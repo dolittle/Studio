@@ -1,39 +1,38 @@
+import { Pivot, PivotItem } from 'office-ui-fabric-react';
 import React from 'react';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    useHistory
 } from 'react-router-dom';
 
 import { index as products } from './products';
 
+const Links = () => {
+    const history = useHistory();
+
+    function linkClicked(item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) {
+        history.push(item?.props.itemKey!);
+    }
+
+    return (
+        <Pivot onLinkClick={linkClicked}>
+            <PivotItem headerText="Home" itemKey="/"></PivotItem>
+            <PivotItem headerText="About" itemKey="/about/42"></PivotItem>
+            <PivotItem headerText="Other thing" itemKey="/about/43"></PivotItem>
+        </Pivot>
+    );
+};
+
 export const Routes = () => {
     return (
-
-        <div>
-            <Router>
-                <div>
-                    <nav>
-                        <ul>
-                            <li>
-                                <Link to="/">Home</Link>
-                            </li>
-                            <li>
-                                <Link to="/about/42">About</Link>
-                            </li>
-                            <li>
-                                <Link to="/about/43">About 2</Link>
-                            </li>
-                        </ul>
-                    </nav>
-
-                    <Switch>
-                        <Route path="/about/:productId" component={products}>
-                        </Route>
-                    </Switch>
-                </div>
-            </Router>
-        </div>
+        <Router>
+            <Links></Links>
+            <Switch>
+                <Route path="/about/:productId" component={products}>
+                </Route>
+            </Switch>
+        </Router>
     );
 };
