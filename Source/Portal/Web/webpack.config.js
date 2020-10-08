@@ -111,7 +111,7 @@ module.exports = (env, argv) => {
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, 'index.html'),
                 metadata: {
-                    title: 'Pantry',
+                    title: 'Dolittle Studio',
                     baseUrl: '/'
                 }
             }),
