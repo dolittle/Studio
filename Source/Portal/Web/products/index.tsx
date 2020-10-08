@@ -30,7 +30,7 @@ export const index = withViewModel(Index, (viewContext) => {
     const params = useParams() as any as Parameters;
 
     return (
-        <div>
+        <div className="something">
             <Stack tokens={stackTokens}>
                 <span>This is the products page for {params.productId}</span>
                 <span>State is : {viewContext.viewModel.someState}</span>

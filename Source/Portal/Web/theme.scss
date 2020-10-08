@@ -40,10 +40,11 @@ $color-gray-darkest: #2b2b2b !default;
 $app_header-height: 3rem;
 $app_header-link-padding: 0.625rem 1rem;
 $grid-gutter: 1.5rem !default;
+$app-background-image: 'images/background.jpg' !default;
 
 
 body {
-    background-color: $content-color;
+    background: #333 url($app-background-image) center/cover;
     padding: $app_header-height 0 0 0;
     height: 100%;
     margin: 0;

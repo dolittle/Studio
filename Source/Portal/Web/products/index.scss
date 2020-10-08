@@ -1,0 +1,9 @@
+@import "../theme.scss";
+$app-background-image: "../" + $app-background-image;
+@import "../acrylic.scss";
+
+.something {
+    @extend .acrylic;
+
+    
+}
