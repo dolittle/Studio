@@ -1,11 +1,11 @@
 @import '../theme.scss';
 
-.app_header {
+.app-header {
     @extend %flex-container-horizontal;
     justify-content: space-between;
     align-items: center;
     background-color: $color-gray-darkest;
-    height: $app_header-height;
+    height: $app-header-height;
     position: fixed;
     top: 0;
     left: 0;
@@ -26,6 +26,6 @@
         display: flex;
         width: 300px;
         display: block;
-        padding: $app_header-link-padding;
+        padding: $app-header-link-padding;
     }
 }

@@ -23,7 +23,6 @@ $ms-color-white:                #2b2f34;
 
 @import '~office-ui-fabric-core/src/sass/Fabric.scss';
 
-$content-color: darken($ms-color-white, 5%);
 
 %flex-container {
     display: flex;
@@ -36,16 +35,19 @@ $content-color: darken($ms-color-white, 5%);
     flex-direction: row;
 }
 
-$color-gray-darkest: #2b2b2b !default;
-$app_header-height: 3rem;
-$app_header-link-padding: 0.625rem 1rem;
-$grid-gutter: 1.5rem !default;
 $app-background-image: 'images/background.jpg' !default;
+$color-gray-darkest: #2b2b2b !default;
+$app-header-height: 3rem;
+$top-level-menu-height: 2.75rem;
+$app-header-link-padding: 0.625rem 1rem;
+$grid-gutter: 1.5rem !default;
+$navigation-color: lighten($ms-color-white, 10%);
+$content-color: darken($ms-color-white, 5%);
 
 
 body {
     background: #333 url($app-background-image) center/cover;
-    padding: $app_header-height 0 0 0;
+    padding: $app-header-height+$top-level-menu-height 0 0 0;
     height: 100%;
     margin: 0;
 }
@@ -53,4 +55,12 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: calc(100vh);
+    background-color: $navigation-color;
 }

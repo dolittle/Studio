@@ -1,0 +1,12 @@
+@import '../theme.scss';
+
+.top-level-menu {
+    @extend %flex-container-horizontal;
+    height: $top-level-menu-height;
+    position: fixed;
+    top: $app-header-height;
+    left: 0;
+    right: 0;
+    z-index: 990;
+    background-color: $navigation-color;
+}

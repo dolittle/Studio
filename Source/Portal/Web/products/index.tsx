@@ -29,23 +29,19 @@ const classNames = mergeStyleSets({
 export const index = withViewModel(Index, (viewContext) => {
     const params = useParams() as any as Parameters;
 
+    // https://www.benmarshall.me/responsive-iframes/
+    const iframe = React.createElement('iframe', {
+        src: 'about: blank',
+        style: {
+            backgroundColor: 'transparent'
+        },
+        frameBorder: 1,
+        allowFullScreen: true
+    });
+
     return (
-        <div className="something">
-            <Stack tokens={stackTokens}>
-                <span>This is the products page for {params.productId}</span>
-                <span>State is : {viewContext.viewModel.someState}</span>
-                <span>The Feature is : {viewContext.viewModel.featureEnabled ? 'enabled' : 'disabled'}</span>
-                <div>
-                    <FontIcon iconName="CompassNW" className={classNames.deepSkyBlue} />
-                    <FontIcon iconName="Dictionary" className={classNames.greenYellow} />
-                    <FontIcon iconName="TrainSolid" className={classNames.salmon} />
-                </div>
-                <Toggle label="Enable stuff" onText="On" offText="Off" onChange={(ev, checked) => viewContext.viewModel.featureEnabled = checked!} />
-                <Stack horizontal tokens={stackTokens}>
-                    <DefaultButton text="Standard" allowDisabledFocus />
-                    <PrimaryButton text="Primary" allowDisabledFocus />
-                </Stack>
-            </Stack>
+        <div className="something iframe-container">
+            {iframe}
         </div>
     );
 });
