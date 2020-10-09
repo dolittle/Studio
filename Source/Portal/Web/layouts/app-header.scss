@@ -11,7 +11,7 @@
     left: 0;
     right: 0;
     z-index: 990;
-    .site_logo {
+    .site-logo {
         display: block;
         height: 1.75rem;
         padding-left: $grid-gutter/2;
@@ -22,10 +22,8 @@
         }
     }
 
-    .app_tenants {
+    .menu {
         display: flex;
-        width: 300px;
-        display: block;
         padding: $app-header-link-padding;
     }
 }
