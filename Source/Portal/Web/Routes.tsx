@@ -10,6 +10,8 @@ import {
 
 import { index as products } from './products';
 
+import './Routes.scss';
+
 
 const groups: INavLinkGroup[] = [
     {
@@ -31,22 +33,26 @@ const groups: INavLinkGroup[] = [
 ];
 
 export const Routes = () => {
+    // https://www.benmarshall.me/responsive-iframes/
+    const iframe = React.createElement('iframe', {
+        src: 'about: blank',
+        style: {
+            backgroundColor: 'transparent'
+        },
+        frameBorder: 1,
+        allowFullScreen: true
+    });
+
+
     return (
         <Router>
-            <TopLevelMenu/>
+            <TopLevelMenu />
             <div className="navigation">
                 <Nav groups={groups} />
             </div>
-            <div className="ms-Grid" dir="ltr">
-                <div className="ms-Grid-row">
-                    <div className="ms-Grid-col ms-sm6 ms-md4 ms-lg2">
-                    </div>
-                    <div className="ms-Grid-col ms-sm4 ms-md5 ms-lg8">
-                        <Switch>
-                            <Route path="/about/:productId" component={products}>
-                            </Route>
-                        </Switch>
-                    </div>
+            <div className="main-content">
+                <div className="iframe-container">
+                    {iframe}
                 </div>
             </div>
         </Router>

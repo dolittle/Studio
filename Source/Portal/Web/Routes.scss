@@ -1,0 +1,36 @@
+@import "./theme.scss";
+@import "./acrylic.scss";
+
+
+.main-content {
+    @extend .acrylic;
+    position: absolute;
+    top: $app-header-height + $top-level-menu-height;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+    left: 12.5rem;
+
+    width: calc(100% - 20rem);
+    height: calc(100% - 13rem);
+}
+
+.iframe-container {
+    overflow: hidden;
+    /* 16:9 aspect ratio */
+    padding-top: 56.25%;
+    position: relative;
+
+    iframe {
+        border: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+}

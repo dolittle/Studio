@@ -44,12 +44,11 @@ $grid-gutter: 1.5rem !default;
 $navigation-color: lighten($ms-color-white, 10%);
 $content-color: darken($ms-color-white, 5%);
 
-
 body {
     background: #333 url($app-background-image) center/cover;
-    padding: $app-header-height+$top-level-menu-height 0 0 0;
+    background-attachment: fixed;
     height: 100%;
-    margin: 0;
+    margin: 0;   
 }
 html {
   margin: 0;
@@ -61,6 +60,8 @@ html {
     display: flex;
     flex-direction: column;
     position: fixed;
+    top:  $app-header-height + $top-level-menu-height;
     height: calc(100vh);
+    width: 12rem; 
     background-color: $navigation-color;
 }
