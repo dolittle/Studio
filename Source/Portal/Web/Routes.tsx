@@ -3,17 +3,11 @@ import { INavLink, INavLinkGroup, Nav, Pivot, PivotItem } from 'office-ui-fabric
 import React, { useState } from 'react';
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
-    useHistory
 } from 'react-router-dom';
-
-import { index as products } from './products';
 
 import './Routes.scss';
 
 import { Navigation, NavigationGroup } from '@shared/portal';
-
 
 export const Routes = () => {
     // https://www.benmarshall.me/responsive-iframes/
