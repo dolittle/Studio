@@ -1,0 +1,14 @@
+{
+    "name": "@shared/mvvm",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.ts",
+    "scripts": {
+    },
+    "author": "Dolittle",
+    "license": "MIT",
+    "dependencies": {
+    },
+    "devDependencies": {
+    }
+}

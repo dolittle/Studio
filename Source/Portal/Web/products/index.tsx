@@ -1,4 +1,4 @@
-import { withViewModel } from '../infrastructure';
+import { withViewModel } from '@shared/mvvm';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Index } from './index.vm';

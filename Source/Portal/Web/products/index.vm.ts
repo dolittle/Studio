@@ -1,4 +1,4 @@
-import { autoinject } from '../infrastructure';
+import { autoinject } from '../../../Shared/MVVM';
 
 export class SomeKindaDependency {
 }
