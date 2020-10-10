@@ -6,7 +6,7 @@ import 'reflect-metadata';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { PrimaryButton, DefaultButton, Stack, FontIcon, mergeStyles, mergeStyleSets, Toggle } from 'office-ui-fabric-react';
+import { PrimaryButton, DefaultButton, Stack, FontIcon, mergeStyles, mergeStyleSets, Toggle, CompoundButton } from 'office-ui-fabric-react';
 import { Navigation } from '@shared/portal';
 
 import './index.scss';
@@ -27,20 +27,55 @@ const classNames = mergeStyleSets({
 
 export default function App() {
 
-    Navigation.setStructure([
-        {
-            name: 'First group',
-            items: [{
-                name: 'First Item'
-            }]
-        }
-    ])
-
-    function publishMessage() {
-        var data = { foo: 'bar' }
-        var event = new CustomEvent('myCustomEvent', { detail: data })
-        window.parent.document.dispatchEvent(event)
+    function setOriginalStructure() {
+        Navigation.setStructure([
+            {
+                name: 'First group',
+                items: [{
+                    name: 'First Item'
+                }]
+            }
+        ]);
     }
+
+    setOriginalStructure();
+
+    function setOtherStructure() {
+        Navigation.setStructure([
+            {
+                name: 'Some other group',
+                items: [{
+                    name: 'Some other First Item'
+                }, {
+                    name: 'Some other Second Item'
+                }]
+            }
+        ])
+    }
+
+    function setThirdStructure() {
+        Navigation.setStructure([
+            {
+                name: 'A third group',
+                items: [{
+                    name: 'Some other First Item'
+                }, {
+                    name: 'Some other Second Item'
+                }]
+            },
+            {
+                name: 'A fourth group',
+                items: [{
+                    name: 'Some other First Item'
+                }, {
+                    name: 'Some other Second Item'
+                },{
+                    name: 'Some other Third Item'
+                }]
+            }
+        ])
+    }
+
 
     return (
         <>
@@ -52,8 +87,11 @@ export default function App() {
                 </div>
                 <Toggle label="Enable stuff" onText="On" offText="Off" />
 
-                <DefaultButton onClick={publishMessage}>Click me</DefaultButton>
-                <PrimaryButton>Click me</PrimaryButton>
+                <Stack horizontal>
+                    <DefaultButton onClick={setOtherStructure}>Set other structure</DefaultButton>
+                    <PrimaryButton onClick={setThirdStructure}>Set third structure</PrimaryButton>
+                    <CompoundButton onClick={setOriginalStructure} secondaryText="This will reset the structure">Reset structure</CompoundButton>
+                </Stack>
             </Stack>
         </>
     );

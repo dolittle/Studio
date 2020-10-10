@@ -1,6 +1,6 @@
 import { TopLevelMenu } from 'layouts/top-level-menu';
 import { INavLink, INavLinkGroup, Nav, Pivot, PivotItem } from 'office-ui-fabric-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     BrowserRouter as Router,
 } from 'react-router-dom';
@@ -38,7 +38,14 @@ export const Routes = () => {
         }));
     }
 
-    window.document.addEventListener(Navigation.SetStructureEvent, handleSetStructure, false);
+    useEffect(() => {
+        window.document.addEventListener(Navigation.SetStructureEvent, handleSetStructure, false);
+
+        return () => {
+            window.document.removeEventListener(Navigation.SetStructureEvent, handleSetStructure);
+        }
+    });
+
 
     return (
         <Router>
