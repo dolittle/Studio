@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = (env, argv) => {
+module.exports = (env, argv, basePath) => {
     const production = argv.mode === 'production';
     
     return {
@@ -17,6 +17,6 @@ module.exports = (env, argv) => {
                 ? '[name].[chunkhash].chunk.js'
                 : '[name].[hash].chunk.js',
         path: path.resolve(process.cwd(), 'wwwroot'),
-        publicPath: '/'
+        publicPath: basePath
     }
 };
