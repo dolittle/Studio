@@ -35,7 +35,7 @@ const groups: INavLinkGroup[] = [
 export const Routes = () => {
     // https://www.benmarshall.me/responsive-iframes/
     const iframe = React.createElement('iframe', {
-        src: 'about: blank',
+        src: '/events',
         style: {
             backgroundColor: 'transparent'
         },

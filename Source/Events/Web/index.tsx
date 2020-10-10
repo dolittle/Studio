@@ -2,19 +2,17 @@ import 'reflect-metadata';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Routes } from './Routes';
 
 import '@shared/styles/theme';
 
 import './index.scss';
 
-import { AppHeader } from './layouts/app-header';
 
 export default function App() {
+    alert('hello');
     return (
         <>
-            <AppHeader></AppHeader>
-            <Routes></Routes>
+            Hello world
         </>
     );
 }
