@@ -54,7 +54,9 @@ export const AppHeader = () => {
                     presence={PersonaPresence.offline}
                     hidePersonaDetails></Persona>
 
-                <IconButton iconProps={{ iconName: 'MoreVertical' }} menuProps={menuProps} />
+                <IconButton iconProps={{ iconName: 'More' }}
+                    menuProps={menuProps}
+                />
 
                 <Dialog
                     hidden={hideDialog}
