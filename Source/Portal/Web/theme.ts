@@ -1,7 +1,7 @@
-import './theme.scss';
 import { createTheme, loadTheme } from 'office-ui-fabric-react/lib/Styling';
-
 import { initializeIcons } from '@uifabric/icons';
+
+import '@shared/styles/theme.scss';
 
 initializeIcons();
 

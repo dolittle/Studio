@@ -6,6 +6,8 @@ import { Routes } from './Routes';
 
 import './theme';
 
+import './index.scss';
+
 import { AppHeader } from './layouts/app-header';
 
 export default function App() {
