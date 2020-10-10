@@ -1,12 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-body {
-    height: 100%;
-    margin: 0;   
+import { NavigationItem } from './NavigationItem';
+
+export interface NavigationGroup {
+    name: string;
+    items: NavigationItem[];
 }
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
+
