@@ -15,14 +15,6 @@ import {
 } from 'office-ui-fabric-react';
 import React from 'react';
 
-const iconClass = mergeStyles({
-    fontSize: 30,
-    height: 30,
-    width: 30,
-    color: 'white',
-    margin: '0 12px',
-});
-
 const img = require('../images/microservice.png');
 
 export const List = () => {
