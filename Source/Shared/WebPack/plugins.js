@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = (basePath) => {
+module.exports = (basePath, title) => {
     return [
         new CleanWebpackPlugin({
             dangerouslyAllowCleanPatternsOutsideProject: true,
@@ -20,7 +20,7 @@ module.exports = (basePath) => {
             },
             publicPath: basePath,
             metadata: {
-                title: 'Dolittle Studio',
+                title: title,
                 baseUrl: basePath
             }
         }),

@@ -5,9 +5,10 @@ const rules = require('./rules');
 const plugins = require('./plugins');
 const devServer = require('./devServer');
 
-module.exports = (env, argv, basePath, callback) => {
+module.exports = (env, argv, basePath, callback, title) => {
     const production = argv.mode === 'production';
     basePath = basePath || '/';
+    title = title || 'Dolittle Studio'
 
     const config = {
         entry: './index.tsx',
@@ -18,7 +19,7 @@ module.exports = (env, argv, basePath, callback) => {
         module: {
             rules: rules
         },
-        plugins: plugins(basePath),
+        plugins: plugins(basePath, title),
         devtool: production ? '' : 'inline-source-map',
         devServer: devServer(basePath)
     };
