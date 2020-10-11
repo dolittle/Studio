@@ -7,7 +7,6 @@ import {
     DocumentCardDetails,
     DocumentCardImage,
     DocumentCardTitle,
-    FontIcon,
     IconButton,
     IDocumentCardStyles,
     ImageFit,
