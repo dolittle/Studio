@@ -7,7 +7,9 @@ import {
 
 import './Routes.scss';
 
-import { Navigation, NavigationGroup } from '@shared/portal';
+import { Navigation, NavigationGroup } from '@shared/portal';
+
+
 
 export const Routes = () => {
     // https://www.benmarshall.me/responsive-iframes/
@@ -46,10 +48,21 @@ export const Routes = () => {
         }
     });
 
+    const [state, changeState] = useState(42);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            changeState(state + 1);
+        }, 1000);
+
+        return () => {
+            clearInterval(timer);
+        }
+    })
 
     return (
         <Router>
-            <TopLevelMenu />
+            <TopLevelMenu something={state} />
             <div className="navigation">
                 <Nav groups={groups} />
             </div>
