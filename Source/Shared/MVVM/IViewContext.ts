@@ -1,5 +1,11 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-export interface IViewContext<T> {
-    params: any;
-    viewModel: T
+import { FunctionComponent } from 'react';
+
+export interface IViewContext<T, TProps = any> {
+    view: FunctionComponent<IViewContext<T, TProps>>;
+    viewModel: T,
+    props: TProps,
+    counter: number;
 }

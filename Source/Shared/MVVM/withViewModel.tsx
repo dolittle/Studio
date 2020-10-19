@@ -1,3 +1,6 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import React, { FunctionComponent, ReactNode, useEffect, useState } from 'react';
 import { Constructor } from '@dolittle/types';
 import { BehaviorSubject } from 'rxjs';
@@ -7,9 +10,10 @@ import { IViewContext } from './IViewContext';
 const viewModelChanged = '__viewModelChanged';
 
 
-type ObserverProps = {
+type ObserverProps<TProps = any> = {
     viewContext: IViewContext<any>;
     view: FunctionComponent<any>;
+    props: TProps;
 };
 
 function Observer(props: ObserverProps) {
@@ -24,15 +28,32 @@ function Observer(props: ObserverProps) {
     );
 }
 
-export function withViewModel<T>(viewModelType: Constructor<T>, view: FunctionComponent<IViewContext<T>>) {
+type ViewModelObserverProps<TViewModel, TProps = {}> = {
+    view: FunctionComponent<IViewContext<TViewModel, TProps>>,
+    viewModelType: Constructor<TViewModel>
+    props: TProps
+};
 
-    return (routing: any) => {
-        const viewContext = {
-        } as IViewContext<any>;
+export class ViewModelObserver<TViewModel, TProps = {}> extends React.Component<ViewModelObserverProps<TViewModel, TProps>, IViewContext<TViewModel, TProps>> {
+    private _counter = 0;
 
-        const viewModel = ViewModelHelpers.createViewModelInstance<T>(viewModelType);
+    constructor(props: ViewModelObserverProps<TViewModel, TProps>) {
+        super(props);
+
+        this.initialize();
+    }
+
+    private initialize() {
+        const viewModel = ViewModelHelpers.createViewModelInstance<TViewModel>(this.props.viewModelType);
+
         ViewModelHelpers.bindViewModelFunctions(viewModel);
-        viewContext.viewModel = viewModel;
+
+        const viewContext = {
+            viewModel,
+            props: this.props.props,
+            view: this.props.view,
+            counter: this._counter
+        } as IViewContext<TViewModel, TProps>;
 
         ViewModelHelpers.setLifecycleOn(viewModel);
         ViewModelHelpers.getLifecycleFor(viewModel).activate(viewContext);
@@ -55,20 +76,48 @@ export function withViewModel<T>(viewModelType: Constructor<T>, view: FunctionCo
             });
         }
 
-        useEffect(() => {
-            ViewModelHelpers.setSubscriptionsOn(viewModel, () => {
-                if (typeof viewModelAsAny[viewModelChanged] === 'function') {
-                    viewModelAsAny[viewModelChanged]();
-                }
-            });
-            return () => {
-                ViewModelHelpers.clearSubscriptionsOn(viewModel);
-            };
+        ViewModelHelpers.setSubscriptionsOn(viewModel, () => {
+
+            this.mutate();
         });
 
+        this.state = viewContext;
+    }
+
+    componentDidMount() {
+    }
+
+
+    componentDidUpdate(prevProps: ViewModelObserverProps<TViewModel, TProps>) {
+        for (const key in prevProps.props) {
+            if (prevProps.props[key] !== this.props.props[key]) {
+                this.setState({ props: this.props.props });
+                break;
+            }
+        }
+    }
+
+    private mutate() {
+        this._counter++;
+        this.setState({ counter: this._counter });
+    }
+
+    render() {
         return (
             <>
-                <Observer viewContext={viewContext} view={view} />
+                {React.createElement(this.props.view, this.state)}
+            </>
+        );
+    }
+
+}
+
+
+export function withViewModel<TViewModel, TProps = {}>(viewModelType: Constructor<TViewModel>, view: FunctionComponent<IViewContext<TViewModel, TProps>>) {
+    return (props: TProps) => {
+        return (
+            <>
+                <ViewModelObserver viewModelType={viewModelType} props={props} view={view} />
             </>
         );
     };
