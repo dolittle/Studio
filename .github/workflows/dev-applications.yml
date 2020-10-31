@@ -1,4 +1,4 @@
-name: Portal - Build and deploy
+name: Applications - Build and deploy
 
 env:
   PRERELEASE_BRANCHES: experimental,alpha,beta,rc
