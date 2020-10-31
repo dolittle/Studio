@@ -51,6 +51,8 @@ jobs:
     - name: Build
       run: |
         yarn
+        cd Source/Events/Backend
+        yarn build
         cd Source/Events/Web
         yarn build
 

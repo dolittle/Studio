@@ -51,6 +51,8 @@ jobs:
     - name: Build
       run: |
         yarn
+        cd Source/Portal/Backend
+        yarn build
         cd Source/Portal/Web
         yarn build
 
