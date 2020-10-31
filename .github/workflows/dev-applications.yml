@@ -17,28 +17,28 @@ on:
     types: [closed]
 
 jobs:
-#  changes:
-#    runs-on: ubuntu-latest
-#
-#    outputs:
-#      has-changes: ${{ steps.filter.outputs.src }}
-#
-#    steps:
-#    - name: Checkout code
-#      uses: actions/checkout@v2
-#
-#
-#    - uses: dorny/paths-filter@v2
-#      id: filter
-#      with:
-#        filters: |
-#          src:
-#            - '${{ env.SOURCE_PATH }}/**'
+  changes:
+    runs-on: ubuntu-latest
+
+    outputs:
+      has-changes: ${{ steps.filter.outputs.src }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          src:
+            - '${{ env.SOURCE_PATH }}/**'
 
   build:
     runs-on: ubuntu-latest
-#    needs: changes
-#    if: ${{ needs.changes.outputs.has-changes == 'true' }}
+    needs: changes
+    if: ${{ needs.changes.outputs.has-changes == 'true' }}
 
     steps:
     - name: Checkout code
@@ -49,13 +49,13 @@ jobs:
       with:
         node-version: 14.x
         registry-url: 'https://registry.npmjs.org'
-#    - name: Build
-#      run: |
-#        yarn
-#        cd Source/Applications/Backend
-#        yarn build
-#        cd ../Web
-#        yarn build
+    - name: Build
+      run: |
+        yarn
+        cd Source/Applications/Backend
+        yarn build
+        cd ../Web
+        yarn build
 
   conditionalDeploy:
     runs-on: ubuntu-latest
@@ -74,7 +74,7 @@ jobs:
 
     - name: Increment version
       id: increment-version
-#      if: ${{ steps.context.outputs.should-publish == 'true' }}
+      if: ${{ steps.context.outputs.should-publish == 'true' }}
       uses: dolittle/increment-version-action@v2
       with:
         version: '1.0.0'
@@ -83,7 +83,7 @@ jobs:
           #${{ steps.context.outputs.release-type }}
 
     - name: Invoke deploy
-#      if: ${{ steps.context.outputs.should-publish == 'true' }}
+      if: ${{ steps.context.outputs.should-publish == 'true' }}
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: DeployMicroservice

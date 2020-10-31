@@ -41,11 +41,11 @@ jobs:
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
 
-#    - name: Build & push the Docker image
-#      run: |
-#        echo ${{ secrets.REGISTRY_PASSWORD }} | docker login -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin ${{ env.CONTAINER_REGISTRY }}
-#        docker build . --file ${{ github.event.inputs.dockerfile }} --tag ${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:${{ github.event.inputs.version }}
-#        docker push ${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:${{ github.event.inputs.version }}
+    - name: Build & push the Docker image
+      run: |
+        echo ${{ secrets.REGISTRY_PASSWORD }} | docker login -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin ${{ env.CONTAINER_REGISTRY }}
+        docker build . --file ${{ github.event.inputs.dockerfile }} --tag ${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:${{ github.event.inputs.version }}
+        docker push ${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:${{ github.event.inputs.version }}
 
     - name: Write version info
       id: write-version-info
