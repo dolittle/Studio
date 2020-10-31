@@ -25,7 +25,9 @@ module.exports = {
         '@typescript-eslint/adjacent-overload-signatures': 'error',
         '@typescript-eslint/array-type': 'error',
         "@typescript-eslint/no-this-alias": ['error', { allowedNames: ['self'] }],
-        "import/no-extraneous-dependencies": 'off',
+        'import/no-extraneous-dependencies': 'off',
+        
+        
 
         'camelcase': 'off',
         '@typescript-eslint/naming-convention': [

@@ -1,6 +1,9 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { Constructor } from '@dolittle/types';
 
-import { Container } from 'typescript-ioc';
+import { container } from 'tsyringe';
 import { PropertySubscriptions } from './PropertySubscriptions';
 import { ViewModelLifecycle } from './ViewModelLifecycle';
 
@@ -35,8 +38,7 @@ export class ViewModelHelpers {
     }
 
     static createViewModelInstance<T>(viewModelType: Constructor<T>): any {
-        const args = (viewModelType as any).__inject?.map((_: Function) => Container.get(_)) || [];
-        const vm = new viewModelType(...args) as any;
+        const vm = container.resolve(viewModelType);
         return vm;
     }
 

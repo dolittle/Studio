@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ViewModelHelpers } from './ViewModelHelpers';
 import { IViewContext } from './IViewContext';
 import { Constructor } from '@dolittle/types';
+import { IViewModelLifecycleManager } from './IViewModelLifecycleManager';
 
 export type ViewModelObserverProps<TViewModel, TProps = {}> = {
     view: FunctionComponent<IViewContext<TViewModel, TProps>>,
@@ -14,7 +15,6 @@ export type ViewModelObserverProps<TViewModel, TProps = {}> = {
 };
 
 export class ViewModelObserver<TViewModel, TProps = {}> extends React.Component<ViewModelObserverProps<TViewModel, TProps>, IViewContext<TViewModel, TProps>> {
-    private _counter = 0;
 
     constructor(props: ViewModelObserverProps<TViewModel, TProps>) {
         super(props);
@@ -30,8 +30,7 @@ export class ViewModelObserver<TViewModel, TProps = {}> extends React.Component<
         const viewContext = {
             viewModel,
             props: this.props.props,
-            view: this.props.view,
-            counter: this._counter
+            view: this.props.view
         } as IViewContext<TViewModel, TProps>;
 
         ViewModelHelpers.setLifecycleOn(viewModel);
@@ -56,7 +55,6 @@ export class ViewModelObserver<TViewModel, TProps = {}> extends React.Component<
         }
 
         ViewModelHelpers.setSubscriptionsOn(viewModel, () => {
-
             this.mutate();
         });
 
@@ -77,8 +75,7 @@ export class ViewModelObserver<TViewModel, TProps = {}> extends React.Component<
     }
 
     private mutate() {
-        this._counter++;
-        this.setState({ counter: this._counter });
+        this.forceUpdate();
     }
 
     render() {

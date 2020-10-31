@@ -6,6 +6,5 @@ import { FunctionComponent } from 'react';
 export interface IViewContext<T, TProps = any> {
     view: FunctionComponent<IViewContext<T, TProps>>;
     viewModel: T,
-    props: TProps,
-    counter: number;
+    props: TProps
 }

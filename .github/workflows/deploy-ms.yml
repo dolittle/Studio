@@ -1,0 +1,72 @@
+name: DeployMicroservice
+
+on:
+  push:
+    branches:
+    - '**'
+    paths:
+    - 'non-existing-path/**'
+
+  workflow_dispatch:
+    inputs:
+      dockerfile:
+        description: 'The Dockerfile to build'
+        required: true
+      docker-image-tag:
+        description: 'The Docker image tag'
+        required: true
+      deployment:
+        description: 'The deployment name'
+        required: true
+      version:
+        description: 'The version to deploy as'
+        required: true
+      source-path:
+        description: 'The relative path to the source'
+        required: true
+
+env:
+  CONTAINER_REGISTRY: 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+
+    - name: Login via Az module
+      uses: azure/login@v1.1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+
+    - name: Build & push the Docker image
+      run: |
+        echo ${{ secrets.REGISTRY_PASSWORD }} | docker login -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin ${{ env.CONTAINER_REGISTRY }}
+        docker build . --file ${{ github.event.inputs.dockerfile }} --tag ${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:${{ github.event.inputs.version }}
+        docker push ${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:${{ github.event.inputs.version }}
+
+    - name: Write version info
+      id: write-version-info
+      uses: dolittle/write-version-to-file-action@v1.0.7
+      with:
+        path: '${{ github.event.inputs.source-path }}/version.json'
+        version: ${{ github.event.inputs.version }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 'Install latest Kubectl'
+      uses: azure/setup-kubectl@v1
+      with:
+        version: 'latest'
+     
+    - name: 'Set k8s context'
+      uses: azure/aks-set-context@v1
+      with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          resource-group: "Infrastructure-Essential"
+          cluster-name: "Cluster-Production-Two"
+          
+    - name: 'Deploy to Development'
+      run: |
+        kubectl patch --namespace application-c52e450e-4877-47bf-a584-7874c205e2b9 deployment ${{ github.event.inputs.deployment }} -p '{"spec": { "template": {"metadata": { "labels": { "date": "'`date +'%s'`'" } }, "spec": { "containers": [{ "name":"head", "image": "${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:'"${{ github.event.inputs.version }}"'"}] }}}}'

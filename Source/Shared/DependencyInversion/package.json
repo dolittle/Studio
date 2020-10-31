@@ -1,14 +1,11 @@
 {
-    "name": "@shared/mvvm",
+    "name": "@shared/dependencyinversion",
     "version": "1.0.0",
     "description": "",
     "main": "index.ts",
-    "scripts": {
-    },
     "author": "",
     "license": "MIT",
     "dependencies": {
-        "@shared/dependencyinversion": "1.0.0"
     },
     "devDependencies": {
     }

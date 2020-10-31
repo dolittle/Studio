@@ -1,7 +1,14 @@
 {
     "private": true,
     "workspaces": [
-        "Source/**"
+        "Source/Applications/Web",
+        "Source/Events/Web",
+        "Source/Portal/Web",
+        "Source/Shared/MVVM",
+        "Source/Shared/DependencyInversion",
+        "Source/Shared/Portal",
+        "Source/Shared/Styles",
+        "Source/Shared/WebPack"
     ],
     "dependencies": {
         "@dolittle/types": "5.0.1",
@@ -13,7 +20,7 @@
         "react-dom": "16.13.1",
         "react-router-dom": "^5.2.0",
         "rxjs": "^6.6.3",
-        "typescript-ioc": "^3.2.2"
+        "tsyringe": "4.3.0"
     },
     "devDependencies": {
         "@types/react-dom": "^16.9.8",
@@ -38,20 +45,20 @@
         "concurrently": "^5.3.0",
         "fs-extra": "^9.0.0",
         "glob": "^7.1.6",
-        "prettier": "^2.0.5",
         "cross-env": "7.0.2",
-        "@typescript-eslint/eslint-plugin": "3.6.0",
-        "@typescript-eslint/parser": "3.6.0",
+        "prettier": "^2.0.5",
+        "@typescript-eslint/eslint-plugin": "4.5.0",
+        "@typescript-eslint/parser": "4.5.0",
         "eslint": "^7.11.0",
         "eslint-config-prettier": "^6.12.0",
         "eslint-plugin-prettier": "^3.1.4",
         "eslint-plugin-header": "^3.1.0",
         "eslint-plugin-import": "^2.22.1",
         "eslint-plugin-jsdoc": "^30.6.4",
-        "eslint-plugin-no-null": "^1.0.2"        
+        "eslint-plugin-no-null": "^1.0.2"
     },
     "resolutions": {
         "node-gyp": "6.1.0"
     },
-    "license": "UNLICENSED"
+    "license": "MIT"
 }

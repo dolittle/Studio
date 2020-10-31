@@ -11,7 +11,7 @@ export class Navigation {
      * @param {NavigationGroup[]} groups Groups to set
      */
     static setStructure(groups: NavigationGroup[]): void {
-        const event = new CustomEvent(Navigation.SetStructureEvent, { detail: groups } );
+        const event = new CustomEvent(Navigation.SetStructureEvent, { detail: groups });
         window.parent.document.dispatchEvent(event);
-    }  
+    }
 }
