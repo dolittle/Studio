@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+  name: studio-dev-portal-env-variables
+  labels:
+    tenant: Dolittle
+    application: Studio-Dev
+    microservice: Portal
+data:
+  NODE_ENV: "production"
+  DATABASE_HOST: "studio-dev-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
+  DATABASE_NAME: "portal"
+  PORT: "80"
+  DOLITTLE_RUNTIME_PORT: 50053
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+  name: shepherd-dev-portal-config-files
+  labels:
+    tenant: Dolittle
+    application: Studio-Dev
+    microservice: Portal
+data:
+

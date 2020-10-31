@@ -69,4 +69,4 @@ jobs:
           
     - name: 'Deploy to Development'
       run: |
-        kubectl patch --namespace application-c52e450e-4877-47bf-a584-7874c205e2b9 deployment ${{ github.event.inputs.deployment }} -p '{"spec": { "template": {"metadata": { "labels": { "date": "'`date +'%s'`'" } }, "spec": { "containers": [{ "name":"head", "image": "${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:'"${{ github.event.inputs.version }}"'"}] }}}}'
+        kubectl patch --namespace application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7 deployment ${{ github.event.inputs.deployment }} -p '{"spec": { "template": {"metadata": { "labels": { "date": "'`date +'%s'`'" } }, "spec": { "containers": [{ "name":"head", "image": "${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:'"${{ github.event.inputs.version }}"'"}] }}}}'
