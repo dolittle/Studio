@@ -74,11 +74,12 @@ jobs:
 
     - name: Increment version
       id: increment-version
-      if: ${{ steps.context.outputs.should-publish == 'true' }}
+#      if: ${{ steps.context.outputs.should-publish == 'true' }}
       uses: dolittle/increment-version-action@v2
       with:
         version: ${{ steps.context.outputs.current-version }}
-        release-type: ${{ steps.context.outputs.release-type }}
+        release-type: patch
+          #${{ steps.context.outputs.release-type }}
 
     - name: Invoke deploy
 #      if: ${{ steps.context.outputs.should-publish == 'true' }}
