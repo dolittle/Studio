@@ -1,3 +1,6 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { mongoose } from '@typegoose/typegoose';
 import { Guid } from '@dolittle/rudiments';
 import './GuidExtensions';

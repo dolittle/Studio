@@ -5,7 +5,7 @@ module.exports = {
     root: true,
     parser: '@typescript-eslint/parser',
     parserOptions: {
-        project: './Source/*/tsconfig.json',
+        project: './Source/**/tsconfig.json',
         sourceType: 'module',
         tsconfigRootDir: __dirname,
         warnOnUnsupportedTypeScriptVersion: false,
@@ -26,8 +26,6 @@ module.exports = {
         '@typescript-eslint/array-type': 'error',
         "@typescript-eslint/no-this-alias": ['error', { allowedNames: ['self'] }],
         'import/no-extraneous-dependencies': 'off',
-        
-        
 
         'camelcase': 'off',
         '@typescript-eslint/naming-convention': [
