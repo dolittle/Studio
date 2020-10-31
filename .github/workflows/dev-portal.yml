@@ -24,12 +24,15 @@ jobs:
       has-changes: ${{ steps.filter.outputs.src }}
 
     steps:
-      - uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            src:
-              - '${{ env.SOURCE_PATH }}/**'
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          src:
+            - '${{ env.SOURCE_PATH }}/**'
 
   build:
     runs-on: ubuntu-latest
@@ -37,6 +40,9 @@ jobs:
     if: ${{ needs.changes.outputs.has-changes == 'true' }}
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Setup node v12
       uses: actions/setup-node@v1
       with:
@@ -53,6 +59,9 @@ jobs:
     needs: build
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Establish context
       id: context
       uses: dolittle/establish-context-action@v2

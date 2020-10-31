@@ -33,6 +33,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Login via Az module
       uses: azure/login@v1.1
       with:
