@@ -54,7 +54,7 @@ jobs:
         yarn
         cd Source/Applications/Backend
         yarn build
-        cd Source/Applications/Web
+        cd ../Web
         yarn build
 
   conditionalDeploy:

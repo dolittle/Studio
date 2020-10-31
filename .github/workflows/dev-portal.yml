@@ -53,7 +53,7 @@ jobs:
         yarn
         cd Source/Portal/Backend
         yarn build
-        cd Source/Portal/Web
+        cd ../Web
         yarn build
 
   conditionalDeploy:
