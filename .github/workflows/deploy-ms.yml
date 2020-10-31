@@ -49,7 +49,7 @@ jobs:
 
     - name: Write version info
       id: write-version-info
-      uses: dolittle/write-version-to-file-action@v1.0.7
+      uses: dolittle/write-version-to-file-action@v1
       with:
         path: '${{ github.event.inputs.source-path }}/version.json'
         version: ${{ github.event.inputs.version }}
