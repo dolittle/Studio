@@ -39,7 +39,11 @@ WORKDIR /app/Source/Portal/Web
 RUN yarn
 
 COPY Source/Portal/version.json /app/Source/Portal
-COPY Source/Shared /app/Source/Shared/
+COPY Source/Shared/DependencyInversion /app/Source/Shared/DependencyInversion/
+COPY Source/Shared/MVVM /app/Source/Shared/MVVM/
+COPY Source/Shared/Portal /app/Source/Shared/Portal/
+COPY Source/Shared/Styles /app/Source/Shared/Styles/
+COPY Source/Shared/WebPack /app/Source/Shared/WebPack/
 COPY Source/Portal/Web ./
 RUN yarn build
 
