@@ -33,6 +33,6 @@
         "strict": true,
         "alwaysStrict": true,
         "preserveConstEnums": true,
-        "newLine": "lf"            
+        "newLine": "lf",
     }
 }
