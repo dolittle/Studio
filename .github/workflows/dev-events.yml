@@ -5,7 +5,7 @@ env:
   SOURCE_PATH: 'Source/Events'
   DEPLOYMENT_NAME: 'studio-dev-events'
   DOCKER_IMAGE_TAG: 'dolittle/studio/events'
-  DOCKER_FILE: 'Source/events/Dockerfile'
+  DOCKER_FILE: 'Source/Events/Backend/Dockerfile'
 
 on:
   push:

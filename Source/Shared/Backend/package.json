@@ -1,0 +1,13 @@
+{
+    "name": "@shared/backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.ts",
+    "author": "",
+    "license": "UNLICENSED",
+    "dependencies": {
+        "@shared/dependencyinversion": "1.0.0"
+    },
+    "devDependencies": {
+    }
+}

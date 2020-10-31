@@ -1,0 +1,57 @@
+# Backend Build
+FROM node:14.2.0 AS backend-build
+
+WORKDIR /app
+
+COPY .eslintrc.js ./
+COPY tsconfig.json ./
+COPY package.json ./
+
+COPY Source/Shared/Backend/package.json ./Source/Shared/Backend/package.json
+COPY Source/Shared/DependencyInversion/package.json ./Source/Shared/DependencyInversion/package.json
+
+WORKDIR /app/Source/Portal/Backend
+COPY Source/Portal/Backend/package.json ./package.json
+RUN yarn
+
+COPY Source/Shared/Backend/ /app/Source/Shared/Backend/
+COPY Source/Shared/DependencyInversion/ /app/Source/Shared/DependencyInversion/
+COPY Source/Portal/Backend/ ./
+
+RUN yarn build
+
+# Web Build
+FROM node:14.2.0 AS web-build
+WORKDIR /app
+
+COPY .eslintrc.js ./
+COPY tsconfig.json ./
+COPY package.json ./
+
+COPY Source/Shared/DependencyInversion/package.json ./Source/Shared/DependencyInversion/package.json
+COPY Source/Shared/MVVM/package.json ./Source/Shared/MVVM/package.json
+COPY Source/Shared/Portal/package.json ./Source/Shared/Portal/package.json
+COPY Source/Shared/Styles/package.json ./Source/Shared/Styles/package.json
+COPY Source/Shared/WebPack/package.json ./Source/Shared/WebPack/package.json
+COPY Source/Portal/Web/package.json ./Source/Portal/Web/package.json
+
+WORKDIR /app/Source/Portal/Web
+RUN yarn
+
+COPY Source/Portal/version.json /app/Source/Portal
+COPY Source/Shared /app/Source/Shared/
+COPY Source/Portal/Web ./
+RUN yarn build
+
+# Resulting Image
+FROM node:14.2.0 as base
+ARG CONFIGURATION=Release
+
+RUN echo Configuration = $CONFIGURATION
+
+WORKDIR /app
+COPY --from=backend-build /app/Source/Portal/Backend/Distribution ./
+COPY --from=backend-build /app/node_modules ./node_modules
+COPY --from=web-build /app/Source/Portal/Web/wwwroot ./Portal/Backend/public
+
+ENTRYPOINT ["node", "Portal/Backend/index.js"]

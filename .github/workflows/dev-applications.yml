@@ -5,7 +5,7 @@ env:
   SOURCE_PATH: 'Source/Applications'
   DEPLOYMENT_NAME: 'studio-dev-applications'
   DOCKER_IMAGE_TAG: 'dolittle/studio/applications'
-  DOCKER_FILE: 'Source/Applications/Dockerfile'
+  DOCKER_FILE: 'Source/Applications/Backend/Dockerfile'
 
 on:
   push:

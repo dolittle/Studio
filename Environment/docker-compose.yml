@@ -1,5 +1,12 @@
 version: '3.1'
 services:
+  mongo:
+    image: dolittle/mongodb:4.2.2
+    ports:
+      - 27017:27017
+    logging:
+      driver: none
+  
   ingress:
     image: nginx:1.18.0
     volumes:
@@ -10,3 +17,38 @@ services:
     logging:
       driver: none
 
+  runtime-portal:
+    image: dolittle/runtime:5.1.4
+    volumes:
+      - ./Portal/resources.json:/app/.dolittle/resources.json
+      - ./tenants.json:/app/.dolittle/tenants.json
+      - ./microservices.json:/app/.dolittle/microservices.json
+      - ./appsettings.json:/app/appsettings.json
+    ports:
+      - 9700:9700
+      - 50052:50052
+      - 50053:50053
+
+  runtime-applications:
+    image: dolittle/runtime:5.1.4
+    volumes:
+      - ./Applications/resources.json:/app/.dolittle/resources.json
+      - ./tenants.json:/app/.dolittle/tenants.json
+      - ./microservices.json:/app/.dolittle/microservices.json
+      - ./appsettings.json:/app/appsettings.json
+    ports:
+      - 9701:9700
+      - 50054:50052
+      - 50055:50053
+
+  runtime-events:
+    image: dolittle/runtime:5.1.4
+    volumes:
+      - ./Events/resources.json:/app/.dolittle/resources.json
+      - ./tenants.json:/app/.dolittle/tenants.json
+      - ./microservices.json:/app/.dolittle/microservices.json
+      - ./appsettings.json:/app/appsettings.json
+    ports:
+      - 9702:9700
+      - 50056:50052
+      - 50057:50053

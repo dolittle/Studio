@@ -1,0 +1,49 @@
+{
+    "name": "events.backend",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "license": "UNLICENSED",
+    "files": [
+        "Distribution",
+        "**/*.ts"
+    ],
+    "main": "Distribution/index.js",
+    "types": "Distribution/index.d.ts",
+    "scripts": {
+        "prebuild": "yarn clean",
+        "postbuild": "yarn lint",
+        "dev": "concurrently -m 1 --kill-others \"nodemon ./index.ts\"",
+        "debug": "nodemon --inspect=5858 -e ts --exec node -r ts-node/register index.ts",
+        "start": "ts-node index.ts",
+        "build": "tsc -b && tspath -f",
+        "clean": "gulp clean --gulpfile ../../../node_modules/@dolittle/typescript.build/Gulpfile.js",
+        "test:run": "gulp test-run --gulpfile ../../../node_modules/@dolittle/typescript.build/Gulpfile.js",
+        "test:clean": "gulp test-clean --gulpfile ../../../node_modules/@dolittle/typescript.build/Gulpfile.js",
+        "lint": "gulp lint --gulpfile ../../../node_modules/@dolittle/typescript.build/Gulpfile.js",
+        "lint:fix": "gulp lint-fix --gulpfile ../../../node_modules/@dolittle/typescript.build/Gulpfile.js"
+    },
+    "nodemonConfig": {
+        "restartable": "rs",
+        "ignore": [
+            "Distribution",
+            "*.d.ts"
+        ],
+        "events": {
+        },
+        "execMap": {
+            "ts": "ts-node"
+        },
+        "watch": [
+            "./",
+            "../../Shared/Backend",
+            "../../Shared/DependencyInversion"
+        ],
+        "ext": "ts"
+    },
+    "dependencies": {
+        "@typegoose/typegoose": "7.3.4",
+        "@shared/backend": "1.0.0",
+        "@shared/dependencyinversion": "1.0.0"
+    }
+}
