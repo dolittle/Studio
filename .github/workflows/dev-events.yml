@@ -24,8 +24,6 @@ jobs:
       has-changes: ${{ steps.filter.outputs.src }}
 
     steps:
-      - uses: actions/checkout@v2
-      - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       - uses: dorny/paths-filter@v2
         id: filter
         with:
@@ -39,8 +37,6 @@ jobs:
     if: ${{ needs.changes.outputs.has-changes == 'true' }}
 
     steps:
-    - uses: actions/checkout@v2
-    - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
     - name: Setup node v12
       uses: actions/setup-node@v1
       with:
@@ -57,9 +53,6 @@ jobs:
     needs: build
 
     steps:
-    - uses: actions/checkout@v2
-    - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
-
     - name: Establish context
       id: context
       uses: dolittle/establish-context-action@v2
