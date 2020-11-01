@@ -1,8 +1,11 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-@import "./globals.scss";
-@import "./acrylic.scss";
+@import "../globals.scss";
+@import "~@shared/styles/acrylic.scss";
+
+$toolbar-color: lighten($navigation-color, 10%);
+$content-color: darken($ms-color-white, 5%);
 
 .main-content {
     @extend .acrylic;
@@ -70,6 +73,7 @@
 }
 
 .navigation {
+    @extend .acrylic;
     display: flex;
     flex-direction: column;
     position: fixed;

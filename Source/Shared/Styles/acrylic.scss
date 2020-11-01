@@ -4,10 +4,8 @@
 @import './globals.scss';
 
 .acrylic {
-    padding: 2em 2em;
     position: relative;
     overflow: hidden;
-    margin: 1em;
 }
 
 @supports (backdrop-filter: blur(20px)) {
