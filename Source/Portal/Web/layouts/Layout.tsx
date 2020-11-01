@@ -5,7 +5,7 @@ import { TopLevelMenu } from 'layouts/TopLevelMenu';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
 import React, { useEffect, useState } from 'react';
 import {
-    BrowserRouter as Router, Route, Switch,
+    BrowserRouter as Router, Route, Switch, useLocation,
 } from 'react-router-dom';
 
 import { ContentFrame } from './ContentFrame';
@@ -13,7 +13,9 @@ import { ContentFrame } from './ContentFrame';
 import './Layout.scss';
 
 export const Layout = () => {
-    const [loadingSpinner, setLoadingSpinner] = useState(true);
+    const location = useLocation();
+    const root = location.pathname === '/' || location.pathname === '';
+    const [loadingSpinner, setLoadingSpinner] = useState(!root);
 
     const contentLoading = () => {
         setLoadingSpinner(true);
@@ -24,7 +26,7 @@ export const Layout = () => {
     };
 
     return (
-        <Router>
+        <>
             <TopLevelMenu />
             <div className="navigation">
             </div>
@@ -47,6 +49,6 @@ export const Layout = () => {
                     </Switch>
                 </div>
             </div>
-        </Router>
+        </>
     );
 };
