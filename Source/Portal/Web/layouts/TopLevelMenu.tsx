@@ -3,13 +3,14 @@
 
 import React from 'react';
 import { Pivot, PivotItem } from 'office-ui-fabric-react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { withViewModel } from '@shared/mvvm';
 import { TopLevelMenuViewModel } from './TopLevelMenu.vm';
 
 import './TopLevelMenu.scss';
 
 export const TopLevelMenu = withViewModel<TopLevelMenuViewModel>(TopLevelMenuViewModel, ({ viewModel }) => {
+    const location = useLocation();
     const history = useHistory();
 
     function linkClicked(item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) {
@@ -18,10 +19,10 @@ export const TopLevelMenu = withViewModel<TopLevelMenuViewModel>(TopLevelMenuVie
 
     return (
         <div className="top-level-menu">
-            <Pivot onLinkClick={linkClicked}>
+            <Pivot onLinkClick={linkClicked} selectedKey={location.pathname}>
                 <PivotItem headerText="Home" itemKey="/"></PivotItem>
-                <PivotItem headerText="Applications" itemKey="/applications"></PivotItem>
-                <PivotItem headerText="Events" itemKey="/events"></PivotItem>
+                <PivotItem headerText="Applications" itemKey="/applications/"></PivotItem>
+                <PivotItem headerText="Events" itemKey="/events/"></PivotItem>
             </Pivot>
         </div>
     );
