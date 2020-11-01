@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { IMessenger } from '@shared/mvvm';
-import { injectable } from 'tsyringe';
+import { injectable, singleton } from 'tsyringe';
 import { NavigationGroup } from './NavigationGroup';
 import { NavigationStructureChanged } from './NavigationStructureChanged';
 
@@ -11,6 +11,7 @@ export type NavigationChanged = (groups: NavigationGroup[]) => void;
 /**
  * Represents the system for working with the navigational structure of a microservice.
  */
+@singleton()
 @injectable()
 export class Navigation {
 

@@ -10,4 +10,5 @@ $top-level-menu-height: 2.75rem;
 $app-header-link-padding: 0.625rem 1rem;
 $grid-gutter: 1.5rem !default;
 $navigation-color: lighten($ms-color-white, 10%);
+$toolbar-color: lighten($navigation-color, 10%);
 $content-color: darken($ms-color-white, 5%);
