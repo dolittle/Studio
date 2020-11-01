@@ -27,3 +27,9 @@
         padding: $app-header-link-padding;
     }
 }
+
+.more-button {
+    [data-icon-name="ChevronDown"] {
+        display: none
+    }
+}

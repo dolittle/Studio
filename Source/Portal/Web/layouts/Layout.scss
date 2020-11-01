@@ -18,12 +18,20 @@
     height: calc(100% - 13rem);
 }
 
-.iframe-container {
+.content {
     position: relative;
     width: calc(100%);
     height: calc(100%);
     margin: 0;
     padding: 0;
+
+    .spinner {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        margin-top: -4rem;
+        margin-left: -4rem;
+    }
 
     iframe {
         left: 0;

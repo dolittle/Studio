@@ -1,20 +1,24 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import 'reflect-metadata';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Routes } from './Routes';
+import { Layout } from './layouts/Layout';
+import { AppHeader } from './layouts/AppHeader';
+import { Bindings as MVVMBindings } from '@shared/mvvm';
 
 import '@shared/styles/theme';
-
 import './index.scss';
 
-import { AppHeader } from './layouts/app-header';
-
 export default function App() {
+    MVVMBindings.initialize();
+
     return (
         <>
-            <AppHeader></AppHeader>
-            <Routes></Routes>
+            <AppHeader/>
+            <Layout/>
         </>
     );
 }

@@ -1,8 +1,11 @@
-import { ContextualMenuItem, DefaultButton, Dialog, DialogFooter, DialogType, IconButton, IContextualMenuProps, IPersonaSharedProps, Persona, PersonaPresence, PersonaSize, PrimaryButton } from 'office-ui-fabric-react';
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+import { DefaultButton, Dialog, DialogFooter, DialogType, IconButton, IContextualMenuProps, IPersonaSharedProps, Persona, PersonaPresence, PersonaSize, PrimaryButton } from 'office-ui-fabric-react';
+import { useId, useBoolean } from '@uifabric/react-hooks';
 import * as React from 'react';
 
-import './app-header.scss';
-import { useId, useBoolean } from '@uifabric/react-hooks';
+import './AppHeader.scss';
 
 const dialogStyles = { main: { maxWidth: 450 } };
 const examplePersona: IPersonaSharedProps = {
@@ -54,7 +57,7 @@ export const AppHeader = () => {
                     presence={PersonaPresence.offline}
                     hidePersonaDetails></Persona>
 
-                <IconButton iconProps={{ iconName: 'More' }}
+                <IconButton className="more-button" iconProps={{ iconName: 'More' }}
                     menuProps={menuProps}
                 />
 

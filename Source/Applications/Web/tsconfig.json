@@ -7,7 +7,7 @@
         "sourceRoot": "./"
     },
     "include": ["**/*.ts", "**/*.tsx", "../../Shared/**/*.ts", "../../Shared/**/*.tsx"],
-    "exclude": ["node_modules", "Distribution"],
+    "exclude": ["node_modules", "Distribution", "../../Shared/Backend"],
     "references": [
     ]
 }
