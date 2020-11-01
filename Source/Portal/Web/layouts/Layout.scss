@@ -7,18 +7,19 @@
 .main-content {
     @extend .acrylic;
     position: absolute;
-    top: $app-header-height + $top-level-menu-height;
     display: flex;
+    left: 12rem;
+    top: $app-header-height + $top-level-menu-height;
     flex: 1;
     flex-direction: row;
     margin-top: 2rem;
     margin-left: 2rem;
     margin-right: 2rem;
     margin-bottom: 2rem;
-    left: 12.5rem;
+    padding: 0;
 
-    width: calc(100% - 20rem);
-    height: calc(100% - 13rem);
+    width: calc(100% - 16rem);
+    height: calc(100% - 9.5rem);
 }
 
 .content {
