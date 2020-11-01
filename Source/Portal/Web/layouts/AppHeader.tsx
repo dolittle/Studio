@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { DefaultButton, Dialog, DialogFooter, DialogType, IconButton, IContextualMenuProps, IPersonaSharedProps, Persona, PersonaPresence, PersonaSize, PrimaryButton } from 'office-ui-fabric-react';
+import { ContextualMenuItemType, DefaultButton, Dialog, DialogFooter, DialogType, IconButton, IContextualMenuProps, IPersonaSharedProps, Persona, PersonaPresence, PersonaSize, PrimaryButton } from 'office-ui-fabric-react';
 import { useId, useBoolean } from '@uifabric/react-hooks';
 import * as React from 'react';
 
@@ -32,7 +32,10 @@ export const AppHeader = () => {
     const menuProps = {
         shouldFocusOnMount: true,
         items: [
-            { key: 'versions', text: 'Versions', onClick: toggleHideDialog }
+            { key: 'settings', text: 'Settings', iconProps: { iconName: 'Settings' } },
+            { key: 'profile', text: 'Profile', iconProps: { iconName: 'Contact' } },
+            { key: 'divider', itemType: ContextualMenuItemType.Divider },
+            { key: 'versions', text: 'Versions', iconProps: { iconName: 'Info' }, onClick: toggleHideDialog },
         ]
     } as IContextualMenuProps;
 
