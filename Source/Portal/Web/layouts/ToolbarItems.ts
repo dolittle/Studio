@@ -18,4 +18,8 @@ export class ToolbarItems {
             map(_ => _.items.map(i => new ToolbarItem(i.text, i.icon, () => {}, i.id))
         )).subscribe(_ => this.items.next(_));
     }
+
+    reset() {
+        this.items.next([]);
+    }
 }

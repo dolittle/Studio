@@ -14,6 +14,7 @@ export const TopLevelMenu = withViewModel<TopLevelMenuViewModel>(TopLevelMenuVie
     const history = useHistory();
 
     function linkClicked(item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) {
+        viewModel.beforeNavigating();
         history.push(item?.props.itemKey!);
     }
 

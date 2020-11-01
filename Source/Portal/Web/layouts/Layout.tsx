@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TopLevelMenu } from 'layouts/TopLevelMenu';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
 import { Route, Switch, useLocation } from 'react-router-dom';
@@ -34,7 +34,7 @@ export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
                 <Navigation />
             </div>
 
-            <div className="toolbar" style={{ height: viewModel.hasToolbarItems ? '' : '0px' }}>
+            <div className="toolbar" style={{ visibility: viewModel.hasToolbarItems ? 'visible' : 'hidden' }}>
                 <Toolbar />
             </div>
 
