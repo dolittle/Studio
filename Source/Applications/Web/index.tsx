@@ -7,10 +7,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { PrimaryButton, DefaultButton, Stack, FontIcon, mergeStyles, mergeStyleSets, Toggle, CompoundButton } from 'office-ui-fabric-react';
-import { Navigation } from '@shared/portal';
+import { Bindings as PortalBindings, Navigation } from '@shared/portal';
+import { Bindings as MVVMBindings } from '@shared/mvvm';
 
 import './index.scss';
 import '@shared/styles/theme';
+import { container } from 'tsyringe';
 const iconClass = mergeStyles({
     fontSize: 50,
     height: 50,
@@ -26,9 +28,14 @@ const classNames = mergeStyleSets({
 
 
 export default function App() {
+    MVVMBindings.initialize();
+    PortalBindings.initialize();
+
+    const navigation = container.resolve(Navigation);
+
 
     function setOriginalStructure() {
-        Navigation.setStructure([
+        navigation.set([
             {
                 name: 'First group',
                 items: [{
@@ -41,7 +48,7 @@ export default function App() {
     setOriginalStructure();
 
     function setOtherStructure() {
-        Navigation.setStructure([
+        navigation.set([
             {
                 name: 'Some other group',
                 items: [{
@@ -50,11 +57,11 @@ export default function App() {
                     name: 'Some other Second Item'
                 }]
             }
-        ])
+        ]);
     }
 
     function setThirdStructure() {
-        Navigation.setStructure([
+        navigation.set([
             {
                 name: 'A third group',
                 items: [{
@@ -69,11 +76,11 @@ export default function App() {
                     name: 'Some other First Item'
                 }, {
                     name: 'Some other Second Item'
-                },{
+                }, {
                     name: 'Some other Third Item'
                 }]
             }
-        ])
+        ]);
     }
 
 

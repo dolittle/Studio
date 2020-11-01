@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom';
 import { Layout } from './layouts/Layout';
 import { AppHeader } from './layouts/AppHeader';
 import { Bindings as MVVMBindings } from '@shared/mvvm';
+import { Bindings as PortalBindings } from '@shared/portal';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import '@shared/styles/theme';
@@ -15,6 +16,7 @@ import './index.scss';
 
 export default function App() {
     MVVMBindings.initialize();
+    PortalBindings.initialize();
 
     return (
         <Router>

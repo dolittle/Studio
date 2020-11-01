@@ -1,16 +1,15 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import React, { useState } from 'react';
 import { TopLevelMenu } from 'layouts/TopLevelMenu';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
-import React, { useEffect, useState } from 'react';
-import {
-    BrowserRouter as Router, Route, Switch, useLocation,
-} from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 
 import { ContentFrame } from './ContentFrame';
 
 import './Layout.scss';
+import { Navigation } from './Navigation';
 
 export const Layout = () => {
     const location = useLocation();
@@ -29,6 +28,7 @@ export const Layout = () => {
         <>
             <TopLevelMenu />
             <div className="navigation">
+                <Navigation/>
             </div>
             <div className="main-content">
                 <div className="content">

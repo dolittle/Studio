@@ -45,3 +45,13 @@
         position: absolute;
     }
 }
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top:  $app-header-height + $top-level-menu-height;
+    height: calc(100vh);
+    width: 12rem; 
+    background-color: $navigation-color;
+}

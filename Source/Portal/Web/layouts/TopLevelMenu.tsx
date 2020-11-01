@@ -5,7 +5,7 @@ import React from 'react';
 import { Pivot, PivotItem } from 'office-ui-fabric-react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { withViewModel } from '@shared/mvvm';
-import { TopLevelMenuViewModel } from './TopLevelMenu.vm';
+import { TopLevelMenuViewModel } from './TopLevelMenuViewModel';
 
 import './TopLevelMenu.scss';
 
