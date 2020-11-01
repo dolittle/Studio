@@ -1,0 +1,16 @@
+{
+    "files.exclude": {
+        
+        "**/node_modules": true,
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.DS_Store": true
+    },
+    "cSpell.words": [
+        "Deduplication",
+        "MUUID",
+        "dependencyinversion",
+        "mvvm",
+        "upsert"
+    ]
+}
