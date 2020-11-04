@@ -1,7 +1,7 @@
 name: Dev - Portal - Deploy
 
 env:
-  PRERELEASE_BRANCHES: experimental,alpha,beta,rc
+  PRERELEASE_BRANCHES: development
   SOURCE_PATH: 'Source/Portal'
   DEPLOYMENT_NAME: 'studio-dev-portal'
   DOCKER_IMAGE_TAG: 'dolittle/studio/portal'

@@ -1,7 +1,7 @@
 name: Dev - Applications - Deploy
 
 env:
-  PRERELEASE_BRANCHES: experimental,alpha,beta,rc
+  PRERELEASE_BRANCHES: development
   SOURCE_PATH: 'Source/Applications'
   DEPLOYMENT_NAME: 'studio-dev-applications'
   DOCKER_IMAGE_TAG: 'dolittle/studio/applications'

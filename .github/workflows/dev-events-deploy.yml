@@ -1,7 +1,7 @@
 name: Dev - Events - Deploy
 
 env:
-  PRERELEASE_BRANCHES: experimental,alpha,beta,rc
+  PRERELEASE_BRANCHES: development
   SOURCE_PATH: 'Source/Events'
   DEPLOYMENT_NAME: 'studio-dev-events'
   DOCKER_IMAGE_TAG: 'dolittle/studio/events'
