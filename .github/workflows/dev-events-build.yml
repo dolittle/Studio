@@ -1,4 +1,4 @@
-name: Events - Build
+name: Dev - Events - Build
 
 on:
   push:

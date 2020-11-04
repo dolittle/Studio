@@ -1,4 +1,4 @@
-name: Portal - Build
+name: Dev - Portal - Build
 
 on:
   push:

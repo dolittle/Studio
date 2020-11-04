@@ -1,4 +1,4 @@
-name: Applications - Deploy
+name: Dev - Applications - Deploy
 
 env:
   PRERELEASE_BRANCHES: experimental,alpha,beta,rc

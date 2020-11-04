@@ -1,4 +1,4 @@
-name: Events - Deploy
+name: Dev - Events - Deploy
 
 env:
   PRERELEASE_BRANCHES: experimental,alpha,beta,rc
