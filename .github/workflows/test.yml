@@ -1,0 +1,20 @@
+name: DeployMicroservice
+
+on:
+  workflow_dispatch:
+
+env:
+  CONTAINER_REGISTRY: 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+     
+    - name: 'Set k8s context'
+      uses: azure/aks-set-context@v1
+      with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          resource-group: "Infrastructure-Essential"
+          cluster-name: "Cluster-Production-Two"
