@@ -1,4 +1,4 @@
-name: DeployMicroservice
+name: Test
 
 on:
   workflow_dispatch:
