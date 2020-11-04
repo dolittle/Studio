@@ -34,7 +34,7 @@ jobs:
 
   conditionalDeploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: changes
 
     steps:
     - name: Checkout code
