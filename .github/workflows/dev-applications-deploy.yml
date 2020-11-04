@@ -1,4 +1,4 @@
-name: Applications - Build and deploy
+name: Applications - Deploy
 
 env:
   PRERELEASE_BRANCHES: experimental,alpha,beta,rc
@@ -8,12 +8,9 @@ env:
   DOCKER_FILE: 'Source/Applications/Backend/Dockerfile'
 
 on:
-  push:
-    branches:
-    - '**'
-    paths:
-    - 'Source/Applications/**'
   pull_request:
+    branches:
+    - 'Development'
     types: [closed]
 
 jobs:
@@ -34,28 +31,6 @@ jobs:
         filters: |
           src:
             - '${{ env.SOURCE_PATH }}/**'
-
-  build:
-    runs-on: ubuntu-latest
-    needs: changes
-    if: ${{ needs.changes.outputs.has-changes == 'true' }}
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Setup node v12
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.x
-        registry-url: 'https://registry.npmjs.org'
-    - name: Build
-      run: |
-        yarn
-        cd Source/Applications/Backend
-        yarn build
-        cd ../Web
-        yarn build
 
   conditionalDeploy:
     runs-on: ubuntu-latest

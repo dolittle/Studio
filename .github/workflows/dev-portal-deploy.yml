@@ -1,4 +1,4 @@
-name: Portal - Build and deploy
+name: Portal - Deploy
 
 env:
   PRERELEASE_BRANCHES: experimental,alpha,beta,rc
@@ -8,12 +8,9 @@ env:
   DOCKER_FILE: 'Source/Portal/Backend/Dockerfile'
 
 on:
-  push:
-    branches:
-    - '**'
-    paths:
-    - 'Source/Portal/**'
   pull_request:
+    branches:
+    - 'Development'
     types: [closed]
 
 jobs:
