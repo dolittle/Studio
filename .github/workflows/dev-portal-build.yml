@@ -1,14 +1,14 @@
-name: Portal - Build
+name: Dev - Portal - Build
 
 on:
   push:
     branches:
-    - '**'
+    - 'development/**'
     paths:
     - 'Source/Portal/**'
   pull_request:
     branches:
-    - 'Development'
+    - 'development/**'
     types: [opened]
 
 jobs:

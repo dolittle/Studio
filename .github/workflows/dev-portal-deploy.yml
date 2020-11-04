@@ -1,4 +1,4 @@
-name: Portal - Deploy
+name: Dev - Portal - Deploy
 
 env:
   PRERELEASE_BRANCHES: experimental,alpha,beta,rc
@@ -10,7 +10,7 @@ env:
 on:
   pull_request:
     branches:
-    - 'Development'
+    - 'development'
     types: [closed]
 
 jobs:

@@ -1,14 +1,14 @@
-name: Events - Build and deploy
+name: Dev - Events - Build
 
 on:
   push:
     branches:
-    - '**'
+    - 'development/**'
     paths:
     - 'Source/Events/**'
   pull_request:
     branches:
-    - 'Development'
+    - 'development/**'
     types: [opened]
 
 jobs:
