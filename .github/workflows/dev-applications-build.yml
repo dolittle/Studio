@@ -3,12 +3,12 @@ name: Applications - Build
 on:
   push:
     branches:
-    - 'Development'
+    - 'development'
     paths:
     - 'Source/Applications/**'
   pull_request:
     branches:
-    - 'Development'
+    - 'development'
     types: [opened]
 
 jobs:

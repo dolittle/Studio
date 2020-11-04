@@ -3,12 +3,12 @@ name: Portal - Build
 on:
   push:
     branches:
-    - '**'
+    - 'development'
     paths:
     - 'Source/Portal/**'
   pull_request:
     branches:
-    - 'Development'
+    - 'development'
     types: [opened]
 
 jobs:
