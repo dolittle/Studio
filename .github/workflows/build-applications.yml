@@ -1,15 +1,11 @@
-name: Dev - Applications - Build
+name: Build Applications
 
 on:
   push:
     branches:
-    - 'development/**'
+    - '**'
     paths:
     - 'Source/Applications/**'
-  pull_request:
-    branches:
-    - 'development/**'
-    types: [opened]
 
 jobs:
   build:

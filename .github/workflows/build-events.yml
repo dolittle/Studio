@@ -1,15 +1,11 @@
-name: Dev - Portal - Build
+name: Build Events
 
 on:
   push:
     branches:
-    - 'development/**'
+    - '**'
     paths:
-    - 'Source/Portal/**'
-  pull_request:
-    branches:
-    - 'development/**'
-    types: [opened]
+    - 'Source/Events/**'
 
 jobs:
   build:
@@ -28,7 +24,7 @@ jobs:
     - name: Build
       run: |
         yarn
-        cd Source/Portal/Backend
+        cd Source/Events/Backend
         yarn build
         cd ../Web
         yarn build
