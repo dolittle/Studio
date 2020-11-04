@@ -3,12 +3,12 @@ name: Dev - Events - Build
 on:
   push:
     branches:
-    - 'development'
+    - 'development/**'
     paths:
     - 'Source/Events/**'
   pull_request:
     branches:
-    - 'development'
+    - 'development/**'
     types: [opened]
 
 jobs:
