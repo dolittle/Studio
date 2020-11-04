@@ -6,7 +6,7 @@ import { TopLevelMenu } from 'layouts/TopLevelMenu';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 
-import { ContentFrame } from './ContentFrame';
+import { ContentFrame } from '@shared/components';
 
 import './Layout.scss';
 import { Navigation } from './Navigation';

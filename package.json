@@ -8,6 +8,7 @@
         "Source/Portal/Backend",
         "Source/Portal/Web",
         "Source/Shared/Backend",
+        "Source/Shared/Components",
         "Source/Shared/DependencyInversion",
         "Source/Shared/MVVM",
         "Source/Shared/Portal",

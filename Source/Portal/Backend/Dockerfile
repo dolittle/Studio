@@ -28,6 +28,7 @@ COPY .eslintrc.js ./
 COPY tsconfig.json ./
 COPY package.json ./
 
+COPY Source/Shared/Components/package.json ./Source/Shared/Components/package.json
 COPY Source/Shared/DependencyInversion/package.json ./Source/Shared/DependencyInversion/package.json
 COPY Source/Shared/MVVM/package.json ./Source/Shared/MVVM/package.json
 COPY Source/Shared/Portal/package.json ./Source/Shared/Portal/package.json
@@ -39,6 +40,7 @@ WORKDIR /app/Source/Portal/Web
 RUN yarn
 
 COPY Source/Portal/version.json /app/Source/Portal
+COPY Source/Shared/Components /app/Source/Shared/Components/
 COPY Source/Shared/DependencyInversion /app/Source/Shared/DependencyInversion/
 COPY Source/Shared/MVVM /app/Source/Shared/MVVM/
 COPY Source/Shared/Portal /app/Source/Shared/Portal/

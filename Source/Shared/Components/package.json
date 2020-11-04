@@ -1,0 +1,14 @@
+{
+    "name": "@shared/components",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.ts",
+    "scripts": {
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+    },
+    "devDependencies": {
+    }
+}
