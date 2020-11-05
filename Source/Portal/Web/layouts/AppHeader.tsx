@@ -24,6 +24,9 @@ const dialogContentProps = {
     subText: 'Do you want to send this message without a subject?',
 };
 
+const logo = require('./logo.svg');
+
+
 export const AppHeader = () => {
     const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
     const labelId: string = useId('dialogLabel');
@@ -52,7 +55,7 @@ export const AppHeader = () => {
     return (
         <header className="app-header">
             <a href="/" className="site-logo">
-                <img src="../images/logo.svg" alt="" />
+                <img src={logo} alt="" />
             </a>
             <div className="menu">
                 <Persona {...examplePersona}
