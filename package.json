@@ -1,6 +1,7 @@
 {
     "private": true,
     "workspaces": [
+        "Source/DevTool",
         "Source/Applications/Backend",
         "Source/Applications/Web",
         "Source/Events/Backend",
@@ -51,6 +52,7 @@
         "@dolittle/typescript.build": "rc",
         "nodemon": "2.0.4",
         "ts-node": "9.0.0",
+        "wait-on": "^5.2.0",
         "tspath": "^1.3.7",
         "concurrently": "^5.3.0",
         "fs-extra": "^9.0.0",
