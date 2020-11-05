@@ -1,7 +1,6 @@
 name: Dev - Events - Deploy
 
 env:
-  PRERELEASE_BRANCHES: development
   SOURCE_PATH: 'Source/Events'
   DEPLOYMENT_NAME: 'studio-dev-events'
   DOCKER_IMAGE_TAG: 'dolittle/studio/events'
@@ -44,7 +43,7 @@ jobs:
       uses: dolittle/establish-context-action@v2
       with:
         version-file: '${{ env.SOURCE_PATH }}/version.json'
-        prerelease-branches: ${{ env.PRERELEASE_BRANCHES }}
+        environment-branch: 'development'
 
     - name: Increment version
       id: increment-version
