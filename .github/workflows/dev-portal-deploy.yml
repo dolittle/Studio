@@ -1,7 +1,6 @@
 name: Dev - Portal - Deploy
 
 env:
-  PRERELEASE_BRANCHES: development
   SOURCE_PATH: 'Source/Portal'
   DEPLOYMENT_NAME: 'studio-dev-portal'
   DOCKER_IMAGE_TAG: 'dolittle/studio/portal'
@@ -66,7 +65,7 @@ jobs:
       uses: dolittle/establish-context-action@v2
       with:
         version-file: '${{ env.SOURCE_PATH }}/version.json'
-        prerelease-branches: ${{ env.PRERELEASE_BRANCHES }}
+        environment-branch: 'development'
 
     - name: Increment version
       id: increment-version

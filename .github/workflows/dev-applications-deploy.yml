@@ -1,7 +1,6 @@
 name: Dev - Applications - Deploy
 
 env:
-  PRERELEASE_BRANCHES: development
   SOURCE_PATH: 'Source/Applications'
   DEPLOYMENT_NAME: 'studio-dev-applications'
   DOCKER_IMAGE_TAG: 'dolittle/studio/applications'
@@ -24,7 +23,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-
     - uses: dorny/paths-filter@v2
       id: filter
       with:
@@ -45,17 +43,15 @@ jobs:
       uses: dolittle/establish-context-action@v2
       with:
         version-file: '${{ env.SOURCE_PATH }}/version.json'
-        prerelease-branches: ${{ env.PRERELEASE_BRANCHES }}
+        environment-branch: 'development'
 
     - name: Increment version
       id: increment-version
       if: ${{ steps.context.outputs.should-publish == 'true' }}
       uses: dolittle/increment-version-action@v2
       with:
-        version: '1.0.0'
-          #${{ steps.context.outputs.current-version }}
-        release-type: patch
-          #${{ steps.context.outputs.release-type }}
+        version: ${{ steps.context.outputs.current-version }}
+        release-type: ${{ steps.context.outputs.release-type }}
 
     - name: Invoke deploy
       if: ${{ steps.context.outputs.should-publish == 'true' }}
