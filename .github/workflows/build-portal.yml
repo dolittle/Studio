@@ -10,7 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ needs.changes.outputs.has-changes == 'true' }}
 
     steps:
     - name: Checkout code
