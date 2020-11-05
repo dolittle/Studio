@@ -3,7 +3,7 @@
 
 const webpack = require('@shared/webpack');
 module.exports = (env, argv) => {
-    return webpack(env, argv, '/events', config => {
+    return webpack(env, argv, '/_/events', config => {
         config.devServer.port = 9003;
     });
 };
