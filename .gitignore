@@ -126,3 +126,5 @@ Environments/data
 
 # Jet Brains
 .idea
+
+*.scss.d.ts
