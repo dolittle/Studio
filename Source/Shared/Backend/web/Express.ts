@@ -5,6 +5,7 @@ import express, { Express } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import compression from 'compression';
 import { GraphQLSchema } from 'graphql';
+import morgan from 'morgan';
 
 export let app: Express;
 export type ExpressConfigCallback = (app: Express) => void;
@@ -21,6 +22,7 @@ export async function initialize(prefix: string, publicPath: string, port: numbe
 
     if (configCallback) configCallback(app);
 
+    app.use(morgan('tiny'));
     app.use(prefix, express.static(publicPath));
     app.use((req, res) => {
         res.sendFile(`${publicPath}/index.html`);

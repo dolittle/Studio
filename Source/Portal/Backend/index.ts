@@ -13,7 +13,7 @@ import { getSchema } from './schema';
         microserviceId: '590696bc-1c4e-4a14-b621-c2125713a974',
         prefix: '/',
         publicPath: path.join(__dirname, 'public'),
-        port: 3001,
+        port: 3000,
         dolittleRuntimePort: 50053,
         graphQLSchema: schema,
         defaultDatabaseName: 'portal',

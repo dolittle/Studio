@@ -14,7 +14,7 @@ import { getSchema } from './schema';
         prefix: '/_/applications',
         publicPath: path.join(__dirname, 'public'),
         port: 3002,
-        dolittleRuntimePort: 50055,
+        dolittleRuntimePort: 50057,
         graphQLSchema: schema,
         defaultDatabaseName: 'applications',
         expressCallback: _ => {

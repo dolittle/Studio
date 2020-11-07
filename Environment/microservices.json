@@ -3,6 +3,10 @@
         "host": "runtime-portal",
         "port": "50052"
     },
+    "c2e34414-5054-4050-8ee4-eb6f3265cce3": {
+        "host": "runtime-k8s-mock",
+        "port": "50052"
+    },
     "05a823dd-0f0d-4157-bc46-14834cca3cd2": {
         "host": "runtime-applications",
         "port": "50052"

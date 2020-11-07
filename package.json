@@ -2,6 +2,7 @@
     "private": true,
     "workspaces": [
         "Source/DevTool",
+        "Source/K8sMock",
         "Source/Applications/Backend",
         "Source/Applications/Web",
         "Source/Events/Backend",
@@ -34,6 +35,7 @@
         "apollo-client": "2.6.8",
         "apollo-link-http": "1.5.17",
         "apollo-server-express": "2.16.1",
+        "morgan": "^1.10.0",
         "compression": "^1.7.4",
         "tsyringe": "4.3.0",
         "react": "16.13.1",
@@ -49,6 +51,7 @@
         "@types/react": "16.9.53",
         "@types/react-dom": "16.9.8",
         "@types/react-router-dom": "5.1.6",
+        "@types/morgan": "^1.9.2",
         "@dolittle/typescript.build": "rc",
         "nodemon": "2.0.4",
         "ts-node": "9.0.0",
