@@ -5,6 +5,6 @@ import { Application } from './Application';
 import { ApplicationCreationResult } from './ApplicationCreationResult';
 
 export abstract class IApplications {
-    abstract create(application: Application): ApplicationCreationResult;
+    abstract create(application: Application): Promise<ApplicationCreationResult>;
 }
 

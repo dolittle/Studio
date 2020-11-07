@@ -8,8 +8,9 @@ import { IApplications } from './IApplications';
 
 @injectable()
 export class Applications implements IApplications {
-    create(application: Application): ApplicationCreationResult {
+    async create(application: Application): Promise<ApplicationCreationResult> {
         console.log('Go Create');
+        const result = await fetch('/api/k8s/ping');
         return new ApplicationCreationResult();
     }
 }
