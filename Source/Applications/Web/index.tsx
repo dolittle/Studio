@@ -9,13 +9,17 @@ import { container } from 'tsyringe';
 
 import { Bindings as PortalBindings, Navigation, ToolbarItems, ToolbarItem } from '@shared/portal';
 import { Bindings as MVVMBindings } from '@shared/mvvm';
+import { Bindings as PlatformBindings } from '@shared/platform';
 
 import '@shared/styles/theme';
 import './index.scss';
 
+import { Something } from './Something';
+
 export default function App() {
     MVVMBindings.initialize();
     PortalBindings.initialize();
+    PlatformBindings.initialize();
 
     const navigation = container.resolve(Navigation);
 
@@ -43,6 +47,8 @@ export default function App() {
 
     return (
         <>
+        Hello from applications
+            <Something />
         </>
     );
 }
