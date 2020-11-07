@@ -6,12 +6,16 @@
         "**/.svn": true,
         "**/.DS_Store": true
     },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
     "cSpell.words": [
         "Deduplication",
         "MUUID",
         "dependencyinversion",
         "mvvm",
         "tsoa",
+        "tsyringe",
         "upsert"
     ]
 }
