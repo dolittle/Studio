@@ -14,9 +14,9 @@ class ViewModel {
 
     }
 
-    create() {
-        this._applications.create(new Application());
-
+    async create() {
+        const result = await this._applications.create(new Application());
+        console.log(`Result : ${result.message}`);
     }
 }
 
