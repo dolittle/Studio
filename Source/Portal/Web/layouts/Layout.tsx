@@ -38,24 +38,26 @@ export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
                 <Toolbar />
             </div>
 
-            <div className={'main-content ' + (viewModel.hasToolbarItems ? 'with-toolbar' : '')}>
-                <div className="content-scrollable">
-                    <div className="content">
-                        <div className="spinner">
-                            <Spinner styles={{ root: { display: loadingSpinner ? undefined! : 'none' } }} size={SpinnerSize.large} label="Loading Content" />
-                        </div>
+            <div className={'application ' + (viewModel.hasToolbarItems ? 'with-toolbar' : '')}>
+                <div className="main">
+                    <div className="content-scrollable">
+                        <div className="content">
+                            <div className="spinner">
+                                <Spinner styles={{ root: { display: loadingSpinner ? undefined! : 'none' } }} size={SpinnerSize.large} label="Loading Content" />
+                            </div>
 
-                        <Switch>
-                            <Route exact path="/">
-                                <h2>Welcome to Dolittle Studio</h2>
-                            </Route>
-                            <Route path="/applications">
-                                <ContentFrame src="/_/applications" load={contentLoading} loaded={contentLoaded} />
-                            </Route>
-                            <Route path="/events">
-                                <ContentFrame src="/_/events" load={contentLoading} loaded={contentLoaded} />
-                            </Route>
-                        </Switch>
+                            <Switch>
+                                <Route exact path="/">
+                                    <h2>Welcome to Dolittle Studio</h2>
+                                </Route>
+                                <Route path="/applications">
+                                    <ContentFrame src="/_/applications" load={contentLoading} loaded={contentLoaded} />
+                                </Route>
+                                <Route path="/events">
+                                    <ContentFrame src="/_/events" load={contentLoading} loaded={contentLoaded} />
+                                </Route>
+                            </Switch>
+                        </div>
                     </div>
                 </div>
             </div>
