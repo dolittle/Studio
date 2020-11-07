@@ -31,6 +31,7 @@ COPY package.json ./
 COPY Source/Shared/Components/package.json ./Source/Shared/Components/package.json
 COPY Source/Shared/DependencyInversion/package.json ./Source/Shared/DependencyInversion/package.json
 COPY Source/Shared/MVVM/package.json ./Source/Shared/MVVM/package.json
+COPY Source/Shared/Platform/package.json ./Source/Shared/Platform/package.json
 COPY Source/Shared/Portal/package.json ./Source/Shared/Portal/package.json
 COPY Source/Shared/Styles/package.json ./Source/Shared/Styles/package.json
 COPY Source/Shared/WebPack/package.json ./Source/Shared/WebPack/package.json
@@ -43,6 +44,7 @@ COPY Source/Applications/version.json /app/Source/Applications
 COPY Source/Shared/Components /app/Source/Shared/Components/
 COPY Source/Shared/DependencyInversion /app/Source/Shared/DependencyInversion/
 COPY Source/Shared/MVVM /app/Source/Shared/MVVM/
+COPY Source/Shared/Platform /app/Source/Shared/Platform/
 COPY Source/Shared/Portal /app/Source/Shared/Portal/
 COPY Source/Shared/Styles /app/Source/Shared/Styles/
 COPY Source/Shared/WebPack /app/Source/Shared/WebPack/

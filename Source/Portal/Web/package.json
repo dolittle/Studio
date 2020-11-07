@@ -16,6 +16,7 @@
         "@shared/components": "1.0.0",
         "@shared/mvvm": "1.0.0",
         "@shared/styles": "1.0.0",
+        "@shared/platform": "1.0.0",
         "@shared/portal": "1.0.0",
         "@shared/webpack": "1.0.0"
     }

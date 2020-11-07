@@ -1,5 +1,5 @@
 {
-    "name": "@shared/styles",
+    "name": "@shared/platform",
     "version": "1.0.0",
     "description": "",
     "main": "index.ts",
