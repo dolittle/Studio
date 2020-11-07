@@ -16,6 +16,8 @@ import { configureLogging } from '@shared/backend/logging/Logging';
 import { Configuration } from './Configuration';
 import * as DependencyInversion from '@shared/dependencyinversion';
 
+import './projections';
+
 export async function startBackend(configuration: Configuration) {
     const envPath = path.resolve(process.cwd(), '.env');
     dotenv.config({ path: envPath });
