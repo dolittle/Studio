@@ -13,7 +13,7 @@
     "scripts": {
         "prebuild": "yarn clean",
         "postbuild": "yarn lint",
-        "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec\"",
+        "dev": "concurrently -m 1 --kill-others \"nodemon -x tsoa spec-and-routes\" \"nodemon\"",
         "debug": "nodemon --inspect=5858 -e ts --exec node -r ts-node/register index.ts",
         "start": "ts-node index.ts",
         "build": "tsc -b && tspath -f",
@@ -26,6 +26,7 @@
     "nodemonConfig": {
         "restartable": "rs",
         "ignore": [
+            "**/routes.ts",
             "Distribution",
             "*.d.ts"
         ],

@@ -6,11 +6,15 @@ import { startBackend } from '@shared/backend';
 import swaggerUi from 'swagger-ui-express';
 
 import { getSchema } from './schema';
-
-import Router from './routes';
+import { RegisterRoutes } from './routes';
+import { RegisterEventTypes } from './applications/EventTypes';
+import { EventContext, PartitionId } from '@dolittle/sdk.events';
+import { PartitionedFilterResult } from '@dolittle/sdk.events.filtering';
 
 (async () => {
     const schema = await getSchema();
+
+    const swagger = await import('./public/swagger.json');
 
     await startBackend({
         microserviceId: 'c2e34414-5054-4050-8ee4-eb6f3265cce3',
@@ -24,15 +28,22 @@ import Router from './routes';
             _.use(
                 '/api/k8s/swagger',
                 swaggerUi.serve,
-                swaggerUi.setup(undefined, {
-                    swaggerOptions: {
-                        url: '/api/k8s/swagger.json',
-                    },
-                })
+                swaggerUi.setup(swagger)
             );
-            _.use(Router);
+
+            RegisterRoutes(_);
         },
         dolittleCallback: _ => {
+            RegisterEventTypes(_);
+
+            _.withFilters(filterBuilder =>
+                filterBuilder
+                    .createPublicFilter('2c087657-b318-40b1-ae92-a400de44e507', fb =>
+                        fb.handle((event: any, context: EventContext) => {
+                            return new PartitionedFilterResult(true, PartitionId.unspecified);
+                        })
+                    )
+            );
         }
     });
 })();

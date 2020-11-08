@@ -6,6 +6,7 @@ import { ApolloServer } from 'apollo-server-express';
 import compression from 'compression';
 import { GraphQLSchema } from 'graphql';
 import morgan from 'morgan';
+import bodyParser from 'body-parser';
 
 export let app: Express;
 export type ExpressConfigCallback = (app: Express) => void;
@@ -13,7 +14,12 @@ export type ExpressConfigCallback = (app: Express) => void;
 export async function initialize(prefix: string, publicPath: string, port: number, schema: GraphQLSchema, configCallback?: ExpressConfigCallback) {
     app = express();
     app.use(compression());
-    app.use(express.json());
+    app.use(
+        bodyParser.urlencoded({
+            extended: true
+        })
+    );
+    app.use(bodyParser.json());
 
     const server = new ApolloServer({
         schema

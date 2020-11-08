@@ -3,11 +3,14 @@
 
 export * from './IEventStore';
 
-import { containerInstance } from '@shared/dependencyinversion';
+import { constructor, containerInstance } from '@shared/dependencyinversion';
 
 import { Client, ClientBuilder } from '@dolittle/sdk';
 import { logger } from '@shared/backend/logging/Logging';
 import { Logger } from 'winston';
+import { container } from 'tsyringe';
+import { IEventStore } from './IEventStore';
+import { IEventTypes } from './IEventTypes';
 
 export type DolittleClientBuilderCallback = (clientBuilder: ClientBuilder) => void;
 
@@ -25,5 +28,10 @@ export async function initialize(port: number, callback?: DolittleClientBuilderC
     if (callback) callback(clientBuilder);
 
     const client = clientBuilder.build();
+
+    const eventStore = client.eventStore.forTenant('508c1745-5f2a-4b4c-b7a5-2fbb1484346d');
+    container.registerInstance(IEventStore as constructor<IEventStore>, eventStore);
+    container.registerInstance(IEventTypes as constructor<IEventTypes>, client.eventTypes);
+
     return client;
 }

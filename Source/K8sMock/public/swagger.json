@@ -6,6 +6,32 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"ApplicationCreateResponse": {
+				"properties": {
+					"result": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"result",
+					"name"
+				],
+				"type": "object"
+			},
+			"ApplicationCreateRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object"
+			},
 			"PingResponse": {
 				"properties": {
 					"message": {
@@ -31,6 +57,35 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/api/k8s/applications": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApplicationCreateResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ApplicationCreateRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/api/k8s/ping": {
 			"get": {
 				"operationId": "GetMessage",
