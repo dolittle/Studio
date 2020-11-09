@@ -24,27 +24,6 @@ $content-color: darken($ms-color-white, 5%);
     width: calc(100% - 16rem);
     height: calc(100% - 9.5rem);
 
-    .toolbar {
-        left: 12rem;
-        top: $app-header-height + $top-level-menu-height;
-        position: absolute;
-        height: 2.7rem;
-        background-color: $toolbar-color;
-        z-index: 1000;
-        width: calc(100% - 12rem);
-        margin: 0;
-        padding: 0;
-    }
-
-    .with-toolbar {
-        margin-top: 4.7rem;
-        height: calc(100vh - (14.2em));
-    }
-
-    .content-scrollable {
-        height: calc(100vh - (12.3rem));
-        overflow: scroll;
-    }
 
     .main {
         margin: 0;
@@ -75,6 +54,28 @@ $content-color: darken($ms-color-white, 5%);
             }
         }
     }
+}
+
+.toolbar {
+    left: 12rem;
+    top: $app-header-height + $top-level-menu-height;
+    position: absolute;
+    height: 2.7rem;
+    background-color: $toolbar-color;
+    z-index: 1000;
+    width: calc(100% - 12rem);
+    margin: 0;
+    padding: 0;
+}
+
+.with-toolbar {
+    margin-top: 4.7rem;
+    height: calc(100vh - (14.2em));
+}
+
+.content-scrollable {
+    height: calc(100vh - (12.3rem));
+    overflow: scroll;
 }
 
 .navigation {
