@@ -13,8 +13,8 @@ export const Toolbar = withViewModel(ToolbarViewModel, ({ viewModel }) => {
             text: _.text,
             iconProps: {
                 iconName: _.icon
-            }
-
+            },
+            onClick: (ev, item) => viewModel.itemClicked(item?.key || '')
         } as ICommandBarItemProps;
     });
 

@@ -5,3 +5,4 @@ export * from './ToolbarItem';
 export * from './ToolbarItemForMessage';
 export * from './ToolbarItems';
 export * from './ToolbarItemForMessage';
+export * from './ToolbarItemWasClicked';

@@ -12,4 +12,8 @@ export class ToolbarViewModel {
     constructor(private readonly _toolbarItems: ToolbarItems) {
         _toolbarItems.items.subscribe(_ => this.items = _);
     }
+
+    itemClicked(id: string) {
+        this._toolbarItems.itemClicked(id);
+    }
 }

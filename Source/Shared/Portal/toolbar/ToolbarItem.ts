@@ -10,7 +10,7 @@ export class ToolbarItem {
     readonly enabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     readonly id: string;
 
-    constructor(readonly text: string, readonly icon?: string, readonly click?: ToolbarItemClicked, id?: string) {
+    constructor(readonly text: string, readonly icon?: string, readonly onClick?: ToolbarItemClicked, id?: string) {
         this.id = id || Guid.create().toString();
     }
 }

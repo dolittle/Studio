@@ -2,8 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { ReplaySubject } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ToolbarItem } from '@shared/portal/toolbar';
+import { map } from 'rxjs/operators';
+import { ToolbarItem, ToolbarItemWasClicked } from '@shared/portal/toolbar';
 import { IMessenger } from '@shared/mvvm';
 import { injectable, singleton } from 'tsyringe';
 import { ToolbarItemsChanged } from '@shared/portal/toolbar/ToolbarItemsChanged';
@@ -15,11 +15,15 @@ export class ToolbarItems {
 
     constructor(private readonly _messenger: IMessenger) {
         _messenger.observe(ToolbarItemsChanged).pipe(
-            map(_ => _.items.map(i => new ToolbarItem(i.text, i.icon, () => {}, i.id))
+            map(_ => _.items.map(i => new ToolbarItem(i.text, i.icon, () => { }, i.id))
         )).subscribe(_ => this.items.next(_));
     }
 
     reset() {
         this.items.next([]);
+    }
+
+    itemClicked(id: string) {
+        this._messenger.publish(new ToolbarItemWasClicked(id));
     }
 }

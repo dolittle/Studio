@@ -14,7 +14,7 @@ import { Bindings as PlatformBindings } from '@shared/platform';
 import '@shared/styles/theme';
 import './index.scss';
 
-import { Something } from './Something';
+import { Sample } from './Sample';
 
 export default function App() {
     MVVMBindings.initialize();
@@ -40,14 +40,9 @@ export default function App() {
         }
     ]);
 
-    const toolbarItems = container.resolve(ToolbarItems);
-    toolbarItems.setItems([
-        new ToolbarItem('Add application', 'Add')
-    ]);
-
     return (
         <>
-            <Something />
+            <Sample />
         </>
     );
 }
