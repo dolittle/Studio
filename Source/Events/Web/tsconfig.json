@@ -2,12 +2,30 @@
     "extends": "../../../tsconfig.json",
     "compilerOptions": {
         "outDir": "./wwwroot",
-        "rootDir": "../../",
-        "baseUrl": "./",
-        "sourceRoot": "./"
+        "rootDir": "./"
     },
-    "include": ["**/*.ts", "**/*.tsx", "../../Shared/**/*.ts", "../../Shared/**/*.tsx"],
-    "exclude": ["node_modules", "Distribution", "../../Shared/Backend"],
     "references": [
+        {
+            "path": "../../Shared/Components"
+        },
+        {
+            "path": "../../Shared/DependencyInversion"
+        },
+        {
+            "path": "../../Shared/MVVM"
+        },
+        {
+            "path": "../../Shared/Platform"
+        },
+        {
+            "path": "../../Shared/Portal"
+        },
+        {
+            "path": "../../Shared/Styles"
+        },
+        {
+            "path": "../../Shared/Web"
+        }
+
     ]
 }

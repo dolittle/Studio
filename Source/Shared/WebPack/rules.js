@@ -5,7 +5,11 @@ module.exports = [
     {
         test: /\.[tj]s[x]*$/i,
         exclude: /(node_modules)/,
-        loader: 'ts-loader'
+        loader: 'ts-loader',
+        options: {
+            projectReferences: true,
+            allowTsInNodeModules: true
+        }
     },
     {
         test: /\.s[ac]ss$/i,

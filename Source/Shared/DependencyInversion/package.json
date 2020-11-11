@@ -6,6 +6,7 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
+        "tsyringe": "4.3.0"
     },
     "devDependencies": {
     }
