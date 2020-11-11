@@ -9,7 +9,7 @@
         "dev": "concurrently -m 1 --kill-others \"nodemon -x tsoa spec-and-routes\" \"nodemon\"",
         "debug": "nodemon --inspect=5858 -e ts --exec node -r ts-node/register index.ts",
         "start": "ts-node index.ts",
-        "build": "tsc -b && tspath -f"
+        "build": "tsc -b --clean && tsc -b"
     },
     "nodemonConfig": {
         "restartable": "rs",
