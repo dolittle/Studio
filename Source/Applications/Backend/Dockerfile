@@ -52,7 +52,7 @@ COPY Source/Applications/Web ./
 RUN yarn build
 
 # Resulting Image
-FROM node:14.2.0 as base
+FROM node:14.2.0-slim as base
 ARG CONFIGURATION=Release
 
 RUN echo Configuration = $CONFIGURATION

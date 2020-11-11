@@ -1,38 +1,45 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@shared/*": ["Shared/*"],
+        },
+
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "composite": true,
+        "strict": true,
+        "allowJs": false,
+        "checkJs": false,
         "module": "CommonJS",
+        "noEmit": false,
+        "pretty": true,
+        "noImplicitAny": false,
+        "skipLibCheck": true,
         "target": "ES2015",
+        "moduleResolution": "node",
         "jsx": "react",
+        "esModuleInterop": true,
+        "strictNullChecks": true,
+        "resolveJsonModule": true,
+
         "downlevelIteration": true,
-        "inlineSourceMap": true,
-        "sourceMap": false,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "stripInternal": true,
-
-        "pretty": true,
-        "moduleResolution": "node",
-    
-        "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        
-        "declaration": true,
-        "declarationMap": true,
-        "composite": true,
-        "incremental": true,
         "watch": true,
-        "noEmitOnError": true,
-    
         "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true,
         "assumeChangesOnlyAffectDirectDependencies": true,
-    
-        "resolveJsonModule": true,
-        "strict": true,
         "alwaysStrict": true,
         "preserveConstEnums": true,
-        "newLine": "lf",
-    }
+        "newLine": "lf"
+     },
+
+     "exclude": [
+         "dist"
+     ]
 }

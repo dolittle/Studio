@@ -1,26 +1,17 @@
 {
     "extends": "../../../tsconfig.json",
     "compilerOptions": {
-        "outDir": "Distribution",
+        "outDir": "dist",
         "moduleResolution": "node",
         "allowJs": false,
-        "rootDir": "../../",
-        "baseUrl": "./",
-        "sourceRoot": "./",
-        "paths": {
-            "@shared/backend/*": ["Shared/Backend/*"],
-            "@shared/dependencyinversion/*": ["Shared/DependencyInversion/*"]
-        }
+        "rootDir": "./",
     },
-    "include": [
-        "**/*.ts",
-        "**/*.tsx",
-        "../../Shared/**/*.ts",
-        "../../Shared/**/*.tsx"
-    ],
-    "exclude": [
-        "node_modules",
-        "Distribution"
-    ],
-    "references": []
+    "references": [
+        {
+            "path": "../../Shared/Backend"
+        },
+        {
+            "path": "../../Shared/DependencyInversion"
+        }
+    ]
 }
