@@ -1,13 +1,13 @@
 version: '3.1'
 services:
-  mongo:
+  studio-mongo:
     image: dolittle/mongodb:4.2.2
     ports:
       - 27017:27017
     logging:
       driver: none
   
-  ingress:
+  studio-ingress:
     image: nginx:1.18.0
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
@@ -17,7 +17,7 @@ services:
     logging:
       driver: none
 
-  runtime-portal:
+  studio-runtime-portal:
     image: dolittle/runtime:5.1.4
     volumes:
       - ./Portal/resources.json:/app/.dolittle/resources.json
@@ -29,7 +29,7 @@ services:
       - 50052:50052
       - 50053:50053
 
-  runtime-k8s-mock:
+  studio-runtime-k8s-mock:
     image: dolittle/runtime:5.1.4
     volumes:
       - ./K8sMock/resources.json:/app/.dolittle/resources.json
@@ -41,7 +41,7 @@ services:
       - 50054:50052
       - 50055:50053
 
-  runtime-applications:
+  studio-runtime-applications:
     image: dolittle/runtime:5.1.4
     volumes:
       - ./Applications/resources.json:/app/.dolittle/resources.json
@@ -53,7 +53,7 @@ services:
       - 50056:50052
       - 50057:50053
 
-  runtime-events:
+  studio-runtime-events:
     image: dolittle/runtime:5.1.4
     volumes:
       - ./Events/resources.json:/app/.dolittle/resources.json
