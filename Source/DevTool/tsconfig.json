@@ -2,12 +2,30 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "outDir": "./build",
-        "rootDir": "../",
-        "baseUrl": "./",
-        "sourceRoot": "./"
+        "rootDir": "./",
     },
-    "include": ["**/*.ts", "**/*.tsx", "../Shared/**/*.ts", "../Shared/**/*.tsx"],
-    "exclude": ["node_modules", "build"],
     "references": [
+        {
+            "path": "../Shared/Components"
+        },
+        {
+            "path": "../Shared/DependencyInversion"
+        },
+        {
+            "path": "../Shared/MVVM"
+        },
+        {
+            "path": "../Shared/Platform"
+        },
+        {
+            "path": "../Shared/Portal"
+        },
+        {
+            "path": "../Shared/Styles"
+        },
+        {
+            "path": "../Shared/Web"
+        }
+
     ]
 }
