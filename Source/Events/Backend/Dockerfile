@@ -34,6 +34,7 @@ COPY Source/Shared/MVVM/package.json ./Source/Shared/MVVM/package.json
 COPY Source/Shared/Platform/package.json ./Source/Shared/Platform/package.json
 COPY Source/Shared/Portal/package.json ./Source/Shared/Portal/package.json
 COPY Source/Shared/Styles/package.json ./Source/Shared/Styles/package.json
+COPY Source/Shared/Web/package.json ./Source/Shared/Web/package.json
 COPY Source/Shared/WebPack/package.json ./Source/Shared/WebPack/package.json
 COPY Source/Events/Web/package.json ./Source/Events/Web/package.json
 
@@ -47,18 +48,19 @@ COPY Source/Shared/MVVM /app/Source/Shared/MVVM/
 COPY Source/Shared/Platform /app/Source/Shared/Platform/
 COPY Source/Shared/Portal /app/Source/Shared/Portal/
 COPY Source/Shared/Styles /app/Source/Shared/Styles/
+COPY Source/Shared/Web /app/Source/Shared/Web/
 COPY Source/Shared/WebPack /app/Source/Shared/WebPack/
 COPY Source/Events/Web ./
 RUN yarn build
 
 # Resulting Image
-FROM node:14.2.0 as base
+FROM node:14.2.0-slim as base
 ARG CONFIGURATION=Release
 
 RUN echo Configuration = $CONFIGURATION
 
 WORKDIR /app
-COPY --from=backend-build /app/Source/Events/Backend/Distribution ./
+COPY --from=backend-build /app/Source/Events/Backend/dist ./
 COPY --from=backend-build /app/node_modules ./node_modules
 COPY --from=web-build /app/Source/Events/Web/wwwroot ./Events/Backend/public
 
