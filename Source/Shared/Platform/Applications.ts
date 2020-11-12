@@ -10,7 +10,7 @@ import { IApplications } from './IApplications';
 export class Applications implements IApplications {
     async create(application: Application): Promise<ApplicationCreationResult> {
         console.log('Go Create');
-        const result = await fetch('/api/k8s/ping');
+        const result = await fetch('/api/k8s/applications');
         const jsonResult = await result.json();
         return { message: jsonResult.message };
     }
