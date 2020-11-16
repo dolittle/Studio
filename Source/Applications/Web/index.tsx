@@ -3,26 +3,33 @@
 
 import 'reflect-metadata';
 
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { container } from 'tsyringe';
 
 import { Bindings as PortalBindings, Navigation, ToolbarItems, ToolbarItem } from '@shared/portal';
 import { Bindings as MVVMBindings } from '@shared/mvvm';
 import { Bindings as PlatformBindings } from '@shared/platform';
+import { Dialog, PrimaryButton, DefaultButton, DialogFooter, TextField } from 'office-ui-fabric-react';
 
 import '@shared/styles/theme';
 import './index.scss';
 
-import { Sample } from './Sample';
 import { Overview } from './Overview';
 
 export default function App() {
+
+    const [
+        showCreateApplicationDialog,
+        setShowCreateApplicationDialog,
+    ] = useState(false);
+
     MVVMBindings.initialize();
     PortalBindings.initialize();
     PlatformBindings.initialize();
 
     const navigation = container.resolve(Navigation);
+    const toolbar = container.resolve(ToolbarItems);
 
     navigation.set([
         {
@@ -41,10 +48,26 @@ export default function App() {
         }
     ]);
 
+    toolbar.setItems([
+        new ToolbarItem('Create application', 'Add', () => setShowCreateApplicationDialog(true))
+    ]);
+
     return (
         <>
+            <Dialog
+                hidden={!showCreateApplicationDialog}
+                title="Create Application"
+                modalProps={{topOffsetFixed: true}}
+            >
+                <TextField label="Name" placeholder="Enter application name"></TextField>
+                <DialogFooter>
+                    <PrimaryButton onClick={() => setShowCreateApplicationDialog(false)} text='Create'/>
+                    <DefaultButton onClick={() => setShowCreateApplicationDialog(false)}>
+                        Cancel
+                    </DefaultButton>
+                </DialogFooter>
+            </Dialog>
             <Overview/>
-            {/* <Sample /> */}
         </>
     );
 }
