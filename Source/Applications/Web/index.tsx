@@ -15,6 +15,7 @@ import '@shared/styles/theme';
 import './index.scss';
 
 import { Sample } from './Sample';
+import { Overview } from './Overview';
 
 export default function App() {
     MVVMBindings.initialize();
@@ -42,7 +43,8 @@ export default function App() {
 
     return (
         <>
-            <Sample />
+            <Overview/>
+            {/* <Sample /> */}
         </>
     );
 }
