@@ -9,7 +9,7 @@ import { container } from 'tsyringe';
 
 import { Bindings as PortalBindings, Navigation, ToolbarItems, ToolbarItem } from '@shared/portal';
 import { Bindings as MVVMBindings } from '@shared/mvvm';
-import { Bindings as PlatformBindings } from '@shared/platform';
+import { Applications, Bindings as PlatformBindings } from '@shared/platform';
 import { Dialog, PrimaryButton, DefaultButton, DialogFooter, TextField } from 'office-ui-fabric-react';
 
 import '@shared/styles/theme';
@@ -24,12 +24,15 @@ export default function App() {
         setShowCreateApplicationDialog,
     ] = useState(false);
 
+    const [applicationName, setApplication] = useState('');
+
     MVVMBindings.initialize();
     PortalBindings.initialize();
     PlatformBindings.initialize();
 
     const navigation = container.resolve(Navigation);
     const toolbar = container.resolve(ToolbarItems);
+    const applications = container.resolve(Applications);
 
     navigation.set([
         {
@@ -59,9 +62,15 @@ export default function App() {
                 title="Create Application"
                 modalProps={{topOffsetFixed: true}}
             >
-                <TextField label="Name" placeholder="Enter application name"></TextField>
+                <TextField label="Name" placeholder="Enter application name" value={applicationName} onChange={(event, newValue)=> setApplication(newValue || '')}></TextField>
                 <DialogFooter>
-                    <PrimaryButton onClick={() => setShowCreateApplicationDialog(false)} text='Create'/>
+                    <PrimaryButton
+                        onClick={() => {
+                            applications.create({name: applicationName});
+                            setShowCreateApplicationDialog(false);
+                            setApplication('');
+                        }}
+                        text='Create'/>
                     <DefaultButton onClick={() => setShowCreateApplicationDialog(false)}>
                         Cancel
                     </DefaultButton>
