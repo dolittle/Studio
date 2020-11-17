@@ -1,35 +1,17 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { buildSchema, Field, ObjectType, Query, Resolver, ResolverData } from 'type-graphql';
+import { buildSchema, ResolverData } from 'type-graphql';
 import { GraphQLSchema } from 'graphql';
 
-import { guid, GuidScalar } from '@shared/backend/data';
+import { GuidScalar } from '@shared/backend/data';
 import { Guid } from '@dolittle/rudiments';
-import { modelOptions, Severity } from '@typegoose/typegoose';
 import { container } from 'tsyringe';
-
-@ObjectType()
-@modelOptions({ options: { allowMixed: Severity.ALLOW } })
-class Nothing {
-    @Field({ name: 'id' })
-    @guid()
-    _id?: Guid;
-}
-
-
-@Resolver(Nothing)
-class NoQueries {
-    @Query(returns => [Nothing])
-    async noresults() {
-        return [];
-    }
-}
-
+import { ApplicationQueries } from './applications';
 
 export async function getSchema(): Promise<GraphQLSchema> {
     const schema = await buildSchema({
-        resolvers: [NoQueries],
+        resolvers: [ApplicationQueries],
         container: {
             get(someClass: any, resolverData: ResolverData<any>): any | Promise<any> {
                 return container.resolve(someClass);
