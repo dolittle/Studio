@@ -6,7 +6,7 @@
     "private": true,
     "license": "UNLICENSED",
     "scripts": {
-        "dev": "concurrently -m 1 --kill-others \"nodemon -x tsoa spec-and-routes\" \"nodemon\"",
+        "dev": "concurrently \"nodemon -x tsoa spec-and-routes\" \"nodemon index.ts\"",
         "debug": "nodemon --inspect=5858 -e ts --exec node -r ts-node/register index.ts",
         "start": "ts-node index.ts",
         "build": "tsc -b --clean && tsc -b"
@@ -18,14 +18,15 @@
             "Distribution",
             "*.d.ts"
         ],
-        "events": {},
+        "execMap": {
+            "ts": "ts-node"
+        },
         "watch": [
             "./",
             "../Shared/Backend",
             "../Shared/DependencyInversion"
         ],
-        "ext": "ts",
-        "exec": "ts-node ./index.ts"
+        "ext": "ts"
     },
     "dependencies": {
         "swagger-ui-express": "^4.1.4",

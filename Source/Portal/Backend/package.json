@@ -6,7 +6,7 @@
     "private": "true",
     "license": "UNLICENSED",
     "scripts": {
-        "dev": "concurrently -m 1 --kill-others \"nodemon ./index.ts\"",
+        "dev": "concurrently \"nodemon ./index.ts\"",
         "debug": "nodemon --inspect=5858 -e ts --exec node -r ts-node/register index.ts",
         "start": "ts-node index.ts",
         "build": "tsc -b --clean && tsc -b"
