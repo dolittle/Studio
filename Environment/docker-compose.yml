@@ -33,6 +33,7 @@ services:
     image: dolittle/runtime:5.1.4
     volumes:
       - ./K8sMock/resources.json:/app/.dolittle/resources.json
+      - ./K8sMock/event-horizon-consents.json:/app/.dolittle/event-horizon-consents.json
       - ./tenants.json:/app/.dolittle/tenants.json
       - ./microservices.json:/app/.dolittle/microservices.json
       - ./appsettings.json:/app/appsettings.json
