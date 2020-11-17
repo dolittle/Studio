@@ -4,6 +4,10 @@
         "outDir": "./wwwroot",
         "rootDir": "./"
     },
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
+    ],
     "references": [
         {
             "path": "../../Shared/Components"
