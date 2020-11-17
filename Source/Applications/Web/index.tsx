@@ -58,7 +58,7 @@ export default function App() {
                 visible={showCreateApplicationDialog}
                 onCreated={() => setShowCreateApplicationDialog(false)}
                 onCancelled={() => setShowCreateApplicationDialog(false)}
-            ></CreateApplication>
+            />
             <Overview />
         </>
     );
