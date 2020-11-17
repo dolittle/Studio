@@ -27,6 +27,9 @@ export class ProjectionBuilder<TDocument extends object> {
         return this;
     }
 
+    // todo: something to access properties on metadata (and all other props in the event store)
+    // https://app.asana.com/0/1190518762954630/1199206453501045
+
     fromScope(id: Guid | string): ProjectionBuilder<TDocument> {
         this._fromScope = Guid.as(id);
 
