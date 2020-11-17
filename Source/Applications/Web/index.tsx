@@ -7,10 +7,21 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { container } from 'tsyringe';
 
-import { Bindings as PortalBindings, Navigation, ToolbarItems, ToolbarItem } from '@shared/portal';
+import {
+    Bindings as PortalBindings,
+    Navigation,
+    ToolbarItems,
+    ToolbarItem,
+} from '@shared/portal';
 import { Bindings as MVVMBindings } from '@shared/mvvm';
 import { Applications, Bindings as PlatformBindings } from '@shared/platform';
-import { Dialog, PrimaryButton, DefaultButton, DialogFooter, TextField } from 'office-ui-fabric-react';
+import {
+    Dialog,
+    PrimaryButton,
+    DefaultButton,
+    DialogFooter,
+    TextField,
+} from 'office-ui-fabric-react';
 
 import '@shared/styles/theme';
 import './index.scss';
@@ -18,7 +29,6 @@ import './index.scss';
 import { Overview } from './Overview';
 
 export default function App() {
-
     const [
         showCreateApplicationDialog,
         setShowCreateApplicationDialog,
@@ -37,22 +47,29 @@ export default function App() {
     navigation.set([
         {
             name: 'Studio',
-            items: [{
-                name: 'Applications'
-            }, {
-                name: 'Events'
-            }]
+            items: [
+                {
+                    name: 'Applications',
+                },
+                {
+                    name: 'Events',
+                },
+            ],
         },
         {
             name: 'Lunch App',
-            items: [{
-                name: 'Default'
-            }]
-        }
+            items: [
+                {
+                    name: 'Default',
+                },
+            ],
+        },
     ]);
 
     toolbar.setItems([
-        new ToolbarItem('Create application', 'Add', () => setShowCreateApplicationDialog(true))
+        new ToolbarItem('Create application', 'Add', () =>
+            setShowCreateApplicationDialog(true)
+        ),
     ]);
 
     return (
@@ -60,28 +77,34 @@ export default function App() {
             <Dialog
                 hidden={!showCreateApplicationDialog}
                 title="Create Application"
-                modalProps={{topOffsetFixed: true}}
+                modalProps={{ topOffsetFixed: true }}
             >
-                <TextField label="Name" placeholder="Enter application name" value={applicationName} onChange={(event, newValue)=> setApplication(newValue || '')}></TextField>
+                <TextField
+                    label="Name"
+                    placeholder="Enter application name"
+                    value={applicationName}
+                    onChange={(event, newValue) =>
+                        setApplication(newValue || '')
+                    }
+                ></TextField>
                 <DialogFooter>
                     <PrimaryButton
                         onClick={() => {
-                            applications.create({name: applicationName});
+                            applications.create({ name: applicationName });
                             setShowCreateApplicationDialog(false);
                             setApplication('');
                         }}
-                        text='Create'/>
-                    <DefaultButton onClick={() => setShowCreateApplicationDialog(false)}>
-                        Cancel
-                    </DefaultButton>
+                        text="Create"
+                    />
+                    <DefaultButton
+                        onClick={() => setShowCreateApplicationDialog(false)}
+                        text="Cancel"
+                    />
                 </DialogFooter>
             </Dialog>
-            <Overview/>
+            <Overview />
         </>
     );
 }
 
-ReactDOM.render(
-    <App />,
-    document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById('root'));
