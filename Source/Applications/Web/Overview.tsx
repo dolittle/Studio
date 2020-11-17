@@ -5,13 +5,18 @@ import { withViewModel } from '@shared/mvvm';
 import { OverviewViewModel } from './OverviewViewModel';
 import { DetailsList, DetailsListLayoutMode, IDetailsListProps } from 'office-ui-fabric-react';
 
-
-export const Overview = withViewModel(OverviewViewModel, ({viewModel}) => {
-
+export const Overview = withViewModel(OverviewViewModel, ({ viewModel }) => {
     const _columns = [
         { key: 'id', name: 'Id', fieldName: 'id', minWidth: 100, maxWidth: 200, isResizable: true },
-        { key: 'name', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200, isResizable: true },
-      ];
+        {
+            key: 'name',
+            name: 'Name',
+            fieldName: 'name',
+            minWidth: 100,
+            maxWidth: 200,
+            isResizable: true,
+        },
+    ];
     const detailsListProps: IDetailsListProps = {
         items: viewModel.items,
         columns: _columns,
@@ -32,4 +37,3 @@ export const Overview = withViewModel(OverviewViewModel, ({viewModel}) => {
         </>
     );
 });
-

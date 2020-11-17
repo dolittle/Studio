@@ -7,12 +7,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { container } from 'tsyringe';
 
-import {
-    Bindings as PortalBindings,
-    Navigation,
-    ToolbarItems,
-    ToolbarItem,
-} from '@shared/portal';
+import { Bindings as PortalBindings, Navigation, ToolbarItems, ToolbarItem } from '@shared/portal';
 import { Bindings as MVVMBindings } from '@shared/mvvm';
 import { Applications, Bindings as PlatformBindings } from '@shared/platform';
 import {
@@ -25,14 +20,10 @@ import {
 
 import '@shared/styles/theme';
 import './index.scss';
-
 import { Overview } from './Overview';
 
 export default function App() {
-    const [
-        showCreateApplicationDialog,
-        setShowCreateApplicationDialog,
-    ] = useState(false);
+    const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
 
     const [applicationName, setApplication] = useState('');
 
@@ -67,25 +58,21 @@ export default function App() {
     ]);
 
     toolbar.setItems([
-        new ToolbarItem('Create application', 'Add', () =>
-            setShowCreateApplicationDialog(true)
-        ),
+        new ToolbarItem('Create application', 'Add', () => setShowCreateApplicationDialog(true)),
     ]);
 
     return (
         <>
             <Dialog
                 hidden={!showCreateApplicationDialog}
-                title="Create Application"
+                title='Create Application'
                 modalProps={{ topOffsetFixed: true }}
             >
                 <TextField
-                    label="Name"
-                    placeholder="Enter application name"
+                    label='Name'
+                    placeholder='Enter application name'
                     value={applicationName}
-                    onChange={(event, newValue) =>
-                        setApplication(newValue || '')
-                    }
+                    onChange={(event, newValue) => setApplication(newValue || '')}
                 ></TextField>
                 <DialogFooter>
                     <PrimaryButton
@@ -94,11 +81,11 @@ export default function App() {
                             setShowCreateApplicationDialog(false);
                             setApplication('');
                         }}
-                        text="Create"
+                        text='Create'
                     />
                     <DefaultButton
                         onClick={() => setShowCreateApplicationDialog(false)}
-                        text="Cancel"
+                        text='Cancel'
                     />
                 </DialogFooter>
             </Dialog>

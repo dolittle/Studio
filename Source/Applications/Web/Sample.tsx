@@ -4,12 +4,10 @@
 import { withViewModel } from '@shared/mvvm';
 import React from 'react';
 
-import { PrimaryButton } from 'office-ui-fabric-react';
+import { PrimaryButton } from 'office-ui-fabric-react';
 
-import { SampleViewModel } from './SampleViewModel';
+import { SampleViewModel } from './SampleViewModel';
 
 export const Sample = withViewModel(SampleViewModel, ({ viewModel }) => {
-    return (
-        <PrimaryButton onClick={viewModel.create}>Create app</PrimaryButton>
-    );
+    return <PrimaryButton onClick={viewModel.create}>Create app</PrimaryButton>;
 });
