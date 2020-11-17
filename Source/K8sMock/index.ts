@@ -38,9 +38,14 @@ import { PartitionedFilterResult } from '@dolittle/sdk.events.filtering';
 
             _.withFilters(filterBuilder =>
                 filterBuilder
-                    .createPublicFilter('b628cd98-9d0d-4dbc-b4dd-56e89d7aa272', fb =>
-                        fb.handle((event: any, context: EventContext) => {
-                            return new PartitionedFilterResult(true, PartitionId.unspecified);
+                    .createPublicFilter(
+                        'b628cd98-9d0d-4dbc-b4dd-56e89d7aa272',
+                        fb => fb.handle(
+                            (event: any, context: EventContext) => {
+                            return new PartitionedFilterResult(
+                                true,
+                                PartitionId.unspecified
+                            );
                         })
                     )
             );

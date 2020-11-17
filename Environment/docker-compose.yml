@@ -6,7 +6,7 @@ services:
       - 27017:27017
     logging:
       driver: none
-  
+
   studio-ingress:
     image: nginx:1.18.0
     volumes:

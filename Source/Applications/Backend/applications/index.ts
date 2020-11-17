@@ -9,12 +9,13 @@ import { ClientBuilder } from '@dolittle/sdk';
 import { Application, ApplicationModel } from './Application';
 import { ApplicationCreated } from './events';
 
-export function registerDolittle(clientBuilder: ClientBuilder) {
+export function projectFromEventsToReadModels(clientBuilder: ClientBuilder) {
     clientBuilder.withEventTypes(_ => {
         _.register(ApplicationCreated);
     });
 
-    clientBuilder.withProjectionFor(Application, _ => {
+    clientBuilder
+        .withProjectionFor(Application, _ => {
         _.withId('c25d1a88-fd4c-4b78-ac81-f90c3545fab9')
             .useModel(ApplicationModel)
             .fromScope('da92a933-a4c5-478d-a0c4-49aeef72f6d5');

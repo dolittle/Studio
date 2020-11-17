@@ -7,9 +7,12 @@ import { injectable } from 'tsyringe';
 
 @injectable()
 export class SampleViewModel {
-    constructor(private readonly _applications: IApplications, private readonly _toolbarItems: ToolbarItems) {
+    constructor(
+        private readonly _applications: IApplications,
+        private readonly _toolbarItems: ToolbarItems
+    ) {
         _toolbarItems.setItems([
-            new ToolbarItem('Create application', 'Add', () => alert('Lets create'))
+            new ToolbarItem('Create application', 'Add', () => alert('Lets create')),
         ]);
     }
 

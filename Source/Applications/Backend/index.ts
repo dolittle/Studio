@@ -9,7 +9,7 @@ import { PartitionId } from '@dolittle/sdk.events';
 import tenant from '@shared/backend/Tenant';
 import Microservices from '@shared/backend/Microservices';
 
-import { registerDolittle as applicationsRegisterDolittle } from './applications';
+import { projectFromEventsToReadModels } from './applications';
 
 (async () => {
     const schema = await getSchema();
@@ -25,7 +25,7 @@ import { registerDolittle as applicationsRegisterDolittle } from './applications
         expressCallback: _ => {
         },
         dolittleCallback: _ => {
-            applicationsRegisterDolittle(_);
+            projectFromEventsToReadModels(_);
 
             _.withEventHorizons(eh => {
                 eh.forTenant(tenant, ts => {
