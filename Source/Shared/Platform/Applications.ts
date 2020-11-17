@@ -16,6 +16,7 @@ export class Applications implements IApplications {
             headers:{'content-type': 'application/json'}
         });
         const jsonResult = await result.json();
+        console.log('Go go gadget go - created!');
         return { message: jsonResult.message };
     }
 }
