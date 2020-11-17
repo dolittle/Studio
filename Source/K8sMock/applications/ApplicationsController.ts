@@ -21,7 +21,9 @@ export class ApplicationsController extends Controller {
     async create(@Body() application: ApplicationCreateRequest): Promise<ApplicationCreateResponse> {
         this.setStatus(200);
 
-        const event = new ApplicationCreated(application.name);
+        const event = new ApplicationCreated(
+            Guid.create().toString(),
+            application.name);
         await this._eventStore.commitPublic(event, Guid.create());
 
         return {
