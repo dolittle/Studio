@@ -16,6 +16,7 @@
         "mvvm",
         "tsoa",
         "tsyringe",
+        "typegoose",
         "upsert"
     ]
 }
