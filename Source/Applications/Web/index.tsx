@@ -10,22 +10,14 @@ import { container } from 'tsyringe';
 import { Bindings as PortalBindings, Navigation, ToolbarItems, ToolbarItem } from '@shared/portal';
 import { Bindings as MVVMBindings } from '@shared/mvvm';
 import { Applications, Bindings as PlatformBindings } from '@shared/platform';
-import {
-    Dialog,
-    PrimaryButton,
-    DefaultButton,
-    DialogFooter,
-    TextField,
-} from 'office-ui-fabric-react';
 
 import '@shared/styles/theme';
 import './index.scss';
 import { Overview } from './Overview';
+import { CreateApplication } from './CreateApplication';
 
 export default function App() {
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
-
-    const [applicationName, setApplication] = useState('');
 
     MVVMBindings.initialize();
     PortalBindings.initialize();
@@ -33,7 +25,6 @@ export default function App() {
 
     const navigation = container.resolve(Navigation);
     const toolbar = container.resolve(ToolbarItems);
-    const applications = container.resolve(Applications);
 
     navigation.set([
         {
@@ -63,32 +54,11 @@ export default function App() {
 
     return (
         <>
-            <Dialog
-                hidden={!showCreateApplicationDialog}
-                title='Create Application'
-                modalProps={{ topOffsetFixed: true }}
-            >
-                <TextField
-                    label='Name'
-                    placeholder='Enter application name'
-                    value={applicationName}
-                    onChange={(event, newValue) => setApplication(newValue || '')}
-                ></TextField>
-                <DialogFooter>
-                    <PrimaryButton
-                        onClick={() => {
-                            applications.create({ name: applicationName });
-                            setShowCreateApplicationDialog(false);
-                            setApplication('');
-                        }}
-                        text='Create'
-                    />
-                    <DefaultButton
-                        onClick={() => setShowCreateApplicationDialog(false)}
-                        text='Cancel'
-                    />
-                </DialogFooter>
-            </Dialog>
+            <CreateApplication
+                visible={showCreateApplicationDialog}
+                onCreated={() => setShowCreateApplicationDialog(false)}
+                onCancelled={() => setShowCreateApplicationDialog(false)}
+            ></CreateApplication>
             <Overview />
         </>
     );
