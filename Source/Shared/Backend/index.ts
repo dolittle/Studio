@@ -26,7 +26,7 @@ export async function startBackend(configuration: Configuration) {
     DependencyInversion.initialize();
 
     await Mongoose.initialize(configuration.defaultDatabaseName);
-    await Dolittle.initialize(configuration.dolittleRuntimePort, configuration.dolittleCallback);
+    await Dolittle.initialize(configuration.microserviceId, configuration.dolittleRuntimePort, configuration.dolittleCallback);
     await Express.initialize(
         configuration.prefix,
         configuration.publicPath,

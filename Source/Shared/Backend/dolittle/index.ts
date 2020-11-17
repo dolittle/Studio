@@ -14,13 +14,13 @@ import { IEventTypes } from './IEventTypes';
 
 export type DolittleClientBuilderCallback = (clientBuilder: ClientBuilder) => void;
 
-export async function initialize(port: number, callback?: DolittleClientBuilderCallback): Promise<Client> {
+export async function initialize(microserviceId: string, port: number, callback?: DolittleClientBuilderCallback): Promise<Client> {
     let runtimePort = port;
     if (process.env.DOLITTLE_RUNTIME_PORT) {
         runtimePort = parseInt(process.env.DOLITTLE_RUNTIME_PORT);
     }
     const clientBuilder = Client
-        .forMicroservice('acfda18a-8ad7-42fe-b363-8c6c289cb0ff')
+        .forMicroservice(microserviceId)
         .withLogging(logger as Logger)
         .withContainer(containerInstance)
         .withRuntimeOn('localhost', runtimePort);
