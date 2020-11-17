@@ -14,8 +14,9 @@ export class Projection {
 
     constructor(readonly stream: Guid,
         private readonly _targetType: Constructor,
-        private readonly _reducers: IReducer<any>[]) {
-        this._databaseModel = getModelForClass(_targetType);
+        private readonly _reducers: IReducer<any>[],
+        databaseModel?: ModelType<any>) {
+        this._databaseModel = databaseModel || getModelForClass(_targetType);
     }
 
     async handle(event: any, context: EventContext) {
