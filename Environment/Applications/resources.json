@@ -4,7 +4,7 @@
             "servers": [
                 "studio-mongo"
             ],
-            "database": "event_store_k8smock"
+            "database": "event_store_applications"
         }
     }
 }
