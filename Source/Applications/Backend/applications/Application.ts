@@ -13,6 +13,10 @@ export class Application {
     _id?: Guid;
 
     @Field()
+    @guid()
+    applicationId?: Guid;
+
+    @Field()
     @prop()
     name!: string;
 }
