@@ -29,7 +29,9 @@ export class OverviewViewModel {
 
         observableQuery.startPolling(1000);
         observableQuery.subscribe((next) => {
-            this.items = next.data.allApplications;
+            if (next.data) {
+                this.items = next.data.allApplications;
+            }
         });
     }
 }
