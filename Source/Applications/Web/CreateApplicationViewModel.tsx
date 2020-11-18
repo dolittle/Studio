@@ -17,6 +17,7 @@ export class CreateApplicationViewModel {
     }
 
     async createApplication() {
+        //Validation?
         if (this.applicationName) {
             await this.applications.create({ name: this.applicationName });
             this._props?.onCreated();
