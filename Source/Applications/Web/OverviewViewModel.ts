@@ -19,7 +19,7 @@ export class OverviewViewModel {
         const query = gql`
             query {
                 allApplications {
-                    id
+                    applicationId
                     name
                 }
             }

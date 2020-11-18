@@ -13,8 +13,8 @@ export class Application {
     _id?: Guid;
 
     @Field()
-    @guid()
-    applicationId?: Guid;
+    @prop()
+    applicationId?: string;
 
     @Field()
     @prop()

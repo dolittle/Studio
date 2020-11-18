@@ -7,7 +7,14 @@ import { DetailsList, DetailsListLayoutMode, IDetailsListProps } from 'office-ui
 
 export const Overview = withViewModel(OverviewViewModel, ({ viewModel }) => {
     const _columns = [
-        { key: 'id', name: 'Id', fieldName: 'id', minWidth: 100, maxWidth: 200, isResizable: true },
+        {
+            key: 'id',
+            name: 'Id',
+            fieldName: 'applicationId',
+            minWidth: 100,
+            maxWidth: 200,
+            isResizable: true,
+        },
         {
             key: 'name',
             name: 'Name',
