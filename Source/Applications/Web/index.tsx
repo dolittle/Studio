@@ -15,10 +15,12 @@ import '@shared/styles/theme';
 import './index.scss';
 import { Overview } from './Overview';
 import { CreateApplication } from './CreateApplication';
+import { Bindings } from './Bindings';
 
 export default function App() {
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
 
+    Bindings.initialize();
     MVVMBindings.initialize();
     PortalBindings.initialize();
     PlatformBindings.initialize();
