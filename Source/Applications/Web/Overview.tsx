@@ -39,7 +39,7 @@ export const Overview = withViewModel(OverviewViewModel, ({ viewModel }) => {
 
     return (
         <>
-            <h1>Overview</h1>
+            <h1>Your Applications</h1>
             <DetailsList {...detailsListProps} />
         </>
     );
