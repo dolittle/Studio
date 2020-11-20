@@ -53,6 +53,9 @@ export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
                                 <Route path="/applications">
                                     <ContentFrame src="/_/applications" load={contentLoading} loaded={contentLoaded} />
                                 </Route>
+                                <Route path="/microservices">
+                                    <ContentFrame src="/_/microservices" load={contentLoading} loaded={contentLoaded} />
+                                </Route>
                                 <Route path="/events">
                                     <ContentFrame src="/_/events" load={contentLoading} loaded={contentLoaded} />
                                 </Route>

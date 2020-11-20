@@ -1,11 +1,18 @@
 {
     "508c1745-5f2a-4b4c-b7a5-2fbb1484346d": [
         {
+            "consent": "9da5fed4-450e-417c-bcb5-a9e36c710ebe",
             "microservice": "05a823dd-0f0d-4157-bc46-14834cca3cd2",
             "tenant": "508c1745-5f2a-4b4c-b7a5-2fbb1484346d",
             "stream": "b628cd98-9d0d-4dbc-b4dd-56e89d7aa272",
-            "partition": "00000000-0000-0000-0000-000000000000",
-            "consent": "9da5fed4-450e-417c-bcb5-a9e36c710ebe"
+            "partition": "00000000-0000-0000-0000-000000000000"
+        },
+        {
+            "consent": "BF2FFEDB-7390-45D7-B1B8-DA3EA8510826",
+            "microservice": "A9CF063D-415F-4F83-A528-2F0D6057F05D",
+            "tenant": "508c1745-5f2a-4b4c-b7a5-2fbb1484346d",
+            "stream": "b628cd98-9d0d-4dbc-b4dd-56e89d7aa272",
+            "partition": "00000000-0000-0000-0000-000000000000"
         }
     ]
 }

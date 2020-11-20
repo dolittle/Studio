@@ -15,7 +15,7 @@ import Microservices from '@shared/backend/Microservices';
     const schema = await getSchema();
 
     await startBackend({
-        microserviceId: '05a823dd-0f0d-4157-bc46-14834cca3cd2',
+        microserviceId: 'A9CF063D-415F-4F83-A528-2F0D6057F05D',
         prefix: '/_/microservices',
         publicPath: path.join(__dirname, 'public'),
         port: 3004,
