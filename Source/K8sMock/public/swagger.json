@@ -112,7 +112,7 @@
 				}
 			}
 		},
-		"/api/k8s/Microservices": {
+		"/api/k8s/microservices": {
 			"post": {
 				"operationId": "Create",
 				"responses": {

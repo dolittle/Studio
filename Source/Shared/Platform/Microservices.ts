@@ -3,8 +3,8 @@
 
 import { injectable } from 'tsyringe';
 import { Microservice } from './Microservice';
-import { IMicroservices } from './IMicroservices';
 import { MicroserviceCreationResult } from './MicroserviceCreationResult';
+import { IMicroservices } from './IMicroservices';
 
 @injectable()
 export class Microservices implements IMicroservices {

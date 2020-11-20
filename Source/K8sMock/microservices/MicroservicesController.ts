@@ -9,7 +9,7 @@ import { MicroserviceCreated } from './MicroserviceCreated';
 import { MicroserviceCreateRequest } from './MicroserviceCreateRequest';
 import { MicroserviceCreateResponse } from './MicroserviceCreateResponse';
 
-@Route('api/k8s/Microservices')
+@Route('api/k8s/microservices')
 @injectable()
 export class MicroservicesController extends Controller {
 

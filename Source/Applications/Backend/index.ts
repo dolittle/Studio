@@ -24,7 +24,7 @@ import { projectFromEventsToReadModels } from './applications';
         defaultDatabaseName: 'applications',
         expressCallback: _ => {
         },
-        dolittleCallback: _ => {
+            dolittleCallback: _ => {
             projectFromEventsToReadModels(_);
 
             _.withEventHorizons(eh => {

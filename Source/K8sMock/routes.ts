@@ -5,7 +5,7 @@ import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, H
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ApplicationsController } from './applications/ApplicationsController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { MicroservicesController } from './microservices/MicroserviceController';
+import { MicroservicesController } from './microservices/MicroservicesController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PingController } from './ping/PingController';
 import { iocContainer } from './ioc';
@@ -80,7 +80,7 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/api/k8s/Microservices',
+        app.post('/api/k8s/microservices',
             function (request: any, response: any, next: any) {
             const args = {
                     microservice: {"in":"body","name":"microservice","required":true,"ref":"MicroserviceCreateRequest"},
