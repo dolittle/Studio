@@ -7,7 +7,7 @@ import swaggerUi from 'swagger-ui-express';
 
 import { getSchema } from './schema';
 import { RegisterRoutes } from './routes';
-import { RegisterEventTypes } from './applications/EventTypes';
+import { RegisterEventTypes } from './RegisterEventTypes';
 import { EventContext, PartitionId } from '@dolittle/sdk.events';
 import { PartitionedFilterResult } from '@dolittle/sdk.events.filtering';
 
