@@ -30,7 +30,7 @@ export class OverviewViewModel {
         observableQuery.startPolling(1000);
         observableQuery.subscribe((next) => {
             if (next.data) {
-                this.items = next.data.allApplications;
+                this.items = next.data.allMicroservices;
             }
         });
     }

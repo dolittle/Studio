@@ -13,7 +13,7 @@ export class Microservices implements IMicroservices {
         const result = await fetch('/api/k8s/microservices', {
             method: 'POST',
             body: JSON.stringify(microservice),
-            headers:{'content-type': 'microservice/json'}
+            headers:{'content-type': 'application/json'}
         });
         const jsonResult = await result.json();
         console.log('Microservice created! 🦄');
