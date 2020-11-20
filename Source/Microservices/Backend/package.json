@@ -1,0 +1,32 @@
+{
+    "name": "microservices.backend",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "private": "true",
+    "license": "UNLICENSED",
+    "scripts": {
+        "dev": "concurrently \"nodemon ./index.ts\"",
+        "debug": "nodemon --inspect=5858 -e ts --exec node -r ts-node/register index.ts",
+        "start": "ts-node index.ts",
+        "build": "tsc -b --clean && tsc -b"
+    },
+    "nodemonConfig": {
+        "restartable": "rs",
+        "ignore": [
+            "dist",
+            "*.d.ts"
+        ],
+        "execMap": {
+            "ts": "ts-node"
+        },
+        "watch": [
+            "./",
+            "../../Shared/Backend",
+            "../../Shared/DependencyInversion"
+        ],
+        "ext": "ts"
+    },
+    "dependencies": {
+    }
+}

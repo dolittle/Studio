@@ -9,6 +9,8 @@
         "Source/Events/Web",
         "Source/Portal/Backend",
         "Source/Portal/Web",
+        "Source/Microservices/Backend",
+        "Source/Microservices/Web",
         "Source/Shared/Backend",
         "Source/Shared/Components",
         "Source/Shared/DependencyInversion",
