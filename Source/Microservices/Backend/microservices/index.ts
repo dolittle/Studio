@@ -18,7 +18,7 @@ export function projectFromEventsToReadModels(clientBuilder: ClientBuilder) {
         .withProjectionFor(
             Microservice,
             _ => {
-                _.withId('c25d1a88-fd4c-4b78-ac81-f90c3545fab9')
+                _.withId('3E514A82-B12D-499B-81A0-EA20B7CD5A77')
                     .useModel(MicroserviceModel)
                     .fromScope('da92a933-a4c5-478d-a0c4-49aeef72f6d5');
                 _.set(a => a.name, p => p.from(MicroserviceCreated, e => e.name));

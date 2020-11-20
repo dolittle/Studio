@@ -18,8 +18,8 @@ export class OverviewViewModel {
     private _startPollingForApplications() {
         const query = gql`
             query {
-                allApplications {
-                    applicationId
+                allMicroservices {
+                    microserviceId
                     name
                 }
             }

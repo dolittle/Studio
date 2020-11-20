@@ -9,7 +9,7 @@ import { PartitionId } from '@dolittle/sdk.events';
 import tenant from '@shared/backend/Tenant';
 import Microservices from '@shared/backend/Microservices';
 
-// import { projectFromEventsToReadModels } from './applications';
+import { projectFromEventsToReadModels } from './microservices';
 
 (async () => {
     const schema = await getSchema();
@@ -19,13 +19,13 @@ import Microservices from '@shared/backend/Microservices';
         prefix: '/_/microservices',
         publicPath: path.join(__dirname, 'public'),
         port: 3004,
-        dolittleRuntimePort: 50057,
+        dolittleRuntimePort: 50061,
         graphQLSchema: schema,
         defaultDatabaseName: 'microservices',
         expressCallback: _ => {
         },
         dolittleCallback: _ => {
-            // projectFromEventsToReadModels(_);
+            projectFromEventsToReadModels(_);
 
             _.withEventHorizons(eh => {
                 eh.forTenant(tenant, ts => {

@@ -69,7 +69,7 @@ services:
   studio-runtime-microservices:
     image: dolittle/runtime:5.1.4
     volumes:
-      - ./Events/resources.json:/app/.dolittle/resources.json
+      - ./Microservices/resources.json:/app/.dolittle/resources.json
       - ./tenants.json:/app/.dolittle/tenants.json
       - ./microservices.json:/app/.dolittle/microservices.json
       - ./appsettings.json:/app/appsettings.json

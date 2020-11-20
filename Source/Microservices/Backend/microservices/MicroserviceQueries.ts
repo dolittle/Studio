@@ -13,7 +13,7 @@ export class MicroserviceQueries {
     }
 
     @Query(returns => [Microservice])
-    async allApplications() {
+    async allMicroservices() {
         return MicroserviceModel.find();
     }
 }

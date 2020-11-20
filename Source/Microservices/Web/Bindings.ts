@@ -13,13 +13,13 @@ export class Bindings {
     static initialize() {
         const cache = new InMemoryCache();
         const link = new HttpLink({
-            uri: '/_/applications/graphql/',
+            uri: '/_/mocroservices/graphql/',
         });
 
         const client = new ApolloClient({
             cache,
             link,
-            name: 'Studio Applications Client',
+            name: 'Studio Microservices Client',
             version: versionInfo.version,
             queryDeduplication: false,
             defaultOptions: {
