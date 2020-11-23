@@ -9,7 +9,7 @@ import { container } from 'tsyringe';
 
 import { Bindings as PortalBindings, Navigation, ToolbarItems, ToolbarItem } from '@shared/portal';
 import { Bindings as MVVMBindings } from '@shared/mvvm';
-import { Applications, Bindings as PlatformBindings } from '@shared/platform';
+import { Bindings as PlatformBindings } from '@shared/platform';
 
 import '@shared/styles/theme';
 import './index.scss';
@@ -17,9 +17,12 @@ import { Overview } from './Overview';
 import { CreateApplication } from './CreateApplication';
 import { Bindings } from './Bindings';
 
-export default function App() {
+export default function App(this: any) {
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
     const [showAssignMicroserviceDialog, setShowAssignMicroserviceDialog] = useState(false);
+    const [selectedApplications, setSelectedApplications] = useState(undefined);
+
+    console.log('current application is ', selectedApplications);
 
     Bindings.initialize();
     MVVMBindings.initialize();
@@ -77,7 +80,9 @@ export default function App() {
                 onCancelled={() => setShowAssignMicroserviceDialog(false)}
             /> */}
             <Overview
-                // onSelection=) => setSelectedApplication(item)}
+                 onSelected={
+                    ((i) => setSelectedApplications(i)).bind(this)
+                }
             />
         </>
     );

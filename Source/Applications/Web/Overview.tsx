@@ -3,10 +3,10 @@
 import React from 'react';
 import { withViewModel } from '@shared/mvvm';
 import { OverviewViewModel } from './OverviewViewModel';
-import { DetailsList, DetailsListLayoutMode, IDetailsListProps, ISelectionOptions, Selection } from 'office-ui-fabric-react';
+import { DetailsList, DetailsListLayoutMode, IDetailsListProps, Selection } from 'office-ui-fabric-react';
 
 export type OverviewProps = {
-    onSelected?: (i) => void;
+    onSelected: (i) => void;
 };
 
 export const Overview = withViewModel<OverviewViewModel, OverviewProps>(OverviewViewModel, ({ viewModel, props }) => {
@@ -30,10 +30,7 @@ export const Overview = withViewModel<OverviewViewModel, OverviewProps>(Overview
     ];
     const selection = new Selection({
         onSelectionChanged: () => {
-            console.log(
-                'selection changed',
-                selection.getSelection(),
-            )
+            props.onSelected(selection.getSelection())
         }
     });
 
