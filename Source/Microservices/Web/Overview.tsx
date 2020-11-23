@@ -10,7 +10,7 @@ export const Overview = withViewModel(OverviewViewModel, ({ viewModel }) => {
         {
             key: 'id',
             name: 'Id',
-            fieldName: 'applicationId',
+            fieldName: 'microserviceId',
             minWidth: 100,
             maxWidth: 200,
             isResizable: true,
