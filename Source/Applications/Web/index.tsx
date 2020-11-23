@@ -16,6 +16,7 @@ import './index.scss';
 import { Overview } from './Overview';
 import { CreateApplication } from './CreateApplication';
 import { Bindings } from './Bindings';
+import { AssignMicroservice } from './AssignMicroservice';
 
 export default function App(this: any) {
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
@@ -74,11 +75,11 @@ export default function App(this: any) {
                 onCreated={() => setShowCreateApplicationDialog(false)}
                 onCancelled={() => setShowCreateApplicationDialog(false)}
             />
-            {/* <AssignMicroservice
+            <AssignMicroservice
                 visible={showAssignMicroserviceDialog}
                 onAssigned={() => setShowAssignMicroserviceDialog(false)}
                 onCancelled={() => setShowAssignMicroserviceDialog(false)}
-            /> */}
+            />
             <Overview
                  onSelected={
                     ((i) => setSelectedApplications(i)).bind(this)
