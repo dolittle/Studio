@@ -3,7 +3,7 @@
 import React from 'react';
 import { withViewModel } from '@shared/mvvm';
 import { OverviewViewModel } from './OverviewViewModel';
-import { DetailsList, DetailsListLayoutMode, IDetailsListProps, Selection } from 'office-ui-fabric-react';
+import { DetailsList, DetailsListLayoutMode, IDetailsListProps, Selection, SelectionMode } from 'office-ui-fabric-react';
 
 export type OverviewProps = {
     onSelected: (i) => void;
@@ -44,6 +44,7 @@ export const Overview = withViewModel<OverviewViewModel, OverviewProps>(Overview
         ariaLabelForSelectionColumn: 'Toggle selection',
         ariaLabelForSelectAllCheckbox: 'Toggle selection for all items',
         checkButtonAriaLabel: 'Row checkbox',
+        selectionMode: SelectionMode.single,
         // onItemInvoked:{this._onItemInvoked},
         selection: selection
     };
