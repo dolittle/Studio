@@ -19,6 +19,7 @@ import { Bindings } from './Bindings';
 
 export default function App() {
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
+    const [showAssignMicroserviceDialog, setShowAssignMicroserviceDialog] = useState(false);
 
     Bindings.initialize();
     MVVMBindings.initialize();
@@ -51,7 +52,16 @@ export default function App() {
     ]);
 
     toolbar.setItems([
-        new ToolbarItem('Create application', 'Add', () => setShowCreateApplicationDialog(true)),
+        new ToolbarItem(
+            'Create application',
+            'Add',
+            () => setShowCreateApplicationDialog(true)
+        ),
+        new ToolbarItem(
+            'Assign microservice',
+            'AppIconDefaultAdd',
+            () => setShowAssignMicroserviceDialog(true)
+        ),
     ]);
 
     return (
@@ -61,7 +71,14 @@ export default function App() {
                 onCreated={() => setShowCreateApplicationDialog(false)}
                 onCancelled={() => setShowCreateApplicationDialog(false)}
             />
-            <Overview />
+            {/* <AssignMicroservice
+                visible={showAssignMicroserviceDialog}
+                onAssigned={() => setShowAssignMicroserviceDialog(false)}
+                onCancelled={() => setShowAssignMicroserviceDialog(false)}
+            /> */}
+            <Overview
+                // onSelection=) => setSelectedApplication(item)}
+            />
         </>
     );
 }

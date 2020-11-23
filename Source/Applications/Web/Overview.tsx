@@ -3,9 +3,13 @@
 import React from 'react';
 import { withViewModel } from '@shared/mvvm';
 import { OverviewViewModel } from './OverviewViewModel';
-import { DetailsList, DetailsListLayoutMode, IDetailsListProps } from 'office-ui-fabric-react';
+import { DetailsList, DetailsListLayoutMode, IDetailsListProps, ISelectionOptions, Selection } from 'office-ui-fabric-react';
 
-export const Overview = withViewModel(OverviewViewModel, ({ viewModel }) => {
+export type OverviewProps = {
+    onSelected?: (i) => void;
+};
+
+export const Overview = withViewModel<OverviewViewModel, OverviewProps>(OverviewViewModel, ({ viewModel, props }) => {
     const _columns = [
         {
             key: 'id',
@@ -24,6 +28,15 @@ export const Overview = withViewModel(OverviewViewModel, ({ viewModel }) => {
             isResizable: true,
         },
     ];
+    const selection = new Selection({
+        onSelectionChanged: () => {
+            console.log(
+                'selection changed',
+                selection.getSelection(),
+            )
+        }
+    });
+
     const detailsListProps: IDetailsListProps = {
         items: viewModel.items,
         columns: _columns,
@@ -35,6 +48,7 @@ export const Overview = withViewModel(OverviewViewModel, ({ viewModel }) => {
         ariaLabelForSelectAllCheckbox: 'Toggle selection for all items',
         checkButtonAriaLabel: 'Row checkbox',
         // onItemInvoked:{this._onItemInvoked},
+        selection: selection
     };
 
     return (
