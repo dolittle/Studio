@@ -17,6 +17,7 @@ import { Overview } from './Overview';
 import { CreateApplication } from './CreateApplication';
 import { Bindings } from './Bindings';
 import { AssignMicroservice } from './AssignMicroservice';
+import { ApplicationToolbarItems } from './ApplicationToolbarItems';
 import { ApplicationModel } from './ApplicationModel';
 
 export default function App(this: any) {
@@ -33,7 +34,6 @@ export default function App(this: any) {
     PlatformBindings.initialize();
 
     const navigation = container.resolve(Navigation);
-    const toolbar = container.resolve(ToolbarItems);
 
     navigation.set([
         {
@@ -57,21 +57,12 @@ export default function App(this: any) {
         },
     ]);
 
-    toolbar.setItems([
-        new ToolbarItem(
-            'Create application',
-            'Add',
-            () => setShowCreateApplicationDialog(true)
-        ),
-        new ToolbarItem(
-            'Assign microservice',
-            'AppIconDefaultAdd',
-            () => setShowAssignMicroserviceDialog(true)
-        ),
-    ]);
-
     return (
         <>
+            <ApplicationToolbarItems
+                onCreateApplicationClicked={() => setShowCreateApplicationDialog(true)}
+                onAssignMicroserviceClicked={() => setShowAssignMicroserviceDialog(true)}
+            />
             <CreateApplication
                 visible={showCreateApplicationDialog}
                 onCreated={() => setShowCreateApplicationDialog(false)}
@@ -83,11 +74,7 @@ export default function App(this: any) {
                 onAssigned={() => setShowAssignMicroserviceDialog(false)}
                 onCancelled={() => setShowAssignMicroserviceDialog(false)}
             />
-            <Overview
-                 onSelected={
-                    ((i) => setSelectedApplications(i)).bind(this)
-                }
-            />
+            <Overview onSelected={((i) => setSelectedApplications(i)).bind(this)} />
         </>
     );
 }
