@@ -12,7 +12,7 @@ import {
     Dropdown,
 } from 'office-ui-fabric-react';
 import { withViewModel } from '@shared/mvvm';
-import { AssignMicroserviceViewModel } from './AssignMicroserviceViewModel';
+import { AssignMicroserviceViewModel, SelectedOption } from './AssignMicroserviceViewModel';
 import { Guid } from '@dolittle/rudiments'
 import { ApplicationModel } from './ApplicationModel';
 
@@ -39,10 +39,18 @@ export const AssignMicroservice = withViewModel<AssignMicroserviceViewModel, Ass
                 <Dropdown
                     label="Select microservice"
                     options={options}
+                    onChange={
+                        (e, o) => viewModel.selectMicroservice(o as SelectedOption)
+                    }
                 />
                 <DialogFooter>
                     <PrimaryButton
-                        onClick={async () => viewModel.assignMicroservice()}
+                        onClick={
+                            async () => viewModel.assignMicroservice(
+                                props.forApplication!.applicationId,
+                                viewModel!.selectedMicroserviceId
+                            )
+                        }
                         text='Assign'
                     />
                     <DefaultButton onClick={props.onCancelled} text='Cancel' />
