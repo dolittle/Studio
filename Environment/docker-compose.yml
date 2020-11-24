@@ -75,5 +75,5 @@ services:
       - ./appsettings.json:/app/appsettings.json
     ports:
       - 9704:9700
-      - 50060:50052
-      - 50061:50053
+      - 50048:50052
+      - 50049:50053

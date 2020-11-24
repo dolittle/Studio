@@ -19,7 +19,7 @@ import { projectFromEventsToReadModels } from './microservices';
         prefix: '/_/microservices',
         publicPath: path.join(__dirname, 'public'),
         port: 3004,
-        dolittleRuntimePort: 50061,
+        dolittleRuntimePort: 50049,
         graphQLSchema: schema,
         defaultDatabaseName: 'microservices',
         expressCallback: _ => {
