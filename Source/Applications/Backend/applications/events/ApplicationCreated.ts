@@ -7,3 +7,4 @@ import { eventType } from '@dolittle/sdk.events';
 export class ApplicationCreated {
     constructor(readonly id: string = '', readonly name: string = '') {}
 }
+

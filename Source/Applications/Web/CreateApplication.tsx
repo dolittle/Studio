@@ -32,7 +32,7 @@ export const CreateApplication = withViewModel<CreateApplicationViewModel, Creat
                     label='Name'
                     placeholder='Enter application name'
                     value={viewModel.applicationName}
-                    onChange={(e, v) => (viewModel.applicationName = v)} //Do we actually need this?
+                    onChange={(e, v) => (viewModel.applicationName = v)}
                 ></TextField>
                 <DialogFooter>
                     <PrimaryButton

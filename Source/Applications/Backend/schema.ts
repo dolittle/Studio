@@ -7,11 +7,11 @@ import { GraphQLSchema } from 'graphql';
 import { GuidScalar } from '@shared/backend/data';
 import { Guid } from '@dolittle/rudiments';
 import { container } from 'tsyringe';
-import { ApplicationQueries } from './applications';
+import { ApplicationQueries, MicroserviceQueries } from './applications';
 
 export async function getSchema(): Promise<GraphQLSchema> {
     const schema = await buildSchema({
-        resolvers: [ApplicationQueries],
+        resolvers: [ApplicationQueries, MicroserviceQueries],
         container: {
             get(someClass: any, resolverData: ResolverData<any>): any | Promise<any> {
                 return container.resolve(someClass);
