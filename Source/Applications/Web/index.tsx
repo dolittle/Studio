@@ -17,11 +17,13 @@ import { Overview } from './Overview';
 import { CreateApplication } from './CreateApplication';
 import { Bindings } from './Bindings';
 import { AssignMicroservice } from './AssignMicroservice';
+import { ApplicationModel } from './ApplicationModel';
 
 export default function App(this: any) {
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
     const [showAssignMicroserviceDialog, setShowAssignMicroserviceDialog] = useState(false);
-    const [selectedApplications, setSelectedApplications] = useState(undefined);
+    const [selectedApplications, setSelectedApplications]
+        = useState<ApplicationModel[]>([]);
 
     console.log('current application is ', selectedApplications);
 
@@ -76,6 +78,7 @@ export default function App(this: any) {
                 onCancelled={() => setShowCreateApplicationDialog(false)}
             />
             <AssignMicroservice
+                forApplication={selectedApplications[0]}
                 visible={showAssignMicroserviceDialog}
                 onAssigned={() => setShowAssignMicroserviceDialog(false)}
                 onCancelled={() => setShowAssignMicroserviceDialog(false)}

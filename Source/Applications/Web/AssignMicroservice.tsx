@@ -13,9 +13,12 @@ import {
 } from 'office-ui-fabric-react';
 import { withViewModel } from '@shared/mvvm';
 import { AssignMicroserviceViewModel } from './AssignMicroserviceViewModel';
+import { Guid } from '@dolittle/rudiments'
+import { ApplicationModel } from './ApplicationModel';
 
 export type AssignMicroserviceProps = {
     visible: any;
+    forApplication?: ApplicationModel;
     onAssigned: () => void;
     onCancelled: () => void;
 };
@@ -28,7 +31,7 @@ export const AssignMicroservice = withViewModel<AssignMicroserviceViewModel, Ass
         return (
             <Dialog
                 hidden={!props.visible}
-                title='Assign Microservice'
+                title={`Assign Microservice to ${props.forApplication?.name}`}
                 modalProps={{
                     topOffsetFixed: true,
                 }}
