@@ -6,9 +6,10 @@ import {
     PrimaryButton,
     DefaultButton,
     DialogFooter,
-    DropdownMenuItemType,
     IDropdownOption,
     Dropdown,
+    Spinner,
+    SpinnerSize,
 } from 'office-ui-fabric-react';
 import { withViewModel } from '@shared/mvvm';
 import { AssignMicroserviceViewModel, SelectedOption } from './AssignMicroserviceViewModel';
@@ -25,6 +26,17 @@ export const AssignMicroservice = withViewModel<AssignMicroserviceViewModel, Ass
     AssignMicroserviceViewModel,
     ({ viewModel, props }) => {
         const options: IDropdownOption[] = viewModel.microservices;
+        const canAssign: boolean = props.forApplication?.applicationId !== undefined;
+        const disableAssignButton = !canAssign || viewModel.isAssigning;
+        const disableCancelButton = viewModel.isAssigning;
+
+        function handleAssigning(viewModel: AssignMicroserviceViewModel, props: AssignMicroserviceProps) {
+            viewModel.assignMicroservice(
+                props.forApplication!.applicationId,
+                viewModel!.selectedMicroserviceId
+            );
+            props.onAssigned();
+        }
 
         return (
             <Dialog
@@ -35,25 +47,24 @@ export const AssignMicroservice = withViewModel<AssignMicroserviceViewModel, Ass
                 }}
             >
                 <Dropdown
-                    label="Select microservice"
+                    label='Select microservice'
                     options={options}
-                    onChange={
-                        (e, o) => viewModel.selectMicroservice(o as SelectedOption)
-                    }
+                    onChange={(e, o) => viewModel.selectMicroservice(o as SelectedOption)}
                 />
                 <DialogFooter>
                     <PrimaryButton
-                        onClick={
-                            async () => viewModel.assignMicroservice(
-                                props.forApplication!.applicationId,
-                                viewModel!.selectedMicroserviceId
-                            )
-                        }
+                        onClick={async () => handleAssigning(viewModel, props)}
                         text='Assign'
+                        disabled={disableAssignButton}
                     />
-                    <DefaultButton onClick={props.onCancelled} text='Cancel' />
+                    <DefaultButton
+                        onClick={props.onCancelled}
+                        text='Cancel'
+                        disabled={disableCancelButton}
+                    />
                 </DialogFooter>
             </Dialog>
         );
     }
 );
+

@@ -11,6 +11,8 @@ import { AssignMicroserviceProps } from './AssignMicroservice';
 export class AssignMicroserviceViewModel {
     microservices: { key: string; text: string }[] = [];
     selectedMicroserviceId: string | undefined;
+    isAssigning: boolean = false;
+
     private _props!: AssignMicroserviceProps;
 
     constructor(
@@ -40,14 +42,18 @@ export class AssignMicroserviceViewModel {
     }
 
     async assignMicroservice(applicationId: Guid, microserviceId: string | undefined) {
-        console.log(
-            'assign microservice',
-            microserviceId,
-            'to application',
-            applicationId
-        );
         if (applicationId && microserviceId) {
-            await this._applications.assignMicroserviceToApplication(applicationId, Guid.parse(microserviceId));
+            this.isAssigning = true;
+            try {
+                await this._applications.assignMicroserviceToApplication(
+                    applicationId,
+                    Guid.parse(microserviceId)
+                );
+            } catch (e) {
+                console.log(e.message);
+            } finally {
+                this.isAssigning = false;
+            }
         }
 
     }
