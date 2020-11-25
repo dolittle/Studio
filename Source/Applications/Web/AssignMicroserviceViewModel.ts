@@ -1,9 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { QueryForMicroservices } from './QueryForMicroservices';
+import { IApplications } from '@shared/platform';
 import { IViewContext } from '@shared/mvvm';
 import { Guid } from '@dolittle/rudiments';
 import { injectable } from 'tsyringe';
+import { QueryForMicroservices } from './QueryForMicroservices';
 import { AssignMicroserviceProps } from './AssignMicroservice';
 
 @injectable()
@@ -12,7 +13,10 @@ export class AssignMicroserviceViewModel {
     selectedMicroserviceId: string | undefined;
     private _props!: AssignMicroserviceProps;
 
-    constructor(readonly _query: QueryForMicroservices) {}
+    constructor(
+        readonly _query: QueryForMicroservices,
+        readonly _applications: IApplications
+        ) {}
 
     activate({
         props,
@@ -43,13 +47,9 @@ export class AssignMicroserviceViewModel {
             applicationId
         );
         if (applicationId && microserviceId) {
-            // no op
+            await this._applications.assignMicroserviceToApplication(applicationId, Guid.parse(microserviceId));
         }
-        // //Validation?
-        // if (this.applicationName) {
-        //     await this.applications.create({ name: this.applicationName });
-        //     this._props?.onCreated();
-        // }
+
     }
 }
 

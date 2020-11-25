@@ -47,7 +47,7 @@ export class ApplicationsController extends Controller {
             await this._eventStore.commitPublic(event, applicationId);
 
             this.setStatus(200);
-            return { result: 'signed' };
+            return { result: 'assigned' };
 
         } catch (error) {
             this.setStatus(500);

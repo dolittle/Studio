@@ -3,6 +3,7 @@
 
 import { ClientBuilder } from '@dolittle/sdk';
 import { ApplicationCreated } from './applications/ApplicationCreated';
+import { MicroserviceAssignedToApplication } from './applications/MicroserviceAssignedToApplication';
 import { MicroserviceCreated } from './microservices/MicroserviceCreated';
 
 export const RegisterEventTypes = (clientBuilder: ClientBuilder) => {
@@ -13,5 +14,6 @@ export const RegisterEventTypes = (clientBuilder: ClientBuilder) => {
 
     clientBuilder.withEventTypes(_ => {
         _.register(ApplicationCreated);
+        _.register(MicroserviceAssignedToApplication)
     });
 };
