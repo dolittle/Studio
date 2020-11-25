@@ -1,60 +1,47 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+import { QueryForMicroservices } from './QueryForMicroservices';
 import { IViewContext } from '@shared/mvvm';
-import gql from 'graphql-tag';
 import { Guid } from '@dolittle/rudiments';
 import { injectable } from 'tsyringe';
 import { AssignMicroserviceProps } from './AssignMicroservice';
-import { DataSource } from './DataSource';
 
 @injectable()
 export class AssignMicroserviceViewModel {
-    microservices: {key: string, text: string}[] = [];
+    microservices: { key: string; text: string }[] = [];
     selectedMicroserviceId: string | undefined;
-    private _props! : AssignMicroserviceProps;
+    private _props!: AssignMicroserviceProps;
 
-    constructor(
-        readonly _dataSource: DataSource
-    ) {}
+    constructor(readonly _query: QueryForMicroservices) {}
 
-    activate({props}: IViewContext<AssignMicroserviceViewModel>) {
-        console.log('activating', props)
+    activate({
+        props,
+    }: IViewContext<AssignMicroserviceViewModel, AssignMicroserviceProps>) {
+        console.log('activating', props);
         this._props = props;
         this._fetchMicroservices();
     }
 
-    selectMicroservice(option? : SelectedOption) {
+    selectMicroservice(option?: SelectedOption) {
         console.log('selected', option, this._props);
         this.selectedMicroserviceId = option?.key;
     }
 
     async _fetchMicroservices(): Promise<void> {
-        const query = gql`
-            query {
-                allMicroservices {
-                    microserviceId
-                    name
-                }
-            }
-        `;
-
-        const result = await this._dataSource.query<MicroservicesQuery>({ query });
-
-        this.microservices = result
-            .data
-            ?.allMicroservices
-            .map(ms => ({key: ms.microserviceId, text: ms.name}));
+        const microservices = await this._query.allMicroservices();
+        this.microservices = microservices.map((ms) => ({
+            key: ms.microserviceId,
+            text: ms.name,
+        }));
     }
 
-    async assignMicroservice(
-        applicationId: Guid,
-        microserviceId: string | undefined
-    ) {
+    async assignMicroservice(applicationId: Guid, microserviceId: string | undefined) {
         console.log(
             'assign microservice',
             microserviceId,
             'to application',
-            applicationId);
+            applicationId
+        );
         if (applicationId && microserviceId) {
             // no op
         }
@@ -64,18 +51,8 @@ export class AssignMicroserviceViewModel {
         //     this._props?.onCreated();
         // }
     }
-
 }
 
 export type SelectedOption = {
-    key?: string
-}
-
-export type MicroservicesQuery = {
-    allMicroservices: MicroserviceModel[]
+    key?: string;
 };
-
-export type MicroserviceModel = {
-    microserviceId: string,
-    name: string
-}

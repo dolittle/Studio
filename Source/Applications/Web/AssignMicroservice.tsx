@@ -6,14 +6,12 @@ import {
     PrimaryButton,
     DefaultButton,
     DialogFooter,
-    TextField,
     DropdownMenuItemType,
     IDropdownOption,
     Dropdown,
 } from 'office-ui-fabric-react';
 import { withViewModel } from '@shared/mvvm';
 import { AssignMicroserviceViewModel, SelectedOption } from './AssignMicroserviceViewModel';
-import { Guid } from '@dolittle/rudiments'
 import { ApplicationModel } from './ApplicationModel';
 
 export type AssignMicroserviceProps = {
