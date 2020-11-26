@@ -28,7 +28,7 @@ $content-color: darken($ms-color-white, 5%);
     .main {
         margin: 0;
         width: 100%;
-        
+
         .content {
             position: relative;
             width: calc(100%);
@@ -84,7 +84,7 @@ $content-color: darken($ms-color-white, 5%);
     flex-direction: column;
     position: fixed;
     top: $app-header-height + $top-level-menu-height;
-    height: calc(100vh);
+    height: calc(100vh - #{$app-header-height} - #{$top-level-menu-height});
     width: 12rem;
     background-color: $navigation-color;
 }

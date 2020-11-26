@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { TopLevelMenu } from './TopLevelMenu';
-import { Spinner, SpinnerSize, Stack, StackItem,  ActionButton } from 'office-ui-fabric-react';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 
 import { ContentFrame } from '@shared/components';
@@ -31,19 +31,7 @@ export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
         <>
             <TopLevelMenu />
             <div className="navigation">
-                <Stack>
-                    <StackItem>
-                        <Navigation />
-                    </StackItem>
-                    <StackItem>
-                        <ActionButton
-                            text="Create application"
-
-                            iconProps={ {iconName: 'Add'} }
-                        />
-                    </StackItem>
-
-                </Stack>
+                <Navigation />
             </div>
 
             <div className="toolbar" style={{ visibility: viewModel.hasToolbarItems ? 'visible' : 'hidden' }}>
