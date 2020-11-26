@@ -11,7 +11,8 @@ export interface Configuration {
     port: number,
     microserviceId: string;
     graphQLSchema: GraphQLSchema;
-    defaultDatabaseName: string,
+    defaultDatabaseName: string;
+    defaultEventStoreDatabaseName: string;
     dolittleRuntimePort: number;
 
     expressCallback?: ExpressConfigCallback;
