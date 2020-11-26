@@ -37,21 +37,44 @@ export default function App(this: any) {
 
     navigation.set([
         {
-            name: 'Studio',
+            name: 'Face-b',
             items: [
                 {
-                    name: 'Applications',
+                    name: 'Dev',
                 },
                 {
-                    name: 'Events',
+                    name: 'Test',
+                },
+                {
+                    name: 'Prod',
                 },
             ],
         },
         {
-            name: 'Lunch App',
+            name: 'Insta-g',
             items: [
                 {
                     name: 'Default',
+                },
+            ],
+        },
+        {
+            name: 'Wahats-up',
+            items: [
+                {
+                    name: 'Dev',
+                },
+                {
+                    name: 'Test',
+                },
+                {
+                    name: 'Staging',
+                },
+                {
+                    name: 'China',
+                },
+                {
+                    name: 'Europe',
                 },
             ],
         },
