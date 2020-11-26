@@ -6,7 +6,7 @@ services:
       - 27017:27017
     logging:
       driver: none
-  
+
   studio-ingress:
     image: nginx:1.18.0
     volumes:
@@ -65,3 +65,15 @@ services:
       - 9703:9700
       - 50058:50052
       - 50059:50053
+
+  studio-runtime-microservices:
+    image: dolittle/runtime:5.1.4
+    volumes:
+      - ./Microservices/resources.json:/app/.dolittle/resources.json
+      - ./tenants.json:/app/.dolittle/tenants.json
+      - ./microservices.json:/app/.dolittle/microservices.json
+      - ./appsettings.json:/app/appsettings.json
+    ports:
+      - 9704:9700
+      - 50048:50052
+      - 50049:50053

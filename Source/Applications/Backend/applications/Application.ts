@@ -14,7 +14,10 @@ export class Application {
 
     @Field()
     @prop()
+    applicationId?: string;
+
+    @Field()
+    @prop()
     name!: string;
 }
-
 export const ApplicationModel = getModelForClass(Application);
