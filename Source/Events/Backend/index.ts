@@ -17,6 +17,7 @@ import { getSchema } from './schema';
         dolittleRuntimePort: 50059,
         graphQLSchema: schema,
         defaultDatabaseName: 'events',
+        defaultEventStoreDatabaseName: 'event_store_applications',
         expressCallback: _ => {
         },
         dolittleCallback: _ => {

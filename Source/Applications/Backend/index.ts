@@ -22,6 +22,7 @@ import { registerDolittle as applicationsRegisterDolittle } from './applications
         dolittleRuntimePort: 50057,
         graphQLSchema: schema,
         defaultDatabaseName: 'applications',
+        defaultEventStoreDatabaseName: 'event_store_applications',
         expressCallback: _ => {
         },
         dolittleCallback: _ => {
