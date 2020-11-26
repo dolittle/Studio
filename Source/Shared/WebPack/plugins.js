@@ -18,12 +18,10 @@ module.exports = (basePath, title) => {
         new HtmlWebpackPlugin({
             template: path.resolve(process.cwd(), 'index.ejs'),
             templateParameters: {
-                
-
             },
             publicPath: basePath,
             metadata: {
-                title: title,
+                title,
                 baseUrl: basePath
             }
         }),
