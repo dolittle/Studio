@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { container } from 'tsyringe';
 
-import { Bindings as PortalBindings, Navigation, ToolbarItems, ToolbarItem } from '@shared/portal';
+import { Bindings as PortalBindings, Navigation, ToolbarItems, ToolbarItem, NavigationButton } from '@shared/portal';
 import { Bindings as MVVMBindings } from '@shared/mvvm';
 import { Bindings as PlatformBindings } from '@shared/platform';
 
@@ -35,50 +35,58 @@ export default function App(this: any) {
 
     const navigation = container.resolve(Navigation);
 
-    navigation.set([
+    navigation.set(
+        [
+            {
+                name: 'Face-b',
+                items: [
+                    {
+                        name: 'Dev',
+                    },
+                    {
+                        name: 'Test',
+                    },
+                    {
+                        name: 'Prod',
+                    },
+                ],
+            },
+            {
+                name: 'Insta-g',
+                items: [
+                    {
+                        name: 'Default',
+                    },
+                ],
+            },
+            {
+                name: 'Wahats-up',
+                items: [
+                    {
+                        name: 'Dev',
+                    },
+                    {
+                        name: 'Test',
+                    },
+                    {
+                        name: 'Staging',
+                    },
+                    {
+                        name: 'China',
+                    },
+                    {
+                        name: 'Europe',
+                    },
+                ],
+            },
+        ],
         {
-            name: 'Face-b',
-            items: [
-                {
-                    name: 'Dev',
-                },
-                {
-                    name: 'Test',
-                },
-                {
-                    name: 'Prod',
-                },
-            ],
-        },
-        {
-            name: 'Insta-g',
-            items: [
-                {
-                    name: 'Default',
-                },
-            ],
-        },
-        {
-            name: 'Wahats-up',
-            items: [
-                {
-                    name: 'Dev',
-                },
-                {
-                    name: 'Test',
-                },
-                {
-                    name: 'Staging',
-                },
-                {
-                    name: 'China',
-                },
-                {
-                    name: 'Europe',
-                },
-            ],
-        },
-    ]);
+            button: new NavigationButton('New Application', 'Add', () => {
+                console.log('Applications/Web: Received NavigationActionButton clicked!');
+            }),
+            placement: 'bottom'
+        }
+    );
 
     return (
         <>
@@ -97,7 +105,7 @@ export default function App(this: any) {
                 onAssigned={() => setShowAssignMicroserviceDialog(false)}
                 onCancelled={() => setShowAssignMicroserviceDialog(false)}
             />
-            <Overview onSelected={((i) => setSelectedApplications(i)).bind(this)} />
+            <Overview onSelected={((i) => setSelectedApplications(i))} />
         </>
     );
 }
