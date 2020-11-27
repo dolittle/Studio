@@ -55,16 +55,4 @@ export class Navigation {
         console.log('Shared/Portal/Navigation: Publishing NavigationStructureChanged');
         this._messenger.publish(changed);
     }
-
-    /**
-     * Hooks up a callback to be called when navigation structure changes.
-     * @param callback Callback that gets called when the navigation structure changes
-     */
-    onChanged(callback: NavigationChanged) {
-        console.log('Shared/Portal/Navigation: Subscribing to NavigationStructureChanged');
-        this._messenger.subscribeTo(NavigationStructureChanged, (_) => {
-            console.log('Shared/Portal/Navigation: Handle NavigationStructureChanged');
-            callback(_.groups, _.actionBar);
-        });
-    }
 }
