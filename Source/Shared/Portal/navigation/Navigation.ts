@@ -29,7 +29,8 @@ export class Navigation {
     constructor(private readonly _messenger: IMessenger) {
         console.log('Shared/Portal/Navigation: Subscribing to NavigationActionButtonWasClicked');
         _messenger.subscribeTo(NavigationButtonWasClicked, (_) => {
-            console.log('NavigationActionButton: Handle NavigationActionButtonWasClicked');
+            console.log('Shared/Portal/Navigation: Handle NavigationActionButtonWasClicked');
+            console.log(this._navigationActionButton);
             this._navigationActionButton?.onClick?.();
         });
     }
@@ -42,6 +43,7 @@ export class Navigation {
     set(groups: NavigationGroup[], actionBar?: NavigationActionBar): void {
         const changed = new NavigationStructureChanged();
         if(actionBar){
+            this._navigationActionButton = actionBar.button;
             console.log('Shared/Portal/Navigation: Setting NavigationStructure.actionBar');
             changed.actionBar = {
                 placement: actionBar.placement,
@@ -59,9 +61,9 @@ export class Navigation {
      * @param callback Callback that gets called when the navigation structure changes
      */
     onChanged(callback: NavigationChanged) {
-        console.log('Portal/Navigation: Subscribing to NavigationStructureChanged');
+        console.log('Shared/Portal/Navigation: Subscribing to NavigationStructureChanged');
         this._messenger.subscribeTo(NavigationStructureChanged, (_) => {
-            console.log('Portal/Navigation: Handle NavigationStructureChanged');
+            console.log('Shared/Portal/Navigation: Handle NavigationStructureChanged');
             callback(_.groups, _.actionBar);
         });
     }
