@@ -10,7 +10,12 @@ export class NavigationButton {
     readonly enabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     readonly id: string;
 
-    constructor(readonly text: string, readonly icon?: string, readonly onClick?: NavigationButtonClicked, id?: string) {
+    constructor(
+        readonly text: string,
+        readonly icon?: string,
+        readonly onClick?: NavigationButtonClicked,
+        id?: string
+    ) {
         this.id = id || Guid.create().toString();
     }
 }

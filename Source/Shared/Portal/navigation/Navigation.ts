@@ -11,7 +11,10 @@ import { NavigationButton } from './NavigationButton';
 import { NavigationButtonWasClicked } from './NavigationButtonWasClicked';
 import { NavigationActionBarForMessage } from './NavigationActionBarForMessage';
 
-export type NavigationChanged = (groups: NavigationGroup[], actionButton?: NavigationActionBarForMessage) => void;
+export type NavigationChanged = (
+    groups: NavigationGroup[],
+    actionButton?: NavigationActionBarForMessage
+) => void;
 
 /**
  * Represents the system for working with the navigational structure of a microservice.
@@ -19,7 +22,6 @@ export type NavigationChanged = (groups: NavigationGroup[], actionButton?: Navig
 @singleton()
 @injectable()
 export class Navigation {
-
     private _navigationActionButton?: NavigationButton;
 
     /**
@@ -27,10 +29,7 @@ export class Navigation {
      * @param {IMessenger} _messenger Messenger to use for publishing messages.
      */
     constructor(private readonly _messenger: IMessenger) {
-        console.log('Shared/Portal/Navigation: Subscribing to NavigationActionButtonWasClicked');
         _messenger.subscribeTo(NavigationButtonWasClicked, (_) => {
-            console.log('Shared/Portal/Navigation: Handle NavigationActionButtonWasClicked');
-            console.log(this._navigationActionButton);
             this._navigationActionButton?.onClick?.();
         });
     }
@@ -42,17 +41,18 @@ export class Navigation {
      */
     set(groups: NavigationGroup[], actionBar?: NavigationActionBar): void {
         const changed = new NavigationStructureChanged();
-        if(actionBar){
+        if (actionBar) {
             this._navigationActionButton = actionBar.button;
-            console.log('Shared/Portal/Navigation: Setting NavigationStructure.actionBar');
             changed.actionBar = {
                 placement: actionBar.placement,
-                button: new NavigationButtonForMessage(actionBar.button.id, actionBar.button.text, actionBar.button.icon || '')
+                button: new NavigationButtonForMessage(
+                    actionBar.button.id,
+                    actionBar.button.text,
+                    actionBar.button.icon || ''
+                ),
             };
         }
-        console.log('Shared/Portal/Navigation: Setting NavigationStructure.groups');
         changed.groups = groups;
-        console.log('Shared/Portal/Navigation: Publishing NavigationStructureChanged');
         this._messenger.publish(changed);
     }
 }
