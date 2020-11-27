@@ -81,10 +81,10 @@ export default function App(this: any) {
             },
         ],
         {
-            button: new NavigationButton('New Application', 'Add', () => {
-                console.log('Applications/Web: Received NavigationActionButton clicked!');
-            }),
-            placement: 'bottom'
+            button: new NavigationButton('New Application', 'Add', () =>
+                setShowCreateApplicationDialog(true)
+            ),
+            placement: 'bottom',
         }
     );
 

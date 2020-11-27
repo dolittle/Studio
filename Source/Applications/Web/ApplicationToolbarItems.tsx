@@ -12,11 +12,6 @@ export const ApplicationToolbarItems = (props: {
     const toolbar = container.resolve(ToolbarItems);
     toolbar.setItems([
         new ToolbarItem(
-            'Create application',
-            'Add',
-            () => props.onCreateApplicationClicked()
-        ),
-        new ToolbarItem(
             'Assign microservice',
             'AppIconDefaultAdd',
             () => props.onAssignMicroserviceClicked()
