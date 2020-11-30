@@ -20,16 +20,13 @@ export class AllApplicationsQuery {
     }
 
     public startPollingForApplications() {
-        console.log('graphql query Starting polling for all applications');
         this._startPollingForApplications();
     }
 
     public stopPollingForApplications() {
-        console.log('graphql query Stop polling for all applications');
         if(this._observableQuery) {
             this._observableQuery.stopPolling();
         }
-
     }
 
     private async _startPollingForApplications() {
@@ -47,9 +44,7 @@ export class AllApplicationsQuery {
         this._observableQuery.startPolling(5000);
         this._observableQuery.subscribe((next) => {
             if(next.networkStatus === NetworkStatus.ready && next.data){
-                console.log('graphql query returned');
-                console.log('graphql query result',next);
-                // console.log('AllApplications have changed - updating observable');
+                // Should we have some logic to decide if there are actually any changes?
                 this.items.next(next.data.allApplications);
             }
         });

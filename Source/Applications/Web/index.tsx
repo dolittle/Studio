@@ -24,7 +24,6 @@ import { NavigationStructure } from './NavigationStructure';
 import { AllApplicationsQuery } from './AllApplicationsQuery';
 
 export default function App(this: any) {
-    console.log('Initializing App!');
     Bindings.initialize();
     MVVMBindings.initialize();
     PortalBindings.initialize();
@@ -39,14 +38,10 @@ export default function App(this: any) {
 
     useEffect(() => {
         const id = Guid.create().toString();
-        console.log(id,'useEFFECT START');
         const subscription = allApplicationsQuery.items.subscribe((apps) =>{
-            console.log(id, 'useEFFECT START subscription');
-            console.log(id,'useEFFECT Apps', apps);
             setAllApplications(apps);
         });
         return () => {
-            console.log(id, 'useEFFECT START CLEANUP');
             subscription.unsubscribe();
         };
     },[allApplications]);
