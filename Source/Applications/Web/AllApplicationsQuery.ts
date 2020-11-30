@@ -1,0 +1,57 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+import { BehaviorSubject } from 'rxjs';
+import { ObservableQuery, NetworkStatus } from 'apollo-client';
+import gql from 'graphql-tag';
+import { injectable, singleton } from 'tsyringe';
+import { ApplicationModel } from './ApplicationModel';
+import { DataSource } from './DataSource';
+
+@singleton()
+@injectable()
+export class AllApplicationsQuery {
+    items: BehaviorSubject<ApplicationModel[]> = new BehaviorSubject<ApplicationModel[]>(
+        []
+    );
+    private _observableQuery?: ObservableQuery<any>;
+
+    constructor(readonly _dataSource: DataSource) {
+        this.startPollingForApplications();
+    }
+
+    public startPollingForApplications() {
+        console.log('graphql query Starting polling for all applications');
+        this._startPollingForApplications();
+    }
+
+    public stopPollingForApplications() {
+        console.log('graphql query Stop polling for all applications');
+        if(this._observableQuery) {
+            this._observableQuery.stopPolling();
+        }
+
+    }
+
+    private async _startPollingForApplications() {
+        const query = gql`
+            query {
+                allApplications {
+                    applicationId
+                    name
+                }
+            }
+        `;
+
+        this._observableQuery = this._dataSource.watchQuery<any>({ query });
+
+        this._observableQuery.startPolling(5000);
+        this._observableQuery.subscribe((next) => {
+            if(next.networkStatus === NetworkStatus.ready && next.data){
+                console.log('graphql query returned');
+                console.log('graphql query result',next);
+                // console.log('AllApplications have changed - updating observable');
+                this.items.next(next.data.allApplications);
+            }
+        });
+    }
+}
