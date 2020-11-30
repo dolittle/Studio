@@ -3,93 +3,45 @@
 
 import 'reflect-metadata';
 
-import React, { useState } from 'react';
+import { Guid } from '@dolittle/rudiments';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { container } from 'tsyringe';
 
-import { Bindings as PortalBindings, Navigation, ToolbarItems, ToolbarItem, NavigationButton } from '@shared/portal';
+import { Bindings as PortalBindings, Navigation, ToolbarItems, ToolbarItem, NavigationButton, NavigationGroup, NavigationActionBar } from '@shared/portal';
 import { Bindings as MVVMBindings } from '@shared/mvvm';
 import { Bindings as PlatformBindings } from '@shared/platform';
 
 import '@shared/styles/theme';
 import './index.scss';
-import { Overview } from './Overview';
+// import { Overview } from './Overview';
 import { CreateApplication } from './CreateApplication';
 import { Bindings } from './Bindings';
 import { AssignMicroservice } from './AssignMicroservice';
 import { ApplicationToolbarItems } from './ApplicationToolbarItems';
 import { ApplicationModel } from './ApplicationModel';
+import { NavigationStructure } from './NavigationStructure';
+import { AllApplicationsQuery } from './AllApplicationsQuery';
 
 export default function App(this: any) {
-    const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
-    const [showAssignMicroserviceDialog, setShowAssignMicroserviceDialog] = useState(false);
-    const [selectedApplications, setSelectedApplications]
-        = useState<ApplicationModel[]>([]);
-
-    console.log('current application is ', selectedApplications);
-
+    console.log('Initializing App!');
     Bindings.initialize();
     MVVMBindings.initialize();
     PortalBindings.initialize();
     PlatformBindings.initialize();
 
-    const navigation = container.resolve(Navigation);
+    const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
+    const [showAssignMicroserviceDialog, setShowAssignMicroserviceDialog] = useState(false);
+    const [selectedApplications, setSelectedApplications]= useState<ApplicationModel[]>([]);
+    const [allApplications, setAllApplications]= useState<ApplicationModel[]>([]);
 
-    navigation.set(
-        [
-            {
-                name: 'Face-b',
-                items: [
-                    {
-                        name: 'Dev',
-                    },
-                    {
-                        name: 'Test',
-                    },
-                    {
-                        name: 'Prod',
-                    },
-                ],
-            },
-            {
-                name: 'Insta-g',
-                items: [
-                    {
-                        name: 'Default',
-                    },
-                ],
-            },
-            {
-                name: 'Wahats-up',
-                items: [
-                    {
-                        name: 'Dev',
-                    },
-                    {
-                        name: 'Test',
-                    },
-                    {
-                        name: 'Staging',
-                    },
-                    {
-                        name: 'China',
-                    },
-                    {
-                        name: 'Europe',
-                    },
-                ],
-            },
-        ],
-        {
-            button: new NavigationButton('New Application', 'Add', () =>
-                setShowCreateApplicationDialog(true)
-            ),
-            placement: 'bottom',
-        }
-    );
 
     return (
         <>
+            <NavigationStructure
+                applications={allApplications}
+                handleNavbarActionButtonClick={() => setShowCreateApplicationDialog(true)}
+            />
             <ApplicationToolbarItems
                 onCreateApplicationClicked={() => setShowCreateApplicationDialog(true)}
                 onAssignMicroserviceClicked={() => setShowAssignMicroserviceDialog(true)}
@@ -105,7 +57,6 @@ export default function App(this: any) {
                 onAssigned={() => setShowAssignMicroserviceDialog(false)}
                 onCancelled={() => setShowAssignMicroserviceDialog(false)}
             />
-            <Overview onSelected={((i) => setSelectedApplications(i))} />
         </>
     );
 }
