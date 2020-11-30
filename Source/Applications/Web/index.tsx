@@ -35,6 +35,23 @@ export default function App(this: any) {
     const [selectedApplications, setSelectedApplications]= useState<ApplicationModel[]>([]);
     const [allApplications, setAllApplications]= useState<ApplicationModel[]>([]);
 
+    const allApplicationsQuery = container.resolve(AllApplicationsQuery);
+
+    useEffect(() => {
+        const id = Guid.create().toString();
+        console.log(id,'useEFFECT START');
+        const subscription = allApplicationsQuery.items.subscribe((apps) =>{
+            console.log(id, 'useEFFECT START subscription');
+            console.log(id,'useEFFECT Apps', apps);
+            setAllApplications(apps);
+        });
+        return () => {
+            console.log(id, 'useEFFECT START CLEANUP');
+            subscription.unsubscribe();
+        };
+    },[allApplications]);
+
+
 
     return (
         <>
