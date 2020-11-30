@@ -22,6 +22,7 @@ import { projectFromEventsToReadModels } from './microservices';
         dolittleRuntimePort: 50049,
         graphQLSchema: schema,
         defaultDatabaseName: 'microservices',
+        defaultEventStoreDatabaseName: 'event_store_microservices',
         expressCallback: _ => {
         },
         dolittleCallback: _ => {
