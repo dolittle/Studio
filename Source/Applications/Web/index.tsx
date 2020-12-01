@@ -3,18 +3,16 @@
 
 import 'reflect-metadata';
 
-import { Guid } from '@dolittle/rudiments';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { container } from 'tsyringe';
 
-import { Bindings as PortalBindings, Navigation, ToolbarItems, ToolbarItem, NavigationButton, NavigationGroup, NavigationActionBar } from '@shared/portal';
+import { Bindings as PortalBindings } from '@shared/portal';
 import { Bindings as MVVMBindings } from '@shared/mvvm';
 import { Bindings as PlatformBindings } from '@shared/platform';
 
 import '@shared/styles/theme';
 import './index.scss';
-// import { Overview } from './Overview';
 import { CreateApplication } from './CreateApplication';
 import { Bindings } from './Bindings';
 import { AssignMicroservice } from './AssignMicroservice';
@@ -37,7 +35,6 @@ export default function App(this: any) {
     const allApplicationsQuery = container.resolve(AllApplicationsQuery);
 
     useEffect(() => {
-        const id = Guid.create().toString();
         const subscription = allApplicationsQuery.items.subscribe((apps) =>{
             setAllApplications(apps);
         });
