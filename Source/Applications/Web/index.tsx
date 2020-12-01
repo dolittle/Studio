@@ -61,7 +61,7 @@ export default function App(this: any) {
                 onCancelled={() => setShowCreateApplicationDialog(false)}
             />
             <AssignMicroservice
-                forApplication={selectedApplications[0]}
+                forApplications={allApplications}
                 visible={showAssignMicroserviceDialog}
                 onAssigned={() => setShowAssignMicroserviceDialog(false)}
                 onCancelled={() => setShowAssignMicroserviceDialog(false)}

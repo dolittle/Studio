@@ -3,6 +3,7 @@
 import gql from 'graphql-tag';
 import { injectable } from 'tsyringe';
 import { DataSource } from './DataSource';
+import { MicroserviceModel } from './MicroserviceModel';
 
 @injectable()
 export class QueryForMicroservices {
@@ -27,7 +28,4 @@ export type MicroservicesQuery = {
     allMicroservices: MicroserviceModel[];
 };
 
-export type MicroserviceModel = {
-    microserviceId: string;
-    name: string;
-};
+

@@ -1,11 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import { Guid } from '@dolittle/rudiments';
-import { EnvironmentModel } from './EnvironmentModel';
 
-export type ApplicationModel = {
+export type TenantModel = {
     id: Guid;
-    applicationId: Guid;
+    tenantId: Guid;
     name: string;
-    environments: EnvironmentModel[];
 };

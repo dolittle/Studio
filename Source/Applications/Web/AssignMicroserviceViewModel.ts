@@ -5,57 +5,61 @@ import { IViewContext } from '@shared/mvvm';
 import { Guid } from '@dolittle/rudiments';
 import { injectable } from 'tsyringe';
 import { QueryForMicroservices } from './QueryForMicroservices';
+import { MicroserviceModel } from './MicroserviceModel';
 import { AssignMicroserviceProps } from './AssignMicroservice';
 
 @injectable()
 export class AssignMicroserviceViewModel {
-    microservices: { key: string; text: string }[] = [];
+    microservices: MicroserviceModel[] = [];
+    selectedApplicationId: string | undefined;
+    selectedEnvironmentId: string | undefined;
     selectedMicroserviceId: string | undefined;
     isAssigning: boolean = false;
-
-    private _props!: AssignMicroserviceProps;
 
     constructor(
         readonly _query: QueryForMicroservices,
         readonly _applications: IApplications
-        ) {}
+    ) {}
 
-    activate({
-        props,
-    }: IViewContext<AssignMicroserviceViewModel, AssignMicroserviceProps>) {
-        console.log('activating', props);
-        this._props = props;
+    activate() {
         this._fetchMicroservices();
     }
 
+    selectApplication(option?: SelectedOption) {
+        this.selectedApplicationId = option?.key;
+    }
+
+    selectEnvironment(option: SelectedOption): void {
+        this.selectedEnvironmentId = option?.key;
+    }
+
     selectMicroservice(option?: SelectedOption) {
-        console.log('selected', option, this._props);
         this.selectedMicroserviceId = option?.key;
     }
 
     async _fetchMicroservices(): Promise<void> {
         const microservices = await this._query.allMicroservices();
-        this.microservices = microservices.map((ms) => ({
-            key: ms.microserviceId,
-            text: ms.name,
-        }));
+        this.microservices = microservices;
     }
 
-    async assignMicroservice(applicationId: Guid, microserviceId: string | undefined) {
+    async assignMicroservice() {
+        const applicationId = this.selectedApplicationId,
+            environmentId = this.selectedEnvironmentId,
+            microserviceId = this.selectedMicroserviceId;
         if (applicationId && microserviceId) {
             this.isAssigning = true;
             try {
-                await this._applications.assignMicroserviceToApplication(
-                    applicationId,
-                    Guid.parse(microserviceId)
-                );
+                console.log(applicationId, environmentId, microserviceId);
+                // await this._applications.assignMicroserviceToApplication(
+                //     Guid.parse(applicationId),
+                //     Guid.parse(microserviceId)
+                // );
             } catch (e) {
                 console.log(e.message);
             } finally {
                 this.isAssigning = false;
             }
         }
-
     }
 }
 
