@@ -16,8 +16,6 @@ export class NavigationViewModel {
     }
 
     navActionButtonClicked() {
-        console.log('Portal/Web/NavigationViewModel: Clicked');
-        console.log('Portal/Web/NavigationViewModel: Publishing NavigationButtonWasClicked');
         this._navigation.navigationActionButtonClicked();
     }
 

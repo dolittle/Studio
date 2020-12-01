@@ -38,7 +38,6 @@ export const AssignMicroservice = withViewModel<AssignMicroserviceViewModel, Ass
             viewModel.assignMicroservice();
             props.onAssigned();
         }
-        console.log(viewModel);
 
         return (
             <Dialog
