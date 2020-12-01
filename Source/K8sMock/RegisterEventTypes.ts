@@ -3,7 +3,8 @@
 
 import { ClientBuilder } from '@dolittle/sdk';
 import { ApplicationCreated } from './applications/ApplicationCreated';
-import { MicroserviceAssignedToApplication } from './applications/MicroserviceAssignedToApplication';
+import { EnvironmentCreatedForApplication } from './applications/EnvironmentCreatedForApplication';
+import { MicroserviceAssignedToApplicationForEnvironment } from './applications/MicroserviceAssignedToApplicationForEnvironment';
 import { MicroserviceCreated } from './microservices/MicroserviceCreated';
 
 export const RegisterEventTypes = (clientBuilder: ClientBuilder) => {
@@ -14,6 +15,7 @@ export const RegisterEventTypes = (clientBuilder: ClientBuilder) => {
 
     clientBuilder.withEventTypes(_ => {
         _.register(ApplicationCreated);
-        _.register(MicroserviceAssignedToApplication)
+        _.register(EnvironmentCreatedForApplication);
+        _.register(MicroserviceAssignedToApplicationForEnvironment);
     });
 };

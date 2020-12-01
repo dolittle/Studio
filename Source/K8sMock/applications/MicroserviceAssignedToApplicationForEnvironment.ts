@@ -3,10 +3,11 @@
 
 import { eventType } from '@dolittle/sdk.events';
 
-@eventType('DA487116-84D8-47C4-B9FB-74C4F766DC02')
-export class MicroserviceAssignedToApplication {
+@eventType('0e6eac84-2122-4434-bedc-ce4ea3db965c')
+export class MicroserviceAssignedToApplicationForEnvironment {
     constructor(
         readonly applicationId: string,
+        readonly environmentId: string,
         readonly microserviceId: string
     ) { }
 }

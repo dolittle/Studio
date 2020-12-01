@@ -7,6 +7,7 @@ import { injectable } from 'tsyringe';
 import { QueryForMicroservices } from './QueryForMicroservices';
 import { MicroserviceModel } from './MicroserviceModel';
 import { AssignMicroserviceProps } from './AssignMicroservice';
+import { SelectedOption } from './SelectedOption';
 
 @injectable()
 export class AssignMicroserviceViewModel {
@@ -63,6 +64,3 @@ export class AssignMicroserviceViewModel {
     }
 }
 
-export type SelectedOption = {
-    key?: string;
-};

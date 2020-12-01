@@ -8,51 +8,79 @@ import { injectable } from 'tsyringe';
 import { ApplicationCreated } from './ApplicationCreated';
 import { ApplicationCreateRequest } from './ApplicationCreateRequest';
 import { ApplicationCreateResponse } from './ApplicationCreateResponse';
+import { EnvironmentCreateRequest } from './EnvironmentCreateRequest';
+import { EnvironmentCreateResponse } from './EnvironmentCreateResponse';
+import { EnvironmentCreatedForApplication } from './EnvironmentCreatedForApplication';
 import { AssignMicroserviceToApplicationResponse } from './AssignMicroserviceToApplicationResponse';
-import { MicroserviceAssignedToApplication } from './MicroserviceAssignedToApplication';
+import { MicroserviceAssignedToApplicationForEnvironment } from './MicroserviceAssignedToApplicationForEnvironment';
 
 @Route('api/k8s/applications')
 @injectable()
 export class ApplicationsController extends Controller {
-
     constructor(private readonly _eventStore: IEventStore) {
         super();
     }
 
     @Post()
-    async create(@Body() application: ApplicationCreateRequest): Promise<ApplicationCreateResponse> {
+    async create(
+        @Body() application: ApplicationCreateRequest
+    ): Promise<ApplicationCreateResponse> {
         this.setStatus(200);
 
-        const event = new ApplicationCreated(
-            Guid.create().toString(),
-            application.name);
+        const event = new ApplicationCreated(Guid.create().toString(), application.name);
         await this._eventStore.commitPublic(event, Guid.create());
 
         return {
             name: application.name,
-            result: 'Created'
+            result: 'Created',
         } as ApplicationCreateResponse;
     }
 
-    @Post('{applicationId}/microservices/{microserviceId}')
-    async assignMicroservice(applicationId: string, microserviceId: string)
-        : Promise<AssignMicroserviceToApplicationResponse> {
-
+    @Post('{applicationId}/environments')
+    async createEnvironment(
+        applicationId: string,
+        @Body() environment: EnvironmentCreateRequest
+    ): Promise<EnvironmentCreateResponse> {
         try {
-            const event = new MicroserviceAssignedToApplication(
+            const event = new EnvironmentCreatedForApplication(
                 applicationId,
+                environment.name,
+                applicationId
+            );
+
+            await this._eventStore.commitPublic(event, applicationId);
+
+            this.setStatus(200);
+            return { name: environment.name, result: 'assigned' };
+        } catch (error) {
+            this.setStatus(500);
+            return {
+                name: environment.name,
+                result: `failed with error: ${error?.message ?? 'no message'}`,
+            };
+        }
+    }
+    @Post('{applicationId}/environments/{environmentId}/microservices/{microserviceId}')
+    async assignMicroservice(
+        applicationId: string,
+        environmentId: string,
+        microserviceId: string
+    ): Promise<AssignMicroserviceToApplicationResponse> {
+        try {
+            const event = new MicroserviceAssignedToApplicationForEnvironment(
+                applicationId,
+                environmentId,
                 microserviceId
-            )
+            );
 
             await this._eventStore.commitPublic(event, applicationId);
 
             this.setStatus(200);
             return { result: 'assigned' };
-
         } catch (error) {
             this.setStatus(500);
             return {
-                result: `failed with error: ${error?.message ?? 'no message'}`
+                result: `failed with error: ${error?.message ?? 'no message'}`,
             };
         }
     }

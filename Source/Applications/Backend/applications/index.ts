@@ -9,14 +9,14 @@ export * from './MicroserviceQueries';
 
 import { ClientBuilder } from '@dolittle/sdk';
 import { Application, ApplicationModel } from './Application';
-import { ApplicationCreated } from './events';
-import { MicroserviceCreated } from './events/MicroserviceCreated';
+import { ApplicationCreated, EnvironmentCreatedForApplication, MicroserviceCreated } from './events';
 import { Microservice, MicroserviceModel } from './Microservice';
 
 export function projectFromEventsToReadModels(clientBuilder: ClientBuilder) {
     clientBuilder.withEventTypes(_ => {
         _.register(ApplicationCreated);
         _.register(MicroserviceCreated);
+        _.register(EnvironmentCreatedForApplication);
     });
 
     clientBuilder
@@ -62,5 +62,5 @@ export function projectFromEventsToReadModels(clientBuilder: ClientBuilder) {
                             )
                     );
             }
-        )
+        );
 }

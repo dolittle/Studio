@@ -20,6 +20,7 @@ import { ApplicationToolbarItems } from './ApplicationToolbarItems';
 import { ApplicationModel } from './ApplicationModel';
 import { NavigationStructure } from './NavigationStructure';
 import { AllApplicationsQuery } from './AllApplicationsQuery';
+import { CreateEnvironment } from './CreateEnvironment';
 
 export default function App(this: any) {
     Bindings.initialize();
@@ -28,6 +29,7 @@ export default function App(this: any) {
     PlatformBindings.initialize();
 
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
+    const [showCreateEnvironmentDialog, setShowCreateEnvironmentDialog] = useState(false);
     const [showAssignMicroserviceDialog, setShowAssignMicroserviceDialog] = useState(false);
     const [selectedApplications, setSelectedApplications]= useState<ApplicationModel[]>([]);
     const [allApplications, setAllApplications]= useState<ApplicationModel[]>([]);
@@ -53,12 +55,19 @@ export default function App(this: any) {
             />
             <ApplicationToolbarItems
                 onCreateApplicationClicked={() => setShowCreateApplicationDialog(true)}
+                onCreateEnvironmentClicked={() => setShowCreateEnvironmentDialog(true)}
                 onAssignMicroserviceClicked={() => setShowAssignMicroserviceDialog(true)}
             />
             <CreateApplication
                 visible={showCreateApplicationDialog}
                 onCreated={() => setShowCreateApplicationDialog(false)}
                 onCancelled={() => setShowCreateApplicationDialog(false)}
+            />
+            <CreateEnvironment
+                allApplications={allApplications}
+                visible={showCreateEnvironmentDialog}
+                onCreated={() => setShowCreateEnvironmentDialog(false)}
+                onCancelled={() => setShowCreateEnvironmentDialog(false)}
             />
             <AssignMicroservice
                 forApplications={allApplications}

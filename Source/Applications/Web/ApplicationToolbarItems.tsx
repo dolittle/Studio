@@ -8,9 +8,15 @@ import { container } from 'tsyringe';
 export const ApplicationToolbarItems = (props: {
     onCreateApplicationClicked: () => void;
     onAssignMicroserviceClicked: () => void;
+    onCreateEnvironmentClicked: () => void;
 }): JSX.Element => {
     const toolbar = container.resolve(ToolbarItems);
     toolbar.setItems([
+        new ToolbarItem(
+            'Create Environment',
+            'Add',
+            () => props.onCreateEnvironmentClicked()
+        ),
         new ToolbarItem(
             'Assign microservice',
             'AppIconDefaultAdd',

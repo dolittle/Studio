@@ -25,6 +25,16 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "EnvironmentCreateResponse": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"result":{"dataType":"string","required":true},"name":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "EnvironmentCreateRequest": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "AssignMicroserviceToApplicationResponse": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"result":{"dataType":"string","required":true}},"validators":{}},
@@ -85,10 +95,39 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/api/k8s/applications/:applicationId/microservices/:microserviceId',
+        app.post('/api/k8s/applications/:applicationId/environments',
             function (request: any, response: any, next: any) {
             const args = {
                     applicationId: {"in":"path","name":"applicationId","required":true,"dataType":"string"},
+                    environment: {"in":"body","name":"environment","required":true,"ref":"EnvironmentCreateRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+            const controller: any = container.get<ApplicationsController>(ApplicationsController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.createEnvironment.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/k8s/applications/:applicationId/environments/:environmentId/microservices/:microserviceId',
+            function (request: any, response: any, next: any) {
+            const args = {
+                    applicationId: {"in":"path","name":"applicationId","required":true,"dataType":"string"},
+                    environmentId: {"in":"path","name":"environmentId","required":true,"dataType":"string"},
                     microserviceId: {"in":"path","name":"microserviceId","required":true,"dataType":"string"},
             };
 

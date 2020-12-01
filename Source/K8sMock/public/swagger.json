@@ -32,6 +32,32 @@
 				],
 				"type": "object"
 			},
+			"EnvironmentCreateResponse": {
+				"properties": {
+					"result": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"result",
+					"name"
+				],
+				"type": "object"
+			},
+			"EnvironmentCreateRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object"
+			},
 			"AssignMicroserviceToApplicationResponse": {
 				"properties": {
 					"result": {
@@ -123,7 +149,45 @@
 				}
 			}
 		},
-		"/api/k8s/applications/{applicationId}/microservices/{microserviceId}": {
+		"/api/k8s/applications/{applicationId}/environments": {
+			"post": {
+				"operationId": "CreateEnvironment",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EnvironmentCreateResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "applicationId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/EnvironmentCreateRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/k8s/applications/{applicationId}/environments/{environmentId}/microservices/{microserviceId}": {
 			"post": {
 				"operationId": "AssignMicroservice",
 				"responses": {
@@ -143,6 +207,14 @@
 					{
 						"in": "path",
 						"name": "applicationId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "environmentId",
 						"required": true,
 						"schema": {
 							"type": "string"

@@ -4,3 +4,4 @@
 export class Microservice {
     name: string = '';
 }
+

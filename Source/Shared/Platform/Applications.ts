@@ -6,6 +6,7 @@ import { injectable } from 'tsyringe';
 import { Application } from './Application';
 import { ApplicationCreationResult } from './ApplicationCreationResult';
 import { AssignMicroserviceToApplicationResult } from './AssignMicroserviceToApplicationResult';
+import { Environment } from './Environment';
 import { IApplications } from './IApplications';
 
 @injectable()
@@ -22,8 +23,18 @@ export class Applications implements IApplications {
         return { message: jsonResult.message };
     }
 
-    async assignMicroserviceToApplication(applicationId: Guid, microserviceId: Guid): Promise<AssignMicroserviceToApplicationResult> {
-        const endpoint = `${Applications.BaseUri}/${applicationId}/microservices/${microserviceId}`;
+    async createEnvironment(applicationId: Guid, environment: Environment): Promise<ApplicationCreationResult> {
+        const result = await fetch(`${Applications.BaseUri}/${applicationId}/environments/`, {
+            method: 'POST',
+            body: JSON.stringify(environment),
+            headers:{'content-type': 'application/json'}
+        });
+        const jsonResult = await result.json();
+        return { message: jsonResult.message };
+    }
+
+    async assignMicroserviceToApplication(applicationId: Guid, environmentId: Guid, microserviceId: Guid): Promise<AssignMicroserviceToApplicationResult> {
+        const endpoint = `${Applications.BaseUri}/${applicationId}/environments/${environmentId}/microservices/${microserviceId}`;
         const result = await fetch(endpoint,{
             method: 'POST',
             headers:{'content-type': 'application/json'}

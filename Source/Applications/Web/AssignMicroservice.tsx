@@ -12,7 +12,8 @@ import {
     ComboBox,
 } from 'office-ui-fabric-react';
 import { withViewModel } from '@shared/mvvm';
-import { AssignMicroserviceViewModel, SelectedOption } from './AssignMicroserviceViewModel';
+import { AssignMicroserviceViewModel } from './AssignMicroserviceViewModel';
+import { SelectedOption } from './SelectedOption';
 import { ApplicationModel } from './ApplicationModel';
 
 export type AssignMicroserviceProps = {
