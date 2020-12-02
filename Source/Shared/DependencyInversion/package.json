@@ -6,6 +6,7 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
+        "reflect-metadata": "^0.1.13",
         "tsyringe": "4.3.0"
     },
     "devDependencies": {
