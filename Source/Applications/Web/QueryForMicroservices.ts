@@ -12,7 +12,7 @@ export class QueryForMicroservices {
         const query = gql`
             query {
                 allMicroservices {
-                    microserviceId
+                    id
                     name
                 }
             }
@@ -28,6 +28,6 @@ export type MicroservicesQuery = {
 };
 
 export type MicroserviceModel = {
-    microserviceId: string;
+    id: string;
     name: string;
 };

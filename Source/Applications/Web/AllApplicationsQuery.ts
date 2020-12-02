@@ -33,7 +33,7 @@ export class AllApplicationsQuery {
         const query = gql`
             query {
                 allApplications {
-                    applicationId
+                    id
                     name
                 }
             }

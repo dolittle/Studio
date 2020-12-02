@@ -14,10 +14,6 @@ export class Microservice {
 
     @Field()
     @prop()
-    microserviceId?: string;
-
-    @Field()
-    @prop()
     name!: string;
 }
 

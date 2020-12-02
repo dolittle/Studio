@@ -24,7 +24,6 @@ export function projectFromEventsToReadModels(clientBuilder: ClientBuilder) {
                     .from(MicroserviceCreated, e => e
                         .usingKeyFrom(ev => ev.id)
                         .set(model => model.name).to(ev => ev.name)
-                        .set(model => model.microserviceId).to(ev => ev.id)
                     );
             }
         );

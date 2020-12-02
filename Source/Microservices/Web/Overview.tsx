@@ -3,14 +3,18 @@
 import React from 'react';
 import { withViewModel } from '@shared/mvvm';
 import { OverviewViewModel } from './OverviewViewModel';
-import { DetailsList, DetailsListLayoutMode, IDetailsListProps } from 'office-ui-fabric-react';
+import {
+    DetailsList,
+    DetailsListLayoutMode,
+    IDetailsListProps,
+} from 'office-ui-fabric-react';
 
 export const Overview = withViewModel(OverviewViewModel, ({ viewModel }) => {
     const _columns = [
         {
             key: 'id',
             name: 'Id',
-            fieldName: 'microserviceId',
+            fieldName: 'id',
             minWidth: 100,
             maxWidth: 200,
             isResizable: true,

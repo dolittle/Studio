@@ -2,12 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import gql from 'graphql-tag';
 import { injectable } from 'tsyringe';
-import { ApplicationModel } from './ApplicationModel';
 import { DataSource } from './DataSource';
+import { MicroserviceModel } from './MicroserviceModel';
 
 @injectable()
 export class OverviewViewModel {
-    items: ApplicationModel[] = [];
+    items: MicroserviceModel[] = [];
 
     constructor(readonly _dataSource: DataSource) {}
 
@@ -19,7 +19,7 @@ export class OverviewViewModel {
         const query = gql`
             query {
                 allMicroservices {
-                    microserviceId
+                    id
                     name
                 }
             }

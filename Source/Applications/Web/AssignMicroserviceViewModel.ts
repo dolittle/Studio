@@ -36,7 +36,7 @@ export class AssignMicroserviceViewModel {
     async _fetchMicroservices(): Promise<void> {
         const microservices = await this._query.allMicroservices();
         this.microservices = microservices.map((ms) => ({
-            key: ms.microserviceId,
+            key: ms.id,
             text: ms.name,
         }));
     }

@@ -4,6 +4,5 @@ import { Guid } from '@dolittle/rudiments';
 
 export type ApplicationModel = {
     id: Guid;
-    applicationId: Guid;
     name: string;
 };

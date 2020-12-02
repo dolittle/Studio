@@ -2,8 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import { Guid } from '@dolittle/rudiments';
 
-export type ApplicationModel = {
+export type MicroserviceModel = {
     id: Guid;
-    applicationId: Guid;
     name: string;
 };
