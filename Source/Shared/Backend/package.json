@@ -13,7 +13,6 @@
         "@typegoose/typegoose": "7.4.2",
         "mongoose": "5.10.13",
         "class-validator": "0.12.2",
-        "graphql": "15.4.0",
         "type-graphql": "1.1.1",
         "uuid": "8.3.1",
         "uuid-mongodb": "2.3.3",
@@ -27,9 +26,6 @@
         "@types/compression": "^1.7.0",
         "@types/express": "4.17.7",        
         "ts-node": "9.0.0"
-    },
-    "resolutions": {
-        "graphql": "15.4.0"
     },
     "peerDependencies": {}
 }

@@ -22,9 +22,8 @@
         "Source/Shared/WebPack"
     ],
     "dependencies": {
-        "dotenv": "8.2.0",
-        "reflect-metadata": "^0.1.13",
-        "tsyringe": "4.3.0"
+        "graphql": "15.4.0",
+        "dotenv": "8.2.0"
     },
     "devDependencies": {
         "@dolittle/typescript.build": "rc",
@@ -46,6 +45,9 @@
         "nodemon": "2.0.4",
         "prettier": "^2.0.5",
         "typescript": "4.0.5"
+    },
+    "resolutions": {
+        "graphql": "15.4.0"
     },
     "license": "MIT"
 }
