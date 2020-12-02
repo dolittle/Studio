@@ -6,10 +6,13 @@
     "private": "true",
     "license": "UNLICENSED",
     "scripts": {
-        "dev": "concurrently \"nodemon ./index.ts\"",
+        "dev": "nodemon ./index.ts",
         "debug": "nodemon --inspect=5858 -e ts --exec node -r ts-node/register index.ts",
         "start": "ts-node index.ts",
-        "build": "tsc -b --clean && tsc -b"
+        "build": "yarn clean && webpack --env.production --mode=production",
+        "clean": "tsc -b --clean",
+        "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+        "ci": "yarn clean && yarn lint && tsc -b && yarn test"
     },
     "nodemonConfig": {
         "restartable": "rs",
