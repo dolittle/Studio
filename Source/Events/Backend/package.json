@@ -7,7 +7,7 @@
     "license": "UNLICENSED",
     "scripts": {
         "dev": "nodemon ./index.ts",
-        "debug": "nodemon --inspect=5858 -e ts --exec node -r ts-node/register index.ts",
+        "debug": "nodemon --inspect -e ts --exec node -r ts-node/register index.ts",
         "start": "ts-node index.ts",
         "build": "yarn clean && webpack --env.production --mode=production",
         "clean": "tsc -b --clean",
