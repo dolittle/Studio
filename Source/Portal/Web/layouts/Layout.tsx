@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { TopLevelMenu } from 'layouts/TopLevelMenu';
+import { TopLevelMenu } from './TopLevelMenu';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 
