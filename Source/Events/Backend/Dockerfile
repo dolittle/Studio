@@ -7,6 +7,7 @@ COPY .eslintrc.js ./
 COPY tsconfig.json ./
 COPY package.json ./
 
+COPY Source/Shared/WebPack/package.json ./Source/Shared/WebPack/package.json
 COPY Source/Shared/Backend/package.json ./Source/Shared/Backend/package.json
 COPY Source/Shared/DependencyInversion/package.json ./Source/Shared/DependencyInversion/package.json
 
@@ -14,6 +15,7 @@ WORKDIR /app/Source/Events/Backend
 COPY Source/Events/Backend/package.json ./package.json
 RUN yarn
 
+COPY Source/Shared/WebPack/ /app/Source/Shared/WebPack/
 COPY Source/Shared/Backend/ /app/Source/Shared/Backend/
 COPY Source/Shared/DependencyInversion/ /app/Source/Shared/DependencyInversion/
 COPY Source/Events/Backend/ ./
@@ -60,8 +62,7 @@ ARG CONFIGURATION=Release
 RUN echo Configuration = $CONFIGURATION
 
 WORKDIR /app
-COPY --from=backend-build /app/Source/Events/Backend/dist ./
-COPY --from=backend-build /app/node_modules ./node_modules
-COPY --from=web-build /app/Source/Events/Web/wwwroot ./Events/Backend/public
+COPY --from=backend-build /app/Source/Events/Backend/dist/index.js ./
+COPY --from=web-build /app/Source/Events/Web/wwwroot ./public
 
-ENTRYPOINT ["node", "Events/Backend/index.js"]
+ENTRYPOINT ["node", "index.js"]
