@@ -24,6 +24,6 @@ jobs:
       run: |
         yarn
         cd Source/Events/Backend
-        yarn build
+        yarn ci
         cd ../Web
         yarn build
