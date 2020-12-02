@@ -14,6 +14,7 @@ export class MicroserviceQueries {
 
     @Query(returns => [Microservice])
     async allMicroservices() {
-        return MicroserviceModel.find();
+        console.log('fetching all microservices');
+        return MicroserviceModel.find().exec();
     }
 }
