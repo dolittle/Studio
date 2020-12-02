@@ -17,15 +17,15 @@ export function projectFromEventsToReadModels(clientBuilder: ClientBuilder) {
     clientBuilder
         .withProjectionFor(
             Microservice,
-            _ => {
-                _.withId('3E514A82-B12D-499B-81A0-EA20B7CD5A77')
-                    .useModel(MicroserviceModel)
-                    .fromScope('da92a933-a4c5-478d-a0c4-49aeef72f6d5');
-                _.set(a => a.name, p => p.from(MicroserviceCreated, e => e.name));
-                _.set(
-                    a => a.microserviceId,
-                    p => p.from(MicroserviceCreated, e => e.id)
-                );
+            builder => {
+                builder
+                    .withId('3E514A82-B12D-499B-81A0-EA20B7CD5A77')
+                    .inScope('da92a933-a4c5-478d-a0c4-49aeef72f6d5')
+                    .from(MicroserviceCreated, e => e
+                        .usingKeyFrom(ev => ev.id)
+                        .set(model => model.name).to(ev => ev.name)
+                        .set(model => model.microserviceId).to(ev => ev.id)
+                    );
             }
         );
 }
