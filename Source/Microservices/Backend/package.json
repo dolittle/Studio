@@ -11,6 +11,7 @@
         "start": "ts-node index.ts",
         "build": "yarn clean && webpack --env.production --mode=production",
         "clean": "tsc -b --clean",
+        "test": "mocha",
         "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
         "ci": "yarn clean && yarn lint && tsc -b && yarn test"
     },
