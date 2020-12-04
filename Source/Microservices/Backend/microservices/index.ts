@@ -19,8 +19,9 @@ export function projectFromEventsToReadModels(clientBuilder: ClientBuilder) {
             Microservice,
             builder => {
                 builder
-                    .withId('3E514A82-B12D-499B-81A0-EA20B7CD5A77')
+                    .withId('bf519ef8-d5b0-41f7-be03-4b30e7b3b65f')
                     .inScope('da92a933-a4c5-478d-a0c4-49aeef72f6d5')
+                    .useModelName('microservices')
                     .from(MicroserviceCreated, e => e
                         .usingKeyFrom(ev => ev.id)
                         .set(model => model.name).to(ev => ev.name)

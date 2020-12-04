@@ -23,8 +23,9 @@ export function projectFromEventsToReadModels(clientBuilder: ClientBuilder) {
         .withProjectionFor(
             Application,
             builder => builder
-                .withId('c25d1a88-fd4c-4b78-ac81-f90c3545fab9')
+                .withId('4b0eb09f-4aa9-4ea6-a24e-25241f4be4ca')
                 .inScope('da92a933-a4c5-478d-a0c4-49aeef72f6d5')
+                .useModelName('applications')
                 .from(ApplicationCreated, e => e
                     .usingKeyFrom(ev => ev.id)
                     .set(model => model.name).to(ev => ev.name))
@@ -34,8 +35,9 @@ export function projectFromEventsToReadModels(clientBuilder: ClientBuilder) {
         .withProjectionFor(
             Microservice,
             builder => builder
-                .withId('4D074AFD-C01F-4904-99CF-03ED609BD222')
+                .withId('8d28b74a-0b18-4665-a4e8-70c9518cf05a')
                 .inScope('da92a933-a4c5-478d-a0c4-49aeef72f6d5')
+                .useModelName('microservices')
                 .from(MicroserviceCreated, e => e
                     .usingKeyFrom(ev => ev.id)
                     .set(model => model.name).to(ev => ev.name)
