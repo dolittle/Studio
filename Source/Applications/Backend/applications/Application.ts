@@ -10,8 +10,8 @@ import { Microservice } from './Microservice';
 @ObjectType()
 export class Application {
     @Field({ name: 'id' })
-    @guid()
-    _id?: Guid;
+    @prop()
+    _id?: string;
 
     @Field()
     @prop()
@@ -23,8 +23,8 @@ export const ApplicationModel = getModelForClass(Application);
 
 export class Environment {
     @Field({ name: 'id' })
-    @guid()
-    _id?: Guid;
+    @prop()
+    _id?: string;
 
     name!: string;
 
@@ -35,8 +35,8 @@ export class Environment {
 
 export class Tenant {
     @Field({ name: 'id' })
-    @guid()
-    _id?: Guid;
+    @prop()
+    _id?: string;
 
     name?: string;
 }
