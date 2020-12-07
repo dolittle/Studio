@@ -4,14 +4,14 @@
 import { Controller, Get, Route, Tags } from 'tsoa';
 import { PodList } from '@shared/backend/k8s/PodList';
 
-const pods = require('./pods.json') as PodList;
+const namespaces = require('./namespaces.json') as PodList;
 
 @Route('api/v1/namespaces')
 @Tags('core_v1')
-export class PodsController extends Controller {
+export class NamespacesController extends Controller {
 
-    @Get('{namespace}/pods')
-    async getPods(): Promise<PodList> {
-        return pods;
+    @Get()
+    async getNamespaces(): Promise<PodList> {
+        return namespaces;
     }
 }

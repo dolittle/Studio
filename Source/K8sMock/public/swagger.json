@@ -69,20 +69,84 @@
 				],
 				"type": "object"
 			},
-			"PingResponse": {
+			"PodMetadata": {
 				"properties": {
-					"message": {
+					"creationTimestamp": {
 						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"labels": {
+						"properties": {},
+						"additionalProperties": {
+							"type": "string"
+						},
+						"type": "object"
 					}
 				},
 				"required": [
-					"message"
+					"creationTimestamp",
+					"name",
+					"labels"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ContainerSpec": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					},
+					"args": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"name",
+					"image",
+					"args"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PodSpec": {
+				"properties": {
+					"containers": {
+						"$ref": "#/components/schemas/ContainerSpec"
+					}
+				},
+				"required": [
+					"containers"
 				],
 				"type": "object",
 				"additionalProperties": false
 			},
 			"Pod": {
-				"properties": {},
+				"properties": {
+					"apiVersion": {
+						"type": "string"
+					},
+					"kind": {
+						"type": "string"
+					},
+					"metadata": {
+						"$ref": "#/components/schemas/PodMetadata"
+					},
+					"spec": {
+						"$ref": "#/components/schemas/PodSpec"
+					}
+				},
+				"required": [
+					"metadata",
+					"spec"
+				],
 				"type": "object",
 				"additionalProperties": false
 			},
@@ -132,6 +196,18 @@
 					"items",
 					"kind",
 					"metadata"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PingResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -241,6 +317,28 @@
 						}
 					}
 				}
+			}
+		},
+		"/api/v1/namespaces": {
+			"get": {
+				"operationId": "GetNamespaces",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PodList"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"core_v1"
+				],
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/api/k8s/ping": {
