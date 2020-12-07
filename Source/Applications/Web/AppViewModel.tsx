@@ -11,25 +11,14 @@ import { ApplicationModel } from './ApplicationModel';
 @injectable()
 export class AppViewModel {
     allApplications: ApplicationModel[] = [];
-    assignMicroserviceDialogVisible: boolean = false;
-    createApplicationDialogVisible: boolean = false;
     selectedApplication?: ApplicationModel;
 
     private _observableQuery?: ObservableQuery;
 
-    constructor(readonly _dataSource: DataSource) {
-
-    }
+    constructor(readonly _dataSource: DataSource) {}
 
     activate() {
         this._startPollingForApplications();
-    }
-
-    setCreateApplicationDialogVisible(show: boolean) {
-        this.createApplicationDialogVisible = show;
-    }
-    setAssignMicroserviceDialogVisible(show: boolean) {
-        this.assignMicroserviceDialogVisible = show;
     }
 
     private async _startPollingForApplications() {
@@ -42,11 +31,13 @@ export class AppViewModel {
             }
         `;
 
-        this._observableQuery = this._dataSource.watchQuery<AllApplicationsQuery>({ query });
+        this._observableQuery = this._dataSource.watchQuery<AllApplicationsQuery>({
+            query,
+        });
 
         this._observableQuery.startPolling(1000);
         this._observableQuery.subscribe((next) => {
-            if(next.networkStatus === NetworkStatus.ready && next.data){
+            if (next.networkStatus === NetworkStatus.ready && next.data) {
                 // Should we have some logic to decide if there are actually any changes?
                 this.allApplications = next.data.allApplications;
                 this.selectedApplication = this.allApplications?.[0];
@@ -58,4 +49,3 @@ export class AppViewModel {
 type AllApplicationsQuery = {
     allApplications: ApplicationModel[];
 };
-

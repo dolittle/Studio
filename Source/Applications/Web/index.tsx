@@ -3,7 +3,7 @@
 
 import 'reflect-metadata';
 
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import '@shared/styles/theme';
@@ -17,32 +17,29 @@ import { withViewModel } from '@shared/mvvm';
 import { AppViewModel } from './AppViewModel';
 
 const App = withViewModel(AppViewModel, ({ viewModel }) => {
+    const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
+    const [showAssignMicroserviceDialog, setShowAssignMicroserviceDialog] = useState(false);
+
     return (
         <>
             <NavigationStructure
                 applications={viewModel.allApplications}
-                handleNavbarActionButtonClick={() =>
-                    viewModel.setCreateApplicationDialogVisible(true)
-                }
+                handleNavbarActionButtonClick={() => setShowCreateApplicationDialog(true)}
             />
             <ApplicationToolbarItems
-                onCreateApplicationClicked={() =>
-                    viewModel.setCreateApplicationDialogVisible(true)
-                }
-                onAssignMicroserviceClicked={() =>
-                    viewModel.setAssignMicroserviceDialogVisible(true)
-                }
+                onCreateApplicationClicked={() => setShowCreateApplicationDialog(true)}
+                onAssignMicroserviceClicked={() => setShowAssignMicroserviceDialog(true)}
             />
             <CreateApplication
-                visible={viewModel.createApplicationDialogVisible}
-                onCreated={() => viewModel.setCreateApplicationDialogVisible(false)}
-                onCancelled={() => viewModel.setCreateApplicationDialogVisible(false)}
+                visible={showCreateApplicationDialog}
+                onCreated={() => setShowCreateApplicationDialog(false)}
+                onCancelled={() => setShowCreateApplicationDialog(false)}
             />
             <AssignMicroservice
                 forApplication={viewModel.selectedApplication}
-                visible={viewModel.assignMicroserviceDialogVisible}
-                onAssigned={() => viewModel.setAssignMicroserviceDialogVisible(false)}
-                onCancelled={() => viewModel.setAssignMicroserviceDialogVisible(false)}
+                visible={showAssignMicroserviceDialog}
+                onAssigned={() => setShowAssignMicroserviceDialog(false)}
+                onCancelled={() => setShowAssignMicroserviceDialog(false)}
             />
         </>
     );
