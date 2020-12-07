@@ -9,8 +9,8 @@ import { Guid } from '@dolittle/rudiments';
 @ObjectType()
 export class Microservice {
     @Field({ name: 'id' })
-    @guid()
-    _id?: Guid;
+    @prop()
+    _id?: string;
 
     @Field()
     @prop()
