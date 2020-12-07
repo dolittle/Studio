@@ -14,8 +14,13 @@
             "spec": {
                 "containers": [
                     {
-                        "name": "Portal",
-                        "image": "dolittle/studio/portal:1.0.0",
+                        "name": "head",
+                        "image": "508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/applications:1.0.2-0",
+                        "args": []
+                    },
+                    {
+                        "name": "runtime",
+                        "image": "dolittle/runtime:5.1.2",
                         "args": []
                     }
                 ]
