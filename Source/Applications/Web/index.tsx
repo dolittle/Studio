@@ -7,9 +7,6 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { container } from 'tsyringe';
 
-import { Bindings as PortalBindings } from '@shared/portal';
-import { Bindings as MVVMBindings } from '@shared/mvvm';
-import { Bindings as PlatformBindings } from '@shared/platform';
 
 import '@shared/styles/theme';
 import './index.scss';
@@ -22,10 +19,6 @@ import { NavigationStructure } from './NavigationStructure';
 import { AllApplicationsQuery } from './AllApplicationsQuery';
 
 export default function App(this: any) {
-    Bindings.initialize();
-    MVVMBindings.initialize();
-    PortalBindings.initialize();
-    PlatformBindings.initialize();
 
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
     const [showAssignMicroserviceDialog, setShowAssignMicroserviceDialog] = useState(false);
@@ -44,6 +37,7 @@ export default function App(this: any) {
     },[allApplications]);
 
 
+import { Bootstrapped } from './BootStrapped';
 
     return (
         <>
@@ -70,4 +64,10 @@ export default function App(this: any) {
     );
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <Bootstrapped>
+        <App />
+    </Bootstrapped>,
+    document.getElementById('root')
+);
+export default Bootstrapped;
