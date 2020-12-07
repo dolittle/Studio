@@ -6,10 +6,11 @@ import { injectable } from 'tsyringe';
 
 
 export interface PodListMetadata {
-    continue: string;
-    remainingItemCount: number;
     resourceVersion: string
     selfLink: string;
+    /* Paging */
+    continue?: string;
+    remainingItemCount?: number;
 }
 
 export interface Pod {
@@ -31,14 +32,14 @@ export class PodsController extends Controller {
     @Get('{namespace}/pods')
     async getPods(): Promise<PodList> {
         return {
-            apiVersion: '1',
+            apiVersion: 'v1',
             items: [],
-            kind: 'something',
+            kind: 'PodList',
             metadata: {
-                continue: 'no',
-                remainingItemCount: 42,
-                resourceVersion: '1',
-                selfLink: 'self'
+                //continue: 'no',
+                //remainingItemCount: 42,
+                resourceVersion: '3993',
+                selfLink: '/api/v1/namespaces/default/pods'
             }
         };
     }

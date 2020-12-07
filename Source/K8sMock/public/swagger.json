@@ -88,23 +88,21 @@
 			},
 			"PodListMetadata": {
 				"properties": {
+					"resourceVersion": {
+						"type": "string"
+					},
+					"selfLink": {
+						"type": "string"
+					},
 					"continue": {
 						"type": "string"
 					},
 					"remainingItemCount": {
 						"type": "number",
 						"format": "double"
-					},
-					"resourceVersion": {
-						"type": "string"
-					},
-					"selfLink": {
-						"type": "string"
 					}
 				},
 				"required": [
-					"continue",
-					"remainingItemCount",
 					"resourceVersion",
 					"selfLink"
 				],

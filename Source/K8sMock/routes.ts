@@ -60,10 +60,10 @@ const models: TsoaRoute.Models = {
     "PodListMetadata": {
         "dataType": "refObject",
         "properties": {
-            "continue": {"dataType":"string","required":true},
-            "remainingItemCount": {"dataType":"double","required":true},
             "resourceVersion": {"dataType":"string","required":true},
             "selfLink": {"dataType":"string","required":true},
+            "continue": {"dataType":"string"},
+            "remainingItemCount": {"dataType":"double"},
         },
         "additionalProperties": false,
     },
