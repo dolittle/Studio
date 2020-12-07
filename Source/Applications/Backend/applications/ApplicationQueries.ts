@@ -23,7 +23,6 @@ export class ApplicationQueries {
         const response = await fetch('http://localhost:3001/api/v1/namespaces');
         const namespaces = await response.json() as NamespaceList;
 
-        console.log(namespaces);
         const applications = namespaces.items.map(_ => {
             const guid = _.metadata.name.replace('application-', '');
             const application = new Application();
@@ -31,8 +30,6 @@ export class ApplicationQueries {
             application.name = _.metadata.labels.application || 'unknown';
             return application;
         });
-
-        console.log(applications);
 
         return applications;
     }
