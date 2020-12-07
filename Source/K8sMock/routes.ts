@@ -8,6 +8,8 @@ import { ApplicationsController } from './applications/ApplicationsController';
 import { MicroservicesController } from './microservices/MicroservicesController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PingController } from './ping/PingController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { PodsController } from './pods/PodsController';
 import { iocContainer } from './ioc';
 import { IocContainer, IocContainerFactory } from '@tsoa/runtime';
 import * as express from 'express';
@@ -44,6 +46,35 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "message": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pod": {
+        "dataType": "refObject",
+        "properties": {
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PodListMetadata": {
+        "dataType": "refObject",
+        "properties": {
+            "continue": {"dataType":"string","required":true},
+            "remainingItemCount": {"dataType":"double","required":true},
+            "resourceVersion": {"dataType":"string","required":true},
+            "selfLink": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PodList": {
+        "dataType": "refObject",
+        "properties": {
+            "apiVersion": {"dataType":"string","required":true},
+            "items": {"dataType":"array","array":{"ref":"Pod"},"required":true},
+            "kind": {"dataType":"string","required":true},
+            "metadata": {"ref":"PodListMetadata","required":true},
         },
         "additionalProperties": false,
     },
@@ -163,6 +194,32 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getMessage.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/v1/namespaces/:namespace/pods',
+            function (request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+            const controller: any = container.get<PodsController>(PodsController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.getPods.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

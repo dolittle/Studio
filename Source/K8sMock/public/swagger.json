@@ -80,6 +80,63 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"Pod": {
+				"properties": {},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PodListMetadata": {
+				"properties": {
+					"continue": {
+						"type": "string"
+					},
+					"remainingItemCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"resourceVersion": {
+						"type": "string"
+					},
+					"selfLink": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"continue",
+					"remainingItemCount",
+					"resourceVersion",
+					"selfLink"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PodList": {
+				"properties": {
+					"apiVersion": {
+						"type": "string"
+					},
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/Pod"
+						},
+						"type": "array"
+					},
+					"kind": {
+						"type": "string"
+					},
+					"metadata": {
+						"$ref": "#/components/schemas/PodListMetadata"
+					}
+				},
+				"required": [
+					"apiVersion",
+					"items",
+					"kind",
+					"metadata"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -203,6 +260,28 @@
 						}
 					}
 				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/v1/namespaces/{namespace}/pods": {
+			"get": {
+				"operationId": "GetPods",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PodList"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"core_v1"
+				],
 				"security": [],
 				"parameters": []
 			}
