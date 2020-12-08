@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { TopLevelMenu } from './TopLevelMenu';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
+import { Spinner, SpinnerSize, StackItem, Stack } from 'office-ui-fabric-react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 
 import { ContentFrame } from '@shared/components';
@@ -13,6 +13,7 @@ import { Navigation } from './Navigation';
 import { Toolbar } from './Toolbar';
 import { LayoutViewModel } from './LayoutViewModel';
 import { withViewModel } from '@shared/mvvm';
+import { ActionBar } from './ActionBar';
 
 export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
     const location = useLocation();
@@ -31,7 +32,14 @@ export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
         <>
             <TopLevelMenu />
             <div className="navigation">
-                <Navigation />
+                <Stack verticalAlign='space-between' style={{ minHeight: '100%' }}>
+                    <StackItem styles={{ root: { overflow: 'auto' } }}>
+                        <Navigation />
+                    </StackItem>
+                    <StackItem>
+                        <ActionBar />
+                    </StackItem>
+                </Stack>
             </div>
 
             <div className="toolbar" style={{ visibility: viewModel.hasToolbarItems ? 'visible' : 'hidden' }}>
