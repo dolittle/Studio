@@ -1,13 +1,13 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { ActionButton } from './ActionButton';
 import { IMessenger } from '@shared/mvvm';
 import { injectable, singleton } from 'tsyringe';
-import { ActionButtonWasTriggered } from './ActionButtonWasTriggered';
-import { ActionBarStructureChanged } from './ActionBarStructureChanged';
+import { ActionButton } from './ActionButton';
 import { ActionBar } from './ActionBar';
 import { ActionButtonForMessage } from './ActionButtonForMessage';
+import { ActionButtonWasTriggered } from './ActionButtonWasTriggered';
+import { ActionBarStructureChanged } from './ActionBarStructureChanged';
 
 /**
  * Represents the system for working with the action bar structure of a microservice.
