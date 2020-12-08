@@ -7,7 +7,7 @@
         "**/.DS_Store": true
     },
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+        "source.fixAll.eslint": false
     },
     "cSpell.words": [
         "Deduplication",

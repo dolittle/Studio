@@ -69,6 +69,65 @@
 				],
 				"type": "object"
 			},
+			"NamespaceMetadata": {
+				"properties": {
+					"creationTimestamp": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"labels": {
+						"properties": {},
+						"additionalProperties": {
+							"type": "string"
+						},
+						"type": "object"
+					}
+				},
+				"required": [
+					"creationTimestamp",
+					"name",
+					"labels"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Namespace": {
+				"properties": {
+					"metadata": {
+						"$ref": "#/components/schemas/NamespaceMetadata"
+					}
+				},
+				"required": [
+					"metadata"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"NamespaceList": {
+				"properties": {
+					"apiVersion": {
+						"type": "string"
+					},
+					"kind": {
+						"type": "string"
+					},
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/Namespace"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"apiVersion",
+					"kind",
+					"items"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"PingResponse": {
 				"properties": {
 					"message": {
@@ -77,6 +136,137 @@
 				},
 				"required": [
 					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PodMetadata": {
+				"properties": {
+					"creationTimestamp": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"labels": {
+						"properties": {},
+						"additionalProperties": {
+							"type": "string"
+						},
+						"type": "object"
+					}
+				},
+				"required": [
+					"creationTimestamp",
+					"name",
+					"labels"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ContainerSpec": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					},
+					"args": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"name",
+					"image",
+					"args"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PodSpec": {
+				"properties": {
+					"containers": {
+						"$ref": "#/components/schemas/ContainerSpec"
+					}
+				},
+				"required": [
+					"containers"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pod": {
+				"properties": {
+					"apiVersion": {
+						"type": "string"
+					},
+					"kind": {
+						"type": "string"
+					},
+					"metadata": {
+						"$ref": "#/components/schemas/PodMetadata"
+					},
+					"spec": {
+						"$ref": "#/components/schemas/PodSpec"
+					}
+				},
+				"required": [
+					"metadata",
+					"spec"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PodListMetadata": {
+				"properties": {
+					"resourceVersion": {
+						"type": "string"
+					},
+					"selfLink": {
+						"type": "string"
+					},
+					"continue": {
+						"type": "string"
+					},
+					"remainingItemCount": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"resourceVersion",
+					"selfLink"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PodList": {
+				"properties": {
+					"apiVersion": {
+						"type": "string"
+					},
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/Pod"
+						},
+						"type": "array"
+					},
+					"kind": {
+						"type": "string"
+					},
+					"metadata": {
+						"$ref": "#/components/schemas/PodListMetadata"
+					}
+				},
+				"required": [
+					"apiVersion",
+					"items",
+					"kind",
+					"metadata"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -188,6 +378,28 @@
 				}
 			}
 		},
+		"/api/v1/namespaces": {
+			"get": {
+				"operationId": "GetNamespaces",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NamespaceList"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"core_v1"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/api/k8s/ping": {
 			"get": {
 				"operationId": "GetMessage",
@@ -203,6 +415,28 @@
 						}
 					}
 				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/v1/namespaces/{namespace}/pods": {
+			"get": {
+				"operationId": "GetPods",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PodList"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"core_v1"
+				],
 				"security": [],
 				"parameters": []
 			}

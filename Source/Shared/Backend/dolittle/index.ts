@@ -18,6 +18,7 @@ export async function initialize(microserviceId: string, port: number, defaultDa
     const host = process.env.DATABASE_HOST || 'localhost';
     const databaseConnectionString = `mongodb://${host}:27017/`;
     const databaseName = process.env.DATABASE_NAME || defaultDatabaseName;
+    const eventStoreDatabaseName = process.env.EVENTSTORE_DATABASE_NAME || defaultEventStoreDatabaseName;
 
     let runtimePort = port;
     if (process.env.DOLITTLE_RUNTIME_PORT) {
@@ -29,7 +30,7 @@ export async function initialize(microserviceId: string, port: number, defaultDa
         .withContainer(containerInstance)
         .withRuntimeOn('localhost', runtimePort)
         .withProjections(p => p.storeInMongo(databaseConnectionString, databaseName))
-        .withProjectionIntermediates(p => p.storeInMongo(databaseConnectionString, defaultEventStoreDatabaseName))
+        .withProjectionIntermediates(p => p.storeInMongo(databaseConnectionString, eventStoreDatabaseName))
     ;
 
     if (callback) callback(clientBuilder);

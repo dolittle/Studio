@@ -24,9 +24,10 @@ import { PartitionedFilterResult } from '@dolittle/sdk.events.filtering';
         dolittleRuntimePort: 50055,
         graphQLSchema: schema,
         defaultDatabaseName: 'k8s',
+        defaultEventStoreDatabaseName: 'event_store_k8smock',
         expressCallback: _ => {
             _.use(
-                '/api/k8s/swagger',
+                '/api/swagger',
                 swaggerUi.serve,
                 swaggerUi.setup(swagger)
             );

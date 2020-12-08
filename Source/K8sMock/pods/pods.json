@@ -1,0 +1,65 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "metadata": {
+                "name": "studio-dev-applications-dolittle",
+                "creationTimestamp": "2020-12-07T17:00:28Z",
+                "labels": {
+                    "tenant": "Dolittle",
+                    "application": "Studio-Dev",
+                    "microservice": "Applications"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "head",
+                        "image": "508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/applications:1.0.2-0",
+                        "args": []
+                    },
+                    {
+                        "name": "runtime",
+                        "image": "dolittle/runtime:5.1.2",
+                        "args": []
+                    }
+                ]
+            }
+        }
+    ],
+    "status": {
+        "phase": "Running",
+        "startTime": "2020-12-07T17:00:28Z",
+        "containerStatuses": [
+            {
+                "containerID": "docker://9656265f3d8207d2ec8ce5962f3d25b34f784a9466c268492f06766f03665881",
+                "name": "head",
+                "image": "508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/applications:1.0.2-0",
+                "imageID": "docker-pullable://docker/desktop-vpnkit-controller@sha256:6800d69751e483710a0949fbd01c459934a18ede9d227166def0af44f3a46970",
+                "ready": true,
+                "started": true,
+                "state": {
+                    "running": {
+                        "startedAt": "2020-12-07T17:06:07Z"
+                    }
+                },
+                "lastState": {}
+            },
+            {
+                "containerID": "docker://9656265f3d8207d2ec8ce5962f3d25b34f784a9466c268492f06766f03665881",
+                "name": "runtime",
+                "image": "dolittle/runtime:5.1.2",
+                "imageID": "docker-pullable://docker/desktop-vpnkit-controller@sha256:6800d69751e483710a0949fbd01c459934a18ede9d227166def0af44f3a46970",
+                "ready": true,
+                "started": true,
+                "state": {
+                    "running": {
+                        "startedAt": "2020-12-07T17:06:07Z"
+                    }
+                },
+                "lastState": {}
+            }
+
+        ]
+    }
+}
