@@ -44,6 +44,42 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "NamespaceMetadata": {
+        "dataType": "refObject",
+        "properties": {
+            "creationTimestamp": {"dataType":"string","required":true},
+            "name": {"dataType":"string","required":true},
+            "labels": {"dataType":"nestedObjectLiteral","nestedProperties":{},"additionalProperties":{"dataType":"string"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Namespace": {
+        "dataType": "refObject",
+        "properties": {
+            "metadata": {"ref":"NamespaceMetadata","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "NamespaceList": {
+        "dataType": "refObject",
+        "properties": {
+            "apiVersion": {"dataType":"string","required":true},
+            "kind": {"dataType":"string","required":true},
+            "items": {"dataType":"array","array":{"ref":"Namespace"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PingResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "message": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PodMetadata": {
         "dataType": "refObject",
         "properties": {
@@ -101,14 +137,6 @@ const models: TsoaRoute.Models = {
             "items": {"dataType":"array","array":{"ref":"Pod"},"required":true},
             "kind": {"dataType":"string","required":true},
             "metadata": {"ref":"PodListMetadata","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "PingResponse": {
-        "dataType": "refObject",
-        "properties": {
-            "message": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },

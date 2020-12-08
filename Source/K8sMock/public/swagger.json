@@ -69,6 +69,77 @@
 				],
 				"type": "object"
 			},
+			"NamespaceMetadata": {
+				"properties": {
+					"creationTimestamp": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"labels": {
+						"properties": {},
+						"additionalProperties": {
+							"type": "string"
+						},
+						"type": "object"
+					}
+				},
+				"required": [
+					"creationTimestamp",
+					"name",
+					"labels"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Namespace": {
+				"properties": {
+					"metadata": {
+						"$ref": "#/components/schemas/NamespaceMetadata"
+					}
+				},
+				"required": [
+					"metadata"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"NamespaceList": {
+				"properties": {
+					"apiVersion": {
+						"type": "string"
+					},
+					"kind": {
+						"type": "string"
+					},
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/Namespace"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"apiVersion",
+					"kind",
+					"items"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PingResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"PodMetadata": {
 				"properties": {
 					"creationTimestamp": {
@@ -199,18 +270,6 @@
 				],
 				"type": "object",
 				"additionalProperties": false
-			},
-			"PingResponse": {
-				"properties": {
-					"message": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"message"
-				],
-				"type": "object",
-				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -328,7 +387,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/PodList"
+									"$ref": "#/components/schemas/NamespaceList"
 								}
 							}
 						}
