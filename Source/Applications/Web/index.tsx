@@ -11,7 +11,7 @@ import './index.scss';
 import { CreateApplication } from './CreateApplication';
 import { AssignMicroservice } from './AssignMicroservice';
 import { ApplicationToolbarItems } from './ApplicationToolbarItems';
-import { NavigationStructure } from './NavigationStructure';
+import { NavBar } from './NavBar';
 import { Bootstrapped } from './BootStrapped';
 import { withViewModel } from '@shared/mvvm';
 import { AppViewModel } from './AppViewModel';
@@ -22,9 +22,9 @@ const App = withViewModel(AppViewModel, ({ viewModel }) => {
 
     return (
         <>
-            <NavigationStructure
+            <NavBar
                 applications={viewModel.allApplications}
-                handleNavbarActionButtonClick={() => setShowCreateApplicationDialog(true)}
+                handleNavbarActionButtonTriggered={() => setShowCreateApplicationDialog(true)}
             />
             <ApplicationToolbarItems
                 onCreateApplicationClicked={() => setShowCreateApplicationDialog(true)}
