@@ -3,22 +3,13 @@
 
 import { NavigationStructure } from './NavigationStructure';
 import { injectable } from 'tsyringe';
-import { NavigationGroup, NavigationActionBar } from '@shared/portal';
+import { NavigationGroup } from '@shared/portal';
 
 @injectable()
 export class NavigationViewModel {
     groups: NavigationGroup[] = [];
-    actionBar?: NavigationActionBar;
 
     constructor(private readonly _navigation: NavigationStructure) {
-        _navigation.groups.subscribe(_ => this.groups = _);
-        _navigation.actionBar.subscribe(_ => this.actionBar = _);
+        _navigation.groups.subscribe((_) => (this.groups = _));
     }
-
-    navActionButtonClicked() {
-        console.log('Portal/Web/NavigationViewModel: Clicked');
-        console.log('Portal/Web/NavigationViewModel: Publishing NavigationButtonWasClicked');
-        this._navigation.navigationActionButtonClicked();
-    }
-
 }
