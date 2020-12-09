@@ -4,17 +4,17 @@
 import { Guid } from '@dolittle/rudiments';
 import { BehaviorSubject } from 'rxjs';
 
-export type ActionButtonTriggered = () => void;
+export type ActionBarActionTriggered = () => void;
 
-export class ActionButton {
+export class ActionBarAction {
     readonly enabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     readonly id: string;
 
     constructor(
         readonly text: string,
         readonly icon?: string,
-        readonly onTriggered?: ActionButtonTriggered,
-        id?: string
+        readonly onTriggered?: ActionBarActionTriggered,
+        id?: string,
     ) {
         this.id = id || Guid.create().toString();
     }

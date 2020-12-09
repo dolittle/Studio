@@ -3,10 +3,10 @@
 
 import { IMessenger } from '@shared/mvvm';
 import { injectable, singleton } from 'tsyringe';
-import { ActionButton } from './ActionButton';
+import { ActionBarAction } from './ActionBarAction';
 import { ActionBar } from './ActionBar';
-import { ActionButtonForMessage } from './ActionButtonForMessage';
-import { ActionButtonWasTriggered } from './ActionButtonWasTriggered';
+import { ActionBarActionForMessage } from './ActionBarActionForMessage';
+import { ActionBarActionWasTriggered } from './ActionBarActionWasTriggered';
 import { ActionBarStructureChanged } from './ActionBarStructureChanged';
 
 /**
@@ -15,14 +15,14 @@ import { ActionBarStructureChanged } from './ActionBarStructureChanged';
 @singleton()
 @injectable()
 export class ActionBarBroker {
-    private _actionButton?: ActionButton;
+    private _actionButton?: ActionBarAction;
 
     /**
      * Initializes a new instance of {@link ActionBarBroker}.
      * @param {IMessenger} _messenger Messenger to use for publishing messages.
      */
     constructor(private readonly _messenger: IMessenger) {
-        _messenger.subscribeTo(ActionButtonWasTriggered, (_) => {
+        _messenger.subscribeTo(ActionBarActionWasTriggered, (_) => {
             this._actionButton?.onTriggered?.();
         });
     }
@@ -37,7 +37,7 @@ export class ActionBarBroker {
         this._actionButton = actionBar.button;
         changed.actionBar = {
             placement: actionBar.placement,
-            button: new ActionButtonForMessage(
+            button: new ActionBarActionForMessage(
                 actionBar.button.id,
                 actionBar.button.text,
                 actionBar.button.icon || ''

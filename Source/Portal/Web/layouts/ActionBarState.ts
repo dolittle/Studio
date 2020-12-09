@@ -6,7 +6,9 @@ import { IMessenger } from '@shared/mvvm';
 import {
     ActionBarStructureChanged,
     ActionBar,
-    ActionButtonWasTriggered,
+    ActionBarActionWasTriggered,
+    ActionBarActionForMessage,
+    ActionBarAction,
 } from '@shared/portal';
 import { singleton, injectable } from 'tsyringe';
 
@@ -28,6 +30,6 @@ export class ActionBarState {
     }
 
     actionButtonTriggered() {
-        this._messenger.publish(new ActionButtonWasTriggered());
+        this._messenger.publish(new ActionBarActionWasTriggered());
     }
 }

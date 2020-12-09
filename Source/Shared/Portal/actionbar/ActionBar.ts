@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { ActionButton } from './ActionButton';
+import { ActionBarAction } from './ActionBarAction';
 
 
 export interface ActionBar {
-    button: ActionButton;
+    button: ActionBarAction;
     placement: 'bottom';
 }
