@@ -6,6 +6,7 @@ on:
     - '**'
     paths:
     - 'Source/Portal/**'
+    - 'Source/Shared/**'
 
 jobs:
   build:

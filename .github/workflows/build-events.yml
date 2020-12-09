@@ -6,6 +6,7 @@ on:
     - '**'
     paths:
     - 'Source/Events/**'
+    - 'Source/Shared/**'
 
 jobs:
   build:
