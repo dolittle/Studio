@@ -11,7 +11,6 @@ export class Mongoose {
 
         await mongoose.connect(connectionString, {
             useNewUrlParser: true,
-            useUnifiedTopology: true,
             dbName: databaseName,
             useFindAndModify: false
         });
