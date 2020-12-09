@@ -21,7 +21,19 @@ export class ActionBarState {
         _messenger
             .observe(ActionBarStructureChanged)
             .subscribe((_) => {
-                this.current.next(_.actionBar as ActionBar | undefined);
+
+                if(_.actionBar.button != ActionBarActionForMessage.EMPTY) {
+                    const actionBar = {
+                        placement: _.actionBar.placement,
+                        button: new ActionBarAction(
+                            _.actionBar.button.text,
+                            _.actionBar.button.icon,
+                            this._publishActionTriggered.bind(this),
+                            _.actionBar.button.id,
+                            )
+                    } as ActionBar;
+                    this.current.next(actionBar);
+                }
             });
     }
 
@@ -29,7 +41,7 @@ export class ActionBarState {
         this.current.next(undefined);
     }
 
-    actionButtonTriggered() {
+    private _publishActionTriggered() {
         this._messenger.publish(new ActionBarActionWasTriggered());
     }
 }

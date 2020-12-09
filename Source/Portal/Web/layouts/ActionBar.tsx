@@ -5,34 +5,26 @@ import React from 'react';
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react';
 import { Guid } from '@dolittle/rudiments';
 import { withViewModel } from '@shared/mvvm';
-import { ActionButton } from '@shared/portal';
+import { ActionBarAction } from '@shared/portal';
 import { ActionBarViewModel } from './ActionBarViewModel';
 
 export const ActionBar = withViewModel(ActionBarViewModel, ({ viewModel }) => {
     return (
         <>
             {viewModel.actionBar && (
-                <CommandBar
-                    items={buildCommandBarItems(
-                        viewModel.actionBar?.button,
-                        viewModel.actionButtonClicked
-                    )}
-                />
+                <CommandBar items={buildCommandBarItems(viewModel.actionBar.button)} />
             )}
         </>
     );
 });
 
-function buildCommandBarItems(
-    actionButton: ActionButton,
-    actionHandler: () => void
-): ICommandBarItemProps[] {
+function buildCommandBarItems(action: ActionBarAction): ICommandBarItemProps[] {
     return [
         {
             key: Guid.create().toString(),
-            text: actionButton.text,
-            iconProps: { iconName: actionButton.icon },
-            onClick: () => actionHandler(),
+            text: action.text,
+            iconProps: { iconName: action.icon },
+            onClick: () => action.onTriggered?.(),
         },
     ];
 }

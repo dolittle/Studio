@@ -12,8 +12,4 @@ export class ActionBarViewModel {
     activate() {
         this._state.current.subscribe((_) => (this.actionBar = _));
     }
-
-    actionButtonClicked() {
-        this._state.actionButtonTriggered();
-    }
 }
