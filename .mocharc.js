@@ -15,7 +15,7 @@ chai.use(chaiAsPromised);
 module.exports = {
     diff: true,
     extension: ['ts'],
-    spec: ['**/for_*/**/*.ts'],
-    ignore: ['**/*.d.ts'],
+    spec: ['**/for_*/**/*.ts', '**/Spec/*_spec.ts'],
+    ignore: ['**/node_modules/**/*', '**/*.d.ts'],
     require: ['ts-node/register']
 }
