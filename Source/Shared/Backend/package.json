@@ -8,7 +8,7 @@
     "private": true,
     "dependencies": {
         "@dolittle/sdk": "14.1.0",
-        "@dolittle/projections": "1.0.0",
+        "@dolittle/projections": "1.0.5",
         "apollo-server-express": "2.19.0",
         "@typegoose/typegoose": "7.4.2",
         "mongoose": "5.10.13",
