@@ -23,7 +23,16 @@
     ],
     "dependencies": {
         "graphql": "15.4.0",
-        "dotenv": "8.2.0"
+        "dotenv": "8.2.0",
+        "@shared/backend": "*",
+        "@shared/components": "*",
+        "@shared/dependencyinversion": "*",
+        "@shared/mvvm": "*",
+        "@shared/platform": "*",
+        "@shared/portal": "*",
+        "@shared/styles": "*",
+        "@shared/web": "*",
+        "@shared/webpack": "*"
     },
     "devDependencies": {
         "@dolittle/typescript.build": "rc",
