@@ -1,3 +1,6 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
@@ -53,7 +56,10 @@ module.exports = (env, argv, callback) => {
                     loader: 'ts-loader',
                     options: {
                         projectReferences: true,
-                        allowTsInNodeModules: true
+                        allowTsInNodeModules: true,
+                        compilerOptions: {
+                            outDir: 'dist'
+                        }
                     }
                 }
             ]
