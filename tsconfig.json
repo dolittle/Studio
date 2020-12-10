@@ -1,9 +1,8 @@
 {
     "compilerOptions": {
         "baseUrl": ".",
-        "paths": {
-            "@shared/*": ["Shared/*"],
-        },
+        "outDir": "dist",
+        "rootDir": ".",
 
         "declaration": true,
         "declarationMap": true,
@@ -36,9 +35,7 @@
         "assumeChangesOnlyAffectDirectDependencies": true,
         "alwaysStrict": true,
         "preserveConstEnums": true,
-        "newLine": "lf",
-        "disableSourceOfProjectReferenceRedirect": true //https://github.com/microsoft/TypeScript/issues/34677
-
+        "newLine": "lf"
      },
 
      "exclude": [

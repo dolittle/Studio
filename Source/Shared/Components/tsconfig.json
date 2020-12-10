@@ -1,9 +1,11 @@
 {
     "extends": "../../../tsconfig.json",
-    "compilerOptions": {
-        "rootDir": "./",
-        "outDir": "dist"
-    },
     "references": [
+        {
+            "path": "../DependencyInversion"
+        },
+        {
+            "path": "../MVVM"
+        }
     ]
 }
