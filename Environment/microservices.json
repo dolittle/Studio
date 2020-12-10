@@ -14,9 +14,5 @@
     "81cad113-a001-45dc-86cb-7b1e725ae25e": {
         "host": "studio-runtime-events",
         "port": "50052"
-    },
-    "A9CF063D-415F-4F83-A528-2F0D6057F05D": {
-        "host": "studio-runtime-microservices",
-        "port": "50052"
     }
 }
