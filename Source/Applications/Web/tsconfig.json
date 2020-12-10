@@ -1,13 +1,8 @@
 {
     "extends": "../../../tsconfig.json",
     "compilerOptions": {
-        "outDir": "./wwwroot",
-        "rootDir": "./"
+        "outDir": "./wwwroot"
     },
-    "include": [
-        "**/*.ts",
-        "**/*.tsx",
-    ],
     "references": [
         {
             "path": "../../Shared/Components"
