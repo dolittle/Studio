@@ -9,12 +9,14 @@ import { Guid } from '@dolittle/rudiments';
 @ObjectType()
 export class Microservice {
     @Field({ name: 'id' })
-    @guid()
-    _id?: Guid;
+    @prop()
+    _id?: string;
 
     @Field()
     @prop()
     name!: string;
+
+    logAvailableAtUrl?: string;
 }
 
 export const MicroserviceModel = getModelForClass(Microservice);

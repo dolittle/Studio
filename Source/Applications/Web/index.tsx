@@ -5,60 +5,27 @@ import 'reflect-metadata';
 
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { container } from 'tsyringe';
-
-import { Bindings as PortalBindings, Navigation, ToolbarItems, ToolbarItem } from '@shared/portal';
-import { Bindings as MVVMBindings } from '@shared/mvvm';
-import { Bindings as PlatformBindings } from '@shared/platform';
 
 import '@shared/styles/theme';
 import './index.scss';
-import { Overview } from './Overview';
 import { CreateApplication } from './CreateApplication';
-import { Bindings } from './Bindings';
 import { AssignMicroservice } from './AssignMicroservice';
 import { ApplicationToolbarItems } from './ApplicationToolbarItems';
-import { ApplicationModel } from './ApplicationModel';
+import { NavBar } from './NavBar';
+import { Bootstrapped } from './BootStrapped';
+import { withViewModel } from '@shared/mvvm';
+import { AppViewModel } from './AppViewModel';
 
-export default function App(this: any) {
+const App = withViewModel(AppViewModel, ({ viewModel }) => {
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
     const [showAssignMicroserviceDialog, setShowAssignMicroserviceDialog] = useState(false);
-    const [selectedApplications, setSelectedApplications]
-        = useState<ApplicationModel[]>([]);
-
-    console.log('current application is ', selectedApplications);
-
-    Bindings.initialize();
-    MVVMBindings.initialize();
-    PortalBindings.initialize();
-    PlatformBindings.initialize();
-
-    const navigation = container.resolve(Navigation);
-
-    navigation.set([
-        {
-            name: 'Studio',
-            items: [
-                {
-                    name: 'Applications',
-                },
-                {
-                    name: 'Events',
-                },
-            ],
-        },
-        {
-            name: 'Lunch App',
-            items: [
-                {
-                    name: 'Default',
-                },
-            ],
-        },
-    ]);
 
     return (
         <>
+            <NavBar
+                applications={viewModel.allApplications}
+                handleNavbarActionButtonTriggered={() => setShowCreateApplicationDialog(true)}
+            />
             <ApplicationToolbarItems
                 onCreateApplicationClicked={() => setShowCreateApplicationDialog(true)}
                 onAssignMicroserviceClicked={() => setShowAssignMicroserviceDialog(true)}
@@ -69,14 +36,19 @@ export default function App(this: any) {
                 onCancelled={() => setShowCreateApplicationDialog(false)}
             />
             <AssignMicroservice
-                forApplication={selectedApplications[0]}
+                forApplication={viewModel.selectedApplication}
                 visible={showAssignMicroserviceDialog}
                 onAssigned={() => setShowAssignMicroserviceDialog(false)}
                 onCancelled={() => setShowAssignMicroserviceDialog(false)}
             />
-            <Overview onSelected={((i) => setSelectedApplications(i)).bind(this)} />
         </>
     );
-}
+});
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <Bootstrapped>
+        <App />
+    </Bootstrapped>,
+    document.getElementById('root')
+);
+export default Bootstrapped;

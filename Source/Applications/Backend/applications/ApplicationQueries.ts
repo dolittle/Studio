@@ -26,7 +26,7 @@ export class ApplicationQueries {
         const applications = namespaces.items.map(_ => {
             const guid = _.metadata.name.replace('application-', '');
             const application = new Application();
-            application._id = Guid.parse(guid);
+            application._id = Guid.parse(guid).toString();
             application.name = _.metadata.labels.application || 'unknown';
             return application;
         });

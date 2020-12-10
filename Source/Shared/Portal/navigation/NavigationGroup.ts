@@ -7,4 +7,3 @@ export interface NavigationGroup {
     name: string;
     items: NavigationItem[];
 }
-

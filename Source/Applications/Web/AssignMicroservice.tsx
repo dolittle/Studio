@@ -26,13 +26,13 @@ export const AssignMicroservice = withViewModel<AssignMicroserviceViewModel, Ass
     AssignMicroserviceViewModel,
     ({ viewModel, props }) => {
         const options: IDropdownOption[] = viewModel.microservices;
-        const canAssign: boolean = props.forApplication?.applicationId !== undefined;
+        const canAssign: boolean = props.forApplication?.id !== undefined;
         const disableAssignButton = !canAssign || viewModel.isAssigning;
         const disableCancelButton = viewModel.isAssigning;
 
         function handleAssigning(viewModel: AssignMicroserviceViewModel, props: AssignMicroserviceProps) {
             viewModel.assignMicroservice(
-                props.forApplication!.applicationId,
+                props.forApplication!.id,
                 viewModel!.selectedMicroserviceId
             );
             props.onAssigned();
