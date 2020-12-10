@@ -1,8 +1,7 @@
 {
     "extends": "../../../tsconfig.json",
     "compilerOptions": {
-        "outDir": "./wwwroot",
-        "rootDir": "./"
+        "outDir": "./wwwroot"
     },
     "references": [
         {
@@ -26,6 +25,5 @@
         {
             "path": "../../Shared/Web"
         }
-
     ]
 }
