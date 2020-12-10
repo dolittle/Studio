@@ -7,18 +7,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Layout } from './layouts/Layout';
 import { AppHeader } from './layouts/AppHeader';
-import { Bindings as MVVMBindings } from '@shared/mvvm';
-import { Bindings as PortalBindings } from '@shared/portal';
-import { Bindings as PlatformBindings } from '@shared/platform';
 import { BrowserRouter as Router } from 'react-router-dom';
+
+import { initializeFrontend, VersionInfo } from '@shared/web';
+
+const versionInfo = require('../version.json') as VersionInfo;
 
 import '@shared/styles/theme';
 import './index.scss';
 
 export default function App() {
-    MVVMBindings.initialize();
-    PortalBindings.initialize();
-    PlatformBindings.initialize();
+    initializeFrontend({
+        name: 'Portal',
+        prefix: '',
+        versionInfo
+    });
 
     return (
         <Router>
