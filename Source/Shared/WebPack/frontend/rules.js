@@ -8,10 +8,7 @@ module.exports = [
         loader: 'ts-loader',
         options: {
             projectReferences: true,
-            allowTsInNodeModules: true,
-            compilerOptions: {
-                outDir: 'dist'
-            }
+            allowTsInNodeModules: true
         }
     },
     {
