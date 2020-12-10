@@ -15,8 +15,8 @@ export class ToolbarItems {
 
     constructor(private readonly _messenger: IMessenger) {
         _messenger.observe(ToolbarItemsChanged).pipe(
-            map((_: ToolbarItemsChanged) => _.items.map(i => new ToolbarItem(i.text, i.icon, () => { }, i.id))
-        )).subscribe(_ => this.items.next(_));
+            map(_ => _.items.map(i => new ToolbarItem(i.text, i.icon, () => { }, i.id))
+            )).subscribe(_ => this.items.next(_));
     }
 
     reset() {
