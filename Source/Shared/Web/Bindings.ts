@@ -1,32 +1,29 @@
-// Copyright (c) Dolittle. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { DataSource } from '@shared/web';
+import { DataSource } from './DataSource';
 import { constructor } from '@shared/dependencyinversion';
 import { container } from 'tsyringe';
-
-const versionInfo = require('../version.json');
+import { Configuration } from './Configuration';
 
 export class Bindings {
-    static initialize() {
+    static initialize(configuration: Configuration) {
         const cache = new InMemoryCache();
         const link = new HttpLink({
-            uri: '/_/applications/graphql/',
+            uri: `/_/${configuration.prefix}/graphql`
         });
 
         const client = new ApolloClient({
             cache,
             link,
-            name: 'Studio Applications Client',
-            version: versionInfo.version,
+            name: `${configuration.name} Client`,
+            version: configuration.versionInfo.version,
             queryDeduplication: false,
             defaultOptions: {
                 watchQuery: {
-                    fetchPolicy: 'cache-and-network',
-                },
-            },
+                    fetchPolicy: 'cache-and-network'
+                }
+            }
         });
 
         container.registerInstance(DataSource as constructor<DataSource>, client);

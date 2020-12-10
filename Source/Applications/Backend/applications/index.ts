@@ -8,6 +8,7 @@ export * from './Microservice';
 export * from './MicroserviceQueries';
 
 import { ClientBuilder } from '@dolittle/sdk';
+import '@dolittle/projections';
 import { Application } from './Application';
 import { ApplicationCreated } from './events';
 import { MicroserviceCreated } from './events/MicroserviceCreated';

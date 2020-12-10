@@ -5,17 +5,20 @@ import 'reflect-metadata';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Bindings as MVVMBindings } from '@shared/mvvm';
-import { Bindings as PortalBindings } from '@shared/portal';
-import { Bindings as PlatformBindings } from '@shared/platform';
+
+import { initializeFrontend, VersionInfo } from '@shared/web';
+
+const versionInfo = require('../version.json') as VersionInfo;
 
 import '@shared/styles/theme';
 import './index.scss';
 
 export default function App() {
-    MVVMBindings.initialize();
-    PortalBindings.initialize();
-    PlatformBindings.initialize();
+    initializeFrontend({
+        name: 'Events',
+        prefix: '/_/events',
+        versionInfo
+    });
 
     return (
         <>
