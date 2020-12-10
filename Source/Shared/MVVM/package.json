@@ -4,6 +4,7 @@
     "description": "",
     "main": "index.ts",
     "scripts": {
+        "test": "mocha"
     },
     "author": "",
     "license": "MIT",

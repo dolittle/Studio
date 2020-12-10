@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { a_view_model_lifecycle_manager } from './given/a_view_model_lifecycle_manager';
+import { a_view_model_lifecycle_manager } from '@shared/mvvm/for_ViewModelLifecycleManager/given/a_view_model_lifecycle_manager';
 
 import { expect } from 'chai';
 
