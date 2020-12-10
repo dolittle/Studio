@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import gql from 'graphql-tag';
 import { injectable } from 'tsyringe';
-import { DataSource } from './DataSource';
+import { DataSource } from '@shared/web';
 
 @injectable()
 export class QueryForMicroservices {

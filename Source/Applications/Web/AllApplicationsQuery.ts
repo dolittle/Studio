@@ -5,7 +5,7 @@ import { ObservableQuery, NetworkStatus } from 'apollo-client';
 import gql from 'graphql-tag';
 import { injectable, singleton } from 'tsyringe';
 import { ApplicationModel } from './ApplicationModel';
-import { DataSource } from './DataSource';
+import { DataSource } from '@shared/web';
 
 @singleton()
 @injectable()

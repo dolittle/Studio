@@ -2,9 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { injectable } from 'tsyringe';
-import { Guid } from '@dolittle/rudiments';
 import gql from 'graphql-tag';
-import { DataSource } from './DataSource';
+import { DataSource } from '@shared/web';
 import { ObservableQuery, NetworkStatus } from 'apollo-client';
 import { ApplicationModel } from './ApplicationModel';
 
