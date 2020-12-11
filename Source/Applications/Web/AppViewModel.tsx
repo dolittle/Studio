@@ -34,7 +34,6 @@ export class AppViewModel {
             query,
         });
 
-        this._observableQuery.startPolling(1000);
         this._observableQuery.subscribe((next) => {
             if (next.networkStatus === NetworkStatus.ready && next.data) {
                 // Should we have some logic to decide if there are actually any changes?
