@@ -12,7 +12,7 @@ import { getSchema } from './schema';
     await startBackend({
         microserviceId: '81cad113-a001-45dc-86cb-7b1e725ae25e',
         prefix: '/_/events',
-        publicPath: path.join(__dirname, 'public'),
+        publicPath: './public',
         port: 3003,
         dolittleRuntimePort: 50059,
         graphQLSchema: schema,

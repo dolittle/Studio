@@ -17,7 +17,7 @@ import { projectFromEventsToReadModels } from './applications';
     await startBackend({
         microserviceId: '05a823dd-0f0d-4157-bc46-14834cca3cd2',
         prefix: '/_/applications',
-        publicPath: path.join(__dirname, 'public'),
+        publicPath: './public',
         port: 3002,
         dolittleRuntimePort: 50057,
         graphQLSchema: schema,
