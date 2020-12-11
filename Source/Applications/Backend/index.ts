@@ -43,3 +43,4 @@ import { projectFromEventsToReadModels } from './applications';
         }
     });
 })();
+

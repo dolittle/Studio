@@ -24,3 +24,4 @@ import { getSchema } from './schema';
         }
     });
 })();
+
