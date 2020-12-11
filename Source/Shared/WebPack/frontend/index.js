@@ -11,23 +11,23 @@ const devServer = require('./devServer');
 module.exports = (env, argv, basePath, callback, title) => {
     const production = argv.mode === 'production';
     basePath = basePath || '/';
-    title = title || 'Dolittle Studio'
+    title = title || 'Dolittle Studio';
 
     const config = {
         entry: './index.tsx',
         target: 'web',
         output: output(env, argv, basePath),
-        optimization: optimization,
-        resolve: resolve,
+        optimization,
+        resolve,
         module: {
-            rules: rules
+            rules
         },
         plugins: plugins(basePath, title),
         devtool: production ? '' : 'inline-source-map',
         devServer: devServer(basePath)
     };
 
-    if( callback ) {
+    if (callback) {
         callback(config);
     }
 
