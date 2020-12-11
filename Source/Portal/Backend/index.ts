@@ -24,5 +24,3 @@ import { getSchema } from './schema';
         }
     });
 })();
-
-
