@@ -29,6 +29,7 @@ jobs:
         filters: |
           src:
             - '${{ env.SOURCE_PATH }}/**'
+            - 'Source/Shared/**'
 
   conditionalDeploy:
     runs-on: ubuntu-latest
