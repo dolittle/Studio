@@ -7,6 +7,7 @@ module.exports = [
         exclude: /(node_modules)/,
         loader: 'ts-loader',
         options: {
+            transpileOnly: true,
             projectReferences: true,
             allowTsInNodeModules: true
         }

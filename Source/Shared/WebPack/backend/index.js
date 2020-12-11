@@ -55,11 +55,9 @@ module.exports = (env, argv, callback) => {
                     exclude: /(node_modules)/,
                     loader: 'ts-loader',
                     options: {
+                        transpileOnly: true,
                         projectReferences: true,
-                        allowTsInNodeModules: true,
-                        compilerOptions: {
-                            outDir: 'dist'
-                        }
+                        allowTsInNodeModules: true
                     }
                 }
             ]
