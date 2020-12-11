@@ -23,7 +23,6 @@ export const TopLevelMenu = withViewModel<TopLevelMenuViewModel>(TopLevelMenuVie
             <Pivot onLinkClick={linkClicked} selectedKey={location.pathname}>
                 <PivotItem headerText="Home" itemKey="/"></PivotItem>
                 <PivotItem headerText="Applications" itemKey="/applications/"></PivotItem>
-                <PivotItem headerText="Microservices" itemKey="/microservices/"></PivotItem>
                 <PivotItem headerText="Events" itemKey="/events/"></PivotItem>
             </Pivot>
         </div>
