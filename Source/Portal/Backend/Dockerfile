@@ -69,6 +69,7 @@ RUN echo Configuration = $CONFIGURATION
 
 WORKDIR /app
 COPY --from=backend-build /app/Source/Portal/Backend/dist/index.js ./
+COPY --from=web-build /app/Source/Portal/Web/icons ./public/icons
 COPY --from=web-build /app/Source/Portal/Web/wwwroot ./public
 
 ENTRYPOINT ["node", "index.js"]
