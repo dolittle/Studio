@@ -1,7 +1,22 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+const TerserPlugin = require('terser-webpack-plugin');
+
 module.exports = {
+    minimizer: [
+        new TerserPlugin({
+            terserOptions: {
+                cache: true,
+                parallel: true,
+                sourceMap: false,
+
+                // We want the class names and function names to be there for the IoC to work its magic
+                keep_classnames: true,
+                keep_fnames: true
+            }
+        })
+    ],
     runtimeChunk: true,
     moduleIds: 'hashed',
     splitChunks: {
