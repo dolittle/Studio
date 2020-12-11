@@ -19,7 +19,7 @@ import { PartitionedFilterResult } from '@dolittle/sdk.events.filtering';
     await startBackend({
         microserviceId: 'c2e34414-5054-4050-8ee4-eb6f3265cce3',
         prefix: '/api/k8s',
-        publicPath: path.join(__dirname, 'public'),
+        publicPath: './public',
         port: 3001,
         dolittleRuntimePort: 50055,
         graphQLSchema: schema,
