@@ -20,6 +20,7 @@ export class ApplicationQueries {
     @Query(returns => [Application])
     async allApplications() {
 
+        /*
         const response = await fetch('http://localhost:3001/api/v1/namespaces');
         const namespaces = await response.json() as NamespaceList;
 
@@ -32,5 +33,7 @@ export class ApplicationQueries {
         });
 
         return applications;
+        */
+       return [];
     }
 }
