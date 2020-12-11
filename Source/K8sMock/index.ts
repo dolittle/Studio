@@ -11,10 +11,10 @@ import { RegisterEventTypes } from './RegisterEventTypes';
 import { EventContext, PartitionId } from '@dolittle/sdk.events';
 import { PartitionedFilterResult } from '@dolittle/sdk.events.filtering';
 
+const swagger = require('./swagger.json');
+
 (async () => {
     const schema = await getSchema();
-
-    const swagger = await import('./public/swagger.json');
 
     await startBackend({
         microserviceId: 'c2e34414-5054-4050-8ee4-eb6f3265cce3',
