@@ -5,9 +5,12 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = (basePath, title) => {
     return [
+        new ForkTsCheckerWebpackPlugin(),
+
         new CleanWebpackPlugin({
             dangerouslyAllowCleanPatternsOutsideProject: true,
             dry: false,
