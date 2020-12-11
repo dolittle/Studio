@@ -5,7 +5,7 @@
         "**/*Controller.ts"
     ],
     "spec": {
-      "outputDirectory": "public",
+      "outputDirectory": ".",
       "specVersion": 3
     },
     "routes": {
