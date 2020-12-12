@@ -10,6 +10,7 @@
         "source.fixAll.eslint": false
     },
     "cSpell.words": [
+        "Bootstraper",
         "Deduplication",
         "MUUID",
         "dependencyinversion",

@@ -6,20 +6,14 @@ import 'reflect-metadata';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { initializeFrontend, VersionInfo } from '@shared/web';
+import { Bootstraper, VersionInfo } from '@shared/web';
 
-const versionInfo = require('../version.json') as VersionInfo;
+const version = require('../version.json') as VersionInfo;
 
 import '@shared/styles/theme';
 import './index.scss';
 
 export default function App() {
-    initializeFrontend({
-        name: 'Events',
-        prefix: '/_/events',
-        versionInfo
-    });
-
     return (
         <>
         </>
@@ -27,6 +21,8 @@ export default function App() {
 }
 
 ReactDOM.render(
-    <App />,
+    <Bootstraper name="Events" prefix="/_/events" version={version}>
+        <App />
+    </Bootstraper>,
     document.getElementById('root')
 );
