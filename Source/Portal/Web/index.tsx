@@ -9,20 +9,14 @@ import { Layout } from './layouts/Layout';
 import { AppHeader } from './layouts/AppHeader';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { initializeFrontend, VersionInfo } from '@shared/web';
+import { Bootstraper, VersionInfo } from '@shared/web';
 
-const versionInfo = require('../version.json') as VersionInfo;
+const version = require('../version.json') as VersionInfo;
 
 import '@shared/styles/theme';
 import './index.scss';
 
 export default function App() {
-    initializeFrontend({
-        name: 'Portal',
-        prefix: '',
-        versionInfo
-    });
-
     return (
         <Router>
             <AppHeader />
@@ -32,6 +26,8 @@ export default function App() {
 }
 
 ReactDOM.render(
-    <App />,
+    <Bootstraper name="Portal" prefix="" version={version}>
+        <App />
+    </Bootstraper>,
     document.getElementById('root')
 );

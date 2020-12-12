@@ -10,11 +10,14 @@ import '@shared/styles/theme';
 import './index.scss';
 import { CreateApplication } from './CreateApplication';
 import { AssignMicroservice } from './AssignMicroservice';
-import { ApplicationToolbarItems } from './ApplicationToolbarItems';
 import { NavBar } from './NavBar';
-import { Bootstrapped } from './BootStrapped';
 import { withViewModel } from '@shared/mvvm';
 import { AppViewModel } from './AppViewModel';
+import { Bootstraper, VersionInfo } from '@shared/web';
+
+import { Toolbar, ToolbarItem } from '@shared/components';
+
+const version = require('../version.json') as VersionInfo;
 
 const App = withViewModel(AppViewModel, ({ viewModel }) => {
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
@@ -23,13 +26,15 @@ const App = withViewModel(AppViewModel, ({ viewModel }) => {
     return (
         <>
             <NavBar
-                applications={viewModel.allApplications}
                 handleNavbarActionButtonTriggered={() => setShowCreateApplicationDialog(true)}
             />
-            <ApplicationToolbarItems
-                onCreateApplicationClicked={() => setShowCreateApplicationDialog(true)}
-                onAssignMicroserviceClicked={() => setShowAssignMicroserviceDialog(true)}
-            />
+            <Toolbar>
+                <ToolbarItem
+                    title="Assign microservice"
+                    icon="AppIconDefaultAdd"
+                    onClick={() => setShowAssignMicroserviceDialog(true)} />
+            </Toolbar>
+
             <CreateApplication
                 visible={showCreateApplicationDialog}
                 onCreated={() => setShowCreateApplicationDialog(false)}
@@ -46,9 +51,9 @@ const App = withViewModel(AppViewModel, ({ viewModel }) => {
 });
 
 ReactDOM.render(
-    <Bootstrapped>
+    <Bootstraper name="Applications" prefix="/_/applications" version={version}>
         <App />
-    </Bootstrapped>,
+    </Bootstraper>,
     document.getElementById('root')
 );
-export default Bootstrapped;
+
