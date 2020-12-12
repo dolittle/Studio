@@ -6,52 +6,10 @@ import 'reflect-metadata';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import '@shared/styles/theme';
-import './index.scss';
-import { CreateApplication } from './CreateApplication';
-import { AssignMicroservice } from './AssignMicroservice';
-import { NavBar } from './NavBar';
-import { withViewModel } from '@shared/mvvm';
-import { AppViewModel } from './AppViewModel';
 import { Bootstraper, VersionInfo } from '@shared/web';
-
-import { ActionBar, Toolbar, ToolbarItem } from '@shared/components';
+import { App } from './App';
 
 const version = require('../version.json') as VersionInfo;
-
-const App = withViewModel(AppViewModel, ({ viewModel }) => {
-    const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
-    const [showAssignMicroserviceDialog, setShowAssignMicroserviceDialog] = useState(false);
-
-    return (
-        <>
-            <NavBar/>
-            <Toolbar>
-                <ToolbarItem
-                    title="Assign microservice"
-                    icon="AppIconDefaultAdd"
-                    onClick={() => setShowAssignMicroserviceDialog(true)} />
-            </Toolbar>
-
-            <ActionBar
-                title="New Application"
-                icon="Add"
-                onClick={() => setShowCreateApplicationDialog(true)}/>
-
-            <CreateApplication
-                visible={showCreateApplicationDialog}
-                onCreated={() => setShowCreateApplicationDialog(false)}
-                onCancelled={() => setShowCreateApplicationDialog(false)}
-            />
-            <AssignMicroservice
-                forApplication={viewModel.selectedApplication}
-                visible={showAssignMicroserviceDialog}
-                onAssigned={() => setShowAssignMicroserviceDialog(false)}
-                onCancelled={() => setShowAssignMicroserviceDialog(false)}
-            />
-        </>
-    );
-});
 
 ReactDOM.render(
     <Bootstraper name="Applications" prefix="/_/applications" version={version}>
