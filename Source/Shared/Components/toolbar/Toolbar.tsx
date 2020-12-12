@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import { ToolbarViewModel } from '@shared/components/Toolbar/ToolbarViewModel';
 import { withViewModel } from '@shared/mvvm';
+import { ToolbarViewModel } from './ToolbarViewModel';
 import { ToolbarProps } from './ToolbarProps';
 
 export const Toolbar = withViewModel<ToolbarViewModel, ToolbarProps>(ToolbarViewModel, ({ viewModel, props }) => {

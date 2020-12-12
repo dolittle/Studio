@@ -13,6 +13,7 @@
         "Bootstraper",
         "Deduplication",
         "MUUID",
+        "actionbar",
         "dependencyinversion",
         "mvvm",
         "tsoa",
