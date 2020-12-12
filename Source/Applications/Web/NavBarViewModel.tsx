@@ -1,17 +1,68 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { ActionBar, ActionBarBroker, Navigation, NavigationGroup } from '@shared/portal';
+
+import { ActionBar, ActionBarAction, ActionBarBroker, Navigation, NavigationGroup } from '@shared/portal';
+import { DataSource } from '@shared/web';
 import { injectable } from 'tsyringe';
+import { ApplicationModel } from './ApplicationModel';
+import { ObservableQuery, NetworkStatus } from 'apollo-client';
+import gql from 'graphql-tag';
 
 @injectable()
 export class NavBarViewModel {
-    constructor(public navigation: Navigation, public actionBar: ActionBarBroker) {}
+    private _observableQuery?: ObservableQuery;
+    applications: ApplicationModel[] = [];
+    handleNavbarActionButtonTriggered?: () => void;
 
-    setNavigation(navigationGroups: NavigationGroup[]) {
-        this.navigation.set(navigationGroups);
+    constructor(
+        private readonly _navigation: Navigation,
+        private readonly _actionBar: ActionBarBroker,
+        private readonly _dataSource: DataSource) {}
+
+    activate() {
+        this._getApplicationList();
+        this._populateNavigation();
     }
 
-    setActionBar(actionBar: ActionBar) {
-        this.actionBar.set(actionBar);
+    private async _getApplicationList() {
+        const query = gql`
+            query {
+                allApplications {
+                    id
+                    name
+                }
+            }
+        `;
+
+        this._observableQuery = this._dataSource.watchQuery<AllApplicationsQuery>({
+            query,
+        });
+
+        this._observableQuery.subscribe((next) => {
+            if (next.networkStatus === NetworkStatus.ready && next.data) {
+                this.applications = next.data.allApplications;
+            }
+        });
     }
+
+    private async _populateNavigation() {
+        const navigationItems = this.applications?.map(
+            (app) => ({ name: app.name, items: [{ name: 'Default' }] } as NavigationGroup)
+        );
+
+        this._navigation.set(navigationItems ?? []);
+
+        const actionBarStructure = {
+            button: new ActionBarAction('New Application', 'Add', () =>
+                this.handleNavbarActionButtonTriggered?.()
+            ),
+            placement: 'bottom',
+        } as ActionBar;
+        this._actionBar.set(actionBarStructure);
+    }
+
 }
+
+type AllApplicationsQuery = {
+    allApplications: ApplicationModel[];
+};
