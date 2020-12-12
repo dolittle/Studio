@@ -7,7 +7,6 @@ import '@shared/styles/theme';
 import './index.scss';
 import { CreateApplication } from './CreateApplication';
 import { AssignMicroservice } from './AssignMicroservice';
-import { NavBar } from './NavBar';
 import { withViewModel } from '@shared/mvvm';
 import { AppViewModel } from './AppViewModel';
 
@@ -19,7 +18,6 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
 
     return (
         <>
-            <NavBar/>
             <Toolbar>
                 <ToolbarItem
                     title="Assign microservice"
