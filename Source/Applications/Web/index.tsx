@@ -15,7 +15,7 @@ import { withViewModel } from '@shared/mvvm';
 import { AppViewModel } from './AppViewModel';
 import { Bootstraper, VersionInfo } from '@shared/web';
 
-import { Toolbar, ToolbarItem } from '@shared/components';
+import { ActionBar, Toolbar, ToolbarItem } from '@shared/components';
 
 const version = require('../version.json') as VersionInfo;
 
@@ -25,15 +25,18 @@ const App = withViewModel(AppViewModel, ({ viewModel }) => {
 
     return (
         <>
-            <NavBar
-                handleNavbarActionButtonTriggered={() => setShowCreateApplicationDialog(true)}
-            />
+            <NavBar/>
             <Toolbar>
                 <ToolbarItem
                     title="Assign microservice"
                     icon="AppIconDefaultAdd"
                     onClick={() => setShowAssignMicroserviceDialog(true)} />
             </Toolbar>
+
+            <ActionBar
+                title="New Application"
+                icon="Add"
+                onClick={() => setShowCreateApplicationDialog(true)}/>
 
             <CreateApplication
                 visible={showCreateApplicationDialog}

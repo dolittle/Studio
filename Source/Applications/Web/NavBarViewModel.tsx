@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { ActionBar, ActionBarAction, ActionBarBroker, Navigation, NavigationGroup } from '@shared/portal';
+import { Navigation, NavigationGroup } from '@shared/portal';
 import { DataSource } from '@shared/web';
 import { injectable } from 'tsyringe';
 import { ApplicationModel } from './ApplicationModel';
@@ -16,7 +16,6 @@ export class NavBarViewModel {
 
     constructor(
         private readonly _navigation: Navigation,
-        private readonly _actionBar: ActionBarBroker,
         private readonly _dataSource: DataSource) {}
 
     activate() {
@@ -51,14 +50,6 @@ export class NavBarViewModel {
         );
 
         this._navigation.set(navigationItems ?? []);
-
-        const actionBarStructure = {
-            button: new ActionBarAction('New Application', 'Add', () =>
-                this.handleNavbarActionButtonTriggered?.()
-            ),
-            placement: 'bottom',
-        } as ActionBar;
-        this._actionBar.set(actionBarStructure);
     }
 
 }
