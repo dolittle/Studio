@@ -8,7 +8,7 @@ import { GuidScalar } from '@shared/backend/data';
 import { Guid } from '@dolittle/rudiments';
 import { container } from 'tsyringe';
 import { ApplicationQueries, MicroserviceQueries } from './applications';
-import { ApplicationForListingQueries } from './listing/ApplicationQueries';
+import { ApplicationForListingQueries } from './listing/ApplicationForListingQueries';
 
 export async function getSchema(): Promise<GraphQLSchema> {
     const schema = await buildSchema({

@@ -8,22 +8,23 @@ import { Guid } from '@dolittle/rudiments';
 import { ILogger } from '@shared/backend/logging';
 import { NamespaceList } from '@shared/backend/k8s/NamespaceList';
 import { ApplicationForListing, ApplicationModel } from './ApplicationForListing';
+import { IK8sClient } from '@shared/backend/k8s';
 
 
 
 @injectable()
 @Resolver(ApplicationForListing)
 export class ApplicationForListingQueries {
-    constructor(private readonly _logger: ILogger) {
-    }
+    constructor(
+        private readonly _logger: ILogger,
+        private readonly _k8sClient: IK8sClient
+    ) {}
 
-    @Query(returns => [ApplicationForListing])
+    @Query((returns) => [ApplicationForListing])
     async allApplicationsForListing() {
+        const namespaces = await this._k8sClient.getNamespaces();
 
-        const response = await fetch('http://localhost:3001/api/v1/namespaces');
-        const namespaces = await response.json() as NamespaceList;
-
-        const applications = namespaces.items.map(_ => {
+        const applications = namespaces.items.map((_) => {
             const guid = _.metadata.name.replace('application-', '');
             const application = new ApplicationForListing();
             application._id = Guid.parse(guid).toString();
@@ -34,3 +35,5 @@ export class ApplicationForListingQueries {
         return applications;
     }
 }
+
+
