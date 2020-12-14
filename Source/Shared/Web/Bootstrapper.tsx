@@ -5,14 +5,14 @@ import React from 'react';
 import { initializeFrontend } from './index';
 import { VersionInfo } from './VersionInfo';
 
-export interface BootstraperProps {
+export interface BootstrapperProps {
     name: string;
     prefix: string;
     version: VersionInfo;
     children?: React.ReactNode;
 }
 
-export const Bootstraper = (props: BootstraperProps) => {
+export const Bootstrapper = (props: BootstrapperProps) => {
     initializeFrontend({
         name: props.name,
         prefix: props.prefix,

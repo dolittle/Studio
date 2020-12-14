@@ -7,7 +7,7 @@ import { Bindings as MVVMBindings } from '@shared/mvvm';
 import { Bindings as PlatformBindings } from '@shared/platform';
 import { Configuration } from './Configuration';
 
-export * from './Bootstraper';
+export * from './Bootstrapper';
 
 export * from './DataSource';
 export * from './VersionInfo';

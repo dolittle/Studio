@@ -6,15 +6,15 @@ import 'reflect-metadata';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import { Bootstraper, VersionInfo } from '@shared/web';
+import { Bootstrapper, VersionInfo } from '@shared/web';
 import { App } from './App';
 
 const version = require('../version.json') as VersionInfo;
 
 ReactDOM.render(
-    <Bootstraper name="Applications" prefix="/_/applications" version={version}>
+    <Bootstrapper name="Applications" prefix="/_/applications" version={version}>
         <App />
-    </Bootstraper>,
+    </Bootstrapper>,
     document.getElementById('root')
 );
 

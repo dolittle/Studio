@@ -6,7 +6,7 @@ import 'reflect-metadata';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Bootstraper, VersionInfo } from '@shared/web';
+import { Bootstrapper, VersionInfo } from '@shared/web';
 
 const version = require('../version.json') as VersionInfo;
 
@@ -21,8 +21,8 @@ export default function App() {
 }
 
 ReactDOM.render(
-    <Bootstraper name="Events" prefix="/_/events" version={version}>
+    <Bootstrapper name="Events" prefix="/_/events" version={version}>
         <App />
-    </Bootstraper>,
+    </Bootstrapper>,
     document.getElementById('root')
 );
