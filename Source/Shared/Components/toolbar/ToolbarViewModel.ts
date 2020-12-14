@@ -19,13 +19,9 @@ export class ToolbarViewModel {
             return;
         }
 
-        let items: JSX.Element[];
-
-        if (Array.isArray(viewContext.props.children)) {
-            items = viewContext.props.children;
-        } else {
-            items = [viewContext.props.children];
-        }
+   const items = Array.isArray(viewContext.props.children)
+            ? viewContext.props.children
+            : [viewContext.props.children];
 
         const toolbarItems = items.map(_ => {
             const props = (_.props as ToolbarItemProps);
