@@ -9,7 +9,7 @@ import { Layout } from './layouts/Layout';
 import { AppHeader } from './layouts/AppHeader';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { Bootstraper, VersionInfo } from '@shared/web';
+import { Bootstrapper, VersionInfo } from '@shared/web';
 
 const version = require('../version.json') as VersionInfo;
 
@@ -26,8 +26,8 @@ export default function App() {
 }
 
 ReactDOM.render(
-    <Bootstraper name="Portal" prefix="" version={version}>
+    <Bootstrapper name="Portal" prefix="" version={version}>
         <App />
-    </Bootstraper>,
+    </Bootstrapper>,
     document.getElementById('root')
 );
