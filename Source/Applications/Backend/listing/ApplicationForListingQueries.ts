@@ -1,16 +1,13 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import fetch from 'node-fetch';
 import { injectable } from 'tsyringe';
-import { Query, Resolver, Arg } from 'type-graphql';
+import { Query, Resolver } from 'type-graphql';
 import { Guid } from '@dolittle/rudiments';
 import { ILogger } from '@shared/backend/logging';
-import { NamespaceList } from '@shared/backend/k8s/NamespaceList';
-import { ApplicationForListing, ApplicationModel } from './ApplicationForListing';
+import { ApplicationForListing } from './ApplicationForListing';
 import { IK8sClient } from '@shared/backend/k8s';
-
-
+import { MicroserviceForListing } from './MicroserviceForListing';
 
 @injectable()
 @Resolver(ApplicationForListing)
@@ -23,17 +20,26 @@ export class ApplicationForListingQueries {
     @Query((returns) => [ApplicationForListing])
     async allApplicationsForListing() {
         const namespaces = await this._k8sClient.getNamespaces();
-
-        const applications = namespaces.items.map((_) => {
-            const guid = _.metadata.name.replace('application-', '');
+        const applications = (
+            await Promise.all(
+                namespaces.items.map(async (namespace) => {
+                    const pods = await this._k8sClient.getPods(namespace.metadata.name);
+                    return { namespace, pods };
+                })
+            )
+        ).map(async ({ namespace, pods }) => {
+            const guid = namespace.metadata.name.replace('application-', '');
             const application = new ApplicationForListing();
             application._id = Guid.parse(guid).toString();
-            application.name = _.metadata.labels.application || 'unknown';
+            application.name = namespace.metadata.labels.application || 'unknown';
+            application.microservices = pods.items.map((pod) => {
+                const id = pod.metadata.name;
+                const name = pod.metadata.labels.microservice || 'unknown';
+                return { _id: id, name } as MicroserviceForListing;
+            });
             return application;
         });
 
         return applications;
     }
 }
-
-

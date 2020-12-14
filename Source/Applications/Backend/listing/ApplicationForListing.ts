@@ -5,7 +5,7 @@ import { Field, ObjectType } from 'type-graphql';
 import { guid } from '@shared/backend/data';
 import { prop, getModelForClass } from '@typegoose/typegoose';
 import { Guid } from '@dolittle/rudiments';
-import { EnvironmentForListing } from './EnvironmentForListing';
+import { MicroserviceForListing } from './MicroserviceForListing';
 
 @ObjectType()
 export class ApplicationForListing {
@@ -17,6 +17,7 @@ export class ApplicationForListing {
     @prop()
     name!: string;
 
-    environments!: EnvironmentForListing[];
+    @Field(type => [MicroserviceForListing])
+    microservices!: MicroserviceForListing[];
 }
-export const ApplicationModel = getModelForClass(ApplicationForListing);
+export const ApplicationForListingModel = getModelForClass(ApplicationForListing);
