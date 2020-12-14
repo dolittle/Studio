@@ -7,6 +7,7 @@ import compression from 'compression';
 import { GraphQLSchema } from 'graphql';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import path from 'path';
 
 export let app: Express;
 export type ExpressConfigCallback = (app: Express) => void;
@@ -31,7 +32,8 @@ export async function initialize(prefix: string, publicPath: string, port: numbe
     app.use(morgan('tiny'));
     app.use(prefix, express.static(publicPath));
     app.use((req, res) => {
-        res.sendFile(`${publicPath}/index.html`);
+        const indexPath = path.resolve(publicPath, 'index.html');
+        res.sendFile(indexPath);
     });
 
     const expressPort = process.env.PORT || port;
