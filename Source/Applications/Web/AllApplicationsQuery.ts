@@ -4,13 +4,13 @@ import { BehaviorSubject } from 'rxjs';
 import { ObservableQuery, NetworkStatus } from 'apollo-client';
 import gql from 'graphql-tag';
 import { injectable, singleton } from 'tsyringe';
-import { ApplicationModel } from './ApplicationModel';
+import { ApplicationForListingModel } from './ApplicationForListingModel';
 import { DataSource } from '@shared/web';
 
 @singleton()
 @injectable()
 export class AllApplicationsQuery {
-    items: BehaviorSubject<ApplicationModel[]> = new BehaviorSubject<ApplicationModel[]>(
+    items: BehaviorSubject<ApplicationForListingModel[]> = new BehaviorSubject<ApplicationForListingModel[]>(
         []
     );
     private _observableQuery?: ObservableQuery<any>;
