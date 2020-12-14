@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { ToolbarItem, ToolbarItems } from '@shared/portal';
-import { ToolbarItemProps } from './ToolbarItemProps';
 import { ToolbarProps } from './ToolbarProps';
 import { IViewContext } from '@shared/mvvm';
 import { injectable } from 'tsyringe';
