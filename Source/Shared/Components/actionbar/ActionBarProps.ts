@@ -6,5 +6,5 @@ import { ActionBarActionTriggered } from '@shared/portal';
 export interface ActionBarProps {
     title: string;
     icon?: string;
-    onClick: ActionBarActionTriggered;
+    onTriggered: ActionBarActionTriggered;
 }

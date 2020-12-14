@@ -28,7 +28,7 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
             <ActionBar
                 title="New Application"
                 icon="Add"
-                onClick={() => setShowCreateApplicationDialog(true)}/>
+                onTriggered={() => setShowCreateApplicationDialog(true)}/>
 
             <CreateApplication
                 visible={showCreateApplicationDialog}
