@@ -23,11 +23,10 @@ export class AppViewModel {
 
     constructor(
         private readonly _navigation: Navigation,
-        private readonly _dataSource: DataSource) {}
+        private readonly _dataSource: DataSource) { }
 
     activate() {
         this._getApplicationList();
-        this._populateNavigation();
     }
 
     private async _getApplicationList() {
@@ -47,6 +46,7 @@ export class AppViewModel {
         this._observableQuery.subscribe((next) => {
             if (next.networkStatus === NetworkStatus.ready && next.data) {
                 this.applications = next.data.allApplications;
+                this._populateNavigation();
             }
         });
     }
