@@ -24,7 +24,7 @@ export class ToolbarViewModel {
             : [viewContext.props.children];
 
         const toolbarItems = items.map(_ => {
-            const props = (_.props as ToolbarItemProps);
+            const props = (_.props);
             return new ToolbarItem(
                 props.title,
                 props.icon,
