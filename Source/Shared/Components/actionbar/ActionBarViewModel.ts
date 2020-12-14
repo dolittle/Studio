@@ -18,7 +18,7 @@ export class ActionBarViewModel {
             button: new ActionBarAction(
                 viewContext.props.title,
                 viewContext.props.icon,
-                viewContext.props.onClick),
+                viewContext.props.onTriggered),
             placement: 'bottom'
         })
     }
