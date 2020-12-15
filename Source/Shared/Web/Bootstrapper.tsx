@@ -4,6 +4,7 @@
 import React from 'react';
 import { initializeFrontend } from './index';
 import { VersionInfo } from './VersionInfo';
+import { MicroserviceContext } from './MicroserviceContext';
 
 export interface BootstrapperProps {
     name: string;
@@ -12,6 +13,7 @@ export interface BootstrapperProps {
     children?: React.ReactNode;
 }
 
+
 export const Bootstrapper = (props: BootstrapperProps) => {
     initializeFrontend({
         name: props.name,
@@ -19,5 +21,11 @@ export const Bootstrapper = (props: BootstrapperProps) => {
         versionInfo: props.version
     });
 
-    return (<>{props.children}</>);
+    return (
+        <>
+            <MicroserviceContext.Provider value={props}>
+                {props.children}
+            </MicroserviceContext.Provider>
+        </>
+    );
 };
