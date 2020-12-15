@@ -9,8 +9,13 @@ import { CreateApplication } from './CreateApplication';
 import { AssignMicroservice } from './AssignMicroservice';
 import { withViewModel } from '@shared/mvvm';
 import { AppViewModel } from './AppViewModel';
+import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 
 import { ActionBar, Toolbar, ToolbarItem } from '@shared/components';
+import { AllApplications } from './applications/AllApplications';
+import { ApplicationDetails } from './applications/ApplicationDetails';
+import { MicroserviceDetails } from './microservices/MicroserviceDetails';
+import { baseurl, routes } from './routing';
 
 export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
@@ -20,15 +25,17 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
         <>
             <Toolbar>
                 <ToolbarItem
-                    title="Assign microservice"
-                    icon="AppIconDefaultAdd"
-                    onClick={() => setShowAssignMicroserviceDialog(true)} />
+                    title='Assign microservice'
+                    icon='AppIconDefaultAdd'
+                    onClick={() => setShowAssignMicroserviceDialog(true)}
+                />
             </Toolbar>
 
             <ActionBar
-                title="New Application"
-                icon="Add"
-                onTriggered={() => setShowCreateApplicationDialog(true)}/>
+                title='New Application'
+                icon='Add'
+                onTriggered={() => setShowCreateApplicationDialog(true)}
+            />
 
             <CreateApplication
                 visible={showCreateApplicationDialog}
@@ -41,6 +48,34 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
                 onAssigned={() => setShowAssignMicroserviceDialog(false)}
                 onCancelled={() => setShowAssignMicroserviceDialog(false)}
             />
+
+            <Router basename={baseurl}>
+                <Switch>
+                    <Route
+                        exact
+                        path={routes.allApplications.route}
+                        render={() => (
+                            <AllApplications applications={viewModel.applications} />
+                        )}
+                    />
+                    <Route
+                        exact
+                        path={routes.applicationDetails.route}
+                        render={(routeProps) => (
+                            <ApplicationDetails {...routeProps.match.params} />
+                        )}
+                    />
+                    <Route
+                        exact
+                        path={routes.microserviceDetails.route}
+                        render={(routeProps) => (
+                            <MicroserviceDetails {...routeProps.match.params} />
+                        )}
+                    />
+                </Switch>
+            </Router>
         </>
     );
 });
+
+
