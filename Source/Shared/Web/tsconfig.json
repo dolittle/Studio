@@ -3,6 +3,10 @@
     "references": [
         {
             "path": "../DependencyInversion"
+        },
+        {
+            "path": "../MVVM"
         }
+
     ]
 }

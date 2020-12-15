@@ -14,9 +14,7 @@ const version = require('../version.json') as VersionInfo;
 
 ReactDOM.render(
     <Bootstrapper name="Applications" prefix="/_/applications" version={version}>
-        <Router>
-            <App />
-        </Router>
+        <App />
     </Bootstrapper>,
     document.getElementById('root')
 );

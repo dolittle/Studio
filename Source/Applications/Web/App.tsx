@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useEffect } from 'react';
-import { Route, Switch, useLocation, useHistory  } from 'react-router-dom';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { History } from 'history';
 
 import '@shared/styles/theme';
@@ -13,7 +13,7 @@ import { withViewModel } from '@shared/mvvm';
 import { AppViewModel } from './AppViewModel';
 
 import { ActionBar, Toolbar, ToolbarItem } from '@shared/components';
-import { MicroserviceRoute } from '@shared/web';
+import { MicroserviceRoute, Routing } from '@shared/web';
 
 
 export const App = withViewModel(AppViewModel, ({ viewModel }) => {
@@ -22,8 +22,8 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
 
     return (
         <>
-            <Switch>
-                <MicroserviceRoute >
+            <Routing>
+                <MicroserviceRoute>
                     <Toolbar>
                         <ToolbarItem
                             title="Assign microservice"
@@ -52,7 +52,7 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
                 <MicroserviceRoute exact path="/something">
                     Hello world
                 </MicroserviceRoute>
-            </Switch>
+            </Routing>
         </>
     );
 });

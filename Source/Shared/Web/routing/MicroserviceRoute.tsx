@@ -14,7 +14,6 @@ export const MicroserviceRoute = (props: RouteProps) => {
                 innerProps.path = `${value.prefix}/${props.path || ''}`;
                 innerProps.path = innerProps.path.replace('//','/');
 
-                console.log(`Listen to ${innerProps.path}`);
                 return <Route {...innerProps} />;
             }}
         </MicroserviceContext.Consumer>

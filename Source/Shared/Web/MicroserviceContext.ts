@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { BootstrapperProps } from './Bootstrapper';
 import React from 'react';
+import { MicroserviceConfiguration } from '@shared/web/MicroserviceConfiguration';
 
-export const MicroserviceContext = React.createContext<BootstrapperProps>({
+export const MicroserviceContext = React.createContext<MicroserviceConfiguration>({
     name: 'unknown',
     prefix: '',
     version: {

@@ -25,6 +25,7 @@ export const TopLevelMenu = withViewModel<TopLevelMenuViewModel>(TopLevelMenuVie
                 <PivotItem headerText="Applications" itemKey="/applications/"></PivotItem>
                 <PivotItem headerText="Events" itemKey="/events/"></PivotItem>
             </Pivot>
+            <button onClick={viewModel.doMagic}>Click me</button>
         </div>
     );
 });
