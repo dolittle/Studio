@@ -5,15 +5,18 @@ import 'reflect-metadata';
 
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import { Bootstrapper, VersionInfo } from '@shared/web';
-import { App } from './App';
+import { Bootstrapper, MicroserviceContext, VersionInfo } from '@shared/web';
+import { App } from './App';
 
 const version = require('../version.json') as VersionInfo;
 
 ReactDOM.render(
     <Bootstrapper name="Applications" prefix="/_/applications" version={version}>
-        <App />
+        <Router>
+            <App />
+        </Router>
     </Bootstrapper>,
     document.getElementById('root')
 );
