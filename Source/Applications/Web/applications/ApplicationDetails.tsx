@@ -25,7 +25,13 @@ export const ApplicationDetails = withViewModel<
             <h2>Microservices:</h2>
             <ul>
                 {props.applicationForListing?.microservices.map((m) => (
-                    <Link key={m.id.toString()} to={routes.microserviceDetails.route}>
+                    <Link
+                        key={m.id.toString()}
+                        to={routes.microserviceDetails.generate({
+                            applicationId: props.applicationForListing!.id.toString(),
+                            microserviceId: m.id.toString(),
+                        })}
+                    >
                         {m.name}
                     </Link>
                 ))}

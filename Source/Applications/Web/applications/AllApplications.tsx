@@ -21,7 +21,10 @@ export const AllApplications = withViewModel<
             <h1>Applications:</h1>
             <ul>
                 {props.applications.map((a) => (
-                    <Link key={a.id.toString()} to={routes.applicationDetails.route}>
+                    <Link
+                        key={a.id.toString()}
+                        to={routes.applicationDetails.generate({ applicationId: a.id.toString() })}
+                    >
                         {a.name}
                     </Link>
                 ))}
