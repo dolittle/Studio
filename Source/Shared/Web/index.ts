@@ -8,9 +8,10 @@ import { Bindings as PlatformBindings } from '@shared/platform';
 import { Configuration } from './Configuration';
 
 export * from './Bootstrapper';
-
 export * from './DataSource';
 export * from './VersionInfo';
+export * from './MicroserviceContext';
+export * from './routing';
 
 export function initializeFrontend(configuration: Configuration) {
     Bindings.initialize(configuration);
