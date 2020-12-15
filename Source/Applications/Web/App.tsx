@@ -9,13 +9,14 @@ import { CreateApplication } from './CreateApplication';
 import { AssignMicroservice } from './AssignMicroservice';
 import { withViewModel } from '@shared/mvvm';
 import { AppViewModel } from './AppViewModel';
-import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Switch, Route, RouteComponentProps } from 'react-router-dom';
 
 import { ActionBar, Toolbar, ToolbarItem } from '@shared/components';
 import { AllApplications } from './applications/AllApplications';
 import { ApplicationDetails } from './applications/ApplicationDetails';
 import { MicroserviceDetails } from './microservices/MicroserviceDetails';
 import { baseurl, routes } from './routing';
+import { ApplicationForListingModel } from './ApplicationForListingModel';
 
 export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
@@ -61,8 +62,16 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
                     <Route
                         exact
                         path={routes.applicationDetails.route}
-                        render={(routeProps) => (
-                            <ApplicationDetails {...routeProps.match.params} />
+                        render={(
+                            routeProps: RouteComponentProps<{ applicationId: string }>
+                        ) => (
+                            <ApplicationDetails
+                                applicationForListing={resolveApplication(
+                                    viewModel.applications,
+                                    routeProps.match.params.applicationId
+                                )}
+                                {...routeProps.match.params}
+                            />
                         )}
                     />
                     <Route
@@ -79,3 +88,9 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
 });
 
 
+function resolveApplication(
+    applications: ApplicationForListingModel[],
+    applicationId: string
+): ApplicationForListingModel | undefined {
+    return applications.find((a) => a.id.toString() === applicationId);
+}

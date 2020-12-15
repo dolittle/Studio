@@ -4,16 +4,32 @@
 import React from 'react';
 import { withViewModel } from '@shared/mvvm';
 import { ApplicationDetailsViewModel } from './ApplicationDetailsViewModel';
-import { RouteComponentProps } from 'react-router-dom';
+import { ApplicationForListingModel } from '../ApplicationForListingModel';
+import { Link } from 'react-router-dom';
+import { routes } from '../routing';
 
-export interface ApplicationDetailsProps{
-    applicationId: string
-};
+export interface ApplicationDetailsProps {
+    applicationId: string;
+    applicationForListing?: ApplicationForListingModel;
+}
 
-export const ApplicationDetails = withViewModel<ApplicationDetailsViewModel, ApplicationDetailsProps>(ApplicationDetailsViewModel, ({viewModel, props}) => {
+export const ApplicationDetails = withViewModel<
+    ApplicationDetailsViewModel,
+    ApplicationDetailsProps
+>(ApplicationDetailsViewModel, ({ viewModel, props }) => {
     return (
         <>
-            <h1>Microservice ApplicationDetails {props.applicationId}</h1>
+            <h1>{props.applicationForListing?.name}</h1>
+            <h4>{props.applicationId}</h4>
+
+            <h2>Microservices:</h2>
+            <ul>
+                {props.applicationForListing?.microservices.map((m) => (
+                    <Link key={m.id.toString()} to={routes.microserviceDetails.route}>
+                        {m.name}
+                    </Link>
+                ))}
+            </ul>
         </>
     );
 });
