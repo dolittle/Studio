@@ -17,6 +17,7 @@ import { ApplicationDetails } from './applications/ApplicationDetails';
 import { MicroserviceDetails } from './microservices/MicroserviceDetails';
 import { baseurl, routes } from './routing';
 import { ApplicationForListingModel } from './ApplicationForListingModel';
+import { MicroserviceForListing } from './MicroserviceForListing';
 
 export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
@@ -78,7 +79,14 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
                         exact
                         path={routes.microserviceDetails.route}
                         render={(routeProps) => (
-                            <MicroserviceDetails {...routeProps.match.params} />
+                            <MicroserviceDetails
+                                microserviceForListing={resolveMicroservice(
+                                    viewModel.applications,
+                                    routeProps.match.params.applicationId,
+                                    routeProps.match.params.microserviceId
+                                )}
+                                {...routeProps.match.params}
+                            />
                         )}
                     />
                 </Switch>
@@ -93,4 +101,14 @@ function resolveApplication(
     applicationId: string
 ): ApplicationForListingModel | undefined {
     return applications.find((a) => a.id.toString() === applicationId);
+}
+
+function resolveMicroservice(
+    applications: ApplicationForListingModel[],
+    applicationId: string,
+    microserviceId: string,
+): MicroserviceForListing | undefined {
+    return applications
+        .find((a) => a.id.toString() === applicationId)
+        ?.microservices.find((m) => m.id.toString() === microserviceId);
 }

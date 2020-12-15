@@ -4,16 +4,19 @@
 import React from 'react';
 import { withViewModel } from '@shared/mvvm';
 import { MicroserviceDetailsViewModel } from './MicroserviceDetailsViewModel';
+import { MicroserviceForListing } from '../MicroserviceForListing';
 
 export interface MicroserviceDetailsProps{
     applicationId: string;
     microserviceId: string;
+    microserviceForListing?: MicroserviceForListing
 };
 
 export const MicroserviceDetails = withViewModel<MicroserviceDetailsViewModel, MicroserviceDetailsProps>(MicroserviceDetailsViewModel, ({viewModel, props}) => {
     return (
         <>
-            <h1>Microservice MicroserviceDetails {props.microserviceId} for Application {props.applicationId}</h1>
+            <h1>{props.microserviceForListing?.name}</h1>
+            <h3>{props.microserviceForListing?.id}</h3>
         </>
     );
 });

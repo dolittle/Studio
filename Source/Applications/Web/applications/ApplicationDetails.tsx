@@ -20,7 +20,7 @@ export const ApplicationDetails = withViewModel<
     return (
         <>
             <h1>{props.applicationForListing?.name}</h1>
-            <h4>{props.applicationId}</h4>
+            <h3>{props.applicationId}</h3>
 
             <h2>Microservices:</h2>
             <ul>
