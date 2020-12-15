@@ -5,6 +5,7 @@ import React from 'react';
 import { withViewModel } from '@shared/mvvm';
 import { MicroserviceDetailsViewModel } from './MicroserviceDetailsViewModel';
 import { MicroserviceForListing } from '../MicroserviceForListing';
+const microservice_mock = require('./microservice_dashboard_mock.jpg').default;
 
 export interface MicroserviceDetailsProps{
     applicationId: string;
@@ -17,6 +18,9 @@ export const MicroserviceDetails = withViewModel<MicroserviceDetailsViewModel, M
         <>
             <h1>{props.microserviceForListing?.name}</h1>
             <h3>{props.microserviceForListing?.id}</h3>
+            <div>
+                <img src={microservice_mock} style={{width:'100%'}}></img>
+            </div>
         </>
     );
 });
