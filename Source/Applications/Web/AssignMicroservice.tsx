@@ -13,11 +13,11 @@ import {
 } from 'office-ui-fabric-react';
 import { withViewModel } from '@shared/mvvm';
 import { AssignMicroserviceViewModel, SelectedOption } from './AssignMicroserviceViewModel';
-import { ApplicationForListingModel } from './ApplicationForListingModel';
+import { ApplicationForListing } from './ApplicationForListing';
 
 export type AssignMicroserviceProps = {
     visible: any;
-    forApplication?: ApplicationForListingModel;
+    forApplication?: ApplicationForListing;
     onAssigned: () => void;
     onCancelled: () => void;
 };

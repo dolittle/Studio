@@ -3,7 +3,7 @@
 import { Guid } from '@dolittle/rudiments';
 import { MicroserviceForListing } from './MicroserviceForListing';
 
-export type ApplicationForListingModel = {
+export type ApplicationForListing = {
     id: Guid;
     name: string;
     microservices: MicroserviceForListing[];

@@ -6,15 +6,15 @@ import { DataSource } from '@shared/web';
 import { injectable } from 'tsyringe';
 import { ObservableQuery, NetworkStatus } from 'apollo-client';
 import gql from 'graphql-tag';
-import { ApplicationForListingModel } from './ApplicationForListingModel';
+import { ApplicationForListing } from './ApplicationForListing';
 
 
 @injectable()
 export class AppViewModel {
-    selectedApplication?: ApplicationForListingModel;
+    selectedApplication?: ApplicationForListing;
 
     private _observableQuery?: ObservableQuery<AllApplicationsForListingQuery>;
-    applications: ApplicationForListingModel[] = [];
+    applications: ApplicationForListing[] = [];
     handleNavbarActionButtonTriggered?: () => void;
 
     constructor(
@@ -66,5 +66,5 @@ export class AppViewModel {
 }
 
 type AllApplicationsForListingQuery = {
-    allApplicationsForListing: ApplicationForListingModel[];
+    allApplicationsForListing: ApplicationForListing[];
 };
