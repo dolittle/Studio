@@ -23,7 +23,8 @@ export class AppViewModel {
 
     constructor(
         private readonly _navigation: Navigation,
-        private readonly _dataSource: DataSource) { }
+        private readonly _dataSource: DataSource) {
+    }
 
     activate() {
         this._getApplicationList();
@@ -58,6 +59,4 @@ export class AppViewModel {
 
         this._navigation.set(navigationItems ?? []);
     }
-
 }
-

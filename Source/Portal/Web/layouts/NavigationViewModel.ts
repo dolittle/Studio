@@ -4,12 +4,17 @@
 import { NavigationStructure } from './NavigationStructure';
 import { injectable } from 'tsyringe';
 import { NavigationGroup } from '@shared/portal';
+import { INavigator } from '@shared/web';
 
 @injectable()
 export class NavigationViewModel {
     groups: NavigationGroup[] = [];
 
-    constructor(private readonly _navigation: NavigationStructure) {
+    constructor(private readonly _navigation: NavigationStructure, private readonly _navigator: INavigator) {
         _navigation.groups.subscribe((_) => (this.groups = _));
+    }
+
+    navigateTo(path: string) {
+        this._navigator.navigateTo(path);
     }
 }

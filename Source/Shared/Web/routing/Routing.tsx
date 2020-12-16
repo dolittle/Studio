@@ -5,25 +5,18 @@ import React from 'react';
 import { withViewModel } from '@shared/MVVM';
 
 import { RoutingViewModel } from './RoutingViewModel';
-import { Switch, useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 export interface RoutingProps {
     children: React.ReactNode[] | React.ReactNode;
 }
 
 export const Routing = withViewModel<RoutingViewModel, RoutingProps>(RoutingViewModel, ({ viewModel, props }) => {
-    const location = useLocation();
     const history = useHistory();
 
-    console.log('Routing');
-    viewModel.callback = (path: string) => {
+    viewModel.navigated = (path: string) => {
         history.push(path);
-        console.log('Pushed history : '+path);
     };
-
-    if (viewModel.currentPath !== location.pathname) {
-        //history.push(viewModel.currentPath);
-    }
 
     return (
         <>

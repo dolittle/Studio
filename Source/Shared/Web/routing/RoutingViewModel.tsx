@@ -10,14 +10,14 @@ import { NavigatedTo } from './NavigatedTo';
 export class RoutingViewModel {
     currentPath: string;
 
-    callback!: (path: string) => void;
+    navigated!: (path: string) => void;
 
     constructor(readonly microserviceConfiguration: MicroserviceConfiguration, private readonly _messenger: IMessenger) {
         this.currentPath = microserviceConfiguration.prefix;
         _messenger.subscribeTo(NavigatedTo, _ => {
-            console.log(`Navigated to ${_.path}`);
-            this.callback?.(_.path);
-            //this.currentPath = _.path;
+            const actualPath = `/_${_.path}`;
+            console.log(`Navigated to ${actualPath}`);
+            this.navigated?.(actualPath);
         });
     }
 

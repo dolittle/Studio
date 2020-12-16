@@ -5,3 +5,5 @@ export * from './Routing';
 export * from './MicroserviceRoute';
 export * from './CompositionRoute';
 export * from './NavigatedTo';
+export * from './INavigator';
+export * from './Navigator';

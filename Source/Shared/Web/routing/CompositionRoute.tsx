@@ -3,7 +3,7 @@
 
 import { MicroserviceContext } from '../MicroserviceContext';
 import React from 'react';
-import { Route, RouteProps } from 'react-router-dom';
+import { Route, RouteProps, useLocation } from 'react-router-dom';
 import { ContentFrame } from '@shared/web/routing/ContentFrame';
 
 export interface CompositionRouteProps extends RouteProps {
@@ -12,10 +12,12 @@ export interface CompositionRouteProps extends RouteProps {
 }
 
 export const CompositionRoute = (props: CompositionRouteProps) => {
+    const location = useLocation();
+
     return (
         <MicroserviceContext.Consumer>
             {value => {
-                let src = `/_/${props.path}`;
+                let src = `/_/${location.pathname}`;
                 src = src.replace('//', '/');
                 return (
                     <Route {...props}>
