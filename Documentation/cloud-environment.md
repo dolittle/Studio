@@ -93,7 +93,7 @@ $ kubectl get pods
 You can get to the logs from the individual container instances within every pod running in Kubernetes.
 By using the `kubectl logs` command you can get logs for a container within a pod.
 
-For instance if we want to look at the runtime logs for the M3 Connector using the pod identifier from the `get pods` command:
+For instance if we want to look at the runtime logs for the applications microservice using the pod identifier from the `get pods` command:
 
 ```shell
 $ kubectl logs studio-dev-applications-5c59ff4c4-mjtgb -c runtime
