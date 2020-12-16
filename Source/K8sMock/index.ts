@@ -7,9 +7,6 @@ import swaggerUi from 'swagger-ui-express';
 
 import { getSchema } from './schema';
 import { RegisterRoutes } from './routes';
-import { RegisterEventTypes } from './RegisterEventTypes';
-import { EventContext, PartitionId } from '@dolittle/sdk.events';
-import { PartitionedFilterResult } from '@dolittle/sdk.events.filtering';
 
 const swagger = require('./swagger.json');
 
@@ -34,22 +31,5 @@ const swagger = require('./swagger.json');
 
             RegisterRoutes(_);
         },
-        dolittleCallback: _ => {
-            RegisterEventTypes(_);
-
-            _.withFilters(filterBuilder =>
-                filterBuilder
-                    .createPublicFilter(
-                        'b628cd98-9d0d-4dbc-b4dd-56e89d7aa272',
-                        fb => fb.handle(
-                            (event: any, context: EventContext) => {
-                            return new PartitionedFilterResult(
-                                true,
-                                PartitionId.unspecified
-                            );
-                        })
-                    )
-            );
-        }
     });
 })();
