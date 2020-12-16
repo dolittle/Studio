@@ -1,8 +1,5 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { Guid } from '@dolittle/rudiments';
 
-export type ApplicationModel = {
-    id: Guid;
-    name: string;
-};
+export * from './IK8sClient';
+export * from './Bindings';
