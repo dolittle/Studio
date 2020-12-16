@@ -1,7 +1,13 @@
-# Studio
+# Dolittle Studio
 
-## Build status
+This is the mono repo for all microservices part of the Dolittle Studio.
 
-| Portal | Applications | Events |
-| ------ | ------------ | ------ |
-| ![Build Portal](https://github.com/dolittle/Studio/workflows/Build%20Portal/badge.svg) | ![Build Portal](https://github.com/dolittle/Studio/workflows/Build%20Applications/badge.svg) | ![Build Portal](https://github.com/dolittle/Studio/workflows/Build%20Events/badge.svg) |
+## Code of conduct
+
+This project has a [code of conduct](./CODE_OF_CONDUCT.md) which is important to read through
+for everyone participating in this project to see what is expected.
+
+## Getting started and documentation
+
+You'll find all the details on how everything is put together and how to get started
+in th [Documentation](./Documentation/README.md).
