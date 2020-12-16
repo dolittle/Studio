@@ -4,13 +4,13 @@
 import React from 'react';
 import { withViewModel } from '@shared/mvvm';
 import { ApplicationDetailsViewModel } from './ApplicationDetailsViewModel';
-import { ApplicationForListingModel } from '../ApplicationForListingModel';
+import { ApplicationForListing } from '../ApplicationForListing';
 import { Link } from 'react-router-dom';
 import { routes } from '../routing';
 
 export interface ApplicationDetailsProps {
     applicationId: string;
-    applicationForListing?: ApplicationForListingModel;
+    applicationForListing?: ApplicationForListing;
 }
 
 export const ApplicationDetails = withViewModel<

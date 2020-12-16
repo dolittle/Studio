@@ -5,11 +5,11 @@ import React from 'react';
 import { withViewModel } from '@shared/mvvm';
 import { AllApplicationsViewModel } from './AllApplicationsViewModel';
 import { Link } from 'react-router-dom';
-import { ApplicationForListingModel } from '../ApplicationForListingModel';
+import { ApplicationForListing } from '../ApplicationForListing';
 import { routes } from '../routing';
 
 export interface AllApplicationsProps {
-    applications: ApplicationForListingModel[];
+    applications: ApplicationForListing[];
 };
 
 export const AllApplications = withViewModel<

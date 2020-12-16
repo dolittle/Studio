@@ -16,7 +16,7 @@ import { AllApplications } from './applications/AllApplications';
 import { ApplicationDetails } from './applications/ApplicationDetails';
 import { MicroserviceDetails } from './microservices/MicroserviceDetails';
 import { baseurl, routes } from './routing';
-import { ApplicationForListingModel } from './ApplicationForListingModel';
+import { ApplicationForListing } from './ApplicationForListing';
 import { MicroserviceForListing } from './MicroserviceForListing';
 
 export const App = withViewModel(AppViewModel, ({ viewModel }) => {
@@ -97,14 +97,14 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
 
 
 function resolveApplication(
-    applications: ApplicationForListingModel[],
+    applications: ApplicationForListing[],
     applicationId: string
-): ApplicationForListingModel | undefined {
+): ApplicationForListing | undefined {
     return applications.find((a) => a.id.toString() === applicationId);
 }
 
 function resolveMicroservice(
-    applications: ApplicationForListingModel[],
+    applications: ApplicationForListing[],
     applicationId: string,
     microserviceId: string,
 ): MicroserviceForListing | undefined {
