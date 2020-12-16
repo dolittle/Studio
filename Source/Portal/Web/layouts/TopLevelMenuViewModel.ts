@@ -8,7 +8,7 @@ import { BeforeNavigation } from './BeforeNavigation';
 
 @injectable()
 export class TopLevelMenuViewModel {
-    constructor(private readonly _navigator: INavigator) {
+    constructor(private readonly _navigator: INavigator, private readonly _messenger: IMessenger) {
     }
 
     doMagic() {
@@ -16,6 +16,6 @@ export class TopLevelMenuViewModel {
     }
 
     beforeNavigating() {
-        //this._messenger.publish(new BeforeNavigation());
+        this._messenger.publish(new BeforeNavigation());
     }
 }
