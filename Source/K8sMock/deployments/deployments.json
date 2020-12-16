@@ -1,0 +1,1325 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "14",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"application\":\"Studio-Dev\",\"microservice\":\"Applications\",\"tenant\":\"Dolittle\"},\"name\":\"studio-dev-applications\",\"namespace\":\"application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7\"},\"spec\":{\"selector\":{\"matchLabels\":{\"application\":\"Studio-Dev\",\"microservice\":\"Applications\"}},\"template\":{\"metadata\":{\"labels\":{\"application\":\"Studio-Dev\",\"microservice\":\"Applications\"}},\"spec\":{\"containers\":[{\"envFrom\":[{\"configMapRef\":{\"name\":\"studio-dev-applications-env-variables\"}},{\"secretRef\":{\"name\":\"studio-dev-applications-secret-env-variables\"}}],\"image\":\"508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/applications:1.0.2-0\",\"name\":\"head\",\"ports\":[{\"containerPort\":80,\"name\":\"http\"}],\"volumeMounts\":[{\"mountPath\":\"/app/.dolittle/tenants.json\",\"name\":\"tenants-config\",\"subPath\":\"tenants.json\"},{\"mountPath\":\"/app/.dolittle/resources.json\",\"name\":\"dolittle-config\",\"subPath\":\"resources.json\"},{\"mountPath\":\"/app/data\",\"name\":\"config-files\"},{\"mountPath\":\"/app/.dolittle/event-horizons.json\",\"name\":\"dolittle-config\",\"subPath\":\"event-horizons.json\"},{\"mountPath\":\"/app/.dolittle/clients.json\",\"name\":\"dolittle-config\",\"subPath\":\"clients.json\"}]},{\"image\":\"dolittle/runtime:5.1.2\",\"name\":\"runtime\",\"ports\":[{\"containerPort\":50052,\"name\":\"runtime\"}],\"volumeMounts\":[{\"mountPath\":\"/app/.dolittle/tenants.json\",\"name\":\"tenants-config\",\"subPath\":\"tenants.json\"},{\"mountPath\":\"/app/.dolittle/resources.json\",\"name\":\"dolittle-config\",\"subPath\":\"resources.json\"},{\"mountPath\":\"/app/.dolittle/endpoints.json\",\"name\":\"dolittle-config\",\"subPath\":\"endpoints.json\"},{\"mountPath\":\"/app/.dolittle/microservices.json\",\"name\":\"dolittle-config\",\"subPath\":\"microservices.json\"},{\"mountPath\":\"/app/appsettings.json\",\"name\":\"dolittle-config\",\"subPath\":\"appsettings.json\"}]}],\"volumes\":[{\"configMap\":{\"name\":\"studio-dev-tenants\"},\"name\":\"tenants-config\"},{\"configMap\":{\"name\":\"studio-dev-applications-dolittle\"},\"name\":\"dolittle-config\"},{\"configMap\":{\"name\":\"studio-dev-applications-config-files\"},\"name\":\"config-files\"}]}}}}\n"
+                },
+                "creationTimestamp": "2020-12-03T15:29:47Z",
+                "generation": 16,
+                "labels": {
+                    "application": "Studio-Dev",
+                    "microservice": "Applications",
+                    "tenant": "Dolittle"
+                },
+                "name": "studio-dev-applications",
+                "namespace": "application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7",
+                "resourceVersion": "112209694",
+                "selfLink": "/apis/apps/v1/namespaces/application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7/deployments/studio-dev-applications",
+                "uid": "608b0f05-357c-11eb-b699-be77ee2a4e07"
+            },
+            "spec": {
+                "progressDeadlineSeconds": 600,
+                "replicas": 1,
+                "revisionHistoryLimit": 10,
+                "selector": {
+                    "matchLabels": {
+                        "application": "Studio-Dev",
+                        "microservice": "Applications"
+                    }
+                },
+                "strategy": {
+                    "rollingUpdate": {
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%"
+                    },
+                    "type": "RollingUpdate"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "application": "Studio-Dev",
+                            "date": "1608109537",
+                            "microservice": "Applications"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "envFrom": [
+                                    {
+                                        "configMapRef": {
+                                            "name": "studio-dev-applications-env-variables"
+                                        }
+                                    },
+                                    {
+                                        "secretRef": {
+                                            "name": "studio-dev-applications-secret-env-variables"
+                                        }
+                                    }
+                                ],
+                                "image": "508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/applications:1.0.0-development.10",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "head",
+                                "ports": [
+                                    {
+                                        "containerPort": 80,
+                                        "name": "http",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/app/.dolittle/tenants.json",
+                                        "name": "tenants-config",
+                                        "subPath": "tenants.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/resources.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "resources.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/data",
+                                        "name": "config-files"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/event-horizons.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "event-horizons.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/clients.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "clients.json"
+                                    }
+                                ]
+                            },
+                            {
+                                "image": "dolittle/runtime:5.1.2",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "runtime",
+                                "ports": [
+                                    {
+                                        "containerPort": 50052,
+                                        "name": "runtime",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/app/.dolittle/tenants.json",
+                                        "name": "tenants-config",
+                                        "subPath": "tenants.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/resources.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "resources.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/endpoints.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "endpoints.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/microservices.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "microservices.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/appsettings.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "appsettings.json"
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30,
+                        "volumes": [
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-dev-tenants"
+                                },
+                                "name": "tenants-config"
+                            },
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-dev-applications-dolittle"
+                                },
+                                "name": "dolittle-config"
+                            },
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-dev-applications-config-files"
+                                },
+                                "name": "config-files"
+                            }
+                        ]
+                    }
+                }
+            },
+            "status": {
+                "availableReplicas": 1,
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2020-12-11T09:44:47Z",
+                        "lastUpdateTime": "2020-12-11T09:44:47Z",
+                        "message": "Deployment has minimum availability.",
+                        "reason": "MinimumReplicasAvailable",
+                        "status": "True",
+                        "type": "Available"
+                    },
+                    {
+                        "lastTransitionTime": "2020-12-03T15:29:47Z",
+                        "lastUpdateTime": "2020-12-16T09:05:48Z",
+                        "message": "ReplicaSet \"studio-dev-applications-5c59ff4c4\" has successfully progressed.",
+                        "reason": "NewReplicaSetAvailable",
+                        "status": "True",
+                        "type": "Progressing"
+                    }
+                ],
+                "observedGeneration": 16,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "updatedReplicas": 1
+            }
+        },
+        {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "2",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"application\":\"Studio-Dev\",\"infrastructure\":\"Authentication\",\"tenant\":\"Dolittle\"},\"name\":\"studio-dev-authentication\",\"namespace\":\"application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"application\":\"Studio-Dev\",\"infrastructure\":\"Authentication\",\"tenant\":\"Dolittle\"}},\"template\":{\"metadata\":{\"labels\":{\"application\":\"Studio-Dev\",\"infrastructure\":\"Authentication\",\"tenant\":\"Dolittle\"}},\"spec\":{\"containers\":[{\"args\":[\"--config\",\"/etc/oathkeeper/config/oathkeeper.yaml\",\"serve\"],\"image\":\"oryd/oathkeeper:v0.38.4-beta.1\",\"name\":\"oathkeeper\",\"ports\":[{\"containerPort\":4456,\"name\":\"oath-api\"}],\"volumeMounts\":[{\"mountPath\":\"/etc/oathkeeper/config\",\"name\":\"config\",\"readOnly\":true}]}],\"volumes\":[{\"configMap\":{\"name\":\"studio-dev-authentication\"},\"name\":\"config\"}]}}}}\n"
+                },
+                "creationTimestamp": "2020-12-09T14:40:26Z",
+                "generation": 2,
+                "labels": {
+                    "application": "Studio-Dev",
+                    "infrastructure": "Authentication",
+                    "tenant": "Dolittle"
+                },
+                "name": "studio-dev-authentication",
+                "namespace": "application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7",
+                "resourceVersion": "110971235",
+                "selfLink": "/apis/apps/v1/namespaces/application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7/deployments/studio-dev-authentication",
+                "uid": "79bdd810-3a2c-11eb-8fd4-7ea37ebc27c2"
+            },
+            "spec": {
+                "progressDeadlineSeconds": 600,
+                "replicas": 1,
+                "revisionHistoryLimit": 10,
+                "selector": {
+                    "matchLabels": {
+                        "application": "Studio-Dev",
+                        "infrastructure": "Authentication",
+                        "tenant": "Dolittle"
+                    }
+                },
+                "strategy": {
+                    "rollingUpdate": {
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%"
+                    },
+                    "type": "RollingUpdate"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "application": "Studio-Dev",
+                            "infrastructure": "Authentication",
+                            "tenant": "Dolittle"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "args": [
+                                    "--config",
+                                    "/etc/oathkeeper/config/oathkeeper.yaml",
+                                    "serve"
+                                ],
+                                "image": "oryd/oathkeeper:v0.38.4-beta.1",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "oathkeeper",
+                                "ports": [
+                                    {
+                                        "containerPort": 4456,
+                                        "name": "oath-api",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/etc/oathkeeper/config",
+                                        "name": "config",
+                                        "readOnly": true
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30,
+                        "volumes": [
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-dev-authentication"
+                                },
+                                "name": "config"
+                            }
+                        ]
+                    }
+                }
+            },
+            "status": {
+                "availableReplicas": 1,
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2020-12-09T14:40:26Z",
+                        "lastUpdateTime": "2020-12-09T15:38:58Z",
+                        "message": "ReplicaSet \"studio-dev-authentication-7d6b86c68d\" has successfully progressed.",
+                        "reason": "NewReplicaSetAvailable",
+                        "status": "True",
+                        "type": "Progressing"
+                    },
+                    {
+                        "lastTransitionTime": "2020-12-11T13:21:05Z",
+                        "lastUpdateTime": "2020-12-11T13:21:05Z",
+                        "message": "Deployment has minimum availability.",
+                        "reason": "MinimumReplicasAvailable",
+                        "status": "True",
+                        "type": "Available"
+                    }
+                ],
+                "observedGeneration": 2,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "updatedReplicas": 1
+            }
+        },
+        {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "12",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"application\":\"Studio-Dev\",\"microservice\":\"Events\",\"tenant\":\"Dolittle\"},\"name\":\"studio-dev-events\",\"namespace\":\"application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7\"},\"spec\":{\"selector\":{\"matchLabels\":{\"application\":\"Studio-Dev\",\"microservice\":\"Events\"}},\"template\":{\"metadata\":{\"labels\":{\"application\":\"Studio-Dev\",\"microservice\":\"Events\"}},\"spec\":{\"containers\":[{\"envFrom\":[{\"configMapRef\":{\"name\":\"studio-dev-events-env-variables\"}},{\"secretRef\":{\"name\":\"studio-dev-events-secret-env-variables\"}}],\"image\":\"508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/events:1.0.2-0\",\"name\":\"head\",\"ports\":[{\"containerPort\":80,\"name\":\"http\"}],\"volumeMounts\":[{\"mountPath\":\"/app/.dolittle/tenants.json\",\"name\":\"tenants-config\",\"subPath\":\"tenants.json\"},{\"mountPath\":\"/app/.dolittle/resources.json\",\"name\":\"dolittle-config\",\"subPath\":\"resources.json\"},{\"mountPath\":\"/app/data\",\"name\":\"config-files\"},{\"mountPath\":\"/app/.dolittle/event-horizons.json\",\"name\":\"dolittle-config\",\"subPath\":\"event-horizons.json\"},{\"mountPath\":\"/app/.dolittle/clients.json\",\"name\":\"dolittle-config\",\"subPath\":\"clients.json\"}]},{\"image\":\"dolittle/runtime:5.1.2\",\"name\":\"runtime\",\"ports\":[{\"containerPort\":50052,\"name\":\"runtime\"}],\"volumeMounts\":[{\"mountPath\":\"/app/.dolittle/tenants.json\",\"name\":\"tenants-config\",\"subPath\":\"tenants.json\"},{\"mountPath\":\"/app/.dolittle/resources.json\",\"name\":\"dolittle-config\",\"subPath\":\"resources.json\"},{\"mountPath\":\"/app/.dolittle/endpoints.json\",\"name\":\"dolittle-config\",\"subPath\":\"endpoints.json\"},{\"mountPath\":\"/app/.dolittle/microservices.json\",\"name\":\"dolittle-config\",\"subPath\":\"microservices.json\"},{\"mountPath\":\"/app/appsettings.json\",\"name\":\"dolittle-config\",\"subPath\":\"appsettings.json\"}]}],\"volumes\":[{\"configMap\":{\"name\":\"studio-dev-tenants\"},\"name\":\"tenants-config\"},{\"configMap\":{\"name\":\"studio-dev-events-dolittle\"},\"name\":\"dolittle-config\"},{\"configMap\":{\"name\":\"studio-dev-events-config-files\"},\"name\":\"config-files\"}]}}}}\n"
+                },
+                "creationTimestamp": "2020-12-03T15:29:37Z",
+                "generation": 12,
+                "labels": {
+                    "application": "Studio-Dev",
+                    "microservice": "Events",
+                    "tenant": "Dolittle"
+                },
+                "name": "studio-dev-events",
+                "namespace": "application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7",
+                "resourceVersion": "112209785",
+                "selfLink": "/apis/apps/v1/namespaces/application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7/deployments/studio-dev-events",
+                "uid": "5a7f4721-357c-11eb-b699-be77ee2a4e07"
+            },
+            "spec": {
+                "progressDeadlineSeconds": 600,
+                "replicas": 1,
+                "revisionHistoryLimit": 10,
+                "selector": {
+                    "matchLabels": {
+                        "application": "Studio-Dev",
+                        "microservice": "Events"
+                    }
+                },
+                "strategy": {
+                    "rollingUpdate": {
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%"
+                    },
+                    "type": "RollingUpdate"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "application": "Studio-Dev",
+                            "date": "1608109561",
+                            "microservice": "Events"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "envFrom": [
+                                    {
+                                        "configMapRef": {
+                                            "name": "studio-dev-events-env-variables"
+                                        }
+                                    },
+                                    {
+                                        "secretRef": {
+                                            "name": "studio-dev-events-secret-env-variables"
+                                        }
+                                    }
+                                ],
+                                "image": "508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/events:1.0.0-development.7",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "head",
+                                "ports": [
+                                    {
+                                        "containerPort": 80,
+                                        "name": "http",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/app/.dolittle/tenants.json",
+                                        "name": "tenants-config",
+                                        "subPath": "tenants.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/resources.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "resources.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/data",
+                                        "name": "config-files"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/event-horizons.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "event-horizons.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/clients.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "clients.json"
+                                    }
+                                ]
+                            },
+                            {
+                                "image": "dolittle/runtime:5.1.2",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "runtime",
+                                "ports": [
+                                    {
+                                        "containerPort": 50052,
+                                        "name": "runtime",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/app/.dolittle/tenants.json",
+                                        "name": "tenants-config",
+                                        "subPath": "tenants.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/resources.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "resources.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/endpoints.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "endpoints.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/microservices.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "microservices.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/appsettings.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "appsettings.json"
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30,
+                        "volumes": [
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-dev-tenants"
+                                },
+                                "name": "tenants-config"
+                            },
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-dev-events-dolittle"
+                                },
+                                "name": "dolittle-config"
+                            },
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-dev-events-config-files"
+                                },
+                                "name": "config-files"
+                            }
+                        ]
+                    }
+                }
+            },
+            "status": {
+                "availableReplicas": 1,
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2020-12-09T06:04:52Z",
+                        "lastUpdateTime": "2020-12-09T06:04:52Z",
+                        "message": "Deployment has minimum availability.",
+                        "reason": "MinimumReplicasAvailable",
+                        "status": "True",
+                        "type": "Available"
+                    },
+                    {
+                        "lastTransitionTime": "2020-12-03T15:29:37Z",
+                        "lastUpdateTime": "2020-12-16T09:06:08Z",
+                        "message": "ReplicaSet \"studio-dev-events-6489bdd8d9\" has successfully progressed.",
+                        "reason": "NewReplicaSetAvailable",
+                        "status": "True",
+                        "type": "Progressing"
+                    }
+                ],
+                "observedGeneration": 12,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "updatedReplicas": 1
+            }
+        },
+        {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "16",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"application\":\"Studio-Dev\",\"microservice\":\"Portal\",\"tenant\":\"Dolittle\"},\"name\":\"studio-dev-portal\",\"namespace\":\"application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7\"},\"spec\":{\"selector\":{\"matchLabels\":{\"application\":\"Studio-Dev\",\"microservice\":\"Portal\"}},\"template\":{\"metadata\":{\"labels\":{\"application\":\"Studio-Dev\",\"microservice\":\"Portal\"}},\"spec\":{\"containers\":[{\"envFrom\":[{\"configMapRef\":{\"name\":\"studio-dev-portal-env-variables\"}},{\"secretRef\":{\"name\":\"studio-dev-portal-secret-env-variables\"}}],\"image\":\"508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/portal:1.0.1-0\",\"name\":\"head\",\"ports\":[{\"containerPort\":80,\"name\":\"http\"}],\"volumeMounts\":[{\"mountPath\":\"/app/.dolittle/tenants.json\",\"name\":\"tenants-config\",\"subPath\":\"tenants.json\"},{\"mountPath\":\"/app/.dolittle/resources.json\",\"name\":\"dolittle-config\",\"subPath\":\"resources.json\"},{\"mountPath\":\"/app/data\",\"name\":\"config-files\"},{\"mountPath\":\"/app/.dolittle/event-horizons.json\",\"name\":\"dolittle-config\",\"subPath\":\"event-horizons.json\"},{\"mountPath\":\"/app/.dolittle/clients.json\",\"name\":\"dolittle-config\",\"subPath\":\"clients.json\"}]},{\"image\":\"dolittle/runtime:5.1.2\",\"name\":\"runtime\",\"ports\":[{\"containerPort\":50052,\"name\":\"runtime\"}],\"volumeMounts\":[{\"mountPath\":\"/app/.dolittle/tenants.json\",\"name\":\"tenants-config\",\"subPath\":\"tenants.json\"},{\"mountPath\":\"/app/.dolittle/resources.json\",\"name\":\"dolittle-config\",\"subPath\":\"resources.json\"},{\"mountPath\":\"/app/.dolittle/endpoints.json\",\"name\":\"dolittle-config\",\"subPath\":\"endpoints.json\"},{\"mountPath\":\"/app/.dolittle/microservices.json\",\"name\":\"dolittle-config\",\"subPath\":\"microservices.json\"},{\"mountPath\":\"/app/appsettings.json\",\"name\":\"dolittle-config\",\"subPath\":\"appsettings.json\"}]}],\"volumes\":[{\"configMap\":{\"name\":\"studio-dev-tenants\"},\"name\":\"tenants-config\"},{\"configMap\":{\"name\":\"studio-dev-portal-dolittle\"},\"name\":\"dolittle-config\"},{\"configMap\":{\"name\":\"studio-dev-portal-config-files\"},\"name\":\"config-files\"}]}}}}\n"
+                },
+                "creationTimestamp": "2020-12-03T15:29:29Z",
+                "generation": 16,
+                "labels": {
+                    "application": "Studio-Dev",
+                    "microservice": "Portal",
+                    "tenant": "Dolittle"
+                },
+                "name": "studio-dev-portal",
+                "namespace": "application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7",
+                "resourceVersion": "112210073",
+                "selfLink": "/apis/apps/v1/namespaces/application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7/deployments/studio-dev-portal",
+                "uid": "55c00eb4-357c-11eb-b699-be77ee2a4e07"
+            },
+            "spec": {
+                "progressDeadlineSeconds": 600,
+                "replicas": 1,
+                "revisionHistoryLimit": 10,
+                "selector": {
+                    "matchLabels": {
+                        "application": "Studio-Dev",
+                        "microservice": "Portal"
+                    }
+                },
+                "strategy": {
+                    "rollingUpdate": {
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%"
+                    },
+                    "type": "RollingUpdate"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "application": "Studio-Dev",
+                            "date": "1608109640",
+                            "microservice": "Portal"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "envFrom": [
+                                    {
+                                        "configMapRef": {
+                                            "name": "studio-dev-portal-env-variables"
+                                        }
+                                    },
+                                    {
+                                        "secretRef": {
+                                            "name": "studio-dev-portal-secret-env-variables"
+                                        }
+                                    }
+                                ],
+                                "image": "508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/portal:1.0.0-development.10",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "head",
+                                "ports": [
+                                    {
+                                        "containerPort": 80,
+                                        "name": "http",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/app/.dolittle/tenants.json",
+                                        "name": "tenants-config",
+                                        "subPath": "tenants.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/resources.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "resources.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/data",
+                                        "name": "config-files"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/event-horizons.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "event-horizons.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/clients.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "clients.json"
+                                    }
+                                ]
+                            },
+                            {
+                                "image": "dolittle/runtime:5.1.2",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "runtime",
+                                "ports": [
+                                    {
+                                        "containerPort": 50052,
+                                        "name": "runtime",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/app/.dolittle/tenants.json",
+                                        "name": "tenants-config",
+                                        "subPath": "tenants.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/resources.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "resources.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/endpoints.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "endpoints.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/microservices.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "microservices.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/appsettings.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "appsettings.json"
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30,
+                        "volumes": [
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-dev-tenants"
+                                },
+                                "name": "tenants-config"
+                            },
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-dev-portal-dolittle"
+                                },
+                                "name": "dolittle-config"
+                            },
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-dev-portal-config-files"
+                                },
+                                "name": "config-files"
+                            }
+                        ]
+                    }
+                }
+            },
+            "status": {
+                "availableReplicas": 1,
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2020-12-09T06:04:45Z",
+                        "lastUpdateTime": "2020-12-09T06:04:45Z",
+                        "message": "Deployment has minimum availability.",
+                        "reason": "MinimumReplicasAvailable",
+                        "status": "True",
+                        "type": "Available"
+                    },
+                    {
+                        "lastTransitionTime": "2020-12-03T15:29:29Z",
+                        "lastUpdateTime": "2020-12-16T09:07:28Z",
+                        "message": "ReplicaSet \"studio-dev-portal-6cd4cdd777\" has successfully progressed.",
+                        "reason": "NewReplicaSetAvailable",
+                        "status": "True",
+                        "type": "Progressing"
+                    }
+                ],
+                "observedGeneration": 16,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "updatedReplicas": 1
+            }
+        },
+        {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"application\":\"Studio-Prod\",\"microservice\":\"Applications\",\"tenant\":\"Dolittle\"},\"name\":\"studio-prod-applications\",\"namespace\":\"application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7\"},\"spec\":{\"selector\":{\"matchLabels\":{\"application\":\"Studio-Prod\",\"microservice\":\"Applications\"}},\"template\":{\"metadata\":{\"labels\":{\"application\":\"Studio-Prod\",\"microservice\":\"Applications\"}},\"spec\":{\"containers\":[{\"envFrom\":[{\"configMapRef\":{\"name\":\"studio-prod-applications-env-variables\"}},{\"secretRef\":{\"name\":\"studio-prod-applications-secret-env-variables\"}}],\"image\":\"508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/spinner:0.0.0\",\"name\":\"head\",\"ports\":[{\"containerPort\":80,\"name\":\"http\"}],\"volumeMounts\":[{\"mountPath\":\"/app/.dolittle/tenants.json\",\"name\":\"tenants-config\",\"subPath\":\"tenants.json\"},{\"mountPath\":\"/app/.dolittle/resources.json\",\"name\":\"dolittle-config\",\"subPath\":\"resources.json\"},{\"mountPath\":\"/app/data\",\"name\":\"config-files\"},{\"mountPath\":\"/app/.dolittle/event-horizons.json\",\"name\":\"dolittle-config\",\"subPath\":\"event-horizons.json\"}]},{\"image\":\"dolittle/runtime:5.1.2\",\"name\":\"runtime\",\"ports\":[{\"containerPort\":50052,\"name\":\"runtime\"}],\"volumeMounts\":[{\"mountPath\":\"/app/.dolittle/tenants.json\",\"name\":\"tenants-config\",\"subPath\":\"tenants.json\"},{\"mountPath\":\"/app/.dolittle/resources.json\",\"name\":\"dolittle-config\",\"subPath\":\"resources.json\"},{\"mountPath\":\"/app/.dolittle/endpoints.json\",\"name\":\"dolittle-config\",\"subPath\":\"endpoints.json\"},{\"mountPath\":\"/app/.dolittle/microservices.json\",\"name\":\"dolittle-config\",\"subPath\":\"microservices.json\"},{\"mountPath\":\"/app/appsettings.json\",\"name\":\"dolittle-config\",\"subPath\":\"appsettings.json\"}]}],\"volumes\":[{\"configMap\":{\"name\":\"studio-prod-tenants\"},\"name\":\"tenants-config\"},{\"configMap\":{\"name\":\"studio-prod-applications-dolittle\"},\"name\":\"dolittle-config\"},{\"configMap\":{\"name\":\"studio-prod-applications-config-files\"},\"name\":\"config-files\"}]}}}}\n"
+                },
+                "creationTimestamp": "2020-10-30T12:37:16Z",
+                "generation": 1,
+                "labels": {
+                    "application": "Studio-Prod",
+                    "microservice": "Applications",
+                    "tenant": "Dolittle"
+                },
+                "name": "studio-prod-applications",
+                "namespace": "application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7",
+                "resourceVersion": "100380858",
+                "selfLink": "/apis/apps/v1/namespaces/application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7/deployments/studio-prod-applications",
+                "uid": "a4cc4d4e-1aac-11eb-8938-52fb5a1060de"
+            },
+            "spec": {
+                "progressDeadlineSeconds": 600,
+                "replicas": 1,
+                "revisionHistoryLimit": 10,
+                "selector": {
+                    "matchLabels": {
+                        "application": "Studio-Prod",
+                        "microservice": "Applications"
+                    }
+                },
+                "strategy": {
+                    "rollingUpdate": {
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%"
+                    },
+                    "type": "RollingUpdate"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "application": "Studio-Prod",
+                            "microservice": "Applications"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "envFrom": [
+                                    {
+                                        "configMapRef": {
+                                            "name": "studio-prod-applications-env-variables"
+                                        }
+                                    },
+                                    {
+                                        "secretRef": {
+                                            "name": "studio-prod-applications-secret-env-variables"
+                                        }
+                                    }
+                                ],
+                                "image": "508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/spinner:0.0.0",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "head",
+                                "ports": [
+                                    {
+                                        "containerPort": 80,
+                                        "name": "http",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/app/.dolittle/tenants.json",
+                                        "name": "tenants-config",
+                                        "subPath": "tenants.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/resources.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "resources.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/data",
+                                        "name": "config-files"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/event-horizons.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "event-horizons.json"
+                                    }
+                                ]
+                            },
+                            {
+                                "image": "dolittle/runtime:5.1.2",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "runtime",
+                                "ports": [
+                                    {
+                                        "containerPort": 50052,
+                                        "name": "runtime",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/app/.dolittle/tenants.json",
+                                        "name": "tenants-config",
+                                        "subPath": "tenants.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/resources.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "resources.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/endpoints.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "endpoints.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/microservices.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "microservices.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/appsettings.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "appsettings.json"
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30,
+                        "volumes": [
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-prod-tenants"
+                                },
+                                "name": "tenants-config"
+                            },
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-prod-applications-dolittle"
+                                },
+                                "name": "dolittle-config"
+                            },
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-prod-applications-config-files"
+                                },
+                                "name": "config-files"
+                            }
+                        ]
+                    }
+                }
+            },
+            "status": {
+                "availableReplicas": 1,
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2020-10-30T12:37:19Z",
+                        "lastUpdateTime": "2020-10-30T12:37:19Z",
+                        "message": "Deployment has minimum availability.",
+                        "reason": "MinimumReplicasAvailable",
+                        "status": "True",
+                        "type": "Available"
+                    },
+                    {
+                        "lastTransitionTime": "2020-10-30T12:37:16Z",
+                        "lastUpdateTime": "2020-10-30T12:37:19Z",
+                        "message": "ReplicaSet \"studio-prod-applications-665b4cf64b\" has successfully progressed.",
+                        "reason": "NewReplicaSetAvailable",
+                        "status": "True",
+                        "type": "Progressing"
+                    }
+                ],
+                "observedGeneration": 1,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "updatedReplicas": 1
+            }
+        },
+        {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"application\":\"Studio-Prod\",\"microservice\":\"Events\",\"tenant\":\"Dolittle\"},\"name\":\"studio-prod-events\",\"namespace\":\"application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7\"},\"spec\":{\"selector\":{\"matchLabels\":{\"application\":\"Studio-Prod\",\"microservice\":\"Events\"}},\"template\":{\"metadata\":{\"labels\":{\"application\":\"Studio-Prod\",\"microservice\":\"Events\"}},\"spec\":{\"containers\":[{\"envFrom\":[{\"configMapRef\":{\"name\":\"studio-prod-events-env-variables\"}},{\"secretRef\":{\"name\":\"studio-prod-events-secret-env-variables\"}}],\"image\":\"508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/spinner:0.0.0\",\"name\":\"head\",\"ports\":[{\"containerPort\":80,\"name\":\"http\"}],\"volumeMounts\":[{\"mountPath\":\"/app/.dolittle/tenants.json\",\"name\":\"tenants-config\",\"subPath\":\"tenants.json\"},{\"mountPath\":\"/app/.dolittle/resources.json\",\"name\":\"dolittle-config\",\"subPath\":\"resources.json\"},{\"mountPath\":\"/app/data\",\"name\":\"config-files\"},{\"mountPath\":\"/app/.dolittle/event-horizons.json\",\"name\":\"dolittle-config\",\"subPath\":\"event-horizons.json\"}]},{\"image\":\"dolittle/runtime:5.1.2\",\"name\":\"runtime\",\"ports\":[{\"containerPort\":50052,\"name\":\"runtime\"}],\"volumeMounts\":[{\"mountPath\":\"/app/.dolittle/tenants.json\",\"name\":\"tenants-config\",\"subPath\":\"tenants.json\"},{\"mountPath\":\"/app/.dolittle/resources.json\",\"name\":\"dolittle-config\",\"subPath\":\"resources.json\"},{\"mountPath\":\"/app/.dolittle/endpoints.json\",\"name\":\"dolittle-config\",\"subPath\":\"endpoints.json\"},{\"mountPath\":\"/app/.dolittle/microservices.json\",\"name\":\"dolittle-config\",\"subPath\":\"microservices.json\"},{\"mountPath\":\"/app/appsettings.json\",\"name\":\"dolittle-config\",\"subPath\":\"appsettings.json\"}]}],\"volumes\":[{\"configMap\":{\"name\":\"studio-prod-tenants\"},\"name\":\"tenants-config\"},{\"configMap\":{\"name\":\"studio-prod-events-dolittle\"},\"name\":\"dolittle-config\"},{\"configMap\":{\"name\":\"studio-prod-events-config-files\"},\"name\":\"config-files\"}]}}}}\n"
+                },
+                "creationTimestamp": "2020-10-30T12:37:21Z",
+                "generation": 1,
+                "labels": {
+                    "application": "Studio-Prod",
+                    "microservice": "Events",
+                    "tenant": "Dolittle"
+                },
+                "name": "studio-prod-events",
+                "namespace": "application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7",
+                "resourceVersion": "100380899",
+                "selfLink": "/apis/apps/v1/namespaces/application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7/deployments/studio-prod-events",
+                "uid": "a7c71391-1aac-11eb-8938-52fb5a1060de"
+            },
+            "spec": {
+                "progressDeadlineSeconds": 600,
+                "replicas": 1,
+                "revisionHistoryLimit": 10,
+                "selector": {
+                    "matchLabels": {
+                        "application": "Studio-Prod",
+                        "microservice": "Events"
+                    }
+                },
+                "strategy": {
+                    "rollingUpdate": {
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%"
+                    },
+                    "type": "RollingUpdate"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "application": "Studio-Prod",
+                            "microservice": "Events"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "envFrom": [
+                                    {
+                                        "configMapRef": {
+                                            "name": "studio-prod-events-env-variables"
+                                        }
+                                    },
+                                    {
+                                        "secretRef": {
+                                            "name": "studio-prod-events-secret-env-variables"
+                                        }
+                                    }
+                                ],
+                                "image": "508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/spinner:0.0.0",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "head",
+                                "ports": [
+                                    {
+                                        "containerPort": 80,
+                                        "name": "http",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/app/.dolittle/tenants.json",
+                                        "name": "tenants-config",
+                                        "subPath": "tenants.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/resources.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "resources.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/data",
+                                        "name": "config-files"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/event-horizons.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "event-horizons.json"
+                                    }
+                                ]
+                            },
+                            {
+                                "image": "dolittle/runtime:5.1.2",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "runtime",
+                                "ports": [
+                                    {
+                                        "containerPort": 50052,
+                                        "name": "runtime",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/app/.dolittle/tenants.json",
+                                        "name": "tenants-config",
+                                        "subPath": "tenants.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/resources.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "resources.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/endpoints.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "endpoints.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/microservices.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "microservices.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/appsettings.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "appsettings.json"
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30,
+                        "volumes": [
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-prod-tenants"
+                                },
+                                "name": "tenants-config"
+                            },
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-prod-events-dolittle"
+                                },
+                                "name": "dolittle-config"
+                            },
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-prod-events-config-files"
+                                },
+                                "name": "config-files"
+                            }
+                        ]
+                    }
+                }
+            },
+            "status": {
+                "availableReplicas": 1,
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2020-10-30T12:37:25Z",
+                        "lastUpdateTime": "2020-10-30T12:37:25Z",
+                        "message": "Deployment has minimum availability.",
+                        "reason": "MinimumReplicasAvailable",
+                        "status": "True",
+                        "type": "Available"
+                    },
+                    {
+                        "lastTransitionTime": "2020-10-30T12:37:21Z",
+                        "lastUpdateTime": "2020-10-30T12:37:25Z",
+                        "message": "ReplicaSet \"studio-prod-events-554b675c88\" has successfully progressed.",
+                        "reason": "NewReplicaSetAvailable",
+                        "status": "True",
+                        "type": "Progressing"
+                    }
+                ],
+                "observedGeneration": 1,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "updatedReplicas": 1
+            }
+        },
+        {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"application\":\"Studio-Prod\",\"microservice\":\"Portal\",\"tenant\":\"Dolittle\"},\"name\":\"studio-prod-portal\",\"namespace\":\"application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7\"},\"spec\":{\"selector\":{\"matchLabels\":{\"application\":\"Studio-Prod\",\"microservice\":\"Portal\"}},\"template\":{\"metadata\":{\"labels\":{\"application\":\"Studio-Prod\",\"microservice\":\"Portal\"}},\"spec\":{\"containers\":[{\"envFrom\":[{\"configMapRef\":{\"name\":\"studio-prod-portal-env-variables\"}},{\"secretRef\":{\"name\":\"studio-prod-portal-secret-env-variables\"}}],\"image\":\"508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/spinner:0.0.0\",\"name\":\"head\",\"ports\":[{\"containerPort\":80,\"name\":\"http\"}],\"volumeMounts\":[{\"mountPath\":\"/app/.dolittle/tenants.json\",\"name\":\"tenants-config\",\"subPath\":\"tenants.json\"},{\"mountPath\":\"/app/.dolittle/resources.json\",\"name\":\"dolittle-config\",\"subPath\":\"resources.json\"},{\"mountPath\":\"/app/data\",\"name\":\"config-files\"},{\"mountPath\":\"/app/.dolittle/event-horizons.json\",\"name\":\"dolittle-config\",\"subPath\":\"event-horizons.json\"}]},{\"image\":\"dolittle/runtime:5.1.2\",\"name\":\"runtime\",\"ports\":[{\"containerPort\":50052,\"name\":\"runtime\"}],\"volumeMounts\":[{\"mountPath\":\"/app/.dolittle/tenants.json\",\"name\":\"tenants-config\",\"subPath\":\"tenants.json\"},{\"mountPath\":\"/app/.dolittle/resources.json\",\"name\":\"dolittle-config\",\"subPath\":\"resources.json\"},{\"mountPath\":\"/app/.dolittle/endpoints.json\",\"name\":\"dolittle-config\",\"subPath\":\"endpoints.json\"},{\"mountPath\":\"/app/.dolittle/microservices.json\",\"name\":\"dolittle-config\",\"subPath\":\"microservices.json\"},{\"mountPath\":\"/app/appsettings.json\",\"name\":\"dolittle-config\",\"subPath\":\"appsettings.json\"}]}],\"volumes\":[{\"configMap\":{\"name\":\"studio-prod-tenants\"},\"name\":\"tenants-config\"},{\"configMap\":{\"name\":\"studio-prod-portal-dolittle\"},\"name\":\"dolittle-config\"},{\"configMap\":{\"name\":\"studio-prod-portal-config-files\"},\"name\":\"config-files\"}]}}}}\n"
+                },
+                "creationTimestamp": "2020-10-30T12:37:11Z",
+                "generation": 1,
+                "labels": {
+                    "application": "Studio-Prod",
+                    "microservice": "Portal",
+                    "tenant": "Dolittle"
+                },
+                "name": "studio-prod-portal",
+                "namespace": "application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7",
+                "resourceVersion": "100380817",
+                "selfLink": "/apis/apps/v1/namespaces/application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7/deployments/studio-prod-portal",
+                "uid": "a179010f-1aac-11eb-8938-52fb5a1060de"
+            },
+            "spec": {
+                "progressDeadlineSeconds": 600,
+                "replicas": 1,
+                "revisionHistoryLimit": 10,
+                "selector": {
+                    "matchLabels": {
+                        "application": "Studio-Prod",
+                        "microservice": "Portal"
+                    }
+                },
+                "strategy": {
+                    "rollingUpdate": {
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%"
+                    },
+                    "type": "RollingUpdate"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "application": "Studio-Prod",
+                            "microservice": "Portal"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "envFrom": [
+                                    {
+                                        "configMapRef": {
+                                            "name": "studio-prod-portal-env-variables"
+                                        }
+                                    },
+                                    {
+                                        "secretRef": {
+                                            "name": "studio-prod-portal-secret-env-variables"
+                                        }
+                                    }
+                                ],
+                                "image": "508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/spinner:0.0.0",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "head",
+                                "ports": [
+                                    {
+                                        "containerPort": 80,
+                                        "name": "http",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/app/.dolittle/tenants.json",
+                                        "name": "tenants-config",
+                                        "subPath": "tenants.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/resources.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "resources.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/data",
+                                        "name": "config-files"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/event-horizons.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "event-horizons.json"
+                                    }
+                                ]
+                            },
+                            {
+                                "image": "dolittle/runtime:5.1.2",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "runtime",
+                                "ports": [
+                                    {
+                                        "containerPort": 50052,
+                                        "name": "runtime",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/app/.dolittle/tenants.json",
+                                        "name": "tenants-config",
+                                        "subPath": "tenants.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/resources.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "resources.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/endpoints.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "endpoints.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/.dolittle/microservices.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "microservices.json"
+                                    },
+                                    {
+                                        "mountPath": "/app/appsettings.json",
+                                        "name": "dolittle-config",
+                                        "subPath": "appsettings.json"
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30,
+                        "volumes": [
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-prod-tenants"
+                                },
+                                "name": "tenants-config"
+                            },
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-prod-portal-dolittle"
+                                },
+                                "name": "dolittle-config"
+                            },
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "studio-prod-portal-config-files"
+                                },
+                                "name": "config-files"
+                            }
+                        ]
+                    }
+                }
+            },
+            "status": {
+                "availableReplicas": 1,
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2020-10-30T12:37:14Z",
+                        "lastUpdateTime": "2020-10-30T12:37:14Z",
+                        "message": "Deployment has minimum availability.",
+                        "reason": "MinimumReplicasAvailable",
+                        "status": "True",
+                        "type": "Available"
+                    },
+                    {
+                        "lastTransitionTime": "2020-10-30T12:37:11Z",
+                        "lastUpdateTime": "2020-10-30T12:37:14Z",
+                        "message": "ReplicaSet \"studio-prod-portal-576fd66695\" has successfully progressed.",
+                        "reason": "NewReplicaSetAvailable",
+                        "status": "True",
+                        "type": "Progressing"
+                    }
+                ],
+                "observedGeneration": 1,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "updatedReplicas": 1
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": "",
+        "selfLink": ""
+    }
+}
