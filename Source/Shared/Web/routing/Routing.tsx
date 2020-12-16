@@ -15,8 +15,10 @@ export const Routing = withViewModel<RoutingViewModel, RoutingProps>(RoutingView
     const location = useLocation();
     const history = useHistory();
 
+    console.log('Routing');
     viewModel.callback = (path: string) => {
         history.push(path);
+        console.log('Pushed history : '+path);
     };
 
     if (viewModel.currentPath !== location.pathname) {
@@ -25,9 +27,7 @@ export const Routing = withViewModel<RoutingViewModel, RoutingProps>(RoutingView
 
     return (
         <>
-            <Switch>
-                {props.children}
-            </Switch>
+            {props.children}
         </>
     );
 });

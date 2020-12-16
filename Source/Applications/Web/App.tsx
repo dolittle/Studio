@@ -2,8 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useEffect } from 'react';
-import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
-import { History } from 'history';
 
 import '@shared/styles/theme';
 import './index.scss';
@@ -23,7 +21,9 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     return (
         <>
             <Routing>
-                <MicroserviceRoute>
+                <MicroserviceRoute exact>
+
+                    This is the roooot.
                     <Toolbar>
                         <ToolbarItem
                             title="Assign microservice"
@@ -49,8 +49,8 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
                     />
                 </MicroserviceRoute>
 
-                <MicroserviceRoute exact path="/something">
-                    Hello world
+                <MicroserviceRoute path="something">
+                    Something
                 </MicroserviceRoute>
             </Routing>
         </>
