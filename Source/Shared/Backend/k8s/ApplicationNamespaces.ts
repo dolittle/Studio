@@ -8,7 +8,6 @@ import { Configuration } from '@shared/backend/configuration/Configuration';
 import { ILogger } from '@shared/backend/logging';
 
 import { IApplicationNamespaces } from './IApplicationNamespaces';
-import { ClientBuilder } from './ClientBuilder';
 
 @injectable()
 export class ApplicationNamespaces extends IApplicationNamespaces {
