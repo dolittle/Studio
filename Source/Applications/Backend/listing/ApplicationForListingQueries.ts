@@ -2,11 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { injectable } from 'tsyringe';
-import { Query, Resolver } from 'type-graphql';
+import { Query, Resolver, Ctx } from 'type-graphql';
 import { Guid } from '@dolittle/rudiments';
 import { ILogger } from '@shared/backend/logging';
 import { ApplicationForListing } from './ApplicationForListing';
 import { IK8sClient } from '@shared/backend/k8s';
+import { Context } from '@shared/backend/web';
 import { MicroserviceForListing } from './MicroserviceForListing';
 
 @injectable()
@@ -18,7 +19,7 @@ export class ApplicationForListingQueries {
     ) {}
 
     @Query((returns) => [ApplicationForListing])
-    async allApplicationsForListing() {
+    async allApplicationsForListing(@Ctx() ctx: Context) {
         const namespaces = await this._k8sClient.getNamespaces();
         const applications = (
             await Promise.all(

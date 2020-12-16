@@ -23,7 +23,14 @@ export async function initialize(prefix: string, publicPath: string, port: numbe
     app.use(bodyParser.json());
 
     const server = new ApolloServer({
-        schema
+        schema,
+        context: ({ req }) => {
+            return {
+                userId: req.header('User-ID'),
+                tenantId: req.header('Tenant-Id'),
+                cookies: req.header('Cookie'),
+            };
+        }
     });
     server.applyMiddleware({ app, path: `${prefix}/graphql` });
 

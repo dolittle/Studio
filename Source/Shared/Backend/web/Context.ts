@@ -1,5 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-export * from './Express';
-export * from './Context';
+export type Context = {
+    userId: string;
+    tenantId: string;
+    cookies: string;
+};
