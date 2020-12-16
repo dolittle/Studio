@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { MicroserviceConfiguration } from '@shared/web/MicroserviceConfiguration';
-import { IMessenger } from '@shared/MVVM';
+import { IMessenger } from '@shared/mvvm';
 import { injectable } from 'tsyringe';
 import { NavigatedTo } from './NavigatedTo';
 

@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { withViewModel } from '@shared/MVVM';
+import { withViewModel } from '@shared/mvvm';
 
 import { RoutingViewModel } from './RoutingViewModel';
 import { useHistory } from 'react-router-dom';
