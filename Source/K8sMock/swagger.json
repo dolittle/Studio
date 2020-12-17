@@ -3669,7 +3669,7 @@
 		},
 		"/api/v1/namespaces/{namespace}/pods": {
 			"get": {
-				"operationId": "GetPods",
+				"operationId": "GetPodsForNamespace",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -3690,6 +3690,50 @@
 					{
 						"in": "path",
 						"name": "namespace",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/namespaces/{namespace}/pods/{pod}": {
+			"get": {
+				"operationId": "GetPod",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/V1Pod"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"core_v1"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "namespace",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "pod",
 						"required": true,
 						"schema": {
 							"type": "string"
