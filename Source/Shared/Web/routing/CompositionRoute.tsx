@@ -17,11 +17,14 @@ export const CompositionRoute = (props: CompositionRouteProps) => {
     return (
         <MicroserviceContext.Consumer>
             {value => {
-                let src = `/_/${location.pathname}`;
-                src = src.replace('//', '/');
+                let path = location.pathname;
+                if (path.startsWith('/')) {
+                    path = path.substr(1);
+                }
+                const src = `/_/${path}`;
                 return (
                     <Route {...props}>
-                        <ContentFrame src={src} load={props.load} loaded={props.loaded}/>
+                        <ContentFrame src={src} load={props.load} loaded={props.loaded} />
                     </Route>
                 );
             }}

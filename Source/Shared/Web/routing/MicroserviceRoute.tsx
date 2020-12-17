@@ -14,10 +14,14 @@ export const MicroserviceRoute = (props: RouteProps) => {
         <MicroserviceContext.Consumer>
             {value => {
                 const innerProps = { ...props };
-                innerProps.path = `${value.prefix}/${props.path || ''}`;
-                innerProps.path = innerProps.path.replace('//', '/');
 
-                console.log(`Route path : ${innerProps.path}`);
+                let path = `${props.path} || ''`;
+                if (path.startsWith('/')) {
+                    path = path.substr(1);
+                }
+
+                innerProps.path = `${value.prefix}/${path}`;
+                innerProps.path = innerProps.path.replace('//', '/');
 
                 return <Route {...innerProps} />;
             }}
