@@ -11,9 +11,6 @@ export class TopLevelMenuViewModel {
     constructor(private readonly _navigator: INavigator, private readonly _messenger: IMessenger) {
     }
 
-    doMagic() {
-        this._navigator.navigateTo('/applications/something');
-    }
 
     beforeNavigating() {
         this._messenger.publish(new BeforeNavigation());
