@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { Controller, Get, Route, Tags } from 'tsoa';
-import { V1DeploymentList, V1ListMeta, V1Deployment, V1ObjectMeta, V1DeploymentSpec, V1PodTemplateSpec, V1PodSpec, V1Container, V1LabelSelector, V1DeploymentStrategy, V1RollingUpdateDeployment, V1PodSecurityContext, V1Volume, V1DeploymentStatus } from '@kubernetes/client-node';
+import { V1DeploymentList, V1ListMeta, V1Deployment, V1ObjectMeta, V1DeploymentSpec, V1PodTemplateSpec, V1PodSpec, V1Container, V1LabelSelector, V1DeploymentStrategy, V1RollingUpdateDeployment, V1PodSecurityContext, V1Volume, V1DeploymentStatus, V1EnvFromSource, V1ConfigMapEnvSource, V1VolumeMount, V1ConfigMapVolumeSource } from '@kubernetes/client-node';
 
 import { Guid } from '@dolittle/rudiments';
 
@@ -211,6 +211,18 @@ export class DeploymentsController extends Controller {
                 const head = new V1Container();
                 head.name = 'head';
                 head.image = headImage;
+                {
+                    const envConfigMap = new V1EnvFromSource();
+                    const configMapRef = envConfigMap.configMapRef = new V1ConfigMapEnvSource();
+                    configMapRef.name = `${name}-env-variables`;
+                    head.envFrom = [ envConfigMap ];
+                }
+                {
+                    const mountConfigMap = new V1VolumeMount();
+                    mountConfigMap.mountPath = '/app/data';
+                    mountConfigMap.name = 'config-files';
+                    head.volumeMounts = [ mountConfigMap ];
+                }
                 spec.containers.push(head);
             }
             {
@@ -224,8 +236,14 @@ export class DeploymentsController extends Controller {
             spec.schedulerName = 'default-scheduler';
             spec.securityContext = new V1PodSecurityContext();
             spec.terminationGracePeriodSeconds = 30;
-
-            const volumes = spec.volumes = [] as V1Volume[];
+            {
+                const volumeConfigMap = new V1Volume();
+                volumeConfigMap.name = 'config-files';
+                const sourceConfigMap = volumeConfigMap.configMap = new V1ConfigMapVolumeSource();
+                sourceConfigMap.defaultMode = 420;
+                sourceConfigMap.name = `${name}-config-files`;
+                spec.volumes = [ volumeConfigMap ];
+            }
         }
 
         const status = deployment.status = new V1DeploymentStatus();
