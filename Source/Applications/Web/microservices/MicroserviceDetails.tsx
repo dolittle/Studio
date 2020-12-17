@@ -7,6 +7,11 @@ import { MicroserviceDetailsViewModel } from './MicroserviceDetailsViewModel';
 import { MicroserviceForListing } from '../MicroserviceForListing';
 import { Stack, StackItem, IStackProps, IStackTokens } from 'office-ui-fabric-react';
 import styles from './MicroserviceDetails.module.scss';
+import { DataManagementPanel } from './Panels/DataManagementPanel';
+import { EventFlowPanel } from './Panels/EventFlowPanel';
+import { DetailsPanel } from './Panels/DetailsPanel';
+import { ReportsPanel } from './Panels/ReportsPanel';
+import { StatusPanel } from './Panels/StatusPanel';
 
 
 const microservice_mock = require('./microservice_dashboard_mock.jpg').default;
@@ -50,9 +55,6 @@ export const MicroserviceDetails = withViewModel<MicroserviceDetailsViewModel, M
         <>
             <h1>{props.microserviceForListing?.name}</h1>
             <h3>{props.microserviceForListing?.id}</h3>
-            <div>
-                <img src={microservice_mock} style={{ width: '100%' }}></img>
-            </div>
 
             {/* Page Header */}
             {/* Page layout */}
@@ -60,17 +62,27 @@ export const MicroserviceDetails = withViewModel<MicroserviceDetailsViewModel, M
                 {/* Top Status - Full-Width*/}
                 <StackItem>
                     <Stack {...fullRowStackProps}>
-                        <div className={styles.fullWidth}>Status</div>
+                        <div className={styles.fullWidth}>
+                            <StatusPanel />
+                        </div>
                     </Stack>
                 </StackItem>
 
                 {/* Widgets Half-width */}
-                <StackItem align='stretch'>
+                <StackItem>
                     <Stack {...halfRowStackProps}>
-                        <div className={styles.halfWidth}>Data Management</div>
-                        <div className={styles.halfWidth}>Event Flow</div>
-                        <div className={styles.halfWidth}>Reports</div>
-                        <div className={styles.halfWidth}>Details</div>
+                        <div className={styles.halfWidth}>
+                            <DataManagementPanel/>
+                        </div>
+                        <div className={styles.halfWidth}>
+                            <EventFlowPanel />
+                        </div>
+                        <div className={styles.halfWidth}>
+                            <ReportsPanel />
+                        </div>
+                        <div className={styles.halfWidth}>
+                            <DetailsPanel />
+                        </div>
                     </Stack>
                 </StackItem>
             </Stack>
