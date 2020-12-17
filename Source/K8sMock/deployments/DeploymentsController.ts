@@ -52,7 +52,7 @@ export class DeploymentsController extends Controller {
             }
             {
                 this._deployments.push(this.createDeployment(
-                    'studio-dev-applications',
+                    'studio-prod-applications',
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
@@ -63,7 +63,7 @@ export class DeploymentsController extends Controller {
                     'dolittle/runtime:5.1.2'
                     ));
                 this._deployments.push(this.createDeployment(
-                    'studio-dev-portal',
+                    'studio-prod-portal',
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
@@ -74,7 +74,7 @@ export class DeploymentsController extends Controller {
                     'dolittle/runtime:5.1.2'
                     ));
                 this._deployments.push(this.createDeployment(
-                    'studio-dev-portal',
+                    'studio-prod-portal',
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
@@ -104,7 +104,7 @@ export class DeploymentsController extends Controller {
         {
             {
                 this._deployments.push(this.createDeployment(
-                    'trucker',
+                    'trucker-dev',
                     'application-17e4f11e-4cf9-49a6-af0d-b69be8af1e63',
                     {
                         tenant: 'Dolittle-Truck-Service',
@@ -117,7 +117,7 @@ export class DeploymentsController extends Controller {
             }
             {
                 this._deployments.push(this.createDeployment(
-                    'trucker',
+                    'trucker-test',
                     'application-17e4f11e-4cf9-49a6-af0d-b69be8af1e63',
                     {
                         tenant: 'Dolittle-Truck-Service',
@@ -130,7 +130,7 @@ export class DeploymentsController extends Controller {
             }
             {
                 this._deployments.push(this.createDeployment(
-                    'trucker',
+                    'trucker-prod',
                     'application-17e4f11e-4cf9-49a6-af0d-b69be8af1e63',
                     {
                         tenant: 'Dolittle-Truck-Service',
@@ -182,7 +182,7 @@ export class DeploymentsController extends Controller {
         metadata.namespace = namespace;
         metadata.labels = labels;
         metadata.uid = Guid.create().toString();
-        metadata.selfLink = `/api/v1/namespaces/${name}`;
+        metadata.selfLink = `/apis/apps/v1/namespaces/${namespace}/deployments/${name}`;
         metadata.resourceVersion = `${Math.ceil(Math.random() * 1e6)}`;
         metadata.creationTimestamp = new Date(Date.now() - Math.random()*100*24*3600*1000);
 
