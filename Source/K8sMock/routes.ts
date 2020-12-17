@@ -3,6 +3,8 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, HttpStatusCodeLiteral, TsoaResponse } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { ConfigmapsController } from './configmaps/ConfigmapsController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { DeploymentsController } from './deployments/DeploymentsController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { NamespacesController } from './namespaces/NamespacesController';
@@ -60,6 +62,41 @@ const models: TsoaRoute.Models = {
             "resourceVersion": {"dataType":"string"},
             "selfLink": {"dataType":"string"},
             "uid": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "V1ConfigMap": {
+        "dataType": "refObject",
+        "properties": {
+            "apiVersion": {"dataType":"string"},
+            "binaryData": {"dataType":"nestedObjectLiteral","nestedProperties":{},"additionalProperties":{"dataType":"string"}},
+            "data": {"dataType":"nestedObjectLiteral","nestedProperties":{},"additionalProperties":{"dataType":"string"}},
+            "immutable": {"dataType":"boolean"},
+            "kind": {"dataType":"string"},
+            "metadata": {"ref":"V1ObjectMeta"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "V1ListMeta": {
+        "dataType": "refObject",
+        "properties": {
+            "_continue": {"dataType":"string"},
+            "remainingItemCount": {"dataType":"double"},
+            "resourceVersion": {"dataType":"string"},
+            "selfLink": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "V1ConfigMapList": {
+        "dataType": "refObject",
+        "properties": {
+            "apiVersion": {"dataType":"string"},
+            "items": {"dataType":"array","array":{"ref":"V1ConfigMap"},"required":true},
+            "kind": {"dataType":"string"},
+            "metadata": {"ref":"V1ListMeta"},
         },
         "additionalProperties": false,
     },
@@ -1176,17 +1213,6 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "V1ListMeta": {
-        "dataType": "refObject",
-        "properties": {
-            "_continue": {"dataType":"string"},
-            "remainingItemCount": {"dataType":"double"},
-            "resourceVersion": {"dataType":"string"},
-            "selfLink": {"dataType":"string"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "V1DeploymentList": {
         "dataType": "refObject",
         "properties": {
@@ -1381,6 +1407,61 @@ export function RegisterRoutes(app: express.Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
+        app.get('/api/v1/namespaces/:namespace/configmaps',
+            function (request: any, response: any, next: any) {
+            const args = {
+                    namespace: {"in":"path","name":"namespace","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+            const controller: any = container.get<ConfigmapsController>(ConfigmapsController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.getConfigmapsForNamespace.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/v1/namespaces/:namespace/configmaps/:configmap',
+            function (request: any, response: any, next: any) {
+            const args = {
+                    namespace: {"in":"path","name":"namespace","required":true,"dataType":"string"},
+                    configmap: {"in":"path","name":"configmap","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+            const controller: any = container.get<ConfigmapsController>(ConfigmapsController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.getConfigmap.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/apis/apps/v1/namespaces/:namespace/deployments',
             function (request: any, response: any, next: any) {
             const args = {

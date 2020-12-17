@@ -168,6 +168,96 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"V1ConfigMap": {
+				"description": "ConfigMap holds configuration data for pods to consume.",
+				"properties": {
+					"apiVersion": {
+						"type": "string",
+						"description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+					},
+					"binaryData": {
+						"properties": {},
+						"additionalProperties": {
+							"type": "string"
+						},
+						"type": "object",
+						"description": "BinaryData contains the binary data. Each key must consist of alphanumeric characters, \\'-\\', \\'_\\' or \\'.\\'. BinaryData can contain byte sequences that are not in the UTF-8 range. The keys stored in BinaryData must not overlap with the ones in the Data field, this is enforced during validation process. Using this field will require 1.10+ apiserver and kubelet."
+					},
+					"data": {
+						"properties": {},
+						"additionalProperties": {
+							"type": "string"
+						},
+						"type": "object",
+						"description": "Data contains the configuration data. Each key must consist of alphanumeric characters, \\'-\\', \\'_\\' or \\'.\\'. Values with non-UTF-8 byte sequences must use the BinaryData field. The keys stored in Data must not overlap with the keys in the BinaryData field, this is enforced during validation process."
+					},
+					"immutable": {
+						"type": "boolean",
+						"description": "Immutable, if set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified). If not set to true, the field can be modified at any time. Defaulted to nil. This is a beta field enabled by ImmutableEphemeralVolumes feature gate."
+					},
+					"kind": {
+						"type": "string",
+						"description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+					},
+					"metadata": {
+						"$ref": "#/components/schemas/V1ObjectMeta"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"V1ListMeta": {
+				"description": "ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}.",
+				"properties": {
+					"_continue": {
+						"type": "string",
+						"description": "continue may be set if the user set a limit on the number of items returned, and indicates that the server has more data available. The value is opaque and may be used to issue another request to the endpoint that served this list to retrieve the next set of available objects. Continuing a consistent list may not be possible if the server configuration has changed or more than a few minutes have passed. The resourceVersion field returned when using this continue value will be identical to the value in the first response, unless you have received this token from an error message."
+					},
+					"remainingItemCount": {
+						"type": "number",
+						"format": "double",
+						"description": "remainingItemCount is the number of subsequent items in the list which are not included in this list response. If the list request contained label or field selectors, then the number of remaining items is unknown and the field will be left unset and omitted during serialization. If the list is complete (either because it is not chunking or because this is the last chunk), then there are no more remaining items and this field will be left unset and omitted during serialization. Servers older than v1.15 do not set this field. The intended use of the remainingItemCount is *estimating* the size of a collection. Clients should not rely on the remainingItemCount to be set or to be exact."
+					},
+					"resourceVersion": {
+						"type": "string",
+						"description": "String that identifies the server\\'s internal version of this object that can be used by clients to determine when objects have changed. Value must be treated as opaque by clients and passed unmodified back to the server. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency"
+					},
+					"selfLink": {
+						"type": "string",
+						"description": "selfLink is a URL representing this object. Populated by the system. Read-only.  DEPRECATED Kubernetes will stop propagating this field in 1.20 release and the field is planned to be removed in 1.21 release."
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"V1ConfigMapList": {
+				"description": "ConfigMapList is a resource containing a list of ConfigMap objects.",
+				"properties": {
+					"apiVersion": {
+						"type": "string",
+						"description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+					},
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/V1ConfigMap"
+						},
+						"type": "array",
+						"description": "Items is the list of ConfigMaps."
+					},
+					"kind": {
+						"type": "string",
+						"description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+					},
+					"metadata": {
+						"$ref": "#/components/schemas/V1ListMeta"
+					}
+				},
+				"required": [
+					"items"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"V1LabelSelectorRequirement": {
 				"description": "A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.",
 				"properties": {
@@ -2932,30 +3022,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"V1ListMeta": {
-				"description": "ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}.",
-				"properties": {
-					"_continue": {
-						"type": "string",
-						"description": "continue may be set if the user set a limit on the number of items returned, and indicates that the server has more data available. The value is opaque and may be used to issue another request to the endpoint that served this list to retrieve the next set of available objects. Continuing a consistent list may not be possible if the server configuration has changed or more than a few minutes have passed. The resourceVersion field returned when using this continue value will be identical to the value in the first response, unless you have received this token from an error message."
-					},
-					"remainingItemCount": {
-						"type": "number",
-						"format": "double",
-						"description": "remainingItemCount is the number of subsequent items in the list which are not included in this list response. If the list request contained label or field selectors, then the number of remaining items is unknown and the field will be left unset and omitted during serialization. If the list is complete (either because it is not chunking or because this is the last chunk), then there are no more remaining items and this field will be left unset and omitted during serialization. Servers older than v1.15 do not set this field. The intended use of the remainingItemCount is *estimating* the size of a collection. Clients should not rely on the remainingItemCount to be set or to be exact."
-					},
-					"resourceVersion": {
-						"type": "string",
-						"description": "String that identifies the server\\'s internal version of this object that can be used by clients to determine when objects have changed. Value must be treated as opaque by clients and passed unmodified back to the server. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency"
-					},
-					"selfLink": {
-						"type": "string",
-						"description": "selfLink is a URL representing this object. Populated by the system. Read-only.  DEPRECATED Kubernetes will stop propagating this field in 1.20 release and the field is planned to be removed in 1.21 release."
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
 			"V1DeploymentList": {
 				"description": "DeploymentList is a list of Deployments.",
 				"properties": {
@@ -3420,6 +3486,81 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/api/v1/namespaces/{namespace}/configmaps": {
+			"get": {
+				"operationId": "GetConfigmapsForNamespace",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/V1ConfigMapList"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"core_v1"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "namespace",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/namespaces/{namespace}/configmaps/{configmap}": {
+			"get": {
+				"operationId": "GetConfigmap",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/V1ConfigMap"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"core_v1"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "namespace",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "configmap",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/apis/apps/v1/namespaces/{namespace}/deployments": {
 			"get": {
 				"operationId": "GetDeploymentsForNamespace",
