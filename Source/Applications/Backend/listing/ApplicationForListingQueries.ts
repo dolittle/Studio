@@ -3,6 +3,8 @@
 
 import { injectable } from 'tsyringe';
 import { Query, Resolver, Ctx } from 'type-graphql';
+import { V1Deployment } from '@kubernetes/client-node';
+
 import { Guid } from '@dolittle/rudiments';
 
 import { ILogger } from '@shared/backend/logging';
@@ -35,7 +37,15 @@ export class ApplicationForListingQueries {
             application._id = guid;
             application.name = namespace.metadata?.labels ? namespace.metadata.labels.application : '[Not Set]';
 
-            application.microservices = deployments.filter(_ => _.metadata?.labels?.microservice).map(deployment => {
+            const microserviceDeployments = deployments.reduce((mss, deployment) => {
+                const name = deployment.metadata?.labels?.microservice;
+                if (!name) return mss;
+                if (name in mss) return mss;
+                mss[name] = deployment;
+                return mss;
+            }, {} as { [key: string]: V1Deployment});
+
+            application.microservices = Object.values(microserviceDeployments).map(deployment => {
                 const microservice = new MicroserviceForListing();
                 microservice._id = deployment.metadata?.uid ?? 'oops';
                 microservice.name = deployment.metadata?.labels?.microservice ?? '[Not Set]';
