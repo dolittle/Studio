@@ -15,8 +15,12 @@ export class RoutingViewModel {
     constructor(readonly microserviceConfiguration: MicroserviceConfiguration, private readonly _messenger: IMessenger) {
         this.currentPath = microserviceConfiguration.prefix;
         _messenger.subscribeTo(NavigatedTo, _ => {
-            const actualPath = `/_${_.path}`;
-            console.log(`Navigated to ${actualPath}`);
+            let path = _.path;
+            if (path.startsWith('/')) {
+                path = path.substr(1);
+            }
+
+            const actualPath = `/_${path}`;
             this.navigated?.(actualPath);
         });
     }
