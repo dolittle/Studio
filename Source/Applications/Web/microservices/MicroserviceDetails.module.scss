@@ -1,0 +1,16 @@
+.layoutPane{
+    height: 5rem;
+    outline: solid red;
+    padding: 3rem;
+    display: flex;
+}
+
+.fullWidth {
+    @extend .layoutPane;
+    flex-grow: 1;
+}
+
+.halfWidth {
+    @extend .layoutPane;
+    flex: 2 2 25rem;
+}
