@@ -2,11 +2,16 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { injectable } from 'tsyringe';
-import { Query, Resolver } from 'type-graphql';
+import { Query, Resolver, Ctx } from 'type-graphql';
+import { V1Deployment } from '@kubernetes/client-node';
+
 import { Guid } from '@dolittle/rudiments';
+
 import { ILogger } from '@shared/backend/logging';
+import { IApplicationNamespaces, IMicroserviceResources } from '@shared/backend/k8s';
+import { Context } from '@shared/backend/web';
+
 import { ApplicationForListing } from './ApplicationForListing';
-import { IK8sClient } from '@shared/backend/k8s';
 import { MicroserviceForListing } from './MicroserviceForListing';
 
 @injectable()
@@ -14,32 +19,40 @@ import { MicroserviceForListing } from './MicroserviceForListing';
 export class ApplicationForListingQueries {
     constructor(
         private readonly _logger: ILogger,
-        private readonly _k8sClient: IK8sClient
+        private readonly _applicationNamespaces: IApplicationNamespaces,
+        private readonly _microserviceResources: IMicroserviceResources
     ) {}
 
     @Query((returns) => [ApplicationForListing])
-    async allApplicationsForListing() {
-        const namespaces = await this._k8sClient.getNamespaces();
-        const applications = (
-            await Promise.all(
-                namespaces.items.map(async (namespace) => {
-                    const pods = await this._k8sClient.getPods(namespace.metadata.name);
-                    return { namespace, pods };
-                })
-            )
-        ).map(async ({ namespace, pods }) => {
-            const guid = namespace.metadata.name.replace('application-', '');
+    async allApplicationsForListing(@Ctx() ctx: Context) {
+        const namespaces = this._applicationNamespaces.getNamespacesForTenant(ctx.tenantId);
+        const deployments = await Promise.all(namespaces.map(async (namespace) => {
+            const deployments = await this._microserviceResources.getDeployments(namespace.metadata!.name!, ctx);
+            return { namespace, deployments };
+        }));
+        return deployments.map(async ({ namespace, deployments }) => {
+            const guid = namespace.metadata?.name?.replace('application-', '');
+
             const application = new ApplicationForListing();
-            application._id = Guid.parse(guid).toString();
-            application.name = namespace.metadata.labels.application || 'unknown';
-            application.microservices = pods.items.map((pod) => {
-                const id = pod.metadata.name;
-                const name = pod.metadata.labels.microservice || 'unknown';
-                return { _id: id, name } as MicroserviceForListing;
+            application._id = guid;
+            application.name = namespace.metadata?.labels ? namespace.metadata.labels.application : '[Not Set]';
+
+            const microserviceDeployments = deployments.reduce((mss, deployment) => {
+                const name = deployment.metadata?.labels?.microservice;
+                if (!name) return mss;
+                if (name in mss) return mss;
+                mss[name] = deployment;
+                return mss;
+            }, {} as { [key: string]: V1Deployment});
+
+            application.microservices = Object.values(microserviceDeployments).map(deployment => {
+                const microservice = new MicroserviceForListing();
+                microservice._id = deployment.metadata?.uid ?? 'oops';
+                microservice.name = deployment.metadata?.labels?.microservice ?? '[Not Set]';
+                return microservice;
             });
+
             return application;
         });
-
-        return applications;
     }
 }
