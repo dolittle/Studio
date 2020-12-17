@@ -3,6 +3,10 @@
 
 export class Configuration {
     get isDevelopment(): boolean {
-        return true;
+        return process.env.NODE_ENV?.toLowerCase() === 'development';
+    }
+
+    get apiserverProxyURL(): string {
+        return process.env.APISERVER_PROXY_URL ?? '';
     }
 }

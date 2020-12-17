@@ -27,7 +27,7 @@ export class ApplicationForListingQueries {
     async allApplicationsForListing(@Ctx() ctx: Context) {
         const namespaces = this._applicationNamespaces.getNamespacesForTenant(ctx.tenantId);
         const deployments = await Promise.all(namespaces.map(async (namespace) => {
-            const deployments = await this._microserviceResources.getDeployments(namespace.metadata!.name!);
+            const deployments = await this._microserviceResources.getDeployments(namespace.metadata!.name!, ctx);
             return { namespace, deployments };
         }));
         return deployments.map(async ({ namespace, deployments }) => {

@@ -6,6 +6,7 @@ import { KubeConfig, AppsV1Api} from '@kubernetes/client-node';
 
 import { Configuration } from '@shared/backend/configuration/Configuration';
 import { ILogger } from '@shared/backend/logging';
+import { Context } from '@shared/backend/web';
 
 import { IMicroserviceResources } from './IMicroserviceResources';
 
@@ -20,8 +21,25 @@ export class MicroserviceResources extends IMicroserviceResources {
         this.appsV1Api = this.config.makeApiClient(AppsV1Api);
     }
 
-    getDeployments = async (namespace: string) => {
-        const { body } = await this.appsV1Api.listNamespacedDeployment(namespace);
+    getDeployments = async (namespace: string, ctx: Context) => {
+        const { body } = await this.appsV1Api.listNamespacedDeployment(
+            namespace,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+                headers: {
+                    'User-ID': ctx.userId,
+                    'Tenant-ID': ctx.tenantId,
+                }
+            });
         return body.items;
     };
 
@@ -38,8 +56,8 @@ export class MicroserviceResources extends IMicroserviceResources {
         } else {
             config.loadFromClusterAndUser({
                 name: 'studio',
-                server: 'https://dev.dolittle.studio/api',
-                skipTLSVerify: false,
+                server: configuration.apiserverProxyURL,
+                skipTLSVerify: true,
             }, {
                 name: 'noone',
             });
