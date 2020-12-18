@@ -53,39 +53,31 @@ export const MicroserviceDetails = withViewModel<MicroserviceDetailsViewModel, M
 
     return (
         <>
-            <h1>{props.microserviceForListing?.name}</h1>
-            <h3>{props.microserviceForListing?.id}</h3>
+            <h1>Microservice: {props.microserviceForListing?.name}</h1>
+            <h3>ID: {props.microserviceForListing?.id}</h3>
 
-            {/* Page Header */}
-            {/* Page layout */}
-            <Stack {...layoutStackProps}>
-                {/* Top Status - Full-Width*/}
-                <StackItem>
-                    <Stack {...fullRowStackProps}>
-                        <div className={styles.fullWidth}>
-                            <StatusPanel />
-                        </div>
-                    </Stack>
-                </StackItem>
+            <div className="ms-Grid" dir="ltr">
+                <div className="ms-Grid-row">
+                    <div className="ms-Grid-col ms-sm12">
+                        <StatusPanel />
+                    </div>
+                </div>
+                <div className="ms-Grid-row">
+                    <div className="ms-Grid-col ms-sm12 ms-md6">
+                        <DataManagementPanel/>
+                    </div>
+                    <div className="ms-Grid-col ms-sm12 ms-md6">
+                        <EventFlowPanel />
+                    </div>
+                    <div className="ms-Grid-col ms-sm12 ms-md6">
+                        <ReportsPanel />
+                    </div>
+                    <div className="ms-Grid-col ms-sm12 ms-md6">
+                        <DetailsPanel />
+                    </div>
+                </div>
+            </div>
 
-                {/* Widgets Half-width */}
-                <StackItem>
-                    <Stack {...halfRowStackProps}>
-                        <div className={styles.halfWidth}>
-                            <DataManagementPanel/>
-                        </div>
-                        <div className={styles.halfWidth}>
-                            <EventFlowPanel />
-                        </div>
-                        <div className={styles.halfWidth}>
-                            <ReportsPanel />
-                        </div>
-                        <div className={styles.halfWidth}>
-                            <DetailsPanel />
-                        </div>
-                    </Stack>
-                </StackItem>
-            </Stack>
         </>
     );
 });
