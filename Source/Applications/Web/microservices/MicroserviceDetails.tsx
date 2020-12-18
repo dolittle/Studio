@@ -64,7 +64,7 @@ export const MicroserviceDetails = withViewModel<MicroserviceDetailsViewModel, M
                 </div>
                 <div className="ms-Grid-row">
                     <div className="ms-Grid-col ms-sm12 ms-md6">
-                        <DetailsPanel />
+                        <DetailsPanel microservice={viewModel.microservice} />
                     </div>
                     <div className="ms-Grid-col ms-sm12 ms-md6">
                         <ReportsPanel />
