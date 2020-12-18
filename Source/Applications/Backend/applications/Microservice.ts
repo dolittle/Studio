@@ -16,7 +16,13 @@ export class Microservice {
     @prop()
     name!: string;
 
-    logAvailableAtUrl?: string;
+    @Field()
+    @prop()
+    headImage!: string;
+
+    @Field()
+    @prop()
+    runtimeImage!: string;
 }
 
 export const MicroserviceModel = getModelForClass(Microservice);

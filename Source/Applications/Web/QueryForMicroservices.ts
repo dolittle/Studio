@@ -9,18 +9,19 @@ export class QueryForMicroservices {
     constructor(readonly _dataSource: DataSource) {}
 
     async allMicroservices(): Promise<MicroserviceModel[]> {
-        const query = gql`
-            query {
-                allMicroservices {
-                    id
-                    name
-                }
-            }
-        `;
+        // const query = gql`
+        //     query {
+        //         allMicroservices {
+        //             id
+        //             name
+        //         }
+        //     }
+        // `;
 
-        const result = await this._dataSource.query<MicroservicesQuery>({ query });
+        // const result = await this._dataSource.query<MicroservicesQuery>({ query });
 
-        return result.data?.allMicroservices ?? [];
+        // return result.data?.allMicroservices ?? [];
+        return [];
     }
 }
 export type MicroservicesQuery = {
