@@ -20,7 +20,7 @@ export class RoutingViewModel {
                 path = path.substr(1);
             }
 
-            const actualPath = `/_${path}`;
+            const actualPath = `/_/${path}`;
             this.navigated?.(actualPath);
         });
     }
