@@ -5,7 +5,7 @@ import React from 'react';
 import { withViewModel } from '@shared/mvvm';
 import { ApplicationDetailsViewModel } from './ApplicationDetailsViewModel';
 import { ApplicationForListing } from '../ApplicationForListing';
-import { Link } from 'react-router-dom';
+import { Link } from 'office-ui-fabric-react';
 import { routes } from '../routing';
 
 export interface ApplicationDetailsProps {
@@ -17,25 +17,29 @@ export const ApplicationDetails = withViewModel<
     ApplicationDetailsViewModel,
     ApplicationDetailsProps
 >(ApplicationDetailsViewModel, ({ viewModel, props }) => {
+    const applicationListItems = props.applicationForListing?.microservices.map((m) => (
+        <li key={m.id.toString()}>
+            <Link
+                href={
+                    '/_/applications' +
+                    routes.microserviceDetails.generate({
+                        applicationId: props.applicationForListing!.id.toString(),
+                        microserviceId: m.id.toString(),
+                    })
+                }
+            >
+                {m.name}
+            </Link>
+        </li>
+    ));
+
     return (
         <>
             <h1>{props.applicationForListing?.name}</h1>
             <h3>{props.applicationId}</h3>
 
             <h2>Microservices:</h2>
-            <ul>
-                {props.applicationForListing?.microservices.map((m) => (
-                    <Link
-                        key={m.id.toString()}
-                        to={routes.microserviceDetails.generate({
-                            applicationId: props.applicationForListing!.id.toString(),
-                            microserviceId: m.id.toString(),
-                        })}
-                    >
-                        {m.name}
-                    </Link>
-                ))}
-            </ul>
+            <ul>{applicationListItems}</ul>
         </>
     );
 });
