@@ -6,13 +6,11 @@ import { withViewModel } from '@shared/mvvm';
 import { MicroserviceDetailsViewModel } from './MicroserviceDetailsViewModel';
 import { MicroserviceForListing } from '../MicroserviceForListing';
 import { Stack, StackItem, IStackProps, IStackTokens } from 'office-ui-fabric-react';
-import styles from './MicroserviceDetails.module.scss';
 import { DataManagementPanel } from './Panels/DataManagementPanel';
 import { EventFlowPanel } from './Panels/EventFlowPanel';
 import { DetailsPanel } from './Panels/DetailsPanel';
 import { ReportsPanel } from './Panels/ReportsPanel';
 import { StatusPanel } from './Panels/StatusPanel';
-
 
 const microservice_mock = require('./microservice_dashboard_mock.jpg').default;
 
