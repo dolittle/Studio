@@ -26,33 +26,28 @@ export class ApplicationForListingQueries {
     @Query((returns) => [ApplicationForListing])
     async allApplicationsForListing(@Ctx() ctx: Context) {
         const namespaces = this._applicationNamespaces.getNamespacesForTenant(ctx.tenantId);
-        const deployments = await Promise.all(namespaces.map(async (namespace) => {
-            const deployments = await this._microserviceResources.getDeployments(namespace.metadata!.name!, ctx);
-            return { namespace, deployments };
-        }));
-        return deployments.map(async ({ namespace, deployments }) => {
-            const guid = namespace.metadata?.name?.replace('application-', '');
+        return (await Promise.all(namespaces
+            .map(async (namespace) => {
+                const deployments = await this._microserviceResources.getDeployments(namespace.metadata!.name!, ctx);
+                return { namespace, deployments };
+            })))
+            .map(async ({ namespace, deployments }) => {
+                const guid = namespace.metadata?.name?.replace('application-', '');
 
-            const application = new ApplicationForListing();
-            application._id = guid;
-            application.name = namespace.metadata?.labels ? namespace.metadata.labels.application : '[Not Set]';
+                const application = new ApplicationForListing();
+                application._id = guid;
+                application.name = namespace.metadata?.labels?.application ?? '[Not Set]';
 
-            const microserviceDeployments = deployments.reduce((mss, deployment) => {
-                const name = deployment.metadata?.labels?.microservice;
-                if (!name) return mss;
-                if (name in mss) return mss;
-                mss[name] = deployment;
-                return mss;
-            }, {} as { [key: string]: V1Deployment});
+                application.microservices = deployments
+                    .filter(_ => _.metadata?.labels?.microservice)
+                    .map(deployment => {
+                        const microservice = new MicroserviceForListing();
+                        microservice._id = deployment.metadata!.name;
+                        microservice.name = `${deployment.metadata!.labels!.microservice}-${deployment.metadata!.labels!.environment}`;
+                        return microservice;
+                    });
 
-            application.microservices = Object.values(microserviceDeployments).map(deployment => {
-                const microservice = new MicroserviceForListing();
-                microservice._id = deployment.metadata?.uid ?? 'oops';
-                microservice.name = deployment.metadata?.labels?.microservice ?? '[Not Set]';
-                return microservice;
+                return application;
             });
-
-            return application;
-        });
     }
 }

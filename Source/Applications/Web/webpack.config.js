@@ -5,5 +5,6 @@ const webpack = require('@shared/webpack/frontend');
 module.exports = (env, argv) => {
     return webpack(env, argv, '/_/applications', config => {
         config.devServer.port = 9002;
+        config.devServer.proxy['/_/applications/graphql'] = 'http://localhost:3002/_/applications/graphql';
     });
 };

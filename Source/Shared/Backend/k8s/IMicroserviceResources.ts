@@ -7,4 +7,5 @@ import { Context } from '@shared/backend/web';
 
 export abstract class IMicroserviceResources {
     getDeployments!: (namespace: string, ctx: Context) => Promise<V1Deployment[]>;
+    getDeployment!: (namespace: string, deployment: string, ctx: Context) => Promise<V1Deployment>;
 }

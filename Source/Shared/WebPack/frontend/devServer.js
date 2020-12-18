@@ -3,7 +3,7 @@
 
 module.exports = (basePath) => {
     return {
-        historyApiFallback: true,
+        historyApiFallback: {index: basePath},
         host: '0.0.0.0',
         port: 8080,
         publicPath: basePath,

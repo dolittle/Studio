@@ -9,8 +9,15 @@ import { CreateApplication } from './CreateApplication';
 import { AssignMicroservice } from './AssignMicroservice';
 import { withViewModel } from '@shared/mvvm';
 import { AppViewModel } from './AppViewModel';
+import { BrowserRouter as Router, Link, Switch, Route, RouteComponentProps } from 'react-router-dom';
 
 import { ActionBar, Toolbar, ToolbarItem } from '@shared/components';
+import { AllApplications } from './applications/AllApplications';
+import { ApplicationDetails } from './applications/ApplicationDetails';
+import { MicroserviceDetails } from './microservices/MicroserviceDetails';
+import { baseurl, routes } from './routing';
+import { ApplicationForListing } from './ApplicationForListing';
+import { MicroserviceForListing } from './MicroserviceForListing';
 
 export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);
@@ -20,15 +27,17 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
         <>
             <Toolbar>
                 <ToolbarItem
-                    title="Assign microservice"
-                    icon="AppIconDefaultAdd"
-                    onClick={() => setShowAssignMicroserviceDialog(true)} />
+                    title='Assign microservice'
+                    icon='AppIconDefaultAdd'
+                    onClick={() => setShowAssignMicroserviceDialog(true)}
+                />
             </Toolbar>
 
             <ActionBar
-                title="New Application"
-                icon="Add"
-                onTriggered={() => setShowCreateApplicationDialog(true)}/>
+                title='New Application'
+                icon='Add'
+                onTriggered={() => setShowCreateApplicationDialog(true)}
+            />
 
             <CreateApplication
                 visible={showCreateApplicationDialog}
@@ -41,6 +50,65 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
                 onAssigned={() => setShowAssignMicroserviceDialog(false)}
                 onCancelled={() => setShowAssignMicroserviceDialog(false)}
             />
+
+            <Router basename={baseurl}>
+                <Switch>
+                    <Route
+                        exact
+                        path={routes.allApplications.route}
+                        render={() => (
+                            <AllApplications applications={viewModel.applications} />
+                        )}
+                    />
+                    <Route
+                        exact
+                        path={routes.applicationDetails.route}
+                        render={(
+                            routeProps: RouteComponentProps<{ applicationId: string }>
+                        ) => (
+                            <ApplicationDetails
+                                applicationForListing={resolveApplication(
+                                    viewModel.applications,
+                                    routeProps.match.params.applicationId
+                                )}
+                                {...routeProps.match.params}
+                            />
+                        )}
+                    />
+                    <Route
+                        exact
+                        path={routes.microserviceDetails.route}
+                        render={(routeProps) => (
+                            <MicroserviceDetails
+                                microserviceForListing={resolveMicroservice(
+                                    viewModel.applications,
+                                    routeProps.match.params.applicationId,
+                                    routeProps.match.params.microserviceId
+                                )}
+                                {...routeProps.match.params}
+                            />
+                        )}
+                    />
+                </Switch>
+            </Router>
         </>
     );
 });
+
+
+function resolveApplication(
+    applications: ApplicationForListing[],
+    applicationId: string
+): ApplicationForListing | undefined {
+    return applications.find((a) => a.id.toString() === applicationId);
+}
+
+function resolveMicroservice(
+    applications: ApplicationForListing[],
+    applicationId: string,
+    microserviceId: string,
+): MicroserviceForListing | undefined {
+    return applications
+        .find((a) => a.id.toString() === applicationId)
+        ?.microservices.find((m) => m.id.toString() === microserviceId);
+}
