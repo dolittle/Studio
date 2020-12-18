@@ -22,7 +22,8 @@ export class ConfigmapsController extends Controller {
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
-                            application: 'Studio-Dev',
+                            application: 'Studio',
+                            environment: 'Dev',
                             microservice: 'Applications',
                         },
                         {
@@ -33,7 +34,8 @@ export class ConfigmapsController extends Controller {
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
-                            application: 'Studio-Dev',
+                            application: 'Studio',
+                            environment: 'Dev',
                             microservice: 'Applications',
                         },
                         {
@@ -46,7 +48,8 @@ export class ConfigmapsController extends Controller {
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
-                            application: 'Studio-Dev',
+                            application: 'Studio',
+                            environment: 'Dev',
                             microservice: 'Events',
                         },
                         {
@@ -57,7 +60,8 @@ export class ConfigmapsController extends Controller {
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
-                            application: 'Studio-Dev',
+                            application: 'Studio',
+                            environment: 'Dev',
                             microservice: 'Events',
                         },
                         {
@@ -70,7 +74,8 @@ export class ConfigmapsController extends Controller {
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
-                            application: 'Studio-Dev',
+                            application: 'Studio',
+                            environment: 'Dev',
                             microservice: 'Portal',
                         },
                         {
@@ -81,7 +86,8 @@ export class ConfigmapsController extends Controller {
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
-                            application: 'Studio-Dev',
+                            application: 'Studio',
+                            environment: 'Dev',
                             microservice: 'Portal',
                         },
                         {
@@ -96,7 +102,8 @@ export class ConfigmapsController extends Controller {
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
-                            application: 'Studio-Prod',
+                            application: 'Studio',
+                            environment: 'Prod',
                             microservice: 'Applications',
                         },
                         {
@@ -107,7 +114,8 @@ export class ConfigmapsController extends Controller {
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
-                            application: 'Studio-Prod',
+                            application: 'Studio',
+                            environment: 'Prod',
                             microservice: 'Applications',
                         },
                         {
@@ -120,7 +128,8 @@ export class ConfigmapsController extends Controller {
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
-                            application: 'Studio-Prod',
+                            application: 'Studio',
+                            environment: 'Prod',
                             microservice: 'Events',
                         },
                         {
@@ -131,7 +140,8 @@ export class ConfigmapsController extends Controller {
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
-                            application: 'Studio-Prod',
+                            application: 'Studio',
+                            environment: 'Prod',
                             microservice: 'Events',
                         },
                         {
@@ -144,7 +154,8 @@ export class ConfigmapsController extends Controller {
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
-                            application: 'Studio-Prod',
+                            application: 'Studio',
+                            environment: 'Prod',
                             microservice: 'Portal',
                         },
                         {
@@ -155,7 +166,8 @@ export class ConfigmapsController extends Controller {
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
-                            application: 'Studio-Prod',
+                            application: 'Studio',
+                            environment: 'Prod',
                             microservice: 'Portal',
                         },
                         {
@@ -172,7 +184,8 @@ export class ConfigmapsController extends Controller {
                         'application-a7e5065c-11a7-4e14-b281-c86bcf2dbd5c',
                         {
                             tenant: 'Dolittle',
-                            application: 'Office-Lunch-Prod',
+                            application: 'Office-Lunch',
+                            environment: 'Prod',
                             microservice: 'Order',
                         },
                         {
@@ -183,7 +196,8 @@ export class ConfigmapsController extends Controller {
                         'application-a7e5065c-11a7-4e14-b281-c86bcf2dbd5c',
                         {
                             tenant: 'Dolittle',
-                            application: 'Office-Lunch-Prod',
+                            application: 'Office-Lunch',
+                            environment: 'Prod',
                             microservice: 'Order',
                         },
                         {
@@ -200,7 +214,8 @@ export class ConfigmapsController extends Controller {
                         'application-17e4f11e-4cf9-49a6-af0d-b69be8af1e63',
                         {
                             tenant: 'Dolittle-Truck-Service',
-                            application: 'Trucker-Dev',
+                            application: 'Trucker',
+                            environment: 'Dev',
                             microservice: 'Big-Hot-Wheels'
                         },
                         {
@@ -211,7 +226,8 @@ export class ConfigmapsController extends Controller {
                         'application-17e4f11e-4cf9-49a6-af0d-b69be8af1e63',
                         {
                             tenant: 'Dolittle-Truck-Service',
-                            application: 'Trucker-Dev',
+                            application: 'Trucker',
+                            environment: 'Dev',
                             microservice: 'Big-Hot-Wheels'
                         },
                         {
@@ -226,7 +242,8 @@ export class ConfigmapsController extends Controller {
                         'application-17e4f11e-4cf9-49a6-af0d-b69be8af1e63',
                         {
                             tenant: 'Dolittle-Truck-Service',
-                            application: 'Trucker-Test',
+                            application: 'Trucker',
+                            environment: 'Test',
                             microservice: 'Big-Hot-Wheels'
                         },
                         {
@@ -237,7 +254,8 @@ export class ConfigmapsController extends Controller {
                         'application-17e4f11e-4cf9-49a6-af0d-b69be8af1e63',
                         {
                             tenant: 'Dolittle-Truck-Service',
-                            application: 'Trucker-Test',
+                            application: 'Trucker',
+                            environment: 'Test',
                             microservice: 'Big-Hot-Wheels'
                         },
                         {
@@ -252,7 +270,8 @@ export class ConfigmapsController extends Controller {
                         'application-17e4f11e-4cf9-49a6-af0d-b69be8af1e63',
                         {
                             tenant: 'Dolittle-Truck-Service',
-                            application: 'Trucker-Prod',
+                            application: 'Trucker',
+                            environment: 'Prod',
                             microservice: 'Big-Hot-Wheels'
                         },
                         {
@@ -263,7 +282,8 @@ export class ConfigmapsController extends Controller {
                         'application-17e4f11e-4cf9-49a6-af0d-b69be8af1e63',
                         {
                             tenant: 'Dolittle-Truck-Service',
-                            application: 'Trucker-Prod',
+                            application: 'Trucker',
+                            environment: 'Prod',
                             microservice: 'Big-Hot-Wheels'
                         },
                         {

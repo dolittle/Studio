@@ -21,18 +21,20 @@ export class DeploymentsController extends Controller {
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
-                        application: 'Studio-Dev',
+                        application: 'Studio',
+                        environment: 'Dev',
                         microservice: 'Applications',
                     },
                     'dolittle/studio/applications:1.0.0-development.8',
                     'dolittle/runtime:5.1.2'
                     ));
                 this._deployments.push(this.createDeployment(
-                    'studio-dev-portal',
+                    'studio-dev-events',
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
-                        application: 'Studio-Dev',
+                        application: 'Studio',
+                        environment: 'Dev',
                         microservice: 'Events',
                     },
                     'dolittle/studio/events:1.0.0-development.10',
@@ -43,7 +45,8 @@ export class DeploymentsController extends Controller {
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
-                        application: 'Studio-Dev',
+                        application: 'Studio',
+                        environment: 'Dev',
                         microservice: 'Portal',
                     },
                     'dolittle/studio/portal:1.0.0-development.10',
@@ -56,18 +59,20 @@ export class DeploymentsController extends Controller {
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
-                        application: 'Studio-Prod',
+                        application: 'Studio',
+                        environment: 'Prod',
                         microservice: 'Applications',
                     },
                     'dolittle/studio/applications:0.0.0',
                     'dolittle/runtime:5.1.2'
                     ));
                 this._deployments.push(this.createDeployment(
-                    'studio-prod-portal',
+                    'studio-prod-events',
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
-                        application: 'Studio-Prod',
+                        application: 'Studio',
+                        environment: 'Prod',
                         microservice: 'Events',
                     },
                     'dolittle/studio/events:0.0.0',
@@ -78,7 +83,8 @@ export class DeploymentsController extends Controller {
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
-                        application: 'Studio-Prod',
+                        application: 'Studio',
+                        environment: 'Prod',
                         microservice: 'Portal',
                     },
                     'dolittle/studio/portal:0.0.0',
@@ -93,7 +99,8 @@ export class DeploymentsController extends Controller {
                     'application-a7e5065c-11a7-4e14-b281-c86bcf2dbd5c',
                     {
                         tenant: 'Dolittle',
-                        application: 'Office-Lunch-Prod',
+                        application: 'Office-Lunch',
+                        environment: 'Prod',
                         microservice: 'Order',
                     },
                     'dolittle/office-lunch/order:0.0.9',
@@ -108,7 +115,8 @@ export class DeploymentsController extends Controller {
                     'application-17e4f11e-4cf9-49a6-af0d-b69be8af1e63',
                     {
                         tenant: 'Dolittle-Truck-Service',
-                        application: 'Trucker-Dev',
+                        application: 'Trucker',
+                        environment: 'Dev',
                         microservice: 'Big-Hot-Wheels'
                     },
                     'dolittle-trucker/big-hot-wheels:1.0.0',
@@ -121,7 +129,8 @@ export class DeploymentsController extends Controller {
                     'application-17e4f11e-4cf9-49a6-af0d-b69be8af1e63',
                     {
                         tenant: 'Dolittle-Truck-Service',
-                        application: 'Trucker-Test',
+                        application: 'Trucker',
+                        environment: 'Test',
                         microservice: 'Big-Hot-Wheels'
                     },
                     'dolittle-trucker/big-hot-wheels:1.0.0',
@@ -134,7 +143,8 @@ export class DeploymentsController extends Controller {
                     'application-17e4f11e-4cf9-49a6-af0d-b69be8af1e63',
                     {
                         tenant: 'Dolittle-Truck-Service',
-                        application: 'Trucker-Prod',
+                        application: 'Trucker',
+                        environment: 'Prod',
                         microservice: 'Big-Hot-Wheels'
                     },
                     'dolittle-trucker/big-hot-wheels:0.1.0',

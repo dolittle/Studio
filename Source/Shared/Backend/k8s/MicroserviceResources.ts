@@ -34,13 +34,19 @@ export class MicroserviceResources extends IMicroserviceResources {
             undefined,
             undefined,
             undefined,
-            {
-                headers: {
-                    'User-ID': ctx.userId,
-                    'Tenant-ID': ctx.tenantId,
-                }
-            });
+            this.makeHeaders(ctx));
         return body.items;
+    };
+
+    getDeployment = async (namespace: string, deployment: string, ctx: Context) => {
+        const { body } = await this.appsV1Api.readNamespacedDeployment(
+            deployment,
+            namespace,
+            undefined,
+            undefined,
+            undefined,
+            this.makeHeaders(ctx));
+        return body;
     };
 
     private getKubernetesConfig(configuration: Configuration): KubeConfig {
@@ -63,5 +69,9 @@ export class MicroserviceResources extends IMicroserviceResources {
             });
         }
         return config;
+    }
+
+    private makeHeaders(ctx: Context) {
+        return { headers: { 'User-ID': ctx.userId, 'Tenant-ID': ctx.tenantId, }};
     }
 }
