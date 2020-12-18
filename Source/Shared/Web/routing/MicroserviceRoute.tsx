@@ -8,14 +8,12 @@ import { MicroserviceConfiguration } from '@shared/web/MicroserviceConfiguration
 
 
 export const MicroserviceRoute = (props: RouteProps) => {
-    console.log(`Microservice Route : ${props.path}`);
-
     return (
         <MicroserviceContext.Consumer>
             {value => {
                 const innerProps = { ...props };
 
-                let path = `${props.path} || ''`;
+                let path = `${props.path || ''}`;
                 if (path.startsWith('/')) {
                     path = path.substr(1);
                 }
