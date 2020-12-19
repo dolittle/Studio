@@ -13,7 +13,7 @@ which holds the configuration with all the rules.
 
 It is possible to ignore certain files or folders, for instance artifacts that are being leveraged by specs.
 If we want it to be a global ignore, we do this in the [.eslintrc.js](../eslintrc.js) file.
-Read more [here9(https://eslint.org/docs/user-guide/configuring#ignoring-files-and-directories).
+Read more [here](https://eslint.org/docs/user-guide/configuring#ignoring-files-and-directories).
 
 ## Package.json
 
