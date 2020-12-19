@@ -28,4 +28,4 @@ jobs:
         cd Source/Applications/Backend
         yarn ci
         cd ../Web
-        yarn build
+        yarn ci

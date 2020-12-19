@@ -24,10 +24,15 @@ For a backend, this could typically look like below:
         "build": "yarn clean && webpack --env.production --mode=production",
         "test": "mocha",
         "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-        "ci": "yarn clean && yarn lint && tsc -b && yarn test"
+        "lint:ci": "eslint '*/**/*.{js,ts,tsx}' --quiet",
+        "ci": "yarn clean && yarn lint:ci && tsc -b && yarn test"
     }
 }
 ```
+
+> Notice there are 2 different lint scripts. One for the CI and one for local. The point of this is that the local one
+> is set up to perform any fixes. We don't want the CI pipeline to perform these and hide any issues, since it doesn't
+> commit it back.
 
 ### Nodemon
 

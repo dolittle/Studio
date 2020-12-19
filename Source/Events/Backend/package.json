@@ -13,7 +13,8 @@
         "clean": "tsc -b --clean",
         "test": "mocha",
         "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-        "ci": "yarn clean && yarn lint && tsc -b && yarn test"
+        "lint:ci": "eslint '*/**/*.{js,ts,tsx}' --quiet",
+        "ci": "yarn clean && yarn lint:ci && tsc -b && yarn test"
     },
     "nodemonConfig": {
         "restartable": "rs",

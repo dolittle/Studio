@@ -25,11 +25,16 @@ quick fixes.
 {
    "scripts": {
       "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-      "ci": ""
+      "lint:ci": "eslint '*/**/*.{js,ts,tsx}' --quiet"
    }
 }
 ```
 
+> Notice there are 2 different lint scripts. One for the CI and one for local. The point of this is that the local one
+> is set up to perform any fixes. We don't want the CI pipeline to perform these and hide any issues, since it doesn't
+> commit it back.
+
 ## VSCode extensions
 
-## VSCode configuration
+It is highly recommended to install all helper extensions for lint purposes. That will highlight any issues while you're
+working. Have a look at the [vscode](./vscode.md) page for list of recommended extensions.

@@ -37,8 +37,22 @@ jobs:
         yarn
         cd Source/eCommerce/Backend
         yarn ci
-
 ```
+
+For those microservices with a frontend, the build job needs to also include it:
+
+```yml
+    - name: Build
+      run: |
+        export NODE_OPTIONS="--max-old-space-size=4096"
+        yarn
+        cd Source/Harvest/Backend
+        yarn ci
+        cd ../Web
+        yarn ci
+```
+
+> Note the `NODE_OPTIONS` being set. This is because some of the tooling requires more memory than default.
 
 Here we define the name of the action, and that it runs on every push of any branch. The job it runs has three steps, and runs on `ubuntu-latest`:
 1. check out the code

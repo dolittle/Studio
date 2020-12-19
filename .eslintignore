@@ -1,3 +1,5 @@
 node_modules
-Distribution
-wallaby.conf.js
+dist
+wallaby.js
+*.d.ts
+tsconfig.*
