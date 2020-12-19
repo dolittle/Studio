@@ -23,8 +23,8 @@ For a backend, this could typically look like below:
         "clean": "tsc -b --clean",
         "build": "yarn clean && webpack --env.production --mode=production",
         "test": "mocha",
-        "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-        "lint:ci": "eslint '*/**/*.{js,ts,tsx}' --quiet",
+        "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
+        "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",
         "ci": "yarn clean && yarn lint:ci && tsc -b && yarn test"
     }
 }

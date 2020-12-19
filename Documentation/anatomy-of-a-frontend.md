@@ -140,8 +140,8 @@ package.json:
         "build:dev": "webpack --env.development --mode=development",
         "start": "webpack-dev-server --mode=development --watch --progress --hot --verbose --display-error-details",
         "clean": "tsc -b --clean",
-        "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-        "lint:ci": "eslint '*/**/*.{js,ts,tsx}' --quiet",
+        "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
+        "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",
         "ci": "yarn clean && yarn lint:ci && yarn build"
     },
     "author": "Dolittle",

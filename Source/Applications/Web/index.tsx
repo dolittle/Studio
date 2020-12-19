@@ -17,4 +17,3 @@ ReactDOM.render(
     </Bootstrapper>,
     document.getElementById('root')
 );
-
