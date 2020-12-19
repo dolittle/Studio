@@ -1,34 +1,5 @@
-# Backend Build
-FROM node:14.2.0 AS backend-build
+FROM node:14.2.0 AS shared-build
 
-WORKDIR /app
-
-COPY tsconfig.json ./
-COPY package.json ./
-
-COPY Source/Shared/Backend/package.json ./Source/Shared/Backend/package.json
-COPY Source/Shared/Components/package.json ./Source/Shared/Components/package.json
-COPY Source/Shared/DependencyInversion/package.json ./Source/Shared/DependencyInversion/package.json
-COPY Source/Shared/MVVM/package.json ./Source/Shared/MVVM/package.json
-COPY Source/Shared/Platform/package.json ./Source/Shared/Platform/package.json
-COPY Source/Shared/Portal/package.json ./Source/Shared/Portal/package.json
-COPY Source/Shared/Styles/package.json ./Source/Shared/Styles/package.json
-COPY Source/Shared/Web/package.json ./Source/Shared/Web/package.json
-COPY Source/Shared/WebPack/package.json ./Source/Shared/WebPack/package.json
-
-WORKDIR /app/Source/Portal/Backend
-COPY Source/Portal/Backend/package.json ./package.json
-RUN yarn
-
-COPY Source/Shared/WebPack/ /app/Source/Shared/WebPack/
-COPY Source/Shared/Backend/ /app/Source/Shared/Backend/
-COPY Source/Shared/DependencyInversion/ /app/Source/Shared/DependencyInversion/
-COPY Source/Portal/Backend/ ./
-
-RUN yarn build
-
-# Web Build
-FROM node:14.2.0 AS web-build
 WORKDIR /app
 
 COPY .eslintrc.js ./
@@ -44,9 +15,34 @@ COPY Source/Shared/Portal/package.json ./Source/Shared/Portal/package.json
 COPY Source/Shared/Styles/package.json ./Source/Shared/Styles/package.json
 COPY Source/Shared/Web/package.json ./Source/Shared/Web/package.json
 COPY Source/Shared/WebPack/package.json ./Source/Shared/WebPack/package.json
-COPY Source/Portal/Web/package.json ./Source/Portal/Web/package.json
+RUN yarn
+
+# Backend Build
+FROM node:14.2.0 AS backend-build
+
+WORKDIR /app
+
+COPY --from=shared-build /app/ ./
+
+WORKDIR /app/Source/Portal/Backend
+COPY Source/Portal/Backend/package.json ./package.json
+RUN yarn
+
+COPY Source/Shared/WebPack/ /app/Source/Shared/WebPack/
+COPY Source/Shared/Backend/ /app/Source/Shared/Backend/
+COPY Source/Shared/DependencyInversion/ /app/Source/Shared/DependencyInversion/
+COPY Source/Portal/Backend/ ./
+
+RUN yarn build
+
+# Web Build
+FROM node:14.2.0 AS web-build
+
+WORKDIR /app
+COPY --from=shared-build /app/ ./
 
 WORKDIR /app/Source/Portal/Web
+COPY Source/Portal/Web/package.json ./package.json
 RUN yarn
 
 COPY Source/Portal/version.json /app/Source/Portal
