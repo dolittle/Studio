@@ -2,9 +2,9 @@ FROM node:14.2.0 AS shared-build
 
 WORKDIR /app
 
+COPY package.json ./
 COPY .eslintrc.js ./
 COPY tsconfig.json ./
-COPY package.json ./
 
 COPY Source/Shared/Backend/package.json ./Source/Shared/Backend/package.json
 COPY Source/Shared/Components/package.json ./Source/Shared/Components/package.json
