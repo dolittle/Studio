@@ -17,6 +17,8 @@ COPY Source/Shared/Web/package.json ./Source/Shared/Web/package.json
 COPY Source/Shared/WebPack/package.json ./Source/Shared/WebPack/package.json
 RUN yarn
 
+COPY Source/Events/version.json /app/Source/Events/version.json
+
 # Backend Build
 FROM node:14.2.0 AS backend-build
 
@@ -28,9 +30,7 @@ WORKDIR /app/Source/Events/Backend
 COPY Source/Events/Backend/package.json ./package.json
 RUN yarn
 
-COPY Source/Shared/WebPack/ /app/Source/Shared/WebPack/
-COPY Source/Shared/Backend/ /app/Source/Shared/Backend/
-COPY Source/Shared/DependencyInversion/ /app/Source/Shared/DependencyInversion/
+COPY Source/Shared /app/Source/Shared/
 COPY Source/Events/Backend/ ./
 
 RUN yarn build
@@ -45,15 +45,7 @@ WORKDIR /app/Source/Events/Web
 COPY Source/Events/Web/package.json ./package.json
 RUN yarn
 
-COPY Source/Events/version.json /app/Source/Events
-COPY Source/Shared/Components /app/Source/Shared/Components/
-COPY Source/Shared/DependencyInversion /app/Source/Shared/DependencyInversion/
-COPY Source/Shared/MVVM /app/Source/Shared/MVVM/
-COPY Source/Shared/Platform /app/Source/Shared/Platform/
-COPY Source/Shared/Portal /app/Source/Shared/Portal/
-COPY Source/Shared/Styles /app/Source/Shared/Styles/
-COPY Source/Shared/Web /app/Source/Shared/Web/
-COPY Source/Shared/WebPack /app/Source/Shared/WebPack/
+COPY Source/Shared /app/Source/Shared/
 COPY Source/Events/Web ./
 RUN yarn build
 
