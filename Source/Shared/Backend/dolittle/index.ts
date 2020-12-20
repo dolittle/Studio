@@ -21,8 +21,8 @@ export async function initialize(configuration: Configuration, callback?: Dolitt
     const eventStoreDatabaseConnectionString = `mongodb://${configuration.eventStore.host}:${configuration.eventStore.port}/`;
     const eventStoreDatabaseName = configuration.eventStore.name;
 
-    logger.info(`Using '${databaseConnectionString}/${databaseName}' for projections`);
-    logger.info(`Using '${eventStoreDatabaseConnectionString}/${eventStoreDatabaseName}' for projection intermediate state`);
+    logger.info(`Using '${databaseConnectionString}${databaseName}' for projections`);
+    logger.info(`Using '${eventStoreDatabaseConnectionString}${eventStoreDatabaseName}' for projection intermediate state`);
 
     const clientBuilder = Client
         .forMicroservice(configuration.microserviceId)
