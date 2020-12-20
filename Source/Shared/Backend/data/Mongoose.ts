@@ -10,7 +10,7 @@ export class Mongoose {
         const connectionString = `mongodb://${configuration.database.host}:${configuration.database.port}/`;
         const databaseName = configuration.database.name;
 
-        logger.info(`Using '${connectionString}/${databaseName}' for Mongoose`);
+        logger.info(`Using '${connectionString}${databaseName}' for Mongoose`);
 
         await mongoose.connect(connectionString, {
             useNewUrlParser: true,
