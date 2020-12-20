@@ -1,0 +1,16 @@
+{
+    "microserviceId": "81cad113-a001-45dc-86cb-7b1e725ae25e",
+    "routeSegment": "events",
+    "port": 3003,
+    "dolittle": {
+        "runtime": {
+            "port": 50059
+        }
+    },
+    "database": {
+        "name": "events"
+    },
+    "eventStore": {
+        "name": "event_store_events"
+    }
+}
