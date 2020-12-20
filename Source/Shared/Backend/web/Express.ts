@@ -36,6 +36,7 @@ export async function initialize(configuration: Configuration, graphQLResolvers:
 
     if (swaggerDoc) {
         const swaggerPath = `/api/${configuration.routeSegment}/swagger`;
+        logger.info(`Hosting swagger at '${swaggerPath}'`);
         app.use(
             swaggerPath,
             swaggerUI.serve,
