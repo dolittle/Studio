@@ -74,79 +74,133 @@ Leveraging the shared backend setup.
 import path from 'path';
 import { startBackend } from '@shared/backend';
 
-import { getSchema } from './schema';
-import { ProductAdded, ProductHandler } from './configuration';
+import queries from './queries';
 
 (async () => {
-    const schema = await getSchema();                           <-- This is the exposed GraphQL schema exposed
-
-    await startBackend({
-        microserviceId: '08fe9d6d-874e-45d5-b4f6-b31a099645a3',     <-- Unique identifier that will be used for the microservice configuration in general
-        prefix: '/_/<microservice>',                                <-- URL prefix for frontend, APIs and GraphQL endpoints - each microservice has their own unique
-        publicPath: './public',                                     <-- The path to where the static web pages are served from (if any)
-        port: 3003,                                                 <-- Development port the backend will be served from - must be unique per Microservice
-        dolittleRuntimePort: 50057,                                 <-- The Dolittle runtime port to connect to in the local development environment
-        graphQLSchema: schema,                                      <-- Pass in the GraphQL schema generated
-        defaultDatabaseName: '<microservice>',                      <-- Default name for database - unique per microservice
-        defaultEventStoreDatabaseName: <microservice-event-store>,  <-- The default name for the event store database - same as in the resources.json for the microservice in environments.
-        expressCallback: _ => {
-            /* _ is the Express app instance */
-        },
-        dolittleCallback: _ => _
-            /*
-            _ is the Dolittle client builder instance
-
-            this is where you'd start registering things like
-            events, projections and more.
-            */
-        });
+    await startBackend({});
 })();
 ```
 
-For the GraphQL schema, add a file called `schema.ts`. The code above relies on this to be there.
-A starting point would be to put it something that doesn't add any specific model or queries.
+### Express configuration
 
-> The GraphQL system requires something, so one can't pass an empty schema.
+If you want to have control over the Express App object, you can add a callback to the argument object
+for the `startBackend()` function.
 
-Add the "empty" schema:
+```typescript
+await startBackend({
+    expressCallback: _ => {
+        /* _ is the Express app instance */
+    }
+});
+```
 
-```javascript
-import { buildSchema, Field, ObjectType, Query, Resolver, ResolverData } from 'type-graphql';
-import { modelOptions, Severity } from '@typegoose/typegoose';
-import { guid, GuidScalar } from '@shared/backend/data';
-import { Guid } from '@dolittle/rudiments';
-import { GraphQLSchema } from 'graphql';
-import { container } from 'tsyringe';
+### Dolittle configuration
 
-@ObjectType()
-@modelOptions({ options: { allowMixed: Severity.ALLOW } })
-class Nothing {
-    @Field({ name: 'id' })
-    @guid()
-    _id?: Guid;
-}
+If you want to have control over the Dolittle client builder, you can add a callback to the argument object
 
-@Resolver(Nothing)
-class NoQueries {
-    @Query(returns => [Nothing])
-    async noresults() {
-        return [];
+```typescript
+await startBackend({
+    dolittleCallback: _ => _
+        /*
+        _ is the Dolittle client builder instance
+
+        this is where you'd start registering things like
+        events, projections and more.
+        */
+    });
+});
+```
+
+### GraphQL Resolvers
+
+If your Microservice provides queries or mutations for the frontend you can provide resolvers for GraphQL by providing an array of the resolver types.
+
+```typescript
+await startBackend({
+    graphQLResolvers: [MyFirstResolver, MySecondResolver]
+});
+
+A good practice would be to create a file that exports a default array with resolvers and maybe even per category.
+Lets say you have queries you want to expose, add a file called `queries.ts`:
+
+```typescript
+export default [
+    MyFirstQuery,
+    MySecondQuery
+];
+```
+
+Then you'd import this and use it:
+
+```typescript
+import queries from './queries';
+
+await startBackend({
+    graphQLResolvers: queries
+});
+
+If you in addition have mutations, you would do the same thing, add a `mutations.ts`:
+
+```typescript
+export default [
+    MyFirstMutations,
+    MySecondMutations
+]
+```
+
+And then leverage both in the setup:
+
+```typescript
+import queries from './queries';
+import mutations from './mutations';
+
+await startBackend({
+    graphQLResolvers: [...queries, ...mutations]
+});
+```
+
+## Config.json
+
+Every Microservice needs unique configuration for them to work.
+This configuration is represented in a JSON file called `config.json` that should sit next to your entrypoint.
+The values in the config file are overrides from the default and there are more values that can be overridden.
+Typically some of the values in the full config is overridden when going to production.
+
+```json
+{
+    "microserviceId": "81cad113-a001-45dc-86cb-7b1e725ae25e",       <-- Unique identifier of the microservice - corresponding to what is in the microservice.json file in environment
+    "routeSegment": "<microservice>",                               <-- Unique route segment to use for the microservice. For frontends it will end up as `/_/<microservice>` and `/_/<microservice>/graphql`. APIs will be at `/api/<microservice>`
+    "port": 3003,                                                   <-- The port used for the Web host - must correspond to what is configured in the docker compose in environment
+    "dolittle": {
+        "runtime": {
+            "port": 50059                                           <-- The Dolittle runtime port - must correspond to what is configured in the docker compose in environment
+        }
+    },
+    "database": {
+        "name": "<microservice>"                                    <-- Database name to use for the 
+    },
+    "eventStore": {
+        "name": "event_store_<microservice>"                        <-- Event store database name - must correspond to what is set up in the resources.json for the microservice in environment
     }
 }
+```
 
-export async function getSchema(): Promise<GraphQLSchema> {
-    const schema = await buildSchema({
-        resolvers: [NoQueries],
-        container: {
-            get(someClass: any, resolverData: ResolverData<any>): any | Promise<any> {
-                return container.resolve(someClass);
-            }
-        },
-        scalarsMap: [
-            { type: Guid, scalar: GuidScalar }
-        ]
-    });
-    return schema;
+> The config system is using [nconf](https://www.npmjs.com/package/nconf) at its core. It has a hierarchy of sources for configuration
+> and it is possible to override using both environment variables and arguments for the process. The convention for environment
+> variables is that it considers '_' as a separator segment for deep object hierarchies. So for the Dolittle Runtime Port, it is
+> expecting the variable to be DOLITTLE_RUNTIME_PORT or dolittle_runtime_port. It is configured to make it lower case when parsing.
+
+The system gets configured with a `Configuration` object that anyone can take a dependency to:
+
+```typescript
+import { Configuration } from '@shared/backend`;
+import { injectable } from 'tsyringe';
+
+@injectable()
+export class MyClass {
+    constructor(configuration: Configuration) {
+        // Use the configuration properties
+    }
 }
 ```
 
