@@ -5,11 +5,11 @@
         "**/*Controller.ts"
     ],
     "spec": {
-      "outputDirectory": ".",
-      "specVersion": 3
+        "outputDirectory": "./",
+        "specVersion": 3
     },
     "routes": {
         "routesDir": "./",
-        "iocModule": "./ioc"
+        "iocModule": "../Shared/Backend/tsoa/ioc"
     }
 }

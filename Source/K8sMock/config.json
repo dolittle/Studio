@@ -1,0 +1,16 @@
+{
+    "microserviceId": "c2e34414-5054-4050-8ee4-eb6f3265cce3",
+    "routeSegment": "k8s",
+    "port": 3001,
+    "dolittle": {
+        "runtime": {
+            "port": 50053
+        }
+    },
+    "database": {
+        "name": "k8s"
+    },
+    "eventStore": {
+        "name": "event_store_k8smock"
+    }
+}
