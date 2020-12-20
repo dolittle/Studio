@@ -1,0 +1,17 @@
+{
+    "microserviceId": "590696bc-1c4e-4a14-b621-c2125713a974",
+    "routeSegment": "",
+    "isRooted": true,
+    "port": 3000,
+    "dolittle": {
+        "runtime": {
+            "port": 50053
+        }
+    },
+    "database": {
+        "name": "portal"
+    },
+    "eventStore": {
+        "name": "event_store_portal"
+    }
+}
