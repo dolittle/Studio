@@ -6,22 +6,15 @@ import { constructor } from '@shared/dependencyinversion';
 import { createLogger, format, transports } from 'winston';
 import { ILogger } from './ILogger';
 
-export let logger: ILogger;
+const loggerOptions = {
+    level: 'info',
+    format: format.colorize(),
+    transports: [
+        new transports.Console({
+            format: format.simple()
+        })
+    ]
+};
 
-export function configureLogging(microserviceId: string) {
-    const loggerOptions = {
-        level: 'info',
-        format: format.colorize(),
-        defaultMeta: {
-            microserviceId
-        },
-        transports: [
-            new transports.Console({
-                format: format.simple()
-            })
-        ]
-    };
-
-    logger = createLogger(loggerOptions);
-    container.registerInstance(ILogger as constructor<ILogger>, logger);
-}
+export const logger: ILogger = createLogger(loggerOptions);
+container.registerInstance(ILogger as constructor<ILogger>, logger);

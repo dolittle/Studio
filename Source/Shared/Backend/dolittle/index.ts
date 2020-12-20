@@ -6,34 +6,34 @@ export * from './IEventStore';
 import { constructor, containerInstance } from '@shared/dependencyinversion';
 
 import { Client, ClientBuilder } from '@dolittle/sdk';
-import { logger } from '@shared/backend/logging/Logging';
 import { Logger } from 'winston';
 import { container } from 'tsyringe';
 import { IEventStore } from './IEventStore';
 import { IEventTypes } from './IEventTypes';
+import { Configuration } from '../Configuration';
+import { logger } from '../logging';
 
 export type DolittleClientBuilderCallback = (clientBuilder: ClientBuilder) => void;
 
-export async function initialize(microserviceId: string, port: number, defaultDatabaseName: string, defaultEventStoreDatabaseName: string, callback?: DolittleClientBuilderCallback): Promise<Client> {
-    const host = process.env.DATABASE_HOST || 'localhost';
-    const databaseConnectionString = `mongodb://${host}:27017/`;
-    const databaseName = process.env.DATABASE_NAME || defaultDatabaseName;
-    const eventStoreDatabaseName = process.env.EVENTSTORE_DATABASE_NAME || defaultEventStoreDatabaseName;
+export async function initialize(configuration: Configuration, callback?: DolittleClientBuilderCallback): Promise<Client> {
+    const databaseConnectionString = `mongodb://${configuration.database.host}:${configuration.database.port}/`;
+    const databaseName = configuration.database.name;
+    const eventStoreDatabaseConnectionString = `mongodb://${configuration.eventStore.host}:${configuration.eventStore.port}/`;
+    const eventStoreDatabaseName = configuration.eventStore.name;
 
-    let runtimePort = port;
-    if (process.env.DOLITTLE_RUNTIME_PORT) {
-        runtimePort = parseInt(process.env.DOLITTLE_RUNTIME_PORT);
-    }
+    logger.info(`Using '${databaseConnectionString}/${databaseName}' for projections`);
+    logger.info(`Using '${eventStoreDatabaseConnectionString}/${eventStoreDatabaseName}' for projection intermediate state`);
+
     const clientBuilder = Client
-        .forMicroservice(microserviceId)
+        .forMicroservice(configuration.microserviceId)
         .withLogging(logger as Logger)
         .withContainer(containerInstance)
-        .withRuntimeOn('localhost', runtimePort)
+        .withRuntimeOn(configuration.dolittle.runtime.host, configuration.dolittle.runtime.port)
         .withProjections(p => p.storeInMongo(databaseConnectionString, databaseName))
-        .withProjectionIntermediates(p => p.storeInMongo(databaseConnectionString, eventStoreDatabaseName))
-    ;
+        .withProjectionIntermediates(p => p.storeInMongo(eventStoreDatabaseConnectionString, eventStoreDatabaseName))
+        ;
 
-    if (callback) callback(clientBuilder);
+    callback?.(clientBuilder);
 
     const client = clientBuilder.build();
 

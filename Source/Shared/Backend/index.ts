@@ -13,33 +13,26 @@ import { Mongoose } from '@shared/backend/data';
 import * as Express from '@shared/backend/web';
 import { Bindings as K8sBindings} from '@shared/backend/k8s';
 
-import { configureLogging } from '@shared/backend/logging/Logging';
+export { logger } from './logging';
+
 import { Configuration } from './Configuration';
 import * as DependencyInversion from '@shared/dependencyinversion';
 
 import '@dolittle/projections';
+import { BackendArguments } from './BackendArguments';
+import { container } from 'tsyringe';
 
-export async function startBackend(configuration: Configuration) {
+export async function startBackend(startArguments: BackendArguments) {
     const envPath = path.resolve(process.cwd(), '.env');
     dotenv.config({ path: envPath });
-    configureLogging(configuration.microserviceId);
-
-    K8sBindings.initialize();
+    const configuration = Configuration.create();
 
     DependencyInversion.initialize();
+    K8sBindings.initialize();
 
-    await Mongoose.initialize(configuration.defaultDatabaseName);
-    await Dolittle.initialize(
-        configuration.microserviceId,
-        configuration.dolittleRuntimePort,
-        configuration.defaultDatabaseName,
-        configuration.defaultEventStoreDatabaseName,
-        configuration.dolittleCallback);
+    container.registerInstance(Configuration, configuration);
 
-    await Express.initialize(
-        configuration.prefix,
-        configuration.publicPath,
-        configuration.port,
-        configuration.graphQLSchema,
-        configuration.expressCallback);
+    await Mongoose.initialize(configuration);
+    await Dolittle.initialize(configuration, startArguments.dolittleCallback);
+    await Express.initialize(configuration, startArguments.graphQLResolvers, startArguments.swaggerDoc, startArguments.expressCallback);
 }
