@@ -9,6 +9,9 @@
             "path": "../../Shared/Backend"
         },
         {
+            "path": "../../Shared/k8s"
+        },
+        {
             "path": "../../Shared/DependencyInversion"
         }
     ]

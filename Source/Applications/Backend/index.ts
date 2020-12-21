@@ -8,11 +8,12 @@ import { PartitionId } from '@dolittle/sdk.events';
 
 import tenant from '@shared/backend/Tenant';
 import Microservices from '@shared/backend/Microservices';
-
+import { Bindings as K8sBindings} from '@shared/k8s';
 import { projectFromEventsToReadModels } from './applications';
 
 (async () => {
     const schema = await getSchema();
+    K8sBindings.initialize();
 
     await startBackend({
         microserviceId: '05a823dd-0f0d-4157-bc46-14834cca3cd2',

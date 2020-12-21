@@ -11,7 +11,7 @@ import dotenv from 'dotenv';
 import * as Dolittle from '@shared/backend/dolittle';
 import { Mongoose } from '@shared/backend/data';
 import * as Express from '@shared/backend/web';
-import { Bindings as K8sBindings} from '@shared/backend/k8s';
+
 
 import { configureLogging } from '@shared/backend/logging/Logging';
 import { Configuration } from './Configuration';
@@ -23,8 +23,6 @@ export async function startBackend(configuration: Configuration) {
     const envPath = path.resolve(process.cwd(), '.env');
     dotenv.config({ path: envPath });
     configureLogging(configuration.microserviceId);
-
-    K8sBindings.initialize();
 
     DependencyInversion.initialize();
 

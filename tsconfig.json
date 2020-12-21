@@ -7,6 +7,7 @@
             "@shared/backend*": ["Source/Shared/Backend*"],
             "@shared/components*": ["Source/Components*"],
             "@shared/dependencyinversion*": ["Source/DependencyInversion*"],
+            "@shared/k8s*": ["Source/k8s*"],
             "@shared/mvvm*": ["Source/MVVM*"],
             "@shared/platform*": ["Source/Platform*"],
             "@shared/portal*": ["Source/Portal*"],

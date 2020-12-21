@@ -3,12 +3,9 @@
 
 import { injectable } from 'tsyringe';
 import { Query, Resolver, Ctx } from 'type-graphql';
-import { V1Deployment } from '@kubernetes/client-node';
-
-import { Guid } from '@dolittle/rudiments';
 
 import { ILogger } from '@shared/backend/logging';
-import { IApplicationNamespaces, IMicroserviceResources } from '@shared/backend/k8s';
+import { IApplicationNamespaces, IMicroserviceResources } from '@shared/k8s';
 import { Context } from '@shared/backend/web';
 
 import { ApplicationForListing } from './ApplicationForListing';

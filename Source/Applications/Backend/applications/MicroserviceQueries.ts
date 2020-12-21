@@ -6,7 +6,7 @@ import { injectable } from 'tsyringe';
 
 import { ILogger } from '@shared/backend/logging';
 import { Context } from '@shared/backend/web';
-import { IMicroserviceResources } from  '@shared/backend/k8s';
+import { IMicroserviceResources } from  '@shared/k8s';
 
 import { Microservice } from './Microservice';
 
