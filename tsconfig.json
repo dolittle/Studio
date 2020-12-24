@@ -5,12 +5,7 @@
         "rootDir": ".",
         "paths": {
             "@shared/components*": ["Source/Components*"],
-<<<<<<< HEAD
-=======
-            "@shared/dependencyinversion*": ["Source/DependencyInversion*"],
             "@shared/k8s*": ["Source/k8s*"],
-            "@shared/mvvm*": ["Source/MVVM*"],
->>>>>>> development
             "@shared/platform*": ["Source/Platform*"],
             "@shared/portal*": ["Source/Portal*"],
             "@shared/styles*": ["Source/Styles*"]
