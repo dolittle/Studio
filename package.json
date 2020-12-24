@@ -25,7 +25,7 @@
         "@shared/portal": "1.0.0",
         "@shared/styles": "1.0.0",
         "@shared/web": "1.0.0",
-        "@shared/webpack": "1.0.0"
+        "@dolittle/webpack": "1.0.0"
     },
     "devDependencies": {
         "clean-webpack-plugin": "^3.0.0",
