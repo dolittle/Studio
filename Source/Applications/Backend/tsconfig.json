@@ -5,5 +5,8 @@
         "rootDir": "./",
     },
     "references": [
-    ]
+        {
+            "path": "../../Shared/k8s"
+        }
+   ]
 }

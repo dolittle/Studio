@@ -9,6 +9,7 @@ COPY tsconfig.json ./
 COPY Source/Shared/Backend/package.json ./Source/Shared/Backend/package.json
 COPY Source/Shared/Components/package.json ./Source/Shared/Components/package.json
 COPY Source/Shared/DependencyInversion/package.json ./Source/Shared/DependencyInversion/package.json
+COPY Source/Shared/k8s/package.json ./Source/Shared/k8s/package.json
 COPY Source/Shared/MVVM/package.json ./Source/Shared/MVVM/package.json
 COPY Source/Shared/Platform/package.json ./Source/Shared/Platform/package.json
 COPY Source/Shared/Portal/package.json ./Source/Shared/Portal/package.json

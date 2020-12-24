@@ -3,13 +3,10 @@
 
 import { injectable } from 'tsyringe';
 import { Query, Resolver, Ctx } from 'type-graphql';
-import { V1Deployment } from '@kubernetes/client-node';
-
-import { Guid } from '@dolittle/rudiments';
 
 import { ILogger } from '@dolittle/vanir-backend/logging';
-import { IApplicationNamespaces, IMicroserviceResources } from '@dolittle/vanir-backend/k8s';
 import { Context } from '@dolittle/vanir-backend/web';
+import { IApplicationNamespaces, IMicroserviceResources } from '@shared/k8s';
 
 import { ApplicationForListing } from './ApplicationForListing';
 import { MicroserviceForListing } from './MicroserviceForListing';
