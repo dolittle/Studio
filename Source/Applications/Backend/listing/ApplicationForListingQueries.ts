@@ -7,9 +7,9 @@ import { V1Deployment } from '@kubernetes/client-node';
 
 import { Guid } from '@dolittle/rudiments';
 
-import { ILogger } from '@shared/backend/logging';
-import { IApplicationNamespaces, IMicroserviceResources } from '@shared/backend/k8s';
-import { Context } from '@shared/backend/web';
+import { ILogger } from '@dolittle/vanir-backend/logging';
+import { IApplicationNamespaces, IMicroserviceResources } from '@dolittle/vanir-backend/k8s';
+import { Context } from '@dolittle/vanir-backend/web';
 
 import { ApplicationForListing } from './ApplicationForListing';
 import { MicroserviceForListing } from './MicroserviceForListing';

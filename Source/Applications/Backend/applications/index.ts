@@ -1,14 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-// is this really necessary? does something use this?
-export * from './Application';
-export * from './ApplicationQueries';
-export * from './Microservice';
-export * from './MicroserviceQueries';
-
-import { ClientBuilder } from '@dolittle/sdk';
 import '@dolittle/projections';
+import { ClientBuilder } from '@dolittle/sdk';
 import { Application } from './Application';
 import { ApplicationCreated } from './events';
 import { MicroserviceCreated } from './events/MicroserviceCreated';

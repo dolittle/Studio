@@ -4,9 +4,9 @@
 import { Query, Resolver, Arg, Ctx } from 'type-graphql';
 import { injectable } from 'tsyringe';
 
-import { ILogger } from '@shared/backend/logging';
-import { Context } from '@shared/backend/web';
-import { IMicroserviceResources } from  '@shared/backend/k8s';
+import { ILogger } from '@dolittle/vanir-backend/logging';
+import { Context } from '@dolittle/vanir-backend/web';
+import { IMicroserviceResources } from  '@shared/k8s';
 
 import { Microservice } from './Microservice';
 

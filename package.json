@@ -9,6 +9,7 @@
         "Source/Events/Web",
         "Source/Portal/Backend",
         "Source/Portal/Web",
+        "Source/Shared/Common",
         "Source/Shared/Components",
         "Source/Shared/Portal",
         "Source/Shared/Platform",
@@ -17,15 +18,13 @@
     "dependencies": {
         "graphql": "15.4.0",
         "dotenv": "8.2.0",
-        "@shared/backend": "1.0.0",
+        "@shared/common": "1.0.0",
         "@shared/components": "1.0.0",
-        "@shared/dependencyinversion": "1.0.0",
-        "@shared/mvvm": "1.0.0",
         "@shared/platform": "1.0.0",
         "@shared/portal": "1.0.0",
         "@shared/styles": "1.0.0",
-        "@shared/web": "1.0.0",
-        "@dolittle/webpack": "1.0.0"
+        "@dolittle/vanir-backend": "^2.0.0",
+        "@dolittle/webpack": "^2.0.0"
     },
     "devDependencies": {
         "clean-webpack-plugin": "^3.0.0",

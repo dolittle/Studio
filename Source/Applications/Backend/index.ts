@@ -1,18 +1,17 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { startBackend } from '@shared/backend';
+import { Host, logger } from '@dolittle/vanir-backend';
 import queries from './queries';
 import { PartitionId } from '@dolittle/sdk.events';
 
-import tenant from '@shared/backend/Tenant';
-import Microservices from '@shared/backend/Microservices';
+import tenant from '@shared/common/Tenant';
+import Microservices from '@shared/common/Microservices';
 
 import { projectFromEventsToReadModels } from './applications';
-import { logger } from 'Source/Shared/Common/Backend/k8s/node_modules/@shared/backend/logging';
 
 (async () => {
-    await startBackend({
+    await Host.start({
         graphQLResolvers: queries,
         dolittleCallback: _ => {
             projectFromEventsToReadModels(_);

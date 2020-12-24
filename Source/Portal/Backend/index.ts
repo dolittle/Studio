@@ -1,8 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { startBackend } from '@shared/backend';
+import { Host } from '@dolittle/vanir-backend';
 
 (async () => {
-    await startBackend({});
+    await Host.start({});
 })();

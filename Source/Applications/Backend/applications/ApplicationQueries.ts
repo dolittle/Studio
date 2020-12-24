@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { Query, Resolver, Arg } from 'type-graphql';
-import { ILogger } from '@shared/backend/logging';
+import { ILogger } from '@dolittle/vanir-backend';
 import { injectable } from 'tsyringe';
 import { Application, ApplicationModel } from './Application';
 
