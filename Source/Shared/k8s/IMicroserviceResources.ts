@@ -3,7 +3,7 @@
 
 import { V1Deployment } from '@kubernetes/client-node';
 
-import { Context } from '@shared/backend/web';
+import { Context } from '@dolittle/vanir-backend/web';
 
 export abstract class IMicroserviceResources {
     getDeployments!: (namespace: string, ctx: Context) => Promise<V1Deployment[]>;

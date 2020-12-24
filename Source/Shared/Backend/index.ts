@@ -8,12 +8,12 @@ export * as Tenant from './Tenant';
 import path from 'path';
 import dotenv from 'dotenv';
 
-import * as Dolittle from '@shared/backend/dolittle';
-import { Mongoose } from '@shared/backend/data';
-import * as Express from '@shared/backend/web';
+import * as Dolittle from '@dolittle/vanir-backend/dolittle';
+import { Mongoose } from '@dolittle/vanir-backend/data';
+import * as Express from '@dolittle/vanir-backend/web';
 
 
-import { configureLogging } from '@shared/backend/logging/Logging';
+import { configureLogging } from '@dolittle/vanir-backend/Logging';
 import { Configuration } from './Configuration';
 import * as DependencyInversion from '@shared/dependencyinversion';
 

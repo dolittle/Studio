@@ -4,9 +4,9 @@
 import { injectable } from 'tsyringe';
 import { KubeConfig, AppsV1Api} from '@kubernetes/client-node';
 
-import { Configuration } from '@shared/backend/configuration/Configuration';
-import { ILogger } from '@shared/backend/logging';
-import { Context } from '@shared/backend/web';
+import { Configuration } from '@dolittle/vanir-backend';
+import { ILogger } from '@dolittle/vanir-backend';
+import { Context } from '@dolittle/vanir-backend/web';
 
 import { IMicroserviceResources } from './IMicroserviceResources';
 

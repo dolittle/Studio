@@ -8,6 +8,9 @@ import { ApplicationCreated } from './events';
 import { MicroserviceCreated } from './events/MicroserviceCreated';
 import { Microservice } from './Microservice';
 
+export * from './ApplicationQueries';
+export * from './MicroserviceQueries';
+
 export function projectFromEventsToReadModels(clientBuilder: ClientBuilder) {
     clientBuilder.withEventTypes(_ => {
         _.register(ApplicationCreated);

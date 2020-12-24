@@ -4,8 +4,8 @@
 import { injectable } from 'tsyringe';
 import { KubeConfig, ListWatch, Watch, CoreV1Api, V1Namespace } from '@kubernetes/client-node';
 
-import { Configuration } from '@shared/backend/configuration/Configuration';
-import { ILogger } from '@shared/backend/logging';
+import { Configuration } from '@dolittle/vanir-backend';
+import { ILogger } from '@dolittle/vanir-backend';
 
 import { IApplicationNamespaces } from './IApplicationNamespaces';
 
