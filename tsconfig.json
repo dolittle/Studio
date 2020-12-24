@@ -4,18 +4,11 @@
         "outDir": "dist",
         "rootDir": ".",
         "paths": {
-            "@shared/backend*": ["Source/Shared/Backend*"],
             "@shared/components*": ["Source/Components*"],
-            "@shared/dependencyinversion*": ["Source/DependencyInversion*"],
-            "@shared/mvvm*": ["Source/MVVM*"],
             "@shared/platform*": ["Source/Platform*"],
             "@shared/portal*": ["Source/Portal*"],
-            "@shared/styles*": ["Source/Styles*"],
-            "@shared/web*": ["Source/Web*"],
-            "@shared/webpack*": ["Source/WebPack*"]
+            "@shared/styles*": ["Source/Styles*"]
         },
-
-
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,

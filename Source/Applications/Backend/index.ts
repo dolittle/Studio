@@ -9,7 +9,7 @@ import tenant from '@shared/backend/Tenant';
 import Microservices from '@shared/backend/Microservices';
 
 import { projectFromEventsToReadModels } from './applications';
-import { logger } from '@shared/backend/logging';
+import { logger } from 'Source/Shared/Common/Backend/k8s/node_modules/@shared/backend/logging';
 
 (async () => {
     await startBackend({

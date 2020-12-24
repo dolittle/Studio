@@ -9,15 +9,10 @@
         "Source/Events/Web",
         "Source/Portal/Backend",
         "Source/Portal/Web",
-        "Source/Shared/Backend",
         "Source/Shared/Components",
-        "Source/Shared/DependencyInversion",
-        "Source/Shared/MVVM",
         "Source/Shared/Portal",
         "Source/Shared/Platform",
-        "Source/Shared/Styles",
-        "Source/Shared/Web",
-        "Source/Shared/WebPack"
+        "Source/Shared/Styles"
     ],
     "dependencies": {
         "graphql": "15.4.0",

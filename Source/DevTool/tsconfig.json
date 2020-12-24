@@ -9,12 +9,6 @@
             "path": "../Shared/Components"
         },
         {
-            "path": "../Shared/DependencyInversion"
-        },
-        {
-            "path": "../Shared/MVVM"
-        },
-        {
             "path": "../Shared/Platform"
         },
         {
@@ -22,10 +16,6 @@
         },
         {
             "path": "../Shared/Styles"
-        },
-        {
-            "path": "../Shared/Web"
         }
-
     ]
 }

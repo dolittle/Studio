@@ -23,9 +23,7 @@
             "ts": "ts-node"
         },
         "watch": [
-            "./",
-            "../Shared/Backend",
-            "../Shared/DependencyInversion"
+            "./"
         ],
         "ext": "ts"
     },

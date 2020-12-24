@@ -5,11 +5,5 @@
         "rootDir": "./",
     },
     "references": [
-        {
-            "path": "../Shared/Backend"
-        },
-        {
-            "path": "../Shared/DependencyInversion"
-        }
     ]
 }
