@@ -4,7 +4,7 @@
 import React from 'react';
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react';
 import { Guid } from '@dolittle/rudiments';
-import { withViewModel } from '@dolittle/vanir-web';
+import { withViewModel } from '@dolittle/vanir-react';
 import { ActionBarAction } from '@shared/portal';
 import { ActionBarViewModel } from './ActionBarViewModel';
 

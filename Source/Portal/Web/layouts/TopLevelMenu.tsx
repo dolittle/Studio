@@ -4,7 +4,7 @@
 import React from 'react';
 import { Pivot, PivotItem } from '@fluentui/react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { withViewModel } from '@dolittle/vanir-web';
+import { withViewModel } from '@dolittle/vanir-react';
 import { TopLevelMenuViewModel } from './TopLevelMenuViewModel';
 
 import './TopLevelMenu.scss';
@@ -15,6 +15,7 @@ export const TopLevelMenu = withViewModel<TopLevelMenuViewModel>(TopLevelMenuVie
 
     function linkClicked(item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) {
         viewModel.beforeNavigating();
+
         history.push(item?.props.itemKey!);
     }
 

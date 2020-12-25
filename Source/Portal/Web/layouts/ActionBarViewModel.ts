@@ -9,7 +9,7 @@ import {
     ActionBarActionWasTriggered,
     ActionBarStructureChanged,
 } from '@shared/portal';
-import { IMessenger } from '@dolittle/vanir-react';
+import { IMessenger } from '@dolittle/vanir-web';
 
 @injectable()
 export class ActionBarViewModel {

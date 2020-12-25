@@ -3,9 +3,9 @@
 
 import React from 'react';
 import { INavLink, INavLinkGroup, Nav } from '@fluentui/react';
-import { withViewModel } from '@dolittle/vanir-web';
+import { withViewModel } from '@dolittle/vanir-react';
 import { NavigationViewModel } from './NavigationViewModel';
-import { NavigationGroup } from '@shared/portal';
+import { NavigationGroup } from '@dolittle/vanir-web';
 
 export const Navigation = withViewModel(NavigationViewModel, ({ viewModel }) => {
     const groups = mapToNavLinkGroup(viewModel.groups, viewModel);

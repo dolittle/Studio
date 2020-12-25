@@ -10,9 +10,8 @@ import './Layout.scss';
 import { Navigation } from './Navigation';
 import { Toolbar } from './Toolbar';
 import { LayoutViewModel } from './LayoutViewModel';
-import { withViewModel } from '@dolittle/vanir-web';
+import { CompositionRoute, withViewModel } from '@dolittle/vanir-react';
 import { ActionBar } from './ActionBar';
-import { CompositionRoute } from '@dolittle/vanir-web';
 
 export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
     const location = useLocation();

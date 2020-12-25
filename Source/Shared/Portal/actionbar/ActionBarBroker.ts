@@ -1,8 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { IMessenger } from '@dolittle/vanir-react';
 import { injectable, singleton } from 'tsyringe';
+import { IMessenger } from '@dolittle/vanir-web';
 import { ActionBarAction } from './ActionBarAction';
 import { ActionBar } from './ActionBar';
 import { ActionBarActionForMessage } from './ActionBarActionForMessage';

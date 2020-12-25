@@ -8,6 +8,6 @@ import { ToolbarViewModel } from './ToolbarViewModel';
 import { ToolbarProps } from './ToolbarProps';
 
 export const Toolbar = withViewModel<ToolbarViewModel, ToolbarProps>(ToolbarViewModel, ({ viewModel, props }) => {
-    return (<></>)
+    return (<></>);
 });
 
