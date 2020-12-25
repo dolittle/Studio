@@ -2,8 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import { generatePath } from 'react-router-dom';
 
-export const baseurl = '/_/applications/';
-
 export const routes = {
     allApplications: {
         route: '/',

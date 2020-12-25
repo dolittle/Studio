@@ -2,13 +2,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { IMessenger } from '@dolittle/vanir-react';
+import { INavigator, NavigatedTo } from '@shared/web';
 import { injectable } from 'tsyringe';
 import { BeforeNavigation } from './BeforeNavigation';
 
 @injectable()
 export class TopLevelMenuViewModel {
-    constructor(private readonly _messenger: IMessenger) {
+    constructor(private readonly _navigator: INavigator, private readonly _messenger: IMessenger) {
     }
+
 
     beforeNavigating() {
         this._messenger.publish(new BeforeNavigation());

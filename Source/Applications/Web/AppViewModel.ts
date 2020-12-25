@@ -7,7 +7,7 @@ import { injectable } from 'tsyringe';
 import { ObservableQuery, NetworkStatus } from 'apollo-client';
 import gql from 'graphql-tag';
 import { ApplicationForListing } from './ApplicationForListing';
-
+import { routes } from './routing';
 
 @injectable()
 export class AppViewModel {
@@ -19,7 +19,8 @@ export class AppViewModel {
 
     constructor(
         private readonly _navigation: Navigation,
-        private readonly _dataSource: DataSource) { }
+        private readonly _dataSource: DataSource) {
+    }
 
     activate() {
         this._getApplicationList();
@@ -54,15 +55,18 @@ export class AppViewModel {
     private async _populateNavigation() {
         const navigationItems = this.applications?.map(
             (app) =>
-                ({
-                    name: app.name,
-                    items: app.microservices.map((a) => ({ name: a.name })),
-                } as NavigationGroup)
+            ({
+                name: app.name,
+                items: app.microservices.map((ms) => ({
+                    name: ms.name,
+                    path: `/applications${routes.microserviceDetails.generate({ applicationId: app.id.toString(), microserviceId: ms.id.toString() })}`
+                })),
+
+            } as NavigationGroup)
         );
 
         this._navigation.set(navigationItems ?? []);
     }
-
 }
 
 type AllApplicationsForListingQuery = {

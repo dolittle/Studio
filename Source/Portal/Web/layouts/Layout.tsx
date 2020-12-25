@@ -6,14 +6,13 @@ import { TopLevelMenu } from './TopLevelMenu';
 import { Spinner, SpinnerSize, StackItem, Stack } from 'office-ui-fabric-react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 
-import { ContentFrame } from '@shared/components';
-
 import './Layout.scss';
 import { Navigation } from './Navigation';
 import { Toolbar } from './Toolbar';
 import { LayoutViewModel } from './LayoutViewModel';
 import { withViewModel } from '@shared/mvvm';
 import { ActionBar } from './ActionBar';
+import { CompositionRoute } from '@shared/web';
 
 export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
     const location = useLocation();
@@ -58,15 +57,9 @@ export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
                                 <Route exact path="/">
                                     <h2>Welcome to Dolittle Studio</h2>
                                 </Route>
-                                <Route path="/applications">
-                                    <ContentFrame src="/_/applications" load={contentLoading} loaded={contentLoaded} />
-                                </Route>
-                                <Route path="/microservices">
-                                    <ContentFrame src="/_/microservices" load={contentLoading} loaded={contentLoaded} />
-                                </Route>
-                                <Route path="/events">
-                                    <ContentFrame src="/_/events" load={contentLoading} loaded={contentLoaded} />
-                                </Route>
+                                <CompositionRoute path="/applications" load={contentLoading} loaded={contentLoaded}/>
+                                <CompositionRoute path="/microservices" load={contentLoading} loaded={contentLoaded}/>
+                                <CompositionRoute path="/events" load={contentLoading} loaded={contentLoaded}/>
                             </Switch>
                         </div>
                     </div>

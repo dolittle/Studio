@@ -8,13 +8,13 @@ import { NavigationViewModel } from './NavigationViewModel';
 import { NavigationGroup } from '@shared/portal';
 
 export const Navigation = withViewModel(NavigationViewModel, ({ viewModel }) => {
-    const groups = mapToNavLinkGroup(viewModel.groups);
+    const groups = mapToNavLinkGroup(viewModel.groups, viewModel);
 
     return (
         <Nav groups={groups}></Nav>
     );
 });
-function mapToNavLinkGroup(navigationGroups: NavigationGroup[]) {
+function mapToNavLinkGroup(navigationGroups: NavigationGroup[], viewModel: NavigationViewModel) {
     return navigationGroups.map((_) => {
         return {
             name: _.name,
@@ -22,6 +22,11 @@ function mapToNavLinkGroup(navigationGroups: NavigationGroup[]) {
                 return {
                     name: i.name,
                     key: i.name,
+                    onClick: (e, item) => {
+                        if (i.path) {
+                            viewModel.navigateTo(i.path);
+                        }
+                    }
                 } as INavLink;
             }),
         } as INavLinkGroup;
