@@ -5,7 +5,7 @@ const path = require('path');
 
 module.exports = (env, argv, basePath) => {
     const production = argv.mode === 'production';
-    
+
     return {
         filename:
             production === true
@@ -21,5 +21,5 @@ module.exports = (env, argv, basePath) => {
                 : '[name].[hash].chunk.js',
         path: path.resolve(process.cwd(), 'wwwroot'),
         publicPath: basePath
-    }
+    };
 };

@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import '@shared/styles/theme';
 import './index.scss';
@@ -12,10 +12,12 @@ import { AppViewModel } from './AppViewModel';
 import { BrowserRouter as Router, Link, Switch, Route, RouteComponentProps } from 'react-router-dom';
 
 import { ActionBar, Toolbar, ToolbarItem } from '@shared/components';
+import { MicroserviceRoute, Routing } from '@shared/web';
+
 import { AllApplications } from './applications/AllApplications';
 import { ApplicationDetails } from './applications/ApplicationDetails';
 import { MicroserviceDetails } from './microservices/MicroserviceDetails';
-import { baseurl, routes } from './routing';
+import { routes } from './routing';
 import { ApplicationForListing } from './ApplicationForListing';
 import { MicroserviceForListing } from './MicroserviceForListing';
 
@@ -51,46 +53,44 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
                 onCancelled={() => setShowAssignMicroserviceDialog(false)}
             />
 
-            <Router basename={baseurl}>
-                <Switch>
-                    <Route
-                        exact
-                        path={routes.allApplications.route}
-                        render={() => (
-                            <AllApplications applications={viewModel.applications} />
-                        )}
-                    />
-                    <Route
-                        exact
-                        path={routes.applicationDetails.route}
-                        render={(
-                            routeProps: RouteComponentProps<{ applicationId: string }>
-                        ) => (
-                            <ApplicationDetails
-                                applicationForListing={resolveApplication(
-                                    viewModel.applications,
-                                    routeProps.match.params.applicationId
-                                )}
-                                {...routeProps.match.params}
-                            />
-                        )}
-                    />
-                    <Route
-                        exact
-                        path={routes.microserviceDetails.route}
-                        render={(routeProps) => (
-                            <MicroserviceDetails
-                                microserviceForListing={resolveMicroservice(
-                                    viewModel.applications,
-                                    routeProps.match.params.applicationId,
-                                    routeProps.match.params.microserviceId
-                                )}
-                                {...routeProps.match.params}
-                            />
-                        )}
-                    />
-                </Switch>
-            </Router>
+            <Routing>
+                <MicroserviceRoute
+                    exact
+                    path={routes.allApplications.route}
+                    render={() => (
+                        <AllApplications applications={viewModel.applications} />
+                    )}
+                />
+                <MicroserviceRoute
+                    exact
+                    path={routes.applicationDetails.route}
+                    render={(
+                        routeProps: RouteComponentProps<{ applicationId: string }>
+                    ) => (
+                        <ApplicationDetails
+                            applicationForListing={resolveApplication(
+                                viewModel.applications,
+                                routeProps.match.params.applicationId
+                            )}
+                            {...routeProps.match.params}
+                        />
+                    )}
+                />
+                <MicroserviceRoute
+                    exact
+                    path={routes.microserviceDetails.route}
+                    render={(routeProps) => (
+                        <MicroserviceDetails
+                            microserviceForListing={resolveMicroservice(
+                                viewModel.applications,
+                                routeProps.match.params.applicationId,
+                                routeProps.match.params.microserviceId
+                            )}
+                            {...routeProps.match.params}
+                        />
+                    )}
+                />
+            </Routing>
         </>
     );
 });

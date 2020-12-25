@@ -6,6 +6,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { HtmlInterceptorPlugin } = require('./HtmlInterceptorPlugin');
 
 module.exports = (basePath, title) => {
     return [
@@ -21,6 +22,7 @@ module.exports = (basePath, title) => {
         new HtmlWebpackPlugin({
             template: path.resolve(process.cwd(), 'index.ejs'),
             templateParameters: {
+
             },
             publicPath: basePath,
             metadata: {
@@ -28,6 +30,8 @@ module.exports = (basePath, title) => {
                 baseUrl: basePath
             }
         }),
+
+        new HtmlInterceptorPlugin({}),
         new MiniCssExtractPlugin({
             filename: './styles.css',
         }),
