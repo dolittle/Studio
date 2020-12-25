@@ -15,7 +15,7 @@ import * as Express from '@dolittle/vanir-backend/web';
 
 import { configureLogging } from '@dolittle/vanir-backend/Logging';
 import { Configuration } from './Configuration';
-import * as DependencyInversion from '@shared/dependencyinversion';
+import * as DependencyInversion from '@dolittle/vanir-dependency-inversion';
 
 import '@dolittle/projections';
 

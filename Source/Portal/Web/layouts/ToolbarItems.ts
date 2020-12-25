@@ -4,7 +4,7 @@
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ToolbarItem, ToolbarItemWasClicked } from '@shared/portal/toolbar';
-import { IMessenger } from '@shared/mvvm';
+import { IMessenger } from '@dolittle/vanir-react';
 import { injectable, singleton } from 'tsyringe';
 import { ToolbarItemsChanged } from '@shared/portal/toolbar/ToolbarItemsChanged';
 

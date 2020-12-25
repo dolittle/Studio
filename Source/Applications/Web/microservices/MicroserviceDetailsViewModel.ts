@@ -3,7 +3,7 @@
 import { injectable } from 'tsyringe';
 import { NetworkStatus, ObservableQuery } from 'apollo-client';
 import gql from 'graphql-tag';
-import { IViewContext } from '@shared/mvvm';
+import { IViewContext } from '@dolittle/vanir-react';
 import { DataSource } from '@shared/web';
 import { MicroserviceDetailsProps } from './MicroserviceDetails';
 import { Microservice } from '../Microservice';

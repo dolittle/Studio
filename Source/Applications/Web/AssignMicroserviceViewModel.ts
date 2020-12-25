@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import { IApplications } from '@shared/platform';
-import { IViewContext } from '@shared/mvvm';
+import { IViewContext } from '@dolittle/vanir-react';
 import { Guid } from '@dolittle/rudiments';
 import { injectable } from 'tsyringe';
 import { QueryForMicroservices } from './QueryForMicroservices';

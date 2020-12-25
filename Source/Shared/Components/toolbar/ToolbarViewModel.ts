@@ -3,7 +3,7 @@
 
 import { ToolbarItem, ToolbarItems } from '@shared/portal';
 import { ToolbarProps } from './ToolbarProps';
-import { IViewContext } from '@shared/mvvm';
+import { IViewContext } from '@dolittle/vanir-react';
 import { injectable } from 'tsyringe';
 
 @injectable()

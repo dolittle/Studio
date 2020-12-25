@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { container } from 'tsyringe';
-import { constructor } from '@shared/dependencyinversion';
+import { constructor } from '@dolittle/vanir-dependency-inversion';
 
 import { IApplicationNamespaces } from './IApplicationNamespaces';
 import { ApplicationNamespaces } from './ApplicationNamespaces';
