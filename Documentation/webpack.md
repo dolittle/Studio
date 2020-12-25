@@ -11,7 +11,7 @@ The frontend has a set of default plugins and rules that allows for using SASS, 
 React extensions and more.
 
 ```javascript
-const webpack = require('@dolittle/webpack/frontend');
+const webpack = require('@dolittle/vanir-webpack/frontend');
 module.exports = (env, argv) => {
     return webpack(env, argv, '/_/<microservicename>', config => {
         config.devServer.port = 8083;       // The port of the microservice - unique across the project, aligned with what is configured for the nginx in environments.
@@ -34,7 +34,7 @@ folder. To leverage this, all you need is the following `webpack.config.js` file
 projects folder:
 
 ```javascript
-const webpack = require('@dolittle/webpack/backend');
+const webpack = require('@dolittle/vanir-webpack/backend');
 
 module.exports = (env, argv) => {
     return webpack(env, argv, config => { });
