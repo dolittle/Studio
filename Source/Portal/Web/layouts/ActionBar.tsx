@@ -2,9 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react';
+import { CommandBar, ICommandBarItemProps } from '@fluentui/react';
 import { Guid } from '@dolittle/rudiments';
-import { withViewModel } from '@shared/mvvm';
+import { withViewModel } from '@dolittle/vanir-web';
 import { ActionBarAction } from '@shared/portal';
 import { ActionBarViewModel } from './ActionBarViewModel';
 

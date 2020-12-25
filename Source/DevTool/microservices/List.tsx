@@ -12,7 +12,7 @@ import {
     ImageFit,
     mergeStyles,
     Stack
-} from 'office-ui-fabric-react';
+} from '@fluentui/react';
 import React from 'react';
 
 const img = require('../images/microservice.png');

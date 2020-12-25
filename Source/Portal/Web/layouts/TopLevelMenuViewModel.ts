@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { IMessenger } from '@dolittle/vanir-react';
-import { INavigator, NavigatedTo } from '@shared/web';
+import { INavigator, NavigatedTo } from '@dolittle/vanir-web';
 import { injectable } from 'tsyringe';
 import { BeforeNavigation } from './BeforeNavigation';
 

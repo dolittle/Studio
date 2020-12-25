@@ -3,9 +3,7 @@
 
 import { NavigationStructure } from './NavigationStructure';
 import { injectable } from 'tsyringe';
-import { NavigationGroup } from '@shared/portal';
-import { INavigator } from '@shared/web';
-
+import { INavigator, NavigationGroup } from '@dolittle/vanir-web';
 @injectable()
 export class NavigationViewModel {
     groups: NavigationGroup[] = [];

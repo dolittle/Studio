@@ -2,9 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Pivot, PivotItem } from 'office-ui-fabric-react';
+import { Pivot, PivotItem } from '@fluentui/react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { withViewModel } from '@shared/mvvm';
+import { withViewModel } from '@dolittle/vanir-web';
 import { TopLevelMenuViewModel } from './TopLevelMenuViewModel';
 
 import './TopLevelMenu.scss';

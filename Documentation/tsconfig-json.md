@@ -40,10 +40,10 @@ to give the correct import statement suggestions during auto import or quick fix
         "paths": {
             "@shared/backend*": ["Source/Shared/Backend*"],
             "@shared/dependencyinversion*": ["Source/DependencyInversion*"],
-            "@shared/mvvm*": ["Source/MVVM*"],
+            "@dolittle/vanir-web*": ["Source/MVVM*"],
             "@shared/portal*": ["Source/Portal*"],
             "@shared/styles*": ["Source/Styles*"],
-            "@shared/web*": ["Source/Web*"],
+            "@dolittle/vanir-web*": ["Source/Web*"],
             "@shared/WebPack*": ["Source/WebPack*"]
         }
     }

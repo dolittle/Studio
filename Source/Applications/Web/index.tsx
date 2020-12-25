@@ -3,11 +3,11 @@
 
 import 'reflect-metadata';
 
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
 
-import { Bootstrapper, MicroserviceContext, VersionInfo } from '@shared/web';
+import { Bootstrapper } from '@dolittle/vanir-react';
+import { VersionInfo } from '@dolittle/vanir-web';
 import { App } from './App';
 
 const version = require('../version.json') as VersionInfo;

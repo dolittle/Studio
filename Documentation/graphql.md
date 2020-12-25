@@ -29,7 +29,7 @@ The ViewModels are typically the ones doing the heavy lifting on doing the queri
 do the following:
 
 ```typescript
-import { DataSource } from '@shared/web';
+import { DataSource } from '@dolittle/vanir-web';
 import { injectable } from 'tsyringe';
 import gql from 'graphql-tag';
 

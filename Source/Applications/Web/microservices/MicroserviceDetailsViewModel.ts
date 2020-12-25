@@ -4,7 +4,7 @@ import { injectable } from 'tsyringe';
 import { NetworkStatus, ObservableQuery } from 'apollo-client';
 import gql from 'graphql-tag';
 import { IViewContext } from '@dolittle/vanir-react';
-import { DataSource } from '@shared/web';
+import { DataSource } from '@dolittle/vanir-web';
 import { MicroserviceDetailsProps } from './MicroserviceDetails';
 import { Microservice } from '../Microservice';
 
@@ -40,7 +40,7 @@ export class MicroserviceDetailsViewModel {
             query,
         });
 
-        this._observableQuery.subscribe((next) => {
+        this._observableQuery?.subscribe((next) => {
             console.log('Query Returned', next);
             if (next.networkStatus === NetworkStatus.ready && next.data) {
                 this.microservice = next.data.microservice;

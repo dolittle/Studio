@@ -3,16 +3,13 @@
 
 import React, { useState, useEffect } from 'react';
 
-import '@shared/styles/theme';
-import './index.scss';
 import { CreateApplication } from './CreateApplication';
 import { AssignMicroservice } from './AssignMicroservice';
-import { withViewModel } from '@shared/mvvm';
 import { AppViewModel } from './AppViewModel';
-import { BrowserRouter as Router, Link, Switch, Route, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { ActionBar, Toolbar, ToolbarItem } from '@shared/components';
-import { MicroserviceRoute, Routing } from '@shared/web';
+import { withViewModel, MicroserviceRoute, Routing } from '@dolittle/vanir-react';
 
 import { AllApplications } from './applications/AllApplications';
 import { ApplicationDetails } from './applications/ApplicationDetails';
@@ -20,6 +17,9 @@ import { MicroserviceDetails } from './microservices/MicroserviceDetails';
 import { routes } from './routing';
 import { ApplicationForListing } from './ApplicationForListing';
 import { MicroserviceForListing } from './MicroserviceForListing';
+
+import '@shared/styles/theme';
+import './index.scss';
 
 export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     const [showCreateApplicationDialog, setShowCreateApplicationDialog] = useState(false);

@@ -1,8 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Navigation, NavigationGroup } from '@shared/portal';
-import { DataSource } from '@shared/web';
+import { DataSource, Navigation, NavigationGroup } from '@dolittle/vanir-web';
 import { injectable } from 'tsyringe';
 import { ObservableQuery, NetworkStatus } from 'apollo-client';
 import gql from 'graphql-tag';
@@ -44,7 +43,7 @@ export class AppViewModel {
             query,
         });
 
-        this._observableQuery.subscribe((next) => {
+        this._observableQuery?.subscribe((next) => {
             if (next.networkStatus === NetworkStatus.ready && next.data) {
                 this.applications = next.data.allApplicationsForListing;
                 this._populateNavigation();

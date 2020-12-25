@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { withViewModel } from '@shared/mvvm';
+import { withViewModel } from '@dolittle/vanir-react';
 import { ToolbarViewModel } from './ToolbarViewModel';
 import { ToolbarProps } from './ToolbarProps';
 

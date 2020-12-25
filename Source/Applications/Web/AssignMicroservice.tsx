@@ -7,11 +7,9 @@ import {
     DefaultButton,
     DialogFooter,
     IDropdownOption,
-    Dropdown,
-    Spinner,
-    SpinnerSize,
-} from 'office-ui-fabric-react';
-import { withViewModel } from '@shared/mvvm';
+    Dropdown
+} from '@fluentui/react';
+import { withViewModel } from '@dolittle/vanir-react';
 import { AssignMicroserviceViewModel, SelectedOption } from './AssignMicroserviceViewModel';
 import { ApplicationForListing } from './ApplicationForListing';
 

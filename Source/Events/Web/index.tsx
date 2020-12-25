@@ -6,7 +6,8 @@ import 'reflect-metadata';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Bootstrapper, VersionInfo } from '@shared/web';
+import { Bootstrapper } from '@dolittle/vanir-react';
+import { VersionInfo } from '@dolittle/vanir-web';
 
 const version = require('../version.json') as VersionInfo;
 

@@ -47,7 +47,7 @@ import ReactDOM from 'react-dom';
 import '@shared/styles';                                // Our shared styles to make it all look and feel the same
 import './index.scss';                                  // Our specific styles for this page
 
-import { initializeFrontend, VersionInfo } from '@shared/web';
+import { initializeFrontend, VersionInfo } from '@dolittle/vanir-web';
 
 // Require the version info to be available for seeing the version of the Microservice at runtime
 const versionInfo = require('../version.json') as VersionInfo;
@@ -205,7 +205,7 @@ This is very clean and focused and can be consumed by a View.
 A view consumes a ViewModel and leverages its exposed state and behavior:
 
 ```tsx
-import { withViewModel } from '@shared/mvvm';
+import { withViewModel } from '@dolittle/vanir-web';
 
 export const MyFeature = withViewModel(MyFeatureViewModel, { viewModel } => {
     return (

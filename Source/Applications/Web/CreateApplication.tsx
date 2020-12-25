@@ -7,8 +7,8 @@ import {
     DefaultButton,
     DialogFooter,
     TextField,
-} from 'office-ui-fabric-react';
-import { withViewModel } from '@shared/mvvm';
+} from '@fluentui/react';
+import { withViewModel } from '@dolittle/vanir-react';
 import { CreateApplicationViewModel } from './CreateApplicationViewModel';
 
 export type CreateApplicationProps = {

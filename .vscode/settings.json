@@ -15,6 +15,7 @@
         "MUUID",
         "actionbar",
         "dependencyinversion",
+        "fluentui",
         "mvvm",
         "tsoa",
         "tsyringe",

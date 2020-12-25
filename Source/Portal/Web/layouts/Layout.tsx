@@ -3,16 +3,16 @@
 
 import React, { useEffect, useState } from 'react';
 import { TopLevelMenu } from './TopLevelMenu';
-import { Spinner, SpinnerSize, StackItem, Stack } from 'office-ui-fabric-react';
+import { Spinner, SpinnerSize, StackItem, Stack } from '@fluentui/react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 
 import './Layout.scss';
 import { Navigation } from './Navigation';
 import { Toolbar } from './Toolbar';
 import { LayoutViewModel } from './LayoutViewModel';
-import { withViewModel } from '@shared/mvvm';
+import { withViewModel } from '@dolittle/vanir-web';
 import { ActionBar } from './ActionBar';
-import { CompositionRoute } from '@shared/web';
+import { CompositionRoute } from '@dolittle/vanir-web';
 
 export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
     const location = useLocation();

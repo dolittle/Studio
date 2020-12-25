@@ -2,10 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { withViewModel } from '@shared/mvvm';
+import { withViewModel } from '@dolittle/vanir-react';
 import { ApplicationDetailsViewModel } from './ApplicationDetailsViewModel';
 import { ApplicationForListing } from '../ApplicationForListing';
-import { Link } from 'office-ui-fabric-react';
+import { Link } from '@fluentui/react';
 import { routes } from '../routing';
 
 export interface ApplicationDetailsProps {

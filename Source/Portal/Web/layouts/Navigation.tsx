@@ -2,8 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { INavLink, INavLinkGroup, Nav } from 'office-ui-fabric-react';
-import { withViewModel } from '@shared/mvvm';
+import { INavLink, INavLinkGroup, Nav } from '@fluentui/react';
+import { withViewModel } from '@dolittle/vanir-web';
 import { NavigationViewModel } from './NavigationViewModel';
 import { NavigationGroup } from '@shared/portal';
 

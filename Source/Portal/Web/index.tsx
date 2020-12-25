@@ -6,13 +6,14 @@ import 'reflect-metadata';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Bootstrapper, VersionInfo } from '@shared/web';
+import { Bootstrapper } from '@dolittle/vanir-react';
+import { VersionInfo } from '@dolittle/vanir-web';
+import { App } from './App';
 
 const version = require('../version.json') as VersionInfo;
 
 import '@shared/styles/theme';
 import './index.scss';
-import App from './App';
 
 ReactDOM.render(
     <Bootstrapper name="Portal" prefix="" version={version}>

@@ -62,13 +62,17 @@ export class MicroserviceResources extends IMicroserviceResources {
         } else {
             config.loadFromClusterAndUser({
                 name: 'studio',
-                server: configuration.apiserverProxyURL,
+                server: this.apiserverProxyURL,
                 skipTLSVerify: true,
             }, {
                 name: 'noone',
             });
         }
         return config;
+    }
+
+    private get apiserverProxyURL(): string {
+        return process.env.APISERVER_PROXY_URL ?? '';
     }
 
     private makeHeaders(ctx: Context) {

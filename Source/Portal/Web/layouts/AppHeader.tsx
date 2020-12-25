@@ -1,15 +1,15 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { ContextualMenuItemType, DefaultButton, Dialog, DialogFooter, DialogType, IconButton, IContextualMenuProps, IPersonaSharedProps, Persona, PersonaPresence, PersonaSize, PrimaryButton } from 'office-ui-fabric-react';
-import { useId, useBoolean } from '@uifabric/react-hooks';
+import { ContextualMenuItemType, DefaultButton, Dialog, DialogFooter, DialogType, IconButton, IContextualMenuProps, IPersonaSharedProps, Persona, PersonaPresence, PersonaSize, PrimaryButton } from '@fluentui/react';
+import { useId, useBoolean } from '@fluentui/react-hooks';
 import * as React from 'react';
 
 import './AppHeader.scss';
 
 const dialogStyles = { main: { maxWidth: 450 } };
 const examplePersona: IPersonaSharedProps = {
-    imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png',
+    imageUrl: 'https://static2.sharepointonline.com/files/fabric/@fluentui/react-assets/persona-female.png',
     imageInitials: 'AL',
     text: 'Annie Lindqvist',
     secondaryText: 'Software Engineer',

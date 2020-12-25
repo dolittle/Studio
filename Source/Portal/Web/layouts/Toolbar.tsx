@@ -1,8 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { withViewModel } from '@shared/mvvm';
-import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react';
+import { withViewModel } from '@dolittle/vanir-web';
+import { CommandBar, ICommandBarItemProps } from '@fluentui/react';
 import React from 'react';
 import { ToolbarViewModel } from './ToolbarViewModel';
 

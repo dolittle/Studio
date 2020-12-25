@@ -2,10 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { withViewModel } from '@shared/mvvm';
+import { withViewModel } from '@dolittle/vanir-react';
 import { MicroserviceDetailsViewModel } from './MicroserviceDetailsViewModel';
 import { MicroserviceForListing } from '../MicroserviceForListing';
-import { Stack, StackItem, IStackProps, IStackTokens } from 'office-ui-fabric-react';
+import { IStackProps } from '@fluentui/react';
 import { DataManagementPanel } from './Panels/DataManagementPanel';
 import { EventFlowPanel } from './Panels/EventFlowPanel';
 import { DetailsPanel } from './Panels/DetailsPanel';
