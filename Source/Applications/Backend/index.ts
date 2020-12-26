@@ -10,7 +10,12 @@ import Microservices from '@shared/common/Microservices';
 
 import { projectFromEventsToReadModels } from './applications';
 
+import { Bindings as K8sBindings } from '@shared/k8s';
+
 (async () => {
+
+    K8sBindings.initialize();
+
     await Host.start({
         graphQLResolvers: queries,
         dolittleCallback: _ => {
