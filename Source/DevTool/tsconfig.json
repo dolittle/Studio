@@ -6,6 +6,9 @@
     },
     "references": [
         {
+            "path": "../Shared/Backend"
+        },
+        {
             "path": "../Shared/Components"
         },
         {
@@ -16,6 +19,9 @@
         },
         {
             "path": "../Shared/Styles"
+        },
+        {
+            "path": "../Shared/Web"
         }
     ]
 }

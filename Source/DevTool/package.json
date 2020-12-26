@@ -4,11 +4,12 @@
     "description": "",
     "main": "build/electron/main.js",
     "scripts": {
+        "clean": "tsc -b --clean",
         "build": "webpack --env.production --mode=production",
         "build:dev": "webpack --env.development --mode=development",
-        "start:electron": "tsc --project ./electron",
+        "start:electron": "tsc --project electron",
         "start": "webpack-dev-server --mode=development --watch --progress --hot --verbose --display-error-details",
-        "dev": "concurrently \"npm:start:electron\" \"yarn start\" \"wait-on http://localhost:9100 && nodemon\""
+        "start:dev": "rimraf build && concurrently \"npm:start:electron\" \"yarn start\" \"wait-on http://localhost:9100 && sleepms 10000 && nodemon\""
     },
     "nodemonConfig": {
         "restartable": "rs",
@@ -23,11 +24,14 @@
 
     "author": "Dolittle",
     "license": "MIT",
-    "devDependencies": {
-        "electron": "10.1.3",
-        "@shared/styles": "1.0.0"
-    },
     "dependencies": {
         "electron-is-dev": "^1.2.0"
+    },
+    "devDependencies": {
+        "electron": "10.1.3",
+        "@shared/styles": "1.0.0",
+        "wait-on": "5.2.0",
+        "sleep-ms": "2.0.1",
+        "rimraf": "3.0.2"
     }
 }
