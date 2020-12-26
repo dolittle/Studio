@@ -4,7 +4,7 @@
 import { injectable } from 'tsyringe';
 import { Query, Resolver, Ctx } from 'type-graphql';
 
-import { ILogger } from '@dolittle/vanir-backend/logging';
+import { ILogger } from '@dolittle/vanir-backend';
 import { Context } from '@dolittle/vanir-backend/web';
 import { IApplicationNamespaces, IMicroserviceResources } from '@shared/k8s';
 
