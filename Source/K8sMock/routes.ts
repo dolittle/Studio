@@ -10,7 +10,7 @@ import { DeploymentsController } from './deployments/DeploymentsController';
 import { NamespacesController } from './namespaces/NamespacesController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PodsController } from './pods/PodsController';
-import { iocContainer } from './../Shared/Backend/tsoa/ioc';
+import { iocContainer } from './../../node_modules/@dolittle/vanir-backend/dist/tsoa/ioc.js';
 import { IocContainer, IocContainerFactory } from '@tsoa/runtime';
 import * as express from 'express';
 
