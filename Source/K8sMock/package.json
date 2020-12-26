@@ -6,7 +6,7 @@
     "private": true,
     "license": "UNLICENSED",
     "scripts": {
-        "dev": "NODE_ENV=tsoa_test concurrently \"nodemon -x tsoa spec-and-routes\" \"nodemon index.ts\"",
+        "start:dev": "NODE_ENV=tsoa_test concurrently \"nodemon -x tsoa spec-and-routes\" \"nodemon index.ts\"",
         "debug": "nodemon --inspect=0-e ts --exec node -r ts-node/register index.ts",
         "k8s-api": "docker run --rm -p 80:8080 -e SWAGGER_JSON=/k8s-swagger.json -v $(pwd)/k8s-swagger.json:/k8s-swagger.json swaggerapi/swagger-ui",
         "start": "ts-node index.ts",

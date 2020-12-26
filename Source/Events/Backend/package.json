@@ -6,7 +6,7 @@
     "private": "true",
     "license": "UNLICENSED",
     "scripts": {
-        "dev": "nodemon ./index.ts",
+        "start:dev": "nodemon ./index.ts",
         "debug": "nodemon --inspect=0 -e ts --exec node -r ts-node/register index.ts",
         "start": "ts-node index.ts",
         "build": "yarn clean && webpack --env.production --mode=production",

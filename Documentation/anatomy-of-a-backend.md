@@ -18,7 +18,7 @@ For a backend, this could typically look like below:
 ```json
 {
     "scripts": {
-        "dev": "nodemon --inspect=0 -e ts --exec node -r ts-node/register index.ts",
+        "start:dev": "nodemon --inspect=0 -e ts --exec node -r ts-node/register index.ts",
         "start": "ts-node index.ts",
         "clean": "tsc -b --clean",
         "build": "yarn clean && webpack --env.production --mode=production",
@@ -236,7 +236,7 @@ Then update the `dev` script in the `package.json` file to be something like thi
 ```json
 {
     "scripts": {
-        "dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 concurrently \"nodemon -x tsoa spec-and-routes\" \"nodemon index.ts\"",
+        "start:dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 concurrently \"nodemon -x tsoa spec-and-routes\" \"nodemon index.ts\"",
     }
 }
 ```
