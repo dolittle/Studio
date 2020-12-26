@@ -8,6 +8,7 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
+        "@shared/web": "1.0.0"
     },
     "devDependencies": {
     }

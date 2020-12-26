@@ -31,5 +31,6 @@
         "ext": "ts"
     },
     "dependencies": {
+        "@shared/backend": "1.0.0"
     }
 }

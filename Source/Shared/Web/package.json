@@ -1,5 +1,5 @@
 {
-    "name": "@shared/backend",
+    "name": "@shared/web",
     "version": "1.0.0",
     "description": "",
     "main": "index.ts",
@@ -8,7 +8,10 @@
     "private": true,
     "dependencies": {
         "@shared/common": "1.0.0",
-        "@dolittle/vanir-backend": "^2.1.10"
+        "@fluentui/react": "8.0.0-beta.31",
+        "@fluentui/react-hooks": "8.0.0-beta.0",
+        "@dolittle/vanir-react": "^2.1.10",
+        "@dolittle/vanir-web": "^2.1.10"
     },
     "devDependencies": {},
     "peerDependencies": {}

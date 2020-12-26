@@ -8,6 +8,7 @@
     "author": "Dolittle",
     "license": "MIT",
     "dependencies": {
+        "@shared/common": "1.0.0"
     },
     "devDependencies": {
     }

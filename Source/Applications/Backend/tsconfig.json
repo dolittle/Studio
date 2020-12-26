@@ -6,6 +6,9 @@
     },
     "references": [
         {
+            "path": "../../Shared/Backend"
+        },
+        {
             "path": "../../Shared/k8s"
         }
    ]

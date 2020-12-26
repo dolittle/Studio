@@ -30,5 +30,7 @@
         "ext": "ts"
     },
     "dependencies": {
+        "@shared/backend": "1.0.0",
+        "@shared/k8s": "1.0.0"
     }
 }
