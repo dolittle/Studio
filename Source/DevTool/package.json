@@ -2,13 +2,13 @@
     "name": "devtool",
     "version": "1.0.0",
     "description": "",
-    "main": "build/electron/main.js",
+    "main": "build/backend/main.js",
     "scripts": {
         "clean": "tsc -b --clean",
-        "build": "webpack --env.production --mode=production",
-        "build:dev": "webpack --env.development --mode=development",
-        "start:electron": "tsc --project electron",
-        "start": "webpack-dev-server --mode=development --watch --progress --hot --verbose --display-error-details",
+        "build": "cd web && webpack --env.production --mode=production",
+        "build:dev": "cd web && webpack --env.development --mode=development",
+        "start:electron": "tsc --project backend",
+        "start": "cd web && webpack-dev-server --mode=development --watch --progress --hot --verbose --display-error-details",
         "start:dev": "rimraf build && concurrently \"npm:start:electron\" \"yarn start\" \"wait-on http://localhost:9100 && sleepms 10000 && nodemon\""
     },
     "nodemonConfig": {
@@ -17,7 +17,7 @@
             "js": "electron ./"
         },
         "watch": [
-            "./build/electron"
+            "./build/backend"
         ],
         "ext": "js"
     },
@@ -25,11 +25,12 @@
     "author": "Dolittle",
     "license": "MIT",
     "dependencies": {
-        "electron-is-dev": "^1.2.0"
+        "electron-is-dev": "^1.2.0",
+        "@shared/styles": "1.0.0",
+        "@shared/web": "1.0.0"
     },
     "devDependencies": {
         "electron": "10.1.3",
-        "@shared/styles": "1.0.0",
         "wait-on": "5.2.0",
         "sleep-ms": "2.0.1",
         "rimraf": "3.0.2"

@@ -7,16 +7,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { List } from './microservices/List';
+import { List as WorkspaceList } from './workspaces/List';
 
+import { default as styles } from './index.module.scss';
 import '@shared/styles/theme';
 
-import './index.scss';
+import { Services } from './Services';
 
 export default function App() {
+    Services.initialize();
+
     return (
         <>
-            <div className="main-content">
-                <List></List>
+            <div className={styles.navigation}>
+                <WorkspaceList />
+            </div>
+            <div className={styles.mainContent}>
+                <List />
             </div>
         </>
     );

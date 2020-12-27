@@ -1,0 +1,13 @@
+{
+    "name": "Applications",
+    "id": "05a823dd-0f0d-4157-bc46-14834cca3cd2",
+    "version": "1.0.0-development.14",
+    "commit": "1219024a059fd8bd4f222861e112be92323de769",
+    "built": "2020-12-19T06:34:01.590Z",
+    "backend": {
+        "cmd": "yarn start:dev"
+    },
+    "web": {
+        "cmd": "yarn start"
+    }
+}

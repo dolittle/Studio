@@ -6,7 +6,7 @@
         "baseUrl": "./",
         "sourceRoot": "./"
     },
-    "include": ["**/*.ts", "**/*.tsx"],
+    "include": ["**/*.ts", "../common/**/*.ts"],
     "exclude": ["node_modules", "build"],
     "references": [
     ]
