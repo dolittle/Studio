@@ -20,8 +20,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
 
     const navigationGroups = viewModel.workspaces.map(_ => {
         return {
-            name: _
-
+            name: _.name
         } as INavLinkGroup;
     });
 
@@ -31,7 +30,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                 <StackItem>
                     <Stack horizontal tokens={{ childrenGap: 5 }}>
                         <IconButton iconProps={{ iconName: 'OpenFolderHorizontal' }} title="Open workspace" onClick={openWorkspace} />
-                        <IconButton iconProps={{ iconName: 'Add' }} title="Create workspace" onClick={createWorkspace}/>
+                        <IconButton iconProps={{ iconName: 'Add' }} title="Create workspace" onClick={createWorkspace} />
                     </Stack>
                 </StackItem>
                 <StackItem verticalFill={true} grow={1} >

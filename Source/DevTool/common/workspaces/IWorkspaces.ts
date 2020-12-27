@@ -5,5 +5,6 @@ import { Workspace } from './Workspace';
 export const IWorkspacesToken = 'IWorkspaces';
 
 export interface IWorkspaces {
+    addFromPath(path: string): Promise<void>;
     getAll(): Promise<Workspace[]>;
 }

@@ -10,9 +10,11 @@ export class WorkspacesProxy implements IWorkspaces {
     constructor(private readonly _interop: Interop) {
     }
 
+    addFromPath(path: string): Promise<void> {
+        return this._interop.invoke(IWorkspacesToken, 'addFromPath', path);
+    }
+
     async getAll(): Promise<Workspace[]> {
-        const workspaces = await this._interop.invoke(IWorkspacesToken, 'getAll') as Workspace[];
-        console.log(workspaces);
-        return workspaces;
+        return await this._interop.invoke(IWorkspacesToken, 'getAll') as Workspace[];
     }
 }

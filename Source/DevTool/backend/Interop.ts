@@ -12,7 +12,7 @@ export class Interop {
             if (arg.length === 1) {
                 const call = arg[0] as Call;
                 const service = container.resolve(call.service) as any;
-                const result = await service[call.method].call(service, call.args);
+                const result = await service[call.method].call(service, ...call.args);
                 const mainWindow = getMainWindow();
                 mainWindow?.webContents.send(call.responseEventName, result);
             }

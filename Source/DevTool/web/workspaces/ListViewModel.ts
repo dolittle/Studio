@@ -3,17 +3,22 @@
 
 import { IWorkspacesToken, IWorkspaces } from '../../common/workspaces/IWorkspaces';
 import { injectable, inject } from 'tsyringe';
+import { Workspace } from '../../common/workspaces/Workspace';
 
 @injectable()
 export class ListViewModel {
-    workspaces: string[] = [];
+    workspaces: Workspace[] = [];
 
     constructor(@inject(IWorkspacesToken) private readonly _workspaces: IWorkspaces) {
+        this.populate();
     }
 
-    async directoryAdded(directory: string) {
-        this.workspaces = [...this.workspaces, directory];
+    async populate() {
+        this.workspaces = await this._workspaces.getAll();
+    }
 
-        await this._workspaces.getAll();
+    async directoryAdded(path: string) {
+        await this._workspaces.addFromPath(path);
+        this.populate();
     }
 }

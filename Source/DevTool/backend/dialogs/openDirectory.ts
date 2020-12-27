@@ -11,6 +11,7 @@ ipcMain.on('open-directory', async (event, arg) => {
             properties: ['openDirectory']
         });
 
-        mainWindow.webContents.send('directory-opened', result.filePaths);
+        const path = result.filePaths.length === 1 ? result.filePaths[0] : '';
+        mainWindow.webContents.send('directory-opened', path);
     }
 });
