@@ -1,0 +1,32 @@
+version: '3.1'
+services:
+  {{applicationName}}-mongo:
+    image: dolittle/mongodb:4.2.2
+    ports:
+      - 27017:27017
+    logging:
+      driver: none
+
+  {{applicationName}}-ingress:
+    image: nginx:1.18.0
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 9000:9000
+    restart: on-failure
+    logging:
+      driver: none
+
+{{#each microservice}}
+  {{applicationName}}-runtime-{{portal}}:
+    image: dolittle/runtime:5.1.4
+    volumes:
+      - ./{{name}}/resources.json:/app/.dolittle/resources.json
+      - ./tenants.json:/app/.dolittle/tenants.json
+      - ./microservices.json:/app/.dolittle/microservices.json
+      - ./appsettings.json:/app/appsettings.json
+    ports:
+      - 9700:9700
+      - 50052:50052
+      - 50053:50053
+{{/each}}
