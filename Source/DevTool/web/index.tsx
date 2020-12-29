@@ -6,25 +6,34 @@ import 'reflect-metadata';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { List } from './microservices/List';
 import { List as WorkspaceList } from './workspaces/List';
 
 import { default as styles } from './index.module.scss';
 import '@shared/styles/theme';
 
 import { Services } from './Services';
+import { Microservice } from './microservices/Microservice';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 
 export default function App() {
     Services.initialize();
 
     return (
         <>
-            <div className={styles.navigation}>
-                <WorkspaceList />
-            </div>
-            <div className={styles.mainContent}>
-                <List />
-            </div>
+            <Router>
+                <div className={styles.navigation}>
+                    <WorkspaceList />
+                </div>
+                <div className={styles.mainContent}>
+                    <Route exact path="/">
+
+                    </Route>
+                    <Route path="/microservice/:microserviceId">
+                        <Microservice />
+                    </Route>
+                </div>
+            </Router>
         </>
     );
 }

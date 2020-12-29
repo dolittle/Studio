@@ -26,7 +26,6 @@ html {
 }
 
 .mainContent {
-    @extend .acrylic;
     position: absolute;
     display: flex;
     flex: 1;
@@ -35,6 +34,7 @@ html {
     margin-left: 16rem;
     margin-right: 0rem;
     margin-bottom: 0rem;
+    padding: 0;
 
     width: calc(100% - 16rem);
     height: calc(100%);

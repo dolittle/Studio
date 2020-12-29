@@ -6,8 +6,11 @@ import { withViewModel } from '@dolittle/vanir-react';
 import { ListViewModel } from './ListViewModel';
 import { IconButton, Stack, StackItem, Nav, INavLink, INavLinkGroup } from '@fluentui/react';
 import { Dialog } from '../dialogs';
+import { useHistory } from 'react-router-dom';
 
 export const List = withViewModel(ListViewModel, ({ viewModel }) => {
+    const history = useHistory();
+
     const openWorkspace = async () => {
         const directory = await Dialog.showOpenDialog();
         if (directory?.length > 0) {
@@ -25,7 +28,11 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
             links: _.microservices.map(ms => {
                 return {
                     key: ms.id,
-                    name: ms.name
+                    name: ms.name,
+                    onClick: () => {
+                        history.push(`/microservice/${ms.id}`);
+                        viewModel.setCurrentMicroservice(ms);
+                    }
                 } as INavLink;
             })
         } as INavLinkGroup;
@@ -36,6 +43,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
             <Stack verticalAlign='space-between' style={{ minHeight: '100%' }}>
                 <StackItem>
                     <Stack horizontal tokens={{ childrenGap: 5 }}>
+                        <IconButton iconProps={{ iconName: 'Home' }} title="Home" onClick={() => history.push('/')} />
                         <IconButton iconProps={{ iconName: 'OpenFolderHorizontal' }} title="Open workspace" onClick={openWorkspace} />
                         <IconButton iconProps={{ iconName: 'Add' }} title="Create workspace" onClick={createWorkspace} />
                     </Stack>
@@ -46,10 +54,9 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                     </div>
                 </StackItem>
                 <StackItem>
-                    The bottom
+                    (C)2020 Dolittle
                 </StackItem>
             </Stack>
-
         </>
     );
 });
