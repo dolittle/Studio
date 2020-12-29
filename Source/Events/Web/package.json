@@ -6,7 +6,7 @@
     "scripts": {
         "build": "webpack --env.production --mode=production",
         "build:dev": "webpack --env.development --mode=development",
-        "start": "webpack-dev-server --mode=development --watch --progress --hot --verbose --display-error-details",
+        "start:dev": "webpack-dev-server --mode=development --watch --progress --hot --verbose --display-error-details",
         "clean": "tsc -b --clean",
         "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
         "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",

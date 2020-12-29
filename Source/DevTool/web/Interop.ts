@@ -3,9 +3,7 @@
 
 const ipcRenderer = window.require('electron').ipcRenderer;
 
-import { invokeServiceMethodEvent } from '../common';
-import { Call } from '../build/common';
-
+import { invokeServiceMethodEvent, Call } from '../common';
 export class Interop {
     async invoke(service: string, method: string, ...args: any[]): Promise<any> {
         return new Promise(resolve => {

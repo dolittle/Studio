@@ -1,22 +1,7 @@
 {
     "private": true,
     "workspaces": [
-        "Source/DevTool",
-        "Source/K8sMock",
-        "Source/Applications/Backend",
-        "Source/Applications/Web",
-        "Source/Events/Backend",
-        "Source/Events/Web",
-        "Source/Portal/Backend",
-        "Source/Portal/Web",
-        "Source/Shared/Backend",
-        "Source/Shared/Common",
-        "Source/Shared/Components",
-        "Source/Shared/k8s",
-        "Source/Shared/Portal",
-        "Source/Shared/Platform",
-        "Source/Shared/Styles",
-        "Source/Shared/Web"
+        "Source/**/*"
     ],
     "dependencies": {
     },

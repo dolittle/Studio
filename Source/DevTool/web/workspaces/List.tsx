@@ -20,7 +20,14 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
 
     const navigationGroups = viewModel.workspaces.map(_ => {
         return {
-            name: _.name
+            key: _.application.id,
+            name: _.application.name,
+            links: _.microservices.map(ms => {
+                return {
+                    key: ms.id,
+                    name: ms.name
+                } as INavLink;
+            })
         } as INavLinkGroup;
     });
 
