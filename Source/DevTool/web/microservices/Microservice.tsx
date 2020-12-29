@@ -6,7 +6,7 @@ import { CommandBar, ICommandBarItemProps, FontIcon, Stack, Pivot, PivotItem } f
 
 import { default as styles } from './Microservice.module.scss';
 import { theme } from '@shared/styles/theme';
-import { Route, useHistory, useParams } from 'react-router-dom';
+import { Route, useHistory, useParams, useLocation } from 'react-router-dom';
 import { Overview } from './Overview';
 import { Runtime } from './Runtime';
 import { Backend } from './Backend';
@@ -19,6 +19,7 @@ type MicroserviceRouteParams = {
 };
 
 export const Microservice = withViewModel(MicroserviceViewModel, ({ viewModel }) => {
+    const location = useLocation();
     const history = useHistory();
     const params = useParams<MicroserviceRouteParams>();
 
@@ -43,7 +44,7 @@ export const Microservice = withViewModel(MicroserviceViewModel, ({ viewModel })
                     <h2><FontIcon iconName="WebAppBuilderSlot" />&nbsp;{viewModel.microservice.name}</h2>
                 </div>
                 <CommandBar style={{ width: '100%' }} items={commandBarItems} />
-                <Pivot onLinkClick={linkClicked} style={{ backgroundColor: theme.palette.neutralTertiaryAlt }}>
+                <Pivot onLinkClick={linkClicked} style={{ backgroundColor: theme.palette.neutralTertiaryAlt }} selectedKey={location.pathname}>
                     <PivotItem headerText="Overview" itemKey={`/microservice/${params.microserviceId}/overview`}></PivotItem>
                     <PivotItem headerText="Runtime" itemKey={`/microservice/${params.microserviceId}/runtime`}></PivotItem>
                     <PivotItem headerText="Backend" itemKey={`/microservice/${params.microserviceId}/backend`}></PivotItem>
