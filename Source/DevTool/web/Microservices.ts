@@ -18,7 +18,6 @@ export class Microservices {
     readonly current: BehaviorSubject<Microservice> = new BehaviorSubject(NotSet);
 
     constructor() {
-        console.log('Hello');
         this.current.subscribe(_ => this._current = _);
     }
 

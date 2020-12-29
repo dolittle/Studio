@@ -33,6 +33,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                     name: ms.name,
                     onClick: () => {
                         history.push(`/microservice/${ms.id}`);
+                        viewModel.setCurrentApplication(_.application);
                         viewModel.setCurrentMicroservice(ms);
                     }
                 } as INavLink;

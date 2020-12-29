@@ -41,7 +41,7 @@ export const Microservice = withViewModel(MicroserviceViewModel, ({ viewModel })
         <div style={{ width: '100%', height: '100%' }}>
             <Stack>
                 <div className={styles.header}>
-                    <h2><FontIcon iconName="WebAppBuilderSlot" />&nbsp;{viewModel.microservice.name}</h2>
+                    <h2><FontIcon iconName="WebAppBuilderSlot" />&nbsp;{viewModel.application.name} / {viewModel.microservice.name}</h2>
                 </div>
                 <CommandBar style={{ width: '100%' }} items={commandBarItems} />
                 <Pivot onLinkClick={linkClicked} style={{ backgroundColor: theme.palette.neutralTertiaryAlt }} selectedKey={location.pathname}>

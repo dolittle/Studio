@@ -4,8 +4,9 @@
 import { IWorkspacesToken, IWorkspaces } from '../../common/workspaces/IWorkspaces';
 import { injectable, inject } from 'tsyringe';
 import { Workspace } from '../../common/workspaces/Workspace';
-import { Microservice } from '@dolittle/vanir-common';
-import { Microservices } from '../microservices/Microservices';
+import { Application, Microservice } from '@dolittle/vanir-common';
+import { Microservices } from '../Microservices';
+import { Applications } from '../Applications';
 
 @injectable()
 export class ListViewModel {
@@ -13,6 +14,7 @@ export class ListViewModel {
 
     constructor(
         @inject(IWorkspacesToken) private readonly _workspaces: IWorkspaces,
+        private readonly _applications: Applications,
         private readonly _microservices: Microservices) {
         this.populate();
     }
@@ -24,6 +26,11 @@ export class ListViewModel {
     async directoryAdded(path: string) {
         await this._workspaces.addFromPath(path);
         this.populate();
+    }
+
+
+    setCurrentApplication(application: Application) {
+        this._applications.setCurrent(application);
     }
 
     setCurrentMicroservice(microservice: Microservice) {
