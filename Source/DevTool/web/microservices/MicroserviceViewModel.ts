@@ -7,7 +7,7 @@ import { Microservice } from '@dolittle/vanir-common';
 
 @injectable()
 export class MicroserviceViewModel {
-    microservice?: Microservice;
+    microservice!: Microservice;
 
     constructor(readonly microservices: Microservices) {
         microservices.current.subscribe(_ => {

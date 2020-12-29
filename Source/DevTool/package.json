@@ -21,20 +21,21 @@
         ],
         "ext": "js"
     },
-
     "author": "Dolittle",
     "license": "MIT",
     "dependencies": {
         "@dolittle/vanir-common": "2.3.0",
-        "electron-is-dev": "^1.2.0",
+        "@fluentui/react-charting": "5.0.0-beta.0",
         "@shared/styles": "1.0.0",
         "@shared/web": "1.0.0",
-        "@fluentui/react-charting": "5.0.0-beta.0"
+        "electron-is-dev": "^1.2.0",
+        "xterm-addon-fit": "^0.4.0",
+        "xterm-for-react": "1.0.4"
     },
     "devDependencies": {
         "electron": "10.1.3",
-        "wait-on": "5.2.0",
+        "rimraf": "3.0.2",
         "sleep-ms": "2.0.1",
-        "rimraf": "3.0.2"
+        "wait-on": "5.2.0"
     }
 }

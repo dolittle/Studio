@@ -2,11 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+import { LogOutput } from './LogOutput';
+import { withViewModel } from '@dolittle/vanir-react';
+import { RuntimeViewModel } from './RuntimeViewModel';
 
-export const Runtime = () => {
+
+export const Runtime = withViewModel(RuntimeViewModel, ({ viewModel }) => {
     return (
-        <>
-            Runtime;
-        </>
+        <LogOutput terminalReady={viewModel.terminalReady} />
     );
-}
+});

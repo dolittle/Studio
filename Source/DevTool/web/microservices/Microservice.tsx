@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { CommandBar, ICommandBarItemProps, Stack, Pivot, PivotItem } from '@fluentui/react';
+import { CommandBar, ICommandBarItemProps, FontIcon, Stack, Pivot, PivotItem } from '@fluentui/react';
 
 import { default as styles } from './Microservice.module.scss';
 import { theme } from '@shared/styles/theme';
@@ -39,6 +39,9 @@ export const Microservice = withViewModel(MicroserviceViewModel, ({ viewModel })
     return (
         <div style={{ width: '100%', height: '100%' }}>
             <Stack>
+                <div className={styles.header}>
+                    <h2><FontIcon iconName="WebAppBuilderSlot" />&nbsp;{viewModel.microservice.name}</h2>
+                </div>
                 <CommandBar style={{ width: '100%' }} items={commandBarItems} />
                 <Pivot onLinkClick={linkClicked} style={{ backgroundColor: theme.palette.neutralTertiaryAlt }}>
                     <PivotItem headerText="Overview" itemKey={`/microservice/${params.microserviceId}/overview`}></PivotItem>

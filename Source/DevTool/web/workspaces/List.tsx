@@ -17,8 +17,10 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
             viewModel.directoryAdded(directory);
         }
     };
-    const createWorkspace = async () => {
+    const createApplication = async () => {
         const directory = await Dialog.showOpenDialog();
+    };
+    const createMicroservice = async () => {
     };
 
     const navigationGroups = viewModel.workspaces.map(_ => {
@@ -45,7 +47,8 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                     <Stack horizontal tokens={{ childrenGap: 5 }}>
                         <IconButton iconProps={{ iconName: 'Home' }} title="Home" onClick={() => history.push('/')} />
                         <IconButton iconProps={{ iconName: 'OpenFolderHorizontal' }} title="Open workspace" onClick={openWorkspace} />
-                        <IconButton iconProps={{ iconName: 'Add' }} title="Create workspace" onClick={createWorkspace} />
+                        <IconButton iconProps={{ iconName: 'ExploreContent' }} title="Create application" onClick={createApplication} />
+                        <IconButton iconProps={{ iconName: 'WebAppBuilderFragmentCreate' }} title="Create microservice" onClick={createMicroservice} />
                     </Stack>
                 </StackItem>
                 <StackItem verticalFill={true} grow={1} >
