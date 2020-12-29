@@ -1,12 +1,16 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState } from 'react';
 import { withViewModel } from '@dolittle/vanir-react';
 import { ListViewModel } from './ListViewModel';
 import { IconButton, Stack, StackItem, Nav, INavLink, INavLinkGroup } from '@fluentui/react';
 import { Dialog } from '../dialogs';
 import { useHistory } from 'react-router-dom';
+import { useId, useBoolean } from '@fluentui/react-hooks';
+import { CreateMicroserviceDialog } from '../microservices/CreateMicroserviceDialog';
+
+
 
 export const List = withViewModel(ListViewModel, ({ viewModel }) => {
     const history = useHistory();
@@ -21,6 +25,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
         const directory = await Dialog.showOpenDialog();
     };
     const createMicroservice = async () => {
+        viewModel.initiateMicroserviceCreation();
     };
 
     const navigationGroups = viewModel.workspaces.map(_ => {
@@ -40,6 +45,8 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
             })
         } as INavLinkGroup;
     });
+
+    console.log(`ViewModel : ${viewModel.createMicroservice}`);
 
     return (
         <>
@@ -61,6 +68,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                     (C)2020 Dolittle
                 </StackItem>
             </Stack>
+            <CreateMicroserviceDialog hidden={!viewModel.createMicroservice} />
         </>
     );
 });

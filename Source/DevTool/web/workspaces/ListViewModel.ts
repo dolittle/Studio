@@ -11,12 +11,14 @@ import { Applications } from '../Applications';
 @injectable()
 export class ListViewModel {
     workspaces: Workspace[] = [];
+    createMicroservice: boolean = false;
 
     constructor(
         @inject(IWorkspacesToken) private readonly _workspaces: IWorkspaces,
         private readonly _applications: Applications,
         private readonly _microservices: Microservices) {
         this.populate();
+        console.log('El Constructor');
     }
 
     async populate() {
@@ -26,6 +28,11 @@ export class ListViewModel {
     async directoryAdded(path: string) {
         await this._workspaces.addFromPath(path);
         this.populate();
+    }
+
+    initiateMicroserviceCreation() {
+        this.createMicroservice = true;
+        console.log(this.createMicroservice);
     }
 
 

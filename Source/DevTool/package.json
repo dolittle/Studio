@@ -25,6 +25,8 @@
     "license": "MIT",
     "dependencies": {
         "@dolittle/vanir-common": "2.3.0",
+        "create-dolittle-app": "2.3.0",
+        "create-dolittle-microservice": "2.3.0",
         "@fluentui/react-charting": "5.0.0-beta.0",
         "@shared/styles": "1.0.0",
         "@shared/web": "1.0.0",
