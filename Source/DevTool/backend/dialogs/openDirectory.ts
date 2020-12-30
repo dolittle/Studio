@@ -8,7 +8,7 @@ ipcMain.on('open-directory', async (event, arg) => {
     const mainWindow = getMainWindow();
     if (mainWindow) {
         const result = await dialog.showOpenDialog(mainWindow, {
-            properties: ['openDirectory']
+            properties: ['openDirectory', 'createDirectory']
         });
 
         const path = result.filePaths.length === 1 ? result.filePaths[0] : '';
