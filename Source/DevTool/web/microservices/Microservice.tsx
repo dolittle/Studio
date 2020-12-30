@@ -13,6 +13,8 @@ import { Backend } from './Backend';
 import { Web } from './Web';
 import { withViewModel } from '@dolittle/vanir-react';
 import { MicroserviceViewModel } from './MicroserviceViewModel';
+import { GraphQL } from './GraphQL';
+import { Swagger } from './Swagger';
 
 type MicroserviceRouteParams = {
     microserviceId: string;
@@ -46,6 +48,8 @@ export const Microservice = withViewModel(MicroserviceViewModel, ({ viewModel })
                 <CommandBar style={{ width: '100%' }} items={commandBarItems} />
                 <Pivot onLinkClick={linkClicked} style={{ backgroundColor: theme.palette.neutralTertiaryAlt }} selectedKey={location.pathname}>
                     <PivotItem headerText="Overview" itemKey={`/microservice/${params.microserviceId}/overview`}></PivotItem>
+                    <PivotItem headerText="GraphQL" itemKey={`/microservice/${params.microserviceId}/graphql`}></PivotItem>
+                    <PivotItem headerText="Swagger" itemKey={`/microservice/${params.microserviceId}/swagger`}></PivotItem>
                     <PivotItem headerText="Runtime" itemKey={`/microservice/${params.microserviceId}/runtime`}></PivotItem>
                     <PivotItem headerText="Backend" itemKey={`/microservice/${params.microserviceId}/backend`}></PivotItem>
                     <PivotItem headerText="Web" itemKey={`/microservice/${params.microserviceId}/web`}></PivotItem>
@@ -57,6 +61,12 @@ export const Microservice = withViewModel(MicroserviceViewModel, ({ viewModel })
                 </Route>
                 <Route path="/microservice/:microserviceId/overview">
                     <Overview />
+                </Route>
+                <Route path="/microservice/:microserviceId/graphql">
+                    <GraphQL />
+                </Route>
+                <Route path="/microservice/:microserviceId/swagger">
+                    <Swagger />
                 </Route>
                 <Route path="/microservice/:microserviceId/runtime">
                     <Runtime />
