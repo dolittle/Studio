@@ -21,6 +21,7 @@ export class ListViewModel {
 
     async populate() {
         this.workspaces = await this._workspaces.getAll();
+        console.log(this.workspaces);
     }
 
     async directoryAdded(path: string) {
@@ -31,6 +32,11 @@ export class ListViewModel {
     async createApplication(path: string, name: string, tenant: string, license: string, containerRegistry: string, portal: boolean) {
         await this._workspaces.create(path, name, tenant, license, containerRegistry, portal);
         await this.directoryAdded(path);
+    }
+
+    async createMicroservice(path: string, name: string, addWebFrontend: boolean) {
+        await this._workspaces.createMicroservice(path, name, addWebFrontend);
+        this.populate();
     }
 
     setCurrentApplication(application: Application) {

@@ -4,8 +4,12 @@
 import { Application, Microservice } from '@dolittle/vanir-common';
 
 export class Workspace {
-    readonly microservices: Microservice[] = [];
+    microservices: Microservice[] = [];
 
     constructor(readonly path: string, readonly application: Application) {
+    }
+
+    clear() {
+        this.microservices = [];
     }
 }

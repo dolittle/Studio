@@ -25,12 +25,14 @@ export interface ICreateMicroserviceDialogInput {
 }
 
 export interface ICreateMicroserviceDialogOutput {
+    path: string;
     name: string;
     addWebFrontend: boolean;
 }
 
 export const CreateMicroserviceDialog = (props: IDialogProps<ICreateMicroserviceDialogInput, ICreateMicroserviceDialogOutput>) => {
     const output: ICreateMicroserviceDialogOutput = {
+        path: props.input.path,
         name: '',
         addWebFrontend: true
     };

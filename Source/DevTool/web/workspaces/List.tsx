@@ -15,8 +15,9 @@ import { Workspace } from '../../common/workspaces/Workspace';
 
 export const List = withViewModel(ListViewModel, ({ viewModel }) => {
     const history = useHistory();
-    const [showCreateMicroserviceDialog, createMicroServiceDialogProps] = useDialog<ICreateMicroserviceDialogInput, ICreateMicroserviceDialogOutput>((result, output) => {
-        if (result === DialogResult.Success) {
+    const [showCreateMicroserviceDialog, createMicroServiceDialogProps] = useDialog<ICreateMicroserviceDialogInput, ICreateMicroserviceDialogOutput>((result, output?) => {
+        if (result === DialogResult.Success && output) {
+            viewModel.createMicroservice(output.path, output.name, output.addWebFrontend);
         }
     });
     const [showCreateApplicationDialog, createApplicationDialogProps] = useDialog<ICreateApplicationDialogInput, ICreateApplicationDialogOutput>((result, output?) => {
@@ -67,10 +68,10 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
 
     const renderGroupHeader = (group: INavLinkGroup): JSX.Element => {
         return (
-            <div style={{ paddingRight: '1rem', paddingLeft: '1rem'}}>
+            <div style={{ paddingRight: '1rem', paddingLeft: '1rem' }}>
                 <Stack horizontal>
                     <StackItem grow={1}>
-                        <h3 style={{paddingTop: '0.15rem'}}>{group.name}</h3>
+                        <h3 style={{ paddingTop: '0.15rem' }}>{group.name}</h3>
                     </StackItem>
                     <StackItem>
                         <h3>

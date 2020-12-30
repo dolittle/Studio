@@ -13,8 +13,8 @@ export class WorkspacesProxy implements IWorkspaces {
     create(path: string, name: string, tenant: string, license: string, containerRegistry: string, portal: boolean): Promise<void> {
         return this._interop.invoke(IWorkspacesToken, 'create', path, name, tenant, license, containerRegistry, portal);
     }
-    createMicroservice(workspace: Workspace, name: string, addWebFrontend: boolean): Promise<void> {
-        return this._interop.invoke(IWorkspacesToken, 'addFromPath', name, addWebFrontend);
+    createMicroservice(path: string, name: string, addWebFrontend: boolean): Promise<void> {
+        return this._interop.invoke(IWorkspacesToken, 'createMicroservice', path, name, addWebFrontend);
     }
 
     addFromPath(path: string): Promise<void> {

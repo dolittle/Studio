@@ -8,6 +8,7 @@ import { injectable } from 'tsyringe';
 import { Application, Microservice } from '@dolittle/vanir-common';
 import { homedir } from 'os';
 import { createApplication } from 'create-dolittle-app/dist/creation';
+import { createMicroservice } from 'create-dolittle-microservice/dist/creation';
 
 export type WorkspaceFile = {
     path: string;
@@ -30,6 +31,7 @@ export class Workspaces implements IWorkspaces {
     }
 
     async populateMicroservicesFor(workspace: Workspace, paths: string[]) {
+        workspace.clear();
         for (const relativePath of paths) {
             const microservicePath = path.join(workspace.path, relativePath, 'microservice.json');
             const buffer = await fs.promises.readFile(microservicePath);
@@ -56,8 +58,13 @@ export class Workspaces implements IWorkspaces {
         });
     }
 
-    async createMicroservice(workspace: Workspace, name: string, addWebFrontend: boolean): Promise<void> {
-        throw new Error('Method not implemented.');
+    async createMicroservice(path: string, name: string, addWebFrontend: boolean): Promise<void> {
+        await createMicroservice({
+            name,
+            ui: addWebFrontend,
+            targetDirectory: path
+        });
+        await this.loadFromPath(path);
     }
 
     private async loadFromPath(source: string): Promise<boolean> {
@@ -65,8 +72,13 @@ export class Workspaces implements IWorkspaces {
         if (fs.existsSync(applicationPath)) {
             const buffer = await fs.promises.readFile(applicationPath);
             const application = JSON.parse(buffer.toString()) as Application;
-            const workspace = new Workspace(source, application);
-            this._workspaces.push(workspace);
+            let workspace = new Workspace(source, application);
+            const existing = this._workspaces.find(_ => _.path === source);
+            if (!existing) {
+                this._workspaces.push(workspace);
+            } else {
+                workspace = existing;
+            }
             await this.populateMicroservicesFor(workspace, application.microservices);
             return true;
         }
