@@ -35,16 +35,16 @@ export interface ICreateApplicationDialogOutput {
     portal: boolean;
 }
 
-let invalidCount = 0;
-
 export const CreateApplicationDialog = (props: IDialogProps<ICreateApplicationDialogInput, ICreateApplicationDialogOutput>) => {
-    const [isValid, setIsValid] = useState(false);
+    const [isNameValid, setIsNameValid] = useState(false);
+    const [isTenantValid, setIsTenantValid] = useState(false);
+    const [isContainerRegistryValid, setIsContainerRegistryValid] = useState(false);
 
     const output: ICreateApplicationDialogOutput = {
         path: props.input.path,
         name: '',
         tenant: '',
-        license: '',
+        license: 'MIT',
         containerRegistry: '',
         portal: true
     };
@@ -70,14 +70,16 @@ export const CreateApplicationDialog = (props: IDialogProps<ICreateApplicationDi
         return input.length === 0 ? 'Required' : '';
     }
 
-    function handleValidationResult(message: string | JSX.Element, value: string) {
-        if (message.toString().length === 0) {
-            invalidCount --;
-        } else {
-            invalidCount ++;
-        }
+    function handleNameValidationResult(message: string | JSX.Element, value?: string) {
+        setIsNameValid(message.toString().length === 0);
+    }
 
-        setIsValid(invalidCount === 0);
+    function handleTenantValidationResult(message: string | JSX.Element, value?: string) {
+        setIsTenantValid(message.toString().length === 0);
+    }
+
+    function handleContainerRegistryValidationResult(message: string | JSX.Element, value?: string) {
+        setIsContainerRegistryValid(message.toString().length === 0);
     }
 
     return (
@@ -87,15 +89,15 @@ export const CreateApplicationDialog = (props: IDialogProps<ICreateApplicationDi
             dialogContentProps={dialogContentProps}>
 
             <Stack tokens={{ childrenGap: 10 }}>
-                <TextField label="Name" required onChange={(e, value) => output.name = value} onGetErrorMessage={validateString} onNotifyValidationResult={handleValidationResult} />
-                <TextField label="Tenant" required onChange={(e, value) => output.tenant = value} onGetErrorMessage={validateString} onNotifyValidationResult={handleValidationResult} />
-                <Dropdown label="License" options={licenses} onChanged={(e, index) => output.license = licenses[index].text} defaultSelectedKey="MIT" />
-                <TextField label="Container registry" required onChange={(e, value) => output.containerRegistry = value} onGetErrorMessage={validateString} onNotifyValidationResult={handleValidationResult} />
-                <Checkbox label="Include portal" defaultChecked onChange={(e, value) => output.portal = value} />
+                <TextField label="Name" required onChange={(e, value) => output.name = value!} onGetErrorMessage={validateString} onNotifyValidationResult={handleNameValidationResult} />
+                <TextField label="Tenant" required onChange={(e, value) => output.tenant = value!} onGetErrorMessage={validateString} onNotifyValidationResult={handleTenantValidationResult} />
+                <Dropdown label="License" options={licenses} onChanged={(e, index) => output.license = licenses[index!].text} defaultSelectedKey="MIT" />
+                <TextField label="Container registry" required onChange={(e, value) => output.containerRegistry = value!} onGetErrorMessage={validateString} onNotifyValidationResult={handleContainerRegistryValidationResult} />
+                <Checkbox label="Include portal" defaultChecked onChange={(e, value) => output.portal = value!} />
             </Stack>
 
             <DialogFooter>
-                <PrimaryButton onClick={create} text="Create" disabled={!isValid} />
+                <PrimaryButton onClick={create} text="Create" disabled={!(isNameValid && isTenantValid && isContainerRegistryValid)} />
                 <DefaultButton onClick={cancel} text="Cancel" />
             </DialogFooter>
         </Dialog>
