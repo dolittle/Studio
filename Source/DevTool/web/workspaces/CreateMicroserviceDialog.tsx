@@ -32,26 +32,27 @@ export interface ICreateMicroserviceDialogOutput {
 
 export const CreateMicroserviceDialog = (props: IDialogProps<ICreateMicroserviceDialogInput, ICreateMicroserviceDialogOutput>) => {
     const [isValid, setIsValid] = useState(false);
-
-    const output: ICreateMicroserviceDialogOutput = {
-        path: props.input.path,
-        name: '',
-        addWebFrontend: true
-    };
+    const [name, setName] = useState('');
+    const [addWebFrontend, setAddWebFrontend] = useState(true);
 
     function create() {
+        const output: ICreateMicroserviceDialogOutput = {
+            path: props.input.path,
+            name,
+            addWebFrontend
+        };
         props.onClose(DialogResult.Success, output);
     }
 
     function cancel() {
-        props.onClose(DialogResult.Cancelled, output);
+        props.onClose(DialogResult.Cancelled);
     }
 
     function validateName(input: string) {
         return input.length === 0 ? 'Required' : '';
     }
 
-    function handleValidationResult(message: string | JSX.Element, value: string) {
+    function handleValidationResult(message: string | JSX.Element, value?: string) {
         setIsValid(message.toString().length === 0);
     }
 
@@ -62,8 +63,8 @@ export const CreateMicroserviceDialog = (props: IDialogProps<ICreateMicroservice
             dialogContentProps={dialogContentProps}>
 
             <Stack tokens={{ childrenGap: 10 }}>
-                <TextField label="Name" required onChange={(e, value) => output.name = value} onGetErrorMessage={validateName} onNotifyValidationResult={handleValidationResult} />
-                <Checkbox label="Add Web frontend?" defaultChecked onChange={(e, value) => output.addWebFrontend = value} />
+                <TextField label="Name" required onChange={(e, value) => setName(value!)} onGetErrorMessage={validateName} onNotifyValidationResult={handleValidationResult} />
+                <Checkbox label="Add Web frontend?" defaultChecked onChange={(e, value) => setAddWebFrontend(value!)} />
             </Stack>
 
             <DialogFooter>

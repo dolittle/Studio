@@ -39,22 +39,27 @@ export const CreateApplicationDialog = (props: IDialogProps<ICreateApplicationDi
     const [isNameValid, setIsNameValid] = useState(false);
     const [isTenantValid, setIsTenantValid] = useState(false);
     const [isContainerRegistryValid, setIsContainerRegistryValid] = useState(false);
+    const [name, setName] = useState('');
+    const [tenant, setTenant] = useState('');
+    const [license, setLicense] = useState('MIT');
+    const [containerRegistry, setContainerRegistry] = useState('');
+    const [portal, setPortal] = useState(true);
 
-    const output: ICreateApplicationDialogOutput = {
-        path: props.input.path,
-        name: '',
-        tenant: '',
-        license: 'MIT',
-        containerRegistry: '',
-        portal: true
-    };
 
     function create() {
+        const output: ICreateApplicationDialogOutput = {
+            path: props.input.path,
+            name,
+            tenant,
+            license,
+            containerRegistry,
+            portal
+        };
         props.onClose(DialogResult.Success, output);
     }
 
     function cancel() {
-        props.onClose(DialogResult.Cancelled, output);
+        props.onClose(DialogResult.Cancelled);
     }
 
     const licenses: IDropdownOption[] = [
@@ -89,11 +94,11 @@ export const CreateApplicationDialog = (props: IDialogProps<ICreateApplicationDi
             dialogContentProps={dialogContentProps}>
 
             <Stack tokens={{ childrenGap: 10 }}>
-                <TextField label="Name" required onChange={(e, value) => output.name = value!} onGetErrorMessage={validateString} onNotifyValidationResult={handleNameValidationResult} />
-                <TextField label="Tenant" required onChange={(e, value) => output.tenant = value!} onGetErrorMessage={validateString} onNotifyValidationResult={handleTenantValidationResult} />
-                <Dropdown label="License" options={licenses} onChanged={(e, index) => output.license = licenses[index!].text} defaultSelectedKey="MIT" />
-                <TextField label="Container registry" required onChange={(e, value) => output.containerRegistry = value!} onGetErrorMessage={validateString} onNotifyValidationResult={handleContainerRegistryValidationResult} />
-                <Checkbox label="Include portal" defaultChecked onChange={(e, value) => output.portal = value!} />
+                <TextField label="Name" required onChange={(e, value) => setName(value!)} onGetErrorMessage={validateString} onNotifyValidationResult={handleNameValidationResult} />
+                <TextField label="Tenant" required onChange={(e, value) => setTenant(value!)} onGetErrorMessage={validateString} onNotifyValidationResult={handleTenantValidationResult} />
+                <Dropdown label="License" options={licenses} onChanged={(e, index) => setLicense(licenses[index!].text)} defaultSelectedKey="MIT" />
+                <TextField label="Container registry" required onChange={(e, value) => setContainerRegistry(value!)} onGetErrorMessage={validateString} onNotifyValidationResult={handleContainerRegistryValidationResult} />
+                <Checkbox label="Include portal" defaultChecked onChange={(e, value) => setPortal(value!)} />
             </Stack>
 
             <DialogFooter>
