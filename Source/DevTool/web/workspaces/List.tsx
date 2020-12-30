@@ -4,17 +4,18 @@
 import React from 'react';
 import { withViewModel } from '@dolittle/vanir-react';
 import { ListViewModel } from './ListViewModel';
-import { IconButton, Stack, StackItem, Nav, INavLink, INavLinkGroup } from '@fluentui/react';
+import { IconButton, Stack, StackItem, Nav, INavLink, INavLinkGroup, FontIcon } from '@fluentui/react';
 import { Dialog } from '../dialogs';
 import { useHistory } from 'react-router-dom';
-import { CreateMicroserviceDialog } from './CreateMicroserviceDialog';
+import { CreateMicroserviceDialog, ICreateMicroserviceDialogOutput, ICreateMicroserviceDialogInput } from './CreateMicroserviceDialog';
 import { useDialog, DialogResult } from '../dialogs/useDialog';
 import { CreateApplicationDialog, ICreateApplicationDialogInput, ICreateApplicationDialogOutput } from './CreateApplicationDialog';
+import { Workspace } from '../../common/workspaces/Workspace';
 
 
 export const List = withViewModel(ListViewModel, ({ viewModel }) => {
     const history = useHistory();
-    const [showCreateMicroserviceDialog, createMicroServiceDialogProps] = useDialog((result, output) => {
+    const [showCreateMicroserviceDialog, createMicroServiceDialogProps] = useDialog<ICreateMicroserviceDialogInput, ICreateMicroserviceDialogOutput>((result, output) => {
         if (result === DialogResult.Success) {
         }
     });
@@ -36,14 +37,20 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
             showCreateApplicationDialog({ path: directory });
         }
     };
-    const createMicroservice = async () => {
-        showCreateMicroserviceDialog();
+    const createMicroservice = async (workspace: Workspace) => {
+        showCreateMicroserviceDialog({
+            path: workspace.path
+        });
+    };
+
+    const removeApplication = async () => {
     };
 
     const navigationGroups = viewModel.workspaces.map(_ => {
         return {
             key: _.application.id,
             name: _.application.name,
+            groupData: _,
             links: _.microservices.map(ms => {
                 return {
                     key: ms.id,
@@ -58,21 +65,38 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
         } as INavLinkGroup;
     });
 
+    const renderGroupHeader = (group: INavLinkGroup): JSX.Element => {
+        return (
+            <div style={{ paddingRight: '1rem', paddingLeft: '1rem'}}>
+                <Stack horizontal>
+                    <StackItem grow={1}>
+                        <h3 style={{paddingTop: '0.15rem'}}>{group.name}</h3>
+                    </StackItem>
+                    <StackItem>
+                        <h3>
+                            <Stack horizontal tokens={{ childrenGap: 5 }}>
+                                <IconButton iconProps={{ iconName: 'WebAppBuilderFragmentCreate' }} title="Create microservice" onClick={() => createMicroservice(group.groupData as Workspace)} />
+                                <IconButton iconProps={{ iconName: 'Delete' }} title="Remove application" onClick={removeApplication} />
+                            </Stack>
+                        </h3>
+                    </StackItem>
+                </Stack>
+            </div>
+        );
+    };
+
     return (
         <>
             <Stack verticalAlign='space-between' style={{ minHeight: '100%' }}>
                 <StackItem>
-                    <Stack horizontal tokens={{ childrenGap: 5 }}>
+                    <Stack horizontal>
                         <IconButton iconProps={{ iconName: 'Home' }} title="Home" onClick={() => history.push('/')} />
                         <IconButton iconProps={{ iconName: 'OpenFolderHorizontal' }} title="Open workspace" onClick={openWorkspace} />
                         <IconButton iconProps={{ iconName: 'ExploreContent' }} title="Create application" onClick={createApplication} />
-                        <IconButton iconProps={{ iconName: 'WebAppBuilderFragmentCreate' }} title="Create microservice" onClick={createMicroservice} />
                     </Stack>
                 </StackItem>
                 <StackItem verticalFill={true} grow={1} >
-                    <div>
-                        <Nav groups={navigationGroups} />
-                    </div>
+                    <Nav groups={navigationGroups} onRenderGroupHeader={renderGroupHeader} />
                 </StackItem>
                 <StackItem>
                     (C)2020 Dolittle

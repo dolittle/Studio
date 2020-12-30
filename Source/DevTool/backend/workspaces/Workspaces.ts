@@ -21,6 +21,7 @@ export class Workspaces implements IWorkspaces {
     private _workspaces: Workspace[] = [];
 
     constructor() {
+        this.makeSureRootExists();
     }
 
     async addFromPath(source: string): Promise<void> {
@@ -45,7 +46,7 @@ export class Workspaces implements IWorkspaces {
     }
 
     async create(path: string, name: string, tenant: string, license: string, containerRegistry: string, portal: boolean): Promise<void> {
-        createApplication({
+        await createApplication({
             name,
             tenant,
             license,
@@ -59,7 +60,7 @@ export class Workspaces implements IWorkspaces {
         throw new Error('Method not implemented.');
     }
 
-    private async loadFromPath(source: string) {
+    private async loadFromPath(source: string): Promise<boolean> {
         const applicationPath = path.join(source, 'application.json');
         if (fs.existsSync(applicationPath)) {
             const buffer = await fs.promises.readFile(applicationPath);
@@ -67,7 +68,10 @@ export class Workspaces implements IWorkspaces {
             const workspace = new Workspace(source, application);
             this._workspaces.push(workspace);
             await this.populateMicroservicesFor(workspace, application.microservices);
+            return true;
         }
+
+        return false;
     }
 
     private getWorkspaceFilePath() {
@@ -88,10 +92,18 @@ export class Workspaces implements IWorkspaces {
     private async load() {
         const file = this.getWorkspaceFilePath();
         if (fs.existsSync(file)) {
+            let missingWorkspaces = false;
             const buffer = await fs.promises.readFile(file);
             const workspaces = JSON.parse(buffer.toString()) as WorkspaceFile[];
             for (const workspace of workspaces) {
-                await this.loadFromPath(workspace.path);
+                const exists = await this.loadFromPath(workspace.path);
+                if (!exists) {
+                    missingWorkspaces = true;
+                }
+            }
+
+            if (missingWorkspaces) {
+                await this.save();
             }
         }
     }

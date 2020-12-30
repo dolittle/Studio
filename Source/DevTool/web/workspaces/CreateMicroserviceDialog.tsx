@@ -20,12 +20,16 @@ const dialogContentProps = {
     closeButtonAriaLabel: 'Close'
 };
 
+export interface ICreateMicroserviceDialogInput {
+    path: string;
+}
+
 export interface ICreateMicroserviceDialogOutput {
     name: string;
     addWebFrontend: boolean;
 }
 
-export const CreateMicroserviceDialog = (props: IDialogProps<any, ICreateMicroserviceDialogOutput>) => {
+export const CreateMicroserviceDialog = (props: IDialogProps<ICreateMicroserviceDialogInput, ICreateMicroserviceDialogOutput>) => {
     const output: ICreateMicroserviceDialogOutput = {
         name: '',
         addWebFrontend: true
