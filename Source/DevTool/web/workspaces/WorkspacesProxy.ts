@@ -24,4 +24,8 @@ export class WorkspacesProxy implements IWorkspaces {
     async getAll(): Promise<Workspace[]> {
         return await this._interop.invoke(IWorkspacesToken, 'getAll') as Workspace[];
     }
+
+    remove(path: string): Promise<void> {
+        return this._interop.invoke(IWorkspacesToken, 'remove', path);
+    }
 }

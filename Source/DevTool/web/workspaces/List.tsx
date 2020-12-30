@@ -2,13 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { withViewModel } from '@dolittle/vanir-react';
+import { withViewModel, useDialog, DialogResult } from '@dolittle/vanir-react';
 import { ListViewModel } from './ListViewModel';
 import { IconButton, Stack, StackItem, Nav, INavLink, INavLinkGroup, FontIcon } from '@fluentui/react';
 import { Dialog } from '../dialogs';
 import { useHistory } from 'react-router-dom';
 import { CreateMicroserviceDialog, ICreateMicroserviceDialogOutput, ICreateMicroserviceDialogInput } from './CreateMicroserviceDialog';
-import { useDialog, DialogResult } from '../dialogs/useDialog';
 import { CreateApplicationDialog, ICreateApplicationDialogInput, ICreateApplicationDialogOutput } from './CreateApplicationDialog';
 import { Workspace } from '../../common/workspaces/Workspace';
 
@@ -44,9 +43,6 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
         });
     };
 
-    const removeApplication = async () => {
-    };
-
     const navigationGroups = viewModel.workspaces.map(_ => {
         return {
             key: _.application.id,
@@ -77,7 +73,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                         <h3>
                             <Stack horizontal tokens={{ childrenGap: 5 }}>
                                 <IconButton iconProps={{ iconName: 'WebAppBuilderFragmentCreate' }} title="Create microservice" onClick={() => createMicroservice(group.groupData as Workspace)} />
-                                <IconButton iconProps={{ iconName: 'Delete' }} title="Remove application" onClick={removeApplication} />
+                                <IconButton iconProps={{ iconName: 'Delete' }} title="Remove application" onClick={() => viewModel.remove((group.groupData as Workspace).path)} />
                             </Stack>
                         </h3>
                     </StackItem>

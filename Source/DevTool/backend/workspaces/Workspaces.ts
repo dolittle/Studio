@@ -24,7 +24,6 @@ export class Workspaces implements IWorkspaces {
     constructor() {
         this.makeSureRootExists();
     }
-
     async addFromPath(source: string): Promise<void> {
         await this.loadFromPath(source);
         await this.save();
@@ -66,6 +65,12 @@ export class Workspaces implements IWorkspaces {
         });
         await this.loadFromPath(path);
     }
+
+    async remove(path: string): Promise<void> {
+        this._workspaces = this._workspaces.filter(_ => _.path !== path);
+        await this.save();
+    }
+
 
     private async loadFromPath(source: string): Promise<boolean> {
         const applicationPath = path.join(source, 'application.json');

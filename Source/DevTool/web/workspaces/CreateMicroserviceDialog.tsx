@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
-import { DialogResult, IDialogProps } from '../dialogs/useDialog';
+import { IDialogProps, DialogResult } from '@dolittle/vanir-react';
 import {
     DialogType,
     Dialog,

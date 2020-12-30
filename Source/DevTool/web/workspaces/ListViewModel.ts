@@ -38,6 +38,11 @@ export class ListViewModel {
         this.populate();
     }
 
+    async remove(path: string) {
+        await this._workspaces.remove(path);
+        this.populate();
+    }
+
     setCurrentApplication(application: Application) {
         this._applications.setCurrent(application);
     }
