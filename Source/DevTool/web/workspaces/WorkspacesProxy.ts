@@ -10,6 +10,13 @@ export class WorkspacesProxy implements IWorkspaces {
     constructor(private readonly _interop: Interop) {
     }
 
+    create(path: string, name: string, tenant: string, license: string, containerRegistry: string, portal: boolean): Promise<void> {
+        return this._interop.invoke(IWorkspacesToken, 'create', path, name, tenant, license, containerRegistry, portal);
+    }
+    createMicroservice(workspace: Workspace, name: string, addWebFrontend: boolean): Promise<void> {
+        return this._interop.invoke(IWorkspacesToken, 'addFromPath', name, addWebFrontend);
+    }
+
     addFromPath(path: string): Promise<void> {
         return this._interop.invoke(IWorkspacesToken, 'addFromPath', path);
     }

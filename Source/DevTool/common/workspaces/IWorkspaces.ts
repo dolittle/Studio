@@ -7,4 +7,7 @@ export const IWorkspacesToken = 'IWorkspaces';
 export interface IWorkspaces {
     addFromPath(path: string): Promise<void>;
     getAll(): Promise<Workspace[]>;
+
+    create(path: string, name: string, tenant: string, license: string, containerRegistry: string, portal: boolean): Promise<void>;
+    createMicroservice(workspace: Workspace, name: string, addWebFrontend: boolean): Promise<void>;
 }

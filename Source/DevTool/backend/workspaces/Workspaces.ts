@@ -7,6 +7,7 @@ import { IWorkspaces, Workspace } from '../../common/workspaces';
 import { injectable } from 'tsyringe';
 import { Application, Microservice } from '@dolittle/vanir-common';
 import { homedir } from 'os';
+import { createApplication } from 'create-dolittle-app/dist/creation';
 
 export type WorkspaceFile = {
     path: string;
@@ -41,6 +42,21 @@ export class Workspaces implements IWorkspaces {
             await this.load();
         }
         return this._workspaces;
+    }
+
+    async create(path: string, name: string, tenant: string, license: string, containerRegistry: string, portal: boolean): Promise<void> {
+        createApplication({
+            name,
+            tenant,
+            license,
+            containerRegistry,
+            portal,
+            targetDirectory: path
+        });
+    }
+
+    async createMicroservice(workspace: Workspace, name: string, addWebFrontend: boolean): Promise<void> {
+        throw new Error('Method not implemented.');
     }
 
     private async loadFromPath(source: string) {

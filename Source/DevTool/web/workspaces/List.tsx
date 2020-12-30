@@ -1,19 +1,28 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React from 'react';
 import { withViewModel } from '@dolittle/vanir-react';
 import { ListViewModel } from './ListViewModel';
 import { IconButton, Stack, StackItem, Nav, INavLink, INavLinkGroup } from '@fluentui/react';
 import { Dialog } from '../dialogs';
 import { useHistory } from 'react-router-dom';
-import { useId, useBoolean } from '@fluentui/react-hooks';
-import { CreateMicroserviceDialog } from '../microservices/CreateMicroserviceDialog';
-
+import { CreateMicroserviceDialog } from './CreateMicroserviceDialog';
+import { useDialog, DialogResult } from '../dialogs/useDialog';
+import { CreateApplicationDialog, ICreateApplicationDialogInput, ICreateApplicationDialogOutput } from './CreateApplicationDialog';
 
 
 export const List = withViewModel(ListViewModel, ({ viewModel }) => {
     const history = useHistory();
+    const [showCreateMicroserviceDialog, createMicroServiceDialogProps] = useDialog((result, output) => {
+        if (result === DialogResult.Success) {
+        }
+    });
+    const [showCreateApplicationDialog, createApplicationDialogProps] = useDialog<ICreateApplicationDialogInput, ICreateApplicationDialogOutput>((result, output?) => {
+        if (result === DialogResult.Success && output) {
+            viewModel.createApplication(output.path, output.name, output.tenant, output.license, output.containerRegistry, output.portal);
+        }
+    });
 
     const openWorkspace = async () => {
         const directory = await Dialog.showOpenDialog();
@@ -23,9 +32,12 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
     };
     const createApplication = async () => {
         const directory = await Dialog.showOpenDialog();
+        if (directory?.length > 0) {
+            showCreateApplicationDialog({ path: directory });
+        }
     };
     const createMicroservice = async () => {
-        viewModel.initiateMicroserviceCreation();
+        showCreateMicroserviceDialog();
     };
 
     const navigationGroups = viewModel.workspaces.map(_ => {
@@ -45,8 +57,6 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
             })
         } as INavLinkGroup;
     });
-
-    console.log(`ViewModel : ${viewModel.createMicroservice}`);
 
     return (
         <>
@@ -68,7 +78,8 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                     (C)2020 Dolittle
                 </StackItem>
             </Stack>
-            <CreateMicroserviceDialog hidden={!viewModel.createMicroservice} />
+            <CreateMicroserviceDialog {...createMicroServiceDialogProps} />
+            <CreateApplicationDialog {...createApplicationDialogProps} />
         </>
     );
 });
