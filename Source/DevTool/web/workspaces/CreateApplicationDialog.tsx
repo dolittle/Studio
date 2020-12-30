@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState } from 'react';
 import { DialogResult, IDialogProps } from '../dialogs/useDialog';
 import {
     Dropdown,
@@ -35,7 +35,11 @@ export interface ICreateApplicationDialogOutput {
     portal: boolean;
 }
 
+let invalidCount = 0;
+
 export const CreateApplicationDialog = (props: IDialogProps<ICreateApplicationDialogInput, ICreateApplicationDialogOutput>) => {
+    const [isValid, setIsValid] = useState(false);
+
     const output: ICreateApplicationDialogOutput = {
         path: props.input.path,
         name: '',
@@ -62,6 +66,20 @@ export const CreateApplicationDialog = (props: IDialogProps<ICreateApplicationDi
         { key: 'UNLICENSED', text: 'UNLICENSED' }
     ];
 
+    function validateString(input: string) {
+        return input.length === 0 ? 'Required' : '';
+    }
+
+    function handleValidationResult(message: string | JSX.Element, value: string) {
+        if (message.toString().length === 0) {
+            invalidCount --;
+        } else {
+            invalidCount ++;
+        }
+
+        setIsValid(invalidCount === 0);
+    }
+
     return (
         <Dialog
             hidden={!props.visible}
@@ -69,15 +87,15 @@ export const CreateApplicationDialog = (props: IDialogProps<ICreateApplicationDi
             dialogContentProps={dialogContentProps}>
 
             <Stack tokens={{ childrenGap: 10 }}>
-                <TextField label="Name" required onChange={(e, value) => output.name = value} />
-                <TextField label="Tenant" required onChange={(e, value) => output.tenant = value} />
-                <Dropdown label="License" options={licenses} onChanged={(e, index) => output.license = licenses[index].text} />
-                <TextField label="Container registry" required onChange={(e, value) => output.containerRegistry = value} />
+                <TextField label="Name" required onChange={(e, value) => output.name = value} onGetErrorMessage={validateString} onNotifyValidationResult={handleValidationResult} />
+                <TextField label="Tenant" required onChange={(e, value) => output.tenant = value} onGetErrorMessage={validateString} onNotifyValidationResult={handleValidationResult} />
+                <Dropdown label="License" options={licenses} onChanged={(e, index) => output.license = licenses[index].text} defaultSelectedKey="MIT" />
+                <TextField label="Container registry" required onChange={(e, value) => output.containerRegistry = value} onGetErrorMessage={validateString} onNotifyValidationResult={handleValidationResult} />
                 <Checkbox label="Include portal" defaultChecked onChange={(e, value) => output.portal = value} />
             </Stack>
 
             <DialogFooter>
-                <PrimaryButton onClick={create} text="Create" />
+                <PrimaryButton onClick={create} text="Create" disabled={!isValid} />
                 <DefaultButton onClick={cancel} text="Cancel" />
             </DialogFooter>
         </Dialog>

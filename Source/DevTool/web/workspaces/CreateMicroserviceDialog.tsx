@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState } from 'react';
 import { DialogResult, IDialogProps } from '../dialogs/useDialog';
 import {
     DialogType,
@@ -31,6 +31,8 @@ export interface ICreateMicroserviceDialogOutput {
 }
 
 export const CreateMicroserviceDialog = (props: IDialogProps<ICreateMicroserviceDialogInput, ICreateMicroserviceDialogOutput>) => {
+    const [isValid, setIsValid] = useState(false);
+
     const output: ICreateMicroserviceDialogOutput = {
         path: props.input.path,
         name: '',
@@ -45,6 +47,14 @@ export const CreateMicroserviceDialog = (props: IDialogProps<ICreateMicroservice
         props.onClose(DialogResult.Cancelled, output);
     }
 
+    function validateName(input: string) {
+        return input.length === 0 ? 'Required' : '';
+    }
+
+    function handleValidationResult(message: string | JSX.Element, value: string) {
+        setIsValid(message.toString().length === 0);
+    }
+
     return (
         <Dialog
             hidden={!props.visible}
@@ -52,12 +62,12 @@ export const CreateMicroserviceDialog = (props: IDialogProps<ICreateMicroservice
             dialogContentProps={dialogContentProps}>
 
             <Stack tokens={{ childrenGap: 10 }}>
-                <TextField label="Name" required onChange={(e, value) => output.name = value} />
+                <TextField label="Name" required onChange={(e, value) => output.name = value} onGetErrorMessage={validateName} onNotifyValidationResult={handleValidationResult} />
                 <Checkbox label="Add Web frontend?" defaultChecked onChange={(e, value) => output.addWebFrontend = value} />
             </Stack>
 
             <DialogFooter>
-                <PrimaryButton onClick={create} text="Create" />
+                <PrimaryButton onClick={create} text="Create" disabled={!isValid} />
                 <DefaultButton onClick={cancel} text="Cancel" />
             </DialogFooter>
         </Dialog>

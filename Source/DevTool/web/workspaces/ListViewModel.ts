@@ -21,7 +21,6 @@ export class ListViewModel {
 
     async populate() {
         this.workspaces = await this._workspaces.getAll();
-        console.log(this.workspaces);
     }
 
     async directoryAdded(path: string) {
