@@ -9,9 +9,12 @@ import { Application, Microservice } from '@dolittle/vanir-common';
 import { homedir } from 'os';
 import { createApplication } from 'create-dolittle-app/dist/creation';
 import { createMicroservice } from 'create-dolittle-microservice/dist/creation';
+import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
+import { app } from 'electron';
 
 export type WorkspaceFile = {
     path: string;
+    ports: MicroservicePorts[];
 };
 
 const DOLITTLE_ROOT = '.dolittle';
@@ -71,7 +74,6 @@ export class Workspaces implements IWorkspaces {
         await this.save();
     }
 
-
     private async loadFromPath(source: string): Promise<boolean> {
         const applicationPath = path.join(source, 'application.json');
         if (fs.existsSync(applicationPath)) {
@@ -85,6 +87,7 @@ export class Workspaces implements IWorkspaces {
                 workspace = existing;
             }
             await this.populateMicroservicesFor(workspace, application.microservices);
+            this.setupMicroservicePortsFor(workspace);
             return true;
         }
 
@@ -104,6 +107,22 @@ export class Workspaces implements IWorkspaces {
         if (!fs.existsSync(root)) {
             fs.mkdirSync(root);
         }
+    }
+
+    private setupMicroservicePortsFor(workspace: Workspace) {
+        const microservices: Microservice[] = [];
+
+        const portal = workspace.microservices.find(_ => _.id === workspace.application.portal.id);
+        if (portal) {
+            microservices.push(portal);
+        }
+        microservices.push(...workspace.microservices.filter(_ => _.id !== workspace.application.portal.id));
+
+        workspace.microservicePorts = microservices.map((_, index) => new MicroservicePorts(
+            _.id,
+            3001 + index,
+            9001 + index,
+            50053 + (index * 2)));
     }
 
     private async load() {
@@ -127,8 +146,13 @@ export class Workspaces implements IWorkspaces {
 
     private async save() {
         const file = this.getWorkspaceFilePath();
-        const workspaces = this._workspaces.map(_ => { return { path: _.path } as WorkspaceFile; });
-        const serialized = JSON.stringify(workspaces);
+        const workspaces = this._workspaces.map(_ => {
+            return {
+                path: _.path,
+                ports: _.microservicePorts
+            } as WorkspaceFile;
+        });
+        const serialized = JSON.stringify(workspaces, null, 4);
         await fs.promises.writeFile(file, serialized);
     }
 }
