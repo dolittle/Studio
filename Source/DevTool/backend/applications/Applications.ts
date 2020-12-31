@@ -115,7 +115,7 @@ export class Applications implements IApplications {
                 const logs = await runningInstance.getLogs();
                 const stream = byline.createStream(logs);
                 stream.on('data', (data: Buffer) => {
-                    const message = data.slice(8);
+                    const message = data.slice(8);  // Skip Docker header
                     mainWindow?.webContents.send('log-message', message);
                 });
             }

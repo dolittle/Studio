@@ -14,11 +14,11 @@ export interface ILogOutputProps {
 }
 
 export const LogOutput = (props: ILogOutputProps) => {
-    const xtermRef = React.useRef<XTerm>();
+    const xtermRef = React.createRef<XTerm>();
     const fitAddon = new FitAddon();
 
     useEffect(() => {
-        if (props.terminalReady) {
+        if (props.terminalReady && xtermRef.current) {
             props.terminalReady(xtermRef.current.terminal);
         }
         fitAddon.fit();
@@ -27,6 +27,9 @@ export const LogOutput = (props: ILogOutputProps) => {
     });
 
     return (
-        <XTerm options={{ disableStdin: true }} className={styles.terminal} ref={xtermRef} addons={[fitAddon]} />
+        <XTerm options={{ disableStdin: true, fontSize: 12 }}
+            className={styles.terminal}
+            ref={xtermRef}
+            addons={[fitAddon]} />
     );
 };

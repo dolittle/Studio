@@ -14,7 +14,6 @@ export class RuntimeViewModel {
     application!: Application;
     microservice!: Microservice;
 
-
     constructor(
         @inject(IApplicationsToken) private readonly _applications: IApplications,
         applications: Applications,
