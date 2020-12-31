@@ -26,9 +26,12 @@ export const Application = withViewModel(ApplicationViewModel, ({ viewModel }) =
         iconProps: {
             iconName: 'MSNVideosSolid'
         },
-        onClick: () => { }
+        onClick: () => { viewModel.updateStatus(); }
 
     }] as ICommandBarItemProps[];
+
+    // CircleStopSolid
+    // CircleStop
 
     function linkClicked(item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) {
         history.push(item?.props.itemKey!);

@@ -4,9 +4,12 @@
 import { container } from 'tsyringe';
 import { IWorkspacesToken } from '../common/workspaces/IWorkspaces';
 import { Workspaces } from './workspaces/Workspaces';
+import { IApplicationsToken } from '../common/applications/IApplications';
+import { Applications } from './applications/Applications';
 
 export class Services {
     static initialize() {
         container.registerSingleton(IWorkspacesToken, Workspaces);
+        container.registerSingleton(IApplicationsToken, Applications);
     }
 }

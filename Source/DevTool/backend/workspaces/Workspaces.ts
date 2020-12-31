@@ -10,7 +10,6 @@ import { homedir } from 'os';
 import { createApplication } from 'create-dolittle-app/dist/creation';
 import { createMicroservice } from 'create-dolittle-microservice/dist/creation';
 import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
-import { app } from 'electron';
 import { WorkspaceRenderer } from './WorkspaceRenderer';
 import { ILogger } from '@dolittle/vanir-backend';
 

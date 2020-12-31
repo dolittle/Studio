@@ -13,6 +13,7 @@ import { Services } from './Services';
 import { Interop } from './Interop';
 
 import * as DependencyInversion from '@dolittle/vanir-dependency-inversion';
+import { DockerEnvironment } from './DockerEnvironment';
 
 let mainWindow: BrowserWindow | null;
 
@@ -34,6 +35,7 @@ function createWindow() {
 
     DependencyInversion.initialize();
 
+    DockerEnvironment.initialize();
     Services.initialize();
     Interop.initialize();
 
