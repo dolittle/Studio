@@ -4,7 +4,7 @@
 import React from 'react';
 import { withViewModel, useDialog, DialogResult } from '@dolittle/vanir-react';
 import { ListViewModel } from './ListViewModel';
-import { IconButton, Stack, StackItem, Nav, INavLink, INavLinkGroup, FontIcon } from '@fluentui/react';
+import { IconButton, Stack, StackItem, Nav, INavLink, INavLinkGroup, FontIcon, Link } from '@fluentui/react';
 import { Dialog } from '../dialogs';
 import { useHistory } from 'react-router-dom';
 import { CreateMicroserviceDialog, ICreateMicroserviceDialogOutput, ICreateMicroserviceDialogInput } from './CreateMicroserviceDialog';
@@ -62,16 +62,23 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
         } as INavLinkGroup;
     });
 
+    const navigateToApplication = (workspace: Workspace) => {
+        history.push(`/application/${workspace.application.id}`);
+        viewModel.setCurrentApplication(workspace.application);
+    };
+
+
     const renderGroupHeader = (group: INavLinkGroup): JSX.Element => {
         return (
             <div style={{ paddingRight: '1rem', paddingLeft: '1rem' }}>
                 <Stack horizontal>
                     <StackItem grow={1}>
-                        <h3 style={{ paddingTop: '0.15rem' }}>{group.name}</h3>
+                        <Link onClick={() => navigateToApplication(group.groupData as Workspace)}><h3 style={{ paddingTop: '0.15rem' }}>{group.name}</h3></Link>
                     </StackItem>
                     <StackItem>
                         <h3>
                             <Stack horizontal tokens={{ childrenGap: 5 }}>
+                                <IconButton iconProps={{ iconName: 'MSNVideosSolid' }} title="Start all microservices" />
                                 <IconButton iconProps={{ iconName: 'WebAppBuilderFragmentCreate' }} title="Create microservice" onClick={() => createMicroservice(group.groupData as Workspace)} />
                                 <IconButton iconProps={{ iconName: 'Delete' }} title="Remove application" onClick={() => viewModel.remove((group.groupData as Workspace).path)} />
                             </Stack>

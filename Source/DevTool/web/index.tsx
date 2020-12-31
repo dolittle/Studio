@@ -12,6 +12,7 @@ import { default as styles } from './index.module.scss';
 import '@shared/styles/theme';
 
 import { Services } from './Services';
+import { Application } from './applications/Application';
 import { Microservice } from './microservices/Microservice';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -28,6 +29,9 @@ export default function App() {
                 <div className={styles.mainContent}>
                     <Route exact path="/">
 
+                    </Route>
+                    <Route path="/application/:applicationId">
+                        <Application />
                     </Route>
                     <Route path="/microservice/:microserviceId">
                         <Microservice />
