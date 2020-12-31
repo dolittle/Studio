@@ -12,6 +12,8 @@ import './dialogs/openDirectory';
 import { Services } from './Services';
 import { Interop } from './Interop';
 
+import * as DependencyInversion from '@dolittle/vanir-dependency-inversion';
+
 let mainWindow: BrowserWindow | null;
 
 function createWindow() {
@@ -29,6 +31,8 @@ function createWindow() {
     });
 
     setMainWindow(mainWindow);
+
+    DependencyInversion.initialize();
 
     Services.initialize();
     Interop.initialize();

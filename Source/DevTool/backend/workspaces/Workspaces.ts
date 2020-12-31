@@ -11,6 +11,8 @@ import { createApplication } from 'create-dolittle-app/dist/creation';
 import { createMicroservice } from 'create-dolittle-microservice/dist/creation';
 import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 import { app } from 'electron';
+import { WorkspaceRenderer } from './WorkspaceRenderer';
+import { ILogger } from '@dolittle/vanir-backend';
 
 export type WorkspaceFile = {
     path: string;
@@ -24,21 +26,30 @@ const WORKSPACES_FILE = 'workspaces.json';
 export class Workspaces implements IWorkspaces {
     private _workspaces: Workspace[] = [];
 
-    constructor() {
+    constructor(private readonly _renderer: WorkspaceRenderer, private readonly _logger: ILogger) {
         this.makeSureRootExists();
     }
+
     async addFromPath(source: string): Promise<void> {
         await this.loadFromPath(source);
         await this.save();
     }
 
     async populateMicroservicesFor(workspace: Workspace, paths: string[]) {
+        this._logger.info(`Populate microservices for workspace at ${workspace.path}`);
         workspace.clear();
         for (const relativePath of paths) {
             const microservicePath = path.join(workspace.path, relativePath, 'microservice.json');
-            const buffer = await fs.promises.readFile(microservicePath);
-            const microservice = JSON.parse(buffer.toString()) as Microservice;
-            workspace.microservices.push(microservice);
+            this._logger.info(`Load microservice information from ${microservicePath}`);
+            if (fs.existsSync(microservicePath)) {
+                this._logger.info(`Microservice exists`);
+                const buffer = await fs.promises.readFile(microservicePath);
+                const microservice = JSON.parse(buffer.toString()) as Microservice;
+                this._logger.info(`Microservice with id '${microservice.id}' is loaded`);
+                workspace.microservices.push(microservice);
+            } else {
+                this._logger.info(`Microservice does not exist`);
+            }
         }
     }
 
@@ -76,18 +87,22 @@ export class Workspaces implements IWorkspaces {
 
     private async loadFromPath(source: string): Promise<boolean> {
         const applicationPath = path.join(source, 'application.json');
+        this._logger.info(`Load application from ${applicationPath}`);
         if (fs.existsSync(applicationPath)) {
             const buffer = await fs.promises.readFile(applicationPath);
             const application = JSON.parse(buffer.toString()) as Application;
             let workspace = new Workspace(source, application);
             const existing = this._workspaces.find(_ => _.path === source);
             if (!existing) {
+                this._logger.info(`Workspace is new`);
                 this._workspaces.push(workspace);
             } else {
+                this._logger.info(`Workspace already exists`);
                 workspace = existing;
             }
             await this.populateMicroservicesFor(workspace, application.microservices);
             this.setupMicroservicePortsFor(workspace);
+            await this._renderer.render(workspace);
             return true;
         }
 
@@ -122,23 +137,33 @@ export class Workspaces implements IWorkspaces {
             _.id,
             3001 + index,
             9001 + index,
-            50053 + (index * 2)));
+            50052 + (index * 2),
+            9701 + index));
     }
 
     private async load() {
         const file = this.getWorkspaceFilePath();
+        this._logger.info(`Load registered workspaces`);
         if (fs.existsSync(file)) {
             let missingWorkspaces = false;
             const buffer = await fs.promises.readFile(file);
             const workspaces = JSON.parse(buffer.toString()) as WorkspaceFile[];
             for (const workspace of workspaces) {
+                this._logger.info(`Load workspace located at ${workspace.path}`);
                 const exists = await this.loadFromPath(workspace.path);
                 if (!exists) {
+                    this._logger.info(`Workspace is missing`);
                     missingWorkspaces = true;
+                } else {
+                    const loaded = this._workspaces.find(_ => _.path === workspace.path);
+                    if (loaded) {
+                        loaded.microservicePorts = workspace.ports;
+                    }
                 }
             }
 
             if (missingWorkspaces) {
+                this._logger.info(`Workspaces are missing - update the file by saving it`);
                 await this.save();
             }
         }

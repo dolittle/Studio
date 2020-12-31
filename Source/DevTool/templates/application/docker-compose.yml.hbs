@@ -1,13 +1,17 @@
 version: '3.1'
 services:
-  {{applicationName}}-mongo:
+  {{lowerCase application.name}}-mongo:
+    labels:
+      - dolittle="{{application.id}}"
     image: dolittle/mongodb:4.2.2
     ports:
       - 27017:27017
     logging:
       driver: none
 
-  {{applicationName}}-ingress:
+  {{lowerCase application.name}}-ingress:
+    labels:
+      - dolittle="{{application.id}}"
     image: nginx:1.18.0
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
@@ -17,8 +21,10 @@ services:
     logging:
       driver: none
 
-{{#each microservice}}
-  {{applicationName}}-runtime-{{portal}}:
+{{#each microservices}}
+  {{lowerCase ../application.name}}-runtime-{{lowerCase name}}:
+    labels:
+      - dolittle="{{../application.id}}"
     image: dolittle/runtime:5.1.4
     volumes:
       - ./{{name}}/resources.json:/app/.dolittle/resources.json
@@ -26,7 +32,8 @@ services:
       - ./microservices.json:/app/.dolittle/microservices.json
       - ./appsettings.json:/app/appsettings.json
     ports:
-      - 9700:9700
-      - 50052:50052
-      - 50053:50053
+      - {{ports.metrics}}:9700
+      - {{ports.runtime}}:50052
+      - {{inc ports.runtime}}:50053
+
 {{/each}}
