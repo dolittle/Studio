@@ -6,6 +6,7 @@ import { container } from 'tsyringe';
 
 export class DockerEnvironment {
     static initialize() {
-        const docker = new Docker({socketPath: '/var/run/docker.sock'});
+        const docker = new Docker({ socketPath: '/var/run/docker.sock' });
         container.registerInstance(Docker, docker);
+    }
 }

@@ -54,7 +54,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                     name: ms.name,
                     onClick: () => {
                         history.push(`/microservice/${ms.id}`);
-                        viewModel.setCurrentApplication(_.application);
+                        viewModel.setCurrentApplication(_, _.application);
                         viewModel.setCurrentMicroservice(ms);
                     }
                 } as INavLink;
@@ -64,7 +64,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
 
     const navigateToApplication = (workspace: Workspace) => {
         history.push(`/application/${workspace.application.id}`);
-        viewModel.setCurrentApplication(workspace.application);
+        viewModel.setCurrentApplication(workspace, workspace.application);
     };
 
 

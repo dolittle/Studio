@@ -4,14 +4,15 @@
 import { Application } from '@dolittle/vanir-common';
 import { injectable, inject } from 'tsyringe';
 import { ApplicationStatus } from '../../common/applications/ApplicationStatus';
-import { IApplicationsToken } from '../../common/applications/IApplications';
+import { IApplications, IApplicationsToken } from '../../common/applications/IApplications';
 import { Applications } from '../Applications';
 import { ContainerInfo } from 'dockerode';
 
+/* eslint-disable no-restricted-globals */
 @injectable()
 export class OverviewViewModel {
-    application: Application;
-    applicationStatus: ApplicationStatus;
+    application!: Application;
+    applicationStatus!: ApplicationStatus;
     containers: ContainerInfo[] = [];
 
     constructor(applications: Applications,
@@ -20,12 +21,10 @@ export class OverviewViewModel {
             this.application = _;
             this.updateStatus();
         });
-    }
 
-
-    activate() {
-        console.log('activate');
-        this.updateStatus();
+        setInterval(() => {
+            this.updateStatus();
+        }, 1000);
     }
 
     async updateStatus() {

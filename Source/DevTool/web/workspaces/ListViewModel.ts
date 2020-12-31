@@ -7,6 +7,7 @@ import { Workspace } from '../../common/workspaces/Workspace';
 import { Application, Microservice } from '@dolittle/vanir-common';
 import { Microservices } from '../Microservices';
 import { Applications } from '../Applications';
+import { Workspaces } from '../Workspaces';
 
 @injectable()
 export class ListViewModel {
@@ -14,6 +15,7 @@ export class ListViewModel {
 
     constructor(
         @inject(IWorkspacesToken) private readonly _workspaces: IWorkspaces,
+        private readonly _workspacesState: Workspaces,
         private readonly _applications: Applications,
         private readonly _microservices: Microservices) {
         this.populate();
@@ -43,7 +45,8 @@ export class ListViewModel {
         this.populate();
     }
 
-    setCurrentApplication(application: Application) {
+    setCurrentApplication(workspace: Workspace, application: Application) {
+        this._workspacesState.setCurrent(workspace);
         this._applications.setCurrent(application);
     }
 

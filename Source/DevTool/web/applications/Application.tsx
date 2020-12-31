@@ -21,12 +21,20 @@ export const Application = withViewModel(ApplicationViewModel, ({ viewModel }) =
     const params = useParams<MicroserviceRouteParams>();
 
     const commandBarItems = [{
-        key: 'blah',
+        key: 'start',
         text: 'Start',
         iconProps: {
             iconName: 'MSNVideosSolid'
         },
-        onClick: () => { viewModel.updateStatus(); }
+        onClick: () => { viewModel.start(); }
+
+    }, {
+        key: 'stop',
+        text: 'Stop',
+        iconProps: {
+            iconName: 'CircleStopSolid'
+        },
+        onClick: () => { viewModel.stop(); }
 
     }] as ICommandBarItemProps[];
 
