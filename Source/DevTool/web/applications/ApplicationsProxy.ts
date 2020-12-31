@@ -2,14 +2,18 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { ApplicationStatus } from '../../common/applications/ApplicationStatus';
-import { IApplications, IApplicationsToken } from '../../common/applications/IApplications';
+import { IApplications, IApplicationsToken, RunningInstanceType } from '../../common/applications/IApplications';
 import { injectable } from 'tsyringe';
 import { Interop } from '../Interop';
-import { Application } from '@dolittle/vanir-common';
+import { Application, Microservice } from '@dolittle/vanir-common';
 
 @injectable()
 export class ApplicationsProxy implements IApplications {
     constructor(private readonly _interop: Interop) {
+    }
+
+    captureLogFor(application: Application, instance: RunningInstanceType, microservice?: Microservice): Promise<void> {
+        return this._interop.invoke(IApplicationsToken, 'captureLogFor', application, instance, microservice);
     }
 
     async start(path: string, application: Application): Promise<void> {

@@ -8,7 +8,7 @@ import { Applications } from '../Applications';
 
 @injectable()
 export class MicroserviceViewModel {
-    application: Application;
+    application!: Application;
     microservice!: Microservice;
 
     constructor(applications: Applications, microservices: Microservices) {

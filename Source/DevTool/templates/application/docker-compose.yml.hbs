@@ -6,8 +6,6 @@ services:
     image: dolittle/mongodb:4.2.2
     ports:
       - 27017:27017
-    logging:
-      driver: none
 
   {{lowerCase application.name}}-ingress:
     labels:
@@ -18,8 +16,6 @@ services:
     ports:
       - 9000:9000
     restart: on-failure
-    logging:
-      driver: none
 
 {{#each microservices}}
   {{lowerCase ../application.name}}-runtime-{{lowerCase name}}:

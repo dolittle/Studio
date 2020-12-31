@@ -5,11 +5,17 @@ import Docker, { ContainerInfo } from 'dockerode';
 import { IRunningInstance } from './IRunningInstance';
 
 export class RunningContainer implements IRunningInstance {
-    logs?: NodeJS.ReadableStream;
 
-    constructor(docker: Docker, container: ContainerInfo) {
-        docker.getContainer(container.Names[0]).logs().then(_ => {
-            this.logs = _;
+    constructor(private readonly _docker: Docker, private readonly _container: ContainerInfo) {
+    }
+
+    async getLogs(): Promise<NodeJS.ReadableStream> {
+        const logs = await this._docker.getContainer(this._container.Id).logs({
+            stdout: true,
+            stderr: true,
+            follow: true
         });
+        logs.setEncoding('utf8');
+        return logs;
     }
 }

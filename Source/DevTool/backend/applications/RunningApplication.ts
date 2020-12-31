@@ -15,7 +15,7 @@ import { RunningContainer } from './RunningContainer';
 
 export class RunningApplication {
     readonly mongo: IRunningInstance;
-    readonly nginx: IRunningInstance;
+    readonly ingress: IRunningInstance;
     readonly microservices: RunningMicroservice[] = [];
 
     constructor(
@@ -30,7 +30,7 @@ export class RunningApplication {
         this._logger.info('Setting up RunningApplication');
 
         this.mongo = new RunningContainer(docker, findInContainers(containers, application, 'mongo'));
-        this.nginx = new RunningContainer(docker, findInContainers(containers, application, 'ingress'));
+        this.ingress = new RunningContainer(docker, findInContainers(containers, application, 'ingress'));
 
         for (const relativePath of application.microservices) {
             const runtime = new RunningContainer(docker, findInContainers(containers, application, 'runtime'));
@@ -42,7 +42,7 @@ export class RunningApplication {
                 const microservice = JSON.parse(buffer.toString()) as Microservice;
                 const backend = new RunningTypescriptBackend(application, microservice);
                 const web = new RunningWebFrontend(application, microservice);
-                const runningMicroservice = new RunningMicroservice(runtime, backend, web);
+                const runningMicroservice = new RunningMicroservice(microservice, runtime, backend, web);
                 this.microservices.push(runningMicroservice);
             }
         }

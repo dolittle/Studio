@@ -5,8 +5,10 @@ import { Application, Microservice } from '@dolittle/vanir-common';
 import { IRunningInstance } from './IRunningInstance';
 
 export class RunningTypescriptBackend implements IRunningInstance {
-    logs?: NodeJS.ReadableStream;
-
     constructor(application: Application, microservice: Microservice) {
+    }
+
+    async getLogs(): Promise<NodeJS.ReadableStream> {
+        throw new Error('Not implemented');
     }
 }
