@@ -17,5 +17,6 @@ export interface IApplications {
     start(path: string, application: Application): Promise<void>;
     stop(path: string, application: Application): Promise<void>;
     getStatusFor(id: string): Promise<ApplicationStatus>;
-    captureLogFor(application: Application, instance: RunningInstanceType, microservice?: Microservice): Promise<void>;
+    startCaptureLogFor(application: Application, instance: RunningInstanceType, microservice?: Microservice): Promise<string>;
+    stopCaptureLogFor(id: string): Promise<void>;
 }

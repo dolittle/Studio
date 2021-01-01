@@ -15,6 +15,7 @@ import { IRunningInstance } from './IRunningInstance';
 import { getMainWindow } from '../globals';
 
 import byline from 'byline';
+import { Guid } from '@dolittle/rudiments';
 
 /* eslint-disable no-restricted-globals */
 @injectable()
@@ -79,11 +80,15 @@ export class Applications implements IApplications {
         };
     }
 
-    async captureLogFor(application: Application, instance: RunningInstanceType, microservice?: Microservice): Promise<void> {
+    async startCaptureLogFor(application: Application, instance: RunningInstanceType, microservice?: Microservice): Promise<string> {
         const mainWindow = getMainWindow();
+        const id = Guid.create().toString();
+
+        this._logger.info(`Start log capture for ${application.name} - ${Object.values(RunningInstanceType)[instance]}`);
 
         const runningApplication = this._runningApplications.find(_ => _.application.id === application.id);
         if (runningApplication) {
+            this._logger.info('Found running application');
             let runningInstance: IRunningInstance | undefined;
             if (microservice) {
                 const runningMicroservice = runningApplication.microservices.find(_ => _.microservice.id === microservice.id);
@@ -100,26 +105,33 @@ export class Applications implements IApplications {
                         } break;
                     }
                 }
-            } else {
-                switch (instance) {
-                    case RunningInstanceType.Ingress: {
-                        runningInstance = runningApplication.ingress;
-                    } break;
-                    case RunningInstanceType.Mongo: {
-                        runningInstance = runningApplication.mongo;
-                    } break;
-                }
             }
+
+            switch (instance) {
+                case RunningInstanceType.Ingress: {
+                    runningInstance = runningApplication.ingress;
+                } break;
+                case RunningInstanceType.Mongo: {
+                    runningInstance = runningApplication.mongo;
+                } break;
+            }
+
 
             if (runningInstance) {
                 const logs = await runningInstance.getLogs();
                 const stream = byline.createStream(logs);
                 stream.on('data', (data: Buffer) => {
                     const message = data.slice(8);  // Skip Docker header
-                    mainWindow?.webContents.send('log-message', message);
+                    mainWindow?.webContents.send(id, message);
                 });
+                this._logger.info(`Started capture with id '${id}'`);
             }
         }
+
+        return id;
+    }
+
+    async stopCaptureLogFor(id: string): Promise<void> {
     }
 
     private async listContainersForApplication(id: string): Promise<ContainerInfo[]> {

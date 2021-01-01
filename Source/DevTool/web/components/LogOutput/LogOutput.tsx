@@ -7,23 +7,32 @@ import { Terminal } from 'xterm';
 import { XTerm } from 'xterm-for-react';
 import { FitAddon } from 'xterm-addon-fit';
 
-import { default as styles } from './LogOutput.module.scss';
+import { default as styles } from '../../microservices/LogOutput.module.scss';
+import { LogOutputViewModel } from './LogOutputViewModel';
+import { withViewModel } from '@dolittle/vanir-react';
+import { RunningInstanceType } from '../../../common/applications/IApplications';
 
 export interface ILogOutputProps {
     terminalReady?: (terminal: Terminal) => void;
+    instance: RunningInstanceType;
 }
 
-export const LogOutput = (props: ILogOutputProps) => {
+export const LogOutput = withViewModel<LogOutputViewModel, ILogOutputProps>(LogOutputViewModel, ({ viewModel, props }) => {
     const xtermRef = React.createRef<XTerm>();
     const fitAddon = new FitAddon();
 
     useEffect(() => {
-        if (props.terminalReady && xtermRef.current) {
-            props.terminalReady(xtermRef.current.terminal);
-        }
         fitAddon.fit();
+        if (xtermRef.current) {
+            props.terminalReady?.(xtermRef.current.terminal);
+            viewModel.startCapture(xtermRef.current.terminal, props.instance);
+        }
 
         window.addEventListener('resize', () => fitAddon.fit());
+
+        return () => {
+            viewModel.stopCapture();
+        };
     });
 
     return (
@@ -32,4 +41,4 @@ export const LogOutput = (props: ILogOutputProps) => {
             ref={xtermRef}
             addons={[fitAddon]} />
     );
-};
+});
