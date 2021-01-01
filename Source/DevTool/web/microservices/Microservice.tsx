@@ -66,7 +66,7 @@ export const Microservice = withViewModel(MicroserviceViewModel, ({ viewModel })
                     <GraphQL application={viewModel.application} microservice={viewModel.microservice} />
                 </Route>
                 <Route path="/microservice/:microserviceId/swagger">
-                    <Swagger />
+                    <Swagger application={viewModel.application} microservice={viewModel.microservice}/>
                 </Route>
                 <Route path="/microservice/:microserviceId/runtime">
                     <Runtime />

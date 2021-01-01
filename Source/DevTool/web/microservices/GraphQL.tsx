@@ -7,6 +7,6 @@ import { ExternalContent } from './ExternalContent';
 
 export const GraphQL = (props: {application?: Application, microservice?: Microservice}) => {
     return (
-        <ExternalContent microservice={props.microservice} application={props.application} path="graphql"/>
+        <ExternalContent microservice={props.microservice} application={props.application} path="graphql" api={false}/>
     );
 };

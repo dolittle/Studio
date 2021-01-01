@@ -9,6 +9,7 @@ export interface IExternalContentProps {
     application?: Application;
     microservice?: Microservice;
     path: string;
+    api: boolean;
 }
 
 export const ExternalContent = (props: IExternalContentProps) => {
@@ -19,9 +20,15 @@ export const ExternalContent = (props: IExternalContentProps) => {
     const isPortal = props.application.portal?.id === props.microservice.id;
     let prefix = '';
     if (!isPortal) {
-        prefix = `/_/${props.microservice?.name.toLowerCase()}`;
+        if (!props.api) {
+            prefix = '/_/';
+        }
+        prefix = prefix + props.microservice?.name.toLowerCase();
     } else {
         prefix = '';
+    }
+    if (props.api) {
+        prefix = `/api/${prefix}`;
     }
 
     return (

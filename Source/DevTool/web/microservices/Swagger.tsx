@@ -7,6 +7,6 @@ import { ExternalContent } from './ExternalContent';
 
 export const Swagger = (props: {application?: Application, microservice?: Microservice}) => {
     return (
-        <ExternalContent microservice={props.microservice} application={props.application} path="swagger"/>
+        <ExternalContent microservice={props.microservice} application={props.application} path="swagger" api={true}/>
     );
 };
