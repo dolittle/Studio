@@ -23,6 +23,36 @@ import { Processes } from './Processes';
 import { IWorkspaces, IWorkspacesToken } from '../../common/workspaces';
 import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 
+import { MongoClient } from 'mongodb';
+
+/* eslint-disable no-restricted-globals */
+
+function waitForMongo(logger: ILogger): Promise<void> {
+    return new Promise(async (resolve) => {
+        logger.info('Wait for mongo to become ready');
+
+        const interval = setInterval(async () => {
+            try {
+                const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true });
+                process.stdout.write('\n');
+                logger.info('Mongo is ready');
+                client.close();
+                clearInterval(interval);
+                resolve();
+            } catch (ex) {
+                process.stdout.write('.');
+            }
+        }, 1000);
+
+        setTimeout(() => {
+            logger.info('Timed out waiting for mongo to become ready');
+            clearInterval(interval);
+            resolve();
+        }, 20000);
+    });
+}
+
+
 
 /* eslint-disable no-restricted-globals */
 @injectable()
@@ -52,8 +82,11 @@ export class Applications implements IApplications {
                 const containerInfos = await this.listContainersForApplication(application.id);
                 if (containerInfos.length === application.microservices.length + 2) {
                     this._logger.info('Containers are ready');
+                    clearInterval(interval);
+
                     const containers = new Containers(application, containerInfos);
                     const processes = new Processes(directory, application, this._logger);
+                    await waitForMongo(this._logger);
 
                     for (const microservice of microservices) {
                         processes.start(RunningInstanceType.Backend, microservice);
@@ -70,7 +103,6 @@ export class Applications implements IApplications {
                         processes,
                         this._logger);
                     this._runningApplications.push(runningApplication);
-                    clearInterval(interval);
                 }
             }, 500);
 
