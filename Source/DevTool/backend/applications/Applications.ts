@@ -3,6 +3,7 @@
 
 import Docker, { ContainerInfo } from 'dockerode';
 
+import fs from 'fs';
 import path from 'path';
 import { ApplicationRunState, ApplicationStatus, IApplications, RunningInstanceType } from '../../common/applications';
 import { injectable } from 'tsyringe';
@@ -16,13 +17,9 @@ import { getMainWindow } from '../globals';
 
 import byline from 'byline';
 import { Guid } from '@dolittle/rudiments';
-
-type CapturedLog = {
-    id: string;
-    logs: NodeJS.ReadableStream,
-    byline: byline.LineStream
-};
-
+import { MicroserviceWithLocation } from './MicroserviceWithLocation';
+import { CapturedLog } from './CapturedLog';
+import { Containers } from './Containers';
 
 /* eslint-disable no-restricted-globals */
 @injectable()
@@ -37,6 +34,7 @@ export class Applications implements IApplications {
         const workingDirectory = path.join(directory, '.dolittle');
 
         this._logger.info(`Starting application '${application.name}' from ${workingDirectory}`);
+        const microservices = await this.getMicroservicesFor(directory, application);
 
         exec('docker-compose up -d', { cwd: workingDirectory }, (err, stdout, stderr) => {
             if (err) {
@@ -45,10 +43,19 @@ export class Applications implements IApplications {
             }
 
             const interval = setInterval(async () => {
-                const containers = await this.listContainersForApplication(application.id);
-                if (containers.length === application.microservices.length + 2) {
+                const containerInfos = await this.listContainersForApplication(application.id);
+                if (containerInfos.length === application.microservices.length + 2) {
                     this._logger.info('Containers are ready');
-                    const runningApplication = new RunningApplication(this._docker, directory, application, stdout, stderr, containers, this._logger);
+                    const containers = new Containers(application, containerInfos);
+                    const runningApplication = new RunningApplication(
+                        this._docker,
+                        directory,
+                        application,
+                        microservices,
+                        stdout,
+                        stderr,
+                        containers,
+                        this._logger);
                     this._runningApplications.push(runningApplication);
                     clearInterval(interval);
                 }
@@ -97,33 +104,7 @@ export class Applications implements IApplications {
         const runningApplication = this._runningApplications.find(_ => _.application.id === application.id);
         if (runningApplication) {
             this._logger.info('Found running application');
-            let runningInstance: IRunningInstance | undefined;
-            if (microservice) {
-                const runningMicroservice = runningApplication.microservices.find(_ => _.microservice.id === microservice.id);
-                if (runningMicroservice) {
-                    switch (instance) {
-                        case RunningInstanceType.Runtime: {
-                            runningInstance = runningMicroservice.runtime;
-                        } break;
-                        case RunningInstanceType.Backend: {
-                            runningInstance = runningMicroservice.backend;
-                        } break;
-                        case RunningInstanceType.Web: {
-                            runningInstance = runningMicroservice.web;
-                        } break;
-                    }
-                }
-            }
-
-            switch (instance) {
-                case RunningInstanceType.Ingress: {
-                    runningInstance = runningApplication.ingress;
-                } break;
-                case RunningInstanceType.Mongo: {
-                    runningInstance = runningApplication.mongo;
-                } break;
-            }
-
+            const runningInstance = runningApplication.getRunningInstanceFor(instance, microservice);
 
             if (runningInstance) {
                 const logs = await runningInstance.getLogs();
@@ -152,6 +133,23 @@ export class Applications implements IApplications {
             delete this._capturedLogs[id];
             this._logger.info(`Stopped log capture for '${id}'`);
         }
+    }
+
+    private async getMicroservicesFor(directory: string, application: Application): Promise<MicroserviceWithLocation[]> {
+        const microservices: MicroserviceWithLocation[] = [];
+        for (const relativePath of application.microservices) {
+            const microserviceDirectory = path.join(directory, relativePath);
+            const microservicePath = path.join(microserviceDirectory, 'microservice.json');
+            if (fs.existsSync(microservicePath)) {
+                this._logger.info(`Adding microservice`);
+                const buffer = await fs.promises.readFile(microservicePath);
+                const microservice = JSON.parse(buffer.toString()) as MicroserviceWithLocation;
+                microservice.location = microserviceDirectory;
+                microservices.push(microservice);
+            }
+        }
+
+        return microservices;
     }
 
     private async listContainersForApplication(id: string): Promise<ContainerInfo[]> {
