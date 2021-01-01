@@ -1,12 +1,12 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { Application, Microservice } from '@dolittle/vanir-common';
 import React from 'react';
+import { ExternalContent } from './ExternalContent';
 
-export const GraphQL = () => {
+export const GraphQL = (props: {application?: Application, microservice?: Microservice}) => {
     return (
-        <>
-            GraphQL
-        </>
+        <ExternalContent microservice={props.microservice} application={props.application} path="graphql"/>
     );
-}
+};
