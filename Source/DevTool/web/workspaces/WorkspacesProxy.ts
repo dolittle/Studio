@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { Application } from '@dolittle/vanir-common';
 import { injectable } from 'tsyringe';
 import { IWorkspaces, IWorkspacesToken, Workspace } from '../../common/workspaces';
 import { Interop } from '../Interop';
@@ -19,6 +20,10 @@ export class WorkspacesProxy implements IWorkspaces {
 
     addFromPath(path: string): Promise<void> {
         return this._interop.invoke(IWorkspacesToken, 'addFromPath', path);
+    }
+
+    async getFor(application: Application): Promise<Workspace> {
+        return await this._interop.invoke(IWorkspacesToken, 'getFor', application) as Workspace;
     }
 
     async getAll(): Promise<Workspace[]> {

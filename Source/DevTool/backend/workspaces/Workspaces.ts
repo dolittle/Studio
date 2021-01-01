@@ -52,6 +52,14 @@ export class Workspaces implements IWorkspaces {
         }
     }
 
+    async getFor(application: Application): Promise<Workspace> {
+        const workspace = this._workspaces.find(_ => _.application.id === application.id);
+        if (!workspace) {
+            throw new Error(`Missing workspace for application '${application.name}' with id '${application.id}'`);
+        }
+        return workspace;
+    }
+
     async getAll(): Promise<Workspace[]> {
         if (this._workspaces.length === 0) {
             await this.load();

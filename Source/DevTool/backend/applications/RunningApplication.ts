@@ -9,9 +9,10 @@ import { RunningTypescriptBackend } from './RunningTypescriptBackend';
 import { RunningWebFrontend } from './RunningWebFrontend';
 import { ILogger } from '@dolittle/vanir-backend';
 import { RunningContainer } from './RunningContainer';
-import { MicroserviceWithLocation } from './MicroserviceWithLocation';
+import { MicroserviceWithLocationAndPorts } from './MicroserviceWithLocationAndPorts';
 import { RunningInstanceType } from '../../common/applications/IApplications';
 import { Containers } from './Containers';
+import { Processes } from './Processes';
 
 export class RunningApplication {
     readonly mongo: IRunningInstance;
@@ -22,10 +23,11 @@ export class RunningApplication {
         readonly docker: Docker,
         readonly directory: string,
         readonly application: Application,
-        readonly microservices: MicroserviceWithLocation[],
+        readonly microservices: MicroserviceWithLocationAndPorts[],
         readonly startupStdout: string,
         readonly startupStderr: string,
         readonly containers: Containers,
+        readonly processes: Processes,
         private readonly _logger: ILogger) {
 
         this._logger.info('Setting up RunningApplication');
@@ -35,8 +37,8 @@ export class RunningApplication {
 
         for (const microservice of microservices) {
             const runtime = new RunningContainer(docker, containers.getByName('runtime'));
-            const backend = new RunningTypescriptBackend(microservice.location, application, microservice, _logger);
-            const web = new RunningWebFrontend(application, microservice);
+            const backend = processes.getFor(RunningInstanceType.Backend, microservice);
+            const web = processes.getFor(RunningInstanceType.Web, microservice);
             const runningMicroservice = new RunningMicroservice(microservice, runtime, backend, web);
             this.runningMicroservices.push(runningMicroservice);
         }

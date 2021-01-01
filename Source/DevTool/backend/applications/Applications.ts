@@ -6,20 +6,22 @@ import Docker, { ContainerInfo } from 'dockerode';
 import fs from 'fs';
 import path from 'path';
 import { ApplicationRunState, ApplicationStatus, IApplications, RunningInstanceType } from '../../common/applications';
-import { injectable } from 'tsyringe';
+import { injectable, inject } from 'tsyringe';
 import { Application, Microservice } from '@dolittle/vanir-common';
 
 import { exec } from 'child_process';
 import { ILogger } from '@dolittle/vanir-backend';
 import { RunningApplication } from './RunningApplication';
-import { IRunningInstance } from './IRunningInstance';
 import { getMainWindow } from '../globals';
 
 import byline from 'byline';
 import { Guid } from '@dolittle/rudiments';
-import { MicroserviceWithLocation } from './MicroserviceWithLocation';
+import { MicroserviceWithLocationAndPorts } from './MicroserviceWithLocationAndPorts';
 import { CapturedLog } from './CapturedLog';
 import { Containers } from './Containers';
+import { Processes } from './Processes';
+import { IWorkspaces, IWorkspacesToken } from '../../common/workspaces';
+import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 
 /* eslint-disable no-restricted-globals */
 @injectable()
@@ -27,7 +29,10 @@ export class Applications implements IApplications {
     private _runningApplications: RunningApplication[] = [];
     private _capturedLogs: { [key: string]: CapturedLog } = {};
 
-    constructor(private readonly _docker: Docker, private readonly _logger: ILogger) {
+    constructor(
+        @inject(IWorkspacesToken) private readonly _workspaces: IWorkspaces,
+        private readonly _docker: Docker,
+        private readonly _logger: ILogger) {
     }
 
     async start(directory: string, application: Application) {
@@ -47,6 +52,12 @@ export class Applications implements IApplications {
                 if (containerInfos.length === application.microservices.length + 2) {
                     this._logger.info('Containers are ready');
                     const containers = new Containers(application, containerInfos);
+                    const processes = new Processes(directory, application, this._logger);
+
+                    for (const microservice of microservices) {
+                        processes.start(RunningInstanceType.Backend, microservice);
+                        processes.start(RunningInstanceType.Web, microservice);
+                    }
                     const runningApplication = new RunningApplication(
                         this._docker,
                         directory,
@@ -55,6 +66,7 @@ export class Applications implements IApplications {
                         stdout,
                         stderr,
                         containers,
+                        processes,
                         this._logger);
                     this._runningApplications.push(runningApplication);
                     clearInterval(interval);
@@ -135,16 +147,18 @@ export class Applications implements IApplications {
         }
     }
 
-    private async getMicroservicesFor(directory: string, application: Application): Promise<MicroserviceWithLocation[]> {
-        const microservices: MicroserviceWithLocation[] = [];
+    private async getMicroservicesFor(directory: string, application: Application): Promise<MicroserviceWithLocationAndPorts[]> {
+        const workspace = this._workspaces.getFor(application);
+        const microservices: MicroserviceWithLocationAndPorts[] = [];
         for (const relativePath of application.microservices) {
             const microserviceDirectory = path.join(directory, relativePath);
             const microservicePath = path.join(microserviceDirectory, 'microservice.json');
             if (fs.existsSync(microservicePath)) {
                 this._logger.info(`Adding microservice`);
                 const buffer = await fs.promises.readFile(microservicePath);
-                const microservice = JSON.parse(buffer.toString()) as MicroserviceWithLocation;
+                const microservice = JSON.parse(buffer.toString()) as MicroserviceWithLocationAndPorts;
                 microservice.location = microserviceDirectory;
+                microservice.ports = (await workspace).microservicePorts.find(_ => _.id === microservice.id) || MicroservicePorts.default;
                 microservices.push(microservice);
             }
         }
