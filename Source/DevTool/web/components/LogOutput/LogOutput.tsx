@@ -7,7 +7,7 @@ import { Terminal } from 'xterm';
 import { XTerm } from 'xterm-for-react';
 import { FitAddon } from 'xterm-addon-fit';
 
-import { default as styles } from '../../microservices/LogOutput.module.scss';
+import { default as styles } from './LogOutput.module.scss';
 import { LogOutputViewModel } from './LogOutputViewModel';
 import { withViewModel } from '@dolittle/vanir-react';
 import { RunningInstanceType } from '../../../common/applications/IApplications';
