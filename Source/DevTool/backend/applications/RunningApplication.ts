@@ -5,8 +5,6 @@ import Docker, { ContainerInfo } from 'dockerode';
 import { Application, Microservice } from '@dolittle/vanir-common';
 import { RunningMicroservice } from './RunningMicroservice';
 import { IRunningInstance } from './IRunningInstance';
-import { RunningTypescriptBackend } from './RunningTypescriptBackend';
-import { RunningWebFrontend } from './RunningWebFrontend';
 import { ILogger } from '@dolittle/vanir-backend';
 import { RunningContainer } from './RunningContainer';
 import { MicroserviceWithLocationAndPorts } from './MicroserviceWithLocationAndPorts';

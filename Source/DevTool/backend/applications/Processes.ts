@@ -48,16 +48,24 @@ export class Processes {
 
         const childProcess = exec(command, {
             cwd: processDirectory,
-            env: {...process.env, ...env}
+            env: { ...process.env, ...env }
         });
         childProcess.stdout?.setEncoding('utf8');
         childProcess.stderr?.setEncoding('utf8');
-        childProcess.stdout?.pipe(process.stdout);
-        childProcess.stderr?.pipe(process.stderr);
 
         const runningProcess = new RunningProcess(instance, microservice, childProcess);
         this._running.push(runningProcess);
         return runningProcess;
+    }
+
+    stop() {
+        this._logger.info(`Stopping processes for application '${this._application.name}'`);
+        let count = 0;
+        for (const process of this._running) {
+            process.stop();
+            count++;
+        }
+        this._logger.info(`Processes are stopped (${count} total)`);
     }
 
     getFor(instance: RunningInstanceType, microservice: MicroserviceWithLocationAndPorts): RunningProcess {

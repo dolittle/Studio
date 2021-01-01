@@ -18,4 +18,12 @@ export class RunningContainer implements IRunningInstance {
         logs.setEncoding('utf8');
         return logs;
     }
+
+    async pause(): Promise<void> {
+
+    }
+
+    async stop(): Promise<void> {
+
+    }
 }

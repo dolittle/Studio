@@ -23,6 +23,7 @@ import { Processes } from './Processes';
 import { IWorkspaces, IWorkspacesToken } from '../../common/workspaces';
 import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 
+
 /* eslint-disable no-restricted-globals */
 @injectable()
 export class Applications implements IApplications {
@@ -85,6 +86,11 @@ export class Applications implements IApplications {
             if (err) {
                 console.error(`Exec error ${err}`);
                 return;
+            }
+
+            const runningApplication = this._runningApplications.find(_ => _.application.id === application.id);
+            if (runningApplication) {
+                runningApplication.processes.stop();
             }
 
             const interval = setInterval(async () => {
@@ -158,7 +164,7 @@ export class Applications implements IApplications {
                 const buffer = await fs.promises.readFile(microservicePath);
                 const microservice = JSON.parse(buffer.toString()) as MicroserviceWithLocationAndPorts;
                 microservice.location = microserviceDirectory;
-                microservice.ports = (await workspace).microservicePorts.find(_ => _.id === microservice.id) || MicroservicePorts.default;
+                microservice.ports = (await workspace).microservicePorts.find(_ => _.id === microservice.id) || MicroservicePorts.default;
                 microservices.push(microservice);
             }
         }

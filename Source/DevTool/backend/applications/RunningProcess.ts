@@ -10,13 +10,21 @@ import { MicroserviceWithLocationAndPorts } from './MicroserviceWithLocationAndP
 export class RunningProcess implements IRunningInstance {
     private _accumulatedStream: AccumulatedStream;
 
-    constructor(readonly instance: RunningInstanceType, readonly microservice: MicroserviceWithLocationAndPorts, process: ChildProcess) {
+    constructor(readonly instance: RunningInstanceType, readonly microservice: MicroserviceWithLocationAndPorts, private _process: ChildProcess) {
         this._accumulatedStream = new AccumulatedStream();
-        process.stdout?.pipe(this._accumulatedStream);
-        process.stderr?.pipe(this._accumulatedStream);
+        _process.stdout?.pipe(this._accumulatedStream);
+        _process.stderr?.pipe(this._accumulatedStream);
     }
 
     async getLogs(): Promise<NodeJS.ReadableStream> {
         return this._accumulatedStream.createStream();
+    }
+
+    async pause(): Promise<void> {
+
+    }
+
+    async stop(): Promise<void> {
+        this._process.kill('SIGILL');
     }
 }

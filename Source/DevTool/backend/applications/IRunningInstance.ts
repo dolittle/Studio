@@ -3,4 +3,6 @@
 
 export interface IRunningInstance {
     getLogs(): Promise<NodeJS.ReadableStream>;
+    pause(): Promise<void>;
+    stop(): Promise<void>;
 }
