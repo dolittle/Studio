@@ -17,10 +17,18 @@ import { getMainWindow } from '../globals';
 import byline from 'byline';
 import { Guid } from '@dolittle/rudiments';
 
+type CapturedLog = {
+    id: string;
+    logs: NodeJS.ReadableStream,
+    byline: byline.LineStream
+};
+
+
 /* eslint-disable no-restricted-globals */
 @injectable()
 export class Applications implements IApplications {
     private _runningApplications: RunningApplication[] = [];
+    private _capturedLogs: { [key: string]: CapturedLog } = {};
 
     constructor(private readonly _docker: Docker, private readonly _logger: ILogger) {
     }
@@ -124,6 +132,12 @@ export class Applications implements IApplications {
                     const message = data.slice(8);  // Skip Docker header
                     mainWindow?.webContents.send(id, message);
                 });
+
+                this._capturedLogs[id] = {
+                    id,
+                    logs,
+                    byline: stream
+                };
                 this._logger.info(`Started capture with id '${id}'`);
             }
         }
@@ -132,6 +146,12 @@ export class Applications implements IApplications {
     }
 
     async stopCaptureLogFor(id: string): Promise<void> {
+        if (this._capturedLogs[id]) {
+            this._capturedLogs[id].byline.removeAllListeners();
+            this._capturedLogs[id].logs.removeAllListeners();
+            delete this._capturedLogs[id];
+            this._logger.info(`Stopped log capture for '${id}'`);
+        }
     }
 
     private async listContainersForApplication(id: string): Promise<ContainerInfo[]> {
