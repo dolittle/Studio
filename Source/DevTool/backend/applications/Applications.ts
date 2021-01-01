@@ -31,6 +31,12 @@ function waitForMongo(logger: ILogger): Promise<void> {
     return new Promise(async (resolve) => {
         logger.info('Wait for mongo to become ready');
 
+        const timeout = setTimeout(() => {
+            logger.info('Timed out waiting for mongo to become ready');
+            clearInterval(interval);
+            resolve();
+        }, 20000);
+
         const interval = setInterval(async () => {
             try {
                 const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true });
@@ -38,17 +44,13 @@ function waitForMongo(logger: ILogger): Promise<void> {
                 logger.info('Mongo is ready');
                 client.close();
                 clearInterval(interval);
+                clearTimeout(timeout);
                 resolve();
             } catch (ex) {
                 process.stdout.write('.');
             }
         }, 1000);
 
-        setTimeout(() => {
-            logger.info('Timed out waiting for mongo to become ready');
-            clearInterval(interval);
-            resolve();
-        }, 20000);
     });
 }
 
