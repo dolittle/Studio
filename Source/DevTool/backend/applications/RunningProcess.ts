@@ -25,6 +25,6 @@ export class RunningProcess implements IRunningInstance {
     }
 
     async stop(): Promise<void> {
-        this._process.kill('SIGILL');
+        this._process.kill('SIGTERM');
     }
 }
