@@ -2,6 +2,7 @@
 
 ## Todo
 
+* Fix GitHub action that saves version to read existing file and amend the version info
 * Show details on overview for each microservice
   * Event store (w/connectionstring)
   * Read models (w/connectionstring)
@@ -20,7 +21,6 @@
 * Optimize when we render - only when needed
 * Start / Stop buttons should reflect current state - also support starting state (disable while starting)
 * Open in browser
-* Fix GitHub action that saves version to read existing file and amend the version info
 * Add default Portal layout with navigation structure and iframe setup - leverage deep-linking support
   * Template should have a default landing page with a couple of graphs on it
 * Run yarn after adding a microservice if it is the first microservice
@@ -35,6 +35,9 @@
 * Update running state on startup and detect if any are running
 * Save the running state to disk and resume it when starting (paused containers / processes remain paused etc. )
 * Open MongoDB
+* Don't show Web related things if Microservice does not have a frontend
+* Don't start the Web frontend process if it doesn't have a web frontend
+* Watch for change in files (application.json, microservice.json, vanir.json)
 
 ## Done
 
