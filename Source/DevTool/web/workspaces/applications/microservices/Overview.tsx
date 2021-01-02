@@ -4,7 +4,7 @@
 import { Application, Microservice } from '@dolittle/vanir-common';
 import React from 'react';
 import { TextField, Stack, IStackStyles, IStackProps, FontIcon } from '@fluentui/react';
-import { Workspace, MicroservicePorts } from '../../common/workspaces';
+import { Workspace, MicroservicePorts } from '../../../../common/workspaces';
 
 const stackStyles: Partial<IStackStyles> = { root: { width: 650 } };
 const stackTokens = { childrenGap: 50 };

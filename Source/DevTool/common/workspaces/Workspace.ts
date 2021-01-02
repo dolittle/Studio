@@ -7,7 +7,7 @@ import { MicroservicePorts } from './MicroservicePorts';
 export class Workspace {
     microservices: Microservice[] = [];
 
-    constructor(readonly path: string, readonly application: Application) {
+    constructor(readonly id: string, readonly path: string, readonly application: Application) {
     }
 
     microservicePorts: MicroservicePorts[] = [];

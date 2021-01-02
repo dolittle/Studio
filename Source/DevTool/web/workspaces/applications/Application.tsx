@@ -6,21 +6,24 @@ import { CommandBar, ICommandBarItemProps, FontIcon, Stack, Pivot, PivotItem } f
 
 import { default as styles } from './Application.module.scss';
 import { theme } from '@shared/styles/theme';
-import { Route, useHistory, useParams, useLocation } from 'react-router-dom';
+import { Route, useHistory, useParams, useLocation, useRouteMatch } from 'react-router-dom';
 import { Overview } from './Overview';
 import { withViewModel } from '@dolittle/vanir-react';
 import { ApplicationViewModel } from './ApplicationViewModel';
 import { Mongo } from './Mongo';
 import { Ingress } from './Ingress';
+import { ApplicationProps } from './ApplicationProps';
+import { Microservice } from './microservices/Microservice';
 
 type ApplicationRouteParams = {
     applicationId: string;
 };
 
-export const Application = withViewModel(ApplicationViewModel, ({ viewModel }) => {
+export const Application = withViewModel<ApplicationViewModel, ApplicationProps>(ApplicationViewModel, ({ viewModel, props }) => {
     const location = useLocation();
     const history = useHistory();
-    const params = useParams<ApplicationRouteParams>();
+    const { path, url } = useRouteMatch();
+    viewModel.setWorkspace(props.workspace);
 
     const commandBarItems = [{
         key: 'start',
@@ -51,27 +54,30 @@ export const Application = withViewModel(ApplicationViewModel, ({ viewModel }) =
         <div style={{ width: '100%', height: '100%' }}>
             <Stack>
                 <div className={styles.header}>
-                    <h2><FontIcon iconName="WebAppBuilderSlot" />&nbsp;{viewModel.application?.name}</h2>
+                    <h2><FontIcon iconName="WebAppBuilderSlot" />&nbsp;{props.workspace.application.name}</h2>
                 </div>
                 <CommandBar style={{ width: '100%' }} items={commandBarItems} />
                 <Pivot onLinkClick={linkClicked} style={{ backgroundColor: theme.palette.neutralTertiaryAlt }} selectedKey={location.pathname}>
-                    <PivotItem headerText="Overview" itemKey={`/application/${params.applicationId}/overview`}></PivotItem>
-                    <PivotItem headerText="Mongo" itemKey={`/application/${params.applicationId}/mongo`}></PivotItem>
-                    <PivotItem headerText="Ingress" itemKey={`/application/${params.applicationId}/ingress`}></PivotItem>
+                    <PivotItem headerText="Overview" itemKey={`${url}/overview`}></PivotItem>
+                    <PivotItem headerText="Mongo" itemKey={`${url}/mongo`}></PivotItem>
+                    <PivotItem headerText="Ingress" itemKey={`${url}/ingress`}></PivotItem>
                 </Pivot>
             </Stack>
             <div className={styles.content}>
-                <Route exact path="/application/:applicationId">
-                    <Overview />
+                <Route exact path={`${path}`}>
+                    <Overview workspace={props.workspace} application={props.workspace.application} />
                 </Route>
-                <Route exact path="/application/:applicationId/overview">
-                    <Overview />
+                <Route exact path={`${path}/overview`}>
+                    <Overview workspace={props.workspace} application={props.workspace.application} />
                 </Route>
-                <Route exact path="/application/:applicationId/mongo">
+                <Route exact path={`${path}/mongo`}>
                     <Mongo />
                 </Route>
-                <Route exact path="/application/:applicationId/ingress">
+                <Route exact path={`${path}/ingress`}>
                     <Ingress />
+                </Route>
+                <Route path={`${path}/microservice/:microserviceId`}>
+                    <Microservice workspace={props.workspace} application={props.workspace.application}/>
                 </Route>
             </div>
         </div>

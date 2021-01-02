@@ -3,11 +3,9 @@
 
 import { Application } from '@dolittle/vanir-common';
 import { injectable, inject } from 'tsyringe';
-import { Applications } from '../Applications';
-import { IApplications, IApplicationsToken } from '../../common/applications/IApplications';
-import { ApplicationStatus } from '../../common/applications/ApplicationStatus';
-import { Workspaces } from '../Workspaces';
-import { Workspace } from '../../common/workspaces/Workspace';
+import { IApplications, IApplicationsToken } from '../../../common/applications/IApplications';
+import { ApplicationStatus } from '../../../common/applications/ApplicationStatus';
+import { Workspace } from '../../../common/workspaces/Workspace';
 
 /* eslint-disable no-restricted-globals */
 @injectable()
@@ -17,17 +15,15 @@ export class ApplicationViewModel {
     applicationStatus?: ApplicationStatus;
 
     constructor(
-        applications: Applications,
-        workspaces: Workspaces,
         @inject(IApplicationsToken) private readonly _applications: IApplications) {
+    }
 
-        workspaces.current.subscribe(_ => {
-            this.workspace = _;
-        });
-        applications.current.subscribe(_ => {
-            this.application = _;
+    setWorkspace(workspace: Workspace) {
+        if (this.workspace?.id !== workspace.id) {
+            this.workspace = workspace;
+            this.application = workspace.application;
             this.updateStatus();
-        });
+        }
     }
 
     async start() {

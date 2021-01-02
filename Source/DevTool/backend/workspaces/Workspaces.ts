@@ -12,6 +12,7 @@ import { createMicroservice } from 'create-dolittle-microservice/dist/creation';
 import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 import { WorkspaceRenderer } from './WorkspaceRenderer';
 import { ILogger } from '@dolittle/vanir-backend';
+import { Guid } from '@dolittle/rudiments';
 
 export type WorkspaceFile = {
     path: string;
@@ -50,6 +51,14 @@ export class Workspaces implements IWorkspaces {
                 this._logger.info(`Microservice does not exist`);
             }
         }
+    }
+
+    async getById(id: string): Promise<Workspace> {
+        const workspace = this._workspaces.find(_ => _.id === id);
+        if (!workspace) {
+            throw new Error(`Missing workspace for with id '${id}'`);
+        }
+        return workspace;
     }
 
     async getFor(application: Application): Promise<Workspace> {
@@ -98,7 +107,8 @@ export class Workspaces implements IWorkspaces {
         if (fs.existsSync(applicationPath)) {
             const buffer = await fs.promises.readFile(applicationPath);
             const application = JSON.parse(buffer.toString()) as Application;
-            let workspace = new Workspace(source, application);
+            const workspaceId = Guid.create().toString();
+            let workspace = new Workspace(workspaceId, source, application);
             const existing = this._workspaces.find(_ => _.path === source);
             if (!existing) {
                 this._logger.info(`Workspace is new`);
@@ -180,6 +190,7 @@ export class Workspaces implements IWorkspaces {
         const file = this.getWorkspaceFilePath();
         const workspaces = this._workspaces.map(_ => {
             return {
+                id: _.id,
                 path: _.path,
                 ports: _.microservicePorts
             } as WorkspaceFile;

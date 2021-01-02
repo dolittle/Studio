@@ -5,7 +5,8 @@ import React from 'react';
 import { DetailsList, DetailsListLayoutMode, SelectionMode, IColumn, TextField, Stack } from '@fluentui/react';
 import { withViewModel } from '@dolittle/vanir-react';
 import { OverviewViewModel } from './OverviewViewModel';
-import { ApplicationRunState } from '../../common/applications/ApplicationRunState';
+import { ApplicationRunState } from '../../../common/applications/ApplicationRunState';
+import { OverviewProps } from './OverviewProps';
 
 const columns = [{
     key: 'Id',
@@ -33,8 +34,9 @@ applicationRunStateStrings[ApplicationRunState.stopped] = 'Stopped';
 applicationRunStateStrings[ApplicationRunState.running] = 'Running';
 applicationRunStateStrings[ApplicationRunState.partial] = 'Partially running';
 
-export const Overview = withViewModel(OverviewViewModel, ({ viewModel }) => {
+export const Overview = withViewModel<OverviewViewModel, OverviewProps>(OverviewViewModel, ({ viewModel, props }) => {
     const items = viewModel.containers;
+    viewModel.setApplication(props.application);
 
     return (
         <>

@@ -6,7 +6,7 @@ import { IWorkspacesToken } from '../common/workspaces/IWorkspaces';
 import { Interop } from './Interop';
 import { WorkspacesProxy } from './workspaces/WorkspacesProxy';
 import { IApplicationsToken } from '../common/applications';
-import { ApplicationsProxy } from './applications/ApplicationsProxy';
+import { ApplicationsProxy } from './workspaces/applications/ApplicationsProxy';
 import { IApplicationLogToken } from '../common';
 import { ApplicationLogProxy } from './ApplicationLogProxy';
 

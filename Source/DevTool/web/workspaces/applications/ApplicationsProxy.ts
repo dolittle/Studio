@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { ApplicationStatus } from '../../common/applications/ApplicationStatus';
-import { IApplications, IApplicationsToken, RunningInstanceType } from '../../common/applications/IApplications';
+import { ApplicationStatus } from '../../../common/applications/ApplicationStatus';
+import { IApplications, IApplicationsToken, RunningInstanceType } from '../../../common/applications/IApplications';
 import { injectable } from 'tsyringe';
-import { Interop } from '../Interop';
+import { Interop } from '../../Interop';
 import { Application, Microservice } from '@dolittle/vanir-common';
 
 @injectable()

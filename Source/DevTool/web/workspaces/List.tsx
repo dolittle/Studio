@@ -44,17 +44,23 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
         });
     };
 
+    const getApplicationLinkFrom = (workspace: Workspace) => {
+        return `/workspace/${workspace.id}/application/${workspace.application.id}`;
+    };
+
     const navigationGroups = viewModel.workspaces.map(_ => {
+        const applicationLink = getApplicationLinkFrom(_);
+
         return {
-            key: _.application.id,
             name: _.application.name,
             groupData: _,
             links: _.microservices.map(ms => {
+                const microserviceLink = `${applicationLink}/microservice/${ms.id}`;
                 return {
-                    key: ms.id,
+                    key: microserviceLink,
                     name: ms.name,
                     onClick: () => {
-                        history.push(`/microservice/${ms.id}`);
+                        history.push(microserviceLink);
                         viewModel.setCurrentApplication(_, _.application);
                         viewModel.setCurrentMicroservice(ms);
                     }
@@ -63,8 +69,10 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
         } as INavLinkGroup;
     });
 
-    const navigateToApplication = (workspace: Workspace) => {
-        history.push(`/application/${workspace.application.id}`);
+    const navigateToApplication = (group: INavLinkGroup) => {
+        const workspace = group.groupData as Workspace;
+        const link = getApplicationLinkFrom(workspace);
+        history.push(link);
         viewModel.setCurrentApplication(workspace, workspace.application);
     };
 
@@ -74,7 +82,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
             <div style={{ paddingRight: '1rem', paddingLeft: '1rem' }}>
                 <Stack horizontal>
                     <StackItem grow={1}>
-                        <Link onClick={() => navigateToApplication(group.groupData as Workspace)}><h3 style={{ paddingTop: '0.15rem' }}>{group.name}</h3></Link>
+                        <Link onClick={() => navigateToApplication(group)}><h3 style={{ paddingTop: '0.15rem' }}>{group.name}</h3></Link>
                     </StackItem>
                     <StackItem>
                         <h3>
