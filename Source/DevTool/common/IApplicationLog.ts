@@ -5,4 +5,5 @@ export const IApplicationLogToken = 'IApplicationLog';
 export const ApplicationLogMessage = 'log-message';
 export interface IApplicationLog {
     start(): Promise<void>;
+    stop(): Promise<void>;
 }

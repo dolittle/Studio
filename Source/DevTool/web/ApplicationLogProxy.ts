@@ -15,4 +15,8 @@ export class ApplicationLogProxy implements IApplicationLog {
     start(): Promise<void> {
         return this._interop.invoke(IApplicationLogToken, 'start');
     }
+
+    stop(): Promise<void> {
+        return this._interop.invoke(IApplicationLogToken, 'stop');
+    }
 }

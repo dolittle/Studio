@@ -36,7 +36,7 @@ export const LogOutput = withViewModel<LogOutputViewModel, ILogOutputProps>(LogO
     });
 
     return (
-        <XTerm options={{ disableStdin: true, fontSize: 12 }}
+        <XTerm options={{ disableStdin: true, fontSize: 12, allowTransparency: true, theme: { background: 'transparent'} }}
             className={styles.terminal}
             ref={xtermRef}
             addons={[fitAddon]} />

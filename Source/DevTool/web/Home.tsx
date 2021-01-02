@@ -23,11 +23,14 @@ export const Home = withViewModel(HomeViewModel, ({viewModel}) => {
             viewModel.start();
             ipcRenderer.on(ApplicationLogMessage, (event, message) => {
                 xtermRef.current?.terminal.writeln(message);
-                console.log(`Message: ${message}`);
             });
         }
 
         window.addEventListener('resize', () => fitAddon.fit());
+
+        return () => {
+            viewModel.stop();
+        }
     });
 
     return (

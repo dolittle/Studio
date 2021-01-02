@@ -10,19 +10,20 @@ import { ApplicationLogMessage, IApplicationLog } from '../common';
 
 export class ApplicationLog implements IApplicationLog {
     private _stream = new AccumulatedStream();
-    private count = 0;
 
     constructor() {
         this.wrapStream(process.stdout);
         this.wrapStream(process.stderr);
-
-        this._stream.on('data', (chunk) => this.count += chunk.length);
     }
 
     async start(): Promise<void> {
         const mainWindow = getMainWindow();
         const stream = byline.createStream(this._stream.createStream());
         stream.on('data', (chunk) => mainWindow?.webContents.send(ApplicationLogMessage, chunk));
+    }
+
+    async stop(): Promise<void> {
+        this._stream.removeAllAppendListeners();
     }
 
     private wrapStream(stream: Writable) {

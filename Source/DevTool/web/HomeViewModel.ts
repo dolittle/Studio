@@ -12,4 +12,8 @@ export class HomeViewModel {
     start() {
         this._applicationLog.start();
     }
+
+    stop() {
+        this._applicationLog.stop();
+    }
 }
