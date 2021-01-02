@@ -12,6 +12,7 @@ import { default as styles } from './App.module.scss';
 
 import { BrowserRouter as Router, Route, useParams } from 'react-router-dom';
 import { Home } from './Home';
+import { Layout } from './layout/Layout';
 
 export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     Services.initialize();
@@ -22,12 +23,7 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
                 <WorkspaceList />
             </div>
             <div className={styles.mainContent}>
-                <Route exact path="/">
-                    <Home />
-                </Route>
-                <Route path="/workspace/:workspaceId">
-                    <Workspace />
-                </Route>
+                <Layout/>
             </div>
         </Router>
     );
