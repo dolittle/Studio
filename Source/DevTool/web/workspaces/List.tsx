@@ -4,12 +4,13 @@
 import React from 'react';
 import { withViewModel, useDialog, DialogResult } from '@dolittle/vanir-react';
 import { ListViewModel } from './ListViewModel';
-import { IconButton, Stack, StackItem, Nav, INavLink, INavLinkGroup, FontIcon, Link } from '@fluentui/react';
+import { IconButton, Stack, StackItem, Nav, INavLink, INavLinkGroup, Link } from '@fluentui/react';
 import { Dialog } from '../dialogs';
 import { useHistory } from 'react-router-dom';
 import { CreateMicroserviceDialog, ICreateMicroserviceDialogOutput, ICreateMicroserviceDialogInput } from './CreateMicroserviceDialog';
 import { CreateApplicationDialog, ICreateApplicationDialogInput, ICreateApplicationDialogOutput } from './CreateApplicationDialog';
 import { Workspace } from '../../common/workspaces/Workspace';
+import { default as styles } from './List.module.scss';
 
 
 export const List = withViewModel(ListViewModel, ({ viewModel }) => {
@@ -89,6 +90,19 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
         );
     };
 
+    const renderLink = (link: INavLink): JSX.Element => {
+        return (
+            <>
+                <div>
+                    {link.name}
+                </div>
+                <div className={styles.itemActions}>
+                    <IconButton iconProps={{ iconName: 'MSNVideosSolid' }} title="Start" />
+                </div>
+            </>
+        );
+    };
+
     return (
         <>
             <Stack verticalAlign='space-between' style={{ minHeight: '100%' }}>
@@ -100,7 +114,10 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                     </Stack>
                 </StackItem>
                 <StackItem verticalFill={true} grow={1} >
-                    <Nav groups={navigationGroups} onRenderGroupHeader={renderGroupHeader} />
+                    <Nav groups={navigationGroups}
+                        onRenderGroupHeader={renderGroupHeader}
+                        onRenderLink={renderLink}
+                    />
                 </StackItem>
                 <StackItem>
                     (C)2020 Dolittle
