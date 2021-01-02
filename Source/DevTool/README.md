@@ -2,7 +2,6 @@
 
 ## Todo
 
-* DevCentral Logs -> home
 * Show details on overview for each microservice
   * Event store (w/connectionstring)
   * Read models (w/connectionstring)
@@ -11,7 +10,6 @@
   * Running Applications and Microservices state
 * Ability to pause individual microservices (processes)
 * List containers and processes
-* Figure out why streaming logs doesn't work
 * Restart a running process
 * Restart a running container
 * Pause and resume a running process
@@ -41,3 +39,5 @@
 ## Done
 
 * Fix bug for GraphQL and Swagger not working for portal
+* DevCentral Logs -> home
+* Figure out why streaming logs doesn't work
