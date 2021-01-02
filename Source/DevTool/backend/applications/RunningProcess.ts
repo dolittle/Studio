@@ -3,7 +3,7 @@
 
 import { ChildProcess } from 'child_process';
 import { RunningInstanceType } from '../../common/applications';
-import { AccumulatedStream } from './AccumulatedStream';
+import { AccumulatedStream } from '../AccumulatedStream';
 import { IRunningInstance } from './IRunningInstance';
 import { MicroserviceWithLocationAndPorts } from './MicroserviceWithLocationAndPorts';
 

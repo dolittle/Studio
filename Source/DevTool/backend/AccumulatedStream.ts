@@ -11,7 +11,7 @@ export class AccumulatedStream extends Transform {
     }
 
     _transform(chunk: any, encoding: BufferEncoding, callback: TransformCallback) {
-        this._accumulator.push(chunk);
+        this.append(chunk);
         callback();
     }
 
@@ -19,5 +19,17 @@ export class AccumulatedStream extends Transform {
         const stream = new PassThrough();
         this._accumulator.forEach((chunk) => stream.write(chunk));
         return stream;
+    }
+
+    append(chunk: Uint8Array | string) {
+        this._accumulator.push(chunk);
+    }
+
+    getLength() {
+        return this._accumulator.length;
+    }
+
+    getContent() {
+        return this._accumulator;
     }
 }

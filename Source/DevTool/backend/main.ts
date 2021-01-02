@@ -14,8 +14,10 @@ import { Interop } from './Interop';
 
 import * as DependencyInversion from '@dolittle/vanir-dependency-inversion';
 import { DockerEnvironment } from './DockerEnvironment';
+import byline from 'byline';
+import { AccumulatedStream } from './AccumulatedStream';
 
-let mainWindow: BrowserWindow | null;
+let mainWindow: BrowserWindow | null;
 
 function createWindow() {
     // Create the browser window.
@@ -34,9 +36,8 @@ function createWindow() {
     setMainWindow(mainWindow);
 
     DependencyInversion.initialize();
-
-    DockerEnvironment.initialize();
     Services.initialize();
+    DockerEnvironment.initialize();
     Interop.initialize();
 
     const startURL = isDev ? 'http://localhost:9100' : `file://${path.join(__dirname, './build/index.html')}`;

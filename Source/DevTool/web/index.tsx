@@ -15,6 +15,7 @@ import { Services } from './Services';
 import { Application } from './applications/Application';
 import { Microservice } from './microservices/Microservice';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Home } from './Home';
 
 
 export default function App() {
@@ -28,7 +29,7 @@ export default function App() {
                 </div>
                 <div className={styles.mainContent}>
                     <Route exact path="/">
-
+                        <Home/>
                     </Route>
                     <Route path="/application/:applicationId">
                         <Application />
