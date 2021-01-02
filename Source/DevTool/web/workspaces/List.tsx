@@ -4,7 +4,7 @@
 import React from 'react';
 import { withViewModel, useDialog, DialogResult } from '@dolittle/vanir-react';
 import { ListViewModel } from './ListViewModel';
-import { IconButton, Stack, StackItem, Nav, INavLink, INavLinkGroup, Link } from '@fluentui/react';
+import { IconButton, Stack, StackItem, Nav, INavLink, INavLinkGroup, Link, FontIcon } from '@fluentui/react';
 import { Dialog } from '../dialogs';
 import { useHistory } from 'react-router-dom';
 import { CreateMicroserviceDialog, ICreateMicroserviceDialogOutput, ICreateMicroserviceDialogInput } from './CreateMicroserviceDialog';
@@ -104,8 +104,8 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                 <div>
                     {link.name}
                 </div>
-                <div className={styles.itemActions}>
-                    <IconButton iconProps={{ iconName: 'MSNVideosSolid' }} title="Start" />
+                <div className={styles.itemActions} onClick={() => alert('hello')}>
+                    <FontIcon iconName='MSNVideosSolid' title="Start" />
                 </div>
             </>
         );

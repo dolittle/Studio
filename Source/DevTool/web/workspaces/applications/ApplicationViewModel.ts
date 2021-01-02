@@ -6,16 +6,28 @@ import { injectable, inject } from 'tsyringe';
 import { IApplications, IApplicationsToken } from '../../../common/applications/IApplications';
 import { ApplicationStatus } from '../../../common/applications/ApplicationStatus';
 import { Workspace } from '../../../common/workspaces/Workspace';
+import { FeatureNavigationDefinition, ToolbarItems } from '../../components';
 
 /* eslint-disable no-restricted-globals */
 @injectable()
 export class ApplicationViewModel {
+    baseUrl: string = '';
     workspace?: Workspace;
     application?: Application;
     applicationStatus?: ApplicationStatus;
 
     constructor(
-        @inject(IApplicationsToken) private readonly _applications: IApplications) {
+        @inject(IApplicationsToken) private readonly _applications: IApplications,
+        private readonly _navigation: FeatureNavigationDefinition,
+        private readonly _toolbarItems: ToolbarItems) {
+    }
+
+    activate() {
+
+        this._toolbarItems.setItems([
+            { name: 'Start', icon: 'MSNVideosSolid', onClick: () => this.start() },
+            { name: 'Stop', icon: 'MSNVideosSolid', onClick: () => this.stop() }
+        ]);
     }
 
     setWorkspace(workspace: Workspace) {
@@ -23,6 +35,18 @@ export class ApplicationViewModel {
             this.workspace = workspace;
             this.application = workspace.application;
             this.updateStatus();
+        }
+    }
+
+    setBaseURL(url: string) {
+        if (url !== this.baseUrl) {
+            this.baseUrl = url;
+
+            this._navigation.setLinks([
+                { name: 'Overview', link: `${this.baseUrl}/overview` },
+                { name: 'Mongo', link: `${this.baseUrl}/mongo` },
+                { name: 'Ingress', link: `${this.baseUrl}/ingress` }
+            ]);
         }
     }
 

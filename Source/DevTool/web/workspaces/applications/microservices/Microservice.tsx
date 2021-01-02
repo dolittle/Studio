@@ -11,6 +11,8 @@ import { Web } from './Web';
 import { GraphQL } from './GraphQL';
 import { Swagger } from './Swagger';
 import { MicroserviceProps } from './MicroserviceProps';
+import { withViewModel } from '@dolittle/vanir-react';
+import { MicroserviceViewModel } from './MicroserviceViewModel';
 
 type MicroserviceRouteParams = {
     microserviceId: string;
@@ -18,10 +20,11 @@ type MicroserviceRouteParams = {
 
 const NotSet = { id: '', name: 'NotSet', version: '', commit: '', built: '' };
 
-export const Microservice = (props: MicroserviceProps) => {
-    const { path } = useRouteMatch();
+export const Microservice = withViewModel<MicroserviceViewModel, MicroserviceProps>(MicroserviceViewModel, ({ viewModel, props }) => {
+    const { path, url } = useRouteMatch();
     const params = useParams<MicroserviceRouteParams>();
     const microservice = props.workspace.microservices.find(_ => _.id === params.microserviceId) || NotSet;
+    viewModel.setBaseURL(url);
 
     return (
         <>
@@ -48,4 +51,4 @@ export const Microservice = (props: MicroserviceProps) => {
             </Route>
         </>
     );
-};
+});

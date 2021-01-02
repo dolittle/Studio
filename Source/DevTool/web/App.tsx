@@ -11,7 +11,6 @@ import { List as WorkspaceList, Workspace } from './workspaces/index';
 import { default as styles } from './App.module.scss';
 
 import { BrowserRouter as Router, Route, useParams } from 'react-router-dom';
-import { Home } from './Home';
 import { Layout } from './layout/Layout';
 
 export const App = withViewModel(AppViewModel, ({ viewModel }) => {

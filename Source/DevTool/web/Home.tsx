@@ -30,7 +30,7 @@ export const Home = withViewModel(HomeViewModel, ({viewModel}) => {
 
         return () => {
             viewModel.stop();
-        }
+        };
     });
 
     return (

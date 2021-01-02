@@ -38,6 +38,7 @@
 * Don't show Web related things if Microservice does not have a frontend
 * Don't start the Web frontend process if it doesn't have a web frontend
 * Watch for change in files (application.json, microservice.json, vanir.json)
+* Make the declarative feature navigation system work - lifecycle is a killer with nested features
 
 ## Done
 

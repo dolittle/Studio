@@ -2,10 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { CommandBar, ICommandBarItemProps, FontIcon, Stack, Pivot, PivotItem } from '@fluentui/react';
 
-import { theme } from '@shared/styles/theme';
-import { Route, useHistory, useParams, useLocation, useRouteMatch } from 'react-router-dom';
+import { Route, useRouteMatch } from 'react-router-dom';
 import { Overview } from './Overview';
 import { withViewModel } from '@dolittle/vanir-react';
 import { ApplicationViewModel } from './ApplicationViewModel';
@@ -14,15 +12,11 @@ import { Ingress } from './Ingress';
 import { ApplicationProps } from './ApplicationProps';
 import { Microservice } from './microservices/Microservice';
 
-type ApplicationRouteParams = {
-    applicationId: string;
-};
 
 export const Application = withViewModel<ApplicationViewModel, ApplicationProps>(ApplicationViewModel, ({ viewModel, props }) => {
-    const location = useLocation();
-    const history = useHistory();
     const { path, url } = useRouteMatch();
     viewModel.setWorkspace(props.workspace);
+    viewModel.setBaseURL(url);
 
     return (
         <>
