@@ -29,7 +29,6 @@
 * Change colors for GraphQL playground
 * Change colors for Swagger UI
 * Swap out (C) 2020 dolittle with logo or something
-* Formalize how the navigation is working - not copy/pasted as it is not between microservices and applications
 * Avoid duplicate processes running
   * Add an environment variable to every process for identifying them
 * Update running state on startup and detect if any are running
@@ -45,3 +44,4 @@
 * Fix bug for GraphQL and Swagger not working for portal
 * DevCentral Logs -> home
 * Figure out why streaming logs doesn't work
+* Formalize how the navigation is working - not copy/pasted as it is not between microservices and applications
