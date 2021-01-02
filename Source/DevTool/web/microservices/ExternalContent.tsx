@@ -28,7 +28,11 @@ export const ExternalContent = (props: IExternalContentProps) => {
         prefix = '';
     }
     if (props.api) {
-        prefix = `/api/${prefix}`;
+        if (prefix.length > 0) {
+            prefix = `/api/${prefix}`;
+        } else {
+            prefix = '/api';
+        }
     }
 
     return (
