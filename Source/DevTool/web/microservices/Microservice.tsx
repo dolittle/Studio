@@ -57,16 +57,16 @@ export const Microservice = withViewModel(MicroserviceViewModel, ({ viewModel })
             </Stack>
             <div className={styles.content}>
                 <Route exact path="/microservice/:microserviceId">
-                    <Overview />
+                    <Overview workspace={viewModel.workspace} application={viewModel.application} microservice={viewModel.microservice} />
                 </Route>
                 <Route path="/microservice/:microserviceId/overview">
-                    <Overview />
+                    <Overview workspace={viewModel.workspace} application={viewModel.application} microservice={viewModel.microservice} />
                 </Route>
                 <Route path="/microservice/:microserviceId/graphql">
                     <GraphQL application={viewModel.application} microservice={viewModel.microservice} />
                 </Route>
                 <Route path="/microservice/:microserviceId/swagger">
-                    <Swagger application={viewModel.application} microservice={viewModel.microservice}/>
+                    <Swagger application={viewModel.application} microservice={viewModel.microservice} />
                 </Route>
                 <Route path="/microservice/:microserviceId/runtime">
                     <Runtime />

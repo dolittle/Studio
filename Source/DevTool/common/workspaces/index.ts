@@ -3,3 +3,4 @@
 
 export * from './Workspace';
 export * from './IWorkspaces';
+export * from './MicroservicePorts';
