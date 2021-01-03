@@ -6,9 +6,6 @@
 * Show details on overview for each microservice
   * Event store (w/connectionstring)
   * Read models (w/connectionstring)
-* State management with push to client
-  * Workspace state
-  * Running Applications and Microservices state
 * Ability to pause individual microservices (processes)
 * List containers and processes
 * Restart a running process
@@ -16,7 +13,6 @@
 * Pause and resume a running process
 * Pause and resume a running container
 * Optimize when we render - only when needed
-* Start / Stop buttons should reflect current state - also support starting state (disable while starting)
 * Open in browser
 * Add default Portal layout with navigation structure and iframe setup - leverage deep-linking support
   * Template should have a default landing page with a couple of graphs on it
@@ -37,6 +33,7 @@
 * Make the declarative feature navigation system work - lifecycle is a killer with nested features
 * BUG: When navigating from a Microservice to an Application - it doesn't fire state changes like title / navigation / toolbar
 * BUG: Make sure we fill / stretch the acrylic in layout when toolbar and/or navigation is not visible
+* Cleanup application run state leftovers
 
 ## Done
 
@@ -47,3 +44,7 @@
 * Use navigation to select application and microservice
 * Move microservices structure within application
 * Move application structure into workspace
+* Start / Stop buttons should reflect current state - also support starting state (disable while starting)
+* State management with push to client
+  * Workspace state
+  * Running Applications and Microservices state
