@@ -5,7 +5,7 @@ import Docker, { ContainerInfo } from 'dockerode';
 
 import fs from 'fs';
 import path from 'path';
-import { ApplicationRunState, ApplicationStatus, IApplications, RunningInstanceType } from '../../common/applications';
+import { ApplicationRunState, ApplicationStatus, IApplications, RunningInstanceType, RunState, ICurrentStateToken, ICurrentState } from '../../common/applications';
 import { injectable, inject } from 'tsyringe';
 import { Application, Microservice } from '@dolittle/vanir-common';
 
@@ -23,40 +23,11 @@ import { Processes } from './Processes';
 import { IWorkspaces, IWorkspacesToken } from '../../common/workspaces';
 import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 
-import { MongoClient } from 'mongodb';
+import { waitForMongo } from './waitForMongo';
+import { IRunningInstance } from '../../build/backend/applications/IRunningInstance';
 
 /* eslint-disable no-restricted-globals */
 
-function waitForMongo(logger: ILogger): Promise<void> {
-    return new Promise(async (resolve) => {
-        logger.info('Wait for mongo to become ready');
-
-        const timeout = setTimeout(() => {
-            logger.info('Timed out waiting for mongo to become ready');
-            clearInterval(interval);
-            resolve();
-        }, 20000);
-
-        const interval = setInterval(async () => {
-            try {
-                const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true });
-                process.stdout.write('\n');
-                logger.info('Mongo is ready');
-                client.close();
-                clearInterval(interval);
-                clearTimeout(timeout);
-                resolve();
-            } catch (ex) {
-                process.stdout.write('.');
-            }
-        }, 1000);
-
-    });
-}
-
-
-
-/* eslint-disable no-restricted-globals */
 @injectable()
 export class Applications implements IApplications {
     private _runningApplications: RunningApplication[] = [];
@@ -64,6 +35,7 @@ export class Applications implements IApplications {
 
     constructor(
         @inject(IWorkspacesToken) private readonly _workspaces: IWorkspaces,
+        @inject(ICurrentStateToken) private readonly _currentState: ICurrentState,
         private readonly _docker: Docker,
         private readonly _logger: ILogger) {
     }
@@ -74,6 +46,8 @@ export class Applications implements IApplications {
         this._logger.info(`Starting application '${application.name}' from ${workingDirectory}`);
         const microservices = await this.getMicroservicesFor(directory, application);
 
+        this._currentState.reportRunStateForApplication(application.id, RunState.starting);
+        this._currentState.reportTask(application.id, 'Starting docker containers');
         exec('docker-compose up -d', { cwd: workingDirectory }, (err, stdout, stderr) => {
             if (err) {
                 console.error(`Exec error ${err}`);
@@ -83,38 +57,73 @@ export class Applications implements IApplications {
             const interval = setInterval(async () => {
                 const containerInfos = await this.listContainersForApplication(application.id);
                 if (containerInfos.length === application.microservices.length + 2) {
-                    this._logger.info('Containers are ready');
                     clearInterval(interval);
+
+                    this._logger.info('Containers are ready');
 
                     const containers = new Containers(application, containerInfos);
                     const processes = new Processes(directory, application, this._logger);
-                    await waitForMongo(this._logger);
 
-                    for (const microservice of microservices) {
-                        processes.start(RunningInstanceType.Backend, microservice);
-                        processes.start(RunningInstanceType.Web, microservice);
-                    }
                     const runningApplication = new RunningApplication(
                         this._docker,
                         directory,
                         application,
                         microservices,
-                        stdout,
-                        stderr,
                         containers,
                         processes,
                         this._logger);
                     this._runningApplications.push(runningApplication);
+
+                    this.registerInstance(application.id, runningApplication.ingress);
+                    this.registerInstance(application.id, runningApplication.mongo);
+                    this._currentState.reportRunStateForInstance(application.id, runningApplication.ingress.id, RunState.running);
+                    this._currentState.reportRunStateForInstance(application.id, runningApplication.mongo.id, RunState.starting);
+
+                    this._currentState.reportTask(application.id, 'Wait for mongo to become ready');
+                    await waitForMongo(this._logger);
+
+                    this._currentState.reportRunStateForInstance(application.id, runningApplication.mongo.id, RunState.running);
+
+                    this._currentState.reportTask(application.id, 'Start processes');
+                    for (const microservice of microservices) {
+                        this._currentState.reportRunStateForMicroservice(application.id, microservice.id, RunState.starting);
+                        processes.start(RunningInstanceType.Backend, microservice);
+                        processes.start(RunningInstanceType.Web, microservice);
+
+                        const runningMicroservice = runningApplication.addMicroservice(microservice);
+                        this.registerInstance(application.id, runningMicroservice.runtime);
+                        this._currentState.reportRunStateForInstance(application.id, runningMicroservice.runtime.id, RunState.running);
+                        this.registerInstance(application.id, runningMicroservice.backend);
+                        this._currentState.reportRunStateForInstance(application.id, runningMicroservice.backend.id, RunState.running);
+                        this.registerInstance(application.id, runningMicroservice.web);
+                        this._currentState.reportRunStateForInstance(application.id, runningMicroservice.web.id, RunState.running);
+                        this._currentState.reportRunStateForMicroservice(application.id, microservice.id, RunState.running);
+                    }
+
+                    this._currentState.reportRunStateForApplication(application.id, RunState.running);
                 }
             }, 500);
 
         });
     }
 
+    private registerInstance(applicationId: string, instance: IRunningInstance) {
+        this._currentState.registerInstance(applicationId, instance.id, instance.name, instance.type);
+    }
+
     async stop(directory: string, application: Application) {
         const workingDirectory = path.join(directory, '.dolittle');
 
         this._logger.info(`Stopping application '${application.name}' from ${workingDirectory}`);
+        this._currentState.reportRunStateForApplication(application.id, RunState.stopping);
+
+        this._currentState.reportTask(application.id, 'Stopping processes');
+        const runningApplication = this._runningApplications.find(_ => _.application.id === application.id);
+        if (runningApplication) {
+            runningApplication.processes.stop();
+        }
+
+        this._currentState.reportTask(application.id, 'Stopping docker containers');
 
         exec('docker-compose down --remove-orphans', { cwd: workingDirectory }, (err, stdout, stderr) => {
             if (err) {
@@ -122,17 +131,14 @@ export class Applications implements IApplications {
                 return;
             }
 
-            const runningApplication = this._runningApplications.find(_ => _.application.id === application.id);
-            if (runningApplication) {
-                runningApplication.processes.stop();
-            }
-
             const interval = setInterval(async () => {
                 const containers = await this.listContainersForApplication(application.id);
                 if (containers.length === 0) {
+                    clearInterval(interval);
                     this._logger.info('Containers are stopped');
                     this._runningApplications = this._runningApplications.filter(_ => _.application.id !== application.id);
-                    clearInterval(interval);
+                    this._currentState.removeAllInstancesFrom(application.id);
+                    this._currentState.reportRunStateForApplication(application.id, RunState.stopped);
                 }
             }, 500);
         });

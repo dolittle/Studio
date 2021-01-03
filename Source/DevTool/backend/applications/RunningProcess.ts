@@ -2,15 +2,21 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { ChildProcess } from 'child_process';
-import { RunningInstanceType } from '../../common/applications';
+import { InstanceType, RunningInstanceType } from '../../common/applications';
 import { AccumulatedStream } from '../AccumulatedStream';
 import { IRunningInstance } from './IRunningInstance';
 import { MicroserviceWithLocationAndPorts } from './MicroserviceWithLocationAndPorts';
-
 export class RunningProcess implements IRunningInstance {
     private _accumulatedStream: AccumulatedStream;
 
+    readonly id: string;
+    readonly name: string;
+    readonly type: InstanceType = InstanceType.process;
+
     constructor(readonly instance: RunningInstanceType, readonly microservice: MicroserviceWithLocationAndPorts, private _process: ChildProcess) {
+        this.id = _process.pid.toString();
+        this.name = _process.spawnfile;
+
         this._accumulatedStream = new AccumulatedStream();
         _process.stdout?.pipe(this._accumulatedStream);
         _process.stderr?.pipe(this._accumulatedStream);

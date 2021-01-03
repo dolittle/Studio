@@ -18,30 +18,28 @@ export class RunningApplication {
     readonly runningMicroservices: RunningMicroservice[] = [];
 
     constructor(
-        readonly docker: Docker,
+        readonly _docker: Docker,
         readonly directory: string,
         readonly application: Application,
         readonly microservices: MicroserviceWithLocationAndPorts[],
-        readonly startupStdout: string,
-        readonly startupStderr: string,
         readonly containers: Containers,
         readonly processes: Processes,
         private readonly _logger: ILogger) {
 
         this._logger.info('Setting up RunningApplication');
 
-        this.mongo = new RunningContainer(docker, containers.getByName('mongo'));
-        this.ingress = new RunningContainer(docker, containers.getByName('ingress'));
-
-        for (const microservice of microservices) {
-            const runtime = new RunningContainer(docker, containers.getByName('runtime'));
-            const backend = processes.getFor(RunningInstanceType.Backend, microservice);
-            const web = processes.getFor(RunningInstanceType.Web, microservice);
-            const runningMicroservice = new RunningMicroservice(microservice, runtime, backend, web);
-            this.runningMicroservices.push(runningMicroservice);
-        }
+        this.mongo = new RunningContainer(_docker, containers.getByName('mongo'));
+        this.ingress = new RunningContainer(_docker, containers.getByName('ingress'));
     }
 
+    addMicroservice(microservice: MicroserviceWithLocationAndPorts): RunningMicroservice {
+        const runtime = new RunningContainer(this._docker, this.containers.getByName('runtime', microservice.name));
+        const backend = this.processes.getFor(RunningInstanceType.Backend, microservice);
+        const web = this.processes.getFor(RunningInstanceType.Web, microservice);
+        const runningMicroservice = new RunningMicroservice(microservice, runtime, backend, web);
+        this.runningMicroservices.push(runningMicroservice);
+        return runningMicroservice;
+    }
 
     getRunningInstanceFor(instance: RunningInstanceType, microservice?: Microservice): IRunningInstance | undefined {
         let runningInstance: IRunningInstance | undefined;

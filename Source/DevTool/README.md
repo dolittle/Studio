@@ -15,9 +15,6 @@
 * Restart a running container
 * Pause and resume a running process
 * Pause and resume a running container
-* Use navigation to select application and microservice
-* Move microservices structure within application
-* Move application structure into workspace
 * Optimize when we render - only when needed
 * Start / Stop buttons should reflect current state - also support starting state (disable while starting)
 * Open in browser
@@ -38,6 +35,8 @@
 * Don't start the Web frontend process if it doesn't have a web frontend
 * Watch for change in files (application.json, microservice.json, vanir.json)
 * Make the declarative feature navigation system work - lifecycle is a killer with nested features
+* BUG: When navigating from a Microservice to an Application - it doesn't fire state changes like title / navigation / toolbar
+* BUG: Make sure we fill / stretch the acrylic in layout when toolbar and/or navigation is not visible
 
 ## Done
 
@@ -45,3 +44,6 @@
 * DevCentral Logs -> home
 * Figure out why streaming logs doesn't work
 * Formalize how the navigation is working - not copy/pasted as it is not between microservices and applications
+* Use navigation to select application and microservice
+* Move microservices structure within application
+* Move application structure into workspace

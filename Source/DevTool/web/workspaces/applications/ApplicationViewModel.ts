@@ -1,13 +1,16 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { map } from 'rxjs/operators';
 import { Application } from '@dolittle/vanir-common';
 import { injectable, inject } from 'tsyringe';
 import { IApplications, IApplicationsToken } from '../../../common/applications/IApplications';
 import { ApplicationStatus } from '../../../common/applications/ApplicationStatus';
 import { Workspace } from '../../../common/workspaces/Workspace';
-import { FeatureNavigationDefinition, ToolbarItems } from '../../components';
+import { FeatureNavigationDefinition, ToolbarItem, ToolbarItems } from '../../components';
 import { Globals } from '../../Globals';
+import { ApplicationState, RunState } from '../../../common/applications';
+import { BehaviorSubject } from 'rxjs';
 
 /* eslint-disable no-restricted-globals */
 @injectable()
@@ -17,6 +20,8 @@ export class ApplicationViewModel {
     application?: Application;
     applicationStatus?: ApplicationStatus;
 
+    applicationState: ApplicationState = { id: '', state: RunState.unknown };
+
     constructor(
         @inject(IApplicationsToken) private readonly _applications: IApplications,
         private readonly _navigation: FeatureNavigationDefinition,
@@ -25,10 +30,7 @@ export class ApplicationViewModel {
     }
 
     activate() {
-        this._toolbarItems.setItems([
-            { name: 'Start', icon: 'MSNVideosSolid', onClick: () => this.start() },
-            { name: 'Stop', icon: 'MSNVideosSolid', onClick: () => this.stop() }
-        ]);
+        this.setToolbar();
     }
 
     setWorkspace(workspace: Workspace) {
@@ -37,6 +39,11 @@ export class ApplicationViewModel {
             this.application = workspace.application;
             this._globals.setTitle(`${this.application.name}`);
             this.updateStatus();
+
+            this._globals.applicationStateFor(this.application).subscribe(_ => {
+                this.applicationState = _;
+                this.setToolbar();
+            });
         }
     }
 
@@ -64,5 +71,31 @@ export class ApplicationViewModel {
         if (this.application) {
             this.applicationStatus = await this._applications.getStatusFor(this.application!.id);
         }
+    }
+
+    setToolbar() {
+        const items: ToolbarItem[] = [];
+        const startItem: ToolbarItem = { name: 'Start', icon: 'MSNVideosSolid', onClick: () => this.start() };
+        const stopItem: ToolbarItem = { name: 'Stop', icon: 'CircleStopSolid', onClick: () => this.stop() };
+
+        switch (this.applicationState.state) {
+            case RunState.unknown:
+            case RunState.stopped:
+            case RunState.stopping: {
+                items.push(startItem);
+            } break;
+
+            case RunState.partial: {
+                items.push(startItem);
+                items.push(stopItem);
+            } break;
+
+            case RunState.starting:
+            case RunState.running: {
+                items.push(stopItem);
+            } break;
+        }
+
+        this._toolbarItems.setItems(items);
     }
 }

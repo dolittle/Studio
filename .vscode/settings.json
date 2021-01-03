@@ -38,6 +38,7 @@
     "typescript.preferences.includePackageJsonAutoImports": "on",
     "typescript.preferences.importModuleSpecifier": "relative",
     "typescript.preferences.importModuleSpecifierEnding": "index",
+    "typescript.preferences.useAliasesForRenames": true,
     "typescript.preferences.quoteStyle": "single",
     "typescript.suggest.autoImports": true,
     "typescript.implementationsCodeLens.enabled": true,

@@ -8,8 +8,12 @@ export class Containers {
     constructor(private _application: Application, private _containers: ContainerInfo[]) {
     }
 
-    getByName(name: string) {
-        const fullName = `/dolittle_${this._application.name.toLowerCase()}-${name.toLowerCase()}`;
+    getByName(name: string, microserviceName?: string) {
+        let fullName = `/dolittle_${this._application.name.toLowerCase()}-${name.toLowerCase()}`;
+        if (microserviceName) {
+            fullName = `${fullName}-${microserviceName.toLowerCase()}`;
+        }
+
         const container = this._containers.find(_ => _.Names.some(n => n.startsWith(fullName)));
         if (!container) {
             throw new Error(`Couldn't find container '${name}' in application '${this._application.name}'`);

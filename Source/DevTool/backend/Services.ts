@@ -8,11 +8,14 @@ import { IApplicationsToken } from '../common/applications/IApplications';
 import { Applications } from './applications/Applications';
 import { ApplicationLog } from './ApplicationLog';
 import { IApplicationLogToken } from '../common/IApplicationLog';
+import { ICurrentStateToken } from '../common/applications/ICurrentState';
+import { CurrentStateProxy } from './CurrentStateProxy';
 
 export class Services {
     static initialize() {
         container.registerSingleton(IWorkspacesToken, Workspaces);
         container.registerSingleton(IApplicationsToken, Applications);
         container.registerInstance(IApplicationLogToken, new ApplicationLog());
+        container.registerSingleton(ICurrentStateToken, CurrentStateProxy);
     }
 }

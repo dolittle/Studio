@@ -8,3 +8,5 @@ export type ApplicationStatus = {
     runState: ApplicationRunState;
     containers: ContainerInfo[];
 };
+
+

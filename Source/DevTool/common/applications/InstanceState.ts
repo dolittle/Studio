@@ -1,14 +1,13 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { InstanceType } from '../../common/applications/index';
+import { RunState } from './index';
+import { InstanceType } from './InstanceType';
 
-export interface IRunningInstance {
+export type InstanceState = {
     id: string;
     name: string;
+    state: RunState;
     type: InstanceType;
-
-    getLogs(): Promise<NodeJS.ReadableStream>;
-    pause(): Promise<void>;
-    stop(): Promise<void>;
-}
+    started: Date;
+};
