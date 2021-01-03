@@ -24,11 +24,16 @@ export class CurrentState implements ICurrentState {
     }
 
     async registerInstance(applicationId: string, instanceId: string, name: string, type: InstanceType): Promise<void> {
+        this._globals.reportInstanceStateFor(applicationId, {
+            id: instanceId, name, type, state: RunState.stopped, started: new Date()
+        });
     }
 
     async removeInstanceFrom(applicationId: string, instanceId: string): Promise<void> {
+        this._globals.removeInstanceFor(applicationId, instanceId);
     }
 
     async removeAllInstancesFrom(applicationId: string): Promise<void> {
+        this._globals.removeAllInstancesFrom(applicationId);
     }
 }

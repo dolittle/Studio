@@ -3,34 +3,26 @@
 
 import { Application } from '@dolittle/vanir-common';
 import { injectable, inject } from 'tsyringe';
-import { ApplicationStatus } from '../../../common/applications/ApplicationStatus';
 import { IApplications, IApplicationsToken } from '../../../common/applications/IApplications';
-import { ContainerInfo } from 'dockerode';
-import { Guid } from '@dolittle/rudiments';
+import { Globals } from '../../Globals';
+import { ApplicationState, InstanceState, RunState } from '../../../common/applications';
 
 /* eslint-disable no-restricted-globals */
 @injectable()
 export class OverviewViewModel {
     application!: Application;
-    applicationStatus!: ApplicationStatus;
-    containers: ContainerInfo[] = [];
+    instances: InstanceState[] = [];
+    state: ApplicationState = { id: '', state: RunState.unknown };
 
-    constructor(@inject(IApplicationsToken) private readonly _applications: IApplications) {
-        setInterval(() => {
-            this.updateStatus();
-        }, 1000);
+    constructor(@inject(IApplicationsToken) private readonly _applications: IApplications, private readonly _globals: Globals) {
     }
 
     setApplication(application: Application) {
         if (this.application?.id !== application.id) {
             this.application = application;
         }
-    }
 
-    async updateStatus() {
-        if (this.application) {
-            this.applicationStatus = await this._applications.getStatusFor(this.application.id);
-            this.containers = this.applicationStatus.containers;
-        }
+        this._globals.applicationStateFor(application).subscribe(_ => this.state = _);
+        this._globals.instanceStateFor(application).subscribe(_ => this.instances = _);
     }
 }

@@ -5,43 +5,46 @@ import React from 'react';
 import { DetailsList, DetailsListLayoutMode, SelectionMode, IColumn, TextField, Stack } from '@fluentui/react';
 import { withViewModel } from '@dolittle/vanir-react';
 import { OverviewViewModel } from './OverviewViewModel';
-import { ApplicationRunState } from '../../../common/applications/ApplicationRunState';
 import { OverviewProps } from './OverviewProps';
+import { RunState } from '../../../common/applications';
 
 const columns = [{
     key: 'Id',
-    fieldName: 'Id',
+    fieldName: 'id',
     name: 'Id',
     minWidth: 100
 }, {
-    key: 'Image',
-    fieldName: 'Image',
-    name: 'Image',
+    key: 'Name',
+    fieldName: 'name',
+    name: 'Name',
     minWidth: 200
 }, {
     key: 'State',
-    fieldName: 'State',
+    fieldName: 'state',
     name: 'State'
 }, {
-    key: 'Status',
-    fieldName: 'Status',
-    name: 'Status'
+    key: 'Type',
+    fieldName: 'type',
+    name: 'Type'
 }] as IColumn[];
 
 
-const applicationRunStateStrings: any = {};
-applicationRunStateStrings[ApplicationRunState.stopped] = 'Stopped';
-applicationRunStateStrings[ApplicationRunState.running] = 'Running';
-applicationRunStateStrings[ApplicationRunState.partial] = 'Partially running';
+const runStateStrings: any = {};
+runStateStrings[RunState.stopped] = 'Stopped';
+runStateStrings[RunState.starting] = 'Starting';
+runStateStrings[RunState.running] = 'Running';
+runStateStrings[RunState.partial] = 'Partially running';
+runStateStrings[RunState.stopping] = 'Stopping';
+runStateStrings[RunState.unknown] = 'Unknown';
 
 export const Overview = withViewModel<OverviewViewModel, OverviewProps>(OverviewViewModel, ({ viewModel, props }) => {
-    const items = viewModel.containers;
+    const items = viewModel.instances;
     viewModel.setApplication(props.application);
 
     return (
         <>
             <Stack tokens={{ childrenGap: 5 }}>
-                <TextField label="Running state" readOnly value={applicationRunStateStrings[viewModel.applicationStatus?.runState || ApplicationRunState.stopped]} />
+                <TextField label="Running state" readOnly value={runStateStrings[viewModel.state?.state || RunState.stopped]} />
                 <DetailsList
                     columns={columns}
                     items={items}

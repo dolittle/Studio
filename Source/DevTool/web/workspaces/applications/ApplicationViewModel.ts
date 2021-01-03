@@ -4,7 +4,6 @@
 import { Application } from '@dolittle/vanir-common';
 import { injectable, inject } from 'tsyringe';
 import { IApplications, IApplicationsToken } from '../../../common/applications/IApplications';
-import { ApplicationStatus } from '../../../common/applications/ApplicationStatus';
 import { Workspace } from '../../../common/workspaces/Workspace';
 import { FeatureNavigationDefinition, Link, ToolbarItem, ToolbarItems } from '../../components';
 import { Globals } from '../../Globals';
@@ -16,7 +15,6 @@ export class ApplicationViewModel {
     baseUrl: string = '';
     workspace?: Workspace;
     application?: Application;
-    applicationStatus?: ApplicationStatus;
 
     applicationState: ApplicationState = { id: '', state: RunState.unknown };
 
@@ -36,7 +34,6 @@ export class ApplicationViewModel {
             this.workspace = workspace;
             this.application = workspace.application;
             this._globals.setTitle(`${this.application.name}`);
-            this.updateStatus();
 
             this._globals.applicationStateFor(this.application).subscribe(_ => {
                 this.applicationState = _;
@@ -57,12 +54,6 @@ export class ApplicationViewModel {
 
     async stop() {
         this._applications.stop(this.workspace!.path, this.application!);
-    }
-
-    async updateStatus() {
-        if (this.application) {
-            this.applicationStatus = await this._applications.getStatusFor(this.application!.id);
-        }
     }
 
     setToolbar() {
