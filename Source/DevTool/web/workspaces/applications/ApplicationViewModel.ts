@@ -1,16 +1,14 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { map } from 'rxjs/operators';
 import { Application } from '@dolittle/vanir-common';
 import { injectable, inject } from 'tsyringe';
 import { IApplications, IApplicationsToken } from '../../../common/applications/IApplications';
 import { ApplicationStatus } from '../../../common/applications/ApplicationStatus';
 import { Workspace } from '../../../common/workspaces/Workspace';
-import { FeatureNavigationDefinition, ToolbarItem, ToolbarItems } from '../../components';
+import { FeatureNavigationDefinition, Link, ToolbarItem, ToolbarItems } from '../../components';
 import { Globals } from '../../Globals';
 import { ApplicationState, RunState } from '../../../common/applications';
-import { BehaviorSubject } from 'rxjs';
 
 /* eslint-disable no-restricted-globals */
 @injectable()
@@ -50,12 +48,6 @@ export class ApplicationViewModel {
     setBaseURL(url: string) {
         if (url !== this.baseUrl) {
             this.baseUrl = url;
-
-            this._navigation.setLinks([
-                { name: 'Overview', link: `${this.baseUrl}/overview` },
-                { name: 'Mongo', link: `${this.baseUrl}/mongo` },
-                { name: 'Ingress', link: `${this.baseUrl}/ingress` }
-            ]);
         }
     }
 
@@ -75,8 +67,11 @@ export class ApplicationViewModel {
 
     setToolbar() {
         const items: ToolbarItem[] = [];
+        const links: Link[] = [];
         const startItem: ToolbarItem = { name: 'Start', icon: 'MSNVideosSolid', onClick: () => this.start() };
         const stopItem: ToolbarItem = { name: 'Stop', icon: 'CircleStopSolid', onClick: () => this.stop() };
+
+        links.push({ name: 'Overview', link: `${this.baseUrl}/overview` });
 
         switch (this.applicationState.state) {
             case RunState.unknown:
@@ -93,9 +88,12 @@ export class ApplicationViewModel {
             case RunState.starting:
             case RunState.running: {
                 items.push(stopItem);
+                links.push({ name: 'Mongo', link: `${this.baseUrl}/mongo` });
+                links.push({ name: 'Ingress', link: `${this.baseUrl}/ingress` });
             } break;
         }
 
         this._toolbarItems.setItems(items);
+        this._navigation.setLinks(links);
     }
 }
