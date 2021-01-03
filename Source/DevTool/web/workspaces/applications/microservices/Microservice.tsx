@@ -25,6 +25,7 @@ export const Microservice = withViewModel<MicroserviceViewModel, MicroservicePro
     const params = useParams<MicroserviceRouteParams>();
     const microservice = props.workspace.microservices.find(_ => _.id === params.microserviceId) || NotSet;
     viewModel.setBaseURL(url);
+    viewModel.setTitle(`${props.application.name} / ${microservice.name}`);
 
     return (
         <>

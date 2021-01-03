@@ -5,9 +5,7 @@ import { IWorkspacesToken, IWorkspaces } from '../../common/workspaces/IWorkspac
 import { injectable, inject } from 'tsyringe';
 import { Workspace } from '../../common/workspaces/Workspace';
 import { Application, Microservice } from '@dolittle/vanir-common';
-import { Microservices } from '../Microservices';
-import { Applications } from '../Applications';
-import { Workspaces } from '../Workspaces';
+import { Globals } from '../Globals';
 
 @injectable()
 export class ListViewModel {
@@ -15,9 +13,7 @@ export class ListViewModel {
 
     constructor(
         @inject(IWorkspacesToken) private readonly _workspaces: IWorkspaces,
-        private readonly _workspacesState: Workspaces,
-        private readonly _applications: Applications,
-        private readonly _microservices: Microservices) {
+        private readonly _globals: Globals) {
         this.populate();
     }
 
@@ -46,11 +42,11 @@ export class ListViewModel {
     }
 
     setCurrentApplication(workspace: Workspace, application: Application) {
-        this._workspacesState.setCurrent(workspace);
-        this._applications.setCurrent(application);
+        this._globals.setWorkspace(workspace);
+        this._globals.setApplication(application);
     }
 
     setCurrentMicroservice(microservice: Microservice) {
-        this._microservices.setCurrent(microservice);
+        this._globals.setMicroservice(microservice);
     }
 }

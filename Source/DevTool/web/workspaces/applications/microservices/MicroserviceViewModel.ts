@@ -3,6 +3,7 @@
 
 import { FeatureNavigationDefinition, ToolbarItems } from '../../../components';
 import { injectable } from 'tsyringe';
+import { Globals } from '../../../Globals';
 
 @injectable()
 export class MicroserviceViewModel {
@@ -10,11 +11,16 @@ export class MicroserviceViewModel {
 
     constructor(
         private readonly _navigation: FeatureNavigationDefinition,
-        private readonly _toolbarItems: ToolbarItems) {
+        private readonly _toolbarItems: ToolbarItems,
+        private readonly _globals: Globals) {
     }
 
     activate() {
         this._toolbarItems.setItems([]);
+    }
+
+    setTitle(title: string) {
+        this._globals.setTitle(title);
     }
 
     setBaseURL(url: string) {

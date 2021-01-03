@@ -9,17 +9,18 @@ import { Home } from '../Home';
 import { Workspace } from '../workspaces/Workspace';
 import { FeatureNavigation, Toolbar } from '../components';
 import { Route } from 'react-router-dom';
+import { LayoutViewModel } from './LayoutViewModel';
+import { withViewModel } from '@dolittle/vanir-react';
 
-export const Layout = () => {
-
+export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
     return (
         <div style={{ width: '100%', height: '100%' }}>
             <Stack>
                 <div className={styles.header}>
-                    <h2><FontIcon iconName="WebAppBuilderSlot" />&nbsp;Blah</h2>
+                    <h2><FontIcon iconName="WebAppBuilderSlot" />&nbsp;{viewModel.title}</h2>
                 </div>
-                <FeatureNavigation/>
-                <Toolbar/>
+                <FeatureNavigation />
+                <Toolbar />
             </Stack>
             <div className={styles.content}>
                 <Route exact path="/">
@@ -31,4 +32,4 @@ export const Layout = () => {
             </div>
         </div>
     );
-};
+});

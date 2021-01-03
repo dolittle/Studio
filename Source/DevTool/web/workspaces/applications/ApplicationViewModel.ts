@@ -7,6 +7,7 @@ import { IApplications, IApplicationsToken } from '../../../common/applications/
 import { ApplicationStatus } from '../../../common/applications/ApplicationStatus';
 import { Workspace } from '../../../common/workspaces/Workspace';
 import { FeatureNavigationDefinition, ToolbarItems } from '../../components';
+import { Globals } from '../../Globals';
 
 /* eslint-disable no-restricted-globals */
 @injectable()
@@ -19,11 +20,11 @@ export class ApplicationViewModel {
     constructor(
         @inject(IApplicationsToken) private readonly _applications: IApplications,
         private readonly _navigation: FeatureNavigationDefinition,
-        private readonly _toolbarItems: ToolbarItems) {
+        private readonly _toolbarItems: ToolbarItems,
+        private readonly _globals: Globals) {
     }
 
     activate() {
-
         this._toolbarItems.setItems([
             { name: 'Start', icon: 'MSNVideosSolid', onClick: () => this.start() },
             { name: 'Stop', icon: 'MSNVideosSolid', onClick: () => this.stop() }
@@ -34,6 +35,7 @@ export class ApplicationViewModel {
         if (this.workspace?.id !== workspace.id) {
             this.workspace = workspace;
             this.application = workspace.application;
+            this._globals.setTitle(`${this.application.name}`);
             this.updateStatus();
         }
     }

@@ -5,8 +5,7 @@ import { Application, Microservice } from '@dolittle/vanir-common';
 import { Terminal } from 'xterm';
 import { injectable, inject } from 'tsyringe';
 import { IApplications, IApplicationsToken, RunningInstanceType } from '../../../common/applications/IApplications';
-import { Applications } from '../../Applications';
-import { Microservices } from '../../Microservices';
+import { Globals } from '../../Globals';
 const ipcRenderer = window.require('electron').ipcRenderer;
 
 @injectable()
@@ -18,10 +17,9 @@ export class LogOutputViewModel {
 
     constructor(
         @inject(IApplicationsToken) private readonly _applications: IApplications,
-        applications: Applications,
-        microservices: Microservices) {
-        applications.current.subscribe(_ => this.application = _);
-        microservices.current.subscribe(_ => this.microservice = _);
+        globals: Globals) {
+        globals.application.subscribe(_ => this.application = _);
+        globals.microservice.subscribe(_ => this.microservice = _);
     }
 
     async startCapture(terminal: Terminal, instance: RunningInstanceType) {
