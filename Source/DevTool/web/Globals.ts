@@ -100,8 +100,6 @@ export class Globals {
             }
         }
 
-        console.log(current);
-
         this.applicationInstances.next(current);
     }
 
