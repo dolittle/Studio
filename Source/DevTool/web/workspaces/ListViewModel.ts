@@ -6,15 +6,19 @@ import { injectable, inject } from 'tsyringe';
 import { Workspace } from '../../common/workspaces/Workspace';
 import { Application, Microservice } from '@dolittle/vanir-common';
 import { Globals } from '../Globals';
+import { ApplicationState, RunState } from '../../common/applications';
 
 @injectable()
 export class ListViewModel {
     workspaces: Workspace[] = [];
+    applicationsState: ApplicationState[] = [];
 
     constructor(
         @inject(IWorkspacesToken) private readonly _workspaces: IWorkspaces,
         private readonly _globals: Globals) {
         this.populate();
+
+        _globals.applicationsState.subscribe(_ => this.applicationsState = _);
     }
 
     async populate() {
@@ -48,5 +52,11 @@ export class ListViewModel {
 
     setCurrentMicroservice(microservice: Microservice) {
         this._globals.setMicroservice(microservice);
+    }
+
+    getRunStateFor(applicationId: string): RunState {
+        const state = this.applicationsState.find(_ => _.id === applicationId);
+        if (!state) return RunState.unknown;
+        return state.state;
     }
 }

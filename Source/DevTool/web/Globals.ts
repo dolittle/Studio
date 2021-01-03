@@ -89,7 +89,6 @@ export class Globals {
         } else {
             current.push(applicationState);
         }
-        console.log(current);
         this.applicationsState.next(current);
     }
 }

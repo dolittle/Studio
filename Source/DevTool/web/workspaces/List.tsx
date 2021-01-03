@@ -11,6 +11,7 @@ import { CreateMicroserviceDialog, ICreateMicroserviceDialogOutput, ICreateMicro
 import { CreateApplicationDialog, ICreateApplicationDialogInput, ICreateApplicationDialogOutput } from './CreateApplicationDialog';
 import { Workspace } from '../../common/workspaces/Workspace';
 import { default as styles } from './List.module.scss';
+import { RunState } from '../../common/applications';
 
 
 export const List = withViewModel(ListViewModel, ({ viewModel }) => {
@@ -76,6 +77,31 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
         viewModel.setCurrentApplication(workspace, workspace.application);
     };
 
+    const RunStateButton = (props: { applicationId: string }): JSX.Element => {
+        const runState = viewModel.getRunStateFor(props.applicationId);
+        const startButton = (<IconButton iconProps={{ iconName: 'MSNVideosSolid' }} title="Start application" />);
+        const stopButton = (<IconButton iconProps={{ iconName: 'CircleStopSolid' }} title="Stop application" />);
+
+        switch (runState) {
+            case RunState.unknown:
+            case RunState.stopped:
+            case RunState.stopping: {
+                return startButton;
+            };
+
+            case RunState.partial: {
+                return stopButton;
+            };
+
+            case RunState.starting:
+            case RunState.running: {
+                return stopButton;
+            };
+        }
+
+        return (<></>);
+    };
+
 
     const renderGroupHeader = (group: INavLinkGroup): JSX.Element => {
         return (
@@ -87,7 +113,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                     <StackItem>
                         <h3>
                             <Stack horizontal tokens={{ childrenGap: 5 }}>
-                                <IconButton iconProps={{ iconName: 'MSNVideosSolid' }} title="Start all microservices" />
+                                <RunStateButton applicationId={(group.groupData as Workspace).application.id}/>
                                 <IconButton iconProps={{ iconName: 'WebAppBuilderFragmentCreate' }} title="Create microservice" onClick={() => createMicroservice(group.groupData as Workspace)} />
                                 <IconButton iconProps={{ iconName: 'Delete' }} title="Remove application" onClick={() => viewModel.remove((group.groupData as Workspace).path)} />
                             </Stack>
