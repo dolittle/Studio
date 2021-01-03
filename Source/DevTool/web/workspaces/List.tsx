@@ -77,10 +77,10 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
         viewModel.setCurrentApplication(workspace, workspace.application);
     };
 
-    const RunStateButton = (props: { applicationId: string }): JSX.Element => {
-        const runState = viewModel.getRunStateFor(props.applicationId);
-        const startButton = (<IconButton iconProps={{ iconName: 'MSNVideosSolid' }} title="Start application" />);
-        const stopButton = (<IconButton iconProps={{ iconName: 'CircleStopSolid' }} title="Stop application" />);
+    const RunStateButton = (props: { workspace: Workspace }): JSX.Element => {
+        const runState = viewModel.getRunStateFor(props.workspace.application.id);
+        const startButton = (<IconButton iconProps={{ iconName: 'MSNVideosSolid' }} title="Start application" onClick={() => viewModel.start(props.workspace)} />);
+        const stopButton = (<IconButton iconProps={{ iconName: 'CircleStopSolid' }} title="Stop application" onClick={() => viewModel.stop(props.workspace)}/>);
 
         switch (runState) {
             case RunState.unknown:
@@ -113,7 +113,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                     <StackItem>
                         <h3>
                             <Stack horizontal tokens={{ childrenGap: 5 }}>
-                                <RunStateButton applicationId={(group.groupData as Workspace).application.id}/>
+                                <RunStateButton workspace={group.groupData as Workspace}/>
                                 <IconButton iconProps={{ iconName: 'WebAppBuilderFragmentCreate' }} title="Create microservice" onClick={() => createMicroservice(group.groupData as Workspace)} />
                                 <IconButton iconProps={{ iconName: 'Delete' }} title="Remove application" onClick={() => viewModel.remove((group.groupData as Workspace).path)} />
                             </Stack>

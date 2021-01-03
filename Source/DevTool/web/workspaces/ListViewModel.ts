@@ -6,7 +6,7 @@ import { injectable, inject } from 'tsyringe';
 import { Workspace } from '../../common/workspaces/Workspace';
 import { Application, Microservice } from '@dolittle/vanir-common';
 import { Globals } from '../Globals';
-import { ApplicationState, RunState } from '../../common/applications';
+import { ApplicationState, IApplications, IApplicationsToken, RunState } from '../../common/applications';
 
 @injectable()
 export class ListViewModel {
@@ -15,6 +15,7 @@ export class ListViewModel {
 
     constructor(
         @inject(IWorkspacesToken) private readonly _workspaces: IWorkspaces,
+        @inject(IApplicationsToken) private readonly _applications: IApplications,
         private readonly _globals: Globals) {
         this.populate();
 
@@ -44,6 +45,15 @@ export class ListViewModel {
         await this._workspaces.remove(path);
         this.populate();
     }
+
+    async start(workspace: Workspace) {
+        this._applications.start(workspace.path, workspace.application!);
+    }
+
+    async stop(workspace: Workspace) {
+        this._applications.stop(workspace.path, workspace.application!);
+    }
+
 
     setCurrentApplication(workspace: Workspace, application: Application) {
         this._globals.setWorkspace(workspace);
