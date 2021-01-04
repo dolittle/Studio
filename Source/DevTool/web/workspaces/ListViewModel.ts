@@ -7,11 +7,13 @@ import { Workspace } from '../../common/workspaces/Workspace';
 import { Application, Microservice } from '@dolittle/vanir-common';
 import { Globals } from '../Globals';
 import { ApplicationState, IApplications, IApplicationsToken, RunState } from '../../common/applications';
+import { ApplicationWithMicroservicesState } from '../ApplicationWithMicroservicesState';
 
 @injectable()
 export class ListViewModel {
     workspaces: Workspace[] = [];
     applicationsState: ApplicationState[] = [];
+    microservicesStatePerApplication: ApplicationWithMicroservicesState[] = [];
 
     constructor(
         @inject(IWorkspacesToken) private readonly _workspaces: IWorkspaces,
@@ -20,6 +22,7 @@ export class ListViewModel {
         this.populate();
 
         _globals.applicationsState.subscribe(_ => this.applicationsState = _);
+        _globals.microserviceStatesPerApplication.subscribe(_ => this.microservicesStatePerApplication = _);
     }
 
     async populate() {
@@ -46,11 +49,11 @@ export class ListViewModel {
         this.populate();
     }
 
-    async start(workspace: Workspace) {
+    async startApplication(workspace: Workspace) {
         this._applications.start(workspace.path, workspace.application!);
     }
 
-    async stop(workspace: Workspace) {
+    async stopApplication(workspace: Workspace) {
         this._applications.stop(workspace.path, workspace.application!);
     }
 
@@ -64,9 +67,17 @@ export class ListViewModel {
         this._globals.setMicroservice(microservice);
     }
 
-    getRunStateFor(applicationId: string): RunState {
+    getRunStateForApplication(applicationId: string): RunState {
         const state = this.applicationsState.find(_ => _.id === applicationId);
         if (!state) return RunState.unknown;
         return state.state;
+    }
+
+    getRunStateForMicroservice(applicationId: string, microserviceId: string): RunState {
+        const state = this.microservicesStatePerApplication.find(_ => _.applicationId === applicationId);
+        if (!state) return RunState.unknown;
+        const microserviceState = state.microservices.find(_ => _.id === microserviceId);
+        if (!microserviceState) return RunState.unknown;
+        return microserviceState.state;
     }
 }

@@ -12,6 +12,7 @@ import { CreateApplicationDialog, ICreateApplicationDialogInput, ICreateApplicat
 import { Workspace } from '../../common/workspaces/Workspace';
 import { default as styles } from './List.module.scss';
 import { RunState } from '../../common/applications';
+import { RunStateButton } from './RunStateButton';
 
 
 export const List = withViewModel(ListViewModel, ({ viewModel }) => {
@@ -77,31 +78,6 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
         viewModel.setCurrentApplication(workspace, workspace.application);
     };
 
-    const RunStateButton = (props: { workspace: Workspace }): JSX.Element => {
-        const runState = viewModel.getRunStateFor(props.workspace.application.id);
-        const startButton = (<IconButton iconProps={{ iconName: 'MSNVideosSolid' }} title="Start application" onClick={() => viewModel.start(props.workspace)} />);
-        const stopButton = (<IconButton iconProps={{ iconName: 'CircleStopSolid' }} title="Stop application" onClick={() => viewModel.stop(props.workspace)}/>);
-
-        switch (runState) {
-            case RunState.unknown:
-            case RunState.stopped:
-            case RunState.stopping: {
-                return startButton;
-            };
-
-            case RunState.partial: {
-                return stopButton;
-            };
-
-            case RunState.starting:
-            case RunState.running: {
-                return stopButton;
-            };
-        }
-
-        return (<></>);
-    };
-
 
     const renderGroupHeader = (group: INavLinkGroup): JSX.Element => {
         return (
@@ -113,7 +89,10 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                     <StackItem>
                         <h3>
                             <Stack horizontal tokens={{ childrenGap: 5 }}>
-                                <RunStateButton workspace={group.groupData as Workspace}/>
+                                <RunStateButton runState={viewModel.getRunStateForApplication((group.groupData as Workspace).application.id)}
+                                    onStartClick={() => viewModel.startApplication((group.groupData as Workspace))}
+                                    onStopClick={() => viewModel.stopApplication((group.groupData as Workspace))}
+                                />
                                 <IconButton iconProps={{ iconName: 'WebAppBuilderFragmentCreate' }} title="Create microservice" onClick={() => createMicroservice(group.groupData as Workspace)} />
                                 <IconButton iconProps={{ iconName: 'Delete' }} title="Remove application" onClick={() => viewModel.remove((group.groupData as Workspace).path)} />
                             </Stack>
