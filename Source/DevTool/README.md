@@ -7,13 +7,16 @@
 * Add default Portal layout with navigation structure and iframe setup - leverage deep-linking support
   * Template should have a default landing page with a couple of graphs on it
 
+* Show State as string in App Overview
+* Show Type as string in App Overview
+* BUG: Process name should not be /bin/sh - but the command that was run
+
 * BUG: Make content scrollable
 * BUG: Swagger iFrame is empty till we resize or gets a render somehow...
 * BUG: When navigating from a Microservice to an Application - it doesn't fire state changes like title / navigation / toolbar
 * BUG: Make sure we fill / stretch the acrylic in layout when toolbar and/or navigation is not visible
 * BUG: Title flickers from not set to actual title
 * BUG: Refresh issues in application overview
-* BUG: Process name should not be /bin/sh - but the command that was run
 * BUG: Unselect microservice when navigating to something else
 * Missing faulty RunState - we need to know if it didn't start as expected
 
