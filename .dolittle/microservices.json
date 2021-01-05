@@ -1,0 +1,18 @@
+{
+    "590696bc-1c4e-4a14-b621-c2125713a974": {
+        "host": "studio-runtime-portal",
+        "port": "50052"
+    },
+    "05a823dd-0f0d-4157-bc46-14834cca3cd2": {
+        "host": "studio-runtime-applications",
+        "port": "50052"
+    },
+    "81cad113-a001-45dc-86cb-7b1e725ae25e": {
+        "host": "studio-runtime-events",
+        "port": "50052"
+    },
+    "c2e34414-5054-4050-8ee4-eb6f3265cce3": {
+        "host": "studio-runtime-k8s",
+        "port": "50052"
+    }
+}
