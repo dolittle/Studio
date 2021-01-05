@@ -1,5 +1,17 @@
 {
-    "name": "Dolittle Studio",
+    "id": "fe7736bb-57fc-4166-bb91-6954f4dd4eb7",
+    "name": "Studio",
+    "tenant": "Dolittle",
+    "license": "MIT",
+    "containerRegistry": "508c17455f2a4b4cb7a52fbb1484346d.azurecr.io",
+    "portal": {
+        "enabled": "true",
+        "id": "590696bc-1c4e-4a14-b621-c2125713a974"
+    },
     "microservices": [
+        "./Source/Portal",
+        "./Source/Applications",
+        "./Source/Events",
+        "./Source/K8sMock"
     ]
 }
