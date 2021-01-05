@@ -8,7 +8,7 @@
         }
     },
     "database": {
-        "name": "applications"
+        "name": "read_models_applications"
     },
     "eventStore": {
         "name": "event_store_applications"
