@@ -56,8 +56,7 @@
 * Open in browser
 * Open MongoDB button (ReadModels + EventStore)
 
-* Vanir: proper props / lifecycle handling of viewModels - to avoid having to use useEffect()
-* Vanir: Maintain pipelines in one place use workflow-dispatch to call these.
+* Vanir: Maintain pipelines in one place use workflow-dispatch to call these - so we don't need to have the template be maintained
 * Vanir: Add correct license header to tsconfig.json when selecting a license (except UNLICENSED)
 
 ## Done
@@ -73,6 +72,7 @@
 * State management with push to client
   * Workspace state
   * Running Applications and Microservices state
+* Vanir: proper props / lifecycle handling of viewModels - to avoid having to use useEffect()
 
 ## Presentation
 
