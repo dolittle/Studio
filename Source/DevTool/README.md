@@ -17,6 +17,10 @@
 * BUG: Unselect microservice when navigating to something else
 * Missing faulty RunState - we need to know if it didn't start as expected
 
+* BUG: Displaying 'unknown' for runstate at startup - make sure we set the correct run state for all apps and microservices loaded
+* BUG: Security errors on startup
+* BUG: Multiple windows being opened using start:dev script
+
 * Limit # of bytes / lines we accumulate for logs both for containers and processes
 
 * Need to be able to add existing microservice
