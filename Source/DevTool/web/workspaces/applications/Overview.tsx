@@ -39,7 +39,6 @@ runStateStrings[RunState.unknown] = 'Unknown';
 
 export const Overview = withViewModel<OverviewViewModel, OverviewProps>(OverviewViewModel, ({ viewModel, props }) => {
     const items = viewModel.instances;
-    viewModel.setApplication(props.application);
 
     return (
         <>

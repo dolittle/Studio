@@ -6,11 +6,23 @@ import { injectable } from 'tsyringe';
 import { Globals } from '../../../Globals';
 import { Application, Microservice } from '@dolittle/vanir-common';
 import { MicroserviceState, RunState } from '../../../../common/applications';
+import { MicroserviceProps } from './MicroserviceProps';
+import { Workspace } from '../../../../common/workspaces';
+import { RouteInfo } from '@dolittle/vanir-react';
+
+const NotSet: Microservice = { id: '', name: 'NotSet', version: '', commit: '', built: '', web: true };
+
+type MicroserviceRouteParams = {
+    microserviceId: string;
+};
+
 
 @injectable()
 export class MicroserviceViewModel {
-    baseUrl: string = '';
     microserviceState: MicroserviceState = { id: '', state: RunState.unknown };
+    private _workspace: Workspace;
+    private _application: Application;
+    microservice?: Microservice;
 
     constructor(
         private readonly _navigation: FeatureNavigationDefinition,
@@ -18,41 +30,37 @@ export class MicroserviceViewModel {
         private readonly _globals: Globals) {
     }
 
-    activate() {
+    attached() {
         this._toolbarItems.setItems([]);
     }
 
-    setTitle(title: string) {
-        this._globals.setTitle(title);
+    propsChanged(props: MicroserviceProps) {
+        this._workspace = props.workspace;
+        this._application = props.application;
     }
 
-    setBaseURL(url: string) {
-        if (url !== this.baseUrl) {
-            this.baseUrl = url;
-            this.setLinks();
-        }
-    }
-
-    setMicroservice(application: Application, microservice: Microservice) {
-        this._globals.microserviceStateFor(application, microservice).subscribe(_ => {
+    paramsChanged(params: MicroserviceRouteParams, routeInfo: RouteInfo) {
+        this.microservice = this._workspace.microservices.find(_ => _.id === params.microserviceId) || NotSet;
+        this._globals.setTitle(`${this._application.name} / ${this.microservice.name}`);
+        this._globals.microserviceStateFor(this._application, this.microservice).subscribe(_ => {
             this.microserviceState = _;
-            this.setLinks();
+            this.setLinks(routeInfo.url);
         });
     }
 
-    setLinks() {
+    setLinks(baseUrl: string) {
         const links: Link[] = [];
 
-        links.push({ name: 'Overview', link: `${this.baseUrl}/overview` });
+        links.push({ name: 'Overview', link: `${baseUrl}/overview` });
 
         switch (this.microserviceState.state) {
             case RunState.starting:
             case RunState.running: {
-                links.push({ name: 'GraphQL', link: `${this.baseUrl}/graphql` });
-                links.push({ name: 'Swagger', link: `${this.baseUrl}/swagger` });
-                links.push({ name: 'Runtime', link: `${this.baseUrl}/runtime` });
-                links.push({ name: 'Backend', link: `${this.baseUrl}/backend` });
-                links.push({ name: 'Web', link: `${this.baseUrl}/web` });
+                links.push({ name: 'GraphQL', link: `${baseUrl}/graphql` });
+                links.push({ name: 'Swagger', link: `${baseUrl}/swagger` });
+                links.push({ name: 'Runtime', link: `${baseUrl}/runtime` });
+                links.push({ name: 'Backend', link: `${baseUrl}/backend` });
+                links.push({ name: 'Web', link: `${baseUrl}/web` });
             } break;
         }
 

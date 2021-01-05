@@ -8,15 +8,17 @@ import { Workspace } from '../../../common/workspaces/Workspace';
 import { FeatureNavigationDefinition, Link, ToolbarItem, ToolbarItems } from '../../components';
 import { Globals } from '../../Globals';
 import { ApplicationState, RunState } from '../../../common/applications';
+import { ApplicationProps } from './ApplicationProps';
+import { RouteInfo } from '@dolittle/vanir-react';
 
 /* eslint-disable no-restricted-globals */
 @injectable()
 export class ApplicationViewModel {
-    baseUrl: string = '';
-    workspace?: Workspace;
-    application?: Application;
+    private _baseUrl: string = '';
+    private _workspace?: Workspace;
+    private _application?: Application;
 
-    applicationState: ApplicationState = { id: '', state: RunState.unknown };
+    private _applicationState: ApplicationState = { id: '', state: RunState.unknown };
 
     constructor(
         @inject(IApplicationsToken) private readonly _applications: IApplications,
@@ -25,35 +27,36 @@ export class ApplicationViewModel {
         private readonly _globals: Globals) {
     }
 
-    activate() {
-        this.setToolbar();
+    attached(routeInfo: RouteInfo) {
+        this._baseUrl = routeInfo.url;
     }
 
-    setWorkspace(workspace: Workspace) {
-        if (this.workspace?.id !== workspace.id) {
-            this.workspace = workspace;
-            this.application = workspace.application;
-            this._globals.setTitle(`${this.application.name}`);
+    propsChanged(props: ApplicationProps) {
+        if (this._workspace?.id !== props.workspace.id) {
+            this._workspace = props.workspace;
+            this._application = props.workspace.application;
 
-            this._globals.applicationStateFor(this.application).subscribe(_ => {
-                this.applicationState = _;
+            this._globals.setTitle(`${this._application.name}`);
+
+            this._globals.applicationStateFor(this._application).subscribe(_ => {
+                this._applicationState = _;
                 this.setToolbar();
             });
         }
     }
 
     setBaseURL(url: string) {
-        if (url !== this.baseUrl) {
-            this.baseUrl = url;
+        if (url !== this._baseUrl) {
+            this._baseUrl = url;
         }
     }
 
     async start() {
-        this._applications.start(this.workspace!.path, this.application!);
+        this._applications.start(this._workspace!.path, this._application!);
     }
 
     async stop() {
-        this._applications.stop(this.workspace!.path, this.application!);
+        this._applications.stop(this._workspace!.path, this._application!);
     }
 
     setToolbar() {
@@ -62,9 +65,9 @@ export class ApplicationViewModel {
         const startItem: ToolbarItem = { name: 'Start', icon: 'MSNVideosSolid', onClick: () => this.start() };
         const stopItem: ToolbarItem = { name: 'Stop', icon: 'CircleStopSolid', onClick: () => this.stop() };
 
-        links.push({ name: 'Overview', link: `${this.baseUrl}/overview` });
+        links.push({ name: 'Overview', link: `${this._baseUrl}/overview` });
 
-        switch (this.applicationState.state) {
+        switch (this._applicationState.state) {
             case RunState.unknown:
             case RunState.stopped:
             case RunState.stopping: {
@@ -79,8 +82,8 @@ export class ApplicationViewModel {
             case RunState.starting:
             case RunState.running: {
                 items.push(stopItem);
-                links.push({ name: 'Mongo', link: `${this.baseUrl}/mongo` });
-                links.push({ name: 'Ingress', link: `${this.baseUrl}/ingress` });
+                links.push({ name: 'Mongo', link: `${this._baseUrl}/mongo` });
+                links.push({ name: 'Ingress', link: `${this._baseUrl}/ingress` });
             } break;
         }
 

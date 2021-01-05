@@ -12,11 +12,8 @@ import { Ingress } from './Ingress';
 import { ApplicationProps } from './ApplicationProps';
 import { Microservice } from './microservices/Microservice';
 
-
 export const Application = withViewModel<ApplicationViewModel, ApplicationProps>(ApplicationViewModel, ({ viewModel, props }) => {
-    const { path, url } = useRouteMatch();
-    viewModel.setWorkspace(props.workspace);
-    viewModel.setBaseURL(url);
+    const { path } = useRouteMatch();
 
     return (
         <>

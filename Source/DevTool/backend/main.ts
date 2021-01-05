@@ -14,10 +14,14 @@ import { Interop } from './Interop';
 
 import * as DependencyInversion from '@dolittle/vanir-dependency-inversion';
 import { DockerEnvironment } from './DockerEnvironment';
-import byline from 'byline';
-import { AccumulatedStream } from './AccumulatedStream';
 
 let mainWindow: BrowserWindow | null;
+
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+    app.quit();
+}
+
 
 function createWindow() {
     // Create the browser window.
@@ -26,10 +30,10 @@ function createWindow() {
         height: 1024,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
-            nodeIntegration: true/*,
+            nodeIntegration: true,
             enableRemoteModule: false,
-            contextIsolation: true,
-            sandbox: true*/
+            contextIsolation: false,
+            sandbox: false
         }
     });
 

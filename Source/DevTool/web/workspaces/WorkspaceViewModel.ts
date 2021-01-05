@@ -2,8 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { injectable, inject } from 'tsyringe';
-import { IWorkspacesToken } from '../../common/workspaces/IWorkspaces';
-import { IWorkspaces } from '../../build/common/workspaces/IWorkspaces';
+import { IWorkspacesToken, IWorkspaces } from '../../common/workspaces/IWorkspaces';
 import { Workspace } from '../../common/workspaces';
 import { Guid } from '@dolittle/rudiments';
 
@@ -20,19 +19,22 @@ const NotSet = new Workspace(Guid.empty.toString(), '', {
     microservices: []
 });
 
+type WorkspaceRouteParams = {
+    workspaceId: string;
+};
 
 @injectable()
 export class WorkspaceViewModel {
-    workspaceId: string = '';
+    private _workspaceId: string = '';
     workspace: Workspace = NotSet;
 
     constructor(@inject(IWorkspacesToken) private readonly _workspaces: IWorkspaces) {
     }
 
-    setWorkspaceId(id: string) {
-        if (this.workspaceId !== id) {
-            this.workspaceId = id;
-            this.getWorkspace(id);
+    paramsChanged(params: WorkspaceRouteParams) {
+        if (this._workspaceId !== params.workspaceId) {
+            this._workspaceId = params.workspaceId;
+            this.getWorkspace(params.workspaceId);
         }
     }
 

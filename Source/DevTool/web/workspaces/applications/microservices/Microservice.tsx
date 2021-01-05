@@ -14,33 +14,26 @@ import { MicroserviceProps } from './MicroserviceProps';
 import { withViewModel } from '@dolittle/vanir-react';
 import { MicroserviceViewModel } from './MicroserviceViewModel';
 
-type MicroserviceRouteParams = {
-    microserviceId: string;
-};
 
-const NotSet = { id: '', name: 'NotSet', version: '', commit: '', built: '' };
 
 export const Microservice = withViewModel<MicroserviceViewModel, MicroserviceProps>(MicroserviceViewModel, ({ viewModel, props }) => {
-    const { path, url } = useRouteMatch();
-    const params = useParams<MicroserviceRouteParams>();
-    const microservice = props.workspace.microservices.find(_ => _.id === params.microserviceId) || NotSet;
-    viewModel.setBaseURL(url);
-    viewModel.setMicroservice(props.application, microservice);
-    viewModel.setTitle(`${props.application.name} / ${microservice.name}`);
+    if (!viewModel.microservice) return (<></>);
+
+    const { path } = useRouteMatch();
 
     return (
         <>
             <Route exact path={`${path}`}>
-                <Overview workspace={props.workspace} application={props.application} microservice={microservice} />
+                <Overview workspace={props.workspace} application={props.application} microservice={viewModel.microservice} />
             </Route>
             <Route path={`${path}/overview`}>
-                <Overview workspace={props.workspace} application={props.application} microservice={microservice} />
+                <Overview workspace={props.workspace} application={props.application} microservice={viewModel.microservice} />
             </Route>
             <Route path={`${path}/graphql`}>
-                <GraphQL application={props.application} microservice={microservice} />
+                <GraphQL application={props.application} microservice={viewModel.microservice} />
             </Route>
             <Route path={`${path}/swagger`}>
-                <Swagger application={props.application} microservice={microservice} />
+                <Swagger application={props.application} microservice={viewModel.microservice} />
             </Route>
             <Route path={`${path}/runtime`}>
                 <Runtime />

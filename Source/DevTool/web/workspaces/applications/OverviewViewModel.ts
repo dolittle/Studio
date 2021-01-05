@@ -6,23 +6,24 @@ import { injectable, inject } from 'tsyringe';
 import { IApplications, IApplicationsToken } from '../../../common/applications/IApplications';
 import { Globals } from '../../Globals';
 import { ApplicationState, InstanceState, RunState } from '../../../common/applications';
+import { OverviewProps } from './OverviewProps';
 
 /* eslint-disable no-restricted-globals */
 @injectable()
 export class OverviewViewModel {
-    application!: Application;
+    private _application!: Application;
     instances: InstanceState[] = [];
     state: ApplicationState = { id: '', state: RunState.unknown };
 
     constructor(@inject(IApplicationsToken) private readonly _applications: IApplications, private readonly _globals: Globals) {
     }
 
-    setApplication(application: Application) {
-        if (this.application?.id !== application.id) {
-            this.application = application;
+    propsChanged(props: OverviewProps) {
+        if (this._application?.id !== props.application.id) {
+            this._application = props.application;
         }
 
-        this._globals.applicationStateFor(application).subscribe(_ => this.state = _);
-        this._globals.instanceStateFor(application).subscribe(_ => this.instances = _);
+        this._globals.applicationStateFor(props.application).subscribe(_ => this.state = _);
+        this._globals.instanceStateFor(props.application).subscribe(_ => this.instances = _);
     }
 }

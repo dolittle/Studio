@@ -14,7 +14,7 @@ export class HomeViewModel {
         private readonly _toolbarItems: ToolbarItems,
         private readonly _globals: Globals) { }
 
-    activate() {
+    attached() {
         this._navigation.setLinks([]);
         this._toolbarItems.setItems([]);
         this._globals.setTitle('Home');

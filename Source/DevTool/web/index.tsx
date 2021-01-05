@@ -8,8 +8,14 @@ import ReactDOM from 'react-dom';
 
 import '@shared/styles/theme';
 import { App } from './App';
+import { Bootstrapper } from '@dolittle/vanir-react';
+import { VersionInfo } from '@dolittle/vanir-web';
+
+const version = require('../version.json') as VersionInfo;
 
 ReactDOM.render(
-    <App />,
+    <Bootstrapper name="Dolittle DevCentral" prefix="" version={version}>
+        <App />
+    </Bootstrapper>,
     document.getElementById('root')
 );
