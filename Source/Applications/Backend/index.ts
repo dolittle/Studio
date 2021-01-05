@@ -11,13 +11,20 @@ import Microservices from '@shared/common/Microservices';
 import { projectFromEventsToReadModels } from './applications';
 
 import { Bindings as K8sBindings } from '@shared/k8s';
+import { RegisterRoutes } from './routes';
+
+const swaggerDoc = require('./swagger.json');
 
 (async () => {
 
     K8sBindings.initialize();
 
     await Host.start({
+        swaggerDoc,
         graphQLResolvers: queries,
+        expressCallback: (app) => {
+            RegisterRoutes(app);
+        },
         dolittleCallback: _ => {
             projectFromEventsToReadModels(_);
 
