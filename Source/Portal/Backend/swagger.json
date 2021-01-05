@@ -9,7 +9,7 @@
 		"securitySchemes": {}
 	},
 	"info": {
-		"title": "events.backend",
+		"title": "portal.backend",
 		"version": "1.0.0",
 		"license": {
 			"name": "MIT"
