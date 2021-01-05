@@ -22,7 +22,6 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
     app.quit();
 }
 
-
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
