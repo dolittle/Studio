@@ -3,7 +3,6 @@
 
 import { ToolbarItem, ToolbarItems } from '@shared/portal';
 import { ToolbarProps } from './ToolbarProps';
-import { IViewContext } from '@dolittle/vanir-react';
 import { injectable } from 'tsyringe';
 
 @injectable()
@@ -13,14 +12,14 @@ export class ToolbarViewModel {
 
     }
 
-    activate(viewContext: IViewContext<ToolbarViewModel, ToolbarProps>) {
-        if( !viewContext.props.children) {
+    propsChanged(props: ToolbarProps) {
+        if (!props.children) {
             return;
         }
 
-   const items = Array.isArray(viewContext.props.children)
-            ? viewContext.props.children
-            : [viewContext.props.children];
+        const items = Array.isArray(props.children)
+            ? props.children
+            : [props.children];
 
         const toolbarItems = items.map(_ => {
             const props = (_.props);

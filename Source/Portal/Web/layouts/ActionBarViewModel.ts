@@ -16,7 +16,7 @@ export class ActionBarViewModel {
     actionBar?: ActionBar;
 
     constructor(private readonly _messenger: IMessenger) {}
-    activate() {
+    attached() {
         this._messenger
             .observe(ActionBarStructureChanged)
             .pipe(filter((_) => _.actionBar.button !== ActionBarActionForMessage.EMPTY))

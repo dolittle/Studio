@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { ActionBarProps } from './ActionBarProps';
-import { IViewContext } from '@dolittle/vanir-react';
 import { ActionBarAction, ActionBarBroker } from '@shared/portal';
 import { injectable } from 'tsyringe';
 
@@ -13,12 +12,12 @@ export class ActionBarViewModel {
 
     }
 
-    activate(viewContext: IViewContext<ActionBarViewModel, ActionBarProps>) {
+    propsChanged(props: ActionBarProps) {
         this._actionBarItems.set({
             button: new ActionBarAction(
-                viewContext.props.title,
-                viewContext.props.icon,
-                viewContext.props.onTriggered),
+                props.title,
+                props.icon,
+                props.onTriggered),
             placement: 'bottom'
         })
     }
