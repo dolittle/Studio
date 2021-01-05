@@ -3477,7 +3477,7 @@
 		"securitySchemes": {}
 	},
 	"info": {
-		"title": "k8smock",
+		"title": "k8smock.backend",
 		"version": "1.0.0",
 		"license": {
 			"name": "UNLICENSED"

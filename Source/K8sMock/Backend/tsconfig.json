@@ -1,12 +1,12 @@
 {
-    "extends": "../../tsconfig.json",
+    "extends": "../../../tsconfig.json",
     "compilerOptions": {
         "outDir": "dist",
         "rootDir": "./",
     },
     "references": [
         {
-            "path": "../Shared/Backend"
+            "path": "../../Shared/Backend"
         }
     ]
 }

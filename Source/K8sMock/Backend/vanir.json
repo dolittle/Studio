@@ -8,7 +8,7 @@
         }
     },
     "database": {
-        "name": "k8s"
+        "name": "read_models_k8s"
     },
     "eventStore": {
         "name": "event_store_k8smock"
