@@ -41,7 +41,7 @@ export class Processes {
 
         const env: any = {
             'port': port.toString(),
-            'dolittle_runtime_port': microservice.ports.runtime.toString()
+            'dolittle_runtime_port': (microservice.ports.runtime + 1).toString()
         };
 
         this._logger.info(`Starting '${command}' in '${processDirectory}'`, env);
