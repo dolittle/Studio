@@ -9,10 +9,7 @@
         "build:dev": "cd web && webpack --env.development --mode=development",
         "start:electron": "tsc --project backend",
         "start": "cd web && webpack-dev-server --mode=development --watch --progress --hot --verbose --display-error-details",
-        "start:dev": "rimraf build && concurrently \"npm:start:electron\" \"yarn start\" \"wait-on http://localhost:9100 && sleepms 10000 && nodemon\"",
-        "package": "electron-forge package",
-        "make": "electron-forge make",
-        "publish": "electron-forge publish"
+        "start:dev": "rimraf build && concurrently \"npm:start:electron\" \"yarn start\" \"wait-on http://localhost:9100 && sleepms 10000 && nodemon\""
     },
     "nodemonConfig": {
         "restartable": "rs",
@@ -26,41 +23,14 @@
     },
     "author": "Dolittle",
     "license": "MIT",
-    "config": {
-        "forge": {
-            "packagerConfig": {},
-            "makers": [
-                {
-                    "name": "@electron-forge/maker-squirrel",
-                    "config": {
-                        "name": "Dolittle DevCentral"
-                    }
-                },
-                {
-                    "name": "@electron-forge/maker-zip",
-                    "platforms": [
-                        "darwin"
-                    ]
-                },
-                {
-                    "name": "@electron-forge/maker-deb",
-                    "config": {}
-                },
-                {
-                    "name": "@electron-forge/maker-rpm",
-                    "config": {}
-                }
-            ]
-        }
-    },
     "dependencies": {
-        "@dolittle/vanir-common": "4.2.0",
+        "@dolittle/vanir-common": "4.3.0",
         "@fluentui/react-charting": "5.0.0-beta.0",
         "@shared/styles": "1.0.0",
         "@shared/web": "1.0.0",
         "byline": "^5.0.0",
-        "create-dolittle-app": "4.2.0",
-        "create-dolittle-microservice": "4.2.0",
+        "create-dolittle-app": "4.3.0",
+        "create-dolittle-microservice": "4.3.0",
         "dockerode": "^3.2.1",
         "electron-is-dev": "^1.2.0",
         "electron-squirrel-startup": "^1.0.0",
@@ -72,11 +42,6 @@
         "@types/dockerode": "^3.2.1",
         "@types/mongodb": "^3.6.3",
         "electron": "11.1.1",
-        "@electron-forge/cli": "^6.0.0-beta.54",
-        "@electron-forge/maker-deb": "^6.0.0-beta.54",
-        "@electron-forge/maker-rpm": "^6.0.0-beta.54",
-        "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
-        "@electron-forge/maker-zip": "^6.0.0-beta.54",
         "rimraf": "3.0.2",
         "sleep-ms": "2.0.1",
         "wait-on": "5.2.0"
