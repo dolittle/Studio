@@ -3,7 +3,6 @@
 import { injectable } from 'tsyringe';
 import { NetworkStatus, ObservableQuery } from 'apollo-client';
 import gql from 'graphql-tag';
-import { IViewContext } from '@dolittle/vanir-react';
 import { DataSource } from '@dolittle/vanir-web';
 import { MicroserviceDetailsProps } from './MicroserviceDetails';
 import { Microservice } from '../Microservice';
@@ -17,9 +16,7 @@ export class MicroserviceDetailsViewModel {
 
     constructor(private readonly _dataSource: DataSource) {}
 
-    activate({
-        props,
-    }: IViewContext<MicroserviceDetailsViewModel, MicroserviceDetailsProps>) {
+    propsChanged(props: MicroserviceDetailsProps) {
         this._props = props;
         this._getMicroservice(props.applicationId, props.microserviceId);
     }

@@ -21,7 +21,7 @@ export class AppViewModel {
         private readonly _dataSource: DataSource) {
     }
 
-    activate() {
+    attached() {
         this._getApplicationList();
     }
 

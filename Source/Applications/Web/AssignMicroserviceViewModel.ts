@@ -1,7 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import { IApplications } from '@shared/platform';
-import { IViewContext } from '@dolittle/vanir-react';
 import { Guid } from '@dolittle/rudiments';
 import { injectable } from 'tsyringe';
 import { QueryForMicroservices } from './QueryForMicroservices';
@@ -20,12 +19,12 @@ export class AssignMicroserviceViewModel {
         readonly _applications: IApplications
         ) {}
 
-    activate({
-        props,
-    }: IViewContext<AssignMicroserviceViewModel, AssignMicroserviceProps>) {
-        console.log('activating', props);
-        this._props = props;
+    attached() {
         this._fetchMicroservices();
+    }
+
+    propsChanged(props: AssignMicroserviceProps) {
+        this._props = props;
     }
 
     selectMicroservice(option?: SelectedOption) {

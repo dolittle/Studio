@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { CreateApplication } from './CreateApplication';
 import { AssignMicroservice } from './AssignMicroservice';
