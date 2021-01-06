@@ -59,7 +59,6 @@
 * Cleanup application run state leftovers
 
 * UI improvement: show actions only on mouse over
-* UI improvement: Look at Docker desktop - provide a header with Dolittle logo
 
 * Open in browser
 * Open MongoDB button (ReadModels + EventStore)
@@ -91,6 +90,7 @@
 * BUG: Process name should not be /bin/sh - but the command that was run
 * Sorting of items in list of running instances
 * BUG: Refresh issues in application overview
+* UI improvement: Look at Docker desktop - provide a header with Dolittle logo
 
 ## Presentation
 

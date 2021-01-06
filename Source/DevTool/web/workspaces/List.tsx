@@ -133,7 +133,6 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                     />
                 </StackItem>
                 <StackItem>
-                    (C)2020 Dolittle
                 </StackItem>
             </Stack>
             <CreateMicroserviceDialog {...createMicroServiceDialogProps} />
