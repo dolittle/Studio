@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { Subscription } from 'rxjs';
 import { Application } from '@dolittle/vanir-common';
 import { injectable, inject } from 'tsyringe';
 import { IApplications, IApplicationsToken } from '../../../common/applications/IApplications';
@@ -9,7 +10,7 @@ import { FeatureNavigationDefinition, Link, ToolbarItem, ToolbarItems } from '..
 import { Globals } from '../../Globals';
 import { ApplicationState, RunState } from '../../../common/applications';
 import { ApplicationProps } from './ApplicationProps';
-import { RouteInfo } from '@dolittle/vanir-react';
+import { RouteInfo } from '@dolittle/vanir-react';
 
 /* eslint-disable no-restricted-globals */
 @injectable()
@@ -18,6 +19,7 @@ export class ApplicationViewModel {
     private _workspace?: Workspace;
     private _application?: Application;
 
+    private _applicationStateSubscription?: Subscription;
     private _applicationState: ApplicationState = { id: '', state: RunState.unknown };
 
     constructor(
@@ -29,6 +31,16 @@ export class ApplicationViewModel {
 
     attached(routeInfo: RouteInfo) {
         this._baseUrl = routeInfo.url;
+        console.log('attached');
+    }
+
+    detached() {
+        console.log('detached');
+        this.cleanupSubscriptions();
+    }
+
+    paramsChanged() {
+        console.log('Params');
     }
 
     propsChanged(props: ApplicationProps) {
@@ -38,16 +50,12 @@ export class ApplicationViewModel {
 
             this._globals.setTitle(`${this._application.name}`);
 
-            this._globals.applicationStateFor(this._application).subscribe(_ => {
-                this._applicationState = _;
-                this.setToolbar();
-            });
-        }
-    }
+            this.cleanupSubscriptions();
 
-    setBaseURL(url: string) {
-        if (url !== this._baseUrl) {
-            this._baseUrl = url;
+            this._applicationStateSubscription = this._globals.applicationStateFor(this._application).subscribe(_ => {
+                this._applicationState = _;
+                this.setToolbarAndLinks();
+            });
         }
     }
 
@@ -59,7 +67,9 @@ export class ApplicationViewModel {
         this._applications.stop(this._workspace!.path, this._application!);
     }
 
-    setToolbar() {
+    private setToolbarAndLinks() {
+        console.log('Set links from Application');
+
         const items: ToolbarItem[] = [];
         const links: Link[] = [];
         const startItem: ToolbarItem = { name: 'Start', icon: 'MSNVideosSolid', onClick: () => this.start() };
@@ -90,4 +100,11 @@ export class ApplicationViewModel {
         this._toolbarItems.setItems(items);
         this._navigation.setLinks(links);
     }
+
+    private cleanupSubscriptions() {
+        if (this._applicationStateSubscription) {
+            this._applicationStateSubscription.unsubscribe();
+        }
+    }
+
 }

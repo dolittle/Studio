@@ -7,13 +7,14 @@
 
 * BUG: Inconsistent URLs - Portals API and GraphQL is served on /api/portal and /portal/graphql - while DevCentral assumes without the prefix for a portal
 
-* BUG: Make content scrollable
 * BUG: Swagger iFrame is empty till we resize or gets a render somehow...
 * BUG: When navigating from a Microservice to an Application - it doesn't fire state changes like title / navigation / toolbar
 * BUG: Make sure we fill / stretch the acrylic in layout when toolbar and/or navigation is not visible
 * BUG: Title flickers from not set to actual title
 * BUG: Unselect microservice when navigating to something else
 * Missing faulty RunState - we need to know if it didn't start as expected
+
+* BUG: Make content scrollable
 
 * BUG: Displaying 'unknown' for runstate at startup - make sure we set the correct run state for all apps and microservices loaded
 * BUG: Security errors on startup
@@ -69,6 +70,7 @@
 * Vanir: Maintain pipelines in one place use workflow-dispatch to call these - so we don't need to have the template be maintained.
   Leverage composite runs actions: https://docs.github.com/en/free-pro-team@latest/actions/creating-actions/creating-a-composite-run-steps-action
 * Vanir: Add correct license header to tsconfig.json when selecting a license (except UNLICENSED)
+* Vanir: A lifecycle for ViewModels that is related to route change instead of just params
 
 ## Done
 

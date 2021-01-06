@@ -36,7 +36,7 @@ export class OverviewViewModel {
         this.cleanupSubscriptions();
     }
 
-    cleanupSubscriptions() {
+    private cleanupSubscriptions() {
         if (this._applicationStateSubscription) {
             this._applicationStateSubscription.unsubscribe();
         }
