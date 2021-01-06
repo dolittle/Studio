@@ -23,6 +23,7 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 }
 
 function createWindow() {
+
     // Create the browser window.
     mainWindow = new BrowserWindow({
         width: 1280,
@@ -33,7 +34,9 @@ function createWindow() {
             enableRemoteModule: false,
             contextIsolation: false,
             sandbox: false
-        }
+        },
+        titleBarStyle: 'hidden',
+        frame: false
     });
 
     setMainWindow(mainWindow);
