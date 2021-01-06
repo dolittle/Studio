@@ -5,8 +5,6 @@
 * Add default Portal layout with navigation structure and iframe setup - leverage deep-linking support
   * Template should have a default landing page with a couple of graphs on it
 
-* BUG: Process name should not be /bin/sh - but the command that was run
-
 * BUG: Inconsistent URLs - Portals API and GraphQL is served on /api/portal and /portal/graphql - while DevCentral assumes without the prefix for a portal
 
 * BUG: Make content scrollable
@@ -14,7 +12,6 @@
 * BUG: When navigating from a Microservice to an Application - it doesn't fire state changes like title / navigation / toolbar
 * BUG: Make sure we fill / stretch the acrylic in layout when toolbar and/or navigation is not visible
 * BUG: Title flickers from not set to actual title
-* BUG: Refresh issues in application overview
 * BUG: Unselect microservice when navigating to something else
 * Missing faulty RunState - we need to know if it didn't start as expected
 
@@ -67,6 +64,8 @@
 * Open MongoDB button (ReadModels + EventStore)
 * Open in Visual Studio Code support (if installed)
 
+* Handle errors within containers that are being started (e.g. Mongo not starting) - use RunState.failed for this.
+
 * Vanir: Maintain pipelines in one place use workflow-dispatch to call these - so we don't need to have the template be maintained.
   Leverage composite runs actions: https://docs.github.com/en/free-pro-team@latest/actions/creating-actions/creating-a-composite-run-steps-action
 * Vanir: Add correct license header to tsconfig.json when selecting a license (except UNLICENSED)
@@ -87,6 +86,9 @@
 * Vanir: proper props / lifecycle handling of viewModels - to avoid having to use useEffect()
 * Show State as string in App Overview
 * Show Type as string in App Overview
+* BUG: Process name should not be /bin/sh - but the command that was run
+* Sorting of items in list of running instances
+* BUG: Refresh issues in application overview
 
 ## Presentation
 

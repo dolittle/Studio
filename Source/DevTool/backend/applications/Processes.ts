@@ -53,7 +53,7 @@ export class Processes {
         childProcess.stdout?.setEncoding('utf8');
         childProcess.stderr?.setEncoding('utf8');
 
-        const runningProcess = new RunningProcess(instance, microservice, childProcess);
+        const runningProcess = new RunningProcess(path.join(processDirectory, command), instance, microservice, childProcess);
         this._running.push(runningProcess);
         return runningProcess;
     }

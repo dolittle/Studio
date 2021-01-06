@@ -84,8 +84,6 @@ export class WorkspaceRenderer {
             })
         } as WorkspaceForRendering;
 
-        this._logger.info(workspaceForRendering);
-
         await this.renderTemplatesFrom(workspace, workspaceForRendering, applicationTemplates, dolittleFolder);
         for (const microservice of workspaceForRendering.microservices) {
             const microserviceFolder = path.join(dolittleFolder, microservice.name);

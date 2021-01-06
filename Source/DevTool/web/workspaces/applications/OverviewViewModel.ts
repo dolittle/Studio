@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { Subscription } from 'rxjs';
 import { Application } from '@dolittle/vanir-common';
 import { injectable, inject } from 'tsyringe';
 import { IApplications, IApplicationsToken } from '../../../common/applications/IApplications';
@@ -15,6 +16,9 @@ export class OverviewViewModel {
     instances: InstanceState[] = [];
     state: ApplicationState = { id: '', state: RunState.unknown };
 
+    private _applicationStateSubscription?: Subscription;
+    private _instanceStateSubscription?: Subscription;
+
     constructor(@inject(IApplicationsToken) private readonly _applications: IApplications, private readonly _globals: Globals) {
     }
 
@@ -23,7 +27,22 @@ export class OverviewViewModel {
             this._application = props.application;
         }
 
-        this._globals.applicationStateFor(props.application).subscribe(_ => this.state = _);
-        this._globals.instanceStateFor(props.application).subscribe(_ => this.instances = _);
+        this.cleanupSubscriptions();
+        this._applicationStateSubscription = this._globals.applicationStateFor(props.application).subscribe(_ => this.state = _);
+        this._instanceStateSubscription = this._globals.instanceStateFor(props.application).subscribe(_ => this.instances = _);
+    }
+
+    detached() {
+        this.cleanupSubscriptions();
+    }
+
+    cleanupSubscriptions() {
+        if (this._applicationStateSubscription) {
+            this._applicationStateSubscription.unsubscribe();
+        }
+
+        if (this._instanceStateSubscription) {
+            this._instanceStateSubscription.unsubscribe();
+        }
     }
 }

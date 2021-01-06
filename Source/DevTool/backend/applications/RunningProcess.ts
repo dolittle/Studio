@@ -10,12 +10,10 @@ export class RunningProcess implements IRunningInstance {
     private _accumulatedStream: AccumulatedStream;
 
     readonly id: string;
-    readonly name: string;
     readonly type: InstanceType = InstanceType.process;
 
-    constructor(readonly instance: RunningInstanceType, readonly microservice: MicroserviceWithLocationAndPorts, private _process: ChildProcess) {
+    constructor(readonly name: string, readonly instance: RunningInstanceType, readonly microservice: MicroserviceWithLocationAndPorts, private _process: ChildProcess) {
         this.id = _process.pid.toString();
-        this.name = _process.spawnfile;
 
         this._accumulatedStream = new AccumulatedStream();
         _process.stdout?.pipe(this._accumulatedStream);
