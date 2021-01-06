@@ -24,6 +24,8 @@
 * BUG: Security errors on startup
 * BUG: Multiple windows being opened using start:dev script
 
+* BUG: When clicking stop on app - navigate to overview of app
+
 * Limit # of bytes / lines we accumulate for logs both for containers and processes
 
 * Need to be able to add existing microservice
@@ -60,10 +62,15 @@
 * Make the declarative feature navigation system work - lifecycle is a killer with nested features
 * Cleanup application run state leftovers
 
+* UI improvement: show actions only on mouse over
+* UI improvement: Look at Docker desktop - provide a header with Dolittle logo
+
 * Open in browser
 * Open MongoDB button (ReadModels + EventStore)
+* Open in Visual Studio Code support (if installed)
 
-* Vanir: Maintain pipelines in one place use workflow-dispatch to call these - so we don't need to have the template be maintained
+* Vanir: Maintain pipelines in one place use workflow-dispatch to call these - so we don't need to have the template be maintained.
+  Leverage composite runs actions: https://docs.github.com/en/free-pro-team@latest/actions/creating-actions/creating-a-composite-run-steps-action
 * Vanir: Add correct license header to tsconfig.json when selecting a license (except UNLICENSED)
 
 ## Done
