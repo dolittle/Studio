@@ -2,14 +2,12 @@
 
 ## Todo
 
-* BUG: Inconsistent URLs - Portals API and GraphQL is served on /api/portal and /portal/graphql - while DevCentral assumes without the prefix for a portal
-
 * Add default Portal layout with navigation structure and iframe setup - leverage deep-linking support
   * Template should have a default landing page with a couple of graphs on it
 
-* Show State as string in App Overview
-* Show Type as string in App Overview
 * BUG: Process name should not be /bin/sh - but the command that was run
+
+* BUG: Inconsistent URLs - Portals API and GraphQL is served on /api/portal and /portal/graphql - while DevCentral assumes without the prefix for a portal
 
 * BUG: Make content scrollable
 * BUG: Swagger iFrame is empty till we resize or gets a render somehow...
@@ -87,6 +85,8 @@
   * Workspace state
   * Running Applications and Microservices state
 * Vanir: proper props / lifecycle handling of viewModels - to avoid having to use useEffect()
+* Show State as string in App Overview
+* Show Type as string in App Overview
 
 ## Presentation
 

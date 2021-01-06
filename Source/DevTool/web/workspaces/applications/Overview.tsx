@@ -6,7 +6,28 @@ import { DetailsList, DetailsListLayoutMode, SelectionMode, IColumn, TextField, 
 import { withViewModel } from '@dolittle/vanir-react';
 import { OverviewViewModel } from './OverviewViewModel';
 import { OverviewProps } from './OverviewProps';
-import { RunState } from '../../../common/applications';
+import { RunState, InstanceState, InstanceType } from '../../../common/applications';
+import { GetInstanceTypeAsString } from './InstanceTypeHelpers';
+import { GetRunStateAsString } from './RunStateHelpers';
+
+const RenderRunState = (item: InstanceState, index: number, column: IColumn) => {
+    const runState = item[column.fieldName as keyof RunState] as RunState;
+    return (
+        <span>
+            {GetRunStateAsString(runState)}
+        </span>
+    );
+};
+
+
+const RenderInstanceType = (item: InstanceState, index: number, column: IColumn) => {
+    const instanceType = item[column.fieldName as keyof InstanceState] as InstanceType;
+    return (
+        <span>
+            {GetInstanceTypeAsString(instanceType)}
+        </span>
+    );
+};
 
 const columns = [{
     key: 'Id',
@@ -21,21 +42,15 @@ const columns = [{
 }, {
     key: 'State',
     fieldName: 'state',
-    name: 'State'
+    name: 'State',
+    onRender: RenderRunState
 }, {
     key: 'Type',
     fieldName: 'type',
-    name: 'Type'
+    name: 'Type',
+    onRender: RenderInstanceType
 }] as IColumn[];
 
-
-const runStateStrings: any = {};
-runStateStrings[RunState.stopped] = 'Stopped';
-runStateStrings[RunState.starting] = 'Starting';
-runStateStrings[RunState.running] = 'Running';
-runStateStrings[RunState.partial] = 'Partially running';
-runStateStrings[RunState.stopping] = 'Stopping';
-runStateStrings[RunState.unknown] = 'Unknown';
 
 export const Overview = withViewModel<OverviewViewModel, OverviewProps>(OverviewViewModel, ({ viewModel, props }) => {
     const items = viewModel.instances;
@@ -43,7 +58,7 @@ export const Overview = withViewModel<OverviewViewModel, OverviewProps>(Overview
     return (
         <>
             <Stack tokens={{ childrenGap: 5 }}>
-                <TextField label="Running state" readOnly value={runStateStrings[viewModel.state?.state || RunState.stopped]} />
+                <TextField label="Running state" readOnly value={GetRunStateAsString(viewModel.state?.state || RunState.stopped)} />
                 <DetailsList
                     columns={columns}
                     items={items}
