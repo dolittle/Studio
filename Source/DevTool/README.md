@@ -31,8 +31,6 @@
 * Don't show Web related things if Microservice does not have a frontend
 * Don't start the Web frontend process if it doesn't have a web frontend
 
-* Swap out (C) 2020 dolittle with logo or something
-
 * Fix GitHub action that saves version to read existing file and amend the version info
 * Show details on overview for each microservice
   * Event store (w/connectionstring)
@@ -91,6 +89,7 @@
 * Sorting of items in list of running instances
 * BUG: Refresh issues in application overview
 * UI improvement: Look at Docker desktop - provide a header with Dolittle logo
+* Swap out (C) 2020 dolittle with logo or something
 
 ## Presentation
 
