@@ -30,17 +30,18 @@ export class ApplicationViewModel {
     }
 
     attached(routeInfo: RouteInfo) {
-        this._baseUrl = routeInfo.url;
-        console.log('attached');
+        this._baseUrl = routeInfo.matchedUrl;
     }
 
     detached() {
-        console.log('detached');
         this.cleanupSubscriptions();
     }
 
-    paramsChanged() {
-        console.log('Params');
+    routeChanged(routeInfo: RouteInfo) {
+        if (routeInfo.isExactMatch) {
+            this.setTitle();
+            this.setToolbarAndLinks();
+        }
     }
 
     propsChanged(props: ApplicationProps) {
@@ -48,7 +49,7 @@ export class ApplicationViewModel {
             this._workspace = props.workspace;
             this._application = props.workspace.application;
 
-            this._globals.setTitle(`${this._application.name}`);
+            this.setTitle();
 
             this.cleanupSubscriptions();
 
@@ -57,6 +58,10 @@ export class ApplicationViewModel {
                 this.setToolbarAndLinks();
             });
         }
+    }
+
+    private setTitle() {
+        this._globals.setTitle(`${this._application.name}`);
     }
 
     async start() {
@@ -68,8 +73,6 @@ export class ApplicationViewModel {
     }
 
     private setToolbarAndLinks() {
-        console.log('Set links from Application');
-
         const items: ToolbarItem[] = [];
         const links: Link[] = [];
         const startItem: ToolbarItem = { name: 'Start', icon: 'MSNVideosSolid', onClick: () => this.start() };
@@ -106,5 +109,4 @@ export class ApplicationViewModel {
             this._applicationStateSubscription.unsubscribe();
         }
     }
-
 }

@@ -5,10 +5,11 @@ import { injectable, inject } from 'tsyringe';
 import { IWorkspacesToken, IWorkspaces } from '../../common/workspaces/IWorkspaces';
 import { Workspace } from '../../common/workspaces';
 import { Guid } from '@dolittle/rudiments';
+import { RouteInfo } from '@dolittle/vanir-react';
 
 const NotSet = new Workspace(Guid.empty.toString(), '', {
     id: Guid.empty.toString(),
-    name: 'NotSet',
+    name: '',
     tenant: '',
     license: '',
     containerRegistry: '',
@@ -31,10 +32,10 @@ export class WorkspaceViewModel {
     constructor(@inject(IWorkspacesToken) private readonly _workspaces: IWorkspaces) {
     }
 
-    paramsChanged(params: WorkspaceRouteParams) {
-        if (this._workspaceId !== params.workspaceId) {
-            this._workspaceId = params.workspaceId;
-            this.getWorkspace(params.workspaceId);
+    routeChanged(routeInfo: RouteInfo<WorkspaceRouteParams>) {
+        if (this._workspaceId !== routeInfo.params.workspaceId) {
+            this._workspaceId = routeInfo.params.workspaceId;
+            this.getWorkspace(routeInfo.params.workspaceId);
         }
     }
 

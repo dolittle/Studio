@@ -15,7 +15,7 @@ import { MicroserviceState } from '../common/applications/MicroserviceState';
 
 const NotSetApplication = {
     id: Guid.empty.toString(),
-    name: 'Not Set',
+    name: '',
     tenant: '',
     license: '',
     containerRegistry: '',
@@ -28,7 +28,7 @@ const NotSetApplication = {
 
 const NotSetMicroservice = {
     id: Guid.empty.toString(),
-    name: 'Not Set',
+    name: '',
     version: '',
     commit: '',
     built: ''

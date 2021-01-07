@@ -11,7 +11,7 @@ import { MicroserviceProps } from './MicroserviceProps';
 import { Workspace } from '../../../../common/workspaces';
 import { RouteInfo } from '@dolittle/vanir-react';
 
-const NotSet: Microservice = { id: '', name: 'NotSet', version: '', commit: '', built: '', web: true };
+const NotSet: Microservice = { id: '', name: '', version: '', commit: '', built: '', web: true };
 
 type MicroserviceRouteParams = {
     microserviceId: string;
@@ -45,22 +45,19 @@ export class MicroserviceViewModel {
         this._application = props.application;
     }
 
-    paramsChanged(params: MicroserviceRouteParams, routeInfo: RouteInfo) {
-        this.microservice = this._workspace.microservices.find(_ => _.id === params.microserviceId) || NotSet;
+    routeChanged(routeInfo: RouteInfo<MicroserviceRouteParams>) {
+        this.microservice = this._workspace.microservices.find(_ => _.id === routeInfo.params.microserviceId) || NotSet;
         this._globals.setTitle(`${this._application.name} / ${this.microservice.name}`);
 
         this.cleanupSubscriptions();
         this._microserviceStateSubscription = this._globals.microserviceStateFor(this._application, this.microservice).subscribe(_ => {
             this.microserviceState = _;
-            this.setLinks(routeInfo.url);
+            this.setLinks(routeInfo.matchedUrl);
         });
+        this.setLinks(routeInfo.matchedUrl);
     }
 
-
-
     private setLinks(baseUrl: string) {
-        console.log('Set links from Microservice');
-
         const links: Link[] = [];
 
         links.push({ name: 'Overview', link: `${baseUrl}/overview` });
@@ -84,5 +81,4 @@ export class MicroserviceViewModel {
             this._microserviceStateSubscription.unsubscribe();
         }
     }
-
 }
