@@ -45,6 +45,7 @@ html {
     background-color: $navigation-color;
     height: 3rem;
     text-align: center;
+    padding-top: 0.25rem;
 }
 
 .dragRegion {
@@ -54,5 +55,22 @@ html {
 
     svg {
         height: 2rem;
+    }
+}
+
+.title {
+    bottom: 0.4rem;
+    position: relative;
+    font-size: 1.5rem;
+}
+
+.linkButtons {
+    position: absolute;
+    right: 1rem;
+    top: 0.4rem;
+    font-size: 1.5rem;
+
+    a {
+        color: $ms-color-black
     }
 }
