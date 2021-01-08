@@ -2,12 +2,17 @@
 
 ## Todo
 
-* Add default Portal layout with navigation structure and iframe setup - leverage deep-linking support
-  * Template should have a default landing page with a couple of graphs on it
+* BUG: Render files after adding microservice
+
+* Restart a running process
+* Restart a running container
 
 * BUG: Inconsistent URLs - Portals API and GraphQL is served on /api/portal and /portal/graphql - while DevCentral assumes without the prefix for a portal
 
-* BUG: Swagger iFrame is empty till we resize or gets a render somehow...
+* BUG: Clean up event listeners: ] (node:46930) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 log-message listeners added to [EventEmitter]. Use emitter.setMaxListeners() to increase limit
+* BUG: Navigating from "Home" directly to a Microservice will not show all Microservice details (Identifier, name, version)
+
+* BUG: Swagger iFrame is empty till we resize or gets a re-render somehow...
 * BUG: When navigating from a Microservice to an Application - it doesn't fire state changes like title / navigation / toolbar (see Vanir - route change)
 * BUG: Make sure we fill / stretch the acrylic in layout when toolbar and/or navigation is not visible
 * BUG: Title flickers from not set to actual title
@@ -37,8 +42,6 @@
   * Read models (w/connectionstring)
 * Ability to pause individual microservices (processes)
 * List containers and processes
-* Restart a running process
-* Restart a running container
 * Pause and resume a running process
 * Pause and resume a running container
 * Optimize when we render - only when needed
@@ -64,10 +67,19 @@
 
 * Handle errors within containers that are being started (e.g. Mongo not starting) - use RunState.failed for this.
 
+* Add navigation, ContentFrame and all to the template
+* Add the ability when adding Microservices for it to add automatically to the navigation
+
+* Progress reporter for Webpack that reports to Dev Central
+
 * Vanir: Maintain pipelines in one place use workflow-dispatch to call these - so we don't need to have the template be maintained.
   Leverage composite runs actions: https://docs.github.com/en/free-pro-team@latest/actions/creating-actions/creating-a-composite-run-steps-action
 * Vanir: Add correct license header to tsconfig.json when selecting a license (except UNLICENSED)
 * Vanir: A lifecycle for ViewModels that is related to route change instead of just params
+* Vanir: Figure out why the SCSS WebPack thing doesn't work on initial builds when using it as module (doesn't generate the d.ts)
+* Vanir: HotLoading not working - have to refresh browser manually when changing anything
+* Vanir: WebPack doesn't always pick up changes in dependencies (Shared)
+* Vanir: Templates in create* commands should be excluded during 'tsc -b' (build) - we don't want them compiled as part of the package dist folder
 
 ## Done
 
@@ -90,6 +102,8 @@
 * BUG: Refresh issues in application overview
 * UI improvement: Look at Docker desktop - provide a header with Dolittle logo
 * Swap out (C) 2020 dolittle with logo or something
+* Add default Portal layout with navigation structure and iframe setup - leverage deep-linking support
+  * Template should have a default landing page with a couple of graphs on it
 
 ## Presentation
 
