@@ -24,7 +24,7 @@ import { IWorkspaces, IWorkspacesToken } from '../../common/workspaces';
 import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 
 import { waitForMongo } from './waitForMongo';
-import { IRunningInstance } from '../../build/backend/applications/IRunningInstance';
+import { IRunningInstance } from './IRunningInstance';
 
 /* eslint-disable no-restricted-globals */
 

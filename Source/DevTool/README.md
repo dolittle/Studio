@@ -4,6 +4,8 @@
 
 * BUG: Render files after adding microservice
 
+* BUG: Starting point is not Home
+
 * Restart a running process
 * Restart a running container
 

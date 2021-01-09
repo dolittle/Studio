@@ -29,11 +29,11 @@ function createWindow() {
         width: 1280,
         height: 1024,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: true,
             enableRemoteModule: false,
             contextIsolation: false,
-            sandbox: false
+            sandbox: false,
+            webSecurity: false
         },
         titleBarStyle: 'hidden',
         frame: false
@@ -46,10 +46,12 @@ function createWindow() {
     DockerEnvironment.initialize();
     Interop.initialize();
 
-    const startURL = isDev ? 'http://localhost:9100' : `file://${path.join(__dirname, './build/index.html')}`;
-    mainWindow.webContents.openDevTools();
-
-    mainWindow.loadURL(startURL);
+    if (isDev) {
+        mainWindow.loadURL('http://localhost:9100');
+        mainWindow.webContents.openDevTools();
+    } else {
+        mainWindow.loadFile('./build/index.html');
+    }
 
     mainWindow.once('ready-to-show', () => mainWindow?.show());
 

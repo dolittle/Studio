@@ -2,24 +2,39 @@
     "name": "devcentral",
     "version": "1.0.0",
     "description": "",
-    "main": "build/backend/main.js",
+    "main": "build/index.js",
     "scripts": {
-        "clean": "tsc -b --clean",
-        "build": "cd web && webpack --env.production --mode=production",
+        "clean": "tsc -b --clean backend",
+        "build:backend": "cd backend && webpack --env.production --mode=production",
+        "build:web": "cd web && webpack --env.production --mode=production",
+        "build": "tsc -b backend && cd web && webpack --env.production --mode=production",
         "build:dev": "cd web && webpack --env.development --mode=development",
         "start:electron": "tsc --project backend",
         "start": "cd web && webpack-dev-server --mode=development --watch --progress --hot --verbose --display-error-details",
-        "start:dev": "rimraf build && concurrently \"npm:start:electron\" \"yarn start\" \"wait-on http://localhost:9100 && sleepms 10000 && nodemon\""
+        "start:dev": "yarn clean && concurrently \"npm:start:electron\" \"yarn start\" \"wait-on http://localhost:9100 && sleepms 10000 && nodemon\"",
+        "pack": "electron-builder --dir",
+        "dist": "yarn build:web && yarn build:backend && electron-builder"
     },
     "nodemonConfig": {
         "restartable": "rs",
         "execMap": {
-            "js": "electron ./"
+            "js": "electron backend/dist/index.js"
         },
         "watch": [
-            "./build/backend"
+            "./backend/dist"
         ],
         "ext": "js"
+    },
+    "build": {
+        "productName": "Dolittle Developer Central",
+        "appId": "com.dolittle.dev-central",
+        "mac": {
+            "category": "public.app-category.developer-tools"
+        },
+        "files": [
+            "!node_modules",
+            "build"
+        ]
     },
     "author": "Dolittle",
     "license": "MIT",
@@ -42,7 +57,9 @@
         "@types/dockerode": "^3.2.1",
         "@types/mongodb": "^3.6.3",
         "electron": "11.1.1",
+        "electron-builder": "^22.9.1",
         "rimraf": "3.0.2",
+        "shebang-loader": "^0.0.1",
         "sleep-ms": "2.0.1",
         "wait-on": "5.2.0"
     }
