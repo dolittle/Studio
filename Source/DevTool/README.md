@@ -13,7 +13,6 @@
 * BUG: Navigating from "Home" directly to a Microservice will not show all Microservice details (Identifier, name, version)
 
 * BUG: Swagger iFrame is empty till we resize or gets a re-render somehow...
-* BUG: When navigating from a Microservice to an Application - it doesn't fire state changes like title / navigation / toolbar (see Vanir - route change)
 * BUG: Make sure we fill / stretch the acrylic in layout when toolbar and/or navigation is not visible
 * BUG: Title flickers from not set to actual title
 * BUG: Unselect microservice when navigating to something else
@@ -104,6 +103,7 @@
 * Swap out (C) 2020 dolittle with logo or something
 * Add default Portal layout with navigation structure and iframe setup - leverage deep-linking support
   * Template should have a default landing page with a couple of graphs on it
+* BUG: When navigating from a Microservice to an Application - it doesn't fire state changes like title / navigation / toolbar (see Vanir - route change)
 
 ## Presentation
 
