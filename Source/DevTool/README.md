@@ -2,7 +2,6 @@
 
 ## Todo
 
-* BUG: Vanir - create-dolittle-microservice spawned from create-dolittle-app yields the following error: Error: Cannot find module 'create-dolittle-microservice/dist/creation' unless it is explicitly installed
 * BUG: Vanir - create-dolittle-app doesn't produce the application.json file: ×  -> Cannot find module 'C:\Users\einari\Documents\MyApp\application.json'
 * BUG: Vanir - When webpacked - the plopfile.js is not included, we need to expose an API rather than how we do it and not rely on the plop file. Extract all the tasks into something independent.
 * BUG: Creating an app doesn't work on Windows
@@ -78,6 +77,10 @@
 
 * Progress reporter for Webpack that reports to Dev Central
 
+* Notifications system
+  * Notify on errors
+  * Notify when something has been started and is running
+
 * Vanir: Maintain pipelines in one place use workflow-dispatch to call these - so we don't need to have the template be maintained.
   Leverage composite runs actions: https://docs.github.com/en/free-pro-team@latest/actions/creating-actions/creating-a-composite-run-steps-action
 * Vanir: Add correct license header to tsconfig.json when selecting a license (except UNLICENSED)
@@ -111,6 +114,7 @@
 * Add default Portal layout with navigation structure and iframe setup - leverage deep-linking support
   * Template should have a default landing page with a couple of graphs on it
 * BUG: When navigating from a Microservice to an Application - it doesn't fire state changes like title / navigation / toolbar (see Vanir - route change)
+* BUG: Vanir - create-dolittle-microservice spawned from create-dolittle-app yields the following error: Error: Cannot find module 'create-dolittle-microservice/dist/creation' unless it is explicitly installed
 
 ## Presentation
 
