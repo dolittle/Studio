@@ -1,7 +1,7 @@
 {
     "name": "devcentral",
     "version": "1.0.0",
-    "description": "",
+    "description": "Dolittle Developer Central is a developer tool for working with Dolittle microservice based solutions.",
     "main": "build/index.js",
     "scripts": {
         "clean": "tsc -b --clean backend",
@@ -12,8 +12,8 @@
         "start:electron": "tsc --project backend",
         "start": "cd web && webpack-dev-server --mode=development --watch --progress --hot --verbose --display-error-details",
         "start:dev": "yarn clean && concurrently \"npm:start:electron\" \"yarn start\" \"wait-on http://localhost:9100 && sleepms 10000 && nodemon\"",
-        "pack": "electron-builder --dir",
-        "dist": "yarn build:web && yarn build:backend && electron-builder"
+        "presdpackage": "yarn build:web && yarn build:backend && cp icon.png ",
+        "package": "electron-builder build -mwl --publish never"
     },
     "nodemonConfig": {
         "restartable": "rs",
@@ -29,12 +29,45 @@
         "productName": "Dolittle Developer Central",
         "appId": "com.dolittle.dev-central",
         "mac": {
-            "category": "public.app-category.developer-tools"
+            "category": "public.app-category.developer-tools",
+            "target": [
+                "dmg"
+            ],
+            "type": "distribution",
+            "hardenedRuntime": true,
+            "entitlements": "assets/entitlements.mac.plist",
+            "entitlementsInherit": "assets/entitlements.mac.plist",
+            "gatekeeperAssess": false
         },
         "files": [
             "!node_modules",
             "build"
-        ]
+        ],
+        "dmg": {
+            "contents": [
+                {
+                    "x": 130,
+                    "y": 220
+                },
+                {
+                    "x": 410,
+                    "y": 220,
+                    "type": "link",
+                    "path": "/Applications"
+                }
+            ]
+        },
+        "win": {
+            "target": [
+                "nsis"
+            ]
+        },
+        "linux": {
+            "target": [
+                "AppImage"
+            ],
+            "category": "Development"
+        }
     },
     "author": "Dolittle",
     "license": "MIT",
