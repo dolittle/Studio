@@ -22,6 +22,10 @@
 * Change name from 'Backend' to Main
 * Change name from 'Web' to Renderer
 
+* Continous deployment pipeline
+
+* Enable Automatic updates (Needs notarizing on macOS (see above))
+
 * Add icon as part of the WebPack for main rather than an OS specific 'cp' command in the node script
 
 * Stop using Buffer - (node:37143) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.re
