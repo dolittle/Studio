@@ -1,5 +1,4 @@
-#
-
+# Developer Central
 
 ## References
 
@@ -11,7 +10,7 @@
 * BUG: LogOutput / Content doesn't stretch out vertically
 * BUG: Render files after adding microservice
 
-* BUG: Starting point is not Home
+* Make acrylic work for Windows https://github.com/Seo-Rii/electron-acrylic-window
 
 * Restart a running process
 * Restart a running container
@@ -21,7 +20,7 @@
 
 * Stop using Buffer - (node:37143) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.re
 
-* Automatically include the Vanir version in the WebPacked and configured correctly
+* Automatically include the Vanir version in the WebPacked output and configured correctly
 
 * BUG: Inconsistent URLs - Portals API and GraphQL is served on /api/portal and /portal/graphql - while DevCentral assumes without the prefix for a portal
 
@@ -135,4 +134,4 @@
 * BUG: Vanir - create-dolittle-app doesn't produce the application.json file: ×  -> Cannot find module 'C:\Users\einari\Documents\MyApp\application.json'
 * BUG: Creating an app doesn't work on Windows
 * BUG: Missing Window buttons in the right corner on Windows
-
+* BUG: Starting point is not Home
