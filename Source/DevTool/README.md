@@ -17,6 +17,9 @@
 * Restart a running process
 * Restart a running container
 
+* Change name from 'Backend' to Main
+* Change name from 'Web' to Renderer
+
 * Stop using Buffer - (node:37143) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.re
 
 * Automatically include the Vanir version in the WebPacked and configured correctly
