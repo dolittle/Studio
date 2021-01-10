@@ -4,6 +4,7 @@
 
 * https://github.com/electron-react-boilerplate/electron-react-boilerplate
 * https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/
+* https://dzone.com/articles/understanding-execfile-spawn-exec-and-fork-in-node
 
 ## Todo
 
