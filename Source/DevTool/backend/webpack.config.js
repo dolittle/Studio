@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
         config.target = 'electron-main';
         config.output.path = path.resolve(process.cwd(), '..', 'build');
         config.module.rules.push({
-            test: /node_modules\/plop\/src\/plop\.js$/,
+            test: /\.[tj]s$/i,
             loader: 'shebang-loader'
         });
         config.plugins.push(
