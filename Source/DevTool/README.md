@@ -8,8 +8,7 @@
 
 ## Todo
 
-* BUG: Creating an app doesn't work on Windows
-* BUG: Missing Window buttons in the right corner on Windows
+* BUG: LogOutput / Content doesn't stretch out vertically
 * BUG: Render files after adding microservice
 
 * BUG: Starting point is not Home
@@ -134,4 +133,6 @@
 * BUG: Vanir - create-dolittle-microservice spawned from create-dolittle-app yields the following error: Error: Cannot find module 'create-dolittle-microservice/dist/creation' unless it is explicitly installed
 * BUG: Vanir - When webpacked - the plopfile.js is not included, we need to expose an API rather than how we do it and not rely on the plop file. Extract all the tasks into something independent.
 * BUG: Vanir - create-dolittle-app doesn't produce the application.json file: ×  -> Cannot find module 'C:\Users\einari\Documents\MyApp\application.json'
+* BUG: Creating an app doesn't work on Windows
+* BUG: Missing Window buttons in the right corner on Windows
 
