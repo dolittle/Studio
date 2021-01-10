@@ -30,10 +30,9 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 
 function createWindow() {
 
-    // Create the browser window.
-    mainWindow = new BrowserWindow({
-        width: 1280,
-        height: 1024,
+    const windowConfig: any = {
+        width: 1000,
+        height: 900,
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: false,
@@ -44,7 +43,16 @@ function createWindow() {
         titleBarStyle: 'hidden',
         vibrancy: 'dark',
         frame: false
-    });
+    };
+
+    if (process.platform === 'darwin') {
+        windowConfig.vibrancy = 'dark';
+    } else {
+        windowConfig.backgroundColor = '#333';
+    }
+
+    // Create the browser window.
+    mainWindow = new BrowserWindow(windowConfig);
 
     setMainWindow(mainWindow);
 
