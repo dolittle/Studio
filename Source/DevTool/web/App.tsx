@@ -10,12 +10,13 @@ import { Services } from './Services';
 import { List as WorkspaceList, Workspace } from './workspaces/index';
 import { default as styles } from './App.module.scss';
 
-import { BrowserRouter as Router, Route, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, useHistory } from 'react-router-dom';
 import { Layout } from './layout/Layout';
 import { Stack, StackItem } from '@fluentui/react';
 
 export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     Services.initialize();
+
 
     return (
         <>
