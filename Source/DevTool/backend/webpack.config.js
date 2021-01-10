@@ -14,7 +14,7 @@ module.exports = (env, argv) => {
             loader: 'shebang-loader'
         });
         config.plugins.push(
-            new wp.NormalModuleReplacementPlugin(/platform-shims\/esm.mjs/, 'devcentral/backend/esm.js')
+            new wp.NormalModuleReplacementPlugin(/platform-shims\/esm.mjs/, 'devcentral/backend/_build/esm.js')
         );
     });
 };
