@@ -11,6 +11,9 @@
 * BUG: LogOutput / Content doesn't stretch out vertically
 * BUG: Render files after adding microservice
 
+* BUG: Fix what areas are draggable to make it feel more natural
+* BUG: Disable text selection - to make it feel more native
+
 * Make acrylic work for Windows https://github.com/Seo-Rii/electron-acrylic-window
 
 * Restart a running process
