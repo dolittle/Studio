@@ -8,7 +8,7 @@ import { default as styles } from './Layout.module.scss';
 import { Home } from '../Home';
 import { Workspace } from '../workspaces/Workspace';
 import { FeatureNavigation, Toolbar } from '../components';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { LayoutViewModel } from './LayoutViewModel';
 import { withViewModel } from '@dolittle/vanir-react';
 import { DolittleLogo } from '../components/DolittleLogo';
@@ -37,6 +37,7 @@ export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
                     <Route path="/workspace/:workspaceId">
                         <Workspace />
                     </Route>
+                    <Redirect to='/'/>
                 </div>
             </StackItem>
         </Stack>
