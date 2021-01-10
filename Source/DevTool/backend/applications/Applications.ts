@@ -9,7 +9,7 @@ import { ApplicationRunState, ApplicationStatus, IApplications, RunningInstanceT
 import { injectable, inject } from 'tsyringe';
 import { Application, Microservice } from '@dolittle/vanir-common';
 
-import { exec } from 'child_process';
+import { execFile } from 'child_process';
 import { ILogger } from '@dolittle/vanir-backend';
 import { RunningApplication } from './RunningApplication';
 import { getMainWindow } from '../globals';
@@ -48,7 +48,9 @@ export class Applications implements IApplications {
 
         this._currentState.reportRunStateForApplication(application.id, RunState.starting);
         this._currentState.reportTask(application.id, 'Starting docker containers');
-        exec('docker-compose up -d', { cwd: workingDirectory }, (err, stdout, stderr) => {
+
+        this._logger.info(`PATH is set to '${process.env.PATH}'`);
+        execFile('docker-compose up -d', { shell: true, cwd: workingDirectory, env: process.env }, (err, stdout, stderr) => {
             if (err) {
                 console.error(`Exec error ${err}`);
                 return;
@@ -125,7 +127,7 @@ export class Applications implements IApplications {
 
         this._currentState.reportTask(application.id, 'Stopping docker containers');
 
-        exec('docker-compose down --remove-orphans', { cwd: workingDirectory }, (err, stdout, stderr) => {
+        execFile('docker-compose down --remove-orphans', { shell: true, cwd: workingDirectory, env: process.env }, (err, stdout, stderr) => {
             if (err) {
                 console.error(`Exec error ${err}`);
                 return;

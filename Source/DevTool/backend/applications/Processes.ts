@@ -4,7 +4,7 @@
 import fs from 'fs';
 import path from 'path';
 import { Application } from '@dolittle/vanir-common';
-import { exec } from 'child_process';
+import { execFile } from 'child_process';
 import { RunningInstanceType } from '../../common/applications/IApplications';
 import { MicroserviceWithLocationAndPorts } from './MicroserviceWithLocationAndPorts';
 import { RunningProcess } from './RunningProcess';
@@ -46,7 +46,8 @@ export class Processes {
 
         this._logger.info(`Starting '${command}' in '${processDirectory}'`, env);
 
-        const childProcess = exec(command, {
+        const childProcess = execFile(command, {
+            shell: true,
             cwd: processDirectory,
             env: { ...process.env, ...env }
         });

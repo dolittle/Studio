@@ -99,6 +99,7 @@
         "dockerode": "^3.2.1",
         "electron-is-dev": "^1.2.0",
         "electron-squirrel-startup": "^1.0.0",
+        "shell-path": "^2.1.0",
         "xterm-addon-fit": "^0.4.0",
         "xterm-for-react": "1.0.4"
     },

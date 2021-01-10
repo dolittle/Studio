@@ -20,6 +20,7 @@ import { Config as AppCreationConfig } from 'create-dolittle-app/dist/Config';
 import { Globals as MicroserviceCreationGlobal } from 'create-dolittle-microservice/dist/Globals';
 import { Config as MicroserviceCreationConfig } from 'create-dolittle-microservice/dist/Config';
 import { logger } from '@dolittle/vanir-backend';
+import shellPath from 'shell-path';
 
 let mainWindow: BrowserWindow | null;
 
@@ -28,7 +29,21 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
     app.quit();
 }
 
+function fixPath() {
+    if (process.platform !== 'darwin') {
+        return;
+    }
+
+    process.env.PATH = shellPath.sync() || [
+        './node_modules/.bin',
+        '/.nodebrew/current/bin',
+        '/usr/local/bin',
+        process.env.PATH
+    ].join(':');
+};
+
 function createWindow() {
+    fixPath();
 
     const windowConfig: any = {
         width: 1000,
