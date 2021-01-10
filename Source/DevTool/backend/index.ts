@@ -15,6 +15,12 @@ import { Interop } from './Interop';
 import * as DependencyInversion from '@dolittle/vanir-dependency-inversion';
 import { DockerEnvironment } from './DockerEnvironment';
 
+import { Globals as AppCreationGlobal } from 'create-dolittle-app/dist/Globals';
+import { Config as AppCreationConfig } from 'create-dolittle-app/dist/Config';
+import { Globals as MicroserviceCreationGlobal } from 'create-dolittle-microservice/dist/Globals';
+import { Config as MicroserviceCreationConfig } from 'create-dolittle-microservice/dist/Config';
+import { logger } from '@dolittle/vanir-backend';
+
 let mainWindow: BrowserWindow | null;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -36,6 +42,7 @@ function createWindow() {
             webSecurity: false
         },
         titleBarStyle: 'hidden',
+        vibrancy: 'dark',
         frame: false
     });
 
@@ -48,10 +55,19 @@ function createWindow() {
 
     if (isDev) {
         mainWindow.loadURL('http://localhost:9100');
-        mainWindow.webContents.openDevTools();
+        //mainWindow.webContents.openDevTools();
     } else {
         mainWindow.loadFile('./build/index.html');
     }
+
+    AppCreationGlobal.version = '6.3.2';
+    AppCreationConfig.templatesRootPath = path.resolve(path.join(app.getAppPath(), 'templates', 'app'));
+    MicroserviceCreationGlobal.version = '6.3.2';
+    MicroserviceCreationConfig.templatesRootPath = path.resolve(path.join(app.getAppPath(), 'templates', 'microservice'));
+
+    logger.info(`App templates are located at : '${AppCreationConfig.templatesRootPath}'`);
+    logger.info(`Microservice templates are located at : '${AppCreationConfig.templatesRootPath}'`);
+
 
     mainWindow.once('ready-to-show', () => mainWindow?.show());
 
