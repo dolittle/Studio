@@ -9,6 +9,7 @@ import { Workspace } from '../../common/workspaces';
 import { injectable } from 'tsyringe';
 import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 import { ILogger } from '@dolittle/vanir-backend';
+import { app } from 'electron';
 
 export type MicroservicePortsForRendering = {
     backend: number;
@@ -55,7 +56,13 @@ export class WorkspaceRenderer {
 
     async render(workspace: Workspace): Promise<void> {
         this._logger.info(`Render workspace at '${workspace.path}'`);
-        const templatesRoot = path.join(require.main!.path, '..', '..', 'templates');
+        let templatesRoot = '';
+        if (require.main?.path) {
+            templatesRoot = path.join(require.main!.path, '..', '..', 'templates');
+        } else {
+            templatesRoot = path.resolve(path.join(app.getAppPath(),'templates', 'workspace'));
+        }
+
         const applicationTemplates = path.join(templatesRoot, 'application');
         const microserviceTemplates = path.join(templatesRoot, 'microservice');
 
