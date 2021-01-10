@@ -46,6 +46,13 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
         });
     };
 
+    const openDocumentation = (event: any) => {
+        const shell = window.require('electron').shell;
+        event.preventDefault();
+        shell.openExternal('https://dolittle.io');
+    };
+
+
     const getApplicationLinkFrom = (workspace: Workspace) => {
         return `/workspace/${workspace.id}/application/${workspace.application.id}`;
     };
@@ -81,7 +88,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
 
     const renderGroupHeader = (group: INavLinkGroup): JSX.Element => {
         return (
-            <div style={{ paddingRight: '1rem', paddingLeft: '1rem' }}>
+            <div className={styles.itemGroupHeader}>
                 <Stack horizontal>
                     <StackItem grow={1}>
                         <Link onClick={() => navigateToApplication(group)}><h3 style={{ paddingTop: '0.15rem' }}>{group.name}</h3></Link>
@@ -106,7 +113,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
     const renderLink = (link: INavLink): JSX.Element => {
         return (
             <>
-                <div>
+                <div className={styles.item}>
                     {link.name}
                 </div>
                 <div className={styles.itemActions} onClick={() => alert('hello')}>
@@ -120,10 +127,11 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
         <>
             <Stack verticalAlign='space-between' style={{ minHeight: '100%' }}>
                 <StackItem>
-                    <Stack horizontal>
+                    <Stack horizontal style={{paddingLeft: '1rem'}}>
                         <IconButton iconProps={{ iconName: 'Home' }} title="Home" onClick={() => history.push('/')} />
                         <IconButton iconProps={{ iconName: 'OpenFolderHorizontal' }} title="Open workspace" onClick={openWorkspace} />
                         <IconButton iconProps={{ iconName: 'ExploreContent' }} title="Create application" onClick={createApplication} />
+                        <IconButton iconProps={{ iconName: 'ReadingMode' }} title="Dolittle Documentation" onClick={openDocumentation} />
                     </Stack>
                 </StackItem>
                 <StackItem verticalFill={true} grow={1} >

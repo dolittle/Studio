@@ -7,12 +7,12 @@
     "license": "MIT",
     "private": true,
     "dependencies": {
-        "@dolittle/vanir-dependency-inversion": "6.2.1",
+        "@dolittle/vanir-dependency-inversion": "6.3.2",
         "graphql": "15.4.0",
         "dotenv": "8.2.0"
     },
     "devDependencies": {
-        "@dolittle/vanir-webpack": "6.2.1",
+        "@dolittle/vanir-webpack": "6.3.2",
         "clean-webpack-plugin": "^3.0.0",
         "concurrently": "^5.3.0",
         "cross-env": "7.0.2",

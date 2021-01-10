@@ -10,3 +10,4 @@ export * from './FeatureNavigation/FeatureNavigation';
 export * from './FeatureNavigation/FeatureNavigationLink';
 export * from './FeatureNavigation/FeatureNavigationLinks';
 export * from './FeatureNavigation/FeatureNavigationDefinition';
+export * from './DolittleLogo';

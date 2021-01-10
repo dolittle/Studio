@@ -5,7 +5,6 @@ import React from 'react';
 import { Pivot, PivotItem } from '@fluentui/react';
 
 import { useLocation, useHistory, useRouteMatch, Route } from 'react-router-dom';
-import { theme } from '@shared/styles/theme';
 import { withViewModel } from '@dolittle/vanir-react';
 import { FeatureNavigationViewModel } from './FeatureNavigationViewModel';
 
@@ -17,7 +16,7 @@ export const FeatureNavigation = withViewModel(FeatureNavigationViewModel, ({ vi
         history.push(item?.props.itemKey!);
     }
     return (
-        <Pivot onLinkClick={linkClicked} style={{ backgroundColor: theme.palette.neutralTertiaryAlt }} selectedKey={location.pathname}>
+        <Pivot onLinkClick={linkClicked} selectedKey={location.pathname}>
             {viewModel.links.map(_ => {
                 return (
                     <PivotItem key={_.link} headerText={_.name} itemKey={_.link} />

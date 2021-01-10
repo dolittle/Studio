@@ -17,6 +17,10 @@
 * Restart a running process
 * Restart a running container
 
+* Stop using Buffer - (node:37143) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.re
+
+* Automatically include the Vanir version in the WebPacked and configured correctly
+
 * BUG: Inconsistent URLs - Portals API and GraphQL is served on /api/portal and /portal/graphql - while DevCentral assumes without the prefix for a portal
 
 * BUG: Clean up event listeners: ] (node:46930) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 log-message listeners added to [EventEmitter]. Use emitter.setMaxListeners() to increase limit
@@ -54,7 +58,10 @@
 * Pause and resume a running process
 * Pause and resume a running container
 * Optimize when we render - only when needed
+
 * Run yarn after adding a microservice if it is the first microservice
+* Detect if 'yarn install' has not been run when starting and then perform yarn and pop up a window with the log output
+
 * Ask if one should do a Git init if the repository doesn't have .git
   * If yes - Add all files and create an initial commit
 * Change colors for GraphQL playground
@@ -94,6 +101,9 @@
 * Vanir: WebPack doesn't always pick up changes in dependencies (Shared)
 * Vanir: Templates in create* commands should be excluded during 'tsc -b' (build) - we don't want them compiled as part of the package dist folder
 
+* Whats new dialog
+* Known issues dialog
+
 ## Done
 
 * Fix bug for GraphQL and Swagger not working for portal
@@ -122,7 +132,3 @@
 * BUG: Vanir - When webpacked - the plopfile.js is not included, we need to expose an API rather than how we do it and not rely on the plop file. Extract all the tasks into something independent.
 * BUG: Vanir - create-dolittle-app doesn't produce the application.json file: ×  -> Cannot find module 'C:\Users\einari\Documents\MyApp\application.json'
 
-## Presentation
-
-* 2 pains - local dev + maintain multiple repos
-* Reference Studio - K8s - start with this

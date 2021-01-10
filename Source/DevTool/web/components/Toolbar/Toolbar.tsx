@@ -26,6 +26,6 @@ export const Toolbar = withViewModel(ToolbarViewModel, ({ viewModel }) => {
     // CircleStop
 
     return (
-        <CommandBar style={{ width: '100%' }} items={commandBarItems} />
+        <CommandBar items={commandBarItems} />
     );
 });

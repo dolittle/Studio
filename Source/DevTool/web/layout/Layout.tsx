@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Stack, FontIcon } from '@fluentui/react';
+import { Stack, StackItem } from '@fluentui/react';
 
 import { default as styles } from './Layout.module.scss';
 import { Home } from '../Home';
@@ -11,25 +11,34 @@ import { FeatureNavigation, Toolbar } from '../components';
 import { Route } from 'react-router-dom';
 import { LayoutViewModel } from './LayoutViewModel';
 import { withViewModel } from '@dolittle/vanir-react';
+import { DolittleLogo } from '../components/DolittleLogo';
 
 export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
     return (
-        <div style={{ width: '100%', height: '100%' }}>
-            <Stack>
+        <Stack>
+            <StackItem>
                 <div className={styles.header}>
-                    <h2><FontIcon iconName="WebAppBuilderSlot" />&nbsp;{viewModel.title}</h2>
+
+                    <div className="ms-fontSize-24">
+                        <Stack horizontal>
+                            <DolittleLogo size="1.5rem" />
+                            <div>{viewModel.title}</div>
+                        </Stack>
+                    </div>
                 </div>
                 <FeatureNavigation />
                 <Toolbar />
-            </Stack>
-            <div className={styles.content}>
-                <Route exact path="/">
-                    <Home />
-                </Route>
-                <Route path="/workspace/:workspaceId">
-                    <Workspace />
-                </Route>
-            </div>
-        </div>
+            </StackItem>
+            <StackItem grow={1}>
+                <div className={styles.content}>
+                    <Route exact path="/">
+                        <Home />
+                    </Route>
+                    <Route path="/workspace/:workspaceId">
+                        <Workspace />
+                    </Route>
+                </div>
+            </StackItem>
+        </Stack>
     );
 });

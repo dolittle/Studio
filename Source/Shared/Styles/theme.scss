@@ -1,30 +1,30 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-$ms-color-themePrimary:         #ffcf00;
-$ms-color-themeLighterAlt:      #fffdf5;
-$ms-color-themeLighter:         #fff8d6;
-$ms-color-themeLight:           #fff1b3;
-$ms-color-themeTertiary:        #ffe366;
-$ms-color-themeSecondary:       #ffd61f;
-$ms-color-themeDarkAlt:         #e6bb00;
-$ms-color-themeDark:            #c29e00;
-$ms-color-themeDarker:          #8f7500;
-$ms-color-neutralLighterAlt:    #292d32;
-$ms-color-neutralLighter:       #292c31;
-$ms-color-neutralLight:         #272a2f;
-$ms-color-neutralQuaternaryAlt: #24282c;
-$ms-color-neutralQuaternary:    #23262a;
-$ms-color-neutralTertiaryAlt:   #212428;
-$ms-color-neutralTertiary:      #c8c8c8;
-$ms-color-neutralSecondary:     #d0d0d0;
-$ms-color-neutralPrimaryAlt:    #dadada;
-$ms-color-neutralPrimary:       #ffffff;
-$ms-color-neutralDark:          #f4f4f4;
-$ms-color-black:                #f8f8f8;
-$ms-color-white:                #2b2f34;
+$ms-color-themePrimary: #f8f8f8;
+$ms-color-themeLighterAlt: #f8f8f8;
+$ms-color-themeLighter: #f9f9f9;
+$ms-color-themeLight: #fafafa;
+$ms-color-themeTertiary: #fbfbfb;
+$ms-color-themeSecondary: #fcfcfc;
+$ms-color-themeDarkAlt: #fcfcfc;
+$ms-color-themeDark: #fdfdfd;
+$ms-color-themeDarker: #fefefe;
+$ms-color-neutralLighterAlt: #0b0b0b;
+$ms-color-neutralLighter: #151515;
+$ms-color-neutralLight: #252525;
+$ms-color-neutralQuaternaryAlt: #2f2f2f;
+$ms-color-neutralQuaternary: #373737;
+$ms-color-neutralTertiaryAlt: #595959;
+$ms-color-neutralTertiary: #fafafa;
+$ms-color-neutralSecondary: #fbfbfb;
+$ms-color-neutralPrimaryAlt: #fcfcfc;
+$ms-color-neutralPrimary: #f8f8f8;
+$ms-color-neutralDark: #fdfdfd;
+$ms-color-black: #fefefe;
+$ms-color-white: #000000;
 
-@import '~office-ui-fabric-core/src/sass/Fabric.scss';
+@import "~office-ui-fabric-core/src/sass/Fabric.scss";
 
 %flex-container {
     display: flex;

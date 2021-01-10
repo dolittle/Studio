@@ -91,6 +91,7 @@ export const Overview = withViewModel<OverviewViewModel, OverviewProps>(Overview
             <Stack tokens={{ childrenGap: 5 }}>
                 <TextField label="Running state" readOnly value={GetRunStateAsString(viewModel.state?.state || RunState.stopped)} />
 
+
                 <div data-is-scrollable="true" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
                     <DetailsList
                         columns={columns}
