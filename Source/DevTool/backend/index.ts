@@ -41,19 +41,19 @@ function createWindow() {
             webSecurity: false
         },
         titleBarStyle: 'hidden',
-        vibrancy: 'dark',
-        frame: false
+        darkTheme: true
     };
 
     if (process.platform === 'darwin') {
         windowConfig.vibrancy = 'dark';
+        windowConfig.frame = false;
     } else {
         windowConfig.backgroundColor = '#333';
     }
 
     // Create the browser window.
     mainWindow = new BrowserWindow(windowConfig);
-
+    mainWindow.setMenuBarVisibility(false);
     setMainWindow(mainWindow);
 
     DependencyInversion.initialize();
