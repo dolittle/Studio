@@ -12,7 +12,7 @@
         "start:electron": "tsc --project backend",
         "start": "cd web && webpack-dev-server --mode=development --watch --progress --hot --verbose --display-error-details",
         "start:dev": "yarn clean && concurrently \"npm:start:electron\" \"yarn start\" \"wait-on http://localhost:9100 && sleepms 10000 && nodemon\"",
-        "prepackage": "yarn build:web && yarn build:backend",
+        "prepackage": "yarn build:web && yarn build:backend && cp ./assets/icon.png build",
         "package": "electron-builder build -mwl --publish never"
     },
     "nodemonConfig": {
@@ -44,7 +44,19 @@
             "build",
             {
                 "from": "assets/icon.png",
-                "to": "build/icon.png"
+                "to": "icon.png"
+            },
+            {
+                "from": "../../node_modules/create-dolittle-app/templates",
+                "to": "templates/app"
+            },
+            {
+                "from": "../../node_modules/create-dolittle-microservice/templates",
+                "to": "templates/microservice"
+            },
+            {
+                "from": "templates",
+                "to": "templates/workspace"
             }
         ],
         "dmg": {
@@ -77,13 +89,13 @@
     "author": "Dolittle",
     "license": "MIT",
     "dependencies": {
-        "@dolittle/vanir-common": "6.2.1",
+        "@dolittle/vanir-common": "6.3.2",
         "@fluentui/react-charting": "5.0.0-beta.0",
         "@shared/styles": "1.0.0",
         "@shared/web": "1.0.0",
         "byline": "^5.0.0",
-        "create-dolittle-app": "6.2.1",
-        "create-dolittle-microservice": "6.2.1",
+        "create-dolittle-app": "6.3.2",
+        "create-dolittle-microservice": "6.3.2",
         "dockerode": "^3.2.1",
         "electron-is-dev": "^1.2.0",
         "electron-squirrel-startup": "^1.0.0",
