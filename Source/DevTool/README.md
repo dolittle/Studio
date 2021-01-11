@@ -16,6 +16,8 @@
 * Show path for where a Workspace is
 * Add "Open in finder" / "Explore" workspace action
 
+* UI Improvement: When App level is selected, deselect any Microservice
+
 * BUG: LogOutput / Content doesn't stretch out vertically
 * BUG: Render files after adding microservice
 
