@@ -45,7 +45,7 @@ export class Workspaces implements IWorkspaces {
                 this._logger.info(`Microservice exists`);
                 const buffer = await fs.promises.readFile(microservicePath);
                 const microservice = JSON.parse(buffer.toString()) as Microservice;
-                this._logger.info(`Microservice with id '${microservice.id}' is loaded`);
+                this._logger.info(`Microservice with id '${microservice.id}' is loaded${microservice.web ? ' - web is enabled' : ''}`);
                 workspace.microservices.push(microservice);
             } else {
                 this._logger.info(`Microservice does not exist`);

@@ -35,7 +35,10 @@ export class RunningApplication {
     addMicroservice(microservice: MicroserviceWithLocationAndPorts): RunningMicroservice {
         const runtime = new RunningContainer(this._docker, this.containers.getByName('runtime', microservice.name));
         const backend = this.processes.getFor(RunningInstanceType.Backend, microservice);
-        const web = this.processes.getFor(RunningInstanceType.Web, microservice);
+        let web: IRunningInstance | undefined;
+        if (microservice.web) {
+            web = this.processes.getFor(RunningInstanceType.Web, microservice);
+        }
         const runningMicroservice = new RunningMicroservice(microservice, runtime, backend, web);
         this.runningMicroservices.push(runningMicroservice);
         return runningMicroservice;

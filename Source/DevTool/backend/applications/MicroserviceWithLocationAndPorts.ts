@@ -9,6 +9,7 @@ export type MicroserviceWithLocationAndPorts = {
     version: string;
     commit: string;
     built: string;
+    web: boolean;
     location: string;
     ports: MicroservicePorts;
 };

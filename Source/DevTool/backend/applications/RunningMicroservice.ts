@@ -5,6 +5,6 @@ import { IRunningInstance } from './IRunningInstance';
 import { MicroserviceWithLocationAndPorts } from './MicroserviceWithLocationAndPorts';
 
 export class RunningMicroservice {
-    constructor(readonly microservice: MicroserviceWithLocationAndPorts, readonly runtime: IRunningInstance, readonly backend: IRunningInstance, readonly web: IRunningInstance) {
+    constructor(readonly microservice: MicroserviceWithLocationAndPorts, readonly runtime: IRunningInstance, readonly backend: IRunningInstance, readonly web?: IRunningInstance) {
     }
 }

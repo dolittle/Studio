@@ -90,15 +90,22 @@ export class Applications implements IApplications {
                     for (const microservice of microservices) {
                         this._currentState.reportRunStateForMicroservice(application.id, microservice.id, RunState.starting);
                         processes.start(RunningInstanceType.Backend, microservice);
-                        processes.start(RunningInstanceType.Web, microservice);
+
+                        if (microservice.web) {
+                            processes.start(RunningInstanceType.Web, microservice);
+                        }
 
                         const runningMicroservice = runningApplication.addMicroservice(microservice);
                         this.registerInstance(application.id, runningMicroservice.runtime);
                         this._currentState.reportRunStateForInstance(application.id, runningMicroservice.runtime.id, RunState.running);
                         this.registerInstance(application.id, runningMicroservice.backend);
                         this._currentState.reportRunStateForInstance(application.id, runningMicroservice.backend.id, RunState.running);
-                        this.registerInstance(application.id, runningMicroservice.web);
-                        this._currentState.reportRunStateForInstance(application.id, runningMicroservice.web.id, RunState.running);
+
+                        if (microservice.web) {
+                            this.registerInstance(application.id, runningMicroservice.web);
+                            this._currentState.reportRunStateForInstance(application.id, runningMicroservice.web.id, RunState.running);
+                        }
+
                         this._currentState.reportRunStateForMicroservice(application.id, microservice.id, RunState.running);
                     }
 
