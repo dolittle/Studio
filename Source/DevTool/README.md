@@ -14,6 +14,9 @@
 * Restart a running process
 * Restart a running container
 
+* Show path for where a Workspace is
+* Add "Open in finder" / "Explore" workspace action
+
 * BUG: LogOutput / Content doesn't stretch out vertically
 * BUG: Render files after adding microservice
 
