@@ -158,7 +158,7 @@ export class Workspaces implements IWorkspaces {
             9701 + index));
     }
 
-    private async load() {
+    async load() {
         const file = this.getWorkspaceFilePath();
         this._logger.info(`Load registered workspaces`);
         if (fs.existsSync(file)) {

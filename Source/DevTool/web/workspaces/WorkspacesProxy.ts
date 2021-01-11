@@ -11,6 +11,10 @@ export class WorkspacesProxy implements IWorkspaces {
     constructor(private readonly _interop: Interop) {
     }
 
+    load(): Promise<void> {
+        return this._interop.invoke(IWorkspacesToken, 'load');
+    }
+
     create(path: string, name: string, tenant: string, license: string, containerRegistry: string, portal: boolean): Promise<void> {
         return this._interop.invoke(IWorkspacesToken, 'create', path, name, tenant, license, containerRegistry, portal);
     }

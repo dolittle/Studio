@@ -29,6 +29,11 @@ export class ListViewModel {
         this.workspaces = await this._workspaces.getAll();
     }
 
+    async reload() {
+        await this._workspaces.load();
+        await this.populate();
+    }
+
     async directoryAdded(path: string) {
         await this._workspaces.addFromPath(path);
         this.populate();

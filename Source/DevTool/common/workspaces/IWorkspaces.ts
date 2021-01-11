@@ -14,4 +14,5 @@ export interface IWorkspaces {
     create(path: string, name: string, tenant: string, license: string, containerRegistry: string, portal: boolean): Promise<void>;
     createMicroservice(path: string, name: string, addWebFrontend: boolean): Promise<void>;
     remove(path: string);
+    load(): Promise<void>;
 }

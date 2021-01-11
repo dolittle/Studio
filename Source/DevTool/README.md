@@ -8,6 +8,12 @@
 
 ## Todo
 
+* Refresh button - reloads workspace
+* Don't show Web related things if Microservice does not have a frontend
+* Don't start the Web frontend process if it doesn't have a web frontend
+* Restart a running process
+* Restart a running container
+
 * BUG: LogOutput / Content doesn't stretch out vertically
 * BUG: Render files after adding microservice
 
@@ -15,9 +21,6 @@
 * BUG: Disable text selection - to make it feel more native
 
 * Make acrylic work for Windows https://github.com/Seo-Rii/electron-acrylic-window
-
-* Restart a running process
-* Restart a running container
 
 * Change name from 'Backend' to Main
 * Change name from 'Web' to Renderer
@@ -56,9 +59,6 @@
 * Need to be able to add existing microservice
 
 * Refresh port mapping in workspaces.json when changes occur - added microservice
-
-* Don't show Web related things if Microservice does not have a frontend
-* Don't start the Web frontend process if it doesn't have a web frontend
 
 * Fix GitHub action that saves version to read existing file and amend the version info
 * Show details on overview for each microservice

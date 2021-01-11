@@ -132,6 +132,7 @@ export const List = withViewModel(ListViewModel, ({ viewModel }) => {
                         <IconButton iconProps={{ iconName: 'OpenFolderHorizontal' }} title="Open workspace" onClick={openWorkspace} />
                         <IconButton iconProps={{ iconName: 'ExploreContent' }} title="Create application" onClick={createApplication} />
                         <IconButton iconProps={{ iconName: 'ReadingMode' }} title="Dolittle Documentation" onClick={openDocumentation} />
+                        <IconButton iconProps={{ iconName: 'Refresh' }} title="Reload workspace" onClick={() => viewModel.reload() } />
                     </Stack>
                 </StackItem>
                 <StackItem verticalFill={true} grow={1} >
