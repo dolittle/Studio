@@ -8,7 +8,6 @@
 
 ## Todo
 
-* Refresh button - reloads workspace
 * Don't show Web related things if Microservice does not have a frontend
 * Don't start the Web frontend process if it doesn't have a web frontend
 * Restart a running process
@@ -148,3 +147,4 @@
 * BUG: Creating an app doesn't work on Windows
 * BUG: Missing Window buttons in the right corner on Windows
 * BUG: Starting point is not Home
+* Refresh button - reloads workspace
