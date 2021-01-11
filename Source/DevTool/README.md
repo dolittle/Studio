@@ -8,21 +8,48 @@
 
 ## Todo
 
+* Vanir: Tenant configuration
 * Don't show Web related things if Microservice does not have a frontend
 * Don't start the Web frontend process if it doesn't have a web frontend
 * Restart a running process
 * Restart a running container
+* BUG: Displaying 'unknown' for runstate at startup - make sure we set the correct run state for all apps and microservices loaded
+* Update running state on startup and detect if any are running
+* Save the running state to disk and resume it when starting (paused containers / processes remain paused etc. )
+* Add ability to add Web frontend at a later stage
+* Vanir: Figure out a good way to export nested modules so that we can do 'import { IEventStore } from '@dolittle/vanir-backend/dolittle''
+* BUG: Running processes list gets clipped outside the window
+* Refresh button for Swagger
+* Refresh button for GraphQL
+* Running time in list of running instances
+* UI: Left menu / sidebar should have a grey semi-transparent background. Looks better.
+
+* BUG: Should not be allowed to start if ports conflict
+* BUG: Tabs that are supposed to only show when running a Microservice sometimes shows up
+
+* UI: Theming support - primarily right now a Desktop theme and a Dark theme. To support the different look of the DevTool and the Web and make it possible to include Studio things within the Dev Central tooling
 
 * Show path for where a Workspace is
 * Add "Open in finder" / "Explore" workspace action
 
 * UI Improvement: When App level is selected, deselect any Microservice
 
+* Main model improvements:
+  * Encapsulate the starting of a Microservice
+  * Processes and containers should be dynamically provided, not hard-coded
+  * Add a Provider model that can provide the artifacts and how to start them (Vanir is one model)
+  * Move reporting of process run status into Processes system
+
+* Add Dockerfile capabilities - meaning that a provider (Vanir) can render dockerfiles on the spot - could be packaged and also be part of the build pipeline
+* Vanir: Look into Vanir being able to read the microservice.json file for the common information, so we don't keep some in vanir.json and some in microservice.json
+
 * BUG: LogOutput / Content doesn't stretch out vertically
 * BUG: Render files after adding microservice
 
 * BUG: Fix what areas are draggable to make it feel more natural
 * BUG: Disable text selection - to make it feel more native
+
+* BUG: List of running instances is inconsistently being updated when there are changes
 
 * Make acrylic work for Windows https://github.com/Seo-Rii/electron-acrylic-window
 
@@ -52,7 +79,6 @@
 
 * BUG: Make content scrollable
 
-* BUG: Displaying 'unknown' for runstate at startup - make sure we set the correct run state for all apps and microservices loaded
 * BUG: Electron Security errors on startup
 * BUG: Multiple windows being opened using start:dev script
 
@@ -83,8 +109,6 @@
 * Change colors for Swagger UI
 * Avoid duplicate processes running
   * Add an environment variable to every process for identifying them
-* Update running state on startup and detect if any are running
-* Save the running state to disk and resume it when starting (paused containers / processes remain paused etc. )
 
 * Watch for change in files (application.json, microservice.json, vanir.json)
 * Make the declarative feature navigation system work - lifecycle is a killer with nested features
@@ -107,6 +131,8 @@
   * Notify on errors
   * Notify when something has been started and is running
 
+* Settings page should show where the folder of the Workspace configuration is
+
 * Vanir: Maintain pipelines in one place use workflow-dispatch to call these - so we don't need to have the template be maintained.
   Leverage composite runs actions: https://docs.github.com/en/free-pro-team@latest/actions/creating-actions/creating-a-composite-run-steps-action
 * Vanir: Add correct license header to tsconfig.json when selecting a license (except UNLICENSED)
@@ -115,6 +141,15 @@
 * Vanir: HotLoading not working - have to refresh browser manually when changing anything
 * Vanir: WebPack doesn't always pick up changes in dependencies (Shared)
 * Vanir: Templates in create* commands should be excluded during 'tsc -b' (build) - we don't want them compiled as part of the package dist folder
+* Vanir: WebPack setup should support reading the microservices.json file for information plus the vanir.json file
+* Vanir: Look at how we could get <Bootstrapper/> instrumented with the information it needs from microservices.json and/or vanir.json
+* Vanir: Add a default empty Swagger schema if non is given
+* Vanir: TS Transformer for discovering the RegisterRoutes thing and hook it up automatically
+* Vanir: Automatically hook up GraphQL Resolvers
+* Vanir: Support overriding the WebPack DevServer hosted port
+* Vanir: Export ContentFrame properly
+* Override WebPack DevServer port with argument
+* It should be optional if one wants a backend or a frontend
 
 * Whats new dialog
 * Known issues dialog
