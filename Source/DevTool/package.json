@@ -1,6 +1,6 @@
 {
     "name": "devcentral",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Dolittle Developer Central is a developer tool for working with Dolittle microservice based solutions.",
     "main": "build/index.js",
     "scripts": {
@@ -89,13 +89,13 @@
     "author": "Dolittle",
     "license": "MIT",
     "dependencies": {
-        "@dolittle/vanir-common": "6.4.1",
+        "@dolittle/vanir-common": "6.5.0",
         "@fluentui/react-charting": "5.0.0-beta.0",
         "@shared/styles": "1.0.0",
         "@shared/web": "1.0.0",
         "byline": "^5.0.0",
-        "create-dolittle-app": "6.4.1",
-        "create-dolittle-microservice": "6.4.1",
+        "create-dolittle-app": "6.5.0",
+        "create-dolittle-microservice": "6.5.0",
         "dockerode": "^3.2.1",
         "electron-is-dev": "^1.2.0",
         "electron-squirrel-startup": "^1.0.0",
