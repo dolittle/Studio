@@ -26,6 +26,8 @@ export class Processes {
             throw new Error(`Directory '${processDirectory}' does not exist trying to start instance '${instanceName}' on '${this._application.name}'`);
         }
 
+        this._logger.info(`Start instance type ${instance}`, microservice);
+
         let port = 0;
         switch (instance) {
             case RunningInstanceType.Backend: {
@@ -78,3 +80,4 @@ export class Processes {
         return runningProcess;
     }
 }
+
