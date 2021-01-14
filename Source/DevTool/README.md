@@ -10,6 +10,7 @@
 
 * Tenant configuration
 * Don't show Web related things if Microservice does not have a frontend
+* Honor route segment from vanir for urls
 * Restart a running process
 * Restart a running container
 * Refresh button for Swagger
@@ -25,6 +26,8 @@
 * UI: Make columns adjustable in size
 * UI: Don't lock the width of the overview page for Apps.
 * Vanir Documentation: The reason for the HtmlInterceptorPlugin - fallback page serving for all non-matched routes for the dev server
+
+* BUG: When refreshing - not all objects are refreshed (Microservice for listing + details + ports)
 
 * Clear logs
 * Download logs
