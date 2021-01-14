@@ -56,6 +56,8 @@ export class Applications implements IApplications {
                 return;
             }
 
+            this._logger.info(`Docker compose started for ${application.microservices.length} microservices`);
+
             const interval = setInterval(async () => {
                 const containerInfos = await this.listContainersForApplication(application.id);
                 if (containerInfos.length === application.microservices.length + 2) {
@@ -101,7 +103,7 @@ export class Applications implements IApplications {
                         this.registerInstance(application.id, runningMicroservice.backend);
                         this._currentState.reportRunStateForInstance(application.id, runningMicroservice.backend.id, RunState.running);
 
-                        if (microservice.web) {
+                        if (microservice.web && runningMicroservice.web) {
                             this.registerInstance(application.id, runningMicroservice.web);
                             this._currentState.reportRunStateForInstance(application.id, runningMicroservice.web.id, RunState.running);
                         }
