@@ -8,21 +8,31 @@
 
 ## Todo
 
-* Vanir: Tenant configuration
+* Tenant configuration
 * Don't show Web related things if Microservice does not have a frontend
-* Don't start the Web frontend process if it doesn't have a web frontend
 * Restart a running process
 * Restart a running container
+* Refresh button for Swagger
+* Refresh button for GraphQL
 * BUG: Displaying 'unknown' for runstate at startup - make sure we set the correct run state for all apps and microservices loaded
 * Update running state on startup and detect if any are running
 * Save the running state to disk and resume it when starting (paused containers / processes remain paused etc. )
 * Add ability to add Web frontend at a later stage
 * Vanir: Figure out a good way to export nested modules so that we can do 'import { IEventStore } from '@dolittle/vanir-backend/dolittle''
 * BUG: Running processes list gets clipped outside the window
-* Refresh button for Swagger
-* Refresh button for GraphQL
 * Running time in list of running instances
 * UI: Left menu / sidebar should have a grey semi-transparent background. Looks better.
+* UI: Make columns adjustable in size
+* UI: Don't lock the width of the overview page for Apps.
+* Vanir Documentation: The reason for the HtmlInterceptorPlugin - fallback page serving for all non-matched routes for the dev server
+
+* Clear logs
+* Download logs
+* Search logs
+
+* BUG: When stopping a running application - clear the interval that polls for container info - really stop everything
+
+* A more "sane" way to figure out if all the Docker containers have started than (microservices.length + 2) - we generate the Docker Compose file, we know! (Applications.ts)
 
 * BUG: Should not be allowed to start if ports conflict
 * BUG: Tabs that are supposed to only show when running a Microservice sometimes shows up
@@ -148,11 +158,14 @@
 * Vanir: Automatically hook up GraphQL Resolvers
 * Vanir: Support overriding the WebPack DevServer hosted port
 * Vanir: Export ContentFrame properly
-* Override WebPack DevServer port with argument
 * It should be optional if one wants a backend or a frontend
 
 * Whats new dialog
 * Known issues dialog
+
+## Ideas
+
+* Visualizing microservices and their dependencies using something similar to this: http://hughsk.io/colony/ (https://github.com/hughsk/colony/blob/master/src/index.js)
 
 ## Done
 
@@ -185,3 +198,5 @@
 * BUG: Missing Window buttons in the right corner on Windows
 * BUG: Starting point is not Home
 * Refresh button - reloads workspace
+* Don't start the Web frontend process if it doesn't have a web frontend
+* Override WebPack DevServer port with argument
