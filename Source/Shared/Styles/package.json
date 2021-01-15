@@ -8,7 +8,6 @@
     "author": "Dolittle",
     "license": "MIT",
     "dependencies": {
-        "office-ui-fabric-core": "11.0.0",
         "@uifabric/icons": "7.5.17"
     },
     "devDependencies": {
