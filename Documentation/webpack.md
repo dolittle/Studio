@@ -46,7 +46,7 @@ In the `package.json` file of the project, you typically have the build script t
 ```json
 {
     "scripts": {
-        "build": "yarn clean && webpack --env.production --mode=production"
+        "build": "yarn clean && webpack --mode=production"
     }
 }
 ```

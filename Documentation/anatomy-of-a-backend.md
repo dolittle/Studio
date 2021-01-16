@@ -21,7 +21,7 @@ For a backend, this could typically look like below:
         "start:dev": "nodemon --inspect=0 -e ts --exec node -r ts-node/register index.ts",
         "start": "ts-node index.ts",
         "clean": "tsc -b --clean",
-        "build": "yarn clean && webpack --env.production --mode=production",
+        "build": "yarn clean && webpack --mode=production",
         "test": "mocha",
         "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
         "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",
@@ -178,7 +178,7 @@ Typically some of the values in the full config is overridden when going to prod
         }
     },
     "database": {
-        "name": "<microservice>"                                    <-- Database name to use for the 
+        "name": "<microservice>"                                    <-- Database name to use for the
     },
     "eventStore": {
         "name": "event_store_<microservice>"                        <-- Event store database name - must correspond to what is set up in the resources.json for the microservice in environment

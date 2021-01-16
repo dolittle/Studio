@@ -136,9 +136,9 @@ package.json:
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "webpack --env.production --mode=production",
-        "build:dev": "webpack --env.development --mode=development",
-        "start": "webpack-dev-server --mode=development --watch --progress --hot --verbose --display-error-details",
+        "build": "webpack --mode=production",
+        "build:dev": "webpack --mode=development",
+        "start:dev": "webpack-cli serve --mode=development --watch --progress --hot",
         "clean": "tsc -b --clean",
         "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
         "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",
@@ -212,7 +212,7 @@ export const MyFeature = withViewModel(MyFeatureViewModel, { viewModel } => {
         <>
             <ul>
             {
-                viewModel.items.map((item, index) => 
+                viewModel.items.map((item, index) =>
                     <li key="{index.toString()}">
                         {item}
                     </li>

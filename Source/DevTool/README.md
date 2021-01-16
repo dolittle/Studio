@@ -8,8 +8,6 @@
 
 ## Todo
 
-* Fix GitHub action that saves version to read existing file and amend the version info in Microservice.json
-
 * Tenant configuration
 * Don't show Web related things if Microservice does not have a frontend
 * Honor route segment from vanir for urls
@@ -17,33 +15,27 @@
 * Restart a running container
 * Refresh button for Swagger
 * Refresh button for GraphQL
-* BUG: Displaying 'unknown' for runstate at startup - make sure we set the correct run state for all apps and microservices loaded
+* Add the ability to configure base port - all ports allocated for processes will be in a range from this
+
 * Update running state on startup and detect if any are running
 * Save the running state to disk and resume it when starting (paused containers / processes remain paused etc. )
 * Add ability to add Web frontend at a later stage
 * Vanir: Figure out a good way to export nested modules so that we can do 'import { IEventStore } from '@dolittle/vanir-backend/dolittle''
-* BUG: Running processes list gets clipped outside the window
 * Running time in list of running instances
 * UI: Left menu / sidebar should have a grey semi-transparent background. Looks better.
 * UI: Make columns adjustable in size
 * UI: Don't lock the width of the overview page for Apps.
 * Vanir Documentation: The reason for the HtmlInterceptorPlugin - fallback page serving for all non-matched routes for the dev server
-
-* BUG: When refreshing - not all objects are refreshed (Microservice for listing + details + ports)
+* Show CPU and memory usage of both containers and running processes (sampled every second or so)
+* Change name from 'Backend' to Main
+* Change name from 'Web' to Renderer
+* Continuous deployment pipeline
 
 * Clear logs
 * Download logs
 * Search logs
-
-* BUG: When stopping a running application - clear the interval that polls for container info - really stop everything
-
 * A more "sane" way to figure out if all the Docker containers have started than (microservices.length + 2) - we generate the Docker Compose file, we know! (Applications.ts)
-
-* BUG: Should not be allowed to start if ports conflict
-* BUG: Tabs that are supposed to only show when running a Microservice sometimes shows up
-
 * UI: Theming support - primarily right now a Desktop theme and a Dark theme. To support the different look of the DevTool and the Web and make it possible to include Studio things within the Dev Central tooling
-
 * Show path for where a Workspace is
 * Add "Open in finder" / "Explore" workspace action
 
@@ -57,21 +49,7 @@
 
 * Add Dockerfile capabilities - meaning that a provider (Vanir) can render dockerfiles on the spot - could be packaged and also be part of the build pipeline
 * Vanir: Look into Vanir being able to read the microservice.json file for the common information, so we don't keep some in vanir.json and some in microservice.json
-
-* BUG: LogOutput / Content doesn't stretch out vertically
-* BUG: Render files after adding microservice
-
-* BUG: Fix what areas are draggable to make it feel more natural
-* BUG: Disable text selection - to make it feel more native
-
-* BUG: List of running instances is inconsistently being updated when there are changes
-
 * Make acrylic work for Windows https://github.com/Seo-Rii/electron-acrylic-window
-
-* Change name from 'Backend' to Main
-* Change name from 'Web' to Renderer
-
-* Continous deployment pipeline
 
 * Enable Automatic updates (Needs notarizing on macOS (see above))
 
@@ -80,24 +58,7 @@
 * Stop using Buffer - (node:37143) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.re
 
 * Automatically include the Vanir version in the WebPacked output and configured correctly
-
-* BUG: Inconsistent URLs - Portals API and GraphQL is served on /api/portal and /portal/graphql - while DevCentral assumes without the prefix for a portal
-
-* BUG: Clean up event listeners: ] (node:46930) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 log-message listeners added to [EventEmitter]. Use emitter.setMaxListeners() to increase limit
-* BUG: Navigating from "Home" directly to a Microservice will not show all Microservice details (Identifier, name, version)
-
-* BUG: Swagger iFrame is empty till we resize or gets a re-render somehow...
-* BUG: Make sure we fill / stretch the acrylic in layout when toolbar and/or navigation is not visible
-* BUG: Title flickers from not set to actual title
-* BUG: Unselect microservice when navigating to something else
 * Missing faulty RunState - we need to know if it didn't start as expected
-
-* BUG: Make content scrollable
-
-* BUG: Electron Security errors on startup
-* BUG: Multiple windows being opened using start:dev script
-
-* BUG: When clicking stop on app - navigate to overview of app
 
 * Limit # of bytes / lines we accumulate for logs both for containers and processes
 
@@ -167,9 +128,31 @@
 * Whats new dialog
 * Known issues dialog
 
+## Known issues
+
+* BUG: Running processes list gets clipped outside the window
+* BUG: When refreshing - not all objects are refreshed (Microservice for listing + details + ports)
+* BUG: Displaying 'unknown' for runstate at startup - make sure we set the correct run state for all apps and microservices loaded
+* BUG: When stopping a running application - clear the interval that polls for container info - really stop everything
+* BUG: Clean up event listeners: ] (node:46930) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 log-message listeners added to [EventEmitter]. Use emitter.setMaxListeners() to increase limit
+* BUG: Should not be allowed to start if ports conflict
+* BUG: Tabs that are supposed to only show when running a Microservice sometimes shows up
+* BUG: LogOutput / Content doesn't stretch out vertically
+* BUG: Render files after adding microservice
+* BUG: Fix what areas are draggable to make it feel more natural
+* BUG: Disable text selection - to make it feel more native
+* BUG: List of running instances is inconsistently being updated when there are changes
+* BUG: Inconsistent URLs - Portals API and GraphQL is served on /api/portal and /portal/graphql - while DevCentral assumes without the prefix for a portal
+* BUG: Navigating from "Home" directly to a Microservice will not show all Microservice details (Identifier, name, version)
+* BUG: Swagger iFrame is empty till we resize or gets a re-render somehow...
+* BUG: Make sure we fill / stretch the acrylic in layout when toolbar and/or navigation is not visible
+* BUG: Title flickers from not set to actual title
+* BUG: Unselect microservice when navigating to something else
+* BUG: Make content scrollable
+* BUG: Electron Security errors on startup
+* BUG: Multiple windows being opened using start:dev script
+* BUG: When clicking stop on app - navigate to overview of app
+
 ## Ideas
 
 * Visualizing microservices and their dependencies using something similar to this: http://hughsk.io/colony/ (https://github.com/hughsk/colony/blob/master/src/index.js)
-
-## Done
-
