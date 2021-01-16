@@ -9,12 +9,5 @@ module.exports = (env, argv) => {
     return webpack(env, argv, config => {
         config.target = 'electron-main';
         config.output.path = path.resolve(process.cwd(), '..', 'build');
-        config.module.rules.push({
-            test: /\.[tj]s$/i,
-            loader: 'shebang-loader'
-        });
-        config.plugins.push(
-            new wp.NormalModuleReplacementPlugin(/platform-shims\/esm.mjs/, 'devcentral/backend/_build/esm.js')
-        );
     });
 };
