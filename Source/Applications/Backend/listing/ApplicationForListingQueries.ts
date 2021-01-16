@@ -5,7 +5,7 @@ import { injectable } from 'tsyringe';
 import { Query, Resolver, Ctx } from 'type-graphql';
 
 import { ILogger } from '@dolittle/vanir-backend';
-import { Context } from '@dolittle/vanir-backend/web';
+import { Context } from '@dolittle/vanir-backend/dist/web';
 import { IApplicationNamespaces, IMicroserviceResources } from '@shared/k8s';
 
 import { ApplicationForListing } from './ApplicationForListing';

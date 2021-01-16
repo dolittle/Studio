@@ -4,7 +4,7 @@
 import { buildSchema, Field, ObjectType, Query, Resolver, ResolverData } from 'type-graphql';
 import { GraphQLSchema } from 'graphql';
 
-import { guid, GuidScalar } from '@dolittle/vanir-backend/data';
+import { guid, GuidScalar } from '@dolittle/vanir-backend/dist/data';
 import { Guid } from '@dolittle/rudiments';
 import { modelOptions, Severity } from '@typegoose/typegoose';
 import { container } from 'tsyringe';

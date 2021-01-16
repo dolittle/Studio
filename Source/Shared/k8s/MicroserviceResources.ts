@@ -6,7 +6,7 @@ import { KubeConfig, AppsV1Api} from '@kubernetes/client-node';
 
 import { Configuration } from '@dolittle/vanir-backend';
 import { ILogger } from '@dolittle/vanir-backend';
-import { Context } from '@dolittle/vanir-backend/web';
+import { Context } from '@dolittle/vanir-backend/dist/web';
 
 import { IMicroserviceResources } from './IMicroserviceResources';
 
