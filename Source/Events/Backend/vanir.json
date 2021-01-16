@@ -2,6 +2,7 @@
     "microserviceId": "81cad113-a001-45dc-86cb-7b1e725ae25e",
     "routeSegment": "events",
     "port": 3003,
+    "publicPath": "./public",
     "dolittle": {
         "runtime": {
             "port": 50059

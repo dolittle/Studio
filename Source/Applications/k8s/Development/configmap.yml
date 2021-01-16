@@ -11,7 +11,9 @@ metadata:
 data:
   NODE_ENV: "production"
   DATABASE_HOST: "studio-dev-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
-  DATABASE_NAME: "applications"
+  DATABASE_NAME: "studio_dev_applications_readmodels"
+  EVENTSTORE_HOST: "studio-dev-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
+  EVENTSTORE_NAME: "studio_dev_applications_eventstore"
   PORT: "80"
   DOLITTLE_RUNTIME_PORT: "50053"
 
