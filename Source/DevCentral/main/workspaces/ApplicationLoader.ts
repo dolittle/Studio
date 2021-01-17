@@ -23,9 +23,10 @@ export class ApplicationLoader implements IApplicationLoader {
 
     async loadFromFolder(folder: string): Promise<Application> {
         const applicationPath = this.getApplicationPathFor(folder);
-        this._logger.info(`Load application from ${applicationPath}`);
+        this._logger.info(`Load application from '${applicationPath}'`);
         const buffer = await this._fileSystem.readFile(applicationPath);
         const application = JSON.parse(buffer.toString()) as Application;
+        this._logger.info(`Application with id '${application.id}' is loaded`);
         return application;
     }
 

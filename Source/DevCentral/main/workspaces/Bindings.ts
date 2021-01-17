@@ -11,6 +11,8 @@ import { IWorkspaceConverter } from './IWorkspaceConverter';
 import { WorkspaceConverter } from './WorkspaceConverter';
 import { IApplicationLoader } from './IApplicationLoader';
 import { ApplicationLoader } from "./ApplicationLoader";
+import { IMicroserviceLoader } from './IMicroserviceLoader';
+import { MicroserviceLoader } from './MicroserviceLoader';
 
 export class Bindings {
     static initialize() {
@@ -18,5 +20,6 @@ export class Bindings {
         container.registerSingleton(IWorkspaceConverter as constructor<IWorkspaceConverter>, WorkspaceConverter);
         container.registerSingleton(IWorkspaceRenderer as constructor<IWorkspaceRenderer>, WorkspaceRenderer);
         container.registerSingleton(IApplicationLoader as constructor<IApplicationLoader>, ApplicationLoader);
+        container.registerSingleton(IMicroserviceLoader as constructor<IMicroserviceLoader>, MicroserviceLoader);
     }
 }

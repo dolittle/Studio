@@ -16,6 +16,7 @@ import { IFileSystem, IWellKnownFilesAndFolders } from '../infrastructure';
 import { WorkspacesFile } from './WorkspacesFile';
 import { WorkspaceFile } from './WorkspaceFile';
 import { IApplicationLoader } from './IApplicationLoader';
+import { IMicroserviceLoader } from './IMicroserviceLoader';
 
 @injectable()
 export class Workspaces implements IWorkspaces {
@@ -27,6 +28,7 @@ export class Workspaces implements IWorkspaces {
         private readonly _filesAndFolders: IWellKnownFilesAndFolders,
         private readonly _fileSystem: IFileSystem,
         private readonly _applicationLoader: IApplicationLoader,
+        private readonly _microserviceLoader: IMicroserviceLoader,
         private readonly _logger: ILogger) {
         this.makeSureRootExists();
     }
@@ -39,17 +41,14 @@ export class Workspaces implements IWorkspaces {
     async populateMicroservicesFor(workspace: Workspace, paths: string[]) {
         this._logger.info(`Populate microservices for workspace at ${workspace.path}`);
         workspace.clear();
+
         for (const relativePath of paths) {
-            const microservicePath = path.join(workspace.path, relativePath, 'microservice.json');
-            this._logger.info(`Load microservice information from ${microservicePath}`);
-            if (this._fileSystem.exists(microservicePath)) {
-                this._logger.info(`Microservice exists`);
-                const buffer = await this._fileSystem.readFile(microservicePath);
-                const microservice = JSON.parse(buffer.toString()) as Microservice;
-                this._logger.info(`Microservice with id '${microservice.id}' is loaded${microservice.web ? ' - web is enabled' : ''}`);
+            const microserviceFolder = path.join(workspace.path, relativePath);
+            if (this._microserviceLoader.existsInFolder(microserviceFolder)) {
+                const microservice = await this._microserviceLoader.loadFromFolder(microserviceFolder);
                 workspace.microservices.push(microservice);
             } else {
-                this._logger.info(`Microservice does not exist`);
+                this._logger.info(`Microservice defined in relative path '${relativePath}' inside workspace located at '${workspace.path}' does not exist`);
             }
         }
     }

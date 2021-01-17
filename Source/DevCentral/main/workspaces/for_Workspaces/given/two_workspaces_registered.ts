@@ -1,7 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Application } from '@dolittle/vanir-common';
 import { WorkspacesFile } from '../../WorkspacesFile';
 import { no_workspaces } from './no_workspaces';
 
@@ -19,12 +18,14 @@ export class two_workspaces_registered extends no_workspaces {
 
     firstApplication = {
         id: '011aeb15-1572-4f93-8901-5c3b34d16cbc',
-        microservices: []
+        microservices: [] as string[],
+        portal: ''
     };
 
     secondApplication = {
         id: '90249ce2-4b67-42f2-a5ca-dc46d15e9cec',
-        microservices: []
+        microservices: [] as string[],
+        portal: ''
     };
 
     constructor() {

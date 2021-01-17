@@ -28,6 +28,10 @@ export class all_dependencies {
         existsInFolder: sinon.stub(),
         loadFromFolder: sinon.stub()
     };
+    microserviceLoader = {
+        existsInFolder: sinon.stub(),
+        loadFromFolder: sinon.stub()
+    };
 
     constructor() {
         this.fileSystem = CreateFakeFileSystem();

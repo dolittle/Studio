@@ -17,6 +17,7 @@ describe('when constructing and root exists', () => {
         dependencies.filesAndFolders,
         dependencies.fileSystem,
         dependencies.applicationLoader,
+        dependencies.microserviceLoader,
         dependencies.logger
     );
 
