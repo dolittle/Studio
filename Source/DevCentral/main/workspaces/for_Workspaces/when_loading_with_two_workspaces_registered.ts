@@ -10,4 +10,6 @@ describe('when loading with two workspaces registered', async () => {
     const workspaces = await context.workspaces.getAll();
 
     it('should have two workspaces', () => workspaces.length.should.equal(2));
+    it('should reference the first application in the first workspace', () => workspaces[0].application.should.equal(context.firstApplication));
+    it('should reference the second application in the second workspace', () => workspaces[1].application.should.equal(context.secondApplication));
 });
