@@ -17,6 +17,8 @@ import { WorkspaceFile } from './WorkspaceFile';
 import { IApplicationLoader } from './IApplicationLoader';
 import { IMicroserviceLoader } from './IMicroserviceLoader';
 import { IMicroservicePortsAllocator } from './IMicroservicePortsAllocator';
+import { Tenant } from '../../common/workspaces/Tenant';
+import { TenantId } from '@dolittle/sdk.execution';
 
 @injectable()
 export class Workspaces implements IWorkspaces {
@@ -129,12 +131,17 @@ export class Workspaces implements IWorkspaces {
 
         let workspace: Workspace;
         const workspaceFilePath = path.join(folder, this._filesAndFolders.dolittleFolder, this._filesAndFolders.workspaceFile);
+        this._logger.info(`Attempting load of workspace file '${workspaceFilePath}'`);
         if (this._fileSystem.exists(workspaceFilePath)) {
             const workspaceFile = await this.loadWorkspaceFromFile(workspaceFilePath);
+            this._logger.info(`Loaded workspace '${workspaceFile.tenants.length}'`);
             workspace = new Workspace(workspaceFile.id, folder, application);
+            workspace.tenants = workspaceFile.tenants.map(_ => new Tenant(Guid.parse(_.id), _.name));
+            this._logger.info('Tenants', workspace.tenants);
         } else {
             const workspaceId = Guid.create().toString();
             workspace = new Workspace(workspaceId, folder, application);
+            workspace.tenants.push(new Tenant(TenantId.development.value, 'Development'));
         }
         this.addOrUpdateExistingInList(folder, workspace);
 
@@ -185,4 +192,3 @@ export class Workspaces implements IWorkspaces {
         await this._fileSystem.writeFile(file, serialized);
     }
 }
-

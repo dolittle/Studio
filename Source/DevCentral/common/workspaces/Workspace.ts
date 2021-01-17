@@ -3,6 +3,7 @@
 
 import { Application, Microservice } from '@dolittle/vanir-common';
 import { MicroservicePorts } from './MicroservicePorts';
+import { Tenant } from './Tenant';
 
 export class Workspace {
     microservices: Microservice[] = [];
@@ -11,8 +12,10 @@ export class Workspace {
     }
 
     microservicePorts: MicroservicePorts[] = [];
+    tenants: Tenant[] = [];
 
     clear() {
         this.microservices = [];
+        this.microservicePorts = [];
     }
 }

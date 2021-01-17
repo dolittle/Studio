@@ -5,7 +5,9 @@ import { Microservice } from '@dolittle/vanir-common';
 import { Workspace } from '../../common/workspaces';
 import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 import { IMicroservicePortsAllocator } from './IMicroservicePortsAllocator';
+import { injectable } from 'tsyringe';
 
+@injectable()
 export class MicroservicePortsAllocator implements IMicroservicePortsAllocator {
     allocateFor(workspace: Workspace): MicroservicePorts[] {
         const microservices: Microservice[] = [];

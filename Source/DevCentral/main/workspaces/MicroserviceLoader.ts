@@ -6,7 +6,9 @@ import { IFileSystem, IWellKnownFilesAndFolders } from '../infrastructure';
 import { IMicroserviceLoader } from './IMicroserviceLoader';
 import { ILogger } from '@dolittle/vanir-backend';
 import * as path from 'path';
+import { injectable } from 'tsyringe';
 
+@injectable()
 export class MicroserviceLoader implements IMicroserviceLoader {
     constructor(
         private readonly _fileSystem: IFileSystem,

@@ -8,8 +8,8 @@
 
 ## Todo
 
-* Move custom configuration into a workspace.json file inside the .dolittle folder of a workspace
 * Tenant configuration
+* Tenant selector UI - bar at the bottom - can we add this through Nginx?
 * Add paths for nginx (Example use case: /api/v1 -> K8s mock in Studio)
 * Don't show Web related things if Microservice does not have a frontend
 * Restart a running process
@@ -158,3 +158,8 @@
 ## Ideas
 
 * Visualizing microservices and their dependencies using something similar to this: http://hughsk.io/colony/ (https://github.com/hughsk/colony/blob/master/src/index.js)
+
+
+## Done
+
+* Move custom configuration into a workspace.json file inside the .dolittle folder of a workspace

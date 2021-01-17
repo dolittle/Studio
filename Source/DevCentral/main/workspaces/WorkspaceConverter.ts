@@ -6,6 +6,7 @@ import { WorkspaceFile } from './WorkspaceFile';
 import { IWorkspaceConverter } from './IWorkspaceConverter';
 import { IApplicationLoader } from './IApplicationLoader';
 import { injectable } from 'tsyringe';
+import { TenantFile } from './TenantFile';
 
 @injectable()
 export class WorkspaceConverter implements IWorkspaceConverter {
@@ -15,7 +16,10 @@ export class WorkspaceConverter implements IWorkspaceConverter {
     toFile(workspace: Workspace): WorkspaceFile {
         return {
             id: workspace.id,
-            ports: workspace.microservicePorts
+            ports: workspace.microservicePorts,
+            tenants: workspace.tenants.map(_ => {
+                return { id: _.id.toString(), name: _.name } as TenantFile;
+            })
         } as WorkspaceFile;
     }
 }
