@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import * as Handlebars from 'handlebars';
-import * as fs from 'fs';
 import * as path from 'path';
 import { glob } from 'glob';
 import { Workspace } from '../../common/workspaces';
@@ -10,6 +9,7 @@ import { injectable } from 'tsyringe';
 import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 import { ILogger } from '@dolittle/vanir-backend';
 import { app } from 'electron';
+import { IFileSystem } from '../infrastructure/IFileSystem';
 
 export type MicroservicePortsForRendering = {
     backend: number;
@@ -47,7 +47,9 @@ const toPascalCase = function (input: string): string {
 @injectable()
 export class WorkspaceRenderer {
 
-    constructor(private readonly _logger: ILogger) {
+    constructor(
+        private readonly _fileSystem: IFileSystem,
+        private readonly _logger: ILogger) {
         Handlebars.registerHelper('lowerCase', (value: string) => value.toLowerCase());
         Handlebars.registerHelper('upperCase', (value: string) => value.toUpperCase());
         Handlebars.registerHelper('pascalCase', (value: string) => toPascalCase(value));
@@ -105,14 +107,14 @@ export class WorkspaceRenderer {
     }
 
     private async renderTemplatesFrom(workspace: Workspace, context: any, source: string, targetDirectory: string): Promise<void> {
-        if (!fs.existsSync(targetDirectory)) {
-            fs.mkdirSync(targetDirectory);
+        if (!this._fileSystem.exists(targetDirectory)) {
+            this._fileSystem.mkdir(targetDirectory);
         }
         const pattern = path.join(source, '**/*');
         const files = await this.glob(pattern);
         this._logger.info(`Render files from '${pattern}' into ${targetDirectory}`);
         for (const file of files) {
-            const buffer = await fs.promises.readFile(file, 'utf8');
+            const buffer = await this._fileSystem.readFile(file, 'utf8');
             const content = buffer.toString();
 
             const template = Handlebars.compile(content);
@@ -124,7 +126,7 @@ export class WorkspaceRenderer {
             }
 
             this._logger.info(` -> ${targetPath}`);
-            await fs.promises.writeFile(targetPath, result);
+            await this._fileSystem.writeFile(targetPath, result);
         }
     }
 }
