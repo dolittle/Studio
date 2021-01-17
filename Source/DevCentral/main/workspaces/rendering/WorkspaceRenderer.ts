@@ -10,14 +10,14 @@ import { ILogger } from '@dolittle/vanir-backend';
 import { app } from 'electron';
 import { IFileSystem } from '../../infrastructure/IFileSystem';
 import { IWorkspaceRenderer } from './IWorkspaceRenderer';
-import { IWorkspaceConverter } from './IWorkspaceConverter';
+import { IWorkspaceForRenderingConverter } from './IWorkspaceForRenderingConverter';
 
 @injectable()
 export class WorkspaceRenderer implements IWorkspaceRenderer {
 
     constructor(
         private readonly _fileSystem: IFileSystem,
-        private readonly _converter: IWorkspaceConverter,
+        private readonly _converter: IWorkspaceForRenderingConverter,
         private readonly _logger: ILogger) {
     }
 

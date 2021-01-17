@@ -5,6 +5,8 @@ import { container } from 'tsyringe';
 import { IFileSystem } from './IFileSystem';
 import { FileSystem } from './FileSystem';
 import { constructor } from '@dolittle/vanir-dependency-inversion';
+import { IWellKnownFilesAndFolders } from './IWellKnownFilesAndFolders';
+import { WellKnownFilesAndFolders } from './WellKnownFilesAndFolders';
 
 
 const toPascalCase = function (input: string): string {
@@ -15,6 +17,7 @@ const toPascalCase = function (input: string): string {
 export class Configuration {
     static configure() {
         container.registerSingleton(IFileSystem as constructor<IFileSystem>, FileSystem);
+        container.registerSingleton(IWellKnownFilesAndFolders as constructor<IWellKnownFilesAndFolders>, WellKnownFilesAndFolders);
     }
 
     private static configureHandlebars() {

@@ -4,6 +4,6 @@
 import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 
 export type WorkspaceFile = {
-    path: string;
+    id: string;
     ports: MicroservicePorts[];
 };

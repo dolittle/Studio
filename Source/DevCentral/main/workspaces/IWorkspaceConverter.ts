@@ -1,9 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Workspace } from '../../../common/workspaces/Workspace';
-import { WorkspaceForRendering } from './WorkspaceForRendering';
+import { Workspace } from '../../common/workspaces';
+import { WorkspaceFile } from './WorkspaceFile';
 
 export abstract class IWorkspaceConverter {
-    abstract convert(workspace: Workspace): WorkspaceForRendering;
+    abstract toFile(workspace: Workspace): WorkspaceFile;
 }

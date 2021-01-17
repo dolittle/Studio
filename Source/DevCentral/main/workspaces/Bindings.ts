@@ -5,13 +5,18 @@ import { container } from 'tsyringe';
 import { constructor } from '@dolittle/vanir-dependency-inversion';
 import { IWorkspaceRenderer } from './rendering/IWorkspaceRenderer';
 import { WorkspaceRenderer } from './rendering/WorkspaceRenderer';
-import { IWorkspaceConverter } from './rendering/IWorkspaceConverter';
-import { WorkspaceConverter } from './rendering/WorkspaceConverter';
-
+import { IWorkspaceForRenderingConverter } from './rendering/IWorkspaceForRenderingConverter';
+import { WorkspaceForRenderingConverter } from './rendering/WorkspaceForRenderingConverter';
+import { IWorkspaceConverter } from './IWorkspaceConverter';
+import { WorkspaceConverter } from './WorkspaceConverter';
+import { IApplicationLoader } from './IApplicationLoader';
+import { ApplicationLoader } from "./ApplicationLoader";
 
 export class Bindings {
     static initialize() {
+        container.registerSingleton(IWorkspaceForRenderingConverter as constructor<IWorkspaceForRenderingConverter>, WorkspaceForRenderingConverter);
         container.registerSingleton(IWorkspaceConverter as constructor<IWorkspaceConverter>, WorkspaceConverter);
         container.registerSingleton(IWorkspaceRenderer as constructor<IWorkspaceRenderer>, WorkspaceRenderer);
+        container.registerSingleton(IApplicationLoader as constructor<IApplicationLoader>, ApplicationLoader);
     }
 }

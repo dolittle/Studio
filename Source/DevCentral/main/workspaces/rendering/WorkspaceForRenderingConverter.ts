@@ -3,11 +3,11 @@
 
 import { Workspace, MicroservicePorts } from '../../../common/workspaces';
 import { WorkspaceForRendering } from './WorkspaceForRendering';
-import { IWorkspaceConverter } from './IWorkspaceConverter';
+import { IWorkspaceForRenderingConverter } from './IWorkspaceForRenderingConverter';
 import { injectable } from 'tsyringe';
 
 @injectable()
-export class WorkspaceConverter implements IWorkspaceConverter {
+export class WorkspaceForRenderingConverter implements IWorkspaceForRenderingConverter {
     convert(workspace: Workspace): WorkspaceForRendering {
         return {
             path: workspace.path,
