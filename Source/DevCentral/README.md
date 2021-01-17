@@ -8,15 +8,17 @@
 
 ## Todo
 
+* Move custom configuration into a workspace.json file inside the .dolittle folder of a workspace
 * Tenant configuration
+* Add paths for nginx (Example use case: /api/v1 -> K8s mock in Studio)
 * Don't show Web related things if Microservice does not have a frontend
-* Honor route segment from vanir for urls
 * Restart a running process
 * Restart a running container
 * Refresh button for Swagger
 * Refresh button for GraphQL
 * Add the ability to configure base port - all ports allocated for processes will be in a range from this
 
+* Honor route segment from vanir for urls
 * Update running state on startup and detect if any are running
 * Save the running state to disk and resume it when starting (paused containers / processes remain paused etc. )
 * Add ability to add Web frontend at a later stage
@@ -113,7 +115,7 @@
 * Vanir: Add correct license header to tsconfig.json when selecting a license (except UNLICENSED)
 * Vanir: A lifecycle for ViewModels that is related to route change instead of just params
 * Vanir: Figure out why the SCSS WebPack thing doesn't work on initial builds when using it as module (doesn't generate the d.ts)
-* Vanir: HotLoading not working - have to refresh browser manually when changing anything
+* Vanir: HotLoading not working - have to refresh browser manually when changing anything - the webpack-dev-server.js path is wrong for inner iframes
 * Vanir: WebPack doesn't always pick up changes in dependencies (Shared)
 * Vanir: Templates in create* commands should be excluded during 'tsc -b' (build) - we don't want them compiled as part of the package dist folder
 * Vanir: WebPack setup should support reading the microservices.json file for information plus the vanir.json file
