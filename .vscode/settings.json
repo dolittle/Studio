@@ -51,6 +51,7 @@
         "dependencyinversion",
         "dockerode",
         "fluentui",
+        "konva",
         "mvvm",
         "tsoa",
         "tsyringe",

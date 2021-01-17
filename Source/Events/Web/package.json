@@ -19,8 +19,9 @@
         "@shared/platform": "1.0.0",
         "@shared/portal": "1.0.0",
         "@shared/styles": "1.0.0",
-        "@shared/web": "1.0.0"
+        "@shared/web": "1.0.0",
+        "konva": "^7.2.2",
+        "react-konva": "16.13.0-6"
     },
-    "devDependencies": {
-    }
+    "devDependencies": {}
 }

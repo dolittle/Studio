@@ -13,13 +13,7 @@ const version = require('../version.json') as VersionInfo;
 
 import '@shared/styles/theme';
 import './index.scss';
-
-export default function App() {
-    return (
-        <>
-        </>
-    );
-}
+import App from './App';
 
 ReactDOM.render(
     <Bootstrapper name="Events" prefix="/_/events" version={version}>
