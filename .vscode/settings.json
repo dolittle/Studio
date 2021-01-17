@@ -47,6 +47,7 @@
         "Bootstrapper",
         "Deduplication",
         "MUUID",
+        "Stubbable",
         "actionbar",
         "dependencyinversion",
         "dockerode",
