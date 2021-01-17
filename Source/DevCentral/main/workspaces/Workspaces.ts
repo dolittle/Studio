@@ -185,3 +185,4 @@ export class Workspaces implements IWorkspaces {
         await this._fileSystem.writeFile(file, serialized);
     }
 }
+
