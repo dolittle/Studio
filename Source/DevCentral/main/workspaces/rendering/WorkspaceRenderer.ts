@@ -4,56 +4,21 @@
 import * as Handlebars from 'handlebars';
 import * as path from 'path';
 import { glob } from 'glob';
-import { Workspace } from '../../common/workspaces';
+import { Workspace } from '../../../common/workspaces';
 import { injectable } from 'tsyringe';
-import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 import { ILogger } from '@dolittle/vanir-backend';
 import { app } from 'electron';
-import { IFileSystem } from '../infrastructure/IFileSystem';
-
-export type MicroservicePortsForRendering = {
-    backend: number;
-    web: number;
-    runtime: number;
-    metrics: number;
-};
-
-export type ApplicationForRendering = {
-    id: string;
-    name: string;
-};
-
-export type MicroserviceForRendering = {
-    id: string;
-    name: string;
-    applicationName: string;
-    portal: boolean;
-    ports: MicroservicePortsForRendering
-};
-
-export type WorkspaceForRendering = {
-    path: string;
-    application: ApplicationForRendering;
-    microservices: MicroserviceForRendering[];
-};
-
-
-const toPascalCase = function (input: string): string {
-    return input.replace(/(\w)(\w*)/g,
-        function (g0, g1, g2) { return g1.toUpperCase() + g2.toLowerCase(); });
-};
-
+import { IFileSystem } from '../../infrastructure/IFileSystem';
+import { IWorkspaceRenderer } from './IWorkspaceRenderer';
+import { IWorkspaceConverter } from './IWorkspaceConverter';
 
 @injectable()
-export class WorkspaceRenderer {
+export class WorkspaceRenderer implements IWorkspaceRenderer {
 
     constructor(
         private readonly _fileSystem: IFileSystem,
+        private readonly _converter: IWorkspaceConverter,
         private readonly _logger: ILogger) {
-        Handlebars.registerHelper('lowerCase', (value: string) => value.toLowerCase());
-        Handlebars.registerHelper('upperCase', (value: string) => value.toUpperCase());
-        Handlebars.registerHelper('pascalCase', (value: string) => toPascalCase(value));
-        Handlebars.registerHelper('inc', (value: string) => parseInt(value) + 1);
     }
 
     async render(workspace: Workspace): Promise<void> {
@@ -70,28 +35,7 @@ export class WorkspaceRenderer {
 
         const dolittleFolder = path.join(workspace.path, '.dolittle');
 
-        const workspaceForRendering = {
-            path: workspace.path,
-            application: {
-                id: workspace.application.id,
-                name: workspace.application.name
-            },
-            microservices: workspace.microservices.map(_ => {
-                const ports = workspace.microservicePorts.find(p => p.id === _.id) || MicroservicePorts.default;
-                return {
-                    id: _.id,
-                    name: _.name,
-                    portal: workspace.application.portal.id === _.id,
-                    applicationName: workspace.application.name,
-                    ports: {
-                        backend: ports.backend,
-                        web: ports.web,
-                        runtime: ports.runtime,
-                        metrics: ports.metrics
-                    }
-                };
-            })
-        } as WorkspaceForRendering;
+        const workspaceForRendering = this._converter.convert(workspace);
 
         await this.renderTemplatesFrom(workspace, workspaceForRendering, applicationTemplates, dolittleFolder);
         for (const microservice of workspaceForRendering.microservices) {

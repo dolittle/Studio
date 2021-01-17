@@ -7,7 +7,9 @@ import { BaseEncodingOptions, MakeDirectoryOptions, PathLike } from 'original-fs
 import { FileHandle } from 'fs/promises';
 import { URL } from 'url';
 import { IFileSystem } from './IFileSystem';
+import { injectable } from 'tsyringe';
 
+@injectable()
 export class FileSystem implements IFileSystem {
     exists(path: PathLike): boolean {
         return fs.existsSync(path);

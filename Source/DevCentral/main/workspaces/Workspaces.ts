@@ -9,7 +9,7 @@ import { homedir } from 'os';
 import { createApplication } from 'create-dolittle-app/dist/creation';
 import { createMicroservice } from 'create-dolittle-microservice/dist/creation';
 import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
-import { WorkspaceRenderer } from './WorkspaceRenderer';
+import { WorkspaceRenderer } from './rendering/WorkspaceRenderer';
 import { ILogger } from '@dolittle/vanir-backend';
 import { Guid } from '@dolittle/rudiments';
 import { WorkspaceFile } from './WorkspaceFile';

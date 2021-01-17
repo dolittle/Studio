@@ -9,7 +9,7 @@
         "build:renderer": "cd renderer && webpack --mode=production",
         "build": "tsc -b main && cd renderer && webpack --mode=production",
         "build:dev": "cd renderer && webpack --mode=development",
-        "start:main": "tsc --project main",
+        "start:main": "yarn clean && tsc --project main",
         "start:renderer": "cd renderer && cross-env WEBPACK_DEV_SERVER=true webpack-cli serve --mode=development --watch --progress --hot",
         "start:dev": "yarn clean && concurrently \"npm:start:main\" \"npm:start:renderer\" \"wait-on http://localhost:9100 && sleepms 10000 && nodemon\"",
         "prepackage": "yarn build:renderer && yarn build:main && cp ./assets/icon.png build",

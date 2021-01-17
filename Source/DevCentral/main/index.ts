@@ -21,7 +21,8 @@ import { Globals as MicroserviceCreationGlobal } from 'create-dolittle-microserv
 import { Config as MicroserviceCreationConfig } from 'create-dolittle-microservice/dist/Config';
 import { logger } from '@dolittle/vanir-backend';
 import shellPath from 'shell-path';
-import { Bindings as Infrastructure } from './infrastructure/Bindings';
+import { Configuration as Infrastructure } from './infrastructure/Configuration';
+import { Bindings as WorkspacesBindings } from './workspaces/Bindings';
 
 let mainWindow: BrowserWindow | null;
 
@@ -73,14 +74,15 @@ function createWindow() {
     setMainWindow(mainWindow);
 
     DependencyInversion.initialize();
-    Infrastructure.initialize();
+    Infrastructure.configure();
     Services.initialize();
     DockerEnvironment.initialize();
     Interop.initialize();
+    WorkspacesBindings.initialize();
 
     if (isDev) {
         mainWindow.loadURL('http://localhost:9100');
-        //mainWindow.webContents.openDevTools();
+        mainWindow.webContents.openDevTools();
     } else {
         mainWindow.loadFile('./build/index.html');
     }
