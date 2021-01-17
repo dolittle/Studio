@@ -1,9 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import fs from 'fs';
-
-import { BaseEncodingOptions, MakeDirectoryOptions, PathLike } from 'original-fs';
+import fs, { BaseEncodingOptions, MakeDirectoryOptions, PathLike } from 'fs';
 import { FileHandle } from 'fs/promises';
 import { URL } from 'url';
 import { IFileSystem } from './IFileSystem';

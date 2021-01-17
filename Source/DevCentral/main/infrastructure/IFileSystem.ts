@@ -1,9 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { BaseEncodingOptions, MakeDirectoryOptions, Mode, PathLike } from 'original-fs';
 import { FileHandle } from 'fs/promises';
-import { OpenMode } from 'fs';
+import { OpenMode, BaseEncodingOptions, MakeDirectoryOptions, Mode, PathLike } from 'fs';
 
 export abstract class IFileSystem {
     abstract exists(path: PathLike): boolean;
