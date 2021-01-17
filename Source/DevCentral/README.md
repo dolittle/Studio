@@ -8,7 +8,9 @@
 
 ## Todo
 
-* Tenant configuration
+* Workspace level information - separate from Application
+* Tenant configuration in files
+* Tenant editor
 * Tenant selector UI - bar at the bottom - can we add this through Nginx?
 * Add paths for nginx (Example use case: /api/v1 -> K8s mock in Studio)
 * Don't show Web related things if Microservice does not have a frontend
