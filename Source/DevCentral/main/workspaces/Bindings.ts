@@ -10,9 +10,11 @@ import { WorkspaceForRenderingConverter } from './rendering/WorkspaceForRenderin
 import { IWorkspaceConverter } from './IWorkspaceConverter';
 import { WorkspaceConverter } from './WorkspaceConverter';
 import { IApplicationLoader } from './IApplicationLoader';
-import { ApplicationLoader } from "./ApplicationLoader";
+import { ApplicationLoader } from './ApplicationLoader';
 import { IMicroserviceLoader } from './IMicroserviceLoader';
 import { MicroserviceLoader } from './MicroserviceLoader';
+import { IMicroservicePortsAllocator } from './IMicroservicePortsAllocator';
+import { MicroservicePortsAllocator } from './MicroservicePortsAllocator';
 
 export class Bindings {
     static initialize() {
@@ -21,5 +23,6 @@ export class Bindings {
         container.registerSingleton(IWorkspaceRenderer as constructor<IWorkspaceRenderer>, WorkspaceRenderer);
         container.registerSingleton(IApplicationLoader as constructor<IApplicationLoader>, ApplicationLoader);
         container.registerSingleton(IMicroserviceLoader as constructor<IMicroserviceLoader>, MicroserviceLoader);
+        container.registerSingleton(IMicroservicePortsAllocator as constructor<IMicroservicePortsAllocator>, MicroservicePortsAllocator);
     }
 }

@@ -15,6 +15,7 @@ describe('when constructing and root does not exist', () => {
         dependencies.fileSystem,
         dependencies.applicationLoader,
         dependencies.microserviceLoader,
+        dependencies.microservicePortsAllocator,
         dependencies.logger
     );
 

@@ -17,6 +17,7 @@ export class no_workspaces extends all_dependencies {
             this.fileSystem,
             this.applicationLoader,
             this.microserviceLoader,
+            this.microservicePortsAllocator,
             this.logger
         );
     }

@@ -32,6 +32,9 @@ export class all_dependencies {
         existsInFolder: sinon.stub(),
         loadFromFolder: sinon.stub()
     };
+    microservicePortsAllocator = {
+        allocateFor: sinon.stub()
+    };
 
     constructor() {
         this.fileSystem = CreateFakeFileSystem();

@@ -7,7 +7,6 @@ import { injectable } from 'tsyringe';
 import { Application, Microservice } from '@dolittle/vanir-common';
 import { createApplication } from 'create-dolittle-app/dist/creation';
 import { createMicroservice } from 'create-dolittle-microservice/dist/creation';
-import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 import { ILogger } from '@dolittle/vanir-backend';
 import { Guid } from '@dolittle/rudiments';
 import { IWorkspaceConverter } from './IWorkspaceConverter';
@@ -17,6 +16,7 @@ import { WorkspacesFile } from './WorkspacesFile';
 import { WorkspaceFile } from './WorkspaceFile';
 import { IApplicationLoader } from './IApplicationLoader';
 import { IMicroserviceLoader } from './IMicroserviceLoader';
+import { IMicroservicePortsAllocator } from './IMicroservicePortsAllocator';
 
 @injectable()
 export class Workspaces implements IWorkspaces {
@@ -29,6 +29,7 @@ export class Workspaces implements IWorkspaces {
         private readonly _fileSystem: IFileSystem,
         private readonly _applicationLoader: IApplicationLoader,
         private readonly _microserviceLoader: IMicroserviceLoader,
+        private readonly _microservicePortsAllocator: IMicroservicePortsAllocator,
         private readonly _logger: ILogger) {
         this.makeSureRootExists();
     }
@@ -138,7 +139,7 @@ export class Workspaces implements IWorkspaces {
         this.addOrUpdateExistingInList(folder, workspace);
 
         await this.populateMicroservicesFor(workspace, application.microservices);
-        this.setupMicroservicePortsFor(workspace);
+        workspace.microservicePorts = this._microservicePortsAllocator.allocateFor(workspace);
         await this._renderer.render(workspace);
         this.saveWorkspace(workspaceFilePath, workspace);
 
@@ -173,23 +174,6 @@ export class Workspaces implements IWorkspaces {
         if (!this._fileSystem.exists(root)) {
             this._fileSystem.mkdir(root);
         }
-    }
-
-    private setupMicroservicePortsFor(workspace: Workspace) {
-        const microservices: Microservice[] = [];
-
-        const portal = workspace.microservices.find(_ => _.id === workspace.application.portal.id);
-        if (portal) {
-            microservices.push(portal);
-        }
-        microservices.push(...workspace.microservices.filter(_ => _.id !== workspace.application.portal.id));
-
-        workspace.microservicePorts = microservices.map((_, index) => new MicroservicePorts(
-            _.id,
-            3001 + index,
-            9001 + index,
-            50052 + (index * 2),
-            9701 + index));
     }
 
     private async save() {
