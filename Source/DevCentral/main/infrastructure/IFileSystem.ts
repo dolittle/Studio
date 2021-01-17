@@ -8,6 +8,6 @@ import { OpenMode } from 'fs';
 export abstract class IFileSystem {
     abstract exists(path: PathLike): boolean;
     abstract mkdir(path: PathLike, options?: Mode | (MakeDirectoryOptions & { recursive?: false; }) | null): void;
-    abstract readFile(path: PathLike | FileHandle, options?: { encoding?: null, flag?: OpenMode } | null): Promise<Buffer>;
+    abstract readFile(path: PathLike | FileHandle, options?: { encoding?: null, flag?: OpenMode } | BufferEncoding | null): Promise<string | Buffer>;
     abstract writeFile(path: PathLike | FileHandle, data: string | Uint8Array, options?: BaseEncodingOptions & { mode?: Mode, flag?: OpenMode } | BufferEncoding | null): Promise<void>;
 }
