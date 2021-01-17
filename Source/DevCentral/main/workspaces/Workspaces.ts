@@ -1,7 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import fs from 'fs';
 import path from 'path';
 import { IWorkspaces, Workspace } from '../../common/workspaces';
 import { injectable } from 'tsyringe';
@@ -13,11 +12,8 @@ import { MicroservicePorts } from '../../common/workspaces/MicroservicePorts';
 import { WorkspaceRenderer } from './WorkspaceRenderer';
 import { ILogger } from '@dolittle/vanir-backend';
 import { Guid } from '@dolittle/rudiments';
-
-export type WorkspaceFile = {
-    path: string;
-    ports: MicroservicePorts[];
-};
+import { WorkspaceFile } from './WorkspaceFile';
+import { IFileSystem } from '../infrastructure/IFileSystem';
 
 const DOLITTLE_ROOT = '.dolittle';
 const WORKSPACES_FILE = 'workspaces.json';
@@ -26,7 +22,10 @@ const WORKSPACES_FILE = 'workspaces.json';
 export class Workspaces implements IWorkspaces {
     private _workspaces: Workspace[] = [];
 
-    constructor(private readonly _renderer: WorkspaceRenderer, private readonly _logger: ILogger) {
+    constructor(
+        private readonly _fileSystem: IFileSystem,
+        private readonly _renderer: WorkspaceRenderer,
+        private readonly _logger: ILogger) {
         this.makeSureRootExists();
     }
 
@@ -41,9 +40,9 @@ export class Workspaces implements IWorkspaces {
         for (const relativePath of paths) {
             const microservicePath = path.join(workspace.path, relativePath, 'microservice.json');
             this._logger.info(`Load microservice information from ${microservicePath}`);
-            if (fs.existsSync(microservicePath)) {
+            if (this._fileSystem.exists(microservicePath)) {
                 this._logger.info(`Microservice exists`);
-                const buffer = await fs.promises.readFile(microservicePath);
+                const buffer = await this._fileSystem.readFile(microservicePath);
                 const microservice = JSON.parse(buffer.toString()) as Microservice;
                 this._logger.info(`Microservice with id '${microservice.id}' is loaded${microservice.web ? ' - web is enabled' : ''}`);
                 workspace.microservices.push(microservice);
@@ -104,8 +103,8 @@ export class Workspaces implements IWorkspaces {
     private async loadFromPath(source: string): Promise<boolean> {
         const applicationPath = path.join(source, 'application.json');
         this._logger.info(`Load application from ${applicationPath}`);
-        if (fs.existsSync(applicationPath)) {
-            const buffer = await fs.promises.readFile(applicationPath);
+        if (this._fileSystem.exists(applicationPath)) {
+            const buffer = await this._fileSystem.readFile(applicationPath);
             const application = JSON.parse(buffer.toString()) as Application;
             const workspaceId = Guid.create().toString();
             let workspace = new Workspace(workspaceId, source, application);
@@ -136,8 +135,8 @@ export class Workspaces implements IWorkspaces {
 
     private makeSureRootExists() {
         const root = this.getRoot();
-        if (!fs.existsSync(root)) {
-            fs.mkdirSync(root);
+        if (!this._fileSystem.exists(root)) {
+            this._fileSystem.mkdir(root);
         }
     }
 
@@ -161,9 +160,9 @@ export class Workspaces implements IWorkspaces {
     async load() {
         const file = this.getWorkspaceFilePath();
         this._logger.info(`Load registered workspaces`);
-        if (fs.existsSync(file)) {
+        if (this._fileSystem.exists(file)) {
             let missingWorkspaces = false;
-            const buffer = await fs.promises.readFile(file);
+            const buffer = await this._fileSystem.readFile(file);
             const workspaces = JSON.parse(buffer.toString()) as WorkspaceFile[];
             for (const workspace of workspaces) {
                 this._logger.info(`Load workspace located at ${workspace.path}`);
@@ -196,6 +195,6 @@ export class Workspaces implements IWorkspaces {
             } as WorkspaceFile;
         });
         const serialized = JSON.stringify(workspaces, null, 4);
-        await fs.promises.writeFile(file, serialized);
+        await this._fileSystem.writeFile(file, serialized);
     }
 }
