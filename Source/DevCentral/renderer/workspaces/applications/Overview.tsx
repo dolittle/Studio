@@ -89,6 +89,8 @@ export const Overview = withViewModel<OverviewViewModel, OverviewProps>(Overview
     return (
         <>
             <Stack tokens={{ childrenGap: 5 }}>
+                <TextField label="Identifier" readOnly value={props.workspace.id} />
+                <TextField label="Path" readOnly value={props.workspace.path} />
                 <TextField label="Running state" readOnly value={GetRunStateAsString(viewModel.state?.state || RunState.stopped)} />
 
 
