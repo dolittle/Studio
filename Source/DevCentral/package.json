@@ -4,7 +4,7 @@
     "description": "Dolittle Developer Central is a developer tool for working with Dolittle microservice based solutions.",
     "main": "build/index.js",
     "scripts": {
-        "clean": "tsc -b --clean main",
+        "clean": "tsc -b --clean main && tsc -b --clean renderer",
         "build:main": "cd main && webpack --mode=production",
         "build:renderer": "cd renderer && webpack --mode=production",
         "build": "tsc -b main && cd renderer && webpack --mode=production",
@@ -13,7 +13,11 @@
         "start:renderer": "cd renderer && cross-env WEBPACK_DEV_SERVER=true webpack-cli serve --mode=development --watch --progress --hot",
         "start:dev": "yarn clean && concurrently \"npm:start:main\" \"npm:start:renderer\" \"wait-on http://localhost:9100 && sleepms 10000 && nodemon\"",
         "prepackage": "yarn build:renderer && yarn build:main && cp ./assets/icon.png build",
-        "package": "electron-builder build -mwl --publish never"
+        "package": "electron-builder build -mwl --publish never",
+        "test": "mocha",
+        "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
+        "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",
+        "ci": "yarn clean && yarn lint:ci && tsc -b main && tsc -b renderer && yarn test"
     },
     "nodemonConfig": {
         "restartable": "rs",
