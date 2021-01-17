@@ -13,6 +13,7 @@ module.exports = function (wallaby) {
             //{ pattern: 'Source/Shared/**/*.ts', instrument: false },
             'Source/DevCentral/main/tsconfig.json',
             './tsconfig.json',
+            'Source/DevCentral/common/**/*.ts',
             'Source/DevCentral/main/**/*.ts',
             '!Source/DevCentral/main/**/when_*',
         ],
