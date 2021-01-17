@@ -4,24 +4,24 @@
     "description": "Dolittle Developer Central is a developer tool for working with Dolittle microservice based solutions.",
     "main": "build/index.js",
     "scripts": {
-        "clean": "tsc -b --clean backend",
-        "build:backend": "cd backend && webpack --mode=production",
-        "build:web": "cd web && webpack --mode=production",
-        "build": "tsc -b backend && cd web && webpack --mode=production",
-        "build:dev": "cd web && webpack --mode=development",
-        "start:electron": "tsc --project backend",
-        "start": "cd web && webpack-cli serve --mode=development --watch --progress --hot",
-        "start:dev": "yarn clean && concurrently \"npm:start:electron\" \"yarn start\" \"wait-on http://localhost:9100 && sleepms 10000 && nodemon\"",
-        "prepackage": "yarn build:web && yarn build:backend && cp ./assets/icon.png build",
+        "clean": "tsc -b --clean main",
+        "build:main": "cd main && webpack --mode=production",
+        "build:renderer": "cd renderer && webpack --mode=production",
+        "build": "tsc -b main && cd renderer && webpack --mode=production",
+        "build:dev": "cd renderer && webpack --mode=development",
+        "start:main": "tsc --project main",
+        "start:renderer": "cd renderer && cross-env WEBPACK_DEV_SERVER=true webpack-cli serve --mode=development --watch --progress --hot",
+        "start:dev": "yarn clean && concurrently \"npm:start:main\" \"npm:start:renderer\" \"wait-on http://localhost:9100 && sleepms 10000 && nodemon\"",
+        "prepackage": "yarn build:renderer && yarn build:main && cp ./assets/icon.png build",
         "package": "electron-builder build -mwl --publish never"
     },
     "nodemonConfig": {
         "restartable": "rs",
         "execMap": {
-            "js": "electron backend/dist/backend/index.js"
+            "js": "electron main/dist/main/index.js"
         },
         "watch": [
-            "./backend/dist"
+            "./main/dist"
         ],
         "ext": "js"
     },
