@@ -18,7 +18,7 @@ services:
       driver: none
 
   studio-runtime-portal:
-    image: dolittle/runtime:5.1.4
+    image: dolittle/runtime:5.3.2
     volumes:
       - ./Portal/resources.json:/app/.dolittle/resources.json
       - ./tenants.json:/app/.dolittle/tenants.json
@@ -30,7 +30,7 @@ services:
       - 50053:50053
 
   studio-runtime-k8s-mock:
-    image: dolittle/runtime:5.1.4
+    image: dolittle/runtime:5.3.2
     volumes:
       - ./K8sMock/resources.json:/app/.dolittle/resources.json
       - ./K8sMock/event-horizon-consents.json:/app/.dolittle/event-horizon-consents.json
@@ -43,7 +43,7 @@ services:
       - 50055:50053
 
   studio-runtime-applications:
-    image: dolittle/runtime:5.1.4
+    image: dolittle/runtime:5.3.2
     volumes:
       - ./Applications/resources.json:/app/.dolittle/resources.json
       - ./tenants.json:/app/.dolittle/tenants.json
@@ -55,7 +55,7 @@ services:
       - 50057:50053
 
   studio-runtime-events:
-    image: dolittle/runtime:5.1.4
+    image: dolittle/runtime:5.3.2
     volumes:
       - ./Events/resources.json:/app/.dolittle/resources.json
       - ./tenants.json:/app/.dolittle/tenants.json
