@@ -8,7 +8,7 @@
     "scripts": {
         "start:dev": "cross-env NODE_ENV=development concurrently \"nodemon --inspect=0 -x tsoa spec-and-routes\" \"nodemon index.ts\"",
         "start": "cross-env NODE_ENV=development ts-node index.ts",
-        "build": "yarn clean && webpack --env.production --mode=production",
+        "build": "yarn clean && webpack --mode=production",
         "clean": "tsc -b --clean",
         "test": "mocha",
         "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
