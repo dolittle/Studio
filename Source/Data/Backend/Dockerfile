@@ -8,14 +8,14 @@ COPY package.json ./
 COPY application.json ./
 
 COPY Source/Shared/Backend/package.json ./Source/Shared/Backend/package.json
+COPY Source/Shared/Common/package.json ./Source/Shared/Common/package.json
 COPY Source/Shared/Components/package.json ./Source/Shared/Components/package.json
-COPY Source/Shared/DependencyInversion/package.json ./Source/Shared/DependencyInversion/package.json
-COPY Source/Shared/MVVM/package.json ./Source/Shared/MVVM/package.json
+COPY Source/Shared/k8s/package.json ./Source/Shared/k8s/package.json
 COPY Source/Shared/Platform/package.json ./Source/Shared/Platform/package.json
 COPY Source/Shared/Portal/package.json ./Source/Shared/Portal/package.json
+COPY Source/Shared/Specs/package.json ./Source/Shared/Specs/package.json
 COPY Source/Shared/Styles/package.json ./Source/Shared/Styles/package.json
 COPY Source/Shared/Web/package.json ./Source/Shared/Web/package.json
-COPY Source/Shared/WebPack/package.json ./Source/Shared/WebPack/package.json
 RUN yarn
 
 COPY Source/Data/microservice.json /app/Source/Data/microservice.json
