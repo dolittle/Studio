@@ -1,0 +1,46 @@
+{
+    "id": "42441f9b-a5ab-e34c-b223-a818de5cc694",
+    "ports": [
+        {
+            "id": "590696bc-1c4e-4a14-b621-c2125713a974",
+            "backend": 3001,
+            "web": 9001,
+            "runtime": 50052,
+            "metrics": 9701
+        },
+        {
+            "id": "05a823dd-0f0d-4157-bc46-14834cca3cd2",
+            "backend": 3002,
+            "web": 9002,
+            "runtime": 50054,
+            "metrics": 9702
+        },
+        {
+            "id": "81cad113-a001-45dc-86cb-7b1e725ae25e",
+            "backend": 3003,
+            "web": 9003,
+            "runtime": 50056,
+            "metrics": 9703
+        },
+        {
+            "id": "c2e34414-5054-4050-8ee4-eb6f3265cce3",
+            "backend": 3004,
+            "web": 9004,
+            "runtime": 50058,
+            "metrics": 9704
+        },
+        {
+            "id": "7d2433e2-84a1-b84b-a098-5bf52f985e5a",
+            "backend": 3005,
+            "web": 9005,
+            "runtime": 50060,
+            "metrics": 9705
+        }
+    ],
+    "tenants": [
+        {
+            "id": "445f8ea8-1a6f-40d7-b2fc-796dba92dc44",
+            "name": "Development"
+        }
+    ]
+}

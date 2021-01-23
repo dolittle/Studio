@@ -1,0 +1,14 @@
+@import "~@shared/styles/microservice.scss";
+@import "./globals.scss";
+
+body {
+    background: #333 url($app-background-image) center/cover;
+    background-attachment: fixed;
+    height: 100%;
+    margin: 0;
+}
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}

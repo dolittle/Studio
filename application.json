@@ -12,6 +12,7 @@
         "./Source/Portal",
         "./Source/Applications",
         "./Source/Events",
-        "./Source/K8sMock"
+        "./Source/K8sMock",
+        "./Source/Data"
     ]
 }

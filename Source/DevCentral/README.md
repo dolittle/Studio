@@ -143,6 +143,7 @@ Nginx sub filter (Inject code):
 
 ## Known issues
 
+* BUG: When adding new microservice - it doesn't show up until one opens the application again
 * BUG: Running processes list gets clipped outside the window
 * BUG: When refreshing - not all objects are refreshed (Microservice for listing + details + ports)
 * BUG: Displaying 'unknown' for runstate at startup - make sure we set the correct run state for all apps and microservices loaded

@@ -128,3 +128,5 @@ Environments/data
 .idea
 
 *.scss.d.ts
+
+!Source/Data
