@@ -20,6 +20,7 @@ export class Configuration {
     static configure() {
         container.registerSingleton(IFileSystem as constructor<IFileSystem>, FileSystem);
         container.registerSingleton(IWellKnownFilesAndFolders as constructor<IWellKnownFilesAndFolders>, WellKnownFilesAndFolders);
+        this.configureHandlebars();
     }
 
     private static configureHandlebars() {
