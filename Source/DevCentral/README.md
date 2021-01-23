@@ -30,8 +30,10 @@ Nginx sub filter (Inject code):
 * Host the GraphQL playground in the App and point the GraphQL endpoint
 * Host the Swagger UI in DevCentral and point to the swagger.json endpoint
 
+* Render routes with the sorted by most specific routes (/api/events before /api, /_/events over / etc..)
 * Render nginx.conf based on route segment in vanir.json
 * Honor route segment from vanir for urls
+* Ability to add custom routes
 * Update running state on startup and detect if any are running
 * Save the running state to disk and resume it when starting (paused containers / processes remain paused etc. )
 * Add ability to add Web frontend at a later stage
