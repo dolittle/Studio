@@ -29,6 +29,7 @@ const swaggerDoc = require('./swagger.json');
             projectFromEventsToReadModels(_);
 
             _.withEventHorizons(eh => {
+                /*
                 eh.forTenant(tenant, ts => {
                     ts.fromProducerMicroservice(Microservices.k8s)
                         .fromProducerTenant(tenant)
@@ -38,8 +39,9 @@ const swaggerDoc = require('./swagger.json');
                         .onSuccess((t, s, sr) => logger.info('EventHorizon subscription: Success'))
                         .onFailure((t, s, sr) => logger.error(`EventHorizon subscription: Failed - ${sr.failure?.reason}`))
                         .onCompleted((t, s, sr) => logger.info(`EventHorizon subscription: Completed`));
-                });
+                });*/
             });
         }
     });
 })();
+
