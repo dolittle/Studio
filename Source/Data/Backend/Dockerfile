@@ -58,7 +58,7 @@ RUN echo Configuration = $CONFIGURATION
 
 WORKDIR /app
 COPY --from=backend-build /app/Source/Data/Backend/dist/index.js ./
-COPY --from=backend-build /app/Source/Data/Backend/config.json ./
+COPY --from=backend-build /app/Source/Data/Backend/vanir.json ./
 COPY --from=backend-build /app/node_modules/swagger-ui-dist/swagger-ui.css ./public/api/Data/swagger/
 COPY --from=backend-build /app/node_modules/swagger-ui-dist/swagger-ui-standalone-preset.js ./public/api/Data/swagger/
 COPY --from=backend-build /app/node_modules/swagger-ui-dist/swagger-ui-bundle.js ./public/api/Data/swagger/
