@@ -12,6 +12,7 @@ COPY Source/Shared/Components/package.json ./Source/Shared/Components/package.js
 COPY Source/Shared/k8s/package.json ./Source/Shared/k8s/package.json
 COPY Source/Shared/Platform/package.json ./Source/Shared/Platform/package.json
 COPY Source/Shared/Portal/package.json ./Source/Shared/Portal/package.json
+COPY Source/Shared/Specs/package.json ./Source/Shared/Specs/package.json
 COPY Source/Shared/Styles/package.json ./Source/Shared/Styles/package.json
 COPY Source/Shared/Web/package.json ./Source/Shared/Web/package.json
 RUN yarn
