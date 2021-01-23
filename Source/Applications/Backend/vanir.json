@@ -1,5 +1,6 @@
 {
     "microserviceId": "05a823dd-0f0d-4157-bc46-14834cca3cd2",
+    "isRooted": false,
     "routeSegment": "applications",
     "port": 3002,
     "publicPath": "./public",
@@ -11,7 +12,7 @@
     "database": {
         "name": "read_models_applications"
     },
-    "eventStore": {
+    "eventstore": {
         "name": "event_store_applications"
     }
 }
