@@ -123,6 +123,7 @@ Nginx sub filter (Inject code):
 
 * Vanir: Maintain pipelines in one place use workflow-dispatch to call these - so we don't need to have the template be maintained.
   Leverage composite runs actions: https://docs.github.com/en/free-pro-team@latest/actions/creating-actions/creating-a-composite-run-steps-action
+* Vanir: Support having a license header that gets added to all files (templating)
 * Vanir: Add correct license header to tsconfig.json when selecting a license (except UNLICENSED)
 * Vanir: A lifecycle for ViewModels that is related to route change instead of just params
 * Vanir: Figure out why the SCSS WebPack thing doesn't work on initial builds when using it as module (doesn't generate the d.ts)

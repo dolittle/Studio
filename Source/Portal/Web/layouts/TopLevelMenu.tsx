@@ -25,6 +25,7 @@ export const TopLevelMenu = withViewModel<TopLevelMenuViewModel>(TopLevelMenuVie
                 <PivotItem headerText="Home" itemKey="/"></PivotItem>
                 <PivotItem headerText="Applications" itemKey="/applications/"></PivotItem>
                 <PivotItem headerText="Events" itemKey="/events/"></PivotItem>
+                <PivotItem headerText="Data" itemKey="/data/"></PivotItem>
             </Pivot>
         </div>
     );
