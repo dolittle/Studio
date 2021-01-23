@@ -8,7 +8,7 @@
     "private": true,
     "dependencies": {
         "@shared/common": "1.0.0",
-        "@dolittle/vanir-backend": "7.1.3"
+        "@dolittle/vanir-backend": "7.1.4"
     },
     "devDependencies": {},
     "peerDependencies": {}
