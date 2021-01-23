@@ -6,9 +6,16 @@
 * https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/
 * https://dzone.com/articles/understanding-execfile-spawn-exec-and-fork-in-node
 
+Nginx sub filter (Inject code):
+
+* https://nginx.org/en/docs/http/ngx_http_sub_module.html
+* https://blog.fhrnet.eu/2017/09/20/nginx-reverse-proxy-with-code-injection/
+* https://stackoverflow.com/questions/19700871/how-to-inject-custom-content-via-nginx
+
 ## Todo
 
 * Workspace level information - separate from Application
+* Figure out a model for microservices across multiple repositories
 * Tenant configuration in files
 * Tenant editor
 * Tenant selector UI - bar at the bottom - can we add this through Nginx?
@@ -19,6 +26,8 @@
 * Refresh button for Swagger
 * Refresh button for GraphQL
 * Add the ability to configure base port - all ports allocated for processes will be in a range from this
+* Host the GraphQL playground in the App and point the GraphQL endpoint
+* Host the Swagger UI in DevCentral and point to the swagger.json endpoint
 
 * Honor route segment from vanir for urls
 * Update running state on startup and detect if any are running
@@ -127,7 +136,7 @@
 * Vanir: Automatically hook up GraphQL Resolvers
 * Vanir: Support overriding the WebPack DevServer hosted port
 * Vanir: Export ContentFrame properly
-* It should be optional if one wants a backend or a frontend
+* Vanir: It should be optional if one wants a backend or a frontend
 
 * Whats new dialog
 * Known issues dialog
