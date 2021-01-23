@@ -14,6 +14,7 @@ Nginx sub filter (Inject code):
 
 ## Todo
 
+* Event Horizon configuration
 * Workspace level information - separate from Application
 * Figure out a model for microservices across multiple repositories
 * Tenant configuration in files
@@ -29,6 +30,7 @@ Nginx sub filter (Inject code):
 * Host the GraphQL playground in the App and point the GraphQL endpoint
 * Host the Swagger UI in DevCentral and point to the swagger.json endpoint
 
+* Render nginx.conf based on route segment in vanir.json
 * Honor route segment from vanir for urls
 * Update running state on startup and detect if any are running
 * Save the running state to disk and resume it when starting (paused containers / processes remain paused etc. )
@@ -44,6 +46,7 @@ Nginx sub filter (Inject code):
 * Change name from 'Web' to Renderer
 * Continuous deployment pipeline
 
+* Render logs with color
 * Clear logs
 * Download logs
 * Search logs
@@ -121,11 +124,9 @@ Nginx sub filter (Inject code):
 
 * Settings page should show where the folder of the Workspace configuration is
 
+* Vanir: Support having a license header that gets added to all files (templating)
 * Vanir: Maintain pipelines in one place use workflow-dispatch to call these - so we don't need to have the template be maintained.
   Leverage composite runs actions: https://docs.github.com/en/free-pro-team@latest/actions/creating-actions/creating-a-composite-run-steps-action
-* Vanir: index.scss is wrong when not portal - refers to globals and has body + html stylings
-* Vanir: App.tsx template is missing a semicolon at the end
-* Vanir: Support having a license header that gets added to all files (templating)
 * Vanir: Add correct license header to tsconfig.json when selecting a license (except UNLICENSED)
 * Vanir: A lifecycle for ViewModels that is related to route change instead of just params
 * Vanir: Figure out why the SCSS WebPack thing doesn't work on initial builds when using it as module (doesn't generate the d.ts)
@@ -174,8 +175,9 @@ Nginx sub filter (Inject code):
 
 * Visualizing microservices and their dependencies using something similar to this: http://hughsk.io/colony/ (https://github.com/hughsk/colony/blob/master/src/index.js)
 
-
 ## Done
 
 * Move custom configuration into a workspace.json file inside the .dolittle folder of a workspace
 * Upgraded to latest Runtime (5.3.2) for templates
+* Vanir: index.scss is wrong when not portal - refers to globals and has body + html stylings
+* Vanir: App.tsx template is missing a semicolon at the end
