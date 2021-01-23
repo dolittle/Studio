@@ -126,6 +126,7 @@ Nginx sub filter (Inject code):
 
 * Settings page should show where the folder of the Workspace configuration is
 
+* Vanir: Add callbacks for 'post bindings, post configuration...' - would be helpful for setting up bindings such as K8sBindings in Application MS
 * Vanir: Support having a license header that gets added to all files (templating)
 * Vanir: Maintain pipelines in one place use workflow-dispatch to call these - so we don't need to have the template be maintained.
   Leverage composite runs actions: https://docs.github.com/en/free-pro-team@latest/actions/creating-actions/creating-a-composite-run-steps-action
