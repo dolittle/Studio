@@ -21,7 +21,7 @@ services:
   {{lowerCase ../application.name}}-runtime-{{lowerCase name}}:
     labels:
       - dolittle="{{../application.id}}"
-    image: dolittle/runtime:5.1.4
+    image: dolittle/runtime:5.3.2
     volumes:
       - ./{{name}}/resources.json:/app/.dolittle/resources.json
       - ./tenants.json:/app/.dolittle/tenants.json
