@@ -174,3 +174,4 @@ Nginx sub filter (Inject code):
 ## Done
 
 * Move custom configuration into a workspace.json file inside the .dolittle folder of a workspace
+* Upgraded to latest Runtime (5.3.2) for templates
