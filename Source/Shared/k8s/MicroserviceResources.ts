@@ -4,8 +4,7 @@
 import { injectable } from 'tsyringe';
 import { KubeConfig, AppsV1Api} from '@kubernetes/client-node';
 
-import { Configuration } from '@dolittle/vanir-backend';
-import { ILogger } from '@dolittle/vanir-backend';
+import { Configuration, ILogger } from '@dolittle/vanir-backend';
 import { Context } from '@dolittle/vanir-backend/dist/web';
 
 import { IMicroserviceResources } from './IMicroserviceResources';
@@ -15,7 +14,7 @@ export class MicroserviceResources extends IMicroserviceResources {
     private config: KubeConfig;
     private appsV1Api: AppsV1Api;
 
-    constructor(configuration: Configuration, private logger: ILogger) {
+    constructor(configuration: Configuration, private readonly _logger: ILogger) {
         super();
         this.config = this.getKubernetesConfig(configuration);
         this.appsV1Api = this.config.makeApiClient(AppsV1Api);
@@ -54,7 +53,7 @@ export class MicroserviceResources extends IMicroserviceResources {
         if (configuration.isDevelopment) {
             config.loadFromClusterAndUser({
                 name: 'mock',
-                server: 'http://localhost:3001',
+                server: 'http://localhost:9000',
                 skipTLSVerify: true,
             }, {
                 name: 'noone',
