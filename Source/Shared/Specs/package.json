@@ -1,0 +1,22 @@
+{
+    "name": "@shared/specs",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.ts",
+    "author": "Dolittle",
+    "license": "MIT",
+    "private": true,
+    "dependencies": {},
+    "devDependencies": {
+        "mocha": "8.2.1",
+        "chai": "4.2.0",
+        "sinon": "9.0.3",
+        "sinon-chai": "3.5.0",
+        "chai-as-promised": "7.1.1",
+        "@types/chai": "4.2.14",
+        "@types/chai-as-promised": "7.1.3",
+        "@types/mocha": "8.0.4",
+        "@types/sinon": "9.0.8",
+        "@types/sinon-chai": "3.2.5"
+    }
+}
