@@ -13,5 +13,8 @@ export class Bindings {
     static initialize() {
         container.registerSingleton(IApplicationNamespaces as constructor<IApplicationNamespaces>, ApplicationNamespaces);
         container.registerSingleton(IMicroserviceResources as constructor<IMicroserviceResources>, MicroserviceResources);
+
+        // By instantiating this, it will start watching for the data
+        container.resolve(IApplicationNamespaces as constructor<IApplicationNamespaces>);
     }
 }
