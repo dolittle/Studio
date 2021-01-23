@@ -4,8 +4,7 @@
 import { injectable } from 'tsyringe';
 import { KubeConfig, ListWatch, Watch, CoreV1Api, V1Namespace } from '@kubernetes/client-node';
 
-import { Configuration } from '@dolittle/vanir-backend';
-import { ILogger } from '@dolittle/vanir-backend';
+import { Configuration, ILogger } from '@dolittle/vanir-backend';
 
 import { IApplicationNamespaces } from './IApplicationNamespaces';
 
@@ -14,7 +13,7 @@ export class ApplicationNamespaces extends IApplicationNamespaces {
     private config: KubeConfig;
     private namespaces?: ListWatch<V1Namespace>;
 
-    constructor(configuration: Configuration, private logger: ILogger) {
+    constructor(configuration: Configuration, private readonly _logger: ILogger) {
         super();
         this.config = this.getKubernetesConfig(configuration);
         this.startListWatcherLoop();
@@ -40,7 +39,7 @@ export class ApplicationNamespaces extends IApplicationNamespaces {
                 this.namespaces = watcher;
                 break;
             } catch (ex) {
-                this.logger.error(`Could not start kubernetes watcher ${ex}`);
+                this._logger.error(`Could not start kubernetes watcher ${ex}`);
             }
             await new Promise(resolve => global.setTimeout(resolve, 5000));
         }
@@ -51,7 +50,7 @@ export class ApplicationNamespaces extends IApplicationNamespaces {
         if (configuration.isDevelopment) {
             config.loadFromClusterAndUser({
                 name: 'mock',
-                server: 'http://localhost:3001',
+                server: 'http://localhost:9000',
                 skipTLSVerify: true,
             }, {
                 name: 'noone',
