@@ -48,6 +48,7 @@ export class ApplicationNamespaces extends IApplicationNamespaces {
     private getKubernetesConfig(configuration: Configuration): KubeConfig {
         const config = new KubeConfig();
         if (configuration.isDevelopment) {
+            this._logger.info('Running development');
             config.loadFromClusterAndUser({
                 name: 'mock',
                 server: 'http://localhost:9000',
@@ -56,6 +57,7 @@ export class ApplicationNamespaces extends IApplicationNamespaces {
                 name: 'noone',
             });
         } else {
+            this._logger.info('Running production');
             config.loadFromDefault();
         }
         return config;
