@@ -59,6 +59,7 @@ export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
                                 <CompositionRoute path="/applications" load={contentLoading} loaded={contentLoaded}/>
                                 <CompositionRoute path="/microservices" load={contentLoading} loaded={contentLoaded}/>
                                 <CompositionRoute path="/events" load={contentLoading} loaded={contentLoaded}/>
+                                <CompositionRoute path="/data" load={contentLoading} loaded={contentLoaded}/>
                             </Switch>
                         </div>
                     </div>
