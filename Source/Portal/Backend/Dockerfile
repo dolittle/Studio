@@ -17,7 +17,7 @@ COPY Source/Shared/Styles/package.json ./Source/Shared/Styles/package.json
 COPY Source/Shared/Web/package.json ./Source/Shared/Web/package.json
 RUN yarn
 
-COPY Source/Portal/version.json /app/Source/Portal/version.json
+COPY Source/Portal/microservice.json /app/Source/Portal/microservice.json
 
 # Backend Build
 FROM node:14.2.0 AS backend-build

@@ -10,7 +10,7 @@ import { Bootstrapper } from '@dolittle/vanir-react';
 import { VersionInfo } from '@dolittle/vanir-web';
 import { App } from './App';
 
-const version = require('../version.json') as VersionInfo;
+const version = require('../microservice.json') as VersionInfo;
 
 import '@shared/styles/theme';
 import './index.scss';

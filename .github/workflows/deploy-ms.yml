@@ -51,7 +51,7 @@ jobs:
       id: write-version-info
       uses: dolittle/write-version-to-file-action@v1
       with:
-        path: '${{ github.event.inputs.source-path }}/version.json'
+        path: '${{ github.event.inputs.source-path }}/microservice.json'
         version: ${{ github.event.inputs.version }}
         token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -59,14 +59,14 @@ jobs:
       uses: azure/setup-kubectl@v1
       with:
         version: 'latest'
-     
+
     - name: 'Set k8s context'
       uses: azure/aks-set-context@v1
       with:
           creds: '${{ secrets.AZURE_CREDENTIALS }}'
           resource-group: "Infrastructure-Essential"
           cluster-name: "Cluster-Production-Two"
-          
+
     - name: 'Deploy to Development'
       run: |
         kubectl patch --namespace application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7 deployment ${{ github.event.inputs.deployment }} -p '{"spec": { "template": {"metadata": { "labels": { "date": "'`date +'%s'`'" } }, "spec": { "containers": [{ "name":"head", "image": "${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:'"${{ github.event.inputs.version }}"'"}] }}}}'
