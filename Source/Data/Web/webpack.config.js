@@ -8,5 +8,5 @@ module.exports = (env, argv) => {
             '/_/data/graphql': 'http://localhost:3000',
             '/api': 'http://localhost:3000'
         };
-    }, 9000, 'Studio');
+    }, 9005, 'Studio');
 };
