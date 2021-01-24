@@ -12,6 +12,9 @@ import { Toolbar } from './Toolbar';
 import { LayoutViewModel } from './LayoutViewModel';
 import { CompositionRoute, withViewModel } from '@dolittle/vanir-react';
 import { ActionBar } from './ActionBar';
+import { container } from 'tsyringe';
+import { IMessenger } from '@dolittle/vanir-web';
+import { constructor } from '@dolittle/vanir-dependency-inversion';
 
 export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
     const location = useLocation();
@@ -24,6 +27,11 @@ export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
 
     const contentLoaded = () => {
         setLoadingSpinner(false);
+
+        const iframe = document.querySelector('iframe');
+        if (iframe && iframe.contentDocument) {
+            container.resolve(IMessenger as constructor<IMessenger>).setCurrentContentDocument(iframe.contentDocument);
+        }
     };
 
     return (
@@ -56,10 +64,10 @@ export const Layout = withViewModel(LayoutViewModel, ({ viewModel }) => {
                                 <Route exact path="/">
                                     <h2>Welcome to Dolittle Studio</h2>
                                 </Route>
-                                <CompositionRoute path="/applications" load={contentLoading} loaded={contentLoaded}/>
-                                <CompositionRoute path="/microservices" load={contentLoading} loaded={contentLoaded}/>
-                                <CompositionRoute path="/events" load={contentLoading} loaded={contentLoaded}/>
-                                <CompositionRoute path="/data" load={contentLoading} loaded={contentLoaded}/>
+                                <CompositionRoute path="/applications" load={contentLoading} loaded={contentLoaded} />
+                                <CompositionRoute path="/microservices" load={contentLoading} loaded={contentLoaded} />
+                                <CompositionRoute path="/events" load={contentLoading} loaded={contentLoaded} />
+                                <CompositionRoute path="/data" load={contentLoading} loaded={contentLoaded} />
                             </Switch>
                         </div>
                     </div>
