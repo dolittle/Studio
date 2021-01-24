@@ -1,6 +1,6 @@
 {
     "name": "devcentral",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Dolittle Developer Central is a developer tool for working with Dolittle microservice based solutions.",
     "main": "build/index.js",
     "scripts": {
