@@ -11,7 +11,7 @@ import { App } from './App';
 import { Bootstrapper } from '@dolittle/vanir-react';
 import { VersionInfo } from '@dolittle/vanir-web';
 
-const version = require('../microservice.json') as VersionInfo;
+const version = require('../version.json') as VersionInfo;
 
 ReactDOM.render(
     <Bootstrapper name="Dolittle DevCentral" prefix="" version={version}>
