@@ -182,9 +182,3 @@ Nginx sub filter (Inject code):
 
 * Visualizing microservices and their dependencies using something similar to this: http://hughsk.io/colony/ (https://github.com/hughsk/colony/blob/master/src/index.js)
 
-## Done
-
-* Move custom configuration into a workspace.json file inside the .dolittle folder of a workspace
-* Upgraded to latest Runtime (5.3.2) for templates
-* Vanir: index.scss is wrong when not portal - refers to globals and has body + html stylings
-* Vanir: App.tsx template is missing a semicolon at the end

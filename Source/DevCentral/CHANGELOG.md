@@ -2,6 +2,13 @@
 
 This is the changelog for DevCentral used during pre-release
 
+## v1.0.2
+
+* Move custom configuration into a workspace.json file inside the .dolittle folder of a workspace
+* Upgraded to latest Runtime (5.3.2) for templates
+* Vanir: index.scss is wrong when not portal - refers to globals and has body + html stylings
+* Vanir: App.tsx template is missing a semicolon at the end
+
 ## v1.0.1
 
 * Refresh button - reloads workspace
