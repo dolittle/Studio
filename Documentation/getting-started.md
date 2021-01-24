@@ -1,8 +1,10 @@
 # Getting started
 
+Studio is built on top of our own [Vanir](https://github.com/dolittle-entropy/vanir).
+
 ## Development Environment
 
-There is a shared development environment for the microservices. You can find this in the [Environment](./Environment) folder.
+There is a shared development environment for the microservices. You can find this in the [.dolittle](./.dolittle) folder.
 Open a terminal and run:
 
 ```shell
@@ -40,9 +42,6 @@ start the things you need to work on and not all of the microservices.
 
 The backends can be run using `yarn dev` - this starts the backend of the microservice and watches for any changes of any TypeScript
 files related to the project or from the shared projects it depends on. When a change occurs, it will restart it.
-If you want to debug, you simply attach your debugger to it as it is running with a debug watcher waiting - read more [here](./debugging.md).
-
-Read more about the [anatomy of a backend](./anatomy-of-a-backend.md).
 
 ### Frontend / Web
 
@@ -51,8 +50,6 @@ in the terminal. As with the backend, it will watch for any changes and recompil
 
 > You will only see the frontend of your microservice doing this, and completely out of context from the portal it lives in. Read more on the composition.
 
-Read more about the [anatomy of a frontend](./anatomy-of-a-frontend.md).
-
 ### Frontend composition
 
 The frontends belong to a larger application composition. In order for you to see it in context of this, you need to start the Portal Web.
@@ -60,4 +57,4 @@ Navigate to the [Source/Portal/Web](../Source/Portal/Web) and run `yarn start` f
 document, you can now navigate the browser to [http://localhost:9000](http://localhost:9000). With the portal running, you can now chose to
 start the frontend of the microservice you're working on.
 
-Read more about how the composition works [here](./composition.md).
+Read more about how the composition works [here](https://github.com/dolittle-entropy/vanir/blob/main/Documentation/frontend/composition.md).
