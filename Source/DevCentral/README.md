@@ -14,6 +14,9 @@ Nginx sub filter (Inject code):
 
 ## Todo
 
+* Vanir: Find a way to passthrough POST verbs for Nginx
+* Vanir: Fix slash at the end of GraphQL queries (HttpLink) - go back and fix Shepherd portal
+
 * Event Horizon configuration
 * Workspace level information - separate from Application
 * Figure out a model for microservices across multiple repositories
