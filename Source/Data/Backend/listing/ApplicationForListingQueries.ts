@@ -29,11 +29,11 @@ export class ApplicationForListingQueries {
                 return { namespace, deployments };
             })))
             .map(async ({ namespace, deployments }) => {
-                const guid = namespace.metadata?.name?.replace('application-', '');
+                const guid = namespace.metadata!.annotations['dolittle.io/application-id'];
 
                 const application = new ApplicationForListing();
                 application._id = guid;
-                application.name = namespace.metadata?.labels?.application ?? '[Not Set]';
+                application.name = namespace.metadata!.labels!.application;
 
                 application.microservices = deployments
                     .filter(_ => _.metadata?.labels?.microservice)
