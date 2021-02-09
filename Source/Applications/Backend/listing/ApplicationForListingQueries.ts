@@ -29,7 +29,8 @@ export class ApplicationForListingQueries {
                 return { namespace, deployments };
             })))
             .map(async ({ namespace, deployments }) => {
-                const guid = namespace!.metadata?.annotations['dolittle.io/application-id'];
+                // What is going on
+                const guid = namespace?.metadata?.annotations['dolittle.io/application-id'];
 
                 const application = new ApplicationForListing();
                 application._id = guid;
