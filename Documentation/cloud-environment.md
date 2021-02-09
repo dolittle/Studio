@@ -37,36 +37,36 @@ For more details on how to update configuration and work with this in the Dolitt
 | Type | Environment | Value |
 | ---- | ----------- | ----- |
 | Image repository | All | 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/harvest |
-| Deployment name  | Dev | studio-dev-portal |
-| ConfigMap name   | Dev | studio-dev-portal-config-files |
-| Env. Variables name | Dev | studio-dev-portal-env-variables |
-| Deployment name  | Prod | studio-prod-portal |
-| ConfigMap name   | Prod | studio-prod-portal-config-files |
-| Env. Variables name | Prod | studio-prod-portal-env-variables |
+| Deployment name  | Dev | dev-portal |
+| ConfigMap name   | Dev | dev-portal-config-files |
+| Env. Variables name | Dev | dev-portal-env-variables |
+| Deployment name  | Prod | prod-portal |
+| ConfigMap name   | Prod | prod-portal-config-files |
+| Env. Variables name | Prod | prod-portal-env-variables |
 
 ### Applications
 
 | Type | Environment | Value |
 | ---- | ----------- | ----- |
 | Image repository | All | 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/harvest |
-| Deployment name  | Dev | studio-dev-applications |
-| ConfigMap name   | Dev | studio-dev-applications-config-files |
-| Env. Variables name | Dev | studio-dev-applications-env-variables |
-| Deployment name  | Prod | studio-prod-applications |
-| ConfigMap name   | Prod | studio-prod-applications-config-files |
-| Env. Variables name | Prod | studio-prod-applications-env-variables |
+| Deployment name  | Dev | dev-applications |
+| ConfigMap name   | Dev | dev-applications-config-files |
+| Env. Variables name | Dev | dev-applications-env-variables |
+| Deployment name  | Prod | prod-applications |
+| ConfigMap name   | Prod | prod-applications-config-files |
+| Env. Variables name | Prod | prod-applications-env-variables |
 
 ### Events
 
 | Type | Environment | Value |
 | ---- | ----------- | ----- |
 | Image repository | All | 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/harvest |
-| Deployment name  | Dev | studio-dev-events |
-| ConfigMap name   | Dev | studio-dev-events-config-files |
-| Env. Variables name | Dev | studio-dev-events-env-variables |
-| Deployment name  | Prod | studio-prod-events |
-| ConfigMap name   | Prod | studio-prod-events-config-files |
-| Env. Variables name | Prod | studio-prod-events-env-variables |
+| Deployment name  | Dev | dev-events |
+| ConfigMap name   | Dev | dev-events-config-files |
+| Env. Variables name | Dev | dev-events-env-variables |
+| Deployment name  | Prod | prod-events |
+| ConfigMap name   | Prod | prod-events-config-files |
+| Env. Variables name | Prod | prod-events-env-variables |
 
 ## Kubernetes
 
@@ -96,11 +96,11 @@ By using the `kubectl logs` command you can get logs for a container within a po
 For instance if we want to look at the runtime logs for the applications microservice using the pod identifier from the `get pods` command:
 
 ```shell
-$ kubectl logs studio-dev-applications-5c59ff4c4-mjtgb -c runtime
+$ kubectl logs dev-applications-5c59ff4c4-mjtgb -c runtime
 ```
 
 For the head, which is the backend code of the microservice:
 
 ```shell
-$ kubectl logs studio-dev-applications-5c59ff4c4-mjtgb -c head
+$ kubectl logs dev-applications-5c59ff4c4-mjtgb -c head
 ```

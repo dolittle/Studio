@@ -2,7 +2,7 @@ name: Dev - Data - Deploy
 
 env:
   SOURCE_PATH: "Source/Data"
-  DEPLOYMENT_NAME: "studio-dev-data"
+  DEPLOYMENT_NAME: "dev-data"
   DOCKER_IMAGE_TAG: "dolittle/studio/data"
   DOCKER_FILE: "Source/Data/Backend/Dockerfile"
 
