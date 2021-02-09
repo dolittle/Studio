@@ -21,7 +21,7 @@ export class ApplicationNamespaces extends IApplicationNamespaces {
 
     getNamespacesForTenant = (tenantId: string) => {
         if (!this.namespaces) return [];
-        return this.namespaces.list().filter(_ => _.metadata?.labels !== undefined && _.metadata?.annotations['dolittle.io/tenant-id'] === tenantId);
+        return this.namespaces.list().filter(_ => _.metadata?.annotations !== undefined && _.metadata?.annotations['dolittle.io/tenant-id'] === tenantId);
     };
 
     private async startListWatcherLoop() {
