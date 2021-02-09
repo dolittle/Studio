@@ -2,7 +2,7 @@ name: Prod - Applications - Deploy
 
 env:
   SOURCE_PATH: 'Source/Applications'
-  DEPLOYMENT_NAME: 'studio-prod-applications'
+  DEPLOYMENT_NAME: 'prod-applications'
   DOCKER_IMAGE_TAG: 'dolittle/studio/applications'
   DOCKER_FILE: 'Source/Applications/Backend/Dockerfile'
 
