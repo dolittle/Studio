@@ -2,7 +2,7 @@ name: Prod - Portal - Deploy
 
 env:
   SOURCE_PATH: 'Source/Portal'
-  DEPLOYMENT_NAME: 'studio-prod-portal'
+  DEPLOYMENT_NAME: 'prod-portal'
   DOCKER_IMAGE_TAG: 'dolittle/studio/portal'
   DOCKER_FILE: 'Source/Portal/Backend/Dockerfile'
 

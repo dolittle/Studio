@@ -2,17 +2,22 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
-  name: studio-prod-data-env-variables
+  annotations:
+    dolittle.io/tenant-id: 508c1745-5f2a-4b4c-b7a5-2fbb1484346d
+    dolittle.io/application-id: fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+    dolittle.io/microservice-id: 7d2433e2-84a1-b84b-a098-5bf52f985e5a
   labels:
     tenant: Dolittle
-    application: Studio-Prod
+    application: Studio
+    environment: Prod
     microservice: Data
+  name: prod-data-env-variables
+  namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
 data:
   NODE_ENV: "production"
-  DATABASE_HOST: "studio-prod-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
+  DATABASE_HOST: "prod-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
   DATABASE_NAME: "read_models_data"
-  EVENTSTORE_HOST: "studio-prod-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
+  EVENTSTORE_HOST: "prod-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
   EVENTSTORE_NAME: "event_store_data"
   DOLITTLE_RUNTIME_HOST: "localhost"
   DOLITTLE_RUNTIME_PORT: "50053"
@@ -22,10 +27,15 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
-  name: studio-prod-data-config-files
+  annotations:
+    dolittle.io/tenant-id: 508c1745-5f2a-4b4c-b7a5-2fbb1484346d
+    dolittle.io/application-id: fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+    dolittle.io/microservice-id: 7d2433e2-84a1-b84b-a098-5bf52f985e5a
   labels:
     tenant: Dolittle
-    application: Studio-Prod
+    application: Studio
+    environment: Prod
     microservice: Data
+  name: prod-data-config-files
+  namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
 data:

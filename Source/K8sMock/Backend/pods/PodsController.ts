@@ -14,7 +14,7 @@ export class PodsController extends Controller {
     private static readonly _pods: V1Pod[] =
     [
         PodsController.createPod(
-            'studio-dev-applications',
+            'dev-applications',
             'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
             {
                 tenant: 'Dolittle',
@@ -26,7 +26,7 @@ export class PodsController extends Controller {
             'dolittle/runtime:5.1.2'
             ),
         PodsController.createPod(
-            'studio-dev-events',
+            'dev-events',
             'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
             {
                 tenant: 'Dolittle',
@@ -38,7 +38,7 @@ export class PodsController extends Controller {
             'dolittle/runtime:5.1.4'
             ),
         PodsController.createPod(
-            'studio-dev-portal',
+            'dev-portal',
             'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
             {
                 tenant: 'Dolittle',
@@ -51,7 +51,7 @@ export class PodsController extends Controller {
             ),
 
         PodsController.createPod(
-            'studio-prod-applications',
+            'prod-applications',
             'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
             {
                 tenant: 'Dolittle',
@@ -63,7 +63,7 @@ export class PodsController extends Controller {
             'dolittle/runtime:5.1.2'
             ),
         PodsController.createPod(
-            'studio-prod-events',
+            'prod-events',
             'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
             {
                 tenant: 'Dolittle',
@@ -75,7 +75,7 @@ export class PodsController extends Controller {
             'dolittle/runtime:5.1.2'
             ),
         PodsController.createPod(
-            'studio-prod-portal',
+            'prod-portal',
             'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
             {
                 tenant: 'Dolittle',
