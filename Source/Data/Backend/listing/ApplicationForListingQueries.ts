@@ -7,7 +7,7 @@ import { Query, Resolver, Ctx } from 'type-graphql';
 
 import { ILogger } from '@dolittle/vanir-backend';
 import { Context } from '@dolittle/vanir-backend/dist/web';
-import { IApplicationNamespaces, IMicroserviceResources } from '@shared/k8s';
+
 
 import { ApplicationForListing } from './ApplicationForListing';
 
@@ -16,16 +16,11 @@ import { ApplicationForListing } from './ApplicationForListing';
 export class ApplicationForListingQueries {
     constructor(
         private readonly _logger: ILogger,
-        private readonly _applicationNamespaces: IApplicationNamespaces,
-        private readonly _microserviceResources: IMicroserviceResources
     ) {}
 
     @Query((returns) => [ApplicationForListing])
     async allApplicationsForListing(@Ctx() ctx: Context) {
-        // curl -I 'http://localhost:3005/graphql'
-
         let body = await fetchTenants();
-        console.log(body);
 
         return body.map(customer => {
             return {
@@ -38,27 +33,12 @@ export class ApplicationForListingQueries {
                 }),
             };
         });
-        const backups: ApplicationForListing[] = [
-        {
-            "tenant": {
-                "name": "Customer-Chris",
-                "id": "fake",
-            },
-            "applications": [
-                {"name":"Taco"}
-            ],
-            "domains": [
-                {"name":"freshteapot-taco.dolittle.cloud"}
-            ]
-        }
-        ];
-        return backups;
     }
 }
 
 
 async function fetchTenants(): Promise<ApplicationForListing[]> {
-
+    // TODO need to set the path to the download-server
     const response = await fetch('http://localhost:8080/share/logs/customers', {
         headers: {
             'x-secret': 'fake'
