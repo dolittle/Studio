@@ -14,9 +14,6 @@ Nginx sub filter (Inject code):
 
 ## Todo
 
-* Vanir: Find a way to passthrough POST verbs for Nginx
-* Vanir: Fix slash at the end of GraphQL queries (HttpLink) - go back and fix Shepherd portal
-
 * Event Horizon configuration
 * Workspace level information - separate from Application
 * Figure out a model for microservices across multiple repositories
@@ -40,12 +37,10 @@ Nginx sub filter (Inject code):
 * Update running state on startup and detect if any are running
 * Save the running state to disk and resume it when starting (paused containers / processes remain paused etc. )
 * Add ability to add Web frontend at a later stage
-* Vanir: Figure out a good way to export nested modules so that we can do 'import { IEventStore } from '@dolittle/vanir-backend/dolittle''
 * Running time in list of running instances
 * UI: Left menu / sidebar should have a grey semi-transparent background. Looks better.
 * UI: Make columns adjustable in size
 * UI: Don't lock the width of the overview page for Apps.
-* Vanir Documentation: The reason for the HtmlInterceptorPlugin - fallback page serving for all non-matched routes for the dev server
 * Show CPU and memory usage of both containers and running processes (sampled every second or so)
 * Change name from 'Backend' to Main
 * Change name from 'Web' to Renderer
@@ -129,31 +124,29 @@ Nginx sub filter (Inject code):
 
 * Settings page should show where the folder of the Workspace configuration is
 
-* Vanir: BUG: ContentFrame does not set the iframe ref document in messenger - causing it not to publish messages downwards to content. Fix hack in Studio - Portal / Layout.tsx that sets it on loaded
-* Vanir: BUG: NavigatedTo message does not show up inside the iframe
-* Vanir: routeChanged() should be called when top level route changed - fix hack in AppViewModel for data that parses the route
-* Vanir: BUG: Navigation for ContentFrame does not happen when route parameters change
-* Vanir: Add callbacks for 'post bindings, post configuration...' - would be helpful for setting up bindings such as K8sBindings in Application MS
-* Vanir: Support having a license header that gets added to all files (templating)
-* Vanir: Maintain pipelines in one place use workflow-dispatch to call these - so we don't need to have the template be maintained.
-  Leverage composite runs actions: https://docs.github.com/en/free-pro-team@latest/actions/creating-actions/creating-a-composite-run-steps-action
-* Vanir: Add correct license header to tsconfig.json when selecting a license (except UNLICENSED)
-* Vanir: A lifecycle for ViewModels that is related to route change instead of just params
-* Vanir: Figure out why the SCSS WebPack thing doesn't work on initial builds when using it as module (doesn't generate the d.ts)
-* Vanir: HotLoading not working - have to refresh browser manually when changing anything - the webpack-dev-server.js path is wrong for inner iframes
-* Vanir: WebPack doesn't always pick up changes in dependencies (Shared)
-* Vanir: Templates in create* commands should be excluded during 'tsc -b' (build) - we don't want them compiled as part of the package dist folder
-* Vanir: WebPack setup should support reading the microservices.json file for information plus the vanir.json file
-* Vanir: Look at how we could get <Bootstrapper/> instrumented with the information it needs from microservices.json and/or vanir.json
-* Vanir: Add a default empty Swagger schema if non is given
-* Vanir: TS Transformer for discovering the RegisterRoutes thing and hook it up automatically
-* Vanir: Automatically hook up GraphQL Resolvers
-* Vanir: Support overriding the WebPack DevServer hosted port
-* Vanir: Export ContentFrame properly
-* Vanir: It should be optional if one wants a backend or a frontend
-
 * Whats new dialog
 * Known issues dialog
+
+### Bugs
+
+* Vanir: BUG: HotLoading not working when going through Nginx - have to refresh browser manually when changing anything - the webpack-dev-server.js path is wrong for inner iframes
+* Vanir: Figure out why the SCSS WebPack thing doesn't work on initial builds when using it as module (doesn't generate the d.ts)
+
+### Documentation
+
+* Vanir: Figure out a good way to export nested modules so that we can do 'import { IEventStore } from '@dolittle/vanir-backend/dolittle''
+
+* Vanir: Add callbacks for 'post bindings, post configuration...' - would be helpful for setting up bindings such as K8sBindings in Application MS
+
+### Tooling
+
+* Vanir: WebPack setup should support reading the microservices.json file for information plus the vanir.json file
+* Vanir: Look at how we could get <Bootstrapper/> instrumented with the information it needs from microservices.json and/or vanir.json
+
+* Vanir: Templates in create* commands should be excluded during 'tsc -b' (build) - we don't want them compiled as part of the package dist folder
+* Vanir: Add a default empty Swagger schema if non is given
+* Vanir: Export ContentFrame properly
+* Vanir: It should be optional if one wants a backend or a frontend
 
 ## Known issues
 
