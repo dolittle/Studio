@@ -35,8 +35,8 @@ give you a common `node_modules` folder at the root for common dependencies.
 
 First thing we need to do is install all the packages. In your terminal, navigate to the [root](./) of the project and the following:
 
-```shell
-$ yarn
+```sh
+yarn
 ```
 
 This should restore all dependencies and dev dependencies for all projects.
@@ -49,7 +49,13 @@ start the things you need to work on and not all of the microservices.
 
 ### Backend
 
-The backends can be run using `yarn dev` - this starts the backend of the microservice and watches for any changes of any TypeScript
+The backends can be run using
+
+```sh
+yarn start:dev
+```
+
+- this starts the backend of the microservice and watches for any changes of any TypeScript
 files related to the project or from the shared projects it depends on. When a change occurs, it will restart it.
 
 ### Frontend / Web
@@ -68,7 +74,7 @@ and navigate to the port outputted in the terminal. As with the backend, it will
 The frontends belong to a larger application composition. In order for you to see it in context of this, you need to start the Portal Web.
 Navigate to the [Source/Portal/Web](../Source/Portal/Web) and run:
 ```sh
-yarn start
+yarn start:dev
 ```
 from this. With the environment running as described at the top of this
 document, you can now navigate the browser to [http://localhost:9000](http://localhost:9000). With the portal running, you can now chose to
