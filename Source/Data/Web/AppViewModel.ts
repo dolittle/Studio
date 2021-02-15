@@ -10,7 +10,7 @@ import { routes } from './routing';
 import { NavigatedTo } from '@dolittle/vanir-web/dist/routing';
 import { RouteInfo } from '@dolittle/vanir-react';
 import { Guid } from '@dolittle/rudiments';
-import { BackupLink, BackupsForApplication, BackupForListing2 } from './BackupForListing';
+import { BackupLink, BackupsForApplication, BackupForListing } from './BackupForListing';
 import { Tenant } from './Tenant';
 
 @injectable()
@@ -20,7 +20,7 @@ export class AppViewModel {
 
     private _observableQuery?: ObservableQuery<AllApplicationsForListingQuery>;
     applications: ApplicationForListing[] = [];
-    backups: BackupForListing2[] = [];
+    backups: BackupForListing[] = [];
     tenants: Tenant[] = [];
 
     constructor(
@@ -75,16 +75,20 @@ export class AppViewModel {
 
         let backupApplication  = result.data.allBackupsForListing;
 
-        this.backups = backupApplication.files.map<BackupForListing2>(file => {
+        this.backups = backupApplication.files.map<BackupForListing>(file => {
+            let parts = file.split("/");
+            let when:string = parts[parts.length-1].replace(".gz.mongodump", "");
+
             return {
                 tenant: backupApplication.tenant,
                 application: backupApplication.application,
-                file: file
+                file: file,
+                when,
             };
         });
     }
 
-    async getBackupLink(input: BackupForListing2): Promise<BackupLink>{
+    async getBackupLink(input: BackupForListing): Promise<BackupLink>{
         // Get me the latest
         const query = gql`
             query {

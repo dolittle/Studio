@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { AppViewModel } from './AppViewModel';
 import { withViewModel } from '@dolittle/vanir-react';
 import { DetailsList, Dropdown, IColumn, IconButton, Stack, IDropdownOption } from '@fluentui/react';
-import { BackupForListing2, BackupLink } from './BackupForListing';
+import { BackupForListing, BackupLink } from './BackupForListing';
 
 
 
@@ -13,7 +13,7 @@ import { BackupForListing2, BackupLink } from './BackupForListing';
 
 
 export const App = withViewModel(AppViewModel, ({ viewModel }) => {
-    const RenderClipboard = (item: BackupForListing2, index?: number, column?: IColumn) => {
+    const RenderClipboard = (item: BackupForListing, index?: number, column?: IColumn) => {
         return (
             <IconButton iconProps={{ iconName: 'PasteAsText' }} onClick={async () => {
                 let share:BackupLink = await viewModel.getBackupLink(item);
@@ -22,7 +22,7 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
         );
     };
 
-    const RenderDownload = (item: BackupForListing2, index?: number, column?: IColumn) => {
+    const RenderDownload = (item: BackupForListing, index?: number, column?: IColumn) => {
         return (
             <IconButton iconProps={{ iconName: 'Download' }} onClick={async  () => {
                 let share:BackupLink = await viewModel.getBackupLink(item);
@@ -34,12 +34,6 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
 
     const columns: IColumn[] = [
         {
-            key: 'Id',
-            fieldName: 'tenant',
-            name: 'Id',
-            minWidth: 50
-        },
-        {
             key: 'Name',
             fieldName: 'file',
             name: 'Name',
@@ -49,6 +43,12 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
             key: 'Application',
             fieldName: 'application',
             name: 'Application',
+            minWidth: 150
+        },
+        {
+            key: 'Date',
+            fieldName: 'when',
+            name: 'Date',
             minWidth: 150
         },
         {
