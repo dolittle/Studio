@@ -7,11 +7,9 @@ Studio is built on top of our own [Vanir](https://github.com/dolittle-entropy/va
 There is a shared development environment for the microservices. You can find this in the [.dolittle](./.dolittle) folder.
 Open a terminal and run:
 
-```shell
+```sh
 cd .dolittle
 docker-compose up
-
-docker-compose up -d studio-mongo
 ```
 
 The environment consists of a shared MongoDB instance and runtimes for the different microservices configured to use this
@@ -20,6 +18,14 @@ for connecting.
 
 In addition to this there is an Nginx instance that acts like a composition layer, much like it will be handled when running
 in a Kubernetes environment with an ingress controller composing it together.
+
+### Local development
+- start mongo
+```sh
+cd .dolittle
+docker-compose up -d studio-mongo
+```
+- depending on the app your working in you might want to spin up a runtime, or not.
 
 ## Restoring all dependencies
 
@@ -48,15 +54,23 @@ files related to the project or from the shared projects it depends on. When a c
 
 ### Frontend / Web
 
-The Web frontends leverages WebPack and its WebPack DevServer. To get started, simply run `yarn start` and navigate to the port outputted
-in the terminal. As with the backend, it will watch for any changes and recompile the WebPack project.
+The Web frontends leverages WebPack and its WebPack DevServer. To get started run:
+
+```sh
+yarn start:dev
+```
+and navigate to the port outputted in the terminal. As with the backend, it will watch for any changes and recompile the WebPack project.
 
 > You will only see the frontend of your microservice doing this, and completely out of context from the portal it lives in. Read more on the composition.
 
 ### Frontend composition
 
 The frontends belong to a larger application composition. In order for you to see it in context of this, you need to start the Portal Web.
-Navigate to the [Source/Portal/Web](../Source/Portal/Web) and run `yarn start` from this. With the environment running as described at the top of this
+Navigate to the [Source/Portal/Web](../Source/Portal/Web) and run:
+```sh
+yarn start
+```
+from this. With the environment running as described at the top of this
 document, you can now navigate the browser to [http://localhost:9000](http://localhost:9000). With the portal running, you can now chose to
 start the frontend of the microservice you're working on.
 
