@@ -8,7 +8,10 @@ There is a shared development environment for the microservices. You can find th
 Open a terminal and run:
 
 ```shell
-$ docker-compose up
+cd .dolittle
+docker-compose up
+
+docker-compose up -d studio-mongo
 ```
 
 The environment consists of a shared MongoDB instance and runtimes for the different microservices configured to use this

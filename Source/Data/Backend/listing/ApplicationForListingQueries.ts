@@ -9,7 +9,6 @@ import { Context } from '@dolittle/vanir-backend/dist/web';
 import { IApplicationNamespaces, IMicroserviceResources } from '@shared/k8s';
 
 import { ApplicationForListing } from './ApplicationForListing';
-import { MicroserviceForListing } from './MicroserviceForListing';
 
 @injectable()
 @Resolver(ApplicationForListing)
@@ -22,29 +21,22 @@ export class ApplicationForListingQueries {
 
     @Query((returns) => [ApplicationForListing])
     async allApplicationsForListing(@Ctx() ctx: Context) {
-        const namespaces = this._applicationNamespaces.getNamespacesForTenant(ctx.tenantId);
-        return (await Promise.all(namespaces
-            .map(async (namespace) => {
-                const deployments = await this._microserviceResources.getDeployments(namespace.metadata!.name!, ctx);
-                return { namespace, deployments };
-            })))
-            .map(async ({ namespace, deployments }) => {
-                const guid = namespace.metadata!.annotations!['dolittle.io/application-id'];
+        // curl -I 'http://localhost:3005/graphql'
 
-                const application = new ApplicationForListing();
-                application._id = guid;
-                application.name = namespace.metadata!.labels!.application;
-
-                application.microservices = deployments
-                    .filter(_ => _.metadata?.labels?.microservice)
-                    .map(deployment => {
-                        const microservice = new MicroserviceForListing();
-                        microservice._id = deployment.metadata!.name;
-                        microservice.name = `${deployment.metadata!.labels!.microservice}-${deployment.metadata!.labels!.environment}`;
-                        return microservice;
-                    });
-
-                return application;
-            });
+        const backups: ApplicationForListing[] = [
+        {
+            "tenant": {
+                "name": "Customer-Chris",
+                "id": "fake",
+            },
+            "applications": [
+                {"name":"Taco"}
+            ],
+            "domains": [
+                {"name":"freshteapot-taco.dolittle.cloud"}
+            ]
+        }
+        ];
+        return backups;
     }
 }

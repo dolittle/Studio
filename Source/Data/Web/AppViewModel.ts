@@ -81,10 +81,15 @@ export class AppViewModel {
         const query = gql`
             query {
                 allApplicationsForListing {
-                    id
-                    name
-                    microservices {
-                        id
+                    tenant {
+                        name
+                    }
+
+                    applications {
+                        name
+                    }
+
+                    domains {
                         name
                     }
                 }
@@ -97,6 +102,7 @@ export class AppViewModel {
 
         this._observableQuery?.subscribe((next) => {
             if (next.networkStatus === NetworkStatus.ready && next.data) {
+                console.log(next.data);
                 this.applications = next.data.allApplicationsForListing;
                 this._populateNavigation();
             }
@@ -107,10 +113,10 @@ export class AppViewModel {
         const navigationItems = this.applications?.map(
             (app) =>
             ({
-                name: app.name,
-                items: app.microservices.map((ms) => ({
+                name: app.tenant.name,
+                items: app.applications.map((ms) => ({
                     name: ms.name,
-                    path: `/applications${routes.microserviceDetails.generate({ applicationId: app.id.toString(), microserviceId: ms.id.toString() })}`
+                    //path: `/applications${routes.microserviceDetails.generate({ applicationId: app.id.toString(), microserviceId: ms.id.toString() })}`
                 })),
 
             } as NavigationGroup)

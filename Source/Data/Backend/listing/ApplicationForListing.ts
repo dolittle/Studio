@@ -3,19 +3,53 @@
 
 import { Field, ObjectType } from 'type-graphql';
 import { prop, getModelForClass } from '@typegoose/typegoose';
-import { MicroserviceForListing } from './MicroserviceForListing';
+
+
 
 @ObjectType()
-export class ApplicationForListing {
-    @Field({ name: 'id' })
+export class DolittleTenant {
+    @Field()
     @prop()
-    _id?: string;
+    id?: string;
 
     @Field()
     @prop()
     name!: string;
+}
+export const DolittleTenantModel = getModelForClass(DolittleTenant);
 
-    @Field(() => [MicroserviceForListing])
-    microservices!: MicroserviceForListing[];
+
+@ObjectType()
+export class CustomerApplication {
+    @Field()
+    @prop()
+    name!: string;
+}
+export const CustomerApplicationModel = getModelForClass(CustomerApplication);
+
+@ObjectType()
+export class CustomerDomain {
+    @Field()
+    @prop()
+    name!: string;
+}
+export const CustomerDomainModel = getModelForClass(CustomerDomain);
+
+
+
+
+@ObjectType()
+export class ApplicationForListing {
+    @Field(() => [CustomerApplication])
+    @prop()
+    applications!: CustomerApplication[];
+
+    @Field(() => [CustomerDomain])
+    @prop()
+    domains!: CustomerDomain[];
+
+    @Field()
+    @prop()
+    tenant!: DolittleTenant;
 }
 export const ApplicationForListingModel = getModelForClass(ApplicationForListing);
