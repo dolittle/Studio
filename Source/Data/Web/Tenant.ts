@@ -4,6 +4,6 @@
 import { Guid } from '@dolittle/rudiments';
 
 export type Tenant = {
-    id: Guid;
+    //id: Guid;
     name: string;
 };

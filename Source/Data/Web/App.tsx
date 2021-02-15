@@ -60,9 +60,9 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     ];
 
     const [selectedItem, setSelectedItem] = useState<IDropdownOption>();
-
+    console.log(viewModel.tenants);
     const tenantOptions = viewModel.tenants.map(_ => {
-        return { key: _.id.toString(), text: _.name } as IDropdownOption;
+        return { key: _.name, text: _.name } as IDropdownOption;
     });
 
 

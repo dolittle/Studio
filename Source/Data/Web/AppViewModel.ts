@@ -104,6 +104,12 @@ export class AppViewModel {
             if (next.networkStatus === NetworkStatus.ready && next.data) {
                 console.log(next.data);
                 this.applications = next.data.allApplicationsForListing;
+                this.tenants = this.applications.map(customer => {
+                    let tenant: Tenant = {
+                        name: customer.tenant.name,
+                    }
+                    return tenant;
+                });
                 this._populateNavigation();
             }
         });
