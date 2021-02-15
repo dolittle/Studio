@@ -5,11 +5,11 @@ import { Resolver, Query, Ctx, Arg } from 'type-graphql';
 import { injectable } from 'tsyringe';
 import { ILogger } from '@dolittle/vanir-backend';
 import { Context } from '@dolittle/vanir-backend/dist/web';
-import { BackupForListing, BackupsForApplication, BackupLink, BackupLinkShareInput } from './BackupForListing';
+import { BackupsForApplication, BackupLink, BackupLinkShareInput } from './BackupForListing';
 
 
 @injectable()
-@Resolver(BackupForListing)
+
 export class BackupForListingQueries {
 
     constructor(
