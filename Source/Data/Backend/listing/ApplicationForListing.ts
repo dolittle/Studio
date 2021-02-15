@@ -36,8 +36,6 @@ export class CustomerDomain {
 export const CustomerDomainModel = getModelForClass(CustomerDomain);
 
 
-
-
 @ObjectType()
 export class ApplicationForListing {
     @Field(() => [CustomerApplication])

@@ -10,7 +10,7 @@ import { routes } from './routing';
 import { NavigatedTo } from '@dolittle/vanir-web/dist/routing';
 import { RouteInfo } from '@dolittle/vanir-react';
 import { Guid } from '@dolittle/rudiments';
-import { BackupForListing } from './BackupForListing';
+import { BackupLink, BackupsForApplication, BackupForListing2 } from './BackupForListing';
 import { Tenant } from './Tenant';
 
 @injectable()
@@ -20,7 +20,7 @@ export class AppViewModel {
 
     private _observableQuery?: ObservableQuery<AllApplicationsForListingQuery>;
     applications: ApplicationForListing[] = [];
-    backups: BackupForListing[] = [];
+    backups: BackupForListing2[] = [];
     tenants: Tenant[] = [];
 
     constructor(
@@ -59,23 +59,47 @@ export class AppViewModel {
         this.tenants = result.data.allTenantsForMicroservice;
     }
 
-    async populateBackupsFor(tenantId: Guid) {
+    async populateBackupsFor(domainName: string) {
+        // Get me the latest
         const query = gql`
             query {
-                allBackupsForListing(applicationId: "${this._applicationId}", microservice: "${this._microservice}", tenantId: "${tenantId}") {
-                    id
-                    name
-                    date
-                    applicationId
-                    microservice
+                allBackupsForListing(domain: "${domainName}") {
+                    tenant
+                    application
+                    files
                 }
             }
         `;
 
         const result = await this._dataSource.query<AllBackupsForListingQuery>({ query });
-        this.backups = result.data.allBackupsForListing;
+
+        let backupApplication  = result.data.allBackupsForListing;
+
+        this.backups = backupApplication.files.map<BackupForListing2>(file => {
+            return {
+                tenant: backupApplication.tenant,
+                application: backupApplication.application,
+                file: file
+            };
+        });
     }
 
+    async getBackupLink(input: BackupForListing2): Promise<BackupLink>{
+        // Get me the latest
+        const query = gql`
+            query {
+                getBackupLink(tenant: "${input.tenant}" application: "${input.application}" file_path: "${input.file}") {
+                    tenant
+                    application
+                    url
+                    expire
+                }
+            }
+        `;
+
+        const result = await this._dataSource.query<GetBackupLinkQuery>({ query });
+        return  result.data.getBackupLink;
+    }
 
     private async getApplicationList() {
         const query = gql`
@@ -102,7 +126,6 @@ export class AppViewModel {
 
         this._observableQuery?.subscribe((next) => {
             if (next.networkStatus === NetworkStatus.ready && next.data) {
-                console.log(next.data);
                 this.applications = next.data.allApplicationsForListing;
                 this.tenants = this.applications.map(customer => {
                     let tenant: Tenant = {
@@ -137,9 +160,16 @@ type AllTenantsForMicroservice = {
 };
 
 type AllBackupsForListingQuery = {
-    allBackupsForListing: BackupForListing[];
+    allBackupsForListing: BackupsForApplication;
 };
 
 type AllApplicationsForListingQuery = {
     allApplicationsForListing: ApplicationForListing[];
 };
+
+
+type GetBackupLinkQuery = {
+    getBackupLink: BackupLink;
+};
+
+

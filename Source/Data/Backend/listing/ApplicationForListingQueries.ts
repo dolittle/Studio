@@ -1,5 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+import fetch from 'node-fetch'
 
 import { injectable } from 'tsyringe';
 import { Query, Resolver, Ctx } from 'type-graphql';
@@ -23,6 +24,20 @@ export class ApplicationForListingQueries {
     async allApplicationsForListing(@Ctx() ctx: Context) {
         // curl -I 'http://localhost:3005/graphql'
 
+        let body = await fetchTenants();
+        console.log(body);
+
+        return body.map(customer => {
+            return {
+                "tenant": customer.tenant,
+                "applications": customer.applications.map(application => {
+                    return {"name": application};
+                }),
+                "domains": customer.domains.map(domain => {
+                    return {"name": domain};
+                }),
+            };
+        });
         const backups: ApplicationForListing[] = [
         {
             "tenant": {
@@ -40,3 +55,21 @@ export class ApplicationForListingQueries {
         return backups;
     }
 }
+
+
+async function fetchTenants(): Promise<ApplicationForListing[]> {
+
+    const response = await fetch('http://localhost:8080/share/logs/customers', {
+        headers: {
+            'x-secret': 'fake'
+        }
+    });
+
+    // waits until the request completes...
+    if (!response.ok) {
+        return [];
+    }
+
+    let body = await response.json();
+    return body.customers;
+  }

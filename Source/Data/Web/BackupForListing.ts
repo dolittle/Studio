@@ -10,3 +10,26 @@ export type BackupForListing = {
     name: string;
     data: Date;
 };
+
+
+export type BackupsForApplication = {
+    tenant: string;
+    application: string;
+    files: string[];
+}
+
+
+export type BackupForListing2 = {
+    tenant: string;
+    application: string;
+    file: string;
+}
+
+
+export type BackupLink = {
+    tenant: string;
+    application: string;
+    url: string;
+    expire: string;
+}
+

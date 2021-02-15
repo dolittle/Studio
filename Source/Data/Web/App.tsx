@@ -5,44 +5,50 @@ import React, { useState } from 'react';
 import { AppViewModel } from './AppViewModel';
 import { withViewModel } from '@dolittle/vanir-react';
 import { DetailsList, Dropdown, IColumn, IconButton, Stack, IDropdownOption } from '@fluentui/react';
-import { BackupForListing } from './BackupForListing';
-import { Guid } from '@dolittle/rudiments';
+import { BackupForListing2, BackupLink } from './BackupForListing';
 
-const RenderDownload = (item?: BackupForListing, index?: number, column?: IColumn) => {
-    return (
-        <IconButton iconProps={{ iconName: 'Download' }} onClick={() => {
-            window.open(`https://download.stuff/${item?.applicationId}/${item?.microserviceId}`, '_blank');
-        }} />
-    );
-};
 
-const RenderClipboard = (item?: BackupForListing, index?: number, column?: IColumn) => {
-    return (
-        <IconButton iconProps={{ iconName: 'PasteAsText' }} onClick={() => {
-            navigator.clipboard.writeText(`Better download this : ${item?.applicationId} - ${item?.microserviceId}`);
-        }} />
-    );
-};
+
+
+
 
 export const App = withViewModel(AppViewModel, ({ viewModel }) => {
+    const RenderClipboard = (item: BackupForListing2, index?: number, column?: IColumn) => {
+        return (
+            <IconButton iconProps={{ iconName: 'PasteAsText' }} onClick={async () => {
+                let share:BackupLink = await viewModel.getBackupLink(item);
+                navigator.clipboard.writeText(share.url);
+            }} />
+        );
+    };
+
+    const RenderDownload = (item: BackupForListing2, index?: number, column?: IColumn) => {
+        return (
+            <IconButton iconProps={{ iconName: 'Download' }} onClick={async  () => {
+                let share:BackupLink = await viewModel.getBackupLink(item);
+                window.open(share.url, '_blank');
+            }} />
+        );
+    };
+
 
     const columns: IColumn[] = [
         {
             key: 'Id',
-            fieldName: 'id',
+            fieldName: 'tenant',
             name: 'Id',
             minWidth: 50
         },
         {
             key: 'Name',
-            fieldName: 'name',
+            fieldName: 'file',
             name: 'Name',
             minWidth: 150
         },
         {
-            key: 'Date',
-            fieldName: 'date',
-            name: 'Date',
+            key: 'Application',
+            fieldName: 'application',
+            name: 'Application',
             minWidth: 150
         },
         {
@@ -60,11 +66,14 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     ];
 
     const [selectedItem, setSelectedItem] = useState<IDropdownOption>();
-    console.log(viewModel.tenants);
-    const tenantOptions = viewModel.tenants.map(_ => {
-        return { key: _.name, text: _.name } as IDropdownOption;
-    });
 
+    let tenantOptions: IDropdownOption[] = [];
+    viewModel.applications.forEach(customer => {
+        customer.domains.map(domain => {
+            let name = `${customer.tenant.name}/${domain.name}/`;
+            tenantOptions.push({ key: domain.name, text: name } as IDropdownOption);
+        })
+    })
 
     return (
         <>
@@ -76,7 +85,7 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
                     onChange={(event, item) => {
                         setSelectedItem(item);
                         if (item) {
-                            viewModel.populateBackupsFor(Guid.parse(item.key.toString()));
+                            viewModel.populateBackupsFor(item.key as string);
                         }
                     }} />
                 <DetailsList
