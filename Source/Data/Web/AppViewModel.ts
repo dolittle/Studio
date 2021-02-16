@@ -31,8 +31,8 @@ export class AppViewModel {
             const segments = _.path.split('/').filter(_ => _.length > 0);
             this._applicationId = Guid.parse(segments[1]);
             this._microservice = segments[3];
-            this.tenants = [];
-            this.populateTenants();
+            //this.tenants = [];
+            //this.populateTenants();
             this.backups = [];
         });
     }
@@ -45,25 +45,11 @@ export class AppViewModel {
     }
 
 
-    async populateTenants() {
-        const query = gql`
-            query {
-                allTenantsForMicroservice(applicationId: "${this._applicationId}", microservice: "${this._microservice}") {
-                    id
-                    name
-                }
-            }
-        `;
-
-        const result = await this._dataSource.query<AllTenantsForMicroservice>({ query });
-        this.tenants = result.data.allTenantsForMicroservice;
-    }
-
-    async populateBackupsFor(domainName: string) {
+    async populateBackupsFor(tenant: string, application: string) {
         // Get me the latest
         const query = gql`
             query {
-                allBackupsForListing(domain: "${domainName}") {
+                allBackupsForListing(tenant: "${tenant}" application: "${application}") {
                     tenant
                     application
                     files

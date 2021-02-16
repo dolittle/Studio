@@ -8,10 +8,6 @@ import { DetailsList, Dropdown, IColumn, IconButton, Stack, IDropdownOption } fr
 import { BackupForListing, BackupLink } from './BackupForListing';
 
 
-
-
-
-
 export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     const RenderClipboard = (item: BackupForListing, index?: number, column?: IColumn) => {
         return (
@@ -69,9 +65,19 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
 
     let tenantOptions: IDropdownOption[] = [];
     viewModel.applications.forEach(customer => {
-        customer.domains.map(domain => {
-            let name = `${customer.tenant.name}/${domain.name}/`;
-            tenantOptions.push({ key: domain.name, text: name } as IDropdownOption);
+        customer.applications.map(application => {
+            // TODO remove tenant in time
+            let name = `${customer.tenant.name}/${application.name}/`;
+            //let name = application.name;
+
+            tenantOptions.push({
+                key: application.name,
+                text: name,
+                data:
+                {
+                    tenant: customer.tenant,
+                    application: application
+                } } as IDropdownOption);
         })
     })
 
@@ -79,13 +85,13 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
         <>
             <Stack>
                 <Dropdown
-                    label="Tenant"
+                    label="Applications"
                     options={tenantOptions}
                     selectedKey={selectedItem ? selectedItem.key : undefined}
                     onChange={(event, item) => {
                         setSelectedItem(item);
                         if (item) {
-                            viewModel.populateBackupsFor(item.key as string);
+                            viewModel.populateBackupsFor(item.data.tenant.name, item.data.application.name);
                         }
                     }} />
                 <DetailsList

@@ -20,7 +20,12 @@ export class ApplicationForListingQueries {
 
     @Query((returns) => [ApplicationForListing])
     async allApplicationsForListing(@Ctx() ctx: Context) {
-        let body = await fetchTenants();
+        console.log("ctx.tenantId", ctx.tenantId);
+        if (ctx.tenantId == "") {
+            return [];
+        }
+
+        let body = await fetchApplications(ctx.tenantId);
 
         return body.map(customer => {
             return {
@@ -35,6 +40,25 @@ export class ApplicationForListingQueries {
         });
     }
 }
+
+async function fetchApplications(tenantID: string): Promise<ApplicationForListing[]> {
+    // TODO need an endpoint to get apps by tenantID
+
+    // TODO need to set the path to the download-server
+    const response = await fetch('http://localhost:8080/share/logs/customers', {
+        headers: {
+            'x-secret': 'fake'
+        }
+    });
+
+    // waits until the request completes...
+    if (!response.ok) {
+        return [];
+    }
+
+    let body = await response.json();
+    return body.customers;
+  }
 
 
 async function fetchTenants(): Promise<ApplicationForListing[]> {

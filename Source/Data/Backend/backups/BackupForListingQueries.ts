@@ -17,10 +17,12 @@ export class BackupForListingQueries {
 
     @Query(() => BackupsForApplication)
     async allBackupsForListing(
-        @Arg('domain') domain: string,
+        @Arg('tenant') tenant: string,
+        @Arg('application') application: string,
         @Ctx() context: Context) {
+            console.log("context.tenantId", context.tenantId);
 
-        let response = await fetchBackups(domain);
+        let response = await fetchBackupsByApplication(tenant, application);
         return response as BackupsForApplication;
     }
 
@@ -41,7 +43,23 @@ export class BackupForListingQueries {
     }
 }
 
-async function fetchBackups(domain: string) : Promise<any> {
+async function fetchBackupsByApplication(tenant: string, name: string) : Promise<any> {
+    // TODO need to set the path to the download-server
+    const response = await fetch(`http://localhost:8080/share/logs/latest/by/app/${tenant}/${name}`, {
+        headers: {
+            'x-secret': 'fake'
+        }
+    });
+
+    if (!response.ok) {
+        return {};
+    }
+
+    let body = await response.json();
+    return body;
+}
+
+async function fetchBackupsByDomain(domain: string) : Promise<any> {
     // TODO need to set the path to the download-server
     const response = await fetch(`http://localhost:8080/share/logs/latest/${domain}`, {
         headers: {
@@ -55,7 +73,7 @@ async function fetchBackups(domain: string) : Promise<any> {
 
     let body = await response.json();
     return body;
-  }
+}
 
 
   async function fetchLink(input: BackupLinkShareInput) : Promise<any> {
