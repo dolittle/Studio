@@ -6,20 +6,15 @@ export type DolittleTenant = {
     name: string;
 }
 
-
 export type CustomerApplication = {
+    id: string;
     name: string;
+    environment: string;
 }
-
-
-export type CustomerDomain = {
-    name: string;
-}
-
-
 
 export type ApplicationForListing = {
     tenant: DolittleTenant;
     applications: CustomerApplication[];
-    domains: CustomerApplication[];
 };
+
+

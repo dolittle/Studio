@@ -7,7 +7,7 @@
     },
     "files.exclude": {
         "**/*.scss.d.ts": true,
-        "**/node_modules": true,
+
         "**/.git": true,
         "**/.svn": true,
         "**/.DS_Store": true

@@ -1,11 +1,11 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { DataSource, Navigation, NavigationGroup, IMessenger } from '@dolittle/vanir-web';
+import { DataSource, Navigation, NavigationGroup, NavigationItem, IMessenger } from '@dolittle/vanir-web';
 import { injectable } from 'tsyringe';
 import { ObservableQuery, NetworkStatus } from 'apollo-client';
 import gql from 'graphql-tag';
-import { ApplicationForListing } from './ApplicationForListing';
+import { ApplicationForListing, CustomerApplication } from './ApplicationForListing';
 import { routes } from './routing';
 import { NavigatedTo } from '@dolittle/vanir-web/dist/routing';
 import { RouteInfo } from '@dolittle/vanir-react';
@@ -19,7 +19,7 @@ export class AppViewModel {
     private _microservice: string = '';
 
     private _observableQuery?: ObservableQuery<AllApplicationsForListingQuery>;
-    applications: ApplicationForListing[] = [];
+    applications: ApplicationForListing = <ApplicationForListing>{};
     backups: BackupForListing[] = [];
     tenants: Tenant[] = [];
 
@@ -31,6 +31,7 @@ export class AppViewModel {
             const segments = _.path.split('/').filter(_ => _.length > 0);
             this._applicationId = Guid.parse(segments[1]);
             this._microservice = segments[3];
+            this.applications =<ApplicationForListing>{};
             //this.tenants = [];
             //this.populateTenants();
             this.backups = [];
@@ -45,11 +46,11 @@ export class AppViewModel {
     }
 
 
-    async populateBackupsFor(tenant: string, application: string) {
+    async populateBackupsFor(application: string, environment: string) {
         // Get me the latest
         const query = gql`
             query {
-                allBackupsForListing(tenant: "${tenant}" application: "${application}") {
+                allBackupsForListing(application: "${application}" environment: "${environment}") {
                     tenant
                     application
                     files
@@ -57,8 +58,8 @@ export class AppViewModel {
             }
         `;
 
-        const result = await this._dataSource.query<AllBackupsForListingQuery>({ query });
-
+        const result = await this._dataSource.query<AllBackupsForListingQuery>({ query, fetchPolicy: 'no-cache'});
+        console.log(result);
         let backupApplication  = result.data.allBackupsForListing;
 
         this.backups = backupApplication.files.map<BackupForListing>(file => {
@@ -96,19 +97,22 @@ export class AppViewModel {
             query {
                 allApplicationsForListing {
                     tenant {
+                        id
                         name
                     }
-
                     applications {
+                        id
                         name
-                    }
-
-                    domains {
-                        name
+                        environment
                     }
                 }
             }
         `;
+
+        const result = await this._dataSource.query<AllApplicationsForListingQuery>({ query: query, fetchPolicy: 'no-cache' });
+        this.applications = result.data.allApplicationsForListing;
+        this._populateNavigation();
+        return
 
         this._observableQuery = this._dataSource.watchQuery<AllApplicationsForListingQuery>({
             query,
@@ -116,31 +120,25 @@ export class AppViewModel {
 
         this._observableQuery?.subscribe((next) => {
             if (next.networkStatus === NetworkStatus.ready && next.data) {
+                console.log(next.data);
                 this.applications = next.data.allApplicationsForListing;
-                this.tenants = this.applications.map(customer => {
-                    let tenant: Tenant = {
-                        name: customer.tenant.name,
-                    }
-                    return tenant;
-                });
+                console.log("this.applications", this.applications)
+                //this.tenants = this.applications.map(customer => {
+                //    let tenant: Tenant = {
+                //        name: customer.tenant.name,
+                //    }
+                //    return tenant;
+                //});
                 this._populateNavigation();
             }
         });
     }
 
     private async _populateNavigation() {
-        const navigationItems = this.applications?.map(
-            (app) =>
-            ({
-                name: app.tenant.name,
-                items: app.applications.map((ms) => ({
-                    name: ms.name,
-                    //path: `/applications${routes.microserviceDetails.generate({ applicationId: app.id.toString(), microserviceId: ms.id.toString() })}`
-                })),
-
-            } as NavigationGroup)
-        );
-
+        const navigationItems = [{
+            name: this.applications.tenant.name,
+            items: this.applications.applications as NavigationItem[]
+        } as NavigationGroup];
         this._navigation.set(navigationItems ?? []);
     }
 }
@@ -154,7 +152,7 @@ type AllBackupsForListingQuery = {
 };
 
 type AllApplicationsForListingQuery = {
-    allApplicationsForListing: ApplicationForListing[];
+    allApplicationsForListing: ApplicationForListing;
 };
 
 

@@ -64,21 +64,19 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     const [selectedItem, setSelectedItem] = useState<IDropdownOption>();
 
     let tenantOptions: IDropdownOption[] = [];
-    viewModel.applications.forEach(customer => {
-        customer.applications.map(application => {
-            // TODO remove tenant in time
-            let name = `${customer.tenant.name}/${application.name}/`;
-            //let name = application.name;
+    console.log(viewModel.applications);
+    viewModel.applications?.applications?.map((application, index) => {
+        const tenant = viewModel.applications.tenant;
+            let name = `${application.name} ${application.environment}`;
 
             tenantOptions.push({
-                key: application.name,
+                key: `${application.name}-${application.environment}`,
                 text: name,
                 data:
                 {
-                    tenant: customer.tenant,
+                    tenant: tenant,
                     application: application
                 } } as IDropdownOption);
-        })
     })
 
     return (
@@ -91,7 +89,7 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
                     onChange={(event, item) => {
                         setSelectedItem(item);
                         if (item) {
-                            viewModel.populateBackupsFor(item.data.tenant.name, item.data.application.name);
+                            viewModel.populateBackupsFor(item.data.application.name, item.data.application.environment);
                         }
                     }} />
                 <DetailsList

@@ -9,7 +9,7 @@ import { ILogger } from '@dolittle/vanir-backend';
 import { Context } from '@dolittle/vanir-backend/dist/web';
 
 
-import { ApplicationForListing } from './ApplicationForListing';
+import { ApplicationForListing, DolittleTenant } from './ApplicationForListing';
 
 @injectable()
 @Resolver(ApplicationForListing)
@@ -18,34 +18,22 @@ export class ApplicationForListingQueries {
         private readonly _logger: ILogger,
     ) {}
 
-    @Query((returns) => [ApplicationForListing])
+    @Query((returns) => ApplicationForListing)
     async allApplicationsForListing(@Ctx() ctx: Context) {
         console.log("ctx.tenantId", ctx.tenantId);
         if (ctx.tenantId == "") {
-            return [];
+            return {} as ApplicationForListing;
         }
 
-        let body = await fetchApplications(ctx.tenantId);
-
-        return body.map(customer => {
-            return {
-                "tenant": customer.tenant,
-                "applications": customer.applications.map(application => {
-                    return {"name": application};
-                }),
-                "domains": customer.domains.map(domain => {
-                    return {"name": domain};
-                }),
-            };
-        });
+        let data = await fetchApplications(ctx.tenantId);
+        console.log(data);
+        return data;
     }
 }
 
-async function fetchApplications(tenantID: string): Promise<ApplicationForListing[]> {
-    // TODO need an endpoint to get apps by tenantID
-
+async function fetchApplications(tenantId: string): Promise<ApplicationForListing> {
     // TODO need to set the path to the download-server
-    const response = await fetch('http://localhost:8080/share/logs/customers', {
+    const response = await fetch(`http://localhost:8080/share/logs/applications/${tenantId}`, {
         headers: {
             'x-secret': 'fake'
         }
@@ -53,11 +41,22 @@ async function fetchApplications(tenantID: string): Promise<ApplicationForListin
 
     // waits until the request completes...
     if (!response.ok) {
-        return [];
+        return {} as ApplicationForListing;
     }
 
-    let body = await response.json();
-    return body.customers;
+    let data: ApplicationForListing = await response.json();
+    return data;
+    /*
+    let body: ApplicationForListing = {
+        tenant: {
+            name: data.tenant,
+            id: tenantId,
+        } as DolittleTenant,
+        applications: data.applications,
+    };
+
+    return body;
+    */
   }
 
 

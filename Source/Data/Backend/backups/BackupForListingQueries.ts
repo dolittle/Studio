@@ -17,13 +17,20 @@ export class BackupForListingQueries {
 
     @Query(() => BackupsForApplication)
     async allBackupsForListing(
-        @Arg('tenant') tenant: string,
         @Arg('application') application: string,
-        @Ctx() context: Context) {
-            console.log("context.tenantId", context.tenantId);
+        @Arg('environment') environment: string,
+        @Ctx() ctx: Context) {
 
-        let response = await fetchBackupsByApplication(tenant, application);
-        return response as BackupsForApplication;
+        if (ctx.tenantId == "") {
+            return {} as BackupsForApplication;
+        }
+        let response = await fetchBackupsByApplication(ctx.tenantId, application, environment);
+        console.log(response);
+        return {
+            tenant: response.tenant.name,
+            application: response.application,
+            files: response.files,
+        } as BackupsForApplication;
     }
 
     @Query(() => BackupLink)
@@ -43,9 +50,9 @@ export class BackupForListingQueries {
     }
 }
 
-async function fetchBackupsByApplication(tenant: string, name: string) : Promise<any> {
+async function fetchBackupsByApplication(tenant: string, name: string, environment: string) : Promise<any> {
     // TODO need to set the path to the download-server
-    const response = await fetch(`http://localhost:8080/share/logs/latest/by/app/${tenant}/${name}`, {
+    const response = await fetch(`http://localhost:8080/share/logs/latest/by/app/${tenant}/${name}/${environment}`, {
         headers: {
             'x-secret': 'fake'
         }

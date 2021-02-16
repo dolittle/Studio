@@ -23,7 +23,15 @@ export const DolittleTenantModel = getModelForClass(DolittleTenant);
 export class CustomerApplication {
     @Field()
     @prop()
+    id!: string;
+
+    @Field()
+    @prop()
     name!: string;
+
+    @Field()
+    @prop()
+    environment!: string;
 }
 export const CustomerApplicationModel = getModelForClass(CustomerApplication);
 
@@ -41,10 +49,6 @@ export class ApplicationForListing {
     @Field(() => [CustomerApplication])
     @prop()
     applications!: CustomerApplication[];
-
-    @Field(() => [CustomerDomain])
-    @prop()
-    domains!: CustomerDomain[];
 
     @Field()
     @prop()
