@@ -87,9 +87,9 @@ function createWindow() {
         mainWindow.loadFile('./build/index.html');
     }
 
-    AppCreationGlobal.version = '7.1.4';
+    AppCreationGlobal.version = '8.0.1';
     AppCreationConfig.templatesRootPath = path.resolve(path.join(app.getAppPath(), 'templates', 'app'));
-    MicroserviceCreationGlobal.version = '7.1.4';
+    MicroserviceCreationGlobal.version = '8.0.1';
     MicroserviceCreationConfig.templatesRootPath = path.resolve(path.join(app.getAppPath(), 'templates', 'microservice'));
 
     logger.info(`App templates are located at : '${AppCreationConfig.templatesRootPath}'`);
