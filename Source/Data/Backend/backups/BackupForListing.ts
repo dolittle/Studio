@@ -44,7 +44,7 @@ export const BackupLinkModel = getModelForClass(BackupLink);
 
 
 export type BackupLinkShareInput = {
-    tenant: string;
+    tenant_id: string;
     application: string;
     file_path: string;
 }
