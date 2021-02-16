@@ -18,7 +18,7 @@ export class ConfigmapsController extends Controller {
             {
                 {
                     this._configmaps.push(this.createConfigMap(
-                        'studio-dev-applications-env-variables',
+                        'dev-applications-env-variables',
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
@@ -30,7 +30,7 @@ export class ConfigmapsController extends Controller {
                         }
                         ));
                     this._configmaps.push(this.createConfigMap(
-                        'studio-dev-applications-config-files',
+                        'dev-applications-config-files',
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
@@ -44,7 +44,7 @@ export class ConfigmapsController extends Controller {
                 }
                 {
                     this._configmaps.push(this.createConfigMap(
-                        'studio-dev-events-env-variables',
+                        'dev-events-env-variables',
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
@@ -56,7 +56,7 @@ export class ConfigmapsController extends Controller {
                         }
                         ));
                     this._configmaps.push(this.createConfigMap(
-                        'studio-dev-events-config-files',
+                        'dev-events-config-files',
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
@@ -70,7 +70,7 @@ export class ConfigmapsController extends Controller {
                 }
                 {
                     this._configmaps.push(this.createConfigMap(
-                        'studio-dev-portal-env-variables',
+                        'dev-portal-env-variables',
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
@@ -82,7 +82,7 @@ export class ConfigmapsController extends Controller {
                         }
                         ));
                     this._configmaps.push(this.createConfigMap(
-                        'studio-dev-portal-config-files',
+                        'dev-portal-config-files',
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
@@ -98,7 +98,7 @@ export class ConfigmapsController extends Controller {
             {
                 {
                     this._configmaps.push(this.createConfigMap(
-                        'studio-prod-applications-env-variables',
+                        'prod-applications-env-variables',
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
@@ -110,7 +110,7 @@ export class ConfigmapsController extends Controller {
                         }
                         ));
                     this._configmaps.push(this.createConfigMap(
-                        'studio-prod-applications-config-files',
+                        'prod-applications-config-files',
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
@@ -124,7 +124,7 @@ export class ConfigmapsController extends Controller {
                 }
                 {
                     this._configmaps.push(this.createConfigMap(
-                        'studio-prod-events-env-variables',
+                        'prod-events-env-variables',
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
@@ -136,7 +136,7 @@ export class ConfigmapsController extends Controller {
                         }
                         ));
                     this._configmaps.push(this.createConfigMap(
-                        'studio-prod-events-config-files',
+                        'prod-events-config-files',
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
@@ -150,7 +150,7 @@ export class ConfigmapsController extends Controller {
                 }
                 {
                     this._configmaps.push(this.createConfigMap(
-                        'studio-prod-portal-env-variables',
+                        'prod-portal-env-variables',
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',
@@ -162,7 +162,7 @@ export class ConfigmapsController extends Controller {
                         }
                         ));
                     this._configmaps.push(this.createConfigMap(
-                        'studio-prod-portal-config-files',
+                        'prod-portal-config-files',
                         'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                         {
                             tenant: 'Dolittle',

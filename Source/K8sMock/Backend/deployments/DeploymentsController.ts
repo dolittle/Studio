@@ -17,7 +17,7 @@ export class DeploymentsController extends Controller {
         {
             {
                 this._deployments.push(this.createDeployment(
-                    'studio-dev-applications',
+                    'dev-applications',
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
@@ -29,7 +29,7 @@ export class DeploymentsController extends Controller {
                     'dolittle/runtime:5.1.2'
                     ));
                 this._deployments.push(this.createDeployment(
-                    'studio-dev-events',
+                    'dev-events',
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
@@ -41,7 +41,7 @@ export class DeploymentsController extends Controller {
                     'dolittle/runtime:5.1.4'
                     ));
                 this._deployments.push(this.createDeployment(
-                    'studio-dev-portal',
+                    'dev-portal',
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
@@ -55,7 +55,7 @@ export class DeploymentsController extends Controller {
             }
             {
                 this._deployments.push(this.createDeployment(
-                    'studio-prod-applications',
+                    'prod-applications',
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
@@ -67,7 +67,7 @@ export class DeploymentsController extends Controller {
                     'dolittle/runtime:5.1.2'
                     ));
                 this._deployments.push(this.createDeployment(
-                    'studio-prod-events',
+                    'prod-events',
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',
@@ -79,7 +79,7 @@ export class DeploymentsController extends Controller {
                     'dolittle/runtime:5.1.2'
                     ));
                 this._deployments.push(this.createDeployment(
-                    'studio-prod-portal',
+                    'prod-portal',
                     'application-853ebea1-1e6b-4fee-9855-10d1df5cad1e',
                     {
                         tenant: 'Dolittle',

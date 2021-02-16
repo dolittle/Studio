@@ -2,7 +2,7 @@ name: Prod - Events - Deploy
 
 env:
   SOURCE_PATH: 'Source/Events'
-  DEPLOYMENT_NAME: 'studio-prod-events'
+  DEPLOYMENT_NAME: 'prod-events'
   DOCKER_IMAGE_TAG: 'dolittle/studio/events'
   DOCKER_FILE: 'Source/Events/Backend/Dockerfile'
 
