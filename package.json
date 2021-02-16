@@ -3,9 +3,8 @@
     "workspaces": [
         "Source/**/*"
     ],
-    "dependencies": {
-    },
-    "devDependencies": {
-    },
-    "license": "MIT"
+    "dependencies": {},
+    "devDependencies": {},
+    "license": "MIT",
+    "version": "0.0.0"
 }
