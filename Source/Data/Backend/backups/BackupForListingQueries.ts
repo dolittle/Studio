@@ -1,6 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import fetch from 'node-fetch'
+import fetch from 'node-fetch';
 import { Query, Ctx, Arg } from 'type-graphql';
 import { injectable } from 'tsyringe';
 import { ILogger } from '@dolittle/vanir-backend';
@@ -23,14 +23,14 @@ export class BackupForListingQueries {
         @Arg('environment') environment: string,
         @Ctx() ctx: Context) {
 
-        if (ctx.tenantId == "") {
+        if (ctx.tenantId === '') {
             return {} as BackupsForApplication;
         }
-        let response = await fetchBackupsByApplication(ctx.tenantId, application, environment);
+        const response = await fetchBackupsByApplication(ctx.tenantId, application, environment);
 
         return {
             tenant: response.tenant.name,
-            environment: environment,
+            environment,
             application: response.application,
             files: response.files,
         } as BackupsForApplication;
@@ -40,26 +40,26 @@ export class BackupForListingQueries {
     async getBackupLink(
         @Arg('application') application: string,
         @Arg('environment') environment: string,
-        @Arg('file_path') file_path: string,
+        @Arg('file_path') filePath: string,
         @Ctx() ctx: Context) {
 
-        if (ctx.tenantId == "") {
+        if (ctx.tenantId === '') {
             return {} as BackupLink;
         }
 
-        let input: BackupLinkShareInput = {
+        const input: BackupLinkShareInput = {
             tenant_id: ctx.tenantId,
             environment,
             application,
-            file_path,
-        }
+            file_path: filePath,
+        };
 
-        let response = await fetchLink(input);
+        const response = await fetchLink(input);
         return response as BackupLink;
     }
 }
 
-async function fetchBackupsByApplication(tenant: string, name: string, environment: string) : Promise<any> {
+async function fetchBackupsByApplication(tenant: string, name: string, environment: string): Promise<any> {
     const response = await fetch(`${getPlatformDownloadServerBasePath()}/logs/latest/by/app/${tenant}/${name}/${environment}`, {
         headers: {
             'x-secret': 'fake'
@@ -70,13 +70,13 @@ async function fetchBackupsByApplication(tenant: string, name: string, environme
         return {};
     }
 
-    let body = await response.json();
+    const body = await response.json();
     return body;
 }
 
-async function fetchLink(input: BackupLinkShareInput) : Promise<any> {
+async function fetchLink(input: BackupLinkShareInput): Promise<any> {
     const response = await fetch(`${getPlatformDownloadServerBasePath()}/logs/link`, {
-        method: "POST",
+        method: 'POST',
         headers: {
             'x-secret': 'fake',
             'Content-Type': 'application/json'
@@ -90,6 +90,6 @@ async function fetchLink(input: BackupLinkShareInput) : Promise<any> {
         return {};
     }
 
-    let body = await response.json();
+    const body = await response.json();
     return body;
 }

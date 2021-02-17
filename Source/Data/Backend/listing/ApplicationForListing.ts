@@ -4,8 +4,6 @@
 import { Field, ObjectType } from 'type-graphql';
 import { prop, getModelForClass } from '@typegoose/typegoose';
 
-
-
 @ObjectType()
 export class DolittleTenant {
     @Field()

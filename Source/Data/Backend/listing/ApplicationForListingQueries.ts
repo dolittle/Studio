@@ -1,6 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import fetch from 'node-fetch'
+import fetch from 'node-fetch';
 
 import { injectable } from 'tsyringe';
 import { Query, Resolver, Ctx } from 'type-graphql';
@@ -21,12 +21,11 @@ export class ApplicationForListingQueries {
 
     @Query((returns) => ApplicationForListing)
     async allApplicationsForListing(@Ctx() ctx: Context) {
-        console.log("ctx.tenantId", ctx.tenantId);
-        if (ctx.tenantId == "") {
+        if (ctx.tenantId === '') {
             return {} as ApplicationForListing;
         }
 
-        let data = await fetchApplications(ctx.tenantId);
+        const data = await fetchApplications(ctx.tenantId);
         return data;
     }
 }
@@ -44,7 +43,7 @@ async function fetchApplications(tenantId: string): Promise<ApplicationForListin
         return {} as ApplicationForListing;
     }
 
-    let data: ApplicationForListing = await response.json();
+    const data: ApplicationForListing = await response.json();
     return data;
   }
 
@@ -62,6 +61,6 @@ async function fetchTenants(): Promise<ApplicationForListing[]> {
         return [];
     }
 
-    let body = await response.json();
+    const body = await response.json();
     return body.customers;
   }

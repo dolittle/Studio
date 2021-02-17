@@ -3,15 +3,15 @@
 
 import { DataSource, Navigation, NavigationGroup, NavigationItem, IMessenger } from '@dolittle/vanir-web';
 import { injectable } from 'tsyringe';
-import { ObservableQuery, NetworkStatus } from 'apollo-client';
+
 import gql from 'graphql-tag';
-import { ApplicationForListing, CustomerApplication } from './ApplicationForListing';
-import { routes } from './routing';
+import { ApplicationForListing } from './ApplicationForListing';
+
 import { NavigatedTo } from '@dolittle/vanir-web/dist/routing';
 import { RouteInfo } from '@dolittle/vanir-react';
-import { Guid } from '@dolittle/rudiments';
+
 import { BackupLink, BackupsForApplication, BackupForListing } from './BackupForListing';
-import { Tenant } from './Tenant';
+
 
 @injectable()
 export class AppViewModel {

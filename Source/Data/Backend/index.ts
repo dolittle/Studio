@@ -13,7 +13,7 @@ const swaggerDoc = require('./swagger.json');
         swaggerDoc,
         graphQLResolvers: queries,
         dolittleCallback: (client) => {
-            console.log("Hello");
+            console.log('Hello');
         },
         expressCallback: (app) => {
             RegisterRoutes(app);

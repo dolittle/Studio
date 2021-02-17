@@ -52,5 +52,5 @@ export type BackupLinkShareInput = {
     application: string;
     environment: string;
     file_path: string;
-}
+};
 
