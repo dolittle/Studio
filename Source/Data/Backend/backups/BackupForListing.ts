@@ -14,6 +14,10 @@ export class BackupsForApplication {
     @prop()
     application!: string;
 
+    @Field()
+    @prop()
+    environment!: string;
+
     @Field(() => [String])
     @prop()
     files!: string[];

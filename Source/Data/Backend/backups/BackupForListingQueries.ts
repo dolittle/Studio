@@ -30,6 +30,7 @@ export class BackupForListingQueries {
 
         return {
             tenant: response.tenant.name,
+            environment: environment,
             application: response.application,
             files: response.files,
         } as BackupsForApplication;

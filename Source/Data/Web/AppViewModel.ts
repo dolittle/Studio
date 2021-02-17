@@ -45,6 +45,7 @@ export class AppViewModel {
                 allBackupsForListing(application: "${application}" environment: "${environment}") {
                     tenant
                     application
+                    environment
                     files
                 }
             }
