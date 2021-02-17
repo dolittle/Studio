@@ -29,7 +29,7 @@
     },
     "dependencies": {
         "@shared/backend": "1.0.0",
-        "@kubernetes/client-node": "^0.13.0"
+        "@kubernetes/client-node": "0.13.0"
     },
     "devDependencies": {
     }
