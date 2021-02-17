@@ -17,14 +17,19 @@ export class BackupForListingQueries {
         private readonly _logger: ILogger) {
     }
 
-    @Query(() => BackupsForApplication)
+    @Query((returns) => BackupsForApplication)
     async allBackupsForListing(
         @Arg('application') application: string,
         @Arg('environment') environment: string,
-        @Ctx() ctx: Context) {
+        @Ctx() ctx: Context): Promise<BackupsForApplication> {
 
         if (ctx.tenantId === '') {
-            return {} as BackupsForApplication;
+            return {
+                tenant: '',
+                environment: '',
+                application: '',
+                files: []
+            };
         }
         const response = await fetchBackupsByApplication(ctx.tenantId, application, environment);
 
@@ -33,18 +38,23 @@ export class BackupForListingQueries {
             environment,
             application: response.application,
             files: response.files,
-        } as BackupsForApplication;
+        };
     }
 
-    @Query(() => BackupLink)
+    @Query((returns) => BackupLink)
     async getBackupLink(
         @Arg('application') application: string,
         @Arg('environment') environment: string,
         @Arg('file_path') filePath: string,
-        @Ctx() ctx: Context) {
+        @Ctx() ctx: Context): Promise<BackupLink>  {
 
         if (ctx.tenantId === '') {
-            return {} as BackupLink;
+            return {
+                tenant: '',
+                application: '',
+                expire: '',
+                url: ''
+            };
         }
 
         const input: BackupLinkShareInput = {
