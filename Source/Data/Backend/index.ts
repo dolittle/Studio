@@ -12,6 +12,9 @@ const swaggerDoc = require('./swagger.json');
     await Host.start({
         swaggerDoc,
         graphQLResolvers: queries,
+        dolittleCallback: (client) => {
+            console.log("Hello");
+        },
         expressCallback: (app) => {
             RegisterRoutes(app);
         }

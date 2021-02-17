@@ -10,6 +10,7 @@ import { Context } from '@dolittle/vanir-backend/dist/web';
 
 
 import { ApplicationForListing, DolittleTenant } from './ApplicationForListing';
+import { getPlatformDownloadServerBasePath } from '../environment';
 
 @injectable()
 @Resolver(ApplicationForListing)
@@ -33,7 +34,7 @@ export class ApplicationForListingQueries {
 
 async function fetchApplications(tenantId: string): Promise<ApplicationForListing> {
     // TODO need to set the path to the download-server
-    const response = await fetch(`http://localhost:8080/share/logs/applications/${tenantId}`, {
+    const response = await fetch(`${getPlatformDownloadServerBasePath()}/logs/applications/${tenantId}`, {
         headers: {
             'x-secret': 'fake'
         }
@@ -62,7 +63,7 @@ async function fetchApplications(tenantId: string): Promise<ApplicationForListin
 
 async function fetchTenants(): Promise<ApplicationForListing[]> {
     // TODO need to set the path to the download-server
-    const response = await fetch('http://localhost:8080/share/logs/customers', {
+    const response = await fetch(`${getPlatformDownloadServerBasePath()}/logs/customers`, {
         headers: {
             'x-secret': 'fake'
         }

@@ -6,6 +6,8 @@ import { injectable } from 'tsyringe';
 import { ILogger } from '@dolittle/vanir-backend';
 import { Context } from '@dolittle/vanir-backend/dist/web';
 import { BackupsForApplication, BackupLink, BackupLinkShareInput } from './BackupForListing';
+import { getPlatformDownloadServerBasePath } from '../environment';
+
 // TODO @Gøran ctx provides the tenantID ctx.tenantId
 
 @injectable()
@@ -57,6 +59,7 @@ export class BackupForListingQueries {
 
 async function fetchBackupsByApplication(tenant: string, name: string, environment: string) : Promise<any> {
     // TODO need to set the path to the download-server
+    getPlatformDownloadServerBasePath
     const response = await fetch(`http://localhost:8080/share/logs/latest/by/app/${tenant}/${name}/${environment}`, {
         headers: {
             'x-secret': 'fake'
@@ -72,8 +75,7 @@ async function fetchBackupsByApplication(tenant: string, name: string, environme
 }
 
 async function fetchLink(input: BackupLinkShareInput) : Promise<any> {
-    // TODO need to set the path to the download-server
-    const response = await fetch(`http://localhost:8080/share/logs/link`, {
+    const response = await fetch(`${getPlatformDownloadServerBasePath()}/logs/link`, {
         method: "POST",
         headers: {
             'x-secret': 'fake',
