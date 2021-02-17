@@ -7,7 +7,7 @@ export type BackupsForApplication = {
     environment: string;
     application: string;
     files: string[];
-}
+};
 
 
 export type BackupForListing = {
@@ -16,7 +16,7 @@ export type BackupForListing = {
     application: string;
     file: string;
     when: string;
-}
+};
 
 
 export type BackupLink = {
@@ -24,5 +24,5 @@ export type BackupLink = {
     application: string;
     url: string;
     expire: string;
-}
+};
 

@@ -52,17 +52,17 @@ export class AppViewModel {
         `;
 
         const result = await this._dataSource.query<AllBackupsForListingQuery>({ query, fetchPolicy: 'no-cache'});
-        let backupApplication  = result.data.allBackupsForListing;
+        const backupApplication  = result.data.allBackupsForListing;
 
         this.backups = backupApplication.files.map<BackupForListing>(file => {
-            let parts = file.split("/");
-            let when:string = parts[parts.length-1].replace(".gz.mongodump", "");
+            const parts = file.split('/');
+            const when: string = parts[parts.length-1].replace('.gz.mongodump', '');
 
             return {
                 tenant: backupApplication.tenant,
                 application: backupApplication.application,
                 environment: backupApplication.environment,
-                file: file,
+                file,
                 when,
             };
         });
@@ -102,7 +102,7 @@ export class AppViewModel {
             }
         `;
 
-        const result = await this._dataSource.query<AllApplicationsForListingQuery>({ query: query, fetchPolicy: 'no-cache' });
+        const result = await this._dataSource.query<AllApplicationsForListingQuery>({ query, fetchPolicy: 'no-cache' });
         this.applications = result.data.allApplicationsForListing;
         this._populateNavigation();
     }

@@ -12,7 +12,7 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     const RenderClipboard = (item: BackupForListing, index?: number, column?: IColumn) => {
         return (
             <IconButton iconProps={{ iconName: 'PasteAsText' }} onClick={async () => {
-                let share:BackupLink = await viewModel.getBackupLink(item);
+                const share: BackupLink = await viewModel.getBackupLink(item);
                 navigator.clipboard.writeText(share.url);
             }} />
         );
@@ -21,7 +21,7 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     const RenderDownload = (item: BackupForListing, index?: number, column?: IColumn) => {
         return (
             <IconButton iconProps={{ iconName: 'Download' }} onClick={async  () => {
-                let share:BackupLink = await viewModel.getBackupLink(item);
+                const share: BackupLink = await viewModel.getBackupLink(item);
                 window.open(share.url, '_blank');
             }} />
         );
@@ -63,21 +63,21 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
 
     const [selectedItem, setSelectedItem] = useState<IDropdownOption>();
 
-    let tenantOptions: IDropdownOption[] = [];
+    const tenantOptions: IDropdownOption[] = [];
     console.log(viewModel.applications);
     viewModel.applications?.applications?.map((application, index) => {
         const tenant = viewModel.applications.tenant;
-            let name = `${application.name} ${application.environment}`;
+            const name = `${application.name} ${application.environment}`;
 
             tenantOptions.push({
                 key: `${application.name}-${application.environment}`,
                 text: name,
                 data:
                 {
-                    tenant: tenant,
-                    application: application
+                    tenant,
+                    application
                 } } as IDropdownOption);
-    })
+    });
 
     return (
         <>
