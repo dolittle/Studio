@@ -4,6 +4,7 @@
 
 export type BackupsForApplication = {
     tenant: string;
+    environment: string;
     application: string;
     files: string[];
 }
@@ -11,6 +12,7 @@ export type BackupsForApplication = {
 
 export type BackupForListing = {
     tenant: string;
+    environment: string;
     application: string;
     file: string;
     when: string;

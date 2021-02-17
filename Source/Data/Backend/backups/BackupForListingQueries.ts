@@ -37,8 +37,8 @@ export class BackupForListingQueries {
 
     @Query(() => BackupLink)
     async getBackupLink(
-        @Arg('tenant') tenant: string,
         @Arg('application') application: string,
+        @Arg('environment') environment: string,
         @Arg('file_path') file_path: string,
         @Ctx() ctx: Context) {
 
@@ -48,19 +48,18 @@ export class BackupForListingQueries {
 
         let input: BackupLinkShareInput = {
             tenant_id: ctx.tenantId,
+            environment,
             application,
             file_path,
         }
-        // TODO user tenantId
+
         let response = await fetchLink(input);
         return response as BackupLink;
     }
 }
 
 async function fetchBackupsByApplication(tenant: string, name: string, environment: string) : Promise<any> {
-    // TODO need to set the path to the download-server
-    getPlatformDownloadServerBasePath
-    const response = await fetch(`http://localhost:8080/share/logs/latest/by/app/${tenant}/${name}/${environment}`, {
+    const response = await fetch(`${getPlatformDownloadServerBasePath()}/logs/latest/by/app/${tenant}/${name}/${environment}`, {
         headers: {
             'x-secret': 'fake'
         }
@@ -84,9 +83,9 @@ async function fetchLink(input: BackupLinkShareInput) : Promise<any> {
         body: JSON.stringify(input),
     });
 
-    console.log(response);
-
     if (!response.ok) {
+        console.log(input);
+        console.log(response);
         return {};
     }
 

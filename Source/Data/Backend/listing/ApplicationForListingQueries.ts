@@ -9,7 +9,7 @@ import { ILogger } from '@dolittle/vanir-backend';
 import { Context } from '@dolittle/vanir-backend/dist/web';
 
 
-import { ApplicationForListing, DolittleTenant } from './ApplicationForListing';
+import { ApplicationForListing } from './ApplicationForListing';
 import { getPlatformDownloadServerBasePath } from '../environment';
 
 @injectable()
@@ -27,7 +27,6 @@ export class ApplicationForListingQueries {
         }
 
         let data = await fetchApplications(ctx.tenantId);
-        console.log(data);
         return data;
     }
 }
@@ -47,17 +46,6 @@ async function fetchApplications(tenantId: string): Promise<ApplicationForListin
 
     let data: ApplicationForListing = await response.json();
     return data;
-    /*
-    let body: ApplicationForListing = {
-        tenant: {
-            name: data.tenant,
-            id: tenantId,
-        } as DolittleTenant,
-        applications: data.applications,
-    };
-
-    return body;
-    */
   }
 
 

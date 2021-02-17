@@ -15,25 +15,17 @@ import { Tenant } from './Tenant';
 
 @injectable()
 export class AppViewModel {
-    private _applicationId: Guid = Guid.empty;
-    private _microservice: string = '';
-
-    private _observableQuery?: ObservableQuery<AllApplicationsForListingQuery>;
+    // TODO change this name
     applications: ApplicationForListing = <ApplicationForListing>{};
     backups: BackupForListing[] = [];
-    tenants: Tenant[] = [];
 
     constructor(
         private readonly _navigation: Navigation,
         private readonly _messenger: IMessenger,
         private readonly _dataSource: DataSource) {
         _messenger.subscribeTo(NavigatedTo, _ => {
-            const segments = _.path.split('/').filter(_ => _.length > 0);
-            this._applicationId = Guid.parse(segments[1]);
-            this._microservice = segments[3];
+            // TODO removed code about uri filtering for no
             this.applications =<ApplicationForListing>{};
-            //this.tenants = [];
-            //this.populateTenants();
             this.backups = [];
         });
     }
@@ -59,7 +51,6 @@ export class AppViewModel {
         `;
 
         const result = await this._dataSource.query<AllBackupsForListingQuery>({ query, fetchPolicy: 'no-cache'});
-        console.log(result);
         let backupApplication  = result.data.allBackupsForListing;
 
         this.backups = backupApplication.files.map<BackupForListing>(file => {
@@ -69,6 +60,7 @@ export class AppViewModel {
             return {
                 tenant: backupApplication.tenant,
                 application: backupApplication.application,
+                environment: backupApplication.environment,
                 file: file,
                 when,
             };
@@ -79,7 +71,7 @@ export class AppViewModel {
         // Get me the latest
         const query = gql`
             query {
-                getBackupLink(tenant: "${input.tenant}" application: "${input.application}" file_path: "${input.file}") {
+                getBackupLink(application: "${input.application}" environment: "${input.environment}" file_path: "${input.file}") {
                     tenant
                     application
                     url
@@ -112,26 +104,6 @@ export class AppViewModel {
         const result = await this._dataSource.query<AllApplicationsForListingQuery>({ query: query, fetchPolicy: 'no-cache' });
         this.applications = result.data.allApplicationsForListing;
         this._populateNavigation();
-        return
-
-        this._observableQuery = this._dataSource.watchQuery<AllApplicationsForListingQuery>({
-            query,
-        });
-
-        this._observableQuery?.subscribe((next) => {
-            if (next.networkStatus === NetworkStatus.ready && next.data) {
-                console.log(next.data);
-                this.applications = next.data.allApplicationsForListing;
-                console.log("this.applications", this.applications)
-                //this.tenants = this.applications.map(customer => {
-                //    let tenant: Tenant = {
-                //        name: customer.tenant.name,
-                //    }
-                //    return tenant;
-                //});
-                this._populateNavigation();
-            }
-        });
     }
 
     private async _populateNavigation() {
@@ -142,10 +114,6 @@ export class AppViewModel {
         this._navigation.set(navigationItems ?? []);
     }
 }
-
-type AllTenantsForMicroservice = {
-    allTenantsForMicroservice: Tenant[];
-};
 
 type AllBackupsForListingQuery = {
     allBackupsForListing: BackupsForApplication;
