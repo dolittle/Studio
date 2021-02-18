@@ -65,7 +65,7 @@ jobs:
       with:
           creds: '${{ secrets.AZURE_CREDENTIALS }}'
           resource-group: "Infrastructure-Essential"
-          cluster-name: "Cluster-Production-Two"
+          cluster-name: "Cluster-Production-Three"
 
     - name: 'Deploy to Development'
       run: |
