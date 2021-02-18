@@ -8,7 +8,6 @@ import gql from 'graphql-tag';
 import { ApplicationForListing } from './ApplicationForListing';
 
 import { NavigatedTo } from '@dolittle/vanir-web/dist/routing';
-import { RouteInfo } from '@dolittle/vanir-react';
 
 import { BackupLink, BackupsForApplication, BackupForListing } from './BackupForListing';
 
@@ -117,7 +116,6 @@ type AllBackupsForListingQuery = {
 type AllApplicationsForListingQuery = {
     allApplicationsForListing: ApplicationForListing;
 };
-
 
 type GetBackupLinkQuery = {
     getBackupLink: BackupLink;
