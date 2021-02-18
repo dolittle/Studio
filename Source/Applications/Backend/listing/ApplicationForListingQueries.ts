@@ -18,7 +18,7 @@ export class ApplicationForListingQueries {
         private readonly _logger: ILogger,
         private readonly _applicationNamespaces: IApplicationNamespaces,
         private readonly _microserviceResources: IMicroserviceResources
-    ) {}
+    ) { }
 
     @Query((returns) => [ApplicationForListing])
     async allApplicationsForListing(@Ctx() ctx: Context) {

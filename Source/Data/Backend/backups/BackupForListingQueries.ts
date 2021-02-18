@@ -6,7 +6,7 @@ import { injectable } from 'tsyringe';
 import { ILogger } from '@dolittle/vanir-backend';
 import { Context } from '@dolittle/vanir-backend/dist/web';
 import { BackupsForApplication, BackupLink, BackupLinkShareInput } from './BackupForListing';
-import { getPlatformDownloadServerBasePath } from '../environment';
+import { fetchBackupsByApplication, fetchLink } from './api';
 @injectable()
 export class BackupForListingQueries {
 
@@ -66,37 +66,3 @@ export class BackupForListingQueries {
     }
 }
 
-async function fetchBackupsByApplication(tenant: string, name: string, environment: string): Promise<any> {
-    const response = await fetch(`${getPlatformDownloadServerBasePath()}/logs/latest/by/app/${tenant}/${name}/${environment}`, {
-        headers: {
-            'x-secret': 'fake'
-        }
-    });
-
-    if (!response.ok) {
-        return {};
-    }
-
-    const body = await response.json();
-    return body;
-}
-
-async function fetchLink(input: BackupLinkShareInput): Promise<any> {
-    const response = await fetch(`${getPlatformDownloadServerBasePath()}/logs/link`, {
-        method: 'POST',
-        headers: {
-            'x-secret': 'fake',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(input),
-    });
-
-    if (!response.ok) {
-        console.log(input);
-        console.log(response);
-        return {};
-    }
-
-    const body = await response.json();
-    return body;
-}

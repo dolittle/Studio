@@ -16,7 +16,6 @@ export class DolittleTenant {
 }
 export const DolittleTenantModel = getModelForClass(DolittleTenant);
 
-
 @ObjectType()
 export class CustomerApplication {
     @Field()
@@ -40,7 +39,6 @@ export class CustomerDomain {
     name!: string;
 }
 export const CustomerDomainModel = getModelForClass(CustomerDomain);
-
 
 @ObjectType()
 export class ApplicationForListing {

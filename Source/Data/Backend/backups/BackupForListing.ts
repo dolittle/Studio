@@ -25,7 +25,6 @@ export class BackupsForApplication {
 }
 export const BackupsForApplicationModel = getModelForClass(BackupsForApplication);
 
-
 @ObjectType()
 export class BackupLink {
     @Field()
@@ -45,7 +44,6 @@ export class BackupLink {
     expire!: string;
 }
 export const BackupLinkModel = getModelForClass(BackupLink);
-
 
 export type BackupLinkShareInput = {
     tenant_id: string;
