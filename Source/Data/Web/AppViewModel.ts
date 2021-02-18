@@ -12,7 +12,6 @@ import { RouteInfo } from '@dolittle/vanir-react';
 
 import { BackupLink, BackupsForApplication, BackupForListing } from './BackupForListing';
 
-
 @injectable()
 export class AppViewModel {
     // TODO change this name
@@ -24,8 +23,7 @@ export class AppViewModel {
         private readonly _messenger: IMessenger,
         private readonly _dataSource: DataSource) {
         _messenger.subscribeTo(NavigatedTo, _ => {
-            // TODO removed code about uri filtering for no
-            this.applications =<ApplicationForListing>{};
+            this.applications = <ApplicationForListing>{};
             this.backups = [];
         });
     }
@@ -33,10 +31,6 @@ export class AppViewModel {
     attached() {
         this.getApplicationList();
     }
-
-    routeChanged(routeInfo: RouteInfo) {
-    }
-
 
     async populateBackupsFor(application: string, environment: string) {
         // Get me the latest
@@ -51,12 +45,12 @@ export class AppViewModel {
             }
         `;
 
-        const result = await this._dataSource.query<AllBackupsForListingQuery>({ query, fetchPolicy: 'no-cache'});
-        const backupApplication  = result.data.allBackupsForListing;
+        const result = await this._dataSource.query<AllBackupsForListingQuery>({ query, fetchPolicy: 'no-cache' });
+        const backupApplication = result.data.allBackupsForListing;
 
         this.backups = backupApplication.files.map<BackupForListing>(file => {
             const parts = file.split('/');
-            const when: string = parts[parts.length-1].replace('.gz.mongodump', '');
+            const when: string = parts[parts.length - 1].replace('.gz.mongodump', '');
 
             return {
                 tenant: backupApplication.tenant,
@@ -68,7 +62,7 @@ export class AppViewModel {
         });
     }
 
-    async getBackupLink(input: BackupForListing): Promise<BackupLink>{
+    async getBackupLink(input: BackupForListing): Promise<BackupLink> {
         // Get me the latest
         const query = gql`
             query {
@@ -82,7 +76,7 @@ export class AppViewModel {
         `;
 
         const result = await this._dataSource.query<GetBackupLinkQuery>({ query });
-        return  result.data.getBackupLink;
+        return result.data.getBackupLink;
     }
 
     private async getApplicationList() {

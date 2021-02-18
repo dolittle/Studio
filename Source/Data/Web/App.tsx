@@ -20,13 +20,12 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
 
     const RenderDownload = (item: BackupForListing, index?: number, column?: IColumn) => {
         return (
-            <IconButton iconProps={{ iconName: 'Download' }} onClick={async  () => {
+            <IconButton iconProps={{ iconName: 'Download' }} onClick={async () => {
                 const share: BackupLink = await viewModel.getBackupLink(item);
                 window.open(share.url, '_blank');
             }} />
         );
     };
-
 
     const columns: IColumn[] = [
         {
@@ -64,19 +63,19 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
     const [selectedItem, setSelectedItem] = useState<IDropdownOption>();
 
     const tenantOptions: IDropdownOption[] = [];
-    console.log(viewModel.applications);
     viewModel.applications?.applications?.map((application, index) => {
         const tenant = viewModel.applications.tenant;
-            const name = `${application.name} ${application.environment}`;
+        const name = `${application.name} ${application.environment}`;
 
-            tenantOptions.push({
-                key: `${application.name}-${application.environment}`,
-                text: name,
-                data:
-                {
-                    tenant,
-                    application
-                } } as IDropdownOption);
+        tenantOptions.push({
+            key: `${application.name}-${application.environment}`,
+            text: name,
+            data:
+            {
+                tenant,
+                application
+            }
+        } as IDropdownOption);
     });
 
     return (

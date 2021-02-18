@@ -16,5 +16,3 @@ export type ApplicationForListing = {
     tenant: DolittleTenant;
     applications: CustomerApplication[];
 };
-
-

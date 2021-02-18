@@ -7,9 +7,6 @@ import { ILogger } from '@dolittle/vanir-backend';
 import { Context } from '@dolittle/vanir-backend/dist/web';
 import { BackupsForApplication, BackupLink, BackupLinkShareInput } from './BackupForListing';
 import { getPlatformDownloadServerBasePath } from '../environment';
-
-// TODO @Gøran ctx provides the tenantID ctx.tenantId
-
 @injectable()
 export class BackupForListingQueries {
 
@@ -46,7 +43,7 @@ export class BackupForListingQueries {
         @Arg('application') application: string,
         @Arg('environment') environment: string,
         @Arg('file_path') filePath: string,
-        @Ctx() ctx: Context): Promise<BackupLink>  {
+        @Ctx() ctx: Context): Promise<BackupLink> {
 
         if (ctx.tenantId === '') {
             return {
