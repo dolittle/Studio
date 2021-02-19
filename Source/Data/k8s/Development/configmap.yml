@@ -5,7 +5,7 @@ metadata:
   annotations:
     dolittle.io/tenant-id: 508c1745-5f2a-4b4c-b7a5-2fbb1484346d
     dolittle.io/application-id: fe7736bb-57fc-4166-bb91-6954f4dd4eb7
-    dolittle.io/microservice-id: 05a823dd-0f0d-4157-bc46-14834cca3cd2
+    dolittle.io/microservice-id: 7d2433e2-84a1-b84b-a098-5bf52f985e5a
   labels:
     tenant: Dolittle
     application: Studio
@@ -30,7 +30,7 @@ metadata:
   annotations:
     dolittle.io/tenant-id: 508c1745-5f2a-4b4c-b7a5-2fbb1484346d
     dolittle.io/application-id: fe7736bb-57fc-4166-bb91-6954f4dd4eb7
-    dolittle.io/microservice-id: 05a823dd-0f0d-4157-bc46-14834cca3cd2
+    dolittle.io/microservice-id: 7d2433e2-84a1-b84b-a098-5bf52f985e5a
   labels:
     tenant: Dolittle
     application: Studio

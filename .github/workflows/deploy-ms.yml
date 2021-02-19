@@ -65,8 +65,8 @@ jobs:
       with:
           creds: '${{ secrets.AZURE_CREDENTIALS }}'
           resource-group: "Infrastructure-Essential"
-          cluster-name: "Cluster-Production-Two"
+          cluster-name: "Cluster-Production-Three"
 
     - name: 'Deploy to Development'
       run: |
-        kubectl patch --namespace application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7 deployment ${{ github.event.inputs.deployment }} -p '{"spec": { "template": {"metadata": { "labels": { "date": "'`date +'%s'`'" } }, "spec": { "containers": [{ "name":"head", "image": "${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:'"${{ github.event.inputs.version }}"'"}] }}}}'
+        kubectl patch --namespace application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7 deployment ${{ github.event.inputs.deployment }} -p '{"spec": { "template": { "spec": { "containers": [{ "name":"head", "image": "${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:'"${{ github.event.inputs.version }}"'"}] }}}}'
