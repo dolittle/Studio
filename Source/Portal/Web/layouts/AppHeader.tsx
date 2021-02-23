@@ -39,6 +39,9 @@ export const AppHeader = () => {
             { key: 'profile', text: 'Profile', iconProps: { iconName: 'Contact' } },
             { key: 'divider', itemType: ContextualMenuItemType.Divider },
             { key: 'versions', text: 'Versions', iconProps: { iconName: 'Info' }, onClick: toggleHideDialog },
+            { key: 'change.tenant', text: 'Change Tenant', iconProps: { iconName: 'Info' }, onClick: (event) => {
+                window.location.href = '/.auth/cookies/initiate';
+            } },
         ]
     } as IContextualMenuProps;
 
