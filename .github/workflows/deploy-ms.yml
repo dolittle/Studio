@@ -41,9 +41,15 @@ jobs:
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
 
+    - name: Login to ACR
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.CONTAINER_REGISTRY }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+
     - name: Build & push the Docker image
       run: |
-        echo ${{ secrets.REGISTRY_PASSWORD }} | docker login -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin ${{ env.CONTAINER_REGISTRY }}
         docker build . --file ${{ github.event.inputs.dockerfile }} --tag ${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:${{ github.event.inputs.version }}
         docker push ${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:${{ github.event.inputs.version }}
 
