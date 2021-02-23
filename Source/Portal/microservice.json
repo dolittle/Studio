@@ -1,8 +1,8 @@
 {
   "id": "590696bc-1c4e-4a14-b621-c2125713a974",
   "name": "Portal",
-  "version": "1.0.0-development.19",
-  "commit": "fdf88446e7e154250cae97ab9148ba596d06f63a",
-  "built": "2021-02-12T10:37:11.660Z",
+  "version": "1.0.0-development.20",
+  "commit": "a6901b12ff02937842d87d929b2fe726c82a11fb",
+  "built": "2021-02-23T09:16:23.463Z",
   "web": true
 }
