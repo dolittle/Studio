@@ -1,6 +1,5 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import fetch from 'node-fetch';
 import { Query, Ctx, Arg } from 'type-graphql';
 import { injectable } from 'tsyringe';
 import { ILogger } from '@dolittle/vanir-backend';

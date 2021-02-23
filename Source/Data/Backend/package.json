@@ -31,8 +31,6 @@
         "ext": "ts"
     },
     "devDependencies": {
-        "@apollo/client": "^3.3.11",
-        "graphql": "^15.4.0",
         "node-fetch": "^2.6.1"
     }
 }
