@@ -1,12 +1,18 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { Guid } from '@dolittle/rudiments';
-import { MicroserviceForListing } from './MicroserviceForListing';
 
-export type ApplicationForListing = {
-    id: Guid;
+export type DolittleTenant = {
+    id: string;
     name: string;
-    microservices: MicroserviceForListing[];
 };
 
+export type CustomerApplication = {
+    id: string;
+    name: string;
+    environment: string;
+};
 
+export type ApplicationForListing = {
+    tenant: DolittleTenant;
+    applications: CustomerApplication[];
+};

@@ -1,38 +1,28 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { DataSource, Navigation, NavigationGroup, IMessenger } from '@dolittle/vanir-web';
+import { DataSource, Navigation, NavigationGroup, NavigationItem, IMessenger } from '@dolittle/vanir-web';
 import { injectable } from 'tsyringe';
-import { ObservableQuery, NetworkStatus } from 'apollo-client';
+
 import gql from 'graphql-tag';
 import { ApplicationForListing } from './ApplicationForListing';
-import { routes } from './routing';
+
 import { NavigatedTo } from '@dolittle/vanir-web/dist/routing';
-import { RouteInfo } from '@dolittle/vanir-react';
-import { Guid } from '@dolittle/rudiments';
-import { BackupForListing } from './BackupForListing';
-import { Tenant } from './Tenant';
+
+import { BackupLink, BackupsForApplication, BackupForListing } from './BackupForListing';
 
 @injectable()
 export class AppViewModel {
-    private _applicationId: Guid = Guid.empty;
-    private _microservice: string = '';
-
-    private _observableQuery?: ObservableQuery<AllApplicationsForListingQuery>;
-    applications: ApplicationForListing[] = [];
+    // TODO change this name
+    applications: ApplicationForListing = <ApplicationForListing>{};
     backups: BackupForListing[] = [];
-    tenants: Tenant[] = [];
 
     constructor(
         private readonly _navigation: Navigation,
         private readonly _messenger: IMessenger,
         private readonly _dataSource: DataSource) {
         _messenger.subscribeTo(NavigatedTo, _ => {
-            const segments = _.path.split('/').filter(_ => _.length > 0);
-            this._applicationId = Guid.parse(segments[1]);
-            this._microservice = segments[3];
-            this.tenants = [];
-            this.populateTenants();
+            this.applications = <ApplicationForListing>{};
             this.backups = [];
         });
     }
@@ -41,93 +31,94 @@ export class AppViewModel {
         this.getApplicationList();
     }
 
-    routeChanged(routeInfo: RouteInfo) {
-    }
-
-
-    async populateTenants() {
+    async populateBackupsFor(application: string, environment: string) {
+        // Get me the latest
         const query = gql`
             query {
-                allTenantsForMicroservice(applicationId: "${this._applicationId}", microservice: "${this._microservice}") {
-                    id
-                    name
+                allBackupsForListing(application: "${application}" environment: "${environment}") {
+                    tenant
+                    application
+                    environment
+                    files
                 }
             }
         `;
 
-        const result = await this._dataSource.query<AllTenantsForMicroservice>({ query });
-        this.tenants = result.data.allTenantsForMicroservice;
+        const result = await this._dataSource.query<AllBackupsForListingQuery>({ query, fetchPolicy: 'no-cache' });
+        const backupApplication = result.data.allBackupsForListing;
+
+        this.backups = backupApplication.files.map<BackupForListing>(file => {
+            const parts = file.split('/');
+            const when: string = parts[parts.length - 1].replace('.gz.mongodump', '');
+
+            return {
+                tenant: backupApplication.tenant,
+                application: backupApplication.application,
+                environment: backupApplication.environment,
+                file,
+                when,
+            };
+        });
     }
 
-    async populateBackupsFor(tenantId: Guid) {
+    async getBackupLink(input: BackupForListing): Promise<BackupLink> {
+        // Get me the latest
         const query = gql`
             query {
-                allBackupsForListing(applicationId: "${this._applicationId}", microservice: "${this._microservice}", tenantId: "${tenantId}") {
-                    id
-                    name
-                    date
-                    applicationId
-                    microservice
+                getBackupLink(application: "${input.application}" environment: "${input.environment}" file_path: "${input.file}") {
+                    tenant
+                    application
+                    url
+                    expire
                 }
             }
         `;
 
-        const result = await this._dataSource.query<AllBackupsForListingQuery>({ query });
-        this.backups = result.data.allBackupsForListing;
+        const result = await this._dataSource.query<GetBackupLinkQuery>({ query });
+        return result.data.getBackupLink;
     }
-
 
     private async getApplicationList() {
         const query = gql`
             query {
                 allApplicationsForListing {
-                    id
-                    name
-                    microservices {
+                    tenant {
                         id
                         name
+                    }
+                    applications {
+                        id
+                        name
+                        environment
                     }
                 }
             }
         `;
 
-        this._observableQuery = this._dataSource.watchQuery<AllApplicationsForListingQuery>({
-            query,
-        });
-
-        this._observableQuery?.subscribe((next) => {
-            if (next.networkStatus === NetworkStatus.ready && next.data) {
-                this.applications = next.data.allApplicationsForListing;
-                this._populateNavigation();
-            }
-        });
+        const result = await this._dataSource.query<AllApplicationsForListingQuery>({ query, fetchPolicy: 'no-cache' });
+        this.applications = result.data.allApplicationsForListing;
+        this._populateNavigation();
     }
 
     private async _populateNavigation() {
-        const navigationItems = this.applications?.map(
-            (app) =>
-            ({
-                name: app.name,
-                items: app.microservices.map((ms) => ({
-                    name: ms.name,
-                    path: `/applications${routes.microserviceDetails.generate({ applicationId: app.id.toString(), microserviceId: ms.id.toString() })}`
-                })),
-
-            } as NavigationGroup)
-        );
-
+        const navigationItems = [{
+            name: this.applications.tenant.name,
+            items: this.applications.applications as NavigationItem[]
+        } as NavigationGroup];
         this._navigation.set(navigationItems ?? []);
     }
 }
 
-type AllTenantsForMicroservice = {
-    allTenantsForMicroservice: Tenant[];
-};
-
 type AllBackupsForListingQuery = {
-    allBackupsForListing: BackupForListing[];
+    allBackupsForListing: BackupsForApplication;
 };
 
 type AllApplicationsForListingQuery = {
-    allApplicationsForListing: ApplicationForListing[];
+    allApplicationsForListing: ApplicationForListing;
 };
+
+type GetBackupLinkQuery = {
+    getBackupLink: BackupLink;
+};
+
+

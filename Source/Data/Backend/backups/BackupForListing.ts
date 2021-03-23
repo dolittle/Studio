@@ -2,29 +2,53 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { Field, ObjectType } from 'type-graphql';
-import { guid } from '@dolittle/vanir-backend/dist/data';
-import { Guid } from '@dolittle/rudiments';
+import { prop, getModelForClass } from '@typegoose/typegoose';
 
 @ObjectType()
-export class BackupForListing {
+export class BackupsForApplication {
     @Field()
-    id?: Guid;
+    @prop()
+    tenant!: string;
 
     @Field()
-    @guid()
-    applicationId!: Guid;
+    @prop()
+    application!: string;
 
     @Field()
-    microservice!: string;
+    @prop()
+    environment!: string;
 
-    @Field()
-    tenantId!: Guid;
+    @Field(() => [String])
+    @prop()
+    files!: string[];
 
-    @Field()
-    name!: string;
-
-    @Field()
-    date!: Date;
 }
+export const BackupsForApplicationModel = getModelForClass(BackupsForApplication);
 
+@ObjectType()
+export class BackupLink {
+    @Field()
+    @prop()
+    tenant!: string;
+
+    @Field()
+    @prop()
+    application!: string;
+
+    @Field()
+    @prop()
+    url!: string;
+
+    @Field()
+    @prop()
+    expire!: string;
+}
+export const BackupLinkModel = getModelForClass(BackupLink);
+
+export type BackupLinkShareInput = {
+    tenant_id: string;
+    application: string;
+    environment: string;
+    file_path: string;
+};
 
