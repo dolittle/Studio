@@ -1,8 +1,8 @@
 {
   "name": "Applications",
   "id": "05a823dd-0f0d-4157-bc46-14834cca3cd2",
-  "version": "1.0.0-development.19",
-  "commit": "fdf88446e7e154250cae97ab9148ba596d06f63a",
-  "built": "2021-02-12T10:35:41.503Z",
+  "version": "1.0.0-development.20",
+  "commit": "faeb9aa032c80168a9d9d3763ac5082b9ee46b06",
+  "built": "2021-03-23T14:59:22.594Z",
   "web": true
 }
