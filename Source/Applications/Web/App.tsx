@@ -65,12 +65,12 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
                     exact
                     path={routes.applicationDetails.route}
                     render={(
-                        routeProps: RouteComponentProps<{ applicationId: string }>
+                        routeProps: any
                     ) => (
                         <ApplicationDetails
                             applicationForListing={resolveApplication(
                                 viewModel.applications,
-                                routeProps.match.params.applicationId
+                                routeProps.match.params.applicationId!
                             )}
                             {...routeProps.match.params}
                         />
@@ -79,12 +79,12 @@ export const App = withViewModel(AppViewModel, ({ viewModel }) => {
                 <MicroserviceRoute
                     exact
                     path={routes.microserviceDetails.route}
-                    render={(routeProps) => (
+                    render={(routeProps: any) => (
                         <MicroserviceDetails
                             microserviceForListing={resolveMicroservice(
-                                viewModel.applications,
-                                routeProps.match.params.applicationId,
-                                routeProps.match.params.microserviceId
+                                viewModel.applications!,
+                                routeProps.match.params.applicationId!,
+                                routeProps.match.params.microserviceId!
                             )}
                             {...routeProps.match.params}
                         />
