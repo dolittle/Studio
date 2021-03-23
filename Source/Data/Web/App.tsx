@@ -1,5 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// A sneaky comment to trigger a build
 
 import React, { useState } from 'react';
 import { AppViewModel } from './AppViewModel';
