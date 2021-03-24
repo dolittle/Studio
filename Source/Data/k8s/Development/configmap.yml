@@ -22,6 +22,7 @@ data:
   DOLITTLE_RUNTIME_HOST: "localhost"
   DOLITTLE__RUNTIME_PORT: "50053"
   PORT: "80"
+  PLATFORM_DOWNLOAD_SERVER_BASE_PATH: http://dev-download-backup-v1.system-data-backups.svc.cluster.local:8080/share
 
 ---
 apiVersion: v1
