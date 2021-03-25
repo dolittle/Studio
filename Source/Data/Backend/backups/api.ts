@@ -2,14 +2,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import fetch from 'node-fetch';
 
-import { getPlatformDownloadServerBasePath } from '../environment';
+import { getPlatformDownloadServerBasePath, getPlatformDownloadServerHeaderSecret } from '../environment';
 import { ApplicationForListing } from './ApplicationForListing';
 import { BackupLinkShareInput } from './BackupForListing';
 
 export async function fetchBackupsByApplication(tenant: string, name: string, environment: string): Promise<any> {
     const response = await fetch(`${getPlatformDownloadServerBasePath()}/logs/latest/by/app/${tenant}/${name}/${environment}`, {
         headers: {
-            'x-secret': 'fake'
+            'x-secret': getPlatformDownloadServerHeaderSecret(),
         }
     });
 
@@ -25,7 +25,7 @@ export async function fetchLink(input: BackupLinkShareInput): Promise<any> {
     const response = await fetch(`${getPlatformDownloadServerBasePath()}/logs/link`, {
         method: 'POST',
         headers: {
-            'x-secret': 'fake',
+            'x-secret': getPlatformDownloadServerHeaderSecret(),
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(input),
@@ -44,7 +44,7 @@ export async function fetchLink(input: BackupLinkShareInput): Promise<any> {
 export async function fetchApplications(tenantId: string): Promise<ApplicationForListing> {
     const response = await fetch(`${getPlatformDownloadServerBasePath()}/logs/applications/${tenantId}`, {
         headers: {
-            'x-secret': 'fake'
+            'x-secret': getPlatformDownloadServerHeaderSecret(),
         }
     });
 
