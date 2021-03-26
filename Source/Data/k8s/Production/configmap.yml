@@ -15,14 +15,14 @@ metadata:
   namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
 data:
   NODE_ENV: "production"
-  DATABASE_HOST: "prod-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
-  DATABASE_NAME: "read_models_data"
-  EVENTSTORE_HOST: "prod-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
-  EVENTSTORE_NAME: "event_store_data"
+  DATABASE__HOST: "prod-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
+  DATABASE__NAME: "read_models_data"
+  EVENTSTORE__HOST: "prod-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
+  EVENTSTORE__NAME: "event_store_data"
   DOLITTLE_RUNTIME_HOST: "localhost"
-  DOLITTLE_RUNTIME_PORT: "50053"
+  DOLITTLE__RUNTIME_PORT: "50053"
   PORT: "80"
-
+  PLATFORM_DOWNLOAD_SERVER_BASE_PATH: http://prod-download-backup-v1.system-data-backups.svc.cluster.local:8080/share
 ---
 apiVersion: v1
 kind: ConfigMap
