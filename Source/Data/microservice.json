@@ -1,8 +1,8 @@
 {
   "id": "7d2433e2-84a1-b84b-a098-5bf52f985e5a",
   "name": "Data",
-  "version": "1.0.0-development.4",
-  "commit": "e6c60f13efda77e040738242b687400336a549e5",
-  "built": "2021-03-26T10:43:12.674Z",
+  "version": "1.0.0",
+  "commit": "6a1119e4f2aa1b04d699feb9b16aedd1fcd722fc",
+  "built": "2021-03-26T13:12:06.743Z",
   "web": true
 }
