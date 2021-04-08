@@ -9,9 +9,9 @@ for line in $LINES; do
     kill -9 $(lsof -ti tcp:$backendPort) >/dev/null 2>&1
 done
 
-ps aux | grep 'yarn start:dev' | awk  '{print $2}' | xargs kill -9 >/dev/null 2>&1
-ps aux | grep 'nodemon' | awk  '{print $2}' | xargs kill -9 >/dev/null 2>&1
 ps aux | grep 'Studio/node_modules' | awk  '{print $2}' | xargs kill -9 >/dev/null 2>&1
+ps aux | grep 'yarn start:dev' | awk  '{print $2}' | xargs kill -9 >/dev/null 2>&1
+ps aux | grep 'webpack' | awk  '{print $2}' | xargs kill -9 >/dev/null 2>&1
 
 for app in Portal Applications Events Data; do
     cd $ROOT_PWD
