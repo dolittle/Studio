@@ -5,5 +5,5 @@ import React from 'react';
 import { ToolbarItemProps } from './ToolbarItemProps';
 
 export const ToolbarItem = (props: ToolbarItemProps) => {
-    return (<></>)
+    return (<></>);
 };

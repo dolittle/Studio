@@ -28,7 +28,7 @@ export class ToolbarViewModel {
                 props.icon,
                 props.onClick
             );
-        })
+        });
 
         this._toolbarItems.setItems(toolbarItems);
     }
