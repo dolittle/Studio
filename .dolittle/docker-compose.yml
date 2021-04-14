@@ -20,7 +20,7 @@ services:
   studio-runtime-portal:
     labels:
       - dolittle="fe7736bb-57fc-4166-bb91-6954f4dd4eb7"
-    image: dolittle/runtime:5.3.2
+    image: dolittle/runtime:5.5.0
     volumes:
       - ./Portal/resources.json:/app/.dolittle/resources.json
       - ./tenants.json:/app/.dolittle/tenants.json
@@ -34,7 +34,7 @@ services:
   studio-runtime-applications:
     labels:
       - dolittle="fe7736bb-57fc-4166-bb91-6954f4dd4eb7"
-    image: dolittle/runtime:5.3.2
+    image: dolittle/runtime:5.5.0
     volumes:
       - ./Applications/resources.json:/app/.dolittle/resources.json
       - ./tenants.json:/app/.dolittle/tenants.json
@@ -48,7 +48,7 @@ services:
   studio-runtime-events:
     labels:
       - dolittle="fe7736bb-57fc-4166-bb91-6954f4dd4eb7"
-    image: dolittle/runtime:5.3.2
+    image: dolittle/runtime:5.5.0
     volumes:
       - ./Events/resources.json:/app/.dolittle/resources.json
       - ./tenants.json:/app/.dolittle/tenants.json
@@ -62,7 +62,7 @@ services:
   studio-runtime-k8s:
     labels:
       - dolittle="fe7736bb-57fc-4166-bb91-6954f4dd4eb7"
-    image: dolittle/runtime:5.3.2
+    image: dolittle/runtime:5.5.0
     volumes:
       - ./K8s/resources.json:/app/.dolittle/resources.json
       - ./tenants.json:/app/.dolittle/tenants.json
@@ -76,7 +76,7 @@ services:
   studio-runtime-data:
     labels:
       - dolittle="fe7736bb-57fc-4166-bb91-6954f4dd4eb7"
-    image: dolittle/runtime:5.3.2
+    image: dolittle/runtime:5.5.0
     volumes:
       - ./Data/resources.json:/app/.dolittle/resources.json
       - ./tenants.json:/app/.dolittle/tenants.json
