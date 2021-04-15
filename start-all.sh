@@ -12,6 +12,7 @@ done
 ps aux | grep 'Studio/node_modules' | awk  '{print $2}' | xargs kill -9 >/dev/null 2>&1
 ps aux | grep 'yarn start:dev' | awk  '{print $2}' | xargs kill -9 >/dev/null 2>&1
 ps aux | grep 'webpack' | awk  '{print $2}' | xargs kill -9 >/dev/null 2>&1
+exit
 
 for app in Portal Applications Events Data; do
     cd $ROOT_PWD
