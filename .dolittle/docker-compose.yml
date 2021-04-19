@@ -97,7 +97,7 @@ services:
       - ./microservices.json:/app/.dolittle/microservices.json
       - ./appsettings.json:/app/appsettings.json
     ports:
-      - 9705:9700
+      - 9706:9700
       - 50062:50052
       - 50063:50053
 
