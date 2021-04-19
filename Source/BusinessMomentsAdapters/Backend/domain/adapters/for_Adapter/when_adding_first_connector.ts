@@ -8,7 +8,7 @@ import { ConnectorTypes } from '../../../concepts';
 import { ConnectorAddedToAdapter } from '../../../events/adapters';
 
 describe('when adding first connector', () => {
-    const name = 'Some Adapter';
+    const name = 'Some Connector';
     const connectorId = Guid.parse('a60bd940-7a3f-417d-bf2d-8126513fe3fc');
     const adapter = new Adapter(EventSourceId.from('46e44f22-1e76-4110-8b1d-d088cd3a1481'));
     adapter.addConnector(name, connectorId, ConnectorTypes.WebHook);

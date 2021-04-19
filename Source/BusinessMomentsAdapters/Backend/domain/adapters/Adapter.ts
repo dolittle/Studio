@@ -7,9 +7,8 @@ import { Guid } from '@dolittle/rudiments';
 import { ConnectorAddedToAdapter } from '../../events/adapters';
 import { BrokenRule } from '@dolittle/vanir-backend';
 
-const ConnectorWithNameAlreadyExists =
+export const ConnectorWithNameAlreadyExists =
     BrokenRule.create('ConnectorWithNameAlreadyExists', 'Connector with name "{name}" already exists on adapter "{adapter}"');
-
 
 @aggregateRoot('08dfe483-0b6a-40e1-95b7-1b3c7ccaf187')
 export class Adapter extends AggregateRoot {
