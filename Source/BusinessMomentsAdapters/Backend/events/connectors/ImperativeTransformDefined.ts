@@ -3,7 +3,7 @@
 
 import { eventType } from '@dolittle/sdk.events';
 
-@eventType('944a702b-302c-4856-89bc-f6830a8464ae')
-export class EmbedDefined {
+@eventType('3fb0d59b-0128-4fe7-9eaf-0fef7d9990d8')
+export class ImperativeTransformDefined {
     constructor(readonly code: string) { }
 }

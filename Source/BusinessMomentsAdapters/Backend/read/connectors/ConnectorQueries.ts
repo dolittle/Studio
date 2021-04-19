@@ -3,12 +3,18 @@
 
 import { Resolver, Query } from 'type-graphql';
 import { Connector } from './Connector';
+import { IMongoDatabase } from '@dolittle/vanir-backend';
+import { injectable } from 'tsyringe';
 
 @Resolver()
+@injectable()
 export class ConnectorQueries {
+
+    constructor(private readonly _mongoDatabase: IMongoDatabase) { }
 
     @Query(() => [Connector])
     async allConnectors(): Promise<Connector[]> {
-        return [];
+        const collection = await this._mongoDatabase.collection(Connector);
+        return collection.find().toArray();
     }
 }

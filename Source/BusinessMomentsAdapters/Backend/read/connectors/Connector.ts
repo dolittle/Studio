@@ -10,6 +10,12 @@ export class Connector {
     _id!: string;
 
     @Field()
-    embedCode!: string;
+    imperativeEmbed!: string;
+
+    @Field()
+    imperativeTransform!: string;
+
+    @Field()
+    imperativeProjection!: string;
 }
 

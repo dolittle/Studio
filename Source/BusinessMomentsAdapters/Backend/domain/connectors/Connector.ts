@@ -3,7 +3,9 @@
 
 import { AggregateRoot, aggregateRoot } from '@dolittle/sdk.aggregates';
 import { EventSourceId } from '@dolittle/sdk.events';
-import { EmbedDefined } from '../../events/connectors/EmbedDefined';
+import { ImperativeEmbedDefined } from '../../events/connectors/ImperativeEmbedDefined';
+import { ImperativeTransformDefined } from '../../events/connectors/ImperativeTransformDefined';
+import { ImperativeProjectionDefined } from '../../events/connectors/ImperativeProjectionDefined';
 
 @aggregateRoot('32d9629e-5484-45b2-848a-77c4bb1db0f8')
 export class Connector extends AggregateRoot {
@@ -12,7 +14,15 @@ export class Connector extends AggregateRoot {
     }
 
     defineEmbed(code: string): void {
-        this.apply(new EmbedDefined(code));
+        this.apply(new ImperativeEmbedDefined(code));
+    }
+
+    defineTransform(code: string): void {
+        this.apply(new ImperativeTransformDefined(code));
+    }
+
+    defineProjection(code: string): void {
+        this.apply(new ImperativeProjectionDefined(code));
     }
 }
 

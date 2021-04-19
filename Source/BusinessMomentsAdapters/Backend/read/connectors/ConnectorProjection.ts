@@ -3,14 +3,20 @@
 
 import { IProjectionFor, ProjectionBuilder, projectionFor } from '@dolittle/projections';
 import { Connector } from './Connector';
-import { EmbedDefined } from '../../events/connectors/EmbedDefined';
+import { ImperativeEmbedDefined, ImperativeTransformDefined, ImperativeProjectionDefined } from '../../events/connectors';
 
-@projectionFor(Connector, 'cbc63948-c388-4984-8d55-cbba21fb7b74')
+@projectionFor(Connector, '71b9ae96-c130-4bee-a84e-df12c3b7420f')
 export class ConnectorProjection implements IProjectionFor<Connector> {
     define(projectionBuilder: ProjectionBuilder<Connector>): void {
         projectionBuilder
             .configureModel(_ => _.withName('connectors'))
-            .from(EmbedDefined, _ => _
-                .set(c => c.embedCode).to(ev => ev.code));
+            .from(ImperativeEmbedDefined, _ => _
+                .set(c => c.imperativeEmbed).to(ev => ev.code))
+            .from(ImperativeTransformDefined, _ => _
+                .set(c => c.imperativeTransform).to(ev => ev.code))
+            .from(ImperativeProjectionDefined, _ => _
+                .set(c => c.imperativeProjection).to(ev => ev.code))
+            ;
+
     }
 }

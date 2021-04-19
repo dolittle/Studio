@@ -5,8 +5,9 @@ import { InputType, Field } from 'type-graphql';
 import { Guid } from '@dolittle/rudiments';
 import { MinLength } from 'class-validator';
 
-@InputType({ description: 'This defines an embed for a connector' })
-export class DefineEmbed {
+
+@InputType({ description: 'This defines a transform for a connector' })
+export class DefineTransform {
     @Field()
     connectorId!: Guid;
 
@@ -14,6 +15,3 @@ export class DefineEmbed {
     @MinLength(1)
     code!: string;
 }
-
-
-
