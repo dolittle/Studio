@@ -6,8 +6,15 @@ import { Host } from '@dolittle/vanir-backend';
 import { RegisterRoutes } from './routes';
 const swaggerDoc = require('./swagger.json');
 
+import * as ConnectorsDomain from './domain/connectors';
+import * as ConnectorsRead from './read/connectors';
+
 (async () => {
     await Host.start({
+        graphQLResolvers: [
+            ...ConnectorsDomain.CommandHandlers,
+            ...ConnectorsRead.Queries
+        ],
         swaggerDoc,
         expressCallback: (app) => {
             RegisterRoutes(app);
