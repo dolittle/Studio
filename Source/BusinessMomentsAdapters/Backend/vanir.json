@@ -1,0 +1,18 @@
+{
+    "microserviceId": "ca0c6b3b-c1a5-7a46-bebd-c50ff8167309",
+    "isRooted": false,
+    "routeSegment": "businessmomentsadapters",
+    "port": 3002,
+    "publicPath": "./public",
+    "dolittle": {
+        "runtime": {
+            "port": 50057
+        }
+    },
+    "database": {
+        "name": "read_models_businessmomentsadapters"
+    },
+    "eventstore": {
+        "name": "event_store_businessmomentsadapters"
+    }
+}
