@@ -5,8 +5,8 @@ const webpack = require('@dolittle/vanir-webpack/frontend');
 module.exports = (env, argv) => {
     return webpack(env, argv, '/_/businessmomentsadapters', config => {
         config.devServer.proxy = {
-            '/_/businessmomentsadapters/graphql': 'http://localhost:3000',
-            '/api': 'http://localhost:3000'
+            '/_/businessmomentsadapters/graphql': 'http://localhost:3006',
+            '/api': 'http://localhost:3006'
         };
-    }, 9000, 'Studio');
+    }, 9006, 'Studio');
 };
