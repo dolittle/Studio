@@ -6,6 +6,9 @@ import { Host } from '@dolittle/vanir-backend';
 import { RegisterRoutes } from './routes';
 const swaggerDoc = require('./swagger.json');
 
+import * as AdaptersDomain from './domain/adapters';
+import * as AdaptersEvents from './events/adapters';
+
 import * as ConnectorsDomain from './domain/connectors';
 import * as ConnectorsRead from './read/connectors';
 import * as ConnectorsEvents from './events/connectors';
@@ -13,10 +16,12 @@ import * as ConnectorsEvents from './events/connectors';
 (async () => {
     await Host.start({
         graphQLResolvers: [
+            ...AdaptersDomain.CommandHandlers,
             ...ConnectorsDomain.CommandHandlers,
             ...ConnectorsRead.Queries
         ],
         eventTypes: [
+            ...AdaptersEvents.Events,
             ...ConnectorsEvents.Events
         ],
         swaggerDoc,
