@@ -3,9 +3,11 @@
 
 import { ConnectorQueries } from './ConnectorQueries';
 import { ConnectorProjection } from './ConnectorProjection';
+import { ConnectorTypeQueries } from './ConnectorTypeQueries';
 
 export const Queries = [
-    ConnectorQueries
+    ConnectorQueries,
+    ConnectorTypeQueries
 ];
 
 export const Projections = [
