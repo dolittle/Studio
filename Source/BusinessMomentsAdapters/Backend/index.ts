@@ -8,12 +8,16 @@ const swaggerDoc = require('./swagger.json');
 
 import * as ConnectorsDomain from './domain/connectors';
 import * as ConnectorsRead from './read/connectors';
+import * as ConnectorsEvents from './events/connectors';
 
 (async () => {
     await Host.start({
         graphQLResolvers: [
             ...ConnectorsDomain.CommandHandlers,
             ...ConnectorsRead.Queries
+        ],
+        eventTypes: [
+            ...ConnectorsEvents.Events
         ],
         swaggerDoc,
         expressCallback: (app) => {
