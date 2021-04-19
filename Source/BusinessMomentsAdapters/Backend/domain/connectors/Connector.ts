@@ -3,6 +3,7 @@
 
 import { AggregateRoot, aggregateRoot } from '@dolittle/sdk.aggregates';
 import { EventSourceId } from '@dolittle/sdk.events';
+import { EmbedDefined } from '../../events/connectors/EmbedDefined';
 
 @aggregateRoot('32d9629e-5484-45b2-848a-77c4bb1db0f8')
 export class Connector extends AggregateRoot {
@@ -11,6 +12,8 @@ export class Connector extends AggregateRoot {
     }
 
     defineEmbed(code: string): void {
-        console.log(`Hello from the connector - ${code} !! `);
+        this.apply(new EmbedDefined(code));
     }
 }
+
+
