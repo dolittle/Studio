@@ -9,6 +9,9 @@ export class Miner {
     _id!: string;
 
     @Field()
+    name!: string;
+
+    @Field()
     imperativeEmbed!: string;
 }
 
