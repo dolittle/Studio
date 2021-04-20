@@ -3,6 +3,7 @@
 
 import { InputType, Field } from 'type-graphql';
 import { Guid } from '@dolittle/rudiments';
+import { MinLength } from 'class-validator';
 
 
 @InputType()
@@ -14,5 +15,6 @@ export class AddMinerToConnector {
     minerId!: Guid;
 
     @Field()
+    @MinLength(1)
     name!: string;
 }
