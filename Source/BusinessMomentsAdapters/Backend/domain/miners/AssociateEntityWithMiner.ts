@@ -3,17 +3,12 @@
 
 import { InputType, Field } from 'type-graphql';
 import { Guid } from '@dolittle/rudiments';
-import { MinLength } from 'class-validator';
 
-@InputType({ description: 'This defines an embed for a connector' })
-export class DefineEmbed {
+@InputType()
+export class AssociateEntityWithMiner {
     @Field()
-    connectorId!: Guid;
+    minerId!: Guid;
 
     @Field()
-    @MinLength(1)
-    code!: string;
+    entityId!: Guid;
 }
-
-
-

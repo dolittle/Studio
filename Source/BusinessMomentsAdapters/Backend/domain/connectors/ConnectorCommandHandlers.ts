@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { Arg, Resolver, Mutation } from 'type-graphql';
-import { DefineEmbed } from './DefineEmbed';
+import { DefineEmbed } from '../miners/DefineEmbed';
 import { IAggregate } from '@dolittle/vanir-backend';
 import { injectable } from 'tsyringe';
 import { Connector } from './Connector';

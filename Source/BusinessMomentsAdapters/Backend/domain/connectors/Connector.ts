@@ -7,6 +7,7 @@ import { ImperativeEmbedDefined } from '../../events/connectors/ImperativeEmbedD
 import { ImperativeTransformDefined } from '../../events/connectors/ImperativeTransformDefined';
 import { ImperativeProjectionDefined } from '../../events/connectors/ImperativeProjectionDefined';
 
+
 @aggregateRoot('32d9629e-5484-45b2-848a-77c4bb1db0f8')
 export class Connector extends AggregateRoot {
     constructor(eventSourceId: EventSourceId) {
