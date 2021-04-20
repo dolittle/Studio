@@ -10,19 +10,34 @@ import * as AdaptersDomain from './domain/adapters';
 import * as AdaptersEvents from './events/adapters';
 
 import * as ConnectorsDomain from './domain/connectors';
-import * as ConnectorsRead from './read/connectors';
 import * as ConnectorsEvents from './events/connectors';
+import * as ConnectorsRead from './read/connectors';
+
+import * as EntitiesDomain from './domain/entities';
+import * as EntitiesEvents from './events/entities';
+import * as EntitiesRead from './read/entities';
+
+import * as MinersDomain from './domain/miners';
+import * as MinersEvents from './events/miners';
+import * as MinersRead from './read/miners';
+
 
 (async () => {
     await Host.start({
         graphQLResolvers: [
             ...AdaptersDomain.CommandHandlers,
             ...ConnectorsDomain.CommandHandlers,
-            ...ConnectorsRead.Queries
+            ...ConnectorsRead.Queries,
+            ...EntitiesDomain.CommandHandlers,
+            ...EntitiesRead.Queries,
+            ...MinersDomain.CommandHandlers,
+            ...MinersRead.Queries
         ],
         eventTypes: [
             ...AdaptersEvents.Events,
-            ...ConnectorsEvents.Events
+            ...ConnectorsEvents.Events,
+            ...EntitiesEvents.Events,
+            ...MinersEvents.Events
         ],
         swaggerDoc,
         expressCallback: (app) => {

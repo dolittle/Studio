@@ -4,17 +4,11 @@
 import { ObjectType, Field } from 'type-graphql';
 
 @ObjectType()
-export class Connector {
+export class Miner {
     @Field()
     _id!: string;
 
     @Field()
-    name!: string;
-
-    @Field()
-    adapterId!: string;
-
-    @Field()
-    connectorTypeId!: string;
+    imperativeEmbed!: string;
 }
 

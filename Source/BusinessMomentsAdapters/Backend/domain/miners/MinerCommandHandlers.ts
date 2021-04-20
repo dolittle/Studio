@@ -5,10 +5,20 @@ import { Arg, Resolver, Mutation } from 'type-graphql';
 import { AssociateEntityWithMiner } from './AssociateEntityWithMiner';
 import { IAggregate } from '@dolittle/vanir-backend';
 import { Miner } from './Miner';
+import { DefineEmbed } from './DefineEmbed';
+import { injectable } from 'tsyringe';
 
 @Resolver()
+@injectable()
 export class MinerCommandHandlers {
     constructor(private readonly _aggregate: IAggregate) { }
+
+    @Mutation(() => Boolean)
+    async defineEmbed(@Arg('command') command: DefineEmbed): Promise<boolean> {
+        const connector = await this._aggregate.of(Miner, command.minerId);
+        await connector.perform(_ => _.defineEmbed(command.code));
+        return true;
+    }
 
     @Mutation(() => Boolean)
     async associateEntityWithMiner(@Arg('command') command: AssociateEntityWithMiner): Promise<boolean> {

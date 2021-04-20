@@ -8,7 +8,7 @@ import { MinLength } from 'class-validator';
 @InputType({ description: 'This defines a projection for a connector' })
 export class DefineProjection {
     @Field()
-    connectorId!: Guid;
+    entityId!: Guid;
 
     @Field()
     @MinLength(1)

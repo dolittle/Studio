@@ -3,6 +3,7 @@
 
 import { AggregateRoot, aggregateRoot } from '@dolittle/sdk.aggregates';
 import { Guid } from '@dolittle/rudiments';
+import { ImperativeEmbedDefined } from '../../events/miners';
 
 @aggregateRoot('f4d99676-cd37-4e7e-8a03-95cd29b5927d')
 export class Miner extends AggregateRoot {
@@ -11,5 +12,6 @@ export class Miner extends AggregateRoot {
     }
 
     defineEmbed(code: string): void {
+        this.apply(new ImperativeEmbedDefined(code));
     }
 }

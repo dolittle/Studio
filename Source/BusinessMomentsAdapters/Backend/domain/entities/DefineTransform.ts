@@ -9,7 +9,7 @@ import { MinLength } from 'class-validator';
 @InputType({ description: 'This defines a transform for a connector' })
 export class DefineTransform {
     @Field()
-    connectorId!: Guid;
+    entityId!: Guid;
 
     @Field()
     @MinLength(1)

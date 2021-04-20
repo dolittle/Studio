@@ -2,19 +2,20 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { ObjectType, Field } from 'type-graphql';
+import { Guid } from '@dolittle/rudiments';
 
 @ObjectType()
-export class Connector {
+export class Entity {
     @Field()
     _id!: string;
 
     @Field()
-    name!: string;
+    imperativeFilter!: string;
 
     @Field()
-    adapterId!: string;
+    imperativeTransform!: string;
 
     @Field()
-    connectorTypeId!: string;
+    imperativeProjection!: string;
 }
 
