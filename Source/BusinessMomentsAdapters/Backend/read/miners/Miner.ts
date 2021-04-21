@@ -12,6 +12,9 @@ export class Miner {
     name!: string;
 
     @Field()
+    entityId!: string;
+
+    @Field()
     imperativeEmbed!: string;
 }
 
