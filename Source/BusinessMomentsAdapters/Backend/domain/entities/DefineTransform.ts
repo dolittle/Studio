@@ -5,8 +5,7 @@ import { InputType, Field } from 'type-graphql';
 import { Guid } from '@dolittle/rudiments';
 import { MinLength } from 'class-validator';
 
-
-@InputType({ description: 'This defines a transform for a connector' })
+@InputType({ description: 'This defines a transform for an entity' })
 export class DefineTransform {
     @Field()
     entityId!: Guid;

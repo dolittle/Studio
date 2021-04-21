@@ -5,8 +5,8 @@ import { InputType, Field } from 'type-graphql';
 import { Guid } from '@dolittle/rudiments';
 import { MinLength } from 'class-validator';
 
-@InputType({ description: 'This defines a projection for an entity' })
-export class DefineProjection {
+@InputType({ description: 'This defines a transform for an entity' })
+export class DefineFilter {
     @Field()
     entityId!: Guid;
 

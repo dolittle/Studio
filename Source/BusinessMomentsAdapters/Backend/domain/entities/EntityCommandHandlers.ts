@@ -4,6 +4,7 @@
 import { Arg, Resolver, Mutation } from 'type-graphql';
 import { DefineTransform } from './DefineTransform';
 import { DefineProjection } from './DefineProjection';
+import { DefineFilter } from './DefineFilter';
 import { injectable } from 'tsyringe';
 import { IAggregate } from '@dolittle/vanir-backend';
 import { Entity } from './Entity';
@@ -12,6 +13,13 @@ import { Entity } from './Entity';
 @injectable()
 export class EntityCommandHandlers {
     constructor(private readonly _aggregate: IAggregate) { }
+
+    @Mutation(() => Boolean)
+    async defineFilter(@Arg('command') command: DefineFilter): Promise<boolean> {
+        const connector = await this._aggregate.of(Entity, command.entityId);
+        await connector.perform(_ => _.defineFilter(command.code));
+        return true;
+    }
 
     @Mutation(() => Boolean)
     async defineTransform(@Arg('command') command: DefineTransform): Promise<boolean> {
