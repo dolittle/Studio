@@ -19,6 +19,7 @@ export class Connector extends AggregateRoot {
     }
 
     addMiner(minerId: Guid, name: string) {
+        this.failIfMinerWithNameAlreadyExists(name);
         this.apply(new MinerAddedToConnector(minerId.toString(), name));
     }
 
