@@ -3,12 +3,13 @@
 
 import { AggregateRoot, aggregateRoot } from '@dolittle/sdk.aggregates';
 import { Guid } from '@dolittle/rudiments';
-import { ImperativeEmbedDefined } from '../../events/miners';
+import { EntityAssociatedWithMiner, ImperativeEmbedDefined } from '../../events/miners';
 
 @aggregateRoot('f4d99676-cd37-4e7e-8a03-95cd29b5927d')
 export class Miner extends AggregateRoot {
 
     associateEntity(entityId: Guid) {
+        this.apply(new EntityAssociatedWithMiner(entityId.toString()));
     }
 
     defineEmbed(code: string): void {
