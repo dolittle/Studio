@@ -23,7 +23,6 @@ export class Adapter extends AggregateRoot {
         this.apply(new ConnectorAddedToAdapter(name, connectorId.toString(), connectorTypeId.toString()));
     }
 
-
     @on(ConnectorAddedToAdapter)
     onConnectorAddedToAdapter(event: ConnectorAddedToAdapter) {
         this._connectors.push(event.name);
