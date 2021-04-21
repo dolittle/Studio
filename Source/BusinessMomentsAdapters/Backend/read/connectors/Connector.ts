@@ -17,4 +17,3 @@ export class Connector {
     @Field()
     connectorTypeId!: string;
 }
-
