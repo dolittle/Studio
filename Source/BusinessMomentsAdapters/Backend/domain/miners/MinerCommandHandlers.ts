@@ -24,6 +24,6 @@ export class MinerCommandHandlers {
     async associateEntityWithMiner(@Arg('command') command: AssociateEntityWithMiner): Promise<boolean> {
         const miner = await this._aggregate.of(Miner, command.minerId);
         await miner.perform(_ => _.associateEntity(command.entityId));
-        return false;
+        return true;
     }
 }
