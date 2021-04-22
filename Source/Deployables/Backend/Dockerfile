@@ -17,7 +17,7 @@ COPY Source/Shared/Styles/package.json ./Source/Shared/Styles/package.json
 COPY Source/Shared/Web/package.json ./Source/Shared/Web/package.json
 RUN yarn
 
-COPY Source/Applications/microservice.json /app/Source/Applications/microservice.json
+COPY Source/Deployables/microservice.json /app/Source/Deployables/microservice.json
 
 # Backend Build
 FROM node:14.2.0 AS backend-build
@@ -26,12 +26,12 @@ WORKDIR /app
 
 COPY --from=shared-build /app/ ./
 
-WORKDIR /app/Source/Applications/Backend
-COPY Source/Applications/Backend/package.json ./package.json
+WORKDIR /app/Source/Deployables/Backend
+COPY Source/Deployables/Backend/package.json ./package.json
 RUN yarn
 
 COPY Source/Shared /app/Source/Shared/
-COPY Source/Applications/Backend/ ./
+COPY Source/Deployables/Backend/ ./
 
 RUN yarn build
 
@@ -41,12 +41,12 @@ FROM node:14.2.0 AS web-build
 WORKDIR /app
 COPY --from=shared-build /app/ ./
 
-WORKDIR /app/Source/Applications/Web
-COPY Source/Applications/Web/package.json ./package.json
+WORKDIR /app/Source/Deployables/Web
+COPY Source/Deployables/Web/package.json ./package.json
 RUN yarn
 
 COPY Source/Shared /app/Source/Shared/
-COPY Source/Applications/Web ./
+COPY Source/Deployables/Web ./
 RUN yarn build
 
 # Resulting Image
@@ -56,8 +56,8 @@ ARG CONFIGURATION=Release
 RUN echo Configuration = $CONFIGURATION
 
 WORKDIR /app
-COPY --from=backend-build /app/Source/Applications/Backend/dist/index.js ./
-COPY --from=backend-build /app/Source/Applications/Backend/vanir.json ./
-COPY --from=web-build /app/Source/Applications/Web/wwwroot ./public
+COPY --from=backend-build /app/Source/Deployables/Backend/dist/index.js ./
+COPY --from=backend-build /app/Source/Deployables/Backend/vanir.json ./
+COPY --from=web-build /app/Source/Deployables/Web/wwwroot ./public
 
 ENTRYPOINT ["node", "index.js"]

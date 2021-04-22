@@ -1,5 +1,5 @@
 {
-    "name": "applications.web",
+    "name": "deployables.web",
     "version": "1.0.0",
     "description": "",
     "private": true,
@@ -21,6 +21,5 @@
         "@shared/styles": "1.0.0",
         "@shared/web": "1.0.0"
     },
-    "devDependencies": {
-    }
+    "devDependencies": {}
 }

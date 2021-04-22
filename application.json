@@ -10,7 +10,7 @@
     },
     "microservices": [
         "./Source/Portal",
-        "./Source/Applications",
+        "./Source/Deployables",
         "./Source/Events",
         "./Source/K8sMock",
         "./Source/Data",

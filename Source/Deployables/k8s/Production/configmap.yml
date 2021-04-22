@@ -10,15 +10,15 @@ metadata:
     tenant: Dolittle
     application: Studio
     environment: Prod
-    microservice: Applications
-  name: prod-applications-env-variables
+    microservice: Deployables
+  name: prod-deployables-env-variables
   namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
 data:
   NODE_ENV: "production"
   DATABASE_HOST: "prod-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
-  DATABASE_NAME: "studio_prod_applications_readmodels"
+  DATABASE_NAME: "studio_prod_deployables_readmodels"
   EVENTSTORE_HOST: "prod-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
-  EVENTSTORE_NAME: "studio_prod_applications_eventstore"
+  EVENTSTORE_NAME: "studio_prod_deployables_eventstore"
   PORT: "80"
   DOLITTLE_RUNTIME_PORT: "50053"
 
@@ -34,12 +34,7 @@ metadata:
     tenant: Dolittle
     application: Studio
     environment: Prod
-    microservice: Applications
-  name: prod-applications-config-files
+    microservice: Deployables
+  name: prod-deployables-config-files
   namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
-  labels:
-    tenant: Dolittle
-    application: Studio
-    microservice: Applications
 data:
-
