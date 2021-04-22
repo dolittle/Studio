@@ -6,11 +6,12 @@ import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { IDropdownOption } from '@fluentui/react';
+import { PrimaryButton } from '@fluentui/react/lib/Button';
+
 import { BasicAuthComponent } from './BasicAuthComponent';
 import { BearerAuthComponent } from './BearerAuthComponent';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
-const narrowTextFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 100 } };
 const stackTokens = { childrenGap: 15 };
 
 export const WebhooksConfig: React.FunctionComponent = () => {
@@ -19,7 +20,7 @@ export const WebhooksConfig: React.FunctionComponent = () => {
     const authenticationOptions: IDropdownOption[] = [
         { key: 'bearer', text: 'Bearer Token' },
         { key: 'basic', text: 'Basic (username and password)' }
-    ]
+    ];
 
     const authTypeChanged = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => {
         setAuthOptionState(option!.key as string);
@@ -44,6 +45,8 @@ export const WebhooksConfig: React.FunctionComponent = () => {
                 <TextField
                     styles={textFieldStyles}
                 />
+
+                <PrimaryButton text="Copy to clipboard" onClick={_copyToClipboard} />
             </Stack>
 
             <Stack horizontal tokens={stackTokens}>
@@ -53,8 +56,6 @@ export const WebhooksConfig: React.FunctionComponent = () => {
                     options={authenticationOptions}
                     onChange={authTypeChanged}
                 />
-
-
             </Stack>
 
             {authOptionState === 'basic' && (
@@ -64,6 +65,18 @@ export const WebhooksConfig: React.FunctionComponent = () => {
             {authOptionState === 'bearer' && (
                 <BearerAuthComponent />
             )}
+
+            <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
+                <PrimaryButton text="Create" onClick={_alertClicked} />
+            </Stack>
         </Stack>
     );
 };
+
+function _copyToClipboard(): void {
+    console.log('copy to clipboard');
+}
+
+function _alertClicked(): void {
+    alert('Clicked');
+}
