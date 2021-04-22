@@ -6,7 +6,7 @@ import { Miner } from './Miner';
 import { EntityAssociatedWithMiner, ImperativeEmbedDefined } from '../../events/miners';
 import { MinerAddedToConnector } from '../../events/connectors/MinerAddedToConnector';
 
-@projectionFor(Miner, '7b1c727c-f53b-4745-88f9-e18f25657757')
+@projectionFor(Miner, '66b9eb53-6010-46ee-a7c0-6bf6e71969f6')
 export class MinerProjection implements IProjectionFor<Miner> {
     define(projectionBuilder: ProjectionBuilder<Miner>): void {
         projectionBuilder
