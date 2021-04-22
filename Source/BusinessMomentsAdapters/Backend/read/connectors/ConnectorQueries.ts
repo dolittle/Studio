@@ -3,10 +3,11 @@
 
 import { Resolver, Query } from 'type-graphql';
 import { Connector } from './Connector';
-import { IMongoDatabase } from '@dolittle/vanir-backend';
+import { IMongoDatabase, graphRoot } from '@dolittle/vanir-backend';
 import { injectable } from 'tsyringe';
 
 @Resolver()
+@graphRoot('connectors')
 @injectable()
 export class ConnectorQueries {
 

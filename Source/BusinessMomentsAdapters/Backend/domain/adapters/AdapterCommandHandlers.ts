@@ -3,11 +3,12 @@
 
 import { Resolver, Mutation, Arg } from 'type-graphql';
 import { injectable } from 'tsyringe';
-import { IAggregate } from '@dolittle/vanir-backend';
+import { IAggregate, graphRoot } from '@dolittle/vanir-backend';
 import { AddConnectorToAdapter } from './AddConnectorToAdapter';
 import { Adapter } from './Adapter';
 
 @Resolver()
+@graphRoot('adapters')
 @injectable()
 export class AdapterCommandHandlers {
     constructor(private readonly _aggregate: IAggregate) {

@@ -6,10 +6,11 @@ import { DefineTransform } from './DefineTransform';
 import { DefineProjection } from './DefineProjection';
 import { DefineFilter } from './DefineFilter';
 import { injectable } from 'tsyringe';
-import { IAggregate } from '@dolittle/vanir-backend';
+import { IAggregate, graphRoot } from '@dolittle/vanir-backend';
 import { Entity } from './Entity';
 
 @Resolver()
+@graphRoot('entities')
 @injectable()
 export class EntityCommandHandlers {
     constructor(private readonly _aggregate: IAggregate) { }

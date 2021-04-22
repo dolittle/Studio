@@ -3,12 +3,13 @@
 
 import { Arg, Resolver, Mutation } from 'type-graphql';
 import { AssociateEntityWithMiner } from './AssociateEntityWithMiner';
-import { IAggregate } from '@dolittle/vanir-backend';
+import { IAggregate, graphRoot } from '@dolittle/vanir-backend';
 import { Miner } from './Miner';
 import { DefineEmbed } from './DefineEmbed';
 import { injectable } from 'tsyringe';
 
 @Resolver()
+@graphRoot('miners')
 @injectable()
 export class MinerCommandHandlers {
     constructor(private readonly _aggregate: IAggregate) { }

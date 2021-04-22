@@ -3,10 +3,11 @@
 
 import { Resolver, Query } from 'type-graphql';
 import { Miner } from './Miner';
-import { IMongoDatabase } from '@dolittle/vanir-backend';
+import { IMongoDatabase, graphRoot } from '@dolittle/vanir-backend';
 import { injectable } from 'tsyringe';
 
 @Resolver()
+@graphRoot('miners')
 @injectable()
 export class MinerQueries {
 

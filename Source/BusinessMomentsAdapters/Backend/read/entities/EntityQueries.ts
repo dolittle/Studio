@@ -3,10 +3,11 @@
 
 import { Resolver, Query } from 'type-graphql';
 import { Entity } from './Entity';
-import { IMongoDatabase } from '@dolittle/vanir-backend';
+import { IMongoDatabase, graphRoot } from '@dolittle/vanir-backend';
 import { injectable } from 'tsyringe';
 
 @Resolver()
+@graphRoot('entities')
 @injectable()
 export class EntityQueries {
 

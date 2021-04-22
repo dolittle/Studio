@@ -2,12 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { Arg, Resolver, Mutation } from 'type-graphql';
-import { IAggregate } from '@dolittle/vanir-backend';
+import { IAggregate, graphRoot } from '@dolittle/vanir-backend';
 import { injectable } from 'tsyringe';
 import { AddMinerToConnector } from './AddMinerToConnector';
 import { Connector } from './Connector';
 
 @Resolver()
+@graphRoot('connectors')
 @injectable()
 export class ConnectorCommandHandlers {
     constructor(private readonly _aggregate: IAggregate) {
