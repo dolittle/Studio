@@ -2,8 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { ButtonDefaultExample } from './Test';
-import { TextFieldControlledExample } from './Input';
+import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 export const App = () => {
     return (
         <div
@@ -11,8 +10,7 @@ export const App = () => {
                 backgroundColor: '#000'
             }}
         >
-            <TextFieldControlledExample />
-            <ButtonDefaultExample />
+            <WebhooksConfig />
         </div>
     );
 };
