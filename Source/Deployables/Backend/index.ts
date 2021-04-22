@@ -9,11 +9,14 @@ import * as ApplicationsEvents from './events/applications';
 import * as ApplicationsExternal from './external/applications';
 import * as ApplicationsRead from './read/applications';
 
+import * as MicroservicesRead from './read/microservices';
+
 (async () => {
     await Host.start({
         graphQLResolvers: [
             ...ApplicationsDomain.CommandHandlers,
-            ...ApplicationsRead.Queries
+            ...ApplicationsRead.Queries,
+            ...MicroservicesRead.Queries
         ],
         eventTypes: [
             ...ApplicationsEvents.EventTypes
