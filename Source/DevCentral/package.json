@@ -93,7 +93,7 @@
     "author": "Dolittle",
     "license": "MIT",
     "dependencies": {
-        "@dolittle/vanir-common": "9.19.0",
+        "@dolittle/vanir-common": "9.20.0",
         "@fluentui/react-charting": "5.0.0-beta.0",
         "@shared/styles": "1.0.0",
         "@shared/web": "1.0.0",

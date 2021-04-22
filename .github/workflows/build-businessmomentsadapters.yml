@@ -1,0 +1,31 @@
+name: Build Businessmomentsadapters
+
+on:
+  push:
+    branches:
+      - "**"
+    paths:
+      - "Source/Businessmomentsadapters/**"
+      - "Source/Shared/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node v12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+          registry-url: "https://registry.npmjs.org"
+      - name: Build
+        run: |
+          export NODE_OPTIONS="--max-old-space-size=4096"
+          yarn
+          cd Source/Businessmomentsadapters/Backend
+          yarn ci
+          cd ../Web
+          yarn ci

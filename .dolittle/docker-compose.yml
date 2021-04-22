@@ -87,3 +87,17 @@ services:
       - 50060:50052
       - 50061:50053
 
+  studio-runtime-businessmomentsadapters:
+    labels:
+      - dolittle="fe7736bb-57fc-4166-bb91-6954f4dd4eb7"
+    image: dolittle/runtime:5.5.0
+    volumes:
+      - ./BusinessMomentsAdapters/resources.json:/app/.dolittle/resources.json
+      - ./tenants.json:/app/.dolittle/tenants.json
+      - ./microservices.json:/app/.dolittle/microservices.json
+      - ./appsettings.json:/app/appsettings.json
+    ports:
+      - 9706:9700
+      - 50062:50052
+      - 50063:50053
+

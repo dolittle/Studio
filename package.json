@@ -3,6 +3,9 @@
     "workspaces": [
         "Source/**/*"
     ],
+    "engines": {
+        "node": ">= 14"
+    },
     "dependencies": {},
     "devDependencies": {},
     "license": "MIT",
