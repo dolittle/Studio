@@ -9,32 +9,12 @@ import { IDropdownOption } from '@fluentui/react';
 import { BasicAuthComponent } from './BasicAuthComponent';
 import { BearerAuthComponent } from './BearerAuthComponent';
 
-//const [state, setState] = useState('authOptionState')
-
-
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const narrowTextFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 100 } };
 const stackTokens = { childrenGap: 15 };
 
 export const WebhooksConfig: React.FunctionComponent = () => {
     const [authOptionState, setAuthOptionState] = React.useState('');
-
-    const [firstTextFieldValue, setFirstTextFieldValue] = React.useState('');
-    const [secondTextFieldValue, setSecondTextFieldValue] = React.useState('');
-    const onChangeFirstTextFieldValue = React.useCallback(
-        (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
-            setFirstTextFieldValue(newValue || '');
-        },
-        [],
-    );
-    const onChangeSecondTextFieldValue = React.useCallback(
-        (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
-            if (!newValue || newValue.length <= 5) {
-                setSecondTextFieldValue(newValue || '');
-            }
-        },
-        [],
-    );
 
     const authenticationOptions: IDropdownOption[] = [
         { key: 'bearer', text: 'Bearer Token' },
@@ -51,8 +31,6 @@ export const WebhooksConfig: React.FunctionComponent = () => {
             <Stack horizontal tokens={stackTokens}>
                 <Label>Webhook name</Label>
                 <TextField
-                    value={firstTextFieldValue}
-                    onChange={onChangeFirstTextFieldValue}
                     styles={textFieldStyles}
                 />
             </Stack>
@@ -60,14 +38,10 @@ export const WebhooksConfig: React.FunctionComponent = () => {
             <Stack horizontal tokens={stackTokens}>
                 <Label>Endpoint</Label>
                 <TextField
-                    value={firstTextFieldValue}
-                    onChange={onChangeFirstTextFieldValue}
                     styles={textFieldStyles}
                 />
                 <span>/</span>
                 <TextField
-                    value={firstTextFieldValue}
-                    onChange={onChangeFirstTextFieldValue}
                     styles={textFieldStyles}
                 />
             </Stack>
@@ -90,13 +64,6 @@ export const WebhooksConfig: React.FunctionComponent = () => {
             {authOptionState === 'bearer' && (
                 <BearerAuthComponent />
             )}
-
-            <TextField
-                label="Controlled TextField limiting length of value to 5"
-                value={secondTextFieldValue}
-                onChange={onChangeSecondTextFieldValue}
-                styles={narrowTextFieldStyles}
-            />
         </Stack>
     );
 };
