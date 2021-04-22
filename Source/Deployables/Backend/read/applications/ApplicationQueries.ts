@@ -4,9 +4,10 @@
 import { Resolver, Query } from 'type-graphql';
 import { injectable } from 'tsyringe';
 import { Application } from './Application';
-import { IMongoDatabase } from '@dolittle/vanir-backend';
+import { IMongoDatabase, graphRoot } from '@dolittle/vanir-backend';
 
 @Resolver()
+@graphRoot('applications')
 @injectable()
 export class ApplicationQueries {
 

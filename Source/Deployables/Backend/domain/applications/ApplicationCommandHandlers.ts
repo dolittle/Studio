@@ -3,11 +3,11 @@
 
 import { CreateApplication } from './CreateApplication';
 import { Resolver, Mutation, Query, Arg } from 'type-graphql';
-import { IAggregate } from '@dolittle/vanir-backend';
+import { IAggregate, graphRoot } from '@dolittle/vanir-backend';
 import { injectable } from 'tsyringe';
 import { Applications } from './Applications';
-
 @Resolver()
+@graphRoot('applications')
 @injectable()
 export class ApplicationCommandHandlers {
 
