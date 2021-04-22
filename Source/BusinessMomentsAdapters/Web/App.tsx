@@ -9,11 +9,7 @@ import { Editor as EntityEditor } from './moments/EntityEditor';
 
 export const App = () => {
     return (
-        <div
-            style={{
-                backgroundColor: '#000'
-            }}
-        >
+        <>
             <Route exact path="/">
                 <h1>Would you like to play a game</h1>
                 <ul>
@@ -38,7 +34,7 @@ export const App = () => {
             <Route path="/entity/editor">
                 <EntityEditor />
             </Route>
-        </div>
+        </>
     );
 };
 // 3:20
