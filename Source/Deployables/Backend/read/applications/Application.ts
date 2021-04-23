@@ -7,9 +7,9 @@ import { ObjectType, Field } from 'type-graphql';
 
 @ObjectType()
 export class Application {
-    @Field()
-    @guid()
-    _id!: Guid;
+    @Field({ name: 'id' })
+    //@guid()
+    _id!: string;
 
     @Field()
     name!: string;
