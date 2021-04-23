@@ -24,8 +24,7 @@ function buildCommandBarItems(action: ActionBarAction): ICommandBarItemProps[] {
             key: Guid.create().toString(),
             text: action.text,
             iconProps: { iconName: action.icon },
-            onClick: () => action.onTriggered?.(),
-            disabled: true
+            onClick: () => action.onTriggered?.()
         },
     ];
 }
