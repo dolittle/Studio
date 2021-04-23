@@ -12,7 +12,7 @@ export class MinerProjection implements IProjectionFor<Miner> {
         projectionBuilder
             .configureModel(_ => _.withName('miners'))
             .from(MinerAddedToConnector, _ => _
-                .usingCompositeKey(ev => ev.minerId)
+                .usingKeyFrom(ev => ev.minerId)
                 .set(c => c.name).to(ev => ev.name))
             .from(ImperativeEmbedDefined, _ => _
                 .set(c => c.imperativeEmbed).to(ev => ev.code))
