@@ -12,7 +12,7 @@ export class ConnectorProjection implements IProjectionFor<Connector> {
             .configureModel(_ => _.withName('connectors'))
             .from(ConnectorAddedToAdapter, _ => _
                 .usingKeyFrom(ev => ev.connectorId)
-                .set(c => c.adapterId).toContext(ev => ev.eventSourceId.value)
+                .set(c => c.adapterId).toContext(ev => ev.eventSourceId)
                 .set(c => c.name).to(ev => ev.name)
                 .set(c => c.connectorTypeId).to(ev => ev.connectorTypeId)
             );
