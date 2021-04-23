@@ -12,7 +12,7 @@ export const Overview = withViewModel(OverviewViewModel, ({ viewModel }) => {
             return {
                 key: _.id,
                 name: _.name
-            }
+            };
         })
     };
 

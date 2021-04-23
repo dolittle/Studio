@@ -6,6 +6,7 @@ import { DialogResult, useDialog, withViewModel } from '@dolittle/vanir-react';
 import { CreateApplication, CreateApplicationOutput } from './CreateApplication';
 import { ActionBar } from '@shared/components';
 import { ApplicationsViewModel } from './ApplicationsViewModel';
+import { CreateMicroservice, CreateMicroserviceOutput } from './CreateMicroservice';
 
 export const Applications = withViewModel(ApplicationsViewModel, ({ viewModel }) => {
     const [showCreateApplication, createApplicationProps] = useDialog<any, CreateApplicationOutput>(async (result, output?) => {
@@ -14,9 +15,18 @@ export const Applications = withViewModel(ApplicationsViewModel, ({ viewModel })
         }
     });
 
+    const [showCreateMicroservice, createMicroserviceProps] = useDialog<any, CreateMicroserviceOutput>(async (result, output?) => {
+        if (result === DialogResult.Success && output) {
+            //viewModel.createApplication(output.name);
+        }
+    });
+    viewModel.createMicroserviceCallback = showCreateMicroservice;
+
     return (
         <>
             <CreateApplication {...createApplicationProps} />
+            <CreateMicroservice {...createMicroserviceProps} />
+
             <ActionBar
                 title="Create application"
                 icon="Add"
