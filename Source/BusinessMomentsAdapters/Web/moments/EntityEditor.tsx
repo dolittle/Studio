@@ -12,7 +12,7 @@ import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
+import { Text, Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 
 
 import CodeEditor, { useMonaco } from '@monaco-editor/react';
@@ -53,6 +53,16 @@ export const Editor: React.FunctionComponent = () => {
     return (
         <>
             <Stack tokens={stackTokens}>
+                <Stack horizontal tokens={stackTokens}>
+                    <Text variant="xLarge" nowrap block>
+                        Remove
+                    </Text>
+
+                    <PrimaryButton text="Load logs" onClick={(e => {
+                        console.log('Load raw logs');
+                    })} />
+
+                </Stack>
                 <Stack horizontal tokens={stackTokens}>
                     <Dropdown placeholder="Select"
                         label="Connector:"

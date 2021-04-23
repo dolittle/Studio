@@ -40,3 +40,8 @@ export function saveEntity(entity: Entity): boolean {
     console.log(entity);
     return true;
 }
+
+
+export function getRawLogs(): any[] {
+    return [];
+}
