@@ -6,14 +6,14 @@ import 'reflect-metadata';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Bootstrapper } from '@dolittle/vanir-react';
+import { Bootstrapper } from '@dolittle/vanir-react';
 import { VersionInfo } from '@dolittle/vanir-web';
 import { App } from './App';
 
 const version = require('../microservice.json') as VersionInfo;
 
 ReactDOM.render(
-    <Bootstrapper name="Applications" prefix="/_/applications" version={version}>
+    <Bootstrapper name="Deployables" prefix="/_/deployables" version={version}>
         <App />
     </Bootstrapper>,
     document.getElementById('root')
