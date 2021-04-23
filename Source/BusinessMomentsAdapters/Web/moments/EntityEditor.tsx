@@ -1,6 +1,11 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+
+// TODO how to load the logs?
+// TODO validate the data
+// TODO change action button from create to save
+
 import React, { useEffect } from 'react';
 
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
@@ -12,12 +17,13 @@ import { Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 
 import CodeEditor, { useMonaco } from '@monaco-editor/react';
 
+import { Entity, getConnectors } from '../store';
+
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
 export const Editor: React.FunctionComponent = () => {
-
     const monaco = useMonaco();
 
     useEffect(() => {
@@ -32,24 +38,47 @@ export const Editor: React.FunctionComponent = () => {
         setOutputScreen(item!.props.headerText as string);
     };
 
+    const _connectors: IDropdownOption[] = getConnectors().map(connector => {
+        return { key: connector.id, text: connector.name } as IDropdownOption;
+    }) as IDropdownOption[];
+
+    // TODO this might need to use state etc
+    const currentEntity: Entity = {} as Entity;
+    currentEntity.id = 'id';
+    currentEntity.name = '';
+    currentEntity.filterCode = '';
+    currentEntity.transformCode = '';
+    currentEntity.connectorId = '';
+
     return (
         <>
             <Stack tokens={stackTokens}>
                 <Stack horizontal tokens={stackTokens}>
                     <Dropdown placeholder="Select"
                         label="Connector:"
-                        options={[]}
+                        options={_connectors}
+                        onChange={(e, v) => {
+                            currentEntity.connectorId = (v as IDropdownOption).key as string;
+                        }}
                     />
 
                     <TextField
                         label="Entity Name:"
                         styles={textFieldStyles}
+                        defaultValue={currentEntity.name}
+                        onChange={(e, v) => {
+                            currentEntity.name = v!;
+                        }}
                     />
 
                     <TextField
                         label="Entity ID:"
                         styles={textFieldStyles}
-                        value="id"
+                        placeholder="id"
+                        defaultValue={currentEntity.id}
+                        onChange={(e, v) => {
+                            currentEntity.id = v!;
+                        }}
                     />
 
                 </Stack>
@@ -63,7 +92,10 @@ export const Editor: React.FunctionComponent = () => {
                                 height="20vh"
                                 width="50vw"
                                 defaultLanguage="javascript"
-                                defaultValue="// some comment"
+                                defaultValue={currentEntity.filterCode}
+                                onChange={(value, e) => {
+                                    currentEntity.filterCode = value!;
+                                }}
                             />
 
                             <h1>Transform Payload</h1>
@@ -71,7 +103,10 @@ export const Editor: React.FunctionComponent = () => {
                                 height="20vh"
                                 width="50vw"
                                 defaultLanguage="javascript"
-                                defaultValue="// some comment"
+                                defaultValue={currentEntity.transformCode}
+                                onChange={(value, e) => {
+                                    currentEntity.transformCode = value!;
+                                }}
                             />
                         </Stack>
 
@@ -88,12 +123,17 @@ export const Editor: React.FunctionComponent = () => {
                                     headerText="With Transform">
                                 </PivotItem>
                             </Pivot>
-                            <textarea value={outputScreen} />
+                            <textarea readOnly value={outputScreen} />
                         </Stack>
 
                     </Stack>
                 </Stack>
 
+                <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
+                    <PrimaryButton text="Create" onClick={(e => {
+                        console.log('Current state of entity is ', currentEntity);
+                    })} />
+                </Stack>
             </Stack>
         </>
     );
