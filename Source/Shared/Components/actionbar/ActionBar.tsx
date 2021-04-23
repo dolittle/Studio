@@ -8,6 +8,6 @@ import { withViewModel } from '@dolittle/vanir-react';
 import { ActionBarProps } from './ActionBarProps';
 
 export const ActionBar = withViewModel<ActionBarViewModel, ActionBarProps>(ActionBarViewModel, ({ viewModel, props }) => {
-    return (<></>)
+    return (<></>);
 });
 
