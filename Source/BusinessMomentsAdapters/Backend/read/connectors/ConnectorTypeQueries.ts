@@ -4,8 +4,10 @@
 import { Resolver, Query } from 'type-graphql';
 import { ConnectorType } from './ConnectorType';
 import { ConnectorTypes } from '../../concepts';
+import { graphRoot } from '@dolittle/vanir-backend';
 
 @Resolver()
+@graphRoot('connectors')
 export class ConnectorTypeQueries {
 
     @Query(() => [ConnectorType])
