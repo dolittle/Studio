@@ -19,6 +19,6 @@ export class ActionBarViewModel {
                 props.icon,
                 props.onTriggered),
             placement: 'bottom'
-        })
+        });
     }
 }

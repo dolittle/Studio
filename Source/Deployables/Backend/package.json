@@ -1,0 +1,37 @@
+{
+    "name": "deployables.backend",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "private": "true",
+    "license": "UNLICENSED",
+    "scripts": {
+        "start:dev": "cross-env NODE_ENV=development nodemon index.ts",
+        "start": "cross-env NODE_ENV=development ts-node index.ts",
+        "build": "yarn clean && webpack --mode=production",
+        "clean": "tsc -b --clean",
+        "test": "mocha",
+        "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
+        "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",
+        "ci": "yarn clean && yarn lint:ci && tsc -b && yarn test"
+    },
+    "nodemonConfig": {
+        "restartable": "rs",
+        "ignore": [
+            "**/routes.ts",
+            "dist",
+            "*.d.ts"
+        ],
+        "execMap": {
+            "ts": "ts-node"
+        },
+        "watch": [
+            "./"
+        ],
+        "ext": "ts"
+    },
+    "dependencies": {
+        "@shared/backend": "1.0.0",
+        "@shared/k8s": "1.0.0"
+    }
+}

@@ -1408,7 +1408,7 @@ export function RegisterRoutes(app: express.Router) {
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
         app.get('/api/v1/namespaces/:namespace/configmaps',
-            function (request: any, response: any, next: any) {
+            function ConfigmapsController_getConfigmapsForNamespace(request: any, response: any, next: any) {
             const args = {
                     namespace: {"in":"path","name":"namespace","required":true,"dataType":"string"},
             };
@@ -1431,11 +1431,11 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getConfigmapsForNamespace.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
+            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/namespaces/:namespace/configmaps/:configmap',
-            function (request: any, response: any, next: any) {
+            function ConfigmapsController_getConfigmap(request: any, response: any, next: any) {
             const args = {
                     namespace: {"in":"path","name":"namespace","required":true,"dataType":"string"},
                     configmap: {"in":"path","name":"configmap","required":true,"dataType":"string"},
@@ -1459,11 +1459,11 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getConfigmap.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
+            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/apis/apps/v1/namespaces/:namespace/deployments',
-            function (request: any, response: any, next: any) {
+            function DeploymentsController_getDeploymentsForNamespace(request: any, response: any, next: any) {
             const args = {
                     namespace: {"in":"path","name":"namespace","required":true,"dataType":"string"},
             };
@@ -1486,11 +1486,11 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getDeploymentsForNamespace.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
+            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/apis/apps/v1/namespaces/:namespace/deployments/:deployment',
-            function (request: any, response: any, next: any) {
+            function DeploymentsController_getDeployment(request: any, response: any, next: any) {
             const args = {
                     namespace: {"in":"path","name":"namespace","required":true,"dataType":"string"},
                     deployment: {"in":"path","name":"deployment","required":true,"dataType":"string"},
@@ -1514,11 +1514,11 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getDeployment.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
+            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/namespaces',
-            function (request: any, response: any, next: any) {
+            function NamespacesController_getNamespaces(request: any, response: any, next: any) {
             const args = {
                     watch: {"in":"query","name":"watch","dataType":"boolean"},
             };
@@ -1541,11 +1541,11 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getNamespaces.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
+            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/namespaces/:namespace/pods',
-            function (request: any, response: any, next: any) {
+            function PodsController_getPodsForNamespace(request: any, response: any, next: any) {
             const args = {
                     namespace: {"in":"path","name":"namespace","required":true,"dataType":"string"},
             };
@@ -1568,11 +1568,11 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getPodsForNamespace.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
+            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/namespaces/:namespace/pods/:pod',
-            function (request: any, response: any, next: any) {
+            function PodsController_getPod(request: any, response: any, next: any) {
             const args = {
                     namespace: {"in":"path","name":"namespace","required":true,"dataType":"string"},
                     pod: {"in":"path","name":"pod","required":true,"dataType":"string"},
@@ -1596,7 +1596,7 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getPod.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
+            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
@@ -1609,14 +1609,14 @@ export function RegisterRoutes(app: express.Router) {
         return 'getHeaders' in object && 'getStatus' in object && 'setStatus' in object;
     }
 
-    function promiseHandler(controllerObj: any, promise: any, response: any, next: any) {
+    function promiseHandler(controllerObj: any, promise: any, response: any, successStatus: any, next: any) {
         return Promise.resolve(promise)
             .then((data: any) => {
-                let statusCode;
+                let statusCode = successStatus;
                 let headers;
                 if (isController(controllerObj)) {
                     headers = controllerObj.getHeaders();
-                    statusCode = controllerObj.getStatus();
+                    statusCode = controllerObj.getStatus() || statusCode;
                 }
 
                 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -1629,18 +1629,21 @@ export function RegisterRoutes(app: express.Router) {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
     function returnHandler(response: any, statusCode?: number, data?: any, headers: any = {}) {
+        if (response.headersSent) {
+            return;
+        }
         Object.keys(headers).forEach((name: string) => {
             response.set(name, headers[name]);
         });
         if (data && typeof data.pipe === 'function' && data.readable && typeof data._read === 'function') {
             data.pipe(response);
-        } else if (data || data === false) { // === false allows boolean result
+        } else if (data !== null && data !== undefined) {
             response.status(statusCode || 200).json(data);
         } else {
             response.status(statusCode || 204).end();
         }
     }
-    
+
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
     function responder(response: any): TsoaResponse<HttpStatusCodeLiteral, unknown>  {
@@ -1668,6 +1671,14 @@ export function RegisterRoutes(app: express.Router) {
                     return validationService.ValidateParam(args[key], request.body, name, fieldErrors, undefined, {"noImplicitAdditionalProperties":"throw-on-extras"});
                 case 'body-prop':
                     return validationService.ValidateParam(args[key], request.body[name], name, fieldErrors, 'body.', {"noImplicitAdditionalProperties":"throw-on-extras"});
+                case 'formData':
+                    if (args[key].dataType === 'file') {
+                        return validationService.ValidateParam(args[key], request.file, name, fieldErrors, undefined, {"noImplicitAdditionalProperties":"throw-on-extras"});
+                    } else if (args[key].dataType === 'array' && args[key].array.dataType === 'file') {
+                        return validationService.ValidateParam(args[key], request.files, name, fieldErrors, undefined, {"noImplicitAdditionalProperties":"throw-on-extras"});
+                    } else {
+                        return validationService.ValidateParam(args[key], request.body[name], name, fieldErrors, undefined, {"noImplicitAdditionalProperties":"throw-on-extras"});
+                    }
                 case 'res':
                     return responder(response);
             }

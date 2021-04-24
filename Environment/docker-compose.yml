@@ -42,10 +42,10 @@ services:
       - 50054:50052
       - 50055:50053
 
-  studio-runtime-applications:
+  studio-runtime-deployables:
     image: dolittle/runtime:5.3.2
     volumes:
-      - ./Applications/resources.json:/app/.dolittle/resources.json
+      - ./Deployables/resources.json:/app/.dolittle/resources.json
       - ./tenants.json:/app/.dolittle/tenants.json
       - ./microservices.json:/app/.dolittle/microservices.json
       - ./appsettings.json:/app/appsettings.json

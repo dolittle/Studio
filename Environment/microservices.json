@@ -8,7 +8,7 @@
         "port": "50052"
     },
     "05a823dd-0f0d-4157-bc46-14834cca3cd2": {
-        "host": "studio-runtime-applications",
+        "host": "studio-runtime-deployables",
         "port": "50052"
     },
     "81cad113-a001-45dc-86cb-7b1e725ae25e": {

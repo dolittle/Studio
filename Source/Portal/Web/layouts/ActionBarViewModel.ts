@@ -15,7 +15,7 @@ import { IMessenger } from '@dolittle/vanir-web';
 export class ActionBarViewModel {
     actionBar?: ActionBar;
 
-    constructor(private readonly _messenger: IMessenger) {}
+    constructor(private readonly _messenger: IMessenger) { }
     attached() {
         this._messenger
             .observe(ActionBarStructureChanged)

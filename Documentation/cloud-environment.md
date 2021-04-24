@@ -44,17 +44,17 @@ For more details on how to update configuration and work with this in the Dolitt
 | ConfigMap name   | Prod | prod-portal-config-files |
 | Env. Variables name | Prod | prod-portal-env-variables |
 
-### Applications
+### Deployables
 
 | Type | Environment | Value |
 | ---- | ----------- | ----- |
 | Image repository | All | 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/harvest |
-| Deployment name  | Dev | dev-applications |
-| ConfigMap name   | Dev | dev-applications-config-files |
-| Env. Variables name | Dev | dev-applications-env-variables |
-| Deployment name  | Prod | prod-applications |
-| ConfigMap name   | Prod | prod-applications-config-files |
-| Env. Variables name | Prod | prod-applications-env-variables |
+| Deployment name  | Dev | dev-deployables |
+| ConfigMap name   | Dev | dev-deployables-config-files |
+| Env. Variables name | Dev | dev-deployables-env-variables |
+| Deployment name  | Prod | prod-deployables |
+| ConfigMap name   | Prod | prod-deployables-config-files |
+| Env. Variables name | Prod | prod-deployables-env-variables |
 
 ### Events
 
@@ -93,14 +93,14 @@ $ kubectl get pods
 You can get to the logs from the individual container instances within every pod running in Kubernetes.
 By using the `kubectl logs` command you can get logs for a container within a pod.
 
-For instance if we want to look at the runtime logs for the applications microservice using the pod identifier from the `get pods` command:
+For instance if we want to look at the runtime logs for the deployables microservice using the pod identifier from the `get pods` command:
 
 ```shell
-$ kubectl logs dev-applications-5c59ff4c4-mjtgb -c runtime
+$ kubectl logs dev-deployables-5c59ff4c4-mjtgb -c runtime
 ```
 
 For the head, which is the backend code of the microservice:
 
 ```shell
-$ kubectl logs dev-applications-5c59ff4c4-mjtgb -c head
+$ kubectl logs dev-deployables-5c59ff4c4-mjtgb -c head
 ```

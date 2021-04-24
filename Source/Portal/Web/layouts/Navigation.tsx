@@ -29,6 +29,7 @@ function mapToNavLinkGroup(navigationGroups: NavigationGroup[], viewModel: Navig
                     }
                 } as INavLink;
             }),
+            onHeaderClick: () => viewModel.groupClicked(_)
         } as INavLinkGroup;
     });
 }
