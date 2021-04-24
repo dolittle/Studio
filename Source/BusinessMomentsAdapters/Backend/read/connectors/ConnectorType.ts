@@ -7,8 +7,8 @@ import { Guid } from '@dolittle/rudiments';
 @ObjectType()
 export class ConnectorType {
     @Field()
-    name!: string;
+    id!: Guid;
 
     @Field()
-    id!: Guid;
+    name!: string;
 }
