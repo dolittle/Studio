@@ -5,7 +5,7 @@ import { ObjectType, Field } from 'type-graphql';
 
 @ObjectType()
 export class Connector {
-    @Field()
+    @Field({ name: 'id' })
     _id!: string;
 
     @Field()

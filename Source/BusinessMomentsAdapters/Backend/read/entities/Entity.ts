@@ -6,7 +6,7 @@ import { Guid } from '@dolittle/rudiments';
 
 @ObjectType()
 export class Entity {
-    @Field()
+    @Field({ name: 'id' })
     _id!: string;
 
     @Field()
