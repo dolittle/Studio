@@ -8,8 +8,8 @@ import { guid } from '@dolittle/vanir-backend';
 @ObjectType()
 export class Miner {
     @Field({ name: 'id' })
-    @guid()
-    _id!: Guid;
+    //@guid()
+    _id!: string;
 
     @Field()
     name!: string;
