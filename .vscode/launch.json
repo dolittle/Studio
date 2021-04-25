@@ -19,6 +19,26 @@
                 "<node_internals>/**"
             ],
             "type": "pwa-node"
+        },
+        {
+            "name": "Launch BusinessMomentsAdapters",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "node",
+            "runtimeArgs": [
+                "--nolazy",
+                "-r",
+                "ts-node/register/transpile-only"
+            ],
+            "args": [
+                "${workspaceFolder}/Source/BusinessMomentsAdapters/Backend/index.ts"
+            ],
+            "cwd": "${workspaceFolder}/Source/BusinessMomentsAdapters/Backend",
+            "preLaunchTask": "tsc: build - BusinessMomentsAdapters",
+            "skipFiles": [
+                "<node_internals>/**",
+                "node_modules/**"
+            ]
         }
     ]
 }
