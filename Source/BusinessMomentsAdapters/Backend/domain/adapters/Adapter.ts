@@ -12,6 +12,7 @@ export const ConnectorWithNameAlreadyExists =
 
 export const ConnectorWithIdAlreadyExists =
     BrokenRule.create('ConnectorWithIdAlreadyExists', 'Connector with identifier "{id}" already exists on adapter "{adapter}"');
+
 @aggregateRoot('08dfe483-0b6a-40e1-95b7-1b3c7ccaf187')
 export class Adapter extends AggregateRoot {
     private _connectors: { id: Guid, name: string }[] = [];
