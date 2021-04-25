@@ -3,11 +3,13 @@
 
 import { ObjectType, Field } from 'type-graphql';
 import { Guid } from '@dolittle/rudiments';
+import { guid } from '@dolittle/vanir-backend';
 
 @ObjectType()
 export class Entity {
     @Field({ name: 'id' })
-    _id!: string;
+    @guid()
+    _id!: Guid;
 
     @Field()
     imperativeFilter!: string;
