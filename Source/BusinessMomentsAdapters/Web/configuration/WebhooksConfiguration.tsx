@@ -48,8 +48,8 @@ export const WebhooksConfig: React.FunctionComponent = () => {
     const authTypeChanged = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => {
         // TODO Need to update the config for this kind as well
         connector.config.kind = option!.key as string;
-        console.log(connector.kind);
-        switch (connector.kind) {
+
+        switch (connector.config.kind) {
             case 'basic':
                 // Not sure this is perfect
                 connector.config.config = {} as ConnectorWebhookConfigBasic;
