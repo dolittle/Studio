@@ -19,9 +19,16 @@ const stackTokens = { childrenGap: 15 };
 
 export const WebhooksConfig: React.FunctionComponent = () => {
     const { id } = useParams() as any;
-    console.log('id is', id);
+
 
     const connector = getConnector(id);
+
+    if (!connector) {
+        // TODO I feel we need a better experience here, just adding base logic for now
+        return (
+            <h1>Connector could not be found</h1>
+        );
+    }
 
     const [authOptionState, setAuthOptionState] = React.useState(connector?.config.kind);
 
@@ -31,10 +38,7 @@ export const WebhooksConfig: React.FunctionComponent = () => {
     ];
 
     authenticationOptions = authenticationOptions.map(option => {
-
         const configKind = connector?.config.kind;
-        console.log(connector?.kind, configKind, option.key);
-
         if (configKind === option.key) {
             option.selected = true;
         }
