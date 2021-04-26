@@ -12,7 +12,7 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 import { BasicAuthComponent } from './BasicAuthComponent';
 import { BearerAuthComponent } from './BearerAuthComponent';
-import { getConnector } from '../store';
+import { getConnector, Connector, ConnectorWebhookConfigBearer, ConnectorWebhookConfigBasic } from '../store';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
@@ -47,6 +47,25 @@ export const WebhooksConfig: React.FunctionComponent = () => {
 
     const authTypeChanged = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => {
         // TODO Need to update the config for this kind as well
+        connector.config.kind = option!.key as string;
+        console.log(connector.kind);
+        switch (connector.kind) {
+            case 'basic':
+                // Not sure this is perfect
+                connector.config.config = {} as ConnectorWebhookConfigBasic;
+                // TODO I am sure there is a better way
+                connector.config.config.username = '';
+                connector.config.config.password = '';
+                break;
+            case 'bearer':
+                connector.config.config = {} as ConnectorWebhookConfigBearer;
+                connector.config.config.token = '';
+                break;
+            default:
+                console.error('Kind not supported', connector.kind);
+                connector.config.config = {};
+        }
+
         setAuthOptionState(option!.key as string);
     };
 
@@ -58,6 +77,9 @@ export const WebhooksConfig: React.FunctionComponent = () => {
                 <TextField
                     styles={textFieldStyles}
                     defaultValue={connector?.name}
+                    onChange={(e, v) => {
+                        connector.name = v!;
+                    }}
                 />
             </Stack>
 
@@ -71,6 +93,9 @@ export const WebhooksConfig: React.FunctionComponent = () => {
                 <TextField
                     styles={textFieldStyles}
                     defaultValue={connector?.config.uriPrefix}
+                    onChange={(e, v) => {
+                        connector.config.uriPrefix = v!;
+                    }}
                 />
 
                 <PrimaryButton text="Copy to clipboard" onClick={_copyToClipboard} />
@@ -94,7 +119,7 @@ export const WebhooksConfig: React.FunctionComponent = () => {
             )}
 
             <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
-                <PrimaryButton text="Create" onClick={_alertClicked} />
+                <PrimaryButton text="Create" onClick={() => _onSave(connector)} />
             </Stack>
         </Stack>
     );
@@ -104,6 +129,6 @@ function _copyToClipboard(): void {
     console.log('copy to clipboard');
 }
 
-function _alertClicked(): void {
-    alert('Clicked');
+function _onSave(connector: Connector): void {
+    console.log('onSave', connector);
 }
