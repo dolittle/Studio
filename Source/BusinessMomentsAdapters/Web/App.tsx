@@ -14,7 +14,7 @@ export const App = () => {
     let itemsWithHref: IBreadcrumbItem[] = [
         // Normally each breadcrumb would have a unique href, but to make the navigation less disruptive
         // in the example, it uses the breadcrumb page as the href for all the items
-        { text: 'Webhooks', key: 'webhooks', href: '/webhooks' },
+        { text: 'Start', key: 'Start', href: '/' },
         { text: 'Business Moments Editor', key: '/business-moments/editor', href: '/business-moments/editor' },
         { text: 'Entity Editor', key: '/entity/editor', href: '/entity/editor' },
 
@@ -35,21 +35,35 @@ export const App = () => {
                     items={itemsWithHref}
                 />
                 <Route exact path="/">
-                    <h1>Would you like to play a game</h1>
-                    <ul>
-                        <li>
-                            <a href="/webhooks">Webhooks</a>
-                        </li>
-                        <li>
-                            <a href="/business-moments/editor">/business-moments/editor</a>
-                        </li>
-                        <li>
-                            <a href="/entity/editor">/entity/editor</a>
-                        </li>
-                    </ul>
+                    <div style={{ backgroundColor: '#c3c3c3' }}>
+                        <h1>Would you like to play a game</h1>
+                        <ul>
+                            <li>
+                                <a href="/connectors">Connectors</a>
+                            </li>
+
+                            <li>
+                                <a href="/connector/edit/m3-webhook-1-basic">Edit Webhook connector (m3-webhook-1-basic)</a>
+                            </li>
+                            <li>
+                                <a href="/connector/edit/m3-webhook-1-bearer">Edit Webhook connector (m3-webhook-1-bearer)</a>
+                            </li>
+
+                            <li>
+                                <a href="/business-moments/editor">/business-moments/editor</a>
+                            </li>
+                            <li>
+                                <a href="/entity/editor">/entity/editor</a>
+                            </li>
+                        </ul>
+                    </div>
                 </Route>
 
-                <Route exact path="/webhooks">
+                <Route exact path="/connectors">
+                    <h1>TODO: List connectors</h1>
+                </Route>
+
+                <Route exact path="/connector/edit/:id">
                     <WebhooksConfig />
                 </Route>
                 <Route path="/business-moments/editor">

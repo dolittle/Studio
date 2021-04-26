@@ -1,6 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
+import { useParams } from 'react-router-dom';
+
 import { Label } from '@fluentui/react/lib/Label';
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
@@ -10,19 +12,37 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 import { BasicAuthComponent } from './BasicAuthComponent';
 import { BearerAuthComponent } from './BearerAuthComponent';
+import { getConnector } from '../store';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
 export const WebhooksConfig: React.FunctionComponent = () => {
-    const [authOptionState, setAuthOptionState] = React.useState('');
+    const { id } = useParams() as any;
+    console.log('id is', id);
 
-    const authenticationOptions: IDropdownOption[] = [
+    const connector = getConnector(id);
+
+    const [authOptionState, setAuthOptionState] = React.useState(connector?.config.kind);
+
+    let authenticationOptions: IDropdownOption[] = [
         { key: 'bearer', text: 'Bearer Token' },
         { key: 'basic', text: 'Basic (username and password)' }
     ];
 
+    authenticationOptions = authenticationOptions.map(option => {
+
+        const configKind = connector?.config.kind;
+        console.log(connector?.kind, configKind, option.key);
+
+        if (configKind === option.key) {
+            option.selected = true;
+        }
+        return option;
+    });
+
     const authTypeChanged = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => {
+        // TODO Need to update the config for this kind as well
         setAuthOptionState(option!.key as string);
     };
 
@@ -33,6 +53,7 @@ export const WebhooksConfig: React.FunctionComponent = () => {
                 <Label>Webhook name</Label>
                 <TextField
                     styles={textFieldStyles}
+                    defaultValue={connector?.name}
                 />
             </Stack>
 
@@ -40,10 +61,12 @@ export const WebhooksConfig: React.FunctionComponent = () => {
                 <Label>Endpoint</Label>
                 <TextField
                     styles={textFieldStyles}
+                    defaultValue="TODO"
                 />
                 <span>/</span>
                 <TextField
                     styles={textFieldStyles}
+                    defaultValue={connector?.config.uriPrefix}
                 />
 
                 <PrimaryButton text="Copy to clipboard" onClick={_copyToClipboard} />
@@ -59,11 +82,11 @@ export const WebhooksConfig: React.FunctionComponent = () => {
             </Stack>
 
             {authOptionState === 'basic' && (
-                <BasicAuthComponent />
+                <BasicAuthComponent {...connector!.config.config} />
             )}
 
             {authOptionState === 'bearer' && (
-                <BearerAuthComponent />
+                <BearerAuthComponent {...connector!.config.config} />
             )}
 
             <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
