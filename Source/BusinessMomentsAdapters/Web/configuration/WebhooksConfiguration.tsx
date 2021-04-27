@@ -17,13 +17,30 @@ import { getConnector, Connector, ConnectorWebhookConfigBearer, ConnectorWebhook
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
-export const WebhooksConfig: React.FunctionComponent = () => {
+
+type WebhooksConfigProps = {
+    connector?: Connector
+};
+// TODO how to pass in
+
+export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undefined> = (props) => {
+    console.log(props, props!.connector);
     const { id } = useParams() as any;
 
+    // TODO ugly going on here due to undefined
+    const connector = id ? getConnector(id)! : {
+        id: '',
+        name: '',
+        kind: 'webhook',
+        config: {
+            domain: '',
+            uriPrefix: '',
+            kind: '',
+            config: {}
+        }
+    } as Connector;
 
-    const connector = getConnector(id);
-
-    if (!connector) {
+    if (id && !connector) {
         // TODO I feel we need a better experience here, just adding base logic for now
         return (
             <h1>Connector could not be found</h1>

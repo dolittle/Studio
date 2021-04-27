@@ -9,6 +9,7 @@ import { Route, useHistory, BrowserRouter } from 'react-router-dom';
 import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 import { Editor as BusinessMomentEditor } from './moments/BusinessMomentEditor';
 import { Editor as EntityEditor } from './moments/EntityEditor';
+import { Create as Microservice } from './moments/Microservice';
 
 export const App = () => {
     let itemsWithHref: IBreadcrumbItem[] = [
@@ -41,6 +42,9 @@ export const App = () => {
                             <li>
                                 <a href="/connectors">Connectors</a>
                             </li>
+                            <li>
+                                <a href="/microservice/business-miner">Create Business Miner</a>
+                            </li>
 
                             <li>
                                 <a href="/connector/edit/m3-webhook-1-basic">Edit Webhook connector (m3-webhook-1-basic)</a>
@@ -61,6 +65,10 @@ export const App = () => {
 
                 <Route exact path="/connectors">
                     <h1>TODO: List connectors</h1>
+                </Route>
+
+                <Route exact path="/microservice/business-miner">
+                    <Microservice />
                 </Route>
 
                 <Route exact path="/connector/edit/:id">
