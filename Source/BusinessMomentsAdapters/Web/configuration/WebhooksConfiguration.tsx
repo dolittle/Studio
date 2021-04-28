@@ -124,6 +124,7 @@ export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undef
                 <Dropdown placeholder="Select"
                     options={authenticationOptions}
                     onChange={authTypeChanged}
+                    dropdownWidth="auto"
                 />
             </Stack>
 
