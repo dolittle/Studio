@@ -10,6 +10,7 @@ import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 import { Editor as BusinessMomentEditor } from './moments/BusinessMomentEditor';
 import { Editor as EntityEditor } from './moments/EntityEditor';
 import { Create as Microservice } from './micoservice/Microservice';
+import { Microservice } from './micoservice/BusinessMomentsAdaptor';
 
 export const App = () => {
     let itemsWithHref: IBreadcrumbItem[] = [
@@ -43,7 +44,7 @@ export const App = () => {
                                 <a href="/connectors">Connectors</a>
                             </li>
                             <li>
-                                <a href="/microservice/business-miner">Create Business Miner</a>
+                                <a href="/microservice/create">Create Microservice</a>
                             </li>
 
                             <li>
@@ -67,7 +68,7 @@ export const App = () => {
                     <h1>TODO: List connectors</h1>
                 </Route>
 
-                <Route exact path="/microservice/business-miner">
+                <Route exact path="/microservice/create">
                     <Microservice />
                 </Route>
 
