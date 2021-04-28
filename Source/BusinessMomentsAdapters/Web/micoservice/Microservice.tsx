@@ -48,19 +48,19 @@ export const Create: React.FunctionComponent = () => {
 
 
                 {microserviceTypeState === 'business-miner' && (
-                    <Stack horizontal tokens={stackTokens}>
+                    <Stack tokens={stackTokens}>
                         <BusinessMomentsAdaptor />
                     </Stack>
                 )}
 
                 {microserviceTypeState === 'static-site' && (
-                    <Stack horizontal tokens={stackTokens}>
+                    <Stack tokens={stackTokens}>
                         <StaticSite />
                     </Stack>
                 )}
 
                 {microserviceTypeState === 'dolittle-microservice' && (
-                    <Stack horizontal tokens={stackTokens}>
+                    <Stack tokens={stackTokens}>
                         <Simple />
                     </Stack>
                 )}

@@ -48,28 +48,26 @@ export const Microservice: React.FunctionComponent = () => {
 
     return (
         <>
+
             <Stack tokens={stackTokens}>
-                <Stack tokens={stackTokens}>
-                    <Text variant="xLarge" block>
-                        Please choose a connector type:
+                <Text variant="xLarge" block>
+                    Please choose a connector type:
                     </Text>
-                    <ChoiceGroup defaultValue={connectorTypeState} options={options} onChange={_onChange} label="Pick connector type" required={true} />
-                </Stack>
-
-                {connectorTypeState === 'webhook' && (
-                    <Stack horizontal tokens={stackTokens}>
-                        <WebhooksConfig connector={connector} />
-                    </Stack>
-                )}
-
-                {connectorTypeState === 'rest' && (
-                    <Stack horizontal tokens={stackTokens}>
-                        <RestConfig />
-                    </Stack>
-                )}
-
-
+                <ChoiceGroup defaultValue={connectorTypeState} options={options} onChange={_onChange} label="Pick connector type" required={true} />
             </Stack>
+
+            {connectorTypeState === 'webhook' && (
+                <Stack horizontal tokens={stackTokens}>
+                    <WebhooksConfig connector={connector} />
+                </Stack>
+            )}
+
+            {connectorTypeState === 'rest' && (
+                <Stack horizontal tokens={stackTokens}>
+                    <RestConfig />
+                </Stack>
+            )}
+
         </>
     );
 };
