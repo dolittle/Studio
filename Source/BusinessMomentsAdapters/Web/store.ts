@@ -39,7 +39,7 @@ const db = {
     connectors: [
         {
             id: 'm3-webhook-1-basic',
-            name: 'M3 Webhook Connector',
+            name: 'M3 Webhook Connector Basic',
             kind: 'webhook',
             config: {
                 domain: '',
@@ -53,7 +53,7 @@ const db = {
         },
         {
             id: 'm3-webhook-1-bearer',
-            name: 'M3 Webhook Connector',
+            name: 'M3 Webhook Connector Bearer',
             kind: 'webhook',
             config: {
                 domain: '',
@@ -67,15 +67,16 @@ const db = {
     ],
     entities: [
         {
-            id: '',
-            name: '',
-            connectorId: '',
+            id: 'fake-entity-1',
+            name: 'All',
+            connectorId: 'm3-webhook-1-basic',
             filterCode: '',
             transformCode: ''
         }
     ]
 };
 
+// Connectors
 export function getConnectors(): Connector[] {
     return db.connectors;
 }
@@ -101,6 +102,23 @@ export function saveConnector(input: Connector) {
     return db.connectors;
 }
 
+
+// Entities
+// TODO Get entities, should be linked to a connector? hmm baby steps
+export function getEntities(): Entity[] {
+    return db.entities;
+}
+
+export function getEntitiesByConnector(id: string): Entity[] {
+    return db.entities.filter(e => e.connectorId === id);
+}
+
+export function getEntity(id: string): Entity | undefined {
+    const found = db.entities.find(c => {
+        return c.id === id;
+    });
+    return found;
+}
 
 export function saveEntity(entity: Entity): boolean {
     console.log(entity);

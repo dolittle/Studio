@@ -65,6 +65,7 @@ export const Editor: React.FunctionComponent = () => {
                 </Stack>
                 <Stack horizontal tokens={stackTokens}>
                     <Dropdown placeholder="Select"
+                        dropdownWidth="auto"
                         label="Connector:"
                         options={_connectors}
                         onChange={(e, v) => {

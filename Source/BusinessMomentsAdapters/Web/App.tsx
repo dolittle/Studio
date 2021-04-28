@@ -10,7 +10,6 @@ import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 import { Editor as BusinessMomentEditor } from './moments/BusinessMomentEditor';
 import { Editor as EntityEditor } from './moments/EntityEditor';
 import { Create as Microservice } from './micoservice/Microservice';
-import { Microservice } from './micoservice/BusinessMomentsAdaptor';
 
 export const App = () => {
     let itemsWithHref: IBreadcrumbItem[] = [

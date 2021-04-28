@@ -11,6 +11,7 @@ import { Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 
 
 import CodeEditor, { useMonaco } from '@monaco-editor/react';
+import { getConnectors, getEntities, getEntitiesByConnector } from '../store';
 
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
@@ -32,18 +33,38 @@ export const Editor: React.FunctionComponent = () => {
         setOutputScreen(item!.props.headerText as string);
     };
 
+    const [connectorIdState, setConnectorIdState] = React.useState('');
+    const connectors = getConnectors().map(connector => {
+        return { key: connector.id, text: connector.name } as IDropdownOption;
+    });
+
+    const connectorChanged = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => {
+        setConnectorIdState(option!.key as string);
+    };
+
+    let entities = [] as IDropdownOption[];
+
+    if (connectorIdState) {
+        entities = getEntitiesByConnector(connectorIdState).map(entity => {
+            return { key: entity.id, text: entity.name } as IDropdownOption;
+        });
+    }
+
     return (
         <>
             <Stack tokens={stackTokens}>
                 <Stack horizontal tokens={stackTokens}>
                     <Dropdown placeholder="Select"
+                        dropdownWidth="auto"
                         label="Connector"
-                        options={[]}
+                        options={connectors}
+                        onChange={connectorChanged}
                     />
 
                     <Dropdown placeholder="Select"
+                        dropdownWidth="auto"
                         label="Entity"
-                        options={[]}
+                        options={entities}
                     />
 
                     <PrimaryButton text="Add Entity" />
