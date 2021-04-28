@@ -9,7 +9,7 @@ import { Route, useHistory, BrowserRouter } from 'react-router-dom';
 import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 import { Editor as BusinessMomentEditor } from './moments/BusinessMomentEditor';
 import { Editor as EntityEditor } from './moments/EntityEditor';
-import { Create as Microservice } from './moments/Microservice';
+import { Create as Microservice } from './micoservice/Microservice';
 
 export const App = () => {
     let itemsWithHref: IBreadcrumbItem[] = [
