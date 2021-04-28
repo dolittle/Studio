@@ -40,7 +40,7 @@ export const Create: React.FunctionComponent = () => {
                     <Text variant="xLarge" block>
                         What type of microservice would you like to create?
                     </Text>
-                    <Dropdown placeholder="Select" defaultSelectedKey=""
+                    <Dropdown placeholder="Select" defaultSelectedKey={microserviceTypeState}
                         options={microserviceTypes}
                         onChange={_onChange}
                     />

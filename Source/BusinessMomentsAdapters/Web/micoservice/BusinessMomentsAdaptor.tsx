@@ -53,7 +53,7 @@ export const Microservice: React.FunctionComponent = () => {
                     <Text variant="xLarge" block>
                         Please choose a connector type:
                     </Text>
-                    <ChoiceGroup options={options} onChange={_onChange} label="Pick connector type" required={true} />
+                    <ChoiceGroup defaultValue={connectorTypeState} options={options} onChange={_onChange} label="Pick connector type" required={true} />
                 </Stack>
 
                 {connectorTypeState === 'webhook' && (
