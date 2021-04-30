@@ -11,7 +11,7 @@ import { Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 
 
 import CodeEditor, { useMonaco } from '@monaco-editor/react';
-import { getConnectors, getEntities, getEntitiesByConnector } from '../store';
+import { getConnectors, getEntitiesByConnector } from '../store';
 
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };

@@ -1,6 +1,5 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
 export type ConnectorWebhookConfigBearer = {
     token: string
 };
@@ -33,6 +32,31 @@ export type Entity = {
     connectorId: string
     filterCode: string
     transformCode: string
+};
+
+export type MicroserviceDolittle = {
+    applicationId: string
+    tenantId: string
+    microserviceId: string
+};
+
+export type MicroserviceIngressPath = {
+    path: string
+    pathType: string
+};
+
+export type MicroserviceSimple = {
+    dolittle: MicroserviceDolittle
+    name: string
+    kind: string
+    extra: MicroserviceSimpleExtra
+};
+
+export type MicroserviceSimpleExtra = {
+    headImage: string
+    runtimeImage: string
+    environment: string
+    ingress: MicroserviceIngressPath
 };
 
 const db = {
@@ -104,11 +128,6 @@ export function saveConnector(input: Connector) {
 
 
 // Entities
-// TODO Get entities, should be linked to a connector? hmm baby steps
-export function getEntities(): Entity[] {
-    return db.entities;
-}
-
 export function getEntitiesByConnector(id: string): Entity[] {
     return db.entities.filter(e => e.connectorId === id);
 }
@@ -129,3 +148,33 @@ export function saveEntity(entity: Entity): boolean {
 export function getRawLogs(): any[] {
     return [];
 }
+
+// Microservice
+export async function createMicroservice(kind: string, input: any): Promise<boolean> {
+    if (kind !== 'simple') {
+        alert('TODO');
+        return false;
+    }
+
+    console.log(input as MicroserviceSimple);
+    // TODO parse in URI
+    // TODO tenant in header
+    const result = await fetch('http://localhost:8080/microservice', {
+        method: 'POST',
+        body: JSON.stringify(input),
+        mode: 'cors',
+        headers: {
+            'content-type': 'application/json',
+            'x-tenant': (input.dolittle as MicroserviceDolittle).tenantId // TODO this is not correct
+        }
+    });
+    const jsonResult = await result.json();
+    console.log(jsonResult);
+    return true;
+}
+
+//
+export function getMicroserviceById(id: string): boolean {
+    return true;
+}
+
