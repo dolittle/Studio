@@ -33,5 +33,5 @@ jobs:
         id: vars
         run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
 
-      - name: Image digest
+      - name: What is the tag
         run: echo ${{ steps.vars.outputs.tag }}
