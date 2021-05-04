@@ -40,6 +40,13 @@ jobs:
       - name: What is the tag?
         run: echo ${{ steps.vars.outputs.sha_short }}
 
+      - name: Login to ACR
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.CONTAINER_REGISTRY }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
       - name: Build Docker image
         working-directory: ${{ env.BACKEND }}
         run: |
