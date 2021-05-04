@@ -42,6 +42,10 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
+      - name: Get Docker Caches
+        run: |
+          echo ${{ github.ref }}
+
       - name: Build Docker image
         working-directory: ${{ env.BACKEND }}
         run: |
