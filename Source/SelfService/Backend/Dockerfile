@@ -14,6 +14,7 @@ RUN go mod download
 FROM build_base AS build
 WORKDIR /src
 COPY --from=build_base /src .
+RUN true
 COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o cli .
