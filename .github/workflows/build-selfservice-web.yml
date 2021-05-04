@@ -1,18 +1,18 @@
-name: Build SelfService Backend
+name: Build SelfService Web
 
 on:
   push:
     branches:
       - "**"
     paths:
-      - "Source/SelfService/Backend/**"
-      - ".github/workflows/build-selfservice-backend.yml"
+      - "Source/SelfService/Web/**"
+      - ".github/workflows/build-selfservice-web.yml"
 
 env:
   CONTAINER_REGISTRY: 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io
-  DOCKER_IMAGE_TAG: "dolittle/studio/self-service-backend"
-  DOCKER_FILE: "Source/SelfService/Backend/Dockerfile"
-  BACKEND: "Source/SelfService/Backend"
+  DOCKER_IMAGE_TAG: "dolittle/studio/self-service-web"
+  DOCKER_FILE: "Source/SelfService/Web/Dockerfile"
+  BACKEND: "Source/SelfService/Web"
 
 jobs:
   build:
@@ -22,11 +22,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Go
-        uses: actions/setup-go@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
         with:
-          go-version: '1.16.3'
-      - run: go version
+          node-version: 14.x
+          registry-url: "https://registry.npmjs.org"
+      - name: Build
+        run: |
+          export NODE_OPTIONS="--max-old-space-size=4096"
+          yarn
+          cd Source/Data/Web
+          yarn ci
 
       - name: Get git branch name
         run: echo "::set-output name=branch::$(echo ${GITHUB_REF##*/})"
