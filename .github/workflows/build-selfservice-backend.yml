@@ -48,13 +48,34 @@ jobs:
 
       - name: Get Docker Caches
         run: |
-          echo ${{ github.ref }} ${{ steps.extract_branch.outputs.branch }}
+          docker pull ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.extract_branch.outputs.branch }}-build_base || true
+          docker pull ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.extract_branch.outputs.branch }}-build || true
+
+      - name: Build Docker image build_base
+        working-directory: ${{ env.BACKEND }}
+        run: |
+          docker build . \
+          --target build_base \
+          --tag ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.extract_branch.outputs.branch }}-build_base
+
+      - name: Build Docker image build
+        working-directory: ${{ env.BACKEND }}
+        run: |
+          docker build . \
+          --target build \
+          --cache-from=${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.extract_branch.outputs.branch }}-build_base \
+          --tag ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.extract_branch.outputs.branch }}-build
 
       - name: Build Docker image
         working-directory: ${{ env.BACKEND }}
         run: |
-          docker build .  --tag ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
+          docker build . \
+          --cache-from=${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.extract_branch.outputs.branch }}-build_base \
+          --cache-from=${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.extract_branch.outputs.branch }}-build \
+          --tag ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
 
-      - name: Push Docker image
+      - name: Push Docker images
         run: |
+          docker push ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.extract_branch.outputs.branch }}-build_base
+          docker push ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.extract_branch.outputs.branch }}-build
           docker push ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
