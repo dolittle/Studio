@@ -12,6 +12,7 @@ env:
   CONTAINER_REGISTRY: 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io
   DOCKER_IMAGE_TAG: "dolittle/studio/self-service"
   DOCKER_FILE: "Source/SelfService/Backend/Dockerfile"
+  BACKEND: "Source/SelfService/Backend"
 
 jobs:
   build:
@@ -40,6 +41,7 @@ jobs:
         run: echo ${{ steps.vars.outputs.sha_short }}
 
       - name: Build Docker image
+        working-directory: ${{ env.BACKEND }}
         run: |
           docker build . --file ${{ env.DOCKER_FILE }} --tag ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
 
