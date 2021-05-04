@@ -43,7 +43,7 @@ jobs:
       - name: Build Docker image
         working-directory: ${{ env.BACKEND }}
         run: |
-          docker build . --file ${{ env.DOCKER_FILE }} --tag ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
+          docker build .  --tag ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
 
       - name: Push Docker image
         run: |
