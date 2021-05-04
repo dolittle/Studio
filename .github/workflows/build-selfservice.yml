@@ -30,8 +30,8 @@ jobs:
           creds: ${{secrets.AZURE_CREDENTIALS}}
 
       - name: Get the version
-          id: vars
-          run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+        id: vars
+        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
 
       - name: Image digest
         run: echo ${{ steps.vars.outputs.tag }}
