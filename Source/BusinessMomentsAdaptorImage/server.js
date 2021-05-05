@@ -1,7 +1,7 @@
 // Require express and body-parser
 const express = require("express")
 const bodyParser = require("body-parser")
-global.atob = require("atob");
+//global.atob = require("atob");
 
 // Initialize express and define a port
 const app = express()
