@@ -1,0 +1,12 @@
+version: '2'
+services:
+    server:
+        build: .
+        command: node server.js
+        volumes:
+            - .:/usr/app/
+            - /usr/app/node_modules
+        ports:
+            - '3008:3008'
+        environment:
+            WH_TOKEN: bTM6am9obmNhcm1hY2s=
