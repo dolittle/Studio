@@ -13,13 +13,13 @@ const PORT = 3008
 app.use(bodyParser.json());
 
 app.post("/api/webhooks-ingestor", (req, res) => {
-    console.log('START');
-    if (atob(req.headers.authorization.split(" ")[1])===process.env.WH_USERNAME+":"+process.env.WH_PASSWORD){
+    console.log(req.headers.authorization);
+    if (req.headers.authorization.split(" ")[1]===process.env.WH_TOKEN){
         console.log(req.body) // Call your action on the request here
         res.status(200).end() // Responding is important
     }
     else{
-        throw 'Authentication failed.';
+        res.status(401).end();
     }
 
   })
