@@ -1,11 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-
-declare var process: {
-    env: {
-        WH_AUTHORIZATION: string;
-    };
-};
+import process from 'process';
 
 // Initialize express and define a port
 const app = express();
@@ -25,4 +20,9 @@ app.post('/api/webhooks-ingestor', (req: any, res: any) => {
 });
 
 // Start express on the defined port
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+if (process.env.WH_AUTHORIZATION) {
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+} else {
+    console.log('WH_AUTHORIZATION is not set.');
+    process.exit(1);
+}
