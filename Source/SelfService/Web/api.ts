@@ -1,6 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { MicroserviceDolittle, MicroserviceSimple } from './store';
+
 
 export type ShortInfo = {
     id: string
@@ -61,6 +63,20 @@ export async function getMicroservices(applicationId: string): Promise<HttpRespo
     return jsonResult;
 }
 
+export async function saveSimpleMicroservice(input: MicroserviceSimple): Promise<boolean> {
+    const result = await fetch('http://localhost:8080/microservice', {
+        method: 'POST',
+        body: JSON.stringify(input),
+        mode: 'cors',
+        headers: {
+            'content-type': 'application/json',
+            'x-tenant': (input.dolittle as MicroserviceDolittle).tenantId // TODO this is not correct
+        }
+    });
+    const jsonResult = await result.json();
+    console.log(jsonResult);
+    return true;
+}
 
 export async function getPodStatus(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponsePodStatus> {
     const uri = `/live/application/${applicationId}/microservices/${microserviceId}/podstatus/${environment}`;

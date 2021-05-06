@@ -68,6 +68,14 @@ export const App = () => {
                 window.location.href = '/entity/editor';
             },
         },
+        {
+            key: 'showQuick',
+            text: 'Quick Links',
+            iconProps: { iconName: 'Thunderstorms' },
+            onClick: () => {
+                window.location.href = '/quick';
+            },
+        },
     ];
 
     return (

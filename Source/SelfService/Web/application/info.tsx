@@ -21,8 +21,8 @@ async function getInfo(tenantId: string, applicationId: string): Promise<string>
     console.log(`//TODO lookup info tenant: ${tenantId} application: ${applicationId}`);
 
     const info = {
-        acrId: '453e04a74f9d42f2b36cd51fa2c83fa3',
-        subscriptionId: 'e7220048-8a2c-4537-994b-6f9b320692d7',
+        acrId: '453e04a74f9d42f2b36cd51fa2c83fa3', // Get from tenantId
+        subscriptionId: 'e7220048-8a2c-4537-994b-6f9b320692d7', // Is in terraform output
         exampleRepo: 'taco/order'
     } as RegistryInfo;
 
