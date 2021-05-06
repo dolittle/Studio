@@ -20,13 +20,11 @@ const PORT = 3008;
 app.use(bodyParser.json());
 
 app.post('/api/webhooks-ingestor', (req, res) => {
-    if (process.env.WH_AUTHORIZATION) {
-        if (req.headers.authorization === process.env.WH_AUTHORIZATION) {
-            console.log(req.body); // Call your action on the request here
-            res.status(200).end(); // Responding is important
-        } else {
-            res.status(401).end();
-        }
+    if (req.headers.authorization === process.env.WH_AUTHORIZATION) {
+        console.log(req.body); // Call your action on the request here
+        res.status(200).end(); // Responding is important
+    } else {
+        res.status(401).end();
     }
 });
 
