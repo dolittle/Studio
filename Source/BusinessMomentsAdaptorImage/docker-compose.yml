@@ -2,7 +2,7 @@ version: '2'
 services:
     server:
         build: .
-        command: node server.js
+        command: yarn ts-node server.ts
         volumes:
             - .:/usr/app/
             - /usr/app/node_modules
