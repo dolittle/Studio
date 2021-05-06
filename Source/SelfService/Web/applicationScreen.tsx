@@ -63,7 +63,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
 
             <PrimaryButton text="Create New Microservice" onClick={(e => {
                 console.log('Create microservice');
-                window.location.href = '/microservice/create';
+                window.location.href = `/application/${data.application.id}/microservice/create`;
             })} />
 
 

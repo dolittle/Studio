@@ -174,7 +174,8 @@ export async function createMicroservice(kind: string, input: any): Promise<bool
 }
 
 //
-export function getMicroserviceById(id: string): boolean {
-    return true;
-}
 
+export function getTenant(): string {
+    //const tenantId = 'fe7736bb-57fc-4166-bb91-6954f4dd4eb7';
+    return '453e04a7-4f9d-42f2-b36c-d51fa2c83fa3';
+}

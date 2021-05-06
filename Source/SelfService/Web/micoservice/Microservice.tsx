@@ -20,7 +20,15 @@ import { Microservice as StaticSite } from './StaticSite';
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
-export const Create: React.FunctionComponent = () => {
+type Props = {
+    applicationId?: string
+    tenantId?: string
+    environments?: string[]
+};
+
+export const Create: React.FunctionComponent<Props | undefined> = (props) => {
+    console.log('props', props);
+
     const [microserviceTypeState, setMicroserviceTypeState] = React.useState('');
 
     const microserviceTypes: IDropdownOption[] = [

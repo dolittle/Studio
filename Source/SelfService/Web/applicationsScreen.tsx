@@ -6,6 +6,7 @@ import { List } from '@fluentui/react/lib/List';
 import { Link, Text } from '@fluentui/react';
 
 import { getApplications, HttpResponseApplications, ShortInfo, HttpResponseMicroservices } from './api';
+import { getTenant } from './store';
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
     const [data, setData] = useState({
@@ -15,8 +16,8 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
     } as HttpResponseApplications);
 
     // TODO handle when not 200!
-    //const tenantId = 'fe7736bb-57fc-4166-bb91-6954f4dd4eb7';
-    const tenantId = '453e04a7-4f9d-42f2-b36c-d51fa2c83fa3';
+    const tenantId = getTenant();
+
     useEffect(() => {
         getApplications(tenantId).then(data => {
             // If only 1 item redirect

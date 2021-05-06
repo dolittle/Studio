@@ -12,6 +12,7 @@ import { Editor as EntityEditor } from './moments/EntityEditor';
 import { Create as Microservice } from './micoservice/Microservice';
 import { ApplicationScreen } from './applicationScreen';
 import { ApplicationsScreen } from './applicationsScreen';
+import { MicroserviceNewScreen } from './microserviceNewScreen';
 
 export const App = () => {
     let itemsWithHref: IBreadcrumbItem[] = [
@@ -91,6 +92,9 @@ export const App = () => {
                 </Route>
                 <Route exact path="/application/:id">
                     <ApplicationScreen />
+                </Route>
+                <Route exact path="/application/:id/microservice/create">
+                    <MicroserviceNewScreen />
                 </Route>
             </BrowserRouter>
         </>
