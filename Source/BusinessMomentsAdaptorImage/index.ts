@@ -1,9 +1,5 @@
-// Require express and body-parser
-
-declare function require(name: string);
-
-const express = require('express');
-const bodyParser = require('body-parser');
+import express from 'express';
+import bodyParser from 'body-parser';
 
 declare var process: {
     env: {
@@ -19,7 +15,7 @@ const PORT = 3008;
 
 app.use(bodyParser.json());
 
-app.post('/api/webhooks-ingestor', (req, res) => {
+app.post('/api/webhooks-ingestor', (req: any, res: any) => {
     console.log(req.headers.authorization);
     if (req.headers.authorization.split(' ')[1] === process.env.WH_TOKEN) {
         console.log(req.body); // Call your action on the request here
