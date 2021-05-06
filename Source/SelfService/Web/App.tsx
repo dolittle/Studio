@@ -78,7 +78,7 @@ export const App = () => {
                     <Microservice />
                 </Route>
 
-                <Route exact path="/connector/edit/:id">
+                <Route exact path="/connector/edit/:connectorId">
                     <WebhooksConfig />
                 </Route>
                 <Route path="/business-moments/editor">
@@ -90,10 +90,10 @@ export const App = () => {
                 <Route exact path="/applications">
                     <ApplicationsScreen />
                 </Route>
-                <Route exact path="/application/:id">
+                <Route exact path="/application/:applicationId">
                     <ApplicationScreen />
                 </Route>
-                <Route exact path="/application/:id/microservice/create">
+                <Route exact path="/application/:applicationId/microservice/create">
                     <MicroserviceNewScreen />
                 </Route>
             </BrowserRouter>

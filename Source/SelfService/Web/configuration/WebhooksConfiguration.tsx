@@ -25,29 +25,22 @@ type WebhooksConfigProps = {
 
 export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undefined> = (props) => {
     console.log(props, props!.connector);
-    const { id } = useParams() as any;
+    const { connectorId } = useParams() as any;
     let action = 'upsert';
     let actionText = 'Save';
     // TODO ugly going on here due to undefined
-    const connector = id ? getConnector(id)! : {
-        id: '',
-        name: '',
-        kind: 'webhook',
-        config: {
-            domain: '',
-            uriPrefix: '',
-            kind: '',
-            config: {}
-        }
-    } as Connector;
+    const connector = getConnector(connectorId);
 
-    if (id && !connector) {
+    if (connectorId && connectorId !== connector.id) {
+        // TODO I feel we need a better experience here, just adding base logic for now
+        return (
+            <h1>Connector could not be found</h1>
+        );
+    }
+
+    if (connector.id === '') {
         action = 'insert';
         actionText = 'Create';
-        // TODO I feel we need a better experience here, just adding base logic for now
-        //return (
-        //    <h1>Connector could not be found</h1>
-        //);
     }
 
     const [authOptionState, setAuthOptionState] = React.useState(connector?.config.kind);

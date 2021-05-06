@@ -16,8 +16,7 @@ const stackTokens = { childrenGap: 15 };
 export const MicroserviceNewScreen: React.FunctionComponent = () => {
 
     const tenantId = getTenant();
-    const { id } = useParams() as any;
-    const applicationId = id;
+    const { applicationId } = useParams() as any;
 
     const [data, setData] = useState({
         application: {

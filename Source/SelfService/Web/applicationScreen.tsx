@@ -12,8 +12,7 @@ import { getMicroservices, HttpResponseMicroservices, ShortInfoWithEnvironment }
 
 
 export const ApplicationScreen: React.FunctionComponent = () => {
-    const { id } = useParams() as any;
-    const applicationId = id;
+    const { applicationId } = useParams() as any;
     const [data, setData] = useState({
         application: {
             name: '',

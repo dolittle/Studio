@@ -105,11 +105,26 @@ export function getConnectors(): Connector[] {
     return db.connectors;
 }
 
-export function getConnector(id: string): Connector | undefined {
+export function getConnector(id: string): Connector {
     const found = db.connectors.find(c => {
         return c.id === id;
     });
-    return found;
+
+    if (found) {
+        return found;
+    }
+
+    return {
+        id: '',
+        name: '',
+        kind: 'webhook',
+        config: {
+            domain: '',
+            uriPrefix: '',
+            kind: '',
+            config: {}
+        }
+    };
 }
 
 export function saveConnector(input: Connector) {
