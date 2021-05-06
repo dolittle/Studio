@@ -10,6 +10,8 @@ import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 import { Editor as BusinessMomentEditor } from './moments/BusinessMomentEditor';
 import { Editor as EntityEditor } from './moments/EntityEditor';
 import { Create as Microservice } from './micoservice/Microservice';
+import { ApplicationScreen } from './applicationScreen';
+import { ApplicationsScreen } from './applicationsScreen';
 
 export const App = () => {
     let itemsWithHref: IBreadcrumbItem[] = [
@@ -40,6 +42,9 @@ export const App = () => {
                         <h1>Would you like to play a game</h1>
                         <ul>
                             <li>
+                                <a href="/applications">/applications</a>
+                            </li>
+                            <li>
                                 <a href="/connectors">Connectors</a>
                             </li>
                             <li>
@@ -59,6 +64,7 @@ export const App = () => {
                             <li>
                                 <a href="/entity/editor">/entity/editor</a>
                             </li>
+
                         </ul>
                     </div>
                 </Route>
@@ -79,6 +85,12 @@ export const App = () => {
                 </Route>
                 <Route path="/entity/editor">
                     <EntityEditor />
+                </Route>
+                <Route exact path="/applications">
+                    <ApplicationsScreen />
+                </Route>
+                <Route exact path="/application/:id">
+                    <ApplicationScreen />
                 </Route>
             </BrowserRouter>
         </>

@@ -20,22 +20,6 @@ RUN yarn
 
 COPY Source/Data/microservice.json /app/Source/Data/microservice.json
 
-# Backend Build
-FROM node:14.2.0 AS backend-build
-
-WORKDIR /app
-
-COPY --from=shared-build /app/ ./
-
-WORKDIR /app/Source/Data/Backend
-COPY Source/Data/Backend/package.json ./package.json
-RUN yarn
-
-COPY Source/Shared /app/Source/Shared/
-COPY Source/Data/Backend/ ./
-
-RUN yarn build
-
 # Web Build
 FROM node:14.2.0 AS web-build
 WORKDIR /app
@@ -57,14 +41,6 @@ ARG CONFIGURATION=Release
 RUN echo Configuration = $CONFIGURATION
 
 WORKDIR /app
-COPY --from=backend-build /app/Source/Data/Backend/dist/index.js ./
-COPY --from=backend-build /app/Source/Data/Backend/vanir.json ./
-COPY --from=backend-build /app/node_modules/swagger-ui-dist/swagger-ui.css ./public/api/Data/swagger/
-COPY --from=backend-build /app/node_modules/swagger-ui-dist/swagger-ui-standalone-preset.js ./public/api/Data/swagger/
-COPY --from=backend-build /app/node_modules/swagger-ui-dist/swagger-ui-bundle.js ./public/api/Data/swagger/
-COPY --from=backend-build /app/node_modules/swagger-ui-dist/favicon-16x16.png ./public/api/Data/swagger/
-COPY --from=backend-build /app/node_modules/swagger-ui-dist/favicon-32x32.png ./public/api/Data/swagger/
-COPY --from=backend-build /app/Source/Data/Backend/swagger.json ./
-COPY --from=web-build /app/Source/Data/Web/wwwroot ./public
+COPY --from=web-build /app/Source/SelfService/Web/wwwroot ./public
 
 ENTRYPOINT ["node", "index.js"]
