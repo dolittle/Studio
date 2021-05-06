@@ -9,4 +9,4 @@ services:
         ports:
             - '3008:3008'
         environment:
-            WH_TOKEN: bTM6am9obmNhcm1hY2s=
+            WH_AUTHORIZATION: 'Basic bTM6am9obmNhcm1hY2s='
