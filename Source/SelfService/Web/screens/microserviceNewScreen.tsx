@@ -7,14 +7,13 @@ import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
 import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react/lib/ChoiceGroup';
 
-import { Create as Microservice } from './micoservice/Microservice';
-import { getMicroservices, HttpResponseMicroservices } from './api';
-import { getTenant } from './store';
+import { Create as Microservice } from '../micoservice/Microservice';
+import { getMicroservices, HttpResponseMicroservices } from '../api';
+import { getTenant } from '../store';
 
 const stackTokens = { childrenGap: 15 };
 
 export const MicroserviceNewScreen: React.FunctionComponent = () => {
-
     const tenantId = getTenant();
     const { applicationId } = useParams() as any;
 
@@ -34,7 +33,6 @@ export const MicroserviceNewScreen: React.FunctionComponent = () => {
         });
     }, []);
 
-
     const options: IChoiceGroupOption[] = [...new Set(data.microservices.map(item => item.environment))].map(environment => {
         return { key: environment.toLowerCase(), text: environment };
     });
@@ -42,7 +40,6 @@ export const MicroserviceNewScreen: React.FunctionComponent = () => {
     function _onChange(ev?: React.FormEvent<HTMLElement | HTMLInputElement>, option?: IChoiceGroupOption): void {
         setEnvironment(option!.text as string);
     }
-
 
     return (
         <>

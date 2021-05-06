@@ -5,8 +5,8 @@ import React, { useState, useEffect } from 'react';
 import { List } from '@fluentui/react/lib/List';
 import { Link, Text } from '@fluentui/react';
 
-import { getApplications, HttpResponseApplications, ShortInfo, HttpResponseMicroservices } from './api';
-import { getTenant } from './store';
+import { getApplications, HttpResponseApplications, ShortInfo, HttpResponseMicroservices } from '../api';
+import { getTenant } from '../store';
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
     const [data, setData] = useState({

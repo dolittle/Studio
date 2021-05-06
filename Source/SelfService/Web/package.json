@@ -1,5 +1,5 @@
 {
-    "name": "businessmomentsadapters.web",
+    "name": "selfservice.web",
     "version": "1.0.0",
     "description": "",
     "private": true,
@@ -15,8 +15,11 @@
         "ci": "yarn clean && yarn lint:ci && yarn build"
     },
     "dependencies": {
+        "@monaco-editor/react": "^4.1.3",
         "@shared/styles": "1.0.0",
-        "@shared/web": "1.0.0"
+        "@shared/web": "1.0.0",
+        "react-markdown": "^6.0.2",
+        "remark-gfm": "^1.0.0"
     },
     "devDependencies": {}
 }

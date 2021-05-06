@@ -4,12 +4,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import { List } from '@fluentui/react/lib/List';
 import { Link, Text } from '@fluentui/react';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
+import { Stack } from '@fluentui/react/lib/Stack';
 
-import { getMicroservices, HttpResponseMicroservices, ShortInfoWithEnvironment } from './api';
+import { getMicroservices, HttpResponseMicroservices, ShortInfoWithEnvironment } from '../api';
+import { ApplicationInfo } from '../application/info';
 
+const stackTokens = { childrenGap: 15 };
 
 export const ApplicationScreen: React.FunctionComponent = () => {
     const { applicationId } = useParams() as any;
@@ -49,16 +53,38 @@ export const ApplicationScreen: React.FunctionComponent = () => {
     const microserviceRow = (item?: ShortInfoWithEnvironment, index?: number | undefined): JSX.Element => {
         const microservice = item!;
         return (
-            <Text>
-                {microservice.name}
-            </Text>
+            <Stack horizontal tokens={stackTokens}>
+                <Text>
+                    {microservice.name}
+                </Text>
+
+                <Link href={`/application/${data.application.id}/microservice/view/${microservice.id}`} underline>
+                    view
+                </Link>
+
+            </Stack>
+
         );
     };
 
+    const _items: ICommandBarItemProps[] = [
+        {
+            key: 'showContainerRegistryInfo',
+            text: 'Show Container Registry Info',
+            iconProps: { iconName: 'Info' },
+            onClick: () => {
+                window.location.href = `/application/${data.application.id}/container-registry-info`;
+            },
+        }
+    ];
+
     return (
         <>
-            <h1>Application Screen</h1>
-            <p title={`${data.application.name} (${data.application.id})`}>{data.application.name}</p>
+            <h3>Application Screen</h3>
+            <h1 title={`${data.application.name} (${data.application.id})`}>{data.application.name}</h1>
+
+            <CommandBar items={_items} />
+
 
             <PrimaryButton text="Create New Microservice" onClick={(e => {
                 console.log('Create microservice');
@@ -66,12 +92,12 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             })} />
 
 
-            <h1>Environment</h1>
+            <h2>Environment</h2>
             <List items={environments} onRenderCell={environmentRow} />
 
             {environment !== '' && (
                 <>
-                    <h1>Microservices</h1>
+                    <h3>Microservices</h3>
                     <List items={data.microservices
                         .filter(microservice => microservice.environment === environment)}
                         onRenderCell={microserviceRow} />

@@ -24,6 +24,16 @@ export type HttpResponseMicroservices = {
     microservices: ShortInfoWithEnvironment[]
 };
 
+export type PodInfo = {
+    name: string
+    phase: string
+};
+
+export type HttpResponsePodStatus = {
+    namespace: string
+    microservice: ShortInfo
+    pods: PodInfo[]
+};
 
 export async function getApplications(tenantId: string): Promise<any> {
     const uri = `/live/tenant/${tenantId}/applications`;
@@ -47,6 +57,20 @@ export async function getMicroservices(applicationId: string): Promise<HttpRespo
         mode: 'cors'
     });
     const jsonResult: HttpResponseMicroservices = await result.json();
+
+    return jsonResult;
+}
+
+
+export async function getPodStatus(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponsePodStatus> {
+    const uri = `/live/application/${applicationId}/microservices/${microserviceId}/podstatus/${environment}`;
+    const url = `http://localhost:8080${uri}`;
+
+    const result = await fetch(url, {
+        method: 'GET',
+        mode: 'cors'
+    });
+    const jsonResult: HttpResponsePodStatus = await result.json();
 
     return jsonResult;
 }

@@ -4,15 +4,19 @@
 import React, { useEffect } from 'react';
 import { Breadcrumb, IBreadcrumbItem, IDividerAsProps } from '@fluentui/react/lib/Breadcrumb';
 
-
-import { Route, useHistory, BrowserRouter } from 'react-router-dom';
+import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
+import { Route, BrowserRouter } from 'react-router-dom';
 import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 import { Editor as BusinessMomentEditor } from './moments/BusinessMomentEditor';
 import { Editor as EntityEditor } from './moments/EntityEditor';
 import { Create as Microservice } from './micoservice/Microservice';
-import { ApplicationScreen } from './applicationScreen';
-import { ApplicationsScreen } from './applicationsScreen';
-import { MicroserviceNewScreen } from './microserviceNewScreen';
+import { ApplicationScreen } from './screens/applicationScreen';
+import { ApplicationsScreen } from './screens/applicationsScreen';
+import { MicroserviceNewScreen } from './screens/microserviceNewScreen';
+import { QuickScreen } from './screens/quickScreen';
+import { MicroserviceEditScreen } from './screens/microserviceEditScreen';
+import { MicroserviceViewScreen } from './screens/microserviceViewScreen';
+import { ContainerRegistryInfoScreen } from './screens/containerRegistryInfoScreen';
 
 export const App = () => {
     let itemsWithHref: IBreadcrumbItem[] = [
@@ -32,42 +36,47 @@ export const App = () => {
         return item;
     });
 
+    // Little hack to force redirect
+    if (['', '/'].includes(window.location.pathname)) {
+        window.location.href = '/applications';
+        return (<></>);
+    }
+
+
+    const _items: ICommandBarItemProps[] = [
+        {
+            key: 'showRoot',
+            text: 'Root',
+            iconProps: { iconName: 'Thunderstorms' },
+            onClick: () => {
+                window.location.href = '/';
+            },
+        },
+        {
+            key: 'showBusinessMomentsEditor',
+            text: 'Business Moments Editor',
+            iconProps: { iconName: 'Thunderstorms' },
+            onClick: () => {
+                window.location.href = '/business-moments/editor';
+            },
+        },
+        {
+            key: 'showEntityEditor',
+            text: 'Entity Editor',
+            iconProps: { iconName: 'Thunderstorms' },
+            onClick: () => {
+                window.location.href = '/entity/editor';
+            },
+        },
+    ];
+
     return (
         <>
             <BrowserRouter>
-                <Breadcrumb
-                    items={itemsWithHref}
-                />
-                <Route exact path="/">
-                    <div style={{ backgroundColor: '#c3c3c3' }}>
-                        <h1>Would you like to play a game</h1>
-                        <ul>
-                            <li>
-                                <a href="/applications">/applications</a>
-                            </li>
-                            <li>
-                                <a href="/connectors">Connectors</a>
-                            </li>
-                            <li>
-                                <a href="/microservice/create">Create Microservice</a>
-                            </li>
+                <CommandBar items={_items} />
 
-                            <li>
-                                <a href="/connector/edit/m3-webhook-1-basic">Edit Webhook connector (m3-webhook-1-basic)</a>
-                            </li>
-                            <li>
-                                <a href="/connector/edit/m3-webhook-1-bearer">Edit Webhook connector (m3-webhook-1-bearer)</a>
-                            </li>
-
-                            <li>
-                                <a href="/business-moments/editor">/business-moments/editor</a>
-                            </li>
-                            <li>
-                                <a href="/entity/editor">/entity/editor</a>
-                            </li>
-
-                        </ul>
-                    </div>
+                <Route exact path="/quick">
+                    <QuickScreen />
                 </Route>
 
                 <Route exact path="/connectors">
@@ -93,8 +102,17 @@ export const App = () => {
                 <Route exact path="/application/:applicationId">
                     <ApplicationScreen />
                 </Route>
+                <Route exact path="/application/:applicationId/container-registry-info">
+                    <ContainerRegistryInfoScreen />
+                </Route>
                 <Route exact path="/application/:applicationId/microservice/create">
                     <MicroserviceNewScreen />
+                </Route>
+                <Route exact path="/application/:applicationId/microservice/edit/:microserviceId">
+                    <MicroserviceEditScreen />
+                </Route>
+                <Route exact path="/application/:applicationId/microservice/view/:microserviceId">
+                    <MicroserviceViewScreen />
                 </Route>
             </BrowserRouter>
         </>
