@@ -70,20 +70,6 @@ export const Microservice: React.FunctionComponent = () => {
         setConnectorTypeState(option!.key as string);
     }
 
-
-
-    const connector = {
-        id: '',
-        name: '',
-        kind: 'webhook',
-        config: {
-            domain: '',
-            uriPrefix: '',
-            kind: '',
-            config: {}
-        }
-    } as Connector;
-
     return (
         <>
 
@@ -109,11 +95,3 @@ export const Microservice: React.FunctionComponent = () => {
         </>
     );
 };
-
-
-
-function _onSave(ms: MicroserviceBusinessMomentAdaptor): void {
-    console.log('onSave', ms);
-    createMicroservice(ms.kind, ms);
-}
-
