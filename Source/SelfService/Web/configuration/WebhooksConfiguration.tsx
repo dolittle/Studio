@@ -26,6 +26,7 @@ type WebhooksConfigProps = {
 // TODO how to pass in
 
 export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undefined> = (props) => {
+    const domain = 'freshteapot-taco.dolittle.cloud';
     const onSave = props!.onSave!;
     const action = props!.action!;
     const ms = props!.ms!;
@@ -34,15 +35,6 @@ export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undef
     //
     const { connectorId } = useParams() as any;
     let actionText = 'Create';
-    // TODO ugly going on here due to undefined
-    //const connector = getConnector(connectorId);
-    //
-    //if (connectorId && connectorId !== connector.id) {
-    //    // TODO I feel we need a better experience here, just adding base logic for now
-    //    return (
-    //        <h1>Connector could not be found</h1>
-    //    );
-    //}
 
     switch (action) {
         case 'insert':
@@ -73,6 +65,7 @@ export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undef
     const authTypeChanged = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => {
         // TODO Need to update the config for this kind as well
         connector.config.kind = option!.key as string;
+
 
         switch (connector.config.kind) {
             case 'basic':
@@ -124,15 +117,14 @@ export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undef
                 <Label>Endpoint</Label>
                 <TextField
                     styles={textFieldStyles}
-                    defaultValue="TODO"
+                    defaultValue={domain}
+                    disabled
                 />
                 <span>/</span>
                 <TextField
                     styles={textFieldStyles}
-                    defaultValue={connector.config.uriPrefix}
-                    onChange={(e, v) => {
-                        connector.config.uriPrefix = v!;
-                    }}
+                    defaultValue={ms.extra.ingress.path.substring(1)}
+                    disabled
                 />
             </Stack>
 
@@ -140,6 +132,7 @@ export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undef
                 <Label>Authentication</Label>
 
                 <Dropdown placeholder="Select"
+                    defaultSelectedKey={authOptionState}
                     options={authenticationOptions}
                     onChange={authTypeChanged}
                     dropdownWidth="auto"
