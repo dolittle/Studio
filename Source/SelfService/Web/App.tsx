@@ -19,6 +19,7 @@ import { MicroserviceViewScreen } from './screens/microserviceViewScreen';
 import { ContainerRegistryInfoScreen } from './screens/containerRegistryInfoScreen';
 import { PodViewScreen } from './screens/podViewScreen';
 import { getFakeMicroserviceBusinessMomentsAdaptor } from './store';
+import { LoginScreen } from './screens/loginScreen';
 
 export const App = () => {
     let itemsWithHref: IBreadcrumbItem[] = [
@@ -84,6 +85,10 @@ export const App = () => {
         <>
             <BrowserRouter>
                 <CommandBar items={_items} />
+
+                <Route exact path="/login">
+                    <LoginScreen />
+                </Route>
 
                 <Route exact path="/quick">
                     <QuickScreen />
