@@ -18,6 +18,7 @@ import { MicroserviceEditScreen } from './screens/microserviceEditScreen';
 import { MicroserviceViewScreen } from './screens/microserviceViewScreen';
 import { ContainerRegistryInfoScreen } from './screens/containerRegistryInfoScreen';
 import { PodViewScreen } from './screens/podViewScreen';
+import { getFakeMicroserviceBusinessMomentsAdaptor } from './store';
 
 export const App = () => {
     let itemsWithHref: IBreadcrumbItem[] = [
@@ -97,7 +98,7 @@ export const App = () => {
                 </Route>
 
                 <Route exact path="/connector/edit/:connectorId">
-                    <WebhooksConfig />
+                    <WebhooksConfig action='upsert' ms={getFakeMicroserviceBusinessMomentsAdaptor()} />
                 </Route>
                 <Route path="/business-moments/editor">
                     <BusinessMomentEditor />

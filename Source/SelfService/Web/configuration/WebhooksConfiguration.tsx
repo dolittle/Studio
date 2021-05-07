@@ -12,38 +12,50 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 import { BasicAuthComponent } from './BasicAuthComponent';
 import { BearerAuthComponent } from './BearerAuthComponent';
-import { getConnector, Connector, ConnectorWebhookConfigBearer, ConnectorWebhookConfigBasic } from '../store';
+import { getConnector, Connector, ConnectorWebhookConfigBearer, ConnectorWebhookConfigBasic, MicroserviceBusinessMomentAdaptorConnector, ConnectorWebhookConfig, MicroserviceBusinessMomentAdaptor, createMicroservice } from '../store';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
 
 type WebhooksConfigProps = {
-    connector?: Connector
+    action: string
+    ms?: MicroserviceBusinessMomentAdaptor
+    onSave?: (ms: MicroserviceBusinessMomentAdaptor) => void;
 };
 // TODO how to pass in
 
 export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undefined> = (props) => {
-    console.log(props, props!.connector);
+    const onSave = props!.onSave!;
+    const action = props!.action!;
+    const ms = props!.ms!;
+    const connector = ms.extra.connector.config as ConnectorWebhookConfig;
+    console.log('connector', connector);
+    //
     const { connectorId } = useParams() as any;
-    let action = 'upsert';
-    let actionText = 'Save';
+    let actionText = 'Create';
     // TODO ugly going on here due to undefined
-    const connector = getConnector(connectorId);
+    //const connector = getConnector(connectorId);
+    //
+    //if (connectorId && connectorId !== connector.id) {
+    //    // TODO I feel we need a better experience here, just adding base logic for now
+    //    return (
+    //        <h1>Connector could not be found</h1>
+    //    );
+    //}
 
-    if (connectorId && connectorId !== connector.id) {
-        // TODO I feel we need a better experience here, just adding base logic for now
-        return (
-            <h1>Connector could not be found</h1>
-        );
+    switch (action) {
+        case 'insert':
+            actionText = 'Create';
+            break;
+        case 'upsert':
+            actionText = 'Save';
+            break;
+
     }
 
-    if (connector.id === '') {
-        action = 'insert';
-        actionText = 'Create';
-    }
-
-    const [authOptionState, setAuthOptionState] = React.useState(connector?.config.kind);
+    const [authOptionState, setAuthOptionState] = React.useState(connector.kind);
+    const [configState, setConfigState] = React.useState(connector.config);
 
     let authenticationOptions: IDropdownOption[] = [
         { key: 'bearer', text: 'Bearer Token' },
@@ -65,21 +77,33 @@ export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undef
         switch (connector.config.kind) {
             case 'basic':
                 // Not sure this is perfect
-                connector.config.config = {} as ConnectorWebhookConfigBasic;
-                // TODO I am sure there is a better way
-                connector.config.config.username = '';
-                connector.config.config.password = '';
+                //connector.config = {} as ConnectorWebhookConfigBasic;
+                setConfigState({
+                    username: '',
+                    password: '',
+                });
+                //// TODO I am sure there is a better way
+                //connector.config.username = '';
+                //connector.config.password = '';
                 break;
             case 'bearer':
-                connector.config.config = {} as ConnectorWebhookConfigBearer;
-                connector.config.config.token = '';
+                //connector.config = {} as ConnectorWebhookConfigBearer;
+                //connector.config.token = '';
+                setConfigState({
+                    token: ''
+                });
+
                 break;
             default:
                 console.error('Kind not supported', connector.kind);
-                connector.config.config = {};
+                connector.config = {};
         }
 
         setAuthOptionState(option!.key as string);
+    };
+
+    const onUpdateConfig = (data: any) => {
+        ms.extra.connector.config = data;
     };
 
     return (
@@ -89,9 +113,9 @@ export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undef
                 <Label>Webhook name</Label>
                 <TextField
                     styles={textFieldStyles}
-                    defaultValue={connector?.name}
+                    defaultValue={ms.name}
                     onChange={(e, v) => {
-                        connector.name = v!;
+                        ms.name = v!;
                     }}
                 />
             </Stack>
@@ -105,13 +129,11 @@ export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undef
                 <span>/</span>
                 <TextField
                     styles={textFieldStyles}
-                    defaultValue={connector?.config.uriPrefix}
+                    defaultValue={connector.config.uriPrefix}
                     onChange={(e, v) => {
                         connector.config.uriPrefix = v!;
                     }}
                 />
-
-                <PrimaryButton text="Copy to clipboard" onClick={_copyToClipboard} />
             </Stack>
 
             <Stack horizontal tokens={stackTokens}>
@@ -125,24 +147,17 @@ export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undef
             </Stack>
 
             {authOptionState === 'basic' && (
-                <BasicAuthComponent {...connector!.config.config} />
+                <BasicAuthComponent {...connector.config} onUpdate={onUpdateConfig} />
             )}
 
             {authOptionState === 'bearer' && (
-                <BearerAuthComponent {...connector!.config.config} />
+                <BearerAuthComponent {...connector.config} onUpdate={onUpdateConfig} />
             )}
 
             <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
-                <PrimaryButton text={actionText} onClick={() => _onSave(connector)} />
+                <PrimaryButton text={actionText} onClick={() => onSave(ms)} />
             </Stack>
         </Stack>
     );
 };
 
-function _copyToClipboard(): void {
-    console.log('copy to clipboard');
-}
-
-function _onSave(connector: Connector): void {
-    console.log('onSave', connector);
-}

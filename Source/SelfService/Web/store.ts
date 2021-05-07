@@ -1,6 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { saveSimpleMicroservice } from './api';
+import { saveBusinessMomentsAdaptorMicroservice, saveSimpleMicroservice } from './api';
 
 export type ConnectorWebhookConfigBearer = {
     token: string
@@ -12,8 +12,8 @@ export type ConnectorWebhookConfigBasic = {
 };
 
 export type ConnectorWebhookConfig = {
-    domain: string
-    uriPrefix: string
+    domain?: string
+    uriPrefix?: string
     kind: string
 
     // ConnectorWebhookConfigBasic
@@ -51,15 +51,37 @@ export type MicroserviceSimple = {
     dolittle: MicroserviceDolittle
     name: string
     kind: string
+    environment: string
     extra: MicroserviceSimpleExtra
 };
 
 export type MicroserviceSimpleExtra = {
     headImage: string
     runtimeImage: string
-    environment: string
     ingress: MicroserviceIngressPath
 };
+
+
+export type MicroserviceBusinessMomentAdaptor = {
+    dolittle: MicroserviceDolittle
+    name: string
+    kind: string
+    environment: string
+    extra: MicroserviceBusinessMomentAdaptorExtra
+};
+
+export type MicroserviceBusinessMomentAdaptorExtra = {
+    headImage: string
+    runtimeImage: string
+    ingress: MicroserviceIngressPath
+    connector: MicroserviceBusinessMomentAdaptorConnector
+};
+
+export type MicroserviceBusinessMomentAdaptorConnector = {
+    kind: string
+    config: ConnectorWebhookConfig
+};
+
 
 const db = {
     connectors: [
@@ -68,8 +90,6 @@ const db = {
             name: 'M3 Webhook Connector Basic',
             kind: 'webhook',
             config: {
-                domain: '',
-                uriPrefix: '',
                 kind: 'basic',
                 config: {
                     username: 'iamtest1',
@@ -82,8 +102,6 @@ const db = {
             name: 'M3 Webhook Connector Bearer',
             kind: 'webhook',
             config: {
-                domain: '',
-                uriPrefix: '',
                 kind: 'bearer',
                 config: {
                     token: 'iamatoken'
@@ -107,7 +125,7 @@ export function getConnectors(): Connector[] {
     return db.connectors;
 }
 
-export function getConnector(id: string): Connector {
+export function getConnector(id: string): MicroserviceBusinessMomentAdaptorConnector {
     const found = db.connectors.find(c => {
         return c.id === id;
     });
@@ -117,12 +135,8 @@ export function getConnector(id: string): Connector {
     }
 
     return {
-        id: '',
-        name: '',
         kind: 'webhook',
         config: {
-            domain: '',
-            uriPrefix: '',
             kind: '',
             config: {}
         }
@@ -168,17 +182,52 @@ export function getRawLogs(): any[] {
 
 // Microservice
 export async function createMicroservice(kind: string, input: any): Promise<boolean> {
-    if (kind !== 'simple') {
-        alert('TODO');
-        return false;
+    switch (kind) {
+        case 'simple':
+            return saveSimpleMicroservice(input as MicroserviceSimple);
+        case 'buisness-moments-adaptor':
+            return saveBusinessMomentsAdaptorMicroservice(input as MicroserviceBusinessMomentAdaptor);
+        default:
+            alert(`kind: ${kind} not supported`);
+            return false;
     }
-
-    return saveSimpleMicroservice(input as MicroserviceSimple);
 }
 
 //
-
 export function getTenant(): string {
     //const tenantId = 'fe7736bb-57fc-4166-bb91-6954f4dd4eb7';
     return '453e04a7-4f9d-42f2-b36c-d51fa2c83fa3';
+}
+
+
+
+export function getFakeMicroserviceBusinessMomentsAdaptor(): MicroserviceBusinessMomentAdaptor {
+    return {
+        dolittle: {
+            applicationId: '11b6cf47-5d9f-438f-8116-0d9828654657',
+            tenantId: '453e04a7-4f9d-42f2-b36c-d51fa2c83fa3',
+            microserviceId: '9f6a613f-d969-4938-a1ac-5b7df199bc41'
+        },
+        name: 'Webhook-101',
+        kind: 'buisness-moments-adaptor',
+        environment: 'Dev',
+        extra: {
+            headImage: '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/businessmomentsadaptor:latest',
+            runtimeImage: 'dolittle/runtime:5.6.0',
+            ingress: {
+                path: '/api/webhooks-ingestor',
+                pathType: 'Prefix'
+            },
+            connector: {
+                kind: 'webhook',
+                config: {
+                    kind: 'basic',
+                    config: {
+                        username: 'm3',
+                        password: 'johncarmack'
+                    }
+                }
+            }
+        }
+    } as MicroserviceBusinessMomentAdaptor;
 }

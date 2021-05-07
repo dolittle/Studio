@@ -19,10 +19,10 @@ export const Microservice: React.FunctionComponent = () => {
         },
         name: 'Order',
         kind: 'simple',
+        environment: 'Dev',
         extra: {
             headImage: '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/taco/order:1.0.6',
             runtimeImage: 'dolittle/runtime:5.6.0',
-            environment: 'Dev',
             ingress: {
                 path: '/',
                 pathType: 'Prefix'
@@ -54,7 +54,7 @@ export const Microservice: React.FunctionComponent = () => {
                 <TextField defaultValue={ms.dolittle.microserviceId} />
 
                 <Label>Environment</Label>
-                <TextField placeholder="Dev" defaultValue={ms.extra.environment} />
+                <TextField placeholder="Dev" defaultValue={ms.environment} />
 
                 <Label>Head Image</Label>
                 <TextField defaultValue={ms.extra.headImage} />

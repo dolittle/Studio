@@ -10,9 +10,19 @@ import { ConnectorWebhookConfigBasic } from '../store';
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
-export const BasicAuthComponent: React.FunctionComponent<ConnectorWebhookConfigBasic> = (props) => {
-    const username = props!.username;
-    const password = props!.password;
+type Props = {
+    username?: string
+    password?: string
+    onUpdate?: (data: any) => void;
+};
+
+export const BasicAuthComponent: React.FunctionComponent<Props> = (props) => {
+    const username = props!.username!;
+    const password = props!.password!;
+    const onUpdate = props!.onUpdate!;
+
+    const [usernameState, setUsernameState] = React.useState(username);
+    const [passwordState, setPasswordState] = React.useState(password);
 
     return (
         <>
@@ -20,7 +30,14 @@ export const BasicAuthComponent: React.FunctionComponent<ConnectorWebhookConfigB
                 <Label>Username</Label>
                 <TextField
                     styles={textFieldStyles}
-                    defaultValue={username}
+                    defaultValue={usernameState}
+                    onChange={(event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+                        setUsernameState(newValue as string);
+                        onUpdate({
+                            username: newValue,
+                            password: passwordState
+                        });
+                    }}
                 />
             </Stack>
 
@@ -28,7 +45,14 @@ export const BasicAuthComponent: React.FunctionComponent<ConnectorWebhookConfigB
                 <Label>Password</Label>
                 <TextField
                     styles={textFieldStyles}
-                    defaultValue={password}
+                    defaultValue={passwordState}
+                    onChange={(event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+                        setPasswordState(newValue as string);
+                        onUpdate({
+                            username: usernameState,
+                            password: newValue
+                        });
+                    }}
                 />
             </Stack>
         </>
