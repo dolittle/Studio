@@ -17,15 +17,21 @@ type Props = {
     data: HttpResponsePodStatus
 };
 
+type PodInfoItem = {
+    key: string
+    name: string
+    data: PodInfo
+};
+
 export const PodStatus: React.FunctionComponent<Props> = (props) => {
     // TODO what is this?
     // eslint-disable-next-line react/prop-types
     const data = props.data!;
 
-    const renderLogs = (item?: PodInfo, index?: number, column?: IColumn) => {
+    const renderLogs = (item?: PodInfoItem, index?: number, column?: IColumn) => {
+        const podInfo = item!.data;
         const applicationId = data.namespace.split('application-')[1];
-
-        const containers = ['head', 'runtime'];
+        const containers = podInfo.containers;
 
         const items = containers.map(containerName => {
             return (
@@ -34,7 +40,7 @@ export const PodStatus: React.FunctionComponent<Props> = (props) => {
                         iconProps={{ iconName: 'SearchData' }}
                         allowDisabledFocus
                         onClick={async () => {
-                            const href = `/application/${applicationId}/pod/view/${item?.name}/logs?containerName=${containerName}`;
+                            const href = `/application/${applicationId}/pod/view/${podInfo.name}/logs?containerName=${containerName}`;
                             window.location.href = href;
                         }}
                     >
@@ -53,7 +59,7 @@ export const PodStatus: React.FunctionComponent<Props> = (props) => {
 
     const columns: IColumn[] = [
         { key: 'name', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200, isResizable: true },
-        { key: 'status', name: 'Status', fieldName: 'status', minWidth: 100, maxWidth: 200, isResizable: true },
+        { key: 'status', name: 'Status', fieldName: 'phase', minWidth: 100, maxWidth: 200, isResizable: true },
         {
             key: 'logs',
             name: 'Logs',
@@ -65,12 +71,12 @@ export const PodStatus: React.FunctionComponent<Props> = (props) => {
     ];
 
 
-    const items = data.pods.map(pod => {
+    const items: PodInfoItem[] = data.pods.map(pod => {
         return {
             key: pod.name,
-            name: pod.name,
-            value: pod.phase,
-            status: pod.phase
+            name: pod.name, // Couldnt figure out how to get fieldName to work with data.name
+            phase: pod.phase, // Couldnt figure out how to get fieldName to work with data.name
+            data: pod
         };
     });
 

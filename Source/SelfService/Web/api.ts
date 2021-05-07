@@ -29,6 +29,7 @@ export type HttpResponseMicroservices = {
 export type PodInfo = {
     name: string
     phase: string
+    containers: string[]
 };
 
 export type HttpResponsePodStatus = {
