@@ -8,6 +8,8 @@ import { Text } from '@fluentui/react';
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 
 import { getTenant } from '../store';
+import { getPodLogs, getPodStatus, HttpResponsePodStatus, PodInfo } from '../api';
+import { PodStatus } from '../micoservice/podStatus';
 
 
 const stackTokens = { childrenGap: 15 };
@@ -15,6 +17,16 @@ const stackTokens = { childrenGap: 15 };
 export const MicroserviceViewScreen: React.FunctionComponent = () => {
     const tenantId = getTenant();
     const { applicationId, microserviceId } = useParams() as any;
+    const [showCurrentStatus, setShowCurrentStatus] = useState(false);
+    const environment = 'Dev';
+    const [podsData, setPodsData] = useState({
+        namespace: '',
+        microservice: {
+            name: '',
+            id: ''
+        },
+        pods: []
+    } as HttpResponsePodStatus);
 
     const _items: ICommandBarItemProps[] = [
         {
@@ -27,11 +39,17 @@ export const MicroserviceViewScreen: React.FunctionComponent = () => {
             key: 'showCurrentStatus',
             text: 'Current Status',
             iconProps: { iconName: 'WebAppBuilderFragment' },
-            onClick: () => console.log('Get pods'),
+            onClick: () => {
+                // TODO maybe loading feedback
+                getPodStatus(applicationId, environment, microserviceId).then(data => {
+                    setShowCurrentStatus(showCurrentStatus ? false : true);
+                    setPodsData(data);
+                    return;
+                });
+
+            }
         }
     ];
-
-
     return (
         <>
             <h1>Microservice View Screen</h1>
@@ -51,6 +69,8 @@ export const MicroserviceViewScreen: React.FunctionComponent = () => {
                 items={_items}
                 ariaLabel="Use left and right arrow keys to navigate between commands"
             />
+
+            {showCurrentStatus && (<PodStatus data={podsData} />)}
 
         </>
     );

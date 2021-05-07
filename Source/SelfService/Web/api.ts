@@ -86,7 +86,7 @@ export async function saveSimpleMicroservice(input: MicroserviceSimple): Promise
 }
 
 export async function getPodStatus(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponsePodStatus> {
-    const uri = `/live/application/${applicationId}/microservices/${microserviceId}/podstatus/${environment}`;
+    const uri = `/live/application/${applicationId}/microservice/${microserviceId}/podstatus/${environment.toLowerCase()}`;
     const url = `http://localhost:8080${uri}`;
 
     const result = await fetch(url, {
