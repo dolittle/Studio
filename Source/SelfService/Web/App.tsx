@@ -17,6 +17,7 @@ import { QuickScreen } from './screens/quickScreen';
 import { MicroserviceEditScreen } from './screens/microserviceEditScreen';
 import { MicroserviceViewScreen } from './screens/microserviceViewScreen';
 import { ContainerRegistryInfoScreen } from './screens/containerRegistryInfoScreen';
+import { PodViewScreen } from './screens/podViewScreen';
 
 export const App = () => {
     let itemsWithHref: IBreadcrumbItem[] = [
@@ -122,6 +123,11 @@ export const App = () => {
                 <Route exact path="/application/:applicationId/microservice/view/:microserviceId">
                     <MicroserviceViewScreen />
                 </Route>
+
+                <Route exact path="/application/:applicationId/pod/view/:podName/logs">
+                    <PodViewScreen />
+                </Route>
+
             </BrowserRouter>
         </>
     );

@@ -37,6 +37,13 @@ export type HttpResponsePodStatus = {
     pods: PodInfo[]
 };
 
+export type HttpResponsePodLog = {
+    applicationId: string
+    podName: string
+    logs: string
+};
+
+
 export async function getApplications(tenantId: string): Promise<any> {
     const uri = `/live/tenant/${tenantId}/applications`;
     const url = `http://localhost:8080${uri}`;
@@ -87,6 +94,23 @@ export async function getPodStatus(applicationId: string, environment: string, m
         mode: 'cors'
     });
     const jsonResult: HttpResponsePodStatus = await result.json();
+
+    return jsonResult;
+}
+
+export async function getPodLogs(applicationId: string, podName: string, containerName: string): Promise<HttpResponsePodLog> {
+    const uri = `/live/application/${applicationId}/pod/${podName}/logs`;
+    let url = `http://localhost:8080${uri}`;
+
+    if (containerName !== '') {
+        url = `${url}?containerName=${containerName}`;
+    }
+
+    const result = await fetch(url, {
+        method: 'GET',
+        mode: 'cors'
+    });
+    const jsonResult: HttpResponsePodLog = await result.json();
 
     return jsonResult;
 }

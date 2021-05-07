@@ -32,6 +32,12 @@ export const QuickScreen: React.FunctionComponent = () => {
                     <li>
                         <a href="/entity/editor">/entity/editor</a>
                     </li>
+                    <li>
+                        <a href="/application/11b6cf47-5d9f-438f-8116-0d9828654657/pod/view/dev-order-846fbc7776-x79rs/logs?containerName=runtime">Logs from a pod</a>
+                    </li>
+                    <li>
+                        <a href="/application/c52e450e-4877-47bf-a584-7874c205e2b9/pod/view/dev-webhooksingestor-846b6b6964-p8kpk/logs?containerName=runtime">Logs from a pod</a>
+                    </li>
 
                 </ul>
             </div>
