@@ -1,27 +1,31 @@
-import express from 'express';
+// import express from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import process from 'process';
+// import { default } from '../Shared/Common/Microservices';
 
-// Initialize express and define a port
-const app = express();
-const PORT = 3008;
+createServer();
+export default function createServer() {
+    // Initialize express and define a port
+    const app: Application = express();
+    const PORT = 3008;
 
-// Tell express to use body-parser's JSON parsing
+    // Tell express to use body-parser's JSON parsing
 
-app.use(bodyParser.json());
+    app.use(bodyParser.json());
 
-InitServer(app);
-
-export function InitServer(app: any) {
     // Start express on the defined port
     if (process.env.WH_AUTHORIZATION) {
-        app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+        if (!process.env.NODE_ENV) {
+            app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+        }
     } else {
         console.log('WH_AUTHORIZATION is not set.');
+        console.log(process.env.WH_AUTHORIZATION);
         process.exit(1);
     }
 
-    app.post('/api/webhooks-ingestor', (req: any, res: any) => {
+    app.post('/api/webhooks-ingestor', (req: Request, res: Response) => {
         if (req.headers.authorization === process.env.WH_AUTHORIZATION) {
             console.log(req.body); // Call your action on the request here
             res.status(200).end(); // Responding is important
@@ -29,6 +33,5 @@ export function InitServer(app: any) {
             res.status(401).end();
         }
     });
-};
-
-
+    return app;
+}
