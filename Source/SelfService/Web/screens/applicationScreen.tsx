@@ -5,13 +5,13 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
+
 import { List } from '@fluentui/react/lib/List';
 import { Link, Text } from '@fluentui/react';
-import { PrimaryButton } from '@fluentui/react/lib/Button';
+import { PrimaryButton, IconButton } from '@fluentui/react/lib/Button';
 import { Stack } from '@fluentui/react/lib/Stack';
 
-import { getMicroservices, HttpResponseMicroservices, ShortInfoWithEnvironment } from '../api';
-import { ApplicationInfo } from '../application/info';
+import { getMicroservices, HttpResponseMicroservices, MicroserviceInfo } from '../api';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -50,22 +50,44 @@ export const ApplicationScreen: React.FunctionComponent = () => {
         );
     };
 
-    const microserviceRow = (item?: ShortInfoWithEnvironment, index?: number | undefined): JSX.Element => {
+    const microserviceRow = (item?: MicroserviceInfo, index?: number | undefined): JSX.Element => {
         const microservice = item!;
+
+        const items = microservice.images.map(container => {
+            return (
+                <Stack
+                    key={container.name}
+                    tokens={stackTokens}
+                    horizontal
+                >
+                    <Text variant="medium" block>
+                        {container.name}
+                    </Text>
+
+                    <Text variant="medium" block>
+                        {container.image}
+                    </Text>
+                </Stack >
+            );
+        });
+
+
         return (
             <Stack horizontal tokens={stackTokens}>
                 <Text>
                     {microservice.name}
                 </Text>
-
                 <Link href={`/application/${data.application.id}/microservice/view/${microservice.id}`} underline>
                     view
                 </Link>
-
+                <Stack tokens={stackTokens}>
+                    {items}
+                </Stack>
             </Stack>
 
         );
     };
+
 
     const _items: ICommandBarItemProps[] = [
         {

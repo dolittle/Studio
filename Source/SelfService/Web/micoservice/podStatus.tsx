@@ -6,8 +6,8 @@ import React from 'react';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react/lib/Text';
 
-import { ActionButton } from '@fluentui/react/lib/Button';
-import { DetailsList, DetailsListLayoutMode, Selection, IColumn } from '@fluentui/react/lib/DetailsList';
+import { IconButton } from '@fluentui/react/lib/Button';
+import { DetailsList, DetailsListLayoutMode, IColumn } from '@fluentui/react/lib/DetailsList';
 
 import { HttpResponsePodStatus, PodInfo } from '../api';
 
@@ -33,19 +33,56 @@ export const PodStatus: React.FunctionComponent<Props> = (props) => {
         const applicationId = data.namespace.split('application-')[1];
         const containers = podInfo.containers;
 
-        const items = containers.map(containerName => {
+        const items = containers.map(container => {
             return (
-                <Stack key={containerName} tokens={stackTokens} horizontal>
-                    <ActionButton
+                <Stack
+                    key={container.name}
+                    tokens={stackTokens}
+                    horizontal
+                    onClick={async () => {
+                        const href = `/application/${applicationId}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
+                        window.location.href = href;
+                    }}>
+                    <IconButton iconProps={{ iconName: 'SearchData' }} />
+                    <Text variant="medium" block>
+                        {container.name}
+                    </Text>
+                </Stack >
+            );
+        });
+
+        return (
+            <Stack tokens={stackTokens}>
+                {items}
+            </Stack>
+        );
+    };
+
+    const renderImages = (item?: PodInfoItem, index?: number, column?: IColumn) => {
+        const podInfo = item!.data;
+        const applicationId = data.namespace.split('application-')[1];
+        const containers = podInfo.containers;
+
+        const items = containers.map(container => {
+            return (
+                <Stack
+                    key={container.name}
+                    tokens={stackTokens}
+                    horizontal
+                >
+                    <IconButton
                         iconProps={{ iconName: 'SearchData' }}
-                        allowDisabledFocus
                         onClick={async () => {
-                            const href = `/application/${applicationId}/pod/view/${podInfo.name}/logs?containerName=${containerName}`;
+                            const href = `/application/${applicationId}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
                             window.location.href = href;
-                        }}
-                    >
-                        {containerName}
-                    </ActionButton>
+                        }} />
+
+                    <Text variant="medium" block>
+                        {container.image}
+                    </Text>
+                    <Text variant="medium" block>
+                        {container.name}
+                    </Text>
                 </Stack >
             );
         });
@@ -60,14 +97,23 @@ export const PodStatus: React.FunctionComponent<Props> = (props) => {
     const columns: IColumn[] = [
         { key: 'name', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200, isResizable: true },
         { key: 'status', name: 'Status', fieldName: 'phase', minWidth: 100, maxWidth: 200, isResizable: true },
+        //{
+        //    key: 'logs',
+        //    name: 'Logs',
+        //    minWidth: 100,
+        //    maxWidth: 200,
+        //    isResizable: true,
+        //    onRender: renderLogs
+        //},
         {
-            key: 'logs',
-            name: 'Logs',
+            key: 'containers',
+            name: 'Containers',
             minWidth: 100,
             maxWidth: 200,
             isResizable: true,
-            onRender: renderLogs
+            onRender: renderImages
         }
+
     ];
 
 

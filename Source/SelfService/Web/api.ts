@@ -3,7 +3,6 @@
 
 import { MicroserviceDolittle, MicroserviceSimple, MicroserviceBusinessMomentAdaptor } from './store';
 
-
 export type ShortInfo = {
     id: string
     name: string
@@ -15,6 +14,18 @@ export type ShortInfoWithEnvironment = {
     environment: string
 };
 
+export type ImageInfo = {
+    image: string
+    name: string
+};
+
+export type MicroserviceInfo = {
+    id: string
+    name: string
+    environment: string
+    images: ImageInfo[]
+};
+
 export type HttpResponseApplications = {
     id: string
     name: string
@@ -23,13 +34,13 @@ export type HttpResponseApplications = {
 
 export type HttpResponseMicroservices = {
     application: ShortInfo
-    microservices: ShortInfoWithEnvironment[]
+    microservices: MicroserviceInfo[]
 };
 
 export type PodInfo = {
     name: string
     phase: string
-    containers: string[]
+    containers: ImageInfo[]
 };
 
 export type HttpResponsePodStatus = {
