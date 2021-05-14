@@ -55,10 +55,12 @@ export type HttpResponsePodLog = {
     logs: string
 };
 
+function getServerUrlPrefix(): string {
+    return `http://localhost:3007`;
+}
 
 export async function getApplications(tenantId: string): Promise<any> {
-    const uri = `/live/tenant/${tenantId}/applications`;
-    const url = `http://localhost:8080${uri}`;
+    const url = `${getServerUrlPrefix()}/live/tenant/${tenantId}/applications`;
 
     const result = await fetch(url, {
         method: 'GET',
@@ -70,8 +72,7 @@ export async function getApplications(tenantId: string): Promise<any> {
 }
 
 export async function getMicroservices(applicationId: string): Promise<HttpResponseMicroservices> {
-    const uri = `/live/application/${applicationId}/microservices`;
-    const url = `http://localhost:8080${uri}`;
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/microservices`;
 
     const result = await fetch(url, {
         method: 'GET',
@@ -83,30 +84,36 @@ export async function getMicroservices(applicationId: string): Promise<HttpRespo
 }
 
 export async function saveSimpleMicroservice(input: MicroserviceSimple): Promise<boolean> {
-    const result = await fetch('http://localhost:8080/microservice', {
-        method: 'POST',
-        body: JSON.stringify(input),
-        mode: 'cors',
-        headers: {
-            'content-type': 'application/json',
-            'x-tenant': (input.dolittle as MicroserviceDolittle).tenantId // TODO this is not correct
-        }
-    });
+    const url = `${getServerUrlPrefix()}/microservice`;
+    const result = await fetch(
+        url,
+        {
+            method: 'POST',
+            body: JSON.stringify(input),
+            mode: 'cors',
+            headers: {
+                'content-type': 'application/json',
+                'x-tenant': (input.dolittle as MicroserviceDolittle).tenantId // TODO this is not correct
+            }
+        });
     const jsonResult = await result.json();
     console.log(jsonResult);
     return true;
 }
 
 export async function saveBusinessMomentsAdaptorMicroservice(input: MicroserviceBusinessMomentAdaptor): Promise<boolean> {
-    const result = await fetch('http://localhost:8080/microservice', {
-        method: 'POST',
-        body: JSON.stringify(input),
-        mode: 'cors',
-        headers: {
-            'content-type': 'application/json',
-            'x-tenant': (input.dolittle as MicroserviceDolittle).tenantId // TODO this is not correct
-        }
-    });
+    const url = `${getServerUrlPrefix()}/microservice`;
+    const result = await fetch(
+        url,
+        {
+            method: 'POST',
+            body: JSON.stringify(input),
+            mode: 'cors',
+            headers: {
+                'content-type': 'application/json',
+                'x-tenant': (input.dolittle as MicroserviceDolittle).tenantId // TODO this is not correct
+            }
+        });
 
     const jsonResult = await result.json();
     return true;
@@ -114,21 +121,20 @@ export async function saveBusinessMomentsAdaptorMicroservice(input: Microservice
 
 
 export async function getPodStatus(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponsePodStatus> {
-    const uri = `/live/application/${applicationId}/microservice/${microserviceId}/podstatus/${environment.toLowerCase()}`;
-    const url = `http://localhost:8080${uri}`;
-
-    const result = await fetch(url, {
-        method: 'GET',
-        mode: 'cors'
-    });
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/microservice/${microserviceId}/podstatus/${environment.toLowerCase()}`;
+    const result = await fetch(
+        url,
+        {
+            method: 'GET',
+            mode: 'cors'
+        });
     const jsonResult: HttpResponsePodStatus = await result.json();
 
     return jsonResult;
 }
 
 export async function getPodLogs(applicationId: string, podName: string, containerName: string): Promise<HttpResponsePodLog> {
-    const uri = `/live/application/${applicationId}/pod/${podName}/logs`;
-    let url = `http://localhost:8080${uri}`;
+    let url = `${getServerUrlPrefix()}/live/application/${applicationId}/pod/${podName}/logs`;
 
     if (containerName !== '') {
         url = `${url}?containerName=${containerName}`;
