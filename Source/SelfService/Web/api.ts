@@ -62,10 +62,12 @@ function getServerUrlPrefix(): string {
 export async function getApplications(tenantId: string): Promise<any> {
     const url = `${getServerUrlPrefix()}/live/tenant/${tenantId}/applications`;
 
-    const result = await fetch(url, {
-        method: 'GET',
-        mode: 'cors'
-    });
+    const result = await fetch(
+        url,
+        {
+            method: 'GET',
+            mode: 'cors'
+        });
     const jsonResult = await result.json();
 
     return jsonResult;
@@ -74,10 +76,12 @@ export async function getApplications(tenantId: string): Promise<any> {
 export async function getMicroservices(applicationId: string): Promise<HttpResponseMicroservices> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/microservices`;
 
-    const result = await fetch(url, {
-        method: 'GET',
-        mode: 'cors'
-    });
+    const result = await fetch(
+        url,
+        {
+            method: 'GET',
+            mode: 'cors'
+        });
     const jsonResult: HttpResponseMicroservices = await result.json();
 
     return jsonResult;
@@ -121,7 +125,7 @@ export async function saveBusinessMomentsAdaptorMicroservice(input: Microservice
 
 
 export async function getPodStatus(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponsePodStatus> {
-    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/microservice/${microserviceId}/podstatus/${environment.toLowerCase()}`;
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()} /microservice/${microserviceId} /podstatus`;
     const result = await fetch(
         url,
         {

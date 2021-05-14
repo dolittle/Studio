@@ -5,12 +5,17 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"os"
 	"time"
 )
 
 func main() {
 	// Ugly first version
-	sharedSecret := "TODO-1"
+	sharedSecret := os.Getenv("HEADER_SECRET")
+	if sharedSecret == "" {
+		sharedSecret = "TODO-1"
+	}
+
 	// Set to false for when in the cluster
 	includeDolittleHeaders := true
 
@@ -40,7 +45,8 @@ func proxyPlatformApiServer(sharedSecret string, includeDolittleHeaders bool) fu
 }
 
 func addSharedSecret(sharedSecret string, req *http.Request) {
-	req.Header.Set("X-Shared-Secret", sharedSecret)
+	//req.Header.Set("X-Shared-Secret", sharedSecret)
+	req.Header.Set("x-shared-secret", sharedSecret)
 }
 
 func addDolittleHeaders(req *http.Request) {
