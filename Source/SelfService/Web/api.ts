@@ -145,3 +145,22 @@ export async function getPodLogs(applicationId: string, podName: string, contain
 
     return jsonResult;
 }
+
+
+export async function saveEnvironment(input: any): Promise<boolean> {
+    const url = `${getServerUrlPrefix()}/microservice`;
+    const result = await fetch(
+        url,
+        {
+            method: 'POST',
+            body: JSON.stringify(input),
+            mode: 'cors',
+            headers: {
+                'content-type': 'application/json',
+                'x-tenant': (input.dolittle as MicroserviceDolittle).tenantId // TODO this is not correct
+            }
+        });
+    const jsonResult = await result.json();
+    console.log(jsonResult);
+    return true;
+}

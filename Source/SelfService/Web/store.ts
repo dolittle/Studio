@@ -232,3 +232,4 @@ export function getFakeMicroserviceBusinessMomentsAdaptor(): MicroserviceBusines
         }
     } as MicroserviceBusinessMomentAdaptor;
 }
+
