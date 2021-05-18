@@ -8,35 +8,55 @@
 
 import React from 'react';
 
-import { ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
 import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react/lib/ChoiceGroup';
 
 import { WebhooksConfig } from '../configuration/WebhooksConfiguration';
 import { Config as RestConfig } from '../configuration/RestConfiguration';
-import { Connector, MicroserviceBusinessMomentAdaptor, createMicroservice, MicroserviceBusinessMomentAdaptorConnector } from '../store';
+import { MicroserviceBusinessMomentAdaptor, createMicroservice, MicroserviceBusinessMomentAdaptorConnector } from '../store';
+import { Guid } from '@dolittle/rudiments';
 
-const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
-export const Microservice: React.FunctionComponent = () => {
-    const applicationId = '11b6cf47-5d9f-438f-8116-0d9828654657';
+type Props = {
+    applicationId?: string
+    tenantId?: string
+    environment?: string
+};
+
+export const Microservice: React.FunctionComponent<Props> = (props) => {
+    const _props = props!;
+    const applicationId = _props.applicationId;
+    const microserviceId = Guid.create().toString();
+
+    const fromStore = {
+        domain: 'freshteapot-taco.dolittle.cloud',
+        domainPrefix: 'freshteapot-taco',
+        businessmomentsadaptor: {
+            image: '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/businessmomentsadaptor:latest',
+        },
+        runtime: {
+            image: 'dolittle/runtime:5.6.0'
+        }
+    };
+
     const ms = {
         dolittle: {
-            applicationId: '11b6cf47-5d9f-438f-8116-0d9828654657',
-            tenantId: '453e04a7-4f9d-42f2-b36c-d51fa2c83fa3',
-            microserviceId: '9f6a613f-d969-4938-a1ac-5b7df199bc41'
+            applicationId,
+            tenantId: _props.tenantId,
+            microserviceId,
         },
         name: 'Webhook-101',
         kind: 'buisness-moments-adaptor',
-        environment: 'Dev',
+        environment: _props.environment,
         extra: {
-            headImage: '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/businessmomentsadaptor:latest',
-            runtimeImage: 'dolittle/runtime:5.6.0',
+            headImage: fromStore.businessmomentsadaptor.image,
+            runtimeImage: fromStore.runtime.image,
             ingress: {
                 path: '/api/webhooks-ingestor',
-                pathType: 'Prefix'
+                pathType: 'Prefix',
+                domainPrefix: fromStore.domainPrefix,
             },
             connector: {
                 kind: 'webhook',
@@ -82,7 +102,7 @@ export const Microservice: React.FunctionComponent = () => {
 
             {connectorTypeState === 'webhook' && (
                 <Stack horizontal tokens={stackTokens}>
-                    <WebhooksConfig action='insert' ms={ms} onSave={onSave} />
+                    <WebhooksConfig domain={fromStore.domain} action='insert' ms={ms} onSave={onSave} />
                 </Stack>
             )}
 

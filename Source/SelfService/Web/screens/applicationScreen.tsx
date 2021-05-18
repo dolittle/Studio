@@ -27,12 +27,16 @@ export const ApplicationScreen: React.FunctionComponent = () => {
 
     const [environments, setEnvironments] = useState([] as string[]);
     const [environment, setEnvironment] = useState('');
+    const [hasEnvironments, setHasEnvironments] = useState(false);
 
 
     useEffect(() => {
         getMicroservices(applicationId).then(data => {
             setData(data);
-            setEnvironments([...new Set(data.microservices.map(item => item.environment))]);
+            const newEnviornments = [...new Set(data.microservices.map(item => item.environment))];
+
+            setHasEnvironments(newEnviornments.length > 0);
+            setEnvironments(newEnviornments);
             return;
         });
     }, []);
@@ -107,22 +111,31 @@ export const ApplicationScreen: React.FunctionComponent = () => {
 
             <CommandBar items={_items} />
 
-
-            <PrimaryButton text="Create New Microservice" onClick={(e => {
-                console.log('Create microservice');
-                window.location.href = `/application/${data.application.id}/microservice/create`;
-            })} />
-
-
-            <h2>Environment</h2>
-            <List items={environments} onRenderCell={environmentRow} />
-
-            {environment !== '' && (
+            {!hasEnvironments && (
                 <>
-                    <h3>Microservices</h3>
-                    <List items={data.microservices
-                        .filter(microservice => microservice.environment === environment)}
-                        onRenderCell={microserviceRow} />
+                    <PrimaryButton text="Create New Environment" onClick={(e => {
+                        window.location.href = `/application/${data.application.id}/environment/create`;
+                    })} />
+                </>
+            )}
+            {hasEnvironments && (
+                <>
+                    <PrimaryButton text="Create New Microservice" onClick={(e => {
+                        console.log('Create microservice');
+                        window.location.href = `/application/${data.application.id}/microservice/create`;
+                    })} />
+
+                    <h2>Environment</h2>
+                    <List items={environments} onRenderCell={environmentRow} />
+
+                    {environment !== '' && (
+                        <>
+                            <h3>Microservices</h3>
+                            <List items={data.microservices
+                                .filter(microservice => microservice.environment === environment)}
+                                onRenderCell={microserviceRow} />
+                        </>
+                    )}
                 </>
             )}
         </>

@@ -15,6 +15,7 @@ import { Text, IDropdownOption } from '@fluentui/react';
 import { Microservice as BusinessMomentsAdaptor } from './BusinessMomentsAdaptor';
 import { Microservice as Simple } from './Simple';
 import { Microservice as StaticSite } from './StaticSite';
+import tenant from '@shared/common/Tenant';
 
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
@@ -27,7 +28,10 @@ type Props = {
 };
 
 export const Create: React.FunctionComponent<Props | undefined> = (props) => {
-    console.log('props', props);
+    const _props = props!;
+    const applicationId = _props.applicationId;
+    const tenantId = _props.tenantId;
+
 
     const [microserviceTypeState, setMicroserviceTypeState] = React.useState('');
 
@@ -69,7 +73,7 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
 
                 {microserviceTypeState === 'dolittle-microservice' && (
                     <Stack tokens={stackTokens}>
-                        <Simple />
+                        <Simple applicationId={applicationId} tenantId={tenantId} />
                     </Stack>
                 )}
 

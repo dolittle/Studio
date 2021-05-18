@@ -20,6 +20,7 @@ import { ContainerRegistryInfoScreen } from './screens/containerRegistryInfoScre
 import { PodViewScreen } from './screens/podViewScreen';
 import { getFakeMicroserviceBusinessMomentsAdaptor } from './store';
 import { LoginScreen } from './screens/loginScreen';
+import { EnvironmentNewScreen } from './screens/environmentNewScreen';
 
 export const App = () => {
     let itemsWithHref: IBreadcrumbItem[] = [
@@ -103,7 +104,7 @@ export const App = () => {
                 </Route>
 
                 <Route exact path="/connector/edit/:connectorId">
-                    <WebhooksConfig action='upsert' ms={getFakeMicroserviceBusinessMomentsAdaptor()} />
+                    <WebhooksConfig domain="freshteapot-taco.dolittle.cloud" action='upsert' ms={getFakeMicroserviceBusinessMomentsAdaptor()} />
                 </Route>
                 <Route path="/business-moments/editor">
                     <BusinessMomentEditor />
@@ -117,6 +118,10 @@ export const App = () => {
                 <Route exact path="/application/:applicationId">
                     <ApplicationScreen />
                 </Route>
+                <Route exact path="/application/:applicationId/environment/create">
+                    <EnvironmentNewScreen />
+                </Route>
+
                 <Route exact path="/application/:applicationId/container-registry-info">
                     <ContainerRegistryInfoScreen />
                 </Route>

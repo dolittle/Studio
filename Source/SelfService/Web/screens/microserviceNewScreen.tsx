@@ -25,15 +25,27 @@ export const MicroserviceNewScreen: React.FunctionComponent = () => {
         microservices: []
     } as HttpResponseMicroservices);
     const [environment, setEnvironment] = useState('');
+    const [environments, setEnvironments] = useState(['Dev']);
 
     useEffect(() => {
+        // TODO when no microservices are running, there are no environments to pick from
+        // TODO no microservices = no ingress = no environment
+        // TODO create environment = name, spin up ingress
+        // https://XXX/dolittle/welcome
         getMicroservices(applicationId).then(data => {
             setData(data);
+            // No environment, add Dev
+            // TODO downside of this, we need to handle ingress setup (oh dear)
+            let newEnvironments = [...new Set(data.microservices.map(item => item.environment))];
+            if (newEnvironments.length === 0) {
+                newEnvironments = ['Dev'];
+            }
+            setEnvironments(newEnvironments);
             return;
         });
     }, []);
 
-    const options: IChoiceGroupOption[] = [...new Set(data.microservices.map(item => item.environment))].map(environment => {
+    const options: IChoiceGroupOption[] = environments.map(environment => {
         return { key: environment.toLowerCase(), text: environment };
     });
 

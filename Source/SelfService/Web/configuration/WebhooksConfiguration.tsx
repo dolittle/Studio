@@ -19,6 +19,7 @@ const stackTokens = { childrenGap: 15 };
 
 
 type WebhooksConfigProps = {
+    domain: string
     action: string
     ms?: MicroserviceBusinessMomentAdaptor
     onSave?: (ms: MicroserviceBusinessMomentAdaptor) => void;
@@ -26,7 +27,7 @@ type WebhooksConfigProps = {
 // TODO how to pass in
 
 export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undefined> = (props) => {
-    const domain = 'freshteapot-taco.dolittle.cloud';
+    const domain = props!.domain;
     const onSave = props!.onSave!;
     const action = props!.action!;
     const ms = props!.ms!;

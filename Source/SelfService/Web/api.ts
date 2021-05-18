@@ -73,6 +73,9 @@ export async function getApplications(tenantId: string): Promise<any> {
     return jsonResult;
 }
 
+// TODO get environments, not easy to know
+
+// getMicroservices by applicationId
 export async function getMicroservices(applicationId: string): Promise<HttpResponseMicroservices> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/microservices`;
 
@@ -87,7 +90,7 @@ export async function getMicroservices(applicationId: string): Promise<HttpRespo
     return jsonResult;
 }
 
-export async function saveSimpleMicroservice(input: MicroserviceSimple): Promise<boolean> {
+export async function saveMicroservice(input: any): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/microservice`;
     const result = await fetch(
         url,
@@ -105,22 +108,12 @@ export async function saveSimpleMicroservice(input: MicroserviceSimple): Promise
     return true;
 }
 
-export async function saveBusinessMomentsAdaptorMicroservice(input: MicroserviceBusinessMomentAdaptor): Promise<boolean> {
-    const url = `${getServerUrlPrefix()}/microservice`;
-    const result = await fetch(
-        url,
-        {
-            method: 'POST',
-            body: JSON.stringify(input),
-            mode: 'cors',
-            headers: {
-                'content-type': 'application/json',
-                'x-tenant': (input.dolittle as MicroserviceDolittle).tenantId // TODO this is not correct
-            }
-        });
+export async function saveSimpleMicroservice(input: MicroserviceSimple): Promise<boolean> {
+    return saveMicroservice(input);
+}
 
-    const jsonResult = await result.json();
-    return true;
+export async function saveBusinessMomentsAdaptorMicroservice(input: MicroserviceBusinessMomentAdaptor): Promise<boolean> {
+    return saveMicroservice(input);
 }
 
 

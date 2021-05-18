@@ -45,6 +45,7 @@ export type MicroserviceDolittle = {
 export type MicroserviceIngressPath = {
     path: string
     pathType: string
+    domainPrefix: string
 };
 
 export type MicroserviceSimple = {
