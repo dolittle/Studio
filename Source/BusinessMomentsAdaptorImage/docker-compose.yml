@@ -1,0 +1,12 @@
+version: '2'
+services:
+    server:
+        build: .
+        command: yarn ts-node server.ts
+        volumes:
+            - .:/usr/app/
+            - /usr/app/node_modules
+        ports:
+            - '3008:3008'
+        environment:
+            WH_AUTHORIZATION: 'Basic bTM6am9obmNhcm1hY2s='

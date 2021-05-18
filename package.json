@@ -3,7 +3,11 @@
     "workspaces": [
         "Source/**/*"
     ],
-    "dependencies": {},
+    "dependencies": {
+        "atob": "^2.1.2",
+        "ts-node": "^9.1.1",
+        "typescript": "^4.2.4"
+    },
     "devDependencies": {},
     "license": "MIT",
     "version": "0.0.0"
