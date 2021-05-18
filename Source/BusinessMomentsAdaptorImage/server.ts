@@ -6,7 +6,7 @@ import process from 'process';
 export function createServer() {
     const app: Application = express();
 
-    // Tell express to use body-parser's JSON parsing
+    // Tell express to use body-parser's JSON parsing.
     app.use(bodyParser.json());
 
     app.post('/api/webhooks-ingestor', (req: Request, res: Response) => {
