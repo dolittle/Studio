@@ -1,11 +1,16 @@
 import request from 'supertest';
-import createServer from '../server';
+import { createServer } from '../server';
 
-const app = createServer();
 
 describe('server checks', function () {
-    it('should fail due to lack of auth', function (done) {
+    let app: any;
+
+    beforeEach(() => {
         process.env.WH_AUTHORIZATION = 'Basic bTM6am9obmNhcm1hY2s=';
+        app = createServer();
+    });
+
+    it('should fail due to lack of auth', function (done) {
         request(app)
             .post('/api/webhooks-ingestor')
             .send({

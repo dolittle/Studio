@@ -9,7 +9,9 @@ WORKDIR /app
 # where available (npm@5+)
 COPY package.json ./
 
-RUN npm install typescript
+RUN npm install -g typescript ts-node
+#RUN yarn add typescript
+#RUN yarn add ts-node
 RUN yarn
 
 # If you are building your code for production
@@ -19,4 +21,4 @@ RUN yarn
 COPY . .
 
 EXPOSE 3008
-CMD [ "yarn", "ts-node", "server.ts" ]
+CMD [ "ts-node", "startserver.ts" ]
