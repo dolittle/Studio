@@ -19,3 +19,4 @@ docker run \
 ```sh
 docker rm -f studio-self-service-server
 ```
+

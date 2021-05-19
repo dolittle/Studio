@@ -1,143 +1,85 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route, BrowserRouter, useParams } from 'react-router-dom';
 
-import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
+import { getApplication, HttpResponseApplications2 } from '../api';
 
-import { List } from '@fluentui/react/lib/List';
-import { Link, Text } from '@fluentui/react';
-import { PrimaryButton, IconButton } from '@fluentui/react/lib/Button';
-import { Stack } from '@fluentui/react/lib/Stack';
+import { ApplicationOverviewScreen } from './applicationOverviewScreen';
+import { MicroserviceNewScreen } from './microserviceNewScreen';
 
-import { getMicroservices, HttpResponseMicroservices, MicroserviceInfo } from '../api';
+import { MicroserviceEditScreen } from './microserviceEditScreen';
+import { MicroserviceViewScreen } from './microserviceViewScreen';
+import { ContainerRegistryInfoScreen } from './containerRegistryInfoScreen';
+import { PodViewScreen } from './podViewScreen';
 
-const stackTokens = { childrenGap: 15 };
+import { EnvironmentNewScreen } from './environmentNewScreen';
+import { EnvironmentChanger } from '../application/environment';
+
 
 export const ApplicationScreen: React.FunctionComponent = () => {
     const { applicationId } = useParams() as any;
-    const [data, setData] = useState({
-        application: {
-            name: '',
-            id: ''
-        },
-        microservices: []
-    } as HttpResponseMicroservices);
 
-    const [environments, setEnvironments] = useState([] as string[]);
-    const [environment, setEnvironment] = useState('');
-    const [hasEnvironments, setHasEnvironments] = useState(false);
-
+    const [application, setApplication] = useState({} as HttpResponseApplications2);
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        getMicroservices(applicationId).then(data => {
-            setData(data);
-            const newEnviornments = [...new Set(data.microservices.map(item => item.environment))];
-
-            setHasEnvironments(newEnviornments.length > 0);
-            setEnvironments(newEnviornments);
-            return;
+        getApplication(applicationId).then(data => {
+            setApplication(data);
+            setLoaded(true);
         });
     }, []);
 
+    if (!loaded) {
+        return null;
+    }
 
-    const environmentRow = (item?: string, index?: number | undefined): JSX.Element => {
-        const environment = item!;
+    if (application.id === '') {
         return (
-            <Link underline onClick={(event: React.MouseEvent<HTMLElement>) => {
-                event.preventDefault();
-                setEnvironment(environment);
-            }}>
-                {environment}
-            </Link>
+            <>
+                <h1>Application with this environment not found</h1>
+            </>
         );
-    };
-
-    const microserviceRow = (item?: MicroserviceInfo, index?: number | undefined): JSX.Element => {
-        const microservice = item!;
-
-        const items = microservice.images.map(container => {
-            return (
-                <Stack
-                    key={container.name}
-                    tokens={stackTokens}
-                    horizontal
-                >
-                    <Text variant="medium" block>
-                        {container.name}
-                    </Text>
-
-                    <Text variant="medium" block>
-                        {container.image}
-                    </Text>
-                </Stack >
-            );
-        });
-
-
-        return (
-            <Stack horizontal tokens={stackTokens}>
-                <Text>
-                    {microservice.name}
-                </Text>
-                <Link href={`/application/${data.application.id}/microservice/view/${microservice.id}`} underline>
-                    view
-                </Link>
-                <Stack tokens={stackTokens}>
-                    {items}
-                </Stack>
-            </Stack>
-
-        );
-    };
-
-
-    const _items: ICommandBarItemProps[] = [
-        {
-            key: 'showContainerRegistryInfo',
-            text: 'Show Container Registry Info',
-            iconProps: { iconName: 'Info' },
-            onClick: () => {
-                window.location.href = `/application/${data.application.id}/container-registry-info`;
-            },
-        }
-    ];
+    }
 
     return (
         <>
-            <h3>Application Screen</h3>
-            <h1 title={`${data.application.name} (${data.application.id})`}>{data.application.name}</h1>
+            <h1>ApplicationsScreen</h1>
+            <Route path="/application/:applicationId/:environment">
+                <EnvironmentChanger application={application} />
+            </Route>
 
-            <CommandBar items={_items} />
+            <BrowserRouter>
 
-            {!hasEnvironments && (
-                <>
-                    <PrimaryButton text="Create New Environment" onClick={(e => {
-                        window.location.href = `/application/${data.application.id}/environment/create`;
-                    })} />
-                </>
-            )}
-            {hasEnvironments && (
-                <>
-                    <PrimaryButton text="Create New Microservice" onClick={(e => {
-                        console.log('Create microservice');
-                        window.location.href = `/application/${data.application.id}/microservice/create`;
-                    })} />
+                <Route exact path="/application/:applicationId/environment/create">
+                    <EnvironmentNewScreen />
+                </Route>
 
-                    <h2>Environment</h2>
-                    <List items={environments} onRenderCell={environmentRow} />
+                <Route exact path="/application/:applicationId/:environment">
+                    <ApplicationOverviewScreen application={application} />
+                </Route>
 
-                    {environment !== '' && (
-                        <>
-                            <h3>Microservices</h3>
-                            <List items={data.microservices
-                                .filter(microservice => microservice.environment === environment)}
-                                onRenderCell={microserviceRow} />
-                        </>
-                    )}
-                </>
-            )}
+                <Route exact path="/application/:applicationId/:environment/container-registry-info">
+                    <ContainerRegistryInfoScreen />
+                </Route>
+                <Route exact path="/application/:applicationId/:environment/microservice/create">
+                    <MicroserviceNewScreen />
+                </Route>
+                <Route exact path="/application/:applicationId/:environment/microservice/edit/:microserviceId">
+                    <MicroserviceEditScreen />
+                </Route>
+                <Route exact path="/application/:applicationId/:environment/microservice/view/:microserviceId">
+                    <MicroserviceViewScreen />
+                </Route>
+
+                <Route exact path="/application/:applicationId/pod/view/:podName/logs">
+                    <PodViewScreen />
+                </Route>
+            </BrowserRouter>
         </>
     );
 };
+// 3:20
+
+

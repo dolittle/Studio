@@ -12,15 +12,10 @@ import { Editor as EntityEditor } from './moments/EntityEditor';
 import { Create as Microservice } from './micoservice/Microservice';
 import { ApplicationScreen } from './screens/applicationScreen';
 import { ApplicationsScreen } from './screens/applicationsScreen';
-import { MicroserviceNewScreen } from './screens/microserviceNewScreen';
 import { QuickScreen } from './screens/quickScreen';
-import { MicroserviceEditScreen } from './screens/microserviceEditScreen';
-import { MicroserviceViewScreen } from './screens/microserviceViewScreen';
-import { ContainerRegistryInfoScreen } from './screens/containerRegistryInfoScreen';
-import { PodViewScreen } from './screens/podViewScreen';
 import { getFakeMicroserviceBusinessMomentsAdaptor } from './store';
 import { LoginScreen } from './screens/loginScreen';
-import { EnvironmentNewScreen } from './screens/environmentNewScreen';
+
 
 export const App = () => {
     let itemsWithHref: IBreadcrumbItem[] = [
@@ -45,7 +40,6 @@ export const App = () => {
         window.location.href = '/applications';
         return (<></>);
     }
-
 
     const _items: ICommandBarItemProps[] = [
         {
@@ -112,31 +106,13 @@ export const App = () => {
                 <Route path="/entity/editor">
                     <EntityEditor />
                 </Route>
+
                 <Route exact path="/applications">
                     <ApplicationsScreen />
                 </Route>
-                <Route exact path="/application/:applicationId">
+
+                <Route path="/application/:applicationId">
                     <ApplicationScreen />
-                </Route>
-                <Route exact path="/application/:applicationId/environment/create">
-                    <EnvironmentNewScreen />
-                </Route>
-
-                <Route exact path="/application/:applicationId/container-registry-info">
-                    <ContainerRegistryInfoScreen />
-                </Route>
-                <Route exact path="/application/:applicationId/microservice/create">
-                    <MicroserviceNewScreen />
-                </Route>
-                <Route exact path="/application/:applicationId/microservice/edit/:microserviceId">
-                    <MicroserviceEditScreen />
-                </Route>
-                <Route exact path="/application/:applicationId/microservice/view/:microserviceId">
-                    <MicroserviceViewScreen />
-                </Route>
-
-                <Route exact path="/application/:applicationId/pod/view/:podName/logs">
-                    <PodViewScreen />
                 </Route>
 
             </BrowserRouter>

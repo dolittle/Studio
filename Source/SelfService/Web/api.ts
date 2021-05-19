@@ -32,6 +32,14 @@ export type HttpResponseApplications = {
     applications: ShortInfo[]
 };
 
+export type HttpResponseApplications2 = { // Not a great name
+    id: string
+    name: string
+    applications: ShortInfo[]
+    environments: HttpInputApplicationEnvironment[]
+    microservices: any[] // Not great
+};
+
 export type HttpResponseMicroservices = {
     application: ShortInfo
     microservices: MicroserviceInfo[]
@@ -55,12 +63,20 @@ export type HttpResponsePodLog = {
     logs: string
 };
 
+export type HttpInputApplicationEnvironment = {
+    applicationId: string
+    tenantId: string
+    name: string
+    domainPrefix: string
+    host: string
+};
+
 function getServerUrlPrefix(): string {
     return `http://localhost:3007`;
 }
 
-export async function getApplications(tenantId: string): Promise<any> {
-    const url = `${getServerUrlPrefix()}/live/tenant/${tenantId}/applications`;
+export async function getLiveApplications(): Promise<any> {
+    const url = `${getServerUrlPrefix()}/live/applications`;
 
     const result = await fetch(
         url,
@@ -69,6 +85,34 @@ export async function getApplications(tenantId: string): Promise<any> {
             mode: 'cors'
         });
     const jsonResult = await result.json();
+
+    return jsonResult;
+}
+
+export async function getApplications(): Promise<any> {
+    const url = `${getServerUrlPrefix()}/applications`;
+
+    const result = await fetch(
+        url,
+        {
+            method: 'GET',
+            mode: 'cors'
+        });
+    const jsonResult = await result.json();
+
+    return jsonResult;
+}
+
+export async function getApplication(applicationId: string): Promise<HttpResponseApplications2> {
+    const url = `${getServerUrlPrefix()}/application/${applicationId}`;
+
+    const result = await fetch(
+        url,
+        {
+            method: 'GET',
+            mode: 'cors'
+        });
+    const jsonResult: HttpResponseApplications2 = await result.json();
 
     return jsonResult;
 }
@@ -147,8 +191,8 @@ export async function getPodLogs(applicationId: string, podName: string, contain
 }
 
 
-export async function saveEnvironment(input: any): Promise<boolean> {
-    const url = `${getServerUrlPrefix()}/microservice`;
+export async function saveEnvironment(input: HttpInputApplicationEnvironment): Promise<boolean> {
+    const url = `${getServerUrlPrefix()}/environment`;
     const result = await fetch(
         url,
         {
@@ -156,11 +200,11 @@ export async function saveEnvironment(input: any): Promise<boolean> {
             body: JSON.stringify(input),
             mode: 'cors',
             headers: {
-                'content-type': 'application/json',
-                'x-tenant': (input.dolittle as MicroserviceDolittle).tenantId // TODO this is not correct
+                'content-type': 'application/json'
             }
         });
     const jsonResult = await result.json();
     console.log(jsonResult);
+    console.log(result.status);
     return true;
 }

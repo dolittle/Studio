@@ -3,10 +3,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { List } from '@fluentui/react/lib/List';
-import { Link, Text } from '@fluentui/react';
+import { Link } from '@fluentui/react';
 
-import { getApplications, HttpResponseApplications, ShortInfo, HttpResponseMicroservices } from '../api';
-import { getTenant } from '../store';
+import { getApplications, HttpResponseApplications, ShortInfo } from '../api';
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
     const [data, setData] = useState({
@@ -16,17 +15,14 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
     } as HttpResponseApplications);
 
     // TODO handle when not 200!
-    const tenantId = getTenant();
-
     useEffect(() => {
-        getApplications(tenantId).then(data => {
+        getApplications().then(data => {
             // If only 1 item redirect
             if (data.applications.length === 1) {
                 const application = data.applications[0];
-                window.location.href = `/application/${application.id}`;
+                window.location.href = `/application/${application.id}/${application.environment}`;
                 return;
             }
-
             setData(data);
             return;
         });
