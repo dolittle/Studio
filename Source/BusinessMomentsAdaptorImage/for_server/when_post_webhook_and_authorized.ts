@@ -23,8 +23,7 @@ describe('Post webhook', function () {
                 .post('/api/webhooks-ingestor')
                 .set('authorization', authHeaderToSendInRequest)
                 .send({
-                    headers: { authorization: 'Basic' },
-                    body: { foo: 'bar' },
+                    body: { foo: 'bar' }
                 })
                 .expect(200, done);
         });

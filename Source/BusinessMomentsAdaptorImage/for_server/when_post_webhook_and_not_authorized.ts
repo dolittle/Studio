@@ -20,9 +20,9 @@ describe('Post webhook', function () {
         it('will return 401 Unauthorized', (done) => {
             request(app)
                 .post('/api/webhooks-ingestor')
+                .set('authorization', authHeaderToSendInRequest)
                 .send({
-                    headers: { authorization: authHeaderToSendInRequest },
-                    body: { foo: 'bar' },
+                    body: { foo: 'bar' }
                 })
                 .expect(401, done);
         });
