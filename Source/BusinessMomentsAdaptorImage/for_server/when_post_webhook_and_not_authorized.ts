@@ -4,7 +4,7 @@ import { createServer } from '../server';
 
 describe('Post webhook', function () {
     let app: any;
-    let authHeader: string;
+    let authHeaderToSendInRequest: string;
 
     beforeEach(() => {
         process.env.WH_AUTHORIZATION = 'Basic bTM6am9obmNhcm1hY2s=';
@@ -14,14 +14,14 @@ describe('Post webhook', function () {
     context('with invalid authorization header', () => {
 
         beforeEach(() => {
-            authHeader = 'Basic invalidheader';
+            authHeaderToSendInRequest = 'Basic invalidheader';
         });
 
         it('will return 401 Unauthorized', (done) => {
             request(app)
                 .post('/api/webhooks-ingestor')
                 .send({
-                    headers: { authorization: authHeader },
+                    headers: { authorization: authHeaderToSendInRequest },
                     body: { foo: 'bar' },
                 })
                 .expect(401, done);
