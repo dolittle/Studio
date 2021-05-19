@@ -18,7 +18,7 @@ COPY Source/Shared/Styles/package.json ./Source/Shared/Styles/package.json
 COPY Source/Shared/Web/package.json ./Source/Shared/Web/package.json
 RUN yarn
 
-COPY Source/Data/microservice.json /app/Source/Data/microservice.json
+COPY Source/SelfService/microservice.json /app/Source/SelfService/microservice.json
 
 # Web Build
 FROM node:14.2.0 AS web-build
@@ -26,12 +26,12 @@ WORKDIR /app
 
 COPY --from=shared-build /app/ ./
 
-WORKDIR /app/Source/Data/Web
-COPY Source/Data/Web/package.json ./package.json
+WORKDIR /app/Source/SelfService/Web
+COPY Source/SelfService/Web/package.json ./package.json
 RUN yarn
 
 COPY Source/Shared /app/Source/Shared/
-COPY Source/Data/Web ./
+COPY Source/SelfService/Web ./
 RUN yarn build
 
 # Resulting Image

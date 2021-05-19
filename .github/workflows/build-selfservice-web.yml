@@ -31,7 +31,7 @@ jobs:
         run: |
           export NODE_OPTIONS="--max-old-space-size=4096"
           yarn
-          cd Source/Data/Web
+          cd Source/SelfService/Web
           yarn ci
 
       - name: Get git branch name
