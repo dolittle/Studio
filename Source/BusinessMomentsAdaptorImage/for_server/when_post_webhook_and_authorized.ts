@@ -1,3 +1,6 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import request from 'supertest';
 import { createServer } from '../server';
 
@@ -5,7 +8,7 @@ import { createServer } from '../server';
 describe('Post webhook', function () {
     let app: any;
     let authHeaderToSendInRequest: string;
-    let configuredAuthHeader = 'Basic bTM6am9obmNhcm1hY2s=';
+    const configuredAuthHeader = 'Basic bTM6am9obmNhcm1hY2s=';
 
     beforeEach(() => {
         process.env.WH_AUTHORIZATION = configuredAuthHeader;
