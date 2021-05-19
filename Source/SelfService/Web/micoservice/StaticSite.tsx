@@ -5,7 +5,13 @@ import { Stack } from '@fluentui/react/lib/Stack';
 
 const stackTokens = { childrenGap: 15 };
 
-export const Microservice: React.FunctionComponent = () => {
+type Props = {
+    applicationId: string
+    environment: string
+};
+
+export const Microservice: React.FunctionComponent<Props> = (props) => {
+    const _props = props!;
     return (
         <Stack tokens={stackTokens}>
             <h1>TODO Static Site</h1>

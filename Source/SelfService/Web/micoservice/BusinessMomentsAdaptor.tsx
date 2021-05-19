@@ -20,14 +20,15 @@ import { Guid } from '@dolittle/rudiments';
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
-    applicationId?: string
+    applicationId: string
     tenantId?: string
-    environment?: string
+    environment: string
 };
 
 export const Microservice: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const applicationId = _props.applicationId;
+    const environment = _props.environment;
     const microserviceId = Guid.create().toString();
 
     const fromStore = {
@@ -44,12 +45,12 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
     const ms = {
         dolittle: {
             applicationId,
-            tenantId: _props.tenantId,
+            tenantId: _props.tenantId, // TODO I am not sure I want this
             microserviceId,
         },
         name: 'Webhook-101',
         kind: 'buisness-moments-adaptor',
-        environment: _props.environment,
+        environment,
         extra: {
             headImage: fromStore.businessmomentsadaptor.image,
             runtimeImage: fromStore.runtime.image,

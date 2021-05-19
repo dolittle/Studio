@@ -1,15 +1,14 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect } from 'react';
-import { Breadcrumb, IBreadcrumbItem, IDividerAsProps } from '@fluentui/react/lib/Breadcrumb';
+import React from 'react';
+import { IBreadcrumbItem } from '@fluentui/react/lib/Breadcrumb';
 
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import { Route, BrowserRouter } from 'react-router-dom';
 import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 import { Editor as BusinessMomentEditor } from './moments/BusinessMomentEditor';
 import { Editor as EntityEditor } from './moments/EntityEditor';
-import { Create as Microservice } from './micoservice/Microservice';
 import { ApplicationScreen } from './screens/applicationScreen';
 import { ApplicationsScreen } from './screens/applicationsScreen';
 import { QuickScreen } from './screens/quickScreen';
@@ -93,13 +92,10 @@ export const App = () => {
                     <h1>TODO: List connectors</h1>
                 </Route>
 
-                <Route exact path="/microservice/create">
-                    <Microservice />
-                </Route>
-
                 <Route exact path="/connector/edit/:connectorId">
                     <WebhooksConfig domain="freshteapot-taco.dolittle.cloud" action='upsert' ms={getFakeMicroserviceBusinessMomentsAdaptor()} />
                 </Route>
+
                 <Route path="/business-moments/editor">
                     <BusinessMomentEditor />
                 </Route>

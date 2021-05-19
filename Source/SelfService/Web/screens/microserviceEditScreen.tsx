@@ -5,10 +5,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
-import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react/lib/ChoiceGroup';
-
-import { Create as Microservice } from '../micoservice/Microservice';
-import { getMicroservices, HttpResponseMicroservices } from '../api';
 import { getTenant } from '../store';
 
 

@@ -7,24 +7,28 @@ import { TextField } from '@fluentui/react/lib/TextField';
 import { MicroserviceSimple, createMicroservice } from '../store';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { Guid } from '@dolittle/rudiments';
+import { HttpResponseApplications2 } from '../api';
 
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
-    applicationId?: string
-    tenantId?: string
-    environment?: string
+    application: HttpResponseApplications2
+    environment: string
 };
 
 export const Microservice: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
+    const application = _props.application;
+    const environment = _props.environment;
+    const ingressInfo = application.environments.find(e => e.name === environment)!;
+
     // TODO do something with
     const microserviceId = Guid.create().toString();
 
     const ms = {
         dolittle: {
-            applicationId: _props.applicationId,
-            tenantId: _props.tenantId,
+            applicationId: application.id,
+            tenantId: application.tenantId,
             microserviceId,
         },
         name: 'Order',
@@ -37,7 +41,8 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
             ingress: {
                 path: '/',
                 pathType: 'Prefix',
-                domainPrefix: 'freshteapot-taco'
+                host: ingressInfo.host,
+                domainPrefix: ingressInfo.domainPrefix
             }
         }
     } as MicroserviceSimple;
@@ -61,7 +66,9 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
         ms.extra.headImage = headImage;
         ms.extra.runtimeImage = runtimeImage;
         ms.extra.ingress.path = ingressPath;
+        // TODO land the name we want here
         ms.extra.ingress.domainPrefix = ingressDomainPrefix;
+        ms.extra.ingress.secretNamePrefix = ingressDomainPrefix;
         console.log('onSave', ms);
         createMicroservice(ms.kind, ms);
     };

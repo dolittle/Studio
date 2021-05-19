@@ -41,6 +41,11 @@ export const EnvironmentChanger: React.FunctionComponent<Props> = (props) => {
             window.location.href = `/application/${application.id}/environment/create`;
             return;
         }
+
+        // TODO change based on the url
+        const parts = window.location.pathname.split(`/${environment}/`);
+        const href = `${parts[0]}/${newEnvironment}/${parts[1]}`;
+        window.location.href = href;
     };
 
     if (!application.environments.some(e => e.name === environment)) {

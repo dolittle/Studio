@@ -15,22 +15,22 @@ import { Text, IDropdownOption } from '@fluentui/react';
 import { Microservice as BusinessMomentsAdaptor } from './BusinessMomentsAdaptor';
 import { Microservice as Simple } from './Simple';
 import { Microservice as StaticSite } from './StaticSite';
-import tenant from '@shared/common/Tenant';
 
+import { useParams } from 'react-router-dom';
+import { HttpResponseApplications2 } from '../api';
 
-const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
-    applicationId?: string
-    tenantId?: string
-    environments?: string[]
+    application: HttpResponseApplications2
 };
 
 export const Create: React.FunctionComponent<Props | undefined> = (props) => {
+    const { environment } = useParams() as any;
+
     const _props = props!;
-    const applicationId = _props.applicationId;
-    const tenantId = _props.tenantId;
+    const applicationId = _props.application.id;
+    const tenantId = _props.application.tenantId;
 
 
     const [microserviceTypeState, setMicroserviceTypeState] = React.useState('');
@@ -61,19 +61,19 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
 
                 {microserviceTypeState === 'business-miner' && (
                     <Stack tokens={stackTokens}>
-                        <BusinessMomentsAdaptor />
+                        <BusinessMomentsAdaptor applicationId={applicationId} environment={environment} />
                     </Stack>
                 )}
 
                 {microserviceTypeState === 'static-site' && (
                     <Stack tokens={stackTokens}>
-                        <StaticSite />
+                        <StaticSite applicationId={applicationId} environment={environment} />
                     </Stack>
                 )}
 
                 {microserviceTypeState === 'dolittle-microservice' && (
                     <Stack tokens={stackTokens}>
-                        <Simple applicationId={applicationId} tenantId={tenantId} />
+                        <Simple application={_props.application} environment={environment} />
                     </Stack>
                 )}
 

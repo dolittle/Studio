@@ -35,6 +35,7 @@ export type HttpResponseApplications = {
 export type HttpResponseApplications2 = { // Not a great name
     id: string
     name: string
+    tenantId: string
     applications: ShortInfo[]
     environments: HttpInputApplicationEnvironment[]
     microservices: any[] // Not great
@@ -162,7 +163,7 @@ export async function saveBusinessMomentsAdaptorMicroservice(input: Microservice
 
 
 export async function getPodStatus(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponsePodStatus> {
-    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()} /microservice/${microserviceId} /podstatus`;
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/microservice/${microserviceId}/podstatus`;
     const result = await fetch(
         url,
         {

@@ -64,7 +64,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                     <ContainerRegistryInfoScreen />
                 </Route>
                 <Route exact path="/application/:applicationId/:environment/microservice/create">
-                    <MicroserviceNewScreen />
+                    <MicroserviceNewScreen application={application} />
                 </Route>
                 <Route exact path="/application/:applicationId/:environment/microservice/edit/:microserviceId">
                     <MicroserviceEditScreen />
