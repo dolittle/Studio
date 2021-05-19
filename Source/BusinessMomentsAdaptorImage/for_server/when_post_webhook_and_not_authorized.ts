@@ -1,4 +1,4 @@
-import request from 'supertest';
+import supertest from 'supertest';
 import { createServer } from '../server';
 
 
@@ -18,7 +18,7 @@ describe('Post webhook', function () {
         });
 
         it('will return 401 Unauthorized', (done) => {
-            request(app)
+            supertest(app)
                 .post('/api/webhooks-ingestor')
                 .set('authorization', authHeaderToSendInRequest)
                 .send({
@@ -27,6 +27,15 @@ describe('Post webhook', function () {
                 .expect(401, done);
         });
 
+    });
+
+    it('will return 401 Unauthorized when Authorization header is not set', (done) => {
+        supertest(app)
+            .post('/api/webhooks-ingestor')
+            .send({
+                body: { foo: 'bar' }
+            })
+            .expect(401, done);
     });
 
 });
