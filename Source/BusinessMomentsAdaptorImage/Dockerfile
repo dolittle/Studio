@@ -1,24 +1,44 @@
-# add stuff here
-FROM node:14.2
+FROM node:14.2.0 AS shared-build
 
-# Create app directory
 WORKDIR /app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
 COPY package.json ./
+COPY .eslintrc.js ./
+COPY tsconfig.json ./
+#COPY application.json ./
 
-RUN npm install -g typescript ts-node
-#RUN yarn add typescript
-#RUN yarn add ts-node
+COPY Source/Shared/Backend/package.json ./Source/Shared/Backend/package.json
+COPY Source/Shared/Common/package.json ./Source/Shared/Common/package.json
+COPY Source/Shared/Specs/package.json ./Source/Shared/Specs/package.json
+COPY Source/Shared/Styles/package.json ./Source/Shared/Styles/package.json
+COPY Source/Shared/Web/package.json ./Source/Shared/Web/package.json
 RUN yarn
 
-# If you are building your code for production
-# RUN npm ci --only=production
+#COPY Source/BusinessMomentsAdaptorImage/Backend/microservice.json /app/Source/BusinessMomentsAdaptorImage/microservice.json
 
-# Bundle app source
-COPY . .
+# Backend Build
+FROM node:14.2.0 AS backend-build
 
-EXPOSE 3008
-CMD [ "ts-node", "startserver.ts" ]
+WORKDIR /app
+
+COPY --from=shared-build /app/ ./
+
+WORKDIR /app/Source/BusinessMomentsAdaptorImage
+COPY Source/BusinessMomentsAdaptorImage/package.json ./package.json
+RUN yarn
+
+#COPY Source/Shared /app/Source/Shared/
+COPY Source/BusinessMomentsAdaptorImage/ ./
+
+RUN yarn build
+
+# Resulting Image
+FROM node:14.2.0-slim as base
+ARG CONFIGURATION=Release
+
+RUN echo Configuration = $CONFIGURATION
+
+WORKDIR /app
+COPY --from=backend-build /app/Source/BusinessMomentsAdaptorImage/dist/index.js ./
+
+ENTRYPOINT ["node", "index.js"]
