@@ -16,7 +16,7 @@ import './index.scss';
 import { App } from './App';
 
 ReactDOM.render(
-    <Bootstrapper name="Businessmomentsadapters" prefix="/_/businessmomentsadapters" version={version}>
+    <Bootstrapper name="Selfservice" prefix="/_/selfservice" version={version}>
         <App />
     </Bootstrapper>,
     document.getElementById('root')

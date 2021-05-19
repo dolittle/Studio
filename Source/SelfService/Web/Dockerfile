@@ -35,12 +35,11 @@ COPY Source/SelfService/Web ./
 RUN yarn build
 
 # Resulting Image
-FROM node:14.2.0-slim as base
-ARG CONFIGURATION=Release
-
-RUN echo Configuration = $CONFIGURATION
-
+#FROM node:14.2.0-slim as base
+FROM pierrezemb/gostatic as base
+#ARG CONFIGURATION=Release
+#RUN echo Configuration = $CONFIGURATION
 WORKDIR /app
 COPY --from=web-build /app/Source/SelfService/Web/wwwroot ./public
 
-ENTRYPOINT ["node", "index.js"]
+ENTRYPOINT ["/goStatic"]

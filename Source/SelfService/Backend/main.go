@@ -11,6 +11,17 @@ import (
 
 func main() {
 	// Ugly first version
+
+	platformApi := os.Getenv("PLATFORM_API")
+	if platformApi == "" {
+		platformApi = "localhost:8080"
+	}
+
+	listenOn := os.Getenv("LISTEN_ON")
+	if listenOn == "" {
+		listenOn = "localhost:3007"
+	}
+
 	sharedSecret := os.Getenv("HEADER_SECRET")
 	if sharedSecret == "" {
 		sharedSecret = "TODO-1"
@@ -19,10 +30,9 @@ func main() {
 	// Set to false for when in the cluster
 	includeDolittleHeaders := true
 
-	http.HandleFunc("/", proxyPlatformApiServer(sharedSecret, includeDolittleHeaders))
+	http.HandleFunc("/", proxyPlatformApiServer(platformApi, sharedSecret, includeDolittleHeaders))
 	// TODO change so it works in the cluster
 	// listenOn := "0.0.0.0:8080"
-	listenOn := "localhost:3007"
 
 	srv := &http.Server{
 		Addr:         listenOn,
@@ -31,16 +41,16 @@ func main() {
 	}
 
 	log.Fatal(srv.ListenAndServe())
-
 }
 
-func proxyPlatformApiServer(sharedSecret string, includeDolittleHeaders bool) func(w http.ResponseWriter, r *http.Request) {
+func proxyPlatformApiServer(platformApi string, sharedSecret string, includeDolittleHeaders bool) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		addSharedSecret(sharedSecret, r)
 		if includeDolittleHeaders {
 			addDolittleHeaders(r)
 		}
-		serveReverseProxy("localhost:8080", w, r)
+		// TODO this needs elevating
+		serveReverseProxy(platformApi, w, r)
 	}
 }
 

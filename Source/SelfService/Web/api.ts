@@ -73,7 +73,7 @@ export type HttpInputApplicationEnvironment = {
 };
 
 function getServerUrlPrefix(): string {
-    return `http://localhost:3007`;
+    return '/_/selfservice/api';
 }
 
 export async function getLiveApplications(): Promise<any> {

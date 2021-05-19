@@ -5,7 +5,7 @@ import React from 'react';
 import { IBreadcrumbItem } from '@fluentui/react/lib/Breadcrumb';
 
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
-import { Route, BrowserRouter } from 'react-router-dom';
+import { Route, BrowserRouter, useRouteMatch } from 'react-router-dom';
 import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 import { Editor as BusinessMomentEditor } from './moments/BusinessMomentEditor';
 import { Editor as EntityEditor } from './moments/EntityEditor';
@@ -17,10 +17,11 @@ import { LoginScreen } from './screens/loginScreen';
 
 
 export const App = () => {
+    const prefix = '/_/selfservice';
     let itemsWithHref: IBreadcrumbItem[] = [
         // Normally each breadcrumb would have a unique href, but to make the navigation less disruptive
         // in the example, it uses the breadcrumb page as the href for all the items
-        { text: 'Start', key: 'Start', href: '/' },
+        { text: 'Start', key: 'Start', href: `${prefix}/` },
         { text: 'Business Moments Editor', key: '/business-moments/editor', href: '/business-moments/editor' },
         { text: 'Entity Editor', key: '/entity/editor', href: '/entity/editor' },
 
@@ -70,14 +71,14 @@ export const App = () => {
             text: 'Quick Links',
             iconProps: { iconName: 'Thunderstorms' },
             onClick: () => {
-                window.location.href = '/quick';
+                window.location.href = `${prefix}/quick`;
             },
         },
     ];
 
     return (
         <>
-            <BrowserRouter>
+            <BrowserRouter basename="/_/selfservice">
                 <CommandBar items={_items} />
 
                 <Route exact path="/login">
@@ -110,7 +111,6 @@ export const App = () => {
                 <Route path="/application/:applicationId">
                     <ApplicationScreen />
                 </Route>
-
             </BrowserRouter>
         </>
     );
