@@ -14,8 +14,6 @@ COPY Source/Shared/Styles/package.json ./Source/Shared/Styles/package.json
 COPY Source/Shared/Web/package.json ./Source/Shared/Web/package.json
 RUN yarn
 
-#COPY Source/BusinessMomentsAdaptorImage/Backend/microservice.json /app/Source/BusinessMomentsAdaptorImage/microservice.json
-
 # Backend Build
 FROM node:14.2.0 AS backend-build
 
@@ -27,7 +25,6 @@ WORKDIR /app/Source/BusinessMomentsAdaptorImage
 COPY Source/BusinessMomentsAdaptorImage/package.json ./package.json
 RUN yarn
 
-#COPY Source/Shared /app/Source/Shared/
 COPY Source/BusinessMomentsAdaptorImage/ ./
 
 RUN yarn build
