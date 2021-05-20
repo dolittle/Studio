@@ -1,3 +1,6 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { expect } from 'chai';
 import { RawDataProcessor } from '../processor';
 
@@ -38,7 +41,7 @@ describe('process raw data', () => {
                         PostalCode: input.Postnr,
                         City: input.City
                     }
-                }
+                };
             }
         });
 
@@ -55,7 +58,7 @@ describe('process raw data', () => {
                 PostalCode: 7070,
                 City: 'Trondheim'
             }
-        })
+        });
     });
 
     it('will not process whne a filter matches', () => {

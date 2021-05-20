@@ -19,19 +19,19 @@ export class RawDataProcessor {
     }
 
     Process(input: any): ProcessingResult {
-        for (let filter of this.transforms) {
+        for (const filter of this.transforms) {
             if (filter.Filter(input)) {
                 return {
                     WasProcessed: true,
                     Result: filter.Transform(input)
-                }
+                };
             }
         }
 
         return {
             WasProcessed: false,
             Result: null
-        }
+        };
     }
 
     AddEntityTransformer(transformer: EntityTransformer) {
