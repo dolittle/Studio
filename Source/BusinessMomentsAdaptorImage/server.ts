@@ -1,7 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import process from 'process';
-
+import * as dataController from './dataController';
 
 export function createServer() {
     const app: Application = express();
@@ -17,6 +17,13 @@ export function createServer() {
             res.status(401).end();
         }
     });
+
+    app.get('/data', dataController.allData);
+    app.get('/data/:id', dataController.getData);
+    app.put('/data', dataController.addData);
+    app.delete('/data/:id', dataController.deleteData);
+    app.post('/data/:id', dataController.updateData);
+
     return app;
 }
 
@@ -33,4 +40,3 @@ export function startServer(app: any) {
         process.exit(1);
     }
 }
-
