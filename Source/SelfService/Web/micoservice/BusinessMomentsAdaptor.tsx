@@ -14,7 +14,7 @@ import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react/lib/ChoiceGroup
 
 import { WebhooksConfig } from '../configuration/WebhooksConfiguration';
 import { Config as RestConfig } from '../configuration/RestConfiguration';
-import { MicroserviceBusinessMomentAdaptor, createMicroservice, MicroserviceBusinessMomentAdaptorConnector } from '../store';
+import { MicroserviceBusinessMomentAdaptor, createMicroservice, MicroserviceBusinessMomentAdaptorConnector, uriWithAppPrefix } from '../store';
 import { Guid } from '@dolittle/rudiments';
 
 const stackTokens = { childrenGap: 15 };
@@ -76,7 +76,7 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
         console.log('onSave', ms);
 
         createMicroservice(ms.kind, ms).then(data => {
-            window.location.href = `/application/${applicationId}`;
+            window.location.href = uriWithAppPrefix(`/application/${applicationId}`);
         });
     };
 

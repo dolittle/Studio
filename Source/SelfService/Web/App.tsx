@@ -12,18 +12,17 @@ import { Editor as EntityEditor } from './moments/EntityEditor';
 import { ApplicationScreen } from './screens/applicationScreen';
 import { ApplicationsScreen } from './screens/applicationsScreen';
 import { QuickScreen } from './screens/quickScreen';
-import { getFakeMicroserviceBusinessMomentsAdaptor } from './store';
+import { getFakeMicroserviceBusinessMomentsAdaptor, uriWithAppPrefix } from './store';
 import { LoginScreen } from './screens/loginScreen';
 
 
 export const App = () => {
-    const prefix = '/_/selfservice';
     let itemsWithHref: IBreadcrumbItem[] = [
         // Normally each breadcrumb would have a unique href, but to make the navigation less disruptive
         // in the example, it uses the breadcrumb page as the href for all the items
-        { text: 'Start', key: 'Start', href: `${prefix}/` },
-        { text: 'Business Moments Editor', key: '/business-moments/editor', href: '/business-moments/editor' },
-        { text: 'Entity Editor', key: '/entity/editor', href: '/entity/editor' },
+        { text: 'Start', key: 'Start', href: uriWithAppPrefix('/') },
+        { text: 'Business Moments Editor', key: '/business-moments/editor', href: uriWithAppPrefix('/business-moments/editor') },
+        { text: 'Entity Editor', key: '/entity/editor', href: uriWithAppPrefix('/entity/editor') },
 
     ];
     const location = window.location;
@@ -36,8 +35,8 @@ export const App = () => {
     });
 
     // Little hack to force redirect
-    if (['', '/'].includes(window.location.pathname)) {
-        window.location.href = '/applications';
+    if (['', '/', uriWithAppPrefix('/')].includes(window.location.pathname)) {
+        window.location.href = uriWithAppPrefix('/applications');
         return (<></>);
     }
 
@@ -47,7 +46,7 @@ export const App = () => {
             text: 'Root',
             iconProps: { iconName: 'Thunderstorms' },
             onClick: () => {
-                window.location.href = '/';
+                window.location.href = uriWithAppPrefix('/');
             },
         },
         {
@@ -55,7 +54,7 @@ export const App = () => {
             text: 'Business Moments Editor',
             iconProps: { iconName: 'Thunderstorms' },
             onClick: () => {
-                window.location.href = '/business-moments/editor';
+                window.location.href = uriWithAppPrefix('/business-moments/editor');
             },
         },
         {
@@ -63,7 +62,7 @@ export const App = () => {
             text: 'Entity Editor',
             iconProps: { iconName: 'Thunderstorms' },
             onClick: () => {
-                window.location.href = '/entity/editor';
+                window.location.href = uriWithAppPrefix('/entity/editor');
             },
         },
         {
@@ -71,14 +70,14 @@ export const App = () => {
             text: 'Quick Links',
             iconProps: { iconName: 'Thunderstorms' },
             onClick: () => {
-                window.location.href = `${prefix}/quick`;
+                window.location.href = uriWithAppPrefix('/quick');
             },
         },
     ];
 
     return (
         <>
-            <BrowserRouter basename="/_/selfservice">
+            <BrowserRouter basename={uriWithAppPrefix('')}>
                 <CommandBar items={_items} />
 
                 <Route exact path="/login">

@@ -5,9 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
-import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 
-import { getTenant } from '../store';
 import { getPodLogs, HttpResponsePodLog } from '../api';
 
 
@@ -19,7 +17,6 @@ function useQuery() {
 
 // dev-order-846fbc7776-x79rs
 export const PodViewScreen: React.FunctionComponent = () => {
-    const tenantId = getTenant();
     const { applicationId, podName } = useParams() as any;
     const query = useQuery();
     // TODO need to expose the options here
@@ -42,9 +39,6 @@ export const PodViewScreen: React.FunctionComponent = () => {
             <h1>Pod View Screen</h1>
 
             <Stack tokens={stackTokens}>
-                <Text variant="xLarge" block>
-                    tenant: {tenantId}
-                </Text>
                 <Text variant="xLarge" block>
                     application: {applicationId}
                 </Text>

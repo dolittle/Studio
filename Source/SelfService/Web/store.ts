@@ -123,6 +123,10 @@ const db = {
     ]
 };
 
+export function uriWithAppPrefix(uri: string): string {
+    const prefix = '/_/selfservice';
+    return `${prefix}${uri}`;
+}
 // Connectors
 export function getConnectors(): Connector[] {
     return db.connectors;

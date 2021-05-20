@@ -10,6 +10,7 @@ import { IconButton } from '@fluentui/react/lib/Button';
 import { DetailsList, DetailsListLayoutMode, IColumn } from '@fluentui/react/lib/DetailsList';
 
 import { HttpResponsePodStatus, PodInfo } from '../api';
+import { uriWithAppPrefix } from '../store';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -40,7 +41,7 @@ export const PodStatus: React.FunctionComponent<Props> = (props) => {
                     tokens={stackTokens}
                     horizontal
                     onClick={async () => {
-                        const href = `/application/${applicationId}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
+                        const href = uriWithAppPrefix(`/application/${applicationId}/pod/view/${podInfo.name}/logs?containerName=${container.name}`);
                         window.location.href = href;
                     }}>
                     <IconButton iconProps={{ iconName: 'SearchData' }} />
@@ -73,7 +74,7 @@ export const PodStatus: React.FunctionComponent<Props> = (props) => {
                     <IconButton
                         iconProps={{ iconName: 'SearchData' }}
                         onClick={async () => {
-                            const href = `/application/${applicationId}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
+                            const href = uriWithAppPrefix(`/application/${applicationId}/pod/view/${podInfo.name}/logs?containerName=${container.name}`);
                             window.location.href = href;
                         }} />
 

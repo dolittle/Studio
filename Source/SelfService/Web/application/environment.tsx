@@ -9,6 +9,7 @@ import { Stack } from '@fluentui/react/lib/Stack';
 import { HttpResponseApplications2 } from '../api';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
+import { uriWithAppPrefix } from '../store';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -19,7 +20,6 @@ type Props = {
 
 
 export const EnvironmentChanger: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory() as any;
     const _props = props!;
     const { environment } = useParams() as any;
     const application = _props.application!;
@@ -38,7 +38,7 @@ export const EnvironmentChanger: React.FunctionComponent<Props> = (props) => {
 
         if (newEnvironment === 'newEnvironment') {
             // TODO I feel there is a better way
-            window.location.href = `/application/${application.id}/environment/create`;
+            window.location.href = uriWithAppPrefix(`/application/${application.id}/environment/create`);
             return;
         }
 

@@ -16,6 +16,7 @@ import { PodViewScreen } from './podViewScreen';
 
 import { EnvironmentNewScreen } from './environmentNewScreen';
 import { EnvironmentChanger } from '../application/environment';
+import { uriWithAppPrefix } from '../store';
 
 
 export const ApplicationScreen: React.FunctionComponent = () => {
@@ -46,11 +47,11 @@ export const ApplicationScreen: React.FunctionComponent = () => {
     return (
         <>
             <h1>ApplicationsScreen</h1>
-            <Route path="/application/:applicationId/:environment">
+            <Route path={uriWithAppPrefix('/application/:applicationId/:environment')}>
                 <EnvironmentChanger application={application} />
             </Route>
 
-            <BrowserRouter>
+            <BrowserRouter basename={uriWithAppPrefix('')}>
 
                 <Route exact path="/application/:applicationId/environment/create">
                     <EnvironmentNewScreen />

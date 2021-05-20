@@ -6,6 +6,7 @@ import { List } from '@fluentui/react/lib/List';
 import { Link } from '@fluentui/react';
 
 import { getApplications, HttpResponseApplications, ShortInfo } from '../api';
+import { uriWithAppPrefix } from '../store';
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
     const [data, setData] = useState({
@@ -20,7 +21,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
             // If only 1 item redirect
             if (data.applications.length === 1) {
                 const application = data.applications[0];
-                window.location.href = `/application/${application.id}/${application.environment}`;
+                window.location.href = uriWithAppPrefix(`/application/${application.id}/${application.environment}`);
                 return;
             }
             setData(data);
@@ -33,7 +34,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
     const onRenderCell = (item?: ShortInfo, index?: number | undefined): JSX.Element => {
         const application = item!;
         return (
-            <Link href={`/application/${application.id}`} underline>
+            <Link href={uriWithAppPrefix(`/application/${application.id}`)} underline>
                 {application.name}
             </Link>
         );

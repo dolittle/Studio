@@ -10,8 +10,11 @@ import (
 )
 
 func main() {
-	// Ugly first version
 
+	// Set to false for when in the cluster
+	includeDolittleHeaders := false
+
+	// Ugly first version
 	platformApi := os.Getenv("PLATFORM_API")
 	if platformApi == "" {
 		platformApi = "localhost:8080"
@@ -20,6 +23,7 @@ func main() {
 	listenOn := os.Getenv("LISTEN_ON")
 	if listenOn == "" {
 		listenOn = "localhost:3007"
+		includeDolittleHeaders = true
 	}
 
 	sharedSecret := os.Getenv("HEADER_SECRET")
@@ -27,13 +31,7 @@ func main() {
 		sharedSecret = "TODO-1"
 	}
 
-	// Set to false for when in the cluster
-	includeDolittleHeaders := true
-
 	http.HandleFunc("/", proxyPlatformApiServer(platformApi, sharedSecret, includeDolittleHeaders))
-	// TODO change so it works in the cluster
-	// listenOn := "0.0.0.0:8080"
-
 	srv := &http.Server{
 		Addr:         listenOn,
 		WriteTimeout: 15 * time.Second,

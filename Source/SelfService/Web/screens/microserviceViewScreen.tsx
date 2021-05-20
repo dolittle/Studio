@@ -56,9 +56,6 @@ export const MicroserviceViewScreen: React.FunctionComponent = () => {
 
             <Stack tokens={stackTokens}>
                 <Text variant="xLarge" block>
-                    tenant: {tenantId}
-                </Text>
-                <Text variant="xLarge" block>
                     application: {applicationId}
                 </Text>
                 <Text variant="xLarge" block>

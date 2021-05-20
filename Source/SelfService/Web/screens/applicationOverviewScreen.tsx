@@ -12,6 +12,7 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { Stack } from '@fluentui/react/lib/Stack';
 
 import { getApplication, getMicroservices, HttpResponseMicroservices, MicroserviceInfo, HttpResponseApplications2 } from '../api';
+import { uriWithAppPrefix } from '../store';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -99,7 +100,7 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
                 <Text>
                     {microservice.name}
                 </Text>
-                <Link href={`/application/${application?.id}/${currentEnvironment}/microservice/view/${microservice.id}`} underline>
+                <Link href={uriWithAppPrefix(`/application/${application?.id}/${currentEnvironment}/microservice/view/${microservice.id}`)} underline>
                     view
                 </Link>
                 <Stack tokens={stackTokens}>
@@ -117,7 +118,7 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
             text: 'Show Container Registry Info',
             iconProps: { iconName: 'Info' },
             onClick: () => {
-                window.location.href = `/application/${application.id}/${currentEnvironment}/container-registry-info`;
+                window.location.href = uriWithAppPrefix(`/application/${application.id}/${currentEnvironment}/container-registry-info`);
             },
         }
     ];
@@ -132,7 +133,7 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
             {!hasEnvironments && (
                 <>
                     <PrimaryButton text="Create New Environment" onClick={(e => {
-                        window.location.href = `/application/${application.id}/environment/create`;
+                        window.location.href = uriWithAppPrefix(`/application/${application.id}/environment/create`);
                     })} />
                 </>
             )}
@@ -141,7 +142,7 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
                 <>
                     <PrimaryButton text="Create New Microservice" onClick={(e => {
                         console.log('Create microservice');
-                        window.location.href = `/application/${application.id}/${currentEnvironment}/microservice/create`;
+                        window.location.href = uriWithAppPrefix(`/application/${application.id}/${currentEnvironment}/microservice/create`);
                     })} />
 
                     <h2>Environment</h2>
