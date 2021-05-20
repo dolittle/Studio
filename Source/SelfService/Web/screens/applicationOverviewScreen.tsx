@@ -4,18 +4,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
-import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
-
-import { List } from '@fluentui/react/lib/List';
-import { Link, Text } from '@fluentui/react';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { Stack } from '@fluentui/react/lib/Stack';
 
-import { getApplication, getMicroservices, HttpResponseMicroservices, MicroserviceInfo, HttpResponseApplications2 } from '../api';
-import { uriWithAppPrefix } from '../store';
 
-const stackTokens = { childrenGap: 15 };
+import { getMicroservices, HttpResponseMicroservices, MicroserviceInfo, HttpResponseApplications2 } from '../api';
 
+import '../micoservice/microservice.scss';
+import { ViewCard } from '../micoservice/viewCard';
 
 type Props = {
     application?: HttpResponseApplications2
@@ -37,15 +32,11 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
 
 
     useEffect(() => {
-        // TODO how to get environments from the application
         Promise.all([
-            //getApplication(applicationId),
             getMicroservices(applicationId)
         ]
         ).then((values) => {
-            //const applicationData = values[0] as HttpResponseApplications2;
             const applicationData = application;
-
             const microservicesData = values[0] as HttpResponseMicroservices;
 
             let tempEnvironments = applicationData.environments.map(e => e.name);
@@ -62,80 +53,9 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
     }, []);
 
 
-    const environmentRow = (item?: string, index?: number | undefined): JSX.Element => {
-        const environment = item!;
-        return (
-            <Link underline onClick={(event: React.MouseEvent<HTMLElement>) => {
-                event.preventDefault();
-                setCurrentEnvironment(environment);
-            }}>
-                {environment}
-            </Link>
-        );
-    };
-
-    const microserviceRow = (item?: MicroserviceInfo, index?: number | undefined): JSX.Element => {
-        const microservice = item!;
-
-        const items = microservice.images.map(container => {
-            return (
-                <Stack
-                    key={container.name}
-                    tokens={stackTokens}
-                    horizontal
-                >
-                    <Text variant="medium" block>
-                        {container.name}
-                    </Text>
-
-                    <Text variant="medium" block>
-                        {container.image}
-                    </Text>
-                </Stack >
-            );
-        });
-
-
-        return (
-            <Stack horizontal tokens={stackTokens}>
-                <Text>
-                    {microservice.name}
-                </Text>
-                <Link onClick={() => {
-                    const href = `/application/${application?.id}/${currentEnvironment}/microservice/view/${microservice.id}`;
-                    history.push(href);
-                }} underline>
-                    view
-                </Link>
-                <Stack tokens={stackTokens}>
-                    {items}
-                </Stack>
-            </Stack>
-
-        );
-    };
-
-
-    const _items: ICommandBarItemProps[] = [
-        {
-            key: 'showContainerRegistryInfo',
-            text: 'Show Container Registry Info',
-            iconProps: { iconName: 'Info' },
-            onClick: () => {
-                // Interesting stuff, I don't fully understand how this works if we are outside of this route
-                const href = `/application/${application.id}/${currentEnvironment}/container-registry-info`;
-                history.push(href);
-            },
-        }
-    ];
 
     return (
         <>
-            <h3>Application Screen</h3>
-            <h1 title={`${application.name} (${application.id})`}>{application.name}</h1>
-
-            <CommandBar items={_items} />
-
             {!hasEnvironments && (
                 <>
                     <PrimaryButton text="Create New Environment" onClick={(e => {
@@ -151,18 +71,24 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
                         const href = `/application/${application.id}/${currentEnvironment}/microservice/create`;
                         history.push(href);
                     })} />
-
-                    <h2>Environment</h2>
-                    <List items={environments} onRenderCell={environmentRow} />
                 </>
             )}
 
 
             <h3>Microservices</h3>
-            {hasMicroservices
-                ? <List items={currentMicroservices} onRenderCell={microserviceRow} />
-                : <p>No microservices found</p>
-            }
+            {hasMicroservices && (
+                <div className="serv">
+                    <ul>
+                        {currentMicroservices.map((ms) => {
+                            return <li key={ms.id}><ViewCard microservice={ms} applicationId={applicationId} environment={environment} /></li>;
+                        })}
+                    </ul>
+                </div>
+            )}
+
+            {!hasMicroservices && (
+                <p>No microservices found</p>
+            )}
         </>
     );
 };

@@ -1,24 +1,22 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 
-import { getTenant } from '../store';
-import { getPodLogs, getPodStatus, HttpResponsePodStatus, PodInfo } from '../api';
+import { getPodStatus, HttpResponsePodStatus } from '../api';
 import { PodStatus } from '../micoservice/podStatus';
 
 
 const stackTokens = { childrenGap: 15 };
 
 export const MicroserviceViewScreen: React.FunctionComponent = () => {
-    const tenantId = getTenant();
-    const { applicationId, microserviceId } = useParams() as any;
+    const history = useHistory();
+    const { applicationId, environment, microserviceId } = useParams() as any;
     const [showCurrentStatus, setShowCurrentStatus] = useState(false);
-    const environment = 'Dev';
     const [podsData, setPodsData] = useState({
         namespace: '',
         microservice: {
@@ -33,7 +31,10 @@ export const MicroserviceViewScreen: React.FunctionComponent = () => {
             key: 'editItem',
             text: 'Edit',
             iconProps: { iconName: 'Edit' },
-            href: `/application/${applicationId}/microservice/edit/${microserviceId}`,
+            onClick: () => {
+                const href = `/application/${applicationId}/${environment}/microservice/edit/${microserviceId}`;
+                history.push(href);
+            }
         },
         {
             key: 'showCurrentStatus',

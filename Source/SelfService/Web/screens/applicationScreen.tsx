@@ -1,8 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState, useRef } from 'react';
-import { Route, BrowserRouter, useParams, useLocation, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route, useParams, useHistory } from 'react-router-dom';
 
 import { getApplication, HttpResponseApplications2 } from '../api';
 
@@ -17,11 +17,13 @@ import { PodViewScreen } from './podViewScreen';
 import { EnvironmentNewScreen } from './environmentNewScreen';
 import { EnvironmentChanger } from '../application/environment';
 import { BackupScreen } from './backupScreen';
-
+import { Editor as BusinessMomentEditor } from '../moments/BusinessMomentEditor';
+import { BusinessMomentsOverview } from '../moments/BusinessMomentOverview';
 import { Link } from '@fluentui/react';
 import { TodoScreen } from './todoScreen';
 
 import './layout.scss';
+import { DocumentationScreen } from './documentationScreen';
 
 export const ApplicationScreen: React.FunctionComponent = () => {
     const history = useHistory();
@@ -55,7 +57,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             <div className="with-sidebar">
                 <div>
                     <div className="sidebar">
-                        <svg width="86" height="20" viewBox="0 0 86 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg className="logo" width="86" height="20" viewBox="0 0 86 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clipPath="url(#clip0)">
                                 <path d="M7.16087 6.83557H4.2274C4.13857 6.83754 4.05171 6.86196 3.97497 6.90652C3.89823 6.95108 3.83414 7.01433 3.78871 7.09032L2.32198 9.6205C2.2761 9.69957 2.25195 9.78925 2.25195 9.88055C2.25195 9.97185 2.2761 10.0615 2.32198 10.1406L3.78871 12.6695C3.83365 12.7459 3.89763 12.8095 3.97448 12.8541C4.05133 12.8987 4.13844 12.9229 4.2274 12.9242H7.16087C7.24978 12.9226 7.33679 12.8983 7.4136 12.8537C7.4904 12.8092 7.55443 12.7457 7.59956 12.6695L9.0663 10.1406C9.11217 10.0615 9.13632 9.97185 9.13632 9.88055C9.13632 9.78925 9.11217 9.69957 9.0663 9.6205L7.59956 7.09032C7.55404 7.01441 7.48993 6.95123 7.41321 6.90668C7.33649 6.86213 7.24967 6.83767 7.16087 6.83557Z" fill="#F2F2F2" />
                                 <path d="M11.7799 0.122927C11.7462 0.066019 11.6913 0.024624 11.6272 0.007732C11.563 -0.00916004 11.4947 -0.000184434 11.4372 0.0327065C11.4 0.0549949 11.3689 0.0859629 11.3465 0.122927L8.97173 4.2174C8.93565 4.28167 8.91671 4.35407 8.91671 4.42769C8.91671 4.50132 8.93565 4.57371 8.97173 4.63799L11.9212 9.71826C11.9494 9.76543 11.9642 9.81928 11.9642 9.87416C11.9642 9.92903 11.9494 9.98288 11.9212 10.0301L8.93707 15.1634C8.9112 15.2115 8.87279 15.2518 8.82586 15.2801C8.77894 15.3083 8.72523 15.3235 8.67039 15.3239H2.77411C2.69933 15.3221 2.62544 15.3403 2.5602 15.3768C2.49497 15.4132 2.44081 15.4664 2.40343 15.5309L0.0326541 19.6254C0.0161657 19.6538 0.00546511 19.6851 0.00116566 19.7176C-0.0031338 19.7502 -0.00094742 19.7832 0.00759804 19.8149C0.0161435 19.8465 0.030881 19.8762 0.0509676 19.9022C0.0710541 19.9282 0.0960956 19.95 0.124659 19.9664C0.164875 19.9902 0.211245 20.0017 0.257998 19.9995H10.9185C11.1169 19.9988 11.3116 19.9461 11.4829 19.8466C11.6543 19.7472 11.7963 19.6045 11.8945 19.433L17.1108 10.4361C17.211 10.2658 17.2638 10.0721 17.2638 9.87482C17.2638 9.67754 17.211 9.48382 17.1108 9.31359L11.7799 0.122927Z" fill="#F2F2F2" />
@@ -76,12 +78,11 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                                 </clipPath>
                             </defs>
                         </svg>
-
                         <ul>
                             <li>
                                 <Link onClick={() => {
                                     // This is annoying as balls
-                                    const href = `/application/${application?.id}/${environment}/dashboard`;
+                                    const href = `/application/${application.id}/${environment}/dashboard`;
                                     history.push(href);
                                 }}>
                                     Dashboard
@@ -90,7 +91,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                             <li>
                                 <Link onClick={() => {
                                     // This is annoying as balls
-                                    const href = `/application/${application?.id}/${environment}/backup/overview`;
+                                    const href = `/application/${application.id}/${environment}/backup/overview`;
                                     history.push(href);
                                 }}>
                                     Backups
@@ -99,7 +100,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                             <li>
                                 <Link onClick={() => {
                                     // This is annoying as balls
-                                    const href = `/application/${application?.id}/${environment}/business-moments/overview`;
+                                    const href = `/application/${application.id}/${environment}/business-moments`;
                                     history.push(href);
                                 }}>
                                     Business Moments
@@ -109,16 +110,28 @@ export const ApplicationScreen: React.FunctionComponent = () => {
 
                                 <Link onClick={() => {
                                     // This is annoying as balls
-                                    const href = `/application/${application?.id}/${environment}/microservices/overview`;
+                                    const href = `/application/${application.id}/${environment}/microservices/overview`;
                                     history.push(href);
                                 }}>
                                     Microservices
                                         </Link>
                             </li>
+                            <li>
+
+                                <Link onClick={() => {
+                                    // This is annoying as balls
+                                    const href = `/application/${application.id}/${environment}/documentation`;
+                                    history.push(href);
+                                }}>
+                                    Documentation
+                                </Link>
+                            </li>
+
                         </ul>
                     </div>
                     <div className="not-sidebar">
                         <EnvironmentChanger application={application} environment={environment} />
+                        <h1 title={`${application.name} (${application.id})`}>{application.name}</h1>
 
                         <Route exact path="/application/:applicationId/environment/create">
                             <EnvironmentNewScreen />
@@ -128,15 +141,14 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                             <ApplicationOverviewScreen application={application} />
                         </Route>
 
-                        <Route exact path="/application/:applicationId/:environment/container-registry-info">
-                            <ContainerRegistryInfoScreen />
-                        </Route>
                         <Route exact path="/application/:applicationId/:environment/microservice/create">
                             <MicroserviceNewScreen application={application} />
                         </Route>
+
                         <Route exact path="/application/:applicationId/:environment/microservice/edit/:microserviceId">
                             <MicroserviceEditScreen />
                         </Route>
+
                         <Route exact path="/application/:applicationId/:environment/microservice/view/:microserviceId">
                             <MicroserviceViewScreen />
                         </Route>
@@ -151,8 +163,23 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                         <Route path="/application/:applicationId/:environment/dashboard">
                             <TodoScreen />
                         </Route>
+
                         <Route path="/application/:applicationId/:environment/microservices">
                             <ApplicationOverviewScreen application={application} />
+                        </Route>
+                        <Route exact path="/application/:applicationId/:environment/documentation">
+                            <DocumentationScreen />
+                        </Route>
+                        <Route exact path="/application/:applicationId/:environment/documentation/container-registry-info">
+                            <ContainerRegistryInfoScreen application={application} />
+                        </Route>
+
+                        <Route exact path="/application/:applicationId/:environment/business-moments">
+                            <BusinessMomentsOverview />
+                        </Route>
+
+                        <Route exact path="/application/:applicationId/:environment/business-moments/editor/:businessMomentId">
+                            <BusinessMomentEditor />
                         </Route>
                     </div>
                 </div>

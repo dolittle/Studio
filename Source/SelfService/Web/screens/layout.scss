@@ -3,6 +3,11 @@
     margin: 0;
 }
 
+svg.logo {
+    display: block;
+    margin: auto;
+}
+
 .with-sidebar > * {
     min-height: 900px;
     display: flex;

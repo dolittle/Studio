@@ -8,6 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 
 import { getTenant } from '../store';
+import { HttpResponseApplications2 } from '../api';
 
 type RegistryInfo = {
     acrId: string
@@ -18,7 +19,8 @@ type RegistryInfo = {
 
 
 async function getInfo(tenantId: string, applicationId: string): Promise<string> {
-    console.log(`//TODO lookup info tenant: ${tenantId} application: ${applicationId}`);
+    console.log(`// TODO lookup info tenant: ${tenantId} application: ${applicationId}`);
+    console.log('// TODO Include more info acrId, subscriptionId');
 
     const info = {
         acrId: '453e04a74f9d42f2b36cd51fa2c83fa3', // Get from tenantId
@@ -52,9 +54,16 @@ az acr repository show-tags --name ${info.acrId} --repository ${info.exampleRepo
     return markdown.trim();
 };
 
-export const ApplicationInfo: React.FunctionComponent = () => {
-    const tenantId = getTenant();
-    const { applicationId } = useParams() as any;
+type Props = {
+    application: HttpResponseApplications2
+};
+
+export const ApplicationInfo: React.FunctionComponent<Props> = (props) => {
+    const application = props!.application;
+    console.log(application);
+    const tenantId = application.tenantId;
+    const applicationId = application.id;
+
     const [data, setData] = useState('');
 
     useEffect(() => {
