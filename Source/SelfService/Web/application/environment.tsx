@@ -15,13 +15,15 @@ const stackTokens = { childrenGap: 15 };
 
 
 type Props = {
-    application?: HttpResponseApplications2
+    application: HttpResponseApplications2
+    environment: string
 };
 
 
 export const EnvironmentChanger: React.FunctionComponent<Props> = (props) => {
+    console.log('EnvironmentChanger');
     const _props = props!;
-    const { environment } = useParams() as any;
+    const environment = _props.environment;
     const application = _props.application!;
 
     const environments = application.environments.map(env => {

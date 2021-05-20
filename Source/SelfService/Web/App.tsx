@@ -107,7 +107,7 @@ export const App = () => {
                     <ApplicationsScreen />
                 </Route>
 
-                <Route path="/application/:applicationId">
+                <Route path="/application/:applicationId/:environment">
                     <ApplicationScreen />
                 </Route>
             </BrowserRouter>

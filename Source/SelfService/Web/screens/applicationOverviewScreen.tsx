@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 
@@ -23,6 +23,7 @@ type Props = {
 
 
 export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props) => {
+    const history = useHistory();
     const _props = props!;
     const { applicationId, environment } = useParams() as any;
     const application = _props.application!;
@@ -100,7 +101,10 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
                 <Text>
                     {microservice.name}
                 </Text>
-                <Link href={uriWithAppPrefix(`/application/${application?.id}/${currentEnvironment}/microservice/view/${microservice.id}`)} underline>
+                <Link onClick={() => {
+                    const href = `/application/${application?.id}/${currentEnvironment}/microservice/view/${microservice.id}`;
+                    history.push(href);
+                }} underline>
                     view
                 </Link>
                 <Stack tokens={stackTokens}>
@@ -118,7 +122,9 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
             text: 'Show Container Registry Info',
             iconProps: { iconName: 'Info' },
             onClick: () => {
-                window.location.href = uriWithAppPrefix(`/application/${application.id}/${currentEnvironment}/container-registry-info`);
+                // Interesting stuff, I don't fully understand how this works if we are outside of this route
+                const href = `/application/${application.id}/${currentEnvironment}/container-registry-info`;
+                history.push(href);
             },
         }
     ];
@@ -133,7 +139,8 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
             {!hasEnvironments && (
                 <>
                     <PrimaryButton text="Create New Environment" onClick={(e => {
-                        window.location.href = uriWithAppPrefix(`/application/${application.id}/environment/create`);
+                        const href = `/application/${application.id}/environment/create`;
+                        history.push(href);
                     })} />
                 </>
             )}
@@ -141,8 +148,8 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
             {hasEnvironments && (
                 <>
                     <PrimaryButton text="Create New Microservice" onClick={(e => {
-                        console.log('Create microservice');
-                        window.location.href = uriWithAppPrefix(`/application/${application.id}/${currentEnvironment}/microservice/create`);
+                        const href = `/application/${application.id}/${currentEnvironment}/microservice/create`;
+                        history.push(href);
                     })} />
 
                     <h2>Environment</h2>
