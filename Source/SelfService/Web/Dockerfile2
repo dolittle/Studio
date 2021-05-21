@@ -1,0 +1,6 @@
+#  docker run --rm -d -p 80:8043 -v $(pwd)/wwwroot:/srv/http --name goStatic pierrezemb/gostatic -context="_/selfservice"
+FROM pierrezemb/gostatic as base
+WORKDIR /app
+COPY ./wwwroot ./public
+
+ENTRYPOINT ["/goStatic"]
