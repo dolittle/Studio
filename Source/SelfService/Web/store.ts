@@ -124,7 +124,7 @@ const db = {
 };
 
 export function uriWithAppPrefix(uri: string): string {
-    const prefix = '/_/selfservice';
+    const prefix = '/selfservice';
     return `${prefix}${uri}`;
 }
 // Connectors

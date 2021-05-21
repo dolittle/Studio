@@ -73,7 +73,7 @@ export type HttpInputApplicationEnvironment = {
 };
 
 function getServerUrlPrefix(): string {
-    return '/_/selfservice/api';
+    return '/selfservice/api';
 }
 
 export async function getLiveApplications(): Promise<any> {

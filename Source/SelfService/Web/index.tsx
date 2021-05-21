@@ -16,7 +16,7 @@ import './index.scss';
 import { App } from './App';
 
 ReactDOM.render(
-    <Bootstrapper name="Selfservice" prefix="/_/selfservice" version={version}>
+    <Bootstrapper name="Selfservice" prefix="/selfservice" version={version}>
         <App />
     </Bootstrapper>,
     document.getElementById('root')

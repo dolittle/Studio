@@ -3,11 +3,11 @@
 
 const webpack = require('@dolittle/vanir-webpack/frontend');
 module.exports = (env, argv) => {
-    return webpack(env, argv, '/_/selfservice', config => {
+    return webpack(env, argv, '/selfservice', config => {
         config.devServer.proxy = {
-            '/_/selfservice/api': {
+            '/selfservice/api': {
                 target: 'http://localhost:3007',
-                pathRewrite: { '^/_/selfservice/api': '' },
+                pathRewrite: { '^/selfservice/api': '' },
             }
         };
         config.devServer.before = (app, server, compiler) => { };
