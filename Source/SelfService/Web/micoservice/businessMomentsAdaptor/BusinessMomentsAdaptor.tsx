@@ -12,9 +12,9 @@ import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
 import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react/lib/ChoiceGroup';
 
-import { WebhooksConfig } from '../configuration/WebhooksConfiguration';
-import { Config as RestConfig } from '../configuration/RestConfiguration';
-import { MicroserviceBusinessMomentAdaptor, createMicroservice, MicroserviceBusinessMomentAdaptorConnector, uriWithAppPrefix } from '../store';
+import { WebhooksConfig } from './configuration/WebhooksConfiguration';
+import { Config as RestConfig } from './configuration/RestConfiguration';
+import { MicroserviceBusinessMomentAdaptor, createMicroservice, uriWithAppPrefix } from '../../store';
 import { Guid } from '@dolittle/rudiments';
 
 const stackTokens = { childrenGap: 15 };

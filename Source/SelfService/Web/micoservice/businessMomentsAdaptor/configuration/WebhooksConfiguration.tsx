@@ -12,7 +12,7 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 import { BasicAuthComponent } from './BasicAuthComponent';
 import { BearerAuthComponent } from './BearerAuthComponent';
-import { getConnector, Connector, ConnectorWebhookConfigBearer, ConnectorWebhookConfigBasic, MicroserviceBusinessMomentAdaptorConnector, ConnectorWebhookConfig, MicroserviceBusinessMomentAdaptor, createMicroservice } from '../store';
+import { ConnectorWebhookConfig, MicroserviceBusinessMomentAdaptor } from '../../../store';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };

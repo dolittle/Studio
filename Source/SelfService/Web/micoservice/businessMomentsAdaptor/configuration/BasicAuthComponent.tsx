@@ -5,8 +5,6 @@ import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Label } from '@fluentui/react/lib/Label';
 import { Stack } from '@fluentui/react/lib/Stack';
 
-import { ConnectorWebhookConfigBasic } from '../store';
-
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 

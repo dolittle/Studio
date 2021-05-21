@@ -8,11 +8,10 @@
 
 import React from 'react';
 
-import { ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text, IDropdownOption } from '@fluentui/react';
-import { Microservice as BusinessMomentsAdaptor } from './BusinessMomentsAdaptor';
+import { Microservice as BusinessMomentsAdaptor } from './businessMomentsAdaptor/BusinessMomentsAdaptor';
 import { Microservice as Simple } from './Simple';
 import { Microservice as StaticSite } from './StaticSite';
 
@@ -30,8 +29,6 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
 
     const _props = props!;
     const applicationId = _props.application.id;
-    const tenantId = _props.application.tenantId;
-
 
     const [microserviceTypeState, setMicroserviceTypeState] = React.useState('');
 
