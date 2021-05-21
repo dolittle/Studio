@@ -2,9 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useParams, useHistory } from 'react-router-dom';
+import { Route, useParams, useHistory, useLocation } from 'react-router-dom';
 
-import { getApplication, HttpResponseApplications2 } from '../api';
+import { getApplication, HttpResponseApplications2, ShortInfo } from '../api';
 
 import { ApplicationOverviewScreen } from './applicationOverviewScreen';
 import { MicroserviceNewScreen } from './microserviceNewScreen';
@@ -15,17 +15,37 @@ import { ContainerRegistryInfoScreen } from './containerRegistryInfoScreen';
 import { PodViewScreen } from './podViewScreen';
 
 import { EnvironmentNewScreen } from './environmentNewScreen';
-import { EnvironmentChanger } from '../application/environment';
+import { EnvironmentChanger } from '../application/environmentChanger';
 import { BackupScreen } from './backupScreen';
 import { Editor as BusinessMomentEditor } from '../businessMoments/Editor';
 import { BusinessMomentsOverview } from '../businessMoments/Overview';
-import { Link } from '@fluentui/react';
-import { TodoScreen } from './todoScreen';
+import {
+    Link,
+    Icon,
+    TooltipHost,
+    IDividerAsProps
+} from '@fluentui/react';
 
 import { DocumentationScreen } from './documentationScreen';
 import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { ApplicationDashboardScreen } from './applicationDashboard';
+
+// I wonder if scss is scoped like svelte. I hope so!
+// Not scoped like svelte
+import '../application/applicationScreen.scss';
+import { ApplicationsChanger } from '../application/applicationsChanger';
+import { IBreadcrumbItem, Breadcrumb } from '@fluentui/react/lib/Breadcrumb';
+
+const applications: ShortInfo[] = [
+    {
+        id: '11b6cf47-5d9f-438f-8116-0d9828654657',
+        name: 'Taco',
+    },
+];
 
 export const ApplicationScreen: React.FunctionComponent = () => {
+    const location = useLocation();
+    console.log('location', location);
     const history = useHistory();
     const { environment } = useParams() as any;
     const { applicationId } = useParams() as any;
@@ -104,10 +124,39 @@ export const ApplicationScreen: React.FunctionComponent = () => {
         </ul>
     );
 
+    // TODO move to function
+    function _onBreadcrumbItemClicked(ev?: React.MouseEvent<HTMLElement>, item?: IBreadcrumbItem): void {
+        console.log('// TODO bring breadcrumbs to life');
+        alert('TODO bring breadcrumbs to life');
+    }
+
+    const items: IBreadcrumbItem[] = [
+        { text: 'Dashboard', key: 'dashboard', onClick: _onBreadcrumbItemClicked },
+        { text: 'Todo', key: 'todo', onClick: _onBreadcrumbItemClicked },
+    ];
+
+    const breadCrumbs = (
+        <Breadcrumb
+            items={items}
+            maxDisplayedItems={10}
+            dividerAs={_getCustomDivider}
+        />
+    );
+
     return (
         <LayoutWithSidebar navigation={nav}>
-            <EnvironmentChanger application={application} environment={environment} />
-            <h1 title={`${application.name} (${application.id})`}>{application.name}</h1>
+            <div id="topNavBar" className="nav flex-container">
+                <div className="left flex-start">
+                    {breadCrumbs}
+                </div>
+
+                <div className="right item flex-end">
+                    <EnvironmentChanger application={application} environment={environment} />
+                    <ApplicationsChanger applications={applications} current={applicationId} />
+                </div>
+            </div>
+
+
 
             <Route exact path="/application/:applicationId/environment/create">
                 <EnvironmentNewScreen />
@@ -137,7 +186,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                 <BackupScreen />
             </Route>
             <Route path="/application/:applicationId/:environment/dashboard">
-                <TodoScreen />
+                <ApplicationDashboardScreen />
             </Route>
 
             <Route path="/application/:applicationId/:environment/microservices">
@@ -157,9 +206,18 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             <Route exact path="/application/:applicationId/:environment/business-moments/editor/:businessMomentId">
                 <BusinessMomentEditor />
             </Route>
-        </LayoutWithSidebar>
+        </LayoutWithSidebar >
     );
 };
-// 3:20
 
+function _getCustomDivider(dividerProps: IDividerAsProps): JSX.Element {
+    const tooltipText = dividerProps.item ? dividerProps.item.text : '';
+    return (
+        <TooltipHost content={`Show ${tooltipText} contents`} calloutProps={{ gapSpace: 0 }}>
+            <span aria-hidden="true" style={{ cursor: 'pointer', padding: 5 }}>
+                /
+        </span>
+        </TooltipHost>
+    );
+}
 

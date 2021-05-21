@@ -21,7 +21,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
             // If only 1 item redirect
             if (data.applications.length === 1) {
                 const application = data.applications[0];
-                window.location.href = uriWithAppPrefix(`/application/${application.id}/${application.environment}`);
+                window.location.href = uriWithAppPrefix(`/application/${application.id}/${application.environment}/microservices/overview`);
                 return;
             }
             setData(data);
@@ -29,6 +29,10 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         });
     }, []);
 
+
+    if (data.id === '') {
+        return null;
+    }
 
 
     const onRenderCell = (item?: ShortInfo, index?: number | undefined): JSX.Element => {

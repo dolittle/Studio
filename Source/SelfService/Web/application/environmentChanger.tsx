@@ -21,13 +21,12 @@ type Props = {
 
 
 export const EnvironmentChanger: React.FunctionComponent<Props> = (props) => {
-    console.log('EnvironmentChanger');
     const _props = props!;
     const environment = _props.environment;
     const application = _props.application!;
 
     const environments = application.environments.map(env => {
-        return { key: env.name, text: env.name } as IDropdownOption;
+        return { key: env.name, text: `${env.name} Environment` } as IDropdownOption;
     });
 
     environments.push({ key: 'newEnvironment', text: 'Create new' } as IDropdownOption);
@@ -55,14 +54,13 @@ export const EnvironmentChanger: React.FunctionComponent<Props> = (props) => {
     }
 
     return (
-        <Stack tokens={stackTokens}>
-            <Dropdown placeholder="Select"
-                dropdownWidth="auto"
-                label="Change Environment"
-                selectedKey={environment}
-                options={environments}
-                onChange={environmentChanged}
-            />
-        </Stack>
+
+        <Dropdown placeholder="Select"
+            dropdownWidth="auto"
+            selectedKey={environment}
+            options={environments}
+            onChange={environmentChanged}
+        />
+
     );
 };

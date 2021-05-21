@@ -50,7 +50,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             }
         },
         {
-            key: 'editMicroservice',
+            key: 'deleteMicroservice',
             text: 'Delete',
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
                 ev!.stopPropagation();
