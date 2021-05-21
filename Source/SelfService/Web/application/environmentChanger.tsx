@@ -2,17 +2,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-
-import { Stack } from '@fluentui/react/lib/Stack';
+import { useHistory } from 'react-router-dom';
 
 import { HttpResponseApplications2 } from '../api';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
-import { uriWithAppPrefix } from '../store';
-
-const stackTokens = { childrenGap: 15 };
-
 
 type Props = {
     application: HttpResponseApplications2
@@ -21,6 +15,7 @@ type Props = {
 
 
 export const EnvironmentChanger: React.FunctionComponent<Props> = (props) => {
+    const history = useHistory();
     const _props = props!;
     const environment = _props.environment;
     const application = _props.application!;
@@ -38,15 +33,15 @@ export const EnvironmentChanger: React.FunctionComponent<Props> = (props) => {
         }
 
         if (newEnvironment === 'newEnvironment') {
-            // TODO I feel there is a better way
-            window.location.href = uriWithAppPrefix(`/application/${application.id}/environment/create`);
+            const href = `/application/${application.id}/${environment}/environment/create`;
+            history.push(href);
             return;
         }
 
         // TODO change based on the url
         const parts = window.location.pathname.split(`/${environment}/`);
         const href = `${parts[0]}/${newEnvironment}/${parts[1]}`;
-        window.location.href = href;
+        history.push(href);
     };
 
     if (!application.environments.some(e => e.name === environment)) {

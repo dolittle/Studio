@@ -21,7 +21,6 @@ import { Editor as BusinessMomentEditor } from '../businessMoments/Editor';
 import { BusinessMomentsOverview } from '../businessMoments/Overview';
 import {
     Link,
-    Icon,
     TooltipHost,
     IDividerAsProps
 } from '@fluentui/react';
@@ -158,7 +157,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
 
 
 
-            <Route exact path="/application/:applicationId/environment/create">
+            <Route exact path="/application/:applicationId/:environment/environment/create">
                 <EnvironmentNewScreen />
             </Route>
 

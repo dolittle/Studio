@@ -5,7 +5,6 @@ import React from 'react';
 import { ShortInfo } from '../api';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
-import { uriWithAppPrefix } from '../store';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -14,7 +13,6 @@ type Props = {
     applications: ShortInfo[]
     current: string
 };
-
 
 export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
     const applications = props!.applications;
