@@ -19,7 +19,7 @@ export const DataSchema = new mongoose.Schema({
     id: { type: String, required: false },
     elements: { type: Array, required: false },
     message: { type: String, required: false },
-    expireAt: { type: Date, index: { expires: '10s' }, default: Date.now },
+    expireAt: { type: Date, index: { expires: '288h' }, default: Date.now },
 });
 //  DataSchema.index({ lastModifiedDate: 1 }, { expireAfterSeconds: 10 });
 
