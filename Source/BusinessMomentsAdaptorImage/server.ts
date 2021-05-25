@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import process from 'process';
 import * as dataController from './dataController';
+import rawData from './dataschema';
 
 export function createServer() {
     const app: Application = express();
@@ -12,6 +13,13 @@ export function createServer() {
     app.post('/api/webhooks-ingestor', (req: Request, res: Response) => {
         if (req.headers.authorization === process.env.WH_AUTHORIZATION) {
             console.log(req.body);
+
+            let data = new rawData(req.body);
+            try {
+                data.save();
+            } catch (error) {
+                res.send(error);
+            }
             res.status(200).end();
         } else {
             res.status(401).end();
@@ -20,9 +28,6 @@ export function createServer() {
 
     app.get('/data', dataController.allData);
     app.get('/data/:id', dataController.getData);
-    app.put('/data', dataController.addData);
-    app.delete('/data/:id', dataController.deleteData);
-    app.post('/data/:id', dataController.updateData);
 
     return app;
 }
@@ -31,9 +36,7 @@ export function startServer(app: any) {
     const PORT = 3008;
 
     if (process.env.WH_AUTHORIZATION) {
-        // if (!process.env.NODE_ENV) {
         app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-        // }
     } else {
         console.log('WH_AUTHORIZATION is not set.');
         console.log(process.env.WH_AUTHORIZATION);
