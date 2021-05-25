@@ -12,7 +12,7 @@ import {
     IContextualMenuItem
 } from '@fluentui/react';
 
-import { MicroserviceInfo } from '../api';
+import { deleteMicroservice, MicroserviceInfo } from '../api';
 import { mergeStyles } from '@fluentui/react/lib/Styling';
 import '../micoservice/microservice.scss';
 
@@ -54,7 +54,14 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             text: 'Delete',
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
                 ev!.stopPropagation();
-                alert('TODO: delete microservice');
+                (async () => {
+                    const success = await deleteMicroservice(applicationId, environment, microserviceId);
+                    if (!success) {
+                        alert('Failed to delete');
+                        return;
+                    }
+                    alert('Microservice to deleted');
+                })();
             }
         },
         {

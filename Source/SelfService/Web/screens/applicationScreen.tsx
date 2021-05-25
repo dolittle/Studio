@@ -175,7 +175,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                 <MicroserviceViewScreen />
             </Route>
 
-            <Route exact path="/application/:applicationId/pod/view/:podName/logs">
+            <Route exact path="/application/:applicationId/:environment/pod/view/:podName/logs">
                 <PodViewScreen />
             </Route>
 
