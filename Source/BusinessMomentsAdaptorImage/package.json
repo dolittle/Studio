@@ -5,7 +5,12 @@
     "main": "server.js",
     "scripts": {
         "test": "mocha --check-leaks \"**/for_*/**/*.ts\"",
-        "start": "node server.js"
+        "start": "node server.js",
+        "build": "yarn clean && webpack --mode=production",
+        "clean": "tsc -b --clean",
+        "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
+        "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",
+        "ci": "yarn clean && yarn lint:ci && yarn build"
     },
     "author": "",
     "license": "ISC",
