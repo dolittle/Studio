@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import rawData from './dataSchema';
+import rawData from './dataschema';
 
 // every we have from our database
 export let allData = (req: any, res: any) => {
