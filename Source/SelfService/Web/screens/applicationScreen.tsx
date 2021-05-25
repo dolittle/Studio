@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useParams, useHistory, useLocation } from 'react-router-dom';
+import { Route, useParams, useHistory } from 'react-router-dom';
 
 import { getApplication, HttpResponseApplications2, ShortInfo } from '../api';
 
@@ -43,8 +43,6 @@ const applications: ShortInfo[] = [
 ];
 
 export const ApplicationScreen: React.FunctionComponent = () => {
-    const location = useLocation();
-    console.log('location', location);
     const history = useHistory();
     const { environment } = useParams() as any;
     const { applicationId } = useParams() as any;
