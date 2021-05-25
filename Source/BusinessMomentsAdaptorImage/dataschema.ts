@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+// import ttl from 'mongoose-ttl';
 const uri: string = 'mongodb://127.0.0.1:27017/local';
 
 mongoose.connect(uri, (err: any) => {
@@ -19,7 +19,10 @@ export const DataSchema = new mongoose.Schema({
     id: { type: String, required: false },
     elements: { type: Array, required: false },
     message: { type: String, required: false },
+    expireAt: { type: Date, index: { expires: '10s' }, default: Date.now },
 });
+//  DataSchema.index({ lastModifiedDate: 1 }, { expireAfterSeconds: 10 });
 
+// DataSchema.plugin(ttl, { ttl: 5000 });
 const rawData = mongoose.model('rawData', DataSchema);
 export default rawData;
