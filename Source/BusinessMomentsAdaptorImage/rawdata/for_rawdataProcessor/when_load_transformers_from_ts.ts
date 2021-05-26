@@ -15,7 +15,8 @@ describe('fs loader', () => {
             const fsLoader = require('../fsloader');
             const result = fsLoader.loadSync(transformersDir);
 
-            expect(result.length).to.equal(1);
+            expect(result.length).to.equal(2);
+            expect(result.find((n: EntityTransformer) => n.Name === 'another transformer')).to.not.be.undefined;
             // search for specific transformer that has behaviour
             // that can be used to validate that the transformer
             // is laoded from the file system
