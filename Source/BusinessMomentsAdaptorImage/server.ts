@@ -9,7 +9,10 @@ import path from 'path';
 
 export function createServer() {
     const app: Application = express();
-    const transformersDir = `${path.resolve(__dirname)}/transformers`;
+    let transformersDir = `${path.resolve(__dirname)}/transformers`;
+    if (process.env.TRANSFORMERS_PATH) {
+        transformersDir = process.env.TRANSFORMERS_PATH;
+    }
     const rawDataProcessor = new RawDataProcessor();
     const transformers = fsloader.loadSync(transformersDir)
     for (const transformer of transformers) {
