@@ -1,5 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import process from 'process';
@@ -16,7 +17,7 @@ export function createServer() {
         if (req.headers.authorization === process.env.WH_AUTHORIZATION) {
             console.log(req.body);
 
-            let data = new rawData(req.body);
+            const data = new rawData(req.body);
             try {
                 data.save();
             } catch (error) {
