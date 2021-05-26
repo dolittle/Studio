@@ -2,10 +2,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { expect } from 'chai';
-import { RawDataProcessor } from '../processor';
+import { RawDataProcessor, EntityTransformer } from '../processor';
+import path from 'path';
+import * as fsloader from '../fsloader';
+
 
 describe('process raw data', () => {
     let rawDataProcessor: RawDataProcessor;
+    const transformersDir = `${path.resolve(__dirname)}/transformers`;
+    const transformers = fsloader.loadSync(transformersDir);
 
     beforeEach(() => {
         rawDataProcessor = new RawDataProcessor();
@@ -29,21 +34,9 @@ describe('process raw data', () => {
     });
 
     it('will transform the result', () => {
-        rawDataProcessor.AddEntityTransformer({
-            Name: 'Foo',
-            Filter: (input) => {
-                return true;
-            },
-            Transform: (input) => {
-                return {
-                    Name: input.CustomerName,
-                    Adress: {
-                        PostalCode: input.Postnr,
-                        City: input.City
-                    }
-                };
-            }
-        });
+        const customerTransformer = transformers.find((n: any) => n.Name === 'customer transformer') as EntityTransformer;
+        expect(customerTransformer).to.not.be.undefined;
+        rawDataProcessor.AddEntityTransformer(customerTransformer);
 
         const input = {
             CustomerName: 'Rema 1000',
