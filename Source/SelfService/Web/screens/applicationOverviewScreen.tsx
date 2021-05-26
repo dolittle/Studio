@@ -13,7 +13,7 @@ import '../microservice/microservice.scss';
 import { ViewCard } from '../microservice/viewCard';
 
 type Props = {
-    application?: HttpResponseApplications2
+    application: HttpResponseApplications2
 };
 
 

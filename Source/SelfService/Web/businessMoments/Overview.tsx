@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CreateCard, CreateCardAdaptor } from './createCard';
 
@@ -10,11 +10,44 @@ import { Modal, DefaultButton } from '@fluentui/react';
 
 
 import { ViewCard } from './viewCard';
+import { getApplication, getMicroservices, HttpResponseApplications2, HttpResponseMicroservices, MicroserviceInfo } from '../api';
+import { MicroserviceBusinessMomentAdaptor } from '../store';
 
-export const BusinessMomentsOverview: React.FunctionComponent = () => {
+type Props = {
+    application: HttpResponseApplications2
+};
+
+export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) => {
+    const _props = props!;
+    const application = _props.application;
     const [isModalOpen, { setTrue: showModal, setFalse: hideModal }] = useBoolean(false);
     const { environment, applicationId } = useParams() as any;
 
+    const microservices: MicroserviceBusinessMomentAdaptor[] = application.microservices.filter(microservice => {
+        console.log(microservice);
+        return microservice.kind === 'buisness-moments-adaptor';
+    });
+
+    //useEffect(() => {
+    //    Promise.all([
+    //        getMicroservices(applicationId)
+    //    ]
+    //    ).then((values) => {
+    //        const applicationData = application;
+    //        const microservicesData = values[0] as any;
+    //        // This does not include kind
+    //
+    //        const microservices: MicroserviceBusinessMomentAdaptor[] = microservicesData.microservices.filter(microservice => {
+    //            console.log(microservice);
+    //            return microservice.kind === 'buisness-moments-adaptor';
+    //        });
+    //        console.log(microservices);
+    //        setCurrentMicroservices(microservices);
+    //    });
+    //}, []);
+    //
+    // TODO load from the server
+    console.log(microservices);
     const businessMoments = [
         {
             applicationId,

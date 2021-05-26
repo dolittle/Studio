@@ -22,6 +22,7 @@ export type ImageInfo = {
 export type MicroserviceInfo = {
     id: string
     name: string
+    kind: string
     environment: string
     images: ImageInfo[]
 };

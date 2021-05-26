@@ -35,6 +35,7 @@ import '../application/applicationScreen.scss';
 import { ApplicationsChanger } from '../application/applicationsChanger';
 import { IBreadcrumbItem, Breadcrumb } from '@fluentui/react/lib/Breadcrumb';
 
+// TODO replace
 const applications: ShortInfo[] = [
     {
         id: '11b6cf47-5d9f-438f-8116-0d9828654657',
@@ -197,7 +198,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             </Route>
 
             <Route exact path="/application/:applicationId/:environment/business-moments">
-                <BusinessMomentsOverview />
+                <BusinessMomentsOverview application={application} />
             </Route>
 
             <Route exact path="/application/:applicationId/:environment/business-moments/editor/:businessMomentId">
