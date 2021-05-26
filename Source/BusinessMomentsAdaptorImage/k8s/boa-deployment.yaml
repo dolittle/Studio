@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: boa
+  name: boa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: boa
+  template:
+    metadata:
+      labels:
+        app: boa
+    spec:
+      containers:
+      - image: 10.0.1.10:30000/businessmomentsadaptor:latest
+        imagePullPolicy: Always
+        name: businessmomentsadaptor
+        env:
+        - name: WH_AUTHORIZATION
+          value: foo
+        volumeMounts:
+        - name: boa-transformers-volume
+          mountPath: /app/transformers
+      volumes:
+      - name: boa-transformers-volume
+        configMap:
+          name: boa-transformers
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: boa-service
+  labels:
+    run: boa
+spec:
+  selector:
+    app: boa
+  ports:
+    - protocol: TCP
+      port: 3008
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: boa-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /boa/?(.*)
+        backend:
+          serviceName: boa-service
+          servicePort: 3008
