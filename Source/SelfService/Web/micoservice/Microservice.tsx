@@ -58,13 +58,13 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
 
                 {microserviceTypeState === 'business-miner' && (
                     <Stack tokens={stackTokens}>
-                        <BusinessMomentsAdaptor applicationId={applicationId} environment={environment} />
+                        <BusinessMomentsAdaptor application={_props.application} environment={environment} />
                     </Stack>
                 )}
 
                 {microserviceTypeState === 'static-site' && (
                     <Stack tokens={stackTokens}>
-                        <StaticSite applicationId={applicationId} environment={environment} />
+                        <StaticSite application={_props.application} environment={environment} />
                     </Stack>
                 )}
 

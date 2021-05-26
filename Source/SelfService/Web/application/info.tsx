@@ -60,7 +60,6 @@ type Props = {
 
 export const ApplicationInfo: React.FunctionComponent<Props> = (props) => {
     const application = props!.application;
-    console.log(application);
     const tenantId = application.tenantId;
     const applicationId = application.id;
 
