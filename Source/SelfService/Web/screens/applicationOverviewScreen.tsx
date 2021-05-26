@@ -9,8 +9,8 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 import { getMicroservices, HttpResponseMicroservices, MicroserviceInfo, HttpResponseApplications2 } from '../api';
 
-import '../micoservice/microservice.scss';
-import { ViewCard } from '../micoservice/viewCard';
+import '../microservice/microservice.scss';
+import { ViewCard } from '../microservice/viewCard';
 
 type Props = {
     application?: HttpResponseApplications2

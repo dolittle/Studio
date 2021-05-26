@@ -6,7 +6,7 @@ import { IBreadcrumbItem } from '@fluentui/react/lib/Breadcrumb';
 
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import { Route, BrowserRouter, useHistory } from 'react-router-dom';
-import { WebhooksConfig } from './micoservice/businessMomentsAdaptor/configuration/WebhooksConfiguration';
+import { WebhooksConfig } from './microservice/businessMomentsAdaptor/configuration/WebhooksConfiguration';
 import { Editor as BusinessMomentEditor } from './businessMoments/Editor';
 import { Editor as EntityEditor } from './businessMoments/EntityEditor';
 import { ApplicationScreen } from './screens/applicationScreen';

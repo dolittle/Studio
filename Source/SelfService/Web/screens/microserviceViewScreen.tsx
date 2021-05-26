@@ -8,7 +8,7 @@ import { Text } from '@fluentui/react';
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 
 import { getPodStatus, HttpResponsePodStatus } from '../api';
-import { PodStatus } from '../micoservice/podStatus';
+import { PodStatus } from '../microservice/podStatus';
 
 
 const stackTokens = { childrenGap: 15 };

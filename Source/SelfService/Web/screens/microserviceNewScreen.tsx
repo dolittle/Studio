@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Create as Microservice } from '../micoservice/Microservice';
+import { Create as Microservice } from '../microservice/Microservice';
 import { HttpResponseApplications2 } from '../api';
 
 type Props = {

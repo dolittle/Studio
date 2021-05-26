@@ -14,7 +14,7 @@ import { cardStyles, commandTileClass, buttonStyles } from '../theme/viewCard';
 
 import { deleteMicroservice, MicroserviceInfo } from '../api';
 import { mergeStyles } from '@fluentui/react/lib/Styling';
-import '../micoservice/microservice.scss';
+import './microservice.scss';
 
 
 type Props = {
