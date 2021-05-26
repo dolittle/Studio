@@ -23,15 +23,18 @@ type Props = {
     microservice: MicroserviceInfo
     applicationId: string
     environment: string
+    canEdit: boolean
 };
 
 
 export const ViewCard: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
-    const microservice = props!.microservice;
+    const _props = props!;
+    const microservice = _props.microservice;
     const microserviceId = microservice.id;
-    const applicationId = props!.applicationId;
-    const environment = props!.environment;
+    const applicationId = _props.applicationId;
+    const environment = _props.environment;
+    const canEdit = _props.canEdit;
 
     const cardStyles: IDocumentCardStyles = {
         root: { display: 'inline-block', marginRight: 20, width: 320 },
@@ -44,6 +47,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
         {
             key: 'editMicroservice',
             text: 'Edit',
+            disabled: !canEdit,
             onClick: () => {
                 const href = `/application/${applicationId}/${environment}/microservice/edit/${microserviceId}`;
                 history.push(href);
@@ -52,6 +56,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
         {
             key: 'deleteMicroservice',
             text: 'Delete',
+            disabled: !canEdit,
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
                 ev!.stopPropagation();
                 (async () => {
@@ -77,13 +82,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
 
     return (
 
-        <DocumentCard
-            styles={cardStyles}
-            onClick={() => {
-                const href = `/application/${applicationId}/${environment}/microservice/view/${microserviceId}`;
-                history.push(href);
-            }}
-        >
+        <DocumentCard styles={cardStyles}>
             <div className={conversationTileClass}>
                 <DocumentCardTitle
                     title={microservice.name}

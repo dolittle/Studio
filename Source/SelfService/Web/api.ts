@@ -70,6 +70,7 @@ export type HttpInputApplicationEnvironment = {
     name: string
     domainPrefix: string
     host: string
+    automationEnabled: boolean
 };
 
 function getServerUrlPrefix(): string {
@@ -147,6 +148,7 @@ export async function deleteMicroservice(applicationId: string, environment: str
             method: 'DELETE',
             mode: 'cors'
         });
+    console.log(result);
     return result.status === 200;
 }
 
