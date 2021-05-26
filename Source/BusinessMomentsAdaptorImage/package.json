@@ -5,6 +5,7 @@
     "main": "server.js",
     "scripts": {
         "test": "mocha --check-leaks \"**/for_*/**/*.ts\"",
+        "test:watch": "yarn nodemon --watch '**/*.ts' --ext 'ts' --exec 'yarn test'",
         "start": "node server.js",
         "build": "yarn clean && webpack --mode=production",
         "clean": "tsc -b --clean",
