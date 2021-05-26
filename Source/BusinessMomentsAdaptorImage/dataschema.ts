@@ -1,6 +1,9 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import mongoose from 'mongoose';
-// import ttl from 'mongoose-ttl';
-const uri: string = 'mongodb://127.0.0.1:27017/local';
+// const uri: string = 'mongodb://127.0.0.1:27017/local';
+const uri: any = process.env.mongodb_uri;
 
 mongoose.connect(uri, (err: any) => {
     if (err) {
@@ -10,19 +13,15 @@ mongoose.connect(uri, (err: any) => {
     }
 });
 
-export const DataSchema = new mongoose.Schema({
-    tenant: { type: String, required: false },
-    publisher: { type: String, required: false },
-    operation: { type: String, required: false },
-    document: { type: String, required: false },
-    timestamp: { type: String, required: false },
-    id: { type: String, required: false },
-    elements: { type: Array, required: false },
-    message: { type: String, required: false },
-    expireAt: { type: Date, index: { expires: '288h' }, default: Date.now },
-});
-//  DataSchema.index({ lastModifiedDate: 1 }, { expireAfterSeconds: 10 });
+const rawData = mongoose.model(
+    'rawData',
+    new mongoose.Schema(
+        {
+            any: {},
+            expireAt: { type: Date, index: { expires: '288h' }, default: Date.now },
+        },
+        { strict: false }
+    )
+);
 
-// DataSchema.plugin(ttl, { ttl: 5000 });
-const rawData = mongoose.model('rawData', DataSchema);
 export default rawData;
