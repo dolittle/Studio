@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -82,8 +81,6 @@ func serveReverseProxy(host string, res http.ResponseWriter, req *http.Request) 
 	req.URL.Scheme = url.Scheme
 
 	req.Header.Set("X-Forwarded-Host", req.Header.Get("Host"))
-
-	fmt.Println(req.URL.String())
 	// Note that ServeHttp is non blocking and uses a go routine under the hood
 	proxy.ServeHTTP(res, req)
 }

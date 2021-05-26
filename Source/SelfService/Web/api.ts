@@ -148,7 +148,6 @@ export async function deleteMicroservice(applicationId: string, environment: str
             method: 'DELETE',
             mode: 'cors'
         });
-    console.log(result);
     return result.status === 200;
 }
 
@@ -166,7 +165,6 @@ export async function saveMicroservice(input: any): Promise<boolean> {
         });
     _checkRedirect(result);
     const jsonResult = await result.json();
-    console.log(jsonResult);
     return true;
 }
 
