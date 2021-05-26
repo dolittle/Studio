@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import request from 'supertest';
+import supertest from 'supertest';
 import { createServer } from '../server';
 
 
@@ -22,7 +22,7 @@ describe('Post webhook', function () {
         });
 
         it('will return 200 OK', function (done) {
-            request(app)
+            supertest(app)
                 .post('/api/webhooks-ingestor')
                 .set('authorization', authHeaderToSendInRequest)
                 .send({
