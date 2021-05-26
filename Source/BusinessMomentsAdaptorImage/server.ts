@@ -3,17 +3,30 @@
 import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import process from 'process';
-
+import { RawDataProcessor } from './rawdata/processor';
+import * as fsloader from './rawdata/fsloader';
+import path from 'path';
 
 export function createServer() {
     const app: Application = express();
+    const transformersDir = `${path.resolve(__dirname)}/transformers`;
+    const rawDataProcessor = new RawDataProcessor();
+    const transformers = fsloader.loadSync(transformersDir)
+    for (const transformer of transformers) {
+        rawDataProcessor.AddEntityTransformer(transformer);
+    }
 
     // Tell express to use body-parser's JSON parsing
     app.use(bodyParser.json());
 
     app.post('/api/webhooks-ingestor', (req: Request, res: Response) => {
         if (req.headers.authorization === process.env.WH_AUTHORIZATION) {
-            console.log(req.body);
+            const result = rawDataProcessor.Process(req.body);
+            if (result.WasProcessed) {
+                console.log(result.Result);
+            } else {
+                console.log('was not able to process payload');
+            }
             res.status(200).end();
         } else {
             res.status(401).end();
