@@ -1,8 +1,11 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { Request, Response } from 'express';
 import rawData from './dataschema';
 
-export let allData = (req: any, res: any) => {
-    let data = rawData.find((err: any, data: any) => {
+export const allData = (req: any, res: any) => {
+    const data = rawData.find((err: any, data: any) => {
         if (err) {
             res.send('Error!');
         } else {
@@ -11,7 +14,7 @@ export let allData = (req: any, res: any) => {
     });
 };
 
-export let getData = (req: Request, res: Response) => {
+export const getData = (req: Request, res: Response) => {
     rawData.findById(req.params.id, (err: any, data: any) => {
         if (err) {
             res.send(err);
@@ -21,8 +24,8 @@ export let getData = (req: Request, res: Response) => {
     });
 };
 
-export let addData = (req: Request, res: Response) => {
-    let data = new rawData(req.body);
+export const addData = (req: Request, res: Response) => {
+    const data = new rawData(req.body);
     data.save((err: any) => {
         if (err) {
             res.send(err);
