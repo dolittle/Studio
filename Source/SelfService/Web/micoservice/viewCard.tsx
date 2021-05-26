@@ -8,15 +8,13 @@ import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar
 import {
     DocumentCard,
     DocumentCardTitle,
-    IDocumentCardStyles,
     IContextualMenuItem
 } from '@fluentui/react';
+import { cardStyles, commandTileClass, buttonStyles } from '../theme/viewCard';
 
 import { deleteMicroservice, MicroserviceInfo } from '../api';
 import { mergeStyles } from '@fluentui/react/lib/Styling';
 import '../micoservice/microservice.scss';
-
-const stackTokens = { childrenGap: 15 };
 
 
 type Props = {
@@ -25,6 +23,9 @@ type Props = {
     environment: string
     canEdit: boolean
 };
+
+
+const conversationTileClass = mergeStyles({ height: 182 });
 
 
 export const ViewCard: React.FunctionComponent<Props> = (props) => {
@@ -36,15 +37,9 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
     const environment = _props.environment;
     const canEdit = _props.canEdit;
 
-    const cardStyles: IDocumentCardStyles = {
-        root: { display: 'inline-block', marginRight: 20, width: 320 },
-    };
-
-
-    const conversationTileClass = mergeStyles({ height: 182 });
-
     const _items: ICommandBarItemProps[] = [
         {
+            buttonStyles,
             key: 'editMicroservice',
             text: 'Edit',
             disabled: !canEdit,
@@ -54,6 +49,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             }
         },
         {
+            buttonStyles,
             key: 'deleteMicroservice',
             text: 'Delete',
             disabled: !canEdit,
@@ -70,6 +66,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             }
         },
         {
+            buttonStyles,
             key: 'viewMicroservice',
             text: 'View',
             onClick: () => {
@@ -93,7 +90,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
                     shouldTruncate
                     showAsSecondaryTitle
                 />
-                <CommandBar items={_items} />
+                <CommandBar styles={commandTileClass} items={_items} />
             </div>
         </DocumentCard>
     );

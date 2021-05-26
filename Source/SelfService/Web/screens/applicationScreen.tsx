@@ -180,7 +180,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             </Route>
 
             <Route path="/application/:applicationId/:environment/backup">
-                <BackupScreen />
+                <BackupScreen application={application} />
             </Route>
             <Route path="/application/:applicationId/:environment/dashboard">
                 <ApplicationDashboardScreen />
