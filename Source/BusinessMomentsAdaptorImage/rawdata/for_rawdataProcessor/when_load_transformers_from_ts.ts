@@ -4,7 +4,6 @@
 import path from 'path';
 import { expect } from 'chai';
 import { EntityTransformer } from '../processor';
-import { isExportDeclaration } from 'typescript';
 
 describe('fs loader', () => {
 
