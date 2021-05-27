@@ -11,8 +11,8 @@ import { Modal, DefaultButton } from '@fluentui/react';
 
 import { ViewCard } from './viewCard';
 import { HttpResponseApplications2, getMicroservices } from '../api/api';
-import { getBusinessMoments, HttpResponseBusinessMoments } from '../api/businessmoments';
-import { MicroserviceBusinessMomentAdaptor } from '../api/index';
+import { getBusinessMoments } from '../api/businessmoments';
+import { MicroserviceBusinessMomentAdaptor, HttpResponseBusinessMoments } from '../api/index';
 
 type Props = {
     application: HttpResponseApplications2

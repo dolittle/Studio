@@ -70,12 +70,15 @@ export type MicroserviceBusinessMomentAdaptorExtra = {
     ingress: MicroserviceIngressPath
     connector: MicroserviceBusinessMomentAdaptorConnector
     moments: BusinessMoment[]
+    entities: BusinessMomentEntity[]
 };
 
 export type MicroserviceBusinessMomentAdaptorConnector = {
     kind: string
     config: ConnectorWebhookConfig
 };
+
+
 
 
 export type BusinessMoment = {
@@ -86,3 +89,31 @@ export type BusinessMoment = {
     transform: string
 };
 
+export type BusinessMomentEntity = {
+    name: string
+    typeID: string
+    idForRetrival: string
+    filter: string
+    transform: string
+};
+
+export type HttpResponseBusinessMoments = {
+    applicationId: string
+    environment: string
+    moments: HttpInputBusinessMoment[]
+    entities: HttpInputBusinessMomentEntity[]
+};
+
+export type HttpInputBusinessMoment = {
+    applicationId: string
+    environment: string
+    microserviceId: string
+    moment: BusinessMoment
+};
+
+export type HttpInputBusinessMomentEntity = {
+    applicationId: string
+    environment: string
+    microserviceId: string
+    entity: BusinessMomentEntity
+};

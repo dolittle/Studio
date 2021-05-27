@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import {
@@ -25,7 +25,6 @@ export type CreateCardAdaptor = {
     name: '',
     connectorType: ''
 };
-
 
 const buttonStyles = mergeStyleSets(
     baseButtonStyles,
@@ -54,15 +53,23 @@ export const CreateCard: React.FunctionComponent<Props> = (props) => {
     const environment = _props.environment;
     const adaptors = _props.adaptors;
 
+    const hasConnectors = adaptors.length > 0;
+    const [isChecked, setIsChecked] = useState(hasConnectors === false);
 
-    const [isChecked, setIsChecked] = React.useState(false);
+    const options = adaptors.map(ms => {
+        return { key: ms.id, text: `${ms.name} - ${ms.connectorType}`, data: ms } as IDropdownOption;
+    });
+
+    let picked = hasConnectors ? '' : 'new';
+    let adaptor: CreateCardAdaptor = {} as CreateCardAdaptor;
+
+
     const _items: ICommandBarItemProps[] = [
         {
             buttonStyles,
             key: 'cancel',
             text: 'Cancel',
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-                console.log('cancel modal');
                 if (_props.onCancel) {
                     _props.onCancel();
                 }
@@ -78,14 +85,10 @@ export const CreateCard: React.FunctionComponent<Props> = (props) => {
                 switch (picked) {
                     case 'new':
                         href = `/application/${applicationId}/${environment}/microservice/create`;
-                        console.log(href);
                         history.push(href);
                         return;
                     case 'existing':
-                        href = `/application/${applicationId}/${environment}/business-moments/editor/${moment.id}`;
-                        console.log(href);
-                        alert('Moment Id is wrong');
-                        return;
+                        href = `/application/${applicationId}/${environment}/business-moments/editor/new/${adaptor.id}`;
                         history.push(href);
                         return;
                     default:
@@ -96,22 +99,13 @@ export const CreateCard: React.FunctionComponent<Props> = (props) => {
         }
     ];
 
-    const options = adaptors.map(ms => {
-        return { key: ms.id, text: `${ms.name} - ${ms.connectorType}`, data: ms } as IDropdownOption;
-    });
-
-    let picked = '';
-    let moment: CreateCardAdaptor = {} as CreateCardAdaptor;
-
     const selectExisting = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => {
-        console.log('select existing');
         picked = 'existing';
-        moment = option!.data as CreateCardAdaptor;
+        adaptor = option!.data as CreateCardAdaptor;
         setIsChecked(false);
     };
 
     const selectNew = () => {
-        console.log('select new');
         picked = 'new';
         setIsChecked(true);
     };
@@ -177,15 +171,19 @@ export const CreateCard: React.FunctionComponent<Props> = (props) => {
                     shouldTruncate
                 />
 
-                <Dropdown placeholder="Select"
-                    dropdownWidth="auto"
-                    styles={className}
-                    options={options}
-                    onChange={selectExisting}
-                />
+                {hasConnectors && (
+                    <>
 
-                <h1>OR</h1>
+                        <Dropdown placeholder="Select"
+                            dropdownWidth="auto"
+                            styles={className}
+                            options={options}
+                            onChange={selectExisting}
+                        />
 
+                        <h1>OR</h1>
+                    </>
+                )}
                 <Checkbox label="Create new business moment adapter" onChange={selectNew} checked={isChecked} />
 
                 <CommandBar styles={commandTileClass} items={_items} />

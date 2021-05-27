@@ -75,7 +75,8 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
                     }
                 }
             },
-            moments: []
+            moments: [],
+            entities: [],
         }
     } as MicroserviceBusinessMomentAdaptor;
 

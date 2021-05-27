@@ -11,10 +11,9 @@ import { Pivot, PivotItem, IDropdownOption, DefaultButton } from '@fluentui/reac
 
 
 import CodeEditor, { loader } from '@monaco-editor/react';
-import { getEntitiesByConnector } from '../store';
-import { getBusinessMoments, HttpResponseBusinessMoments, saveBusinessmoment, HttpInputBusinessMoment } from '../api/businessmoments';
+import { getBusinessMoments, saveBusinessmoment } from '../api/businessmoments';
 import { HttpResponseApplications2 } from '../api/api';
-import { MicroserviceBusinessMomentAdaptor, BusinessMoment } from '../api/index';
+import { MicroserviceBusinessMomentAdaptor, BusinessMoment, HttpResponseBusinessMoments, HttpInputBusinessMoment } from '../api/index';
 import { Guid } from '@dolittle/rudiments';
 
 
@@ -27,18 +26,15 @@ type Props = {
 
 export const Editor: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
-
-    // TODO need to create guid
     const _props = props!;
     const application = _props.application;
-
-    const { environment, applicationId, businessMomentId } = useParams() as any;
+    const { environment, applicationId, businessMomentId, microserviceId } = useParams() as any;
 
     const [loaded, setLoaded] = useState(false);
     const [connectors, setConnectors] = useState({} as IDropdownOption[]);
     const [moment, setBusinessMoment] = useState({} as BusinessMoment);
+    const [entities, setEntities] = useState({} as IDropdownOption[]);
 
-    const [microserviceId, setMicroserviceId] = useState(Guid.create().toString());
     // Not sure how to hook up to IPivotItemProps
     const [outputScreen, setOutputScreen] = useState('Raw Data');
     const onOutputScreenChanged = (item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) => {
@@ -68,42 +64,36 @@ export const Editor: React.FunctionComponent<Props> = (props) => {
             });
 
             const businessMomentsData = values[0] as HttpResponseBusinessMoments;
-            const businessMoment = businessMomentsData.moments.find(data => data.moment.uuid === businessMomentId);
+            if (businessMomentId !== 'new') {
+                const businessMoment = businessMomentsData.moments.find(data => data.moment.uuid === businessMomentId);
+                if (businessMoment) {
+                    setBusinessMoment(businessMoment?.moment);
+                }
+                alert('Something has gone wrong');
+                return <h1>Something has gone wrong</h1>;
+            }
 
-            if (businessMoment) {
-                setMicroserviceId(businessMoment.microserviceId);
-                setBusinessMoment(businessMoment?.moment);
-            } else {
+
+            if (businessMomentId === 'new') {
                 setBusinessMoment({
                     name: '',
-                    uuid: '',
+                    uuid: Guid.create().toString(),
                     filter: '',
                     mapper: '',
                     transform: ''
                 } as BusinessMoment);
             }
 
-            //const moments = businessMomentsData.moments.map(bmData => {
-            //    const tempMs: MicroserviceBusinessMomentAdaptor | undefined = microservicesGit.find(ms => ms.dolittle.microserviceId === bmData.microserviceId);
-            //    const microserviceName = tempMs ? tempMs.name : 'Missing';
-            //    const connectorType = tempMs ? tempMs.extra.connector.kind : 'Missing';
-            //    const moment = bmData.moment;
-            //
-            //    return {
-            //        applicationId,
-            //        environment,
-            //        momentId: moment.uuid,
-            //        name: moment.name,
-            //        microserviceId: bmData.microserviceId,
-            //        microserviceName,
-            //        connectorType,
-            //        canEdit: true,
-            //    };
-            //});
-            //setBusinessMoments(moments);
+            const entities = businessMomentsData.entities.map(data => {
+                const entity = data.entity;
+                return { key: entity.typeID, text: entity.name } as IDropdownOption;
+            });
+            entities.push({ key: 'newEntity', text: 'Create new' } as IDropdownOption);
+
+            setEntities(entities);
             setConnectors(connectors);
             setLoaded(true);
-
+            return;
         });
 
     }, []);
@@ -112,17 +102,6 @@ export const Editor: React.FunctionComponent<Props> = (props) => {
 
     if (!loaded) {
         return null;
-    }
-
-
-
-
-    let entities = [] as IDropdownOption[];
-
-    if (connectorIdState) {
-        entities = getEntitiesByConnector(connectorIdState).map(entity => {
-            return { key: entity.id, text: entity.name } as IDropdownOption;
-        });
     }
 
     return (

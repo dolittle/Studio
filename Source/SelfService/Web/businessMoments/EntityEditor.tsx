@@ -6,7 +6,8 @@
 // TODO validate the data
 // TODO change action button from create to save
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
@@ -15,51 +16,80 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { Text, Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 
 
-import CodeEditor, { useMonaco } from '@monaco-editor/react';
+import CodeEditor, { loader } from '@monaco-editor/react';
+import { HttpResponseApplications2 } from '../api/api';
+import { getBusinessMoments } from '../api/businessmoments';
+import { MicroserviceBusinessMomentAdaptor, HttpResponseBusinessMoments, BusinessMoment, BusinessMomentEntity } from '../api/index';
 
-import { Entity } from '../store';
 
-function getConnectors() {
-    return [
-        {
-            id: 'fake-1',
-            name: 'fake 1',
-        },
-        {
-            id: 'fake-2',
-            name: 'fake 2',
-        }
-    ];
-}
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
-export const Editor: React.FunctionComponent = () => {
-    const monaco = useMonaco();
+type Props = {
+    application: HttpResponseApplications2
+};
+
+export const Editor: React.FunctionComponent<Props> = (props) => {
+    const history = useHistory();
+    const _props = props!;
+    const application = _props.application;
+    const { environment, applicationId, businessMomentId, microserviceId } = useParams() as any;
+
+    const [loaded, setLoaded] = useState(false);
+    const [entities, setEntities] = useState({} as IDropdownOption[]);
+    const [connectors, setConnectors] = useState({} as IDropdownOption[]);
 
     useEffect(() => {
-        if (monaco) {
-            console.log('here is the monaco isntance:', monaco);
-        }
-    }, [monaco]);
+        Promise.all([
+            getBusinessMoments(applicationId, environment),
+            loader.init(),
+        ]).then(values => {
+            const applicationData = application;
+            const microservicesGit: MicroserviceBusinessMomentAdaptor[] = applicationData.microservices.filter(microservice => {
+                return microservice.kind === 'business-moments-adaptor';
+            });
+
+
+            const connectors = microservicesGit.map(microservice => {
+                return { key: microservice.dolittle.microserviceId, text: microservice.extra.connector.kind } as IDropdownOption;
+            });
+
+            const businessMomentsData = values[0] as HttpResponseBusinessMoments;
+
+            const entities = businessMomentsData.entities.map(data => {
+                const entity = data.entity;
+                return { key: entity.typeID, text: entity.name } as IDropdownOption;
+            });
+            entities.push({ key: 'newEntity', text: 'Create new' } as IDropdownOption);
+
+            setEntities(entities);
+            setLoaded(true);
+            return;
+        });
+
+    }, []);
+
+
+    if (!loaded) {
+        return null;
+    }
 
     // Not sure how to hook up to IPivotItemProps
-    const [outputScreen, setOutputScreen] = React.useState('Raw Data');
+    const [outputScreen, setOutputScreen] = useState('Raw Data');
     const onOutputScreenChanged = (item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) => {
         setOutputScreen(item!.props.headerText as string);
     };
 
-    const _connectors: IDropdownOption[] = getConnectors().map(connector => {
-        return { key: connector.id, text: connector.name } as IDropdownOption;
-    }) as IDropdownOption[];
 
     // TODO this might need to use state etc
-    const currentEntity: Entity = {} as Entity;
-    currentEntity.id = 'id';
-    currentEntity.name = '';
-    currentEntity.filterCode = '';
-    currentEntity.transformCode = '';
-    currentEntity.connectorId = '';
+    const currentEntity = {
+        name: '',
+        typeID: '',
+        idForRetrival: 'id',
+        filter: '',
+        transform: '',
+    } as BusinessMomentEntity;
+
 
     return (
         <>
@@ -78,9 +108,9 @@ export const Editor: React.FunctionComponent = () => {
                     <Dropdown placeholder="Select"
                         dropdownWidth="auto"
                         label="Connector:"
-                        options={_connectors}
+                        options={connectors}
                         onChange={(e, v) => {
-                            currentEntity.connectorId = (v as IDropdownOption).key as string;
+                            //currentEntity.connectorId = (v as IDropdownOption).key as string;
                         }}
                     />
 
@@ -97,9 +127,9 @@ export const Editor: React.FunctionComponent = () => {
                         label="Entity ID:"
                         styles={textFieldStyles}
                         placeholder="id"
-                        defaultValue={currentEntity.id}
+                        defaultValue={currentEntity.idForRetrival}
                         onChange={(e, v) => {
-                            currentEntity.id = v!;
+                            //currentEntity.id = v!;
                         }}
                     />
 
@@ -114,9 +144,9 @@ export const Editor: React.FunctionComponent = () => {
                                 height="20vh"
                                 width="50vw"
                                 defaultLanguage="javascript"
-                                defaultValue={currentEntity.filterCode}
+                                defaultValue={currentEntity.filter}
                                 onChange={(value, e) => {
-                                    currentEntity.filterCode = value!;
+                                    currentEntity.filter = value!;
                                 }}
                             />
 
@@ -125,9 +155,9 @@ export const Editor: React.FunctionComponent = () => {
                                 height="20vh"
                                 width="50vw"
                                 defaultLanguage="javascript"
-                                defaultValue={currentEntity.transformCode}
+                                defaultValue={currentEntity.transform}
                                 onChange={(value, e) => {
-                                    currentEntity.transformCode = value!;
+                                    currentEntity.transform = value!;
                                 }}
                             />
                         </Stack>

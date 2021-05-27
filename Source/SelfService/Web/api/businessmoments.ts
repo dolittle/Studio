@@ -2,20 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { getServerUrlPrefix, _checkRedirect } from './api';
-import { BusinessMoment } from './index';
-
-export type HttpResponseBusinessMoments = {
-    applicationId: string
-    environment: string
-    moments: HttpInputBusinessMoment[]
-};
-
-export type HttpInputBusinessMoment = {
-    applicationId: string
-    environment: string
-    microserviceId: string
-    moment: BusinessMoment
-};
+import { HttpResponseBusinessMoments, HttpInputBusinessMoment } from './index';
 
 
 

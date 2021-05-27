@@ -93,7 +93,7 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
             )}
 
             {!hasMicroservices && (
-                <p>No microservices found</p>
+                <p>You currently do not have any microservices.</p>
             )}
         </>
     );
