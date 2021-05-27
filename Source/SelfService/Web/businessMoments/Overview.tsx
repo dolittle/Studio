@@ -10,7 +10,8 @@ import { Modal, DefaultButton } from '@fluentui/react';
 
 
 import { ViewCard } from './viewCard';
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplications2, getMicroservices } from '../api/api';
+import { getBusinessMoments, HttpResponseBusinessMoments } from '../api/businessmoments';
 import { MicroserviceBusinessMomentAdaptor } from '../api/index';
 
 type Props = {
@@ -23,62 +24,73 @@ export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) =
     const [isModalOpen, { setTrue: showModal, setFalse: hideModal }] = useBoolean(false);
     const { environment, applicationId } = useParams() as any;
 
-    const microservices: MicroserviceBusinessMomentAdaptor[] = application.microservices.filter(microservice => {
-        console.log(microservice);
-        return microservice.kind === 'business-moments-adaptor';
-    });
+    const [loaded, setLoaded] = useState(false);
+    const [connectors, setConnectors] = useState({} as CreateCardAdaptor[]);
+    const [moments, setBusinessMoments] = useState({} as any[]);
 
-    //useEffect(() => {
-    //    Promise.all([
-    //        getMicroservices(applicationId)
-    //    ]
-    //    ).then((values) => {
-    //        const applicationData = application;
-    //        const microservicesData = values[0] as any;
-    //        // This does not include kind
-    //
-    //        const microservices: MicroserviceBusinessMomentAdaptor[] = microservicesData.microservices.filter(microservice => {
-    //            console.log(microservice);
-    //            return microservice.kind === 'buisness-moments-adaptor';
-    //        });
-    //        console.log(microservices);
-    //        setCurrentMicroservices(microservices);
-    //    });
-    //}, []);
-    //
-    // TODO load from the server
-    console.log(microservices);
-    const businessMoments = [
-        {
-            applicationId,
-            momentId: 'fake-bm-123',
-            environment,
-            name: 'Added to Component',
-            microserviceId: 'fake-ms-345',
-            microserviceName: 'Product Structure Extractor',
-            connectorType: 'Webhook',
-            canEdit: true,
 
-        },
-        {
-            applicationId,
-            environment,
-            momentId: 'fake-bm-678',
-            name: 'Customer Created',
-            microserviceId: 'fake-ms-345',
-            microserviceName: 'Customer Extractor',
-            connectorType: 'Webhook',
-            canEdit: true,
-        },
-    ];
 
-    const adaptors = businessMoments.map(moment => {
-        return {
-            id: moment.momentId,
-            name: moment.microserviceName,
-            connectorType: moment.connectorType,
-        } as CreateCardAdaptor;
-    });
+
+    useEffect(() => {
+        Promise.all([
+            getMicroservices(applicationId),
+            getBusinessMoments(applicationId, environment),
+        ]
+        ).then((values) => {
+            const applicationData = application;
+            const microservicesGit: MicroserviceBusinessMomentAdaptor[] = applicationData.microservices.filter(microservice => {
+                console.log(microservice);
+                return microservice.kind === 'business-moments-adaptor';
+            });
+
+
+            const connectors = microservicesGit.map(microservice => {
+                return {
+                    id: microservice.dolittle.microserviceId,
+                    name: microservice.name,
+                    connectorType: microservice.extra.connector.kind,
+                } as CreateCardAdaptor;
+            });
+
+
+            const microservicesData = values[0] as any;
+            // This does not include kind
+
+            const microservicesLive: MicroserviceBusinessMomentAdaptor[] = microservicesData.microservices.filter(microservice => {
+                console.log(microservice);
+                return microservice.kind === 'buisness-moments-adaptor';
+            });
+            console.log(microservicesLive);
+
+
+            const businessMomentsData = values[1] as HttpResponseBusinessMoments;
+
+            const moments = businessMomentsData.moments.map(bmData => {
+                const tempMs: MicroserviceBusinessMomentAdaptor | undefined = microservicesGit.find(ms => ms.dolittle.microserviceId === bmData.microserviceId);
+                const microserviceName = tempMs ? tempMs.name : 'Missing';
+                const connectorType = tempMs ? tempMs.extra.connector.kind : 'Missing';
+                const moment = bmData.moment;
+
+                return {
+                    applicationId,
+                    environment,
+                    momentId: moment.uuid,
+                    name: moment.name,
+                    microserviceId: bmData.microserviceId,
+                    microserviceName,
+                    connectorType,
+                    canEdit: true,
+                };
+            });
+            setBusinessMoments(moments);
+            setConnectors(connectors);
+            setLoaded(true);
+        });
+    }, []);
+
+    if (!loaded) {
+        return null;
+    }
 
     return (
         <>
@@ -86,7 +98,7 @@ export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) =
             <DefaultButton onClick={showModal} text="Create Business Moment" />
             <div className="serv">
                 <ul>
-                    {businessMoments.map((moment) => {
+                    {moments.map((moment) => {
                         return <li key={moment.momentId}><ViewCard {...moment} /></li>;
                     })}
                 </ul>
@@ -96,7 +108,7 @@ export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) =
                 onDismiss={hideModal}
                 isBlocking={false}
             >
-                <CreateCard applicationId={applicationId} environment={environment} adaptors={adaptors} onCancel={() => {
+                <CreateCard applicationId={applicationId} environment={environment} adaptors={connectors} onCancel={() => {
                     hideModal();
                 }} />
             </Modal>

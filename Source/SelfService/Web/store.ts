@@ -73,6 +73,20 @@ export function saveEntity(entity: Entity): boolean {
 export function getRawLogs(): any[] {
     return [];
 }
+// TODO REMOVE
+export function getConnectors() {
+    return [
+        {
+            id: 'fake-1',
+            name: 'fake 1',
+        },
+        {
+            id: 'fake-2',
+            name: 'fake 2',
+        }
+    ];
+}
+
 
 // Microservice
 export async function createMicroservice(kind: string, input: any): Promise<boolean> {

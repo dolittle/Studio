@@ -202,7 +202,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             </Route>
 
             <Route exact path="/application/:applicationId/:environment/business-moments/editor/:businessMomentId">
-                <BusinessMomentEditor />
+                <BusinessMomentEditor application={application} />
             </Route>
         </LayoutWithSidebar >
     );

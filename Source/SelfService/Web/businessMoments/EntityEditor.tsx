@@ -17,9 +17,20 @@ import { Text, Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 
 import CodeEditor, { useMonaco } from '@monaco-editor/react';
 
-import { Entity, getConnectors } from '../store';
+import { Entity } from '../store';
 
-
+function getConnectors() {
+    return [
+        {
+            id: 'fake-1',
+            name: 'fake 1',
+        },
+        {
+            id: 'fake-2',
+            name: 'fake 2',
+        }
+    ];
+}
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
