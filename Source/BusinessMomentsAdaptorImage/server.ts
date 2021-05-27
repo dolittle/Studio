@@ -4,7 +4,6 @@
 import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import process from 'process';
-import rawData from './dataschema';
 import { IRawDataStorage } from './RawDataStorage';
 
 export function createServer(rawDataStorage: IRawDataStorage) {
@@ -20,11 +19,11 @@ export function createServer(rawDataStorage: IRawDataStorage) {
             return;
         }
 
-        console.log(req.body);
-
         try {
             await repo.Append(req.body);
-        } catch (_) {
+            console.log(req.body);
+        } catch (err) {
+            console.log(err);
             res.status(500).end();
         }
         res.status(200).end();
@@ -36,28 +35,27 @@ export function createServer(rawDataStorage: IRawDataStorage) {
             return;
         }
 
-        const data = rawData.find((err: any, data: any) => {
-            if (err) {
-                res.send('Error!');
-            } else {
-                res.send(data);
-            }
-        });
+        try {
+            const result = await repo.GetAll();
+            res.send(result).end();
+        } catch (err) {
+            console.log(err);
+            res.status(500).end();
+        }
     });
 
-    app.get('/api/webhooks-ingestor/data/:id', (req: Request, res: Response) => {
+    app.get('/api/webhooks-ingestor/data/:id', async (req: Request, res: Response) => {
         if (req.headers.authorization !== process.env.WH_AUTHORIZATION) {
             res.status(401).end();
             return;
         }
 
-        rawData.findById(req.params.id, (err: any, data: any) => {
-            if (err) {
-                res.send(err);
-            } else {
-                res.send(data);
-            }
-        });
+        try {
+            const result = await repo.GetById(req.params.id);
+            res.send(result).end();
+        } catch (_) {
+            res.status(500).end();
+        }
     });
 
     return app;
