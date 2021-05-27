@@ -42,7 +42,7 @@ const conversationTileClass = mergeStyles({ height: 182 });
 export const ViewCard: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
     const _props = props!;
-
+    const canEdit = _props.canEdit;
     const applicationId = _props.applicationId;
     const environment = _props.environment;
     const microserviceId = _props.microserviceId;
@@ -57,9 +57,8 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             buttonStyles,
             key: 'edit',
             text: 'Edit',
+            disabled: !canEdit,
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-                alert('Moment Id is wrong');
-                return;
                 const href = `/application/${applicationId}/${environment}/business-moments/editor/${momentId}`;
                 history.push(href);
             }
@@ -68,8 +67,8 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             buttonStyles,
             key: 'delete',
             text: 'Delete',
+            disabled: !canEdit,
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-                // applicationId: string, environment: string, microserviceId: string, momentId: string
                 (async () => {
                     const success = await deleteBusinessmoment(applicationId, environment, microserviceId, momentId);
                     if (!success) {

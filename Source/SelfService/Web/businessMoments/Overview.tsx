@@ -21,9 +21,9 @@ type Props = {
 export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
-    const [isModalOpen, { setTrue: showModal, setFalse: hideModal }] = useBoolean(false);
     const { environment, applicationId } = useParams() as any;
-
+    const canEdit = application.environments.some(info => info.name === environment && info.automationEnabled);
+    const [isModalOpen, { setTrue: showModal, setFalse: hideModal }] = useBoolean(false);
     const [loaded, setLoaded] = useState(false);
     const [connectors, setConnectors] = useState({} as CreateCardAdaptor[]);
     const [moments, setBusinessMoments] = useState({} as any[]);
@@ -57,7 +57,6 @@ export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) =
             // This does not include kind
 
             const microservicesLive: MicroserviceBusinessMomentAdaptor[] = microservicesData.microservices.filter(microservice => {
-                console.log(microservice);
                 return microservice.kind === 'buisness-moments-adaptor';
             });
             console.log(microservicesLive);
@@ -79,7 +78,7 @@ export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) =
                     microserviceId: bmData.microserviceId,
                     microserviceName,
                     connectorType,
-                    canEdit: true,
+                    canEdit,
                 };
             });
             setBusinessMoments(moments);
@@ -95,7 +94,13 @@ export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) =
     return (
         <>
             <h1>Business moments</h1>
-            <DefaultButton onClick={showModal} text="Create Business Moment" />
+            <DefaultButton onClick={() => {
+                if (!canEdit) {
+                    alert('Automation is disabled');
+                    return;
+                }
+                showModal();
+            }} text="Create Business Moment" />
             <div className="serv">
                 <ul>
                     {moments.map((moment) => {

@@ -60,6 +60,7 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
             {!hasEnvironments && (
                 <>
                     <PrimaryButton text="Create New Environment" onClick={(e => {
+                        // TODO How to stop this if automation disabled, currently on the environment level
                         const href = `/application/${application.id}/environment/create`;
                         history.push(href);
                     })} />
@@ -69,6 +70,10 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
             {hasEnvironments && (
                 <>
                     <PrimaryButton text="Create New Microservice" onClick={(e => {
+                        if (!canEdit) {
+                            alert('Automation is disabled');
+                            return;
+                        }
                         const href = `/application/${application.id}/${currentEnvironment}/microservice/create`;
                         history.push(href);
                     })} />
