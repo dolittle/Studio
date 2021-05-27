@@ -38,11 +38,11 @@ export function createServer() {
 export function startServer(app: any) {
     const PORT = 3008;
 
-    if (process.env.WH_AUTHORIZATION) {
-        app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-    } else {
+    if (!process.env.WH_AUTHORIZATION) {
         console.log('WH_AUTHORIZATION is not set.');
         console.log(process.env.WH_AUTHORIZATION);
         process.exit(1);
     }
+
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
