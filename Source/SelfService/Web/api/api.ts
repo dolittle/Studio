@@ -30,7 +30,7 @@ export type MicroserviceInfo = {
 export type HttpResponseApplications = {
     id: string
     name: string
-    applications: ShortInfo[]
+    applications: ShortInfoWithEnvironment[]
 };
 
 export type HttpResponseApplications2 = { // Not a great name

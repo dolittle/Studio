@@ -103,7 +103,7 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
                 <TextField placeholder="Prefix" defaultValue={ms.extra.ingress.pathType} readOnly />
 
                 <Label>Domain Prefix</Label>
-                <TextField placeholder="" defaultValue={ingressDomainPrefix} onChange={onChangeHandler(setIngressDomainPrefix)} />
+                <TextField placeholder="" defaultValue={ingressDomainPrefix} onChange={onChangeHandler(setIngressDomainPrefix)} readOnly />
             </Stack>
 
             <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
