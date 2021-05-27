@@ -14,25 +14,29 @@ export function createServer() {
     app.use(bodyParser.json());
 
     app.post('/api/webhooks-ingestor', (req: Request, res: Response) => {
-        if (req.headers.authorization === process.env.WH_AUTHORIZATION) {
-            console.log(req.body);
-
-            const data = new rawData(req.body);
-            try {
-                data.save();
-            } catch (error) {
-                res.status(500).end();
-            }
-            res.status(200).end();
-        } else {
+        if (req.headers.authorization !== process.env.WH_AUTHORIZATION) {
             res.status(401).end();
         }
+
+        console.log(req.body);
+
+        try {
+            savePayload(req.body);
+        } catch (_) {
+            res.status(500).end();
+        }
+        res.status(200).end();
     });
 
     app.get('/data', dataController.allData);
     app.get('/data/:id', dataController.getData);
 
     return app;
+}
+
+function savePayload(payload: any) {
+    const data = new rawData(payload);
+    data.save();
 }
 
 export function startServer(app: any) {
