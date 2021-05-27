@@ -10,4 +10,4 @@ services:
             - '3008:3008'
         environment:
             WH_AUTHORIZATION: 'Basic bTM6am9obmNhcm1hY2s='
-            mongodb_uri: 'mongodb://127.0.0.1:27017/local'
+            MONGODB_URI: 'mongodb://127.0.0.1:27017/local'

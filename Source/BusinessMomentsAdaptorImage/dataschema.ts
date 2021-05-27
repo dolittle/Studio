@@ -3,7 +3,7 @@
 
 import mongoose from 'mongoose';
 // const uri: string = 'mongodb://127.0.0.1:27017/local';
-const uri: any = process.env.mongodb_uri;
+const uri: any = process.env.MONGODB_URI;
 
 mongoose.connect(uri, (err: any) => {
     if (err) {
