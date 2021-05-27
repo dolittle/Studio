@@ -13,7 +13,11 @@ export class MongodbRawDataStorage implements IRawDataStorage {
 
     async Append(payload: any) {
         const data = new rawData(payload);
-        await data.save();
+        try {
+            await data.save();
+        } catch (err) {
+            return Promise.reject(err);
+        }
     }
 
     GetById(id: string) {

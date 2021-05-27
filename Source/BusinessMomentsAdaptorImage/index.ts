@@ -2,6 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { createServer, startServer } from './server';
+import { MongodbRawDataStorage } from './RawDataStorage';
 
-const app = createServer();
+const rawDataStorage = new MongodbRawDataStorage();
+// TODO: inject dependency with IoC in the future.
+const app = createServer(rawDataStorage);
 startServer(app);

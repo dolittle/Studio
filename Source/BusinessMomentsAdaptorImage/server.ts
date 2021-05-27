@@ -5,25 +5,25 @@ import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import process from 'process';
 import rawData from './dataschema';
-import { MongodbRawDataStorage } from './RawDataStorage';
+import { IRawDataStorage } from './RawDataStorage';
 
-export function createServer() {
+export function createServer(rawDataStorage: IRawDataStorage) {
     const app: Application = express();
+    const repo = rawDataStorage;
 
     // Tell express to use body-parser's JSON parsing.
     app.use(bodyParser.json());
 
-    app.post('/api/webhooks-ingestor', (req: Request, res: Response) => {
+    app.post('/api/webhooks-ingestor', async (req: Request, res: Response) => {
         if (req.headers.authorization !== process.env.WH_AUTHORIZATION) {
             res.status(401).end();
             return;
-            // process.exit(1);
         }
 
         console.log(req.body);
 
         try {
-            savePayload(req.body);
+            await repo.Append(req.body);
         } catch (_) {
             res.status(500).end();
         }
@@ -61,11 +61,6 @@ export function createServer() {
     });
 
     return app;
-}
-
-function savePayload(payload: any) {
-    const data = new rawData(payload);
-    data.save();
 }
 
 export function startServer(app: any) {
