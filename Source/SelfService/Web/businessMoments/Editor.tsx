@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
@@ -11,12 +11,12 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { Pivot, PivotItem, IDropdownOption, DefaultButton } from '@fluentui/react';
 
 
-import CodeEditor, { loader, Monaco } from '@monaco-editor/react';
-import { getConnectors, getEntitiesByConnector } from '../store';
-import { getBusinessMoments, HttpResponseBusinessMoments } from '../api/businessmoments';
+import CodeEditor, { loader } from '@monaco-editor/react';
+import { getEntitiesByConnector } from '../store';
+import { getBusinessMoments, HttpResponseBusinessMoments, saveBusinessmoment, HttpInputBusinessMoment } from '../api/businessmoments';
 import { HttpResponseApplications2 } from '../api/api';
 import { MicroserviceBusinessMomentAdaptor, BusinessMoment } from '../api/index';
-import { CreateCardAdaptor } from './createCard';
+import { Guid } from '@dolittle/rudiments';
 
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
@@ -35,10 +35,9 @@ export const Editor: React.FunctionComponent<Props> = (props) => {
 
     const [loaded, setLoaded] = useState(false);
     const [connectors, setConnectors] = useState({} as IDropdownOption[]);
-    const [moments, setBusinessMoments] = useState({} as any[]);
     const [moment, setBusinessMoment] = useState({} as BusinessMoment);
-    const [monaco, setMoncao] = useState({} as any[]);
 
+    const [microserviceId, setMicroserviceId] = useState(Guid.create().toString());
     // Not sure how to hook up to IPivotItemProps
     const [outputScreen, setOutputScreen] = useState('Raw Data');
     const onOutputScreenChanged = (item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) => {
@@ -51,16 +50,12 @@ export const Editor: React.FunctionComponent<Props> = (props) => {
         setConnectorIdState(option!.key as string);
     };
 
-    const monacoRef = useRef(null as Monaco);
-
 
     useEffect(() => {
         Promise.all([
             getBusinessMoments(applicationId, environment),
             loader.init(),
         ]).then(values => {
-            console.log(values[1]);
-            monacoRef.current = values[1];
             const applicationData = application;
             const microservicesGit: MicroserviceBusinessMomentAdaptor[] = applicationData.microservices.filter(microservice => {
                 return microservice.kind === 'business-moments-adaptor';
@@ -72,10 +67,11 @@ export const Editor: React.FunctionComponent<Props> = (props) => {
             });
 
             const businessMomentsData = values[0] as HttpResponseBusinessMoments;
+            const businessMoment = businessMomentsData.moments.find(data => data.moment.uuid === businessMomentId);
 
-            const moment = businessMomentsData.moments.find(data => data.moment.uuid === businessMomentId);
-            if (moment) {
-                setBusinessMoment(moment.moment);
+            if (businessMoment) {
+                setMicroserviceId(businessMoment.microserviceId);
+                setBusinessMoment(businessMoment?.moment);
             } else {
                 setBusinessMoment({
                     name: '',
@@ -85,6 +81,7 @@ export const Editor: React.FunctionComponent<Props> = (props) => {
                     transform: ''
                 } as BusinessMoment);
             }
+
             //const moments = businessMomentsData.moments.map(bmData => {
             //    const tempMs: MicroserviceBusinessMomentAdaptor | undefined = microservicesGit.find(ms => ms.dolittle.microserviceId === bmData.microserviceId);
             //    const microserviceName = tempMs ? tempMs.name : 'Missing';
@@ -185,8 +182,23 @@ export const Editor: React.FunctionComponent<Props> = (props) => {
                                 defaultLanguage="javascript"
                                 defaultValue={moment.transform}
                             />
-                            <DefaultButton onClick={() => {
+                            <DefaultButton onClick={async () => {
                                 console.log('Save business moment', moment);
+
+                                const input = {
+                                    applicationId,
+                                    environment,
+                                    microserviceId,
+                                    moment,
+                                } as HttpInputBusinessMoment;
+
+
+                                const success = await saveBusinessmoment(input);
+                                if (!success) {
+                                    alert('Failed to save');
+                                    return;
+                                }
+                                alert('Business moment saved');
                             }} text="Save Business Moment" />
                         </Stack>
                         <Stack tokens={{ childrenGap: 15, maxWidth: '50vw' }}>

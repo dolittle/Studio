@@ -32,3 +32,30 @@ export async function getBusinessMoments(applicationId: string, environment: str
     const jsonResult = await result.json() as HttpResponseBusinessMoments;
     return jsonResult;
 }
+
+export async function deleteMicroservice(applicationId: string, environment: string, microserviceId: string, momentId: string): Promise<boolean> {
+    const url = `${getServerUrlPrefix()}/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/moment/${momentId}`;
+    const result = await fetch(
+        url,
+        {
+            method: 'DELETE',
+            mode: 'cors'
+        });
+    return result.status === 200;
+}
+
+export async function saveBusinessmoment(input: HttpInputBusinessMoment): Promise<boolean> {
+    const url = `${getServerUrlPrefix()}/businessmoment`;
+    const result = await fetch(
+        url,
+        {
+            method: 'POST',
+            body: JSON.stringify(input),
+            mode: 'cors',
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+    _checkRedirect(result);
+    return result.status === 200;
+}
