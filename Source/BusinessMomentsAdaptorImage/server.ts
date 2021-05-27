@@ -21,7 +21,6 @@ export function createServer() {
             try {
                 data.save();
             } catch (error) {
-                res.send(error);
                 res.status(500).end();
             }
             res.status(200).end();
