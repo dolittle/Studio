@@ -14,7 +14,8 @@ export function createServer(rawDataStorage: IRawDataStorage) {
     app.use(bodyParser.json());
 
     app.post('/api/webhooks-ingestor', async (req: Request, res: Response) => {
-        if (req.headers.authorization !== process.env.WH_AUTHORIZATION) {
+        // TODO: figure out how we do this with middleware (less duplication)
+        if (!isAuthorized(req)) {
             res.status(401).end();
             return;
         }
@@ -30,7 +31,7 @@ export function createServer(rawDataStorage: IRawDataStorage) {
     });
 
     app.get('/api/webhooks-ingestor/data', async (req: Request, res: Response) => {
-        if (req.headers.authorization !== process.env.WH_AUTHORIZATION) {
+        if (!isAuthorized(req)) {
             res.status(401).end();
             return;
         }
@@ -45,7 +46,7 @@ export function createServer(rawDataStorage: IRawDataStorage) {
     });
 
     app.get('/api/webhooks-ingestor/data/:id', async (req: Request, res: Response) => {
-        if (req.headers.authorization !== process.env.WH_AUTHORIZATION) {
+        if (!isAuthorized(req)) {
             res.status(401).end();
             return;
         }
@@ -59,6 +60,10 @@ export function createServer(rawDataStorage: IRawDataStorage) {
     });
 
     return app;
+}
+
+function isAuthorized(req: Request) {
+    return req.headers.authorization === process.env.WH_AUTHORIZATION;
 }
 
 export function startServer(app: any) {
