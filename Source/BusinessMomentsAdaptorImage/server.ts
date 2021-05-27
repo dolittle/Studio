@@ -15,6 +15,8 @@ export function createServer() {
     app.post('/api/webhooks-ingestor', (req: Request, res: Response) => {
         if (req.headers.authorization !== process.env.WH_AUTHORIZATION) {
             res.status(401).end();
+            return;
+            // process.exit(1);
         }
 
         console.log(req.body);
@@ -27,7 +29,12 @@ export function createServer() {
         res.status(200).end();
     });
 
-    app.get('/data', (req: Request, res: Response) => {
+    app.get('/api/webhooks-ingestor/data', (req: Request, res: Response) => {
+        if (req.headers.authorization !== process.env.WH_AUTHORIZATION) {
+            res.status(401).end();
+            return;
+        }
+
         const data = rawData.find((err: any, data: any) => {
             if (err) {
                 res.send('Error!');
@@ -37,7 +44,12 @@ export function createServer() {
         });
     });
 
-    app.get('/data/:id', (req: Request, res: Response) => {
+    app.get('/api/webhooks-ingestor/data/:id', (req: Request, res: Response) => {
+        if (req.headers.authorization !== process.env.WH_AUTHORIZATION) {
+            res.status(401).end();
+            return;
+        }
+
         rawData.findById(req.params.id, (err: any, data: any) => {
             if (err) {
                 res.send(err);
@@ -70,5 +82,3 @@ function failIfEnvironmentVariableIsNotSet(name: string) {
         process.exit(1);
     }
 }
-
-
