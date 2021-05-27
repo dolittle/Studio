@@ -84,6 +84,8 @@ export const CreateCard: React.FunctionComponent<Props> = (props) => {
                     case 'existing':
                         href = `/application/${applicationId}/${environment}/business-moments/editor/${moment.id}`;
                         console.log(href);
+                        alert('Moment Id is wrong');
+                        return;
                         history.push(href);
                         return;
                     default:

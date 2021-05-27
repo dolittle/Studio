@@ -2,8 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
+import { useParams, useHistory } from 'react-router-dom';
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { Stack } from '@fluentui/react/lib/Stack';
@@ -27,6 +26,8 @@ type Props = {
 };
 
 export const Editor: React.FunctionComponent<Props> = (props) => {
+    const history = useHistory();
+
     // TODO need to create guid
     const _props = props!;
     const application = _props.application;

@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-
+import { useHistory } from 'react-router-dom';
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import {
     DocumentCard,
@@ -13,6 +13,7 @@ import {
 import { mergeStyles, mergeStyleSets } from '@fluentui/react/lib/Styling';
 
 import { cardStyles, commandTileClass, buttonStyles as baseButtonStyles } from '../theme/viewCard';
+import { deleteBusinessmoment } from '../api/businessmoments';
 
 
 const buttonStyles = mergeStyleSets(
@@ -39,6 +40,7 @@ type Props = {
 const conversationTileClass = mergeStyles({ height: 182 });
 
 export const ViewCard: React.FunctionComponent<Props> = (props) => {
+    const history = useHistory();
     const _props = props!;
 
     const applicationId = _props.applicationId;
@@ -56,9 +58,10 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             key: 'edit',
             text: 'Edit',
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-                alert('TODO Edit business moment');
+                alert('Moment Id is wrong');
+                return;
                 const href = `/application/${applicationId}/${environment}/business-moments/editor/${momentId}`;
-                console.log(href);
+                history.push(href);
             }
         },
         {
@@ -66,7 +69,15 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             key: 'delete',
             text: 'Delete',
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-                alert('TODO Delete business moment');
+                // applicationId: string, environment: string, microserviceId: string, momentId: string
+                (async () => {
+                    const success = await deleteBusinessmoment(applicationId, environment, microserviceId, momentId);
+                    if (!success) {
+                        alert('Failed to remove business moment');
+                        return;
+                    }
+                    history.push(window.location);
+                })();
             }
         },
         {

@@ -33,8 +33,8 @@ export async function getBusinessMoments(applicationId: string, environment: str
     return jsonResult;
 }
 
-export async function deleteMicroservice(applicationId: string, environment: string, microserviceId: string, momentId: string): Promise<boolean> {
-    const url = `${getServerUrlPrefix()}/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/moment/${momentId}`;
+export async function deleteBusinessmoment(applicationId: string, environment: string, microserviceId: string, momentId: string): Promise<boolean> {
+    const url = `${getServerUrlPrefix()}/application/${applicationId}/environment/${environment}/businessmoments/microservice/${microserviceId}/moment/${momentId}`;
     const result = await fetch(
         url,
         {
