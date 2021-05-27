@@ -38,15 +38,17 @@ export function createServer() {
 export function startServer(app: any) {
     const PORT = 3008;
 
-    if (!process.env.WH_AUTHORIZATION) {
-        console.log('WH_AUTHORIZATION is not set.');
-        process.exit(1);
-    }
-
-    if (!process.env.MONGODB_URI) {
-        console.log('MONGODB_URI is not set.');
-        process.exit(1);
-    }
+    failIfEnvironmentVariableIsNotSet('WH_AUTHORIZATION');
+    failIfEnvironmentVariableIsNotSet('MONGODB_URI');
 
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
+
+function failIfEnvironmentVariableIsNotSet(name: string) {
+    if (!process.env[name]) {
+        console.log(`${name} is not set.`);
+        process.exit(1);
+    }
+}
+
+
