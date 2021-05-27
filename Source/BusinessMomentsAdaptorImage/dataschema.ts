@@ -18,7 +18,8 @@ const rawData = mongoose.model(
     new mongoose.Schema(
         {
             any: {},
-            expireAt: { type: Date, index: { expires: '288h' }, default: Date.now },
+            createdAt: { type: Date, index: { expires: '20m' }, default: Date.now },
+            // expireAt: { type: Date, index: { expires: '20m' }, default: Date.now },
         },
         { strict: false }
     )
