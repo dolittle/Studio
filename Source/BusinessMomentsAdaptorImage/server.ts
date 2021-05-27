@@ -4,7 +4,6 @@
 import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import process from 'process';
-import * as dataController from './dataController';
 import rawData from './dataschema';
 
 export function createServer() {
@@ -28,8 +27,25 @@ export function createServer() {
         res.status(200).end();
     });
 
-    app.get('/data', dataController.allData);
-    app.get('/data/:id', dataController.getData);
+    app.get('/data', (req: Request, res: Response) => {
+        const data = rawData.find((err: any, data: any) => {
+            if (err) {
+                res.send('Error!');
+            } else {
+                res.send(data);
+            }
+        });
+    });
+
+    app.get('/data/:id', (req: Request, res: Response) => {
+        rawData.findById(req.params.id, (err: any, data: any) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send(data);
+            }
+        });
+    });
 
     return app;
 }
