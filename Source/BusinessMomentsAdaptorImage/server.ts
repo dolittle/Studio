@@ -40,7 +40,11 @@ export function startServer(app: any) {
 
     if (!process.env.WH_AUTHORIZATION) {
         console.log('WH_AUTHORIZATION is not set.');
-        console.log(process.env.WH_AUTHORIZATION);
+        process.exit(1);
+    }
+
+    if (!process.env.MONGODB_URI) {
+        console.log('MONGODB_URI is not set.');
         process.exit(1);
     }
 
