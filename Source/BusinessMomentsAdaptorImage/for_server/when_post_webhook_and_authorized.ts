@@ -21,7 +21,7 @@ describe('Post webhook', function () {
             authHeaderToSendInRequest = configuredAuthHeader;
         });
 
-        it('will return 200 OK', function (done) {
+        it('will return 200 OK', (done) => {
             supertest(app)
                 .post('/api/webhooks-ingestor')
                 .set('authorization', authHeaderToSendInRequest)
