@@ -3,15 +3,17 @@
 
 import supertest from 'supertest';
 import { createServer } from '../server';
-
+import { RawDataStorageMock } from './RawDataStorageMock';
 
 describe('Post webhook', function () {
     let app: any;
     let authHeaderToSendInRequest: string;
+    let storageMock: RawDataStorageMock;
 
     beforeEach(() => {
         process.env.WH_AUTHORIZATION = 'Basic bTM6am9obmNhcm1hY2s=';
-        app = createServer();
+        storageMock = new RawDataStorageMock();
+        app = createServer(storageMock);
     });
 
     context('with invalid authorization header', () => {
