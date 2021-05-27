@@ -23,14 +23,3 @@ export const getData = (req: Request, res: Response) => {
         }
     });
 };
-
-export const addData = (req: Request, res: Response) => {
-    const data = new rawData(req.body);
-    data.save((err: any) => {
-        if (err) {
-            res.send(err);
-        } else {
-            res.send(data);
-        }
-    });
-};
