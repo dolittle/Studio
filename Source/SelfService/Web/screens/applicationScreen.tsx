@@ -17,7 +17,7 @@ import { PodViewScreen } from './podViewScreen';
 import { EnvironmentNewScreen } from './environmentNewScreen';
 import { EnvironmentChanger } from '../application/environmentChanger';
 import { BackupScreen } from './backupScreen';
-import { Editor as BusinessMomentEditor } from '../businessMoments/Editor';
+import { Editor as BusinessMomentEditor } from '../businessMoments/editor';
 import { BusinessMomentsOverview } from '../businessMoments/Overview';
 import {
     Link,

@@ -80,7 +80,6 @@ export const CreateCard: React.FunctionComponent<Props> = (props) => {
             key: 'create',
             text: 'Create',
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-                console.log('goto microservice create page');
                 let href = '';
                 switch (picked) {
                     case 'new':
@@ -88,7 +87,7 @@ export const CreateCard: React.FunctionComponent<Props> = (props) => {
                         history.push(href);
                         return;
                     case 'existing':
-                        href = `/application/${applicationId}/${environment}/business-moments/editor/new/${adaptor.id}`;
+                        href = `/application/${applicationId}/${environment}/business-moments/editor/new/microservice/${adaptor.id}`;
                         history.push(href);
                         return;
                     default:

@@ -84,17 +84,17 @@ export type MicroserviceBusinessMomentAdaptorConnector = {
 export type BusinessMoment = {
     name: string
     uuid: string
-    filter: string
-    mapper: string
-    transform: string
+    entityId: string
+    filter: string // TODO confirm these
+    transform: string // TODO confirm these
 };
 
 export type BusinessMomentEntity = {
     name: string
     typeID: string
     idForRetrival: string
-    filter: string
-    transform: string
+    filter: string // TODO confirm these
+    transform: string // TODO confirm these
 };
 
 export type HttpResponseBusinessMoments = {
