@@ -5,6 +5,7 @@ import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import process from 'process';
 import rawData from './dataschema';
+import { MongodbRawDataStorage } from './RawDataStorage';
 
 export function createServer() {
     const app: Application = express();
@@ -29,7 +30,7 @@ export function createServer() {
         res.status(200).end();
     });
 
-    app.get('/api/webhooks-ingestor/data', (req: Request, res: Response) => {
+    app.get('/api/webhooks-ingestor/data', async (req: Request, res: Response) => {
         if (req.headers.authorization !== process.env.WH_AUTHORIZATION) {
             res.status(401).end();
             return;
