@@ -4,7 +4,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { HttpResponseApplications2 } from '../api';
+import { HttpResponseApplications2 } from '../api/api';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
 

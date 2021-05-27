@@ -9,7 +9,7 @@ import { Text } from '@fluentui/react/lib/Text';
 import { IconButton } from '@fluentui/react/lib/Button';
 import { DetailsList, DetailsListLayoutMode, IColumn } from '@fluentui/react/lib/DetailsList';
 
-import { HttpResponsePodStatus, PodInfo } from '../api';
+import { HttpResponsePodStatus, PodInfo } from '../api/api';
 
 const stackTokens = { childrenGap: 15 };
 

@@ -12,7 +12,7 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 import { BasicAuthComponent } from './BasicAuthComponent';
 import { BearerAuthComponent } from './BearerAuthComponent';
-import { ConnectorWebhookConfig, MicroserviceBusinessMomentAdaptor } from '../../../store';
+import { ConnectorWebhookConfig, MicroserviceBusinessMomentAdaptor } from '../../../api/index';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
@@ -125,7 +125,9 @@ export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undef
                 <TextField
                     styles={textFieldStyles}
                     defaultValue={ms.extra.ingress.path.substring(1)}
-                    disabled
+                    onChange={(e, v) => {
+                        ms.extra.ingress.path = `/${v!}`;
+                    }}
                 />
             </Stack>
 

@@ -15,8 +15,10 @@ import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react/lib/ChoiceGroup
 
 import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 import { Config as RestConfig } from './configuration/RestConfiguration';
-import { MicroserviceBusinessMomentAdaptor, createMicroservice, uriWithAppPrefix } from '../../store';
-import { HttpResponseApplications2 } from '../../api';
+import { createMicroservice } from '../../store';
+import { MicroserviceBusinessMomentAdaptor } from '../../api/index';
+
+import { HttpResponseApplications2 } from '../../api/api';
 import { Guid } from '@dolittle/rudiments';
 
 const stackTokens = { childrenGap: 15 };
@@ -52,7 +54,7 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
             microserviceId,
         },
         name: 'Webhook-101',
-        kind: 'buisness-moments-adaptor',
+        kind: 'business-moments-adaptor',
         environment,
         extra: {
             headImage: fromStore.businessmomentsadaptor.image,
@@ -72,7 +74,8 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
                         password: 'johncarmack'
                     }
                 }
-            }
+            },
+            moments: []
         }
     } as MicroserviceBusinessMomentAdaptor;
 

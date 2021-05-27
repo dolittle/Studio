@@ -7,7 +7,7 @@ import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 
-import { getPodStatus, HttpResponsePodStatus } from '../api';
+import { getPodStatus, HttpResponsePodStatus } from '../api/api';
 import { PodStatus } from '../microservice/podStatus';
 
 

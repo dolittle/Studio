@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Create as Microservice } from '../microservice/Microservice';
-import { HttpResponseApplications2 } from '../api';
+import { HttpResponseApplications2 } from '../api/api';
 
 type Props = {
     application: HttpResponseApplications2

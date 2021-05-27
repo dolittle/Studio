@@ -12,7 +12,7 @@ import {
 } from '@fluentui/react';
 import { cardStyles, commandTileClass, buttonStyles } from '../theme/viewCard';
 
-import { deleteMicroservice, MicroserviceInfo } from '../api';
+import { deleteMicroservice, MicroserviceInfo } from '../api/api';
 import { mergeStyles } from '@fluentui/react/lib/Styling';
 import './microservice.scss';
 

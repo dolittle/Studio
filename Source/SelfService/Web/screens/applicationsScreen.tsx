@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { List } from '@fluentui/react/lib/List';
 import { Link } from '@fluentui/react';
 
-import { getApplications, HttpResponseApplications, ShortInfo } from '../api';
+import { getApplications, HttpResponseApplications, ShortInfo } from '../api/api';
 import { uriWithAppPrefix } from '../store';
 
 export const ApplicationsScreen: React.FunctionComponent = () => {

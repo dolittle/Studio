@@ -7,7 +7,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 
-import { getMicroservices, HttpResponseMicroservices, MicroserviceInfo, HttpResponseApplications2 } from '../api';
+import { getMicroservices, HttpResponseMicroservices, MicroserviceInfo, HttpResponseApplications2 } from '../api/api';
 
 import '../microservice/microservice.scss';
 import { ViewCard } from '../microservice/viewCard';

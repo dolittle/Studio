@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor } from './store';
+import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor } from './index';
 
 export type ShortInfo = {
     id: string
@@ -74,7 +74,7 @@ export type HttpInputApplicationEnvironment = {
     automationEnabled: boolean
 };
 
-function getServerUrlPrefix(): string {
+export function getServerUrlPrefix(): string {
     return '/selfservice/api';
 }
 
@@ -230,7 +230,7 @@ export async function saveEnvironment(input: HttpInputApplicationEnvironment): P
     return true;
 }
 
-function _checkRedirect(response): void {
+export function _checkRedirect(response): void {
     if (!response.redirected) {
         return;
     }

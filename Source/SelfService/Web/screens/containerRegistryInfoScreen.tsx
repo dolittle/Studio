@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { HttpResponseApplications2 } from '../api';
+import { HttpResponseApplications2 } from '../api/api';
 
 import { ApplicationInfo } from '../application/info';
 

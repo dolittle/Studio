@@ -10,8 +10,8 @@ import { Modal, DefaultButton } from '@fluentui/react';
 
 
 import { ViewCard } from './viewCard';
-import { getApplication, getMicroservices, HttpResponseApplications2, HttpResponseMicroservices, MicroserviceInfo } from '../api';
-import { MicroserviceBusinessMomentAdaptor } from '../store';
+import { HttpResponseApplications2 } from '../api/api';
+import { MicroserviceBusinessMomentAdaptor } from '../api/index';
 
 type Props = {
     application: HttpResponseApplications2
@@ -25,7 +25,7 @@ export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) =
 
     const microservices: MicroserviceBusinessMomentAdaptor[] = application.microservices.filter(microservice => {
         console.log(microservice);
-        return microservice.kind === 'buisness-moments-adaptor';
+        return microservice.kind === 'business-moments-adaptor';
     });
 
     //useEffect(() => {

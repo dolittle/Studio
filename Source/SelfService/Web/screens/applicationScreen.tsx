@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useParams, useHistory } from 'react-router-dom';
 
-import { getApplication, HttpResponseApplications2, ShortInfo } from '../api';
+import { getApplication, HttpResponseApplications2, ShortInfo } from '../api/api';
 
 import { ApplicationOverviewScreen } from './applicationOverviewScreen';
 import { MicroserviceNewScreen } from './microserviceNewScreen';

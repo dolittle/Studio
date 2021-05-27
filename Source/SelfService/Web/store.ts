@@ -1,33 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { saveBusinessMomentsAdaptorMicroservice, saveSimpleMicroservice } from './api';
-
-export type ConnectorWebhookConfigBearer = {
-    token: string
-};
-
-export type ConnectorWebhookConfigBasic = {
-    username: string
-    password: string
-};
-
-export type ConnectorWebhookConfig = {
-    domain?: string
-    uriPrefix?: string
-    kind: string
-
-    // ConnectorWebhookConfigBasic
-    // ConnectorWebhookConfigBearer
-    config: any
-};
-
-export type Connector = {
-    id: string
-    name: string
-    kind: string
-    config: ConnectorWebhookConfig
-};
-
+import { saveBusinessMomentsAdaptorMicroservice, saveSimpleMicroservice } from './api/api';
+import { MicroserviceBusinessMomentAdaptor, MicroserviceSimple } from './api/index';
 export type Entity = {
     id: string
     name: string
@@ -35,56 +9,6 @@ export type Entity = {
     filterCode: string
     transformCode: string
 };
-
-export type MicroserviceDolittle = {
-    applicationId: string
-    tenantId: string
-    microserviceId: string
-};
-
-export type MicroserviceIngressPath = {
-    path: string
-    host: string
-    pathType: string
-    domainPrefix: string
-    secretNamePrefix: string
-};
-
-export type MicroserviceSimple = {
-    dolittle: MicroserviceDolittle
-    name: string
-    kind: string
-    environment: string
-    extra: MicroserviceSimpleExtra
-};
-
-export type MicroserviceSimpleExtra = {
-    headImage: string
-    runtimeImage: string
-    ingress: MicroserviceIngressPath
-};
-
-
-export type MicroserviceBusinessMomentAdaptor = {
-    dolittle: MicroserviceDolittle
-    name: string
-    kind: string
-    environment: string
-    extra: MicroserviceBusinessMomentAdaptorExtra
-};
-
-export type MicroserviceBusinessMomentAdaptorExtra = {
-    headImage: string
-    runtimeImage: string
-    ingress: MicroserviceIngressPath
-    connector: MicroserviceBusinessMomentAdaptorConnector
-};
-
-export type MicroserviceBusinessMomentAdaptorConnector = {
-    kind: string
-    config: ConnectorWebhookConfig
-};
-
 
 const db = {
     connectors: [
@@ -127,43 +51,6 @@ export function uriWithAppPrefix(uri: string): string {
     const prefix = '/selfservice';
     return `${prefix}${uri}`;
 }
-// Connectors
-export function getConnectors(): Connector[] {
-    return db.connectors;
-}
-
-export function getConnector(id: string): MicroserviceBusinessMomentAdaptorConnector {
-    const found = db.connectors.find(c => {
-        return c.id === id;
-    });
-
-    if (found) {
-        return found;
-    }
-
-    return {
-        kind: 'webhook',
-        config: {
-            kind: '',
-            config: {}
-        }
-    };
-}
-
-export function saveConnector(input: Connector) {
-    const found = db.connectors.findIndex(c => {
-        return c.id === input.id;
-    });
-
-    if (found !== -1) {
-        db.connectors[found] = input;
-    } else {
-        db.connectors.push(input);
-    }
-
-    return db.connectors;
-}
-
 
 // Entities
 export function getEntitiesByConnector(id: string): Entity[] {
@@ -192,7 +79,7 @@ export async function createMicroservice(kind: string, input: any): Promise<bool
     switch (kind) {
         case 'simple':
             return saveSimpleMicroservice(input as MicroserviceSimple);
-        case 'buisness-moments-adaptor':
+        case 'business-moments-adaptor':
             return saveBusinessMomentsAdaptorMicroservice(input as MicroserviceBusinessMomentAdaptor);
         default:
             alert(`kind: ${kind} not supported`);
@@ -216,7 +103,7 @@ export function getFakeMicroserviceBusinessMomentsAdaptor(): MicroserviceBusines
             microserviceId: '9f6a613f-d969-4938-a1ac-5b7df199bc41'
         },
         name: 'Webhook-101',
-        kind: 'buisness-moments-adaptor',
+        kind: 'business-moments-adaptor',
         environment: 'Dev',
         extra: {
             headImage: '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/businessmomentsadaptor:latest',
