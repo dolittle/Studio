@@ -37,7 +37,7 @@ export type HttpResponseApplications2 = { // Not a great name
     id: string
     name: string
     tenantId: string
-    applications: ShortInfo[]
+    applications: ShortInfo[] // Is this with?
     environments: HttpInputApplicationEnvironment[]
     microservices: any[] // Not great
 };

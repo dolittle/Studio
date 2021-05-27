@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useParams, useHistory } from 'react-router-dom';
 
-import { getApplication, HttpResponseApplications2, ShortInfo } from '../api/api';
+import { getApplication, getApplications, HttpResponseApplications2, ShortInfo, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
 
 import { ApplicationOverviewScreen } from './applicationOverviewScreen';
 import { MicroserviceNewScreen } from './microserviceNewScreen';
@@ -35,26 +35,28 @@ import '../application/applicationScreen.scss';
 import { ApplicationsChanger } from '../application/applicationsChanger';
 import { IBreadcrumbItem, Breadcrumb } from '@fluentui/react/lib/Breadcrumb';
 
-// TODO replace
-const applications: ShortInfo[] = [
-    {
-        id: '11b6cf47-5d9f-438f-8116-0d9828654657',
-        name: 'Taco',
-    },
-];
-
 export const ApplicationScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { environment } = useParams() as any;
     const { applicationId } = useParams() as any;
 
     const [application, setApplication] = useState({} as HttpResponseApplications2);
+    const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        getApplication(applicationId).then(data => {
-            setApplication(data);
+        Promise.all([
+            getApplications(),
+            getApplication(applicationId),
+        ]).then(values => {
+            const applicationsData = values[0] as HttpResponseApplications;
+            const applicationData = values[1];
+            // TODO this should be unique
+            // TODO also when we have more than one application and more than one environment we should default to something.
+            setApplications(applicationsData.applications);
+            setApplication(applicationData);
             setLoaded(true);
+
         });
     }, []);
 
