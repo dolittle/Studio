@@ -59,7 +59,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             text: 'Edit',
             disabled: !canEdit,
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-                const href = `/application/${applicationId}/${environment}/business-moments/editor/${momentId}`;
+                const href = `/application/${applicationId}/${environment}/business-moments/editor/${momentId}/microservice/${microserviceId}`;
                 history.push(href);
             }
         },

@@ -59,11 +59,12 @@ export const Editor: React.FunctionComponent<Props> = (props) => {
             const businessMomentsData = values[0] as HttpResponseBusinessMoments;
             if (businessMomentId !== 'new') {
                 const businessMoment = businessMomentsData.moments.find(data => data.moment.uuid === businessMomentId);
-                if (businessMoment) {
-                    setBusinessMoment(businessMoment?.moment);
+                if (!businessMoment) {
+                    alert('Something has gone wrong');
+                    console.log(businessMoment, businessMomentsData, businessMomentId);
+                    return <h1>Something has gone wrong</h1>;
                 }
-                alert('Something has gone wrong');
-                return <h1>Something has gone wrong</h1>;
+                setBusinessMoment(businessMoment?.moment);
             }
 
 

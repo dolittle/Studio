@@ -236,6 +236,8 @@ export function _checkRedirect(response): void {
     }
     console.log(response);
     console.log('How to redirect this and not be sent back to the application api');
+    // The fucking ugly solution
+    // Force redirect to this page, then follow redirect
     //window.location.href = response.url;
 }
 
