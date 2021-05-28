@@ -17,7 +17,7 @@ export function createServer(rawDataStorage: IRawDataStorage) {
         transformersDir = process.env.TRANSFORMERS_PATH;
     }
     const rawDataProcessor = new RawDataProcessor();
-    const transformers = fsloader.loadSync(transformersDir)
+    const transformers = fsloader.loadSync(transformersDir);
     for (const transformer of transformers) {
         rawDataProcessor.AddEntityTransformer(transformer);
 

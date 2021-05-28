@@ -1,3 +1,4 @@
+/* eslint-disable */
 ({
     Name: 'Feature',
     Filter: (input) => {
