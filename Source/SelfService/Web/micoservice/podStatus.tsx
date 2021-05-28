@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-
+import { useHistory } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react/lib/Text';
 
@@ -10,12 +10,12 @@ import { IconButton } from '@fluentui/react/lib/Button';
 import { DetailsList, DetailsListLayoutMode, IColumn } from '@fluentui/react/lib/DetailsList';
 
 import { HttpResponsePodStatus, PodInfo } from '../api';
-import { uriWithAppPrefix } from '../store';
 
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
     data: HttpResponsePodStatus
+    environment: string
 };
 
 type PodInfoItem = {
@@ -25,39 +25,12 @@ type PodInfoItem = {
 };
 
 export const PodStatus: React.FunctionComponent<Props> = (props) => {
+    const history = useHistory();
     // TODO what is this?
     // eslint-disable-next-line react/prop-types
-    const data = props.data!;
+    const data = props!.data;
+    const environment = props!.environment;
 
-    const renderLogs = (item?: PodInfoItem, index?: number, column?: IColumn) => {
-        const podInfo = item!.data;
-        const applicationId = data.namespace.split('application-')[1];
-        const containers = podInfo.containers;
-
-        const items = containers.map(container => {
-            return (
-                <Stack
-                    key={container.name}
-                    tokens={stackTokens}
-                    horizontal
-                    onClick={async () => {
-                        const href = uriWithAppPrefix(`/application/${applicationId}/pod/view/${podInfo.name}/logs?containerName=${container.name}`);
-                        window.location.href = href;
-                    }}>
-                    <IconButton iconProps={{ iconName: 'SearchData' }} />
-                    <Text variant="medium" block>
-                        {container.name}
-                    </Text>
-                </Stack >
-            );
-        });
-
-        return (
-            <Stack tokens={stackTokens}>
-                {items}
-            </Stack>
-        );
-    };
 
     const renderImages = (item?: PodInfoItem, index?: number, column?: IColumn) => {
         const podInfo = item!.data;
@@ -74,8 +47,8 @@ export const PodStatus: React.FunctionComponent<Props> = (props) => {
                     <IconButton
                         iconProps={{ iconName: 'SearchData' }}
                         onClick={async () => {
-                            const href = uriWithAppPrefix(`/application/${applicationId}/pod/view/${podInfo.name}/logs?containerName=${container.name}`);
-                            window.location.href = href;
+                            const href = `/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
+                            history.push(href);
                         }} />
 
                     <Text variant="medium" block>

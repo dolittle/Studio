@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { MicroserviceDolittle, MicroserviceSimple, MicroserviceBusinessMomentAdaptor } from './store';
+import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor } from './store';
 
 export type ShortInfo = {
     id: string
@@ -70,6 +70,7 @@ export type HttpInputApplicationEnvironment = {
     name: string
     domainPrefix: string
     host: string
+    automationEnabled: boolean
 };
 
 function getServerUrlPrefix(): string {
@@ -85,6 +86,7 @@ export async function getLiveApplications(): Promise<any> {
             method: 'GET',
             mode: 'cors'
         });
+    _checkRedirect(result);
     const jsonResult = await result.json();
 
     return jsonResult;
@@ -99,6 +101,7 @@ export async function getApplications(): Promise<any> {
             method: 'GET',
             mode: 'cors'
         });
+    _checkRedirect(result);
     const jsonResult = await result.json();
 
     return jsonResult;
@@ -113,6 +116,7 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
             method: 'GET',
             mode: 'cors'
         });
+    _checkRedirect(result);
     const jsonResult: HttpResponseApplications2 = await result.json();
 
     return jsonResult;
@@ -130,9 +134,21 @@ export async function getMicroservices(applicationId: string): Promise<HttpRespo
             method: 'GET',
             mode: 'cors'
         });
+    _checkRedirect(result);
     const jsonResult: HttpResponseMicroservices = await result.json();
 
     return jsonResult;
+}
+
+export async function deleteMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
+    const url = `${getServerUrlPrefix()}/application/${applicationId}/environment/${environment}/microservice/${microserviceId}`;
+    const result = await fetch(
+        url,
+        {
+            method: 'DELETE',
+            mode: 'cors'
+        });
+    return result.status === 200;
 }
 
 export async function saveMicroservice(input: any): Promise<boolean> {
@@ -144,12 +160,11 @@ export async function saveMicroservice(input: any): Promise<boolean> {
             body: JSON.stringify(input),
             mode: 'cors',
             headers: {
-                'content-type': 'application/json',
-                'x-tenant': (input.dolittle as MicroserviceDolittle).tenantId // TODO this is not correct
+                'content-type': 'application/json'
             }
         });
+    _checkRedirect(result);
     const jsonResult = await result.json();
-    console.log(jsonResult);
     return true;
 }
 
@@ -170,6 +185,7 @@ export async function getPodStatus(applicationId: string, environment: string, m
             method: 'GET',
             mode: 'cors'
         });
+    _checkRedirect(result);
     const jsonResult: HttpResponsePodStatus = await result.json();
 
     return jsonResult;
@@ -186,6 +202,7 @@ export async function getPodLogs(applicationId: string, podName: string, contain
         method: 'GET',
         mode: 'cors'
     });
+    _checkRedirect(result);
     const jsonResult: HttpResponsePodLog = await result.json();
 
     return jsonResult;
@@ -204,8 +221,20 @@ export async function saveEnvironment(input: HttpInputApplicationEnvironment): P
                 'content-type': 'application/json'
             }
         });
+
+    _checkRedirect(result);
     const jsonResult = await result.json();
     console.log(jsonResult);
     console.log(result.status);
     return true;
 }
+
+function _checkRedirect(response): void {
+    if (!response.redirected) {
+        return;
+    }
+    console.log(response);
+    console.log('How to redirect this and not be sent back to the application api');
+    //window.location.href = response.url;
+}
+

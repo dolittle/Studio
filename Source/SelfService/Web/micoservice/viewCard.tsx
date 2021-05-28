@@ -8,56 +8,65 @@ import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar
 import {
     DocumentCard,
     DocumentCardTitle,
-    IDocumentCardStyles,
     IContextualMenuItem
 } from '@fluentui/react';
+import { cardStyles, commandTileClass, buttonStyles } from '../theme/viewCard';
 
-import { MicroserviceInfo } from '../api';
+import { deleteMicroservice, MicroserviceInfo } from '../api';
 import { mergeStyles } from '@fluentui/react/lib/Styling';
 import '../micoservice/microservice.scss';
-
-const stackTokens = { childrenGap: 15 };
 
 
 type Props = {
     microservice: MicroserviceInfo
     applicationId: string
     environment: string
+    canEdit: boolean
 };
+
+
+const conversationTileClass = mergeStyles({ height: 182 });
 
 
 export const ViewCard: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
-    const microservice = props!.microservice;
+    const _props = props!;
+    const microservice = _props.microservice;
     const microserviceId = microservice.id;
-    const applicationId = props!.applicationId;
-    const environment = props!.environment;
-
-    const cardStyles: IDocumentCardStyles = {
-        root: { display: 'inline-block', marginRight: 20, width: 320 },
-    };
-
-
-    const conversationTileClass = mergeStyles({ height: 182 });
+    const applicationId = _props.applicationId;
+    const environment = _props.environment;
+    const canEdit = _props.canEdit;
 
     const _items: ICommandBarItemProps[] = [
         {
+            buttonStyles,
             key: 'editMicroservice',
             text: 'Edit',
+            disabled: !canEdit,
             onClick: () => {
                 const href = `/application/${applicationId}/${environment}/microservice/edit/${microserviceId}`;
                 history.push(href);
             }
         },
         {
+            buttonStyles,
             key: 'deleteMicroservice',
             text: 'Delete',
+            disabled: !canEdit,
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
                 ev!.stopPropagation();
-                alert('TODO: delete microservice');
+                (async () => {
+                    const success = await deleteMicroservice(applicationId, environment, microserviceId);
+                    if (!success) {
+                        alert('Failed to delete');
+                        return;
+                    }
+                    alert('Microservice to deleted');
+                })();
             }
         },
         {
+            buttonStyles,
             key: 'viewMicroservice',
             text: 'View',
             onClick: () => {
@@ -70,13 +79,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
 
     return (
 
-        <DocumentCard
-            styles={cardStyles}
-            onClick={() => {
-                const href = `/application/${applicationId}/${environment}/microservice/view/${microserviceId}`;
-                history.push(href);
-            }}
-        >
+        <DocumentCard styles={cardStyles}>
             <div className={conversationTileClass}>
                 <DocumentCardTitle
                     title={microservice.name}
@@ -87,7 +90,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
                     shouldTruncate
                     showAsSecondaryTitle
                 />
-                <CommandBar items={_items} />
+                <CommandBar styles={commandTileClass} items={_items} />
             </div>
         </DocumentCard>
     );

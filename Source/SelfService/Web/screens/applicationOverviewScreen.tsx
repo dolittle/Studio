@@ -22,6 +22,7 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
     const _props = props!;
     const { applicationId, environment } = useParams() as any;
     const application = _props.application!;
+    const canEdit = application.environments.some(info => info.name === environment && info.automationEnabled);
 
     const [environments, setEnvironments] = useState([] as string[]);
     const [currentEnvironment, setCurrentEnvironment] = useState(environment);
@@ -80,7 +81,7 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
                 <div className="serv">
                     <ul>
                         {currentMicroservices.map((ms) => {
-                            return <li key={ms.id}><ViewCard microservice={ms} applicationId={applicationId} environment={environment} /></li>;
+                            return <li key={ms.id}><ViewCard microservice={ms} applicationId={applicationId} environment={environment} canEdit={canEdit} /></li>;
                         })}
                     </ul>
                 </div>

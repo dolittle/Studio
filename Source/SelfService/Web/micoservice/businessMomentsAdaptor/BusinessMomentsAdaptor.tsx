@@ -7,6 +7,7 @@
 // TODO change action button from create to save
 
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
@@ -15,25 +16,27 @@ import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react/lib/ChoiceGroup
 import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 import { Config as RestConfig } from './configuration/RestConfiguration';
 import { MicroserviceBusinessMomentAdaptor, createMicroservice, uriWithAppPrefix } from '../../store';
+import { HttpResponseApplications2 } from '../../api';
 import { Guid } from '@dolittle/rudiments';
 
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
-    applicationId: string
-    tenantId?: string
+    application: HttpResponseApplications2
     environment: string
 };
 
 export const Microservice: React.FunctionComponent<Props> = (props) => {
+    const history = useHistory();
     const _props = props!;
-    const applicationId = _props.applicationId;
+    const application = _props.application;
     const environment = _props.environment;
+    const ingressInfo = application.environments.find(e => e.name === environment)!;
+
+    // TODO do something with
     const microserviceId = Guid.create().toString();
 
     const fromStore = {
-        domain: 'freshteapot-taco.dolittle.cloud',
-        domainPrefix: 'freshteapot-taco',
         businessmomentsadaptor: {
             image: '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/businessmomentsadaptor:latest',
         },
@@ -44,8 +47,8 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
 
     const ms = {
         dolittle: {
-            applicationId,
-            tenantId: _props.tenantId, // TODO I am not sure I want this
+            applicationId: application.id,
+            tenantId: application.tenantId,
             microserviceId,
         },
         name: 'Webhook-101',
@@ -57,7 +60,8 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
             ingress: {
                 path: '/api/webhooks-ingestor',
                 pathType: 'Prefix',
-                domainPrefix: fromStore.domainPrefix,
+                host: ingressInfo.host,
+                domainPrefix: ingressInfo.domainPrefix
             },
             connector: {
                 kind: 'webhook',
@@ -76,7 +80,8 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
         console.log('onSave', ms);
 
         createMicroservice(ms.kind, ms).then(data => {
-            window.location.href = uriWithAppPrefix(`/application/${applicationId}`);
+            const href = `/application/${application.id}/${environment}/microservices/overview`;
+            history.push(href);
         });
     };
 
@@ -103,7 +108,7 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
 
             {connectorTypeState === 'webhook' && (
                 <Stack horizontal tokens={stackTokens}>
-                    <WebhooksConfig domain={fromStore.domain} action='insert' ms={ms} onSave={onSave} />
+                    <WebhooksConfig domain={ingressInfo.host} action='insert' ms={ms} onSave={onSave} />
                 </Stack>
             )}
 

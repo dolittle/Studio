@@ -68,7 +68,7 @@ export const MicroserviceViewScreen: React.FunctionComponent = () => {
                 ariaLabel="Use left and right arrow keys to navigate between commands"
             />
 
-            {showCurrentStatus && (<PodStatus data={podsData} />)}
+            {showCurrentStatus && (<PodStatus environment={environment} data={podsData} />)}
 
         </>
     );
