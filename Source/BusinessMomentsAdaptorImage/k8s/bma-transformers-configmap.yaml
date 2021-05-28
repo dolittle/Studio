@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: boa-transformers
+  name: bma-transformers
 data:
   feature.js: |
     ({

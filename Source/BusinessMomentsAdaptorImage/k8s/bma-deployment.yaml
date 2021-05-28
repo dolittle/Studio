@@ -2,17 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: boa
-  name: boa
+    app: bma
+  name: bma
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: boa
+      app: bma
   template:
     metadata:
       labels:
-        app: boa
+        app: bma
     spec:
       containers:
       - image: 10.0.1.10:30000/businessmomentsadaptor:latest
@@ -21,23 +21,25 @@ spec:
         env:
         - name: WH_AUTHORIZATION
           value: foo
+        - name: TRANSFORMERS_PATH
+          value: /app/transformers
         volumeMounts:
-        - name: boa-transformers-volume
+        - name: bma-transformers-volume
           mountPath: /app/transformers
       volumes:
-      - name: boa-transformers-volume
+      - name: bma-transformers-volume
         configMap:
-          name: boa-transformers
+          name: bma-transformers
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: boa-service
+  name: bma-service
   labels:
-    run: boa
+    run: bma
 spec:
   selector:
-    app: boa
+    app: bma
   ports:
     - protocol: TCP
       port: 3008
@@ -45,7 +47,7 @@ spec:
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: boa-ingress
+  name: bma-ingress
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
@@ -53,7 +55,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /boa/?(.*)
+      - path: /bma/?(.*)
         backend:
-          serviceName: boa-service
+          serviceName: bma-service
           servicePort: 3008
