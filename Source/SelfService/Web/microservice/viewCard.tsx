@@ -22,6 +22,7 @@ type Props = {
     applicationId: string
     environment: string
     canEdit: boolean
+    onAfterDelete: (microserviceId: string, environment: string) => void;
 };
 
 
@@ -62,6 +63,12 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
                         return;
                     }
                     alert('Microservice to deleted');
+                    // Bubble up change, this is where a store is nice.
+                    // Today lets just cheat.
+                    // TODO a better way
+                    _props.onAfterDelete(microserviceId, environment);
+                    //const href = `/application/${applicationId}/${environment}/microservices/overview`;
+                    //history.push(href);
                 })();
             }
         },

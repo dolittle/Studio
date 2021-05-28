@@ -1,6 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Label } from '@fluentui/react/lib/Label';
 import { TextField } from '@fluentui/react/lib/TextField';
@@ -18,6 +20,7 @@ type Props = {
 };
 
 export const Microservice: React.FunctionComponent<Props> = (props) => {
+    const history = useHistory();
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
@@ -37,7 +40,7 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
         environment: _props.environment,
         extra: {
             // nginxdemos/hello:latest
-            headImage: 'dolittle/spinner:0.0.0', // Doesnt work
+            headImage: 'nginxdemos/hello:latest', //'dolittle/spinner:0.0.0', // Doesnt work
             runtimeImage: 'dolittle/runtime:5.6.0',
             ingress: {
                 path: '/',
@@ -70,7 +73,10 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
         // TODO land the name we want here
         ms.extra.ingress.domainPrefix = ingressDomainPrefix;
         console.log('onSave', ms);
-        createMicroservice(ms.kind, ms);
+        createMicroservice(ms.kind, ms).then(data => {
+            const href = `/application/${application.id}/${environment}/microservices/overview`;
+            history.push(href);
+        });
     };
 
     return (

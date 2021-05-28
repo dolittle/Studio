@@ -79,22 +79,20 @@ export type MicroserviceBusinessMomentAdaptorConnector = {
 };
 
 
-
-
 export type BusinessMoment = {
     name: string
     uuid: string
-    entityId: string
-    filter: string // TODO confirm these
-    transform: string // TODO confirm these
+    entityTypeId: string
+    embeddingCode: string
+    projectionCode: string
 };
 
 export type BusinessMomentEntity = {
     name: string
-    typeID: string
-    idForRetrival: string
-    filter: string // TODO confirm these
-    transform: string // TODO confirm these
+    entityTypeId: string
+    idNameForRetrival: string
+    filterCode: string
+    transformCode: string
 };
 
 export type HttpResponseBusinessMoments = {

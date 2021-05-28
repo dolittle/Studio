@@ -23,8 +23,10 @@ type Props = {
     connectors: IDropdownOption[]
     entities: IDropdownOption[]
     businessMoment: BusinessMoment
+    entity: BusinessMomentEntity
     onCreate: () => void;
     onEntityChange: (newEntityId: string) => void;
+    onSave: (moment: BusinessMoment) => void;
 };
 
 export const BusinessMomentEditor: React.FunctionComponent<Props> = (props) => {
@@ -56,8 +58,8 @@ export const BusinessMomentEditor: React.FunctionComponent<Props> = (props) => {
             return;
         }
 
-        moment.entityId = key;
-        _props.onEntityChange(moment.entityId);
+        moment.entityTypeId = key;
+        _props.onEntityChange(moment.entityTypeId);
     };
 
 
@@ -124,12 +126,14 @@ export const BusinessMomentEditor: React.FunctionComponent<Props> = (props) => {
                         dropdownWidth="auto"
                         label="Connector"
                         options={connectors}
+                        defaultSelectedKey={microserviceId}
                         onChange={connectorChanged}
                     />
 
                     <Dropdown placeholder="Select"
                         dropdownWidth="auto"
                         label="Entity"
+                        defaultSelectedKey={moment.entityTypeId}
                         options={entities}
                         onChange={entityChanged}
                     />
@@ -152,13 +156,13 @@ export const BusinessMomentEditor: React.FunctionComponent<Props> = (props) => {
                             <h1>Business Moment</h1>
                             <CodeEditor
                                 onChange={(value: string | undefined) => {
-                                    moment.filter = value!;
+                                    moment.embeddingCode = value!;
                                     setBusinessMoment(moment);
                                 }}
                                 height="20vh"
                                 width="50vw"
                                 defaultLanguage="javascript"
-                                defaultValue={moment.filter}
+                                defaultValue={moment.embeddingCode}
                             />
 
                             <h1>Projection</h1>
@@ -166,11 +170,11 @@ export const BusinessMomentEditor: React.FunctionComponent<Props> = (props) => {
                                 height="20vh"
                                 width="50vw"
                                 onChange={(value: string | undefined) => {
-                                    moment.transform = value!;
+                                    moment.projectionCode = value!;
                                     setBusinessMoment(moment);
                                 }}
                                 defaultLanguage="javascript"
-                                defaultValue={moment.transform}
+                                defaultValue={moment.projectionCode}
                             />
                             <DefaultButton onClick={async () => {
                                 console.log('Save business moment', moment);
@@ -188,6 +192,7 @@ export const BusinessMomentEditor: React.FunctionComponent<Props> = (props) => {
                                     return;
                                 }
                                 alert('Business moment saved');
+                                _props.onSave(moment);
                             }} text="Save Business Moment" />
                         </Stack>
                         <Stack tokens={{ childrenGap: 15, maxWidth: '50vw' }}>

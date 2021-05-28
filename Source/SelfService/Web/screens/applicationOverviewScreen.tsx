@@ -86,7 +86,17 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
                 <div className="serv">
                     <ul>
                         {currentMicroservices.map((ms) => {
-                            return <li key={ms.id}><ViewCard microservice={ms} applicationId={applicationId} environment={environment} canEdit={canEdit} /></li>;
+                            return <li key={ms.id}><ViewCard
+                                microservice={ms}
+                                applicationId={applicationId}
+                                environment={environment}
+                                canEdit={canEdit}
+                                onAfterDelete={(microserviceId: string, environment: string) => {
+                                    const updated = currentMicroservices.filter(ms => ms.id !== microserviceId && ms.environment !== environment);
+                                    setCurrentMicroservices(updated);
+                                    setHasMicroservices(updated.length > 0);
+                                }}
+                            /></li>;
                         })}
                     </ul>
                 </div>

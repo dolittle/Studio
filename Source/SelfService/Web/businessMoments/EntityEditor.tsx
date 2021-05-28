@@ -18,7 +18,8 @@ import { Text, Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 
 import CodeEditor, { loader } from '@monaco-editor/react';
 import { HttpResponseApplications2 } from '../api/api';
-import { BusinessMomentEntity } from '../api/index';
+import { BusinessMomentEntity, HttpInputBusinessMomentEntity } from '../api/index';
+import { saveBusinessmoment, saveBusinessmomentEntity } from '../api/businessmoments';
 
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
@@ -29,7 +30,7 @@ type Props = {
     connectors: IDropdownOption[]
     entity: BusinessMomentEntity
     onCreate: () => void;
-    onSave: () => void;
+    onSave: (entity: BusinessMomentEntity) => void;
 };
 
 export const EntityEditor: React.FunctionComponent<Props> = (props) => {
@@ -38,6 +39,7 @@ export const EntityEditor: React.FunctionComponent<Props> = (props) => {
     const application = _props.application;
     const currentEntity = _props.entity;
     const connectors = _props.connectors;
+    const { environment, applicationId, businessMomentId, microserviceId } = useParams() as any;
 
     const [loaded, setLoaded] = useState(false);
     // Not sure how to hook up to IPivotItemProps
@@ -124,7 +126,7 @@ export const EntityEditor: React.FunctionComponent<Props> = (props) => {
                         label="Entity ID"
                         styles={textFieldStyles}
                         placeholder="id"
-                        defaultValue={currentEntity.idForRetrival}
+                        defaultValue={currentEntity.idNameForRetrival}
                         onChange={(e, v) => {
                             //currentEntity.id = v!;
                         }}
@@ -141,9 +143,9 @@ export const EntityEditor: React.FunctionComponent<Props> = (props) => {
                                 height="20vh"
                                 width="50vw"
                                 defaultLanguage="javascript"
-                                defaultValue={currentEntity.filter}
+                                defaultValue={currentEntity.filterCode}
                                 onChange={(value, e) => {
-                                    currentEntity.filter = value!;
+                                    currentEntity.filterCode = value!;
                                 }}
                             />
 
@@ -152,9 +154,9 @@ export const EntityEditor: React.FunctionComponent<Props> = (props) => {
                                 height="20vh"
                                 width="50vw"
                                 defaultLanguage="javascript"
-                                defaultValue={currentEntity.transform}
+                                defaultValue={currentEntity.transformCode}
                                 onChange={(value, e) => {
-                                    currentEntity.transform = value!;
+                                    currentEntity.transformCode = value!;
                                 }}
                             />
                         </Stack>
@@ -179,11 +181,25 @@ export const EntityEditor: React.FunctionComponent<Props> = (props) => {
                 </Stack>
 
                 <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
-                    <PrimaryButton text="Create" onClick={(e => {
+                    <PrimaryButton text="Create" onClick={async () => {
                         console.log('Current state of entity is ', currentEntity);
+
+                        const input = {
+                            applicationId,
+                            environment,
+                            microserviceId,
+                            entity: currentEntity,
+                        } as HttpInputBusinessMomentEntity;
+
+                        const success = await saveBusinessmomentEntity(input);
+                        if (!success) {
+                            alert('Failed to save entity');
+                            return;
+                        }
+                        alert('Entity saved');
                         // _props.onCreate();
-                        // _props.onSave()
-                    })} />
+                        _props.onSave(currentEntity);
+                    }} />
                 </Stack>
             </Stack>
         </>

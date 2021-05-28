@@ -64,23 +64,43 @@ export const Editor: React.FunctionComponent<Props> = (props) => {
                     console.log(businessMoment, businessMomentsData, businessMomentId);
                     return <h1>Something has gone wrong</h1>;
                 }
-                setBusinessMoment(businessMoment?.moment);
+
+                // This might not be needed
+                const entityTypeId = businessMoment.moment.entityTypeId;
+                let entity = {
+                    name: '',
+                    entityTypeId: Guid.create().toString(),
+                    idNameForRetrival: 'id',
+                    filterCode: '',
+                    transformCode: '',
+                } as BusinessMomentEntity;
+
+                const entityInput = businessMomentsData.entities.find(data => data.entity.entityTypeId === entityTypeId);
+                if (!entityInput) {
+                    alert('Entity is no longer connected to this business moment');
+                } else {
+                    entity = entityInput.entity;
+                }
+
+                setEntity(entity);
+
+                setBusinessMoment(businessMoment.moment);
             }
 
 
             if (businessMomentId === 'new') {
                 setBusinessMoment({
                     name: '',
-                    entityId: '',
+                    entityTypeId: '',
                     uuid: Guid.create().toString(),
-                    filter: '',
-                    transform: ''
+                    embeddingCode: '',
+                    projectionCode: ''
                 } as BusinessMoment);
             }
 
             const entities = businessMomentsData.entities.map(data => {
                 const entity = data.entity;
-                return { key: entity.typeID, text: entity.name } as IDropdownOption;
+                return { key: entity.entityTypeId, text: entity.name } as IDropdownOption;
             });
             entities.push({ key: 'newEntity', text: 'Create new' } as IDropdownOption);
 
@@ -102,22 +122,46 @@ export const Editor: React.FunctionComponent<Props> = (props) => {
     return (
         <>
             <Stack tokens={stackTokens}>
-                <Pivot defaultSelectedKey={selectedKey}>
+                <Pivot selectedKey={selectedKey}
+                    onLinkClick={(item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) => {
+                        const key = item?.props.itemKey as string;
+                        if (selectedKey !== key) {
+                            setSelectedKey(key);
+                        }
+                    }}
+                >
                     <PivotItem
                         itemKey="businessMomentEditor"
                         headerText="Business Moment"
+                        onClick={() => {
+                            // TODO add protection if entity not saved
+                            // TODO add protection if business moment not save
+                            setSelectedKey('businessMomentEditor');
+                        }}
                     >
                         <BusinessMomentEditor
                             application={application}
                             connectors={connectors}
                             entities={entities}
+                            entity={entity}
                             businessMoment={businessMoment}
                             onCreate={() => {
+                                setEntity({
+                                    name: '',
+                                    entityTypeId: Guid.create().toString(),
+                                    idNameForRetrival: 'id',
+                                    filterCode: '',
+                                    transformCode: '',
+                                } as BusinessMomentEntity);
                                 setSelectedKey('entityEditor');
                             }}
                             onEntityChange={(newEntityId: string) => {
-                                const newEntity = businessMomentsData.entities.find(entity => entity.entity.typeID === newEntityId)?.entity;
+                                const newEntity = businessMomentsData.entities.find(entity => entity.entity.entityTypeId === newEntityId)?.entity;
                                 setEntity(newEntity!);
+                            }}
+
+                            onSave={(moment: BusinessMoment) => {
+                                console.log('BusinessMomentEditor onSave callback TODO', moment);
                             }}
                         />
                     </PivotItem>
@@ -132,8 +176,8 @@ export const Editor: React.FunctionComponent<Props> = (props) => {
                                 setSelectedKey('entityEditor');
                             }}
 
-                            onSave={() => {
-                                console.log('EntityEditor onSave callback TODO');
+                            onSave={(entity: BusinessMomentEntity) => {
+                                console.log('EntityEditor onSave callback TODO', entity);
                             }}
                         />
 

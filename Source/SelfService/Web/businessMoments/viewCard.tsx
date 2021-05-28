@@ -14,6 +14,7 @@ import { mergeStyles, mergeStyleSets } from '@fluentui/react/lib/Styling';
 
 import { cardStyles, commandTileClass, buttonStyles as baseButtonStyles } from '../theme/viewCard';
 import { deleteBusinessmoment } from '../api/businessmoments';
+import { uriWithAppPrefix } from '../store';
 
 
 const buttonStyles = mergeStyleSets(
@@ -75,7 +76,8 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
                         alert('Failed to remove business moment');
                         return;
                     }
-                    history.push(window.location);
+                    const href = `/application/${applicationId}/${environment}/Dev/business-moments`;
+                    history.push(href);
                 })();
             }
         },
