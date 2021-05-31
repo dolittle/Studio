@@ -7,7 +7,7 @@ import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react/lib/Text';
 
 import { IconButton } from '@fluentui/react/lib/Button';
-import { DetailsList, DetailsListLayoutMode, IColumn } from '@fluentui/react/lib/DetailsList';
+import { DetailsList, DetailsListLayoutMode, IColumn, CheckboxVisibility } from '@fluentui/react/lib/DetailsList';
 
 import { HttpResponsePodStatus, PodInfo } from '../api/api';
 
@@ -105,6 +105,7 @@ export const PodStatus: React.FunctionComponent<Props> = (props) => {
             <Stack tokens={stackTokens}>
                 <Text variant="xLarge" block>Pod Status</Text>
                 <DetailsList
+                    checkboxVisibility={CheckboxVisibility.hidden}
                     items={items}
                     columns={columns}
                     setKey="set"

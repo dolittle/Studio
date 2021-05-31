@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
@@ -16,7 +16,6 @@ const stackTokens = { childrenGap: 15 };
 export const MicroserviceViewScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { applicationId, environment, microserviceId } = useParams() as any;
-    const [showCurrentStatus, setShowCurrentStatus] = useState(false);
     const [podsData, setPodsData] = useState({
         namespace: '',
         microservice: {
@@ -25,6 +24,22 @@ export const MicroserviceViewScreen: React.FunctionComponent = () => {
         },
         pods: []
     } as HttpResponsePodStatus);
+    const [loaded, setLoaded] = useState(false);
+
+
+    useEffect(() => {
+        Promise.all([
+            getPodStatus(applicationId, environment, microserviceId)
+        ]).then(values => {
+            setPodsData(values[0]);
+            setLoaded(true);
+        });
+    }, []);
+
+    if (!loaded) {
+        return null;
+    }
+
 
     const _items: ICommandBarItemProps[] = [
         {
@@ -34,20 +49,6 @@ export const MicroserviceViewScreen: React.FunctionComponent = () => {
             onClick: () => {
                 const href = `/application/${applicationId}/${environment}/microservice/edit/${microserviceId}`;
                 history.push(href);
-            }
-        },
-        {
-            key: 'showCurrentStatus',
-            text: 'Current Status',
-            iconProps: { iconName: 'WebAppBuilderFragment' },
-            onClick: () => {
-                // TODO maybe loading feedback
-                getPodStatus(applicationId, environment, microserviceId).then(data => {
-                    setShowCurrentStatus(showCurrentStatus ? false : true);
-                    setPodsData(data);
-                    return;
-                });
-
             }
         }
     ];
@@ -68,8 +69,7 @@ export const MicroserviceViewScreen: React.FunctionComponent = () => {
                 ariaLabel="Use left and right arrow keys to navigate between commands"
             />
 
-            {showCurrentStatus && (<PodStatus environment={environment} data={podsData} />)}
-
+            <PodStatus environment={environment} data={podsData} />
         </>
     );
 };
