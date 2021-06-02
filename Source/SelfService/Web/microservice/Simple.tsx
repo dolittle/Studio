@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Label } from '@fluentui/react/lib/Label';
 import { TextField } from '@fluentui/react/lib/TextField';
-import { createMicroservice } from '../store';
+import { saveSimpleMicroservice } from '../stores/microservice';
 import { MicroserviceSimple } from '../api/index';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { Guid } from '@dolittle/rudiments';
@@ -72,8 +72,7 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
         ms.extra.ingress.path = ingressPath;
         // TODO land the name we want here
         ms.extra.ingress.domainPrefix = ingressDomainPrefix;
-        console.log('onSave', ms);
-        createMicroservice(ms.kind, ms).then(data => {
+        saveSimpleMicroservice(ms).then(data => {
             const href = `/application/${application.id}/${environment}/microservices/overview`;
             history.push(href);
         });

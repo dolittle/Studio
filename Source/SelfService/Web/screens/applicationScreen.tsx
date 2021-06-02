@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useParams, useHistory } from 'react-router-dom';
 
-import { getApplication, getApplications, HttpResponseApplications2, ShortInfo, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
+import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
 
 import { ApplicationOverviewScreen } from './applicationOverviewScreen';
 import { MicroserviceNewScreen } from './microserviceNewScreen';
@@ -35,7 +35,13 @@ import '../application/applicationScreen.scss';
 import { ApplicationsChanger } from '../application/applicationsChanger';
 import { IBreadcrumbItem, Breadcrumb } from '@fluentui/react/lib/Breadcrumb';
 
+import { useReadable } from 'use-svelte-store';
+import { microservices, mergeMicroservicesFromGit } from '../stores/microservice';
+
+
 export const ApplicationScreen: React.FunctionComponent = () => {
+    const $microservices = useReadable(microservices) as any;
+
     const history = useHistory();
     const { environment } = useParams() as any;
     const { applicationId } = useParams() as any;
@@ -55,8 +61,8 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             // TODO also when we have more than one application and more than one environment we should default to something.
             setApplications(applicationsData.applications);
             setApplication(applicationData);
+            mergeMicroservicesFromGit(applicationData.microservices);
             setLoaded(true);
-
         });
     }, []);
 
@@ -148,6 +154,10 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             <div id="topNavBar" className="nav flex-container">
                 <div className="left flex-start">
                     {breadCrumbs}
+                </div>
+
+                <div className="left flex-start">
+                    Size of microservices {$microservices.length}
                 </div>
 
                 <div className="right item flex-end">

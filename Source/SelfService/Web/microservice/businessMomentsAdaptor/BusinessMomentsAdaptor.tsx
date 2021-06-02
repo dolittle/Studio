@@ -15,7 +15,7 @@ import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react/lib/ChoiceGroup
 
 import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 import { Config as RestConfig } from './configuration/RestConfiguration';
-import { createMicroservice } from '../../store';
+import { saveBusinessMomentsAdaptorMicroservice } from '../../stores/microservice';
 import { MicroserviceBusinessMomentAdaptor } from '../../api/index';
 
 import { HttpResponseApplications2 } from '../../api/api';
@@ -81,9 +81,7 @@ export const Microservice: React.FunctionComponent<Props> = (props) => {
     } as MicroserviceBusinessMomentAdaptor;
 
     const onSave = (ms: MicroserviceBusinessMomentAdaptor): void => {
-        console.log('onSave', ms);
-
-        createMicroservice(ms.kind, ms).then(data => {
+        saveBusinessMomentsAdaptorMicroservice(ms).then(data => {
             const href = `/application/${application.id}/${environment}/microservices/overview`;
             history.push(href);
         });

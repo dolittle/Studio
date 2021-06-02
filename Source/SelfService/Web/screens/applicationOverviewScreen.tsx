@@ -12,12 +12,17 @@ import { getMicroservices, HttpResponseMicroservices, MicroserviceInfo, HttpResp
 import '../microservice/microservice.scss';
 import { ViewCard } from '../microservice/viewCard';
 
+import { useReadable, useWritable } from 'use-svelte-store';
+import { microservices, mergeMicroservicesFromK8s } from '../stores/microservice';
+
 type Props = {
     application: HttpResponseApplications2
 };
 
 
 export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props) => {
+    const $microservices = useReadable(microservices) as any;
+
     const history = useHistory();
     const _props = props!;
     const { applicationId, environment } = useParams() as any;
@@ -33,10 +38,12 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
 
 
     useEffect(() => {
+        // Why am I loading this?
         Promise.all([
             getMicroservices(applicationId)
         ]
         ).then((values) => {
+            // This is only live
             const applicationData = application;
             const microservicesData = values[0] as HttpResponseMicroservices;
 
@@ -50,6 +57,8 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
             const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
             setHasMicroservices(microservices.length > 0);
             setCurrentMicroservices(microservices);
+            console.log(microservices);
+            mergeMicroservicesFromK8s(microservices);
         });
     }, []);
 
@@ -85,9 +94,10 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
             {hasMicroservices && (
                 <div className="serv">
                     <ul>
-                        {currentMicroservices.map((ms) => {
+                        {$microservices.map((ms) => {
                             return <li key={ms.id}><ViewCard
-                                microservice={ms}
+                                microserviceId={ms.id}
+                                microserviceName={ms.name}
                                 applicationId={applicationId}
                                 environment={environment}
                                 canEdit={canEdit}

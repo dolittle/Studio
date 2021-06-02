@@ -11,9 +11,14 @@ import { getPodStatus, HttpResponsePodStatus } from '../api/api';
 import { PodStatus } from '../microservice/podStatus';
 
 
+import { useReadable, useWritable } from 'use-svelte-store';
+import { microservices } from '../stores/state';
+
 const stackTokens = { childrenGap: 15 };
 
 export const MicroserviceViewScreen: React.FunctionComponent = () => {
+    const $microservices = useReadable(microservices) as any;
+    //
     const history = useHistory();
     const { applicationId, environment, microserviceId } = useParams() as any;
     const [podsData, setPodsData] = useState({
@@ -55,6 +60,12 @@ export const MicroserviceViewScreen: React.FunctionComponent = () => {
     return (
         <>
             <h1>Microservice View Screen</h1>
+
+            <ul>
+                {$microservices.map(foo => (
+                    <li key={foo.id}>{foo.name}</li>
+                ))}
+            </ul>
 
             <Stack tokens={stackTokens}>
                 <Text variant="xLarge" block>

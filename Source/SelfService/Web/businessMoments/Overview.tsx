@@ -14,56 +14,79 @@ import { HttpResponseApplications2, getMicroservices } from '../api/api';
 import { getBusinessMoments } from '../api/businessmoments';
 import { MicroserviceBusinessMomentAdaptor, HttpResponseBusinessMoments } from '../api/index';
 
+import { useReadable } from 'use-svelte-store';
+import { microservices } from '../stores/microservice';
+
 type Props = {
     application: HttpResponseApplications2
 };
 
 export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) => {
+    const $microservices = useReadable(microservices) as any;
+    //
     const _props = props!;
     const application = _props.application;
     const { environment, applicationId } = useParams() as any;
     const canEdit = application.environments.some(info => info.name === environment && info.automationEnabled);
     const [isModalOpen, { setTrue: showModal, setFalse: hideModal }] = useBoolean(false);
     const [loaded, setLoaded] = useState(false);
-    const [connectors, setConnectors] = useState({} as CreateCardAdaptor[]);
+    //const [connectors, setConnectors] = useState({} as CreateCardAdaptor[]);
     const [moments, setBusinessMoments] = useState({} as any[]);
 
 
 
+    console.log('how many times', $microservices.length);
+    const microservicesGit: MicroserviceBusinessMomentAdaptor[] = $microservices.filter(storeItem => {
+        console.log('storeItem', storeItem);
+        if (storeItem.edit === {}) {
+            console.log('edit is empty object');
+            return false;
+        }
+
+        if (!storeItem.edit.kind) {
+            console.error('kind not set issue');
+            return false;
+        }
+
+        if (storeItem.edit.kind !== 'business-moments-adaptor') {
+            return false;
+        }
+        return true;
+    }).map(storeItem => {
+        return storeItem.edit;
+    });
+
+    console.log('microservicesGit', microservicesGit);
+    const connectors = microservicesGit.map(microservice => {
+        return {
+            id: microservice.dolittle.microserviceId,
+            name: microservice.name,
+            connectorType: microservice.extra.connector.kind,
+        } as CreateCardAdaptor;
+    });
 
     useEffect(() => {
         Promise.all([
-            getMicroservices(applicationId),
             getBusinessMoments(applicationId, environment),
+            //getMicroservices(applicationId),
         ]
         ).then((values) => {
             const applicationData = application;
-            const microservicesGit: MicroserviceBusinessMomentAdaptor[] = applicationData.microservices.filter(microservice => {
-                console.log(microservice);
-                return microservice.kind === 'business-moments-adaptor';
-            });
+            //const microservicesGit: MicroserviceBusinessMomentAdaptor[] = applicationData.microservices.filter(microservice => {
+            //    console.log(microservice);
+            //    return microservice.kind === 'business-moments-adaptor';
+            //});
+            //const microservicesData = values[1] as any;
+            //// This does not include kind
+            //
+            //const microservicesLive: MicroserviceBusinessMomentAdaptor[] = microservicesData.microservices.filter(microservice => {
+            //    return microservice.kind === 'buisness-moments-adaptor';
+            //});
+            //console.log(microservicesLive);
 
 
-            const connectors = microservicesGit.map(microservice => {
-                return {
-                    id: microservice.dolittle.microserviceId,
-                    name: microservice.name,
-                    connectorType: microservice.extra.connector.kind,
-                } as CreateCardAdaptor;
-            });
-
-
-            const microservicesData = values[0] as any;
-            // This does not include kind
-
-            const microservicesLive: MicroserviceBusinessMomentAdaptor[] = microservicesData.microservices.filter(microservice => {
-                return microservice.kind === 'buisness-moments-adaptor';
-            });
-            console.log(microservicesLive);
-
-
-            const businessMomentsData = values[1] as HttpResponseBusinessMoments;
-
+            const businessMomentsData = values[0] as HttpResponseBusinessMoments;
+            // We use from git as we store the data in git
             const moments = businessMomentsData.moments.map(bmData => {
                 const tempMs: MicroserviceBusinessMomentAdaptor | undefined = microservicesGit.find(ms => ms.dolittle.microserviceId === bmData.microserviceId);
                 const microserviceName = tempMs ? tempMs.name : 'Missing';
@@ -82,7 +105,7 @@ export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) =
                 };
             });
             setBusinessMoments(moments);
-            setConnectors(connectors);
+            //setConnectors(connectors);
             setLoaded(true);
         });
     }, []);
@@ -94,6 +117,11 @@ export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) =
     return (
         <>
             <h1>Business moments</h1>
+            <ul>
+                {$microservices.map(foo => (
+                    <li key={foo.id}>{foo.name}</li>
+                ))}
+            </ul>
             <DefaultButton onClick={() => {
                 if (!canEdit) {
                     alert('Automation is disabled');
