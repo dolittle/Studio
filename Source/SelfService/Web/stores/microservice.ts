@@ -7,6 +7,8 @@ import {
     saveMicroservice as apiSaveMicroservice,
     MicroserviceInfo,
     getMicroservices,
+    getApplication,
+    HttpResponseMicroservices,
 } from '../api/api';
 import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor, MicroserviceDolittle } from '../api/index';
 import { Microservice } from '../microservice/Simple';
@@ -22,11 +24,25 @@ export type MicroserviceStore = {
 
 const data = {
     microservices: [] as MicroserviceInfo[],
+    isLoaded: false,
 };
 
 // We do not use the same information from view to edit
 
 export const microservices = writable(data.microservices);
+export const isLoaded = writable(data.isLoaded);
+export const loadMicroservices = (applicationId: string) => {
+    Promise.all([
+        getApplication(applicationId),
+        getMicroservices(applicationId),
+    ]).then(values => {
+        const applicationData = values[0];
+        mergeMicroservicesFromGit(applicationData.microservices);
+        const microservicesData = values[1] as HttpResponseMicroservices;
+        mergeMicroservicesFromK8s(microservicesData.microservices);
+        isLoaded.set(true);
+    });
+};
 
 export const mergeMicroservicesFromGit = (items) => {
     let data = get(microservices);
@@ -44,7 +60,7 @@ export const mergeMicroservicesFromGit = (items) => {
 
 
         const index = data.findIndex(item => {
-            return item.id === storeItem.id;
+            return item.id === storeItem.id && item.environment === storeItem.environment;
         });
 
         if (-1 === index) {
@@ -73,7 +89,7 @@ export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
         };
 
         const index = data.findIndex(item => {
-            return item.id === storeItem.id;
+            return item.id === storeItem.id && item.environment === storeItem.environment;
         });
 
         if (-1 === index) {
@@ -112,7 +128,7 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
             response = apiSaveMicroservice(input);
             break;
         case 'business-moments-adaptor':
-            response = saveBusinessMomentsAdaptorMicroservice(input as MicroserviceBusinessMomentAdaptor);
+            response = apiSaveMicroservice(input);
             break;
         default:
             alert(`kind: ${kind} not supported`);
@@ -130,8 +146,8 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
     const applicationId = input.dolittle.applicationId;
     const environment = input.environment;
     const liveMicroservices = await getMicroservices(applicationId);
-    const filteredMicroservices = liveMicroservices.microservices.filter(microservice => microservice.environment === environment);
-    mergeMicroservicesFromK8s(filteredMicroservices);
+    //const filteredMicroservices = liveMicroservices.microservices.filter(microservice => microservice.environment === environment);
+    mergeMicroservicesFromK8s(liveMicroservices.microservices);
     return Promise.resolve(true);
 };
 
@@ -141,13 +157,4 @@ export const saveSimpleMicroservice = async (input: MicroserviceSimple): Promise
 
 export const saveBusinessMomentsAdaptorMicroservice = async (input: MicroserviceBusinessMomentAdaptor): Promise<boolean> => {
     return saveMicroservice(input.kind, input);
-};
-
-
-const addOrUpdate = (current: any[], input: any, matchOn: (input: any) => boolean): any[] => {
-    const index = current.findIndex(item => matchOn(item));
-    if (-1 === index) {
-        return [...current, input];
-    }
-    return [...current.slice(0, index), input, ...current.slice(index + 1)];
 };

@@ -10,7 +10,7 @@ import { Pivot, PivotItem, IDropdownOption, DefaultButton } from '@fluentui/reac
 
 
 import CodeEditor, { loader } from '@monaco-editor/react';
-import { saveBusinessmoment } from '../api/businessmoments';
+import { saveBusinessmoment } from '../stores/businessmoment';
 import { HttpResponseApplications2 } from '../api/api';
 import { BusinessMoment, HttpInputBusinessMoment, BusinessMomentEntity } from '../api/index';
 
@@ -67,51 +67,11 @@ export const BusinessMomentEditor: React.FunctionComponent<Props> = (props) => {
         Promise.all([
             loader.init(),
         ]).then(values => {
-            //const applicationData = application;
-            //const microservicesGit: MicroserviceBusinessMomentAdaptor[] = applicationData.microservices.filter(microservice => {
-            //    return microservice.kind === 'business-moments-adaptor';
-            //});
-            //
-            //
-            //const connectors = microservicesGit.map(microservice => {
-            //    return { key: microservice.dolittle.microserviceId, text: microservice.extra.connector.kind } as IDropdownOption;
-            //});
-            //
-            //const businessMomentsData = values[0] as HttpResponseBusinessMoments;
-            //if (businessMomentId !== 'new') {
-            //    const businessMoment = businessMomentsData.moments.find(data => data.moment.uuid === businessMomentId);
-            //    if (businessMoment) {
-            //        setBusinessMoment(businessMoment?.moment);
-            //    }
-            //    alert('Something has gone wrong');
-            //    return <h1>Something has gone wrong</h1>;
-            //}
-            //
-            //
-            //if (businessMomentId === 'new') {
-            //    setBusinessMoment({
-            //        name: '',
-            //        uuid: Guid.create().toString(),
-            //        filter: '',
-            //        mapper: '',
-            //        transform: ''
-            //    } as BusinessMoment);
-            //}
-            //
-            //const entities = businessMomentsData.entities.map(data => {
-            //    const entity = data.entity;
-            //    return { key: entity.typeID, text: entity.name } as IDropdownOption;
-            //});
-            //entities.push({ key: 'newEntity', text: 'Create new' } as IDropdownOption);
-            //
-            //setEntities(entities);
-            //setConnectors(connectors);
             setLoaded(true);
             return;
         });
 
     }, []);
-
 
 
     if (!loaded) {
@@ -178,6 +138,7 @@ export const BusinessMomentEditor: React.FunctionComponent<Props> = (props) => {
                             />
                             <DefaultButton onClick={async () => {
                                 console.log('Save business moment', moment);
+                                console.log('with entity', _props.entity);
                                 const input = {
                                     applicationId,
                                     environment,

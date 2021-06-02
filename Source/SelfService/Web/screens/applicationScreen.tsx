@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useParams, useHistory } from 'react-router-dom';
 
-import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
+import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications, HttpResponseMicroservices, getMicroservices } from '../api/api';
 
 import { ApplicationOverviewScreen } from './applicationOverviewScreen';
 import { MicroserviceNewScreen } from './microserviceNewScreen';
@@ -36,7 +36,8 @@ import { ApplicationsChanger } from '../application/applicationsChanger';
 import { IBreadcrumbItem, Breadcrumb } from '@fluentui/react/lib/Breadcrumb';
 
 import { useReadable } from 'use-svelte-store';
-import { microservices, mergeMicroservicesFromGit } from '../stores/microservice';
+import { microservices, mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
+import { BusinessMomentsContainerScreen } from '../businessMoments/container';
 
 
 export const ApplicationScreen: React.FunctionComponent = () => {
@@ -54,6 +55,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
         Promise.all([
             getApplications(),
             getApplication(applicationId),
+            getMicroservices(applicationId),
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
@@ -62,6 +64,11 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             setApplications(applicationsData.applications);
             setApplication(applicationData);
             mergeMicroservicesFromGit(applicationData.microservices);
+
+
+            const microservicesData = values[2] as HttpResponseMicroservices;
+            const microservices = microservicesData.microservices.filter(microservice => microservice.environment === environment);
+            mergeMicroservicesFromK8s(microservices);
             setLoaded(true);
         });
     }, []);
@@ -209,12 +216,8 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                 <ContainerRegistryInfoScreen application={application} />
             </Route>
 
-            <Route exact path="/application/:applicationId/:environment/business-moments">
-                <BusinessMomentsOverview application={application} />
-            </Route>
-
-            <Route exact path="/application/:applicationId/:environment/business-moments/editor/:businessMomentId/microservice/:microserviceId">
-                <BusinessMomentEditor application={application} />
+            <Route path="/application/:applicationId/:environment/business-moments">
+                <BusinessMomentsContainerScreen application={application} />
             </Route>
         </LayoutWithSidebar >
     );

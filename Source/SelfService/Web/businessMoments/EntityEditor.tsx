@@ -7,7 +7,7 @@
 // TODO change action button from create to save
 
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
@@ -19,7 +19,7 @@ import { Text, Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 import CodeEditor, { loader } from '@monaco-editor/react';
 import { HttpResponseApplications2 } from '../api/api';
 import { BusinessMomentEntity, HttpInputBusinessMomentEntity } from '../api/index';
-import { saveBusinessmoment, saveBusinessmomentEntity } from '../api/businessmoments';
+import { saveBusinessmomentEntity } from '../stores/businessmoment';
 
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
@@ -34,12 +34,10 @@ type Props = {
 };
 
 export const EntityEditor: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
     const _props = props!;
-    const application = _props.application;
     const currentEntity = _props.entity;
     const connectors = _props.connectors;
-    const { environment, applicationId, businessMomentId, microserviceId } = useParams() as any;
+    const { environment, applicationId, microserviceId } = useParams() as any;
 
     const [loaded, setLoaded] = useState(false);
     // Not sure how to hook up to IPivotItemProps
@@ -51,29 +49,8 @@ export const EntityEditor: React.FunctionComponent<Props> = (props) => {
 
     useEffect(() => {
         Promise.all([
-            //getBusinessMoments(applicationId, environment),
             loader.init(),
         ]).then(values => {
-            //const applicationData = application;
-            //const microservicesGit: MicroserviceBusinessMomentAdaptor[] = applicationData.microservices.filter(microservice => {
-            //    return microservice.kind === 'business-moments-adaptor';
-            //});
-            //
-            //
-            //const connectors = microservicesGit.map(microservice => {
-            //    return { key: microservice.dolittle.microserviceId, text: microservice.extra.connector.kind } as IDropdownOption;
-            //});
-            //
-            //const businessMomentsData = values[0] as HttpResponseBusinessMoments;
-            //
-            //const entities = businessMomentsData.entities.map(data => {
-            //    const entity = data.entity;
-            //    return { key: entity.typeID, text: entity.name } as IDropdownOption;
-            //});
-            //entities.push({ key: 'newEntity', text: 'Create new' } as IDropdownOption);
-            //
-            //setConnectors(connectors);
-            //setEntities(entities);
             setLoaded(true);
             return;
         });
@@ -84,11 +61,6 @@ export const EntityEditor: React.FunctionComponent<Props> = (props) => {
     if (!loaded) {
         return null;
     }
-
-
-
-    // TODO this might need to use state etc
-
 
     return (
         <>
@@ -196,7 +168,7 @@ export const EntityEditor: React.FunctionComponent<Props> = (props) => {
                             alert('Failed to save entity');
                             return;
                         }
-                        alert('Entity saved');
+                        //alert('Entity saved');
                         // _props.onCreate();
                         _props.onSave(currentEntity);
                     }} />

@@ -76,7 +76,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
                         alert('Failed to remove business moment');
                         return;
                     }
-                    const href = `/application/${applicationId}/${environment}/Dev/business-moments`;
+                    const href = `/application/${applicationId}/${environment}/business-moments`;
                     history.push(href);
                 })();
             }

@@ -26,43 +26,17 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
     const history = useHistory();
     const _props = props!;
     const { applicationId, environment } = useParams() as any;
+
     const application = _props.application!;
     const canEdit = application.environments.some(info => info.name === environment && info.automationEnabled);
 
-    const [environments, setEnvironments] = useState([] as string[]);
-    const [currentEnvironment, setCurrentEnvironment] = useState(environment);
-    const [hasEnvironments, setHasEnvironments] = useState(false);
-    const [hasMicroservices, setHasMicroservices] = useState(false);
+    const filteredMicroservices = $microservices.filter(microservice => microservice.environment === environment);
+    const hasMicroservices = filteredMicroservices.length > 0;
 
-    const [currentMicroservices, setCurrentMicroservices] = useState([] as MicroserviceInfo[]);
-
-
-    useEffect(() => {
-        // Why am I loading this?
-        Promise.all([
-            getMicroservices(applicationId)
-        ]
-        ).then((values) => {
-            // This is only live
-            const applicationData = application;
-            const microservicesData = values[0] as HttpResponseMicroservices;
-
-            let tempEnvironments = applicationData.environments.map(e => e.name);
-            tempEnvironments = [...tempEnvironments, ...microservicesData.microservices.map(item => item.environment)];
-            const newEnviornments = [...new Set(tempEnvironments)];
-            console.log(newEnviornments.length > 0);
-            setHasEnvironments(newEnviornments.length > 0);
-            setEnvironments(newEnviornments);
-
-            const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
-            setHasMicroservices(microservices.length > 0);
-            setCurrentMicroservices(microservices);
-            console.log(microservices);
-            mergeMicroservicesFromK8s(microservices);
-        });
-    }, []);
-
-
+    let tempEnvironments = application.environments.map(e => e.name);
+    tempEnvironments = [...tempEnvironments, ...$microservices.map(item => item.environment)];
+    const newEnvironments = [...new Set(tempEnvironments)];
+    const hasEnvironments = newEnvironments.length > 0;
 
     return (
         <>
@@ -83,7 +57,7 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
                             alert('Automation is disabled');
                             return;
                         }
-                        const href = `/application/${application.id}/${currentEnvironment}/microservice/create`;
+                        const href = `/application/${application.id}/${environment}/microservice/create`;
                         history.push(href);
                     })} />
                 </>
@@ -102,9 +76,11 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
                                 environment={environment}
                                 canEdit={canEdit}
                                 onAfterDelete={(microserviceId: string, environment: string) => {
-                                    const updated = currentMicroservices.filter(ms => ms.id !== microserviceId && ms.environment !== environment);
-                                    setCurrentMicroservices(updated);
-                                    setHasMicroservices(updated.length > 0);
+                                    console.log('I wonder if this store does this now');
+                                    console.log('worth noting below filters based on environment');
+                                    //const updated = currentMicroservices.filter(ms => ms.id !== microserviceId && ms.environment !== environment);
+                                    //setCurrentMicroservices(updated);
+                                    //setHasMicroservices(updated.length > 0);
                                 }}
                             /></li>;
                         })}
