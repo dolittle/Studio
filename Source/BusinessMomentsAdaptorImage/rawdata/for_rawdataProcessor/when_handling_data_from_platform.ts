@@ -19,14 +19,15 @@ describe('handling data from Platform', () => {
         expect(payloadFromPlatform.name).to.equal('Webhook-101');
     });
 
-    it('wip', () => {
+    it('will transform payload to EntityTransformers', () => {
         const platformDataHandler = new PlatformDataHandler();
         const transformers = platformDataHandler.ExtractTransformers(payloadFromPlatform);
 
         expect(transformers.length).is.greaterThan(0);
         expect(transformers[0].Name).to.equal('I am name');
         expect(transformers[0].Filter).to.not.be.undefined;
-        expect(transformers[0].Filter({})).to.equal(false);;
+        expect(transformers[0].Filter({ system: 'M3' })).to.equal(true);
+        expect(transformers[0].Filter({ system: 'IFS' })).to.equal(false);
     });
 
 });
@@ -39,8 +40,8 @@ class PlatformDataHandler {
         for (let entityDefinition of input.extra.entities) {
             result.push({
                 Name: entityDefinition.name,
-                Filter: new Function(entityDefinition.filter) as (input: any) => boolean,
-                Transform: new Function(entityDefinition.transform) as (input: any) => any
+                Filter: new Function(`return (${entityDefinition.filter});`)() as (data: any) => boolean,
+                Transform: new Function(`return (${entityDefinition.transform});`)() as (data: any) => any
             })
         }
 
