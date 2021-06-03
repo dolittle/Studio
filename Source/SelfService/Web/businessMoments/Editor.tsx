@@ -3,22 +3,16 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
-
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 import { BusinessMomentEditor } from './businessMomentEditor';
 
-import CodeEditor, { loader } from '@monaco-editor/react';
-import { getBusinessMoments, saveBusinessmoment } from '../api/businessmoments';
+import { loader } from '@monaco-editor/react';
 import { HttpResponseApplications2 } from '../api/api';
-import { MicroserviceBusinessMomentAdaptor, BusinessMoment, HttpResponseBusinessMoments, HttpInputBusinessMoment, BusinessMomentEntity } from '../api/index';
+import { MicroserviceBusinessMomentAdaptor, BusinessMoment, HttpResponseBusinessMoments, BusinessMomentEntity } from '../api/index';
 import { Guid } from '@dolittle/rudiments';
 import { EntityEditor } from './entityEditor';
-import { businessmoments } from '../stores/businessmoment';
 
-
-const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
@@ -27,21 +21,14 @@ type Props = {
 };
 
 export const Editor: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
     const _props = props!;
     const application = _props.application;
     const businessMoments = _props.businessMoments;
-
     const { environment, applicationId, businessMomentId, microserviceId } = useParams() as any;
-
     const [loaded, setLoaded] = useState(false);
     const [selectedKey, setSelectedKey] = useState('businessMomentEditor');
-
-    //const [entities, setEntities] = useState({} as IDropdownOption[]);
-
-
-
     const applicationData = application;
+
     const microservicesGit: MicroserviceBusinessMomentAdaptor[] = applicationData.microservices.filter(microservice => {
         return microservice.kind === 'business-moments-adaptor';
     });
@@ -95,6 +82,7 @@ export const Editor: React.FunctionComponent<Props> = (props) => {
         const entity = data.entity;
         return { key: entity.entityTypeId, text: entity.name } as IDropdownOption;
     });
+    entities.unshift({ key: 'skip', text: 'Select Entity' } as IDropdownOption);
     entities.push({ key: 'newEntity', text: 'Create new' } as IDropdownOption);
 
     const [entity, setEntity] = useState(initEntity);

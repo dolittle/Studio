@@ -53,6 +53,10 @@ export const BusinessMomentEditor: React.FunctionComponent<Props> = (props) => {
 
     const entityChanged = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => {
         const key = option!.key as string;
+        if (key === 'skip') {
+            return;
+        }
+
         if (key === 'newEntity') {
             _props.onCreate();
             return;
