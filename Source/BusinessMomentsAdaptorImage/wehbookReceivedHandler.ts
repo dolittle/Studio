@@ -6,6 +6,8 @@ import { WebhookReceived } from './WebhookReceived';
 export class WebhookReceivedHandler {
     @handles(WebhookReceived)
     webhookReceived(event: WebhookReceived, eventContext: EventContext) {
-        console.log(`webhook received status: ${event.status}`);
+        console.log(
+            `webhook received status: ${event.status} \n description: ${event.message}`
+        );
     }
 }
