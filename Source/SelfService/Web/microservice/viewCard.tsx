@@ -12,14 +12,12 @@ import {
 import { cardStyles } from '../theme/viewCard';
 
 import { deleteMicroservice } from '../stores/microservice';
-import { mergeStyles } from '@fluentui/react/lib/Styling';
 import './microservice.scss';
 
 type Props = {
     microserviceName: string
     microserviceId: string
     microserviceKind: string
-    //microservice: MicroserviceInfo
     applicationId: string
     environment: string
     canEdit: boolean
