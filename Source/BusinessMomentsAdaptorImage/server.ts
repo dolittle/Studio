@@ -31,7 +31,7 @@ export function createServer(rawDataStorage: IRawDataStorage) {
                 .withEventTypes((eventTypes) => eventTypes.register(WebhookReceived))
                 .withEventHandlers((builder) => builder.register(WebhookReceivedHandler))
                 .build();
-            const receivedWebhook = new WebhookReceived(true);
+            const receivedWebhook = new WebhookReceived(true, 'Hello World');
             client.eventStore
                 .forTenant(TenantId.development)
                 .commit(receivedWebhook, '59d578b2-3c58-483f-8865-961b29bd8b36');
