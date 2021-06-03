@@ -5,7 +5,6 @@ import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import process from 'process';
 import { IRawDataStorage } from './RawDataStorage';
-
 import { Client } from '@dolittle/sdk';
 import { TenantId } from '@dolittle/sdk.execution';
 import { WebhookReceived } from './WebhookReceived';
