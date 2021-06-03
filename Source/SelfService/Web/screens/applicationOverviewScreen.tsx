@@ -72,6 +72,7 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
                             return <li key={ms.id}><ViewCard
                                 microserviceId={ms.id}
                                 microserviceName={ms.name}
+                                microserviceKind={ms.kind}
                                 applicationId={applicationId}
                                 environment={environment}
                                 canEdit={canEdit}
