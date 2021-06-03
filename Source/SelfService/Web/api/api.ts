@@ -80,31 +80,25 @@ export function getServerUrlPrefix(): string {
 
 export async function getLiveApplications(): Promise<any> {
     const url = `${getServerUrlPrefix()}/live/applications`;
-
     const result = await fetch(
         url,
         {
             method: 'GET',
             mode: 'cors'
         });
-    _checkRedirect(result);
     const jsonResult = await result.json();
-
     return jsonResult;
 }
 
 export async function getApplications(): Promise<any> {
     const url = `${getServerUrlPrefix()}/applications`;
-
     const result = await fetch(
         url,
         {
             method: 'GET',
             mode: 'cors'
         });
-    _checkRedirect(result);
     const jsonResult = await result.json();
-
     return jsonResult;
 }
 
@@ -117,13 +111,9 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
             method: 'GET',
             mode: 'cors'
         });
-    _checkRedirect(result);
     const jsonResult: HttpResponseApplications2 = await result.json();
-
     return jsonResult;
 }
-
-// TODO get environments, not easy to know
 
 // getMicroservices by applicationId
 export async function getMicroservices(applicationId: string): Promise<HttpResponseMicroservices> {
@@ -135,7 +125,7 @@ export async function getMicroservices(applicationId: string): Promise<HttpRespo
             method: 'GET',
             mode: 'cors'
         });
-    _checkRedirect(result);
+
     const jsonResult: HttpResponseMicroservices = await result.json();
 
     return jsonResult;
@@ -164,7 +154,6 @@ export async function saveMicroservice(input: any): Promise<boolean> {
                 'content-type': 'application/json'
             }
         });
-    _checkRedirect(result);
     const jsonResult = await result.json();
     return true;
 }
@@ -186,7 +175,6 @@ export async function getPodStatus(applicationId: string, environment: string, m
             method: 'GET',
             mode: 'cors'
         });
-    _checkRedirect(result);
     const jsonResult: HttpResponsePodStatus = await result.json();
 
     return jsonResult;
@@ -203,7 +191,6 @@ export async function getPodLogs(applicationId: string, podName: string, contain
         method: 'GET',
         mode: 'cors'
     });
-    _checkRedirect(result);
     const jsonResult: HttpResponsePodLog = await result.json();
 
     return jsonResult;
@@ -223,21 +210,6 @@ export async function saveEnvironment(input: HttpInputApplicationEnvironment): P
             }
         });
 
-    _checkRedirect(result);
     const jsonResult = await result.json();
-    console.log(jsonResult);
-    console.log(result.status);
     return true;
 }
-
-export function _checkRedirect(response): void {
-    if (!response.redirected) {
-        return;
-    }
-    console.log(response);
-    console.log('How to redirect this and not be sent back to the application api');
-    // The fucking ugly solution
-    // Force redirect to this page, then follow redirect
-    //window.location.href = response.url;
-}
-

@@ -1,10 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { getServerUrlPrefix, _checkRedirect } from './api';
+import { getServerUrlPrefix } from './api';
 import { HttpResponseBusinessMoments, HttpInputBusinessMoment, HttpInputBusinessMomentEntity } from './index';
-
-
 
 export async function getBusinessMoments(applicationId: string, environment: string): Promise<HttpResponseBusinessMoments> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}/environment/${environment}/businessmoments`;
@@ -15,7 +13,6 @@ export async function getBusinessMoments(applicationId: string, environment: str
             method: 'GET',
             mode: 'cors'
         });
-    _checkRedirect(result);
     const jsonResult = await result.json() as HttpResponseBusinessMoments;
     return jsonResult;
 }
@@ -43,7 +40,6 @@ export async function saveBusinessmoment(input: HttpInputBusinessMoment): Promis
                 'content-type': 'application/json'
             }
         });
-    _checkRedirect(result);
     return result.status === 200;
 }
 
@@ -59,6 +55,5 @@ export async function saveBusinessmomentEntity(input: HttpInputBusinessMomentEnt
                 'content-type': 'application/json'
             }
         });
-    _checkRedirect(result);
     return result.status === 200;
 }

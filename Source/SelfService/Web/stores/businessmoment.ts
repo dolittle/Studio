@@ -1,8 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { get, writable } from 'use-svelte-store';
-import { getServerUrlPrefix, _checkRedirect } from '../api/api';
-
+import { writable } from 'use-svelte-store';
 import {
     deleteBusinessmoment as apiDeleteBusinessmoment,
     getBusinessMoments,
