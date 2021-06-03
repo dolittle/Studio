@@ -1,3 +1,6 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { expect } from 'chai';
 import fs from 'fs';
 import path from 'path';
@@ -36,13 +39,13 @@ describe('handling data from Platform', () => {
 class PlatformDataHandler {
 
     ExtractTransformers(input: any): EntityTransformer[] {
-        let result = new Array<EntityTransformer>();
-        for (let entityDefinition of input.extra.entities) {
+        const result = new Array<EntityTransformer>();
+        for (const entityDefinition of input.extra.entities) {
             result.push({
                 Name: entityDefinition.name,
                 Filter: new Function(`return (${entityDefinition.filter});`)() as (data: any) => boolean,
                 Transform: new Function(`return (${entityDefinition.transform});`)() as (data: any) => any
-            })
+            });
         }
 
         return result;
