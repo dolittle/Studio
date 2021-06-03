@@ -5,10 +5,22 @@ import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import process from 'process';
 import { IRawDataStorage } from './RawDataStorage';
+import { RawDataProcessor } from './rawdata/processor';
+import path from 'path';
+import * as fsloader from './rawdata/fsloader';
 
 export function createServer(rawDataStorage: IRawDataStorage) {
     const app: Application = express();
     const repo = rawDataStorage;
+    let transformersDir = `${path.resolve(__dirname)}/transformers`;
+    if (process.env.TRANSFORMERS_PATH) {
+        transformersDir = process.env.TRANSFORMERS_PATH;
+    }
+    const rawDataProcessor = new RawDataProcessor();
+    const transformers = fsloader.loadSync(transformersDir);
+    for (const transformer of transformers) {
+        rawDataProcessor.AddEntityTransformer(transformer);
+    }
 
     // Tell express to use body-parser's JSON parsing.
     app.use(bodyParser.json());
@@ -21,8 +33,15 @@ export function createServer(rawDataStorage: IRawDataStorage) {
         }
 
         try {
-            await repo.Append(req.body);
-            console.log(req.body);
+            const result = rawDataProcessor.Process(req.body);
+            if (result.WasProcessed) {
+                await repo.Append(req.body);
+                //console.log(req.body);
+                console.log(result.Result);
+            } else {
+                console.log('was not able to process payload');
+            }
+
         } catch (err) {
             console.log(err);
             res.status(500).end();

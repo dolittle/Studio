@@ -37,5 +37,6 @@ RUN echo Configuration = $CONFIGURATION
 
 WORKDIR /app
 COPY --from=backend-build /app/Source/BusinessMomentsAdaptorImage/dist/index.js ./
+COPY --from=backend-build /app/Source/BusinessMomentsAdaptorImage/transformers ./transformers/
 
 ENTRYPOINT ["node", "index.js"]

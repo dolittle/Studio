@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bma
+  name: bma
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bma
+  template:
+    metadata:
+      labels:
+        app: bma
+    spec:
+      containers:
+      - image: 10.0.1.10:30000/businessmomentsadaptor:latest
+        imagePullPolicy: Always
+        name: businessmomentsadaptor
+        env:
+        - name: WH_AUTHORIZATION
+          value: foo
+        - name: TRANSFORMERS_PATH
+          value: /app/transformers
+        volumeMounts:
+        - name: bma-transformers-volume
+          mountPath: /app/transformers
+      volumes:
+      - name: bma-transformers-volume
+        configMap:
+          name: bma-transformers
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bma-service
+  labels:
+    run: bma
+spec:
+  selector:
+    app: bma
+  ports:
+    - protocol: TCP
+      port: 3008
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: bma-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /bma/?(.*)
+        backend:
+          serviceName: bma-service
+          servicePort: 3008
