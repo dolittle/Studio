@@ -4,7 +4,7 @@
 import React from 'react';
 
 import { Route, useParams, useRouteMatch } from 'react-router-dom';
-import { Overview } from './Overview';
+import { Overview } from './overview';
 import { Runtime } from './Runtime';
 import { Backend } from './Backend';
 import { Web } from './Web';

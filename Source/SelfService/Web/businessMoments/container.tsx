@@ -7,7 +7,7 @@ import { Route, useParams } from 'react-router-dom';
 import { HttpResponseApplications2 } from '../api/api';
 
 import { Editor as BusinessMomentEditor } from './editor';
-import { BusinessMomentsOverview } from './Overview';
+import { BusinessMomentsOverview } from './overview';
 
 
 // I wonder if scss is scoped like svelte. I hope so!

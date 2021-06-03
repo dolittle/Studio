@@ -17,8 +17,7 @@ import { PodViewScreen } from './podViewScreen';
 import { EnvironmentNewScreen } from './environmentNewScreen';
 import { EnvironmentChanger } from '../application/environmentChanger';
 import { BackupScreen } from './backupScreen';
-import { Editor as BusinessMomentEditor } from '../businessMoments/editor';
-import { BusinessMomentsOverview } from '../businessMoments/Overview';
+
 import {
     Link,
     TooltipHost,
@@ -35,14 +34,11 @@ import '../application/applicationScreen.scss';
 import { ApplicationsChanger } from '../application/applicationsChanger';
 import { IBreadcrumbItem, Breadcrumb } from '@fluentui/react/lib/Breadcrumb';
 
-import { useReadable } from 'use-svelte-store';
-import { microservices, mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
+import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 import { BusinessMomentsContainerScreen } from '../businessMoments/container';
 
 
 export const ApplicationScreen: React.FunctionComponent = () => {
-    const $microservices = useReadable(microservices) as any;
-
     const history = useHistory();
     const { environment } = useParams() as any;
     const { applicationId } = useParams() as any;
