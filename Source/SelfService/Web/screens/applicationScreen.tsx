@@ -162,18 +162,11 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                 <div className="left flex-start">
                     {breadCrumbs}
                 </div>
-
-                <div className="left flex-start">
-                    Size of microservices {$microservices.length}
-                </div>
-
                 <div className="right item flex-end">
                     <EnvironmentChanger application={application} environment={environment} />
                     <ApplicationsChanger applications={applications} current={applicationId} />
                 </div>
             </div>
-
-
 
             <Route exact path="/application/:applicationId/:environment/environment/create">
                 <EnvironmentNewScreen />
