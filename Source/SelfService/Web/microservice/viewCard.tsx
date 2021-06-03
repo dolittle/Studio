@@ -74,7 +74,8 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
     const environment = _props.environment;
     const canEdit = _props.canEdit;
 
-    const subTitle = kindTitles[microserviceKind] ? kindTitles[microserviceKind].subTitle : `Missing Kind title: ${microserviceKind}`;
+    // Today we do not store the microservice type in the cluster, making it hard to say what it is
+    const subTitle = kindTitles[microserviceKind] ? kindTitles[microserviceKind].subTitle : '';
     const kindIcon = kindTitles[microserviceKind] ? kindTitles[microserviceKind].icon : '';
 
     const onClickDelete = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
@@ -106,13 +107,10 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
                     {kindIcon}
                 </div>
 
-
-
                 <DocumentCardTitle
                     title={microserviceName}
                     shouldTruncate
                 />
-
 
                 <DocumentCardTitle
                     title={subTitle}
