@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor } from './store';
+import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor } from './index';
 
 export type ShortInfo = {
     id: string
@@ -22,6 +22,7 @@ export type ImageInfo = {
 export type MicroserviceInfo = {
     id: string
     name: string
+    kind: string
     environment: string
     images: ImageInfo[]
 };
@@ -29,14 +30,14 @@ export type MicroserviceInfo = {
 export type HttpResponseApplications = {
     id: string
     name: string
-    applications: ShortInfo[]
+    applications: ShortInfoWithEnvironment[]
 };
 
 export type HttpResponseApplications2 = { // Not a great name
     id: string
     name: string
     tenantId: string
-    applications: ShortInfo[]
+    applications: ShortInfo[] // Is this with?
     environments: HttpInputApplicationEnvironment[]
     microservices: any[] // Not great
 };
@@ -73,37 +74,31 @@ export type HttpInputApplicationEnvironment = {
     automationEnabled: boolean
 };
 
-function getServerUrlPrefix(): string {
+export function getServerUrlPrefix(): string {
     return '/selfservice/api';
 }
 
 export async function getLiveApplications(): Promise<any> {
     const url = `${getServerUrlPrefix()}/live/applications`;
-
     const result = await fetch(
         url,
         {
             method: 'GET',
             mode: 'cors'
         });
-    _checkRedirect(result);
     const jsonResult = await result.json();
-
     return jsonResult;
 }
 
 export async function getApplications(): Promise<any> {
     const url = `${getServerUrlPrefix()}/applications`;
-
     const result = await fetch(
         url,
         {
             method: 'GET',
             mode: 'cors'
         });
-    _checkRedirect(result);
     const jsonResult = await result.json();
-
     return jsonResult;
 }
 
@@ -116,13 +111,9 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
             method: 'GET',
             mode: 'cors'
         });
-    _checkRedirect(result);
     const jsonResult: HttpResponseApplications2 = await result.json();
-
     return jsonResult;
 }
-
-// TODO get environments, not easy to know
 
 // getMicroservices by applicationId
 export async function getMicroservices(applicationId: string): Promise<HttpResponseMicroservices> {
@@ -134,7 +125,7 @@ export async function getMicroservices(applicationId: string): Promise<HttpRespo
             method: 'GET',
             mode: 'cors'
         });
-    _checkRedirect(result);
+
     const jsonResult: HttpResponseMicroservices = await result.json();
 
     return jsonResult;
@@ -163,7 +154,6 @@ export async function saveMicroservice(input: any): Promise<boolean> {
                 'content-type': 'application/json'
             }
         });
-    _checkRedirect(result);
     const jsonResult = await result.json();
     return true;
 }
@@ -185,7 +175,6 @@ export async function getPodStatus(applicationId: string, environment: string, m
             method: 'GET',
             mode: 'cors'
         });
-    _checkRedirect(result);
     const jsonResult: HttpResponsePodStatus = await result.json();
 
     return jsonResult;
@@ -202,7 +191,6 @@ export async function getPodLogs(applicationId: string, podName: string, contain
         method: 'GET',
         mode: 'cors'
     });
-    _checkRedirect(result);
     const jsonResult: HttpResponsePodLog = await result.json();
 
     return jsonResult;
@@ -222,19 +210,6 @@ export async function saveEnvironment(input: HttpInputApplicationEnvironment): P
             }
         });
 
-    _checkRedirect(result);
     const jsonResult = await result.json();
-    console.log(jsonResult);
-    console.log(result.status);
     return true;
 }
-
-function _checkRedirect(response): void {
-    if (!response.redirected) {
-        return;
-    }
-    console.log(response);
-    console.log('How to redirect this and not be sent back to the application api');
-    //window.location.href = response.url;
-}
-

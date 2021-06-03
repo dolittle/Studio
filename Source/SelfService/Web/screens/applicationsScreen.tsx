@@ -2,13 +2,16 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { List } from '@fluentui/react/lib/List';
 import { Link } from '@fluentui/react';
 
-import { getApplications, HttpResponseApplications, ShortInfo } from '../api';
+import { getApplications, HttpResponseApplications, ShortInfoWithEnvironment } from '../api/api';
 import { uriWithAppPrefix } from '../store';
 
+
 export const ApplicationsScreen: React.FunctionComponent = () => {
+    const history = useHistory();
     const [data, setData] = useState({
         id: '',
         name: '',
@@ -35,11 +38,16 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
     }
 
 
-    const onRenderCell = (item?: ShortInfo, index?: number | undefined): JSX.Element => {
+    const onRenderCell = (item?: ShortInfoWithEnvironment, index?: number | undefined): JSX.Element => {
         const application = item!;
         return (
-            <Link href={uriWithAppPrefix(`/application/${application.id}`)} underline>
-                {application.name}
+            <Link onClick={() => {
+                // This is annoying as balls
+                const href = `/application/${application.id}/${application.environment}/microservices/overview`;
+                history.push(href);
+            }}
+                underline>
+                {application.name} {application.environment}
             </Link>
         );
     };

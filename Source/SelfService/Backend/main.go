@@ -62,6 +62,7 @@ func addDolittleHeaders(req *http.Request) {
 	// User-ID: '{{ print .Subject }}'
 	// Tenant-ID: '{{ print .Extra.Tenant }}'
 	tenantID := "453e04a7-4f9d-42f2-b36c-d51fa2c83fa3"
+	//tenantID := "508c1745-5f2a-4b4c-b7a5-2fbb1484346d"
 	userID := "be194a45-24b4-4911-9c8d-37125d132b0b"
 
 	req.Header.Set("User-ID", userID)

@@ -7,59 +7,43 @@ import { useParams, useHistory } from 'react-router-dom';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 
-import { getMicroservices, HttpResponseMicroservices, MicroserviceInfo, HttpResponseApplications2 } from '../api';
+import { getMicroservices, HttpResponseMicroservices, MicroserviceInfo, HttpResponseApplications2 } from '../api/api';
 
-import '../micoservice/microservice.scss';
-import { ViewCard } from '../micoservice/viewCard';
+import '../microservice/microservice.scss';
+import { ViewCard } from '../microservice/viewCard';
+
+import { useReadable, useWritable } from 'use-svelte-store';
+import { microservices, mergeMicroservicesFromK8s } from '../stores/microservice';
 
 type Props = {
-    application?: HttpResponseApplications2
+    application: HttpResponseApplications2
 };
 
 
 export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props) => {
+    const $microservices = useReadable(microservices) as any;
+
     const history = useHistory();
     const _props = props!;
     const { applicationId, environment } = useParams() as any;
+
     const application = _props.application!;
     const canEdit = application.environments.some(info => info.name === environment && info.automationEnabled);
 
-    const [environments, setEnvironments] = useState([] as string[]);
-    const [currentEnvironment, setCurrentEnvironment] = useState(environment);
-    const [hasEnvironments, setHasEnvironments] = useState(false);
-    const [hasMicroservices, setHasMicroservices] = useState(false);
+    const filteredMicroservices = $microservices.filter(microservice => microservice.environment === environment);
+    const hasMicroservices = filteredMicroservices.length > 0;
 
-    const [currentMicroservices, setCurrentMicroservices] = useState([] as MicroserviceInfo[]);
-
-
-    useEffect(() => {
-        Promise.all([
-            getMicroservices(applicationId)
-        ]
-        ).then((values) => {
-            const applicationData = application;
-            const microservicesData = values[0] as HttpResponseMicroservices;
-
-            let tempEnvironments = applicationData.environments.map(e => e.name);
-            tempEnvironments = [...tempEnvironments, ...microservicesData.microservices.map(item => item.environment)];
-            const newEnviornments = [...new Set(tempEnvironments)];
-            console.log(newEnviornments.length > 0);
-            setHasEnvironments(newEnviornments.length > 0);
-            setEnvironments(newEnviornments);
-
-            const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
-            setHasMicroservices(microservices.length > 0);
-            setCurrentMicroservices(microservices);
-        });
-    }, []);
-
-
+    let tempEnvironments = application.environments.map(e => e.name);
+    tempEnvironments = [...tempEnvironments, ...$microservices.map(item => item.environment)];
+    const newEnvironments = [...new Set(tempEnvironments)];
+    const hasEnvironments = newEnvironments.length > 0;
 
     return (
         <>
             {!hasEnvironments && (
                 <>
                     <PrimaryButton text="Create New Environment" onClick={(e => {
+                        // TODO How to stop this if automation disabled, currently on the environment level
                         const href = `/application/${application.id}/environment/create`;
                         history.push(href);
                     })} />
@@ -69,7 +53,11 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
             {hasEnvironments && (
                 <>
                     <PrimaryButton text="Create New Microservice" onClick={(e => {
-                        const href = `/application/${application.id}/${currentEnvironment}/microservice/create`;
+                        if (!canEdit) {
+                            alert('Automation is disabled');
+                            return;
+                        }
+                        const href = `/application/${application.id}/${environment}/microservice/create`;
                         history.push(href);
                     })} />
                 </>
@@ -80,15 +68,28 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
             {hasMicroservices && (
                 <div className="serv">
                     <ul>
-                        {currentMicroservices.map((ms) => {
-                            return <li key={ms.id}><ViewCard microservice={ms} applicationId={applicationId} environment={environment} canEdit={canEdit} /></li>;
+                        {$microservices.map((ms) => {
+                            return <li key={ms.id}><ViewCard
+                                microserviceId={ms.id}
+                                microserviceName={ms.name}
+                                applicationId={applicationId}
+                                environment={environment}
+                                canEdit={canEdit}
+                                onAfterDelete={(microserviceId: string, environment: string) => {
+                                    console.log('I wonder if this store does this now');
+                                    console.log('worth noting below filters based on environment');
+                                    //const updated = currentMicroservices.filter(ms => ms.id !== microserviceId && ms.environment !== environment);
+                                    //setCurrentMicroservices(updated);
+                                    //setHasMicroservices(updated.length > 0);
+                                }}
+                            /></li>;
                         })}
                     </ul>
                 </div>
             )}
 
             {!hasMicroservices && (
-                <p>No microservices found</p>
+                <p>You currently do not have any microservices.</p>
             )}
         </>
     );

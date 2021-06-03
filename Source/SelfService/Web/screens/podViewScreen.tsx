@@ -6,7 +6,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
 
-import { getPodLogs, HttpResponsePodLog } from '../api';
+import { getPodLogs, HttpResponsePodLog } from '../api/api';
 
 
 const stackTokens = { childrenGap: 15 };

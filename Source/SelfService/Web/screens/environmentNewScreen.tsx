@@ -9,7 +9,7 @@ import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { getTenant } from '../store';
 import { Label } from '@fluentui/react/lib/Label';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { saveEnvironment, HttpInputApplicationEnvironment } from '../api';
+import { saveEnvironment, HttpInputApplicationEnvironment } from '../api/api';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };

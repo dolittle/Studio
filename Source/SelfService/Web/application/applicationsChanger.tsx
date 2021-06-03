@@ -2,15 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { ShortInfo } from '../api';
+import { ShortInfoWithEnvironment } from '../api/api';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
 
-const stackTokens = { childrenGap: 15 };
-
-
 type Props = {
-    applications: ShortInfo[]
+    applications: ShortInfoWithEnvironment[]
     current: string
 };
 
@@ -19,13 +16,17 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
     const currentApplicationId = props!.current;
 
     const items = applications.map(application => {
-        return { key: application.id, text: application.name } as IDropdownOption;
+        return {
+            key: application.id,
+            text: application.name,
+        } as IDropdownOption;
     });
 
     items.push({ key: 'createNew', text: 'Create new' } as IDropdownOption);
 
     const onChange = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => {
         const newApplication = option!.key as string;
+
         if (newApplication === currentApplicationId) {
             return;
         }
@@ -37,17 +38,23 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
             return;
         }
 
-        alert('TODO: Change to application screen');
+        // TODO check if more than 1
+        // TODO handle default to change to
+        // Key = application/11b6cf47-5d9f-438f-8116-0d9828654657/Dev/
+
+        // TODO change based on the url
+        const parts = window.location.pathname.split(`/${currentApplicationId}/`);
+        const href = `${parts[0]}/${newApplication}/${parts[1]}`;
+        // We use window here, as its a hack to get around the selfservice being duplicated
+        window.location.href = href;
     };
 
     return (
-
         <Dropdown placeholder="Select"
             dropdownWidth="auto"
             selectedKey={currentApplicationId}
             options={items}
             onChange={onChange}
         />
-
     );
 };

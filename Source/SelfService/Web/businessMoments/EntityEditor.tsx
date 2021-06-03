@@ -6,7 +6,8 @@
 // TODO validate the data
 // TODO change action button from create to save
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
@@ -15,40 +16,51 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { Text, Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 
 
-import CodeEditor, { useMonaco } from '@monaco-editor/react';
-
-import { Entity, getConnectors } from '../store';
+import CodeEditor, { loader } from '@monaco-editor/react';
+import { HttpResponseApplications2 } from '../api/api';
+import { BusinessMomentEntity, HttpInputBusinessMomentEntity } from '../api/index';
+import { saveBusinessmomentEntity } from '../stores/businessmoment';
 
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
-export const Editor: React.FunctionComponent = () => {
-    const monaco = useMonaco();
+type Props = {
+    application: HttpResponseApplications2
+    connectors: IDropdownOption[]
+    entity: BusinessMomentEntity
+    onCreate: () => void;
+    onSave: (entity: BusinessMomentEntity) => void;
+};
 
-    useEffect(() => {
-        if (monaco) {
-            console.log('here is the monaco isntance:', monaco);
-        }
-    }, [monaco]);
+export const EntityEditor: React.FunctionComponent<Props> = (props) => {
+    const _props = props!;
+    const currentEntity = _props.entity;
+    const connectors = _props.connectors;
+    const { environment, applicationId, microserviceId } = useParams() as any;
 
+    const [loaded, setLoaded] = useState(false);
     // Not sure how to hook up to IPivotItemProps
-    const [outputScreen, setOutputScreen] = React.useState('Raw Data');
+    const [outputScreen, setOutputScreen] = useState('Raw Data');
     const onOutputScreenChanged = (item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) => {
         setOutputScreen(item!.props.headerText as string);
     };
 
-    const _connectors: IDropdownOption[] = getConnectors().map(connector => {
-        return { key: connector.id, text: connector.name } as IDropdownOption;
-    }) as IDropdownOption[];
 
-    // TODO this might need to use state etc
-    const currentEntity: Entity = {} as Entity;
-    currentEntity.id = 'id';
-    currentEntity.name = '';
-    currentEntity.filterCode = '';
-    currentEntity.transformCode = '';
-    currentEntity.connectorId = '';
+    useEffect(() => {
+        Promise.all([
+            loader.init(),
+        ]).then(values => {
+            setLoaded(true);
+            return;
+        });
+
+    }, []);
+
+
+    if (!loaded) {
+        return null;
+    }
 
     return (
         <>
@@ -64,17 +76,8 @@ export const Editor: React.FunctionComponent = () => {
 
                 </Stack>
                 <Stack horizontal tokens={stackTokens}>
-                    <Dropdown placeholder="Select"
-                        dropdownWidth="auto"
-                        label="Connector:"
-                        options={_connectors}
-                        onChange={(e, v) => {
-                            currentEntity.connectorId = (v as IDropdownOption).key as string;
-                        }}
-                    />
-
                     <TextField
-                        label="Entity Name:"
+                        label="Entity Name"
                         styles={textFieldStyles}
                         defaultValue={currentEntity.name}
                         onChange={(e, v) => {
@@ -82,13 +85,22 @@ export const Editor: React.FunctionComponent = () => {
                         }}
                     />
 
+                    <Dropdown placeholder="Select"
+                        dropdownWidth="auto"
+                        label="Business Moments adapter"
+                        options={connectors}
+                        onChange={(e, v) => {
+                            //currentEntity.connectorId = (v as IDropdownOption).key as string;
+                        }}
+                    />
+
                     <TextField
-                        label="Entity ID:"
+                        label="Entity ID"
                         styles={textFieldStyles}
                         placeholder="id"
-                        defaultValue={currentEntity.id}
+                        defaultValue={currentEntity.idNameForRetrival}
                         onChange={(e, v) => {
-                            currentEntity.id = v!;
+                            //currentEntity.id = v!;
                         }}
                     />
 
@@ -141,9 +153,25 @@ export const Editor: React.FunctionComponent = () => {
                 </Stack>
 
                 <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
-                    <PrimaryButton text="Create" onClick={(e => {
+                    <PrimaryButton text="Create" onClick={async () => {
                         console.log('Current state of entity is ', currentEntity);
-                    })} />
+
+                        const input = {
+                            applicationId,
+                            environment,
+                            microserviceId,
+                            entity: currentEntity,
+                        } as HttpInputBusinessMomentEntity;
+
+                        const success = await saveBusinessmomentEntity(input);
+                        if (!success) {
+                            alert('Failed to save entity');
+                            return;
+                        }
+                        //alert('Entity saved');
+                        // _props.onCreate();
+                        _props.onSave(currentEntity);
+                    }} />
                 </Stack>
             </Stack>
         </>

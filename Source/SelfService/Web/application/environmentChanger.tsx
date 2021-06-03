@@ -4,7 +4,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { HttpResponseApplications2 } from '../api';
+import { HttpResponseApplications2 } from '../api/api';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
 
@@ -41,7 +41,8 @@ export const EnvironmentChanger: React.FunctionComponent<Props> = (props) => {
         // TODO change based on the url
         const parts = window.location.pathname.split(`/${environment}/`);
         const href = `${parts[0]}/${newEnvironment}/${parts[1]}`;
-        history.push(href);
+        // We use window here, as its a hack to get around the selfservice being duplicated
+        window.location.href = href;
     };
 
     if (!application.environments.some(e => e.name === environment)) {

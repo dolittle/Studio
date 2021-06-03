@@ -6,7 +6,7 @@ import {
 } from '@fluentui/react';
 
 const aTagBackgroundColor = '#1AD8C3';
-const backgroundColor = '#323F4B';
+export const backgroundColor = '#323F4B';
 export const cardStyles: IDocumentCardStyles = {
     root: {
         display: 'inline-block',
@@ -19,6 +19,10 @@ export const cardStyles: IDocumentCardStyles = {
 
 export const buttonStyles: IButtonStyles = {
     root: {
+        backgroundColor,
+        color: aTagBackgroundColor,
+    },
+    rootDisabled: {
         backgroundColor,
         color: aTagBackgroundColor,
     }

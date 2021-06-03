@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 import { Stack } from '@fluentui/react/lib/Stack';
-import { HttpResponseApplications2 } from '../api';
+import { HttpResponseApplications2 } from '../api/api';
 
 const stackTokens = { childrenGap: 15 };
 

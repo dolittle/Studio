@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 
 import { getTenant } from '../store';
-import { HttpResponseApplications2 } from '../api';
+import { HttpResponseApplications2 } from '../api/api';
 
 type RegistryInfo = {
     acrId: string

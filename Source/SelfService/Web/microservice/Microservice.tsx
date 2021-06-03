@@ -16,7 +16,7 @@ import { Microservice as Simple } from './Simple';
 import { Microservice as StaticSite } from './StaticSite';
 
 import { useParams } from 'react-router-dom';
-import { HttpResponseApplications2 } from '../api';
+import { HttpResponseApplications2 } from '../api/api';
 
 const stackTokens = { childrenGap: 15 };
 

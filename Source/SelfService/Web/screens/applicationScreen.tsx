@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useParams, useHistory } from 'react-router-dom';
 
-import { getApplication, HttpResponseApplications2, ShortInfo } from '../api';
+import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications, HttpResponseMicroservices, getMicroservices } from '../api/api';
 
 import { ApplicationOverviewScreen } from './applicationOverviewScreen';
 import { MicroserviceNewScreen } from './microserviceNewScreen';
@@ -17,8 +17,7 @@ import { PodViewScreen } from './podViewScreen';
 import { EnvironmentNewScreen } from './environmentNewScreen';
 import { EnvironmentChanger } from '../application/environmentChanger';
 import { BackupScreen } from './backupScreen';
-import { Editor as BusinessMomentEditor } from '../businessMoments/Editor';
-import { BusinessMomentsOverview } from '../businessMoments/Overview';
+
 import {
     Link,
     TooltipHost,
@@ -35,12 +34,9 @@ import '../application/applicationScreen.scss';
 import { ApplicationsChanger } from '../application/applicationsChanger';
 import { IBreadcrumbItem, Breadcrumb } from '@fluentui/react/lib/Breadcrumb';
 
-const applications: ShortInfo[] = [
-    {
-        id: '11b6cf47-5d9f-438f-8116-0d9828654657',
-        name: 'Taco',
-    },
-];
+import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
+import { BusinessMomentsContainerScreen } from '../businessMoments/container';
+
 
 export const ApplicationScreen: React.FunctionComponent = () => {
     const history = useHistory();
@@ -48,11 +44,27 @@ export const ApplicationScreen: React.FunctionComponent = () => {
     const { applicationId } = useParams() as any;
 
     const [application, setApplication] = useState({} as HttpResponseApplications2);
+    const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        getApplication(applicationId).then(data => {
-            setApplication(data);
+        Promise.all([
+            getApplications(),
+            getApplication(applicationId),
+            getMicroservices(applicationId),
+        ]).then(values => {
+            const applicationsData = values[0] as HttpResponseApplications;
+            const applicationData = values[1];
+            // TODO this should be unique
+            // TODO also when we have more than one application and more than one environment we should default to something.
+            setApplications(applicationsData.applications);
+            setApplication(applicationData);
+            mergeMicroservicesFromGit(applicationData.microservices);
+
+
+            const microservicesData = values[2] as HttpResponseMicroservices;
+            const microservices = microservicesData.microservices.filter(microservice => microservice.environment === environment);
+            mergeMicroservicesFromK8s(microservices);
             setLoaded(true);
         });
     }, []);
@@ -146,14 +158,11 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                 <div className="left flex-start">
                     {breadCrumbs}
                 </div>
-
                 <div className="right item flex-end">
                     <EnvironmentChanger application={application} environment={environment} />
                     <ApplicationsChanger applications={applications} current={applicationId} />
                 </div>
             </div>
-
-
 
             <Route exact path="/application/:applicationId/:environment/environment/create">
                 <EnvironmentNewScreen />
@@ -196,12 +205,8 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                 <ContainerRegistryInfoScreen application={application} />
             </Route>
 
-            <Route exact path="/application/:applicationId/:environment/business-moments">
-                <BusinessMomentsOverview />
-            </Route>
-
-            <Route exact path="/application/:applicationId/:environment/business-moments/editor/:businessMomentId">
-                <BusinessMomentEditor />
+            <Route path="/application/:applicationId/:environment/business-moments">
+                <BusinessMomentsContainerScreen application={application} />
             </Route>
         </LayoutWithSidebar >
     );

@@ -12,16 +12,20 @@ import {
 } from '@fluentui/react';
 import { cardStyles, commandTileClass, buttonStyles } from '../theme/viewCard';
 
-import { deleteMicroservice, MicroserviceInfo } from '../api';
+import { deleteMicroservice } from '../stores/microservice';
 import { mergeStyles } from '@fluentui/react/lib/Styling';
-import '../micoservice/microservice.scss';
+import './microservice.scss';
+
 
 
 type Props = {
-    microservice: MicroserviceInfo
+    microserviceName: string
+    microserviceId: string
+    //microservice: MicroserviceInfo
     applicationId: string
     environment: string
     canEdit: boolean
+    onAfterDelete: (microserviceId: string, environment: string) => void;
 };
 
 
@@ -31,8 +35,8 @@ const conversationTileClass = mergeStyles({ height: 182 });
 export const ViewCard: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
     const _props = props!;
-    const microservice = _props.microservice;
-    const microserviceId = microservice.id;
+    const microserviceName = _props.microserviceName;
+    const microserviceId = _props.microserviceId;
     const applicationId = _props.applicationId;
     const environment = _props.environment;
     const canEdit = _props.canEdit;
@@ -62,6 +66,12 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
                         return;
                     }
                     alert('Microservice to deleted');
+                    // Bubble up change, this is where a store is nice.
+                    // Today lets just cheat.
+                    // TODO a better way
+                    _props.onAfterDelete(microserviceId, environment);
+                    //const href = `/application/${applicationId}/${environment}/microservices/overview`;
+                    //history.push(href);
                 })();
             }
         },
@@ -82,7 +92,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
         <DocumentCard styles={cardStyles}>
             <div className={conversationTileClass}>
                 <DocumentCardTitle
-                    title={microservice.name}
+                    title={microserviceName}
                     shouldTruncate
                 />
                 <DocumentCardTitle
