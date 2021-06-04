@@ -23,18 +23,8 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
 
-    const _props = props!;
     const { environment, applicationId, microserviceId } = useParams() as any;
     const [selectedKey, setSelectedKey] = useState('healthStatus');
-
-    const currentMicroservice = $microservices.find(ms => ms.id === microserviceId);
-    if (!currentMicroservice) {
-        const href = `/application/${applicationId}/${environment}/microservices/overview`;
-        history.push(href);
-        return null;
-    }
-
-    const configMapPrefix = `${environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
     // Want microservice name
     const [podsData, setPodsData] = useState({
         namespace: '',
@@ -45,6 +35,14 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         pods: []
     } as HttpResponsePodStatus);
     const [loaded, setLoaded] = useState(false);
+    const currentMicroservice = $microservices.find(ms => ms.id === microserviceId);
+    if (!currentMicroservice) {
+        const href = `/application/${applicationId}/${environment}/microservices/overview`;
+        history.push(href);
+        return null;
+    }
+
+    const configMapPrefix = `${environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
 
     useEffect(() => {
         Promise.all([
@@ -60,8 +58,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
-    console.log($microservices);
-    console.log(currentMicroservice);
     return (
         <>
             <Stack tokens={stackTokens}>
