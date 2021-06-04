@@ -82,7 +82,7 @@ export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
         const storeItem = {
             id: element.id,
             name: element.name,
-            kind: '',
+            kind: '', // TODO life would be so much simpler if we knew what this was, maybe adding the label for it
             environment: element.environment,
             edit: {} as any,
             live: element,
