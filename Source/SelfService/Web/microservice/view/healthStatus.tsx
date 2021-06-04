@@ -7,6 +7,7 @@ import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react/lib/Text';
 import { DetailsList, DetailsListLayoutMode, IColumn, CheckboxVisibility } from '@fluentui/react/lib/DetailsList';
 import { HttpResponsePodStatus, PodInfo, ContainerStatusInfo } from '../../api/api';
+import { Link } from '@fluentui/react';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -14,6 +15,7 @@ type Props = {
     status: string
     data: HttpResponsePodStatus
     environment: string
+    applicationId: string
 };
 
 type Item = {
@@ -47,6 +49,7 @@ export const HealthStatus: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
     // TODO what is this?
     // eslint-disable-next-line react/prop-types
+    const applicationId = props!.applicationId;
     const status = props!.status;
     const data = props!.data;
     const environment = props!.environment;
@@ -121,6 +124,7 @@ export const HealthStatus: React.FunctionComponent<Props> = (props) => {
                     layoutMode={DetailsListLayoutMode.justified}
                 />
             </Stack>
+
         </>
     );
 };
