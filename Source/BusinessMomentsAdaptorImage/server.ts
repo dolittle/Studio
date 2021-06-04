@@ -5,10 +5,9 @@ import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import process from 'process';
 import { IRawDataStorage } from './RawDataStorage';
-import { Client } from '@dolittle/sdk';
 import { TenantId } from '@dolittle/sdk.execution';
 import { WebhookReceived } from './WebhookReceived';
-import { WebhookReceivedHandler } from './wehbookReceivedHandler';
+import { client } from './index';
 
 export function createServer(rawDataStorage: IRawDataStorage) {
     const app: Application = express();
@@ -27,11 +26,7 @@ export function createServer(rawDataStorage: IRawDataStorage) {
         try {
             await repo.Append(req.body);
             console.log(req.body);
-            const client = Client.forMicroservice('a87b3411-7f23-4ea3-9b74-f6fc7f7c5481')
-                .withEventTypes((eventTypes) => eventTypes.register(WebhookReceived))
-                .withEventHandlers((builder) => builder.register(WebhookReceivedHandler))
-                .build();
-            const receivedWebhook = new WebhookReceived(true, 'Hello World');
+            const receivedWebhook = new WebhookReceived(true, 'Webhook Received!');
             client.eventStore
                 .forTenant(TenantId.development)
                 .commit(receivedWebhook, '59d578b2-3c58-483f-8865-961b29bd8b36');
