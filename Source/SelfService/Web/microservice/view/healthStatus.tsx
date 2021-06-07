@@ -25,27 +25,23 @@ type Item = {
     age: string
     image: string
     started: string
-    restarts: any // Int?
+    restarts: number
     pod: PodInfo
     container: ContainerStatusInfo
 };
 
 export const HealthStatus: React.FunctionComponent<Props> = (props) => {
-
     const history = useHistory();
-    // TODO what is this?
-    // eslint-disable-next-line react/prop-types
-    const applicationId = props!.applicationId;
-    const status = props!.status;
-    const data = props!.data;
-    const environment = props!.environment;
+    const _props = props!;
+    const applicationId = _props.applicationId;
+    const status = _props.status;
+    const data = _props.data;
+    const environment = _props.environment;
 
 
     const renderViewLog = (item?: Item, index?: number, column?: IColumn) => {
         const podInfo = item!.pod;
-        const applicationId = data.namespace.split('application-')[1];
         const container = item!.container;
-
         return (
             <Stack
                 key={container.name}
@@ -54,7 +50,7 @@ export const HealthStatus: React.FunctionComponent<Props> = (props) => {
             >
                 <>
                     <div onClick={() => {
-                        console.log('Download logs');
+                        alert('TODO: Download logs');
                     }}>
                         {DownloadLogIcon}
                     </div>
