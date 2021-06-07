@@ -38,7 +38,6 @@ export const HealthStatus: React.FunctionComponent<Props> = (props) => {
     const data = _props.data;
     const environment = _props.environment;
 
-
     const renderViewLog = (item?: Item, index?: number, column?: IColumn) => {
         const podInfo = item!.pod;
         const container = item!.container;

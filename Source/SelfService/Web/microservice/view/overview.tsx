@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Pivot, PivotItem } from '@fluentui/react';
@@ -17,13 +17,19 @@ import { microservices } from '../../stores/microservice';
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
+    applicationId: string
+    environment: string
+    microserviceId: string
 };
 
 export const Overview: React.FunctionComponent<Props> = (props) => {
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
+    const _props = props!;
+    const applicationId = _props.applicationId;
+    const microserviceId = _props.microserviceId;
+    const environment = _props.environment;
 
-    const { environment, applicationId, microserviceId } = useParams() as any;
     const [selectedKey, setSelectedKey] = useState('healthStatus');
     // Want microservice name
     const [podsData, setPodsData] = useState({
