@@ -1,7 +1,11 @@
 {
     "extends": "../../../tsconfig.json",
     "compilerOptions": {
-        "outDir": "./wwwroot"
+        "outDir": "./wwwroot",
+        "target": "es5",
+        "lib": [
+            "es2019"
+        ]
     },
     "references": [
         {

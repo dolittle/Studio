@@ -1,0 +1,21 @@
+
+.btn {
+  .container {
+    padding: 8px 16px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .icon, .title {
+    flex-basis: 50%;
+  }
+
+  .icon {
+    display: inline-block;
+    padding-right: 5px;
+  }
+
+  .title {
+    text-align: right;
+  }
+}

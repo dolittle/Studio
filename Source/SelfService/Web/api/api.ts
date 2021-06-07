@@ -14,6 +14,15 @@ export type ShortInfoWithEnvironment = {
     environment: string
 };
 
+export type ContainerStatusInfo = {
+    image: string
+    name: string
+    age: string
+    state: string
+    started: string
+    restarts: any // How to use int?
+};
+
 export type ImageInfo = {
     image: string
     name: string
@@ -50,7 +59,7 @@ export type HttpResponseMicroservices = {
 export type PodInfo = {
     name: string
     phase: string
-    containers: ImageInfo[]
+    containers: ContainerStatusInfo[]
 };
 
 export type HttpResponsePodStatus = {
