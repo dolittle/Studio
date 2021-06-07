@@ -5,6 +5,9 @@ import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import process from 'process';
 import { IRawDataStorage } from './RawDataStorage';
+import { TenantId } from '@dolittle/sdk.execution';
+import { WebhookReceived } from './WebhookReceived';
+import { client } from './index';
 
 export function createServer(rawDataStorage: IRawDataStorage) {
     const app: Application = express();
@@ -23,6 +26,10 @@ export function createServer(rawDataStorage: IRawDataStorage) {
         try {
             await repo.Append(req.body);
             console.log(req.body);
+            const receivedWebhook = new WebhookReceived(true, 'Webhook Received!');
+            client.eventStore
+                .forTenant(TenantId.development)
+                .commit(receivedWebhook, '59d578b2-3c58-483f-8865-961b29bd8b36');
         } catch (err) {
             console.log(err);
             res.status(500).end();
