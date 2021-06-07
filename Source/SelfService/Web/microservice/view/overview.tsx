@@ -90,7 +90,9 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     title="Download secret env-variables yaml"
                     icon={DownloadLogIcon}
                     onClick={() => {
-                        alert('TODO');
+                        const secretName = `${configMapPrefix}-secret-env-variables`;
+                        const href = `${getServerUrlPrefix()}/live/application/${applicationId}/secret/${secretName}?download=1&fileType=yaml`;
+                        window.open(href, '_blank');
                     }}
                 />
 

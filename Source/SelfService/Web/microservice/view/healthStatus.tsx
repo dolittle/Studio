@@ -72,12 +72,12 @@ export const HealthStatus: React.FunctionComponent<Props> = (props) => {
 
     const columns: IColumn[] = [
         { key: 'name', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200, isResizable: true },
-        { key: 'status', name: 'Status', fieldName: 'state', minWidth: 100, maxWidth: 200, isResizable: true },
-        { key: 'restarts', name: 'Restarts', fieldName: 'restarts', minWidth: 50, maxWidth: 100, isResizable: true },
+        { key: 'status', name: 'Status', fieldName: 'state', minWidth: 50, maxWidth: 50, isResizable: true },
+        { key: 'restarts', name: 'Restarts', fieldName: 'restarts', minWidth: 75, maxWidth: 75, isResizable: true },
         { key: 'age', name: 'Age', fieldName: 'age', minWidth: 50, maxWidth: 100, isResizable: true },
-        { key: 'started', name: 'Started', fieldName: 'started', minWidth: 50, maxWidth: 100, isResizable: true },
-        { key: 'container', name: 'Container', fieldName: 'image', minWidth: 200, maxWidth: 300, isResizable: true },
-        { key: 'logs', name: 'View Logs', minWidth: 50, maxWidth: 100, isResizable: true, onRender: renderViewLog },
+        { key: 'started', name: 'Started', fieldName: 'started', minWidth: 150, maxWidth: 150, isResizable: true },
+        { key: 'container', name: 'Container', fieldName: 'image', minWidth: 300, maxWidth: 500, isResizable: true },
+        { key: 'logs', name: 'View Logs', minWidth: 50, maxWidth: 50, isResizable: true, onRender: renderViewLog },
     ];
 
 
