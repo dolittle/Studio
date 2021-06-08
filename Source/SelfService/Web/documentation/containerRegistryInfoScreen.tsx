@@ -2,13 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import { HttpResponseApplications2 } from '../api/api';
-
-import { ApplicationInfo } from '../application/info';
+import { ApplicationInfo } from './info';
 
 type Props = {
     application: HttpResponseApplications2
+    info: any
 };
 
 export const ContainerRegistryInfoScreen: React.FunctionComponent<Props> = (props) => {
