@@ -1,0 +1,22 @@
+{
+    "name": "purchaseorderapi.web",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "author": "Dolittle",
+    "license": "MIT",
+    "scripts": {
+        "build": "webpack --mode=production",
+        "build:dev": "webpack --mode=development",
+        "start:dev": "webpack serve --mode=development --progress --hot",
+        "clean": "tsc -b --clean",
+        "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
+        "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",
+        "ci": "yarn clean && yarn lint:ci && yarn build"
+    },
+    "dependencies": {
+        "@shared/styles": "1.0.0",
+        "@shared/web": "1.0.0"
+    },
+    "devDependencies": {}
+}

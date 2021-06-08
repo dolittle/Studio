@@ -13,6 +13,7 @@
         "./Source/Applications",
         "./Source/Events",
         "./Source/K8sMock",
-        "./Source/Data"
+        "./Source/Data",
+        "./Source/Purchaseorderapi"
     ]
 }

@@ -1,0 +1,63 @@
+name: Prod - Purchaseorderapi - Deploy
+
+env:
+  SOURCE_PATH: "Source/Purchaseorderapi"
+  DEPLOYMENT_NAME: "studio-prod-purchaseorderapi"
+  DOCKER_IMAGE_TAG: "dolittle/studio/purchaseorderapi"
+  DOCKER_FILE: "Source/Purchaseorderapi/Backend/Dockerfile"
+
+on:
+  pull_request:
+    branches:
+      - "main"
+    types: [closed]
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+
+    outputs:
+      has-changes: ${{ steps.filter.outputs.src }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            src:
+              - '${{ env.SOURCE_PATH }}/**'
+
+  conditionalDeploy:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.has-changes == 'true' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Establish context
+        id: context
+        uses: dolittle/establish-context-action@v2
+        with:
+          version-file: "${{ env.SOURCE_PATH }}/microservice.json"
+
+      - name: Increment version
+        id: increment-version
+        if: ${{ steps.context.outputs.should-publish == 'true' }}
+        uses: dolittle/increment-version-action@v2
+        with:
+          version: ${{ steps.context.outputs.current-version }}
+          release-type: ${{ steps.context.outputs.release-type }}
+
+      - name: Invoke deploy
+        if: ${{ steps.context.outputs.should-publish == 'true' }}
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: DeployMicroservice
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          ref: ${{ github.event.sha }}
+          inputs: '{ "dockerfile":"${{ env.DOCKER_FILE }}", "docker-image-tag":"${{ env.DOCKER_IMAGE_TAG }}", "deployment": "${{ env.DEPLOYMENT_NAME }}", "version": "${{ steps.increment-version.outputs.next-version }}", "source-path": "${{ env.SOURCE_PATH }}" }'

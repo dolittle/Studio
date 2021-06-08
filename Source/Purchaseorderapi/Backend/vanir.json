@@ -1,0 +1,12 @@
+{
+    "microserviceId": "f33d02df-088a-6946-a450-37c87ed6dc9e",
+    "isRooted": false,
+    "routeSegment": "purchaseorderapi",
+    "port": 3002,
+    "publicPath": "./public",
+    "dolittle": {
+        "runtime": {
+            "port": 50057
+        }
+    }
+}

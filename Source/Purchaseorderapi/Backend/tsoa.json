@@ -1,0 +1,15 @@
+{
+    "entryFile": "index.ts",
+    "noImplicitAdditionalProperties": "throw-on-extras",
+    "controllerPathGlobs": [
+        "**/*Controller.ts"
+    ],
+    "spec": {
+        "outputDirectory": "./",
+        "specVersion": 3
+    },
+    "routes": {
+        "routesDir": "./",
+        "iocModule": "../../../node_modules/@dolittle/vanir-backend/dist/tsoa/ioc.js"
+    }
+}
