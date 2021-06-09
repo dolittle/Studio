@@ -28,7 +28,7 @@ type Props = {
     environment: string
 };
 
-export const Microservice: React.FunctionComponent<Props> = (props) => {
+export const Create: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
     const _props = props!;
     const application = _props.application;

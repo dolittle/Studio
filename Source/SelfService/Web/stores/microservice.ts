@@ -11,7 +11,6 @@ import {
     HttpResponseMicroservices,
 } from '../api/api';
 import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor, MicroserviceDolittle } from '../api/index';
-import { Microservice } from '../microservice/Simple';
 
 export type MicroserviceStore = {
     edit: any

@@ -2,18 +2,17 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 
-// TODO how to load the logs?
 // TODO validate the data
 // TODO change action button from create to save
-
 import React from 'react';
 
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text, IDropdownOption } from '@fluentui/react';
-import { Microservice as BusinessMomentsAdaptor } from './businessMomentsAdaptor/BusinessMomentsAdaptor';
-import { Microservice as Simple } from './Simple';
-import { Microservice as StaticSite } from './StaticSite';
+import { Create as BusinessMomentsAdaptor } from './businessMomentsAdaptor/create';
+import { Create as Base } from './base/create';
+import { Create as StaticSite } from './staticSite/create';
+import { Create as RawDataLog } from './rawDataLog/create';
 
 import { useParams } from 'react-router-dom';
 import { HttpResponseApplications2 } from '../api/api';
@@ -56,9 +55,21 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
                 </Stack>
 
 
+                {microserviceTypeState === 'dolittle-microservice' && (
+                    <Stack tokens={stackTokens}>
+                        <Base application={_props.application} environment={environment} />
+                    </Stack>
+                )}
+
                 {microserviceTypeState === 'business-miner' && (
                     <Stack tokens={stackTokens}>
                         <BusinessMomentsAdaptor application={_props.application} environment={environment} />
+                    </Stack>
+                )}
+
+                {microserviceTypeState === 'raw-data-log-webhook' && (
+                    <Stack tokens={stackTokens}>
+                        <RawDataLog application={_props.application} environment={environment} />
                     </Stack>
                 )}
 
@@ -67,13 +78,6 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
                         <StaticSite application={_props.application} environment={environment} />
                     </Stack>
                 )}
-
-                {microserviceTypeState === 'dolittle-microservice' && (
-                    <Stack tokens={stackTokens}>
-                        <Simple application={_props.application} environment={environment} />
-                    </Stack>
-                )}
-
 
             </Stack>
         </>
