@@ -1,18 +1,19 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Pivot, PivotItem } from '@fluentui/react';
 
 import { HealthStatus } from '../view/healthStatus';
-import { getPodStatus, HttpResponsePodStatus, getServerUrlPrefix } from '../../api/api';
+import { HttpResponsePodStatus, getServerUrlPrefix } from '../../api/api';
 import { SecondaryButton } from '../../theme/secondaryButton';
 import { DownloadLogIcon } from '../../theme/icons';
 import { useReadable } from 'use-svelte-store';
 import { microservices } from '../../stores/microservice';
+import { ConfigView } from './configView';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -64,6 +65,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         }}
                     >
                         <p>Config Screen</p>
+                        <ConfigView microservice={currentMicroservice.edit} />
                     </PivotItem>
                     <PivotItem
                         itemKey="healthStatus"
