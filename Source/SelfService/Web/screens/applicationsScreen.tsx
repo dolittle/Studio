@@ -42,7 +42,6 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         const application = item!;
         return (
             <Link onClick={() => {
-                // This is annoying as balls
                 const href = `/application/${application.id}/${application.environment}/microservices/overview`;
                 history.push(href);
             }}
@@ -55,7 +54,6 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
     return (
         <>
             <h1>Applications Screen</h1>
-
             <List items={data.applications} onRenderCell={onRenderCell} />
         </>
     );

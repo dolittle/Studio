@@ -33,10 +33,8 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                 setLoaded(true);
             });
         } else {
-            console.log('Business moments data already loaded');
             setLoaded(true);
         }
-
     }, []);
 
     if (!loaded) {
@@ -52,7 +50,6 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
             <ul>
                 <li>
                     <Link onClick={() => {
-                        // This is annoying as balls
                         const href = `/application/${applicationId}/${environment}/documentation/container-registry-info`;
                         history.push(href);
                     }}>

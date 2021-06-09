@@ -84,7 +84,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
         <ul>
             <li>
                 <Link onClick={() => {
-                    // This is annoying as balls
                     const href = `/application/${application.id}/${environment}/dashboard`;
                     history.push(href);
                 }}>
@@ -93,7 +92,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             </li>
             <li>
                 <Link onClick={() => {
-                    // This is annoying as balls
                     const href = `/application/${application.id}/${environment}/backup/overview`;
                     history.push(href);
                 }}>
@@ -102,7 +100,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             </li>
             <li>
                 <Link onClick={() => {
-                    // This is annoying as balls
                     const href = `/application/${application.id}/${environment}/business-moments`;
                     history.push(href);
                 }}>
@@ -112,7 +109,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             <li>
 
                 <Link onClick={() => {
-                    // This is annoying as balls
                     const href = `/application/${application.id}/${environment}/microservices/overview`;
                     history.push(href);
                 }}>
@@ -122,7 +118,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             <li>
 
                 <Link onClick={() => {
-                    // This is annoying as balls
                     const href = `/application/${application.id}/${environment}/documentation`;
                     history.push(href);
                 }}>
