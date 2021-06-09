@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Config } from './config';
-import { saveBusinessMomentsAdaptorMicroservice, saveMicroserviceRawDataLogIngestorMicroservice } from '../../stores/microservice';
+import { saveMicroserviceRawDataLogIngestorMicroservice } from '../../stores/microservice';
 import { MicroserviceRawDataLogIngestor } from '../../api/index';
 
 import { HttpResponseApplications2 } from '../../api/api';
