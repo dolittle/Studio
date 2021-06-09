@@ -115,3 +115,27 @@ export type HttpInputBusinessMomentEntity = {
     microserviceId: string
     entity: BusinessMomentEntity
 };
+
+
+export type MicroserviceRawDataLogIngestor = {
+    dolittle: MicroserviceDolittle
+    name: string
+    kind: string
+    environment: string
+    extra: MicroserviceRawDataLogIngestorExtra
+};
+
+export type MicroserviceRawDataLogIngestorExtra = {
+    headImage: string
+    runtimeImage: string
+    ingress: MicroserviceIngressPath
+    webhooks: MicroserviceRawDataLogIngestorWebhookConfig[]
+};
+
+export type MicroserviceRawDataLogIngestorWebhookConfig = {
+    kind: string
+    suffix: string // TODO maybe uriSuffix
+    // ConnectorWebhookConfigBasic
+    // ConnectorWebhookConfigBearer
+    config: any
+};

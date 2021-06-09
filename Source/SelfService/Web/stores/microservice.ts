@@ -10,7 +10,7 @@ import {
     getApplication,
     HttpResponseMicroservices,
 } from '../api/api';
-import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor, MicroserviceDolittle } from '../api/index';
+import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor, MicroserviceDolittle, MicroserviceRawDataLogIngestor } from '../api/index';
 
 export type MicroserviceStore = {
     edit: any
@@ -155,5 +155,10 @@ export const saveSimpleMicroservice = async (input: MicroserviceSimple): Promise
 };
 
 export const saveBusinessMomentsAdaptorMicroservice = async (input: MicroserviceBusinessMomentAdaptor): Promise<boolean> => {
+    return saveMicroservice(input.kind, input);
+};
+
+
+export const saveMicroserviceRawDataLogIngestorMicroservice = async (input: MicroserviceRawDataLogIngestor): Promise<boolean> => {
     return saveMicroservice(input.kind, input);
 };

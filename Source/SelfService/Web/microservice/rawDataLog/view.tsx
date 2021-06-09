@@ -1,16 +1,14 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Pivot, PivotItem } from '@fluentui/react';
 
 import { HealthStatus } from '../view/healthStatus';
-import { getPodStatus, HttpResponsePodStatus, getServerUrlPrefix } from '../../api/api';
-import { SecondaryButton } from '../../theme/secondaryButton';
-import { DownloadLogIcon } from '../../theme/icons';
+import { HttpResponsePodStatus } from '../../api/api';
 import { useReadable } from 'use-svelte-store';
 import { microservices } from '../../stores/microservice';
 import { Webhooks } from './webhooks';
@@ -40,8 +38,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
         history.push(href);
         return null;
     }
-
-    const configMapPrefix = `${environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
 
     return (
         <>

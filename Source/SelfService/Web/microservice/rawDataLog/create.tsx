@@ -1,10 +1,18 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import React from 'react';
-import { Stack } from '@fluentui/react/lib/Stack';
-import { HttpResponseApplications2 } from '../../api/api';
 
-const stackTokens = { childrenGap: 15 };
+
+// TODO how to load the logs?
+// TODO validate the data
+// TODO change action button from create to save
+
+import React from 'react';
+import { Guid } from '@dolittle/rudiments';
+
+import { MicroserviceRawDataLogIngestor } from '../../api/index';
+import { HttpResponseApplications2 } from '../../api/api';
+import { EditConfig } from './editConfig';
+
 
 type Props = {
     application: HttpResponseApplications2
@@ -13,11 +21,46 @@ type Props = {
 
 export const Create: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
+    const application = _props.application;
+    const environment = _props.environment;
+    const ingressInfo = application.environments.find(e => e.name === environment)!;
+
+    // TODO do something with
+    const microserviceId = Guid.create().toString();
+
+    const fromStore = {
+        rawDataLogIngestor: {
+            image: '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/businessmomentsadaptor:latest',
+        },
+        runtime: {
+            image: 'dolittle/runtime:5.6.0'
+        }
+    };
+
+    const ms = {
+        dolittle: {
+            applicationId: application.id,
+            tenantId: application.tenantId,
+            microserviceId,
+        },
+        name: 'Raw Data Log Ingestor',
+        kind: 'raw-data-log-ingestor',
+        environment,
+        extra: {
+            headImage: fromStore.rawDataLogIngestor.image,
+            runtimeImage: fromStore.runtime.image,
+            ingress: {
+                path: '/api/webhooks',
+                pathType: 'Prefix',
+                host: ingressInfo.host,
+                domainPrefix: ingressInfo.domainPrefix
+            },
+            webhooks: [],
+        }
+    } as MicroserviceRawDataLogIngestor;
     return (
-        <Stack tokens={stackTokens}>
-            <h1>TODO Raw Data Log</h1>
-            <h2>Env: {_props.environment}</h2>
-            <h2>TenantID: {_props.application.tenantId}</h2>
-        </Stack>
+        <>
+            <EditConfig ms={ms} application={application} environment={environment} />
+        </>
     );
 };

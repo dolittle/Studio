@@ -29,7 +29,7 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
     const microserviceTypes: IDropdownOption[] = [
         { key: 'dolittle-microservice', text: 'Default Microservice' },
         { key: 'business-miner', text: 'Business Moment Adapter' },
-        { key: 'raw-data-log-webhook', text: 'Raw Data Log Webhook' },
+        { key: 'raw-data-log-ingestor', text: 'Raw Data Log Webhook' },
         { key: 'static-site', text: 'Static Site' },
     ];
 
@@ -63,7 +63,7 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
                     </Stack>
                 )}
 
-                {microserviceTypeState === 'raw-data-log-webhook' && (
+                {microserviceTypeState === 'raw-data-log-ingestor' && (
                     <Stack tokens={stackTokens}>
                         <RawDataLog application={_props.application} environment={environment} />
                     </Stack>

@@ -52,7 +52,7 @@ const kindTitles = {
         </svg>
         )
     },
-    'raw-data-log-webhook': {
+    'raw-data-log-ingestor': {
         subTitle: 'Webhook microservice',
         icon: ''
     }

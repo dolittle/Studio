@@ -68,7 +68,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
             currentMicroservice.live.images[0].image &&
             currentMicroservice.live.images[0].image === '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/dolittle/platform/platform-api:dev-x'
         ) {
-            kind = 'raw-data-log-webhook';
+            kind = 'raw-data-log-ingestor';
         }
 
 
@@ -88,7 +88,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     <BusinessMomentsAdaptorView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
                 </>
             );
-        case 'raw-data-log-webhook':
+        case 'raw-data-log-ingestor':
             return (
                 <>
                     <RawDataLogView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
