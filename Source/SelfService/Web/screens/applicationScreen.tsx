@@ -199,7 +199,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             <Route path="/application/:applicationId/:environment/business-moments">
                 <BusinessMomentsContainerScreen application={application} />
             </Route>
-        </LayoutWithSidebar >
+        </LayoutWithSidebar>
     );
 };
 

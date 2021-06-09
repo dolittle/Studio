@@ -1,20 +1,17 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect } from 'react';
-
-
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import { HttpResponseApplications2 } from '../api/api';
 
-type RegistryInfo = {
+type Vars = {
     acrId: string
     subscriptionId: string
 };
 
-
-function getInfo(info: RegistryInfo): string {
+function template(vars: Vars): string {
     const markdown = `
 # Login to az
 
@@ -24,13 +21,13 @@ az login
 
 # Login to your registry
 ~~~sh
-az acr login -n ${info.acrId} --subscription ${info.subscriptionId}
+az acr login -n ${vars.acrId} --subscription ${vars.subscriptionId}
 ~~~
 
 
 # List images in acr
 ~~~sh
-az acr repository list --name ${info.acrId} -otable
+az acr repository list --name ${vars.acrId} -otable
 ~~~
 `;
     return markdown.trim();
@@ -41,19 +38,17 @@ type Props = {
     info: any
 };
 
-export const ApplicationInfo: React.FunctionComponent<Props> = (props) => {
+export const Doc: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
     const info = _props.info;
 
-    const templdateData = {
+    const vars = {
         acrId: info.customer.container_registry_name,
         subscriptionId: info.subscriptionId,
-    } as RegistryInfo;
+    } as Vars;
 
-
-    const data = getInfo(templdateData);
-
+    const data = template(vars);
     return (
         <ReactMarkdown remarkPlugins={[gfm]} >
             {data}
