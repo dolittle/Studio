@@ -5,16 +5,15 @@
 // TODO validate the data
 // TODO change action button from create to save
 import React from 'react';
-
+import { useParams } from 'react-router-dom';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text, IDropdownOption } from '@fluentui/react';
+
 import { Create as BusinessMomentsAdaptor } from './businessMomentsAdaptor/create';
 import { Create as Base } from './base/create';
 import { Create as StaticSite } from './staticSite/create';
 import { Create as RawDataLog } from './rawDataLog/create';
-
-import { useParams } from 'react-router-dom';
 import { HttpResponseApplications2 } from '../api/api';
 
 const stackTokens = { childrenGap: 15 };
@@ -25,16 +24,13 @@ type Props = {
 
 export const Create: React.FunctionComponent<Props | undefined> = (props) => {
     const { environment } = useParams() as any;
-
     const _props = props!;
-    const applicationId = _props.application.id;
-
     const [microserviceTypeState, setMicroserviceTypeState] = React.useState('');
-
     const microserviceTypes: IDropdownOption[] = [
+        { key: 'dolittle-microservice', text: 'Default Microservice' },
         { key: 'business-miner', text: 'Business Moment Adapter' },
+        { key: 'raw-data-log-webhook', text: 'Raw Data Log Webhook' },
         { key: 'static-site', text: 'Static Site' },
-        { key: 'dolittle-microservice', text: 'Default Microservice' }
     ];
 
     function _onChange(event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number): void {
