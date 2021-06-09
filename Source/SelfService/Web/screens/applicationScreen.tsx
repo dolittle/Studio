@@ -11,7 +11,6 @@ import { MicroserviceNewScreen } from './microserviceNewScreen';
 
 import { MicroserviceEditScreen } from './microserviceEditScreen';
 import { MicroserviceViewScreen } from './microserviceViewScreen';
-import { ContainerRegistryInfoScreen } from './containerRegistryInfoScreen';
 import { PodViewScreen } from './podViewScreen';
 
 import { EnvironmentNewScreen } from './environmentNewScreen';
@@ -24,7 +23,7 @@ import {
     IDividerAsProps
 } from '@fluentui/react';
 
-import { DocumentationScreen } from './documentationScreen';
+import { DocumentationContainerScreen } from '../documentation/container';
 import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import { ApplicationDashboardScreen } from './applicationDashboard';
 
@@ -85,7 +84,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
         <ul>
             <li>
                 <Link onClick={() => {
-                    // This is annoying as balls
                     const href = `/application/${application.id}/${environment}/dashboard`;
                     history.push(href);
                 }}>
@@ -94,7 +92,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             </li>
             <li>
                 <Link onClick={() => {
-                    // This is annoying as balls
                     const href = `/application/${application.id}/${environment}/backup/overview`;
                     history.push(href);
                 }}>
@@ -103,7 +100,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             </li>
             <li>
                 <Link onClick={() => {
-                    // This is annoying as balls
                     const href = `/application/${application.id}/${environment}/business-moments`;
                     history.push(href);
                 }}>
@@ -113,7 +109,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             <li>
 
                 <Link onClick={() => {
-                    // This is annoying as balls
                     const href = `/application/${application.id}/${environment}/microservices/overview`;
                     history.push(href);
                 }}>
@@ -123,7 +118,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             <li>
 
                 <Link onClick={() => {
-                    // This is annoying as balls
                     const href = `/application/${application.id}/${environment}/documentation`;
                     history.push(href);
                 }}>
@@ -198,17 +192,14 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             <Route path="/application/:applicationId/:environment/microservices">
                 <ApplicationOverviewScreen application={application} />
             </Route>
-            <Route exact path="/application/:applicationId/:environment/documentation">
-                <DocumentationScreen />
-            </Route>
-            <Route exact path="/application/:applicationId/:environment/documentation/container-registry-info">
-                <ContainerRegistryInfoScreen application={application} />
+            <Route path="/application/:applicationId/:environment/documentation">
+                <DocumentationContainerScreen application={application} />
             </Route>
 
             <Route path="/application/:applicationId/:environment/business-moments">
                 <BusinessMomentsContainerScreen application={application} />
             </Route>
-        </LayoutWithSidebar >
+        </LayoutWithSidebar>
     );
 };
 
