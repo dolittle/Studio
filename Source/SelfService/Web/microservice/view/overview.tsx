@@ -4,17 +4,14 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Stack } from '@fluentui/react/lib/Stack';
-import { Pivot, PivotItem } from '@fluentui/react';
+import { getPodStatus, HttpResponsePodStatus } from '../../api/api';
 
-import { HealthStatus } from './healthStatus';
-import { getPodStatus, HttpResponsePodStatus, getServerUrlPrefix } from '../../api/api';
-import { SecondaryButton } from '../../theme/secondaryButton';
-import { DownloadLogIcon } from '../../theme/icons';
 import { useReadable } from 'use-svelte-store';
 import { microservices } from '../../stores/microservice';
+import { View as BaseView } from '../base/view';
+import { View as BusinessMomentsAdaptorView } from '../businessMomentsAdaptor/view';
+import { View as RawDataLogView } from '../rawDataLog/view';
 
-const stackTokens = { childrenGap: 15 };
 
 type Props = {
     applicationId: string
@@ -30,7 +27,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     const microserviceId = _props.microserviceId;
     const environment = _props.environment;
 
-    const [selectedKey, setSelectedKey] = useState('healthStatus');
     // Want microservice name
     const [podsData, setPodsData] = useState({
         namespace: '',
@@ -48,8 +44,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
-    const configMapPrefix = `${environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
-
     useEffect(() => {
         Promise.all([
             getPodStatus(applicationId, environment, microserviceId)
@@ -64,64 +58,50 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
-    return (
-        <>
-            <Stack tokens={stackTokens}>
-                <h1>{currentMicroservice.name}</h1>
-                <Pivot selectedKey={selectedKey}
-                    onLinkClick={(item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) => {
-                        const key = item?.props.itemKey as string;
-                        if (selectedKey !== key) {
-                            setSelectedKey(key);
-                        }
-                    }}
-                >
-                    <PivotItem
-                        itemKey="config"
-                        headerText="Config"
-                        onClick={() => {
-                            setSelectedKey('config');
-                        }}
-                    >
-                        <p>Config Screen</p>
-                    </PivotItem>
-                    <PivotItem
-                        itemKey="healthStatus"
-                        headerText="Health Status">
-                        <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
-                    </PivotItem>
-                </Pivot>
+    let kind = currentMicroservice.kind;
+    if (kind === '') {
+        // Hack
+        console.log(currentMicroservice);
+        if (
+            currentMicroservice &&
+            currentMicroservice.live &&
+            currentMicroservice.live.images &&
+            currentMicroservice.live.images[0] &&
+            currentMicroservice.live.images[0].image &&
+            currentMicroservice.live.images[0].image === '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/dolittle/platform/platform-api:dev-x'
+        ) {
+            kind = 'raw-data-log-webhook';
+        }
 
-                <SecondaryButton
-                    title="Download secret env-variables yaml"
-                    icon={DownloadLogIcon}
-                    onClick={() => {
-                        const secretName = `${configMapPrefix}-secret-env-variables`;
-                        const href = `${getServerUrlPrefix()}/live/application/${applicationId}/secret/${secretName}?download=1&fileType=yaml`;
-                        window.open(href, '_blank');
-                    }}
-                />
 
-                <SecondaryButton
-                    title="Download config files yaml"
-                    icon={DownloadLogIcon}
-                    onClick={() => {
-                        const configMapName = `${configMapPrefix}-config-files`;
-                        const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
-                        window.open(href, '_blank');
-                    }}
-                />
+    }
 
-                <SecondaryButton
-                    title="Download env-variables yaml"
-                    icon={DownloadLogIcon}
-                    onClick={() => {
-                        const configMapName = `${configMapPrefix}-env-variables`;
-                        const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
-                        window.open(href, '_blank');
-                    }}
-                />
-            </Stack>
-        </>
-    );
+    switch (kind) {
+        case 'simple':
+            return (
+                <>
+                    <BaseView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
+                </>
+            );
+
+        case 'business-moments-adaptor':
+            return (
+                <>
+                    <BusinessMomentsAdaptorView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
+                </>
+            );
+        case 'raw-data-log-webhook':
+            return (
+                <>
+                    <RawDataLogView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
+                </>
+            );
+        default:
+            return (
+                <>
+                    <h1>Not supported</h1>
+                </>
+            );
+    }
+
 };
