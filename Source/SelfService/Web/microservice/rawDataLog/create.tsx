@@ -41,7 +41,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             tenantId: application.tenantId,
             microserviceId,
         },
-        name: 'Raw Data Log Ingestor',
+        name: 'RawDataLogIngestor',
         kind: 'raw-data-log-ingestor',
         environment,
         extra: {

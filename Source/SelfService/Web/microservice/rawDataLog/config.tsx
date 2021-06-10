@@ -48,7 +48,6 @@ export const Config: React.FunctionComponent<WebhooksConfigProps | undefined> = 
                     onChange={(e, v) => {
                         ms.name = v!;
                     }}
-                    readOnly={true}
                 />
             </Stack>
 
