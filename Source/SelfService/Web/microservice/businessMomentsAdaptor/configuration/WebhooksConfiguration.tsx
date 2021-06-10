@@ -156,4 +156,3 @@ export const WebhooksConfig: React.FunctionComponent<WebhooksConfigProps | undef
         </Stack>
     );
 };
-

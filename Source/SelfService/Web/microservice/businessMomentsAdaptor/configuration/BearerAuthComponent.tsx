@@ -9,13 +9,29 @@ import { ConnectorWebhookConfigBearer } from '../../../api/index';
 
 const stackTokens = { childrenGap: 15 };
 
-export const BearerAuthComponent: React.FunctionComponent<ConnectorWebhookConfigBearer> = (props) => {
+type Props = {
+    token: string
+    onUpdate: (data: any) => void;
+};
+
+export const BearerAuthComponent: React.FunctionComponent<Props> = (props) => {
     const token = props!.token;
+    const onUpdate = props!.onUpdate!;
+    const [tokenState, setTokenState] = React.useState(token);
+
     return (
         <>
             <Stack horizontal tokens={stackTokens}>
                 <Label>Token</Label>
-                <TextField defaultValue={token} />
+                <TextField
+                    defaultValue={token}
+                    onChange={(event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+                        setTokenState(newValue as string);
+                        onUpdate({
+                            token: newValue
+                        });
+                    }}
+                />
             </Stack>
         </>
     );
