@@ -131,6 +131,7 @@ export type MicroserviceRawDataLogIngestorExtra = {
     ingress: MicroserviceIngressPath
     webhooks: MicroserviceRawDataLogIngestorWebhookConfig[]
     webhookStatsAuthorization: string
+    writeTo: string
 };
 
 export type MicroserviceRawDataLogIngestorWebhookConfig = {

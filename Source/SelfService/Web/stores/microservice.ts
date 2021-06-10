@@ -124,13 +124,13 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
 
     switch (kind) {
         case 'simple':
-            response = apiSaveMicroservice(input);
+            response = await apiSaveMicroservice(input);
             break;
         case 'business-moments-adaptor':
-            response = apiSaveMicroservice(input);
+            response = await apiSaveMicroservice(input);
             break;
         case 'raw-data-log-ingestor':
-            response = apiSaveMicroservice(input);
+            response = await apiSaveMicroservice(input);
             break;
         default:
             alert(`saving via store failed, kind: ${kind} not supported`);

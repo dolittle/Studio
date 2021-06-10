@@ -61,6 +61,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 }
             ],
             webhookStatsAuthorization: 'test stats',
+            writeTo: 'stdout',
         }
     } as MicroserviceRawDataLogIngestor;
     return (

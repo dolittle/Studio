@@ -17,7 +17,7 @@ type WebhooksConfigProps = {
     domain: string
     action: string
     ms: MicroserviceRawDataLogIngestor
-    onSave?: (ms: MicroserviceRawDataLogIngestor) => void;
+    onSave?: (ms: MicroserviceRawDataLogIngestor) => Promise<void>;
 };
 // TODO how to pass in
 
@@ -69,7 +69,11 @@ export const Config: React.FunctionComponent<WebhooksConfigProps | undefined> = 
             </Stack>
 
             <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
-                <PrimaryButton text={actionText} onClick={() => onSave(ms)} />
+                <PrimaryButton text={actionText} onClick={() => {
+                    (async () => {
+                        await onSave(ms);
+                    })();
+                }} />
             </Stack>
         </Stack>
     );

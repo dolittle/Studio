@@ -31,11 +31,10 @@ export const EditConfig: React.FunctionComponent<Props> = (props) => {
     const environment = _props.environment;
     const ms = _props.ms;
 
-    const onSave = (ms: MicroserviceRawDataLogIngestor): void => {
-        saveRawDataLogIngestorMicroservice(ms).then(data => {
-            const href = `/application/${application.id}/${environment}/microservices/overview`;
-            history.push(href);
-        });
+    const onSave = async (ms: MicroserviceRawDataLogIngestor): Promise<void> => {
+        const data = await saveRawDataLogIngestorMicroservice(ms);
+        const href = `/application/${application.id}/${environment}/microservices/overview`;
+        history.push(href);
     };
 
     return (
