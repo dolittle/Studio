@@ -130,12 +130,11 @@ export type MicroserviceRawDataLogIngestorExtra = {
     runtimeImage: string
     ingress: MicroserviceIngressPath
     webhooks: MicroserviceRawDataLogIngestorWebhookConfig[]
+    webhookStatsAuthorization: string
 };
 
 export type MicroserviceRawDataLogIngestorWebhookConfig = {
     kind: string
-    suffix: string // TODO maybe uriSuffix
-    // ConnectorWebhookConfigBasic
-    // ConnectorWebhookConfigBearer
-    config: any
+    uriSuffix: string // TODO maybe uriSuffix
+    authorization: string // Bearer X or Basic X
 };

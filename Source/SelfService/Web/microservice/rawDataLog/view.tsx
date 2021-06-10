@@ -12,8 +12,7 @@ import { HttpResponsePodStatus } from '../../api/api';
 import { useReadable } from 'use-svelte-store';
 import { microservices } from '../../stores/microservice';
 import { Webhooks } from './webhooks';
-import { ViewConfig } from './viewConfig';
-import { MicroserviceRawDataLogIngestor } from '../../api/index';
+import { ConfigView } from './configView';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -41,29 +40,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
-
-    const ms = {
-        dolittle: {
-            applicationId,
-            tenantId: 'TODO',
-            microserviceId,
-        },
-        name: 'Raw Data Log Ingestor',
-        kind: 'raw-data-log-ingestor',
-        environment,
-        extra: {
-            headImage: currentMicroservice.live.images[0].image,
-            runtimeImage: '',
-            ingress: {
-                path: '/TODO',
-                pathType: 'Prefix',
-                host: 'TODO',
-                domainPrefix: 'TODO'
-            },
-            webhooks: [],
-        }
-    } as MicroserviceRawDataLogIngestor;
-
     return (
         <>
             <Stack tokens={stackTokens}>
@@ -83,7 +59,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                             setSelectedKey('config');
                         }}
                     >
-                        <ViewConfig ms={ms} />
+                        <ConfigView microservice={currentMicroservice.edit} />
                     </PivotItem>
                     <PivotItem
                         itemKey="webhooks"
@@ -92,7 +68,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                             setSelectedKey('webhooks');
                         }}
                     >
-                        <Webhooks />
+                        <Webhooks microservice={currentMicroservice.edit} />
                     </PivotItem>
 
                     <PivotItem

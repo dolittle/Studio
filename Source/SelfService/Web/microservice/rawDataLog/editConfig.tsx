@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Config } from './config';
-import { saveMicroserviceRawDataLogIngestorMicroservice } from '../../stores/microservice';
+import { saveRawDataLogIngestorMicroservice } from '../../stores/microservice';
 import { MicroserviceRawDataLogIngestor } from '../../api/index';
 
 import { HttpResponseApplications2 } from '../../api/api';
@@ -32,7 +32,7 @@ export const EditConfig: React.FunctionComponent<Props> = (props) => {
     const ms = _props.ms;
 
     const onSave = (ms: MicroserviceRawDataLogIngestor): void => {
-        saveMicroserviceRawDataLogIngestorMicroservice(ms).then(data => {
+        saveRawDataLogIngestorMicroservice(ms).then(data => {
             const href = `/application/${application.id}/${environment}/microservices/overview`;
             history.push(href);
         });

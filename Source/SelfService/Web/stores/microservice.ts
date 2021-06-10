@@ -129,8 +129,11 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
         case 'business-moments-adaptor':
             response = apiSaveMicroservice(input);
             break;
+        case 'raw-data-log-ingestor':
+            response = apiSaveMicroservice(input);
+            break;
         default:
-            alert(`kind: ${kind} not supported`);
+            alert(`saving via store failed, kind: ${kind} not supported`);
             return Promise.resolve(false as boolean);
     }
 
@@ -158,7 +161,6 @@ export const saveBusinessMomentsAdaptorMicroservice = async (input: Microservice
     return saveMicroservice(input.kind, input);
 };
 
-
-export const saveMicroserviceRawDataLogIngestorMicroservice = async (input: MicroserviceRawDataLogIngestor): Promise<boolean> => {
+export const saveRawDataLogIngestorMicroservice = async (input: MicroserviceRawDataLogIngestor): Promise<boolean> => {
     return saveMicroservice(input.kind, input);
 };

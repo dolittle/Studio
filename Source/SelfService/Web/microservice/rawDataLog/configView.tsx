@@ -12,11 +12,11 @@ const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } 
 const stackTokens = { childrenGap: 15 };
 
 type WebhooksConfigProps = {
-    ms: MicroserviceRawDataLogIngestor
+    microservice: MicroserviceRawDataLogIngestor
 };
 
-export const ViewConfig: React.FunctionComponent<WebhooksConfigProps> = (props) => {
-    const ms = props!.ms;
+export const ConfigView: React.FunctionComponent<WebhooksConfigProps> = (props) => {
+    const ms = props!.microservice;
     const domain = ms.extra.ingress.host;
 
     return (

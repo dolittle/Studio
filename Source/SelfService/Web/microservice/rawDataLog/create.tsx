@@ -24,13 +24,11 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const application = _props.application;
     const environment = _props.environment;
     const ingressInfo = application.environments.find(e => e.name === environment)!;
-
-    // TODO do something with
     const microserviceId = Guid.create().toString();
 
     const fromStore = {
         rawDataLogIngestor: {
-            image: '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/businessmomentsadaptor:latest',
+            image: '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/dolittle/platform/platform-api:dev-x', // TODO change
         },
         runtime: {
             image: 'dolittle/runtime:5.6.0'
@@ -55,7 +53,14 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 host: ingressInfo.host,
                 domainPrefix: ingressInfo.domainPrefix
             },
-            webhooks: [],
+            webhooks: [
+                {
+                    authorization: 'todo auth',
+                    uriSuffix: 'abc/abc',
+                    kind: 'abc/abc',
+                }
+            ],
+            webhookStatsAuthorization: 'test stats',
         }
     } as MicroserviceRawDataLogIngestor;
     return (
