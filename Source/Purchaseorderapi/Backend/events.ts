@@ -9,18 +9,20 @@ import { eventType } from '@dolittle/sdk.events';
 //     ) {}
 // }
 
-// @eventType('8f395751-c057-4c75-b1b9-a05d6e76510c')
-// export class PurchaseOrderLineUpdated {
-//     constructor(readonly username: string, readonly facilityNumber: string) {}
-// }
+@eventType('2165c455-1ad0-46be-bb0d-fc2df1801b1a')
+export class PurchaseOrderLineUpdated {
+    constructor(readonly username: string, readonly facilityNumber: string) {}
+}
 // @eventType('21b72991-7256-4dfd-82d1-4976aade904a')
 // export class PurchaseOrderLineOrderedQuantityChanged {
 //     constructor(readonly facilityNumber: string) {}
 // }
-@eventType('1ddc8ff9-6d02-4507-b4db-1f520861a3bf')
+
+@eventType('8c9b617a-6823-44b4-b13f-ea6e572871e1')
 export class FacilityCreated {
     constructor(readonly FacilityNumber: string) {}
 }
+
 @eventType('ecd9960e-e2a9-43b1-a6f0-793e83e0aef8')
 export class FacilityDeleted {
     constructor(readonly FacilityNumber: string) {}
@@ -45,10 +47,10 @@ export class PurchaseOrderNumberUpdated {
 export class PurchaseOrderLineCreated {
     constructor(readonly LineNumber: number) {}
 }
-@eventType('9bf543c6-5a34-4bd2-a762-808bf82e9097')
-export class PurchaseOrderLineUpdated {
-    constructor(readonly LineNumber: number) {}
-}
+// @eventType('9bf543c6-5a34-4bd2-a762-808bf82e9097')
+// export class PurchaseOrderLineUpdated {
+//     constructor(readonly LineNumber: number) {}
+// }
 @eventType('3a1135fb-ab87-4a86-8996-25b0fcdddd8d')
 export class PurchaseOrderLineDeleted {
     constructor(readonly LineNumber: number) {}
@@ -434,6 +436,167 @@ export class DeliveryTermsDeleted {
 @eventType('2eb89073-4b8f-4985-88ff-89b718e8a80a')
 export class DeliveryTermsUpdated {
     constructor(readonly Terms: string) {}
+}
+
+////////////
+//HEAD
+@eventType('66f7800d-1a8a-402e-8516-bfa547adf034')
+export class OrderDateCreated {
+    constructor(readonly OrderDate: number) {}
+}
+
+@eventType('1fc52080-23d2-4ca9-8577-19f8195d26f8')
+export class OrderDateDeleted {
+    constructor(readonly OrderDate: number) {}
+}
+
+@eventType('f08c3984-bc19-4329-9465-34bde48c7890')
+export class OrderDateUpdated {
+    constructor(readonly OrderDate: number) {}
+}
+
+////////////
+@eventType('1c6b5f73-5be1-48c8-8078-6a4352805da1')
+export class PaymentTermsCreated {
+    constructor(readonly PaymentTerms: string) {}
+}
+
+@eventType('9e47a6ab-136a-4f7f-88b8-16dc44bbf14c')
+export class PaymentTermsDeleted {
+    constructor(readonly PaymentTerms: string) {}
+}
+
+@eventType('39d112db-672b-4d80-9533-ad4671beab6d')
+export class PaymentTermsUpdated {
+    constructor(readonly PaymentTerms: string) {}
+}
+
+////////////
+@eventType('98289f18-b3f6-43ca-aeaa-0ae90e13e167')
+export class ReferenceCreated {
+    constructor(readonly Reference: string) {}
+}
+
+@eventType('63a096c7-580c-4c38-a576-ba668ab99119')
+export class ReferenceDeleted {
+    constructor(readonly Reference: string) {}
+}
+
+@eventType('e6440f69-1a0e-4570-829a-a34991da5743')
+export class ReferenceUpdated {
+    constructor(readonly Reference: string) {}
+}
+
+////////////
+@eventType('7c9f1eb2-b2bf-4a23-839c-07ae25c7268f')
+export class SupplierReferenceCreated {
+    constructor(readonly SupplierReference: string) {}
+}
+
+@eventType('5af600bf-f41f-442b-87ab-825c2b7ce7cc')
+export class SupplierReferenceDeleted {
+    constructor(readonly SupplierReference: string) {}
+}
+
+@eventType('ef725092-5e2e-41fe-964f-daada254b294')
+export class SupplierReferenceUpdated {
+    constructor(readonly SupplierReference: string) {}
+}
+
+////////////
+@eventType('ce81cd99-c6f2-4ef0-aa00-11471f0a104c')
+export class OurReferenceNumberCreated {
+    constructor(readonly InternalReference: string) {}
+}
+
+@eventType('fee90be9-c42f-438f-8ee9-d87446654dac')
+export class OurReferenceNumberDeleted {
+    constructor(readonly InternalReference: string) {}
+}
+
+@eventType('8b16248a-e717-4429-b990-dc772c0abfba')
+export class OurReferenceNumberUpdated {
+    constructor(readonly InternalReference: string) {}
+}
+
+////////////
+@eventType('8020529f-4b42-46cc-82cd-4b0b11c31715')
+export class NetOrderValueCreated {
+    constructor(readonly OrderValueNet: number) {}
+}
+
+@eventType('12fe085f-8f0b-4c16-85b5-173755bd8c13')
+export class NetOrderValueDeleted {
+    constructor(readonly OrderValueNet: number) {}
+}
+
+@eventType('8036ec2b-2b79-44c7-a628-45ce3afa808b')
+export class NetOrderValueUpdated {
+    constructor(readonly OrderValueNet: number) {}
+}
+
+////////////
+@eventType('296dcb1d-e98a-4d13-b1b4-949ef1af6e77')
+export class NumberOfPurchaseOrderLinesCreated {
+    constructor(readonly AmountPurchaseOrderLines: number) {}
+}
+
+@eventType('4dac676f-9c9e-4b38-9c85-470af4dd2c19')
+export class NumberOfPurchaseOrderLinesDeleted {
+    constructor(readonly AmountPurchaseOrderLines: number) {}
+}
+
+@eventType('6692b5d8-9ccf-4be8-a227-f4fe1b9c4a1b')
+export class NumberOfPurchaseOrderLinesUpdated {
+    constructor(readonly AmountPurchaseOrderLines: number) {}
+}
+
+////////////
+@eventType('c2d609de-851a-4265-9fc1-eb3756222423')
+export class TotalOrderCostCreated {
+    constructor(readonly TotalCost: number) {}
+}
+
+@eventType('bb6bfb94-352a-4e35-8c89-504fd8964c40')
+export class TotalOrderCostDeleted {
+    constructor(readonly TotalCost: number) {}
+}
+
+@eventType('477a05db-b5a2-4e3f-8d23-57b3546ca055')
+export class TotalOrderCostUpdated {
+    constructor(readonly TotalCost: number) {}
+}
+
+////////////
+@eventType('cd70a98c-c4a5-479f-9b5e-92721d5feb73')
+export class TotalQuantityCreated {
+    constructor(readonly TotalQuantity: number) {}
+}
+
+@eventType('718bb6fa-0681-47a4-9f2f-72f15f1eb321')
+export class TotalQuantityDeleted {
+    constructor(readonly TotalQuantity: number) {}
+}
+
+@eventType('c4259df4-a7cc-4b25-bc60-94794f874bff')
+export class TotalQuantityUpdated {
+    constructor(readonly TotalQuantity: number) {}
+}
+
+////////////
+@eventType('be4b2101-6a0a-44af-b148-cf102d339f5a')
+export class OurInvoicingAddressCreated {
+    constructor(readonly InvoiceAddress: string) {}
+}
+
+@eventType('daea2c53-ce86-4b8f-a4b5-a6e1cd2b90d3')
+export class OurInvoicingAddressDeleted {
+    constructor(readonly InvoiceAddress: string) {}
+}
+
+@eventType('b495cc26-4c2c-4bb2-b2bd-a10542bd8929')
+export class OurInvoicingAddressUpdated {
+    constructor(readonly InvoiceAddress: string) {}
 }
 
 ////////////
