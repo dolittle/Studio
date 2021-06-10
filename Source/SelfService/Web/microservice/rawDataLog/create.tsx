@@ -55,12 +55,12 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             },
             webhooks: [
                 {
-                    authorization: 'todo auth',
+                    authorization: 'Bearer TODO',
                     uriSuffix: 'abc/abc',
                     kind: 'abc/abc',
                 }
             ],
-            webhookStatsAuthorization: 'test stats',
+            webhookStatsAuthorization: 'Bearer TODO',
             writeTo: 'stdout',
         }
     } as MicroserviceRawDataLogIngestor;
