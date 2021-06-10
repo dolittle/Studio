@@ -8,6 +8,79 @@ import { eventType } from '@dolittle/sdk.events';
 //         readonly suppplierId: string /* SUNO */
 //     ) {}
 // }
+@eventType('3f6c2333-14f1-4a61-a5ca-7f9b4231313d')
+export class PurchaseOrderCreated {
+    constructor(
+        readonly FacilityNumber: string,
+        readonly PurchaseOrderNumber: number,
+        readonly LowestStatus: string,
+        readonly HighestStatus: string,
+        readonly OrderDate: number,
+        readonly SupplierID: string,
+        readonly PaymentTerms: string,
+        readonly DeliveryMethod: string,
+        readonly DeliveryTerms: string,
+        readonly Reference: string,
+        readonly SupplierReference: string,
+        readonly RequestedDate: number,
+        readonly InternalReference: string,
+        readonly OrderValueNet: number,
+        readonly AmountPurchaseOrderLines: number,
+        readonly TotalCost: number,
+        readonly TotalQuantity: number,
+        readonly InvoiceAddress: string
+    ) {}
+}
+
+@eventType('a1df01e2-7347-4c3c-aaec-c5e94cb093e3')
+export class PurchaseOrderDeleted {
+    constructor(
+        readonly FacilityNumber: string,
+        readonly PurchaseOrderNumber: number,
+        readonly LowestStatus: string,
+        readonly HighestStatus: string,
+        readonly OrderDate: number,
+        readonly SupplierID: string,
+        readonly PaymentTerms: string,
+        readonly DeliveryMethod: string,
+        readonly DeliveryTerms: string,
+        readonly Reference: string,
+        readonly SupplierReference: string,
+        readonly RequestedDate: number,
+        readonly InternalReference: string,
+        readonly OrderValueNet: number,
+        readonly AmountPurchaseOrderLines: number,
+        readonly TotalCost: number,
+        readonly TotalQuantity: number,
+        readonly InvoiceAddress: string
+    ) {}
+}
+
+@eventType('e429ec86-94c2-4ba2-a80d-6027f522ad18')
+export class PurchaseOrderUpdated {
+    constructor(
+        readonly FacilityNumber: string,
+        readonly PurchaseOrderNumber: number,
+        readonly LowestStatus: string,
+        readonly HighestStatus: string,
+        readonly OrderDate: number,
+        readonly SupplierID: string,
+        readonly PaymentTerms: string,
+        readonly DeliveryMethod: string,
+        readonly DeliveryTerms: string,
+        readonly Reference: string,
+        readonly SupplierReference: string,
+        readonly RequestedDate: number,
+        readonly InternalReference: string,
+        readonly OrderValueNet: number,
+        readonly AmountPurchaseOrderLines: number,
+        readonly TotalCost: number,
+        readonly TotalQuantity: number,
+        readonly InvoiceAddress: string
+    ) {}
+}
+
+////////////
 
 @eventType('2165c455-1ad0-46be-bb0d-fc2df1801b1a')
 export class PurchaseOrderLineUpdated {
