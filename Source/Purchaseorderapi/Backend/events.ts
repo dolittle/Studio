@@ -130,7 +130,10 @@ export class PurchaseOrderLineDeleted {
 @eventType('0d8c39bd-658e-4e7f-bf43-39a7df19b8c8')
 export class PurchaseOrderLineSubNumberUpdated {
     // TODO: need to add identifier: po number + linenumber (see PurchaseOrderLineDeleted)
-    constructor(readonly SubLineNumber: number) { }
+    constructor(readonly PurchaseOrderNumber: number,
+        readonly LineNumber: number,
+        readonly itemNumber: string,
+        readonly SubLineNumber: number) { }
 }
 
 @eventType('9ce6921c-d2b6-44c6-9f05-a17966ba2261')
