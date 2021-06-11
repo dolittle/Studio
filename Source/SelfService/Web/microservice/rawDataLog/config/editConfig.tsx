@@ -11,10 +11,10 @@ import { useHistory } from 'react-router-dom';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Config } from './config';
-import { saveRawDataLogIngestorMicroservice } from '../../stores/microservice';
-import { MicroserviceRawDataLogIngestor } from '../../api/index';
+import { saveRawDataLogIngestorMicroservice } from '../../../stores/microservice';
+import { MicroserviceRawDataLogIngestor } from '../../../api/index';
 
-import { HttpResponseApplications2 } from '../../api/api';
+import { HttpResponseApplications2 } from '../../../api/api';
 
 const stackTokens = { childrenGap: 15 };
 

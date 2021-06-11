@@ -5,8 +5,6 @@ import { TextField } from '@fluentui/react/lib/TextField';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Label } from '@fluentui/react/lib/Label';
 
-import { ConnectorWebhookConfigBearer } from '../../../api/index';
-
 const stackTokens = { childrenGap: 15 };
 
 type Props = {

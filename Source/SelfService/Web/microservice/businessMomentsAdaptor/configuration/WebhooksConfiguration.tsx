@@ -10,8 +10,8 @@ import { Stack } from '@fluentui/react/lib/Stack';
 import { IDropdownOption } from '@fluentui/react';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 
-import { BasicAuthComponent } from './BasicAuthComponent';
-import { BearerAuthComponent } from './BearerAuthComponent';
+import { BasicAuthComponent } from '../../../components/basicAuthComponent';
+import { BearerAuthComponent } from '../../../components/bearerAuthComponent';
 import { ConnectorWebhookConfig, MicroserviceBusinessMomentAdaptor } from '../../../api/index';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };

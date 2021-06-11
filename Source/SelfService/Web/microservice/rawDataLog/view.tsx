@@ -12,7 +12,7 @@ import { HttpResponsePodStatus } from '../../api/api';
 import { useReadable } from 'use-svelte-store';
 import { microservices } from '../../stores/microservice';
 import { Webhooks } from './webhooks';
-import { ConfigView } from './configView';
+import { ConfigView } from './config/configView';
 
 const stackTokens = { childrenGap: 15 };
 

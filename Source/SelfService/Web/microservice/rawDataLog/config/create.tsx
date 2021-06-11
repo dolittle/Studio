@@ -9,10 +9,9 @@
 import React from 'react';
 import { Guid } from '@dolittle/rudiments';
 
-import { MicroserviceRawDataLogIngestor } from '../../api/index';
-import { HttpResponseApplications2 } from '../../api/api';
+import { MicroserviceRawDataLogIngestor } from '../../../api/index';
+import { HttpResponseApplications2 } from '../../../api/api';
 import { EditConfig } from './editConfig';
-
 
 type Props = {
     application: HttpResponseApplications2

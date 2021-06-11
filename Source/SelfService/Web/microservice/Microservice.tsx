@@ -13,7 +13,7 @@ import { Text, IDropdownOption } from '@fluentui/react';
 import { Create as BusinessMomentsAdaptor } from './businessMomentsAdaptor/create';
 import { Create as Base } from './base/create';
 import { Create as StaticSite } from './staticSite/create';
-import { Create as RawDataLog } from './rawDataLog/create';
+import { Create as RawDataLog } from './rawDataLog/config/create';
 import { HttpResponseApplications2 } from '../api/api';
 
 const stackTokens = { childrenGap: 15 };

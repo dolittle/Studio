@@ -8,8 +8,8 @@
 
 import React from 'react';
 
-import { MicroserviceRawDataLogIngestor } from '../../api/index';
-import { HttpResponseApplications2 } from '../../api/api';
+import { MicroserviceRawDataLogIngestor } from '../../../api/index';
+import { HttpResponseApplications2 } from '../../../api/api';
 import { EditConfig } from './editConfig';
 
 type Props = {

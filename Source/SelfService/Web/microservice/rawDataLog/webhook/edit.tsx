@@ -9,15 +9,17 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { MicroserviceRawDataLogIngestorWebhookConfig, ConnectorWebhookConfigBasic } from '../../../api/index';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
-import { BasicAuthComponent } from '../../businessMomentsAdaptor/configuration/BasicAuthComponent';
-import { BearerAuthComponent } from '../../businessMomentsAdaptor/configuration/BearerAuthComponent';
-
+import { BasicAuthComponent } from '../../../components/basicAuthComponent';
+import { BearerAuthComponent } from '../../../components/bearerAuthComponent';
+import { trimPrefix, trimSuffix } from '../../../utils/string';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
 
 type Props = {
+    domain: string
+    ingressPath: string
     webhook: MicroserviceRawDataLogIngestorWebhookConfig
     onAfterSave: (webhooks: MicroserviceRawDataLogIngestorWebhookConfig) => Promise<void>;
 };
@@ -26,38 +28,21 @@ const defaultAuthType = 'Basic';
 
 export const Edit: React.FunctionComponent<Props | undefined> = (props) => {
     const currentWebhook = props!.webhook;
+    let domain = props!.domain;
+    let ingressPath = props!.ingressPath;
     const onAfterSave = props!.onAfterSave;
 
-    const actionText = 'Save';
-    const getAuthInfo = (data: string): string[] => {
-        try {
-            const parts = data.split(' ');
-            const authType = parts[0].toLowerCase();
-            parts.shift();
-            const authData = parts.join(' ');
-            if (authType === 'basic') {
-                return ['Basic', authData];
-            }
+    domain = trimSuffix(domain, '/');
+    ingressPath = trimPrefix(ingressPath, '/');
+    ingressPath = trimSuffix(ingressPath, '/');
 
-            if (authType === 'bearer') {
-                return ['Bearer', authData];
-            }
-            throw Error();
-        } catch (e) {
-            return [defaultAuthType, ''];
-        }
-    };
-
-    const authInfo = getAuthInfo(currentWebhook.authorization);
-
-    const domain = 'TODO.com';
-    const ingressPath = 'webhooks';
     const urlPrefix = `${domain}/${ingressPath}`;
+    const actionText = 'Save';
+    const authInfo = getAuthInfo(currentWebhook.authorization);
 
     const [authOptionState, setAuthOptionState] = useState(authInfo[0]);
     const [config, setConfig] = useState(authInfo);
     const [webhook, setWebhook] = useState(currentWebhook);
-
 
     const authenticationOptions: IDropdownOption[] = [
         { key: 'Bearer', text: 'Bearer Token' },
@@ -101,7 +86,6 @@ export const Edit: React.FunctionComponent<Props | undefined> = (props) => {
 
     return (
         <>
-
             <Stack horizontal tokens={stackTokens}>
                 <Label>Entity type / Kind</Label>
                 <TextField
@@ -178,6 +162,25 @@ export const Edit: React.FunctionComponent<Props | undefined> = (props) => {
     );
 };
 
+
+function getAuthInfo(data: string): string[] {
+    try {
+        const parts = data.split(' ');
+        const authType = parts[0].toLowerCase();
+        parts.shift();
+        const authData = parts.join(' ');
+        if (authType === 'basic') {
+            return ['Basic', authData];
+        }
+
+        if (authType === 'bearer') {
+            return ['Bearer', authData];
+        }
+        throw Error();
+    } catch (e) {
+        return [defaultAuthType, ''];
+    }
+};
 
 function getUsernameAndPasswordFromBasicAuth(data: string): ConnectorWebhookConfigBasic {
     try {
