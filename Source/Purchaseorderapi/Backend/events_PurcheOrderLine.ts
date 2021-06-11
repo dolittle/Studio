@@ -2,7 +2,6 @@ import { eventType } from '@dolittle/sdk.events';
 
 @eventType('25e68333-9c2f-4447-93a2-35ba8951ffb2')
 export class PurchaseOrderLineCreated {
-    // TODO: add more properties!
     constructor(
         readonly PurchaseOrderNumber: number,
         readonly LineNumber: number,
@@ -17,6 +16,18 @@ export class PurchaseOrderLineCreated {
         readonly ItemName: string
     ) { }
 }
+
+@eventType('3a1135fb-ab87-4a86-8996-25b0fcdddd8d')
+export class PurchaseOrderLineDeleted {
+    constructor(
+        readonly PurchaseOrderNumber: number,
+        readonly LineNumber: number,
+        readonly SubLineNumber: number,
+        readonly itemNumber: string
+    ) { }
+}
+
+// =============
 
 @eventType('0d8c39bd-658e-4e7f-bf43-39a7df19b8c8')
 export class PurchaseOrderLineSubNumberUpdated {
@@ -237,16 +248,6 @@ export class ConfirmedDeliveryDateUpdated {
         readonly SubLineNumber: number,
         readonly itemNumber: string,
         readonly ConfirmedDate: number
-    ) { }
-}
-
-@eventType('3a1135fb-ab87-4a86-8996-25b0fcdddd8d')
-export class PurchaseOrderLineDeleted {
-    constructor(
-        readonly PurchaseOrderNumber: number,
-        readonly LineNumber: number,
-        readonly SubLineNumber: number,
-        readonly itemNumber: string
     ) { }
 }
 
