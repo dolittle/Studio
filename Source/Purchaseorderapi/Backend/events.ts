@@ -443,7 +443,7 @@ export class PurchaseOrderNetOrderValueUpdated {
     constructor(readonly PurchaseOrderNumber: string, readonly OrderValueNet: number) {}
 }
 
-@eventType('6692b5d8-9ccf-4be8-a227-f4fe1b9c4a1b')
+@eventType('6692b5d8-9ccf-4be8-a    227-f4fe1b9c4a1b')
 export class PurchaseOrderNumberOfPurchaseOrderLinesUpdated {
     constructor(
         readonly PurchaseOrderNumber: string,
