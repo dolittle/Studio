@@ -4,18 +4,18 @@ import { eventType } from '@dolittle/sdk.events';
 export class PurchaseOrderCreated {
     constructor(
         /* Id */
-        readonly PurchaseOrderNumber: number,
+        readonly PurchaseOrderNumber: string,
         readonly FacilityNumber: string,
         readonly LowestStatus: string,
         readonly HighestStatus: string,
-        readonly OrderDate: number,
+        readonly OrderDate: Date | null,
         readonly SupplierID: string,
         readonly PaymentTerms: string,
         readonly DeliveryMethod: string,
         readonly DeliveryTerms: string,
         readonly Reference: string,
         readonly SupplierReference: string,
-        readonly RequestedDate: number,
+        readonly RequestedDate: Date | null,
         readonly InternalReference: string,
         readonly OrderValueNet: number,
         readonly AmountPurchaseOrderLines: number,

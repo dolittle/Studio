@@ -2,7 +2,6 @@ import fs from 'fs';
 import readline from 'readline';
 
 const x = fs.createReadStream('po-example.ndjson');
-
 const rl = readline.createInterface(x);
 
 rl.on('line', line => {
