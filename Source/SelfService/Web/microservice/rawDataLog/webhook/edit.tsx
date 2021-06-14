@@ -6,7 +6,7 @@ import { Label } from '@fluentui/react/lib/Label';
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { MicroserviceRawDataLogIngestorWebhookConfig, ConnectorWebhookConfigBasic } from '../../../api/index';
+import { MicroserviceRawDataLogIngestorWebhookConfig, ConnectorWebhookConfigBasic, ConnectorWebhookConfigBearer } from '../../../api/index';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
 import { BasicAuthComponent } from '../../../components/basicAuthComponent';
@@ -119,7 +119,7 @@ export const Edit: React.FunctionComponent<Props | undefined> = (props) => {
                     onChange={(event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
                         const uriSuffix = newValue!;
                         let kind = webhook.kind;
-                        if (kind === webhook.uriSuffix) {
+                        if (kind === '' || kind === webhook.uriSuffix) {
                             kind = uriSuffix;
                         }
 
@@ -202,6 +202,6 @@ function makeBasicAuth(data: ConnectorWebhookConfigBasic): string {
     return `Basic ${suffix}`;
 }
 
-function makeBearer(suffix: string): string {
-    return `Bearer ${suffix}`;
+function makeBearer(data: ConnectorWebhookConfigBearer): string {
+    return `Bearer ${data.token}`;
 }
