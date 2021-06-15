@@ -47,7 +47,7 @@ export class EventProducer {
 
             if (changeList.includes('FACI')) {
                 const poNumber = payloadObj.PUNO;
-                const facilityNumber = payload.FACI;
+                const facilityNumber = payloadObj.FACI;
                 return [new PurchaseOrderFacilityNumberChanged(poNumber, facilityNumber)];
             }
 
@@ -69,25 +69,25 @@ export class EventProducer {
 
             if (changeList.includes('SUNO')) {
                 const poNumber = payloadObj.PUNO;
-                const supplierId = payload.SUNO;
+                const supplierId = payloadObj.SUNO;
                 return [new PurchaseOrderSupplierIdChanged(poNumber, supplierId)];
             }
 
             if (changeList.includes('MODL')) {
                 const poNumber = payloadObj.PUNO;
-                const deliveryMethod = payload.MODL;
+                const deliveryMethod = payloadObj.MODL;
                 return [new PurchaseOrderDeliveryMethodChanged(poNumber, deliveryMethod)];
             }
 
             if (changeList.includes('RFID')) {
                 const poNumber = payloadObj.PUNO;
-                const reference = payload.RFID;
+                const reference = payloadObj.RFID;
                 return [new PurchaseOrderReferenceChanged(poNumber, reference)];
             }
 
             if (changeList.includes('YRE1')) {
                 const poNumber = payloadObj.PUNO;
-                const supplierReference = payload.YRE1;
+                const supplierReference = payloadObj.YRE1;
                 return [new PurchaseOrderSupplierReferenceChanged(
                     poNumber,
                     supplierReference
@@ -96,13 +96,13 @@ export class EventProducer {
 
             if (changeList.includes('DWDT')) {
                 const poNumber = payloadObj.PUNO;
-                const requestedDate = payload.DWDT;
+                const requestedDate = payloadObj.DWDT;
                 return [new PurchaseOrderRequestedDateChanged(poNumber, requestedDate)];
             }
 
             if (changeList.includes('OURR')) {
                 const poNumber = payloadObj.PUNO;
-                const internalReference = payload.OURR;
+                const internalReference = payloadObj.OURR;
                 return [new PurchaseOrderInternalReferenceChanged(
                     poNumber,
                     internalReference
@@ -148,7 +148,7 @@ export class EventProducer {
 
             if (changeList.includes('PYAD')) {
                 const poNumber = payloadObj.PUNO;
-                const invoiceAddress = payload.PYAD;
+                const invoiceAddress = payloadObj.PYAD;
                 return [new PurchaseOrderOurInvoicingAddressChanged(
                     poNumber,
                     invoiceAddress
@@ -157,19 +157,19 @@ export class EventProducer {
 
             if (changeList.includes('TEDL')) {
                 const poNumber = payloadObj.PUNO;
-                const deliveryTerms = payload.TEDL;
+                const deliveryTerms = payloadObj.TEDL;
                 return [new PurchaseOrderDeliveryTerms(poNumber, deliveryTerms)];
             }
 
             if (changeList.includes('TEPY')) {
                 const poNumber = payloadObj.PUNO;
-                const paymentTerms = payload.TEPY;
+                const paymentTerms = payloadObj.TEPY;
                 return [new PurchaseOrderPaymentTermsChanged(poNumber, paymentTerms)];
             }
 
             if (changeList.includes('PUDT')) {
                 const poNumber = payloadObj.PUNO;
-                const orderDate = payload.PUDT;
+                const orderDate = payloadObj.PUDT;
                 return [new PurchaseOrderDateChanged(poNumber, orderDate)];
             }
         }
