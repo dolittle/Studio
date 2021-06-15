@@ -51,16 +51,20 @@ export class EventProducer {
                 return [new PurchaseOrderFacilityNumberChanged(poNumber, facilityNumber)];
             }
 
-            if (changeList.includes('PUSL')) {
+            if (changeList.includes('PUSL') &&
+                !handledProps.includes('PUSL')) {
                 const poNumber = payloadObj.PUNO;
                 const lowestStatus = payloadObj.PUSL;
-                return [new PurchaseOrderLowestStatusChanged(poNumber, lowestStatus)];
+                return [new PurchaseOrderLowestStatusChanged(poNumber, lowestStatus)]
+                    .concat(this.produce(payload, handledProps.concat(['PUSL'])));
             }
 
-            if (changeList.includes('PUST')) {
+            if (changeList.includes('PUST') &&
+                !handledProps.includes('PUST')) {
                 const poNumber = payloadObj.PUNO;
-                const highestStatus = payload.PUST;
-                return [new PurchaseOrderHighestStatusChanged(poNumber, highestStatus)];
+                const highestStatus = payloadObj.PUST;
+                return [new PurchaseOrderHighestStatusChanged(poNumber, highestStatus)]
+                    .concat(this.produce(payload, handledProps.concat(['PUST'])));
             }
 
             if (changeList.includes('SUNO')) {
