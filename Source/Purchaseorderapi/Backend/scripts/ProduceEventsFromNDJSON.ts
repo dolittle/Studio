@@ -20,6 +20,6 @@ const eventProducer = new EventProducer();
 
 rl.on('line', (line) => {
     const data = JSON.parse(line);
-    const event = eventProducer.produce(data.payload);
-    console.log(`${data.payload.document}: ${data.payload.operation}`, event);
+    const events = eventProducer.produce(data.payload);
+    console.log(`${data.payload.document}: ${data.payload.operation}`, events);
 });

@@ -1,3 +1,5 @@
+import { IContextualMenuProps } from '@fluentui/react';
+import { PurchaseOrderLineCreated } from './events_PurcheOrderLine';
 import {
     PurchaseOrderCreated,
     PurchaseOrderDateChanged,
@@ -20,7 +22,7 @@ import {
 } from './events';
 
 export class EventProducer {
-    produce(payload: any): any {
+    produce(payload: any, handledProps: string[] = []): any[] {
         const payloadObj = payloadToObject(payload);
 
         if (payloadObj.document === 'MPHEAD' && payloadObj.operation === 'U') {
@@ -35,6 +37,7 @@ export class EventProducer {
                     // }
                 }
             });
+
             // let requiredParams: any = ['LMTS', 'CHNO'];
             // if (requiredParams.every((item) => changeList.includes(item))) {
             //     const poNumber = payloadObj.PUNO;
@@ -42,135 +45,141 @@ export class EventProducer {
             //     return new PurchaseOrderFacilityNumberChanged(poNumber, facilityNumber);
             // }
 
-            let requiredParams: any = ['PUNO', 'FACI'];
+            let requiredParams: any = ['FACI'];
             if (requiredParams.every((item) => changeList.includes(item))) {
                 const poNumber = payloadObj.PUNO;
                 const facilityNumber = payload.FACI;
-                return new PurchaseOrderFacilityNumberChanged(poNumber, facilityNumber);
+                return [new PurchaseOrderFacilityNumberChanged(poNumber, facilityNumber)];
             }
 
             requiredParams = ['PUNO', 'PUSL'];
             if (requiredParams.every((item) => changeList.includes(item))) {
                 const poNumber = payloadObj.PUNO;
                 const lowestStatus = payload.PUSL;
-                return new PurchaseOrderLowestStatusChanged(poNumber, lowestStatus);
+                return [new PurchaseOrderLowestStatusChanged(poNumber, lowestStatus)];
             }
 
             requiredParams = ['PUNO', 'PUST'];
             if (requiredParams.every((item) => changeList.includes(item))) {
                 const poNumber = payloadObj.PUNO;
                 const highestStatus = payload.PUST;
-                return new PurchaseOrderHighestStatusChanged(poNumber, highestStatus);
+                return [new PurchaseOrderHighestStatusChanged(poNumber, highestStatus)];
             }
 
             requiredParams = ['PUNO', 'SUNO'];
             if (requiredParams.every((item) => changeList.includes(item))) {
                 const poNumber = payloadObj.PUNO;
                 const supplierId = payload.SUNO;
-                return new PurchaseOrderSupplierIdChanged(poNumber, supplierId);
+                return [new PurchaseOrderSupplierIdChanged(poNumber, supplierId)];
             }
 
             requiredParams = ['PUNO', 'MODL'];
             if (requiredParams.every((item) => changeList.includes(item))) {
                 const poNumber = payloadObj.PUNO;
                 const deliveryMethod = payload.MODL;
-                return new PurchaseOrderDeliveryMethodChanged(poNumber, deliveryMethod);
+                return [new PurchaseOrderDeliveryMethodChanged(poNumber, deliveryMethod)];
             }
 
             requiredParams = ['PUNO', 'RFID'];
             if (requiredParams.every((item) => changeList.includes(item))) {
                 const poNumber = payloadObj.PUNO;
                 const reference = payload.RFID;
-                return new PurchaseOrderReferenceChanged(poNumber, reference);
+                return [new PurchaseOrderReferenceChanged(poNumber, reference)];
             }
 
             requiredParams = ['PUNO', 'YRE1'];
             if (requiredParams.every((item) => changeList.includes(item))) {
                 const poNumber = payloadObj.PUNO;
                 const supplierReference = payload.YRE1;
-                return new PurchaseOrderSupplierReferenceChanged(
+                return [new PurchaseOrderSupplierReferenceChanged(
                     poNumber,
                     supplierReference
-                );
+                )];
             }
 
             requiredParams = ['PUNO', 'DWDT'];
             if (requiredParams.every((item) => changeList.includes(item))) {
                 const poNumber = payloadObj.PUNO;
                 const requestedDate = payload.DWDT;
-                return new PurchaseOrderRequestedDateChanged(poNumber, requestedDate);
+                return [new PurchaseOrderRequestedDateChanged(poNumber, requestedDate)];
             }
 
             requiredParams = ['PUNO', 'OURR'];
             if (requiredParams.every((item) => changeList.includes(item))) {
                 const poNumber = payloadObj.PUNO;
                 const internalReference = payload.OURR;
-                return new PurchaseOrderInternalReferenceChanged(
+                return [new PurchaseOrderInternalReferenceChanged(
                     poNumber,
                     internalReference
-                );
+                )];
             }
 
-            requiredParams = ['PUNO', 'NTAM'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('NTAM') &&
+                !handledProps.includes('NTAM')) {
                 const poNumber = payloadObj.PUNO;
-                const orderValueNet = payload.NTAM;
-                return new PurchaseOrderNetOrderValueChanged(poNumber, orderValueNet);
+                const orderValueNet = payloadObj.NTAM;
+                return [new PurchaseOrderNetOrderValueChanged(poNumber, orderValueNet)]
+                    .concat(this.produce(payload, handledProps.concat(['NTAM'])));
             }
 
-            requiredParams = ['PUNO', 'NOLN'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            // TODO: foo
+            if (changeList.includes('NOLN') &&
+                !handledProps.includes('NOLN')) {
+                console.log(changeList);
                 const poNumber = payloadObj.PUNO;
-                const amountPurchaseOrderLines = payload.NOLN;
-                return new PurchaseOrderNumberOfPurchaseOrderLinesChanged(
+                const amountPurchaseOrderLines = payloadObj.NOLN;
+                return [new PurchaseOrderNumberOfPurchaseOrderLinesChanged(
                     poNumber,
                     amountPurchaseOrderLines
-                );
+                )].concat(this.produce(payload, handledProps.concat(['NOLN'])));
             }
 
-            requiredParams = ['PUNO', 'COAM'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('COAM') &&
+                !handledProps.includes('COAM')) {
+                console.log(changeList);
                 const poNumber = payloadObj.PUNO;
-                const totalCost = payload.COAM;
-                return new PurchaseOrderTotalOrderCostChanged(poNumber, totalCost);
+                const totalCost = payloadObj.COAM;
+                return [new PurchaseOrderTotalOrderCostChanged(poNumber, totalCost)]
+                    .concat(this.produce(payload, handledProps.concat(['COAM'])));
             }
 
-            requiredParams = ['PUNO', 'TOQT'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('TOQT') &&
+                !handledProps.includes('TOQT')) {
                 const poNumber = payloadObj.PUNO;
-                const totalQuantity = payload.TOQT;
-                return new PurchaseOrderTotalQuantityChanged(poNumber, totalQuantity);
+                const totalQuantity = payloadObj.TOQT;
+                return [new PurchaseOrderTotalQuantityChanged(poNumber, totalQuantity)]
+                    .concat(this.produce(payload, handledProps.concat(['TOQT'])));
             }
 
             requiredParams = ['PUNO', 'PYAD'];
             if (requiredParams.every((item) => changeList.includes(item))) {
                 const poNumber = payloadObj.PUNO;
                 const invoiceAddress = payload.PYAD;
-                return new PurchaseOrderOurInvoicingAddressChanged(
+                return [new PurchaseOrderOurInvoicingAddressChanged(
                     poNumber,
                     invoiceAddress
-                );
+                )];
             }
 
             requiredParams = ['PUNO', 'TEDL'];
             if (requiredParams.every((item) => changeList.includes(item))) {
                 const poNumber = payloadObj.PUNO;
                 const deliveryTerms = payload.TEDL;
-                return new PurchaseOrderDeliveryTerms(poNumber, deliveryTerms);
+                return [new PurchaseOrderDeliveryTerms(poNumber, deliveryTerms)];
             }
 
             requiredParams = ['PUNO', 'TEPY'];
             if (requiredParams.every((item) => changeList.includes(item))) {
                 const poNumber = payloadObj.PUNO;
                 const paymentTerms = payload.TEPY;
-                return new PurchaseOrderPaymentTermsChanged(poNumber, paymentTerms);
+                return [new PurchaseOrderPaymentTermsChanged(poNumber, paymentTerms)];
             }
 
             requiredParams = ['PUNO', 'PUDT'];
             if (requiredParams.every((item) => changeList.includes(item))) {
                 const poNumber = payloadObj.PUNO;
                 const orderDate = payload.PUDT;
-                return new PurchaseOrderDateChanged(poNumber, orderDate);
+                return [new PurchaseOrderDateChanged(poNumber, orderDate)];
             }
         }
 
@@ -201,7 +210,7 @@ export class EventProducer {
             const totalCost = parseFloat(payloadObj.COAM);
             const totalQuantity = parseFloat(payloadObj.TOQT);
             const invoiceAdress = payloadObj.PYAD;
-            return new PurchaseOrderCreated(
+            return [new PurchaseOrderCreated(
                 poNumber,
                 facilityId,
                 lowestStatus,
@@ -220,9 +229,12 @@ export class EventProducer {
                 totalCost,
                 totalQuantity,
                 invoiceAdress
-            );
+            )];
         }
+
+        return [];
     }
+
 }
 
 function parseDate(input: string): Date {
