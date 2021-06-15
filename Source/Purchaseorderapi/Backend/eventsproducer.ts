@@ -29,6 +29,12 @@ export class EventProducer {
             const deliveryTerms = payloadObj.TEDL;
             const reference = payloadObj.RFID;
             const supplierReference = payloadObj.YRE1;
+            const internalReference = payloadObj.OURR;
+            const orderValueNet = parseFloat(payloadObj.NTAM);
+            const numberOfPurchaseOrderLines = parseInt(payloadObj.NOLN);
+            const totalCost = parseFloat(payloadObj.COAM);
+            const totalQuantity = parseFloat(payloadObj.TOQT);
+            const invoiceAdress = payloadObj.PYAD;
             return new PurchaseOrderCreated(poNumber,
                 facilityId,
                 lowestStatus,
@@ -41,12 +47,12 @@ export class EventProducer {
                 reference,
                 supplierReference,
                 requestedDate,
-                '',
-                0,
-                0,
-                0,
-                0,
-                '');
+                internalReference,
+                orderValueNet,
+                numberOfPurchaseOrderLines,
+                totalCost,
+                totalQuantity,
+                invoiceAdress);
         }
 
     }
