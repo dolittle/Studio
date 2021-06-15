@@ -1,5 +1,6 @@
 import { IContextualMenuProps } from '@fluentui/react';
 import { PurchaseOrderLineCreated } from './events_PurcheOrderLine';
+import { PurchaseOrderChangedNumberChanged } from './events';
 import {
     PurchaseOrderCreated,
     PurchaseOrderDateChanged,
@@ -172,6 +173,14 @@ export class EventProducer {
                 const orderDate = payloadObj.PUDT;
                 return [new PurchaseOrderDateChanged(poNumber, orderDate)];
             }
+
+            if (changeList.includes('CHNO') &&
+                !handledProps.includes('CHNO')) {
+                const poNumber = payloadObj.PUNO;
+                const changeNumber = payloadObj.CHNO;
+                return [new PurchaseOrderChangedNumberChanged(poNumber, changeNumber)]
+                    .concat(this.produce(payload, handledProps.concat(['CHNO'])));
+            }
         }
 
         if (payloadObj.document === 'MPHEAD' && payloadObj.operation === 'C') {
@@ -201,6 +210,7 @@ export class EventProducer {
             const totalCost = parseFloat(payloadObj.COAM);
             const totalQuantity = parseFloat(payloadObj.TOQT);
             const invoiceAdress = payloadObj.PYAD;
+            const changeNumber = parseInt(payloadObj.CHNO);
             return [new PurchaseOrderCreated(
                 poNumber,
                 facilityId,
@@ -219,7 +229,8 @@ export class EventProducer {
                 numberOfPurchaseOrderLines,
                 totalCost,
                 totalQuantity,
-                invoiceAdress
+                invoiceAdress,
+                changeNumber
             )];
         }
 
