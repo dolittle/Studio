@@ -34,7 +34,6 @@ rl.on('line', (line) => {
         });
 
         console.log(changeList);
-        return;
     }
     position += 1;
 });
