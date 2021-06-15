@@ -46,10 +46,12 @@ export class EventProducer {
             //     return new PurchaseOrderFacilityNumberChanged(poNumber, facilityNumber);
             // }
 
-            if (changeList.includes('FACI')) {
+            if (changeList.includes('FACI') &&
+                !handledProps.includes('FACI')) {
                 const poNumber = payloadObj.PUNO;
                 const facilityNumber = payloadObj.FACI;
-                return [new PurchaseOrderFacilityNumberChanged(poNumber, facilityNumber)];
+                return [new PurchaseOrderFacilityNumberChanged(poNumber, facilityNumber)]
+                    .concat(this.produce(payload, handledProps.concat(['FACI'])));
             }
 
             if (changeList.includes('PUSL') &&
@@ -68,46 +70,56 @@ export class EventProducer {
                     .concat(this.produce(payload, handledProps.concat(['PUST'])));
             }
 
-            if (changeList.includes('SUNO')) {
+            if (changeList.includes('SUNO') &&
+                !handledProps.includes('SUNO')) {
                 const poNumber = payloadObj.PUNO;
                 const supplierId = payloadObj.SUNO;
-                return [new PurchaseOrderSupplierIdChanged(poNumber, supplierId)];
+                return [new PurchaseOrderSupplierIdChanged(poNumber, supplierId)]
+                    .concat(this.produce(payload, handledProps.concat(['SUNO'])));
             }
 
-            if (changeList.includes('MODL')) {
+            if (changeList.includes('MODL') &&
+                !handledProps.includes('MODL')) {
                 const poNumber = payloadObj.PUNO;
                 const deliveryMethod = payloadObj.MODL;
-                return [new PurchaseOrderDeliveryMethodChanged(poNumber, deliveryMethod)];
+                return [new PurchaseOrderDeliveryMethodChanged(poNumber, deliveryMethod)]
+                    .concat(this.produce(payload, handledProps.concat(['MODL'])));
             }
 
-            if (changeList.includes('RFID')) {
+            if (changeList.includes('RFID') &&
+                !handledProps.includes('RFID')) {
                 const poNumber = payloadObj.PUNO;
                 const reference = payloadObj.RFID;
-                return [new PurchaseOrderReferenceChanged(poNumber, reference)];
+                return [new PurchaseOrderReferenceChanged(poNumber, reference)]
+                    .concat(this.produce(payload, handledProps.concat(['RFID'])));
             }
 
-            if (changeList.includes('YRE1')) {
+            if (changeList.includes('YRE1') &&
+                !handledProps.includes('YRE1')) {
                 const poNumber = payloadObj.PUNO;
                 const supplierReference = payloadObj.YRE1;
                 return [new PurchaseOrderSupplierReferenceChanged(
                     poNumber,
                     supplierReference
-                )];
+                )].concat(this.produce(payload, handledProps.concat(['YRE1'])));
             }
 
-            if (changeList.includes('DWDT')) {
+            if (changeList.includes('DWDT') &&
+                !handledProps.includes('DWDT')) {
                 const poNumber = payloadObj.PUNO;
                 const requestedDate = payloadObj.DWDT;
-                return [new PurchaseOrderRequestedDateChanged(poNumber, requestedDate)];
+                return [new PurchaseOrderRequestedDateChanged(poNumber, requestedDate)]
+                    .concat(this.produce(payload, handledProps.concat(['DWDT'])));
             }
 
-            if (changeList.includes('OURR')) {
+            if (changeList.includes('OURR') &&
+                !handledProps.includes('OURR')) {
                 const poNumber = payloadObj.PUNO;
                 const internalReference = payloadObj.OURR;
                 return [new PurchaseOrderInternalReferenceChanged(
                     poNumber,
                     internalReference
-                )];
+                )].concat(this.produce(payload, handledProps.concat(['OURR'])));
             }
 
             if (changeList.includes('NTAM') &&
@@ -147,31 +159,36 @@ export class EventProducer {
                     .concat(this.produce(payload, handledProps.concat(['TOQT'])));
             }
 
-            if (changeList.includes('PYAD')) {
+            if (changeList.includes('PYAD') &&
+                !handledProps.includes('PYAD')) {
                 const poNumber = payloadObj.PUNO;
                 const invoiceAddress = payloadObj.PYAD;
-                return [new PurchaseOrderOurInvoicingAddressChanged(
-                    poNumber,
-                    invoiceAddress
-                )];
+                return [new PurchaseOrderOurInvoicingAddressChanged(poNumber, invoiceAddress)]
+                    .concat(this.produce(payload, handledProps.concat(['PYAD'])));
             }
 
-            if (changeList.includes('TEDL')) {
+            if (changeList.includes('TEDL') &&
+                !handledProps.includes('TEDL')) {
                 const poNumber = payloadObj.PUNO;
                 const deliveryTerms = payloadObj.TEDL;
-                return [new PurchaseOrderDeliveryTerms(poNumber, deliveryTerms)];
+                return [new PurchaseOrderDeliveryTerms(poNumber, deliveryTerms)]
+                    .concat(this.produce(payload, handledProps.concat(['TEDL'])));
             }
 
-            if (changeList.includes('TEPY')) {
+            if (changeList.includes('TEPY') &&
+                !handledProps.includes('TEPY')) {
                 const poNumber = payloadObj.PUNO;
                 const paymentTerms = payloadObj.TEPY;
-                return [new PurchaseOrderPaymentTermsChanged(poNumber, paymentTerms)];
+                return [new PurchaseOrderPaymentTermsChanged(poNumber, paymentTerms)]
+                    .concat(this.produce(payload, handledProps.concat(['TEPY'])));
             }
 
-            if (changeList.includes('PUDT')) {
+            if (changeList.includes('PUDT') &&
+                !handledProps.includes('PUDT')) {
                 const poNumber = payloadObj.PUNO;
                 const orderDate = payloadObj.PUDT;
-                return [new PurchaseOrderDateChanged(poNumber, orderDate)];
+                return [new PurchaseOrderDateChanged(poNumber, orderDate)]
+                    .concat(this.produce(payload, handledProps.concat(['PUDT'])));
             }
 
             if (changeList.includes('CHNO') &&
