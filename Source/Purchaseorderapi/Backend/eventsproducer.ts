@@ -1,4 +1,3 @@
-import { number } from 'yargs';
 import { PurchaseOrderCreated } from './events';
 
 export class EventProducer {
@@ -6,6 +5,13 @@ export class EventProducer {
     produce(payload: any): any {
 
         const payloadObj = payloadToObject(payload);
+
+        if (payloadObj.document === 'MPHEAD' &&
+            payloadObj.operation === 'U') {
+            // TODO: produce correct events
+            // might have to return an array instead of one
+            // object
+        }
 
         if (payloadObj.document === 'MPHEAD' &&
             payloadObj.operation === 'C') {
