@@ -45,50 +45,43 @@ export class EventProducer {
             //     return new PurchaseOrderFacilityNumberChanged(poNumber, facilityNumber);
             // }
 
-            let requiredParams: any = ['FACI'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('FACI')) {
                 const poNumber = payloadObj.PUNO;
                 const facilityNumber = payload.FACI;
                 return [new PurchaseOrderFacilityNumberChanged(poNumber, facilityNumber)];
             }
 
-            requiredParams = ['PUNO', 'PUSL'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('PUSL')) {
                 const poNumber = payloadObj.PUNO;
-                const lowestStatus = payload.PUSL;
+                const lowestStatus = payloadObj.PUSL;
                 return [new PurchaseOrderLowestStatusChanged(poNumber, lowestStatus)];
             }
 
-            requiredParams = ['PUNO', 'PUST'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('PUST')) {
                 const poNumber = payloadObj.PUNO;
                 const highestStatus = payload.PUST;
                 return [new PurchaseOrderHighestStatusChanged(poNumber, highestStatus)];
             }
 
-            requiredParams = ['PUNO', 'SUNO'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('SUNO')) {
                 const poNumber = payloadObj.PUNO;
                 const supplierId = payload.SUNO;
                 return [new PurchaseOrderSupplierIdChanged(poNumber, supplierId)];
             }
 
-            requiredParams = ['PUNO', 'MODL'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('MODL')) {
                 const poNumber = payloadObj.PUNO;
                 const deliveryMethod = payload.MODL;
                 return [new PurchaseOrderDeliveryMethodChanged(poNumber, deliveryMethod)];
             }
 
-            requiredParams = ['PUNO', 'RFID'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('RFID')) {
                 const poNumber = payloadObj.PUNO;
                 const reference = payload.RFID;
                 return [new PurchaseOrderReferenceChanged(poNumber, reference)];
             }
 
-            requiredParams = ['PUNO', 'YRE1'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('YRE1')) {
                 const poNumber = payloadObj.PUNO;
                 const supplierReference = payload.YRE1;
                 return [new PurchaseOrderSupplierReferenceChanged(
@@ -97,15 +90,13 @@ export class EventProducer {
                 )];
             }
 
-            requiredParams = ['PUNO', 'DWDT'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('DWDT')) {
                 const poNumber = payloadObj.PUNO;
                 const requestedDate = payload.DWDT;
                 return [new PurchaseOrderRequestedDateChanged(poNumber, requestedDate)];
             }
 
-            requiredParams = ['PUNO', 'OURR'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('OURR')) {
                 const poNumber = payloadObj.PUNO;
                 const internalReference = payload.OURR;
                 return [new PurchaseOrderInternalReferenceChanged(
@@ -125,7 +116,7 @@ export class EventProducer {
             // TODO: foo
             if (changeList.includes('NOLN') &&
                 !handledProps.includes('NOLN')) {
-                console.log(changeList);
+                //console.log(changeList);
                 const poNumber = payloadObj.PUNO;
                 const amountPurchaseOrderLines = payloadObj.NOLN;
                 return [new PurchaseOrderNumberOfPurchaseOrderLinesChanged(
@@ -136,7 +127,7 @@ export class EventProducer {
 
             if (changeList.includes('COAM') &&
                 !handledProps.includes('COAM')) {
-                console.log(changeList);
+                //console.log(changeList);
                 const poNumber = payloadObj.PUNO;
                 const totalCost = payloadObj.COAM;
                 return [new PurchaseOrderTotalOrderCostChanged(poNumber, totalCost)]
@@ -151,8 +142,7 @@ export class EventProducer {
                     .concat(this.produce(payload, handledProps.concat(['TOQT'])));
             }
 
-            requiredParams = ['PUNO', 'PYAD'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('PYAD')) {
                 const poNumber = payloadObj.PUNO;
                 const invoiceAddress = payload.PYAD;
                 return [new PurchaseOrderOurInvoicingAddressChanged(
@@ -161,22 +151,19 @@ export class EventProducer {
                 )];
             }
 
-            requiredParams = ['PUNO', 'TEDL'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('TEDL')) {
                 const poNumber = payloadObj.PUNO;
                 const deliveryTerms = payload.TEDL;
                 return [new PurchaseOrderDeliveryTerms(poNumber, deliveryTerms)];
             }
 
-            requiredParams = ['PUNO', 'TEPY'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('TEPY')) {
                 const poNumber = payloadObj.PUNO;
                 const paymentTerms = payload.TEPY;
                 return [new PurchaseOrderPaymentTermsChanged(poNumber, paymentTerms)];
             }
 
-            requiredParams = ['PUNO', 'PUDT'];
-            if (requiredParams.every((item) => changeList.includes(item))) {
+            if (changeList.includes('PUDT')) {
                 const poNumber = payloadObj.PUNO;
                 const orderDate = payload.PUDT;
                 return [new PurchaseOrderDateChanged(poNumber, orderDate)];
