@@ -27,7 +27,7 @@ import {
     SupplierOrderUpdated,
     SupplierUpdated,
 } from './events_PurcheOrderLine';
-import { PurchaseOrderChangedNumberChanged } from './events';
+import { PurchaseOrderChangedNumberChanged, PurchaseOrderDeleted } from './events';
 import { IDialogProps } from '@dolittle/vanir-react';
 import {
     PurchaseOrderCreated,
@@ -272,6 +272,11 @@ export class EventProducer {
                     changeNumber
                 ),
             ];
+        }
+
+        if (payloadObj.document === 'MPHEAD' && payloadObj.operation === 'D') {
+            const poNumber = parseInt(payloadObj.FACI);
+            return [new PurchaseOrderDeleted(poNumber)];
         }
 
         if (payloadObj.document === 'MPLINE' && payloadObj.operation === 'C') {
