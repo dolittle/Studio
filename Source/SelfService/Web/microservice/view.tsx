@@ -81,12 +81,12 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                 <>
                     <h1>Not supported</h1>
                     <p>This is an error or our part</p>
-                    <p>Kind is &quot;{kind}&quot;.</p>
+                    <p>Kind is &quot;{currentMicroservice.kind}&quot;.</p>
+                    <p>Subview is &quot;{subView}&quot;.</p>
                     <p>Microservice Id is {currentMicroservice.id}</p>
                 </>
             );
     }
-
 };
 
 
