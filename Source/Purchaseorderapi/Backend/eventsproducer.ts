@@ -1,6 +1,34 @@
 import { IContextualMenuProps } from '@fluentui/react';
-import { PurchaseOrderLineCreated } from './events_PurcheOrderLine';
+import {
+    ConfirmedDeliveryDateUpdated,
+    ConfirmedPurchasePriceQuantityUpdated,
+    ConfirmedPurchasePriceUpdated,
+    DifferentDeliveryAddressUpdated,
+    HighestStatusPurchaseOrderUpdated,
+    ItemUpdated,
+    LineAmountOrderCurrencyUpdated,
+    LowestStatusPurchaseOrderUpdated,
+    PurchaseOrderItemDescriptionUpdated,
+    PurchaseOrderItemNameUpdated,
+    PurchaseOrderLineConfirmedQuantityUpdated,
+    PurchaseOrderLineCreated,
+    PurchaseOrderLineDeleted,
+    PurchaseOrderLineDeliveryMethodUpdated,
+    PurchaseOrderLineDeliveryTermsUpdated,
+    PurchaseOrderLineOrderedQuantityAlternateUnitOfMeasureUpdated,
+    PurchaseOrderLineSubNumberUpdated,
+    PurchaseOrderLineUnitOfMeasureUpdated,
+    PurchasePriceQuantityUpdated,
+    PurchasePriceTextUpdated,
+    PurchasePriceUnitOfMeasureUpdated,
+    PurchasePriceUpdated,
+    RequestedDeliveryDateUpdated,
+    SupplierItemUpdated,
+    SupplierOrderUpdated,
+    SupplierUpdated,
+} from './events_PurcheOrderLine';
 import { PurchaseOrderChangedNumberChanged } from './events';
+import { IDialogProps } from '@dolittle/vanir-react';
 import {
     PurchaseOrderCreated,
     PurchaseOrderDateChanged,
@@ -27,9 +55,6 @@ export class EventProducer {
         const payloadObj = payloadToObject(payload);
 
         if (payloadObj.document === 'MPHEAD' && payloadObj.operation === 'U') {
-            // TODO: produce correct events
-            // might have to return an array instead of one
-            // object
             var changeList: any = [];
             payload.elements.forEach((element) => {
                 // if (element.oldvalue !== 'null' && element.newvalue !== 'null') {
@@ -39,164 +64,160 @@ export class EventProducer {
                 }
             });
 
-            // let requiredParams: any = ['LMTS', 'CHNO'];
-            // if (requiredParams.every((item) => changeList.includes(item))) {
-            //     const poNumber = payloadObj.PUNO;
-            //     const facilityNumber = payload.FACI;
-            //     return new PurchaseOrderFacilityNumberChanged(poNumber, facilityNumber);
-            // }
-
-            if (changeList.includes('FACI') &&
-                !handledProps.includes('FACI')) {
+            if (changeList.includes('FACI') && !handledProps.includes('FACI')) {
                 const poNumber = payloadObj.PUNO;
                 const facilityNumber = payloadObj.FACI;
-                return [new PurchaseOrderFacilityNumberChanged(poNumber, facilityNumber)]
-                    .concat(this.produce(payload, handledProps.concat(['FACI'])));
+                return [
+                    new PurchaseOrderFacilityNumberChanged(poNumber, facilityNumber),
+                ].concat(this.produce(payload, handledProps.concat(['FACI'])));
             }
 
-            if (changeList.includes('PUSL') &&
-                !handledProps.includes('PUSL')) {
+            if (changeList.includes('PUSL') && !handledProps.includes('PUSL')) {
                 const poNumber = payloadObj.PUNO;
                 const lowestStatus = payloadObj.PUSL;
-                return [new PurchaseOrderLowestStatusChanged(poNumber, lowestStatus)]
-                    .concat(this.produce(payload, handledProps.concat(['PUSL'])));
+                return [
+                    new PurchaseOrderLowestStatusChanged(poNumber, lowestStatus),
+                ].concat(this.produce(payload, handledProps.concat(['PUSL'])));
             }
 
-            if (changeList.includes('PUST') &&
-                !handledProps.includes('PUST')) {
+            if (changeList.includes('PUST') && !handledProps.includes('PUST')) {
                 const poNumber = payloadObj.PUNO;
                 const highestStatus = payloadObj.PUST;
-                return [new PurchaseOrderHighestStatusChanged(poNumber, highestStatus)]
-                    .concat(this.produce(payload, handledProps.concat(['PUST'])));
+                return [
+                    new PurchaseOrderHighestStatusChanged(poNumber, highestStatus),
+                ].concat(this.produce(payload, handledProps.concat(['PUST'])));
             }
 
-            if (changeList.includes('SUNO') &&
-                !handledProps.includes('SUNO')) {
+            if (changeList.includes('SUNO') && !handledProps.includes('SUNO')) {
                 const poNumber = payloadObj.PUNO;
                 const supplierId = payloadObj.SUNO;
-                return [new PurchaseOrderSupplierIdChanged(poNumber, supplierId)]
-                    .concat(this.produce(payload, handledProps.concat(['SUNO'])));
+                return [new PurchaseOrderSupplierIdChanged(poNumber, supplierId)].concat(
+                    this.produce(payload, handledProps.concat(['SUNO']))
+                );
             }
 
-            if (changeList.includes('MODL') &&
-                !handledProps.includes('MODL')) {
+            if (changeList.includes('MODL') && !handledProps.includes('MODL')) {
                 const poNumber = payloadObj.PUNO;
                 const deliveryMethod = payloadObj.MODL;
-                return [new PurchaseOrderDeliveryMethodChanged(poNumber, deliveryMethod)]
-                    .concat(this.produce(payload, handledProps.concat(['MODL'])));
+                return [
+                    new PurchaseOrderDeliveryMethodChanged(poNumber, deliveryMethod),
+                ].concat(this.produce(payload, handledProps.concat(['MODL'])));
             }
 
-            if (changeList.includes('RFID') &&
-                !handledProps.includes('RFID')) {
+            if (changeList.includes('RFID') && !handledProps.includes('RFID')) {
                 const poNumber = payloadObj.PUNO;
                 const reference = payloadObj.RFID;
-                return [new PurchaseOrderReferenceChanged(poNumber, reference)]
-                    .concat(this.produce(payload, handledProps.concat(['RFID'])));
+                return [new PurchaseOrderReferenceChanged(poNumber, reference)].concat(
+                    this.produce(payload, handledProps.concat(['RFID']))
+                );
             }
 
-            if (changeList.includes('YRE1') &&
-                !handledProps.includes('YRE1')) {
+            if (changeList.includes('YRE1') && !handledProps.includes('YRE1')) {
                 const poNumber = payloadObj.PUNO;
                 const supplierReference = payloadObj.YRE1;
-                return [new PurchaseOrderSupplierReferenceChanged(
-                    poNumber,
-                    supplierReference
-                )].concat(this.produce(payload, handledProps.concat(['YRE1'])));
+                return [
+                    new PurchaseOrderSupplierReferenceChanged(
+                        poNumber,
+                        supplierReference
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['YRE1'])));
             }
 
-            if (changeList.includes('DWDT') &&
-                !handledProps.includes('DWDT')) {
+            if (changeList.includes('DWDT') && !handledProps.includes('DWDT')) {
                 const poNumber = payloadObj.PUNO;
                 const requestedDate = payloadObj.DWDT;
-                return [new PurchaseOrderRequestedDateChanged(poNumber, requestedDate)]
-                    .concat(this.produce(payload, handledProps.concat(['DWDT'])));
+                return [
+                    new PurchaseOrderRequestedDateChanged(poNumber, requestedDate),
+                ].concat(this.produce(payload, handledProps.concat(['DWDT'])));
             }
 
-            if (changeList.includes('OURR') &&
-                !handledProps.includes('OURR')) {
+            if (changeList.includes('OURR') && !handledProps.includes('OURR')) {
                 const poNumber = payloadObj.PUNO;
                 const internalReference = payloadObj.OURR;
-                return [new PurchaseOrderInternalReferenceChanged(
-                    poNumber,
-                    internalReference
-                )].concat(this.produce(payload, handledProps.concat(['OURR'])));
+                return [
+                    new PurchaseOrderInternalReferenceChanged(
+                        poNumber,
+                        internalReference
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['OURR'])));
             }
 
-            if (changeList.includes('NTAM') &&
-                !handledProps.includes('NTAM')) {
+            if (changeList.includes('NTAM') && !handledProps.includes('NTAM')) {
                 const poNumber = payloadObj.PUNO;
                 const orderValueNet = payloadObj.NTAM;
-                return [new PurchaseOrderNetOrderValueChanged(poNumber, orderValueNet)]
-                    .concat(this.produce(payload, handledProps.concat(['NTAM'])));
+                return [
+                    new PurchaseOrderNetOrderValueChanged(poNumber, orderValueNet),
+                ].concat(this.produce(payload, handledProps.concat(['NTAM'])));
             }
 
             // TODO: foo
-            if (changeList.includes('NOLN') &&
-                !handledProps.includes('NOLN')) {
+            if (changeList.includes('NOLN') && !handledProps.includes('NOLN')) {
                 //console.log(changeList);
                 const poNumber = payloadObj.PUNO;
                 const amountPurchaseOrderLines = payloadObj.NOLN;
-                return [new PurchaseOrderNumberOfPurchaseOrderLinesChanged(
-                    poNumber,
-                    amountPurchaseOrderLines
-                )].concat(this.produce(payload, handledProps.concat(['NOLN'])));
+                return [
+                    new PurchaseOrderNumberOfPurchaseOrderLinesChanged(
+                        poNumber,
+                        amountPurchaseOrderLines
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['NOLN'])));
             }
 
-            if (changeList.includes('COAM') &&
-                !handledProps.includes('COAM')) {
+            if (changeList.includes('COAM') && !handledProps.includes('COAM')) {
                 //console.log(changeList);
                 const poNumber = payloadObj.PUNO;
                 const totalCost = payloadObj.COAM;
-                return [new PurchaseOrderTotalOrderCostChanged(poNumber, totalCost)]
-                    .concat(this.produce(payload, handledProps.concat(['COAM'])));
+                return [
+                    new PurchaseOrderTotalOrderCostChanged(poNumber, totalCost),
+                ].concat(this.produce(payload, handledProps.concat(['COAM'])));
             }
 
-            if (changeList.includes('TOQT') &&
-                !handledProps.includes('TOQT')) {
+            if (changeList.includes('TOQT') && !handledProps.includes('TOQT')) {
                 const poNumber = payloadObj.PUNO;
                 const totalQuantity = payloadObj.TOQT;
-                return [new PurchaseOrderTotalQuantityChanged(poNumber, totalQuantity)]
-                    .concat(this.produce(payload, handledProps.concat(['TOQT'])));
+                return [
+                    new PurchaseOrderTotalQuantityChanged(poNumber, totalQuantity),
+                ].concat(this.produce(payload, handledProps.concat(['TOQT'])));
             }
 
-            if (changeList.includes('PYAD') &&
-                !handledProps.includes('PYAD')) {
+            if (changeList.includes('PYAD') && !handledProps.includes('PYAD')) {
                 const poNumber = payloadObj.PUNO;
                 const invoiceAddress = payloadObj.PYAD;
-                return [new PurchaseOrderOurInvoicingAddressChanged(poNumber, invoiceAddress)]
-                    .concat(this.produce(payload, handledProps.concat(['PYAD'])));
+                return [
+                    new PurchaseOrderOurInvoicingAddressChanged(poNumber, invoiceAddress),
+                ].concat(this.produce(payload, handledProps.concat(['PYAD'])));
             }
 
-            if (changeList.includes('TEDL') &&
-                !handledProps.includes('TEDL')) {
+            if (changeList.includes('TEDL') && !handledProps.includes('TEDL')) {
                 const poNumber = payloadObj.PUNO;
                 const deliveryTerms = payloadObj.TEDL;
-                return [new PurchaseOrderDeliveryTerms(poNumber, deliveryTerms)]
-                    .concat(this.produce(payload, handledProps.concat(['TEDL'])));
+                return [new PurchaseOrderDeliveryTerms(poNumber, deliveryTerms)].concat(
+                    this.produce(payload, handledProps.concat(['TEDL']))
+                );
             }
 
-            if (changeList.includes('TEPY') &&
-                !handledProps.includes('TEPY')) {
+            if (changeList.includes('TEPY') && !handledProps.includes('TEPY')) {
                 const poNumber = payloadObj.PUNO;
                 const paymentTerms = payloadObj.TEPY;
-                return [new PurchaseOrderPaymentTermsChanged(poNumber, paymentTerms)]
-                    .concat(this.produce(payload, handledProps.concat(['TEPY'])));
+                return [
+                    new PurchaseOrderPaymentTermsChanged(poNumber, paymentTerms),
+                ].concat(this.produce(payload, handledProps.concat(['TEPY'])));
             }
 
-            if (changeList.includes('PUDT') &&
-                !handledProps.includes('PUDT')) {
+            if (changeList.includes('PUDT') && !handledProps.includes('PUDT')) {
                 const poNumber = payloadObj.PUNO;
                 const orderDate = payloadObj.PUDT;
-                return [new PurchaseOrderDateChanged(poNumber, orderDate)]
-                    .concat(this.produce(payload, handledProps.concat(['PUDT'])));
+                return [new PurchaseOrderDateChanged(poNumber, orderDate)].concat(
+                    this.produce(payload, handledProps.concat(['PUDT']))
+                );
             }
 
-            if (changeList.includes('CHNO') &&
-                !handledProps.includes('CHNO')) {
+            if (changeList.includes('CHNO') && !handledProps.includes('CHNO')) {
                 const poNumber = payloadObj.PUNO;
                 const changeNumber = payloadObj.CHNO;
-                return [new PurchaseOrderChangedNumberChanged(poNumber, changeNumber)]
-                    .concat(this.produce(payload, handledProps.concat(['CHNO'])));
+                return [
+                    new PurchaseOrderChangedNumberChanged(poNumber, changeNumber),
+                ].concat(this.produce(payload, handledProps.concat(['CHNO'])));
             }
         }
 
@@ -228,32 +249,484 @@ export class EventProducer {
             const totalQuantity = parseFloat(payloadObj.TOQT);
             const invoiceAdress = payloadObj.PYAD;
             const changeNumber = parseInt(payloadObj.CHNO);
-            return [new PurchaseOrderCreated(
-                poNumber,
-                facilityId,
-                lowestStatus,
-                highestStatus,
-                orderDate,
-                supplierId,
-                paymentTerms,
-                deliveryMethod,
-                deliveryTerms,
-                reference,
-                supplierReference,
-                requestedDate,
-                internalReference,
-                orderValueNet,
-                numberOfPurchaseOrderLines,
-                totalCost,
-                totalQuantity,
-                invoiceAdress,
-                changeNumber
-            )];
+            return [
+                new PurchaseOrderCreated(
+                    poNumber,
+                    facilityId,
+                    lowestStatus,
+                    highestStatus,
+                    orderDate,
+                    supplierId,
+                    paymentTerms,
+                    deliveryMethod,
+                    deliveryTerms,
+                    reference,
+                    supplierReference,
+                    requestedDate,
+                    internalReference,
+                    orderValueNet,
+                    numberOfPurchaseOrderLines,
+                    totalCost,
+                    totalQuantity,
+                    invoiceAdress,
+                    changeNumber
+                ),
+            ];
+        }
+
+        if (payloadObj.document === 'MPLINE' && payloadObj.operation === 'C') {
+            const poNumber = payloadObj.PUNO;
+            const lineNumber = parseFloat(payloadObj.PNLI);
+            const subLineNumber = parseFloat(payloadObj.PNSL);
+            const itemNumber = payloadObj.ITNO;
+            const facilityNumber = payloadObj.FACI;
+            const highestStatus = payloadObj.PUST;
+            const lowestStatus = payloadObj.PUSL;
+            const differentDeliveryAddress = payloadObj.IDAG;
+            const supplierId = payloadObj.SUNO;
+            const supplierItemNumber = payloadObj.SITE;
+            const itemName = payloadObj.PITD;
+            return [
+                new PurchaseOrderLineCreated(
+                    poNumber,
+                    lineNumber,
+                    subLineNumber,
+                    itemNumber,
+                    facilityNumber,
+                    highestStatus,
+                    lowestStatus,
+                    differentDeliveryAddress,
+                    supplierId,
+                    supplierItemNumber,
+                    itemName
+                ),
+            ];
+        }
+
+        if (payloadObj.document === 'MPLINE' && payloadObj.operation === 'D') {
+            const poNumber = payloadObj.PUNO;
+            const lineNumber = parseFloat(payloadObj.PNLI);
+            return [new PurchaseOrderLineDeleted(poNumber, lineNumber)];
+        }
+
+        if (payloadObj.document === 'MPLINE' && payloadObj.operation === 'U') {
+            var changeList: any = [];
+            payload.elements.forEach((element) => {
+                // if (element.oldvalue !== 'null' && element.newvalue !== 'null') {
+                if (element.oldvalue !== element.newvalue) {
+                    changeList.push(element.name);
+                    // }
+                }
+            });
+
+            if (changeList.includes('PNSL') && !handledProps.includes('PNSL')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                return [
+                    new PurchaseOrderLineSubNumberUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['PNSL'])));
+            }
+
+            if (changeList.includes('PUST') && !handledProps.includes('PUST')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const highestStatus = payloadObj.PUST;
+                return [
+                    new HighestStatusPurchaseOrderUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        highestStatus
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['PUST'])));
+            }
+
+            if (changeList.includes('PUSL') && !handledProps.includes('PUSL')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const lowestStatus = payloadObj.PUSL;
+                return [
+                    new LowestStatusPurchaseOrderUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        lowestStatus
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['PUSL'])));
+            }
+
+            if (changeList.includes('IDAG') && !handledProps.includes('IDAG')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const differentDeliveryAddress = payloadObj.IDAG;
+                return [
+                    new DifferentDeliveryAddressUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        differentDeliveryAddress
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['IDAG'])));
+            }
+
+            if (changeList.includes('SUNO') && !handledProps.includes('SUNO')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const supplierId = payloadObj.SUNO;
+                return [
+                    new SupplierUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        supplierId
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['SUNO'])));
+            }
+
+            if (changeList.includes('ITNO') && !handledProps.includes('ITNO')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                return [
+                    new ItemUpdated(poNumber, lineNumber, subLineNumber, itemNumber),
+                ].concat(this.produce(payload, handledProps.concat(['ITNO'])));
+            }
+
+            if (changeList.includes('SITE') && !handledProps.includes('SITE')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const supplierItemId = payloadObj.SITE;
+                return [
+                    new SupplierItemUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        supplierItemId
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['SITE'])));
+            }
+
+            if (changeList.includes('PITD') && !handledProps.includes('PITD')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const itemName = payloadObj.PITD;
+                return [
+                    new PurchaseOrderItemNameUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        itemName
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['PITD'])));
+            }
+
+            if (changeList.includes('PITT') && !handledProps.includes('PITT')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const itemDescription = payloadObj.PITT;
+                return [
+                    new PurchaseOrderItemDescriptionUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        itemDescription
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['PITT'])));
+            }
+
+            if (changeList.includes('SORN') && !handledProps.includes('SORN')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const supplierOrderId = payloadObj.SORN;
+                return [
+                    new SupplierOrderUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        supplierOrderId
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['SORN'])));
+            }
+
+            if (changeList.includes('PUPR') && !handledProps.includes('PUPR')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const price = parseFloat(payloadObj.PUPR);
+                return [
+                    new PurchasePriceUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        price
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['PUPR'])));
+            }
+
+            if (changeList.includes('CPPR') && !handledProps.includes('CPPR')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const confirmedPrice = parseFloat(payloadObj.CPPR);
+                return [
+                    new ConfirmedPurchasePriceUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        confirmedPrice
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['CPPR'])));
+            }
+
+            if (changeList.includes('PPUN') && !handledProps.includes('PPUN')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const priceUnitofMeasure = payloadObj.PPUN;
+                return [
+                    new PurchasePriceUnitOfMeasureUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        priceUnitofMeasure
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['PPUN'])));
+            }
+
+            if (changeList.includes('PUCD') && !handledProps.includes('PUCD')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const priceQuantity = parseFloat(payloadObj.PUCD);
+                return [
+                    new PurchasePriceQuantityUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        priceQuantity
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['PUCD'])));
+            }
+
+            if (changeList.includes('CPUC') && !handledProps.includes('CPUC')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const ConfirmedPriceQuantity = parseFloat(payloadObj.CPUC);
+                return [
+                    new ConfirmedPurchasePriceQuantityUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        ConfirmedPriceQuantity
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['CPUC'])));
+            }
+
+            if (changeList.includes('PTCD') && !handledProps.includes('PTCD')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const priceText = parseFloat(payloadObj.PTCD);
+                return [
+                    new PurchasePriceTextUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        priceText
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['PTCD'])));
+            }
+
+            if (changeList.includes('LNAM') && !handledProps.includes('LNAM')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const Currency = parseFloat(payloadObj.LNAM);
+                return [
+                    new LineAmountOrderCurrencyUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        Currency
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['LNAM'])));
+            }
+
+            if (changeList.includes('DWDT') && !handledProps.includes('DWDT')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const requestedDateStr = payloadObj.DWDT;
+                let requestedDate: Date | null = null;
+                if (requestedDateStr && requestedDateStr !== '') {
+                    requestedDate = parseDate(requestedDateStr);
+                }
+                return [
+                    new RequestedDeliveryDateUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        requestedDate
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['DWDT'])));
+            }
+
+            if (changeList.includes('CODT') && !handledProps.includes('CODT')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const confirmedDateStr = payloadObj.CODT;
+                let confirmedDate: Date | null = null;
+                if (confirmedDateStr && confirmedDateStr !== '') {
+                    confirmedDate = parseDate(confirmedDateStr);
+                }
+                return [
+                    new ConfirmedDeliveryDateUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        confirmedDate
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['CODT'])));
+            }
+
+            if (changeList.includes('PUUN') && !handledProps.includes('PUUN')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const OrderUnitofMeasure = payloadObj.PUUN;
+                return [
+                    new PurchaseOrderLineUnitOfMeasureUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        OrderUnitofMeasure
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['PUUN'])));
+            }
+
+            if (changeList.includes('TEDL') && !handledProps.includes('TEDL')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const Terms = payloadObj.TEDL;
+                return [
+                    new PurchaseOrderLineDeliveryTermsUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        Terms
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['TEDL'])));
+            }
+
+            if (changeList.includes('MODL') && !handledProps.includes('MODL')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const Method = payloadObj.MODL;
+                return [
+                    new PurchaseOrderLineDeliveryMethodUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        Method
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['MODL'])));
+            }
+
+            if (changeList.includes('CFQA') && !handledProps.includes('CFQA')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const ConfirmedQuantity = parseFloat(payloadObj.CFQA);
+                return [
+                    new PurchaseOrderLineConfirmedQuantityUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        ConfirmedQuantity
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['CFQA'])));
+            }
+
+            if (changeList.includes('ORQA') && !handledProps.includes('ORQA')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const OrderedQuantityUnitOfMeasure = parseFloat(payloadObj.ORQA);
+                return [
+                    new PurchaseOrderLineOrderedQuantityAlternateUnitOfMeasureUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        OrderedQuantityUnitOfMeasure
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['ORQA'])));
+            }
         }
 
         return [];
     }
-
 }
 
 function parseDate(input: string): Date {
