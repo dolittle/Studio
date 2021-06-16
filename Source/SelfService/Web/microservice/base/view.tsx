@@ -1,18 +1,21 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Pivot, PivotItem } from '@fluentui/react';
 
-import { HealthStatus } from './healthStatus';
-import { getPodStatus, HttpResponsePodStatus, getServerUrlPrefix } from '../../api/api';
+import { HealthStatus } from '../view/healthStatus';
+import { HttpResponsePodStatus, getServerUrlPrefix } from '../../api/api';
 import { SecondaryButton } from '../../theme/secondaryButton';
 import { DownloadLogIcon } from '../../theme/icons';
 import { useReadable } from 'use-svelte-store';
 import { microservices } from '../../stores/microservice';
+import { ConfigView } from './configView';
+import { ConfigViewK8s } from './configViewK8s';
+
 
 const stackTokens = { childrenGap: 15 };
 
@@ -20,27 +23,21 @@ type Props = {
     applicationId: string
     environment: string
     microserviceId: string
+    podsData: HttpResponsePodStatus
 };
 
-export const Overview: React.FunctionComponent<Props> = (props) => {
+export const View: React.FunctionComponent<Props> = (props) => {
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
     const _props = props!;
     const applicationId = _props.applicationId;
     const microserviceId = _props.microserviceId;
     const environment = _props.environment;
+    const podsData = _props.podsData;
 
     const [selectedKey, setSelectedKey] = useState('healthStatus');
     // Want microservice name
-    const [podsData, setPodsData] = useState({
-        namespace: '',
-        microservice: {
-            name: '',
-            id: ''
-        },
-        pods: []
-    } as HttpResponsePodStatus);
-    const [loaded, setLoaded] = useState(false);
+
     const currentMicroservice = $microservices.find(ms => ms.id === microserviceId);
     if (!currentMicroservice) {
         const href = `/application/${applicationId}/${environment}/microservices/overview`;
@@ -50,18 +47,12 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
 
     const configMapPrefix = `${environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
 
-    useEffect(() => {
-        Promise.all([
-            getPodStatus(applicationId, environment, microserviceId)
-        ]).then(values => {
-            setPodsData(values[0]);
-            setLoaded(true);
-        });
-    }, []);
-
-
-    if (!loaded) {
-        return null;
+    let hasEditData = false;
+    if (currentMicroservice.edit &&
+        currentMicroservice.edit.dolittle &&
+        currentMicroservice.id !== '' &&
+        currentMicroservice.kind !== '') {
+        hasEditData = true;
     }
 
     return (
@@ -84,6 +75,11 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                         }}
                     >
                         <p>Config Screen</p>
+                        {hasEditData
+                            ? <ConfigView microservice={currentMicroservice.edit} />
+                            : <ConfigViewK8s microservice={currentMicroservice.live} />
+                        }
+
                     </PivotItem>
                     <PivotItem
                         itemKey="healthStatus"

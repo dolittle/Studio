@@ -5,13 +5,14 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
-import { getTenant } from '../store';
+
 
 
 const stackTokens = { childrenGap: 15 };
 
 export const MicroserviceEditScreen: React.FunctionComponent = () => {
-    const tenantId = getTenant();
+    // TODO Get from application
+    const tenantId = 'TODO';
     const { applicationId, microserviceId } = useParams() as any;
 
     return (

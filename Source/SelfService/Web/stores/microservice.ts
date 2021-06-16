@@ -10,8 +10,7 @@ import {
     getApplication,
     HttpResponseMicroservices,
 } from '../api/api';
-import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor, MicroserviceDolittle } from '../api/index';
-import { Microservice } from '../microservice/Simple';
+import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor, MicroserviceDolittle, MicroserviceRawDataLogIngestor } from '../api/index';
 
 export type MicroserviceStore = {
     edit: any
@@ -58,7 +57,6 @@ export const mergeMicroservicesFromGit = (items) => {
             } as MicroserviceInfo,
         };
 
-
         const index = data.findIndex(item => {
             return item.id === storeItem.id && item.environment === storeItem.environment;
         });
@@ -71,7 +69,6 @@ export const mergeMicroservicesFromGit = (items) => {
         // Use live from the data structure
         storeItem.live = data[index].live;
         data = [...data.slice(0, index), storeItem, ...data.slice(index + 1)];
-        return;
     });
     microservices.set(data);
 };
@@ -99,8 +96,8 @@ export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
 
         // Use live from the data structure
         storeItem.edit = data[index].edit;
-        storeItem.kind = storeItem.edit.kind;
-        return [...data.slice(0, index), storeItem, ...data.slice(index + 1)];
+        storeItem.kind = storeItem.edit.kind ? storeItem.edit.kind : '';
+        data = [...data.slice(0, index), storeItem, ...data.slice(index + 1)];
     });
     microservices.set(data);
 };
@@ -125,13 +122,16 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
 
     switch (kind) {
         case 'simple':
-            response = apiSaveMicroservice(input);
+            response = await apiSaveMicroservice(input);
             break;
         case 'business-moments-adaptor':
-            response = apiSaveMicroservice(input);
+            response = await apiSaveMicroservice(input);
+            break;
+        case 'raw-data-log-ingestor':
+            response = await apiSaveMicroservice(input);
             break;
         default:
-            alert(`kind: ${kind} not supported`);
+            alert(`saving via store failed, kind: ${kind} not supported`);
             return Promise.resolve(false as boolean);
     }
 
@@ -156,5 +156,9 @@ export const saveSimpleMicroservice = async (input: MicroserviceSimple): Promise
 };
 
 export const saveBusinessMomentsAdaptorMicroservice = async (input: MicroserviceBusinessMomentAdaptor): Promise<boolean> => {
+    return saveMicroservice(input.kind, input);
+};
+
+export const saveRawDataLogIngestorMicroservice = async (input: MicroserviceRawDataLogIngestor): Promise<boolean> => {
     return saveMicroservice(input.kind, input);
 };

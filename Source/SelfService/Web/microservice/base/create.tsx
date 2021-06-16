@@ -6,11 +6,12 @@ import { useHistory } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Label } from '@fluentui/react/lib/Label';
 import { TextField } from '@fluentui/react/lib/TextField';
-import { saveSimpleMicroservice } from '../stores/microservice';
-import { MicroserviceSimple } from '../api/index';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { Guid } from '@dolittle/rudiments';
-import { HttpResponseApplications2 } from '../api/api';
+
+import { saveSimpleMicroservice } from '../../stores/microservice';
+import { MicroserviceSimple } from '../../api/index';
+import { HttpResponseApplications2 } from '../../api/api';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -19,7 +20,7 @@ type Props = {
     environment: string
 };
 
-export const Microservice: React.FunctionComponent<Props> = (props) => {
+export const Create: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
     const _props = props!;
     const application = _props.application;

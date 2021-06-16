@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 
-import { getTenant } from '../store';
 import { Label } from '@fluentui/react/lib/Label';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { saveEnvironment, HttpInputApplicationEnvironment } from '../api/api';
@@ -15,7 +14,8 @@ const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } 
 const stackTokens = { childrenGap: 15 };
 
 export const EnvironmentNewScreen: React.FunctionComponent = () => {
-    const tenantId = getTenant();
+    // TODO Get from application
+    const tenantId = 'TODO';
     const { applicationId } = useParams() as any;
 
     const fromStore = {

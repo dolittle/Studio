@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor } from './index';
+import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor, MicroserviceRawDataLogIngestor } from './index';
 
 export type ShortInfo = {
     id: string
@@ -166,15 +166,6 @@ export async function saveMicroservice(input: any): Promise<boolean> {
     const jsonResult = await result.json();
     return true;
 }
-
-export async function saveSimpleMicroservice(input: MicroserviceSimple): Promise<boolean> {
-    return saveMicroservice(input);
-}
-
-export async function saveBusinessMomentsAdaptorMicroservice(input: MicroserviceBusinessMomentAdaptor): Promise<boolean> {
-    return saveMicroservice(input);
-}
-
 
 export async function getPodStatus(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponsePodStatus> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/microservice/${microserviceId}/podstatus`;

@@ -24,8 +24,6 @@ type Props = {
     onAfterDelete: (microserviceId: string, environment: string) => void;
 };
 
-
-
 const kindTitles = {
     'simple': {
         subTitle: 'Base default microservice', // TODO this should not be called simple
@@ -54,9 +52,7 @@ const kindTitles = {
         </svg>
         )
     },
-
-
-    'webhook-ingestor': {
+    'raw-data-log-ingestor': {
         subTitle: 'Webhook microservice',
         icon: ''
     }
