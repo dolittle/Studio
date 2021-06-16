@@ -136,6 +136,6 @@ export type MicroserviceRawDataLogIngestorExtra = {
 
 export type MicroserviceRawDataLogIngestorWebhookConfig = {
     kind: string
-    uriSuffix: string // TODO maybe uriSuffix
-    authorization: string // Bearer X or Basic X
+    uriSuffix: string
+    authorization: string
 };
