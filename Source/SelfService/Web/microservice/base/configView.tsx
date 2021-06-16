@@ -20,7 +20,6 @@ type Props = {
 export const ConfigView: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const ms = _props.microservice;
-    console.log(ms);
     // TODO why am I seeing secretNamePrefix and not domainPrefix?
     return (
         <>

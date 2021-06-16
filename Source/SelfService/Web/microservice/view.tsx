@@ -56,32 +56,14 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
-    let kind = currentMicroservice.kind;
-    if (kind === '') {
-        // Hack
-        console.log(currentMicroservice);
-        if (
-            currentMicroservice &&
-            currentMicroservice.live &&
-            currentMicroservice.live.images &&
-            currentMicroservice.live.images[0] &&
-            currentMicroservice.live.images[0].image &&
-            currentMicroservice.live.images[0].image === '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/dolittle/platform/platform-api:dev-x'
-        ) {
-            kind = 'raw-data-log-ingestor';
-        }
-
-
-    }
-
-    switch (kind) {
+    const subView = whichSubView(currentMicroservice);
+    switch (subView) {
         case 'simple':
             return (
                 <>
                     <BaseView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
                 </>
             );
-
         case 'business-moments-adaptor':
             return (
                 <>
@@ -98,8 +80,32 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
             return (
                 <>
                     <h1>Not supported</h1>
+                    <p>This is an error or our part</p>
+                    <p>Kind is &quot;{kind}&quot;.</p>
+                    <p>Microservice Id is {currentMicroservice.id}</p>
                 </>
             );
     }
 
 };
+
+
+function whichSubView(currentMicroservice: any): string {
+    // Today we try and map subviews based on kind, its not perfect
+    let kind = currentMicroservice.kind;
+    if (
+        currentMicroservice &&
+        currentMicroservice.live &&
+        currentMicroservice.live.images &&
+        currentMicroservice.live.images[0] &&
+        currentMicroservice.live.images[0].image &&
+        currentMicroservice.live.images[0].image === '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/dolittle/platform/platform-api:dev-x'
+    ) {
+        kind = 'raw-data-log-ingestor';
+    }
+
+    if (kind === '') {
+        kind = 'simple'; // TODO change
+    }
+    return kind;
+}

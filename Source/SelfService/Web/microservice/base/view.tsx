@@ -14,6 +14,8 @@ import { DownloadLogIcon } from '../../theme/icons';
 import { useReadable } from 'use-svelte-store';
 import { microservices } from '../../stores/microservice';
 import { ConfigView } from './configView';
+import { ConfigViewK8s } from './configViewK8s';
+
 
 const stackTokens = { childrenGap: 15 };
 
@@ -45,6 +47,14 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
     const configMapPrefix = `${environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
 
+    let hasEditData = false;
+    if (currentMicroservice.edit &&
+        currentMicroservice.edit.dolittle &&
+        currentMicroservice.id !== '' &&
+        currentMicroservice.kind !== '') {
+        hasEditData = true;
+    }
+
     return (
         <>
             <Stack tokens={stackTokens}>
@@ -65,7 +75,11 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         }}
                     >
                         <p>Config Screen</p>
-                        <ConfigView microservice={currentMicroservice.edit} />
+                        {hasEditData
+                            ? <ConfigView microservice={currentMicroservice.edit} />
+                            : <ConfigViewK8s microservice={currentMicroservice.live} />
+                        }
+
                     </PivotItem>
                     <PivotItem
                         itemKey="healthStatus"
