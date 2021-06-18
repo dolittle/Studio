@@ -18,8 +18,10 @@ const inputFileReadStream = fs.createReadStream(argv.inputFile);
 const rl = readline.createInterface(inputFileReadStream);
 const eventProducer = new EventProducer();
 
+let counter = 0;
 rl.on('line', (line) => {
     const data = JSON.parse(line);
     const events = eventProducer.produce(data.payload);
-    console.log(`${data.payload.document}: ${data.payload.operation}`, events);
+    console.log(`${data.payload.document} (${counter}): ${data.payload.operation}`, events);
+    counter += 1;
 });

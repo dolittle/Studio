@@ -29,6 +29,7 @@ import {
 } from './events_PurcheOrderLine';
 import { PurchaseOrderChangedNumberChanged, PurchaseOrderDeleted } from './events';
 import { IDialogProps } from '@dolittle/vanir-react';
+import { PurchaseOrderLineChangeNumberUpdated } from './events_PurcheOrderLine';
 import {
     PurchaseOrderCreated,
     PurchaseOrderDateChanged,
@@ -214,7 +215,7 @@ export class EventProducer {
 
             if (changeList.includes('CHNO') && !handledProps.includes('CHNO')) {
                 const poNumber = payloadObj.PUNO;
-                const changeNumber = payloadObj.CHNO;
+                const changeNumber = parseInt(payloadObj.CHNO);
                 return [
                     new PurchaseOrderChangedNumberChanged(poNumber, changeNumber),
                 ].concat(this.produce(payload, handledProps.concat(['CHNO'])));
@@ -291,6 +292,8 @@ export class EventProducer {
             const supplierId = payloadObj.SUNO;
             const supplierItemNumber = payloadObj.SITE;
             const itemName = payloadObj.PITD;
+            const changeNumber = parseInt(payloadObj.CHNO);
+
             return [
                 new PurchaseOrderLineCreated(
                     poNumber,
@@ -303,7 +306,8 @@ export class EventProducer {
                     differentDeliveryAddress,
                     supplierId,
                     supplierItemNumber,
-                    itemName
+                    itemName,
+                    changeNumber
                 ),
             ];
         }
@@ -727,6 +731,23 @@ export class EventProducer {
                         OrderedQuantityUnitOfMeasure
                     ),
                 ].concat(this.produce(payload, handledProps.concat(['ORQA'])));
+            }
+
+            if (changeList.includes('CHNO') && !handledProps.includes('CHNO')) {
+                const poNumber = payloadObj.PUNO;
+                const lineNumber = parseFloat(payloadObj.PNLI);
+                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const itemNumber = payloadObj.ITNO;
+                const changeNumber = parseInt(payloadObj.CHNO);
+                return [
+                    new PurchaseOrderLineChangeNumberUpdated(
+                        poNumber,
+                        lineNumber,
+                        subLineNumber,
+                        itemNumber,
+                        changeNumber
+                    ),
+                ].concat(this.produce(payload, handledProps.concat(['CHNO'])));
             }
         }
 
