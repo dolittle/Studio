@@ -1,3 +1,6 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { eventType } from '@dolittle/sdk.events';
 
 @eventType('3f6c2333-14f1-4a61-a5ca-7f9b4231313d')
