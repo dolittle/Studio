@@ -1,4 +1,6 @@
-import { IContextualMenuProps } from '@fluentui/react';
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import {
     ConfirmedDeliveryDateUpdated,
     ConfirmedPurchasePriceQuantityUpdated,
@@ -26,10 +28,8 @@ import {
     SupplierItemUpdated,
     SupplierOrderUpdated,
     SupplierUpdated,
+    PurchaseOrderLineChangeNumberUpdated
 } from './events_PurcheOrderLine';
-import { PurchaseOrderChangedNumberChanged, PurchaseOrderDeleted } from './events';
-import { IDialogProps } from '@dolittle/vanir-react';
-import { PurchaseOrderLineChangeNumberUpdated } from './events_PurcheOrderLine';
 import {
     PurchaseOrderCreated,
     PurchaseOrderDateChanged,
@@ -49,6 +49,8 @@ import {
     PurchaseOrderSupplierReferenceChanged,
     PurchaseOrderTotalOrderCostChanged,
     PurchaseOrderTotalQuantityChanged,
+    PurchaseOrderChangedNumberChanged,
+    PurchaseOrderDeleted
 } from './events';
 
 export class EventProducer {
@@ -56,7 +58,7 @@ export class EventProducer {
         const payloadObj = payloadToObject(payload);
 
         if (payloadObj.document === 'MPHEAD' && payloadObj.operation === 'U') {
-            var changeList: any = [];
+            const changeList: any = [];
             payload.elements.forEach((element) => {
                 // if (element.oldvalue !== 'null' && element.newvalue !== 'null') {
                 if (element.oldvalue !== element.newvalue) {
@@ -319,7 +321,7 @@ export class EventProducer {
         }
 
         if (payloadObj.document === 'MPLINE' && payloadObj.operation === 'U') {
-            var changeList: any = [];
+            const changeList: any = [];
             payload.elements.forEach((element) => {
                 // if (element.oldvalue !== 'null' && element.newvalue !== 'null') {
                 if (element.oldvalue !== element.newvalue) {
@@ -775,9 +777,9 @@ const fromEntries = (xs: [string | number | symbol, any][]) =>
         : xs.reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
 function payloadToObject(payload: any): any {
-    let arrayToObj = function (payload) {
+    const arrayToObj = function (payload) {
         return payload.map(function (x) {
-            var data = {};
+            const data = {};
             let newValue = x.newvalue.trim();
             if (newValue === '') {
                 newValue = x.oldvalue.trim();
