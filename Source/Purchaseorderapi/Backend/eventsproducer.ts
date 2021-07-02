@@ -316,7 +316,7 @@ export class EventProducer {
 
         if (payloadObj.document === 'MPLINE' && payloadObj.operation === 'D') {
             const poNumber = payloadObj.PUNO;
-            const lineNumber = parseFloat(payloadObj.PNLI);
+            const lineNumber = parseInt(payloadObj.PNLI);
             return [new PurchaseOrderLineDeleted(poNumber, lineNumber)];
         }
 
@@ -330,23 +330,23 @@ export class EventProducer {
                 }
             });
 
-            if (changeList.includes('PNSL') && !handledProps.includes('PNSL')) {
+            if (changeList.includes('PNLS') && !handledProps.includes('PNLS')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 return [
                     new PurchaseOrderLineSubNumberUpdated(
                         poNumber,
                         lineNumber,
                         subLineNumber
                     ),
-                ].concat(this.produce(payload, handledProps.concat(['PNSL'])));
+                ].concat(this.produce(payload, handledProps.concat(['PNLS'])));
             }
 
             if (changeList.includes('PUST') && !handledProps.includes('PUST')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const highestStatus = payloadObj.PUST;
                 return [
@@ -362,8 +362,8 @@ export class EventProducer {
 
             if (changeList.includes('PUSL') && !handledProps.includes('PUSL')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const lowestStatus = payloadObj.PUSL;
                 return [
@@ -379,8 +379,8 @@ export class EventProducer {
 
             if (changeList.includes('IDAG') && !handledProps.includes('IDAG')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const differentDeliveryAddress = payloadObj.IDAG;
                 return [
@@ -396,8 +396,8 @@ export class EventProducer {
 
             if (changeList.includes('SUNO') && !handledProps.includes('SUNO')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const supplierId = payloadObj.SUNO;
                 return [
@@ -413,8 +413,8 @@ export class EventProducer {
 
             if (changeList.includes('ITNO') && !handledProps.includes('ITNO')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 return [
                     new ItemUpdated(poNumber, lineNumber, subLineNumber, itemNumber),
@@ -423,8 +423,8 @@ export class EventProducer {
 
             if (changeList.includes('SITE') && !handledProps.includes('SITE')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const supplierItemId = payloadObj.SITE;
                 return [
@@ -440,8 +440,8 @@ export class EventProducer {
 
             if (changeList.includes('PITD') && !handledProps.includes('PITD')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const itemName = payloadObj.PITD;
                 return [
@@ -457,8 +457,8 @@ export class EventProducer {
 
             if (changeList.includes('PITT') && !handledProps.includes('PITT')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const itemDescription = payloadObj.PITT;
                 return [
@@ -474,8 +474,8 @@ export class EventProducer {
 
             if (changeList.includes('SORN') && !handledProps.includes('SORN')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const supplierOrderId = payloadObj.SORN;
                 return [
@@ -491,8 +491,8 @@ export class EventProducer {
 
             if (changeList.includes('PUPR') && !handledProps.includes('PUPR')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const price = parseFloat(payloadObj.PUPR);
                 return [
@@ -508,8 +508,8 @@ export class EventProducer {
 
             if (changeList.includes('CPPR') && !handledProps.includes('CPPR')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const confirmedPrice = parseFloat(payloadObj.CPPR);
                 return [
@@ -525,8 +525,8 @@ export class EventProducer {
 
             if (changeList.includes('PPUN') && !handledProps.includes('PPUN')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const priceUnitofMeasure = payloadObj.PPUN;
                 return [
@@ -542,8 +542,8 @@ export class EventProducer {
 
             if (changeList.includes('PUCD') && !handledProps.includes('PUCD')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const priceQuantity = parseFloat(payloadObj.PUCD);
                 return [
@@ -559,8 +559,8 @@ export class EventProducer {
 
             if (changeList.includes('CPUC') && !handledProps.includes('CPUC')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const ConfirmedPriceQuantity = parseFloat(payloadObj.CPUC);
                 return [
@@ -576,8 +576,8 @@ export class EventProducer {
 
             if (changeList.includes('PTCD') && !handledProps.includes('PTCD')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const priceText = parseFloat(payloadObj.PTCD);
                 return [
@@ -593,8 +593,8 @@ export class EventProducer {
 
             if (changeList.includes('LNAM') && !handledProps.includes('LNAM')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const Currency = parseFloat(payloadObj.LNAM);
                 return [
@@ -610,8 +610,8 @@ export class EventProducer {
 
             if (changeList.includes('DWDT') && !handledProps.includes('DWDT')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const requestedDateStr = payloadObj.DWDT;
                 let requestedDate: Date | null = null;
@@ -631,8 +631,8 @@ export class EventProducer {
 
             if (changeList.includes('CODT') && !handledProps.includes('CODT')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const confirmedDateStr = payloadObj.CODT;
                 let confirmedDate: Date | null = null;
@@ -652,8 +652,8 @@ export class EventProducer {
 
             if (changeList.includes('PUUN') && !handledProps.includes('PUUN')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const OrderUnitofMeasure = payloadObj.PUUN;
                 return [
@@ -669,8 +669,8 @@ export class EventProducer {
 
             if (changeList.includes('TEDL') && !handledProps.includes('TEDL')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const Terms = payloadObj.TEDL;
                 return [
@@ -686,8 +686,8 @@ export class EventProducer {
 
             if (changeList.includes('MODL') && !handledProps.includes('MODL')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const Method = payloadObj.MODL;
                 return [
@@ -703,8 +703,8 @@ export class EventProducer {
 
             if (changeList.includes('CFQA') && !handledProps.includes('CFQA')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const ConfirmedQuantity = parseFloat(payloadObj.CFQA);
                 return [
@@ -720,8 +720,8 @@ export class EventProducer {
 
             if (changeList.includes('ORQA') && !handledProps.includes('ORQA')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const OrderedQuantityUnitOfMeasure = parseFloat(payloadObj.ORQA);
                 return [
@@ -737,8 +737,8 @@ export class EventProducer {
 
             if (changeList.includes('CHNO') && !handledProps.includes('CHNO')) {
                 const poNumber = payloadObj.PUNO;
-                const lineNumber = parseFloat(payloadObj.PNLI);
-                const subLineNumber = parseFloat(payloadObj.PNSL);
+                const lineNumber = parseInt(payloadObj.PNLI);
+                const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 const changeNumber = parseInt(payloadObj.CHNO);
                 return [
