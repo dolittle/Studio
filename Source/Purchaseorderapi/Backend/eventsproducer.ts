@@ -60,10 +60,8 @@ export class EventProducer {
         if (payloadObj.document === 'MPHEAD' && payloadObj.operation === 'U') {
             const changeList: any = [];
             payload.elements.forEach((element) => {
-                // if (element.oldvalue !== 'null' && element.newvalue !== 'null') {
                 if (element.oldvalue !== element.newvalue) {
                     changeList.push(element.name);
-                    // }
                 }
             });
 
