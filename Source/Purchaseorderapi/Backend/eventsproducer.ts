@@ -284,8 +284,8 @@ export class EventProducer {
 
         if (payloadObj.document === 'MPLINE' && payloadObj.operation === 'C') {
             const poNumber = payloadObj.PUNO;
-            const lineNumber = parseFloat(payloadObj.PNLI);
-            const subLineNumber = parseFloat(payloadObj.PNSL);
+            const lineNumber = parseInt(payloadObj.PNLI);
+            const subLineNumber = parseInt(payloadObj.PNLS);
             const itemNumber = payloadObj.ITNO;
             const facilityNumber = payloadObj.FACI;
             const highestStatus = payloadObj.PUST;
