@@ -29,7 +29,7 @@ import {
     SupplierOrderUpdated,
     SupplierUpdated,
     PurchaseOrderLineChangeNumberUpdated
-} from './events_PurcheOrderLine';
+} from './events/PurchaseOrderLineEvents';
 import {
     PurchaseOrderCreated,
     PurchaseOrderDateChanged,
@@ -51,7 +51,7 @@ import {
     PurchaseOrderTotalQuantityChanged,
     PurchaseOrderChangedNumberChanged,
     PurchaseOrderDeleted
-} from './events';
+} from './events/PurchaseOrderEvents';
 
 export class EventProducer {
     produce(payload: any, handledProps: string[] = []): any[] {

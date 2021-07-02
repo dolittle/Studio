@@ -28,8 +28,9 @@ import {
     PurchaseOrderSupplierReferenceChanged,
     PurchaseOrderTotalOrderCostChanged,
     PurchaseOrderTotalQuantityChanged
-} from '../events';
+} from '../events/PurchaseOrderEvents';
 import { isReturnStatement } from 'typescript';
+import { PurchaseOrderAndOrderLineHandler } from '../PurchaseOrdersAndOrderLinesHandler';
 
 interface ScriptArgs {
     inputFile: string;
@@ -72,8 +73,7 @@ const client = Client
         eventTypes.register(PurchaseOrderPaymentTermsChanged);
         eventTypes.register(PurchaseOrderDateChanged);
         eventTypes.register(PurchaseOrderChangedNumberChanged);
-    })
-    .build();
+    }).build();
 
 let counter = 0;
 const eventsToProduce: any[] = [];
