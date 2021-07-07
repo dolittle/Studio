@@ -21,7 +21,7 @@ import {
     PurchaseOrderLineSubNumberUpdated,
     PurchaseOrderLineUnitOfMeasureUpdated,
     PurchaseOrderLinePriceQuantityUpdated,
-    PurchasePriceTextUpdated,
+    PurchaseOrderLinePriceTextUpdated,
     PurchaseOrderLinePriceUnitOfMeasureUpdated,
     PurchaseOrderLinePriceUpdated,
     RequestedDeliveryDateUpdated,
@@ -579,7 +579,7 @@ export class EventProducer {
                 const itemNumber = payloadObj.ITNO;
                 const priceText = parseFloat(payloadObj.PTCD);
                 return [
-                    new PurchasePriceTextUpdated(
+                    new PurchaseOrderLinePriceTextUpdated(
                         poNumber,
                         lineNumber,
                         subLineNumber,

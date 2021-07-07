@@ -208,7 +208,7 @@ export class ConfirmedPurchasePriceQuantityUpdated {
 }
 
 @eventType('0de048ef-2fbe-4a3f-bcea-c4b74962c28c')
-export class PurchasePriceTextUpdated {
+export class PurchaseOrderLinePriceTextUpdated {
     constructor(
         readonly PurchaseOrderNumber: number,
         readonly LineNumber: number,
