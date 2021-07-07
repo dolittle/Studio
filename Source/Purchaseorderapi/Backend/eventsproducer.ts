@@ -7,7 +7,7 @@ import {
     ConfirmedPurchasePriceUpdated,
     PurchaseOrderLineDifferentDeliveryAddressUpdated,
     PurchaseOrderLineHighestStatusUpdated,
-    PurchaseOrderLineItemUpdated,
+    PurchaseOrderLineItemNumberUpdated,
     LineAmountOrderCurrencyUpdated,
     PurchaseOrderLineLowestStatusUpdated,
     PurchaseOrderItemDescriptionUpdated,
@@ -415,7 +415,7 @@ export class EventProducer {
                 const subLineNumber = parseInt(payloadObj.PNLS);
                 const itemNumber = payloadObj.ITNO;
                 return [
-                    new PurchaseOrderLineItemUpdated(poNumber, lineNumber, subLineNumber, itemNumber),
+                    new PurchaseOrderLineItemNumberUpdated(poNumber, lineNumber, subLineNumber, itemNumber),
                 ].concat(this.produce(payload, handledProps.concat(['ITNO'])));
             }
 

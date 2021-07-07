@@ -31,12 +31,12 @@ import {
     PurchaseOrderLineCreated,
     PurchaseOrderLineDeleted,
     PurchaseOrderLineSubNumberUpdated,
-    PurchaseOrderLineSupplierUpdated,
     PurchaseOrderLineDifferentDeliveryAddressUpdated,
-    PurchaseOrderLineItemUpdated
+    PurchaseOrderLineItemNumberUpdated
 } from './events/PurchaseOrderLineEvents';
 import { PurchaseOrdersHandler } from './PurchaseOrdersHandler';
 import { PurchaseOrdersLinesHandler } from './PurchaseOrdersLinesHandler';
+import { PurchaseOrderLineSupplierUpdated } from './events/PurchaseOrderLineEvents';
 
 const client = Client
     .forMicroservice('f2586326-1057-495b-a12b-7f45193b9402')
@@ -70,7 +70,7 @@ const client = Client
         eventTypes.register(PurchaseOrderLineDeleted);
         eventTypes.register(PurchaseOrderLineDifferentDeliveryAddressUpdated);
         eventTypes.register(PurchaseOrderLineSupplierUpdated);
-        eventTypes.register(PurchaseOrderLineItemUpdated);
+        eventTypes.register(PurchaseOrderLineItemNumberUpdated);
     })
     .withEventHandlers(builder => {
         builder.register(PurchaseOrdersHandler);
