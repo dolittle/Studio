@@ -27,6 +27,7 @@ import {
     PurchaseOrderLineConfirmedDateUpdated
 } from './events/PurchaseOrderLineEvents';
 import { PurchaseOrderModel, PurchaseOrderLine } from './purchaseorder/PurchaseOrder';
+import { PurchaseOrderLowestStatusChanged } from './events/PurchaseOrderEvents';
 
 @eventHandler('86afb1b1-ed74-4c71-9b67-a3157b1f98da')
 export class PurchaseOrdersLinesHandler {
@@ -35,7 +36,7 @@ export class PurchaseOrdersLinesHandler {
     async purchaseOrderLineCreated(event: PurchaseOrderLineCreated, eventContext: EventContext) {
         await mongoose.connect('mongodb://localhost:27017', { dbName: 'PurchaseOrdersReadModel' });
 
-        console.log('PO LINE CREATED');
+        //console.log('PO LINE CREATED');
 
         let po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
         if (po) {
@@ -62,7 +63,7 @@ export class PurchaseOrdersLinesHandler {
 
     @handles(PurchaseOrderLineDeleted)
     async purchaseOrderLineDelete(event: PurchaseOrderLineDeleted, eventContext: EventContext) {
-        console.log('PO LINE DELETED');
+        //console.log('PO LINE DELETED');
 
         let po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
         if (po) {
@@ -83,38 +84,73 @@ export class PurchaseOrdersLinesHandler {
 
     @handles(PurchaseOrderLineSubNumberUpdated)
     async purchaseOrderLineSubNumberUpdated(event: PurchaseOrderLineSubNumberUpdated, eventContext: EventContext) {
-        console.log('PO LINE SubNumber updated');
+        //console.log('PO LINE SubNumber updated');
+
+        const po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
+        if (po) {
+            const poLine = po.findLine(event.LineNumber);
+            if (poLine) {
+                poLine.subLineNumber = event.SubLineNumber;
+                po.save();
+            }
+        }
+
+
     }
 
     @handles(PurchaseOrderLineHighestStatusUpdated)
     async purchaseOrderLineHighestStatusUpdated(event: PurchaseOrderLineHighestStatusUpdated, eventContext: EventContext) {
-        console.log('PO LINE HighestStatus updated');
+        //console.log('PO LINE HighestStatus updated');
 
-        let po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
+        const po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
         if (po) {
-            for (const x of po.lines) {
-                if (x.lineNumber === event.LineNumber) {
-                    x.highestStatus = event.HighestStatus;
-                    po.save();
-                    break;
-                }
+            const poLine = po.findLine(event.LineNumber);
+            if (poLine) {
+                poLine.higestStatus = event.HighestStatus;
+                po.save();
             }
         }
     }
 
     @handles(PurchaseOrderLineLowestStatusUpdated)
     async purchaseOrderLineLowestStatusUpdated(event: PurchaseOrderLineLowestStatusUpdated, eventContext: EventContext) {
-        console.log('PO LINE LowestStatus udpated');
+        //console.log('PO LINE LowestStatus updated');
+
+        const po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
+        if (po) {
+            const poLine = po.findLine(event.LineNumber);
+            if (poLine) {
+                poLine.lowestStatus = event.Status;
+                po.save();
+            }
+        }
     }
 
     @handles(PurchaseOrderLineDifferentDeliveryAddressUpdated)
     async purchaseOrderLineDifferentDeliveryAddressUpdated(event: PurchaseOrderLineDifferentDeliveryAddressUpdated, eventContext: EventContext) {
-        console.log('PO LINE Different Delivery Adress updated');
+        //console.log('PO LINE Different Delivery Adress updated');
+        const po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
+        if (po) {
+            const poLine = po.findLine(event.LineNumber);
+            if (poLine) {
+                poLine.differentDeliveryAddress = event.DifferentDeliveryAddress;
+                po.save();
+            }
+        }
     }
 
     @handles(PurchaseOrderLineSupplierUpdated)
     async purchaseOrderLineSupplierUpdated(event: PurchaseOrderLineSupplierUpdated, eventContext: EventContext) {
-        console.log('PO LINE Supplier Updated');
+        //console.log('PO LINE Supplier Updated');
+
+        const po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
+        if (po) {
+            const poLine = po.findLine(event.LineNumber);
+            if (poLine) {
+                poLine.supplierId = event.SupplierId;
+                po.save();
+            }
+        }
     }
 
     @handles(PurchaseOrderLineItemNumberUpdated)
