@@ -23,7 +23,8 @@ import {
     PurchaseOrderLinePriceQuantityUpdated,
     PurchaseOrderLinePriceTextUpdated,
     PurchaseOrderLineCurrencyUpdated,
-    PurchaseOrderLineRequestedDateUpdated
+    PurchaseOrderLineRequestedDateUpdated,
+    PurchaseOrderLineConfirmedDateUpdated
 } from './events/PurchaseOrderLineEvents';
 import { PurchaseOrderModel, PurchaseOrderLine } from './purchaseorder/PurchaseOrder';
 
@@ -174,5 +175,10 @@ export class PurchaseOrdersLinesHandler {
     @handles(PurchaseOrderLineRequestedDateUpdated)
     async purchaseOrderLineRequestedDateUpdated(event: PurchaseOrderLineRequestedDateUpdated, eventContext: EventContext) {
         console.log('PO LINE Request Date updated');
+    }
+
+    @handles(PurchaseOrderLineConfirmedDateUpdated)
+    async purchaseOrderLineConfirmedDateUpdated(event: PurchaseOrderLineConfirmedDateUpdated, eventContext: EventContext) {
+        console.log('PO Line Confirmed Date updated');
     }
 }

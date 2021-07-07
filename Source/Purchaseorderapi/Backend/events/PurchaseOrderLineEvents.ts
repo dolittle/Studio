@@ -241,7 +241,7 @@ export class PurchaseOrderLineRequestedDateUpdated {
 }
 
 @eventType('169811e1-6a1b-4364-b788-84aca34da3c2')
-export class ConfirmedDeliveryDateUpdated {
+export class PurchaseOrderLineConfirmedDateUpdated {
     constructor(
         readonly PurchaseOrderNumber: number,
         readonly LineNumber: number,

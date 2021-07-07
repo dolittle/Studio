@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import {
-    ConfirmedDeliveryDateUpdated,
+    PurchaseOrderLineConfirmedDateUpdated,
     ConfirmedPurchasePriceQuantityUpdated,
     PurchaseOrderLineConfirmedPriceUpdated,
     PurchaseOrderLineDifferentDeliveryAddressUpdated,
@@ -638,7 +638,7 @@ export class EventProducer {
                     confirmedDate = parseDate(confirmedDateStr);
                 }
                 return [
-                    new ConfirmedDeliveryDateUpdated(
+                    new PurchaseOrderLineConfirmedDateUpdated(
                         poNumber,
                         lineNumber,
                         subLineNumber,
