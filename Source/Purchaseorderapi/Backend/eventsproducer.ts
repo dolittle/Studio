@@ -27,7 +27,7 @@ import {
     RequestedDeliveryDateUpdated,
     SupplierItemUpdated,
     SupplierOrderUpdated,
-    SupplierUpdated,
+    PurchaseOrderLineSupplierUpdated,
     PurchaseOrderLineChangeNumberUpdated
 } from './events/PurchaseOrderLineEvents';
 import {
@@ -399,7 +399,7 @@ export class EventProducer {
                 const itemNumber = payloadObj.ITNO;
                 const supplierId = payloadObj.SUNO;
                 return [
-                    new SupplierUpdated(
+                    new PurchaseOrderLineSupplierUpdated(
                         poNumber,
                         lineNumber,
                         subLineNumber,
