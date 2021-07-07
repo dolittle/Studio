@@ -230,7 +230,7 @@ export class PurchaseOrderLineCurrencyUpdated {
 }
 
 @eventType('909ac72e-406e-4921-b60b-917e329c8268')
-export class RequestedDeliveryDateUpdated {
+export class PurchaseOrderLineRequestedDateUpdated {
     constructor(
         readonly PurchaseOrderNumber: number,
         readonly LineNumber: number,

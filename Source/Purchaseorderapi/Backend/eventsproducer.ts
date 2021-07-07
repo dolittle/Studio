@@ -24,7 +24,7 @@ import {
     PurchaseOrderLinePriceTextUpdated,
     PurchaseOrderLinePriceUnitOfMeasureUpdated,
     PurchaseOrderLinePriceUpdated,
-    RequestedDeliveryDateUpdated,
+    PurchaseOrderLineRequestedDateUpdated,
     PurchaseOrderLineSupplierItemIdUpdated,
     PurchaseOrderLineSupplierOrderIdUpdated,
     PurchaseOrderLineSupplierUpdated,
@@ -617,7 +617,7 @@ export class EventProducer {
                     requestedDate = parseDate(requestedDateStr);
                 }
                 return [
-                    new RequestedDeliveryDateUpdated(
+                    new PurchaseOrderLineRequestedDateUpdated(
                         poNumber,
                         lineNumber,
                         subLineNumber,
