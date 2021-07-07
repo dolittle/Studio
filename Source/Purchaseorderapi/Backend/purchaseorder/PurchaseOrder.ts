@@ -32,6 +32,7 @@ export class PurchaseOrderLine {
     lineNumber?: number;
     subLineNumber?: number;
     itemNumber?: string;
+    highestStatus?: string;
 }
 
 export const PurchaseOrderModel = getModelForClass(PurchaseOrder);

@@ -26,7 +26,7 @@ import {
 } from './events/PurchaseOrderEvents';
 import {
     PurchaseOrderLineHighestStatusUpdated,
-    LowestStatusPurchaseOrderUpdated,
+    PurchaseOrderLineLowestStatusUpdated,
     PurchaseOrderLineChangeNumberUpdated,
     PurchaseOrderLineCreated,
     PurchaseOrderLineDeleted,
@@ -63,7 +63,7 @@ const client = Client
         eventTypes.register(PurchaseOrderLineSubNumberUpdated);
         eventTypes.register(PurchaseOrderLineChangeNumberUpdated);
         eventTypes.register(PurchaseOrderLineHighestStatusUpdated);
-        eventTypes.register(LowestStatusPurchaseOrderUpdated);
+        eventTypes.register(PurchaseOrderLineLowestStatusUpdated);
         eventTypes.register(PurchaseOrderLineDeleted);
     })
     .withEventHandlers(builder => {

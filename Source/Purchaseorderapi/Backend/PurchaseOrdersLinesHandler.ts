@@ -8,7 +8,8 @@ import {
     PurchaseOrderLineCreated,
     PurchaseOrderLineDeleted,
     PurchaseOrderLineHighestStatusUpdated,
-    PurchaseOrderLineSubNumberUpdated
+    PurchaseOrderLineSubNumberUpdated,
+    PurchaseOrderLineLowestStatusUpdated
 } from './events/PurchaseOrderLineEvents';
 import { PurchaseOrderModel, PurchaseOrderLine } from './purchaseorder/PurchaseOrder';
 
@@ -73,5 +74,22 @@ export class PurchaseOrdersLinesHandler {
     @handles(PurchaseOrderLineHighestStatusUpdated)
     async purchaseOrderLineHighestStatusUpdated(event: PurchaseOrderLineHighestStatusUpdated, eventContext: EventContext) {
         console.log('PO LINE HighestStatus updated');
+
+        let po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
+        if (po) {
+            for (const x of po.lines) {
+                if (x.lineNumber === event.LineNumber) {
+                    x.highestStatus = event.HighestStatus;
+                    po.save();
+                    break;
+                }
+            }
+        }
     }
+
+    @handles(PurchaseOrderLineLowestStatusUpdated)
+    async purchaseOrderLineLowestStatusUpdated(event: PurchaseOrderLineLowestStatusUpdated, eventContext: EventContext) {
+        console.log('PO LINE LowestStatus udpated');
+    }
+
 }

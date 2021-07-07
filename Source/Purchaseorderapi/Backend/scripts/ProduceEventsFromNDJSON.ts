@@ -33,8 +33,8 @@ import {
     PurchaseOrderLineCreated,
     PurchaseOrderLineChangeNumberUpdated,
     PurchaseOrderLineHighestStatusUpdated,
-    LowestStatusPurchaseOrderUpdated,
-    PurchaseOrderLineDeleted
+    PurchaseOrderLineLowestStatusUpdated,
+    PurchaseOrderLineDeleted,
 } from '../events/PurchaseOrderLineEvents';
 
 interface ScriptArgs {
@@ -82,7 +82,7 @@ const client = Client
         eventTypes.register(PurchaseOrderLineCreated);
         eventTypes.register(PurchaseOrderLineChangeNumberUpdated);
         eventTypes.register(PurchaseOrderLineHighestStatusUpdated);
-        eventTypes.register(LowestStatusPurchaseOrderUpdated);
+        eventTypes.register(PurchaseOrderLineLowestStatusUpdated);
         eventTypes.register(PurchaseOrderLineDeleted);
     }).build();
 

@@ -9,7 +9,7 @@ import {
     PurchaseOrderLineHighestStatusUpdated,
     ItemUpdated,
     LineAmountOrderCurrencyUpdated,
-    LowestStatusPurchaseOrderUpdated,
+    PurchaseOrderLineLowestStatusUpdated,
     PurchaseOrderItemDescriptionUpdated,
     PurchaseOrderItemNameUpdated,
     PurchaseOrderLineConfirmedQuantityUpdated,
@@ -365,7 +365,7 @@ export class EventProducer {
                 const itemNumber = payloadObj.ITNO;
                 const lowestStatus = payloadObj.PUSL;
                 return [
-                    new LowestStatusPurchaseOrderUpdated(
+                    new PurchaseOrderLineLowestStatusUpdated(
                         poNumber,
                         lineNumber,
                         subLineNumber,
