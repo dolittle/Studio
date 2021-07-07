@@ -42,7 +42,7 @@ export class PurchaseOrderLineSubNumberUpdated {
 }
 
 @eventType('9ce6921c-d2b6-44c6-9f05-a17966ba2261')
-export class HighestStatusPurchaseOrderUpdated {
+export class PurchaseOrderLineHighestStatusUpdated {
     // TODO: add id. Is this on PO or PO Line?
     constructor(
         readonly PurchaseOrderNumber: number,

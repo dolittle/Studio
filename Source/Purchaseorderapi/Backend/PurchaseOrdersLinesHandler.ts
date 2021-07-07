@@ -6,7 +6,9 @@ import { eventHandler, handles } from '@dolittle/sdk.events.handling';
 import { mongoose } from '@typegoose/typegoose';
 import {
     PurchaseOrderLineCreated,
-    PurchaseOrderLineDeleted
+    PurchaseOrderLineDeleted,
+    PurchaseOrderLineHighestStatusUpdated,
+    PurchaseOrderLineSubNumberUpdated
 } from './events/PurchaseOrderLineEvents';
 import { PurchaseOrderModel, PurchaseOrderLine } from './purchaseorder/PurchaseOrder';
 
@@ -61,5 +63,15 @@ export class PurchaseOrdersLinesHandler {
                 po.save();
             }
         }
+    }
+
+    @handles(PurchaseOrderLineSubNumberUpdated)
+    async purchaseOrderLineSubNumberUpdated(event: PurchaseOrderLineSubNumberUpdated, eventContext: EventContext) {
+        console.log('PO LINE SubNumber updated');
+    }
+
+    @handles(PurchaseOrderLineHighestStatusUpdated)
+    async purchaseOrderLineHighestStatusUpdated(event: PurchaseOrderLineHighestStatusUpdated, eventContext: EventContext) {
+        console.log('PO LINE HighestStatus updated');
     }
 }

@@ -25,11 +25,12 @@ import {
     PurchaseOrderTotalQuantityChanged
 } from './events/PurchaseOrderEvents';
 import {
-    HighestStatusPurchaseOrderUpdated,
+    PurchaseOrderLineHighestStatusUpdated,
     LowestStatusPurchaseOrderUpdated,
     PurchaseOrderLineChangeNumberUpdated,
     PurchaseOrderLineCreated,
-    PurchaseOrderLineDeleted
+    PurchaseOrderLineDeleted,
+    PurchaseOrderLineSubNumberUpdated
 } from './events/PurchaseOrderLineEvents';
 import { PurchaseOrdersHandler } from './PurchaseOrdersHandler';
 import { PurchaseOrdersLinesHandler } from './PurchaseOrdersLinesHandler';
@@ -59,8 +60,9 @@ const client = Client
         eventTypes.register(PurchaseOrderChangedNumberChanged);
 
         eventTypes.register(PurchaseOrderLineCreated);
+        eventTypes.register(PurchaseOrderLineSubNumberUpdated);
         eventTypes.register(PurchaseOrderLineChangeNumberUpdated);
-        eventTypes.register(HighestStatusPurchaseOrderUpdated);
+        eventTypes.register(PurchaseOrderLineHighestStatusUpdated);
         eventTypes.register(LowestStatusPurchaseOrderUpdated);
         eventTypes.register(PurchaseOrderLineDeleted);
     })
