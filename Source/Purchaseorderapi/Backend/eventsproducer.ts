@@ -11,7 +11,7 @@ import {
     LineAmountOrderCurrencyUpdated,
     PurchaseOrderLineLowestStatusUpdated,
     PurchaseOrderItemDescriptionUpdated,
-    PurchaseOrderItemNameUpdated,
+    PurchaseOrderLineItemNameUpdated,
     PurchaseOrderLineConfirmedQuantityUpdated,
     PurchaseOrderLineCreated,
     PurchaseOrderLineDeleted,
@@ -443,7 +443,7 @@ export class EventProducer {
                 const itemNumber = payloadObj.ITNO;
                 const itemName = payloadObj.PITD;
                 return [
-                    new PurchaseOrderItemNameUpdated(
+                    new PurchaseOrderLineItemNameUpdated(
                         poNumber,
                         lineNumber,
                         subLineNumber,
