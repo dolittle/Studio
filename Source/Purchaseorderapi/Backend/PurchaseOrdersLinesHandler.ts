@@ -18,7 +18,8 @@ import {
     PurchaseOrderLineItemDescriptionUpdated,
     PurchaseOrderLineSupplierOrderIdUpdated,
     PurchaseOrderLinePriceUpdated,
-    PurchaseOrderLineConfirmedPriceUpdated
+    PurchaseOrderLineConfirmedPriceUpdated,
+    PurchaseOrderLinePriceUnitOfMeasureUpdated
 } from './events/PurchaseOrderLineEvents';
 import { PurchaseOrderModel, PurchaseOrderLine } from './purchaseorder/PurchaseOrder';
 
@@ -144,5 +145,10 @@ export class PurchaseOrdersLinesHandler {
     @handles(PurchaseOrderLineConfirmedPriceUpdated)
     async purchaseOrderLineConfirmedPriceUpdated(event: PurchaseOrderLineConfirmedPriceUpdated, eventContext: EventContext) {
         console.log('PO LINE Confirmed Price Updated');
+    }
+
+    @handles(PurchaseOrderLinePriceUnitOfMeasureUpdated)
+    async purchaseOrderLinePriceUnitOfMeasureUpdated(event: PurchaseOrderLinePriceUnitOfMeasureUpdated, eventContext: EventContext) {
+        console.log('PO Line Price unit of Measure updated');
     }
 }

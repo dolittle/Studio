@@ -22,7 +22,7 @@ import {
     PurchaseOrderLineUnitOfMeasureUpdated,
     PurchasePriceQuantityUpdated,
     PurchasePriceTextUpdated,
-    PurchasePriceUnitOfMeasureUpdated,
+    PurchaseOrderLinePriceUnitOfMeasureUpdated,
     PurchaseOrderLinePriceUpdated,
     RequestedDeliveryDateUpdated,
     PurchaseOrderLineSupplierItemIdUpdated,
@@ -528,7 +528,7 @@ export class EventProducer {
                 const itemNumber = payloadObj.ITNO;
                 const priceUnitofMeasure = payloadObj.PPUN;
                 return [
-                    new PurchasePriceUnitOfMeasureUpdated(
+                    new PurchaseOrderLinePriceUnitOfMeasureUpdated(
                         poNumber,
                         lineNumber,
                         subLineNumber,

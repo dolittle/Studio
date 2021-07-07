@@ -39,7 +39,8 @@ import {
     PurchaseOrderLinePriceUpdated,
     PurchaseOrderLineSupplierUpdated,
     PurchaseOrderLineItemDescriptionUpdated,
-    PurchaseOrderLineConfirmedPriceUpdated
+    PurchaseOrderLineConfirmedPriceUpdated,
+    PurchaseOrderLinePriceUnitOfMeasureUpdated
 } from './events/PurchaseOrderLineEvents';
 import { PurchaseOrdersHandler } from './PurchaseOrdersHandler';
 import { PurchaseOrdersLinesHandler } from './PurchaseOrdersLinesHandler';
@@ -83,6 +84,7 @@ const client = Client
         eventTypes.register(PurchaseOrderLineSupplierOrderIdUpdated);
         eventTypes.register(PurchaseOrderLinePriceUpdated);
         eventTypes.register(PurchaseOrderLineConfirmedPriceUpdated);
+        eventTypes.register(PurchaseOrderLinePriceUnitOfMeasureUpdated);
     })
     .withEventHandlers(builder => {
         builder.register(PurchaseOrdersHandler);
