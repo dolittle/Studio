@@ -4,7 +4,7 @@
 import {
     ConfirmedDeliveryDateUpdated,
     ConfirmedPurchasePriceQuantityUpdated,
-    ConfirmedPurchasePriceUpdated,
+    PurchaseOrderLineConfirmedPriceUpdated,
     PurchaseOrderLineDifferentDeliveryAddressUpdated,
     PurchaseOrderLineHighestStatusUpdated,
     PurchaseOrderLineItemNumberUpdated,
@@ -511,7 +511,7 @@ export class EventProducer {
                 const itemNumber = payloadObj.ITNO;
                 const confirmedPrice = parseFloat(payloadObj.CPPR);
                 return [
-                    new ConfirmedPurchasePriceUpdated(
+                    new PurchaseOrderLineConfirmedPriceUpdated(
                         poNumber,
                         lineNumber,
                         subLineNumber,
