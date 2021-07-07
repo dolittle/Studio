@@ -23,7 +23,7 @@ import {
     PurchasePriceQuantityUpdated,
     PurchasePriceTextUpdated,
     PurchasePriceUnitOfMeasureUpdated,
-    PurchasePriceUpdated,
+    PurchaseOrderLinePriceUpdated,
     RequestedDeliveryDateUpdated,
     PurchaseOrderLineSupplierItemIdUpdated,
     PurchaseOrderLineSupplierOrderIdUpdated,
@@ -494,7 +494,7 @@ export class EventProducer {
                 const itemNumber = payloadObj.ITNO;
                 const price = parseFloat(payloadObj.PUPR);
                 return [
-                    new PurchasePriceUpdated(
+                    new PurchaseOrderLinePriceUpdated(
                         poNumber,
                         lineNumber,
                         subLineNumber,
