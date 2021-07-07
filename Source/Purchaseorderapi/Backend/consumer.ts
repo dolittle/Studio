@@ -31,11 +31,11 @@ import {
     PurchaseOrderLineCreated,
     PurchaseOrderLineDeleted,
     PurchaseOrderLineSubNumberUpdated,
-    PurchaseOrderLineSupplierUpdated
+    PurchaseOrderLineSupplierUpdated,
+    PurchaseOrderLineDifferentDeliveryAddressUpdated
 } from './events/PurchaseOrderLineEvents';
 import { PurchaseOrdersHandler } from './PurchaseOrdersHandler';
 import { PurchaseOrdersLinesHandler } from './PurchaseOrdersLinesHandler';
-import { PurchaseOrderLineDifferentDeliveryAddressUpdated } from './events/PurchaseOrderLineEvents';
 
 const client = Client
     .forMicroservice('f2586326-1057-495b-a12b-7f45193b9402')
