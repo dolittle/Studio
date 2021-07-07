@@ -8,7 +8,7 @@ import {
     PurchaseOrderLineDifferentDeliveryAddressUpdated,
     PurchaseOrderLineHighestStatusUpdated,
     PurchaseOrderLineItemNumberUpdated,
-    LineAmountOrderCurrencyUpdated,
+    PurchaseOrderLineCurrencyUpdated,
     PurchaseOrderLineLowestStatusUpdated,
     PurchaseOrderLineItemDescriptionUpdated,
     PurchaseOrderLineItemNameUpdated,
@@ -596,7 +596,7 @@ export class EventProducer {
                 const itemNumber = payloadObj.ITNO;
                 const Currency = parseFloat(payloadObj.LNAM);
                 return [
-                    new LineAmountOrderCurrencyUpdated(
+                    new PurchaseOrderLineCurrencyUpdated(
                         poNumber,
                         lineNumber,
                         subLineNumber,

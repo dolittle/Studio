@@ -219,7 +219,7 @@ export class PurchaseOrderLinePriceTextUpdated {
 }
 
 @eventType('e958a88a-4438-4bf1-8fc6-6507f61c08d5')
-export class LineAmountOrderCurrencyUpdated {
+export class PurchaseOrderLineCurrencyUpdated {
     constructor(
         readonly PurchaseOrderNumber: number,
         readonly LineNumber: number,
