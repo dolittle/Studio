@@ -66,7 +66,7 @@ export class PurchaseOrderLineLowestStatusUpdated {
 }
 
 @eventType('4bedb694-e24f-4a9f-b2a0-1926cd91f28e')
-export class DifferentDeliveryAddressUpdated {
+export class PurchaseOrderLineDifferentDeliveryAddressUpdated {
     // TODO: is this PO or PO Line? You need identifier (for the entity)
     constructor(
         readonly PurchaseOrderNumber: number,

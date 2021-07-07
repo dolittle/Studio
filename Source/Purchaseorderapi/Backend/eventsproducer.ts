@@ -5,7 +5,7 @@ import {
     ConfirmedDeliveryDateUpdated,
     ConfirmedPurchasePriceQuantityUpdated,
     ConfirmedPurchasePriceUpdated,
-    DifferentDeliveryAddressUpdated,
+    PurchaseOrderLineDifferentDeliveryAddressUpdated,
     PurchaseOrderLineHighestStatusUpdated,
     ItemUpdated,
     LineAmountOrderCurrencyUpdated,
@@ -382,7 +382,7 @@ export class EventProducer {
                 const itemNumber = payloadObj.ITNO;
                 const differentDeliveryAddress = payloadObj.IDAG;
                 return [
-                    new DifferentDeliveryAddressUpdated(
+                    new PurchaseOrderLineDifferentDeliveryAddressUpdated(
                         poNumber,
                         lineNumber,
                         subLineNumber,

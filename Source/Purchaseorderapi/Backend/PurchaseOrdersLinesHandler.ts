@@ -9,7 +9,8 @@ import {
     PurchaseOrderLineDeleted,
     PurchaseOrderLineHighestStatusUpdated,
     PurchaseOrderLineSubNumberUpdated,
-    PurchaseOrderLineLowestStatusUpdated
+    PurchaseOrderLineLowestStatusUpdated,
+    PurchaseOrderLineDifferentDeliveryAddressUpdated
 } from './events/PurchaseOrderLineEvents';
 import { PurchaseOrderModel, PurchaseOrderLine } from './purchaseorder/PurchaseOrder';
 
@@ -92,4 +93,8 @@ export class PurchaseOrdersLinesHandler {
         console.log('PO LINE LowestStatus udpated');
     }
 
+    @handles(PurchaseOrderLineDifferentDeliveryAddressUpdated)
+    async purchaseOrderLineDifferentDeliveryAddressUpdated(event: PurchaseOrderLineDifferentDeliveryAddressUpdated, eventContext: EventContext) {
+        console.log('PO LINE Different Delivery Adress updated');
+    }
 }
