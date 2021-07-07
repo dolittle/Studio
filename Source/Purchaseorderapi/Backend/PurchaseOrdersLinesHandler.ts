@@ -15,7 +15,8 @@ import {
     PurchaseOrderLineItemNumberUpdated,
     PurchaseOrderLineSupplierItemIdUpdated,
     PurchaseOrderLineItemNameUpdated,
-    PurchaseOrderLineItemDescriptionUpdated
+    PurchaseOrderLineItemDescriptionUpdated,
+    PurchaseOrderLineSupplierOrderIdUpdated
 } from './events/PurchaseOrderLineEvents';
 import { PurchaseOrderModel, PurchaseOrderLine } from './purchaseorder/PurchaseOrder';
 
@@ -126,5 +127,10 @@ export class PurchaseOrdersLinesHandler {
     @handles(PurchaseOrderLineItemDescriptionUpdated)
     async purchaseOrderLineItemDescriptionUpdated(event: PurchaseOrderLineItemDescriptionUpdated, eventContext: EventContext) {
         console.log('PO LINE Item Description updated');
+    }
+
+    @handles(PurchaseOrderLineSupplierOrderIdUpdated)
+    async purchaseOrderLineSupplierOrderIdUpdated(event: PurchaseOrderLineSupplierOrderIdUpdated, eventContext: EventContext) {
+        console.log('PO LINE Supplier Order Id updated');
     }
 }
