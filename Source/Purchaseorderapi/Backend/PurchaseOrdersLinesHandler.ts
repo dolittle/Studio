@@ -28,6 +28,8 @@ import {
 } from './events/PurchaseOrderLineEvents';
 import { PurchaseOrderModel, PurchaseOrderLine } from './purchaseorder/PurchaseOrder';
 import { PurchaseOrderLowestStatusChanged } from './events/PurchaseOrderEvents';
+import { isReturnStatement, PostfixUnaryOperator } from 'typescript';
+import { string } from 'yargs';
 
 @eventHandler('86afb1b1-ed74-4c71-9b67-a3157b1f98da')
 export class PurchaseOrdersLinesHandler {
@@ -77,7 +79,7 @@ export class PurchaseOrdersLinesHandler {
 
             if (indexToRemove > 0) {
                 po.lines.splice(indexToRemove, 1);
-                po.save();
+                await po.save();
             }
         }
     }
@@ -91,7 +93,7 @@ export class PurchaseOrdersLinesHandler {
             const poLine = po.findLine(event.LineNumber);
             if (poLine) {
                 poLine.subLineNumber = event.SubLineNumber;
-                po.save();
+                await po.save();
             }
         }
 
@@ -102,70 +104,64 @@ export class PurchaseOrdersLinesHandler {
     async purchaseOrderLineHighestStatusUpdated(event: PurchaseOrderLineHighestStatusUpdated, eventContext: EventContext) {
         //console.log('PO LINE HighestStatus updated');
 
-        const po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
-        if (po) {
-            const poLine = po.findLine(event.LineNumber);
-            if (poLine) {
-                poLine.higestStatus = event.HighestStatus;
-                po.save();
-            }
-        }
+        await updatePurchaseOrderLine(event.PurchaseOrderNumber, event.LineNumber, {
+            highestStatus: event.HighestStatus
+        });
+
     }
 
     @handles(PurchaseOrderLineLowestStatusUpdated)
     async purchaseOrderLineLowestStatusUpdated(event: PurchaseOrderLineLowestStatusUpdated, eventContext: EventContext) {
         //console.log('PO LINE LowestStatus updated');
 
-        const po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
-        if (po) {
-            const poLine = po.findLine(event.LineNumber);
-            if (poLine) {
-                poLine.lowestStatus = event.Status;
-                po.save();
-            }
-        }
+        await updatePurchaseOrderLine(event.PurchaseOrderNumber, event.LineNumber, {
+            lowestStatus: event.Status
+        });
     }
 
     @handles(PurchaseOrderLineDifferentDeliveryAddressUpdated)
     async purchaseOrderLineDifferentDeliveryAddressUpdated(event: PurchaseOrderLineDifferentDeliveryAddressUpdated, eventContext: EventContext) {
         //console.log('PO LINE Different Delivery Adress updated');
-        const po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
-        if (po) {
-            const poLine = po.findLine(event.LineNumber);
-            if (poLine) {
-                poLine.differentDeliveryAddress = event.DifferentDeliveryAddress;
-                po.save();
-            }
-        }
+
+        await updatePurchaseOrderLine(event.PurchaseOrderNumber, event.LineNumber, {
+            differentDeliveryAddress: event.DifferentDeliveryAddress
+        });
     }
 
     @handles(PurchaseOrderLineSupplierUpdated)
     async purchaseOrderLineSupplierUpdated(event: PurchaseOrderLineSupplierUpdated, eventContext: EventContext) {
         //console.log('PO LINE Supplier Updated');
 
-        const po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
-        if (po) {
-            const poLine = po.findLine(event.LineNumber);
-            if (poLine) {
-                poLine.supplierId = event.SupplierId;
-                po.save();
-            }
-        }
+        await updatePurchaseOrderLine(event.PurchaseOrderNumber, event.LineNumber, {
+            supplierId: event.SupplierId
+        });
     }
 
     @handles(PurchaseOrderLineItemNumberUpdated)
     async purchaseOrderLineItemNumberUpdated(event: PurchaseOrderLineItemNumberUpdated, eventContext: EventContext) {
-        console.log('PO LINE Item Updated');
+        //console.log('PO LINE Item Updated');
+
+        await updatePurchaseOrderLine(event.PurchaseOrderNumber, event.LineNumber, {
+            itemNumber: event.itemNumber
+        });
     }
 
     @handles(PurchaseOrderLineSupplierItemIdUpdated)
-    async purchaseOrderLineSupplierItemIdUpdated(event: PurchaseOrderLineSupplierUpdated, eventContext: EventContext) {
-        console.log('PO LINE Supplier Item Id updated');
+    async purchaseOrderLineSupplierItemIdUpdated(event: PurchaseOrderLineSupplierItemIdUpdated, eventContext: EventContext) {
+        //console.log('PO LINE Supplier Item Id updated');
+
+        await updatePurchaseOrderLine(event.PurchaseOrderNumber, event.LineNumber, {
+            supplierItemId: event.SupplierItemId
+        });
     }
 
     @handles(PurchaseOrderLineItemNameUpdated)
-    async purchaseOrderLineItemNameUpdated(event: PurchaseOrderLineSupplierUpdated, eventContext: EventContext) {
-        console.log('PO LINE Item Name updated');
+    async purchaseOrderLineItemNameUpdated(event: PurchaseOrderLineItemNameUpdated, eventContext: EventContext) {
+        //console.log('PO LINE Item Name updated');
+
+        await updatePurchaseOrderLine(event.PurchaseOrderNumber, event.LineNumber, {
+            itemName: event.ItemName
+        });
     }
 
     @handles(PurchaseOrderLineItemDescriptionUpdated)
@@ -217,4 +213,22 @@ export class PurchaseOrdersLinesHandler {
     async purchaseOrderLineConfirmedDateUpdated(event: PurchaseOrderLineConfirmedDateUpdated, eventContext: EventContext) {
         console.log('PO Line Confirmed Date updated');
     }
+}
+
+async function updatePurchaseOrderLine(poNumber: number, lineNumber: number, part: any) {
+    const filter = { 'orderNumber': poNumber, 'lines.lineNumber': lineNumber };
+    const doc = {};
+    for (const p in part) {
+        doc[`lines.$.${p}`] = part[p];
+    }
+
+    const result = await PurchaseOrderModel.update(filter, doc, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
+
+    // for debugging
+    //console.log('Matched docs', result.n);
+    //console.log('Modified docs', result.nModified);
 }

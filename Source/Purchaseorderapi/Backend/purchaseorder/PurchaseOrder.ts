@@ -46,6 +46,8 @@ export class PurchaseOrderLine {
     lowestStatus?: string;
     differentDeliveryAddress?: string;
     supplierId?: string;
+    supplierItemId?: string;
+    itemName?: string;
 }
 
 export const PurchaseOrderModel = getModelForClass(PurchaseOrder);
