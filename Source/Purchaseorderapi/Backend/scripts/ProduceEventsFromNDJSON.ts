@@ -7,35 +7,7 @@ import yargs from 'yargs/yargs';
 import { EventProducer } from '../eventsproducer';
 import { Client } from '@dolittle/sdk';
 import { TenantId } from '@dolittle/sdk.execution';
-import {
-    PurchaseOrderChangedNumberChanged,
-    PurchaseOrderCreated,
-    PurchaseOrderDateChanged,
-    PurchaseOrderDeleted,
-    PurchaseOrderDeliveryMethodChanged,
-    PurchaseOrderDeliveryTerms,
-    PurchaseOrderFacilityNumberChanged,
-    PurchaseOrderHighestStatusChanged,
-    PurchaseOrderInternalReferenceChanged,
-    PurchaseOrderLowestStatusChanged,
-    PurchaseOrderNetOrderValueChanged,
-    PurchaseOrderNumberOfPurchaseOrderLinesChanged,
-    PurchaseOrderOurInvoicingAddressChanged,
-    PurchaseOrderPaymentTermsChanged,
-    PurchaseOrderReferenceChanged,
-    PurchaseOrderRequestedDateChanged,
-    PurchaseOrderSupplierIdChanged,
-    PurchaseOrderSupplierReferenceChanged,
-    PurchaseOrderTotalOrderCostChanged,
-    PurchaseOrderTotalQuantityChanged
-} from '../events/PurchaseOrderEvents';
-import {
-    PurchaseOrderLineCreated,
-    PurchaseOrderLineChangeNumberUpdated,
-    PurchaseOrderLineHighestStatusUpdated,
-    PurchaseOrderLineLowestStatusUpdated,
-    PurchaseOrderLineDeleted,
-} from '../events/PurchaseOrderLineEvents';
+import { buildProducerClient } from '../dolittleclient';
 
 interface ScriptArgs {
     inputFile: string;
@@ -55,36 +27,7 @@ const inputFileReadStream = fs.createReadStream(argv.inputFile);
 const rl = readline.createInterface(inputFileReadStream);
 const eventProducer = new EventProducer();
 
-const client = Client
-    .forMicroservice('f2586326-1057-495b-a12b-7f45193b9402')
-    .withEventTypes(eventTypes => {
-        eventTypes.register(PurchaseOrderCreated);
-        eventTypes.register(PurchaseOrderDeleted);
-        eventTypes.register(PurchaseOrderFacilityNumberChanged);
-        eventTypes.register(PurchaseOrderLowestStatusChanged);
-        eventTypes.register(PurchaseOrderHighestStatusChanged);
-        eventTypes.register(PurchaseOrderSupplierIdChanged);
-        eventTypes.register(PurchaseOrderDeliveryMethodChanged);
-        eventTypes.register(PurchaseOrderReferenceChanged);
-        eventTypes.register(PurchaseOrderSupplierReferenceChanged);
-        eventTypes.register(PurchaseOrderRequestedDateChanged);
-        eventTypes.register(PurchaseOrderInternalReferenceChanged);
-        eventTypes.register(PurchaseOrderNetOrderValueChanged);
-        eventTypes.register(PurchaseOrderNumberOfPurchaseOrderLinesChanged);
-        eventTypes.register(PurchaseOrderTotalOrderCostChanged);
-        eventTypes.register(PurchaseOrderTotalQuantityChanged);
-        eventTypes.register(PurchaseOrderOurInvoicingAddressChanged);
-        eventTypes.register(PurchaseOrderDeliveryTerms);
-        eventTypes.register(PurchaseOrderPaymentTermsChanged);
-        eventTypes.register(PurchaseOrderDateChanged);
-        eventTypes.register(PurchaseOrderChangedNumberChanged);
-
-        eventTypes.register(PurchaseOrderLineCreated);
-        eventTypes.register(PurchaseOrderLineChangeNumberUpdated);
-        eventTypes.register(PurchaseOrderLineHighestStatusUpdated);
-        eventTypes.register(PurchaseOrderLineLowestStatusUpdated);
-        eventTypes.register(PurchaseOrderLineDeleted);
-    }).build();
+const client = buildProducerClient();
 
 let counter = 0;
 const eventsToProduce: any[] = [];

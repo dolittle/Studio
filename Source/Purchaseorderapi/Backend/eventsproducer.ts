@@ -276,6 +276,7 @@ export class EventProducer {
         }
 
         if (payloadObj.document === 'MPHEAD' && payloadObj.operation === 'D') {
+            // TODO!!! FIX BUG. Should use PONO
             const poNumber = parseInt(payloadObj.FACI);
             return [new PurchaseOrderDeleted(poNumber)];
         }
