@@ -74,7 +74,7 @@ export class PurchaseOrderSupplierReferenceChanged {
 
 @eventType('5af01a7c-5271-446e-9dce-650abf2a5aaa')
 export class PurchaseOrderRequestedDateChanged {
-    constructor(readonly PurchaseOrderNumber: string, readonly RequestedDate: number) { }
+    constructor(readonly PurchaseOrderNumber: string, readonly RequestedDate: Date) { }
 }
 
 @eventType('8b16248a-e717-4429-b990-dc772c0abfba')
@@ -125,7 +125,7 @@ export class PurchaseOrderPaymentTermsChanged {
 
 @eventType('f08c3984-bc19-4329-9465-34bde48c7890')
 export class PurchaseOrderDateChanged {
-    constructor(readonly PurchaseOrderNumber: string, readonly OrderDate: number) { }
+    constructor(readonly PurchaseOrderNumber: string, readonly OrderDate: Date) { }
 }
 
 @eventType('2e40beb0-44f3-49ee-ba09-d218539999e8')

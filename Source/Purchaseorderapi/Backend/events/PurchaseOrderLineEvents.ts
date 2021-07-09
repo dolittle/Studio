@@ -13,7 +13,7 @@ export class PurchaseOrderLineCreated {
         readonly Facility: string,
         readonly HighestStatus: string,
         readonly LowestStatus: string,
-        readonly DiferentDeliveryAdress: number,
+        readonly DiferentDeliveryAdress: string,
         readonly SupplierId: string,
         readonly SupplierItemNumber: string,
         readonly ItemName: string,
@@ -73,7 +73,7 @@ export class PurchaseOrderLineDifferentDeliveryAddressUpdated {
         readonly LineNumber: number,
         readonly SubLineNumber: number,
         readonly itemNumber: string,
-        readonly DifferentDeliveryAddress: number
+        readonly DifferentDeliveryAddress: string
     ) { }
 }
 

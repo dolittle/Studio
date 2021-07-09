@@ -126,10 +126,19 @@ export class EventProducer {
 
             if (changeList.includes('DWDT') && !handledProps.includes('DWDT')) {
                 const poNumber = payloadObj.PUNO;
-                const requestedDate = payloadObj.DWDT;
-                return [
-                    new PurchaseOrderRequestedDateChanged(poNumber, requestedDate),
-                ].concat(this.produce(payload, handledProps.concat(['DWDT'])));
+                const requestedDateStr = payloadObj.DWDT;
+                let requestedDate: Date | null = null;
+                if (requestedDateStr && requestedDateStr !== '') {
+                    requestedDate = parseDate(requestedDateStr);
+                }
+
+                if (requestedDate) {
+                    return [
+                        new PurchaseOrderRequestedDateChanged(poNumber, requestedDate),
+                    ].concat(this.produce(payload, handledProps.concat(['DWDT'])));
+                } else {
+                    return this.produce(payload, handledProps.concat(['DWFT']));
+                }
             }
 
             if (changeList.includes('OURR') && !handledProps.includes('OURR')) {
@@ -207,10 +216,19 @@ export class EventProducer {
 
             if (changeList.includes('PUDT') && !handledProps.includes('PUDT')) {
                 const poNumber = payloadObj.PUNO;
-                const orderDate = payloadObj.PUDT;
-                return [new PurchaseOrderDateChanged(poNumber, orderDate)].concat(
-                    this.produce(payload, handledProps.concat(['PUDT']))
-                );
+                const orderDateStr = payloadObj.PUDT;
+                let orderDate: Date | null = null;
+                if (orderDateStr && orderDateStr !== '') {
+                    orderDate = parseDate(orderDateStr);
+                }
+
+                if (orderDate) {
+                    return [new PurchaseOrderDateChanged(poNumber, orderDate)].concat(
+                        this.produce(payload, handledProps.concat(['PUDT']))
+                    );
+                } else {
+                    return this.produce(payload, handledProps.concat(['PUDT']));
+                }
             }
 
             if (changeList.includes('CHNO') && !handledProps.includes('CHNO')) {
@@ -276,8 +294,7 @@ export class EventProducer {
         }
 
         if (payloadObj.document === 'MPHEAD' && payloadObj.operation === 'D') {
-            // TODO!!! FIX BUG. Should use PONO
-            const poNumber = parseInt(payloadObj.FACI);
+            const poNumber = parseInt(payloadObj.PUNO);
             return [new PurchaseOrderDeleted(poNumber)];
         }
 
@@ -758,8 +775,11 @@ export class EventProducer {
 
 function parseDate(input: string): Date {
     const orderDateYYYY = parseInt(input.substr(0, 4));
-    const orderDateMM = parseInt(input.substr(4, 2));
+    let orderDateMM = parseInt(input.substr(4, 2));
     const orderDateDD = parseInt(input.substr(6, 2));
+    if (orderDateMM > 0) {
+        orderDateMM = orderDateMM - 1; //months are 0 indexed
+    }
     return new Date(orderDateYYYY, orderDateMM, orderDateDD);
 }
 

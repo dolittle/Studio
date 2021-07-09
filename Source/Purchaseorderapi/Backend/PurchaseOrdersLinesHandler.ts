@@ -57,6 +57,9 @@ export class PurchaseOrdersLinesHandler {
                 line.lineNumber = event.LineNumber;
                 line.subLineNumber = event.SubLineNumber;
                 line.itemNumber = event.ItemNumber;
+                line.itemName = event.ItemName;
+                line.supplierId = event.SupplierId;
+                line.diferentDeliveryAdress = event.DiferentDeliveryAdress;
                 po.lines.push(line);
                 po.save();
             }

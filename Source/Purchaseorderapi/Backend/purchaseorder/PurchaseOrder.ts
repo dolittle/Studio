@@ -27,6 +27,33 @@ export class PurchaseOrder {
     @prop()
     lines?: mongoose.Types.Array<PurchaseOrderLine>;
 
+    @prop()
+    totalQuantity?: number;
+
+    @prop()
+    totalCost?: number;
+
+    @prop()
+    numberOfOrderLines?: number;
+
+    @prop()
+    orderValueNet?: number;
+
+    @prop()
+    reference?: string;
+
+    @prop()
+    supplierReference?: string;
+
+    @prop()
+    supplierId?: string;
+
+    @prop()
+    orderDate?: Date;
+
+    @prop()
+    requestedOrderDate?: Date;
+
     findLine(lineNumber: number): PurchaseOrderLine | null {
         for (const x of this.lines) {
             if (x.lineNumber === lineNumber) {
@@ -48,7 +75,7 @@ export class PurchaseOrderLine {
     supplierId?: string;
     supplierItemId?: string;
     itemName?: string;
+    diferentDeliveryAdress?: string;
 }
 
 export const PurchaseOrderModel = getModelForClass(PurchaseOrder);
-

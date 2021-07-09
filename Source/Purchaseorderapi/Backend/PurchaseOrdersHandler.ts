@@ -14,9 +14,14 @@ import {
     PurchaseOrderReferenceChanged,
     PurchaseOrderRequestedDateChanged,
     PurchaseOrderSupplierIdChanged,
-    PurchaseOrderSupplierReferenceChanged
+    PurchaseOrderSupplierReferenceChanged,
+    PurchaseOrderTotalQuantityChanged,
+    PurchaseOrderTotalOrderCostChanged,
+    PurchaseOrderNumberOfPurchaseOrderLinesChanged,
+    PurchaseOrderNetOrderValueChanged,
+    PurchaseOrderDateChanged
 } from './events/PurchaseOrderEvents';
-import { PurchaseOrderModel } from './purchaseorder/PurchaseOrder';
+import { PurchaseOrderModel, PurchaseOrder } from './purchaseorder/PurchaseOrder';
 import { mongoose } from '@typegoose/typegoose';
 
 
@@ -36,14 +41,37 @@ export class PurchaseOrdersHandler {
         if (!po) {
             po = new PurchaseOrderModel();
             po.orderNumber = event.PurchaseOrderNumber;
+            po.reference = event.Reference;
+            po.supplierReference = event.SupplierReference;
+            po.supplierId = event.SupplierID;
+            po.orderDate = event.OrderDate;
+            po.requestedOrderDate = event.RequestedDate;
+            po.lowestStatus = event.LowestStatus;
+            po.highestStatus = event.HighestStatus;
         }
         po.facilityNumber = parseInt(event.FacilityNumber);
         await po.save();
     }
 
     @handles(PurchaseOrderDeleted)
-    purchaseOrderDeleted(event: PurchaseOrderDeleted, eventContext: EventContext) {
+    async purchaseOrderDeleted(event: PurchaseOrderDeleted, eventContext: EventContext) {
         //console.log('PO deleted');
+
+        const filter = { orderNumber: event.PurchaseOrderNumber };
+        const result = await PurchaseOrderModel.deleteOne(filter, (err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+        console.log(result);
+
+    }
+
+    @handles(PurchaseOrderDateChanged)
+    async purchaseOrderDateChanged(event: PurchaseOrderDateChanged, eventContext: EventContext) {
+        updatePurchaseOrder(event.PurchaseOrderNumber, po => {
+            po.orderDate = event.OrderDate;
+        });
     }
 
     @handles(PurchaseOrderFacilityNumberChanged)
@@ -54,21 +82,18 @@ export class PurchaseOrdersHandler {
     @handles(PurchaseOrderLowestStatusChanged)
     async purchaseOrderLowestStatusChanged(event: PurchaseOrderLowestStatusChanged, eventContext: EventContext) {
         //console.log('PurchaseOrderLowestStatusChanged');
-        const po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
-        if (po) {
+
+        updatePurchaseOrder(event.PurchaseOrderNumber, po => {
             po.lowestStatus = event.LowestStatus;
-            po.save();
-        }
+        });
     }
 
     @handles(PurchaseOrderHighestStatusChanged)
     async purchaseOrderHighestStatusChanged(event: PurchaseOrderHighestStatusChanged, eventContext: EventContext) {
         //console.log('PurchaseOrderHighestStatusChanged');
-        const po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
-        if (po) {
+        updatePurchaseOrder(event.PurchaseOrderNumber, po => {
             po.highestStatus = event.HighestStatus;
-            po.save();
-        }
+        });
     }
 
     @handles(PurchaseOrderSupplierIdChanged)
@@ -89,20 +114,63 @@ export class PurchaseOrdersHandler {
     @handles(PurchaseOrderSupplierReferenceChanged)
     purchaseOrderSupplierReferenceChanged(event: PurchaseOrderSupplierReferenceChanged, eventContext: EventContext) {
         //console.log('PurchaseOrderSupplierReferenceChanged');
+
+        updatePurchaseOrder(event.PurchaseOrderNumber, po => {
+            po.supplierReference = event.SupplierReference;
+        });
     }
 
     @handles(PurchaseOrderRequestedDateChanged)
     purchaseOrderRequestedDateChanged(event: PurchaseOrderRequestedDateChanged, eventContext: EventContext) {
         //console.log('PurchaseOrderRequestedDateChanged');
+
+        updatePurchaseOrder(event.PurchaseOrderNumber, po => {
+            po.requestedOrderDate = event.RequestedDate;
+        });
     }
 
     @handles(PurchaseOrderChangedNumberChanged)
     async purchaseOrderChangedNumberChanged(event: PurchaseOrderChangedNumberChanged, eventContext: EventContext) {
         //console.log('PurchaseOrderChangedNumberChanged');
-        const po = await PurchaseOrderModel.findOne({ orderNumber: event.PurchaseOrderNumber }).exec();
-        if (po) {
+
+        updatePurchaseOrder(event.PurchaseOrderNumber, po => {
             po.changeNumber = event.ChangeNumber;
-            po.save();
-        }
+        });
+    }
+
+    @handles(PurchaseOrderTotalQuantityChanged)
+    async purchaseOrderTotalQuantityChanged(event: PurchaseOrderTotalQuantityChanged, eventContext: EventContext) {
+        updatePurchaseOrder(event.PurchaseOrderNumber, po => {
+            po.totalQuantity = event.TotalQuantity;
+        });
+    }
+
+    @handles(PurchaseOrderTotalOrderCostChanged)
+    async purchaseOrderTotalOrderCostChanged(event: PurchaseOrderTotalOrderCostChanged, eventContext: EventContext) {
+        updatePurchaseOrder(event.PurchaseOrderNumber, po => {
+            po.totalCost = event.TotalCost;
+        });
+    }
+
+    @handles(PurchaseOrderNumberOfPurchaseOrderLinesChanged)
+    async purchaseOrderNumberOfPurchaseOrderLinesChanged(event: PurchaseOrderNumberOfPurchaseOrderLinesChanged, eventContext: EventContext) {
+        updatePurchaseOrder(event.PurchaseOrderNumber, po => {
+            po.numberOfOrderLines = event.AmountPurchaseOrderLines;
+        });
+    }
+
+    @handles(PurchaseOrderNetOrderValueChanged)
+    async purchaseOrderNetOrderValueChanged(event: PurchaseOrderNetOrderValueChanged, eventContext: EventContext) {
+        updatePurchaseOrder(event.PurchaseOrderNumber, po => {
+            po.orderValueNet = event.OrderValueNet;
+        });
+    }
+}
+
+async function updatePurchaseOrder(orderNumber: string, updateCallback: (po: any) => void) {
+    const po = await PurchaseOrderModel.findOne({ orderNumber }).exec();
+    if (po) {
+        updateCallback(po);
+        po.save();
     }
 }
