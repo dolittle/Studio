@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    dolittle.io/tenant-id: 
+    dolittle.io/application-id: fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+    dolittle.io/microservice-id: f33d02df-088a-6946-a450-37c87ed6dc9e
+  labels:
+    tenant: Dolittle
+    application: Studio
+    environment: Dev
+    microservice: Purchaseorderapi
+  name:  dev-purchaseorderapi-secret-env-variables
+  namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+type: Opaque
+data:
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    dolittle.io/tenant-id: 
+    dolittle.io/application-id: fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+    dolittle.io/microservice-id: f33d02df-088a-6946-a450-37c87ed6dc9e
+  labels:
+    tenant: Dolittle
+    application: Studio
+    environment: Dev
+    microservice: Purchaseorderapi
+  name: dev-purchaseorderapi-env-variables
+  namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+data:
+  DATABASE__HOST: "dev-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
+  DATABASE__NAME: "read_models_purchaseorderapi"
+  DOLITTLE__RUNTIME__HHOST: "localhost"
+  DOLITTLE__RUNTIME__HPORT: "50053"
+  EVENTSTORE__HOST: "dev-mongo.application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7.svc.cluster.local"
+  EVENTSTORE__NAME: "event_store_purchaseorderapi"
+  NODE_ENV: "production"
+  PORT: "80"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    dolittle.io/tenant-id: 
+    dolittle.io/application-id: fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+    dolittle.io/microservice-id: f33d02df-088a-6946-a450-37c87ed6dc9e
+  labels:
+    tenant: Dolittle
+    application: Studio
+    environment: Dev
+    microservice: Purchaseorderapi
+  name: dev-purchaseorderapi-config-files
+  namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+data:
+
