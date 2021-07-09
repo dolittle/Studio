@@ -32,7 +32,8 @@
     },
     "dependencies": {
         "@shared/backend": "1.0.0",
-        "@shared/specs": "1.0.0"
+        "@shared/specs": "1.0.0",
+        "node-nats-streaming": "^0.3.2"
     },
     "devDependencies": {
         "yargs": "^17.0.1"
