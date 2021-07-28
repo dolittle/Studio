@@ -3,16 +3,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-import { HttpResponseApplications2 } from '../api/api';
 import { Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
-
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 
-
+import { HttpResponseApplications2 } from '../api/api';
 import { getRuntimeV1 } from '../api/insights';
 import { DumpJson } from './DumpJson';
-
 
 type Props = {
     application: HttpResponseApplications2
@@ -70,7 +66,6 @@ export const RuntimeV1Stats: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-
             <Dropdown placeholder="Select"
                 options={items}
                 selectedKey={filterBy}
@@ -85,7 +80,6 @@ export const RuntimeV1Stats: React.FunctionComponent<Props> = (props) => {
                     }
                 }}
             >
-
                 <PivotItem
                     itemKey="eventLogCounts"
                     headerText="Event Log Counts"

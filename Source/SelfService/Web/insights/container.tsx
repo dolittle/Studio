@@ -1,9 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
-
 import {
     Link,
 } from '@fluentui/react';
@@ -23,8 +22,6 @@ export const InsightsContainerScreen: React.FunctionComponent<Props> = (props) =
 
     return (
         <>
-
-
             <Route exact path="/application/:applicationId/:environment/insights/overview">
                 <h1>Hello I am Insights</h1>
                 <h2>Explore application: {application.name}</h2>
@@ -35,9 +32,7 @@ export const InsightsContainerScreen: React.FunctionComponent<Props> = (props) =
                 }}>
                     Runtime Stats
                 </Link>
-
             </Route>
-
             <Route exact path="/application/:applicationId/:environment/insights/runtime-v1">
                 <Link underline onClick={() => {
                     const href = `/application/${application.id}/${environment}/insights/overview`;
@@ -49,7 +44,6 @@ export const InsightsContainerScreen: React.FunctionComponent<Props> = (props) =
                 <h2>Useful for debugging</h2>
                 <RuntimeV1Stats application={application} />
             </Route>
-
         </>
     );
 };
