@@ -35,6 +35,7 @@ import { IBreadcrumbItem, Breadcrumb } from '@fluentui/react/lib/Breadcrumb';
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 import { BusinessMomentsContainerScreen } from '../businessMoments/container';
+import { InsightsContainerScreen } from '../insights/container';
 
 
 export const ApplicationScreen: React.FunctionComponent = () => {
@@ -88,7 +89,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                     history.push(href);
                 }}>
                     Dashboard
-                    </Link>
+                </Link>
             </li>
             <li>
                 <Link onClick={() => {
@@ -104,7 +105,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                     history.push(href);
                 }}>
                     Business Moments
-                    </Link>
+                </Link>
             </li>
             <li>
 
@@ -113,7 +114,16 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                     history.push(href);
                 }}>
                     Microservices
-                    </Link>
+                </Link>
+            </li>
+            <li>
+
+                <Link onClick={() => {
+                    const href = `/application/${application.id}/${environment}/insights/overview`;
+                    history.push(href);
+                }}>
+                    Insights
+                </Link>
             </li>
             <li>
 
@@ -122,7 +132,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                     history.push(href);
                 }}>
                     Documentation
-            </Link>
+                </Link>
             </li>
         </ul>
     );
@@ -192,6 +202,11 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             <Route path="/application/:applicationId/:environment/microservices">
                 <ApplicationOverviewScreen application={application} />
             </Route>
+
+            <Route path="/application/:applicationId/:environment/insights">
+                <InsightsContainerScreen application={application} />
+            </Route>
+
             <Route path="/application/:applicationId/:environment/documentation">
                 <DocumentationContainerScreen application={application} />
             </Route>
@@ -209,7 +224,7 @@ function _getCustomDivider(dividerProps: IDividerAsProps): JSX.Element {
         <TooltipHost content={`Show ${tooltipText} contents`} calloutProps={{ gapSpace: 0 }}>
             <span aria-hidden="true" style={{ cursor: 'pointer', padding: 5 }}>
                 /
-        </span>
+            </span>
         </TooltipHost>
     );
 }
