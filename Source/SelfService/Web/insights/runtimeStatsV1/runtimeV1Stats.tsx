@@ -6,9 +6,11 @@ import { useParams } from 'react-router-dom';
 import { Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 
-import { HttpResponseApplications2 } from '../api/api';
-import { getRuntimeV1 } from '../api/insights';
-import { DumpJson } from './DumpJson';
+import { HttpResponseApplications2 } from '../../api/api';
+import { getRuntimeV1 } from '../../api/insights';
+import { DumpJson } from '../dumpJson';
+import { FaillingPartitionsSummary } from './failingPartitionsSummary';
+import { StateSummary } from './stateSummary';
 
 type Props = {
     application: HttpResponseApplications2
@@ -64,6 +66,29 @@ export const RuntimeV1Stats: React.FunctionComponent<Props> = (props) => {
         setFilterBy(_filterBy);
     };
 
+
+    let filtered = data;
+    if (filterBy !== '*') {
+        filtered = {
+            eventLogCounts: {},
+            latestEvents: {},
+            latestEventsPerEventType: {},
+            runtimeStates: {}
+        };
+
+        // Filter the data
+        Object.keys(filtered).map(_key => {
+            const temp = data[_key];
+
+            filtered[_key] = Object.keys(temp)
+                .filter((key) => key === filterBy)
+                .reduce((obj, key) => {
+                    obj[key] = temp[key];
+                    return obj;
+                }, {});
+        });
+    }
+
     return (
         <>
             <Dropdown placeholder="Select"
@@ -87,7 +112,7 @@ export const RuntimeV1Stats: React.FunctionComponent<Props> = (props) => {
                         setSelectedKey('eventLogCounts');
                     }}
                 >
-                    <DumpJson data={data.eventLogCounts} filterBy={filterBy} />
+                    <DumpJson data={filtered.eventLogCounts} />
                 </PivotItem>
 
                 <PivotItem
@@ -97,7 +122,7 @@ export const RuntimeV1Stats: React.FunctionComponent<Props> = (props) => {
                         setSelectedKey('latestEvents');
                     }}
                 >
-                    <DumpJson data={data.latestEvents} filterBy={filterBy} />
+                    <DumpJson data={filtered.latestEvents} />
                 </PivotItem>
 
                 <PivotItem
@@ -107,7 +132,7 @@ export const RuntimeV1Stats: React.FunctionComponent<Props> = (props) => {
                         setSelectedKey('latestEventsPerEventType');
                     }}
                 >
-                    <DumpJson data={data.latestEventsPerEventType} filterBy={filterBy} />
+                    <DumpJson data={filtered.latestEventsPerEventType} />
                 </PivotItem>
 
                 <PivotItem
@@ -117,9 +142,11 @@ export const RuntimeV1Stats: React.FunctionComponent<Props> = (props) => {
                         setSelectedKey('runtimeStates');
                     }}
                 >
-                    <DumpJson data={data.runtimeStates} filterBy={filterBy} />
+                    <FaillingPartitionsSummary data={filtered.runtimeStates} />
+                    <StateSummary key={filterBy} eventLogCounts={filtered.eventLogCounts} runtimeStates={filtered.runtimeStates} />
                 </PivotItem>
             </Pivot>
+
         </>
     );
 };

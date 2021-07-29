@@ -8,7 +8,7 @@ import {
 } from '@fluentui/react';
 
 import { HttpResponseApplications2 } from '../api/api';
-import { RuntimeV1Stats } from './runtimeV1Stats';
+import { RuntimeV1Stats } from './runtimeStatsV1/runtimeV1Stats';
 
 type Props = {
     application: HttpResponseApplications2
