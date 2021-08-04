@@ -57,16 +57,6 @@ export const BreadCrumbContainer: React.FunctionComponent<Props> = (props?) => {
         {
             path: '/microservices/application/:applicationId/:environment/view',
             breadcrumb: 'View',
-        },
-
-        // Backups
-        {
-            path: '/backups/application/:applicationId/overview',
-            breadcrumb: 'Backup',
-        },
-        {
-            path: '/backups/application/:applicationId/all/:environment',
-            breadcrumb: 'All',
         }
     ];
 

@@ -11,7 +11,6 @@ import { uriWithAppPrefix } from '../store';
 
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
-    console.log('A');
     const history = useHistory();
     const [data, setData] = useState({
         id: '',

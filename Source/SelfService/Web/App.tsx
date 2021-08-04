@@ -8,7 +8,7 @@ import { ApplicationsScreen } from './screens/applicationsScreen';
 
 import { uriWithAppPrefix } from './store';
 import { LoginScreen } from './screens/loginScreen';
-import { BackupScreen } from './screens/backupScreen';
+import { BackupsScreen } from './screens/backupsScreen';
 import { BusinessMomentsScreen } from './screens/businessMomentsScreen';
 import { DocumentationScreen } from './screens/documentationScreen';
 import { InsightsScreen } from './screens/insightsScreen';
@@ -39,7 +39,7 @@ export const App = () => {
                     </Route>
 
                     <Route path="/backups/application/:applicationId">
-                        <BackupScreen />
+                        <BackupsScreen />
                     </Route>
 
                     <Route exact path="/applications">

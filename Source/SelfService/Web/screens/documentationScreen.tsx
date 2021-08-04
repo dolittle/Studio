@@ -83,7 +83,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
     }
 
 
-    const nav = getDefaultMenu(history, application.id, environment);
+    const nav = getDefaultMenu(history, application.id, environment, '');
 
     const environmentOnClick = (applicationId: string, environment: string) => {
         const href = `/documentation/application/${applicationId}/${environment}/overview`;
@@ -137,7 +137,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
                     <DocumentationContainerScreen application={application} />
                 </Route>
                 <Route>
-                    <h1>Hi</h1>
+                    <h1>TODO</h1>
                     <p>{pathname}</p>
                 </Route>
             </Switch>

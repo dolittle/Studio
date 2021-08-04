@@ -59,10 +59,14 @@ export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
 
 
 
-export const getDefaultMenu = (history: History<LocationState>, applicationId: string, environment: string): React.ReactNode => {
-    const suffix = applicationId !== '' && environment !== '' ?
-        `application/${applicationId}/${environment}/overview`
-        : `application/${applicationId}/pick-environment`;
+export const getDefaultMenu = (history: History<LocationState>, applicationId: string, environment: string, overrideSuffix: string): React.ReactNode => {
+    let suffix = overrideSuffix;
+
+    if (overrideSuffix === '') {
+        suffix = applicationId !== '' && environment !== '' ?
+            `application/${applicationId}/${environment}/overview`
+            : `application/${applicationId}/pick-environment`;
+    }
 
     return (
         <>

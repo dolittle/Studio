@@ -78,7 +78,7 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
         );
     }
 
-    const nav = getDefaultMenu(history, application.id, environment);
+    const nav = getDefaultMenu(history, application.id, environment, '');
 
     const environmentOnClick = (applicationId: string, environment: string) => {
         const href = `/microservices/application/${applicationId}/${environment}`;

@@ -61,7 +61,7 @@ export const InsightsScreen: React.FunctionComponent = () => {
         );
     }
 
-    const nav = getDefaultMenu(history, application.id, environment);
+    const nav = getDefaultMenu(history, application.id, environment, '');
 
     const environmentOnClick = (applicationId: string, environment: string) => {
         const href = `/insights/application/${applicationId}/${environment}/overview`;

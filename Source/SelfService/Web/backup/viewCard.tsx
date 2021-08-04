@@ -47,7 +47,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             key: 'viewAllBackups',
             text: 'View All Backups',
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-                const href = `/backups/application/${application.id}/all/${environment}`;
+                const href = `/backups/application/${application.id}/${environment}/list`;
                 history.push(href);
             }
         }

@@ -77,7 +77,7 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
         history.push(href);
     };
 
-    const nav = getDefaultMenu(history, application.id, environment);
+    const nav = getDefaultMenu(history, application.id, environment, '');
 
     return (
         <LayoutWithSidebar navigation={nav}>

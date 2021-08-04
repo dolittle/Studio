@@ -43,7 +43,7 @@ export const DashboardScreen: React.FunctionComponent = () => {
     }
 
 
-    const nav = getDefaultMenu(history, application.id, '');
+    const nav = getDefaultMenu(history, application.id, '', '');
 
     return (
         <LayoutWithSidebar navigation={nav}>
