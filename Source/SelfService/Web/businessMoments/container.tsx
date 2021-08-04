@@ -56,11 +56,11 @@ export const BusinessMomentsContainerScreen: React.FunctionComponent<Props> = (p
 
     return (
         <>
-            <Route exact path="/application/:applicationId/:environment/business-moments">
+            <Route exact path="/business-moments/application/:applicationId/:environment">
                 <BusinessMomentsOverview application={application} businessMoments={$businessmoments} microservices={$microservices} />
             </Route>
 
-            <Route exact path="/application/:applicationId/:environment/business-moments/editor/:businessMomentId/microservice/:microserviceId">
+            <Route exact path="/business-moments/application/:applicationId/:environment/editor/:businessMomentId/microservice/:microserviceId">
                 <BusinessMomentEditor application={application} businessMoments={$businessmoments} />
             </Route>
         </>

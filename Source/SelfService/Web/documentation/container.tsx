@@ -53,31 +53,31 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
     return (
         <>
             <Switch>
-                <Route exact path="/application/:applicationId/:environment/documentation">
+                <Route exact path="/documentation/application/:applicationId/:environment/overview">
                     <ul>
                         <li>
                             <Link onClick={() => {
-                                const href = `/application/${applicationId}/${environment}/documentation/container-registry-info`;
+                                const href = `/documentation/application/${applicationId}/${environment}/container-registry-info`;
                                 history.push(href);
                             }}>
                                 Container Registry Info
-                    </Link>
+                            </Link>
                         </li>
                         <li>
                             <Link onClick={() => {
-                                const href = `/application/${applicationId}/${environment}/documentation/verify-kubernetes-access`;
+                                const href = `/documentation/application/${applicationId}/${environment}/verify-kubernetes-access`;
                                 history.push(href);
                             }}>
                                 Verify access to kubernetes
-                    </Link>
+                            </Link>
                         </li>
 
                     </ul>
                 </Route>
 
-                <Route exact path="/application/:applicationId/:environment/documentation/container-registry-info">
+                <Route exact path="/documentation/application/:applicationId/:environment/container-registry-info">
                     <Link onClick={() => {
-                        const href = `/application/${applicationId}/${environment}/documentation`;
+                        const href = `/documentation/application/${applicationId}/${environment}/overview`;
                         history.push(href);
                     }}>
                         Back
@@ -86,9 +86,9 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                     <AccessContainerRegistry {...docProps} />
                 </Route>
 
-                <Route exact path="/application/:applicationId/:environment/documentation/verify-kubernetes-access">
+                <Route exact path="/documentation/application/:applicationId/:environment/verify-kubernetes-access">
                     <Link onClick={() => {
-                        const href = `/application/${applicationId}/${environment}/documentation`;
+                        const href = `/documentation/application/${applicationId}/${environment}/overview`;
                         history.push(href);
                     }}>
                         Back
@@ -97,6 +97,9 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                     <VerifyKubernetesAccess {...docProps} />
                 </Route>
 
+                <Route>
+                    <h1>Something has gone wrong: documentation</h1>
+                </Route>
             </Switch>
         </>
     );

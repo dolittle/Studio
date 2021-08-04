@@ -37,7 +37,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     const [loaded, setLoaded] = useState(false);
     const currentMicroservice = $microservices.find(ms => ms.id === microserviceId);
     if (!currentMicroservice) {
-        const href = `/application/${applicationId}/${environment}/microservices/overview`;
+        const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);
         return null;
     }

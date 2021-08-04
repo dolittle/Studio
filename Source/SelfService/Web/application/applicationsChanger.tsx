@@ -33,7 +33,6 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
 
         if (newApplication === 'createNew') {
             // TODO I feel there is a better way
-            event.stopPropagation();
             alert('TODO: Create application screen');
             return;
         }

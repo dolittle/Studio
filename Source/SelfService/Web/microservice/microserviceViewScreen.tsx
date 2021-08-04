@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Overview } from '../microservice/view';
+import { Overview } from './view';
 
 export const MicroserviceViewScreen: React.FunctionComponent = () => {
     const { applicationId, environment, microserviceId } = useParams() as any;

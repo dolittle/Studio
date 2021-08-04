@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 
@@ -14,13 +13,17 @@ import { StateSummary } from './stateSummary';
 
 type Props = {
     application: HttpResponseApplications2
+    environment: string
 };
 
 export const RuntimeV1Stats: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
-    const { environment, applicationId } = useParams() as any;
+    const applicationId = application.id;
+    const environment = _props.environment;
+
     const [loaded, setLoaded] = useState(false);
+    const [errorLoading, setErrorLoading] = useState(false);
 
     const [selectedKey, setSelectedKey] = useState('runtimeStates');
 
@@ -39,10 +42,20 @@ export const RuntimeV1Stats: React.FunctionComponent<Props> = (props) => {
         getRuntimeV1(applicationId, environment).then(data => {
             setData(data);
             setLoaded(true);
-            return;
+        }).catch(e => {
+            console.error(e);
+            setErrorLoading(true);
         });
-
     }, []);
+
+    if (errorLoading) {
+        return (
+            <>
+                <h1>We failed you.</h1>
+                <h2>We might need to connect the platform-api to your application</h2>
+            </>
+        );
+    }
 
     if (!loaded) {
         return (

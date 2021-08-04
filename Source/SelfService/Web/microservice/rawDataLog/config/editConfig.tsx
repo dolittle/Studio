@@ -33,7 +33,7 @@ export const EditConfig: React.FunctionComponent<Props> = (props) => {
 
     const onSave = async (ms: MicroserviceRawDataLogIngestor): Promise<void> => {
         const data = await saveRawDataLogIngestorMicroservice(ms);
-        const href = `/application/${application.id}/${environment}/microservices/overview`;
+        const href = `/microservices/application/${application.id}/${environment}/overview`;
         history.push(href);
     };
 

@@ -54,7 +54,7 @@ export const HealthStatus: React.FunctionComponent<Props> = (props) => {
                         {DownloadLogIcon}
                     </div>
                     <div onClick={() => {
-                        const href = `/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
+                        const href = `/microservices/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
                         history.push(href);
                     }}>
                         {ViewLogIcon}

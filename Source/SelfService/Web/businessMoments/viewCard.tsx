@@ -60,7 +60,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             text: 'Edit',
             disabled: !canEdit,
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-                const href = `/application/${applicationId}/${environment}/business-moments/editor/${momentId}/microservice/${microserviceId}`;
+                const href = `/business-moments/application/${applicationId}/${environment}/editor/${momentId}/microservice/${microserviceId}`;
                 history.push(href);
             }
         },
@@ -76,7 +76,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
                         alert('Failed to remove business moment');
                         return;
                     }
-                    const href = `/application/${applicationId}/${environment}/business-moments`;
+                    const href = `/business-moments/application/${applicationId}/${environment}/overview`;
                     history.push(href);
                 })();
             }

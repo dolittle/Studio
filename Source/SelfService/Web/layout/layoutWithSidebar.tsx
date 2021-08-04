@@ -2,6 +2,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+import { History, LocationState } from 'history';
+
+import {
+    Link,
+} from '@fluentui/react';
 
 import './layout.scss';
 
@@ -53,3 +58,67 @@ export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
 // 3:20
 
 
+
+export const getDefaultMenu = (history: History<LocationState>, applicationId: string, environment: string): React.ReactNode => {
+    const suffix = applicationId !== '' && environment !== '' ?
+        `application/${applicationId}/${environment}/overview`
+        : `application/${applicationId}/pick-environment`;
+
+    return (
+        <>
+            <ul>
+                <li>
+                    <Link onClick={() => {
+                        const href = `/dashboard/${suffix}`;
+                        history.push(href);
+                    }}>
+                        Dashboard
+                    </Link>
+                </li>
+                <li>
+                    <Link onClick={() => {
+                        const href = `/backups/${suffix}`;
+                        history.push(href);
+                    }}>
+                        Backups
+                    </Link>
+                </li>
+                <li>
+                    <Link onClick={() => {
+                        const href = `/business-moments/${suffix}`;
+                        history.push(href);
+                    }}>
+                        Business Moments
+                    </Link>
+                </li>
+                <li>
+
+                    <Link onClick={() => {
+                        const href = `/microservices/${suffix}`;
+                        history.push(href);
+                    }}>
+                        Microservices
+                    </Link>
+                </li>
+                <li>
+
+                    <Link onClick={() => {
+                        const href = `/insights/${suffix}`;
+                        history.push(href);
+                    }}>
+                        Insights
+                    </Link>
+                </li>
+                <li>
+
+                    <Link onClick={() => {
+                        const href = `/documentation/${suffix}`;
+                        history.push(href);
+                    }}>
+                        Documentation
+                    </Link>
+                </li>
+            </ul>
+        </>
+    );
+};

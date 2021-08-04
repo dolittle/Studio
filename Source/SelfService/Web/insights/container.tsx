@@ -12,37 +12,37 @@ import { RuntimeV1Stats } from './runtimeStatsV1/runtimeV1Stats';
 
 type Props = {
     application: HttpResponseApplications2
+    environment: string
 };
 
 export const InsightsContainerScreen: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
     const _props = props!;
     const application = _props.application;
-    const { environment } = useParams() as any;
+    const environment = _props.environment;
 
     return (
         <>
-            <Route exact path="/application/:applicationId/:environment/insights/overview">
-                <h1>Hello I am Insights</h1>
+            <Route exact path="/insights/application/:applicationId/:environment/overview">
                 <h2>Explore application: {application.name}</h2>
 
                 <Link underline onClick={() => {
-                    const href = `/application/${application.id}/${environment}/insights/runtime-v1`;
+                    const href = `/insights/application/${application.id}/${environment}/runtime-v1`;
                     history.push(href);
                 }}>
                     Runtime Stats
                 </Link>
             </Route>
-            <Route exact path="/application/:applicationId/:environment/insights/runtime-v1">
+            <Route exact path="/insights/application/:applicationId/:environment/runtime-v1">
                 <Link underline onClick={() => {
-                    const href = `/application/${application.id}/${environment}/insights/overview`;
+                    const href = `/insights/application/${application.id}/${environment}/overview`;
                     history.push(href);
                 }}>
                     Back
                 </Link>
                 <h1>Runtime Insights</h1>
                 <h2>Useful for debugging</h2>
-                <RuntimeV1Stats application={application} />
+                <RuntimeV1Stats application={application} environment={environment} />
             </Route>
         </>
     );

@@ -9,13 +9,18 @@ import { getServerUrlPrefix } from './api';
 export async function getRuntimeV1(applicationId: string, environment: string): Promise<any> {
     //return testData as any;
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/insights/runtime-v1`;
-    const result = await fetch(
+    const response = await fetch(
         url,
         {
             method: 'GET',
             mode: 'cors'
         });
-    const jsonResult: any = await result.json();
+
+    if (!response.ok) {
+        console.error(response);
+        throw Error('Failed to get runtime stats');
+    }
+    const jsonResult: any = await response.json();
 
     return jsonResult;
 }

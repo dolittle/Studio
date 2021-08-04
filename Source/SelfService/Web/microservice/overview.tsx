@@ -10,7 +10,7 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { getMicroservices, HttpResponseMicroservices, MicroserviceInfo, HttpResponseApplications2 } from '../api/api';
 
 import '../microservice/microservice.scss';
-import { ViewCard } from '../microservice/viewCard';
+import { ViewCard } from './viewCard';
 
 import { useReadable, useWritable } from 'use-svelte-store';
 import { microservices, mergeMicroservicesFromK8s } from '../stores/microservice';
@@ -20,7 +20,7 @@ type Props = {
 };
 
 
-export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props) => {
+export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (props) => {
     const $microservices = useReadable(microservices) as any;
 
     const history = useHistory();

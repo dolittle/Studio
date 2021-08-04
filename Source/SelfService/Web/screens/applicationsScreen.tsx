@@ -11,6 +11,7 @@ import { uriWithAppPrefix } from '../store';
 
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
+    console.log('A');
     const history = useHistory();
     const [data, setData] = useState({
         id: '',
@@ -24,7 +25,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
             // If only 1 item redirect
             if (data.applications.length === 1) {
                 const application = data.applications[0];
-                window.location.href = uriWithAppPrefix(`/application/${application.id}/${application.environment}/microservices/overview`);
+                window.location.href = uriWithAppPrefix(`/microservices/application/${application.id}/${application.environment}/overview`);
                 return;
             }
             setData(data);
@@ -42,7 +43,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         const application = item!;
         return (
             <Link onClick={() => {
-                const href = `/application/${application.id}/${application.environment}/microservices/overview`;
+                const href = `/microservices/application/${application.id}/${application.environment}/overview`;
                 history.push(href);
             }}
                 underline>
