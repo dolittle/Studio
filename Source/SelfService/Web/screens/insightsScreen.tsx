@@ -15,17 +15,18 @@ import { PickEnvironment } from '../components/pickEnvironment';
 import { InsightsContainerScreen } from '../insights/container';
 import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
-import { getCurrentEnvironment, useTheme } from '../stores/notifications';
+import { useTheme } from '../stores/notifications';
 import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 
 
 export const InsightsScreen: React.FunctionComponent = () => {
     const history = useHistory();
-    const { setError } = useTheme();
+    const { setError, currentEnvironment } = useTheme();
     const topLevelMatch = useRouteMatch();
+    console.log(topLevelMatch);
     const routeApplicationProps = withRouteApplicationProps('insights');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = getCurrentEnvironment();
+    const environment = currentEnvironment;
 
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
@@ -87,7 +88,7 @@ export const InsightsScreen: React.FunctionComponent = () => {
             path: '/insights/application/:applicationId',
             breadcrumb: BreadcrumbWithRedirect,
             props: {
-                url: `${topLevelMatch.url}/overview`,
+                url: `${topLevelMatch.url}/${environment}/overview`,
                 name: 'Insights'
             } as BreadcrumbWithRedirectProps,
         },

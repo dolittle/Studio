@@ -6,7 +6,7 @@ import Modal from '@material-ui/core/Modal';
 import { useHistory, generatePath } from 'react-router-dom';
 import { HttpResponseApplications2, ShortInfoWithEnvironment } from '../api/api';
 import { List } from '@fluentui/react/lib/List';
-import { setCurrentEnvironment, setCurrentApplicationId } from '../stores/notifications';
+import { useTheme } from '../stores/notifications';
 
 import {
     Link,
@@ -47,6 +47,7 @@ type Props = {
 };
 
 export const PickEnvironment: React.FunctionComponent<Props> = (props) => {
+    const { setCurrentEnvironment, setCurrentApplicationId } = useTheme();
     const history = useHistory();
     const _props = props!;
     const application = _props.application;

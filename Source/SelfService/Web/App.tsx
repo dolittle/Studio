@@ -80,7 +80,7 @@ export const App = () => {
                                 <DocumentationScreen />
                             </Route>
 
-                            <Route path="/insights">
+                            <Route path="/insights/application/:applicationId">
                                 <InsightsScreen />
                             </Route>
 

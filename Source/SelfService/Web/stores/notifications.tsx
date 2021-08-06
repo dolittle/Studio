@@ -18,29 +18,16 @@ export type GlobalContextType = {
     setNotification: (message: string, level: string) => void;
     setError: (obj: any) => void;
     clearNotification: () => void;
+    setCurrentEnvironment: (environment: string) => void;
+    setCurrentApplicationId: (applicationId: string) => void;
+    currentEnvironment: string,
+    currentApplicationId: string,
 };
 
 const _messages: any[] = [];
 const _errors: any[] = [];
 
 
-export const getCurrentApplicationId = (): string => {
-    const current = localStorage.getItem('currentApplicationId');
-    return current ? current : '';
-};
-
-export const setCurrentApplicationId = (newApplicationId) => {
-    localStorage.setItem('currentApplicationId', newApplicationId);
-};
-
-export const getCurrentEnvironment = (): string => {
-    const current = localStorage.getItem('currentEnvironment');
-    return current ? current : '';
-};
-
-export const setCurrentEnvironment = (newEnvironment) => {
-    localStorage.setItem('currentEnvironment', newEnvironment);
-};
 
 
 export const newNotification = (message: string, level: string): NotificationItem => {
@@ -57,6 +44,10 @@ export const GlobalContext = createContext<GlobalContextType>({
         console.log(message, level);
     },
     clearNotification: () => console.warn('clearNotification function not set'),
+    setCurrentEnvironment: (environment: string) => console.warn('setCurrentEnvironment function not set'),
+    setCurrentApplicationId: (applicationId: string) => console.warn('setCurrentApplicationId function not set'),
+    currentEnvironment: '',
+    currentApplicationId: '',
 });
 
 
@@ -65,10 +56,15 @@ export const GlobalContext = createContext<GlobalContextType>({
 export const GlobalContextProvider: React.FunctionComponent = ({ children }) => {
     const location = useLocation();
     const initErrors = localStorage.getItem('errors') ? JSON.parse(localStorage.getItem('errors')!) : [];
+    // TODO not sure this is in use
+    const initCurrentApplicationId = localStorage.getItem('currentApplicationId') ? JSON.parse(localStorage.getItem('currentApplicationId')!) : '';
+    const initCurrentEnvironment = localStorage.getItem('currentEnvironment') ? JSON.parse(localStorage.getItem('currentEnvironment')!) : '';
 
     const [errors, setErrors] = useState(initErrors as any[]);
     const [messages, setMessages] = useState([] as any[]);
     const [lastError, setLastError] = useState({} as any);
+    const [currentApplicationId, _setCurrentApplicationId] = useState(initCurrentApplicationId);
+    const [currentEnvironment, _setCurrentEnvironment] = useState(initCurrentEnvironment);
     const [lastMessage, setLastMessage] = useState(newNotification('', ''));
     const setNotification = (message: string, level: string) => {
         const n = newNotification(message, level);
@@ -96,6 +92,27 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
         setLastMessage(n);
     };
 
+    //const getCurrentApplicationId = (): string => {
+    //    const current = localStorage.getItem('currentApplicationId');
+    //    return current ? current : '';
+    //};
+
+    const setCurrentApplicationId = (newApplicationId) => {
+        localStorage.setItem('currentApplicationId', JSON.stringify(newApplicationId));
+        _setCurrentApplicationId(newApplicationId);
+    };
+
+    //const getCurrentEnvironment = (): string => {
+    //    const current = localStorage.getItem('currentEnvironment');
+    //    return current ? current : '';
+    //};
+
+    const setCurrentEnvironment = (newEnvironment) => {
+        localStorage.setItem('currentEnvironment', JSON.stringify(newEnvironment));
+        _setCurrentEnvironment(newEnvironment);
+    };
+
+
     return (
         <GlobalContext.Provider value={{
             lastMessage,
@@ -105,6 +122,10 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
             setError,
             setNotification,
             clearNotification,
+            currentEnvironment,
+            setCurrentEnvironment,
+            currentApplicationId,
+            setCurrentApplicationId,
         }}>
             {children}
         </GlobalContext.Provider>

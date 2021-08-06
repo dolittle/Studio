@@ -5,7 +5,7 @@ import React from 'react';
 import { ShortInfoWithEnvironment } from '../api/api';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
-import { useTheme, setCurrentApplicationId } from '../stores/notifications';
+import { useTheme } from '../stores/notifications';
 
 type Props = {
     applications: ShortInfoWithEnvironment[]
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
-    const { setNotification } = useTheme();
+    const { setNotification, setCurrentApplicationId } = useTheme();
     const applications = props!.applications;
     const currentApplicationId = props!.current;
 

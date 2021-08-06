@@ -26,15 +26,16 @@ import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { PickEnvironment } from '../components/pickEnvironment';
 import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
-import { getCurrentEnvironment } from '../stores/notifications';
+import { useTheme } from '../stores/notifications';
 import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 
 export const BusinessMomentsScreen: React.FunctionComponent = () => {
     const history = useHistory();
+    const { currentEnvironment } = useTheme();
     const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('business-moments');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = getCurrentEnvironment();
+    const environment = currentEnvironment;
 
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
@@ -132,7 +133,7 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
 
             <Switch>
                 <Route path="/business-moments/application/:applicationId/:environment">
-                    <BusinessMomentsContainerScreen application={application} />
+                    <BusinessMomentsContainerScreen application={application} environment={environment} />
                 </Route>
 
                 <RouteNotFound redirectUrl={redirectUrl} />

@@ -24,18 +24,18 @@ import { withRouteApplicationProps } from '../utils/route';
 import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 import { RouteNotFound } from '../components/notfound';
 import { PickEnvironment } from '../components/pickEnvironment';
-import { getCurrentEnvironment, useTheme } from '../stores/notifications';
+import { useTheme } from '../stores/notifications';
 
 
 export const DocumentationScreen: React.FunctionComponent = () => {
     const { pathname } = useLocation();
     const history = useHistory();
-    const { setNotification } = useTheme();
+    const { setNotification, currentEnvironment } = useTheme();
     const topLevelMatch = useRouteMatch();
 
     const routeApplicationProps = withRouteApplicationProps('documentation');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = getCurrentEnvironment();
+    const environment = currentEnvironment;
 
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);

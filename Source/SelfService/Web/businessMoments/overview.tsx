@@ -12,10 +12,10 @@ import { Modal, DefaultButton } from '@fluentui/react';
 import { ViewCard } from './viewCard';
 import { HttpResponseApplications2 } from '../api/api';
 import { MicroserviceBusinessMomentAdaptor, HttpResponseBusinessMoments } from '../api/index';
-import { getCurrentEnvironment } from '../stores/notifications';
 import { withRouteApplicationProps } from '../utils/route';
 
 type Props = {
+    environment: string
     application: HttpResponseApplications2
     businessMoments: HttpResponseBusinessMoments
     microservices: any[]
@@ -26,7 +26,7 @@ export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) =
     const application = _props.application;
     const routeApplicationProps = withRouteApplicationProps('business-moments');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = getCurrentEnvironment();
+    const environment = _props.environment;
 
     const $microservices = _props.microservices;
     const $businessMoments = _props.businessMoments;

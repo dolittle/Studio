@@ -30,17 +30,17 @@ import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { withRouteApplicationProps } from '../utils/route';
 import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 
-import { getCurrentEnvironment, useTheme } from '../stores/notifications';
+import { useTheme } from '../stores/notifications';
 import { PickEnvironment } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
 
 export const MicroservicesScreen: React.FunctionComponent = () => {
     const history = useHistory();
-    const { setNotification } = useTheme();
+    const { setNotification, currentEnvironment } = useTheme();
     const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('microservices');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = getCurrentEnvironment();
+    const environment = currentEnvironment;
 
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);

@@ -18,10 +18,11 @@ import { useReadable } from 'use-svelte-store';
 import { businessmoments, load, isLoaded } from '../stores/businessmoment';
 import { microservices } from '../stores/microservice';
 import { withRouteApplicationProps } from '../utils/route';
-import { getCurrentEnvironment } from '../stores/notifications';
+
 
 type Props = {
     application: HttpResponseApplications2
+    environment: string
 };
 
 export const BusinessMomentsContainerScreen: React.FunctionComponent<Props> = (props) => {
@@ -29,7 +30,7 @@ export const BusinessMomentsContainerScreen: React.FunctionComponent<Props> = (p
     const application = _props.application;
     const routeApplicationProps = withRouteApplicationProps('business-moments');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = getCurrentEnvironment();
+    const environment = _props.environment;
 
     const $microservices = useReadable(microservices) as any[];
     const $businessmoments = useReadable(businessmoments) as any;
@@ -63,7 +64,7 @@ export const BusinessMomentsContainerScreen: React.FunctionComponent<Props> = (p
         <>
             <Switch>
                 <Route exact path="/business-moments/application/:applicationId/:environment/overview">
-                    <BusinessMomentsOverview application={application} businessMoments={$businessmoments} microservices={$microservices} />
+                    <BusinessMomentsOverview application={application} businessMoments={$businessmoments} microservices={$microservices} environment={environment} />
                 </Route>
 
                 <Route exact path="/business-moments/application/:applicationId/:environment/editor/:businessMomentId/microservice/:microserviceId">

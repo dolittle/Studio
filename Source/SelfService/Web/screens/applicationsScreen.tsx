@@ -8,13 +8,14 @@ import { Link } from '@fluentui/react';
 
 import { getApplications, HttpResponseApplications, ShortInfoWithEnvironment } from '../api/api';
 import { uriWithAppPrefix } from '../store';
-import { setCurrentEnvironment } from '../stores/notifications';
+import { useTheme } from '../stores/notifications';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
     const history = useHistory();
+    const { setCurrentEnvironment } = useTheme();
     const [data, setData] = useState({
         id: '',
         name: '',
