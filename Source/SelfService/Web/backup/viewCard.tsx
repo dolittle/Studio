@@ -15,6 +15,7 @@ import { mergeStyles } from '@fluentui/react/lib/Styling';
 import { HttpResponseApplications2 } from '../api/api';
 import { cardStyles, commandTileClass, buttonStyles } from '../theme/viewCard';
 import { getLatestBackupLinkByApplication } from '../api/backups';
+import { setCurrentEnvironment, setCurrentApplicationId } from '../stores/notifications';
 
 
 type Props = {
@@ -47,6 +48,8 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             key: 'viewAllBackups',
             text: 'View All Backups',
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
+                setCurrentApplicationId(application.id);
+                setCurrentEnvironment(environment);
                 const href = `/backups/application/${application.id}/${environment}/list`;
                 history.push(href);
             }
