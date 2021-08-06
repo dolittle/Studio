@@ -2,14 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, Switch, useRouteMatch, useLocation } from 'react-router-dom';
+import { Route, useHistory, Switch, useRouteMatch, useLocation, generatePath } from 'react-router-dom';
 
 import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications, HttpResponseMicroservices, getMicroservices } from '../api/api';
 
 
 import { EnvironmentChanger } from '../application/environmentChanger';
-
-
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
 
@@ -20,12 +18,13 @@ import { ApplicationsChanger } from '../application/applicationsChanger';
 
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
-
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
-import { PickEnvironment } from '../components/pickEnvironment';
 import { DocumentationContainerScreen } from '../documentation/container';
 import { withRouteApplicationProps } from '../utils/route';
 import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
+import { RouteNotFound } from '../components/notfound';
+import { PickEnvironment } from '../components/pickEnvironment';
+import { getCurrentEnvironment } from '../stores/notifications';
 
 
 export const DocumentationScreen: React.FunctionComponent = () => {
@@ -36,7 +35,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
 
     const routeApplicationProps = withRouteApplicationProps('documentation');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = routeApplicationProps.environment;
+    const environment = getCurrentEnvironment();
 
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
@@ -82,13 +81,16 @@ export const DocumentationScreen: React.FunctionComponent = () => {
         );
     }
 
+    if (environment === '') {
+        return (
+            <PickEnvironment
+                application={application}
+                redirectTo={'/microservices/application/:applicationId/:environment/overview'}
+                openModal={true} />
+        );
+    }
 
-    const nav = getDefaultMenu(history, application.id, environment, '');
-
-    const environmentOnClick = (applicationId: string, environment: string) => {
-        const href = `/documentation/application/${applicationId}/${environment}/overview`;
-        history.push(href);
-    };
+    const nav = getDefaultMenu(history, application.id, environment);
 
     const routes = [
         {
@@ -113,6 +115,11 @@ export const DocumentationScreen: React.FunctionComponent = () => {
         }
     ];
 
+    const redirectUrl = generatePath('/documentation/application/:applicationId/:environment/overview', {
+        applicationId,
+        environment,
+    });
+
     return (
         <LayoutWithSidebar navigation={nav}>
             <div id="topNavBar" className="nav flex-container">
@@ -129,17 +136,10 @@ export const DocumentationScreen: React.FunctionComponent = () => {
             </div>
 
             <Switch>
-                <Route exact path="/documentation/application/:applicationId/pick-environment">
-                    <PickEnvironment application={application} onClick={environmentOnClick} />
-                </Route>
-
                 <Route path="/documentation/application/:applicationId/:environment">
                     <DocumentationContainerScreen application={application} />
                 </Route>
-                <Route>
-                    <h1>TODO</h1>
-                    <p>{pathname}</p>
-                </Route>
+                <RouteNotFound redirectUrl={redirectUrl} />
             </Switch>
         </LayoutWithSidebar >
     );

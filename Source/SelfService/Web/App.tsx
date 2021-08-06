@@ -12,11 +12,28 @@ import { BackupsScreen } from './screens/backupsScreen';
 import { BusinessMomentsScreen } from './screens/businessMomentsScreen';
 import { DocumentationScreen } from './screens/documentationScreen';
 import { InsightsScreen } from './screens/insightsScreen';
-import { DashboardScreen } from './screens/dashboardScreen';
-import { EnvironmentScreen } from './screens/environmentScreen';
 import { MicroservicesScreen } from './screens/microservicesScreen';
+import { GlobalContextProvider } from './stores/notifications';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { RouteNotFound } from './components/notfound';
+import { EnvironmentScreen } from './screens/environmentScreen';
 
+import {
+    createTheme,
+    ThemeProvider,
+} from '@material-ui/core/styles';
 
+const themeDark = createTheme({
+    palette: {
+        background: {
+            default: '#323F4B',
+            paper: '#323F4B',
+        },
+        text: {
+            primary: '#1AD8C3'
+        }
+    }
+});
 
 export const App = () => {
     const { pathname } = useLocation();
@@ -28,50 +45,49 @@ export const App = () => {
 
     return (
         <>
-            <BrowserRouter basename={uriWithAppPrefix('')}>
-                <Switch>
-                    <Route exact path="/login">
-                        <LoginScreen />
-                    </Route>
+            <ThemeProvider theme={themeDark}>
+                <CssBaseline />
+                <GlobalContextProvider>
+                    <BrowserRouter basename={uriWithAppPrefix('')}>
+                        <Switch>
+                            <Route exact path="/login">
+                                <LoginScreen />
+                            </Route>
 
-                    <Route path="/dashboard">
-                        <DashboardScreen />
-                    </Route>
+                            <Route path="/backups/application/:applicationId">
+                                <BackupsScreen />
+                            </Route>
 
-                    <Route path="/backups/application/:applicationId">
-                        <BackupsScreen />
-                    </Route>
+                            <Route exact path="/applications">
+                                <ApplicationsScreen />
+                            </Route>
 
-                    <Route exact path="/applications">
-                        <ApplicationsScreen />
-                    </Route>
+                            <Route path="/environment/application/:applicationId">
+                                <EnvironmentScreen />
+                            </Route>
 
-                    <Route path="/environment/application/:applicationId">
-                        <EnvironmentScreen />
-                    </Route>
+                            <Route path="/microservices/application/:applicationId">
+                                <MicroservicesScreen />
+                            </Route>
 
-                    <Route path="/microservices/application/:applicationId">
-                        <MicroservicesScreen />
-                    </Route>
+                            <Route path="/business-moments/application/:applicationId">
+                                <BusinessMomentsScreen />
+                            </Route>
 
-                    <Route path="/business-moments/application/:applicationId">
-                        <BusinessMomentsScreen />
-                    </Route>
+                            <Route path="/documentation/application/:applicationId">
+                                <DocumentationScreen />
+                            </Route>
 
-                    <Route path="/documentation/application/:applicationId">
-                        <DocumentationScreen />
-                    </Route>
-
-                    <Route path="/insights">
-                        <InsightsScreen />
-                    </Route>
+                            <Route path="/insights">
+                                <InsightsScreen />
+                            </Route>
 
 
-                    <Route>
-                        <h1>Somehting has gone wrong</h1>
-                    </Route>
-                </Switch>
-            </BrowserRouter>
+                            <RouteNotFound redirectUrl="/applications" auto={true} />
+                        </Switch>
+                    </BrowserRouter>
+                </GlobalContextProvider>
+            </ThemeProvider>
         </>
     );
 };

@@ -4,11 +4,13 @@
 import React from 'react';
 import { History, LocationState } from 'history';
 
+
 import {
     Link,
 } from '@fluentui/react';
 
 import './layout.scss';
+import { AlertBox } from '../components/alertBox';
 
 type Props = {
     navigation: React.ReactNode
@@ -48,6 +50,7 @@ export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
                         {navigationPanel}
                     </div>
                     <div className="not-sidebar">
+                        <AlertBox />
                         {children}
                     </div>
                 </div>
@@ -55,33 +58,14 @@ export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
         </>
     );
 };
-// 3:20
 
-
-
-export const getDefaultMenu = (history: History<LocationState>, applicationId: string, environment: string, overrideSuffix: string): React.ReactNode => {
-    let suffix = overrideSuffix;
-
-    if (overrideSuffix === '') {
-        suffix = applicationId !== '' && environment !== '' ?
-            `application/${applicationId}/${environment}/overview`
-            : `application/${applicationId}/pick-environment`;
-    }
-
+export const getDefaultMenu = (history: History<LocationState>, applicationId: string, environment: string): React.ReactNode => {
     return (
         <>
             <ul>
                 <li>
                     <Link onClick={() => {
-                        const href = `/dashboard/${suffix}`;
-                        history.push(href);
-                    }}>
-                        Dashboard
-                    </Link>
-                </li>
-                <li>
-                    <Link onClick={() => {
-                        const href = `/backups/${suffix}`;
+                        const href = `/backups/application/${applicationId}/overview`;
                         history.push(href);
                     }}>
                         Backups
@@ -89,7 +73,7 @@ export const getDefaultMenu = (history: History<LocationState>, applicationId: s
                 </li>
                 <li>
                     <Link onClick={() => {
-                        const href = `/business-moments/${suffix}`;
+                        const href = `/business-moments/application/${applicationId}/${environment}/overview`;
                         history.push(href);
                     }}>
                         Business Moments
@@ -98,7 +82,7 @@ export const getDefaultMenu = (history: History<LocationState>, applicationId: s
                 <li>
 
                     <Link onClick={() => {
-                        const href = `/microservices/${suffix}`;
+                        const href = `/microservices/application/${applicationId}/${environment}/overview`;
                         history.push(href);
                     }}>
                         Microservices
@@ -107,7 +91,7 @@ export const getDefaultMenu = (history: History<LocationState>, applicationId: s
                 <li>
 
                     <Link onClick={() => {
-                        const href = `/insights/${suffix}`;
+                        const href = `/insights/application/${applicationId}/${environment}/overview`;
                         history.push(href);
                     }}>
                         Insights
@@ -116,7 +100,7 @@ export const getDefaultMenu = (history: History<LocationState>, applicationId: s
                 <li>
 
                     <Link onClick={() => {
-                        const href = `/documentation/${suffix}`;
+                        const href = `/documentation/application/${applicationId}/${environment}/overview`;
                         history.push(href);
                     }}>
                         Documentation

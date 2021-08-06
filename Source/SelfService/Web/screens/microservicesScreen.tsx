@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, useRouteMatch } from 'react-router-dom';
+import { Route, useHistory, useRouteMatch, Switch, generatePath } from 'react-router-dom';
 
 import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications, HttpResponseMicroservices, getMicroservices } from '../api/api';
 
@@ -12,12 +12,9 @@ import { MicroserviceEditScreen } from '../microservice/microserviceEditScreen';
 import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';
 
 import { PodViewScreen } from './podViewScreen';
-
-
 import { EnvironmentChanger } from '../application/environmentChanger';
-
-
 import { LayoutWithSidebar, getDefaultMenu } from '../layout/layoutWithSidebar';
+
 
 
 // I wonder if scss is scoped like svelte. I hope so!
@@ -29,16 +26,20 @@ import { ApplicationsChanger } from '../application/applicationsChanger';
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
-import { PickEnvironment } from '../components/pickEnvironment';
+
 import { withRouteApplicationProps } from '../utils/route';
 import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
+
+import { getCurrentEnvironment } from '../stores/notifications';
+import { PickEnvironment } from '../components/pickEnvironment';
+import { RouteNotFound } from '../components/notfound';
 
 export const MicroservicesScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('microservices');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = routeApplicationProps.environment;
+    const environment = getCurrentEnvironment();
 
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
@@ -78,12 +79,17 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
         );
     }
 
-    const nav = getDefaultMenu(history, application.id, environment, '');
+    if (environment === '') {
+        return (
+            <PickEnvironment
+                application={application}
+                redirectTo={'/microservices/application/:applicationId/:environment/overview'}
+                openModal={true} />
+        );
+    }
 
-    const environmentOnClick = (applicationId: string, environment: string) => {
-        const href = `/microservices/application/${applicationId}/${environment}`;
-        history.push(href);
-    };
+    const nav = getDefaultMenu(history, applicationId, environment);
+
 
     const routes = [
         {
@@ -112,44 +118,48 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
         }
     ];
 
+
+    const redirectUrl = generatePath('/microservices/application/:applicationId/:environment/overview', {
+        applicationId,
+        environment,
+    });
+
     return (
         <LayoutWithSidebar navigation={nav}>
             <div id="topNavBar" className="nav flex-container">
                 <div className="left flex-start">
                     <BreadCrumbContainer routes={routes} />
                 </div>
-                <Route path="/microservices/application/:applicationId/:environment">
-                    <div className="right item flex-end">
-                        <EnvironmentChanger application={application} environment={environment} />
-                        <ApplicationsChanger applications={applications} current={applicationId} />
-                    </div>
-                </Route>
+
+                <div className="right item flex-end">
+                    <EnvironmentChanger application={application} environment={environment} />
+                    <ApplicationsChanger applications={applications} current={applicationId} />
+                </div>
             </div>
 
-            <Route exact path="/microservices/application/:applicationId/:environment/overview">
-                <MicroservicesOverviewScreen application={application} />
-            </Route>
+            <Switch>
+                <Route exact path="/microservices/application/:applicationId/:environment/overview">
+                    <MicroservicesOverviewScreen application={application} />
+                </Route>
 
-            <Route exact path="/microservices/application/:applicationId/:environment/create">
-                <MicroserviceNewScreen application={application} />
-            </Route>
+                <Route exact path="/microservices/application/:applicationId/:environment/create">
+                    <MicroserviceNewScreen application={application} />
+                </Route>
 
-            <Route exact path="/microservices/application/:applicationId/:environment/edit/:microserviceId">
-                <MicroserviceEditScreen />
-            </Route>
+                <Route exact path="/microservices/application/:applicationId/:environment/edit/:microserviceId">
+                    <MicroserviceEditScreen />
+                </Route>
 
-            <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId">
-                <MicroserviceViewScreen />
-            </Route>
+                <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId">
+                    <MicroserviceViewScreen />
+                </Route>
 
-            <Route exact path="/microservices/application/:applicationId/:environment/pod/view/:podName/logs">
-                <PodViewScreen />
-            </Route>
+                <Route exact path="/microservices/application/:applicationId/:environment/pod/view/:podName/logs">
+                    <PodViewScreen />
+                </Route>
 
-            <Route exact path="/microservices/application/:applicationId/pick-environment">
-                <PickEnvironment application={application} onClick={environmentOnClick} />
-            </Route>
-
-        </LayoutWithSidebar>
+                <RouteNotFound redirectUrl={redirectUrl} />
+            </Switch>
+        </LayoutWithSidebar >
     );
 };

@@ -194,20 +194,3 @@ export async function getPodLogs(applicationId: string, podName: string, contain
     return jsonResult;
 }
 
-
-export async function saveEnvironment(input: HttpInputApplicationEnvironment): Promise<boolean> {
-    const url = `${getServerUrlPrefix()}/environment`;
-    const result = await fetch(
-        url,
-        {
-            method: 'POST',
-            body: JSON.stringify(input),
-            mode: 'cors',
-            headers: {
-                'content-type': 'application/json'
-            }
-        });
-
-    const jsonResult = await result.json();
-    return true;
-}

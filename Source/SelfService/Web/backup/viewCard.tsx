@@ -14,7 +14,7 @@ import {
 import { mergeStyles } from '@fluentui/react/lib/Styling';
 import { HttpResponseApplications2 } from '../api/api';
 import { cardStyles, commandTileClass, buttonStyles } from '../theme/viewCard';
-import { getBackupsByApplication, getLatestBackupLinkByApplication } from '../api/backups';
+import { getLatestBackupLinkByApplication } from '../api/backups';
 
 
 type Props = {

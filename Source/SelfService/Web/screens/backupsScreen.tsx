@@ -11,8 +11,8 @@ import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { withRouteApplicationProps } from '../utils/route';
 import { BreadcrumbWithRedirectProps, BreadcrumbWithRedirect } from '../components/breadCrumbWithRedirect';
-import { applications } from '../stores/state';
 import { ListView } from '../backup/listView';
+import { getCurrentEnvironment } from '../stores/notifications';
 
 type Props = {
     application?: HttpResponseApplications2
@@ -23,7 +23,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
     const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('backups');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = routeApplicationProps.environment;
+    const environment = getCurrentEnvironment();
 
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [loaded, setLoaded] = useState(false);
@@ -40,8 +40,6 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
         });
     }, []);
 
-    //const _props = props!;
-    //const application = _props.application!;
     if (!loaded) {
         return null;
     }
@@ -54,7 +52,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
         );
     }
     const environments = application.environments;
-    const nav = getDefaultMenu(history, application.id, environment, `application/${application.id}/overview`);
+    const nav = getDefaultMenu(history, application.id, environment);
 
     const routes = [
         {

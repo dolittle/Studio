@@ -8,6 +8,7 @@ import { Link } from '@fluentui/react';
 
 import { getApplications, HttpResponseApplications, ShortInfoWithEnvironment } from '../api/api';
 import { uriWithAppPrefix } from '../store';
+import { setCurrentEnvironment } from '../stores/notifications';
 
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
@@ -24,6 +25,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
             // If only 1 item redirect
             if (data.applications.length === 1) {
                 const application = data.applications[0];
+                setCurrentEnvironment(application.environment);
                 window.location.href = uriWithAppPrefix(`/microservices/application/${application.id}/${application.environment}/overview`);
                 return;
             }
@@ -42,6 +44,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         const application = item!;
         return (
             <Link onClick={() => {
+                setCurrentEnvironment(application.environment);
                 const href = `/microservices/application/${application.id}/${application.environment}/overview`;
                 history.push(href);
             }}

@@ -33,7 +33,7 @@ export const EnvironmentChanger: React.FunctionComponent<Props> = (props) => {
         }
 
         if (newEnvironment === 'newEnvironment') {
-            const href = `/environment/application/${application.id}/${environment}/create`;
+            const href = `/environment/application/${application.id}/create`;
             history.push(href);
             return;
         }

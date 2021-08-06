@@ -15,6 +15,10 @@
         "ci": "yarn clean && yarn lint:ci && yarn build"
     },
     "dependencies": {
+        "@material-ui/core": "^4.12.3",
+        "@material-ui/icons": "^4.11.2",
+        "@material-ui/lab": "^4.0.0-alpha.60",
+        "@material-ui/styles": "^4.11.4",
         "@monaco-editor/react": "^4.1.3",
         "@shared/styles": "1.0.0",
         "@shared/web": "1.0.0",

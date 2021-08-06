@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, useRouteMatch } from 'react-router-dom';
+import { Route, useHistory, Switch, generatePath } from 'react-router-dom';
 
 import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
 
@@ -21,6 +21,8 @@ import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { PickEnvironment } from '../components/pickEnvironment';
 import { InsightsContainerScreen } from '../insights/container';
 import { withRouteApplicationProps } from '../utils/route';
+import { RouteNotFound } from '../components/notfound';
+import { getCurrentEnvironment } from '../stores/notifications';
 
 
 
@@ -30,7 +32,7 @@ export const InsightsScreen: React.FunctionComponent = () => {
 
     const routeApplicationProps = withRouteApplicationProps('insights');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = routeApplicationProps.environment;
+    const environment = getCurrentEnvironment();
 
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
@@ -61,12 +63,21 @@ export const InsightsScreen: React.FunctionComponent = () => {
         );
     }
 
-    const nav = getDefaultMenu(history, application.id, environment, '');
+    if (environment === '') {
+        return (
+            <PickEnvironment
+                application={application}
+                redirectTo={'/insights/application/:applicationId/:environment/overview'}
+                openModal={true} />
+        );
+    }
 
-    const environmentOnClick = (applicationId: string, environment: string) => {
-        const href = `/insights/application/${applicationId}/${environment}/overview`;
-        history.push(href);
-    };
+    const nav = getDefaultMenu(history, application.id, environment);
+
+    const redirectUrl = generatePath('/insights/application/:applicationId/:environment/overview', {
+        applicationId,
+        environment,
+    });
 
     return (
         <LayoutWithSidebar navigation={nav}>
@@ -75,21 +86,18 @@ export const InsightsScreen: React.FunctionComponent = () => {
                     <BreadCrumbContainer />
                 </div>
 
-                <Route path="/insights/application/:applicationId/:environment">
-                    <div className="right item flex-end">
-                        <EnvironmentChanger application={application} environment={environment} />
-                        <ApplicationsChanger applications={applications} current={applicationId} />
-                    </div>
-                </Route>
+                <div className="right item flex-end">
+                    <EnvironmentChanger application={application} environment={environment} />
+                    <ApplicationsChanger applications={applications} current={applicationId} />
+                </div>
             </div>
 
-            <Route path="/insights/application/:applicationId/:environment">
-                <InsightsContainerScreen application={application} environment={environment} />
-            </Route>
-
-            <Route exact path="/insights/application/:applicationId">
-                <PickEnvironment application={application} onClick={environmentOnClick} />
-            </Route>
+            <Switch>
+                <Route path="/insights/application/:applicationId/:environment">
+                    <InsightsContainerScreen application={application} environment={environment} />
+                </Route>
+                <RouteNotFound redirectUrl={redirectUrl} />
+            </Switch>
         </LayoutWithSidebar >
     );
 };

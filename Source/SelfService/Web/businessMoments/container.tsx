@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useParams } from 'react-router-dom';
+import { Route, useParams, Switch } from 'react-router-dom';
 
 import { HttpResponseApplications2 } from '../api/api';
 
@@ -17,6 +17,8 @@ import '../application/applicationScreen.scss';
 import { useReadable } from 'use-svelte-store';
 import { businessmoments, load, isLoaded } from '../stores/businessmoment';
 import { microservices } from '../stores/microservice';
+import { withRouteApplicationProps } from '../utils/route';
+import { getCurrentEnvironment } from '../stores/notifications';
 
 type Props = {
     application: HttpResponseApplications2
@@ -25,7 +27,10 @@ type Props = {
 export const BusinessMomentsContainerScreen: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
-    const { environment, applicationId } = useParams() as any;
+    const routeApplicationProps = withRouteApplicationProps('business-moments');
+    const applicationId = routeApplicationProps.applicationId;
+    const environment = getCurrentEnvironment();
+
     const $microservices = useReadable(microservices) as any[];
     const $businessmoments = useReadable(businessmoments) as any;
     const $isLoaded = useReadable(isLoaded) as boolean;
@@ -56,13 +61,15 @@ export const BusinessMomentsContainerScreen: React.FunctionComponent<Props> = (p
 
     return (
         <>
-            <Route exact path="/business-moments/application/:applicationId/:environment">
-                <BusinessMomentsOverview application={application} businessMoments={$businessmoments} microservices={$microservices} />
-            </Route>
+            <Switch>
+                <Route exact path="/business-moments/application/:applicationId/:environment/overview">
+                    <BusinessMomentsOverview application={application} businessMoments={$businessmoments} microservices={$microservices} />
+                </Route>
 
-            <Route exact path="/business-moments/application/:applicationId/:environment/editor/:businessMomentId/microservice/:microserviceId">
-                <BusinessMomentEditor application={application} businessMoments={$businessmoments} />
-            </Route>
+                <Route exact path="/business-moments/application/:applicationId/:environment/editor/:businessMomentId/microservice/:microserviceId">
+                    <BusinessMomentEditor application={application} businessMoments={$businessmoments} />
+                </Route>
+            </Switch>
         </>
     );
 };
