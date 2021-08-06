@@ -23,6 +23,7 @@ import {
     ThemeProvider,
 } from '@material-ui/core/styles';
 import { DieAndRestart } from './components/dieAndRestart';
+import { LayoutWithSidebar } from './layout/layoutWithSidebar';
 
 const themeDark = createTheme({
     palette: {
@@ -84,7 +85,10 @@ export const App = () => {
                             </Route>
 
                             <Route exact path="/problem">
-                                <DieAndRestart />
+                                <LayoutWithSidebar navigation={[]}>
+                                    <DieAndRestart />
+                                </LayoutWithSidebar>
+
                             </Route>
 
                             <RouteNotFound redirectUrl="/applications" auto={true} />

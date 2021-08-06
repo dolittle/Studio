@@ -2,28 +2,26 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { createContext, useContext, useState } from 'react';
-
+import { useLocation } from 'react-router-dom';
 
 export type NotificationItem = {
     message: string
     level: string
 };
 
-export enum Theme {
-    Dark = 'Dark',
-    Light = 'Light',
-};
 
 export type GlobalContextType = {
-    theme: Theme;
-    setTheme: (Theme: Theme) => void;
     messages: any[],
     lastMessage: NotificationItem,
+    lastError: any,
+    errors: any[],
     setNotification: (message: string, level: string) => void;
+    setError: (obj: any) => void;
     clearNotification: () => void;
 };
 
 const _messages: any[] = [];
+const _errors: any[] = [];
 
 
 export const getCurrentApplicationId = (): string => {
@@ -50,10 +48,11 @@ export const newNotification = (message: string, level: string): NotificationIte
 };
 
 export const GlobalContext = createContext<GlobalContextType>({
-    theme: Theme.Dark,
-    setTheme: theme => console.warn('no theme provider'),
     messages: _messages,
+    errors: _errors,
     lastMessage: newNotification('', ''),
+    lastError: undefined,
+    setError: (obj) => console.warn('setError function not set'),
     setNotification: (message, level) => {
         console.log(message, level);
     },
@@ -64,8 +63,12 @@ export const GlobalContext = createContext<GlobalContextType>({
 
 // eslint-disable-next-line react/prop-types
 export const GlobalContextProvider: React.FunctionComponent = ({ children }) => {
-    const [theme, setTheme] = useState(Theme.Light);
+    const location = useLocation();
+    const initErrors = localStorage.getItem('errors') ? JSON.parse(localStorage.getItem('errors')!) : [];
+
+    const [errors, setErrors] = useState(initErrors as any[]);
     const [messages, setMessages] = useState([] as any[]);
+    const [lastError, setLastError] = useState({} as any);
     const [lastMessage, setLastMessage] = useState(newNotification('', ''));
     const setNotification = (message: string, level: string) => {
         const n = newNotification(message, level);
@@ -74,6 +77,19 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
         setLastMessage(n);
     };
 
+    const setError = (err: any) => {
+        const record = {
+            when: new Date().toUTCString(),
+            location,
+            data: err,
+        };
+        _errors.unshift(record);
+        setErrors(_errors);
+        setLastError(record);
+        localStorage.setItem('errors', JSON.stringify(_errors));
+    };
+
+
     const clearNotification = () => {
         const n = newNotification('', '');
         setMessages([]);
@@ -81,7 +97,15 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
     };
 
     return (
-        <GlobalContext.Provider value={{ theme, setTheme, lastMessage, messages, setNotification, clearNotification }}>
+        <GlobalContext.Provider value={{
+            lastMessage,
+            lastError,
+            messages,
+            errors,
+            setError,
+            setNotification,
+            clearNotification,
+        }}>
             {children}
         </GlobalContext.Provider>
     );

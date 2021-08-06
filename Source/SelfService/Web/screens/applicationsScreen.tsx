@@ -9,6 +9,8 @@ import { Link } from '@fluentui/react';
 import { getApplications, HttpResponseApplications, ShortInfoWithEnvironment } from '../api/api';
 import { uriWithAppPrefix } from '../store';
 import { setCurrentEnvironment } from '../stores/notifications';
+import { BreadCrumbContainer } from '../layout/breadcrumbs';
+import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
@@ -56,8 +58,16 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
 
     return (
         <>
-            <h1>Applications Screen</h1>
-            <List items={data.applications} onRenderCell={onRenderCell} />
+            <LayoutWithSidebar navigation={[]}>
+                <div id="topNavBar" className="nav flex-container">
+                    <div className="left flex-start">
+                        <BreadCrumbContainer routes={[]} />
+                    </div>
+                </div>
+
+                <h1>Applications Screen</h1>
+                <List items={data.applications} onRenderCell={onRenderCell} />
+            </LayoutWithSidebar >
         </>
     );
 };

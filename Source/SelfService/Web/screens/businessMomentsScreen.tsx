@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, generatePath, Switch } from 'react-router-dom';
+import { Route, useHistory, generatePath, useRouteMatch, Switch } from 'react-router-dom';
 
 import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications, HttpResponseMicroservices, getMicroservices } from '../api/api';
 
@@ -27,9 +27,11 @@ import { PickEnvironment } from '../components/pickEnvironment';
 import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { getCurrentEnvironment } from '../stores/notifications';
+import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 
 export const BusinessMomentsScreen: React.FunctionComponent = () => {
     const history = useHistory();
+    const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('business-moments');
     const applicationId = routeApplicationProps.applicationId;
     const environment = getCurrentEnvironment();
@@ -89,18 +91,37 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
     }
 
     const nav = getDefaultMenu(history, application.id, environment);
+
+    const routes = [
+        {
+            path: '/business-moments/application/:applicationId/:environment',
+            breadcrumb: BreadcrumbWithRedirect,
+            props: {
+                url: `${topLevelMatch.url}/${environment}/overview`,
+                name: 'Business Moments'
+            } as BreadcrumbWithRedirectProps,
+        },
+        {
+            path: '/business-moments/application/:applicationId/:environment/overview',
+            breadcrumb: 'Overview',
+        },
+        {
+            path: '/business-moments/application/:applicationId/:environment/editor/:businessMomentId/microservice/:microserviceId',
+            breadcrumb: 'Editor',
+        }
+    ];
+
+
     const redirectUrl = generatePath('/business-moments/application/:applicationId/:environment/overview', {
         applicationId,
         environment,
     });
 
-    // TODO add breadcrumb routes
-    const routes = [];
     return (
         <LayoutWithSidebar navigation={nav}>
             <div id="topNavBar" className="nav flex-container">
                 <div className="left flex-start">
-                    <BreadCrumbContainer />
+                    <BreadCrumbContainer routes={routes} />
                 </div>
 
                 <div className="right item flex-end">

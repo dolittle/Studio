@@ -2,34 +2,27 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, Switch, generatePath } from 'react-router-dom';
+import { Route, useHistory, Switch, generatePath, useRouteMatch } from 'react-router-dom';
 
 import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
-
 import { EnvironmentChanger } from '../application/environmentChanger';
-
-
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
-
-
-// I wonder if scss is scoped like svelte. I hope so!
 // Not scoped like svelte
 import '../application/applicationScreen.scss';
 import { ApplicationsChanger } from '../application/applicationsChanger';
-
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { PickEnvironment } from '../components/pickEnvironment';
 import { InsightsContainerScreen } from '../insights/container';
 import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
-import { getCurrentEnvironment } from '../stores/notifications';
-
-
+import { getCurrentEnvironment, useTheme } from '../stores/notifications';
+import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 
 
 export const InsightsScreen: React.FunctionComponent = () => {
     const history = useHistory();
-
+    const { setError } = useTheme();
+    const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('insights');
     const applicationId = routeApplicationProps.applicationId;
     const environment = getCurrentEnvironment();
@@ -39,15 +32,29 @@ export const InsightsScreen: React.FunctionComponent = () => {
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
+
         Promise.all([
             getApplications(),
             getApplication(applicationId),
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
+
+            if (!applicationData?.id) {
+                setError({ message: 'Application id is empty' });
+                const href = `/problem`;
+                history.push(href);
+                return;
+            }
+
             setApplications(applicationsData.applications);
             setApplication(applicationData);
             setLoaded(true);
+        }).catch(error => {
+            setError(error.stack);
+            const href = `/problem`;
+            history.push(href);
+            return;
         });
     }, []);
 
@@ -74,6 +81,27 @@ export const InsightsScreen: React.FunctionComponent = () => {
 
     const nav = getDefaultMenu(history, application.id, environment);
 
+    const routes = [
+        // Insights
+        {
+            path: '/insights/application/:applicationId',
+            breadcrumb: BreadcrumbWithRedirect,
+            props: {
+                url: `${topLevelMatch.url}/overview`,
+                name: 'Insights'
+            } as BreadcrumbWithRedirectProps,
+        },
+        {
+            path: '/insights/application/:applicationId/:environment/overview',
+            breadcrumb: 'Overview'
+        },
+        {
+            path: '/insights/application/:applicationId/:environment/runtime-v1',
+            breadcrumb: 'Runtime Stats'
+        },
+
+    ];
+
     const redirectUrl = generatePath('/insights/application/:applicationId/:environment/overview', {
         applicationId,
         environment,
@@ -83,7 +111,7 @@ export const InsightsScreen: React.FunctionComponent = () => {
         <LayoutWithSidebar navigation={nav}>
             <div id="topNavBar" className="nav flex-container">
                 <div className="left flex-start">
-                    <BreadCrumbContainer />
+                    <BreadCrumbContainer routes={routes} />
                 </div>
 
                 <div className="right item flex-end">

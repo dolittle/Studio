@@ -118,8 +118,10 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
             method: 'GET',
             mode: 'cors'
         });
+
     const jsonResult: HttpResponseApplications2 = await result.json();
     return jsonResult;
+
 }
 
 // getMicroservices by applicationId

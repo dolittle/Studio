@@ -20,48 +20,9 @@ type Props = {
     routes?: BreadcrumbsRoute[]
 };
 export const BreadCrumbContainer: React.FunctionComponent<Props> = (props?) => {
-
     const history = useHistory();
-    const defaultRoutes = [
-        // Insights
-        {
-            path: '/insights/application/:applicationId',
-            breadcrumb: 'Insights'
-        },
-        {
-            path: '/insights/application/:applicationId/:environment/overview',
-            breadcrumb: 'Overview'
-        },
-        {
-            path: '/insights/application/:applicationId/:environment/runtime-v1',
-            breadcrumb: 'Runtime Stats'
-        },
 
-        // Microservices
-        {
-            path: '/microservices/application/:applicationId/:environment',
-            breadcrumb: 'Microservices',
-        },
-        {
-            path: '/microservices/application/:applicationId/:environment/overview',
-            breadcrumb: 'Overview',
-        },
-        {
-            path: '/microservices/application/:applicationId/:environment/create',
-            breadcrumb: 'Create',
-        },
-        {
-            path: '/microservices/application/:applicationId/:environment/edit',
-            breadcrumb: 'Edit',
-        },
-        {
-            path: '/microservices/application/:applicationId/:environment/view',
-            breadcrumb: 'View',
-        }
-    ];
-
-    // eslint-disable-next-line react/prop-types
-    const routes = props?.routes ? props!.routes : defaultRoutes;
+    const routes = props!.routes;
 
     const _breadcrumbs = useBreadcrumbs(routes, { disableDefaults: true });
 

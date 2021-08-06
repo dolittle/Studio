@@ -3,14 +3,20 @@
 
 import React, { useEffect } from 'react';
 import { useHistory, Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
+import { Link, Box } from '@material-ui/core';
+import { useTheme } from '../stores/notifications';
 
 
 export const DieAndRestart: React.FunctionComponent = () => {
-
+    const { lastMessage, lastError, errors } = useTheme();
+    const dump = {
+        lastMessage,
+        lastError,
+    };
     useEffect(() => {
         localStorage.clear();
     }, []);
+
 
     return (
         <>
@@ -20,7 +26,11 @@ export const DieAndRestart: React.FunctionComponent = () => {
             <Link component={RouterLink} to="/applications">
                 Link
             </Link>
-
+            <Box fontFamily="Monospace">
+                <h1>Help us, help you</h1>
+                <p>Take a screenshot of the below and get in touch with P&amp;D</p>
+                <pre>{JSON.stringify(dump, null, '  ')}</pre>
+            </Box>
         </>
     );
 };
