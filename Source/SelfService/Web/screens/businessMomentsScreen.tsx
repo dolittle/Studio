@@ -46,6 +46,13 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
+
+            if (!applicationData?.id) {
+                const href = `/problem`;
+                history.push(href);
+                return;
+            }
+
             // TODO this should be unique
             // TODO also when we have more than one application and more than one environment we should default to something.
             setApplications(applicationsData.applications);

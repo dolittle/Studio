@@ -30,12 +30,13 @@ import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { withRouteApplicationProps } from '../utils/route';
 import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 
-import { getCurrentEnvironment } from '../stores/notifications';
+import { getCurrentEnvironment, useTheme } from '../stores/notifications';
 import { PickEnvironment } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
 
 export const MicroservicesScreen: React.FunctionComponent = () => {
     const history = useHistory();
+    const { setNotification } = useTheme();
     const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('microservices');
     const applicationId = routeApplicationProps.applicationId;
@@ -53,6 +54,13 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
+
+            if (!applicationData?.id) {
+                const href = `/problem`;
+                history.push(href);
+                return;
+            }
+
             // TODO this should be unique
             // TODO also when we have more than one application and more than one environment we should default to something.
             setApplications(applicationsData.applications);
@@ -64,6 +72,9 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
             const microservices = microservicesData.microservices.filter(microservice => microservice.environment === environment);
             mergeMicroservicesFromK8s(microservices);
             setLoaded(true);
+        }).catch((error) => {
+            console.log(error);
+            setNotification('Failed getting data from the server', 'error');
         });
     }, []);
 

@@ -33,6 +33,11 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
             getApplication(applicationId),
         ]).then(values => {
             const applicationData = values[0];
+            if (!applicationData?.id) {
+                const href = `/problem`;
+                history.push(href);
+                return;
+            }
             // TODO this should be unique
             // TODO also when we have more than one application and more than one environment we should default to something.
             setApplication(applicationData);

@@ -24,13 +24,13 @@ import { withRouteApplicationProps } from '../utils/route';
 import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 import { RouteNotFound } from '../components/notfound';
 import { PickEnvironment } from '../components/pickEnvironment';
-import { getCurrentEnvironment } from '../stores/notifications';
+import { getCurrentEnvironment, useTheme } from '../stores/notifications';
 
 
 export const DocumentationScreen: React.FunctionComponent = () => {
     const { pathname } = useLocation();
     const history = useHistory();
-
+    const { setNotification } = useTheme();
     const topLevelMatch = useRouteMatch();
 
     const routeApplicationProps = withRouteApplicationProps('documentation');
@@ -51,21 +51,24 @@ export const DocumentationScreen: React.FunctionComponent = () => {
         Promise.all([
             getApplications(),
             getApplication(applicationId),
-            getMicroservices(applicationId),
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
+            if (!applicationData?.id) {
+                const href = `/problem`;
+                history.push(href);
+                return;
+            }
+
+            console.log('applicationData', applicationData);
             // TODO this should be unique
             // TODO also when we have more than one application and more than one environment we should default to something.
             setApplications(applicationsData.applications);
             setApplication(applicationData);
-            mergeMicroservicesFromGit(applicationData.microservices);
-
-
-            const microservicesData = values[2] as HttpResponseMicroservices;
-            const microservices = microservicesData.microservices.filter(microservice => microservice.environment === environment);
-            mergeMicroservicesFromK8s(microservices);
             setLoaded(true);
+        }).catch((error) => {
+            console.log(error);
+            setNotification('Failed getting data from the server', 'error');
         });
     }, []);
 

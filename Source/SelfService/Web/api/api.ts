@@ -124,6 +124,7 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
 
 // getMicroservices by applicationId
 export async function getMicroservices(applicationId: string): Promise<HttpResponseMicroservices> {
+    // TODO {"message":"open /tmp/dolittle-k8s/508c1745-5f2a-4b4c-b7a5-2fbb1484346d/11b6cf47-5d9f-438f-8116-0d9828654657/application.json: no such file or directory"}
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/microservices`;
 
     const result = await fetch(
@@ -193,4 +194,3 @@ export async function getPodLogs(applicationId: string, podName: string, contain
 
     return jsonResult;
 }
-

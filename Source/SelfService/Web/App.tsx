@@ -22,6 +22,7 @@ import {
     createTheme,
     ThemeProvider,
 } from '@material-ui/core/styles';
+import { DieAndRestart } from './components/dieAndRestart';
 
 const themeDark = createTheme({
     palette: {
@@ -82,6 +83,9 @@ export const App = () => {
                                 <InsightsScreen />
                             </Route>
 
+                            <Route exact path="/problem">
+                                <DieAndRestart />
+                            </Route>
 
                             <RouteNotFound redirectUrl="/applications" auto={true} />
                         </Switch>
