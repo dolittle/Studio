@@ -70,7 +70,7 @@ export async function getLatestBackupLinkByApplication(tenant: string, name: str
 
 export async function getBackupsByApplication(tenant: string, name: string, environment: string): Promise<BackupsForApplication> {
     const url = `${getServerUrlPrefix()}/share/logs/latest/by/app/${tenant}/${name}/${environment}`;
-    console.log(url);
+
     const response = await fetch(
         url,
         {

@@ -3,13 +3,20 @@
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { HttpResponseApplications2 } from '../api/api';
 import { Overview } from './view';
 
-export const MicroserviceViewScreen: React.FunctionComponent = () => {
-    const { applicationId, environment, microserviceId } = useParams() as any;
+type Props = {
+    environment: string
+    application: HttpResponseApplications2
+};
+
+export const MicroserviceViewScreen: React.FunctionComponent<Props> = (props) => {
+
+    const { microserviceId } = useParams() as any;
     return (
         <>
-            <Overview applicationId={applicationId} environment={environment} microserviceId={microserviceId} />
+            <Overview applicationId={props!.application.id} environment={props!.environment} microserviceId={microserviceId} />
         </>
     );
 };

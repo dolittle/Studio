@@ -1,21 +1,22 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 
-import { getMicroservices, HttpResponseMicroservices, MicroserviceInfo, HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplications2 } from '../api/api';
 
 import '../microservice/microservice.scss';
 import { ViewCard } from './viewCard';
 
-import { useReadable, useWritable } from 'use-svelte-store';
-import { microservices, mergeMicroservicesFromK8s } from '../stores/microservice';
+import { useReadable } from 'use-svelte-store';
+import { microservices } from '../stores/microservice';
 
 type Props = {
+    environment: string
     application: HttpResponseApplications2
 };
 
@@ -25,7 +26,8 @@ export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (prop
 
     const history = useHistory();
     const _props = props!;
-    const { applicationId, environment } = useParams() as any;
+    const environment = _props.environment;
+    const applicationId = _props.application.id;
 
     const application = _props.application!;
     const canEdit = application.environments.some(info => info.name === environment && info.automationEnabled);
@@ -69,7 +71,7 @@ export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (prop
                 <div className="serv">
                     <ul>
                         {$microservices.map((ms) => {
-                            return <li key={ms.id}><ViewCard
+                            return <li key={`${environment}-${ms.id}`}><ViewCard
                                 microserviceId={ms.id}
                                 microserviceName={ms.name}
                                 microserviceKind={ms.kind}

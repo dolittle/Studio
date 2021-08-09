@@ -13,6 +13,7 @@ import { Doc as VerifyKubernetesAccess } from './verifyKubernetesAccess';
 import { Doc as AccessContainerRegistry } from './accessContainerRegistry';
 
 type Props = {
+    environment: string
     application: HttpResponseApplications2
 };
 
@@ -20,7 +21,9 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
     const history = useHistory();
     const _props = props!;
     const application = _props.application;
-    const { environment, applicationId } = useParams() as any;
+    const applicationId = application.id;
+    const environment = _props.environment;
+
     const $info = useReadable(info) as any;
     const $isLoaded = useReadable(isLoaded) as boolean;
 

@@ -150,19 +150,19 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
 
             <Switch>
                 <Route exact path="/microservices/application/:applicationId/:environment/overview">
-                    <MicroservicesOverviewScreen application={application} />
+                    <MicroservicesOverviewScreen application={application} environment={environment} />
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/create">
-                    <MicroserviceNewScreen application={application} />
+                    <MicroserviceNewScreen application={application} environment={environment} />
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/edit/:microserviceId">
-                    <MicroserviceEditScreen />
+                    <MicroserviceEditScreen application={application} environment={environment} />
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId">
-                    <MicroserviceViewScreen />
+                    <MicroserviceViewScreen application={application} environment={environment} />
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/pod/view/:podName/logs">

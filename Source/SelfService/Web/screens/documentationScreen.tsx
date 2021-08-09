@@ -2,11 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, Switch, useRouteMatch, useLocation, generatePath } from 'react-router-dom';
+import { Route, useHistory, Switch, useRouteMatch, generatePath } from 'react-router-dom';
 
-import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications, HttpResponseMicroservices, getMicroservices } from '../api/api';
-
-
+import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
 import { EnvironmentChanger } from '../application/environmentChanger';
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
@@ -16,8 +14,6 @@ import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import '../application/applicationScreen.scss';
 import { ApplicationsChanger } from '../application/applicationsChanger';
 
-
-import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { DocumentationContainerScreen } from '../documentation/container';
 import { withRouteApplicationProps } from '../utils/route';
@@ -28,7 +24,6 @@ import { useTheme } from '../stores/notifications';
 
 
 export const DocumentationScreen: React.FunctionComponent = () => {
-    const { pathname } = useLocation();
     const history = useHistory();
     const { setNotification, currentEnvironment } = useTheme();
     const topLevelMatch = useRouteMatch();
@@ -40,12 +35,6 @@ export const DocumentationScreen: React.FunctionComponent = () => {
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
-
-    // Little hack to force redirect
-    //if (['', '/', uriWithAppPrefix('/')].includes(pathname)) {
-    //    window.location.href = uriWithAppPrefix('/');
-    //    return null;
-    //}
 
     useEffect(() => {
         Promise.all([
@@ -60,7 +49,6 @@ export const DocumentationScreen: React.FunctionComponent = () => {
                 return;
             }
 
-            console.log('applicationData', applicationData);
             // TODO this should be unique
             // TODO also when we have more than one application and more than one environment we should default to something.
             setApplications(applicationsData.applications);
@@ -140,7 +128,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
 
             <Switch>
                 <Route path="/documentation/application/:applicationId/:environment">
-                    <DocumentationContainerScreen application={application} />
+                    <DocumentationContainerScreen application={application} environment={environment} />
                 </Route>
                 <RouteNotFound redirectUrl={redirectUrl} />
             </Switch>

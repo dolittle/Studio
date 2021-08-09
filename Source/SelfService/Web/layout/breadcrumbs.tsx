@@ -34,7 +34,6 @@ export const BreadCrumbContainer: React.FunctionComponent<Props> = (props?) => {
             text: breadcrumb, key: match.url
         };
     }) as BreadcrumbItem[];
-    console.log(data);
 
     const items = data.map((_item, i) => {
         const a = [

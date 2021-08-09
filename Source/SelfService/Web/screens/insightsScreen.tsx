@@ -23,7 +23,7 @@ export const InsightsScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { setError, currentEnvironment } = useTheme();
     const topLevelMatch = useRouteMatch();
-    console.log(topLevelMatch);
+
     const routeApplicationProps = withRouteApplicationProps('insights');
     const applicationId = routeApplicationProps.applicationId;
     const environment = currentEnvironment;
