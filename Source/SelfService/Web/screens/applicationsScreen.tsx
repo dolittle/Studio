@@ -59,7 +59,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
                 history.push(href);
             }}
                 underline>
-                {application.name} {application.environment}
+                {application.name.toUpperCase()} - {application.environment}
             </Link>
         );
     };
