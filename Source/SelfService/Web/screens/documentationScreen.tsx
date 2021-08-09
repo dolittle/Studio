@@ -19,8 +19,9 @@ import { DocumentationContainerScreen } from '../documentation/container';
 import { withRouteApplicationProps } from '../utils/route';
 import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 import { RouteNotFound } from '../components/notfound';
-import { PickEnvironment } from '../components/pickEnvironment';
+import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
 import { useGlobalContext } from '../stores/notifications';
+
 
 
 export const DocumentationScreen: React.FunctionComponent = () => {
@@ -30,7 +31,6 @@ export const DocumentationScreen: React.FunctionComponent = () => {
 
     const routeApplicationProps = withRouteApplicationProps('documentation');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = currentEnvironment;
 
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
@@ -72,23 +72,24 @@ export const DocumentationScreen: React.FunctionComponent = () => {
         );
     }
 
-    if (environment === '') {
+    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentEnvironment)) {
         return (
             <PickEnvironment
+                applications={applications}
                 application={application}
-                redirectTo={'/microservices/application/:applicationId/:environment/overview'}
+                redirectTo={'/documentation/application/:applicationId/:environment/overview'}
                 openModal={true} />
         );
     }
 
-    const nav = getDefaultMenu(history, application.id, environment);
+    const nav = getDefaultMenu(history, application.id, currentEnvironment);
 
     const routes = [
         {
             path: '/documentation/application/:applicationId/:environment',
             breadcrumb: BreadcrumbWithRedirect,
             props: {
-                url: `${topLevelMatch.url}/${environment}/overview`,
+                url: `${topLevelMatch.url}/${currentEnvironment}/overview`,
                 name: 'Documentation'
             } as BreadcrumbWithRedirectProps,
         },
@@ -108,7 +109,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
 
     const redirectUrl = generatePath('/documentation/application/:applicationId/:environment/overview', {
         applicationId,
-        environment,
+        environment: currentEnvironment,
     });
 
     return (
@@ -120,7 +121,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
 
                 <Route path="/documentation/application/:applicationId/:environment">
                     <div className="right item flex-end">
-                        <EnvironmentChanger application={application} environment={environment} />
+                        <EnvironmentChanger application={application} environment={currentEnvironment} />
                         <ApplicationsChanger applications={applications} current={applicationId} />
                     </div>
                 </Route>
@@ -128,7 +129,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
 
             <Switch>
                 <Route path="/documentation/application/:applicationId/:environment">
-                    <DocumentationContainerScreen application={application} environment={environment} />
+                    <DocumentationContainerScreen application={application} environment={currentEnvironment} />
                 </Route>
                 <RouteNotFound redirectUrl={redirectUrl} />
             </Switch>

@@ -118,7 +118,7 @@ export const ListView: React.FunctionComponent<Props> = (props) => {
                                     };
 
                                     const share: BackupLink = await getLink(input);
-                                    navigator.clipboard.writeText(share.url);
+                                    await navigator.clipboard.writeText(share.url);
                                     setNotification('The download link is now in your clipboard', 'info');
                                 }} /></TableCell>
                             </TableRow>

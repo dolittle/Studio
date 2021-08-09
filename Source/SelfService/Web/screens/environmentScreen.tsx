@@ -4,46 +4,34 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useHistory, useRouteMatch, Switch, generatePath } from 'react-router-dom';
 
-import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications, HttpResponseMicroservices, getMicroservices } from '../api/api';
+import {
+    getApplication,
+    HttpResponseApplications2
+} from '../api/api';
 
-import { MicroservicesOverviewScreen } from '../microservice/overview';
-import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
-import { MicroserviceEditScreen } from '../microservice/microserviceEditScreen';
-import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';
-
-import { PodViewScreen } from './podViewScreen';
-import { EnvironmentChanger } from '../application/environmentChanger';
-import { LayoutWithSidebar, getDefaultMenu } from '../layout/layoutWithSidebar';
-
-
-
-// I wonder if scss is scoped like svelte. I hope so!
-// Not scoped like svelte
-import '../application/applicationScreen.scss';
-import { ApplicationsChanger } from '../application/applicationsChanger';
-
-
-import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
+import {
+    LayoutWithSidebar,
+    getDefaultMenu
+} from '../layout/layoutWithSidebar';
 
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 
 import { withRouteApplicationProps } from '../utils/route';
-import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
+import {
+    BreadcrumbWithRedirect,
+    BreadcrumbWithRedirectProps
+} from '../components/breadCrumbWithRedirect';
 
 import { useGlobalContext } from '../stores/notifications';
-import { PickEnvironment } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
 import { Create } from '../environment/create';
 
-
-
 export const EnvironmentScreen: React.FunctionComponent = () => {
     const history = useHistory();
-    const { currentEnvironment } = useGlobalContext();
     const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('environment');
+    const { currentEnvironment } = useGlobalContext();
     const applicationId = routeApplicationProps.applicationId;
-    const environment = currentEnvironment;
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [loaded, setLoaded] = useState(false);
 
@@ -69,16 +57,7 @@ export const EnvironmentScreen: React.FunctionComponent = () => {
         );
     }
 
-    if (environment === '') {
-        return (
-            <PickEnvironment
-                application={application}
-                redirectTo={'/environment/application/:applicationId/create'}
-                openModal={true} />
-        );
-    }
-
-    const nav = getDefaultMenu(history, applicationId, environment);
+    const nav = getDefaultMenu(history, applicationId, currentEnvironment);
 
     const routes = [
         {

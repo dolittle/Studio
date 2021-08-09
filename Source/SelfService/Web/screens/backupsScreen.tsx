@@ -24,8 +24,6 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
     const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('backups');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = currentEnvironment;
-
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [loaded, setLoaded] = useState(false);
 
@@ -39,8 +37,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
                 history.push(href);
                 return;
             }
-            // TODO this should be unique
-            // TODO also when we have more than one application and more than one environment we should default to something.
+
             setApplication(applicationData);
             setLoaded(true);
         });
@@ -58,7 +55,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
         );
     }
     const environments = application.environments;
-    const nav = getDefaultMenu(history, application.id, environment);
+    const nav = getDefaultMenu(history, application.id, currentEnvironment);
 
     const routes = [
         {
@@ -76,7 +73,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
         },
         {
             path: '/backups/application/:applicationId/:environment/list',
-            breadcrumb: environment,
+            breadcrumb: currentEnvironment,
         }
     ];
     return (
@@ -100,7 +97,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
                         </div>
                     </Route>
                     <Route exact path="/backups/application/:applicationId/:environment/list">
-                        <ListView application={application} environment={environment} />
+                        <ListView application={application} environment={currentEnvironment} />
                     </Route>
                     <Route>
                         <h1>Something has gone wrong: backups</h1>

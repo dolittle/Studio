@@ -23,7 +23,7 @@ import { BusinessMomentsContainerScreen } from '../businessMoments/container';
 
 
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
-import { PickEnvironment } from '../components/pickEnvironment';
+import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
 import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { useGlobalContext } from '../stores/notifications';
@@ -35,7 +35,6 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
     const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('business-moments');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = currentEnvironment;
 
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
@@ -56,15 +55,12 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
                 return;
             }
 
-            // TODO this should be unique
-            // TODO also when we have more than one application and more than one environment we should default to something.
             setApplications(applicationsData.applications);
             setApplication(applicationData);
             mergeMicroservicesFromGit(applicationData.microservices);
 
-
             const microservicesData = values[2] as HttpResponseMicroservices;
-            const microservices = microservicesData.microservices.filter(microservice => microservice.environment === environment);
+            const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
             mergeMicroservicesFromK8s(microservices);
             setLoaded(true);
         });
@@ -82,23 +78,24 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
         );
     }
 
-    if (environment === '') {
+    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentEnvironment)) {
         return (
             <PickEnvironment
+                applications={applications}
                 application={application}
                 redirectTo={'/business-moments/application/:applicationId/:environment/overview'}
                 openModal={true} />
         );
     }
 
-    const nav = getDefaultMenu(history, application.id, environment);
+    const nav = getDefaultMenu(history, application.id, currentEnvironment);
 
     const routes = [
         {
             path: '/business-moments/application/:applicationId/:environment',
             breadcrumb: BreadcrumbWithRedirect,
             props: {
-                url: `${topLevelMatch.url}/${environment}/overview`,
+                url: `${topLevelMatch.url}/${currentEnvironment}/overview`,
                 name: 'Business Moments'
             } as BreadcrumbWithRedirectProps,
         },
@@ -115,7 +112,7 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
 
     const redirectUrl = generatePath('/business-moments/application/:applicationId/:environment/overview', {
         applicationId,
-        environment,
+        environment: currentEnvironment,
     });
 
     return (
@@ -126,14 +123,14 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
                 </div>
 
                 <div className="right item flex-end">
-                    <EnvironmentChanger application={application} environment={environment} />
+                    <EnvironmentChanger application={application} environment={currentEnvironment} />
                     <ApplicationsChanger applications={applications} current={applicationId} />
                 </div>
             </div>
 
             <Switch>
                 <Route path="/business-moments/application/:applicationId/:environment">
-                    <BusinessMomentsContainerScreen application={application} environment={environment} />
+                    <BusinessMomentsContainerScreen application={application} environment={currentEnvironment} />
                 </Route>
 
                 <RouteNotFound redirectUrl={redirectUrl} />

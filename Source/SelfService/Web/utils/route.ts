@@ -9,16 +9,16 @@ export type RouteApplicationProps = {
 };
 
 export const withRouteApplicationProps = (prefix: string): RouteApplicationProps => {
-    const match = useRouteMatch(`/${prefix}/application/:applicationId`);
+    let match = useRouteMatch(`/${prefix}/application/:applicationId`);
     const applicationId = (match?.params as RouteApplicationProps)?.applicationId ? (match?.params as RouteApplicationProps)?.applicationId : '';
 
     // TODO I think this is a hot mess
-    //match = useRouteMatch(`/${prefix}/application/:applicationId/:environment`);
-    //const environment = (match?.params as RouteApplicationProps)?.environment ? (match?.params as RouteApplicationProps)?.environment : '';
+    match = useRouteMatch(`/${prefix}/application/:applicationId/:environment`);
+    const environment = (match?.params as RouteApplicationProps)?.environment ? (match?.params as RouteApplicationProps)?.environment : '';
 
     //const currentEnvironment = getCurrentEnvironment();
     return {
         applicationId,
-        environment: ''
+        environment,
     } as RouteApplicationProps;
 };

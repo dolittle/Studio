@@ -3,7 +3,7 @@
 import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import { useHistory, generatePath } from 'react-router-dom';
+import { useHistory, generatePath, useParams } from 'react-router-dom';
 import { HttpResponseApplications2, ShortInfoWithEnvironment } from '../api/api';
 import { List } from '@fluentui/react/lib/List';
 import { useGlobalContext } from '../stores/notifications';
@@ -11,6 +11,7 @@ import { useGlobalContext } from '../stores/notifications';
 import {
     Link,
 } from '@fluentui/react';
+import { RouteApplicationProps } from '../utils/route';
 
 function rand() {
     return Math.round(Math.random() * 20) - 10;
@@ -41,9 +42,32 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type Props = {
+    applications: ShortInfoWithEnvironment[]
     application: HttpResponseApplications2
     redirectTo: string
     openModal: boolean
+};
+
+// confirmEnvironmentFromUri if empty = no real
+// Try this without having currentEnvironment in the
+//export const isEnvironmentValidFromUri = (application: HttpResponseApplications2, currentEnvironment: string, environment: string, setCurrentEnvironment: ((environment: string) => void)): boolean => {
+export const isEnvironmentValidFromUri = (routeProps: RouteApplicationProps, applications: ShortInfoWithEnvironment[], currentEnvironment: string): boolean => {
+    console.log('currentEnvironment', currentEnvironment);
+    console.log('routeProps', routeProps);
+    console.log('applications', applications);
+
+    const _environment = routeProps.environment;
+    // TODO Add in currentApplicationId (maybe)
+    if (currentEnvironment !== _environment) {
+        return false;
+    }
+
+
+    const exists = applications.some((info) => {
+        return routeProps.applicationId === info.id && info.environment === _environment;
+    });
+
+    return exists;
 };
 
 export const PickEnvironment: React.FunctionComponent<Props> = (props) => {
@@ -65,13 +89,8 @@ export const PickEnvironment: React.FunctionComponent<Props> = (props) => {
         setOpen(false);
     };
 
-    const environments: ShortInfoWithEnvironment[] = application.environments.map((environment) => {
-        return {
-            id: application.id,
-            name: application.name,
-            environment: environment.name,
-        } as ShortInfoWithEnvironment;
-    });
+    const environments: ShortInfoWithEnvironment[] = _props.applications;
+
 
     const onRenderCell = (item?: ShortInfoWithEnvironment, index?: number | undefined): JSX.Element => {
         const application = item!;

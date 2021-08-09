@@ -1,19 +1,36 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
-import { Route, useHistory, useRouteMatch, Switch, generatePath } from 'react-router-dom';
-
-import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications, HttpResponseMicroservices, getMicroservices } from '../api/api';
-
+import React, {
+    useEffect,
+    useState
+} from 'react';
+import {
+    Route,
+    useHistory,
+    useRouteMatch,
+    Switch,
+    generatePath
+} from 'react-router-dom';
+import {
+    getApplication,
+    getApplications,
+    HttpResponseApplications2,
+    ShortInfoWithEnvironment,
+    HttpResponseApplications,
+    HttpResponseMicroservices,
+    getMicroservices
+} from '../api/api';
 import { MicroservicesOverviewScreen } from '../microservice/overview';
 import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
 import { MicroserviceEditScreen } from '../microservice/microserviceEditScreen';
 import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';
-
 import { PodViewScreen } from './podViewScreen';
 import { EnvironmentChanger } from '../application/environmentChanger';
-import { LayoutWithSidebar, getDefaultMenu } from '../layout/layoutWithSidebar';
+import {
+    LayoutWithSidebar,
+    getDefaultMenu
+} from '../layout/layoutWithSidebar';
 
 
 
@@ -21,17 +38,23 @@ import { LayoutWithSidebar, getDefaultMenu } from '../layout/layoutWithSidebar';
 // Not scoped like svelte
 import '../application/applicationScreen.scss';
 import { ApplicationsChanger } from '../application/applicationsChanger';
-
-
-import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
-
+import {
+    mergeMicroservicesFromGit,
+    mergeMicroservicesFromK8s
+} from '../stores/microservice';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 
 import { withRouteApplicationProps } from '../utils/route';
-import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
+import {
+    BreadcrumbWithRedirect,
+    BreadcrumbWithRedirectProps
+} from '../components/breadCrumbWithRedirect';
 
 import { useGlobalContext } from '../stores/notifications';
-import { PickEnvironment } from '../components/pickEnvironment';
+import {
+    isEnvironmentValidFromUri,
+    PickEnvironment
+} from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
 
 export const MicroservicesScreen: React.FunctionComponent = () => {
@@ -40,7 +63,6 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
     const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('microservices');
     const applicationId = routeApplicationProps.applicationId;
-    const environment = currentEnvironment;
 
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
@@ -61,15 +83,13 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
                 return;
             }
 
-            // TODO this should be unique
-            // TODO also when we have more than one application and more than one environment we should default to something.
             setApplications(applicationsData.applications);
             setApplication(applicationData);
             mergeMicroservicesFromGit(applicationData.microservices);
 
 
             const microservicesData = values[2] as HttpResponseMicroservices;
-            const microservices = microservicesData.microservices.filter(microservice => microservice.environment === environment);
+            const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
             mergeMicroservicesFromK8s(microservices);
             setLoaded(true);
         }).catch((error) => {
@@ -90,16 +110,17 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
         );
     }
 
-    if (environment === '') {
+    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentEnvironment)) {
         return (
             <PickEnvironment
+                applications={applications}
                 application={application}
                 redirectTo={'/microservices/application/:applicationId/:environment/overview'}
                 openModal={true} />
         );
     }
 
-    const nav = getDefaultMenu(history, applicationId, environment);
+    const nav = getDefaultMenu(history, applicationId, currentEnvironment);
 
 
     const routes = [
@@ -107,7 +128,7 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
             path: '/microservices/application/:applicationId/:environment',
             breadcrumb: BreadcrumbWithRedirect,
             props: {
-                url: `${topLevelMatch.url}/${environment}/overview`,
+                url: `${topLevelMatch.url}/${currentEnvironment}/overview`,
                 name: 'Microservices'
             } as BreadcrumbWithRedirectProps,
         },
@@ -132,7 +153,7 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
 
     const redirectUrl = generatePath('/microservices/application/:applicationId/:environment/overview', {
         applicationId,
-        environment,
+        environment: currentEnvironment,
     });
 
     return (
@@ -143,26 +164,26 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
                 </div>
 
                 <div className="right item flex-end">
-                    <EnvironmentChanger application={application} environment={environment} />
+                    <EnvironmentChanger application={application} environment={currentEnvironment} />
                     <ApplicationsChanger applications={applications} current={applicationId} />
                 </div>
             </div>
 
             <Switch>
                 <Route exact path="/microservices/application/:applicationId/:environment/overview">
-                    <MicroservicesOverviewScreen application={application} environment={environment} />
+                    <MicroservicesOverviewScreen application={application} environment={currentEnvironment} />
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/create">
-                    <MicroserviceNewScreen application={application} environment={environment} />
+                    <MicroserviceNewScreen application={application} environment={currentEnvironment} />
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/edit/:microserviceId">
-                    <MicroserviceEditScreen application={application} environment={environment} />
+                    <MicroserviceEditScreen application={application} environment={currentEnvironment} />
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId">
-                    <MicroserviceViewScreen application={application} environment={environment} />
+                    <MicroserviceViewScreen application={application} environment={currentEnvironment} />
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/pod/view/:podName/logs">

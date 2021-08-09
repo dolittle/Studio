@@ -74,6 +74,7 @@ export const InsightsScreen: React.FunctionComponent = () => {
     if (environment === '') {
         return (
             <PickEnvironment
+                applications={applications}
                 application={application}
                 redirectTo={'/insights/application/:applicationId/:environment/overview'}
                 openModal={true} />

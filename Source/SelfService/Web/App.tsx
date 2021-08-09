@@ -41,6 +41,11 @@ export const App = () => {
     const { pathname } = useLocation();
     // Little hack to force redirect
     if (['', '/', uriWithAppPrefix('/')].includes(pathname)) {
+        // It is possible to know that the user just picked a tenant
+        // We could signal this to the applications page
+        // This could then redirect, if the
+        // We could offer redirect back to last page?
+        // Referer https://dolittle.studio/.auth/select-tenant?login_challenge=c84329905dd7402bb45377dc8e1006c9
         window.location.href = uriWithAppPrefix('/applications');
         return null;
     }
@@ -68,19 +73,19 @@ export const App = () => {
                                 <EnvironmentScreen />
                             </Route>
 
-                            <Route path="/microservices/application/:applicationId">
+                            <Route path="/microservices/application/:applicationId/:environment">
                                 <MicroservicesScreen />
                             </Route>
 
-                            <Route path="/business-moments/application/:applicationId">
+                            <Route path="/business-moments/application/:applicationId/:environment">
                                 <BusinessMomentsScreen />
                             </Route>
 
-                            <Route path="/documentation/application/:applicationId">
+                            <Route path="/documentation/application/:applicationId/:environment">
                                 <DocumentationScreen />
                             </Route>
 
-                            <Route path="/insights/application/:applicationId">
+                            <Route path="/insights/application/:applicationId/:environment">
                                 <InsightsScreen />
                             </Route>
 
