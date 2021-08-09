@@ -26,12 +26,12 @@ import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { PickEnvironment } from '../components/pickEnvironment';
 import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
-import { useTheme } from '../stores/notifications';
+import { useGlobalContext } from '../stores/notifications';
 import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 
 export const BusinessMomentsScreen: React.FunctionComponent = () => {
     const history = useHistory();
-    const { currentEnvironment } = useTheme();
+    const { currentEnvironment } = useGlobalContext();
     const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('business-moments');
     const applicationId = routeApplicationProps.applicationId;

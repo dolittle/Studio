@@ -4,11 +4,11 @@
 import React, { useEffect } from 'react';
 import { useHistory, Link as RouterLink } from 'react-router-dom';
 import { Link, Box } from '@material-ui/core';
-import { useTheme } from '../stores/notifications';
+import { useGlobalContext } from '../stores/notifications';
 
 
 export const DieAndRestart: React.FunctionComponent = () => {
-    const { lastMessage, lastError, errors } = useTheme();
+    const { lastMessage, lastError, errors } = useGlobalContext();
     const dump = {
         lastMessage,
         lastError,

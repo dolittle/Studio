@@ -4,10 +4,10 @@
 import React from 'react';
 import { Alert, Color } from '@material-ui/lab';
 
-import { useTheme } from '../stores/notifications';
+import { useGlobalContext } from '../stores/notifications';
 
 export const AlertBox: React.FunctionComponent = () => {
-    const { lastMessage, clearNotification } = useTheme();
+    const { lastMessage, clearNotification } = useGlobalContext();
     const severity = lastMessage.level as Color;
     const dismiss = () => {
         window.clearTimeout(timer);

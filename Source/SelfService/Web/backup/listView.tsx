@@ -17,7 +17,7 @@ import { HttpResponseApplications2 } from '../api/api';
 
 
 import { BackupLink, getLink, BackupsForApplication, getBackupsByApplication, BackupLinkShareInput } from '../api/backups';
-import { useTheme } from '../stores/notifications';
+import { useGlobalContext } from '../stores/notifications';
 
 type BackupsDetailsList = {
     tenant: string;
@@ -37,7 +37,7 @@ export const ListView: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
-    const { setNotification } = useTheme();
+    const { setNotification } = useGlobalContext();
 
     const [data, setData] = useState({} as BackupsForApplication);
     const [loaded, setLoaded] = useState(false);

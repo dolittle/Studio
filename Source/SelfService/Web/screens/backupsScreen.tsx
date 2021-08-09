@@ -12,7 +12,7 @@ import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { withRouteApplicationProps } from '../utils/route';
 import { BreadcrumbWithRedirectProps, BreadcrumbWithRedirect } from '../components/breadCrumbWithRedirect';
 import { ListView } from '../backup/listView';
-import { useTheme } from '../stores/notifications';
+import { useGlobalContext } from '../stores/notifications';
 
 type Props = {
     application?: HttpResponseApplications2
@@ -20,7 +20,7 @@ type Props = {
 
 export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
-    const { currentEnvironment } = useTheme();
+    const { currentEnvironment } = useGlobalContext();
     const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('backups');
     const applicationId = routeApplicationProps.applicationId;

@@ -143,4 +143,4 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
     );
 };
 
-export const useTheme = () => useContext(GlobalContext);
+export const useGlobalContext = () => useContext(GlobalContext);

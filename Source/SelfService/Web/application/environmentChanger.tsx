@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { HttpResponseApplications2 } from '../api/api';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
-import { useTheme } from '../stores/notifications';
+import { useGlobalContext } from '../stores/notifications';
 
 type Props = {
     application: HttpResponseApplications2
@@ -17,7 +17,7 @@ type Props = {
 
 export const EnvironmentChanger: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
-    const { setCurrentEnvironment } = useTheme();
+    const { setCurrentEnvironment } = useGlobalContext();
     const _props = props!;
     const environment = _props.environment;
     const application = _props.application!;

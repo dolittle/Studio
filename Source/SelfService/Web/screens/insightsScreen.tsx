@@ -15,13 +15,13 @@ import { PickEnvironment } from '../components/pickEnvironment';
 import { InsightsContainerScreen } from '../insights/container';
 import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
-import { useTheme } from '../stores/notifications';
+import { useGlobalContext } from '../stores/notifications';
 import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 
 
 export const InsightsScreen: React.FunctionComponent = () => {
     const history = useHistory();
-    const { setError, currentEnvironment } = useTheme();
+    const { setError, currentEnvironment } = useGlobalContext();
     const topLevelMatch = useRouteMatch();
 
     const routeApplicationProps = withRouteApplicationProps('insights');

@@ -9,7 +9,7 @@ import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Label } from '@fluentui/react/lib/Label';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { HttpInputApplicationEnvironment, HttpResponseApplications2 } from '../api/api';
-import { useTheme } from '../stores/notifications';
+import { useGlobalContext } from '../stores/notifications';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
@@ -20,7 +20,7 @@ type Props = {
 
 export const Create: React.FunctionComponent<Props> = (props) => {
     // TODO Get from application
-    const { setNotification } = useTheme();
+    const { setNotification } = useGlobalContext();
     const tenantId = 'TODO';
     const { applicationId } = useParams() as any;
 

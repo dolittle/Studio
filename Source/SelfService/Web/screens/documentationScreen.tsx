@@ -20,12 +20,12 @@ import { withRouteApplicationProps } from '../utils/route';
 import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 import { RouteNotFound } from '../components/notfound';
 import { PickEnvironment } from '../components/pickEnvironment';
-import { useTheme } from '../stores/notifications';
+import { useGlobalContext } from '../stores/notifications';
 
 
 export const DocumentationScreen: React.FunctionComponent = () => {
     const history = useHistory();
-    const { setNotification, currentEnvironment } = useTheme();
+    const { setNotification, currentEnvironment } = useGlobalContext();
     const topLevelMatch = useRouteMatch();
 
     const routeApplicationProps = withRouteApplicationProps('documentation');

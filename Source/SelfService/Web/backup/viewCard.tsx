@@ -15,7 +15,7 @@ import { mergeStyles } from '@fluentui/react/lib/Styling';
 import { HttpResponseApplications2 } from '../api/api';
 import { cardStyles, commandTileClass, buttonStyles } from '../theme/viewCard';
 import { getLatestBackupLinkByApplication } from '../api/backups';
-import { useTheme } from '../stores/notifications';
+import { useGlobalContext } from '../stores/notifications';
 
 
 type Props = {
@@ -28,7 +28,7 @@ const conversationTileClass = mergeStyles({ height: 182 });
 
 export const ViewCard: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
-    const { setCurrentEnvironment, setCurrentApplicationId } = useTheme();
+    const { setCurrentEnvironment, setCurrentApplicationId } = useGlobalContext();
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
