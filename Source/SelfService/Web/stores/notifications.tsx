@@ -50,15 +50,26 @@ export const GlobalContext = createContext<GlobalContextType>({
     currentApplicationId: '',
 });
 
+// getFromLocalStorage a wrapper to protect if the data is not there or not parsable
+const getFromLocalStorage = (key: string, defaultValue: any): any => {
+    try {
+        return localStorage.hasOwnProperty(key) ? JSON.parse(localStorage.getItem(key)!) : defaultValue;
+    } catch (e) {
+        return defaultValue;
+    }
+};
 
+const saveToLocalStorage = (key: string, newValue: any): any => {
+    localStorage.setItem(key, JSON.stringify(newValue));
+};
 
 // eslint-disable-next-line react/prop-types
 export const GlobalContextProvider: React.FunctionComponent = ({ children }) => {
     const location = useLocation();
-    const initErrors = localStorage.getItem('errors') ? JSON.parse(localStorage.getItem('errors')!) : [];
-    // TODO not sure this is in use
-    const initCurrentApplicationId = localStorage.getItem('currentApplicationId') ? JSON.parse(localStorage.getItem('currentApplicationId')!) : '';
-    const initCurrentEnvironment = localStorage.getItem('currentEnvironment') ? JSON.parse(localStorage.getItem('currentEnvironment')!) : '';
+
+    const initErrors = getFromLocalStorage('errors', []);
+    const initCurrentApplicationId = getFromLocalStorage('currentApplicationId', '');
+    const initCurrentEnvironment = getFromLocalStorage('currentEnvironment', '');
 
     const [errors, setErrors] = useState(initErrors as any[]);
     const [messages, setMessages] = useState([] as any[]);
@@ -82,7 +93,7 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
         _errors.unshift(record);
         setErrors(_errors);
         setLastError(record);
-        localStorage.setItem('errors', JSON.stringify(_errors));
+        saveToLocalStorage('errors', _errors);
     };
 
 
@@ -98,7 +109,7 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
     //};
 
     const setCurrentApplicationId = (newApplicationId) => {
-        localStorage.setItem('currentApplicationId', JSON.stringify(newApplicationId));
+        saveToLocalStorage('currentApplicationId', newApplicationId);
         _setCurrentApplicationId(newApplicationId);
     };
 
@@ -108,7 +119,7 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
     //};
 
     const setCurrentEnvironment = (newEnvironment) => {
-        localStorage.setItem('currentEnvironment', JSON.stringify(newEnvironment));
+        saveToLocalStorage('currentEnvironment', newEnvironment);
         _setCurrentEnvironment(newEnvironment);
     };
 
