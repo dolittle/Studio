@@ -1,20 +1,26 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 
 import { Label } from '@fluentui/react/lib/Label';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { saveEnvironment, HttpInputApplicationEnvironment } from '../api/api';
+import { HttpInputApplicationEnvironment, HttpResponseApplications2 } from '../api/api';
+import { useGlobalContext } from '../stores/notifications';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
-export const EnvironmentNewScreen: React.FunctionComponent = () => {
+type Props = {
+    application: HttpResponseApplications2
+};
+
+export const Create: React.FunctionComponent<Props> = (props) => {
     // TODO Get from application
+    const { setNotification } = useGlobalContext();
     const tenantId = 'TODO';
     const { applicationId } = useParams() as any;
 
@@ -27,7 +33,11 @@ export const EnvironmentNewScreen: React.FunctionComponent = () => {
     const [environment, setEnvironment] = useState(fromStore.environment);
     const [domainPrefix, setDomainPrefix] = useState(fromStore.domainPrefix);
     const [domainSuffix, setDomainSuffix] = useState(fromStore.domainSuffix);
+    // Super ugly hack
 
+    useEffect(() => {
+        setNotification('TODO: Create environment', 'info');
+    }, []);
     return (
         <>
             <h1>Environment New Screen</h1>
@@ -70,7 +80,7 @@ export const EnvironmentNewScreen: React.FunctionComponent = () => {
                     // TODO Check if environment exists
                     console.log('create environment');
                     console.log(input);
-                    saveEnvironment(input);
+                    setNotification('TODO: Create environment', 'info');
                 })} />
 
             </Stack>

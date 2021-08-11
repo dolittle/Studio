@@ -19,12 +19,14 @@ import { HttpResponseApplications2 } from '../api/api';
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
+    environment: string
     application: HttpResponseApplications2
 };
 
 export const Create: React.FunctionComponent<Props | undefined> = (props) => {
-    const { environment } = useParams() as any;
+
     const _props = props!;
+    const environment = _props.environment;
     const [microserviceTypeState, setMicroserviceTypeState] = React.useState('');
     const microserviceTypes: IDropdownOption[] = [
         { key: 'dolittle-microservice', text: 'Default Microservice' },

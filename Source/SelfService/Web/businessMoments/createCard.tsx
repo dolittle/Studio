@@ -83,11 +83,11 @@ export const CreateCard: React.FunctionComponent<Props> = (props) => {
                 let href = '';
                 switch (picked) {
                     case 'new':
-                        href = `/application/${applicationId}/${environment}/microservice/create`;
+                        href = `/microservices/application/${applicationId}/${environment}/create`;
                         history.push(href);
                         return;
                     case 'existing':
-                        href = `/application/${applicationId}/${environment}/business-moments/editor/new/microservice/${adaptor.id}`;
+                        href = `/business-moments/application/${applicationId}/${environment}/editor/new/microservice/${adaptor.id}`;
                         history.push(href);
                         return;
                     default:

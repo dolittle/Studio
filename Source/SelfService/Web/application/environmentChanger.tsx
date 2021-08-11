@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { HttpResponseApplications2 } from '../api/api';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
+import { useGlobalContext } from '../stores/notifications';
 
 type Props = {
     application: HttpResponseApplications2
@@ -16,6 +17,7 @@ type Props = {
 
 export const EnvironmentChanger: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
+    const { setCurrentEnvironment } = useGlobalContext();
     const _props = props!;
     const environment = _props.environment;
     const application = _props.application!;
@@ -33,10 +35,13 @@ export const EnvironmentChanger: React.FunctionComponent<Props> = (props) => {
         }
 
         if (newEnvironment === 'newEnvironment') {
-            const href = `/application/${application.id}/${environment}/environment/create`;
+            const href = `/environment/application/${application.id}/create`;
             history.push(href);
             return;
         }
+        setCurrentEnvironment(newEnvironment);
+
+
 
         // TODO change based on the url
         const parts = window.location.pathname.split(`/${environment}/`);

@@ -12,8 +12,10 @@ import { Modal, DefaultButton } from '@fluentui/react';
 import { ViewCard } from './viewCard';
 import { HttpResponseApplications2 } from '../api/api';
 import { MicroserviceBusinessMomentAdaptor, HttpResponseBusinessMoments } from '../api/index';
+import { withRouteApplicationProps } from '../utils/route';
 
 type Props = {
+    environment: string
     application: HttpResponseApplications2
     businessMoments: HttpResponseBusinessMoments
     microservices: any[]
@@ -22,21 +24,25 @@ type Props = {
 export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
+    const routeApplicationProps = withRouteApplicationProps('business-moments');
+    const applicationId = routeApplicationProps.applicationId;
+    const environment = _props.environment;
+
     const $microservices = _props.microservices;
     const $businessMoments = _props.businessMoments;
-    const { environment, applicationId } = useParams() as any;
+
     const canEdit = application.environments.some(info => info.name === environment && info.automationEnabled);
     const [isModalOpen, { setTrue: showModal, setFalse: hideModal }] = useBoolean(false);
 
 
     const microservicesGit: MicroserviceBusinessMomentAdaptor[] = $microservices.filter(storeItem => {
         if (storeItem.edit === {}) {
-            console.log('edit is empty object');
+            console.error('edit is empty object');
             return false;
         }
 
         if (!storeItem.edit.kind) {
-            console.error('kind not set issue');
+            //console.error('kind not set issue');
             return false;
         }
 

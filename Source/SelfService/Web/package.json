@@ -15,11 +15,17 @@
         "ci": "yarn clean && yarn lint:ci && yarn build"
     },
     "dependencies": {
+        "@material-ui/core": "^4.12.3",
+        "@material-ui/icons": "^4.11.2",
+        "@material-ui/lab": "^4.0.0-alpha.60",
+        "@material-ui/styles": "^4.11.4",
         "@monaco-editor/react": "^4.1.3",
         "@shared/styles": "1.0.0",
         "@shared/web": "1.0.0",
         "react-markdown": "^6.0.2",
-        "remark-gfm": "^1.0.0"
+        "remark-gfm": "^1.0.0",
+        "typescript": "^4.2.4",
+        "use-react-router-breadcrumbs": "^2.0.2"
     },
     "devDependencies": {
         "use-svelte-store": "^1.3.2"

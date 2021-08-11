@@ -1,0 +1,73 @@
+{
+    "applicationID": "ac77db60-e0ef-48c2-943c-a64c641acfd7",
+    "environment": "prod",
+    "eventLogCounts": {
+        "policy-admin_prod_eventstore": 3154,
+        "chris_prod_eventstore": 0
+    },
+    "latestEvents": {
+        "policy-admin_prod_eventstore": {
+            "Row": "3153",
+            "EventTypeId": "7d3fd898-81f4-4a39-a92e-16b72bac9736",
+            "Occurred": "2021-07-28T11:16:20.349Z"
+        }
+    },
+    "latestEventsPerEventType": {
+        "policy-admin_prod_eventstore": [
+            {
+                "Row": "2711",
+                "EventTypeId": "7b0b3f06-2ed4-485e-9251-7ff5d2e74db3",
+                "Occurred": "2021-07-22T01:00:00.81Z"
+            },
+            {
+                "Row": "3153",
+                "EventTypeId": "7d3fd898-81f4-4a39-a92e-16b72bac9736",
+                "Occurred": "2021-07-28T11:16:20.349Z"
+            }
+        ]
+    },
+    "runtimeStates": {
+        "chris_prod_eventstore": [
+            {
+                "position": "154",
+                "eventProcessor": "74c001e8-3b12-4bc8-bacf-5477dd06fa13",
+                "sourceStream": "74c001e8-3b12-4bc8-bacf-5477dd06fa13",
+                "lastSuccessfullyProcessed": "2021-07-28T11:16:14.448Z",
+                "kind": "handler"
+            }
+        ],
+        "policy-admin_prod_eventstore": [
+            {
+                "position": "154",
+                "eventProcessor": "74c001e8-3b12-4bc8-bacf-5477dd06fa13",
+                "sourceStream": "74c001e8-3b12-4bc8-bacf-5477dd06fa13",
+                "failingPartitions": [
+                    {
+                        "lastFailed": "2021-07-28T11:19:12.407Z",
+                        "partition": "58647073-bba5-5970-a269-372428bb519c",
+                        "position": "128",
+                        "processingAttempts": 12125,
+                        "reason": "Event handler 74c001e8-3b12-4bc8-bacf-5477dd06fa13 failed to handle event Events.XXX with event type EventType(\"7b0b3f06-2ed4-485e-9251-7ff5d2e74db3\", 1) ",
+                        "retryTime": "2021-07-28T11:20:12.407Z"
+                    }
+                ],
+                "lastSuccessfullyProcessed": "2021-07-28T11:16:14.448Z",
+                "kind": "handler"
+            },
+            {
+                "position": "3154",
+                "eventProcessor": "05cc9eae-c704-46c4-b17b-b03f44e2e551",
+                "sourceStream": "00000000-0000-0000-0000-000000000000",
+                "lastSuccessfullyProcessed": "2021-07-28T11:16:20.407Z",
+                "kind": "filter"
+            },
+            {
+                "position": "1698",
+                "eventProcessor": "05cc9eae-c704-46c4-b17b-b03f44e2e551",
+                "sourceStream": "05cc9eae-c704-46c4-b17b-b03f44e2e551",
+                "lastSuccessfullyProcessed": "2021-07-28T11:16:20.417Z",
+                "kind": "handler"
+            }
+        ]
+    }
+}

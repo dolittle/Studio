@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import {
@@ -13,6 +14,8 @@ import {
 import { mergeStyles } from '@fluentui/react/lib/Styling';
 import { HttpResponseApplications2 } from '../api/api';
 import { cardStyles, commandTileClass, buttonStyles } from '../theme/viewCard';
+import { getLatestBackupLinkByApplication } from '../api/backups';
+import { useGlobalContext } from '../stores/notifications';
 
 
 type Props = {
@@ -24,18 +27,21 @@ const conversationTileClass = mergeStyles({ height: 182 });
 
 
 export const ViewCard: React.FunctionComponent<Props> = (props) => {
+    const history = useHistory();
+    const { setCurrentEnvironment, setCurrentApplicationId } = useGlobalContext();
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
-
 
     const _items: ICommandBarItemProps[] = [
         {
             buttonStyles,
             key: 'downloadLatest',
             text: 'Download Latest Backup',
-            onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-                alert('TODO View backups');
+            onClick: async (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): Promise<void> => {
+                ev!.stopPropagation();
+                const url = await getLatestBackupLinkByApplication(_props.application.tenantId, _props.application.name, _props.environment);
+                window.open(url, '_blank');
             }
         },
         {
@@ -43,7 +49,10 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             key: 'viewAllBackups',
             text: 'View All Backups',
             onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-                alert('TODO View backups');
+                setCurrentApplicationId(application.id);
+                setCurrentEnvironment(environment);
+                const href = `/backups/application/${application.id}/${environment}/list`;
+                history.push(href);
             }
         }
     ];

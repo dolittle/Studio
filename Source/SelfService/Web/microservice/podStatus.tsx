@@ -48,7 +48,7 @@ export const PodStatus: React.FunctionComponent<Props> = (props) => {
                     <IconButton
                         iconProps={{ iconName: 'SearchData' }}
                         onClick={async () => {
-                            const href = `/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
+                            const href = `/microservices/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
                             history.push(href);
                         }} />
 

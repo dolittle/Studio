@@ -5,7 +5,7 @@ import {
     IButtonStyles
 } from '@fluentui/react';
 
-const aTagBackgroundColor = '#1AD8C3';
+export const aTagBackgroundColor = '#1AD8C3';
 export const backgroundColor = '#323F4B';
 export const cardStyles: IDocumentCardStyles = {
     root: {

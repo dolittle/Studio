@@ -86,7 +86,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
     };
 
     const onClickView = () => {
-        const href = `/application/${applicationId}/${environment}/microservice/view/${microserviceId}`;
+        const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}`;
         history.push(href);
     };
 

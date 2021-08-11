@@ -82,7 +82,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     const onSave = (ms: MicroserviceBusinessMomentAdaptor): void => {
         saveBusinessMomentsAdaptorMicroservice(ms).then(data => {
-            const href = `/application/${application.id}/${environment}/microservices/overview`;
+            const href = `/microservices/application/${application.id}/${environment}/overview`;
             history.push(href);
         });
     };
@@ -104,7 +104,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             <Stack tokens={stackTokens}>
                 <Text variant="xLarge" block>
                     Please choose a connector type:
-                    </Text>
+                </Text>
                 <ChoiceGroup defaultValue={connectorTypeState} options={options} onChange={_onChange} label="Pick connector type" required={true} />
             </Stack>
 

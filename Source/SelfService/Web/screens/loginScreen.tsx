@@ -34,7 +34,6 @@ export const LoginScreen: React.FunctionComponent = () => {
                         </svg>
 
                         <ul>
-                            <li>Dashboard</li>
                             <li>Backups</li>
                             <li>Business Moments</li>
                             <li>Microservices</li>

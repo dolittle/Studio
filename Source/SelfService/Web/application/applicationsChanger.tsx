@@ -5,6 +5,7 @@ import React from 'react';
 import { ShortInfoWithEnvironment } from '../api/api';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
+import { useGlobalContext } from '../stores/notifications';
 
 type Props = {
     applications: ShortInfoWithEnvironment[]
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
+    const { setNotification, setCurrentApplicationId } = useGlobalContext();
     const applications = props!.applications;
     const currentApplicationId = props!.current;
 
@@ -33,14 +35,12 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
 
         if (newApplication === 'createNew') {
             // TODO I feel there is a better way
-            event.stopPropagation();
-            alert('TODO: Create application screen');
+            setNotification('TODO: Create application screen', 'info');
             return;
         }
 
-        // TODO check if more than 1
-        // TODO handle default to change to
-        // Key = application/11b6cf47-5d9f-438f-8116-0d9828654657/Dev/
+        // TODO use setApplicaitonId
+        setCurrentApplicationId(newApplication);
 
         // TODO change based on the url
         const parts = window.location.pathname.split(`/${currentApplicationId}/`);

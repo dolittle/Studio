@@ -74,7 +74,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         // TODO land the name we want here
         ms.extra.ingress.domainPrefix = ingressDomainPrefix;
         saveSimpleMicroservice(ms).then(data => {
-            const href = `/application/${application.id}/${environment}/microservices/overview`;
+            const href = `/microservices/application/${application.id}/${environment}/overview`;
             history.push(href);
         });
     };

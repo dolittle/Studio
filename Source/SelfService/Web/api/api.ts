@@ -1,8 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor, MicroserviceRawDataLogIngestor } from './index';
-
 export type ShortInfo = {
     id: string
     name: string
@@ -120,12 +118,15 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
             method: 'GET',
             mode: 'cors'
         });
+
     const jsonResult: HttpResponseApplications2 = await result.json();
     return jsonResult;
+
 }
 
 // getMicroservices by applicationId
 export async function getMicroservices(applicationId: string): Promise<HttpResponseMicroservices> {
+    // TODO {"message":"open /tmp/dolittle-k8s/508c1745-5f2a-4b4c-b7a5-2fbb1484346d/11b6cf47-5d9f-438f-8116-0d9828654657/application.json: no such file or directory"}
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/microservices`;
 
     const result = await fetch(
@@ -194,22 +195,4 @@ export async function getPodLogs(applicationId: string, podName: string, contain
     const jsonResult: HttpResponsePodLog = await result.json();
 
     return jsonResult;
-}
-
-
-export async function saveEnvironment(input: HttpInputApplicationEnvironment): Promise<boolean> {
-    const url = `${getServerUrlPrefix()}/environment`;
-    const result = await fetch(
-        url,
-        {
-            method: 'POST',
-            body: JSON.stringify(input),
-            mode: 'cors',
-            headers: {
-                'content-type': 'application/json'
-            }
-        });
-
-    const jsonResult = await result.json();
-    return true;
 }

@@ -5,16 +5,23 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
+import { HttpResponseApplications2 } from '../api/api';
 
 
 
 const stackTokens = { childrenGap: 15 };
 
-export const MicroserviceEditScreen: React.FunctionComponent = () => {
+type Props = {
+    environment: string
+    application: HttpResponseApplications2
+};
+
+
+export const MicroserviceEditScreen: React.FunctionComponent<Props> = (props) => {
     // TODO Get from application
     const tenantId = 'TODO';
-    const { applicationId, microserviceId } = useParams() as any;
-
+    const { microserviceId } = useParams() as any;
+    const applicationId = props!.application.id;
     return (
         <>
             <h1>Microservice Edit Screen</h1>

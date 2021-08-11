@@ -1,31 +1,33 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 
-import { getMicroservices, HttpResponseMicroservices, MicroserviceInfo, HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplications2 } from '../api/api';
 
 import '../microservice/microservice.scss';
-import { ViewCard } from '../microservice/viewCard';
+import { ViewCard } from './viewCard';
 
-import { useReadable, useWritable } from 'use-svelte-store';
-import { microservices, mergeMicroservicesFromK8s } from '../stores/microservice';
+import { useReadable } from 'use-svelte-store';
+import { microservices } from '../stores/microservice';
 
 type Props = {
+    environment: string
     application: HttpResponseApplications2
 };
 
 
-export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props) => {
+export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (props) => {
     const $microservices = useReadable(microservices) as any;
 
     const history = useHistory();
     const _props = props!;
-    const { applicationId, environment } = useParams() as any;
+    const environment = _props.environment;
+    const applicationId = _props.application.id;
 
     const application = _props.application!;
     const canEdit = application.environments.some(info => info.name === environment && info.automationEnabled);
@@ -44,7 +46,7 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
                 <>
                     <PrimaryButton text="Create New Environment" onClick={(e => {
                         // TODO How to stop this if automation disabled, currently on the environment level
-                        const href = `/application/${application.id}/environment/create`;
+                        const href = `/environment/application/${application.id}/create`;
                         history.push(href);
                     })} />
                 </>
@@ -57,7 +59,7 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
                             alert('Automation is disabled');
                             return;
                         }
-                        const href = `/application/${application.id}/${environment}/microservice/create`;
+                        const href = `/microservices/application/${application.id}/${environment}/create`;
                         history.push(href);
                     })} />
                 </>
@@ -69,7 +71,7 @@ export const ApplicationOverviewScreen: React.FunctionComponent<Props> = (props)
                 <div className="serv">
                     <ul>
                         {$microservices.map((ms) => {
-                            return <li key={ms.id}><ViewCard
+                            return <li key={`${environment}-${ms.id}`}><ViewCard
                                 microserviceId={ms.id}
                                 microserviceName={ms.name}
                                 microserviceKind={ms.kind}
