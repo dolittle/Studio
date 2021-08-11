@@ -58,6 +58,7 @@ func NewBackend(logContext logrus.FieldLogger, appConfig AppConfig) backend {
 }
 
 func main() {
+	// TODO make this a better service (example https://github.com/enricofoltran/simple-go-server/blob/master/main.go)
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 	appConfig := initConfig()
 	logContext := logrus.WithField("context", "backend-service")
