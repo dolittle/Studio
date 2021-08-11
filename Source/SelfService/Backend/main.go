@@ -7,33 +7,71 @@ import (
 	"net/url"
 	"os"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
+type AppConfig struct {
+	PlatformApiHost     string
+	ListenOn            string
+	SharedSecret        string
+	DevelopmentEnabled  bool
+	DevelopmentTenantID string
+	DevelopmentUserID   string
+}
+
+func initConfig() AppConfig {
+	appConfig := AppConfig{}
+
+	appConfig.PlatformApiHost = os.Getenv("PLATFORM_API")
+	if appConfig.PlatformApiHost == "" {
+		appConfig.PlatformApiHost = "localhost:8080"
+	}
+
+	appConfig.ListenOn = os.Getenv("LISTEN_ON")
+	if appConfig.ListenOn == "" {
+		appConfig.ListenOn = "localhost:3007"
+	}
+
+	appConfig.SharedSecret = os.Getenv("HEADER_SECRET")
+	if appConfig.SharedSecret == "" {
+		appConfig.SharedSecret = "CHANGEME"
+	}
+
+	appConfig.DevelopmentTenantID = os.Getenv("DEVELOPMENT_TENANT_ID")
+	appConfig.DevelopmentUserID = os.Getenv("DEVELOPMENT_USER_ID")
+	appConfig.DevelopmentEnabled = (appConfig.DevelopmentTenantID != "" && appConfig.DevelopmentUserID != "")
+
+	return appConfig
+}
+
+type backend struct {
+	logContext logrus.FieldLogger
+	appConfig  AppConfig
+}
+
+func NewBackend(logContext logrus.FieldLogger, appConfig AppConfig) backend {
+	return backend{
+		logContext: logContext,
+		appConfig:  appConfig,
+	}
+}
+
 func main() {
+	logrus.SetFormatter(&logrus.JSONFormatter{})
+	appConfig := initConfig()
+	logContext := logrus.WithField("context", "backend-service")
+	service := NewBackend(logContext, appConfig)
+	// Setting the secret to blank, as it will be displayed in the logs,
+	// It is still correct in the service
+	appConfig.SharedSecret = ""
+	logContext.WithFields(logrus.Fields{
+		"config": appConfig,
+	}).Info("Server starting")
 
-	// Set to false for when in the cluster
-	includeDolittleHeaders := false
-
-	// Ugly first version
-	platformApi := os.Getenv("PLATFORM_API")
-	if platformApi == "" {
-		platformApi = "localhost:8080"
-	}
-
-	listenOn := os.Getenv("LISTEN_ON")
-	if listenOn == "" {
-		listenOn = "localhost:3007"
-		includeDolittleHeaders = true
-	}
-
-	sharedSecret := os.Getenv("HEADER_SECRET")
-	if sharedSecret == "" {
-		sharedSecret = "TODO-1"
-	}
-
-	http.HandleFunc("/", proxyPlatformApiServer(platformApi, sharedSecret, includeDolittleHeaders))
+	http.HandleFunc("/", service.ProxyPlatformApiServer())
 	srv := &http.Server{
-		Addr:         listenOn,
+		Addr:         appConfig.ListenOn,
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
@@ -41,35 +79,29 @@ func main() {
 	log.Fatal(srv.ListenAndServe())
 }
 
-func proxyPlatformApiServer(platformApi string, sharedSecret string, includeDolittleHeaders bool) func(w http.ResponseWriter, r *http.Request) {
+func (s backend) ProxyPlatformApiServer() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		addSharedSecret(sharedSecret, r)
-		if includeDolittleHeaders {
-			addDolittleHeaders(r)
+		s.AddSharedSecret(r)
+		if s.appConfig.DevelopmentEnabled {
+			s.AddDolittleHeaders(r)
 		}
-		// TODO this needs elevating
-		serveReverseProxy(platformApi, w, r)
+
+		s.ServeReverseProxy(w, r)
 	}
 }
 
-func addSharedSecret(sharedSecret string, req *http.Request) {
-	//req.Header.Set("X-Shared-Secret", sharedSecret)
-	req.Header.Set("x-shared-secret", sharedSecret)
+func (s backend) AddSharedSecret(req *http.Request) {
+	req.Header.Set("x-shared-secret", s.appConfig.SharedSecret)
 }
 
-func addDolittleHeaders(req *http.Request) {
-	// Below shouldn't be needed
-	// User-ID: '{{ print .Subject }}'
-	// Tenant-ID: '{{ print .Extra.Tenant }}'
-	//tenantID := "453e04a7-4f9d-42f2-b36c-d51fa2c83fa3"
-	tenantID := "508c1745-5f2a-4b4c-b7a5-2fbb1484346d"
-	userID := "be194a45-24b4-4911-9c8d-37125d132b0b"
-
-	req.Header.Set("User-ID", userID)
-	req.Header.Set("Tenant-ID", tenantID)
+func (s backend) AddDolittleHeaders(req *http.Request) {
+	req.Header.Set("Tenant-ID", s.appConfig.DevelopmentTenantID)
+	req.Header.Set("User-ID", s.appConfig.DevelopmentUserID)
 }
 
-func serveReverseProxy(host string, res http.ResponseWriter, req *http.Request) {
+func (s backend) ServeReverseProxy(res http.ResponseWriter, req *http.Request) {
+	// TODO log requests
+	host := s.appConfig.PlatformApiHost
 	url, _ := url.Parse("/")
 	url.Host = host
 	// Hard coding to http for now
