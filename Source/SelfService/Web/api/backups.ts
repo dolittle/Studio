@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { getServerUrlPrefix } from './api';
-import { applications } from '../stores/state';
+import { getServerUrlPrefix, ShortInfo } from './api';
+
 // HACK for getting testdata
 //const testData = require('./testdata/insights-runtime-v1.json');
 
@@ -27,29 +27,26 @@ export type ApplicationForListing = {
 };
 
 export type BackupsForApplication = {
-    tenant: DolittleTenant
-    application: string
+    application: ShortInfo
     environment: string
     files: string[]
 };
 
 
 export type BackupLink = {
-    tenant: string;
-    application: string;
+    applicationId: string;
     url: string;
     expire: string;
 };
 
 export type BackupLinkShareInput = {
-    tenant_id: string;
-    application: string;
+    applicationId: string;
     environment: string;
     file_path: string;
 };
 
-export async function getLatestBackupLinkByApplication(tenant: string, name: string, environment: string): Promise<string> {
-    const backups = await getBackupsByApplication(tenant, name, environment);
+export async function getLatestBackupLinkByApplication(applicationID: string, environment: string): Promise<string> {
+    const backups = await getBackupsByApplication(applicationID, environment);
 
     if (!backups.files[0]) {
         return '';
@@ -57,9 +54,8 @@ export async function getLatestBackupLinkByApplication(tenant: string, name: str
 
 
     const input: BackupLinkShareInput = {
-        tenant_id: backups.tenant.id,
         environment,
-        application: backups.application,
+        applicationId: applicationID,
         file_path: backups.files[0],
     };
 
@@ -68,8 +64,8 @@ export async function getLatestBackupLinkByApplication(tenant: string, name: str
 }
 
 
-export async function getBackupsByApplication(tenant: string, name: string, environment: string): Promise<BackupsForApplication> {
-    const url = `${getServerUrlPrefix()}/share/logs/latest/by/app/${tenant}/${name}/${environment}`;
+export async function getBackupsByApplication(applicationID: string, environment: string): Promise<BackupsForApplication> {
+    const url = `${getServerUrlPrefix()}/backups/logs/latest/by/app/${applicationID}/${environment}`;
 
     const response = await fetch(
         url,
@@ -83,7 +79,7 @@ export async function getBackupsByApplication(tenant: string, name: string, envi
 }
 
 export async function getLink(input: BackupLinkShareInput): Promise<BackupLink> {
-    const url = `${getServerUrlPrefix()}/share/logs/link`;
+    const url = `${getServerUrlPrefix()}/backups/logs/link`;
     const response = await fetch(
         url,
         {
