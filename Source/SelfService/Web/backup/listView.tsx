@@ -13,16 +13,15 @@ import Box from '@material-ui/core/Box';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import ShareIcon from '@material-ui/icons/Share';
 
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplications2, ShortInfo } from '../api/api';
 
 
 import { BackupLink, getLink, BackupsForApplication, getBackupsByApplication, BackupLinkShareInput } from '../api/backups';
 import { useGlobalContext } from '../stores/notifications';
 
 type BackupsDetailsList = {
-    tenant: string;
     environment: string;
-    application: string;
+    application: ShortInfo;
     file: string;
     when: string;
 };
@@ -45,7 +44,7 @@ export const ListView: React.FunctionComponent<Props> = (props) => {
 
     useEffect(() => {
         Promise.all([
-            getBackupsByApplication(application.tenantId, application.name, environment)
+            getBackupsByApplication(application.id, environment)
         ]).then(values => {
             const _data = values[0];
             // TODO this should be unique
@@ -66,7 +65,6 @@ export const ListView: React.FunctionComponent<Props> = (props) => {
         const when: string = parts[parts.length - 1].replace('.gz.mongodump', '');
 
         return {
-            tenant: data.tenant.id,
             application: data.application,
             environment,
             file,
@@ -94,13 +92,12 @@ export const ListView: React.FunctionComponent<Props> = (props) => {
                                 <TableCell align="left">
                                     {item.file}
                                 </TableCell>
-                                <TableCell align="right">{item.application}</TableCell>
+                                <TableCell align="right">{application.name}</TableCell>
                                 <TableCell align="right">{item.when}</TableCell>
 
                                 <TableCell align="right"><GetAppIcon onClick={async () => {
                                     const input: BackupLinkShareInput = {
-                                        tenant_id: item.tenant,
-                                        application: item.application,
+                                        applicationId: application.id,
                                         environment: item.environment,
                                         file_path: item.file,
                                     };
@@ -111,8 +108,7 @@ export const ListView: React.FunctionComponent<Props> = (props) => {
 
                                 <TableCell align="right"><ShareIcon onClick={async () => {
                                     const input: BackupLinkShareInput = {
-                                        tenant_id: item.tenant,
-                                        application: item.application,
+                                        applicationId: application.id,
                                         environment: item.environment,
                                         file_path: item.file,
                                     };
