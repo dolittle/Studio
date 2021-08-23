@@ -6,6 +6,13 @@
     "author": "",
     "license": "MIT",
     "private": true,
+    "scripts": {
+        "build": "tsc -b tsconfig.json",
+        "clean": "tsc -b --clean",
+        "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
+        "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",
+        "ci": "yarn clean && yarn lint:ci && yarn build"
+    },
     "dependencies": {
         "@fluentui/react": "8.29.1",
         "@fluentui/react-hooks": "8.2.7",

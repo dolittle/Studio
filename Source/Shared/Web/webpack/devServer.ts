@@ -3,8 +3,8 @@
 
 const fileTypes = /\.(js|css|html|png|jpg|jpeg|gif)$/;
 
-module.exports = (basePath, port) => {
-    const actualPort = process.env.port || port || 9000;
+export default (basePath, port) => {
+    const actualPort = process.env.port || port || 9000;
 
     return {
         historyApiFallback: { index: basePath },

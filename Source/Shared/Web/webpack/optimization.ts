@@ -3,7 +3,7 @@
 
 const TerserPlugin = require('terser-webpack-plugin');
 
-module.exports = {
+export default {
     minimizer: [
         new TerserPlugin({
             terserOptions: {
