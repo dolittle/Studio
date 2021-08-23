@@ -38,13 +38,9 @@ to give the correct import statement suggestions during auto import or quick fix
 {
     "compilerOptions": {
         "paths": {
-            "@shared/backend*": ["Source/Shared/Backend*"],
-            "@shared/dependencyinversion*": ["Source/DependencyInversion*"],
             "@dolittle/vanir-web*": ["Source/MVVM*"],
-            "@shared/portal*": ["Source/Portal*"],
             "@shared/styles*": ["Source/Styles*"],
             "@dolittle/vanir-web*": ["Source/Web*"],
-            "@shared/WebPack*": ["Source/WebPack*"]
         }
     }
 }

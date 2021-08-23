@@ -3,13 +3,11 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.ts",
-    "scripts": {
-    },
+    "scripts": {},
     "author": "Dolittle",
     "license": "MIT",
     "dependencies": {
-        "@uifabric/icons": "7.5.17"
+        "@uifabric/icons": "7.5.23"
     },
-    "devDependencies": {
-    }
+    "devDependencies": {}
 }
