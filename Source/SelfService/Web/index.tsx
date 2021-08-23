@@ -6,7 +6,6 @@ import 'reflect-metadata';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// import { Bootstrapper } from '@shared/web';
 import { VersionInfo } from '@shared/web';
 
 const version = require('../microservice.json') as VersionInfo;
@@ -16,8 +15,6 @@ import './index.scss';
 import { App } from './App';
 
 ReactDOM.render(
-    <Bootstrapper name="Selfservice" prefix="/selfservice" version={version}>
-        <App />
-    </Bootstrapper>,
+    <App />,
     document.getElementById('root')
 );
