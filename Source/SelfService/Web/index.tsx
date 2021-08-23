@@ -6,8 +6,8 @@ import 'reflect-metadata';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Bootstrapper } from '@dolittle/vanir-react';
-import { VersionInfo } from '@dolittle/vanir-web';
+// import { Bootstrapper } from '@shared/web';
+import { VersionInfo } from '@shared/web';
 
 const version = require('../microservice.json') as VersionInfo;
 
@@ -21,5 +21,3 @@ ReactDOM.render(
     </Bootstrapper>,
     document.getElementById('root')
 );
-
-
