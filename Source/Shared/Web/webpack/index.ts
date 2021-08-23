@@ -1,18 +1,17 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-const output = require('./output');
-const optimization = require('./optimization');
-const resolve = require('./resolve');
-const rules = require('./rules');
-const plugins = require('./plugins');
-const devServer = require('./devServer');
+import output from './output';
+import optimization from './optimization';
+import resolve from './resolve';
+import rules from './rules';
+import plugins from './plugins';
+import devServer from './devServer';
 
 export const webpack = (env, argv, basePath, callback, port, title) => {
     const production = argv.mode === 'production';
     basePath = basePath || '/';
     title = title || 'Dolittle Studio';
-
     const config = {
         entry: './index.tsx',
         target: 'web',
