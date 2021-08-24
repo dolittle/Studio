@@ -3,11 +3,7 @@
         "baseUrl": ".",
         "outDir": "dist",
         "rootDir": ".",
-        "paths": {
-            "@shared/styles*": [
-                "Source/Styles*"
-            ]
-        },
+        "paths": {},
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
