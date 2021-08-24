@@ -42,14 +42,10 @@ export default [
     },
     {
         test: /\.(png|gif|jpg|cur)$/i,
-        loader: 'url-loader',
-        options: { limit: 8192 }
+        loader: 'asset/resource',
     },
     {
         test: /\.svg/,
-        use: {
-            loader: 'svg-url-loader',
-            options: {}
-        }
+        type: 'asset/inline'
     }
 ];
