@@ -13,6 +13,7 @@ export const webpack = (env, argv, basePath, callback, port, title) => {
     basePath = basePath || '/';
     title = title || 'Dolittle Studio';
     const config = {
+        mode: production ? 'production' : 'development',
         entry: './index.tsx',
         target: 'web',
         output: output(env, argv, basePath),
