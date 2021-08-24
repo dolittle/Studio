@@ -3,16 +3,18 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import { VersionInfo } from '@shared/web';
 
 const version = require('../microservice.json') as VersionInfo;
 
-import '@shared/styles/theme';
 import './index.scss';
 import { App } from './App';
 
 ReactDOM.render(
-    <App />,
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>,
     document.getElementById('root')
 );
