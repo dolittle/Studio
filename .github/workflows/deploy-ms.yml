@@ -1,78 +1,78 @@
-name: DeployMicroservice
+# name: DeployMicroservice
 
-on:
-  push:
-    branches:
-    - '**'
-    paths:
-    - 'non-existing-path/**'
+# on:
+#   push:
+#     branches:
+#     - '**'
+#     paths:
+#     - 'non-existing-path/**'
 
-  workflow_dispatch:
-    inputs:
-      dockerfile:
-        description: 'The Dockerfile to build'
-        required: true
-      docker-image-tag:
-        description: 'The Docker image tag'
-        required: true
-      deployment:
-        description: 'The deployment name'
-        required: true
-      version:
-        description: 'The version to deploy as'
-        required: true
-      source-path:
-        description: 'The relative path to the source'
-        required: true
+#   workflow_dispatch:
+#     inputs:
+#       dockerfile:
+#         description: 'The Dockerfile to build'
+#         required: true
+#       docker-image-tag:
+#         description: 'The Docker image tag'
+#         required: true
+#       deployment:
+#         description: 'The deployment name'
+#         required: true
+#       version:
+#         description: 'The version to deploy as'
+#         required: true
+#       source-path:
+#         description: 'The relative path to the source'
+#         required: true
 
-env:
-  CONTAINER_REGISTRY: 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io
+# env:
+#   CONTAINER_REGISTRY: 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v2
 
-    - name: Login via Az module
-      uses: azure/login@v1.1
-      with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
+#     - name: Login via Az module
+#       uses: azure/login@v1.1
+#       with:
+#         creds: ${{secrets.AZURE_CREDENTIALS}}
 
-    - name: Login to ACR
-      uses: azure/docker-login@v1
-      with:
-        login-server: ${{ env.CONTAINER_REGISTRY }}
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
+#     - name: Login to ACR
+#       uses: azure/docker-login@v1
+#       with:
+#         login-server: ${{ env.CONTAINER_REGISTRY }}
+#         username: ${{ secrets.REGISTRY_USERNAME }}
+#         password: ${{ secrets.REGISTRY_PASSWORD }}
 
-    - name: Build & push the Docker image
-      run: |
-        docker build . --file ${{ github.event.inputs.dockerfile }} --tag ${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:${{ github.event.inputs.version }}
-        docker push ${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:${{ github.event.inputs.version }}
+#     - name: Build & push the Docker image
+#       run: |
+#         docker build . --file ${{ github.event.inputs.dockerfile }} --tag ${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:${{ github.event.inputs.version }}
+#         docker push ${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:${{ github.event.inputs.version }}
 
-    - name: Write version info
-      id: write-version-info
-      uses: dolittle/write-version-to-file-action@v1
-      with:
-        path: '${{ github.event.inputs.source-path }}/microservice.json'
-        version: ${{ github.event.inputs.version }}
-        token: ${{ secrets.GITHUB_TOKEN }}
+#     - name: Write version info
+#       id: write-version-info
+#       uses: dolittle/write-version-to-file-action@v1
+#       with:
+#         path: '${{ github.event.inputs.source-path }}/microservice.json'
+#         version: ${{ github.event.inputs.version }}
+#         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: 'Install latest Kubectl'
-      uses: azure/setup-kubectl@v1
-      with:
-        version: 'latest'
+#     - name: 'Install latest Kubectl'
+#       uses: azure/setup-kubectl@v1
+#       with:
+#         version: 'latest'
 
-    - name: 'Set k8s context'
-      uses: azure/aks-set-context@v1
-      with:
-          creds: '${{ secrets.AZURE_CREDENTIALS }}'
-          resource-group: "Infrastructure-Essential"
-          cluster-name: "Cluster-Production-Three"
+#     - name: 'Set k8s context'
+#       uses: azure/aks-set-context@v1
+#       with:
+#           creds: '${{ secrets.AZURE_CREDENTIALS }}'
+#           resource-group: "Infrastructure-Essential"
+#           cluster-name: "Cluster-Production-Three"
 
-    - name: 'Deploy to Development'
-      run: |
-        kubectl patch --namespace application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7 deployment ${{ github.event.inputs.deployment }} -p '{"spec": { "template": { "spec": { "containers": [{ "name":"head", "image": "${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:'"${{ github.event.inputs.version }}"'"}] }}}}'
+#     - name: 'Deploy to Development'
+#       run: |
+#         kubectl patch --namespace application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7 deployment ${{ github.event.inputs.deployment }} -p '{"spec": { "template": { "spec": { "containers": [{ "name":"head", "image": "${{ env.CONTAINER_REGISTRY }}/${{ github.event.inputs.docker-image-tag }}:'"${{ github.event.inputs.version }}"'"}] }}}}'
