@@ -4,13 +4,12 @@
         "outDir": "./wwwroot",
         "target": "es5",
         "lib": [
-            "es2019"
-        ]
+            "es2019",
+            "DOM"
+        ],
+        "noEmit": true
     },
     "references": [
-        {
-            "path": "../../Shared/Styles"
-        },
         {
             "path": "../../Shared/Web"
         }

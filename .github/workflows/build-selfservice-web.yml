@@ -1,60 +1,60 @@
-name: Build SelfService Web
+# name: Build SelfService Web
 
-on:
-  push:
-    branches:
-      - "**"
-    paths:
-      - "Source/SelfService/Web/**"
-      - ".github/workflows/build-selfservice-web.yml"
+# on:
+#   push:
+#     branches:
+#       - "**"
+#     paths:
+#       - "Source/SelfService/Web/**"
+#       - ".github/workflows/build-selfservice-web.yml"
 
-env:
-  CONTAINER_REGISTRY: 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io
-  DOCKER_IMAGE_TAG: "dolittle/studio/self-service-web"
-  DOCKER_FILE: "Source/SelfService/Web/Dockerfile"
-  BACKEND: "Source/SelfService/Web"
+# env:
+#   CONTAINER_REGISTRY: 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io
+#   DOCKER_IMAGE_TAG: "dolittle/studio/self-service-web"
+#   DOCKER_FILE: "Source/SelfService/Web/Dockerfile"
+#   BACKEND: "Source/SelfService/Web"
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
 
-      - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-          registry-url: "https://registry.npmjs.org"
-      - name: Build
-        run: |
-          export NODE_OPTIONS="--max-old-space-size=4096"
-          yarn
-          cd Source/SelfService/Web
-          yarn ci
+#       - name: Setup node
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 14.x
+#           registry-url: "https://registry.npmjs.org"
+#       - name: Build
+#         run: |
+#           export NODE_OPTIONS="--max-old-space-size=4096"
+#           yarn
+#           cd Source/SelfService/Web
+#           yarn ci
 
-      - name: Get git branch name
-        run: echo "::set-output name=branch::$(echo ${GITHUB_REF##*/})"
-        id: extract_branch
+#       - name: Get git branch name
+#         run: echo "::set-output name=branch::$(echo ${GITHUB_REF##*/})"
+#         id: extract_branch
 
-      - name: Get git sha short
-        id: vars
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+#       - name: Get git sha short
+#         id: vars
+#         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
-      - name: Login to ACR
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ env.CONTAINER_REGISTRY }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+#       - name: Login to ACR
+#         uses: azure/docker-login@v1
+#         with:
+#           login-server: ${{ env.CONTAINER_REGISTRY }}
+#           username: ${{ secrets.REGISTRY_USERNAME }}
+#           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build Docker image
-        run: |
-          docker build . \
-          --file ${{ env.DOCKER_FILE }} \
-          --tag ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
+#       - name: Build Docker image
+#         run: |
+#           docker build . \
+#           --file ${{ env.DOCKER_FILE }} \
+#           --tag ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
 
-      - name: Push Docker images
-        run: |
-          docker push ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
+#       - name: Push Docker images
+#         run: |
+#           docker push ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}

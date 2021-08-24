@@ -1,54 +1,54 @@
-name: Build SelfService Backend
+# name: Build SelfService Backend
 
-on:
-  push:
-    branches:
-      - "**"
-    paths:
-      - "Source/SelfService/Backend/**"
-      - ".github/workflows/build-selfservice-backend.yml"
+# on:
+#   push:
+#     branches:
+#       - "**"
+#     paths:
+#       - "Source/SelfService/Backend/**"
+#       - ".github/workflows/build-selfservice-backend.yml"
 
-env:
-  CONTAINER_REGISTRY: 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io
-  DOCKER_IMAGE_TAG: "dolittle/studio/self-service-backend"
-  DOCKER_FILE: "Source/SelfService/Backend/Dockerfile"
-  BACKEND: "Source/SelfService/Backend"
+# env:
+#   CONTAINER_REGISTRY: 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io
+#   DOCKER_IMAGE_TAG: "dolittle/studio/self-service-backend"
+#   DOCKER_FILE: "Source/SelfService/Backend/Dockerfile"
+#   BACKEND: "Source/SelfService/Backend"
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
 
-      - name: Setup Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: '1.16.3'
-      - run: go version
+#       - name: Setup Go
+#         uses: actions/setup-go@v2
+#         with:
+#           go-version: '1.16.3'
+#       - run: go version
 
-      - name: Get git branch name
-        run: echo "::set-output name=branch::$(echo ${GITHUB_REF##*/})"
-        id: extract_branch
+#       - name: Get git branch name
+#         run: echo "::set-output name=branch::$(echo ${GITHUB_REF##*/})"
+#         id: extract_branch
 
-      - name: Get git sha short
-        id: vars
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+#       - name: Get git sha short
+#         id: vars
+#         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
-      - name: Login to ACR
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ env.CONTAINER_REGISTRY }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+#       - name: Login to ACR
+#         uses: azure/docker-login@v1
+#         with:
+#           login-server: ${{ env.CONTAINER_REGISTRY }}
+#           username: ${{ secrets.REGISTRY_USERNAME }}
+#           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build Docker image
-        working-directory: ${{ env.BACKEND }}
-        run: |
-          docker build . \
-          --tag ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
+#       - name: Build Docker image
+#         working-directory: ${{ env.BACKEND }}
+#         run: |
+#           docker build . \
+#           --tag ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
 
-      - name: Push Docker images
-        run: |
-          docker push ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
+#       - name: Push Docker images
+#         run: |
+#           docker push ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
