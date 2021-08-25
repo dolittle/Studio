@@ -87,17 +87,15 @@ export const getDefaultMenu = (history: History<LocationState>, applicationId: s
             <ul>
                 {items.map(link => {
                     return (
-                        <>
-                            <li>
-                                <a href="#" onClick={(event) => {
-                                    event.preventDefault();
-                                    const href = link.href;
-                                    history.push(href);
-                                }}>
-                                    {link.name}
-                                </a>
-                            </li>
-                        </>
+                        <li key={link.name}>
+                            <a href="#" onClick={(event) => {
+                                event.preventDefault();
+                                const href = link.href;
+                                history.push(href);
+                            }}>
+                                {link.name}
+                            </a>
+                        </li>
                     );
                 })}
             </ul>

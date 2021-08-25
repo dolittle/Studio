@@ -4,6 +4,7 @@ import React from 'react';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Label } from '@fluentui/react/lib/Label';
 import { TextField } from '@fluentui/react/lib/TextField';
+import { Grid } from '@material-ui/core';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -30,25 +31,28 @@ export const ConfigViewK8s: React.FunctionComponent<Props> = (props) => {
     }
 
     return (
-        <>
-            <Stack tokens={stackTokens}>
-                <h1>Microservice Specific</h1>
-                <Label>UUID</Label>
-                <TextField defaultValue={ms.id} readOnly />
+        <Grid
+            container
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="stretch"
+        >
+            <h1>Microservice Specific</h1>
+            <Label>UUID</Label>
+            <TextField defaultValue={ms.id} readOnly />
 
-                <Label>Name</Label>
-                <TextField defaultValue={ms.name} readOnly />
+            <Label>Name</Label>
+            <TextField defaultValue={ms.name} readOnly />
 
-                <Label>Environment</Label>
-                <TextField defaultValue={ms.environment} readOnly />
+            <Label>Environment</Label>
+            <TextField defaultValue={ms.environment} readOnly />
 
-                <Label>Head Image</Label>
-                <TextField defaultValue={headImage} readOnly />
+            <Label>Head Image</Label>
+            <TextField defaultValue={headImage} readOnly />
 
-                <Label>Runtime Image</Label>
-                <TextField defaultValue={runtimeImage} readOnly />
-            </Stack>
-        </>
+            <Label>Runtime Image</Label>
+            <TextField defaultValue={runtimeImage} readOnly />
+        </Grid>
     );
 };
 

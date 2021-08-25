@@ -1,24 +1,11 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-
-
-
-
 import React from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import './breadcrumbs.scss';
 
-
-function _getCustomDivider(key: number): JSX.Element {
-    const _key = `bcd-${key}`;
-    return (
-        <span key={key} aria-hidden="true" style={{ cursor: 'pointer', padding: 5 }}>
-            /
-        </span>
-    );
-}
 
 
 type BreadcrumbsRoute = {
@@ -34,20 +21,11 @@ type Props = {
 export const BreadCrumbContainer: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
 
-    //const crumbs = [
-    //    props!.routes[0],
-    //
-    //];
-
     const crumbs = props!.routes.filter(r => {
         const match = useRouteMatch(r.path);
         return match ? r : false;
-        //return match && match.isExact ? r : false;
     });
 
-    //if (found) {
-    //    crumbs.push(found);
-    //}
 
     const items = crumbs.map((_item, i) => {
         const a = [
@@ -74,3 +52,12 @@ export const BreadCrumbContainer: React.FunctionComponent<Props> = (props) => {
     );
 
 };
+
+function _getCustomDivider(key: number): JSX.Element {
+    const _key = `bcd-${key}`;
+    return (
+        <span key={key} aria-hidden="true" style={{ cursor: 'pointer', padding: 5 }}>
+            /
+        </span>
+    );
+}

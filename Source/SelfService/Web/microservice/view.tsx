@@ -7,7 +7,7 @@ import { useReadable } from 'use-svelte-store';
 
 import { getPodStatus, HttpResponsePodStatus } from '../api/api';
 import { microservices } from '../stores/microservice';
-import { View as BaseView } from './base/view';
+import { View2 as BaseView } from './base/view';
 import { View as BusinessMomentsAdaptorView } from './businessMomentsAdaptor/view';
 import { View as RawDataLogView } from './rawDataLog/view';
 
@@ -60,21 +60,15 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     switch (subView) {
         case 'simple':
             return (
-                <>
-                    <BaseView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
-                </>
+                <BaseView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
             );
         case 'business-moments-adaptor':
             return (
-                <>
-                    <BusinessMomentsAdaptorView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
-                </>
+                <BusinessMomentsAdaptorView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
             );
         case 'raw-data-log-ingestor':
             return (
-                <>
-                    <RawDataLogView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
-                </>
+                <RawDataLogView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
             );
         default:
             return (
