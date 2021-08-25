@@ -4,9 +4,10 @@ import {
     IDocumentCardStyles,
     IButtonStyles
 } from '@fluentui/react';
+import { MicNone } from '@material-ui/icons';
 
-export const aTagBackgroundColor = '#1AD8C3';
-export const backgroundColor = '#323F4B';
+export const aTagBackgroundColor = '#6678F6';
+export const backgroundColor = '#191A21';
 export const cardStyles: IDocumentCardStyles = {
     root: {
         display: 'inline-block',
@@ -14,6 +15,7 @@ export const cardStyles: IDocumentCardStyles = {
         maxWidth: 400,
         width: 400,
         backgroundColor,
+        border: 'none',
     },
 };
 

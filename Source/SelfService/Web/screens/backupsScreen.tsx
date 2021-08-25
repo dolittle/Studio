@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
+import { Route, Switch, useHistory, useRouteMatch, generatePath } from 'react-router-dom';
 
 
 import { getApplication, HttpResponseApplications2 } from '../api/api';
@@ -10,7 +10,6 @@ import { ViewCard } from '../backup/viewCard';
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { withRouteApplicationProps } from '../utils/route';
-import { BreadcrumbWithRedirectProps, BreadcrumbWithRedirect } from '../components/breadCrumbWithRedirect';
 import { ListView } from '../backup/listView';
 import { useGlobalContext } from '../stores/notifications';
 
@@ -22,6 +21,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
     const { currentEnvironment } = useGlobalContext();
     const topLevelMatch = useRouteMatch();
+
     const routeApplicationProps = withRouteApplicationProps('backups');
     const applicationId = routeApplicationProps.applicationId;
     const [application, setApplication] = useState({} as HttpResponseApplications2);
@@ -60,20 +60,25 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
     const routes = [
         {
             path: '/backups/application/:applicationId',
-            breadcrumb: BreadcrumbWithRedirect,
-            props: {
-                url: `${topLevelMatch.url}/overview`,
-                name: 'Backups'
-            } as BreadcrumbWithRedirectProps,
+            to: generatePath('/backups/application/:applicationId/overview', {
+                applicationId: application.id,
+            }),
+            name: 'Backups'
         },
         {
             path: '/backups/application/:applicationId/overview',
-            breadcrumb: 'Overview',
-            exact: true,
+            to: generatePath('/backups/application/:applicationId/overview', {
+                applicationId: application.id,
+            }),
+            name: 'Overview',
         },
         {
             path: '/backups/application/:applicationId/:environment/list',
-            breadcrumb: currentEnvironment,
+            to: generatePath('/backups/application/:applicationId/:environment/list', {
+                applicationId: application.id,
+                environment: currentEnvironment
+            }),
+            name: currentEnvironment,
         }
     ];
     return (

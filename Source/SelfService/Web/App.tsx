@@ -28,11 +28,11 @@ import { LayoutWithSidebar } from './layout/layoutWithSidebar';
 const themeDark = createTheme({
     palette: {
         background: {
-            default: '#323F4B',
-            paper: '#323F4B',
+            default: '#191A21',
+            paper: '#191A21',
         },
         text: {
-            primary: '#1AD8C3'
+            primary: '#E9EAEC'
         }
     }
 });

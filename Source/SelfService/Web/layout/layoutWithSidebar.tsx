@@ -5,9 +5,6 @@ import React from 'react';
 import { History, LocationState } from 'history';
 
 
-import {
-    Link,
-} from '@fluentui/react';
 
 import './layout.scss';
 import { AlertBox } from '../components/alertBox';
@@ -16,6 +13,7 @@ type Props = {
     navigation: React.ReactNode
     children: React.ReactNode
 };
+
 
 export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
     const navigationPanel = props!.navigation;
@@ -60,52 +58,46 @@ export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
 };
 
 export const getDefaultMenu = (history: History<LocationState>, applicationId: string, environment: string): React.ReactNode => {
+    const items = [
+        {
+            href: `/backups/application/${applicationId}/overview`,
+            name: 'Backups'
+        },
+        {
+            href: `/business-moments/application/${applicationId}/${environment}/overview`,
+            name: 'Business Moments'
+        },
+        {
+            href: `/microservices/application/${applicationId}/${environment}/overview`,
+            name: 'Microservices'
+        },
+        {
+            href: `/insights/application/${applicationId}/${environment}/overview`,
+            name: 'Insights'
+        },
+
+        {
+            href: `/documentation/application/${applicationId}/${environment}/overview`,
+            name: 'Documentation'
+        },
+    ];
+
     return (
         <>
             <ul>
-                <li>
-                    <Link onClick={() => {
-                        const href = `/backups/application/${applicationId}/overview`;
-                        history.push(href);
-                    }}>
-                        Backups
-                    </Link>
-                </li>
-                <li>
-                    <Link onClick={() => {
-                        const href = `/business-moments/application/${applicationId}/${environment}/overview`;
-                        history.push(href);
-                    }}>
-                        Business Moments
-                    </Link>
-                </li>
-                <li>
-
-                    <Link onClick={() => {
-                        const href = `/microservices/application/${applicationId}/${environment}/overview`;
-                        history.push(href);
-                    }}>
-                        Microservices
-                    </Link>
-                </li>
-                <li>
-
-                    <Link onClick={() => {
-                        const href = `/insights/application/${applicationId}/${environment}/overview`;
-                        history.push(href);
-                    }}>
-                        Insights
-                    </Link>
-                </li>
-                <li>
-
-                    <Link onClick={() => {
-                        const href = `/documentation/application/${applicationId}/${environment}/overview`;
-                        history.push(href);
-                    }}>
-                        Documentation
-                    </Link>
-                </li>
+                {items.map(link => {
+                    return (
+                        <li key={link.name}>
+                            <a href="#" onClick={(event) => {
+                                event.preventDefault();
+                                const href = link.href;
+                                history.push(href);
+                            }}>
+                                {link.name}
+                            </a>
+                        </li>
+                    );
+                })}
             </ul>
         </>
     );

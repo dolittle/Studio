@@ -60,21 +60,15 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     switch (subView) {
         case 'simple':
             return (
-                <>
-                    <BaseView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
-                </>
+                <BaseView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
             );
         case 'business-moments-adaptor':
             return (
-                <>
-                    <BusinessMomentsAdaptorView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
-                </>
+                <BusinessMomentsAdaptorView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
             );
         case 'raw-data-log-ingestor':
             return (
-                <>
-                    <RawDataLogView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
-                </>
+                <RawDataLogView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
             );
         default:
             return (

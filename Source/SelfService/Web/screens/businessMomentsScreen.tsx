@@ -27,12 +27,10 @@ import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEn
 import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { useGlobalContext } from '../stores/notifications';
-import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 
 export const BusinessMomentsScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { currentEnvironment } = useGlobalContext();
-    const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('business-moments');
     const applicationId = routeApplicationProps.applicationId;
 
@@ -93,19 +91,24 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
     const routes = [
         {
             path: '/business-moments/application/:applicationId/:environment',
-            breadcrumb: BreadcrumbWithRedirect,
-            props: {
-                url: `${topLevelMatch.url}/${currentEnvironment}/overview`,
-                name: 'Business Moments'
-            } as BreadcrumbWithRedirectProps,
+            to: generatePath('/business-moments/application/:applicationId/:environment/overview', {
+                applicationId: application.id,
+                environment: currentEnvironment
+            }),
+            name: 'Business Moments',
         },
         {
             path: '/business-moments/application/:applicationId/:environment/overview',
-            breadcrumb: 'Overview',
+            to: generatePath('/business-moments/application/:applicationId/:environment/overview', {
+                applicationId: application.id,
+                environment: currentEnvironment
+            }),
+            name: 'Overview',
         },
         {
             path: '/business-moments/application/:applicationId/:environment/editor/:businessMomentId/microservice/:microserviceId',
-            breadcrumb: 'Editor',
+            to: '/business-moments/application/:applicationId/:environment/editor/:businessMomentId/microservice/:microserviceId',
+            name: 'Editor (TODO)',
         }
     ];
 

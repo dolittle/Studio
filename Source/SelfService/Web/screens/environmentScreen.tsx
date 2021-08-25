@@ -62,15 +62,18 @@ export const EnvironmentScreen: React.FunctionComponent = () => {
     const routes = [
         {
             path: '/environment/application/:applicationId',
-            breadcrumb: BreadcrumbWithRedirect,
-            props: {
-                url: `${topLevelMatch.url}/create`,
-                name: 'Environment'
-            } as BreadcrumbWithRedirectProps,
+            to: generatePath('/environment/application/:applicationId/create', {
+                applicationId: application.id,
+            }),
+            name: 'Environment'
         },
+
         {
             path: '/environment/application/:applicationId/create',
-            breadcrumb: 'Create',
+            to: generatePath('/environment/application/:applicationId/create', {
+                applicationId: application.id,
+            }),
+            name: 'Create'
         }
     ];
 

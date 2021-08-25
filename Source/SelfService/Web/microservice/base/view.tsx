@@ -3,21 +3,24 @@
 
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import { Stack } from '@fluentui/react/lib/Stack';
-import { Pivot, PivotItem } from '@fluentui/react';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import { Grid } from '@material-ui/core';
 
+
+import { getServerUrlPrefix, HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
-import { HttpResponsePodStatus, getServerUrlPrefix } from '../../api/api';
-import { SecondaryButton } from '../../theme/secondaryButton';
-import { DownloadLogIcon } from '../../theme/icons';
 import { useReadable } from 'use-svelte-store';
 import { microservices } from '../../stores/microservice';
 import { ConfigView } from './configView';
 import { ConfigViewK8s } from './configViewK8s';
+import { SecondaryButton } from '../../theme/secondaryButton';
+import { DownloadLogIcon } from '../../theme/icons';
+// TODO Doesnt seem ready for prime time, this is from the example and the github issue
+import { TabPanel } from '../../utils/materialUi';
 
-
-const stackTokens = { childrenGap: 15 };
 
 type Props = {
     applicationId: string
@@ -55,69 +58,71 @@ export const View: React.FunctionComponent<Props> = (props) => {
         hasEditData = true;
     }
 
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+        setValue(newValue);
+    };
+
     return (
-        <>
-            <Stack tokens={stackTokens}>
-                <h1>{currentMicroservice.name}</h1>
-                <Pivot selectedKey={selectedKey}
-                    onLinkClick={(item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) => {
-                        const key = item?.props.itemKey as string;
-                        if (selectedKey !== key) {
-                            setSelectedKey(key);
-                        }
-                    }}
+        <Grid
+            container
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="stretch"
+        >
+            <h1>{currentMicroservice.name}</h1>
+            <div>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    TabIndicatorProps={{ style: { background: '#ffffff' } }}
                 >
-                    <PivotItem
-                        itemKey="config"
-                        headerText="Config"
-                        onClick={() => {
-                            setSelectedKey('config');
-                        }}
-                    >
-                        <p>Config Screen</p>
-                        {hasEditData
-                            ? <ConfigView microservice={currentMicroservice.edit} />
-                            : <ConfigViewK8s microservice={currentMicroservice.live} />
-                        }
+                    <Tab label="Config" />
+                    <Tab label="Health Status" />
+                </Tabs>
 
-                    </PivotItem>
-                    <PivotItem
-                        itemKey="healthStatus"
-                        headerText="Health Status">
-                        <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
-                    </PivotItem>
-                </Pivot>
+                <TabPanel value={value} index={0}>
+                    {hasEditData
+                        ? <ConfigView microservice={currentMicroservice.edit} />
+                        : <ConfigViewK8s microservice={currentMicroservice.live} />
+                    }
+                </TabPanel>
 
-                <SecondaryButton
-                    title="Download secret env-variables yaml"
-                    icon={DownloadLogIcon}
-                    onClick={() => {
-                        const secretName = `${configMapPrefix}-secret-env-variables`;
-                        const href = `${getServerUrlPrefix()}/live/application/${applicationId}/secret/${secretName}?download=1&fileType=yaml`;
-                        window.open(href, '_blank');
-                    }}
-                />
+                <TabPanel value={value} index={1}>
+                    <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
+                </TabPanel>
+            </div>
 
-                <SecondaryButton
-                    title="Download config files yaml"
-                    icon={DownloadLogIcon}
-                    onClick={() => {
-                        const configMapName = `${configMapPrefix}-config-files`;
-                        const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
-                        window.open(href, '_blank');
-                    }}
-                />
+            <SecondaryButton
+                title="Download secret env-variables yaml"
+                icon={DownloadLogIcon}
+                onClick={() => {
+                    const secretName = `${configMapPrefix}-secret-env-variables`;
+                    const href = `${getServerUrlPrefix()}/live/application/${applicationId}/secret/${secretName}?download=1&fileType=yaml`;
+                    window.open(href, '_blank');
+                }}
+            />
 
-                <SecondaryButton
-                    title="Download env-variables yaml"
-                    icon={DownloadLogIcon}
-                    onClick={() => {
-                        const configMapName = `${configMapPrefix}-env-variables`;
-                        const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
-                        window.open(href, '_blank');
-                    }}
-                />
-            </Stack>
-        </>
+            <SecondaryButton
+                title="Download config files yaml"
+                icon={DownloadLogIcon}
+                onClick={() => {
+                    const configMapName = `${configMapPrefix}-config-files`;
+                    const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
+                    window.open(href, '_blank');
+                }}
+            />
+
+            <SecondaryButton
+                title="Download env-variables yaml"
+                icon={DownloadLogIcon}
+                onClick={() => {
+                    const configMapName = `${configMapPrefix}-env-variables`;
+                    const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
+                    window.open(href, '_blank');
+                }}
+            />
+        </Grid>
     );
 };

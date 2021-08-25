@@ -2,54 +2,52 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 
-import {
-    Link,
-} from '@fluentui/react';
+import './breadcrumbs.scss';
 
-import useBreadcrumbs, { BreadcrumbsRoute } from 'use-react-router-breadcrumbs';
 
-type BreadcrumbItem = {
-    text: string
-    key: string
-    onClick?: (ev?: React.MouseEvent<HTMLElement>, item?: BreadcrumbItem) => void;
+
+type BreadcrumbsRoute = {
+    path: string
+    to: string
+    name: string
 };
 
 type Props = {
-    routes?: BreadcrumbsRoute[]
+    routes: BreadcrumbsRoute[]
 };
-export const BreadCrumbContainer: React.FunctionComponent<Props> = (props?) => {
+
+export const BreadCrumbContainer: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
 
-    const routes = props!.routes;
+    const crumbs = props!.routes.filter(r => {
+        const match = useRouteMatch(r.path);
+        return match ? r : false;
+    });
 
-    const _breadcrumbs = useBreadcrumbs(routes, { disableDefaults: true });
 
-    const data: BreadcrumbItem[] = _breadcrumbs.map(({
-        match,
-        breadcrumb
-    }) => {
-        return {
-            text: breadcrumb, key: match.url
-        };
-    }) as BreadcrumbItem[];
-
-    const items = data.map((_item, i) => {
+    const items = crumbs.map((_item, i) => {
         const a = [
             i > 0 && _getCustomDivider(i),
-            <Link key={`bc-${i}`} onClick={(ev?: React.MouseEvent<HTMLElement>) => {
-                history.push(_item.key);
-            }}>
-                {_item.text}
-            </Link >
+            <a
+                key={`bc-${i}`}
+                href={_item.to}
+                onClick={(event) => {
+                    event.preventDefault();
+                    history.push(_item.to);
+                }}>
+                {_item.name}
+            </a>
         ];
         return a;
     }
     );
     return (
         <>
-            {items}
+            <div className="breadcrumbs">
+                {items}
+            </div>
         </>
     );
 
@@ -63,4 +61,3 @@ function _getCustomDivider(key: number): JSX.Element {
         </span>
     );
 }
-
