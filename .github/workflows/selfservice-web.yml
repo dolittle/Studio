@@ -14,7 +14,8 @@ env:
   PRERELEASE_BRANCHES: "" # Comma separated list of prerelease branch names. 'alpha,rc, ...'
   SOURCE_PATH: "Source/SelfService/Web"
   DOCKER_FILE: "Source/SelfService/Web/Dockerfile"
-  DOCKER_IMAGE_TAG: "dolittle/studio/self-service-web"
+DOCKER_IMAGE_TAG: "dolittle/self-service-web"
+CONTAINER_REGISTRY: docker.io
   CONTAINER_REGISTRY: 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io
 
 jobs:
