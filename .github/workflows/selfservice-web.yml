@@ -87,6 +87,14 @@ jobs:
         if: ${{ steps.context.outputs.should-publish == 'true' }}
         with:
           push: true
-          context: ${{ env.SOURCE_PATH }}
+          context: .
           file: ./${{ env.DOCKER_FILE }}
           tags: ${{ env.DOCKER_IMAGE_TAG }}:${{ steps.increment-version.outputs.next-version }}
+      - name: Push latest tag to Docker Hub
+        uses: docker/build-push-action@v2
+        if: ${{ steps.context.outputs.should-publish == 'true' && steps.context.outputs.release-type != 'prerelease' }}
+        with:
+          push: true
+          context: .
+          file: ./${{ env.DOCKER_FILE }}
+          tags: ${{ env.DOCKER_IMAGE_TAG }}:latest
