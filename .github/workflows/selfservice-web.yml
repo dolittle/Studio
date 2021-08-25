@@ -70,7 +70,7 @@ jobs:
           user-name: dolittle-build
 
       - name: Login to ACR
-        if: ${{ steps.context.outputs.should-publish == 'true'
+        if: ${{ steps.context.outputs.should-publish == 'true' }}
         uses: azure/docker-login@v1
         with:
           login-server: ${{ env.CONTAINER_REGISTRY }}
