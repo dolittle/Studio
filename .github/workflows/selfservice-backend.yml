@@ -15,7 +15,8 @@ env:
   SOURCE_PATH: "Source/SelfService/Backend"
   DOCKER_FILE: "Source/SelfService/Backend/Dockerfile"
   DOCKER_IMAGE_TAG: "dolittle/studio/self-service-backend"
-  CONTAINER_REGISTRY: 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io
+DOCKER_IMAGE_TAG: "dolittle/self-service-backend"
+CONTAINER_REGISTRY: docker.io
 
 jobs:
   build:
