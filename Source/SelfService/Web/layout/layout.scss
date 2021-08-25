@@ -24,9 +24,23 @@ svg.logo {
   .sidebar {
     flex-basis: 20rem;
     flex-grow: 1;
-    background-color:#1F2933;
+    background-color:#191A21;
     flex: 0 0 200px;
     align-self: stretch;
+  }
+
+  .sidebar ul {
+    list-style-type: none;
+  }
+  .sidebar li {
+    margin: 30px 0px;
+
+  }
+  .sidebar a {
+    color: #ffffff;
+    white-space: nowrap;
+    text-decoration: none;
+    text-transform: uppercase;
   }
 
   .not-sidebar {
@@ -34,5 +48,5 @@ svg.logo {
     flex-basis: 0;
     flex-grow: 999;
     min-width: calc(50% - 1rem);
-    background-color: #1D2025;
+    background-color: #0F1014;
   }
