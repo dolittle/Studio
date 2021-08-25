@@ -32,7 +32,6 @@ At the root level there is a [package.json](../package.json) that describes the 
 ```json
 {
     "dependencies": {
-        "@shared/backend": "*"
     }
 }
 ```

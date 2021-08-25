@@ -3,13 +3,7 @@
         "baseUrl": ".",
         "outDir": "dist",
         "rootDir": ".",
-        "paths": {
-            "@shared/components*": ["Source/Components*"],
-            "@shared/k8s*": ["Source/k8s*"],
-            "@shared/platform*": ["Source/Platform*"],
-            "@shared/portal*": ["Source/Portal*"],
-            "@shared/styles*": ["Source/Styles*"]
-        },
+        "paths": {},
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
@@ -28,7 +22,6 @@
         "esModuleInterop": true,
         "strictNullChecks": true,
         "resolveJsonModule": true,
-
         "downlevelIteration": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
@@ -42,9 +35,8 @@
         "alwaysStrict": true,
         "preserveConstEnums": true,
         "newLine": "lf"
-     },
-
-     "exclude": [
-         "**/dist"
-     ]
+    },
+    "exclude": [
+        "**/dist"
+    ]
 }

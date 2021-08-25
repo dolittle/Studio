@@ -19,7 +19,6 @@
         "**/lib-commonjs": true,
         "**/lib-amd": true,
         "**/temp": true,
-        "**/dist": true,
         "**/dist-storybook": true,
         "**/*.scss.ts": true,
         "**/coverage": true

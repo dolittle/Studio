@@ -1,8 +1,0 @@
-{
-{{#each microservices}}
-    "{{id}}": {
-        "host": "{{lowerCase ../application.name }}-runtime-{{lowerCase name}}",
-        "port": "50052"
-    }{{#unless @last}},{{/unless}}
-{{/each}}
-}
