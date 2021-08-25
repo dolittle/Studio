@@ -1,43 +1,55 @@
-name: Build - SelfService - Backend
+name: Build - SelfService - Web
 
 on:
-  push:
-    branches:
-      - "**"
-    paths:
-      - "Source/SelfService/Backend/**"
-      - ".github/workflows/selfservice-backend.yml"
   pull_request:
     types: [closed]
 
 env:
   PRERELEASE_BRANCHES: "" # Comma separated list of prerelease branch names. 'alpha,rc, ...'
-  SOURCE_PATH: "Source/SelfService/Backend"
-  DOCKER_FILE: "Source/SelfService/Backend/Dockerfile"
-  DOCKER_IMAGE_TAG: "dolittle/self-service-backend"
+  SOURCE_PATH: "Source/SelfService/Web"
+  DOCKER_FILE: "Source/SelfService/Web/Dockerfile"
+  DOCKER_IMAGE_TAG: "dolittle/self-service-web"
 
 jobs:
-  build:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      has-changes: ${{ steps.filter.outputs.src }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            src:
+              - '${{ env.SOURCE_PATH }}/**'
+              - 'Source/Shared/**'
+
+  deploy:
+    needs: changes
+    if: ${{ needs.changes.outputs.has-changes == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
+
       - uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Setup Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: "1.16.3"
+
       - name: Establish context
         id: context
         uses: dolittle/establish-context-action@v2
         with:
           prerelease-branches: ${{ env.PRERELEASE_BRANCHES }}
           version-file: ${{ env.SOURCE_PATH }}/version.json
+
       - name: Increment version
         id: increment-version
         if: ${{ steps.context.outputs.should-publish == 'true' }}
@@ -45,24 +57,14 @@ jobs:
         with:
           version: ${{ steps.context.outputs.current-version }}
           release-type: ${{ steps.context.outputs.release-type }}
-      - name: Build
-        working-directory: ${{ env.SOURCE_PATH}}
-        run: go build .
-      - name: Test
-        working-directory: ${{ env.SOURCE_PATH}}
-        run: go test -v ./...
-      - name: Build Docker image
-        uses: docker/build-push-action@v2
-        with:
-          push: false
-          context: ${{ env.SOURCE_PATH }}
-          file: ./${{ env.DOCKER_FILE }}
+
       - name: Write version info
         if: ${{ steps.context.outputs.should-publish == 'true' }}
         uses: dolittle/write-version-to-file-action@v2
         with:
           path: ${{ env.SOURCE_PATH }}/version.json
           version: ${{ steps.increment-version.outputs.next-version }}
+
       - name: Prepend to Changelog
         if: ${{ steps.context.outputs.should-publish == 'true' && steps.context.outputs.release-type != 'prerelease' }}
         uses: dolittle/add-to-changelog-action@v2
@@ -73,6 +75,7 @@ jobs:
           changelog-path: ${{ env.SOURCE_PATH }}/CHANGELOG.md
           user-email: build@dolittle.com
           user-name: dolittle-build
+
       - name: Create GitHub Release
         if: ${{ steps.context.outputs.should-publish == 'true' }}
         uses: dolittle/github-release-action@v2
@@ -80,20 +83,22 @@ jobs:
           token: ${{  secrets.BUILD_PAT  }}
           version: ${{ steps.increment-version.outputs.next-version }}
           body: ${{ steps.context.outputs.pr-body }}
-          microservice: SelfService-Backend
+          microservice: SelfService-Web
+
       - name: Push Semantic Image to Docker Hub
         uses: docker/build-push-action@v2
         if: ${{ steps.context.outputs.should-publish == 'true' }}
         with:
           push: true
-          context: ${{ env.SOURCE_PATH }}
+          context: .
           file: ./${{ env.DOCKER_FILE }}
           tags: ${{ env.DOCKER_IMAGE_TAG }}:${{ steps.increment-version.outputs.next-version }}
+
       - name: Push latest tag to Docker Hub
         uses: docker/build-push-action@v2
         if: ${{ steps.context.outputs.should-publish == 'true' && steps.context.outputs.release-type != 'prerelease' }}
         with:
           push: true
-          context: ${{ env.SOURCE_PATH }}
+          context: .
           file: ./${{ env.DOCKER_FILE }}
           tags: ${{ env.DOCKER_IMAGE_TAG }}:latest
