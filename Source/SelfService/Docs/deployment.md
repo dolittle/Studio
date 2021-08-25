@@ -28,3 +28,15 @@ docker push dolittle/self-service-backend:latest-dev
 ```sh
 kubectl -n application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7 delete $(kubectl get pod -l "microservice=SelfServiceWeb" -o name -n application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7)
 ```
+
+# Run Web via Docker
+
+```
+docker run \
+--rm --name dolittle-selfservice-web \
+-p 8043:8043 \
+selfservice-web:latest \
+-context=selfservice \
+-path=/app/public \
+-fallback=index.html
+```
