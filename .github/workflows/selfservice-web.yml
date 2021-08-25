@@ -1,0 +1,91 @@
+name: Build - SelfService - Web
+
+on:
+  push:
+    branches:
+      - "**"
+    paths:
+      - "Source/SelfService/Web/**"
+      - ".github/workflows/selfservice-web.yml"
+  pull_request:
+    types: [closed]
+
+env:
+  PRERELEASE_BRANCHES: "" # Comma separated list of prerelease branch names. 'alpha,rc, ...'
+  SOURCE_PATH: "Source/SelfService/Web"
+  DOCKER_FILE: "Source/SelfService/Web/Dockerfile"
+  DOCKER_IMAGE_TAG: "dolittle/studio/self-service-web"
+  CONTAINER_REGISTRY: 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+          registry-url: "https://registry.npmjs.org"
+      - name: Establish context
+        id: context
+        uses: dolittle/establish-context-action@v2
+        with:
+          prerelease-branches: ${{ env.PRERELEASE_BRANCHES }}
+          version-file: ${{ env.SOURCE_PATH }}/version.json
+      - name: Increment version
+        id: increment-version
+        if: ${{ steps.context.outputs.should-publish == 'true' }}
+        uses: dolittle/increment-version-action@v2
+        with:
+          version: ${{ steps.context.outputs.current-version }}
+          release-type: ${{ steps.context.outputs.release-type }}
+      - name: Install dependencies
+        working-directory: ${{ env.SOURCE_PATH}}
+        run: yarn
+      - name: CI
+        working-directory: ${{ env.SOURCE_PATH}}
+        run: yarn ci
+
+      - name: Build Docker image
+        working-directory: ${{ env.SOURCE_PATH }}
+        run: |
+          docker build . \
+
+      - name: Write version info
+        if: ${{ steps.context.outputs.should-publish == 'true' }}
+        uses: dolittle/write-version-to-file-action@v2
+        with:
+          path: ${{ env.SOURCE_PATH }}/version.json
+          version: ${{ steps.increment-version.outputs.next-version }}
+      - name: Prepend to Changelog
+        if: ${{ steps.context.outputs.should-publish == 'true' && steps.context.outputs.release-type != 'prerelease' }}
+        uses: dolittle/add-to-changelog-action@v2
+        with:
+          version: ${{ steps.increment-version.outputs.next-version }}
+          body: ${{ steps.context.outputs.pr-body }}
+          pr-url: ${{ steps.context.outputs.pr-url }}
+          changelog-path: ${{ env.SOURCE_PATH }}/CHANGELOG.md
+          user-email: build@dolittle.com
+          user-name: dolittle-build
+
+      - name: Login to ACR
+        if: ${{ steps.context.outputs.should-publish == 'true'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.CONTAINER_REGISTRY }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      # These three steps builds and pushes an image on each build. We may or may not want this. I'm just commenting this out for now.
+      # - name: Get git sha short
+      #   id: vars
+      #   run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+      # - name: Build Docker image
+      #   working-directory: ${{ env.SOURCE_PATH }}
+      #   run: |
+      #     docker build . \
+      #     --tag ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
+      # - name: Push Docker images
+      #   run: |
+      #     docker push ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_IMAGE_TAG }}:${{ steps.vars.outputs.sha_short }}
