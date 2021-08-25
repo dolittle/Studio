@@ -4,11 +4,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
+
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import { Grid } from '@material-ui/core';
 
 
@@ -20,38 +18,9 @@ import { ConfigView } from './configView';
 import { ConfigViewK8s } from './configViewK8s';
 import { SecondaryButton } from '../../theme/secondaryButton';
 import { DownloadLogIcon } from '../../theme/icons';
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: any;
-    value: any;
-}
+// TODO Doesnt seem ready for prime time, this is from the example and the github issue
+import { TabPanel } from '../../utils/materialUi';
 
-function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`tabpanel-${index}`}
-            aria-labelledby={`tabpanel-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
-
-const useStyles = makeStyles((theme: Theme) => ({
-    root: {
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.paper
-    },
-}));
 
 type Props = {
     applicationId: string
@@ -60,7 +29,7 @@ type Props = {
     podsData: HttpResponsePodStatus
 };
 
-export const View2: React.FunctionComponent<Props> = (props) => {
+export const View: React.FunctionComponent<Props> = (props) => {
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
     const _props = props!;
@@ -89,8 +58,6 @@ export const View2: React.FunctionComponent<Props> = (props) => {
         hasEditData = true;
     }
 
-
-    const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -105,7 +72,7 @@ export const View2: React.FunctionComponent<Props> = (props) => {
             alignItems="stretch"
         >
             <h1>{currentMicroservice.name}</h1>
-            <div className={classes.root}>
+            <div>
                 <Tabs
                     value={value}
                     onChange={handleChange}

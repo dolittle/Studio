@@ -3,13 +3,10 @@
 
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Stack } from '@fluentui/react/lib/Stack';
-import { Text } from '@fluentui/react/lib/Text';
-import { DetailsList, DetailsListLayoutMode, IColumn, CheckboxVisibility } from '@fluentui/react/lib/DetailsList';
+import { Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+
 import { HttpResponsePodStatus, PodInfo, ContainerStatusInfo } from '../../api/api';
 import { ViewLogIcon, DownloadLogIcon } from '../../theme/icons';
-
-const stackTokens = { childrenGap: 15 };
 
 type Props = {
     status: string
@@ -38,48 +35,10 @@ export const HealthStatus: React.FunctionComponent<Props> = (props) => {
     const data = _props.data;
     const environment = _props.environment;
 
-    const renderViewLog = (item?: Item, index?: number, column?: IColumn) => {
-        const podInfo = item!.pod;
-        const container = item!.container;
-        return (
-            <Stack
-                key={container.name}
-                tokens={stackTokens}
-                horizontal
-            >
-                <>
-                    <div onClick={() => {
-                        alert('TODO: Download logs');
-                    }}>
-                        {DownloadLogIcon}
-                    </div>
-                    <div onClick={() => {
-                        const href = `/microservices/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
-                        history.push(href);
-                    }}>
-                        {ViewLogIcon}
-                    </div>
-                </>
-            </Stack >
-        );
-    };
-
-
-    const columns: IColumn[] = [
-        { key: 'name', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200, isResizable: true },
-        { key: 'status', name: 'Status', fieldName: 'state', minWidth: 50, maxWidth: 50, isResizable: true },
-        { key: 'restarts', name: 'Restarts', fieldName: 'restarts', minWidth: 75, maxWidth: 75, isResizable: true },
-        { key: 'age', name: 'Age', fieldName: 'age', minWidth: 50, maxWidth: 100, isResizable: true },
-        { key: 'started', name: 'Started', fieldName: 'started', minWidth: 150, maxWidth: 150, isResizable: true },
-        { key: 'container', name: 'Container', fieldName: 'image', minWidth: 300, maxWidth: 500, isResizable: true },
-        { key: 'logs', name: 'View Logs', minWidth: 50, maxWidth: 50, isResizable: true, onRender: renderViewLog },
-    ];
-
-
-    const items: Item[] = data.pods.flatMap(pod => {
+    const items: any[] = data.pods.flatMap(pod => {
         return pod.containers.map((container, index) => {
             const name = index === 0 ? pod.name : '';
-            return {
+            const item = {
                 key: `${pod.name}-${container.name}`,
                 name,
                 image: container.image,
@@ -90,22 +49,66 @@ export const HealthStatus: React.FunctionComponent<Props> = (props) => {
                 container,
                 pod,
             } as Item;
+
+            const podInfo = item!.pod;
+
+            return (
+                <TableRow key={item.key}>
+                    <TableCell align="left">
+                        {item.name}
+                    </TableCell>
+                    <TableCell align="right">{item.state}</TableCell>
+                    <TableCell align="right">{item.restarts}</TableCell>
+                    <TableCell align="right">{item.age}</TableCell>
+                    <TableCell align="right">{item.started}</TableCell>
+                    <TableCell align="right">{item.image}</TableCell>
+                    <TableCell align="right">
+                        <Grid
+                            container
+                            direction="row"
+                            justifyContent="space-between"
+                            alignItems="stretch"
+                        >
+                            <div onClick={() => {
+                                alert('TODO: Download logs');
+                            }}>
+                                {DownloadLogIcon}
+                            </div>
+                            <div onClick={() => {
+                                const href = `/microservices/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
+                                history.push(href);
+                            }}>
+                                {ViewLogIcon}
+                            </div>
+                        </Grid>
+                    </TableCell>
+                </TableRow>
+            );
         });
-    }) as Item[];
+    }) as any[];
+
 
     return (
-        <>
-            <Stack tokens={stackTokens}>
-                <Text variant="xLarge" block>Status: {status}</Text>
-                <DetailsList
-                    checkboxVisibility={CheckboxVisibility.hidden}
-                    items={items}
-                    columns={columns}
-                    setKey="set"
-                    layoutMode={DetailsListLayoutMode.justified}
-                />
-            </Stack>
-
-        </>
+        <Box component={Paper} m={2}>
+            <TableContainer>
+                <Table size="small" aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="left">Name</TableCell>
+                            <TableCell align="right">Status</TableCell>
+                            <TableCell align="right">Restarts</TableCell>
+                            <TableCell align="right">Age</TableCell>
+                            <TableCell align="right">Started</TableCell>
+                            <TableCell align="right">Container</TableCell>
+                            <TableCell align="right">View Logs</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {items}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Box>
     );
+
 };

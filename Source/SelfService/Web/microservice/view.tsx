@@ -7,7 +7,7 @@ import { useReadable } from 'use-svelte-store';
 
 import { getPodStatus, HttpResponsePodStatus } from '../api/api';
 import { microservices } from '../stores/microservice';
-import { View2 as BaseView } from './base/view';
+import { View as BaseView } from './base/view';
 import { View as BusinessMomentsAdaptorView } from './businessMomentsAdaptor/view';
 import { View as RawDataLogView } from './rawDataLog/view';
 
