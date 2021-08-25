@@ -15,8 +15,7 @@ function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
-// dev-order-846fbc7776-x79rs
-export const PodViewScreen: React.FunctionComponent = () => {
+export const PodLogScreen: React.FunctionComponent = () => {
     const { applicationId, podName } = useParams() as any;
     const query = useQuery();
     // TODO need to expose the options here

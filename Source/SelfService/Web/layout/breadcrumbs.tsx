@@ -1,59 +1,15 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+
+
+
+
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 
-import {
-    Link,
-} from '@fluentui/react';
+import './breadcrumbs.scss';
 
-import useBreadcrumbs, { BreadcrumbsRoute } from 'use-react-router-breadcrumbs';
-
-type BreadcrumbItem = {
-    text: string
-    key: string
-    onClick?: (ev?: React.MouseEvent<HTMLElement>, item?: BreadcrumbItem) => void;
-};
-
-type Props = {
-    routes?: BreadcrumbsRoute[]
-};
-export const BreadCrumbContainer: React.FunctionComponent<Props> = (props?) => {
-    const history = useHistory();
-
-    const routes = props!.routes;
-
-    const _breadcrumbs = useBreadcrumbs(routes, { disableDefaults: true });
-
-    const data: BreadcrumbItem[] = _breadcrumbs.map(({
-        match,
-        breadcrumb
-    }) => {
-        return {
-            text: breadcrumb, key: match.url
-        };
-    }) as BreadcrumbItem[];
-
-    const items = data.map((_item, i) => {
-        const a = [
-            i > 0 && _getCustomDivider(i),
-            <Link key={`bc-${i}`} onClick={(ev?: React.MouseEvent<HTMLElement>) => {
-                history.push(_item.key);
-            }}>
-                {_item.text}
-            </Link >
-        ];
-        return a;
-    }
-    );
-    return (
-        <>
-            {items}
-        </>
-    );
-
-};
 
 function _getCustomDivider(key: number): JSX.Element {
     const _key = `bcd-${key}`;
@@ -64,3 +20,57 @@ function _getCustomDivider(key: number): JSX.Element {
     );
 }
 
+
+type BreadcrumbsRoute = {
+    path: string
+    to: string
+    name: string
+};
+
+type Props = {
+    routes: BreadcrumbsRoute[]
+};
+
+export const BreadCrumbContainer: React.FunctionComponent<Props> = (props) => {
+    const history = useHistory();
+
+    //const crumbs = [
+    //    props!.routes[0],
+    //
+    //];
+
+    const crumbs = props!.routes.filter(r => {
+        const match = useRouteMatch(r.path);
+        return match ? r : false;
+        //return match && match.isExact ? r : false;
+    });
+
+    //if (found) {
+    //    crumbs.push(found);
+    //}
+
+    const items = crumbs.map((_item, i) => {
+        const a = [
+            i > 0 && _getCustomDivider(i),
+            <a
+                key={`bc-${i}`}
+                href={_item.to}
+                onClick={(event) => {
+                    event.preventDefault();
+                    history.push(_item.to);
+                }}>
+                {_item.name}
+            </a>
+        ];
+        return a;
+    }
+    );
+    return (
+        <>
+            <div className="breadcrumbs">
+                {items}
+            </div>
+        </>
+    );
+
+};

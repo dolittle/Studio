@@ -23,7 +23,7 @@ type Props = {
     environment: string
 };
 
-const conversationTileClass = mergeStyles({ height: 182 });
+const conversationTileClass = mergeStyles({ height: 182, paddingLeft: 10 });
 
 
 export const ViewCard: React.FunctionComponent<Props> = (props) => {
@@ -62,18 +62,10 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
     const environmentName = `${environment} - Environment`;
 
     return (
-
-        <DocumentCard styles={cardStyles}>
+        <DocumentCard key={`${name}-${environment}`} styles={cardStyles}>
             <div className={conversationTileClass}>
-                <DocumentCardTitle
-                    title={name}
-                    shouldTruncate
-                />
-                <DocumentCardTitle
-                    title={environmentName}
-                    shouldTruncate
-                    showAsSecondaryTitle
-                />
+                <h1>{name}</h1>
+                <h2>{environmentName}</h2>
                 <CommandBar styles={commandTileClass} items={_items} />
             </div>
         </DocumentCard>

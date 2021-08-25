@@ -8,7 +8,6 @@ import { History, LocationState } from 'history';
 
 import './layout.scss';
 import { AlertBox } from '../components/alertBox';
-import { createStyles } from '@material-ui/styles';
 
 type Props = {
     navigation: React.ReactNode

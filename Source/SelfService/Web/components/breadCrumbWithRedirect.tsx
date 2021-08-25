@@ -15,7 +15,7 @@ export const BreadcrumbWithRedirect: React.FunctionComponent<BreadcrumbWithRedir
     return (
         <span onClick={(event: React.MouseEvent<HTMLElement>) => {
             event.stopPropagation();
-            console.log('Redirect');
+            console.log('Redirect', props!.url);
             history.push(props!.url);
         }}> {props!.name}</span >
     );

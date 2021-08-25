@@ -84,24 +84,31 @@ export const InsightsScreen: React.FunctionComponent = () => {
     const nav = getDefaultMenu(history, application.id, environment);
 
     const routes = [
-        // Insights
         {
             path: '/insights/application/:applicationId',
-            breadcrumb: BreadcrumbWithRedirect,
-            props: {
-                url: `${topLevelMatch.url}/${environment}/overview`,
-                name: 'Insights'
-            } as BreadcrumbWithRedirectProps,
+            to: generatePath('/insights/application/:applicationId/:environment/overview', {
+                applicationId: application.id,
+                environment: currentEnvironment,
+            }),
+            name: 'Insights'
         },
+
         {
             path: '/insights/application/:applicationId/:environment/overview',
-            breadcrumb: 'Overview'
+            to: generatePath('/insights/application/:applicationId/:environment/overview', {
+                applicationId: application.id,
+                environment: currentEnvironment,
+            }),
+            name: 'Overview'
         },
         {
             path: '/insights/application/:applicationId/:environment/runtime-v1',
-            breadcrumb: 'Runtime Stats'
+            to: generatePath('/insights/application/:applicationId/:environment/runtime-v1', {
+                applicationId: application.id,
+                environment: currentEnvironment,
+            }),
+            name: 'Runtime Stats',
         },
-
     ];
 
     const redirectUrl = generatePath('/insights/application/:applicationId/:environment/overview', {

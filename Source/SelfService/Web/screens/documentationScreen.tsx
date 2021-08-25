@@ -87,23 +87,35 @@ export const DocumentationScreen: React.FunctionComponent = () => {
     const routes = [
         {
             path: '/documentation/application/:applicationId/:environment',
-            breadcrumb: BreadcrumbWithRedirect,
-            props: {
-                url: `${topLevelMatch.url}/${currentEnvironment}/overview`,
-                name: 'Documentation'
-            } as BreadcrumbWithRedirectProps,
+            to: generatePath('/documentation/application/:applicationId/:environment/overview', {
+                applicationId: application.id,
+                environment: currentEnvironment,
+            }),
+            name: 'Documentation'
         },
         {
             path: '/documentation/application/:applicationId/:environment/overview',
-            breadcrumb: 'Overview',
+            to: generatePath('/documentation/application/:applicationId/overview', {
+                applicationId: application.id,
+                environment: currentEnvironment,
+            }),
+            name: 'Overview'
         },
         {
             path: '/documentation/application/:applicationId/:environment/container-registry-info',
-            breadcrumb: 'Container Registry Info',
+            to: generatePath('/documentation/application/:applicationId/:environment/container-registry-info', {
+                applicationId: application.id,
+                environment: currentEnvironment,
+            }),
+            name: 'Container Registry Info',
         },
         {
             path: '/documentation/application/:applicationId/:environment/verify-kubernetes-access',
-            breadcrumb: 'Verify access to kubernetes',
+            to: generatePath('/documentation/application/:applicationId/:environment/verify-kubernetes-access', {
+                applicationId: application.id,
+                environment: currentEnvironment,
+            }),
+            name: 'Verify access to kubernetes',
         }
     ];
 

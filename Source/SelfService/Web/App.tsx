@@ -32,7 +32,7 @@ const themeDark = createTheme({
             paper: '#191A21',
         },
         text: {
-            primary: '#1AD8C3'
+            primary: '#E9EAEC'
         }
     }
 });

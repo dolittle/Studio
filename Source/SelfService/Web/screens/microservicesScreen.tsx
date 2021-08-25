@@ -25,7 +25,7 @@ import { MicroservicesOverviewScreen } from '../microservice/overview';
 import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
 import { MicroserviceEditScreen } from '../microservice/microserviceEditScreen';
 import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';
-import { PodViewScreen } from './podViewScreen';
+import { PodLogScreen } from '../microservice/podLogScreen';
 import { EnvironmentChanger } from '../application/environmentChanger';
 import {
     LayoutWithSidebar,
@@ -45,10 +45,6 @@ import {
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 
 import { withRouteApplicationProps } from '../utils/route';
-import {
-    BreadcrumbWithRedirect,
-    BreadcrumbWithRedirectProps
-} from '../components/breadCrumbWithRedirect';
 
 import { useGlobalContext } from '../stores/notifications';
 import {
@@ -60,7 +56,7 @@ import { RouteNotFound } from '../components/notfound';
 export const MicroservicesScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { setNotification, currentEnvironment } = useGlobalContext();
-    const topLevelMatch = useRouteMatch();
+
     const routeApplicationProps = withRouteApplicationProps('microservices');
     const applicationId = routeApplicationProps.applicationId;
 
@@ -126,27 +122,48 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
     const routes = [
         {
             path: '/microservices/application/:applicationId/:environment',
-            breadcrumb: BreadcrumbWithRedirect,
-            props: {
-                url: `${topLevelMatch.url}/${currentEnvironment}/overview`,
-                name: 'Microservices'
-            } as BreadcrumbWithRedirectProps,
+            to: generatePath(
+                '/microservices/application/:applicationId/:environment/overview', {
+                applicationId: application.id,
+                environment: currentEnvironment
+            }),
+            name: 'Microservices'
         },
         {
             path: '/microservices/application/:applicationId/:environment/overview',
-            breadcrumb: 'Overview',
+            to: generatePath(
+                '/microservices/application/:applicationId/:environment/overview', {
+                applicationId: application.id,
+                environment: currentEnvironment
+            }),
+            name: 'Overview'
         },
         {
             path: '/microservices/application/:applicationId/:environment/create',
-            breadcrumb: 'Create',
+            to: generatePath(
+                '/microservices/application/:applicationId/:environment/create', {
+                applicationId: application.id,
+                environment: currentEnvironment
+            }),
+            name: 'Create'
         },
         {
             path: '/microservices/application/:applicationId/:environment/edit',
-            breadcrumb: 'Edit',
+            to: generatePath(
+                '/microservices/application/:applicationId/:environment/edit', {
+                applicationId: application.id,
+                environment: currentEnvironment
+            }),
+            name: 'Edit'
         },
         {
             path: '/microservices/application/:applicationId/:environment/view',
-            breadcrumb: 'View',
+            to: generatePath(
+                '/microservices/application/:applicationId/:environment/view', {
+                applicationId: application.id,
+                environment: currentEnvironment
+            }),
+            name: 'View'
         }
     ];
 
@@ -187,7 +204,7 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/pod/view/:podName/logs">
-                    <PodViewScreen />
+                    <PodLogScreen />
                 </Route>
 
                 <RouteNotFound redirectUrl={redirectUrl} />
