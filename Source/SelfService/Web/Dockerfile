@@ -1,4 +1,4 @@
-FROM node:14.17.5 AS shared-build
+FROM node:16.7.0 AS shared-build
 
 # Install dependencies
 WORKDIR /build
