@@ -49,9 +49,8 @@ jobs:
         run: yarn ci
 
       - name: Build Docker image
-        working-directory: ${{ env.SOURCE_PATH }}
         run: |
-          docker build . \
+          docker build -f ${{ env.DOCKER_FILE }} .
 
       - name: Write version info
         if: ${{ steps.context.outputs.should-publish == 'true' }}

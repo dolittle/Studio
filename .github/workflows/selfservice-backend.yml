@@ -51,7 +51,7 @@ jobs:
       - name: Build Docker image
         working-directory: ${{ env.SOURCE_PATH }}
         run: |
-          docker build . \
+          docker build .
 
       - name: Write version info
         if: ${{ steps.context.outputs.should-publish == 'true' }}
