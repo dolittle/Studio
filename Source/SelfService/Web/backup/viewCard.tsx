@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom';
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import {
     DocumentCard,
-    DocumentCardTitle,
     IContextualMenuItem
 } from '@fluentui/react';
 

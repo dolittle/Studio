@@ -14,7 +14,6 @@ import { mergeStyles, mergeStyleSets } from '@fluentui/react/lib/Styling';
 
 import { cardStyles, commandTileClass, buttonStyles as baseButtonStyles } from '../theme/viewCard';
 import { deleteBusinessmoment } from '../api/businessmoments';
-import { uriWithAppPrefix } from '../store';
 
 
 const buttonStyles = mergeStyleSets(
@@ -22,7 +21,6 @@ const buttonStyles = mergeStyleSets(
     {
         root: {
             color: '#ffffff',
-            //backgroundColor: 'none'
         }
     }) as IButtonStyles;
 

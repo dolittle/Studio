@@ -5,9 +5,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import {
     DocumentCard,
-    DocumentCardTitle,
     IContextualMenuItem,
-    Link
 } from '@fluentui/react';
 import { cardStyles } from '../theme/viewCard';
 
@@ -72,6 +70,10 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
     const subTitle = kindTitles[microserviceKind] ? kindTitles[microserviceKind].subTitle : '';
     const kindIcon = kindTitles[microserviceKind] ? kindTitles[microserviceKind].icon : '';
 
+    const onClickStopPropagation = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
+        ev!.stopPropagation();
+    };
+
     const onClickDelete = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
         ev!.stopPropagation();
         (async () => {
@@ -101,22 +103,30 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
                     {kindIcon}
                 </div>
 
-                <DocumentCardTitle
-                    title={microserviceName}
-                    shouldTruncate
-                />
+                <h1>{microserviceName}</h1>
+                <h2>{subTitle}</h2>
 
-                <DocumentCardTitle
-                    title={subTitle}
-                    shouldTruncate
-                    showAsSecondaryTitle
-                />
                 <div className="bottomBar">
-                    <Link
-                        disabled={!canEdit}
-                        className="left"
-                        onClick={onClickDelete}
-                    >Delete</Link>
+                    {canEdit ?
+                        (
+                            <a href="#"
+                                onClick={onClickDelete}
+                                className="left"
+                            >
+                                Delete
+                            </a>
+                        ) :
+
+                        (
+                            <a href="#"
+                                className="left"
+                                onClick={onClickStopPropagation}
+                            >
+                                Delete
+                            </a>
+                        )
+                    }
+
                     <div className="right">STATUS:TODO</div>
                 </div>
             </div>
