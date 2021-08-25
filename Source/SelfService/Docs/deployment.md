@@ -10,19 +10,16 @@ cd Source/SelfService/
 
 ## Web
 ```sh
-cd Web
-yarn build
-docker build --file Dockerfile2 --tag selfservice-web-test .
-docker tag selfservice-web-test:latest 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/self-service-web:latest
-docker push 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/self-service-web:latest
+docker build --file ./Source/SelfService/Web/Dockerfile --tag selfservice-web .
+docker tag selfservice-web:latest dolittle/self-service-web:latest-dev
+docker push dolittle/self-service-web:latest-dev
 ```
 
 # Backend
 ```sh
-cd Backend
-docker build --tag selfservice-backend-test .
-docker tag selfservice-backend-test:latest 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/self-service-backend:latest
-docker push 508c17455f2a4b4cb7a52fbb1484346d.azurecr.io/dolittle/studio/self-service-backend:latest
+docker build --file ./Source/SelfService/Backend/Dockerfile --tag selfservice-backend .
+docker tag selfservice-backend:latest dolittle/self-service-backend:latest-dev
+docker push dolittle/self-service-backend:latest-dev
 ```
 
 # Update studio
