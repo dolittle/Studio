@@ -38,9 +38,10 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
     const currentApplicationEnvironment = `${props!.applicationId}/${props!.environment}`;
 
     const items = applications.map(application => {
+        // TODO maybe we filter this into an order?
         // key using / so we can just pump it into the url
         const key = `${application.id}/${application.environment}`;
-        const text = `${application.name} · ${application.environment}`;
+        const text = `${application.environment.toUpperCase()} ENVIRONMENT · ${application.name}`;
         return (
             <MenuItem className={classes.menuItem} key={key} value={key}>{text}</MenuItem>
         );
