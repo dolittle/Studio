@@ -1,3 +1,24 @@
+# [1.0.3] - 2021-8-27 [PR: #93](https://github.com/dolittle/Studio/pull/93)
+# What
+- 1 dropdown menu
+- 1 no duplicate data
+- closer to https://www.figma.com/file/OPDbO214o4LjpTu316WyMf/Studio-Mockups?node-id=1256%3A56795
+
+# Todo
+- [x] Align to the right, so it is closer still to the UX.
+
+# How to run
+- run backend main with Flokk tenant to see more than one application and environment
+```sh
+HEADER_SECRET="FAKE" \
+DEVELOPMENT_TENANT_ID="388c0cc7-24b2-46a7-8735-b583ce21e01b" \
+DEVELOPMENT_USER_ID="be194a45-24b4-4911-9c8d-37125d132b0b" \
+go run main.go
+```
+
+Helps with https://app.asana.com/0/1200181647276434/1200843654574930/f
+
+
 # [1.0.2] - 2021-8-27 [PR: #95](https://github.com/dolittle/Studio/pull/95)
 ## Summary
 
