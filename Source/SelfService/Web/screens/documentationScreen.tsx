@@ -2,10 +2,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, Switch, useRouteMatch, generatePath } from 'react-router-dom';
+import {
+    Route,
+    useHistory,
+    Switch,
+    generatePath
+} from 'react-router-dom';
 
 import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
-import { EnvironmentChanger } from '../application/environmentChanger';
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
 
@@ -17,7 +21,6 @@ import { ApplicationsChanger } from '../application/applicationsChanger';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { DocumentationContainerScreen } from '../documentation/container';
 import { withRouteApplicationProps } from '../utils/route';
-import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
 import { RouteNotFound } from '../components/notfound';
 import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
 import { useGlobalContext } from '../stores/notifications';
@@ -26,8 +29,7 @@ import { useGlobalContext } from '../stores/notifications';
 
 export const DocumentationScreen: React.FunctionComponent = () => {
     const history = useHistory();
-    const { setNotification, currentEnvironment } = useGlobalContext();
-    const topLevelMatch = useRouteMatch();
+    const { setNotification, currentEnvironment, currentApplicationId } = useGlobalContext();
 
     const routeApplicationProps = withRouteApplicationProps('documentation');
     const applicationId = routeApplicationProps.applicationId;
@@ -72,7 +74,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
         );
     }
 
-    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentEnvironment)) {
+    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}
@@ -133,8 +135,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
 
                 <Route path="/documentation/application/:applicationId/:environment">
                     <div className="right item flex-end">
-                        <EnvironmentChanger application={application} environment={currentEnvironment} />
-                        <ApplicationsChanger applications={applications} current={applicationId} />
+                        <ApplicationsChanger applications={applications} applicationId={applicationId} environment={currentEnvironment} />
                     </div>
                 </Route>
             </div>

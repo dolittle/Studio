@@ -2,8 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { createContext, useContext, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { HttpResponseApplications2 } from '../api/api';
+import { useLocation } from 'react-router-dom';
 
 export type NotificationItem = {
     message: string
@@ -24,7 +23,6 @@ export type GlobalContextType = {
     currentEnvironment: string,
     currentApplicationId: string,
     clearGlobalState: () => void,
-    isEnvironmentValidFromUri: (application: HttpResponseApplications2, currentEnvironment: string) => boolean,
 };
 
 let _messages: any[] = [];
@@ -52,10 +50,6 @@ export const GlobalContext = createContext<GlobalContextType>({
     currentEnvironment: '',
     currentApplicationId: '',
     clearGlobalState: () => console.warn('clearGlobalState function not set'),
-    isEnvironmentValidFromUri: (application: HttpResponseApplications2, currentEnvironment: string) => {
-        console.warn('isEnvironmentValidFromUri function not set');
-        return false;
-    },
 });
 
 // getFromLocalStorage a wrapper to protect if the data is not there or not parsable
@@ -111,20 +105,10 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
         setLastMessage(n);
     };
 
-    //const getCurrentApplicationId = (): string => {
-    //    const current = localStorage.getItem('currentApplicationId');
-    //    return current ? current : '';
-    //};
-
     const setCurrentApplicationId = (newApplicationId) => {
         saveToLocalStorage('currentApplicationId', newApplicationId);
         _setCurrentApplicationId(newApplicationId);
     };
-
-    //const getCurrentEnvironment = (): string => {
-    //    const current = localStorage.getItem('currentEnvironment');
-    //    return current ? current : '';
-    //};
 
     const setCurrentEnvironment = (newEnvironment) => {
         saveToLocalStorage('currentEnvironment', newEnvironment);
@@ -138,27 +122,6 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
         setCurrentApplicationId('');
         setErrors(_errors);
         setMessages(_messages);
-    };
-
-    const isEnvironmentValidFromUri = (application: HttpResponseApplications2, currentEnvironment: string): boolean => {
-        const { environment } = useParams() as any;
-        let _environment = currentEnvironment;
-        if (currentEnvironment !== environment) {
-            _environment = environment;
-        }
-
-        const exists = application.environments.some((env) => {
-            return env.name === _environment;
-        });
-
-        if (exists && currentEnvironment !== environment) {
-            //window.setTimeout(() => {
-            //    setCurrentEnvironment(_environment);
-            //}, 100);
-
-        }
-
-        return exists;
     };
 
     return (
@@ -175,7 +138,6 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
             currentApplicationId,
             setCurrentApplicationId,
             clearGlobalState,
-            isEnvironmentValidFromUri,
         }}>
             {children}
         </GlobalContext.Provider>

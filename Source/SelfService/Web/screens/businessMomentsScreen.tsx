@@ -2,12 +2,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, generatePath, useRouteMatch, Switch } from 'react-router-dom';
+import {
+    Route,
+    useHistory,
+    generatePath,
+    Switch
+} from 'react-router-dom';
 
 import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications, HttpResponseMicroservices, getMicroservices } from '../api/api';
-
-import { EnvironmentChanger } from '../application/environmentChanger';
-
 
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
@@ -30,10 +32,9 @@ import { useGlobalContext } from '../stores/notifications';
 
 export const BusinessMomentsScreen: React.FunctionComponent = () => {
     const history = useHistory();
-    const { currentEnvironment } = useGlobalContext();
+    const { currentEnvironment, currentApplicationId } = useGlobalContext();
     const routeApplicationProps = withRouteApplicationProps('business-moments');
     const applicationId = routeApplicationProps.applicationId;
-
     const [application, setApplication] = useState({} as HttpResponseApplications2);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
@@ -76,7 +77,7 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
         );
     }
 
-    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentEnvironment)) {
+    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}
@@ -118,6 +119,7 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
         environment: currentEnvironment,
     });
 
+
     return (
         <LayoutWithSidebar navigation={nav}>
             <div id="topNavBar" className="nav flex-container">
@@ -126,8 +128,7 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
                 </div>
 
                 <div className="right item flex-end">
-                    <EnvironmentChanger application={application} environment={currentEnvironment} />
-                    <ApplicationsChanger applications={applications} current={applicationId} />
+                    <ApplicationsChanger applications={applications} applicationId={applicationId} environment={currentEnvironment} />
                 </div>
             </div>
 

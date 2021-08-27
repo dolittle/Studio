@@ -2,7 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, useRouteMatch, Switch, generatePath } from 'react-router-dom';
+import {
+    Route,
+    useHistory,
+    Switch,
+    generatePath
+} from 'react-router-dom';
 
 import {
     getApplication,
@@ -17,18 +22,12 @@ import {
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 
 import { withRouteApplicationProps } from '../utils/route';
-import {
-    BreadcrumbWithRedirect,
-    BreadcrumbWithRedirectProps
-} from '../components/breadCrumbWithRedirect';
-
 import { useGlobalContext } from '../stores/notifications';
 import { RouteNotFound } from '../components/notfound';
 import { Create } from '../environment/create';
 
 export const EnvironmentScreen: React.FunctionComponent = () => {
     const history = useHistory();
-    const topLevelMatch = useRouteMatch();
     const routeApplicationProps = withRouteApplicationProps('environment');
     const { currentEnvironment } = useGlobalContext();
     const applicationId = routeApplicationProps.applicationId;

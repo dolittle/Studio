@@ -2,8 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, useHistory, useRouteMatch, generatePath } from 'react-router-dom';
-
+import {
+    Route,
+    Switch,
+    useHistory,
+    generatePath
+} from 'react-router-dom';
 
 import { getApplication, HttpResponseApplications2 } from '../api/api';
 import { ViewCard } from '../backup/viewCard';
@@ -20,7 +24,6 @@ type Props = {
 export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
     const { currentEnvironment } = useGlobalContext();
-    const topLevelMatch = useRouteMatch();
 
     const routeApplicationProps = withRouteApplicationProps('backups');
     const applicationId = routeApplicationProps.applicationId;

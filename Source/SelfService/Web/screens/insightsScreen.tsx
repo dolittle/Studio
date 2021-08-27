@@ -2,10 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, Switch, generatePath, useRouteMatch } from 'react-router-dom';
+import { Route, useHistory, Switch, generatePath } from 'react-router-dom';
 
 import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
-import { EnvironmentChanger } from '../application/environmentChanger';
+
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 // Not scoped like svelte
 import '../application/applicationScreen.scss';
@@ -16,13 +16,10 @@ import { InsightsContainerScreen } from '../insights/container';
 import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { useGlobalContext } from '../stores/notifications';
-import { BreadcrumbWithRedirect, BreadcrumbWithRedirectProps } from '../components/breadCrumbWithRedirect';
-
 
 export const InsightsScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { setError, currentEnvironment } = useGlobalContext();
-    const topLevelMatch = useRouteMatch();
 
     const routeApplicationProps = withRouteApplicationProps('insights');
     const applicationId = routeApplicationProps.applicationId;
@@ -124,8 +121,7 @@ export const InsightsScreen: React.FunctionComponent = () => {
                 </div>
 
                 <div className="right item flex-end">
-                    <EnvironmentChanger application={application} environment={environment} />
-                    <ApplicationsChanger applications={applications} current={applicationId} />
+                    <ApplicationsChanger applications={applications} applicationId={applicationId} environment={currentEnvironment} />
                 </div>
             </div>
 
