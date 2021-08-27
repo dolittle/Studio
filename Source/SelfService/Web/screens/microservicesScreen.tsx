@@ -8,7 +8,6 @@ import React, {
 import {
     Route,
     useHistory,
-    useRouteMatch,
     Switch,
     generatePath
 } from 'react-router-dom';
@@ -26,13 +25,10 @@ import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
 import { MicroserviceEditScreen } from '../microservice/microserviceEditScreen';
 import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';
 import { PodLogScreen } from '../microservice/podLogScreen';
-import { EnvironmentChanger } from '../application/environmentChanger';
 import {
     LayoutWithSidebar,
     getDefaultMenu
 } from '../layout/layoutWithSidebar';
-
-
 
 // I wonder if scss is scoped like svelte. I hope so!
 // Not scoped like svelte
@@ -55,7 +51,8 @@ import { RouteNotFound } from '../components/notfound';
 
 export const MicroservicesScreen: React.FunctionComponent = () => {
     const history = useHistory();
-    const { setNotification, currentEnvironment } = useGlobalContext();
+    const { setNotification, currentEnvironment, currentApplicationId } = useGlobalContext();
+    console.log('screen', currentEnvironment, currentApplicationId);
 
     const routeApplicationProps = withRouteApplicationProps('microservices');
     const applicationId = routeApplicationProps.applicationId;
@@ -106,7 +103,7 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
         );
     }
 
-    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentEnvironment)) {
+    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}
@@ -181,8 +178,7 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
                 </div>
 
                 <div className="right item flex-end">
-                    <EnvironmentChanger application={application} environment={currentEnvironment} />
-                    <ApplicationsChanger applications={applications} current={applicationId} />
+                    <ApplicationsChanger applications={applications} applicationId={applicationId} environment={currentEnvironment} />
                 </div>
             </div>
 

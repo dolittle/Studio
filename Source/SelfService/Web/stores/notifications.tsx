@@ -21,6 +21,7 @@ export type GlobalContextType = {
     clearNotification: () => void;
     setCurrentEnvironment: (environment: string) => void;
     setCurrentApplicationId: (applicationId: string) => void;
+    setCurrentApplicationAndEnvironment: (applicationId: string, environment: string) => void,
     currentEnvironment: string,
     currentApplicationId: string,
     clearGlobalState: () => void,
@@ -49,6 +50,7 @@ export const GlobalContext = createContext<GlobalContextType>({
     clearNotification: () => console.warn('clearNotification function not set'),
     setCurrentEnvironment: (environment: string) => console.warn('setCurrentEnvironment function not set'),
     setCurrentApplicationId: (applicationId: string) => console.warn('setCurrentApplicationId function not set'),
+    setCurrentApplicationAndEnvironment: (applicationId: string, environment: string) => console.warn('setCurrentApplicationAndEnvironment function not set'),
     currentEnvironment: '',
     currentApplicationId: '',
     clearGlobalState: () => console.warn('clearGlobalState function not set'),
@@ -131,6 +133,13 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
         _setCurrentEnvironment(newEnvironment);
     };
 
+    const setCurrentApplicationAndEnvironment = (newApplicationId, newEnvironment) => {
+        saveToLocalStorage('currentApplicationId', newApplicationId);
+        saveToLocalStorage('currentEnvironment', newEnvironment);
+        _setCurrentApplicationId(newApplicationId);
+        _setCurrentEnvironment(newEnvironment);
+    };
+
     const clearGlobalState = () => {
         _errors = [];
         _messages = [];
@@ -139,7 +148,7 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
         setErrors(_errors);
         setMessages(_messages);
     };
-
+    // TODO is this duplicate????
     const isEnvironmentValidFromUri = (application: HttpResponseApplications2, currentEnvironment: string): boolean => {
         const { environment } = useParams() as any;
         let _environment = currentEnvironment;
@@ -173,6 +182,7 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
             currentEnvironment,
             setCurrentEnvironment,
             currentApplicationId,
+            setCurrentApplicationAndEnvironment,
             setCurrentApplicationId,
             clearGlobalState,
             isEnvironmentValidFromUri,

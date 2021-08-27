@@ -51,20 +51,19 @@ type Props = {
 // confirmEnvironmentFromUri if empty = no real
 // Try this without having currentEnvironment in the
 //export const isEnvironmentValidFromUri = (application: HttpResponseApplications2, currentEnvironment: string, environment: string, setCurrentEnvironment: ((environment: string) => void)): boolean => {
-export const isEnvironmentValidFromUri = (routeProps: RouteApplicationProps, applications: ShortInfoWithEnvironment[], currentEnvironment: string): boolean => {
-    console.log('currentEnvironment', currentEnvironment);
-    console.log('routeProps', routeProps);
-    console.log('applications', applications);
+export const isEnvironmentValidFromUri = (routeProps: RouteApplicationProps, applications: ShortInfoWithEnvironment[], currentApplicationId: string, currentEnvironment: string): boolean => {
+    // Give priority to this fist
+    // We want the second one for the uri change
+    let exists = applications.some((info) => {
+        return currentApplicationId === info.id && currentEnvironment === info.environment;
+    });
 
-    const _environment = routeProps.environment;
-    // TODO Add in currentApplicationId (maybe)
-    if (currentEnvironment !== _environment) {
-        return false;
+    if (exists) {
+        return exists;
     }
 
-
-    const exists = applications.some((info) => {
-        return routeProps.applicationId === info.id && info.environment === _environment;
+    exists = applications.some((info) => {
+        return routeProps.applicationId === info.id && routeProps.environment === info.environment;
     });
 
     return exists;
