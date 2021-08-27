@@ -1,12 +1,10 @@
-name: Deploy - SelfService - Backend
+name: Deploy Dev - SelfService - Backend
 
 on:
   pull_request:
-    types:
-      - closed
+    types: [closed]
     branches:
-      - main
-      - "!development"
+      - development
 
 env:
   PRERELEASE_BRANCHES: "" # Comma separated list of prerelease branch names. 'alpha,rc, ...'
@@ -53,6 +51,7 @@ jobs:
         with:
           prerelease-branches: ${{ env.PRERELEASE_BRANCHES }}
           version-file: ${{ env.SOURCE_PATH }}/version.json
+          environment-branch: development
 
       - name: Increment version
         id: increment-version
@@ -100,9 +99,9 @@ jobs:
 
       - name: Push latest tag to Docker Hub
         uses: docker/build-push-action@v2
-        if: ${{ steps.context.outputs.should-publish == 'true' && steps.context.outputs.release-type != 'prerelease' }}
+        if: ${{ steps.context.outputs.should-publish == 'true'}}
         with:
           push: true
           context: ${{ env.SOURCE_PATH }}
           file: ./${{ env.DOCKER_FILE }}
-          tags: ${{ env.DOCKER_IMAGE_TAG }}:latest
+          tags: ${{ env.DOCKER_IMAGE_TAG }}:latest-development

@@ -2,7 +2,11 @@ name: Build - SelfService - Web
 
 on:
   pull_request:
-    types: [closed]
+    types:
+      - closed
+    branches:
+      - main
+      - "!development"
 
 env:
   PRERELEASE_BRANCHES: "" # Comma separated list of prerelease branch names. 'alpha,rc, ...'
