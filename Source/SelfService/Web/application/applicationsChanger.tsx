@@ -47,7 +47,7 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
     });
 
     items.push((
-        <MenuItem className={classes.menuItem} key="createNew" value="createNew">Create New</MenuItem>
+        <MenuItem className={classes.menuItem} key="createNew" value="createNew">+ New application</MenuItem>
     ));
 
     const onChange = (event: React.ChangeEvent<{ value: unknown }>) => {
