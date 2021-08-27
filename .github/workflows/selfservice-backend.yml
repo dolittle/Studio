@@ -2,8 +2,8 @@ name: SelfService - Backend
 
 on:
   push:
-    branches:
-      - "**"
+    branches-ignore:
+      - main
     paths:
       - "Source/SelfService/Backend/**"
       - ".github/workflows/selfservice-backend.yml"
