@@ -85,8 +85,6 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
     return (
         <FormControl className={classes.formControl}>
             <Select
-                className={classes.select}
-                id="application-environment-changer"
                 value={currentApplicationEnvironment}
                 onChange={onChange}
             >
