@@ -2,8 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { createContext, useContext, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { HttpResponseApplications2 } from '../api/api';
+import { useLocation } from 'react-router-dom';
 
 export type NotificationItem = {
     message: string
@@ -106,30 +105,13 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
         setLastMessage(n);
     };
 
-    //const getCurrentApplicationId = (): string => {
-    //    const current = localStorage.getItem('currentApplicationId');
-    //    return current ? current : '';
-    //};
-
     const setCurrentApplicationId = (newApplicationId) => {
         saveToLocalStorage('currentApplicationId', newApplicationId);
         _setCurrentApplicationId(newApplicationId);
     };
 
-    //const getCurrentEnvironment = (): string => {
-    //    const current = localStorage.getItem('currentEnvironment');
-    //    return current ? current : '';
-    //};
-
     const setCurrentEnvironment = (newEnvironment) => {
         saveToLocalStorage('currentEnvironment', newEnvironment);
-        _setCurrentEnvironment(newEnvironment);
-    };
-
-    const setCurrentApplicationAndEnvironment = (newApplicationId, newEnvironment) => {
-        saveToLocalStorage('currentApplicationId', newApplicationId);
-        saveToLocalStorage('currentEnvironment', newEnvironment);
-        _setCurrentApplicationId(newApplicationId);
         _setCurrentEnvironment(newEnvironment);
     };
 
