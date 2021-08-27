@@ -2,8 +2,8 @@ name: SelfService - Web
 
 on:
   push:
-    branches:
-      - "**"
+    branches-ignore:
+      - main
     paths:
       - "Source/SelfService/Web/**"
       - ".github/workflows/selfservice-web.yml"
