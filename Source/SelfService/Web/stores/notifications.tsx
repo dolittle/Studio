@@ -21,11 +21,9 @@ export type GlobalContextType = {
     clearNotification: () => void;
     setCurrentEnvironment: (environment: string) => void;
     setCurrentApplicationId: (applicationId: string) => void;
-    setCurrentApplicationAndEnvironment: (applicationId: string, environment: string) => void,
     currentEnvironment: string,
     currentApplicationId: string,
     clearGlobalState: () => void,
-    isEnvironmentValidFromUri: (application: HttpResponseApplications2, currentEnvironment: string) => boolean,
 };
 
 let _messages: any[] = [];
@@ -50,14 +48,9 @@ export const GlobalContext = createContext<GlobalContextType>({
     clearNotification: () => console.warn('clearNotification function not set'),
     setCurrentEnvironment: (environment: string) => console.warn('setCurrentEnvironment function not set'),
     setCurrentApplicationId: (applicationId: string) => console.warn('setCurrentApplicationId function not set'),
-    setCurrentApplicationAndEnvironment: (applicationId: string, environment: string) => console.warn('setCurrentApplicationAndEnvironment function not set'),
     currentEnvironment: '',
     currentApplicationId: '',
     clearGlobalState: () => console.warn('clearGlobalState function not set'),
-    isEnvironmentValidFromUri: (application: HttpResponseApplications2, currentEnvironment: string) => {
-        console.warn('isEnvironmentValidFromUri function not set');
-        return false;
-    },
 });
 
 // getFromLocalStorage a wrapper to protect if the data is not there or not parsable
@@ -148,27 +141,6 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
         setErrors(_errors);
         setMessages(_messages);
     };
-    // TODO is this duplicate????
-    const isEnvironmentValidFromUri = (application: HttpResponseApplications2, currentEnvironment: string): boolean => {
-        const { environment } = useParams() as any;
-        let _environment = currentEnvironment;
-        if (currentEnvironment !== environment) {
-            _environment = environment;
-        }
-
-        const exists = application.environments.some((env) => {
-            return env.name === _environment;
-        });
-
-        if (exists && currentEnvironment !== environment) {
-            //window.setTimeout(() => {
-            //    setCurrentEnvironment(_environment);
-            //}, 100);
-
-        }
-
-        return exists;
-    };
 
     return (
         <GlobalContext.Provider value={{
@@ -182,10 +154,8 @@ export const GlobalContextProvider: React.FunctionComponent = ({ children }) => 
             currentEnvironment,
             setCurrentEnvironment,
             currentApplicationId,
-            setCurrentApplicationAndEnvironment,
             setCurrentApplicationId,
             clearGlobalState,
-            isEnvironmentValidFromUri,
         }}>
             {children}
         </GlobalContext.Provider>

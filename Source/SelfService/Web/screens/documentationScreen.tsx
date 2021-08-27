@@ -30,7 +30,6 @@ import { useGlobalContext } from '../stores/notifications';
 export const DocumentationScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { setNotification, currentEnvironment, currentApplicationId } = useGlobalContext();
-    console.log('screen', currentEnvironment, currentApplicationId);
 
     const routeApplicationProps = withRouteApplicationProps('documentation');
     const applicationId = routeApplicationProps.applicationId;

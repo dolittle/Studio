@@ -52,7 +52,6 @@ import { RouteNotFound } from '../components/notfound';
 export const MicroservicesScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { setNotification, currentEnvironment, currentApplicationId } = useGlobalContext();
-    console.log('screen', currentEnvironment, currentApplicationId);
 
     const routeApplicationProps = withRouteApplicationProps('microservices');
     const applicationId = routeApplicationProps.applicationId;
