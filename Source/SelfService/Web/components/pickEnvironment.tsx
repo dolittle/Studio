@@ -3,7 +3,7 @@
 import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import { useHistory, generatePath, useParams } from 'react-router-dom';
+import { useHistory, generatePath } from 'react-router-dom';
 import { HttpResponseApplications2, ShortInfoWithEnvironment } from '../api/api';
 import { List } from '@fluentui/react/lib/List';
 import { useGlobalContext } from '../stores/notifications';
@@ -48,9 +48,6 @@ type Props = {
     openModal: boolean
 };
 
-// confirmEnvironmentFromUri if empty = no real
-// Try this without having currentEnvironment in the
-//export const isEnvironmentValidFromUri = (application: HttpResponseApplications2, currentEnvironment: string, environment: string, setCurrentEnvironment: ((environment: string) => void)): boolean => {
 export const isEnvironmentValidFromUri = (routeProps: RouteApplicationProps, applications: ShortInfoWithEnvironment[], currentApplicationId: string, currentEnvironment: string): boolean => {
     // Give priority to this fist
     // We want the second one for the uri change
