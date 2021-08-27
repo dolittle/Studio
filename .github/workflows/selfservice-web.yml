@@ -1,4 +1,4 @@
-name: CI - SelfService - Web
+name: SelfService - Web
 
 on:
   push:
@@ -11,6 +11,7 @@ on:
 env:
   SOURCE_PATH: "Source/SelfService/Web"
   DOCKER_FILE: "Source/SelfService/Web/Dockerfile"
+  DOCKER_IMAGE_TAG: "dolittle/self-service-web"
 
 jobs:
   ci:
@@ -41,3 +42,19 @@ jobs:
           push: false
           context: .
           file: ./${{ env.DOCKER_FILE }}
+
+      - name: Get git branch name
+        run: echo "::set-output name=branch::$(echo ${GITHUB_REF##*/})"
+        id: get_branch
+
+      - name: Get git sha short
+        id: get_sha
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+      - name: Push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: .
+          file: ./${{ env.DOCKER_FILE }}
+          tags: ${{ env.DOCKER_IMAGE_TAG }}:${{ steps.get_branch.outputs.branch }}-${{ steps.get_sha.outputs.sha_short }}
