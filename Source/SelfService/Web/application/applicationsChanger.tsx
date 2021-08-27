@@ -9,6 +9,8 @@ import { useGlobalContext } from '../stores/notifications';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles, Theme } from '@material-ui/core';
+import { createStyles } from '@material-ui/styles';
 
 type Props = {
     applications: ShortInfoWithEnvironment[]
@@ -16,22 +18,36 @@ type Props = {
     environment: string
 };
 
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        formControl: {
+            margin: theme.spacing(1),
+            minWidth: 120,
+        },
+
+        menuItem: {
+            justifyContent: 'flex-end',
+        }
+    }),
+);
+
 export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
-    const { setNotification, setCurrentApplicationId, setCurrentEnvironment, setCurrentApplicationAndEnvironment } = useGlobalContext();
+    const classes = useStyles();
+    const { setNotification, setCurrentApplicationId, setCurrentEnvironment } = useGlobalContext();
     const applications = props!.applications;
     const currentApplicationEnvironment = `${props!.applicationId}/${props!.environment}`;
 
     const items = applications.map(application => {
         // key using / so we can just pump it into the url
         const key = `${application.id}/${application.environment}`;
-        const text = `${application.name} - ${application.environment}`;
+        const text = `${application.name} · ${application.environment}`;
         return (
-            <MenuItem key={key} value={key}>{text}</MenuItem>
+            <MenuItem className={classes.menuItem} key={key} value={key}>{text}</MenuItem>
         );
     });
 
     items.push((
-        <MenuItem key="createNew" value="createNew">Create New</MenuItem>
+        <MenuItem className={classes.menuItem} key="createNew" value="createNew">Create New</MenuItem>
     ));
 
     const onChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -66,8 +82,9 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
     };
 
     return (
-        <FormControl >
+        <FormControl className={classes.formControl}>
             <Select
+                className={classes.select}
                 id="application-environment-changer"
                 value={currentApplicationEnvironment}
                 onChange={onChange}
