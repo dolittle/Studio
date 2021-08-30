@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "Source/SelfService/Web/**"
+      - "Source/Shared/**"
       - ".github/workflows/selfservice-web.yml"
 
 env:
