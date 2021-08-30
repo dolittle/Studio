@@ -2,7 +2,7 @@
     "name": "@shared/web",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/index.js",
+    "main": "index.ts",
     "author": "",
     "license": "MIT",
     "private": true,
