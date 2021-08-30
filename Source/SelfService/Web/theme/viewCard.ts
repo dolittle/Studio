@@ -4,7 +4,6 @@ import {
     IDocumentCardStyles,
     IButtonStyles
 } from '@fluentui/react';
-import { MicNone } from '@material-ui/icons';
 
 export const aTagBackgroundColor = '#6678F6';
 export const backgroundColor = '#191A21';
