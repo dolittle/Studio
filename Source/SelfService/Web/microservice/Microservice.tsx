@@ -5,7 +5,8 @@
 // TODO validate the data
 // TODO change action button from create to save
 import React from 'react';
-import { Text, IDropdownOption } from '@fluentui/react';
+import { useLocation } from 'react-router-dom';
+
 import { Create as BusinessMomentsAdaptor } from './businessMomentsAdaptor/create';
 import { Create as Base } from './base/create';
 import { Create as StaticSite } from './staticSite/create';
@@ -45,7 +46,8 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
     const classes = useStyles();
     const _props = props!;
     const environment = _props.environment;
-    const [microserviceTypeState, setMicroserviceTypeState] = React.useState('');
+    const searchParams = new URLSearchParams(useLocation().search);
+
 
     const items = [
         {
@@ -111,8 +113,27 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
         },
     ];
 
+    const kindViaParams = (): string => {
+        if (!searchParams.has('kind')) {
+            return '';
+        }
+
+        const kind = searchParams.get('kind') as string;
+
+        if (!items.map(e => e.kind).includes(kind)) {
+            return '';
+        }
+        return kind;
+    };
+
+    const kindFromParams = kindViaParams();
+
+    const [microserviceTypeState, setMicroserviceTypeState] = React.useState(kindFromParams);
 
     const onCreate = (kind: string) => {
+        searchParams.set('kind', kind);
+        window.location.search = searchParams.toString();
+
         setMicroserviceTypeState(kind);
     };
 
