@@ -61,14 +61,14 @@ export class Server {
 
     private logRequestsAndResponses() {
         this._router.use((request, response, next) => {
-            this._logger.info(
+            this._logger.debug(
                 `Received request to '${request.url}' method '${request.method}'`,
                 {
                     url: request.url,
                     method: request.method,
                 });
             response.on('finish', () => {
-                this._logger.info(
+                this._logger.debug(
                     `Response sent to url '${request.url}' with status ${response.statusCode}`,
                     {
                         url: request.url,
