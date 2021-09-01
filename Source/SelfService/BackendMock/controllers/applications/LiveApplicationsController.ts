@@ -4,24 +4,24 @@
 import { Request, Response, Router } from 'express';
 import { Logger } from 'winston';
 import { IController } from '../IController';
+import { allLiveApplications } from './given';
 
 /**
  * A controller for handling requests related to applications.
  */
 export class LiveApplicationsController implements IController {
     readonly baseRoute = '/live/applications';
-    constructor(
-        protected readonly _logger: Logger
-    ) { }
+    constructor(protected readonly _logger: Logger) {}
 
     /** @inheritdoc */
     registerRoutes(router: Router) {
-        router.get(this.baseRoute, this.test.bind(this));
+        router.get(this.baseRoute, this.getAllLiveApplications.bind(this));
     }
 
-    private test(req: Request, res: Response) {
-        return res.status(200).json({ message: 'Hello World Live' });
+    private getAllLiveApplications(req: Request, res: Response) {
+        return res.status(200).json(allLiveApplications);
     }
 }
 
-export const createLiveApplicationsController = (logger: Logger) => new LiveApplicationsController(logger);
+export const createLiveApplicationsController = (logger: Logger) =>
+    new LiveApplicationsController(logger);
