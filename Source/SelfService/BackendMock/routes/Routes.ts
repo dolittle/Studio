@@ -2,13 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { Router } from 'express';
-import { Controller } from '../controllers/Controller';
+import { IControllers } from '../controllers';
 
 /**
  * The API endpoint routes to register on an HTTP server.
  */
 export class Routes {
-    constructor(private readonly _controller: Controller) { }
+    constructor(private readonly _controller: IControllers) { }
 
     /**
      * Registers the API routes on the provided router.
