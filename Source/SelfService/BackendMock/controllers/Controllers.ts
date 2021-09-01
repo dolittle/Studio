@@ -6,6 +6,7 @@ import { Logger } from 'winston';
 import { IController } from './IController';
 import { IControllers } from './IControllers';
 import { MultipleControllersForBaseRoute } from './MultipleControllersForBaseRoute';
+import { TestController } from './TestController';
 
 
 /**
@@ -40,4 +41,6 @@ export class Controllers implements IControllers {
 
 }
 
-export const createControllers = (logger: Logger): IControllers => new Controllers([], logger);
+export const createControllers = (logger: Logger): IControllers => new Controllers([
+    new TestController(logger)
+], logger);

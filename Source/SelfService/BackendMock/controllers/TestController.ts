@@ -8,7 +8,7 @@ import { IController } from './IController';
 /**
  * A controller for handling request for fetching purchase orders.
  */
-export class Controller implements IController {
+export class TestController implements IController {
     readonly baseRoute = '/test';
     constructor(
         protected readonly _logger: Logger
@@ -17,7 +17,7 @@ export class Controller implements IController {
     /** @inheritdoc */
     registerRoutes(router: Router) {
         // router.get('/purchaseorders', this._controller.getAllBySupplierId.bind(this._controller));
-        router.get(this.baseRoute, test.bind(this));
+        router.get(this.baseRoute, this.test.bind(this));
     }
 
     private test(req: Request, res: Response) {
@@ -25,5 +25,3 @@ export class Controller implements IController {
     }
 
 }
-
-export const createController = (logger: Logger) => new Controller(logger);
