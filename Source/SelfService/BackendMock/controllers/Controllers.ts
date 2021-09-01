@@ -10,17 +10,17 @@ import { IController } from './IController';
 import { IControllers } from './IControllers';
 import { MultipleControllersForBaseRoute } from './MultipleControllersForBaseRoute';
 import { TestController } from './TestController';
-
+import { createLiveApplicationsController } from './applications/LiveApplicationsController';
+import { createMicroserviceController } from './applications/MicroserviceController';
 
 /**
  * Represents an implementation of {@link IControllers}.
  */
 export class Controllers implements IControllers {
-
     constructor(
         private readonly _controllers: IController[],
         private readonly _logger: Logger
-    ) { }
+    ) {}
 
     /** @inheritdoc */
     add(controller: IController): void {
@@ -30,23 +30,28 @@ export class Controllers implements IControllers {
     /** @inheritdoc */
     registerRoutes(router: Router): void {
         this.throwIfMultipleControllersWithSameBaseRoute();
-        this._controllers.forEach(controller => controller.registerRoutes(router));
+        this._controllers.forEach((controller) => controller.registerRoutes(router));
     }
 
     private throwIfMultipleControllersWithSameBaseRoute() {
-        const routes = this._controllers.map(_ => _.baseRoute);
-        routes.forEach(route => {
-            if (routes.filter(routeToCheck => routeToCheck === route).length > 1) {
+        const routes = this._controllers.map((_) => _.baseRoute);
+        routes.forEach((route) => {
+            if (routes.filter((routeToCheck) => routeToCheck === route).length > 1) {
                 throw new MultipleControllersForBaseRoute(route);
             }
-        })
+        });
     }
-
 }
 
-export const createControllers = (logger: Logger): IControllers => new Controllers([
-    new TestController(logger),
-    createApplicationsController(logger),
-    createApplicationController(logger),
-    createLiveApplicationController(logger),
-], logger);
+export const createControllers = (logger: Logger): IControllers =>
+    new Controllers(
+        [
+            new TestController(logger),
+            createApplicationsController(logger),
+            createApplicationController(logger),
+            createLiveApplicationsController(logger),
+            createLiveApplicationController(logger),
+            createMicroserviceController(logger),
+        ],
+        logger
+    );
