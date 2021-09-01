@@ -25,7 +25,7 @@ export const Configuration = convict({
         port: {
             format: 'port',
             doc: 'The port to listen on for the REST API',
-            default: 8080,
+            default: 3007,
             env: 'SERVER_PORT',
             arg: 'server-port',
         },
