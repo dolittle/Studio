@@ -290,12 +290,6 @@ Returns JSON:
 
 Body JSON:
 
-dolittle: MicroserviceDolittle
-name: string
-kind: string
-environment: string
-extra: MicroserviceSimpleExtra
-
 ```json
 {
     "dolittle": {
@@ -316,14 +310,28 @@ extra: MicroserviceSimpleExtra
             "domainPrefix": "domainPrefix"
         }
     }
+}
+```
 
+Response:
 
+```json
+{
+    //TODO Figure out what this is
 }
 ```
 
 ## Delete
 
 ### Deletes a microservice http://localhost:9007/selfservice/api/application/{applicationId}/environment/{environment}/microservice/{microserviceId}
+
+Response:
+
+```json
+{
+    //TODO Figure out what this is
+}
+``´
 
 ## Platform API routes to document
 
