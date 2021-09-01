@@ -8,6 +8,12 @@ import { IController } from '../../IController';
 
 
 export default {
+    a_controller: (baseRoute: string): IController => {
+        return {
+            baseRoute,
+            registerRoutes: sinon.default.stub()
+        }
+    },
     controllers: (...controllers: IController[]) => new Controllers(controllers, sinon.stubInterface<Logger>()),
     no_controllers: () => new Controllers([], sinon.stubInterface<Logger>()),
 };

@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { Router } from 'express';
 import { IController } from './IController';
 
 
@@ -9,5 +10,5 @@ import { IController } from './IController';
  */
 export interface IControllers {
     add(controller: IController): void
-    get(route: string): IController
+    registerRoutes(router: Router): void
 }

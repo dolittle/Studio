@@ -4,7 +4,6 @@
 import { createLogger, format, transports } from 'winston';
 import { printHelpOrValidationError, Configuration } from './configuration';
 import { createControllers } from './controllers';
-import { Routes } from './routes';
 import { Server } from './server';
 
 printHelpOrValidationError();
@@ -22,11 +21,12 @@ const logger = createLogger({
 
 
 logger.info('The configuration', JSON.parse(Configuration.toString()));
-const routes = new Routes(createControllers(logger));
 
 const server = new Server(
     Configuration.get('server.host'),
     Configuration.get('server.port'),
-    routes,
+    createControllers(logger),
     logger
 );
+
+server.start();

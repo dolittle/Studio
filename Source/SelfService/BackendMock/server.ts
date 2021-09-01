@@ -5,7 +5,7 @@ import http from 'http';
 import express, { Express } from 'express';
 import { Logger } from 'winston';
 
-import { Routes } from './routes';
+import { IControllers } from './controllers';
 
 /**
  * An HTTP server implemented with Express that hosts the API controllers.
@@ -18,13 +18,13 @@ export class Server {
      * Creates an instance of the {@link Server} class.
      * @param _host The address to listen to.
      * @param _port The port to listen to.
-     * @param _routes The routes to register on the server.
+     * @param _controllers The controllers to register on the server.
      * @param _logger The logger to use.
      */
     constructor(
         private readonly _host: string,
         private readonly _port: number,
-        private readonly _routes: Routes,
+        private readonly _controllers: IControllers,
         private readonly _logger: Logger
     ) {
         this._router = express();
@@ -81,7 +81,7 @@ export class Server {
 
     private handleAPIRequests() {
         const apiRouter = express.Router();
-        this._routes.registerRoutes(apiRouter);
+        this._controllers.registerRoutes(apiRouter);
         this._router.use('/api', apiRouter);
     }
 

@@ -1,10 +1,11 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Request, Response } from 'express';
+import { Router } from 'express';
 import { Logger } from 'winston';
 import { IController } from './IController';
 import { IControllers } from './IControllers';
+import { MultipleControllersForBaseRoute } from './MultipleControllersForBaseRoute';
 
 
 /**
@@ -13,17 +14,28 @@ import { IControllers } from './IControllers';
 export class Controllers implements IControllers {
 
     constructor(
-        private readonly _controllers,
+        private readonly _controllers: IController[],
         private readonly _logger: Logger
     ) { }
 
     /** @inheritdoc */
     add(controller: IController): void {
-        throw new Error('Method not implemented.');
+        this._controllers.push(controller);
     }
+
     /** @inheritdoc */
-    get(route: string): IController {
-        throw new Error('Method not implemented.');
+    registerRoutes(router: Router): void {
+        this.throwIfMultipleControllersWithSameBaseRoute();
+        this._controllers.forEach(controller => controller.registerRoutes(router));
+    }
+
+    private throwIfMultipleControllersWithSameBaseRoute() {
+        const routes = this._controllers.map(_ => _.baseRoute);
+        routes.forEach(route => {
+            if (routes.filter(routeToCheck => routeToCheck === route).length > 1) {
+                throw new MultipleControllersForBaseRoute(route);
+            }
+        })
     }
 
 }
