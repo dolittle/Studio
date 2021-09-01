@@ -6,7 +6,6 @@
     "author": "Dolittle",
     "license": "MIT",
     "scripts": {
-        "start:dev": "webpack serve --mode=development --progress --hot",
         "start": "cross-env NODE_ENV=development ts-node index.ts",
         "build": "yarn clean && tsc --build",
         "clean": "tsc -b --clean",
