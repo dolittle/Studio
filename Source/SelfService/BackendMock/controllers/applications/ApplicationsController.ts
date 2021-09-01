@@ -3,25 +3,25 @@
 
 import { Request, Response, Router } from 'express';
 import { Logger } from 'winston';
-import { IController } from './IController';
+import { IController } from '../IController';
 
 /**
- * A test controller
+ * A controller for handling requests related to applications.
  */
-export class TestController implements IController {
-    readonly baseRoute = '/test';
+export class ApplicationsController implements IController {
+    readonly baseRoute = '/applications';
     constructor(
         protected readonly _logger: Logger
     ) { }
 
     /** @inheritdoc */
     registerRoutes(router: Router) {
-        // selfservice/api/test => test(req, res) => {message: "Hello world"}
         router.get(this.baseRoute, this.test.bind(this));
     }
 
     private test(req: Request, res: Response) {
         return res.status(200).json({ message: 'Hello World' });
     }
-
 }
+
+export const createApplicationsController = (logger: Logger) => new ApplicationsController(logger);

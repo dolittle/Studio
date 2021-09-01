@@ -3,6 +3,9 @@
 
 import { Router } from 'express';
 import { Logger } from 'winston';
+import { createApplicationController } from './applications/ApplicationController';
+import { createApplicationsController } from './applications/ApplicationsController';
+import { createLiveApplicationController } from './applications/LiveApplicationController';
 import { IController } from './IController';
 import { IControllers } from './IControllers';
 import { MultipleControllersForBaseRoute } from './MultipleControllersForBaseRoute';
@@ -42,5 +45,8 @@ export class Controllers implements IControllers {
 }
 
 export const createControllers = (logger: Logger): IControllers => new Controllers([
-    new TestController(logger)
+    new TestController(logger),
+    createApplicationsController(logger),
+    createApplicationController(logger),
+    createLiveApplicationController(logger),
 ], logger);
