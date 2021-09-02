@@ -12,7 +12,7 @@ export default {
         return {
             baseRoute,
             registerRoutes: sinon.default.stub()
-        }
+        };
     },
     controllers: (...controllers: IController[]) => new Controllers(controllers, sinon.stubInterface<Logger>()),
     no_controllers: () => new Controllers([], sinon.stubInterface<Logger>()),

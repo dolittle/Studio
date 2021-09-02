@@ -9,7 +9,7 @@ import { Router } from 'express';
 import { MultipleControllersForBaseRoute } from '../../MultipleControllersForBaseRoute';
 
 describeThis(__filename, () => {
-    const baseRoute = '/some/route'
+    const baseRoute = '/some/route';
     const controller_1 = given.a_controller(baseRoute);
     const controller_2 = given.a_controller(baseRoute);
     const controllers = given.controllers(controller_1, controller_2);
