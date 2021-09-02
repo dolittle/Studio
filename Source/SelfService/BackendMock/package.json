@@ -25,6 +25,7 @@
         "@shared/specs": "1.0.0",
         "@shared/web": "1.0.0",
         "@types/express": "^4.17.13",
-        "cross-env": "^7.0.3"
+        "cross-env": "^7.0.3",
+        "nodemon": "^2.0.12"
     }
 }
