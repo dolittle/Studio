@@ -11,7 +11,7 @@
     },
     "references": [
         {
-            "path": "../../Shared/Web"
+            "path": "../../Shared/Web",
         }
     ]
 }

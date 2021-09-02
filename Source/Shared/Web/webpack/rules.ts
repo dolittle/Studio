@@ -42,7 +42,7 @@ export default [
     },
     {
         test: /\.(png|gif|jpg|cur)$/i,
-        loader: 'asset/resource',
+        type: 'asset/resource',
     },
     {
         test: /\.svg/,
