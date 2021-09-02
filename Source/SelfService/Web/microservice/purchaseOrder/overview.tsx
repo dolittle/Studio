@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 // This doesnt load :(
-import logoInfor from '../../../images/infor.png'; // with import
+import logoInfor from '../../images/infor.png'; // with import
 import { Grid } from '@material-ui/core';
 
 type Props = {};
