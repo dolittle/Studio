@@ -317,7 +317,7 @@ Response:
 
 ```json
 {
-    //TODO Figure out what this is
+    //TODO: Figure out what this is
 }
 ```
 
@@ -329,6 +329,6 @@ Response:
 
 ```json
 {
-    //TODO Figure out what this is
+    //TODO: Figure out what this is
 }
 ``´
