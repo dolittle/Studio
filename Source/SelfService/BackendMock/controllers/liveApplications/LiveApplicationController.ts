@@ -20,7 +20,7 @@ export class LiveApplicationController implements IController {
             this.getAllMicroservices.bind(this)
         );
         router.get(
-            '/:applicationID/environment/:environment/microservice/:microserviceID/podStatus',
+            '/:applicationID/environment/:environment/microservice/:microserviceID/podstatus',
             this.getPodStatus.bind(this)
         );
         router.get(
