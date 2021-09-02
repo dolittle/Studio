@@ -82,7 +82,7 @@ export class Server {
     private handleAPIRequests() {
         const apiRouter = express.Router();
         this._controllers.registerRoutes(apiRouter);
-        this._router.use('/selfservice/api', apiRouter);
+        this._router.use('', apiRouter);
     }
 
     private handleNotFound() {
