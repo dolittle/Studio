@@ -24,7 +24,7 @@ export class MicroserviceController implements IController {
 
     /** @inheritdoc */
     registerRoutes(router: Router) {
-        router.post(this.baseRoute, this.saveMicroservice.bind(this));
+        router.post('/', this.saveMicroservice.bind(this));
     }
 
     private saveMicroservice(req: Request, res: Response) {

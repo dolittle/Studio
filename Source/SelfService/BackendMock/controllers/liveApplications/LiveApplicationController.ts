@@ -16,15 +16,15 @@ export class LiveApplicationController implements IController {
     /** @inheritdoc */
     registerRoutes(router: Router) {
         router.get(
-            `${this.baseRoute}/:applicationID/microservices`,
+            '/:applicationID/microservices',
             this.getAllMicroservices.bind(this)
         );
         router.get(
-            `${this.baseRoute}/:applicationID/environment/:environment/microservice/:microserviceid/podstatus`,
+            '/:applicationID/environment/:environment/microservice/:microserviceID/podStatus',
             this.getPodStatus.bind(this)
         );
         router.get(
-            `${this.baseRoute}/:applicationID/pod/:podname/logs`,
+            '/:applicationID/pod/:podName/logs',
             this.getPodLogs.bind(this)
         );
     }

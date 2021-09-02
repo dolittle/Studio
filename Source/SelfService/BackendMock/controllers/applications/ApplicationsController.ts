@@ -11,11 +11,11 @@ import { allApplications } from './given';
  */
 export class ApplicationsController implements IController {
     readonly baseRoute = '/applications';
-    constructor(protected readonly _logger: Logger) {}
+    constructor(protected readonly _logger: Logger) { }
 
     /** @inheritdoc */
     registerRoutes(router: Router) {
-        router.get(this.baseRoute, this.getAllApplications.bind(this));
+        router.get('/', this.getAllApplications.bind(this));
     }
 
     private getAllApplications(req: Request, res: Response) {

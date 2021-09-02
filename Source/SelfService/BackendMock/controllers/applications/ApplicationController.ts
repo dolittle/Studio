@@ -18,17 +18,17 @@ export class ApplicationController implements IController {
 
     /** @inheritdoc */
     registerRoutes(router: Router) {
-        router.get(this.baseRoute, this.test.bind(this));
+        router.get('/', this.test.bind(this));
         router.get(
-            `${this.baseRoute}/:applicationID`,
+            '/:applicationID',
             this.getEnvironmentsAndMicroservices.bind(this)
         );
         router.get(
-            `${this.baseRoute}/:applicationID/microservices`,
+            '/:applicationID/microservices',
             this.getAllMicroservices.bind(this)
         );
         router.delete(
-            `${this.baseRoute}/:applicationID/environment/:environment/microservice/:microserviceid`,
+            '/:applicationID/environment/:environment/microservice/:microserviceID',
             this.deleteMicroservice.bind(this)
         );
     }
