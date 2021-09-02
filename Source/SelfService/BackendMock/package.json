@@ -7,7 +7,7 @@
     "license": "MIT",
     "scripts": {
         "start": "cross-env NODE_ENV=development ts-node index.ts",
-        "start:dev": "cross-env NODE_ENV=development \"nodemon index.ts\"",
+        "start:dev": "cross-env NODE_ENV=development nodemon",
         "build": "yarn clean && tsc --build",
         "clean": "tsc -b --clean",
         "test": "mocha",
