@@ -4,7 +4,6 @@
 import { Router } from 'express';
 import { IController } from './IController';
 
-
 /**
  * Defines a system that knows about controllers.
  */

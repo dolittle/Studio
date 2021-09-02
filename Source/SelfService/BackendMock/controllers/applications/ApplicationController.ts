@@ -14,7 +14,7 @@ import {
  */
 export class ApplicationController implements IController {
     readonly baseRoute = '/application';
-    constructor(protected readonly _logger: Logger) {}
+    constructor(protected readonly _logger: Logger) { }
 
     /** @inheritdoc */
     registerRoutes(router: Router) {

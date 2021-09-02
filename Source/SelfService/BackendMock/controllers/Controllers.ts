@@ -5,13 +5,12 @@ import { Router } from 'express';
 import { Logger } from 'winston';
 import { createApplicationController } from './applications/ApplicationController';
 import { createApplicationsController } from './applications/ApplicationsController';
-import { createLiveApplicationController } from './applications/LiveApplicationController';
 import { IController } from './IController';
 import { IControllers } from './IControllers';
 import { MultipleControllersForBaseRoute } from './MultipleControllersForBaseRoute';
-import { TestController } from './TestController';
-import { createLiveApplicationsController } from './applications/LiveApplicationsController';
-import { createMicroserviceController } from './applications/MicroserviceController';
+import { createMicroserviceController } from './microservices/MicroserviceController';
+import { createLiveApplicationsController } from './liveApplications/LiveApplicationsController';
+import { createLiveApplicationController } from './liveApplications/LiveApplicationController';
 
 /**
  * Represents an implementation of {@link IControllers}.
@@ -20,7 +19,7 @@ export class Controllers implements IControllers {
     constructor(
         private readonly _controllers: IController[],
         private readonly _logger: Logger
-    ) {}
+    ) { }
 
     /** @inheritdoc */
     add(controller: IController): void {
@@ -46,7 +45,6 @@ export class Controllers implements IControllers {
 export const createControllers = (logger: Logger): IControllers =>
     new Controllers(
         [
-            new TestController(logger),
             createApplicationsController(logger),
             createApplicationController(logger),
             createLiveApplicationsController(logger),

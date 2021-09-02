@@ -3,34 +3,24 @@
 
 import { Request, Response, Router } from 'express';
 import { Logger } from 'winston';
+import { common, microservices } from '../../api';
 import { IController } from '../IController';
 
+export type SaveMicroserviceInput = {
+    dolittle: common.MicroserviceDolittle,
+    name: string,
+    kind: string,
+    environment: string,
+    extra: microservices.MicroserviceSimpleExtra
+};
+
 /**
- * A controller for handling requests related to applications.
+ * A controller for handling requests related to microservices.
  */
 export class MicroserviceController implements IController {
-    readonly saveMicroserviceBody = {
-        dolittle: {
-            applicationId: 'application id',
-            tenantId: 'tenant',
-            microserviceId: 'microservice',
-        },
-        name: 'microservice name',
-        kind: 'microservice kind',
-        environment: 'environment',
-        extra: {
-            headImage: 'image',
-            runtimeImage: 'image',
-            ingress: {
-                path: 'path',
-                host: 'host',
-                pathType: 'pathType',
-                domainPrefix: 'domainPrefix',
-            },
-        },
-    };
+
     readonly baseRoute = '/microservice';
-    constructor(protected readonly _logger: Logger) {}
+    constructor(protected readonly _logger: Logger) { }
 
     /** @inheritdoc */
     registerRoutes(router: Router) {
