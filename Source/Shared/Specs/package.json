@@ -8,16 +8,16 @@
     "private": true,
     "dependencies": {},
     "devDependencies": {
-        "mocha": "9.1.0",
-        "chai": "4.3.4",
-        "sinon": "11.1.2",
-        "ts-sinon": "2.0.1",
-        "sinon-chai": "3.7.0",
-        "chai-as-promised": "7.1.1",
         "@types/chai": "4.2.21",
         "@types/chai-as-promised": "7.1.4",
-        "@types/mocha": "9.0.0",
-        "@types/sinon": "10.0.2",
-        "@types/sinon-chai": "3.2.5"
+        "@types/mocha": "8.0.4",
+        "@types/sinon": "9.0.8",
+        "@types/sinon-chai": "3.2.5",
+        "chai": "4.3.4",
+        "chai-as-promised": "7.1.1",
+        "mocha": "8.2.1",
+        "sinon": "9.0.3",
+        "sinon-chai": "3.7.0",
+        "ts-sinon": "2.0.1"
     }
 }
