@@ -18,7 +18,6 @@ export class ApplicationController implements IController {
 
     /** @inheritdoc */
     registerRoutes(router: Router) {
-        router.get('/', this.test.bind(this));
         router.get(
             '/:applicationID',
             this.getEnvironmentsAndMicroservices.bind(this)
@@ -33,9 +32,6 @@ export class ApplicationController implements IController {
         );
     }
 
-    private test(req: Request, res: Response) {
-        return res.status(200).json({ message: 'Hello World' });
-    }
     private getAllMicroservices(req: Request, res: Response) {
         return res.status(200).send(allMicroservicesInApplication);
     }
