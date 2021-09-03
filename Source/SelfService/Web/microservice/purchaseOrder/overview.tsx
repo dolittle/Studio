@@ -18,7 +18,9 @@ import logoInfor from '../../images/infor.png'; // with import
 import { Color } from '@material-ui/lab';
 import { Grid } from '@material-ui/core';
 
-type Props = {};
+type Props = {
+    onNameChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+};
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -40,10 +42,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Overview: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
+    const onNameChange = _props.onNameChange;
 
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
-    const steps = ['Select ERP system', 'Provide a name', 'Connect with ERP system'];
+    const steps = [
+        'Select ERP system',
+        'Provide a name',
+        'Connect with ERP system',
+        'Wait for data',
+    ];
 
     const stepsContent = [
         <>
@@ -70,7 +78,12 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     later.{' '}
                 </p>
                 <form className={classes.root} noValidate autoComplete='off'>
-                    <TextField id='microserviceName' label='Name' variant='outlined' />
+                    <TextField
+                        id='microserviceName'
+                        label='Name'
+                        variant='outlined'
+                        onChange={onNameChange}
+                    />
                 </form>
             </Typography>
         </>,
