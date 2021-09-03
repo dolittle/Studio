@@ -6,15 +6,18 @@ import { Create as Microservice } from '../microservice/Microservice';
 import { HttpResponseApplications2 } from '../api/api';
 
 type Props = {
-    environment: string
-    application: HttpResponseApplications2
+    environment: string;
+    application: HttpResponseApplications2;
 };
 
 export const MicroserviceNewScreen: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     return (
         <>
-            <Microservice application={_props.application} environment={_props.environment} />
+            <Microservice
+                application={_props.application}
+                environment={_props.environment}
+            />
         </>
     );
 };
