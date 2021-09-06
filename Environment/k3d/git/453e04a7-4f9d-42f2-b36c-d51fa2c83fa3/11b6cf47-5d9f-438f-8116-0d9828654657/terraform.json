@@ -1,0 +1,10 @@
+{
+  "customer": {
+    "guid": "453e04a7-4f9d-42f2-b36c-d51fa2c83fa3",
+    "name": "Customer-Chris"
+  },
+  "group_id": "cc3d1c06-ffeb-488c-8b90-a4536c3e6dfa",
+  "guid": "11b6cf47-5d9f-438f-8116-0d9828654657",
+  "kind": "dolittle-application",
+  "name": "Taco"
+}
