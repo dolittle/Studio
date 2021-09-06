@@ -34,5 +34,23 @@ kubectl patch -n ingress-nginx service ingress-nginx-controller -p '{"spec": {"t
 ```
 
 
+# Run platform-api
+- Define GIT_REPO_DIRECTORY to existing repo
+- TODO add GIT_REPO_PUSH=false, this might mean we can skip GIT_REPO_SSH_KEY, code will need to handle this
+- TODO document how to define where the GIT_REPO_DIRECTORY is
+- TODO Change --kube-config to env variable
+
+```sh
+GIT_REPO_SSH_KEY="/Users/freshteapot/.ssh/dolittle_operations" \
+GIT_REPO_BRANCH=auto-dev \
+GIT_REPO_URL="git@github.com:dolittle-platform/Operations.git" \
+LISTEN_ON="localhost:8080" \
+HEADER_SECRET="FAKE" \
+AZURE_SUBSCRIPTION_ID="e7220048-8a2c-4537-994b-6f9b320692d7" \
+go run main.go microservice server --kube-config="/Users/freshteapot/.kube/config"
+```
+
 # Reference
 - https://k3d.io/
+
+
