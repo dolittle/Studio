@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    dolittle.io/tenant-id: 453e04a7-4f9d-42f2-b36c-d51fa2c83fa3
+    dolittle.io/application-id: 11b6cf47-5d9f-438f-8116-0d9828654657
+  labels:
+    tenant: Customer-Chris
+    application: Taco
+  name: application-11b6cf47-5d9f-438f-8116-0d9828654657
