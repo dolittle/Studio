@@ -20,6 +20,13 @@ k3d cluster create dolittle-dev \
     --kubeconfig-update-default=false
 ```
 
+# Crete kubeconfig
+- isolated, not in the default
+```sh
+k3d kubeconfig write dolittle-dev
+export KUBECONFIG=$(k3d kubeconfig write dolittle-dev)
+
+```
 
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.48.1/deploy/static/provider/baremetal/deploy.yaml
