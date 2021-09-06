@@ -30,7 +30,13 @@ k3d kubeconfig write dolittle-dev
 export KUBECONFIG=$(k3d kubeconfig write dolittle-dev)
 ```
 
-git clone XXX /tmp/dolittle-local-dev
+```sh
+cd Environment/k3d/k8s
+kubectl apply -f namespace.yml
+kubectl apply -f rbac.yml
+kubectl apply -f tenants.yml
+```
+
 
 # Run self-service web
 ```sh
