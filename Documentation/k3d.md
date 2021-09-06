@@ -28,13 +28,19 @@ k3d kubeconfig write dolittle-dev
 export KUBECONFIG=$(k3d kubeconfig write dolittle-dev)
 ```
 
+BEFORE APPLYING CHECK THAT YOU ARE IN THE CORRECT CONTEXT!
+Do the following command and verify that current context is k3d-dolittle-env
+
+```sh
+kubectl config current-context
+```
+
 ```sh
 cd Environment/k3d/k8s
 kubectl apply -f namespace.yml
 kubectl apply -f rbac.yml
 kubectl apply -f tenants.yml
 ```
-
 
 # Run self-service web
 ```sh
