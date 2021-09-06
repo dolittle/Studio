@@ -1,5 +1,3 @@
-# Todo
-- [ ] TODO add local-dev to clusteradmin role
 # Install k3d
 ```sh
 curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
@@ -70,6 +68,8 @@ AZURE_SUBSCRIPTION_ID="e7220048-8a2c-4537-994b-6f9b320692d7" \
 go run main.go microservice server --kube-config=$(k3d kubeconfig write dolittle-dev)
 ```
 
+# Setup Ingress
+- NOT QUITE WORKING
 
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.48.1/deploy/static/provider/baremetal/deploy.yaml
