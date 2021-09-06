@@ -33,6 +33,19 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 kubectl patch -n ingress-nginx service ingress-nginx-controller -p '{"spec": {"type": "LoadBalancer"}}'
 ```
 
+# Run self-service web
+```sh
+make develop-frontend
+```
+
+# Run self-service backend
+- TODO user_id might not be so important, or breaks, time will tell.
+```sh
+HEADER_SECRET="FAKE" \
+DEVELOPMENT_TENANT_ID="453e04a7-4f9d-42f2-b36c-d51fa2c83fa3" \
+DEVELOPMENT_USER_ID="be194a45-24b4-4911-9c8d-37125d132b0b" \
+go run main.go
+```
 
 # Run platform-api
 - Define GIT_REPO_DIRECTORY to existing repo
