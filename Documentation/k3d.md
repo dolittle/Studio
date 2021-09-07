@@ -83,13 +83,19 @@ AZURE_SUBSCRIPTION_ID="e7220048-8a2c-4537-994b-6f9b320692d7" \
 go run main.go microservice server --kube-config=~/.kube/config
 ```
 
-# Setup Ingress
-- NOT QUITE WORKING
+# Check out Studio
+
+Navigate to `http://localhost:9007` for Studio and check out the goodness!!👍
+
+# TODO
+## Setup Ingress
+- NOT QUITE WORKING, Or more specifically we haven't tried with localhost / how to use domains
 
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.48.1/deploy/static/provider/baremetal/deploy.yaml
 kubectl patch -n ingress-nginx service ingress-nginx-controller -p '{"spec": {"type": "LoadBalancer"}}'
 ```
+
 
 # Deleting
 ## the local cluster
