@@ -73,6 +73,8 @@ go run main.go
 - in new terminal
 - TODO https://app.asana.com/0/1200181647276434/1200931154475271/f
 
+On *nix:
+
 ```sh
 GIT_REPO_DIRECTORY="/tmp/dolittle-local-dev" \
 GIT_REPO_DIRECTORY_ONLY="true" \
@@ -80,7 +82,8 @@ GIT_REPO_BRANCH=main \
 LISTEN_ON="localhost:8081" \
 HEADER_SECRET="FAKE" \
 AZURE_SUBSCRIPTION_ID="e7220048-8a2c-4537-994b-6f9b320692d7" \
-go run main.go microservice server --kube-config=~/.kube/config
+go run main.go microservice server --kube-config ~/.kube/config
+# for windows use --kube-config $USERPROFILE/.kube/config instead
 ```
 
 # Check out Studio
