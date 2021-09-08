@@ -2,8 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 
-import TextField from '@material-ui/core/TextField';
-
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -15,8 +13,13 @@ import Typography from '@material-ui/core/Typography';
 
 // This doesnt load :(
 import logoInfor from '../../images/infor.png'; // with import
-import { Color } from '@material-ui/lab';
+import logoIFS from '../../images/ifs.png';
+import logoSAP from '../../images/sap.png';
+
 import { Grid } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import LoopIcon from '@material-ui/icons/Loop';
+import '../purchaseOrder/purchaseorder.scss';
 
 type Props = {
     onNameChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
@@ -37,6 +40,12 @@ const useStyles = makeStyles((theme: Theme) =>
         resetContainer: {
             padding: theme.spacing(3),
         },
+        inactiveText: {
+            color: 'grey',
+        },
+        progressBar: {
+            color: '#ff9366',
+        },
     })
 );
 
@@ -49,7 +58,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     const steps = [
         'Select ERP system',
         'Provide a name',
-        'Connect with ERP system',
+        'Configure ERP system',
         'Wait for data',
     ];
 
@@ -68,6 +77,8 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                 alignItems='center'
             >
                 <img src={logoInfor} />
+                <img src={logoIFS} />
+                <img src={logoSAP} />
             </Grid>
         </>,
         <>
@@ -75,7 +86,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                 <p>
                     Establish a descriptive name for this microservice. A good example
                     might be, “supplier purchase orders”. This can always be changed
-                    later.{' '}
+                    later.
                 </p>
                 <form className={classes.root} noValidate autoComplete='off'>
                     <TextField
@@ -95,31 +106,44 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     password can be used for both endpoints.
                 </p>
                 <p>Webhook for purchase order head (POHEAD)</p>
-                <TextField
-                    disabled
-                    id='standard-disabled'
-                    defaultValue='https://dazzling-fayman.dolittle.io/api/webhooks / m3/pohead'
-                    style={{ width: '30%' }}
-                />
+                <span className={classes.inactiveText}>
+                    https://dazzling-fayman.dolittle.io/api/webhooks / m3/pohead
+                </span>
                 <Button color='primary'>COPY TO CLIPBOARD</Button>
+
                 <p>Webhook for purchase order line (POLINE)</p>
-                <TextField
-                    disabled
-                    id='standard-disabled'
-                    defaultValue='https://dazzling-fayman.dolittle.io/api/webhooks / m3/poline'
-                    style={{ width: '30%' }}
-                />
+                <span className={classes.inactiveText}>
+                    https://dazzling-fayman.dolittle.io/api/webhooks / m3/poline
+                </span>
                 <Button color='primary'>COPY TO CLIPBOARD</Button>
+
                 <p>Create username</p>
-                <TextField required id='outlined-required' variant='outlined' />
+                <TextField
+                    required
+                    id='outlined-required'
+                    label='Username'
+                    variant='outlined'
+                />
                 <p>Create Password</p>
                 <TextField
                     id='outlined-password-input'
                     type='password'
+                    label='Password'
                     autoComplete='current-password'
                     variant='outlined'
                 />
                 <Button color='primary'>GENERATE AND COPY TO CLIPBOARD</Button>
+            </Typography>
+        </>,
+        <>
+            <Typography>
+                <LoopIcon className={classes.progressBar} />
+                <span className='waitForData'>WAITING FOR DATA</span>
+                <span>
+                    It may take a few moments for data to start flowing. If studio cannot
+                    connect to your ERP system, try trouble-shooting.
+                </span>
+                <Button color='primary'>TROUBLESHOOT</Button>
             </Typography>
         </>,
     ];
