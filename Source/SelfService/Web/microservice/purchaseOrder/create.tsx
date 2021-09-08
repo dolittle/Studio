@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { Grid } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
@@ -17,14 +18,14 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-
 import { HttpResponseApplications2 } from '../../api/api';
 import { useGlobalContext } from '../../stores/notifications';
 import { Overview } from './overview';
+import '../purchaseOrder/purchaseorder.scss';
 
 type Props = {
-    application: HttpResponseApplications2
-    environment: string
+    application: HttpResponseApplications2;
+    environment: string;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
         resetContainer: {
             padding: theme.spacing(3),
         },
-    }),
+    })
 );
 
 function getSteps() {
@@ -72,36 +73,37 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const { setNotification } = useGlobalContext();
     const [value, setValue] = React.useState(0);
 
-
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = ['Select ERP system', 'Provide a name', 'Connect with ERP system'];
 
     const stepsContent = [
-        (
-            <>
-                <Typography>
-                    <p>Select the ERP system you have. Make sure you have access to the system for the next two steps.</p>
-                </Typography>
-            </>
-        ),
-        (
-            <>
-                <Typography>
-                    <p>Establish a descriptive name for this microservice. A good example might be, “supplier purchase orders”. This can always be changed later. </p>
-                </Typography>
-            </>
-        ),
-
-        (
-            <>
-                <Typography>
-                    <p>The webhook endpoints are provided below. Each one will be established separately in program CMS045 in M3, however, the same username and password can be used for both endpoints.</p>
-                </Typography>
-            </>
-        ),
-
-
+        <>
+            <Typography>
+                <p>
+                    Select the ERP system you have. Make sure you have access to the
+                    system for the next two steps.
+                </p>
+            </Typography>
+        </>,
+        <>
+            <Typography>
+                <p>
+                    Establish a descriptive name for this microservice. A good example
+                    might be, “supplier purchase orders”. This can always be changed
+                    later.{' '}
+                </p>
+            </Typography>
+        </>,
+        <>
+            <Typography>
+                <p>
+                    The webhook endpoints are provided below. Each one will be established
+                    separately in program CMS045 in M3, however, the same username and
+                    password can be used for both endpoints.
+                </p>
+            </Typography>
+        </>,
     ];
 
     const handleNext = () => {
@@ -119,7 +121,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const isCreate = true;
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         if (isCreate) {
-            setNotification('Health Status only available after microservice created', 'error');
+            setNotification(
+                'Health Status only available after microservice created',
+                'error'
+            );
             return;
         }
         setValue(newValue);
@@ -128,9 +133,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     return (
         <Grid
             container
-            direction="column"
-            justifyContent="flex-start"
-            alignItems="stretch"
+            direction='column'
+            justifyContent='flex-start'
+            alignItems='stretch'
         >
             <h1>Create purchase order API</h1>
             <div>
@@ -139,17 +144,16 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     onChange={handleChange}
                     TabIndicatorProps={{ style: { background: '#ffffff' } }}
                 >
-                    <Tab label="Overview" />
-                    <Tab label="Config" />
-                    <Tab label="Health Status" />
+                    {/* <Tab label='Overview' /> */}
+                    <Tab label='Configuration' />
+                    <Tab label='Health Status' />
+                    <DeleteIcon className='deleteIcon' />
+                    <Button className='deleteIcon'>DELETEs</Button>
                 </Tabs>
-
                 <TabPanel value={value} index={0}>
                     <Overview />
                 </TabPanel>
             </div>
-
-
         </Grid>
     );
 };
