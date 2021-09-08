@@ -101,7 +101,7 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
             )
         },
         {
-            kind: 'purchase-order',
+            kind: 'purchase-order-api',
             name: 'Purchase Order',
             description: 'Integrate your purchase orders from M3.',
             icon: (
@@ -176,7 +176,7 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
                     <StaticSite application={_props.application} environment={environment} />
                 )}
 
-                {microserviceTypeState === 'purchase-order' && (
+                {microserviceTypeState === 'purchase-order-api' && (
                     <PurchaseOrder application={_props.application} environment={environment} />
                 )}
             </Grid>
