@@ -102,6 +102,11 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             //    host: ingressInfo.host,
             //    domainPrefix: ingressInfo.domainPrefix
             //}
+
+            headImage: 'TODO',
+            runtimeImage: 'TODO',
+            webhooks: [],
+            rawDataLogID: 'TODO',
         },
     };
 
