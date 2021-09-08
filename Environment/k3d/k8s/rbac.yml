@@ -1,0 +1,65 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  annotations:
+    dolittle.io/tenant-id: 453e04a7-4f9d-42f2-b36c-d51fa2c83fa3
+    dolittle.io/application-id: 11b6cf47-5d9f-438f-8116-0d9828654657
+  labels:
+    tenant: Customer-Chris
+    application: Taco
+  name: developer
+  namespace: application-11b6cf47-5d9f-438f-8116-0d9828654657
+rules:
+- apiGroups: [""]
+  resources:
+  - configmaps
+  resourceNames:
+    - dev-order-env-variables
+    - dev-order-config-files
+  verbs:
+  - get
+  - patch
+- apiGroups: [""]
+  resources:
+  - secrets
+  resourceNames:
+    - dev-order-secret-env-variables
+  verbs:
+  - get
+  - patch
+- apiGroups: [""]
+  resources:
+  - pods
+  - pods/log
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups: ["apps"]
+  resources:
+  - deployments
+  verbs:
+  - get
+  - list
+  - watch
+  - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    dolittle.io/tenant-id: 453e04a7-4f9d-42f2-b36c-d51fa2c83fa3
+    dolittle.io/application-id: 11b6cf47-5d9f-438f-8116-0d9828654657
+  labels:
+    tenant: Customer-Chris
+    application: Taco
+  name: developer
+  namespace: application-11b6cf47-5d9f-438f-8116-0d9828654657
+roleRef:
+  kind: Role
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: User
+  name: local-dev
+  apiGroup: rbac.authorization.k8s.io
