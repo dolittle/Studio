@@ -142,7 +142,7 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
         case 'raw-data-log-ingestor':
             response = await apiSaveMicroservice(input);
             break;
-        case 'purchase-order':
+        case 'purchase-order-api':
             response = await apiSaveMicroservice(input);
             break;
         default:
