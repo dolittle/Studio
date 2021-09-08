@@ -64,7 +64,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
 
     const stepsContent = [
         <>
-            <Typography>
+            <Typography component={'span'}>
                 <p>
                     Select the ERP system you have. Make sure you have access to the
                     system for the next two steps.
@@ -82,7 +82,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
             </Grid>
         </>,
         <>
-            <Typography>
+            <Typography component={'span'}>
                 <p>
                     Establish a descriptive name for this microservice. A good example
                     might be, “supplier purchase orders”. This can always be changed
@@ -99,7 +99,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
             </Typography>
         </>,
         <>
-            <Typography>
+            <Typography component={'span'}>
                 <p>
                     The webhook endpoints are provided below. Each one will be established
                     separately in program CMS045 in M3, however, the same username and
@@ -136,9 +136,10 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
             </Typography>
         </>,
         <>
-            <Typography>
+            <Typography component={'span'}>
                 <LoopIcon className={classes.progressBar} />
                 <span className='waitForData'>WAITING FOR DATA</span>
+                <br />
                 <span>
                     It may take a few moments for data to start flowing. If studio cannot
                     connect to your ERP system, try trouble-shooting.
