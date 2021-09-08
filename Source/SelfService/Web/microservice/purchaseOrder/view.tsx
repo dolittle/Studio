@@ -75,7 +75,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 </Tabs>
 
                 <TabPanel value={value} index={0}>
-                    <Overview />
+                    {/* <Overview /> */}
                 </TabPanel>
 
                 <TabPanel value={value} index={1}>
