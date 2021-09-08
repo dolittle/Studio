@@ -60,7 +60,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 }
             ],
             webhookStatsAuthorization: 'Bearer TODO',
-            writeTo: 'stdout',
+            writeTo: 'nats', //TODO: SAD - This is broken
         }
     } as MicroserviceRawDataLogIngestor;
     return (
