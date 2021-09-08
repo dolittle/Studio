@@ -97,7 +97,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
         },
         {
             path: '/documentation/application/:applicationId/:environment/overview',
-            to: generatePath('/documentation/application/:applicationId/overview', {
+            to: generatePath('/documentation/application/:applicationId/:environment/overview', {
                 applicationId: application.id,
                 environment: currentEnvironment,
             }),
