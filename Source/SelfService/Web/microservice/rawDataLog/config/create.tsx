@@ -27,10 +27,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     const fromStore = {
         rawDataLogIngestor: {
-            image: '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/dolittle/platform/platform-api:dev-x', // TODO change
+            image: 'dolittle/platform-api:latest', // TODO change
         },
         runtime: {
-            image: 'dolittle/runtime:5.6.0'
+            image: 'dolittle/runtime:6.1.0'
         }
     };
 
