@@ -9,21 +9,17 @@ import Tab from '@material-ui/core/Tab';
 import { TabPanel } from '../../utils/materialUi';
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
+
 import { savePurchaseOrderMicroservice } from '../../stores/microservice';
-import { MicroservicePurchaseOrder, MicroserviceSimple } from '../../api/index';
+import { MicroservicePurchaseOrder } from '../../api/index';
 
 import { HttpResponseApplications2 } from '../../api/api';
 import { useGlobalContext } from '../../stores/notifications';
 import { Overview } from './overview';
 import { Guid } from '@dolittle/rudiments';
+import '../purchaseOrder/purchaseorder.scss';
 
 type Props = {
     application: HttpResponseApplications2;
@@ -110,6 +106,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         },
     };
 
+    const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const [msName, setMsName] = React.useState('');
 
@@ -226,15 +223,15 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     onChange={handleChange}
                     TabIndicatorProps={{ style: { background: '#ffffff' } }}
                 >
-                    <Tab label='Overview' />
-                    <Tab label='Config' />
+                    <Tab label='Configuration' />
                     <Tab label='Health Status' />
-                </Tabs>
-
+                    <DeleteIcon className='deleteIcon' />
+                    <Button className='deleteIcon'>DELETEs</Button>
+                </Tabs >
                 <TabPanel value={value} index={0}>
                     <Overview onNameChange={onChangeHandler(setMsName)} />
                 </TabPanel>
-            </div>
-        </Grid>
+            </div >
+        </Grid >
     );
 };
