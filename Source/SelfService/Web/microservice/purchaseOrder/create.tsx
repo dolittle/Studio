@@ -89,7 +89,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             microserviceId,
         },
         name: 'TODO:Changeme', // TODO update based on name change in stepper part 2
-        kind: 'purchase-order',
+        kind: 'purchase-order-api',
         environment: _props.environment,
         // TODO make specific for the purchase-order
         extra: {
@@ -102,6 +102,11 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             //    host: ingressInfo.host,
             //    domainPrefix: ingressInfo.domainPrefix
             //}
+
+            headImage: 'TODO',
+            runtimeImage: 'TODO',
+            webhooks: [],
+            rawDataLogID: 'TODO',
         },
     };
 
