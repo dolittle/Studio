@@ -8,6 +8,13 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import Grid from '@material-ui/core/Grid';
+import Grow from '@material-ui/core/Grow';
+import Popper from '@material-ui/core/Popper';
+import Paper from '@material-ui/core/Paper';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import MenuList from '@material-ui/core/MenuList';
 
 import { ShortInfoWithEnvironment } from '../api/api';
 
@@ -18,12 +25,16 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles, Theme } from '@material-ui/core';
 import { createStyles } from '@material-ui/styles';
+import { backgroundColor } from '../theme/viewCard';
+import '../application/applicationScreen.scss';
 
 type Props = {
     applications: ShortInfoWithEnvironment[];
     applicationId: string;
     environment: string;
 };
+
+const options = ['+ New Application'];
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -43,12 +54,36 @@ const useStyles = makeStyles((theme: Theme) =>
             // marginRight: theme.spacing(1),
             // minWidth: 120,
             // float: 'right',
-            color: 'white',
+            backgroundColor: 'white',
         },
     })
 );
 
 export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
+    const [open, setOpen] = React.useState(false);
+    const anchorRef: any = React.useRef(null);
+    const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+    const handleMenuItemClick = (event, index) => {
+        setSelectedIndex(index);
+        setOpen(false);
+    };
+
+    const handleClick = () => {
+        console.info(`You clicked ${options[selectedIndex]}`);
+    };
+    const handleToggle = () => {
+        setOpen((prevOpen) => !prevOpen);
+    };
+
+    const handleClose = (event) => {
+        if (anchorRef.current && anchorRef.current.contains!(event.target)) {
+            return;
+        }
+
+        setOpen(false);
+    };
+
     const classes = useStyles();
     const { setNotification, setCurrentApplicationId, setCurrentEnvironment } =
         useGlobalContext();
@@ -113,13 +148,77 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
         //         {items}
         //     </Select>
         // </FormControl>
-        <ButtonGroup color='primary' aria-label='outlined primary button group'>
-            <Select value={currentApplicationEnvironment} onChange={onChange}>
-                {items}
-            </Select>
-            <NotificationsIcon className={classes.notifPanel} />
-            <AccountCircleIcon className={classes.notifPanel} />
-            <MoreVertIcon className={classes.notifPanel} />
-        </ButtonGroup>
+
+        <Grid container direction='row' alignItems='center'>
+            <Grid item xs={12}>
+                <ButtonGroup
+                    aria-label='split button'
+                    className='NavbarColor'
+                    ref={anchorRef}
+                >
+                    <Button onClick={handleToggle} className='envTitle'>
+                        {items.slice(0, 1)}
+                    </Button>
+
+                    <Button
+                        size='small'
+                        aria-controls={open ? 'split-button-menu' : undefined}
+                        aria-expanded={open ? 'true' : undefined}
+                        aria-label='select merge strategy'
+                        aria-haspopup='menu'
+                        className='NavbarColor'
+                        onClick={handleToggle}
+                    >
+                        <ArrowDropDownIcon className='envTitle' />
+                    </Button>
+                    <NotificationsIcon />
+                    <AccountCircleIcon />
+                    <MoreVertIcon />
+                </ButtonGroup>
+
+                <Popper
+                    open={open}
+                    anchorEl={anchorRef.current}
+                    role={undefined}
+                    transition
+                    disablePortal
+                    className='NewApplication'
+                >
+                    {({ TransitionProps, placement }) => (
+                        <Grow
+                            {...TransitionProps}
+                            style={{
+                                transformOrigin:
+                                    placement === 'bottom'
+                                        ? 'center top'
+                                        : 'center bottom',
+                            }}
+                        >
+                            <Paper>
+                                <ClickAwayListener onClickAway={handleClose}>
+                                    <MenuList
+                                        id='split-button-menu'
+                                        className='NavbarColor'
+                                    >
+                                        {options.map((option, index) => (
+                                            <MenuItem
+                                                key={option}
+                                                disabled={index === 2}
+                                                selected={index === selectedIndex}
+                                                onClick={(event) =>
+                                                    handleMenuItemClick(event, index)
+                                                }
+                                            >
+                                                {option}
+                                            </MenuItem>
+                                        ))}
+                                    </MenuList>
+                                </ClickAwayListener>
+                            </Paper>
+                        </Grow>
+                    )}
+                </Popper>
+            </Grid>
+        </Grid>
     );
 };
