@@ -3,14 +3,14 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Grid } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { TabPanel } from '../../utils/materialUi';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-
 
 import { savePurchaseOrderMicroservice } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
@@ -20,6 +20,7 @@ import { useGlobalContext } from '../../stores/notifications';
 import { Overview } from './overview';
 import { Guid } from '@dolittle/rudiments';
 import '../purchaseOrder/purchaseorder.scss';
+import { microservices } from '../../stores/state';
 
 type Props = {
     application: HttpResponseApplications2;
@@ -43,28 +44,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     })
 );
-
-function getSteps() {
-    return ['Select ERP system', 'Provide a name', 'Connect with ERP system'];
-}
-
-function getStepContent(step: number) {
-    switch (step) {
-        case 0:
-            return `For each ad campaign that you create, you can control how much
-                you're willing to spend on clicks and conversions, which networks
-                and geographical locations you want your ads to show on, and more.`;
-        case 1:
-            return 'An ad group contains one or more ads which target a shared set of keywords.';
-        case 2:
-            return `Try out different ad text to see what brings in the most customers,
-                and learn how to enhance your ads using features like ad extensions.
-                If you run into any problems with your ads, find out how to tell if
-                they're running and how to resolve approval issues.`;
-        default:
-            return 'Unknown step';
-    }
-}
 
 export const Create: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
@@ -226,10 +205,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     <Tab label='Configuration' />
                     <Tab label='Health Status' />
                     <DeleteIcon className='deleteIcon' />
-                    <Button className='deleteIcon'>DELETEs</Button>
+                    <Button className='deleteIcon'>DELETE</Button>
                 </Tabs >
                 <TabPanel value={value} index={0}>
-                    <Overview onNameChange={onChangeHandler(setMsName)} />
+                    <Overview onNameChange={onChangeHandler(setMsName)} onSave={_onSave} microservice={ms} />
                 </TabPanel>
             </div >
         </Grid >
