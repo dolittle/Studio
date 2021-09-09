@@ -20,9 +20,13 @@ import { Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import LoopIcon from '@material-ui/icons/Loop';
 import '../purchaseOrder/purchaseorder.scss';
+import { microservices } from '../../stores/state';
+import { MicroservicePurchaseOrder } from '../../api/index';
 
 type Props = {
     onNameChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+    onSave: (microservice: MicroservicePurchaseOrder) => any;
+    microservice: MicroservicePurchaseOrder;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -51,10 +55,18 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Overview: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
+    // TODO not in use now we are baking it in here.
     const onNameChange = _props.onNameChange;
+    const onSave = _props.onSave;
+
+    const ms = _props.microservice;
 
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
+    const [msName, setMsName] = React.useState('');
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
     const steps = [
         'Select ERP system',
         'Provide a name',
@@ -93,7 +105,10 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                         id='microserviceName'
                         label='Name'
                         variant='outlined'
-                        onChange={onNameChange}
+                        value={msName}
+                        onChange={(event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+                            setMsName(newValue as string);
+                        }}
                     />
                 </form>
             </Typography>
@@ -123,6 +138,11 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     id='outlined-required'
                     label='Username'
                     variant='outlined'
+                    value={username}
+                    onChange={(event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+                        console.log('username', newValue);
+                        setUsername(newValue as string);
+                    }}
                 />
                 <p>Create Password</p>
                 <TextField
@@ -131,6 +151,11 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     label='Password'
                     autoComplete='current-password'
                     variant='outlined'
+                    value={password}
+                    onChange={(event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+                        console.log('password', newValue);
+                        setPassword(newValue as string);
+                    }}
                 />
                 <Button color='primary'>GENERATE AND COPY TO CLIPBOARD</Button>
             </Typography>
@@ -149,7 +174,20 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         </>,
     ];
 
-    const handleNext = () => {
+    const handleNext = async () => {
+        // Save microservice
+        // Redirect to view
+        if (activeStep === 2) {
+            ms.name = msName;
+            // TODO
+            console.log('TODO Add username to webhook', username);
+            console.log('TODO Add password to webhook', password);
+            console.log('TODO build webhooks');
+            ms.extra.webhooks = [];
+            await onSave(ms);
+            return;
+        }
+
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
@@ -162,6 +200,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     };
 
     return (
+
         <div className={classes.root}>
             <Stepper activeStep={activeStep} orientation='vertical'>
                 {steps.map((label, index) => (

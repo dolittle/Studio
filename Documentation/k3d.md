@@ -61,6 +61,7 @@ cd Source/SelfService/Web && yarn start:dev
 # Run self-service backend
 - in new terminal
 ```sh
+cd Source/SelfService/Backend
 HEADER_SECRET="FAKE" \
 PLATFORM_API="localhost:8081" \
 DEVELOPMENT_TENANT_ID="453e04a7-4f9d-42f2-b36c-d51fa2c83fa3" \
