@@ -9,13 +9,12 @@ import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWi
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 // Not scoped like svelte
 import '../application/applicationScreen.scss';
-import { ApplicationsChanger } from '../application/applicationsChanger';
-import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { PickEnvironment } from '../components/pickEnvironment';
 import { InsightsContainerScreen } from '../insights/container';
 import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { useGlobalContext } from '../stores/notifications';
+import { TopNavBar } from '../components/topNavBar';
 
 export const InsightsScreen: React.FunctionComponent = () => {
     const history = useHistory();
@@ -115,15 +114,7 @@ export const InsightsScreen: React.FunctionComponent = () => {
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <div id="topNavBar" className="nav flex-container">
-                <div className="left flex-start">
-                    <BreadCrumbContainer routes={routes} />
-                </div>
-
-                <div className="right item flex-end">
-                    <ApplicationsChanger applications={applications} applicationId={applicationId} environment={currentEnvironment} />
-                </div>
-            </div>
+            <TopNavBar routes={routes} applications={applications} applicationId={applicationId} environment={currentEnvironment} />
 
             <Switch>
                 <Route path="/insights/application/:applicationId/:environment">

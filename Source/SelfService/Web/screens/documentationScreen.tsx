@@ -16,14 +16,13 @@ import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 // I wonder if scss is scoped like svelte. I hope so!
 // Not scoped like svelte
 import '../application/applicationScreen.scss';
-import { ApplicationsChanger } from '../application/applicationsChanger';
 
-import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { DocumentationContainerScreen } from '../documentation/container';
 import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
 import { useGlobalContext } from '../stores/notifications';
+import { TopNavBar } from '../components/topNavBar';
 
 
 
@@ -128,17 +127,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <div id="topNavBar" className="nav flex-container">
-                <div className="left flex-start">
-                    <BreadCrumbContainer routes={routes} />
-                </div>
-
-                <Route path="/documentation/application/:applicationId/:environment">
-                    <div className="right item flex-end">
-                        <ApplicationsChanger applications={applications} applicationId={applicationId} environment={currentEnvironment} />
-                    </div>
-                </Route>
-            </div>
+            <TopNavBar routes={routes} applications={applications} applicationId={applicationId} environment={currentEnvironment} />
 
             <Switch>
                 <Route path="/documentation/application/:applicationId/:environment">
