@@ -68,6 +68,3 @@ spec:
           ports:
             - name: mongo
               containerPort: 27017
-          # volumeMounts:
-          #   - name: dev-mongo-storage
-          #     mountPath: /data/db
