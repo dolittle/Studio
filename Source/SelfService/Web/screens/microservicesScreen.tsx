@@ -48,6 +48,8 @@ import {
     PickEnvironment
 } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
+import { TopRightMenu } from '../components/topRightMenu';
+import { Grid } from '@material-ui/core';
 
 export const MicroservicesScreen: React.FunctionComponent = () => {
     const history = useHistory();
@@ -171,14 +173,21 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <div id="topNavBar" className="nav flex-container">
-                <div className="left flex-start">
+            <div id="topNavBar" >
+                <Grid
+                    container
+                    direction="row"
+                    justifyContent="space-between"
+                >
                     <BreadCrumbContainer routes={routes} />
-                </div>
-
-                <div className="right item flex-end">
-                    <ApplicationsChanger applications={applications} applicationId={applicationId} environment={currentEnvironment} />
-                </div>
+                    <Grid
+                        direction="row"
+                        justifyContent="flex-end"
+                        alignItems="flex-end"
+                    >
+                        <TopRightMenu applications={applications} applicationId={applicationId} environment={currentEnvironment} />
+                    </Grid>
+                </Grid>
             </div>
 
             <Switch>
@@ -204,6 +213,7 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
 
                 <RouteNotFound redirectUrl={redirectUrl} />
             </Switch>
+
         </LayoutWithSidebar >
     );
 };
