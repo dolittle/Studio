@@ -3,18 +3,6 @@
 
 import React from 'react';
 
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import Grid from '@material-ui/core/Grid';
-import Grow from '@material-ui/core/Grow';
-import Popper from '@material-ui/core/Popper';
-import Paper from '@material-ui/core/Paper';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import MenuList from '@material-ui/core/MenuList';
 
 import { ShortInfoWithEnvironment } from '../api/api';
 
@@ -25,8 +13,6 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles, Theme } from '@material-ui/core';
 import { createStyles } from '@material-ui/styles';
-import { backgroundColor } from '../theme/viewCard';
-import '../application/applicationScreen.scss';
 
 type Props = {
     applications: ShortInfoWithEnvironment[];
@@ -34,13 +20,10 @@ type Props = {
     environment: string;
 };
 
-const options = ['+ New Application'];
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         formControl: {
-            margin: theme.spacing(1),
-            marginRight: theme.spacing(30),
+            marginRight: theme.spacing(3),
             minWidth: 120,
             float: 'left',
         },
@@ -49,54 +32,24 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: 'flex-end',
         },
 
-        notifPanel: {
-            // margin: theme.spacing(1),
-            // marginRight: theme.spacing(1),
-            // minWidth: 120,
-            // float: 'right',
-            backgroundColor: 'white',
+        icon: {
+            fill: 'white',
         },
     })
 );
 
 export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
-    const [open, setOpen] = React.useState(false);
-    const anchorRef: any = React.useRef(null);
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
-
-    const handleMenuItemClick = (event, index) => {
-        setSelectedIndex(index);
-        setOpen(false);
-    };
-
-    const handleClick = () => {
-        console.info(`You clicked ${options[selectedIndex]}`);
-    };
-    const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
-    };
-
-    const handleClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains!(event.target)) {
-            return;
-        }
-
-        setOpen(false);
-    };
-
     const classes = useStyles();
     const { setNotification, setCurrentApplicationId, setCurrentEnvironment } =
         useGlobalContext();
     const applications = props!.applications;
     const currentApplicationEnvironment = `${props!.applicationId}/${props!.environment}`;
 
-    const items = applications.map((application) => {
+    const items = applications.map((application, index) => {
         // TODO maybe we filter this into an order?
         // key using / so we can just pump it into the url
         const key = `${application.id}/${application.environment}`;
-        const text = `${application.environment.toUpperCase()} ENVIRONMENT · ${
-            application.name
-        }`;
+        const text = `${application.environment.toUpperCase()} ENVIRONMENT · ${application.name}`;
         return (
             <MenuItem className={classes.menuItem} key={key} value={key}>
                 {text}
@@ -142,83 +95,23 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
         window.location.href = href;
     };
 
+    // TODO How can we fix the popper or the arrow to appear in the first menu item
     return (
-        // <FormControl className={classes.formControl}>
-        //     <Select value={currentApplicationEnvironment} onChange={onChange}>
-        //         {items}
-        //     </Select>
-        // </FormControl>
-
-        <Grid container direction='row' alignItems='center'>
-            <Grid item xs={12}>
-                <ButtonGroup
-                    aria-label='split button'
-                    className='NavbarColor'
-                    ref={anchorRef}
+        <>
+            <FormControl className={classes.formControl}>
+                <Select
+                    value={currentApplicationEnvironment}
+                    onChange={onChange}
+                    inputProps={{
+                        classes: {
+                            icon: classes.icon,
+                        }
+                    }}
                 >
-                    <Button onClick={handleToggle} className='envTitle'>
-                        {items.slice(0, 1)}
-                    </Button>
 
-                    <Button
-                        size='small'
-                        aria-controls={open ? 'split-button-menu' : undefined}
-                        aria-expanded={open ? 'true' : undefined}
-                        aria-label='select merge strategy'
-                        aria-haspopup='menu'
-                        className='NavbarColor'
-                        onClick={handleToggle}
-                    >
-                        <ArrowDropDownIcon className='envTitle' />
-                    </Button>
-                    <NotificationsIcon />
-                    <AccountCircleIcon />
-                    <MoreVertIcon />
-                </ButtonGroup>
-
-                <Popper
-                    open={open}
-                    anchorEl={anchorRef.current}
-                    role={undefined}
-                    transition
-                    disablePortal
-                    className='NewApplication'
-                >
-                    {({ TransitionProps, placement }) => (
-                        <Grow
-                            {...TransitionProps}
-                            style={{
-                                transformOrigin:
-                                    placement === 'bottom'
-                                        ? 'center top'
-                                        : 'center bottom',
-                            }}
-                        >
-                            <Paper>
-                                <ClickAwayListener onClickAway={handleClose}>
-                                    <MenuList
-                                        id='split-button-menu'
-                                        className='NavbarColor'
-                                    >
-                                        {options.map((option, index) => (
-                                            <MenuItem
-                                                key={option}
-                                                disabled={index === 2}
-                                                selected={index === selectedIndex}
-                                                onClick={(event) =>
-                                                    handleMenuItemClick(event, index)
-                                                }
-                                            >
-                                                {option}
-                                            </MenuItem>
-                                        ))}
-                                    </MenuList>
-                                </ClickAwayListener>
-                            </Paper>
-                        </Grow>
-                    )}
-                </Popper>
-            </Grid>
-        </Grid>
+                    {items}
+                </Select>
+            </FormControl>
+        </>
     );
 };
