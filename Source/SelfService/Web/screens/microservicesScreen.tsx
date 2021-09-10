@@ -50,6 +50,7 @@ import {
 import { RouteNotFound } from '../components/notfound';
 import { TopRightMenu } from '../components/topRightMenu';
 import { Grid } from '@material-ui/core';
+import { TopNavBar } from '../components/topNavBar';
 
 export const MicroservicesScreen: React.FunctionComponent = () => {
     const history = useHistory();
@@ -173,22 +174,7 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <div id="topNavBar" >
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="space-between"
-                >
-                    <BreadCrumbContainer routes={routes} />
-                    <Grid
-                        direction="row"
-                        justifyContent="flex-end"
-                        alignItems="flex-end"
-                    >
-                        <TopRightMenu applications={applications} applicationId={applicationId} environment={currentEnvironment} />
-                    </Grid>
-                </Grid>
-            </div>
+            <TopNavBar routes={routes} applications={applications} applicationId={applicationId} environment={currentEnvironment} />
 
             <Switch>
                 <Route exact path="/microservices/application/:applicationId/:environment/overview">
