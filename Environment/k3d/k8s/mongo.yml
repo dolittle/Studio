@@ -1,0 +1,73 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    dolittle.io/tenant-id: 453e04a7-4f9d-42f2-b36c-d51fa2c83fa3
+    dolittle.io/application-id: 11b6cf47-5d9f-438f-8116-0d9828654657
+  labels:
+    tenant: Customer-Chris
+    application: Taco
+    environment: Dev
+    infrastructure: Mongo
+  name: dev-mongo
+  namespace: application-11b6cf47-5d9f-438f-8116-0d9828654657
+spec:
+  selector:
+    tenant: Customer-Chris
+    application: Taco
+    environment: Dev
+    infrastructure: Mongo
+  clusterIP: None
+  ports:
+    - port: 27017
+      targetPort: mongo
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    dolittle.io/tenant-id: 453e04a7-4f9d-42f2-b36c-d51fa2c83fa3
+    dolittle.io/application-id: 11b6cf47-5d9f-438f-8116-0d9828654657
+  labels:
+    tenant: Customer-Chris
+    application: Taco
+    environment: Dev
+    infrastructure: Mongo
+  name: dev-mongo
+  namespace: application-11b6cf47-5d9f-438f-8116-0d9828654657
+spec:
+  selector:
+    matchLabels:
+      tenant: Customer-Chris
+      application: Taco
+      environment: Dev
+      infrastructure: Mongo
+
+  serviceName: dev-mongo
+  replicas: 1
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+
+  template:
+    metadata:
+      annotations:
+        dolittle.io/tenant-id: 453e04a7-4f9d-42f2-b36c-d51fa2c83fa3
+        dolittle.io/application-id: 11b6cf47-5d9f-438f-8116-0d9828654657
+      labels:
+        tenant: Customer-Chris
+        application: Taco
+        environment: Dev
+        infrastructure: Mongo
+    spec:
+      containers:
+        - name: mongo
+          image: dolittle/mongodb:4.2.2
+          ports:
+            - name: mongo
+              containerPort: 27017
+          # volumeMounts:
+          #   - name: dev-mongo-storage
+          #     mountPath: /data/db
