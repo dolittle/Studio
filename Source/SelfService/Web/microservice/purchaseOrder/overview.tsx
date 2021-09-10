@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-// This doesnt load :(
+import { useGlobalContext } from '../../stores/notifications';
 import logoInfor from '../../images/infor.png'; // with import
 import logoIFS from '../../images/ifs.png';
 import logoSAP from '../../images/sap.png';
@@ -20,7 +20,6 @@ import { Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import LoopIcon from '@material-ui/icons/Loop';
 import '../purchaseOrder/purchaseorder.scss';
-import { microservices } from '../../stores/state';
 import { MicroservicePurchaseOrder } from '../../api/index';
 
 type Props = {
@@ -54,6 +53,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Overview: React.FunctionComponent<Props> = (props) => {
+    const { setNotification } = useGlobalContext();
+
     const _props = props!;
     // TODO not in use now we are baking it in here.
     const onNameChange = _props.onNameChange;
@@ -100,17 +101,15 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     might be, “supplier purchase orders”. This can always be changed
                     later.
                 </p>
-                <form className={classes.root} noValidate autoComplete='off'>
-                    <TextField
-                        id='microserviceName'
-                        label='Name'
-                        variant='outlined'
-                        value={msName}
-                        onChange={(event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
-                            setMsName(newValue as string);
-                        }}
-                    />
-                </form>
+                <TextField
+                    id='microserviceName'
+                    label='Name'
+                    variant='outlined'
+                    value={msName}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        setMsName(event.target.value!);
+                    }}
+                />
             </Typography>
         </>,
         <>
@@ -139,9 +138,9 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     label='Username'
                     variant='outlined'
                     value={username}
-                    onChange={(event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
-                        console.log('username', newValue);
-                        setUsername(newValue as string);
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        console.log('username', event.target.value!);
+                        setUsername(event.target.value!);
                     }}
                 />
                 <p>Create Password</p>
@@ -152,9 +151,9 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     autoComplete='current-password'
                     variant='outlined'
                     value={password}
-                    onChange={(event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
-                        console.log('password', newValue);
-                        setPassword(newValue as string);
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        console.log('setPassword', event.target.value!);
+                        setPassword(event.target.value!);
                     }}
                 />
                 <Button color='primary'>GENERATE AND COPY TO CLIPBOARD</Button>
@@ -184,6 +183,9 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
             console.log('TODO Add password to webhook', password);
             console.log('TODO build webhooks');
             ms.extra.webhooks = [];
+            setNotification(`Write to platform-api name: ${ms.name}`, 'info');
+            return;
+            // TODO
             await onSave(ms);
             return;
         }
