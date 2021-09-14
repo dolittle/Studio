@@ -3,7 +3,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid, IconButton } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { TabPanel } from '../../utils/materialUi';
@@ -19,7 +19,6 @@ import { HttpResponseApplications2 } from '../../api/api';
 import { useGlobalContext } from '../../stores/notifications';
 import { Overview } from './overview';
 import { Guid } from '@dolittle/rudiments';
-import '../purchaseOrder/purchaseorder.scss';
 import { microservices } from '../../stores/state';
 
 type Props = {
@@ -27,6 +26,8 @@ type Props = {
     environment: string;
 };
 
+// TODO add waitForData
+// TODO add Deleteicon colours
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -41,6 +42,15 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         resetContainer: {
             padding: theme.spacing(3),
+        },
+
+        iconRoot: {
+            padding: 0,
+            marginRight: theme.spacing(1),
+            fill: 'white',
+        },
+        icon: {
+            fill: 'white',
         },
     })
 );
@@ -63,7 +73,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             tenantId: application.tenantId,
             microserviceId,
         },
-        name: 'TODO:Changeme', // TODO update based on name change in stepper part 2
+        name: '',
         kind: 'purchase-order-api',
         environment: _props.environment,
         // TODO make specific for the purchase-order
@@ -77,67 +87,14 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             //    host: ingressInfo.host,
             //    domainPrefix: ingressInfo.domainPrefix
             //}
-
-            headImage: 'TODO',
-            runtimeImage: 'TODO',
+            headImage: '',
+            runtimeImage: '',
             webhooks: [],
-            rawDataLogID: 'TODO',
+            rawDataLogName: '',
         },
     };
 
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [msName, setMsName] = React.useState('');
-
-    const steps = ['Select ERP system', 'Provide a name', 'Connect with ERP system'];
-
-    const stepsContent = [
-        <>
-            <Typography>
-                <p>
-                    Select the ERP system you have. Make sure you have access to the
-                    system for the next two steps.
-                </p>
-            </Typography>
-        </>,
-        <>
-            <Typography>
-                <p>
-                    Establish a descriptive name for this microservice. A good example
-                    might be, “supplier purchase orders”. This can always be changed
-                    later.{' '}
-                </p>
-            </Typography>
-        </>,
-        <>
-            <Typography>
-                <p>
-                    The webhook endpoints are provided below. Each one will be established
-                    separately in program CMS045 in M3, however, the same username and
-                    password can be used for both endpoints.
-                </p>
-            </Typography>
-        </>,
-    ];
-
-    const handleNext = async () => {
-        // Save microservice
-        // Redirect to view
-        if (activeStep === 2) {
-            await _onSave(ms);
-            return;
-        }
-
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
-
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-
-    const handleReset = () => {
-        setActiveStep(0);
-    };
 
     const isCreate = true;
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -155,37 +112,15 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const runtimeImage = 'dolittle/runtime:6.1.0';
 
     const _onSave = (ms: MicroservicePurchaseOrder): void => {
-        console.log(msName);
-        const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}?step=3`;
-        history.push(href);
-        return;
-        // TODO when platform-api is running or mock
-        ms.name = msName;
         ms.extra.headImage = headImage;
         ms.extra.runtimeImage = runtimeImage;
-
+        // TODO handle exception (maybe move to wait)
         savePurchaseOrderMicroservice(ms).then((data) => {
             // TODO We want to take them to the actual new microservice and set to step 3.
             //const href = `/microservices/application/${application.id}/${environment}/overview`;
             const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}?step=3`;
             history.push(href);
-        });
-    };
-
-    const onChangeHandler = (
-        setter: React.Dispatch<React.SetStateAction<string>>
-    ): ((
-        event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-        newValue?: string
-    ) => void) => {
-        return (
-            event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-            newValue?: string
-        ): void => {
-            {
-                setter(newValue!);
-            }
-        };
+        }).catch(reason => console.log(reason));
     };
 
     return (
@@ -204,11 +139,18 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 >
                     <Tab label='Configuration' />
                     <Tab label='Health Status' />
-                    <DeleteIcon className='deleteIcon' />
-                    <Button className='deleteIcon'>DELETE</Button>
+
+                    <IconButton aria-label="more-options" onClick={() => {
+                        setNotification('TODO: More options?', 'info');
+                    }}
+                        className={classes.iconRoot}
+                    >
+                        <DeleteIcon className={classes.icon} />
+                        <span>DELETE</span>
+                    </IconButton>
                 </Tabs >
                 <TabPanel value={value} index={0}>
-                    <Overview onNameChange={onChangeHandler(setMsName)} onSave={_onSave} microservice={ms} />
+                    <Overview onSave={_onSave} microservice={ms} />
                 </TabPanel>
             </div >
         </Grid >

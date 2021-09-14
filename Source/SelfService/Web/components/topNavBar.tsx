@@ -35,11 +35,7 @@ export const TopNavBar: React.FunctionComponent<Props> = (props) => {
                     justifyContent="space-between"
                 >
                     <BreadCrumbContainer routes={_props.routes} />
-                    <Grid
-                        direction="row"
-                        justifyContent="flex-end"
-                        alignItems="flex-end"
-                    >
+                    <Grid>
                         <TopRightMenu applications={_props.applications} applicationId={_props.applicationId} environment={_props.environment} />
                     </Grid>
                 </Grid>

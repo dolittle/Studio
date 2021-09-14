@@ -19,14 +19,18 @@ import logoSAP from '../../images/sap.png';
 import { Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import LoopIcon from '@material-ui/icons/Loop';
-import '../purchaseOrder/purchaseorder.scss';
-import { MicroservicePurchaseOrder } from '../../api/index';
+import {
+    MicroservicePurchaseOrder,
+    MicroserviceRawDataLogIngestorWebhookConfig,
+    ConnectorWebhookConfigBasic,
+    ConnectorWebhookConfigBearer,
+} from '../../api/index';
 
 type Props = {
-    onNameChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
     onSave: (microservice: MicroservicePurchaseOrder) => any;
     microservice: MicroservicePurchaseOrder;
 };
+
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -51,13 +55,11 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     })
 );
-
+// TODO ask Liz about bearer token
 export const Overview: React.FunctionComponent<Props> = (props) => {
     const { setNotification } = useGlobalContext();
 
     const _props = props!;
-    // TODO not in use now we are baking it in here.
-    const onNameChange = _props.onNameChange;
     const onSave = _props.onSave;
 
     const ms = _props.microservice;
@@ -74,6 +76,10 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         'Configure ERP system',
         'Wait for data',
     ];
+
+    const webhookPrefix = 'https://dazzling-fayman.dolittle.io/api/webhooks';
+    const webhookPoHead = 'm3/pohead';
+    const webhookPoLine = 'm3/poline';
 
     const stepsContent = [
         <>
@@ -121,13 +127,13 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                 </p>
                 <p>Webhook for purchase order head (POHEAD)</p>
                 <span className={classes.inactiveText}>
-                    https://dazzling-fayman.dolittle.io/api/webhooks / m3/pohead
+                    {webhookPrefix} / m3/pohead
                 </span>
                 <Button color='primary'>COPY TO CLIPBOARD</Button>
 
                 <p>Webhook for purchase order line (POLINE)</p>
                 <span className={classes.inactiveText}>
-                    https://dazzling-fayman.dolittle.io/api/webhooks / m3/poline
+                    {webhookPrefix} / m3/poline
                 </span>
                 <Button color='primary'>COPY TO CLIPBOARD</Button>
 
@@ -182,10 +188,22 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
             console.log('TODO Add username to webhook', username);
             console.log('TODO Add password to webhook', password);
             console.log('TODO build webhooks');
-            ms.extra.webhooks = [];
+            const authorization = makeBasicAuth({ username, password } as ConnectorWebhookConfigBasic);
+            // This is the name given to the creation of raw-data-log
+            ms.extra.rawDataLogName = 'rawdatalogv1';
+            ms.extra.webhooks = [
+                {
+                    kind: webhookPoHead,
+                    uriSuffix: webhookPoHead,
+                    authorization,
+                },
+                {
+                    kind: webhookPoLine,
+                    uriSuffix: webhookPoLine,
+                    authorization,
+                }
+            ] as MicroserviceRawDataLogIngestorWebhookConfig[];
             setNotification(`Write to platform-api name: ${ms.name}`, 'info');
-            return;
-            // TODO
             await onSave(ms);
             return;
         }
@@ -247,3 +265,12 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         </div>
     );
 };
+// TODO move to util as used in multiple places
+function makeBasicAuth(data: ConnectorWebhookConfigBasic): string {
+    const suffix = btoa(`${data.username}:${data.password}`);
+    return `Basic ${suffix}`;
+}
+
+function makeBearer(data: ConnectorWebhookConfigBearer): string {
+    return `Bearer ${data.token}`;
+}

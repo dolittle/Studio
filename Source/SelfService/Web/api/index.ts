@@ -149,7 +149,7 @@ export type MicroservicePurchaseOrderExtra = {
     headImage: string;
     runtimeImage: string;
     webhooks: MicroserviceRawDataLogIngestorWebhookConfig[]; // TODO We either need to store the webhooks to rebuild
-    rawDataLogID: string; // TODO or do we create a relationship to the datalog where we are registering our webhooks.
+    rawDataLogName: string;
 };
 
 // We want to know the state when in this microservice.
