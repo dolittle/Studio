@@ -50,6 +50,7 @@ Execute the following commands in Studio repo while in the `k3d-dolittle-dev` k8
  ```sh
 cd Environment/k3d/k8s
 kubectl apply -f namespace.yml -f rbac.yml -f tenants.yml -f mongo.yml
+cd -
 ```
 
 # Run self-service web
