@@ -90,7 +90,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             headImage: '',
             runtimeImage: '',
             webhooks: [],
-            rawDataLogName: '',
+            rawDataLogName: 'raw-data-log-v1',
         },
     };
 

@@ -189,8 +189,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
             console.log('TODO Add password to webhook', password);
             console.log('TODO build webhooks');
             const authorization = makeBasicAuth({ username, password } as ConnectorWebhookConfigBasic);
-            // This is the name given to the creation of raw-data-log
-            ms.extra.rawDataLogName = 'rawdatalogv1';
             ms.extra.webhooks = [
                 {
                     kind: webhookPoHead,
