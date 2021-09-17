@@ -3,14 +3,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Button, Grid, IconButton } from '@material-ui/core';
+import { Grid, IconButton } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { TabPanel } from '../../utils/materialUi';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 
 import { savePurchaseOrderMicroservice } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
@@ -19,7 +18,6 @@ import { HttpResponseApplications2 } from '../../api/api';
 import { useGlobalContext } from '../../stores/notifications';
 import { Overview } from './overview';
 import { Guid } from '@dolittle/rudiments';
-import { microservices } from '../../stores/state';
 
 type Props = {
     application: HttpResponseApplications2;
@@ -57,6 +55,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Create: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
+    const classes = useStyles();
+    // TODO handle when it is not create
+    const isCreate = true;
+
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
@@ -64,8 +66,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const { setNotification } = useGlobalContext();
     const [value, setValue] = React.useState(0);
 
-    // TODO do something with
     const microserviceId = Guid.create().toString();
+    const headImage = 'dolittle/integrations-m3-purchaseorders:latest';
+    const runtimeImage = 'dolittle/runtime:6.1.0';
 
     const ms: MicroservicePurchaseOrder = {
         dolittle: {
@@ -76,27 +79,21 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         name: '',
         kind: 'purchase-order-api',
         environment: _props.environment,
-        // TODO make specific for the purchase-order
         extra: {
-            // nginxdemos/hello:latest
-            //headImage: 'nginxdemos/hello:latest', //'dolittle/spinner:0.0.0', // Doesnt work
-            //runtimeImage: 'dolittle/runtime:5.6.0',
             //ingress: {
             //    path: '/',
             //    pathType: 'Prefix',
             //    host: ingressInfo.host,
             //    domainPrefix: ingressInfo.domainPrefix
             //}
-            headImage: '',
-            runtimeImage: '',
+            headImage,
+            runtimeImage,
             webhooks: [],
             rawDataLogName: 'raw-data-log-v1',
         },
     };
 
-    const classes = useStyles();
 
-    const isCreate = true;
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         if (isCreate) {
             setNotification(
@@ -108,12 +105,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         setValue(newValue);
     };
 
-    const headImage = 'dolittle/integrations-m3-purchaseorders:latest';
-    const runtimeImage = 'dolittle/runtime:6.1.0';
-
     const _onSave = (ms: MicroservicePurchaseOrder): void => {
-        ms.extra.headImage = headImage;
-        ms.extra.runtimeImage = runtimeImage;
         // TODO handle exception (maybe move to wait)
         savePurchaseOrderMicroservice(ms).then((data) => {
             // TODO We want to take them to the actual new microservice and set to step 3.
