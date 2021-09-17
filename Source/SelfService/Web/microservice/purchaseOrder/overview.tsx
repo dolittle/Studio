@@ -79,7 +79,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     ];
 
     // TODO change to data from platform-api
-    const webhookPrefix = 'https://dazzling-fayman.dolittle.io/api/webhooks';
+    const webhookPrefix = `https://${ms.extra.ingress.host}/api/webhooks`;
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
 

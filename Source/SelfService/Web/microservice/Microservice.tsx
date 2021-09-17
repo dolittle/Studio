@@ -19,7 +19,6 @@ import { Grid, makeStyles, Theme } from '@material-ui/core';
 import { createStyles } from '@material-ui/styles';
 import { SimpleCard } from './create/card';
 
-
 type Props = {
     environment: string
     application: HttpResponseApplications2
