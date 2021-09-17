@@ -50,6 +50,7 @@ Execute the following commands in Studio repo while in the `k3d-dolittle-dev` k8
  ```sh
 cd Environment/k3d/k8s
 kubectl apply -f namespace.yml -f rbac.yml -f tenants.yml -f mongo.yml
+cd -
 ```
 
 # Run self-service web
@@ -61,6 +62,7 @@ cd Source/SelfService/Web && yarn start:dev
 # Run self-service backend
 - in new terminal
 ```sh
+cd Source/SelfService/Backend
 HEADER_SECRET="FAKE" \
 PLATFORM_API="localhost:8081" \
 DEVELOPMENT_TENANT_ID="453e04a7-4f9d-42f2-b36c-d51fa2c83fa3" \
@@ -94,7 +96,7 @@ Navigate to `http://localhost:9007` for Studio and check out the goodness!!👍
 - NOT QUITE WORKING, Or more specifically we haven't tried with localhost / how to use domains
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.48.1/deploy/static/provider/baremetal/deploy.yaml
+kubectl apply -f 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/baremetal/deploy.yaml'
 kubectl patch -n ingress-nginx service ingress-nginx-controller -p '{"spec": {"type": "LoadBalancer"}}'
 ```
 

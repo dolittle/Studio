@@ -17,18 +17,14 @@ import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 // I wonder if scss is scoped like svelte. I hope so!
 // Not scoped like svelte
 import '../application/applicationScreen.scss';
-import { ApplicationsChanger } from '../application/applicationsChanger';
-
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 import { BusinessMomentsContainerScreen } from '../businessMoments/container';
-
-
-import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
 import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { useGlobalContext } from '../stores/notifications';
+import { TopNavBar } from '../components/topNavBar';
 
 export const BusinessMomentsScreen: React.FunctionComponent = () => {
     const history = useHistory();
@@ -122,15 +118,8 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <div id="topNavBar" className="nav flex-container">
-                <div className="left flex-start">
-                    <BreadCrumbContainer routes={routes} />
-                </div>
+            <TopNavBar routes={routes} applications={applications} applicationId={applicationId} environment={currentEnvironment} />
 
-                <div className="right item flex-end">
-                    <ApplicationsChanger applications={applications} applicationId={applicationId} environment={currentEnvironment} />
-                </div>
-            </div>
 
             <Switch>
                 <Route path="/business-moments/application/:applicationId/:environment">

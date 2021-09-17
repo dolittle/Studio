@@ -10,15 +10,21 @@ import {
     getApplication,
     HttpResponseMicroservices,
 } from '../api/api';
-import { MicroserviceSimple, MicroserviceBusinessMomentAdaptor, MicroserviceDolittle, MicroserviceRawDataLogIngestor } from '../api/index';
+import {
+    MicroserviceSimple,
+    MicroserviceBusinessMomentAdaptor,
+    MicroserviceDolittle,
+    MicroserviceRawDataLogIngestor,
+    MicroservicePurchaseOrder,
+} from '../api/index';
 
 export type MicroserviceStore = {
-    edit: any
-    live: MicroserviceInfo
-    id: string
-    kind: string
-    name: string
-    environment: string
+    edit: any;
+    live: MicroserviceInfo;
+    id: string;
+    kind: string;
+    name: string;
+    environment: string;
 };
 
 const data = {
@@ -31,21 +37,20 @@ const data = {
 export const microservices = writable(data.microservices);
 export const isLoaded = writable(data.isLoaded);
 export const loadMicroservices = (applicationId: string) => {
-    Promise.all([
-        getApplication(applicationId),
-        getMicroservices(applicationId),
-    ]).then(values => {
-        const applicationData = values[0];
-        mergeMicroservicesFromGit(applicationData.microservices);
-        const microservicesData = values[1] as HttpResponseMicroservices;
-        mergeMicroservicesFromK8s(microservicesData.microservices);
-        isLoaded.set(true);
-    });
+    Promise.all([getApplication(applicationId), getMicroservices(applicationId)]).then(
+        (values) => {
+            const applicationData = values[0];
+            mergeMicroservicesFromGit(applicationData.microservices);
+            const microservicesData = values[1] as HttpResponseMicroservices;
+            mergeMicroservicesFromK8s(microservicesData.microservices);
+            isLoaded.set(true);
+        }
+    );
 };
 
 export const mergeMicroservicesFromGit = (items) => {
     let data = get(microservices);
-    items.forEach(element => {
+    items.forEach((element) => {
         const storeItem = {
             id: (element.dolittle as MicroserviceDolittle).microserviceId,
             name: element.name,
@@ -57,7 +62,7 @@ export const mergeMicroservicesFromGit = (items) => {
             } as MicroserviceInfo,
         };
 
-        const index = data.findIndex(item => {
+        const index = data.findIndex((item) => {
             return item.id === storeItem.id && item.environment === storeItem.environment;
         });
 
@@ -75,7 +80,7 @@ export const mergeMicroservicesFromGit = (items) => {
 
 export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
     let data = get(microservices);
-    items.forEach(element => {
+    items.forEach((element) => {
         const storeItem = {
             id: element.id,
             name: element.name,
@@ -85,7 +90,7 @@ export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
             live: element,
         };
 
-        const index = data.findIndex(item => {
+        const index = data.findIndex((item) => {
             return item.id === storeItem.id && item.environment === storeItem.environment;
         });
 
@@ -102,9 +107,16 @@ export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
     microservices.set(data);
 };
 
-
-export async function deleteMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
-    const response = await apiDeleteMicroservice(applicationId, environment, microserviceId);
+export async function deleteMicroservice(
+    applicationId: string,
+    environment: string,
+    microserviceId: string
+): Promise<boolean> {
+    const response = await apiDeleteMicroservice(
+        applicationId,
+        environment,
+        microserviceId
+    );
 
     if (!response) {
         return response;
@@ -112,10 +124,10 @@ export async function deleteMicroservice(applicationId: string, environment: str
 
     let data = get(microservices);
     // I dont think we need to care about environment etc, if we trigger reload between
-    data = data.filter(ms => ms.id !== microserviceId);
+    data = data.filter((ms) => ms.id !== microserviceId);
     microservices.set(data);
     return response;
-};
+}
 
 const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
     let response;
@@ -128,6 +140,9 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
             response = await apiSaveMicroservice(input);
             break;
         case 'raw-data-log-ingestor':
+            response = await apiSaveMicroservice(input);
+            break;
+        case 'purchase-order-api':
             response = await apiSaveMicroservice(input);
             break;
         default:
@@ -148,17 +163,34 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
     const liveMicroservices = await getMicroservices(applicationId);
     //const filteredMicroservices = liveMicroservices.microservices.filter(microservice => microservice.environment === environment);
     mergeMicroservicesFromK8s(liveMicroservices.microservices);
+    // TODO change to microserviceID
     return Promise.resolve(true);
 };
 
-export const saveSimpleMicroservice = async (input: MicroserviceSimple): Promise<boolean> => {
+export const saveSimpleMicroservice = async (
+    input: MicroserviceSimple
+): Promise<boolean> => {
     return saveMicroservice(input.kind, input);
 };
 
-export const saveBusinessMomentsAdaptorMicroservice = async (input: MicroserviceBusinessMomentAdaptor): Promise<boolean> => {
+export const saveBusinessMomentsAdaptorMicroservice = async (
+    input: MicroserviceBusinessMomentAdaptor
+): Promise<boolean> => {
     return saveMicroservice(input.kind, input);
 };
 
-export const saveRawDataLogIngestorMicroservice = async (input: MicroserviceRawDataLogIngestor): Promise<boolean> => {
+export const saveRawDataLogIngestorMicroservice = async (
+    input: MicroserviceRawDataLogIngestor
+): Promise<boolean> => {
+    return saveMicroservice(input.kind, input);
+};
+
+export const savePurchaseOrderMicroservice = async (
+    input: MicroservicePurchaseOrder
+): Promise<boolean> => {
+    // TODO maybe we put the logic to handle does raw data log exist in here
+    // This contains all the microservices, so we can lookup the rawdatalog in here.
+    // Check kind, get id etc
+    // make sure webhook is unique etc
     return saveMicroservice(input.kind, input);
 };
