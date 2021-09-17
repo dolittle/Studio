@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom';
 import { useGlobalContext } from '../stores/notifications';
 import {
     DocumentCard,
-    IContextualMenuItem,
 } from '@fluentui/react';
 import { cardStyles } from '../theme/viewCard';
 
@@ -72,13 +71,14 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
     const subTitle = kindTitles[microserviceKind] ? kindTitles[microserviceKind].subTitle : '';
     const kindIcon = kindTitles[microserviceKind] ? kindTitles[microserviceKind].icon : '';
 
-    const onClickStopPropagation = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-        ev!.stopPropagation();
+    const onClickStopPropagation = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): void => {
+        event.stopPropagation();
+        event.preventDefault();
     };
 
-    const onClickDelete = async (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem) => {
-        ev!.stopPropagation();
-
+    const onClickDelete = async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
+        event.stopPropagation();
+        event.preventDefault();
         const success = await deleteMicroservice(applicationId, environment, microserviceId);
 
         if (!success) {
