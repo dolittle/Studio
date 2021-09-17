@@ -78,6 +78,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         'Wait for data',
     ];
 
+    // TODO change to data from platform-api
     const webhookPrefix = 'https://dazzling-fayman.dolittle.io/api/webhooks';
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
@@ -190,8 +191,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     ];
 
     const handleNext = async () => {
-        // Save microservice
-        // Redirect to view
         if (activeStep === 0) {
             if (erpSystem === '') {
                 setNotification('Please select an ERP system', 'error');
@@ -201,10 +200,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
 
         if (activeStep === 2) {
             ms.name = msName;
-            // TODO
-            console.log('TODO Add username to webhook', username);
-            console.log('TODO Add password to webhook', password);
-            console.log('TODO build webhooks');
             const authorization = makeBasicAuth({ username, password } as ConnectorWebhookConfigBasic);
             ms.extra.webhooks = [
                 {
@@ -218,7 +213,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     authorization,
                 }
             ] as MicroserviceRawDataLogIngestorWebhookConfig[];
-            setNotification(`Write to platform - api name: ${ms.name}`, 'info');
+            setNotification('Creating microservice', 'info');
             await onSave(ms);
             return;
         }
@@ -280,6 +275,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         </div>
     );
 };
+
 // TODO move to util as used in multiple places
 function makeBasicAuth(data: ConnectorWebhookConfigBasic): string {
     const suffix = btoa(`${data.username}:${data.password}`);
