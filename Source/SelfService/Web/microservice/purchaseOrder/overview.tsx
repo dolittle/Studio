@@ -67,6 +67,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const [msName, setMsName] = React.useState('');
+    const [erpSystem, setErpSystem] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
@@ -95,9 +96,18 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                 justifyContent='flex-start'
                 alignItems='center'
             >
-                <img src={logoInfor} />
-                <img src={logoIFS} />
-                <img src={logoSAP} />
+                <img src={logoInfor} onClick={() => {
+                    setNotification(`Pick infor`, 'info');
+                    setErpSystem('infor');
+                    setActiveStep(1);
+                }} />
+
+                <img src={logoIFS} onClick={() => {
+                    setNotification(`Not yet supported, please reach out if interested to know when it will arrive`, 'info');
+                }} />
+                <img src={logoSAP} onClick={() => {
+                    setNotification(`Not yet supported, please reach out if interested to know when it will arrive`, 'info');
+                }} />
             </Grid>
         </>,
         <>
@@ -182,6 +192,13 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     const handleNext = async () => {
         // Save microservice
         // Redirect to view
+        if (activeStep === 0) {
+            if (erpSystem === '') {
+                setNotification('Please select an ERP system', 'error');
+                return;
+            }
+        }
+
         if (activeStep === 2) {
             ms.name = msName;
             // TODO
@@ -201,7 +218,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     authorization,
                 }
             ] as MicroserviceRawDataLogIngestorWebhookConfig[];
-            setNotification(`Write to platform-api name: ${ms.name}`, 'info');
+            setNotification(`Write to platform - api name: ${ms.name}`, 'info');
             await onSave(ms);
             return;
         }
