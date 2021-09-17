@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useGlobalContext } from '../stores/notifications';
 import {
     DocumentCard,
     IContextualMenuItem,
@@ -57,6 +58,7 @@ const kindTitles = {
 };
 
 export const ViewCard: React.FunctionComponent<Props> = (props) => {
+    const { setNotification } = useGlobalContext();
     const history = useHistory();
     const _props = props!;
     const microserviceName = _props.microserviceName;
@@ -74,17 +76,17 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
         ev!.stopPropagation();
     };
 
-    const onClickDelete = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
+    const onClickDelete = async (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem) => {
         ev!.stopPropagation();
-        (async () => {
-            const success = await deleteMicroservice(applicationId, environment, microserviceId);
-            if (!success) {
-                alert('Failed to delete');
-                return;
-            }
-            alert('Microservice to deleted');
-            _props.onAfterDelete(microserviceId, environment);
-        })();
+
+        const success = await deleteMicroservice(applicationId, environment, microserviceId);
+
+        if (!success) {
+            setNotification('Failed to delete', 'error');
+            return;
+        }
+        //setNotification('Microservice to deleted', 'info');
+        _props.onAfterDelete(microserviceId, environment);
     };
 
     const onClickView = () => {
