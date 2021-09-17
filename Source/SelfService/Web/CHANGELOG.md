@@ -1,3 +1,21 @@
+# [1.1.0] - 2021-9-17 [PR: #104](https://github.com/dolittle/Studio/pull/104)
+Summary
+
+Frontend Components for Purchase Order API Microservice is added. What is required to add is to retrieve M3 data, Automate the creation of the PO API microservice
+
+Some modifications are required to do to satisfy the Figma design.
+
+Merging #99 #102 
+
+### Added
+
+- Added the functionality to create and delete a PurchaseOrderAPI Microservice in the UI
+
+### Fixed
+
+- Mismatching between expected input for the backend
+
+
 # [1.0.3] - 2021-8-27 [PR: #93](https://github.com/dolittle/Studio/pull/93)
 # What
 - 1 dropdown menu
