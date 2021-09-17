@@ -146,6 +146,7 @@ export type MicroservicePurchaseOrder = {
 };
 
 export type MicroservicePurchaseOrderExtra = {
+    ingress: MicroserviceIngressPath;
     headImage: string;
     runtimeImage: string;
     webhooks: MicroserviceRawDataLogIngestorWebhookConfig[]; // TODO We either need to store the webhooks to rebuild

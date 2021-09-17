@@ -69,6 +69,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const microserviceId = Guid.create().toString();
     const headImage = 'dolittle/integrations-m3-purchaseorders:latest';
     const runtimeImage = 'dolittle/runtime:6.1.0';
+    const ingressInfo = {
+        host: 'todo',
+        domainPrefix: 'todo'
+    };
 
     const ms: MicroservicePurchaseOrder = {
         dolittle: {
@@ -80,12 +84,12 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         kind: 'purchase-order-api',
         environment: _props.environment,
         extra: {
-            //ingress: {
-            //    path: '/',
-            //    pathType: 'Prefix',
-            //    host: ingressInfo.host,
-            //    domainPrefix: ingressInfo.domainPrefix
-            //}
+            ingress: {
+                path: '/api/webhooks',
+                pathType: 'Prefix',
+                host: ingressInfo.host,
+                domainPrefix: ingressInfo.domainPrefix
+            },
             headImage,
             runtimeImage,
             webhooks: [],
