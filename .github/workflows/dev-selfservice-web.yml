@@ -104,4 +104,4 @@ jobs:
           push: true
           context: .
           file: ./${{ env.DOCKER_FILE }}
-          tags: ${{ env.DOCKER_IMAGE_TAG }}:latest-development
+          tags: ${{ env.DOCKER_IMAGE_TAG }}:latest-dev
