@@ -11,7 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-import { savePurchaseOrderMicroservice } from '../../stores/microservice';
+import { savePurchaseOrderMicroservice, getFirstIngressFromApplication } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
 
 import { HttpResponseApplications2 } from '../../api/api';
@@ -69,10 +69,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const microserviceId = Guid.create().toString();
     const headImage = 'dolittle/integrations-m3-purchaseorders:latest';
     const runtimeImage = 'dolittle/runtime:6.1.0';
-    const ingressInfo = {
-        host: 'todo',
-        domainPrefix: 'todo'
-    };
+    const ingressInfo = getFirstIngressFromApplication(_props.application, environment);
 
     const ms: MicroservicePurchaseOrder = {
         dolittle: {

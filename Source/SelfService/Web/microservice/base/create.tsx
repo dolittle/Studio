@@ -9,7 +9,7 @@ import { TextField } from '@fluentui/react/lib/TextField';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { Guid } from '@dolittle/rudiments';
 
-import { saveSimpleMicroservice } from '../../stores/microservice';
+import { getFirstIngressFromApplication, saveSimpleMicroservice } from '../../stores/microservice';
 import { MicroserviceSimple } from '../../api/index';
 import { HttpResponseApplications2 } from '../../api/api';
 
@@ -25,8 +25,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
-    const ingressInfo = application.environments.find(e => e.name === environment)!;
-
+    const ingressInfo = getFirstIngressFromApplication(application, environment);
     // TODO do something with
     const microserviceId = Guid.create().toString();
 

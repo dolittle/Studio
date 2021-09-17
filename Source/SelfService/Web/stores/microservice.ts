@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import { get, writable } from 'use-svelte-store';
+import { Exception } from '@dolittle/rudiments';
 
 import {
     deleteMicroservice as apiDeleteMicroservice,
@@ -9,6 +10,7 @@ import {
     getMicroservices,
     getApplication,
     HttpResponseMicroservices,
+    HttpResponseApplications2,
 } from '../api/api';
 import {
     MicroserviceSimple,
@@ -16,6 +18,7 @@ import {
     MicroserviceDolittle,
     MicroserviceRawDataLogIngestor,
     MicroservicePurchaseOrder,
+    MicroserviceIngressPath,
 } from '../api/index';
 
 export type MicroserviceStore = {
@@ -193,4 +196,16 @@ export const savePurchaseOrderMicroservice = async (
     // Check kind, get id etc
     // make sure webhook is unique etc
     return saveMicroservice(input.kind, input);
+};
+
+
+export const getFirstIngressFromApplication = (application: HttpResponseApplications2, environment: string): MicroserviceIngressPath => {
+    const environmentInfo = application.environments.find(e => e.name === environment);
+    if (!environmentInfo) {
+        throw new Exception(`environment info missing for ${environment}`);
+    }
+
+    const customerTenant = environmentInfo.tenants[0];
+    const ingressInfo = environmentInfo.ingresses[customerTenant];
+    return ingressInfo;
 };
