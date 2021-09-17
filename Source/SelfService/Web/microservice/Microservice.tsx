@@ -5,7 +5,7 @@
 // TODO validate the data
 // TODO change action button from create to save
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router';
 
 import { Create as BusinessMomentsAdaptor } from './businessMomentsAdaptor/create';
 import { Create as Base } from './base/create';
@@ -14,13 +14,10 @@ import { Create as RawDataLog } from './rawDataLog/config/create';
 import { Create as PurchaseOrder } from './purchaseOrder/create';
 
 import { HttpResponseApplications2 } from '../api/api';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import { Grid, makeStyles, Paper, Theme } from '@material-ui/core';
+
+import { Grid, makeStyles, Theme } from '@material-ui/core';
 import { createStyles } from '@material-ui/styles';
 import { SimpleCard } from './create/card';
-
 
 
 type Props = {
@@ -43,11 +40,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 export const Create: React.FunctionComponent<Props | undefined> = (props) => {
+    const history = useHistory();
+    const location = useLocation();
+
     const classes = useStyles();
     const _props = props!;
     const environment = _props.environment;
     const searchParams = new URLSearchParams(useLocation().search);
-
 
     const items = [
         {
@@ -132,8 +131,7 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
 
     const onCreate = (kind: string) => {
         searchParams.set('kind', kind);
-        window.location.search = searchParams.toString();
-
+        history.replace({ pathname: location.pathname, search: searchParams.toString() });
         setMicroserviceTypeState(kind);
     };
 
