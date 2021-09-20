@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export const Create: React.FunctionComponent<Props> = (props) => {
+export const Container: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
     const classes = useStyles();
     // TODO handle when it is not create
@@ -124,7 +124,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             alignItems='stretch'
         >
             <h1>Create purchase order API</h1>
-            <div>
+            <Grid
+                container
+                direction='row'
+            >
                 <Tabs
                     value={value}
                     onChange={handleChange}
@@ -132,7 +135,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 >
                     <Tab label='Configuration' />
                     <Tab label='Health Status' />
-
+                </Tabs>
+                <div>
                     <IconButton aria-label="more-options" onClick={() => {
                         setNotification('TODO: More options?', 'info');
                     }}
@@ -141,11 +145,13 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                         <DeleteIcon className={classes.icon} />
                         <span>DELETE</span>
                     </IconButton>
-                </Tabs >
-                <TabPanel value={value} index={0}>
-                    <Overview onSave={_onSave} microservice={ms} />
-                </TabPanel>
-            </div >
+                </div>
+            </Grid>
+
+
+            <TabPanel value={value} index={0}>
+                <Overview onSave={_onSave} microservice={ms} />
+            </TabPanel>
         </Grid >
     );
 };
