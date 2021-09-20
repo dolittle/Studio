@@ -1,3 +1,11 @@
+# [1.1.1] - 2021-9-20 [PR: #109](https://github.com/dolittle/Studio/pull/109)
+## Summary
+Error in the image url.
+
+# Reference
+https://app.asana.com/0/1200899594200551/1201018124798215/f
+
+
 # [1.1.0] - 2021-9-17 [PR: #104](https://github.com/dolittle/Studio/pull/104)
 Summary
 
