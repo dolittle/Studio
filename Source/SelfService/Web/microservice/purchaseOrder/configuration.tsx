@@ -98,7 +98,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                 alignItems='center'
             >
                 <img src={logoInfor} onClick={() => {
-                    setNotification(`Pick infor`, 'info');
                     setErpSystem('infor');
                     setActiveStep(1);
                 }} />

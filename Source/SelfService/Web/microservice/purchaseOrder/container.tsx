@@ -1,6 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Grid, IconButton } from '@material-ui/core';
@@ -14,10 +14,11 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { savePurchaseOrderMicroservice, getFirstIngressFromApplication } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
 
-import { HttpResponseApplications2 } from '../../api/api';
+import { HttpResponseApplications2, HttpResponsePodStatus } from '../../api/api';
 import { useGlobalContext } from '../../stores/notifications';
 import { Configuration } from './configuration';
 import { Guid } from '@dolittle/rudiments';
+import { HealthStatus } from '../view/healthStatus';
 
 type Props = {
     application: HttpResponseApplications2;
@@ -62,14 +63,25 @@ export const Container: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
+    const applicationId = application.id;
 
     const { setNotification } = useGlobalContext();
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
 
     const microserviceId = Guid.create().toString();
     const headImage = 'dolittle/integrations-m3-purchaseorders:latest';
     const runtimeImage = 'dolittle/runtime:6.1.0';
     const ingressInfo = getFirstIngressFromApplication(_props.application, environment);
+
+    const [podsData, setPodsData] = useState({
+        namespace: '',
+        microservice: {
+            name: '',
+            id: ''
+        },
+        pods: []
+    } as HttpResponsePodStatus);
+    // TODO load podsData from platform-api
 
     const ms: MicroservicePurchaseOrder = {
         dolittle: {
@@ -151,6 +163,10 @@ export const Container: React.FunctionComponent<Props> = (props) => {
 
             <TabPanel value={value} index={0}>
                 <Configuration onSave={_onSave} microservice={ms} />
+                {!isCreate && (
+                    <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
+                )}
+
             </TabPanel>
         </Grid >
     );
