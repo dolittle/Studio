@@ -85,14 +85,22 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
 
-    const copyPOHeadUrl = () => {
-        navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoHead}`);
-        enqueueSnackbar('POHEAD URL copied to clipboard.');
+    const copyPOHeadUrl = async () => {
+        try {
+            await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoHead}`);
+            enqueueSnackbar('POHEAD URL copied to clipboard.');
+        } catch {
+            enqueueSnackbar('Failed to copy POHEAD URL to clipboard.', { variant: 'error' });
+        }
     };
 
-    const copyPOLineUrl = () => {
-        navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoLine}`);
-        enqueueSnackbar('POLINE URL copied to clipboard.');
+    const copyPOLineUrl = async () => {
+        try {
+            await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoLine}`);
+            enqueueSnackbar('POLINE URL copied to clipboard.');
+        } catch {
+            enqueueSnackbar('Failed to copy POLINE URL to clipboard.', { variant: 'error' });
+        }
     };
 
     const stepsContent = [
