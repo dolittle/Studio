@@ -156,7 +156,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     variant='outlined'
                     value={username}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        console.log('username', event.target.value!);
                         setUsername(event.target.value!);
                     }}
                 />
@@ -169,7 +168,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     variant='outlined'
                     value={password}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        console.log('setPassword', event.target.value!);
                         setPassword(event.target.value!);
                     }}
                 />

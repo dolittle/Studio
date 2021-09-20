@@ -16,7 +16,7 @@ import { MicroservicePurchaseOrder } from '../../api/index';
 
 import { HttpResponseApplications2 } from '../../api/api';
 import { useGlobalContext } from '../../stores/notifications';
-import { Overview } from './overview';
+import { Configuration } from './configuration';
 import { Guid } from '@dolittle/rudiments';
 
 type Props = {
@@ -150,7 +150,7 @@ export const Container: React.FunctionComponent<Props> = (props) => {
 
 
             <TabPanel value={value} index={0}>
-                <Overview onSave={_onSave} microservice={ms} />
+                <Configuration onSave={_onSave} microservice={ms} />
             </TabPanel>
         </Grid >
     );
