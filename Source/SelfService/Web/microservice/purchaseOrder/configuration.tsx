@@ -53,6 +53,22 @@ const useStyles = makeStyles((theme: Theme) =>
         progressBar: {
             color: '#ff9366',
         },
+
+        textField: { //https://stackoverflow.com/a/60461876 excellent resource
+            '& .MuiOutlinedInput-input': {
+                color: 'white'
+            },
+            '& .MuiInputLabel-root': {
+                color: 'white'
+            },
+            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                color: 'white',
+                borderColor: 'white'
+            },
+            '&:hover .MuiOutlinedInput-input': {
+                color: 'white'
+            },
+        }
     })
 );
 
@@ -121,6 +137,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     id='microserviceName'
                     label='Name'
                     variant='outlined'
+                    className={classes.textField}
                     value={msName}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setMsName(event.target.value!);
@@ -153,6 +170,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     id='outlined-required'
                     label='Username'
                     variant='outlined'
+                    className={classes.textField}
                     value={username}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setUsername(event.target.value!);
@@ -165,6 +183,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     label='Password'
                     autoComplete='current-password'
                     variant='outlined'
+                    className={classes.textField}
                     value={password}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setPassword(event.target.value!);
