@@ -85,11 +85,11 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
 
     const copyPOHeadUrl = () => {
         navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoHead}`);
-    }
+    };
 
     const copyPOLineUrl = () => {
         navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoLine}`);
-    }
+    };
 
     const stepsContent = [
         <>
