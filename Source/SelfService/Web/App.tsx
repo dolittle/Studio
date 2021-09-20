@@ -22,7 +22,7 @@ import { createTheme, makeStyles, Theme, ThemeProvider } from '@material-ui/core
 import { DieAndRestart } from './components/dieAndRestart';
 import { LayoutWithSidebar } from './layout/layoutWithSidebar';
 
-import { SnackbarProvider } from 'notistack';
+import { ClassNameMap, CombinedClassKey, SnackbarProvider } from 'notistack';
 import Grow from '@material-ui/core/Grow';
 import { TransitionProps } from '@material-ui/core/transitions';
 
@@ -38,10 +38,13 @@ const themeDark = createTheme({
     }
 });
 
-const useStyles = makeStyles({
-    snackbar: {
+const useSnackbarStyles = makeStyles({
+    contentRoot: {
         backgroundColor: '#2C2B33',
         color: '#FAFAFA',
+    },
+    variantError: {
+        backgroundColor: '#F44040',
     }
 });
 
@@ -58,7 +61,7 @@ export const App = () => {
         return null;
     }
 
-    const classes = useStyles();
+    const snackbarClasses = useSnackbarStyles();
 
     return (
         <>
@@ -68,7 +71,7 @@ export const App = () => {
                     <SnackbarProvider
                         maxSnack={1}
                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                        className={classes.snackbar}
+                        classes={snackbarClasses as Partial<ClassNameMap<CombinedClassKey>>}
                         TransitionComponent={Grow as React.ComponentType<TransitionProps>}
                     >
                         <BrowserRouter basename={uriWithAppPrefix('')}>
