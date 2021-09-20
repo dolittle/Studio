@@ -1,3 +1,13 @@
+# [1.1.2] - 2021-9-20 [PR: #108](https://github.com/dolittle/Studio/pull/108)
+## Summary
+
+Fixes the "COPY TO CLIPBOARD" button in the PurchaseOrderAPI microservice creation view to actually work.
+
+### Fixed
+
+- The "COPY TO CLIPBOARD" button actually works now
+
+
 # [1.1.1] - 2021-9-20 [PR: #109](https://github.com/dolittle/Studio/pull/109)
 ## Summary
 Error in the image url.
