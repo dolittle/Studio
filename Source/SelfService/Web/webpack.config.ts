@@ -3,7 +3,7 @@
 
 const webpack = require('@shared/web').webpack;
 module.exports = (env, argv) => {
-    return webpack(env, argv, '/selfservice', config => {
+    return webpack(env, argv, '/selfservice/', config => {
         config.devServer.proxy = {
             '/selfservice/api': {
                 target: 'http://localhost:3007',
