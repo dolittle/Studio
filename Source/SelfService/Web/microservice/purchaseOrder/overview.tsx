@@ -83,6 +83,14 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
 
+    const copyPOHeadUrl = () => {
+        navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoHead}`);
+    }
+
+    const copyPOLineUrl = () => {
+        navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoLine}`);
+    }
+
     const stepsContent = [
         <>
             <Typography component={'span'}>
@@ -140,13 +148,13 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                 <span className={classes.inactiveText}>
                     {webhookPrefix} / m3/pohead
                 </span >
-                <Button color='primary'>COPY TO CLIPBOARD</Button>
+                <Button color='primary' onClick={copyPOHeadUrl}>COPY TO CLIPBOARD</Button>
 
                 <p>Webhook for purchase order line (POLINE)</p>
                 <span className={classes.inactiveText}>
                     {webhookPrefix} / m3/poline
                 </span >
-                <Button color='primary'>COPY TO CLIPBOARD</Button>
+                <Button color='primary' onClick={copyPOLineUrl}>COPY TO CLIPBOARD</Button>
 
                 <p>Create username</p>
                 <TextField
