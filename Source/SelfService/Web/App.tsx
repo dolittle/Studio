@@ -18,12 +18,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { RouteNotFound } from './components/notfound';
 import { EnvironmentScreen } from './screens/environmentScreen';
 
-import {
-    createTheme,
-    ThemeProvider,
-} from '@material-ui/core/styles';
+import { createTheme, makeStyles, Theme, ThemeProvider } from '@material-ui/core/styles';
 import { DieAndRestart } from './components/dieAndRestart';
 import { LayoutWithSidebar } from './layout/layoutWithSidebar';
+
+import { SnackbarProvider } from 'notistack';
+import Grow from '@material-ui/core/Grow';
+import { TransitionProps } from '@material-ui/core/transitions';
 
 const themeDark = createTheme({
     palette: {
@@ -34,6 +35,13 @@ const themeDark = createTheme({
         text: {
             primary: '#E9EAEC'
         }
+    }
+});
+
+const useStyles = makeStyles({
+    snackbar: {
+        backgroundColor: '#2C2B33',
+        color: '#FAFAFA',
     }
 });
 
@@ -50,55 +58,64 @@ export const App = () => {
         return null;
     }
 
+    const classes = useStyles();
+
     return (
         <>
             <ThemeProvider theme={themeDark}>
                 <CssBaseline />
                 <GlobalContextProvider>
-                    <BrowserRouter basename={uriWithAppPrefix('')}>
-                        <Switch>
-                            <Route exact path="/login">
-                                <LoginScreen />
-                            </Route>
+                    <SnackbarProvider
+                        maxSnack={1}
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                        className={classes.snackbar}
+                        TransitionComponent={Grow as React.ComponentType<TransitionProps>}
+                    >
+                        <BrowserRouter basename={uriWithAppPrefix('')}>
+                            <Switch>
+                                <Route exact path="/login">
+                                    <LoginScreen />
+                                </Route>
 
-                            <Route path="/backups/application/:applicationId">
-                                <BackupsScreen />
-                            </Route>
+                                <Route path="/backups/application/:applicationId">
+                                    <BackupsScreen />
+                                </Route>
 
-                            <Route exact path="/applications">
-                                <ApplicationsScreen />
-                            </Route>
+                                <Route exact path="/applications">
+                                    <ApplicationsScreen />
+                                </Route>
 
-                            <Route path="/environment/application/:applicationId">
-                                <EnvironmentScreen />
-                            </Route>
+                                <Route path="/environment/application/:applicationId">
+                                    <EnvironmentScreen />
+                                </Route>
 
-                            <Route path="/microservices/application/:applicationId/:environment">
-                                <MicroservicesScreen />
-                            </Route>
+                                <Route path="/microservices/application/:applicationId/:environment">
+                                    <MicroservicesScreen />
+                                </Route>
 
-                            <Route path="/business-moments/application/:applicationId/:environment">
-                                <BusinessMomentsScreen />
-                            </Route>
+                                <Route path="/business-moments/application/:applicationId/:environment">
+                                    <BusinessMomentsScreen />
+                                </Route>
 
-                            <Route path="/documentation/application/:applicationId/:environment">
-                                <DocumentationScreen />
-                            </Route>
+                                <Route path="/documentation/application/:applicationId/:environment">
+                                    <DocumentationScreen />
+                                </Route>
 
-                            <Route path="/insights/application/:applicationId/:environment">
-                                <InsightsScreen />
-                            </Route>
+                                <Route path="/insights/application/:applicationId/:environment">
+                                    <InsightsScreen />
+                                </Route>
 
-                            <Route exact path="/problem">
-                                <LayoutWithSidebar navigation={[]}>
-                                    <DieAndRestart />
-                                </LayoutWithSidebar>
+                                <Route exact path="/problem">
+                                    <LayoutWithSidebar navigation={[]}>
+                                        <DieAndRestart />
+                                    </LayoutWithSidebar>
 
-                            </Route>
+                                </Route>
 
-                            <RouteNotFound redirectUrl="/applications" auto={true} />
-                        </Switch>
-                    </BrowserRouter>
+                                <RouteNotFound redirectUrl="/applications" auto={true} />
+                            </Switch>
+                        </BrowserRouter>
+                    </SnackbarProvider>
                 </GlobalContextProvider>
             </ThemeProvider>
         </>

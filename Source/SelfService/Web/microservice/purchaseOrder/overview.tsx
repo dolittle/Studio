@@ -10,6 +10,7 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { useSnackbar } from 'notistack';
 
 import { useGlobalContext } from '../../stores/notifications';
 import logoInfor from '../../images/infor.png'; // with import
@@ -58,6 +59,7 @@ const useStyles = makeStyles((theme: Theme) =>
 // TODO ask Liz about bearer token
 export const Overview: React.FunctionComponent<Props> = (props) => {
     const { setNotification } = useGlobalContext();
+    const { enqueueSnackbar } = useSnackbar();
 
     const _props = props!;
     const onSave = _props.onSave;
@@ -85,10 +87,12 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
 
     const copyPOHeadUrl = () => {
         navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoHead}`);
+        enqueueSnackbar('POHEAD URL copied to clipboard.');
     };
 
     const copyPOLineUrl = () => {
         navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoLine}`);
+        enqueueSnackbar('POLINE URL copied to clipboard.');
     };
 
     const stepsContent = [
