@@ -2,22 +2,24 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
-import { Grid, IconButton, Typography } from '@material-ui/core';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import {
+    Grid,
+    IconButton,
+    Typography,
+    Tabs,
+    Tab
+} from '@material-ui/core';
 import { TabPanel } from '../../utils/materialUi';
 import DeleteIcon from '@material-ui/icons/Delete';
-
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { Guid } from '@dolittle/rudiments';
+
 
 import { savePurchaseOrderMicroservice, getFirstIngressFromApplication } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
-
 import { HttpResponseApplications2, HttpResponsePodStatus } from '../../api/api';
 import { useGlobalContext } from '../../stores/notifications';
 import { Configuration } from './configuration';
-import { Guid } from '@dolittle/rudiments';
 import { HealthStatus } from '../view/healthStatus';
 
 type Props = {
