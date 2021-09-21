@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Grid, IconButton } from '@material-ui/core';
+import { Grid, IconButton, Typography } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { TabPanel } from '../../utils/materialUi';
@@ -43,14 +43,19 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(3),
         },
 
-        iconRoot: {
-            padding: 0,
-            marginRight: theme.spacing(1),
-            fill: 'white',
-        },
-        icon: {
-            fill: 'white',
-        },
+        deleteIcon: {
+            'padding': 0,
+            'marginRight': theme.spacing(1),
+            'fill': 'white',
+            '& .MuiSvgIcon-root': {
+                color: 'white'
+            },
+            '& .MuiTypography-root': {
+                color: 'white',
+                textTransform: 'uppercase'
+            }
+
+        }
     })
 );
 
@@ -139,6 +144,7 @@ export const Container: React.FunctionComponent<Props> = (props) => {
             <Grid
                 container
                 direction='row'
+                justifyContent='space-between'
             >
                 <Tabs
                     value={value}
@@ -148,25 +154,23 @@ export const Container: React.FunctionComponent<Props> = (props) => {
                     <Tab label='Configuration' />
                     <Tab label='Health Status' />
                 </Tabs>
-                <div>
-                    <IconButton aria-label="more-options" onClick={() => {
-                        setNotification('TODO: More options?', 'info');
-                    }}
-                        className={classes.iconRoot}
-                    >
-                        <DeleteIcon className={classes.icon} />
-                        <span>DELETE</span>
-                    </IconButton>
-                </div>
-            </Grid>
 
+                <IconButton
+                    onClick={() => {
+                        setNotification('TODO: Delete microservice', 'info');
+                    }}
+                    className={classes.deleteIcon}
+                >
+                    <DeleteIcon />
+                    <Typography>delete</Typography>
+                </IconButton>
+            </Grid>
 
             <TabPanel value={value} index={0}>
                 <Configuration onSave={_onSave} microservice={ms} />
                 {!isCreate && (
                     <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
                 )}
-
             </TabPanel>
         </Grid >
     );
