@@ -20,6 +20,7 @@ import logoSAP from '../../images/sap.png';
 import { Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import LoopIcon from '@material-ui/icons/Loop';
+import { backgroundColor } from '../../theme/viewCard';
 import {
     MicroservicePurchaseOrder,
     MicroserviceRawDataLogIngestorWebhookConfig,
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(3),
         },
         inactiveText: {
-            color: 'grey',
+            color: '#93959F',
         },
         progressBar: {
             color: '#ff9366',
@@ -68,6 +69,27 @@ const useStyles = makeStyles((theme: Theme) =>
             '&:hover .MuiOutlinedInput-input': {
                 color: 'white'
             },
+        },
+        stepIcon: {
+            'color': '#3B3D48',
+            '&.MuiStepIcon-active': {
+                color: '#6678F6'
+            },
+            '&.MuiStepIcon-completed': {
+                color: '#6678F6'
+            },
+            '&.MuiStepIcon-active .MuiStepIcon-text': {
+                fill: '#B3BBFB'
+            },
+            // TODO
+            //'&.MuiStepIcon-completed path': {
+            //    stroke: '#6678F6',
+            //    fill: 'white',
+            //    backgroundColor: 'red'
+            //},
+            '&.MuiStepIcon-root .MuiStepIcon-text': {
+                fill: '#93959F'
+            }
         }
     })
 );
@@ -291,7 +313,11 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
             <Stepper activeStep={activeStep} orientation='vertical'>
                 {steps.map((label, index) => (
                     <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
+                        <StepLabel StepIconProps={{
+                            classes: { root: classes.stepIcon }
+                        }}>
+                            <span className={activeStep >= index ? '' : classes.inactiveText}>{label}</span>
+                        </StepLabel>
                         <StepContent>
                             {stepsContent[index]}
 
