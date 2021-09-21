@@ -10,6 +10,7 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { useSnackbar } from 'notistack';
 
 import { useGlobalContext } from '../../stores/notifications';
 import logoInfor from '../../images/infor.png'; // with import
@@ -23,7 +24,6 @@ import {
     MicroservicePurchaseOrder,
     MicroserviceRawDataLogIngestorWebhookConfig,
     ConnectorWebhookConfigBasic,
-    ConnectorWebhookConfigBearer,
 } from '../../api/index';
 
 type Props = {
@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Configuration: React.FunctionComponent<Props> = (props) => {
     const { setNotification } = useGlobalContext();
+    const { enqueueSnackbar } = useSnackbar();
 
     const _props = props!;
     const onSave = _props.onSave;
@@ -98,6 +99,24 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     const webhookPrefix = `https://${ms.extra.ingress.host}/api/webhooks`;
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
+
+    const copyPOHeadUrl = async () => {
+        try {
+            await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoHead}`);
+            enqueueSnackbar('POHEAD URL copied to clipboard.');
+        } catch {
+            enqueueSnackbar('Failed to copy POHEAD URL to clipboard.', { variant: 'error' });
+        }
+    };
+
+    const copyPOLineUrl = async () => {
+        try {
+            await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoLine}`);
+            enqueueSnackbar('POLINE URL copied to clipboard.');
+        } catch {
+            enqueueSnackbar('Failed to copy POLINE URL to clipboard.', { variant: 'error' });
+        }
+    };
 
     const stepsContent = [
         <>
@@ -156,13 +175,14 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                 <span className={classes.inactiveText}>
                     {webhookPrefix} / m3/pohead
                 </span >
-                <Button color='primary'>COPY TO CLIPBOARD</Button>
+                <Button color='primary' onClick={copyPOHeadUrl}>COPY TO CLIPBOARD</Button>
 
                 <p>Webhook for purchase order line (POLINE)</p>
                 <span className={classes.inactiveText}>
                     {webhookPrefix} / m3/poline
                 </span >
-                <Button color='primary'>COPY TO CLIPBOARD</Button>
+                <Button color='primary' onClick={copyPOLineUrl}>COPY TO CLIPBOARD</Button>
+
 
                 <p>Create username</p>
                 <TextField
