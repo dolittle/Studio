@@ -234,8 +234,28 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                 return;
             }
         }
+        if (activeStep === 1) {
+            // Validate name
+            if (msName === '' || msName.includes(' ')) {
+                setNotification('Your name cannot be empty, nor with spaces', 'error');
+                return;
+            }
+
+        }
 
         if (activeStep === 2) {
+            // Validate username
+            if (username === '') {
+                setNotification('You need a username', 'error');
+                return;
+            }
+
+            // Validate password
+            if (password === '') {
+                setNotification('We require a password', 'error');
+                return;
+            }
+
             ms.name = msName;
             const authorization = makeBasicAuth({ username, password } as ConnectorWebhookConfigBasic);
             ms.extra.webhooks = [
@@ -250,7 +270,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     authorization,
                 }
             ] as MicroserviceRawDataLogIngestorWebhookConfig[];
-            setNotification('Creating microservice', 'info');
             await onSave(ms);
             return;
         }
