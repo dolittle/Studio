@@ -267,7 +267,8 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
 
         if (activeStep === 2) {
             // Validate username
-            if (username === '') {
+            const cleanedUsername = username.trim();
+            if (cleanedUsername === '' || cleanedUsername.includes(' ')) {
                 setNotification('You need a username', 'error');
                 return;
             }
@@ -279,7 +280,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
             }
 
             ms.name = msName;
-            const authorization = makeBasicAuth({ username, password } as ConnectorWebhookConfigBasic);
+            const authorization = makeBasicAuth({ username: cleanedUsername, password } as ConnectorWebhookConfigBasic);
             ms.extra.webhooks = [
                 {
                     kind: webhookPoHead,
