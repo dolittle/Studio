@@ -10,6 +10,7 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { useSnackbar } from 'notistack';
 
 import { useGlobalContext } from '../../stores/notifications';
 import logoInfor from '../../images/infor.png'; // with import
@@ -58,6 +59,7 @@ const useStyles = makeStyles((theme: Theme) =>
 // TODO ask Liz about bearer token
 export const Overview: React.FunctionComponent<Props> = (props) => {
     const { setNotification } = useGlobalContext();
+    const { enqueueSnackbar } = useSnackbar();
 
     const _props = props!;
     const onSave = _props.onSave;
@@ -83,12 +85,22 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
 
-    const copyPOHeadUrl = () => {
-        navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoHead}`);
+    const copyPOHeadUrl = async () => {
+        try {
+            await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoHead}`);
+            enqueueSnackbar('POHEAD URL copied to clipboard.');
+        } catch {
+            enqueueSnackbar('Failed to copy POHEAD URL to clipboard.', { variant: 'error' });
+        }
     };
 
-    const copyPOLineUrl = () => {
-        navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoLine}`);
+    const copyPOLineUrl = async () => {
+        try {
+            await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoLine}`);
+            enqueueSnackbar('POLINE URL copied to clipboard.');
+        } catch {
+            enqueueSnackbar('Failed to copy POLINE URL to clipboard.', { variant: 'error' });
+        }
     };
 
     const stepsContent = [
