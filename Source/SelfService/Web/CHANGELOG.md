@@ -1,3 +1,16 @@
+# [1.2.0] - 2021-9-21 [PR: #111](https://github.com/dolittle/Studio/pull/111)
+## Summary
+
+Adds a Snackbar when user copies PurchaseOrderAPI URLs to clipboard, with an error if it fails. I found a library that seemed nice https://iamhosseindhv.com/notistack, that simplifies handling multiple snackbars (which is not allowed by Material Design). The library required a bit of hacking with types to get the animation and styling to work, but I think that might be down to something with typescript and dependencies and versions. I think we can clean that up later.
+
+The styling corresponds to the Figma designs for notifications to the best of my ability.
+
+### Added
+
+- A global provider to display Snackbars from anywhere easily (notistack)
+- Snackbars when copying URLs during the creation of PurchaseOrderAPI
+
+
 # [1.1.2] - 2021-9-20 [PR: #108](https://github.com/dolittle/Studio/pull/108)
 ## Summary
 
