@@ -104,14 +104,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     const onSave = _props.onSave;
 
     const ms = _props.microservice;
-    // Little hack for now
-    console.error('Remove hardcoded ingress');
-    ms.extra.ingress = {
-        host: 'freshteapot-taco.dolittle.cloud',
-        domainPrefix: 'freshteapot-taco',
-        path: '/api/webhooks',
-        pathType: 'Prefix'
-    };
 
     const isCreate = ms.name === '' ? true : false;
     const classes = useStyles();

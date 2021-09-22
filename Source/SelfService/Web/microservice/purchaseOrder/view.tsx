@@ -66,8 +66,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
-    console.log(currentMicroservice);
-
     const { setNotification } = useGlobalContext();
     const [value, setValue] = useState(0);
 
