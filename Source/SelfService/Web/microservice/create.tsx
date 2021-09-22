@@ -10,10 +10,7 @@ import { useHistory, useLocation } from 'react-router';
 import { Create as BusinessMomentsAdaptor } from './businessMomentsAdaptor/create';
 import { Create as Base } from './base/create';
 import { Create as StaticSite } from './staticSite/create';
-
-import { Container as PurchaseOrder } from './purchaseOrder/container';
-//import { Create as PurchaseOrder } from './purchaseOrder/create';
-
+import { Create as PurchaseOrder } from './purchaseOrder/create';
 
 import { HttpResponseApplications2 } from '../api/api';
 
