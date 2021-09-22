@@ -6,12 +6,13 @@ import { Label } from '@fluentui/react/lib/Label';
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { MicroserviceRawDataLogIngestorWebhookConfig, ConnectorWebhookConfigBasic, ConnectorWebhookConfigBearer } from '../../../api/index';
+import { MicroserviceRawDataLogIngestorWebhookConfig, ConnectorWebhookConfigBasic } from '../../../api/index';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
 import { BasicAuthComponent } from '../../../components/basicAuthComponent';
 import { BearerAuthComponent } from '../../../components/bearerAuthComponent';
 import { trimPrefix, trimSuffix } from '../../../utils/string';
+import { makeBasicAuth, makeBearer } from '../../../utils/httpCredentials';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
@@ -195,13 +196,4 @@ function getUsernameAndPasswordFromBasicAuth(data: string): ConnectorWebhookConf
             password: '',
         } as ConnectorWebhookConfigBasic;
     }
-}
-
-function makeBasicAuth(data: ConnectorWebhookConfigBasic): string {
-    const suffix = btoa(`${data.username}:${data.password}`);
-    return `Basic ${suffix}`;
-}
-
-function makeBearer(data: ConnectorWebhookConfigBearer): string {
-    return `Bearer ${data.token}`;
 }
