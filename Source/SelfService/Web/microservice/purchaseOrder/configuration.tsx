@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
@@ -20,7 +21,7 @@ import logoSAP from '../../images/sap.png';
 import { Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import LoopIcon from '@material-ui/icons/Loop';
-import { backgroundColor } from '../../theme/viewCard';
+
 import {
     MicroservicePurchaseOrder,
     MicroserviceRawDataLogIngestorWebhookConfig,
@@ -28,6 +29,7 @@ import {
 } from '../../api/index';
 
 type Props = {
+
     onSave: (microservice: MicroservicePurchaseOrder) => any;
     microservice: MicroservicePurchaseOrder;
 };
@@ -102,13 +104,33 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     const onSave = _props.onSave;
 
     const ms = _props.microservice;
+    // Little hack for now
+    console.error('Remove hardcoded ingress');
+    ms.extra.ingress = {
+        host: 'freshteapot-taco.dolittle.cloud',
+        domainPrefix: 'freshteapot-taco',
+        path: '/api/webhooks',
+        pathType: 'Prefix'
+    };
 
+    const isCreate = ms.name === '' ? true : false;
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [msName, setMsName] = React.useState('');
-    const [erpSystem, setErpSystem] = React.useState('');
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
+
+
+    const initStep = !isCreate ? 3 : 0;
+    const initMicroserviceName = !isCreate ? ms.name : '';
+    // TODO this can be replaced once we land https://app.asana.com/0/0/1201032430663748/f
+    const initErpSystem = !isCreate ? 'infor' : '';
+
+    const authorization = ms.extra.webhooks[0]?.authorization ? ms.extra.webhooks[0].authorization : '';
+    const initCredentials = getCredentialsFromBasicAuth(authorization);
+
+    const [activeStep, setActiveStep] = React.useState(initStep);
+    // TODO get from ms
+    const [msName, setMsName] = React.useState(initMicroserviceName);
+    const [erpSystem, setErpSystem] = React.useState(initErpSystem);
+    const [username, setUsername] = React.useState(initCredentials.username);
+    const [password, setPassword] = React.useState(initCredentials.password);
 
     const steps = [
         'Select ERP system',
@@ -250,19 +272,22 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
 
 
     const handleNext = async () => {
-        if (activeStep === 0) {
-            if (erpSystem === '') {
-                setNotification('Please select an ERP system', 'error');
-                return;
+        // Only allow changes on isCreate
+        if (isCreate) {
+            if (activeStep === 0) {
+                if (erpSystem === '') {
+                    setNotification('Please select an ERP system', 'error');
+                    return;
+                }
             }
-        }
-        if (activeStep === 1) {
-            // Validate name
-            if (msName === '' || msName.includes(' ')) {
-                setNotification('Your name cannot be empty, nor with spaces', 'error');
-                return;
-            }
+            if (activeStep === 1) {
+                // Validate name
+                if (msName === '' || msName.includes(' ')) {
+                    setNotification('Your name cannot be empty, nor with spaces', 'error');
+                    return;
+                }
 
+            }
         }
 
         if (activeStep === 2) {
@@ -363,4 +388,21 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
 function makeBasicAuth(data: ConnectorWebhookConfigBasic): string {
     const suffix = btoa(`${data.username}:${data.password}`);
     return `Basic ${suffix}`;
+}
+
+
+function getCredentialsFromBasicAuth(data: string): ConnectorWebhookConfigBasic {
+    if (data === '') {
+        return {
+            username: '',
+            password: '',
+        };
+    }
+
+    const dataWithoutBase64 = atob(data.split(' ')[1]);
+    const rawCredentials = dataWithoutBase64.split(':');
+    return {
+        username: rawCredentials[0],
+        password: rawCredentials[1],
+    };
 }

@@ -10,6 +10,7 @@ import { microservices } from '../stores/microservice';
 import { View as BaseView } from './base/view';
 import { View as BusinessMomentsAdaptorView } from './businessMomentsAdaptor/view';
 import { View as RawDataLogView } from './rawDataLog/view';
+import { View as PurchaseOrderApiView } from './purchaseOrder/view';
 
 type Props = {
     applicationId: string
@@ -69,6 +70,10 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         case 'raw-data-log-ingestor':
             return (
                 <RawDataLogView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
+            );
+        case 'purchase-order-api':
+            return (
+                <PurchaseOrderApiView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
             );
         default:
             return (
