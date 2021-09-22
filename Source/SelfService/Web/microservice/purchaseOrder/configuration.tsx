@@ -1,7 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
@@ -27,6 +26,7 @@ import {
     MicroserviceRawDataLogIngestorWebhookConfig,
     ConnectorWebhookConfigBasic,
 } from '../../api/index';
+import { getCredentialsFromBasicAuth, makeBasicAuth } from '../../utils/httpCredentials';
 
 type Props = {
 
@@ -126,7 +126,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     const initCredentials = getCredentialsFromBasicAuth(authorization);
 
     const [activeStep, setActiveStep] = React.useState(initStep);
-    // TODO get from ms
     const [msName, setMsName] = React.useState(initMicroserviceName);
     const [erpSystem, setErpSystem] = React.useState(initErpSystem);
     const [username, setUsername] = React.useState(initCredentials.username);
@@ -139,7 +138,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
         'Wait for data',
     ];
 
-    // TODO change to data from platform-api
     const webhookPrefix = `https://${ms.extra.ingress.host}/api/webhooks`;
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
@@ -383,26 +381,3 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
         </div>
     );
 };
-
-// TODO move to util as used in multiple places
-function makeBasicAuth(data: ConnectorWebhookConfigBasic): string {
-    const suffix = btoa(`${data.username}:${data.password}`);
-    return `Basic ${suffix}`;
-}
-
-
-function getCredentialsFromBasicAuth(data: string): ConnectorWebhookConfigBasic {
-    if (data === '') {
-        return {
-            username: '',
-            password: '',
-        };
-    }
-
-    const dataWithoutBase64 = atob(data.split(' ')[1]);
-    const rawCredentials = dataWithoutBase64.split(':');
-    return {
-        username: rawCredentials[0],
-        password: rawCredentials[1],
-    };
-}
