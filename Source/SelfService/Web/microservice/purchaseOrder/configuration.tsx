@@ -20,11 +20,11 @@ import logoSAP from '../../images/sap.png';
 import { Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import LoopIcon from '@material-ui/icons/Loop';
+import { backgroundColor } from '../../theme/viewCard';
 import {
     MicroservicePurchaseOrder,
     MicroserviceRawDataLogIngestorWebhookConfig,
     ConnectorWebhookConfigBasic,
-    ConnectorWebhookConfigBearer,
 } from '../../api/index';
 
 type Props = {
@@ -49,15 +49,52 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(3),
         },
         inactiveText: {
-            color: 'grey',
+            color: '#93959F',
         },
         progressBar: {
             color: '#ff9366',
         },
+
+        textField: { //https://stackoverflow.com/a/60461876 excellent resource
+            '& .MuiOutlinedInput-input': {
+                color: 'white'
+            },
+            '& .MuiInputLabel-root': {
+                color: 'white'
+            },
+            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                color: 'white',
+                borderColor: 'white'
+            },
+            '&:hover .MuiOutlinedInput-input': {
+                color: 'white'
+            },
+        },
+        stepIcon: {
+            'color': '#3B3D48',
+            '&.MuiStepIcon-active': {
+                color: '#6678F6'
+            },
+            '&.MuiStepIcon-completed': {
+                color: '#6678F6'
+            },
+            '&.MuiStepIcon-active .MuiStepIcon-text': {
+                fill: '#B3BBFB'
+            },
+            // TODO
+            //'&.MuiStepIcon-completed path': {
+            //    stroke: '#6678F6',
+            //    fill: 'white',
+            //    backgroundColor: 'red'
+            //},
+            '&.MuiStepIcon-root .MuiStepIcon-text': {
+                fill: '#93959F'
+            }
+        }
     })
 );
-// TODO ask Liz about bearer token
-export const Overview: React.FunctionComponent<Props> = (props) => {
+
+export const Configuration: React.FunctionComponent<Props> = (props) => {
     const { setNotification } = useGlobalContext();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -118,7 +155,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                 alignItems='center'
             >
                 <img src={logoInfor} onClick={() => {
-                    setNotification(`Pick infor`, 'info');
                     setErpSystem('infor');
                     setActiveStep(1);
                 }} />
@@ -142,6 +178,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     id='microserviceName'
                     label='Name'
                     variant='outlined'
+                    className={classes.textField}
                     value={msName}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setMsName(event.target.value!);
@@ -168,15 +205,16 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                 </span >
                 <Button color='primary' onClick={copyPOLineUrl}>COPY TO CLIPBOARD</Button>
 
+
                 <p>Create username</p>
                 <TextField
                     required
                     id='outlined-required'
                     label='Username'
                     variant='outlined'
+                    className={classes.textField}
                     value={username}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        console.log('username', event.target.value!);
                         setUsername(event.target.value!);
                     }}
                 />
@@ -187,9 +225,9 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     label='Password'
                     autoComplete='current-password'
                     variant='outlined'
+                    className={classes.textField}
                     value={password}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        console.log('setPassword', event.target.value!);
                         setPassword(event.target.value!);
                     }}
                 />
@@ -210,6 +248,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         </>,
     ];
 
+
     const handleNext = async () => {
         if (activeStep === 0) {
             if (erpSystem === '') {
@@ -217,10 +256,31 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                 return;
             }
         }
+        if (activeStep === 1) {
+            // Validate name
+            if (msName === '' || msName.includes(' ')) {
+                setNotification('Your name cannot be empty, nor with spaces', 'error');
+                return;
+            }
+
+        }
 
         if (activeStep === 2) {
+            // Validate username
+            const cleanedUsername = username.trim();
+            if (cleanedUsername === '' || cleanedUsername.includes(' ')) {
+                setNotification('You need a username', 'error');
+                return;
+            }
+
+            // Validate password
+            if (password === '') {
+                setNotification('We require a password', 'error');
+                return;
+            }
+
             ms.name = msName;
-            const authorization = makeBasicAuth({ username, password } as ConnectorWebhookConfigBasic);
+            const authorization = makeBasicAuth({ username: cleanedUsername, password } as ConnectorWebhookConfigBasic);
             ms.extra.webhooks = [
                 {
                     kind: webhookPoHead,
@@ -233,7 +293,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
                     authorization,
                 }
             ] as MicroserviceRawDataLogIngestorWebhookConfig[];
-            setNotification('Creating microservice', 'info');
             await onSave(ms);
             return;
         }
@@ -255,7 +314,11 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
             <Stepper activeStep={activeStep} orientation='vertical'>
                 {steps.map((label, index) => (
                     <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
+                        <StepLabel StepIconProps={{
+                            classes: { root: classes.stepIcon }
+                        }}>
+                            <span className={activeStep >= index ? '' : classes.inactiveText}>{label}</span>
+                        </StepLabel>
                         <StepContent>
                             {stepsContent[index]}
 
@@ -300,8 +363,4 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
 function makeBasicAuth(data: ConnectorWebhookConfigBasic): string {
     const suffix = btoa(`${data.username}:${data.password}`);
     return `Basic ${suffix}`;
-}
-
-function makeBearer(data: ConnectorWebhookConfigBearer): string {
-    return `Bearer ${data.token}`;
 }

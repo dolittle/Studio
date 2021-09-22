@@ -34,6 +34,17 @@ k3d cluster create dolittle-dev \
     --kubeconfig-switch-context
 ```
 
+# Setup Ingress
+- Using a real domain will require changing your /etc/hosts (hosts file)
+- Firefox and Chrome have special behaviour for "*.dev"
+
+```sh
+kubectl apply -f 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/baremetal/deploy.yaml'
+kubectl patch -n ingress-nginx service ingress-nginx-controller -p '{"spec": {"type": "LoadBalancer"}}'
+```
+
+
+
 # Bootstrap the namespace
 
 BEFORE APPLYING CHECK THAT YOU ARE IN THE CORRECT CONTEXT!
@@ -90,15 +101,6 @@ go run main.go microservice server --kube-config ~/.kube/config
 # Check out Studio
 
 Navigate to `http://localhost:9007` for Studio and check out the goodness!!👍
-
-# TODO
-## Setup Ingress
-- NOT QUITE WORKING, Or more specifically we haven't tried with localhost / how to use domains
-
-```sh
-kubectl apply -f 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/baremetal/deploy.yaml'
-kubectl patch -n ingress-nginx service ingress-nginx-controller -p '{"spec": {"type": "LoadBalancer"}}'
-```
 
 
 # Deleting

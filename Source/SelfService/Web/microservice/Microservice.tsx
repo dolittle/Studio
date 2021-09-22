@@ -11,7 +11,7 @@ import { Create as BusinessMomentsAdaptor } from './businessMomentsAdaptor/creat
 import { Create as Base } from './base/create';
 import { Create as StaticSite } from './staticSite/create';
 import { Create as RawDataLog } from './rawDataLog/config/create';
-import { Create as PurchaseOrder } from './purchaseOrder/create';
+import { Container as PurchaseOrder } from './purchaseOrder/container';
 
 import { HttpResponseApplications2 } from '../api/api';
 
