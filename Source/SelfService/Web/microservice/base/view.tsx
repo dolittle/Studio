@@ -3,7 +3,6 @@
 
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
