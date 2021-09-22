@@ -1,3 +1,17 @@
+# [1.2.1] - 2021-9-22 [PR: #110](https://github.com/dolittle/Studio/pull/110)
+## Summary
+- Fixing the white text for name
+- Fixing the white text for username and password
+- Removing the warning messages in the console
+- Making the file names make a little more sense
+- Delete icon and text is white
+- Validation on username and password
+- Validation on name of microservice
+
+# Reference
+- https://app.asana.com/0/1200899594200551/1200948921136344/f
+
+
 # [1.2.0] - 2021-9-21 [PR: #111](https://github.com/dolittle/Studio/pull/111)
 ## Summary
 
