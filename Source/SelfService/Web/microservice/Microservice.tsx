@@ -10,7 +10,6 @@ import { useHistory, useLocation } from 'react-router';
 import { Create as BusinessMomentsAdaptor } from './businessMomentsAdaptor/create';
 import { Create as Base } from './base/create';
 import { Create as StaticSite } from './staticSite/create';
-import { Create as RawDataLog } from './rawDataLog/config/create';
 import { Container as PurchaseOrder } from './purchaseOrder/container';
 
 import { HttpResponseApplications2 } from '../api/api';
@@ -88,17 +87,6 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
             )
         },
         {
-            kind: 'raw-data-log-ingestor',
-            name: 'Raw Data Log Webhook',
-            description: 'Connect multiple webhooks to ingest data from your system.',
-            icon: (
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M40 20C40 31.0457 31.0457 40 20 40C8.9543 40 0 31.0457 0 20C0 8.9543 8.9543 0 20 0C31.0457 0 40 8.9543 40 20Z" fill="#3B3D48" />
-                    <path d="M27.9988 19.3025C28.3703 18.7972 28.5891 18.2041 28.6314 17.5881C28.6738 16.972 28.538 16.3567 28.2389 15.8094C27.9398 15.262 27.489 14.8038 26.9357 14.4847C26.3824 14.1656 25.7478 13.9979 25.1015 14H14.5013C13.618 14.0541 12.7926 14.4389 12.2046 15.0708C11.6165 15.7027 11.3132 16.5307 11.3605 17.375C11.3627 18.036 11.5527 18.684 11.9102 19.25C11.0716 19.3633 10.308 19.7728 9.77016 20.3976C9.23229 21.0225 8.95925 21.8172 9.00493 22.625C8.95762 23.4692 9.26093 24.2972 9.84899 24.9291C10.4371 25.5611 11.2624 25.9459 12.1457 26H27.4571C28.3481 26.0042 29.2077 25.686 29.863 25.1093C30.5184 24.5327 30.9209 23.7405 30.9895 22.8919C31.0582 22.0434 30.7879 21.2015 30.233 20.5356C29.6782 19.8696 28.88 19.4291 27.9988 19.3025ZM18.4273 22.625C18.4739 23.0715 18.3356 23.5177 18.0421 23.8682C17.7486 24.2186 17.3232 24.4453 16.8569 24.5C16.3906 24.4453 15.9652 24.2186 15.6717 23.8682C15.3782 23.5177 15.2399 23.0715 15.2865 22.625C15.2399 22.1784 15.3782 21.7322 15.6717 21.3818C15.9652 21.0314 16.3906 20.8046 16.8569 20.75C17.3232 20.8046 17.7486 21.0314 18.0421 21.3818C18.3356 21.7322 18.4739 22.1784 18.4273 22.625ZM14.5013 15.5C14.9676 15.5546 15.3931 15.7814 15.6865 16.1318C15.98 16.4822 16.1183 16.9285 16.0717 17.375C16.1183 17.8215 15.98 18.2678 15.6865 18.6182C15.3931 18.9686 14.9676 19.1954 14.5013 19.25C14.035 19.1954 13.6096 18.9686 13.3161 18.6182C13.0226 18.2678 12.8843 17.8215 12.9309 17.375C12.8843 16.9285 13.0226 16.4822 13.3161 16.1318C13.6096 15.7814 14.035 15.5546 14.5013 15.5ZM10.5753 22.625C10.5287 22.1784 10.667 21.7322 10.9605 21.3818C11.254 21.0314 11.6794 20.8046 12.1457 20.75C12.612 20.8046 13.0375 21.0314 13.331 21.3818C13.6244 21.7322 13.7627 22.1784 13.7161 22.625C13.7627 23.0715 13.6244 23.5177 13.331 23.8682C13.0375 24.2186 12.612 24.4453 12.1457 24.5C11.6794 24.4453 11.254 24.2186 10.9605 23.8682C10.667 23.5177 10.5287 23.0715 10.5753 22.625Z" fill="#E9EAEC" />
-                </svg>
-            )
-        },
-        {
             kind: 'purchase-order-api',
             name: 'Purchase Order',
             description: 'Integrate your purchase orders from M3.',
@@ -163,10 +151,6 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
 
                 {microserviceTypeState === 'business-miner' && (
                     <BusinessMomentsAdaptor application={_props.application} environment={environment} />
-                )}
-
-                {microserviceTypeState === 'raw-data-log-ingestor' && (
-                    <RawDataLog application={_props.application} environment={environment} />
                 )}
 
                 {microserviceTypeState === 'static-site' && (
