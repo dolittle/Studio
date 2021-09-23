@@ -1,3 +1,13 @@
+# [1.3.0] - 2021-9-22 [PR: #114](https://github.com/dolittle/Studio/pull/114)
+## Summary
+
+Removes the views that allow creation of a Raw Data Log Ingestor manually. It is created automatically when the user creates a PurchaseOrderAPI instead.
+
+### Removed
+
+- The ability to manually create a Raw Data Log Ingestor
+
+
 # [1.2.1] - 2021-9-22 [PR: #110](https://github.com/dolittle/Studio/pull/110)
 ## Summary
 - Fixing the white text for name
