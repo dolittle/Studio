@@ -23,6 +23,11 @@ export const GeneratePassword: React.FunctionComponent<Props> = (props) => {
 
     // https://app.asana.com/0/1200899594200551/1201018124798232/f
     const copyToClipboard = async () => {
+        if (_password === '') {
+            enqueueSnackbar('Password is empty, nothing to copy to clipboard.', { variant: 'error' });
+            return;
+        }
+
         try {
             await navigator.clipboard.writeText(`${_password}`);
             enqueueSnackbar('Password copied to clipboard.');
@@ -39,7 +44,6 @@ export const GeneratePassword: React.FunctionComponent<Props> = (props) => {
             });
 
             setPassword(_password);
-            console.log('password', _password, password);
         }
         await copyToClipboard();
     };
