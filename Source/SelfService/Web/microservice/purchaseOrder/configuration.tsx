@@ -316,6 +316,11 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     };
 
     const handleBack = () => {
+        if (!isCreate && activeStep === 2) {
+            setNotification('You cannot make changes to the name of the integration type', 'error');
+            return;
+        }
+
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
