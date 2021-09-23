@@ -27,6 +27,7 @@ import {
     ConnectorWebhookConfigBasic,
 } from '../../api/index';
 import { getCredentialsFromBasicAuth, makeBasicAuth } from '../../utils/httpCredentials';
+import { GeneratePassword } from './generatePassword';
 
 type Props = {
 
@@ -152,6 +153,8 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
         }
     };
 
+
+
     const stepsContent = [
         <>
             <Typography component={'span'}>
@@ -243,7 +246,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                         setPassword(event.target.value!);
                     }}
                 />
-                <Button color='primary'>GENERATE AND COPY TO CLIPBOARD</Button>
+                <GeneratePassword isCreate={isCreate} password={password} setPassword={setPassword} />
             </Typography >
         </>,
         <>
