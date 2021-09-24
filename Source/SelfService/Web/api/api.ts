@@ -158,7 +158,7 @@ export async function deleteMicroservice(applicationId: string, environment: str
 
 export async function saveMicroservice(input: any): Promise<Response> {
     const url = `${getServerUrlPrefix()}/microservice`;
-    return await fetch(
+    return fetch(
         url,
         {
             method: 'POST',
