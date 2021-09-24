@@ -109,31 +109,45 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
 
                 <h1>{microserviceName}</h1>
                 <h2>{subTitle}</h2>
-                <div className="bottomBar">
-                    {canEdit ?
-                        (
-                            <a href="#"
-                                onClick={onClickDelete}
-                                className="left"
-                                hidden={!canDelete}
-                            >
-                                Delete
-                            </a>
-                        ) :
-
-                        (
-                            <a href="#"
-                                className="left"
-                                onClick={onClickStopPropagation}
-                                hidden={!canDelete}
-                            >
-                                Delete
-                            </a>
-                        )
-                    }
-                    <div className="right">STATUS:TODO</div>
-                </div>
+                {createBottomBar(canEdit, canDelete, onClickDelete, onClickStopPropagation)}
             </div>
         </DocumentCard >
     );
 };
+
+function createBottomBar(canEdit: boolean, canDelete: boolean, onClickDelete, onClickStopPropagation) {
+    return (
+        <div className="bottomBar">
+            {canDelete ?
+                createDeleteButton(canEdit, onClickDelete, onClickStopPropagation)
+                : (null)
+            }
+            {createStatus()}
+        </div>
+    );
+}
+
+function createDeleteButton(canEdit: boolean, onClickDelete, onClickStopPropagation) {
+    return canEdit ?
+        (
+            <a href="#"
+                onClick={onClickDelete}
+                className="left"
+            >
+                Delete
+            </a>
+        ) :
+        (
+            <a href="#"
+                className="left"
+                onClick={onClickStopPropagation}
+            >
+                Delete
+            </a>
+        );
+}
+function createStatus() {
+    return (
+        <div className="right">STATUS:TODO</div>
+    );
+}
