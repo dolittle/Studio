@@ -19,6 +19,7 @@ type Props = {
     applicationId: string
     environment: string
     canEdit: boolean
+    canDelete: boolean
     onAfterDelete: (microserviceId: string, environment: string) => void;
 };
 
@@ -66,6 +67,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
     const applicationId = _props.applicationId;
     const environment = _props.environment;
     const canEdit = _props.canEdit;
+    const canDelete = _props.canDelete;
 
     // Today we do not store the microservice type in the cluster, making it hard to say what it is
     const subTitle = kindTitles[microserviceKind] ? kindTitles[microserviceKind].subTitle : '';
@@ -107,13 +109,13 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
 
                 <h1>{microserviceName}</h1>
                 <h2>{subTitle}</h2>
-
                 <div className="bottomBar">
                     {canEdit ?
                         (
                             <a href="#"
                                 onClick={onClickDelete}
                                 className="left"
+                                hidden={!canDelete}
                             >
                                 Delete
                             </a>
@@ -123,16 +125,15 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
                             <a href="#"
                                 className="left"
                                 onClick={onClickStopPropagation}
+                                hidden={!canDelete}
                             >
                                 Delete
                             </a>
                         )
                     }
-
                     <div className="right">STATUS:TODO</div>
                 </div>
             </div>
         </DocumentCard >
     );
 };
-

@@ -78,6 +78,7 @@ export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (prop
                                 applicationId={applicationId}
                                 environment={environment}
                                 canEdit={canEdit}
+                                canDelete={ms.kind !== 'raw-data-log-ingestor'}
                                 onAfterDelete={(microserviceId: string, environment: string) => {
                                     console.log('I wonder if this store does this now');
                                     console.log('worth noting below filters based on environment');
