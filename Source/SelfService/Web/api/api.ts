@@ -156,9 +156,9 @@ export async function deleteMicroservice(applicationId: string, environment: str
     return result.status === 200;
 }
 
-export async function saveMicroservice(input: any): Promise<boolean> {
+export async function saveMicroservice(input: any): Promise<Response> {
     const url = `${getServerUrlPrefix()}/microservice`;
-    const result = await fetch(
+    return await fetch(
         url,
         {
             method: 'POST',
@@ -168,8 +168,6 @@ export async function saveMicroservice(input: any): Promise<boolean> {
                 'content-type': 'application/json'
             }
         });
-    const jsonResult = await result.json();
-    return true;
 }
 
 export async function getPodStatus(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponsePodStatus> {

@@ -132,7 +132,7 @@ export async function deleteMicroservice(
     return response;
 }
 
-const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
+const saveMicroservice = async (kind: string, input: any): Promise<any> => {
     let response;
 
     switch (kind) {
@@ -153,9 +153,9 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
             return Promise.resolve(false as boolean);
     }
 
-    if (!response) {
-        alert('Sad times');
-        return Promise.resolve(false);
+    const jsonResponse = await response.json();
+    if (!response.ok) {
+        return Promise.reject(jsonResponse.message);
     }
 
     // Add to store
@@ -167,7 +167,7 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
     //const filteredMicroservices = liveMicroservices.microservices.filter(microservice => microservice.environment === environment);
     mergeMicroservicesFromK8s(liveMicroservices.microservices);
     // TODO change to microserviceID
-    return Promise.resolve(true);
+    return Promise.resolve(jsonResponse);
 };
 
 export const saveSimpleMicroservice = async (
