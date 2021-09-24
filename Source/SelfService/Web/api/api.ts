@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { Exception } from '@dolittle/rudiments';
 import { MicroserviceIngressPath } from './index';
 
 export type ShortInfo = {
@@ -156,9 +157,9 @@ export async function deleteMicroservice(applicationId: string, environment: str
     return result.status === 200;
 }
 
-export async function saveMicroservice(input: any): Promise<Response> {
+export async function saveMicroservice(input: any): Promise<any> {
     const url = `${getServerUrlPrefix()}/microservice`;
-    return fetch(
+    const response = await fetch(
         url,
         {
             method: 'POST',
@@ -168,6 +169,11 @@ export async function saveMicroservice(input: any): Promise<Response> {
                 'content-type': 'application/json'
             }
         });
+    const jsonResponse = await response.json();
+    if (!response.ok) {
+        throw new Exception(jsonResponse.message);
+    }
+    return jsonResponse;
 }
 
 export async function getPodStatus(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponsePodStatus> {

@@ -133,7 +133,7 @@ export const Container: React.FunctionComponent<Props> = (props) => {
             //const href = `/microservices/application/${application.id}/${environment}/overview`;
             const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}?step=3`;
             history.push(href);
-        }).catch(reason => enqueueSnackbar(reason, { variant: 'error' }));
+        }).catch(reason => enqueueSnackbar(reason.message, { variant: 'error' }));
     };
 
     return (

@@ -153,11 +153,6 @@ const saveMicroservice = async (kind: string, input: any): Promise<any> => {
             return Promise.resolve(false as boolean);
     }
 
-    const jsonResponse = await response.json();
-    if (!response.ok) {
-        return Promise.reject(jsonResponse.message);
-    }
-
     // Add to store
     // Hairy stuff trying to keep track of the edit and the live
     mergeMicroservicesFromGit([input]);
@@ -167,7 +162,7 @@ const saveMicroservice = async (kind: string, input: any): Promise<any> => {
     //const filteredMicroservices = liveMicroservices.microservices.filter(microservice => microservice.environment === environment);
     mergeMicroservicesFromK8s(liveMicroservices.microservices);
     // TODO change to microserviceID
-    return Promise.resolve(jsonResponse);
+    return response;
 };
 
 export const saveSimpleMicroservice = async (
@@ -190,7 +185,7 @@ export const saveRawDataLogIngestorMicroservice = async (
 
 export const savePurchaseOrderMicroservice = async (
     input: MicroservicePurchaseOrder
-): Promise<boolean> => {
+): Promise<any> => {
     // TODO maybe we put the logic to handle does raw data log exist in here
     // This contains all the microservices, so we can lookup the rawdatalog in here.
     // Check kind, get id etc
