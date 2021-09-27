@@ -44,7 +44,7 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
     const classes = useStyles();
     const _props = props!;
     const environment = _props.environment;
-    const searchParams = new URLSearchParams(useLocation().search);
+    const searchParams = new URLSearchParams(location.search);
 
     const items = [
         {

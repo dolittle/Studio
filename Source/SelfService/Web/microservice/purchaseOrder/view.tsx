@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
     Grid,
     IconButton,
@@ -21,6 +21,8 @@ import { useGlobalContext } from '../../stores/notifications';
 import { Configuration } from './configuration';
 import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
+import { ViewConfiguration } from './viewConfiguration';
+import { WaitForData } from './waitForData';
 
 type Props = {
     applicationId: string
@@ -53,6 +55,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
+    const location = useLocation();
     const _props = props!;
     const applicationId = _props.applicationId;
     const microserviceId = _props.microserviceId;
@@ -84,6 +87,11 @@ export const View: React.FunctionComponent<Props> = (props) => {
             history.push(href);
         }).catch(reason => console.log(reason));
     };
+
+    // TODO waitForDataState figure out wait for data state
+    // Fake it till we are ready
+    const searchParams = new URLSearchParams(location.search);
+    const waitForDataState = searchParams.get('waitForData')!;
 
     return (
         <Grid
@@ -118,7 +126,13 @@ export const View: React.FunctionComponent<Props> = (props) => {
             </Grid>
 
             <TabPanel value={value} index={0}>
-                <Configuration onSave={_onSave} microservice={currentMicroservice.edit} />
+                {waitForDataState !== 'fakeit' && (
+                    <WaitForData onSave={_onSave} microservice={currentMicroservice.edit} />
+                )}
+
+                {waitForDataState === 'fakeit' && (
+                    <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} />
+                )}
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />

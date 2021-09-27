@@ -50,7 +50,18 @@ export const GeneratePassword: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
+            {isCreate
+                ? <Button color='primary' onClick={generatePasswordAndCopyToClipboard}>GENERATE AND COPY TO CLIPBOARD</Button>
+                : <Button color='primary' onClick={copyToClipboard}>COPY TO CLIPBOARD</Button>
+            }
+        </>
+    );
+
+    return (
+        <>
             <Button color='primary' onClick={generatePasswordAndCopyToClipboard}>GENERATE AND COPY TO CLIPBOARD</Button>
+
+
             {!isCreate && (
                 <Button color='primary' onClick={copyToClipboard}>(COPY TO CLIPBOARD)</Button>
             )}

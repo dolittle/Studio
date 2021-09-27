@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
+import { useHistory, useLocation } from 'react-router';
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
@@ -8,7 +9,6 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { useSnackbar } from 'notistack';
 
@@ -23,10 +23,8 @@ import LoopIcon from '@material-ui/icons/Loop';
 
 import {
     MicroservicePurchaseOrder,
-    MicroserviceRawDataLogIngestorWebhookConfig,
-    ConnectorWebhookConfigBasic,
 } from '../../api/index';
-import { getCredentialsFromBasicAuth, makeBasicAuth } from '../../utils/httpCredentials';
+import { getCredentialsFromBasicAuth } from '../../utils/httpCredentials';
 import { GeneratePassword } from './generatePassword';
 
 type Props = {
@@ -96,11 +94,13 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export const Configuration: React.FunctionComponent<Props> = (props) => {
-    const { setNotification } = useGlobalContext();
+export const WaitForData: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
+    const history = useHistory();
+    const location = useLocation();
 
     const _props = props!;
+    // TODO used to update waitforDataState
     const onSave = _props.onSave;
 
     const ms = _props.microservice;
@@ -168,17 +168,9 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                 justifyContent='flex-start'
                 alignItems='center'
             >
-                <img src={logoInfor} onClick={() => {
-                    setErpSystem('infor');
-                    setActiveStep(1);
-                }} />
-
-                <img src={logoIFS} onClick={() => {
-                    setNotification(`Not yet supported, please reach out if interested to know when it will arrive`, 'info');
-                }} />
-                <img src={logoSAP} onClick={() => {
-                    setNotification(`Not yet supported, please reach out if interested to know when it will arrive`, 'info');
-                }} />
+                <img src={logoInfor} />
+                <img src={logoIFS} />
+                <img src={logoSAP} />
             </Grid>
         </>,
         <>
@@ -194,9 +186,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     variant='outlined'
                     className={classes.textField}
                     value={msName}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setMsName(event.target.value!);
-                    }}
+                    disabled={true}
                 />
             </Typography>
         </>,
@@ -228,9 +218,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     variant='outlined'
                     className={classes.textField}
                     value={username}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setUsername(event.target.value!);
-                    }}
+                    disabled={true}
                 />
                 <p>Create Password</p>
                 <TextField
@@ -241,11 +229,9 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     variant='outlined'
                     className={classes.textField}
                     value={password}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setPassword(event.target.value!);
-                    }}
+                    disabled={true}
                 />
-                <GeneratePassword isCreate={isCreate} password={password} setPassword={setPassword} />
+                <GeneratePassword isCreate={false} password={password} setPassword={setPassword} />
             </Typography >
         </>,
         <>
@@ -263,75 +249,27 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     ];
 
 
+    const lastStep = activeStep === steps.length - 1;
     const handleNext = async () => {
-        // Only allow changes on isCreate
-        if (isCreate) {
-            if (activeStep === 0) {
-                if (erpSystem === '') {
-                    setNotification('Please select an ERP system', 'error');
-                    return;
-                }
-            }
-            if (activeStep === 1) {
-                // Validate name
-                if (msName === '' || msName.includes(' ')) {
-                    setNotification('Your name cannot be empty, nor with spaces', 'error');
-                    return;
-                }
+        if (lastStep) {
+            // TODO onSave, then redirect and check the object, but today we fake it
+            // onSave
+            // TODO don't fake it
+            const searchParams = new URLSearchParams(location.search);
+            searchParams.set('waitForData', 'fakeit');
+            console.log('finish');
+            history.replace({ pathname: location.pathname, search: searchParams.toString() });
 
-            }
-        }
-
-        if (activeStep === 2) {
-            // Validate username
-            const cleanedUsername = username.trim();
-            if (cleanedUsername === '' || cleanedUsername.includes(' ')) {
-                setNotification('You need a username', 'error');
-                return;
-            }
-
-            // Validate password
-            if (password === '') {
-                setNotification('We require a password', 'error');
-                return;
-            }
-
-            ms.name = msName;
-            const authorization = makeBasicAuth({ username: cleanedUsername, password } as ConnectorWebhookConfigBasic);
-            ms.extra.webhooks = [
-                {
-                    kind: webhookPoHead,
-                    uriSuffix: webhookPoHead,
-                    authorization,
-                },
-                {
-                    kind: webhookPoLine,
-                    uriSuffix: webhookPoLine,
-                    authorization,
-                }
-            ] as MicroserviceRawDataLogIngestorWebhookConfig[];
-            await onSave(ms);
             return;
         }
-
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
     const handleBack = () => {
-        if (!isCreate && activeStep === 2) {
-            setNotification('You cannot make changes to the name of the integration type', 'error');
-            return;
-        }
-
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleReset = () => {
-        setActiveStep(0);
-    };
-
     return (
-
         <div className={classes.root}>
             <Stepper activeStep={activeStep} orientation='vertical'>
                 {steps.map((label, index) => (
@@ -359,7 +297,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                                         onClick={handleNext}
                                         className={classes.button}
                                     >
-                                        {activeStep === steps.length - 1
+                                        {lastStep
                                             ? 'Finish'
                                             : 'Next'}
                                     </Button>
@@ -369,14 +307,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     </Step>
                 ))}
             </Stepper>
-            {activeStep === steps.length && (
-                <Paper square elevation={0} className={classes.resetContainer}>
-                    <Typography>All steps completed - you&apos;re finished</Typography>
-                    <Button onClick={handleReset} className={classes.button}>
-                        Reset
-                    </Button>
-                </Paper>
-            )}
         </div>
     );
 };
