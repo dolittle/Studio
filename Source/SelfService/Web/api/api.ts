@@ -169,11 +169,20 @@ export async function saveMicroservice(input: any): Promise<any> {
                 'content-type': 'application/json'
             }
         });
-    const jsonResponse = await response.json();
+
+    const text = await response.text();
+
     if (!response.ok) {
+        let jsonResponse;
+        try {
+            jsonResponse = JSON.parse(text);
+        } catch (error) {
+            throw new Exception(`Couldn't parse the error message. The error was ${error}. Response Status ${response.status}. Response Body ${text}`);
+        }
         throw new Exception(jsonResponse.message);
     }
-    return jsonResponse;
+
+    return JSON.parse(text);
 }
 
 export async function getPodStatus(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponsePodStatus> {
