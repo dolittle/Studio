@@ -92,7 +92,6 @@ export const getDefaultMenu = (history: History<LocationState>, applicationId: s
                                 event.preventDefault();
                                 const href = link.href;
                                 history.push(href);
-                                window.location.reload();
                             }}>
                                 {link.name}
                             </a>
