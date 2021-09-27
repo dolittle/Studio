@@ -317,7 +317,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
 
     const handleBack = () => {
         if (!isCreate && activeStep === 2) {
-            setNotification('You cannot make changes to the name of the integration type', 'error');
+            setNotification('You cannot make changes to the name or the ERP system type', 'error');
             return;
         }
 
