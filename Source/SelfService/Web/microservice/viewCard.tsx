@@ -146,6 +146,7 @@ function createDeleteButton(canEdit: boolean, onClickDelete, onClickStopPropagat
             </a>
         );
 }
+
 function createStatus() {
     return (
         <div className="right">STATUS:TODO</div>
