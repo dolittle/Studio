@@ -31,6 +31,7 @@ k3d cluster create dolittle-dev \
     --port 8443:443@loadbalancer \
     --k3s-server-arg "--no-deploy=traefik" \
     --registry-create \
+    -v /tmp/k3dvolume:/tmp/k3dvolume \
     --kubeconfig-switch-context
 ```
 
@@ -55,12 +56,12 @@ Do the following command and verify that current context is `k3d-dolittle-env`
 kubectl config current-context
 ```
 
-We need to bootstrap some k8s things before we can continue. This is to mimick our setup in the platform. We also setup a hardcoded mongodb with the correct setup (labels, annotations, resources.json) for the example microservices in Studio.
+We need to bootstrap some k8s things before we can continue. This is to mimick our setup in the platform. We also setup a hardcoded mongodb with the correct setup (labels, annotations, resources.json) for the example microservices in Studio. We also need to setup a persistent volume so that we can persist the data, it's path is set to `/tmp/k3dvolume`. We also mock the `managed-premium` storage class from Azure to work as a local storage.
 Execute the following commands in Studio repo while in the `k3d-dolittle-dev` k8s context (the pods might take a while to start):
 
  ```sh
 cd Environment/k3d/k8s
-kubectl apply -f namespace.yml -f rbac.yml -f tenants.yml -f mongo.yml
+kubectl apply -f namespace.yml -f rbac.yml -f tenants.yml -f mongo.yml -f storage-class.yml -f persistent-volume.yml
 cd -
 ```
 
