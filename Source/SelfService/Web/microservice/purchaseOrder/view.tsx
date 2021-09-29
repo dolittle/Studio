@@ -14,7 +14,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
-import Paper from '@material-ui/core/Paper';
 
 import { microservices, savePurchaseOrderMicroservice } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
@@ -23,7 +22,7 @@ import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
 import { ViewConfiguration } from './viewConfiguration';
 import { WaitForData } from './waitForData';
-import { WaitForDataStatus } from './waitForDataStatus';
+import { DataStateIcon } from './dataStateIcon';
 
 type Props = {
     applicationId: string
@@ -120,7 +119,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         <Typography>{msName}</Typography>
                     </Grid>
                     <Grid item xs={2}>
-                        <WaitForDataStatus state={fakeState} />
+                        <DataStateIcon state={fakeState} />
                     </Grid>
                 </Grid>
             )}

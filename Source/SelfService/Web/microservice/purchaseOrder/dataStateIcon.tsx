@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export const WaitForDataStatus: React.FunctionComponent<Props> = (props) => {
+export const DataStateIcon: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();
     const state = props!.state;
 
