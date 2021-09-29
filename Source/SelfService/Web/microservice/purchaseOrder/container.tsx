@@ -128,11 +128,15 @@ export const Container: React.FunctionComponent<Props> = (props) => {
     };
 
     const _onSave = (ms: MicroservicePurchaseOrder): void => {
-        savePurchaseOrderMicroservice(ms).then((data) => {
+        savePurchaseOrderMicroservice(ms).then((result) => {
             // TODO We want to take them to the actual new microservice and set to step 3.
             //const href = `/microservices/application/${application.id}/${environment}/overview`;
-            const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}?step=3`;
-            history.push(href);
+            if (result) {
+                const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}?step=3`;
+                history.push(href);
+            } else {
+                enqueueSnackbar(`Failed to create a Purchase Order Microservice`, { variant: 'error' });
+            }
         }).catch(reason => enqueueSnackbar(reason.message, { variant: 'error' }));
     };
 

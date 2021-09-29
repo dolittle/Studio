@@ -132,7 +132,7 @@ export async function deleteMicroservice(
     return response;
 }
 
-const saveMicroservice = async (kind: string, input: any): Promise<any> => {
+const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
     let response;
 
     switch (kind) {
@@ -150,19 +150,18 @@ const saveMicroservice = async (kind: string, input: any): Promise<any> => {
             break;
         default:
             alert(`saving via store failed, kind: ${kind} not supported`);
-            return Promise.resolve(false as boolean);
+            return false;
     }
 
     // Add to store
     // Hairy stuff trying to keep track of the edit and the live
     mergeMicroservicesFromGit([input]);
     const applicationId = input.dolittle.applicationId;
-    const environment = input.environment;
     const liveMicroservices = await getMicroservices(applicationId);
     //const filteredMicroservices = liveMicroservices.microservices.filter(microservice => microservice.environment === environment);
     mergeMicroservicesFromK8s(liveMicroservices.microservices);
     // TODO change to microserviceID
-    return response;
+    return true;
 };
 
 export const saveSimpleMicroservice = async (
@@ -185,7 +184,7 @@ export const saveRawDataLogIngestorMicroservice = async (
 
 export const savePurchaseOrderMicroservice = async (
     input: MicroservicePurchaseOrder
-): Promise<any> => {
+): Promise<boolean> => {
     // TODO maybe we put the logic to handle does raw data log exist in here
     // This contains all the microservices, so we can lookup the rawdatalog in here.
     // Check kind, get id etc
