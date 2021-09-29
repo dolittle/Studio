@@ -155,8 +155,9 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
 
     // Add to store
     // Hairy stuff trying to keep track of the edit and the live
-    mergeMicroservicesFromGit([input]);
     const applicationId = input.dolittle.applicationId;
+    const application = await getApplication(applicationId);
+    mergeMicroservicesFromGit(application.microservices);
     const liveMicroservices = await getMicroservices(applicationId);
     //const filteredMicroservices = liveMicroservices.microservices.filter(microservice => microservice.environment === environment);
     mergeMicroservicesFromK8s(liveMicroservices.microservices);

@@ -1,3 +1,32 @@
+# [1.4.0] - 2021-9-27 [PR: #116](https://github.com/dolittle/Studio/pull/116)
+## Summary
+
+Hides the delete button for the raw data log view card
+
+
+#### How to test
+- Start with a clean cluster (or without raw-data-log and purchase-order)
+- Click Microservices
+- Click Create new microservice
+- Click Create within the Purchase order api card
+- Select Infor graphic
+- Enter name
+- Click next
+- Enter username
+- Enter password
+- Click Next
+- Click Microservices
+- See that there is no delete button on the raw-data-log-v1 webhook microservice 
+
+### Added
+
+- canDelete property to microservice view card
+
+### Changed
+
+- Uses HTML5 hidden to hide delete button from raw data log microservice view card
+
+
 # [1.3.0] - 2021-9-22 [PR: #114](https://github.com/dolittle/Studio/pull/114)
 ## Summary
 
