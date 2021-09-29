@@ -115,10 +115,10 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     justifyContent="flex-start"
                     alignItems="flex-start"
                 >
-                    <Grid item xs={2}>
-                        <Typography>{msName}</Typography>
+                    <Grid item xs={3}>
+                        <Typography variant="h3" component="h3">{msName}</Typography>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
                         <DataStateIcon state={fakeState} />
                     </Grid>
                 </Grid>

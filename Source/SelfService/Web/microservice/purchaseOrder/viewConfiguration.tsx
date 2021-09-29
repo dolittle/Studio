@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
             lineHeight: 1.75,
         },
         icon: {
-            fill: 'white',
+            fill: '#6678F6',
         },
         iconRoot: {
             padding: 0,

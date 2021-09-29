@@ -7,7 +7,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
 
-import { IconButton } from '@material-ui/core';
+import { IconButton, Paper } from '@material-ui/core';
 
 import ErrorIcon from '@material-ui/icons/Error';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -53,7 +53,10 @@ const useStyles = makeStyles((theme: Theme) =>
                 textTransform: 'uppercase'
             }
         },
-
+        paper: {
+            padding: theme.spacing(1),
+            textAlign: 'center',
+        },
     })
 );
 
@@ -84,11 +87,14 @@ export const DataStateIcon: React.FunctionComponent<Props> = (props) => {
     const iconText = option.text;
 
     return (
-        <IconButton
-            className={option.className}
-        >
-            {icon}
-            <Typography>{iconText}</Typography>
-        </IconButton>
+        <Paper className={classes.paper}>
+            <IconButton
+                className={option.className}
+            >
+                {icon}
+                <Typography>{iconText}</Typography>
+            </IconButton>
+        </Paper>
+
     );
 };
