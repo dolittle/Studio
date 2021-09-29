@@ -9,7 +9,7 @@ import { MicroservicePurchaseOrder } from '../../api/index';
 import { useSnackbar } from 'notistack';
 import { getCredentialsFromBasicAuth } from '../../utils/httpCredentials';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-
+import Paper from '@material-ui/core/Paper';
 
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
@@ -44,6 +44,14 @@ const useStyles = makeStyles((theme: Theme) =>
         copyClipboardCallToAction: {
             padding: theme.spacing(0),
             lineHeight: 1.75,
+        },
+        root: {
+            flexGrow: 1,
+        },
+        paper: {
+            padding: theme.spacing(2),
+            textAlign: 'center',
+            color: theme.palette.text.secondary,
         },
     })
 );
@@ -113,54 +121,61 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
 
 
                 <p>Webhook for purchase order head (POHEAD)</p>
+                <Grid container spacing={3}>
+                    <Grid item xs={8}>
+                        <span className={classes.inactiveText}>
+                            {webhookPrefix} / m3/pohead
+                        </span>
 
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="flex-start"
-                >
-                    <span className={classes.inactiveText}>
-                        {webhookPrefix} / m3/pohead
-                    </span >
-                    <Button className={classes.copyClipboardCallToAction} color='primary' onClick={copyPOHeadUrl}>COPY TO CLIPBOARD</Button>
+                    </Grid>
+
+                    <Grid
+                        item xs={4}
+                    >
+                        <Button className={classes.copyClipboardCallToAction} color='primary' onClick={copyPOHeadUrl}>COPY TO CLIPBOARD</Button>
+                    </Grid>
                 </Grid>
 
 
                 <p>Webhook for purchase order line (POLINE)</p>
+                <Grid container spacing={3}>
+                    <Grid item xs={8}>
+                        <span className={classes.inactiveText}>
+                            {webhookPrefix} / m3/poline
+                        </span>
 
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="flex-start"
-                >
-                    <span className={classes.inactiveText}>
-                        {webhookPrefix} / m3/poline
-                    </span >
-                    <Button className={classes.copyClipboardCallToAction} color='primary' onClick={copyPOLineUrl}>COPY TO CLIPBOARD</Button>
+                    </Grid>
+
+                    <Grid
+                        item xs={4}
+                    >
+                        <Button className={classes.copyClipboardCallToAction} color='primary' onClick={copyPOLineUrl}>COPY TO CLIPBOARD</Button>
+                    </Grid>
                 </Grid>
-
 
                 <h1>Username</h1>
                 <p>{username}</p>
 
                 <h1>Password</h1>
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="flex-start"
-                >
-                    <span>{password}</span>
-                    <IconButton onClick={() => {
-                        togglePassword();
-                    }}
-                        className={classes.iconRoot}
+                <Grid container spacing={3}>
+                    <Grid item xs={2}>
+                        <span>{password}</span>
+
+                    </Grid>
+
+                    <Grid
+                        item xs={10}
                     >
-                        <VisibilityIcon className={classes.icon} />
-                    </IconButton>
+                        <IconButton onClick={() => {
+                            togglePassword();
+                        }}
+                            className={classes.iconRoot}
+                        >
+                            <VisibilityIcon className={classes.icon} />
+                        </IconButton>
+                    </Grid>
                 </Grid>
+
             </Grid >
         </div >
     );
