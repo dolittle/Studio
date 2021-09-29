@@ -12,7 +12,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useSnackbar } from 'notistack';
 
-import { useGlobalContext } from '../../stores/notifications';
 import logoInfor from '../../images/infor.png'; // with import
 import logoIFS from '../../images/ifs.png';
 import logoSAP from '../../images/sap.png';

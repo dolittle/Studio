@@ -11,14 +11,14 @@ import {
 } from '@material-ui/core';
 import { TabPanel } from '../../utils/materialUi';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-
+import { useSnackbar } from 'notistack';
+import Paper from '@material-ui/core/Paper';
 
 import { microservices, savePurchaseOrderMicroservice } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
 import { HttpResponsePodStatus } from '../../api/api';
-import { useGlobalContext } from '../../stores/notifications';
-import { Configuration } from './configuration';
 import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
 import { ViewConfiguration } from './viewConfiguration';
@@ -44,12 +44,19 @@ const useStyles = makeStyles((theme: Theme) =>
                 color: 'white',
                 textTransform: 'uppercase'
             }
-
-        }
+        },
+        root: {
+            flexGrow: 1,
+        },
+        paper: {
+            padding: theme.spacing(2),
+            textAlign: 'center',
+        },
     })
 );
 
 export const View: React.FunctionComponent<Props> = (props) => {
+    const { enqueueSnackbar } = useSnackbar();
     const classes = useStyles();
 
 
@@ -69,7 +76,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
-    const { setNotification } = useGlobalContext();
     const [value, setValue] = useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -77,7 +83,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     };
 
     const _onSave = (ms: MicroservicePurchaseOrder): void => {
-        setNotification('TODO: update not done', 'error');
+        enqueueSnackbar('TODO: Update not done', { variant: 'error' });
         return;
         // TODO handle exception (maybe move to wait)
         savePurchaseOrderMicroservice(ms).then((data) => {
@@ -100,30 +106,52 @@ export const View: React.FunctionComponent<Props> = (props) => {
             justifyContent='flex-start'
             alignItems='stretch'
         >
-            <Grid
-                container
-                direction='row'
-                justifyContent='space-between'
-            >
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    TabIndicatorProps={{ style: { background: '#ffffff' } }}
-                >
-                    <Tab label='Configuration' />
-                    <Tab label='Health Status' />
-                </Tabs>
+            <Grid container spacing={3}>
+                <Grid item xs={8}>
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        TabIndicatorProps={{ style: { background: '#ffffff' } }}
+                    >
+                        <Tab label='Configuration' />
+                        <Tab label='Health Status' />
+                    </Tabs>
+                </Grid>
 
-                <IconButton
-                    onClick={() => {
-                        setNotification('TODO: Delete microservice', 'info');
-                    }}
-                    className={classes.deleteIcon}
+                <Grid
+                    item xs={4}
                 >
-                    <DeleteIcon />
-                    <Typography>delete</Typography>
-                </IconButton>
+                    <Grid
+                        container
+                        direction='row'
+                        justifyContent='space-evenly'
+                        alignItems='center'
+                    >
+                        <IconButton
+                            onClick={() => {
+                                enqueueSnackbar('TODO: Delete microservice', { variant: 'error' });
+                            }}
+                            className={classes.deleteIcon}
+                        >
+                            <DeleteIcon />
+                            <Typography>delete</Typography>
+                        </IconButton>
+
+                        {waitForDataState === 'fakeit' && (
+                            <IconButton
+                                onClick={() => {
+                                    enqueueSnackbar('TODO: Edit microservice', { variant: 'error' });
+                                }}
+                                className={classes.deleteIcon}
+                            >
+                                <EditIcon />
+                                <Typography>Edit</Typography>
+                            </IconButton>
+                        )}
+                    </Grid>
+                </Grid>
             </Grid>
+
 
             <TabPanel value={value} index={0}>
                 {waitForDataState !== 'fakeit' && (
