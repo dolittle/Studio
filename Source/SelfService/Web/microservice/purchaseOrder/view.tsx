@@ -23,6 +23,7 @@ import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
 import { ViewConfiguration } from './viewConfiguration';
 import { WaitForData } from './waitForData';
+import { WaitForDataStatus } from './waitForDataStatus';
 
 type Props = {
     applicationId: string
@@ -98,6 +99,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
     // Fake it till we are ready
     const searchParams = new URLSearchParams(location.search);
     const waitForDataState = searchParams.get('waitForData')!;
+    const msName = currentMicroservice.name;
+    const fakeState = searchParams.get('dataState')!;
 
     return (
         <Grid
@@ -106,6 +109,23 @@ export const View: React.FunctionComponent<Props> = (props) => {
             justifyContent='flex-start'
             alignItems='stretch'
         >
+            {waitForDataState === 'fakeit' && (
+                <Grid container
+                    spacing={2}
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="flex-start"
+                >
+                    <Grid item xs={2}>
+                        <Typography>{msName}</Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <WaitForDataStatus state={fakeState} />
+                    </Grid>
+                </Grid>
+            )}
+
+
             <Grid container spacing={3}>
                 <Grid item xs={8}>
                     <Tabs

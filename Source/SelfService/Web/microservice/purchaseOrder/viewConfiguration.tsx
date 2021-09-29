@@ -44,15 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
         copyClipboardCallToAction: {
             padding: theme.spacing(0),
             lineHeight: 1.75,
-        },
-        root: {
-            flexGrow: 1,
-        },
-        paper: {
-            padding: theme.spacing(2),
-            textAlign: 'center',
-            color: theme.palette.text.secondary,
-        },
+        }
     })
 );
 
@@ -70,7 +62,7 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
     const msName = ms.name;
     const credentials = getCredentialsFromBasicAuth(ms.extra.webhooks[0].authorization);
     const username = credentials.username;
-    const hiddenPassword = "*****";
+    const hiddenPassword = '*****';
     const [password, setPassword] = useState(hiddenPassword);
 
     const copyPOHeadUrl = async () => {
