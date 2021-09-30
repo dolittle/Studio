@@ -178,6 +178,10 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     };
 
 
+    const allowMicroserviceName = (name): boolean => {
+        return name === '' || name.includes(' ') ? false : true;
+    };
+
     const allowUsername = (username): boolean => {
         const cleanedUsername = username.trim();
         return cleanedUsername === '' || cleanedUsername.includes(' ') ? false : true;
@@ -228,7 +232,15 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     className={classes.textField}
                     value={msName}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setMsName(event.target.value!);
+                        const _name = event.target.value!;
+                        setMsName(_name);
+
+                        if (allowMicroserviceName(_name)) {
+                            setActiveNextButton(true);
+                        } else {
+                            setActiveNextButton(false);
+                        }
+
                     }}
                 />
             </Typography>
@@ -309,10 +321,16 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
             }
             if (activeStep === 1) {
                 // Validate name
-                if (msName === '' || msName.includes(' ')) {
+                if (!allowMicroserviceName(msName)) {
                     enqueueSnackbar('Your name cannot be empty, nor with spaces', { variant: 'error' });
                     return;
                 }
+            }
+        }
+
+        if (activeStep === 0) {
+            if (!allowMicroserviceName(msName)) {
+                setActiveNextButton(false);
             }
         }
 
