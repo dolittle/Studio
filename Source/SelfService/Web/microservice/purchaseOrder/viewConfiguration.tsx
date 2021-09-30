@@ -4,12 +4,15 @@ import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Grid, IconButton } from '@material-ui/core';
+import { Box, Grid, IconButton, Typography } from '@material-ui/core';
 import { MicroservicePurchaseOrder } from '../../api/index';
 import { useSnackbar } from 'notistack';
 import { getCredentialsFromBasicAuth } from '../../utils/httpCredentials';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import Paper from '@material-ui/core/Paper';
+
+
+const secondaryColor = '#93959F';
+const primaryColor = '#E9EAEC';
 
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
@@ -30,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
         inactiveText: {
             padding: theme.spacing(0),
             paddingRight: theme.spacing(10),
-            color: '#93959F',
+            color: secondaryColor,
             lineHeight: 1.75,
         },
         icon: {
@@ -44,6 +47,15 @@ const useStyles = makeStyles((theme: Theme) =>
         copyClipboardCallToAction: {
             padding: theme.spacing(0),
             lineHeight: 1.75,
+        },
+
+        label: {
+            padding: theme.spacing(1),
+            color: theme.palette.text.primary
+        },
+        data: {
+            padding: theme.spacing(1),
+            color: theme.palette.text.secondary
         }
     })
 );
@@ -101,73 +113,103 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
                 justifyContent="flex-start"
                 alignItems="stretch"
             >
-                <h1>Purchase order API name</h1>
-                <p>{msName}</p>
+                <Box m={2} pt={3}>
+                    <Typography component="p" className={classes.label}>
+                        Purchase order API name
+                    </Typography>
+
+                    <Typography component="p" className={classes.data}>
+                        {msName}
+                    </Typography>
 
 
-                <h1>uuid provided</h1>
-                <p>9f6a613f-d969-4938-alac-5b7d199bc40</p>
+                    <Typography component="p" className={classes.label}>
+                        uuid provided
+                    </Typography>
 
-                <h1>Runtime image provided</h1>
-                <p>dolittle/runtime: 6.0</p>
+                    <Typography component="p" className={classes.data}>
+                        {ms.dolittle.microserviceId}
+                    </Typography>
 
+                    <Typography component="p" className={classes.label}>
+                        Runtime image provided
+                    </Typography>
 
-                <p>Webhook for purchase order head (POHEAD)</p>
-                <Grid container spacing={3}>
-                    <Grid item xs={8}>
-                        <span className={classes.inactiveText}>
-                            {webhookPrefix} / m3/pohead
-                        </span>
-
-                    </Grid>
-
-                    <Grid
-                        item xs={4}
-                    >
-                        <Button className={classes.copyClipboardCallToAction} color='primary' onClick={copyPOHeadUrl}>COPY TO CLIPBOARD</Button>
-                    </Grid>
-                </Grid>
+                    <Typography component="p" className={classes.data}>
+                        {ms.extra.runtimeImage}
+                    </Typography>
 
 
-                <p>Webhook for purchase order line (POLINE)</p>
-                <Grid container spacing={3}>
-                    <Grid item xs={8}>
-                        <span className={classes.inactiveText}>
-                            {webhookPrefix} / m3/poline
-                        </span>
+                    <Typography component="p" className={classes.label}>
+                        Webhook for purchase order head (POHEAD)
+                    </Typography>
 
-                    </Grid>
+                    <Grid container spacing={3}>
+                        <Grid item xs={8}>
+                            <span className={classes.inactiveText}>
+                                {webhookPrefix} / m3/pohead
+                            </span>
 
-                    <Grid
-                        item xs={4}
-                    >
-                        <Button className={classes.copyClipboardCallToAction} color='primary' onClick={copyPOLineUrl}>COPY TO CLIPBOARD</Button>
-                    </Grid>
-                </Grid>
+                        </Grid>
 
-                <h1>Username</h1>
-                <p>{username}</p>
-
-                <h1>Password</h1>
-                <Grid container spacing={3}>
-                    <Grid item xs={2}>
-                        <span>{password}</span>
-
-                    </Grid>
-
-                    <Grid
-                        item xs={10}
-                    >
-                        <IconButton onClick={() => {
-                            togglePassword();
-                        }}
-                            className={classes.iconRoot}
+                        <Grid
+                            item xs={4}
                         >
-                            <VisibilityIcon className={classes.icon} />
-                        </IconButton>
+                            <Button className={classes.copyClipboardCallToAction} color='primary' onClick={copyPOHeadUrl}>COPY TO CLIPBOARD</Button>
+                        </Grid>
                     </Grid>
-                </Grid>
 
+                    <Typography component="p" className={classes.label}>
+                        Webhook for purchase order head (POLINE)
+                    </Typography>
+                    <Grid container spacing={3}>
+                        <Grid item xs={8}>
+                            <span className={classes.inactiveText}>
+                                {webhookPrefix} / m3/poline
+                            </span>
+
+                        </Grid>
+
+                        <Grid
+                            item xs={4}
+                        >
+                            <Button className={classes.copyClipboardCallToAction} color='primary' onClick={copyPOLineUrl}>COPY TO CLIPBOARD</Button>
+                        </Grid>
+                    </Grid>
+
+
+                    <Typography component="p" className={classes.label}>
+                        Username
+                    </Typography>
+
+                    <Typography component="p" className={classes.data}>
+                        {username}
+                    </Typography>
+
+
+                    <Typography component="p" className={classes.label}>
+                        Password
+                    </Typography>
+                    <Grid container spacing={3}>
+                        <Grid item xs={2}>
+                            <Typography component="p" className={classes.data}>
+                                {password}
+                            </Typography>
+                        </Grid>
+
+                        <Grid
+                            item xs={10}
+                        >
+                            <IconButton onClick={() => {
+                                togglePassword();
+                            }}
+                                className={classes.iconRoot}
+                            >
+                                <VisibilityIcon className={classes.icon} />
+                            </IconButton>
+                        </Grid>
+                    </Grid>
+                </Box>
             </Grid >
         </div >
     );

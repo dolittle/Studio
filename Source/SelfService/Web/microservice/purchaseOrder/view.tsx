@@ -38,10 +38,24 @@ const useStyles = makeStyles((theme: Theme) =>
             'marginRight': theme.spacing(1),
             'fill': 'white',
             '& .MuiSvgIcon-root': {
-                color: 'white'
+                color: 'white',
+                marginRight: theme.spacing(1),
             },
             '& .MuiTypography-root': {
                 color: 'white',
+                textTransform: 'uppercase'
+            }
+        },
+        editIcon: {
+            'padding': 0,
+            'marginRight': theme.spacing(1),
+            'fill': '#6678F6',
+            '& .MuiSvgIcon-root': {
+                color: '#6678F6',
+                marginRight: theme.spacing(1),
+            },
+            '& .MuiTypography-root': {
+                color: '#6678F6',
                 textTransform: 'uppercase'
             }
         },
@@ -106,7 +120,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
             container
             direction='column'
             justifyContent='flex-start'
-            alignItems='stretch'
         >
             {waitForDataState === 'fakeit' && (
                 <Grid container
@@ -125,8 +138,12 @@ export const View: React.FunctionComponent<Props> = (props) => {
             )}
 
 
-            <Grid container spacing={3}>
-                <Grid item xs={8}>
+            <Grid
+                container
+                spacing={3}
+
+            >
+                <Grid item xs={10}>
                     <Tabs
                         value={value}
                         onChange={handleChange}
@@ -138,13 +155,13 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 </Grid>
 
                 <Grid
-                    item xs={4}
+                    item xs={2}
                 >
                     <Grid
                         container
                         direction='row'
-                        justifyContent='space-evenly'
-                        alignItems='center'
+                        justifyContent='space-around'
+                        alignItems='flex-end'
                     >
                         <IconButton
                             onClick={() => {
@@ -161,7 +178,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                                 onClick={() => {
                                     enqueueSnackbar('TODO: Edit microservice', { variant: 'error' });
                                 }}
-                                className={classes.deleteIcon}
+                                className={classes.editIcon}
                             >
                                 <EditIcon />
                                 <Typography>Edit</Typography>

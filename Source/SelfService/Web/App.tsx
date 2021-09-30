@@ -27,15 +27,17 @@ import Grow from '@material-ui/core/Grow';
 import { TransitionProps } from '@material-ui/core/transitions';
 
 const themeDark = createTheme({
+    spacing: 8,
     palette: {
         background: {
             default: '#191A21',
             paper: '#191A21',
         },
         text: {
-            primary: '#E9EAEC'
+            primary: '#E9EAEC',
+            secondary: '#93959F',
         }
-    }
+    },
 });
 
 const useSnackbarStyles = makeStyles({
