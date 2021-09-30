@@ -8,18 +8,15 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { useSnackbar } from 'notistack';
 
-import { useGlobalContext } from '../../stores/notifications';
 import logoInfor from '../../images/infor.png'; // with import
 import logoIFS from '../../images/ifs.png';
 import logoSAP from '../../images/sap.png';
 
 import { Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import LoopIcon from '@material-ui/icons/Loop';
 
 import {
     MicroservicePurchaseOrder,
@@ -43,6 +40,35 @@ const useStyles = makeStyles((theme: Theme) =>
         button: {
             marginTop: theme.spacing(1),
             marginRight: theme.spacing(1),
+        },
+        backButton: {
+            'textTransform': 'uppercase',
+            'marginTop': theme.spacing(1),
+            'marginRight': theme.spacing(1),
+            'color': '#93959F',
+            'backgroundColor': 'inherit',
+            '&:disabled': {
+                backgroundColor: 'inherit',
+                color: '#3B3D48',
+            },
+            '&:hover': {
+                color: '#3B3D48',
+                backgroundColor: 'inherit',
+            },
+        },
+        nextButton: {
+            'marginTop': theme.spacing(1),
+            'marginRight': theme.spacing(1),
+            'color': '#2C2B33',
+            'backgroundColor': '#6678F6',
+            '&:hover': {
+                color: '#2C2B33',
+                backgroundColor: '#6678F6',
+            },
+            '&:disabled': {
+                backgroundColor: '#93959F',
+                color: '#3B3D48',
+            }
         },
         actionsContainer: {
             marginBottom: theme.spacing(2),
@@ -97,7 +123,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Configuration: React.FunctionComponent<Props> = (props) => {
-    const { setNotification } = useGlobalContext();
     const { enqueueSnackbar } = useSnackbar();
 
     const _props = props!;
@@ -122,12 +147,12 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     const [erpSystem, setErpSystem] = React.useState(initErpSystem);
     const [username, setUsername] = React.useState(initCredentials.username);
     const [password, setPassword] = React.useState(initCredentials.password);
+    const [activeNextButton, setActiveNextButton] = React.useState(false);
 
     const steps = [
         'Select ERP system',
         'Provide a name',
-        'Configure ERP system',
-        'Wait for data',
+        'Configure ERP system'
     ];
 
     const webhookPrefix = `https://${ms.extra.ingress.host}/api/webhooks`;
@@ -153,6 +178,14 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     };
 
 
+    const allowUsername = (username): boolean => {
+        const cleanedUsername = username.trim();
+        return cleanedUsername === '' || cleanedUsername.includes(' ') ? false : true;
+    };
+
+    const allowPassword = (password): boolean => {
+        return password === '' ? false : true;
+    };
 
     const stepsContent = [
         <>
@@ -170,14 +203,14 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
             >
                 <img src={logoInfor} onClick={() => {
                     setErpSystem('infor');
-                    setActiveStep(1);
+                    setActiveNextButton(true);
                 }} />
 
                 <img src={logoIFS} onClick={() => {
-                    setNotification(`Not yet supported, please reach out if interested to know when it will arrive`, 'info');
+                    enqueueSnackbar('Not yet supported, please reach out if interested to know when it will arrive');
                 }} />
                 <img src={logoSAP} onClick={() => {
-                    setNotification(`Not yet supported, please reach out if interested to know when it will arrive`, 'info');
+                    enqueueSnackbar('Not yet supported, please reach out if interested to know when it will arrive');
                 }} />
             </Grid>
         </>,
@@ -229,7 +262,14 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     className={classes.textField}
                     value={username}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setUsername(event.target.value!);
+                        const _username = event.target.value!;
+                        setUsername(_username);
+
+                        if (allowUsername(_username) && allowPassword(password)) {
+                            setActiveNextButton(true);
+                        } else {
+                            setActiveNextButton(false);
+                        }
                     }}
                 />
                 <p>Create Password</p>
@@ -242,23 +282,18 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     className={classes.textField}
                     value={password}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        const _password = event.target.value!;
                         setPassword(event.target.value!);
+
+                        if (allowUsername(username) && allowPassword(_password)) {
+                            setActiveNextButton(true);
+                        } else {
+                            setActiveNextButton(false);
+                        }
                     }}
                 />
                 <GeneratePassword isCreate={isCreate} password={password} setPassword={setPassword} />
             </Typography >
-        </>,
-        <>
-            <Typography component={'span'}>
-                <LoopIcon className={classes.progressBar} />
-                <span className='waitForData'>WAITING FOR DATA</span>
-                <br />
-                <span>
-                    It may take a few moments for data to start flowing. If studio cannot
-                    connect to your ERP system, try trouble-shooting.
-                </span>
-                <Button color='primary'>TROUBLESHOOT</Button>
-            </Typography>
         </>,
     ];
 
@@ -268,36 +303,41 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
         if (isCreate) {
             if (activeStep === 0) {
                 if (erpSystem === '') {
-                    setNotification('Please select an ERP system', 'error');
+                    enqueueSnackbar('Please select an ERP system', { variant: 'error' });
                     return;
                 }
             }
             if (activeStep === 1) {
                 // Validate name
                 if (msName === '' || msName.includes(' ')) {
-                    setNotification('Your name cannot be empty, nor with spaces', 'error');
+                    enqueueSnackbar('Your name cannot be empty, nor with spaces', { variant: 'error' });
                     return;
                 }
-
             }
         }
 
+        if (activeStep === 1) {
+            if (!allowUsername(username) || !allowPassword(password)) {
+                setActiveNextButton(false);
+            }
+        }
+
+
         if (activeStep === 2) {
             // Validate username
-            const cleanedUsername = username.trim();
-            if (cleanedUsername === '' || cleanedUsername.includes(' ')) {
-                setNotification('You need a username', 'error');
+            if (!allowUsername(username)) {
+                enqueueSnackbar('You need a username', { variant: 'error' });
                 return;
             }
 
             // Validate password
-            if (password === '') {
-                setNotification('We require a password', 'error');
+            if (!allowPassword(password)) {
+                enqueueSnackbar('We require a password', { variant: 'error' });
                 return;
             }
 
             ms.name = msName;
-            const authorization = makeBasicAuth({ username: cleanedUsername, password } as ConnectorWebhookConfigBasic);
+            const authorization = makeBasicAuth({ username: username.trim(), password } as ConnectorWebhookConfigBasic);
             ms.extra.webhooks = [
                 {
                     kind: webhookPoHead,
@@ -319,19 +359,14 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
 
     const handleBack = () => {
         if (!isCreate && activeStep === 2) {
-            setNotification('You cannot make changes to the name of the integration type', 'error');
+            enqueueSnackbar('You cannot make changes to the name of the integration type', { variant: 'error' });
             return;
         }
 
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleReset = () => {
-        setActiveStep(0);
-    };
-
     return (
-
         <div className={classes.root}>
             <Stepper activeStep={activeStep} orientation='vertical'>
                 {steps.map((label, index) => (
@@ -347,17 +382,18 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                             <div className={classes.actionsContainer}>
                                 <div>
                                     <Button
+                                        variant='contained'
                                         disabled={activeStep === 0}
                                         onClick={handleBack}
-                                        className={classes.button}
+                                        className={classes.backButton}
                                     >
                                         Back
                                     </Button>
                                     <Button
                                         variant='contained'
-                                        color='primary'
                                         onClick={handleNext}
-                                        className={classes.button}
+                                        disabled={!activeNextButton}
+                                        className={classes.nextButton}
                                     >
                                         {activeStep === steps.length - 1
                                             ? 'Finish'
@@ -369,14 +405,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     </Step>
                 ))}
             </Stepper>
-            {activeStep === steps.length && (
-                <Paper square elevation={0} className={classes.resetContainer}>
-                    <Typography>All steps completed - you&apos;re finished</Typography>
-                    <Button onClick={handleReset} className={classes.button}>
-                        Reset
-                    </Button>
-                </Paper>
-            )}
         </div>
     );
 };
