@@ -5,10 +5,12 @@ import { useHistory } from 'react-router-dom';
 import {
     Grid,
     Tabs,
-    Tab
+    Tab,
+    Button
 } from '@material-ui/core';
 import { TabPanel } from '../../utils/materialUi';
 import { Guid } from '@dolittle/rudiments';
+import { useSnackbar } from 'notistack';
 
 
 import { savePurchaseOrderMicroservice, getFirstIngressFromApplication } from '../../stores/microservice';
@@ -24,6 +26,7 @@ type Props = {
 
 export const Create: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
+    const { enqueueSnackbar } = useSnackbar();
 
     const _props = props!;
     const application = _props.application;
@@ -84,23 +87,46 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             container
             direction='column'
             justifyContent='flex-start'
-            alignItems='stretch'
         >
             <h1>Create purchase order API</h1>
+
             <Grid
                 container
-                direction='row'
-                justifyContent='space-between'
+                spacing={3}
+
             >
-                <Tabs
-                    value={0}
-                    onChange={handleChange}
-                    TabIndicatorProps={{ style: { background: '#ffffff' } }}
+                <Grid item xs={10}>
+                    <Tabs
+                        value={0}
+                        onChange={handleChange}
+                        TabIndicatorProps={{ style: { background: '#ffffff' } }}
+                    >
+                        <Tab label='Configuration' />
+                        <Tab label='Health Status' />
+                    </Tabs>
+                </Grid>
+
+                <Grid
+                    item xs={2}
                 >
-                    <Tab label='Configuration' />
-                    <Tab label='Health Status' />
-                </Tabs>
+                    <Grid
+                        container
+                        direction='row'
+                        justifyContent='space-around'
+                        alignItems='flex-end'
+                    >
+                        <Button
+                            onClick={() => {
+                                enqueueSnackbar('TODO: Cancel setup', { variant: 'error' });
+                            }}
+                        >
+                            cancel
+                        </Button>
+                    </Grid>
+                </Grid>
             </Grid>
+
+
 
             <TabPanel value={0} index={0}>
                 <Configuration onSave={_onSave} microservice={ms} />
