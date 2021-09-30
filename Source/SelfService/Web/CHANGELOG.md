@@ -1,3 +1,16 @@
+# [1.4.1] - 2021-9-30 [PR: #117](https://github.com/dolittle/Studio/pull/117)
+## Summary
+
+Handle PurchaseOrderAPI creation errors by displaying an error snackbar with the message from the HTTP response.
+
+Preview (some of the HTTP responses are fixed in https://github.com/dolittle/platform-api/pull/34 as shown here):
+![image](https://user-images.githubusercontent.com/10163775/134651915-1ebd0335-962a-40be-b372-2b8517badb6e.png)
+
+### Added
+
+- Error handling to POAPI creation view
+
+
 # [1.4.0] - 2021-9-27 [PR: #116](https://github.com/dolittle/Studio/pull/116)
 ## Summary
 
