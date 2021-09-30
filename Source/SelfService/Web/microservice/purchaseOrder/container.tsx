@@ -13,7 +13,7 @@ import { TabPanel } from '../../utils/materialUi';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Guid } from '@dolittle/rudiments';
-
+import { useSnackbar } from 'notistack';
 
 import { savePurchaseOrderMicroservice, getFirstIngressFromApplication } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
@@ -73,12 +73,14 @@ export const Container: React.FunctionComponent<Props> = (props) => {
     const applicationId = application.id;
 
     const { setNotification } = useGlobalContext();
+    const { enqueueSnackbar } = useSnackbar();
     const [value, setValue] = useState(0);
 
     const microserviceId = Guid.create().toString();
     const headImage = 'dolittle/integrations-m3-purchaseorders:latest';
     const runtimeImage = 'dolittle/runtime:6.1.0';
     const ingressInfo = getFirstIngressFromApplication(_props.application, environment);
+
 
     const [podsData, setPodsData] = useState({
         namespace: '',
@@ -126,13 +128,16 @@ export const Container: React.FunctionComponent<Props> = (props) => {
     };
 
     const _onSave = (ms: MicroservicePurchaseOrder): void => {
-        // TODO handle exception (maybe move to wait)
-        savePurchaseOrderMicroservice(ms).then((data) => {
+        savePurchaseOrderMicroservice(ms).then((result) => {
             // TODO We want to take them to the actual new microservice and set to step 3.
             //const href = `/microservices/application/${application.id}/${environment}/overview`;
-            const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}?step=3`;
-            history.push(href);
-        }).catch(reason => console.log(reason));
+            if (result) {
+                const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}?step=3`;
+                history.push(href);
+            } else {
+                enqueueSnackbar(`Failed to create a Purchase Order Microservice`, { variant: 'error' });
+            }
+        }).catch(reason => enqueueSnackbar(reason.message, { variant: 'error' }));
     };
 
     return (

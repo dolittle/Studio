@@ -150,12 +150,7 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
             break;
         default:
             alert(`saving via store failed, kind: ${kind} not supported`);
-            return Promise.resolve(false as boolean);
-    }
-
-    if (!response) {
-        alert('Sad times');
-        return Promise.resolve(false);
+            return false;
     }
 
     // Add to store
@@ -163,12 +158,11 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
     const applicationId = input.dolittle.applicationId;
     const application = await getApplication(applicationId);
     mergeMicroservicesFromGit(application.microservices);
-    const environment = input.environment;
     const liveMicroservices = await getMicroservices(applicationId);
     //const filteredMicroservices = liveMicroservices.microservices.filter(microservice => microservice.environment === environment);
     mergeMicroservicesFromK8s(liveMicroservices.microservices);
     // TODO change to microserviceID
-    return Promise.resolve(true);
+    return true;
 };
 
 export const saveSimpleMicroservice = async (
