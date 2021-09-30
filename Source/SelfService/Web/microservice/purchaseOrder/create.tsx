@@ -1,6 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import {
     Grid,
@@ -117,7 +117,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     >
                         <Button
                             onClick={() => {
-                                enqueueSnackbar('TODO: Cancel setup', { variant: 'error' });
+                                const href = `/microservices/application/${application.id}/${environment}/create`;
+                                history.replace(href);
                             }}
                         >
                             cancel

@@ -4,7 +4,7 @@
 
 // TODO validate the data
 // TODO change action button from create to save
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router';
 
 import { Create as BusinessMomentsAdaptor } from './businessMomentsAdaptor/create';
@@ -106,15 +106,19 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
 
         const kind = searchParams.get('kind') as string;
 
-        if (!items.map(e => e.kind).includes(kind)) {
+        if (!kind || !items.map(e => e.kind).includes(kind)) {
             return '';
         }
         return kind;
     };
 
-    const kindFromParams = kindViaParams();
+    const [microserviceTypeState, setMicroserviceTypeState] = React.useState(kindViaParams());
+    useEffect(() => {
+        setMicroserviceTypeState(kindViaParams());
+    }, [kindViaParams()]);
 
-    const [microserviceTypeState, setMicroserviceTypeState] = React.useState(kindFromParams);
+
+    console.log('kindViaParams', kindViaParams(), microserviceTypeState);
 
     const onCreate = (kind: string) => {
         searchParams.set('kind', kind);
