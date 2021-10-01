@@ -1,20 +1,22 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import Button from '@material-ui/core/Button';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Box, Grid, IconButton, Typography } from '@material-ui/core';
+import { Box, Grid, Typography } from '@material-ui/core';
 
 import { MicroservicePurchaseOrder } from '../../api/index';
-import { getCredentialsFromBasicAuth } from '../../utils/httpCredentials';
-import VisibilityIcon from '@material-ui/icons/Visibility';
+
+import { ViewWebhookCredentials } from './viewWebhookCredentials';
+import { EditWebhookCredentials } from './editWebhookCredentials';
 
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
     microservice: MicroservicePurchaseOrder;
+    editMode: boolean;
 };
 
 // Below is ugly and still not right
@@ -53,7 +55,22 @@ const useStyles = makeStyles((theme: Theme) =>
         data: {
             padding: theme.spacing(1),
             color: theme.palette.text.secondary
-        }
+        },
+        textField: { //https://stackoverflow.com/a/60461876 excellent resource
+            '& .MuiOutlinedInput-input': {
+                color: 'white'
+            },
+            '& .MuiInputLabel-root': {
+                color: 'white'
+            },
+            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                color: 'white',
+                borderColor: theme.palette.text.secondary
+            },
+            '&:hover .MuiOutlinedInput-input': {
+                color: 'white'
+            },
+        },
     })
 );
 
@@ -64,7 +81,7 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
     const location = useLocation();
 
     const _props = props!;
-
+    const editMode = _props.editMode;
     const ms = _props.microservice;
     const searchParams = new URLSearchParams(location.search);
 
@@ -72,10 +89,6 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
     const msName = ms.name;
-    const credentials = getCredentialsFromBasicAuth(ms.extra.webhooks[0].authorization);
-    const username = credentials.username;
-    const hiddenPassword = '*****';
-    const [password, setPassword] = useState(hiddenPassword);
 
     useEffect(() => {
         const firstTime = searchParams.get('firstTime')!;
@@ -103,13 +116,9 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
         }
     };
 
-    const togglePassword = () => {
-        if (password === hiddenPassword) {
-            setPassword(credentials.password);
-        } else {
-            setPassword(hiddenPassword);
-        }
-    };
+    const webhookCredentials = !editMode ?
+        <ViewWebhookCredentials classes={classes} authorization={ms.extra.webhooks[0].authorization} />
+        : <EditWebhookCredentials classes={classes} authorization={ms.extra.webhooks[0].authorization} />;
 
     return (
         <div >
@@ -183,38 +192,7 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
                         </Grid>
                     </Grid>
 
-
-                    <Typography component="p" className={classes.label}>
-                        Username
-                    </Typography>
-
-                    <Typography component="p" className={classes.data}>
-                        {username}
-                    </Typography>
-
-
-                    <Typography component="p" className={classes.label}>
-                        Password
-                    </Typography>
-                    <Grid container spacing={3}>
-                        <Grid item xs={2}>
-                            <Typography component="p" className={classes.data}>
-                                {password}
-                            </Typography>
-                        </Grid>
-
-                        <Grid
-                            item xs={10}
-                        >
-                            <IconButton onClick={() => {
-                                togglePassword();
-                            }}
-                                className={classes.iconRoot}
-                            >
-                                <VisibilityIcon className={classes.icon} />
-                            </IconButton>
-                        </Grid>
-                    </Grid>
+                    {webhookCredentials}
                 </Box>
             </Grid >
         </div >

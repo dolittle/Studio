@@ -89,6 +89,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     }
 
     const [value, setValue] = useState(0);
+    const [editMode, setEditMode] = useState(false);
 
     // TODO modify when we know how we want to handle state of purchase order data
     // Fake it till we are ready
@@ -179,7 +180,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
                         <IconButton
                             onClick={() => {
-                                enqueueSnackbar('TODO: Edit microservice', { variant: 'error' });
+
+                                setEditMode(!editMode);
                             }}
                             className={classes.editIcon}
                         >
@@ -193,7 +195,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
 
             <TabPanel value={value} index={0}>
-                <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} />
+                <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} editMode={editMode} />
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
