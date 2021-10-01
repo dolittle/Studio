@@ -21,7 +21,6 @@ import { HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
 import { ViewConfiguration } from './viewConfiguration';
-import { WaitForData } from './waitForData';
 import { DataStateIcon } from './dataStateIcon';
 
 type Props = {
@@ -111,7 +110,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
     // TODO waitForDataState figure out wait for data state
     // Fake it till we are ready
     const searchParams = new URLSearchParams(location.search);
-    const waitForDataState = searchParams.get('waitForData')!;
     const msName = currentMicroservice.name;
     const fakeState = searchParams.get('dataState')!;
 
@@ -121,22 +119,20 @@ export const View: React.FunctionComponent<Props> = (props) => {
             direction='column'
             justifyContent='flex-start'
         >
-            {waitForDataState === 'fakeit' && (
-                <Grid container
-                    spacing={2}
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="flex-start"
-                >
-                    <Grid item xs={3}>
-                        <Typography variant="h3" component="h3">{msName}</Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <DataStateIcon state={fakeState} />
-                    </Grid>
-                </Grid>
-            )}
 
+            <Grid container
+                spacing={2}
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="flex-start"
+            >
+                <Grid item xs={3}>
+                    <Typography variant="h3" component="h3">{msName}</Typography>
+                </Grid>
+                <Grid item xs={3}>
+                    <DataStateIcon state={fakeState} />
+                </Grid>
+            </Grid>
 
             <Grid
                 container
@@ -173,30 +169,24 @@ export const View: React.FunctionComponent<Props> = (props) => {
                             <Typography>delete</Typography>
                         </IconButton>
 
-                        {waitForDataState === 'fakeit' && (
-                            <IconButton
-                                onClick={() => {
-                                    enqueueSnackbar('TODO: Edit microservice', { variant: 'error' });
-                                }}
-                                className={classes.editIcon}
-                            >
-                                <EditIcon />
-                                <Typography>Edit</Typography>
-                            </IconButton>
-                        )}
+
+                        <IconButton
+                            onClick={() => {
+                                enqueueSnackbar('TODO: Edit microservice', { variant: 'error' });
+                            }}
+                            className={classes.editIcon}
+                        >
+                            <EditIcon />
+                            <Typography>Edit</Typography>
+                        </IconButton>
+
                     </Grid>
                 </Grid>
             </Grid>
 
 
             <TabPanel value={value} index={0}>
-                {waitForDataState !== 'fakeit' && (
-                    <WaitForData onSave={_onSave} microservice={currentMicroservice.edit} />
-                )}
-
-                {waitForDataState === 'fakeit' && (
-                    <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} />
-                )}
+                <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} />
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />

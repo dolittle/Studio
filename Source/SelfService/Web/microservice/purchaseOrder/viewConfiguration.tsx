@@ -1,16 +1,19 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
+import Button from '@material-ui/core/Button';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Box, Grid, IconButton, Typography } from '@material-ui/core';
+
 import { MicroservicePurchaseOrder } from '../../api/index';
-import { useSnackbar } from 'notistack';
 import { getCredentialsFromBasicAuth } from '../../utils/httpCredentials';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
-
+// TODO handle firstTime=1
+// TODO use theme
 const secondaryColor = '#93959F';
 const primaryColor = '#E9EAEC';
 
@@ -64,6 +67,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();
     const { enqueueSnackbar } = useSnackbar();
+    const location = useLocation();
+
     const _props = props!;
 
     const ms = _props.microservice;
@@ -105,6 +110,8 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
 
     };
 
+    //const searchParams = new URLSearchParams(location.search);
+    //const waitForDataState = searchParams.get('waitForData')!;
     return (
         <div >
             <Grid

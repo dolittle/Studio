@@ -27,7 +27,7 @@ import Grow from '@material-ui/core/Grow';
 import { TransitionProps } from '@material-ui/core/transitions';
 
 const themeDark = createTheme({
-    spacing: 8,
+    //spacing: 8,
     palette: {
         background: {
             default: '#191A21',

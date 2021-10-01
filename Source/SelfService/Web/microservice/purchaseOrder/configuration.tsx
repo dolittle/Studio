@@ -191,6 +191,16 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
         return password === '' ? false : true;
     };
 
+    const setPasswordAndCheckAction = (username: string, newPassword: string) => {
+        setPassword(newPassword);
+
+        if (allowUsername(username) && allowPassword(newPassword)) {
+            setActiveNextButton(true);
+        } else {
+            setActiveNextButton(false);
+        }
+    };
+
     const stepsContent = [
         <>
             <Typography component={'span'}>
@@ -296,17 +306,14 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     className={classes.textField}
                     value={password}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        const _password = event.target.value!;
-                        setPassword(event.target.value!);
-
-                        if (allowUsername(username) && allowPassword(_password)) {
-                            setActiveNextButton(true);
-                        } else {
-                            setActiveNextButton(false);
-                        }
+                        setPasswordAndCheckAction(username, event.target.value!);
                     }}
                 />
-                <GeneratePassword isCreate={isCreate} password={password} setPassword={setPassword} />
+
+                <GeneratePassword isCreate={isCreate} password={password} setPassword={(newPassword) => {
+                    setPasswordAndCheckAction(username, newPassword);
+                }
+                } />
             </Typography >
         </>,
     ];

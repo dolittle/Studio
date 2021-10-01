@@ -65,6 +65,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+        // TODO replace with enqueue
         setNotification(
             'Health Status only available after microservice created',
             'error'
@@ -74,9 +75,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const _onSave = (ms: MicroservicePurchaseOrder): void => {
         // TODO handle exception (maybe move to wait)
         savePurchaseOrderMicroservice(ms).then((data) => {
-            // TODO We want to take them to the actual new microservice and set to step 3.
-            //const href = `/microservices/application/${application.id}/${environment}/overview`;
-            // Not sure if we need the step
+            // TODO add firstTime=1 to trigger popup
             const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}`;
             history.push(href);
         }).catch(reason => console.log(reason));

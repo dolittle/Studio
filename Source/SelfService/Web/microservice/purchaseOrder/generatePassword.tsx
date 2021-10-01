@@ -10,7 +10,7 @@ import { generate } from 'generate-password-browser';
 type Props = {
     isCreate: boolean;
     password: string;
-    setPassword: Dispatch<SetStateAction<string>>;
+    setPassword: (newValue: string) => void;
 };
 
 export const GeneratePassword: React.FunctionComponent<Props> = (props) => {
