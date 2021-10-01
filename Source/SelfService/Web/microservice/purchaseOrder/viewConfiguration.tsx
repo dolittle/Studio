@@ -1,6 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
@@ -12,17 +12,11 @@ import { MicroservicePurchaseOrder } from '../../api/index';
 import { getCredentialsFromBasicAuth } from '../../utils/httpCredentials';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
-// TODO handle firstTime=1
-// TODO use theme
-const secondaryColor = '#93959F';
-const primaryColor = '#E9EAEC';
-
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
     microservice: MicroservicePurchaseOrder;
 };
 
-// TODO: I am not winning at the game of grids / css / flexbox
 // Below is ugly and still not right
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -36,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
         inactiveText: {
             padding: theme.spacing(0),
             paddingRight: theme.spacing(10),
-            color: secondaryColor,
+            color: theme.palette.text.secondary,
             lineHeight: 1.75,
         },
         icon: {
@@ -72,6 +66,7 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
 
     const ms = _props.microservice;
+    const searchParams = new URLSearchParams(location.search);
 
     const webhookPrefix = `https://${ms.extra.ingress.host}/api/webhooks`;
     const webhookPoHead = 'm3/pohead';
@@ -81,6 +76,14 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
     const username = credentials.username;
     const hiddenPassword = '*****';
     const [password, setPassword] = useState(hiddenPassword);
+
+    useEffect(() => {
+        const firstTime = searchParams.get('firstTime')!;
+        if (firstTime === '1') {
+            console.log('How many times');
+            enqueueSnackbar('Microservice ‘Supplier PO API’ successfully created.');
+        }
+    }, []);
 
     const copyPOHeadUrl = async () => {
         try {
@@ -106,12 +109,8 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
         } else {
             setPassword(hiddenPassword);
         }
-
-
     };
 
-    //const searchParams = new URLSearchParams(location.search);
-    //const waitForDataState = searchParams.get('waitForData')!;
     return (
         <div >
             <Grid
