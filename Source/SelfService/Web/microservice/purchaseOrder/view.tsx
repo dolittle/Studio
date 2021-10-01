@@ -71,11 +71,10 @@ const useStyles = makeStyles((theme: Theme) =>
 export const View: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
     const classes = useStyles();
-
-
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
     const location = useLocation();
+
     const _props = props!;
     const applicationId = _props.applicationId;
     const microserviceId = _props.microserviceId;
@@ -90,6 +89,19 @@ export const View: React.FunctionComponent<Props> = (props) => {
     }
 
     const [value, setValue] = useState(0);
+
+    // TODO modify when we know how we want to handle state of purchase order data
+    // Fake it till we are ready
+    const msName = currentMicroservice.name;
+    const searchParams = new URLSearchParams(location.search);
+
+    const getFakeState = (searchParams: URLSearchParams): string => {
+        if (!searchParams.has('dataState')) {
+            return 'waiting';
+        }
+        return searchParams.get('dataState') as string;
+    };
+    const fakeState = getFakeState(searchParams);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
@@ -107,11 +119,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
         }).catch(reason => console.log(reason));
     };
 
-    // TODO waitForDataState figure out wait for data state
-    // Fake it till we are ready
-    const searchParams = new URLSearchParams(location.search);
-    const msName = currentMicroservice.name;
-    const fakeState = searchParams.get('dataState')!;
 
     return (
         <Grid

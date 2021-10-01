@@ -75,8 +75,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const _onSave = (ms: MicroservicePurchaseOrder): void => {
         // TODO handle exception (maybe move to wait)
         savePurchaseOrderMicroservice(ms).then((data) => {
-            // TODO add firstTime=1 to trigger popup
-            const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}`;
+            const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}?firstTime=1`;
             history.push(href);
         }).catch(reason => console.log(reason));
     };
