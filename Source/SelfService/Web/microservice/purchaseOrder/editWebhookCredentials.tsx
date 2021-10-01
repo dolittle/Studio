@@ -8,6 +8,7 @@ import { getCredentialsFromBasicAuth } from '../../utils/httpCredentials';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { ClassNameMap } from '@material-ui/styles/withStyles';
 import { GeneratePassword } from './generatePassword';
+import { ActionButton } from '../../theme/actionButton';
 
 
 type Props = {
@@ -95,6 +96,29 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
                     />
                 </Grid>
             </Grid>
+
+            <div className={classes.actionsContainer}>
+                <div>
+                    <ActionButton
+                        onClick={() => {
+                            enqueueSnackbar('TODO: cancel', { variant: 'warning' });
+                        }}
+                        disabled={false}
+                        buttonType='secondary'
+                    >
+                        Back
+                    </ActionButton>
+                    <ActionButton
+                        onClick={() => {
+                            enqueueSnackbar('TODO: save', { variant: 'warning' });
+                        }}
+                        disabled={false}
+                        buttonType='primary'
+                    >
+                        Save
+                    </ActionButton>
+                </div>
+            </div>
         </>
     );
 };

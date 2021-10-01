@@ -22,6 +22,9 @@ type Props = {
 // Below is ugly and still not right
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        actionsContainer: {
+            marginBottom: theme.spacing(2),
+        },
         button: {
             padding: 0,
             marginRight: theme.spacing(1),

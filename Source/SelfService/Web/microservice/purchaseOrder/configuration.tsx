@@ -25,6 +25,7 @@ import {
 } from '../../api/index';
 import { getCredentialsFromBasicAuth, makeBasicAuth } from '../../utils/httpCredentials';
 import { GeneratePassword } from './generatePassword';
+import { ActionButton } from '../../theme/actionButton';
 
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
@@ -40,35 +41,6 @@ const useStyles = makeStyles((theme: Theme) =>
         button: {
             marginTop: theme.spacing(1),
             marginRight: theme.spacing(1),
-        },
-        backButton: {
-            'textTransform': 'uppercase',
-            'marginTop': theme.spacing(1),
-            'marginRight': theme.spacing(1),
-            'color': '#93959F',
-            'backgroundColor': 'inherit',
-            '&:disabled': {
-                backgroundColor: 'inherit',
-                color: '#3B3D48',
-            },
-            '&:hover': {
-                color: '#3B3D48',
-                backgroundColor: 'inherit',
-            },
-        },
-        nextButton: {
-            'marginTop': theme.spacing(1),
-            'marginRight': theme.spacing(1),
-            'color': '#2C2B33',
-            'backgroundColor': '#6678F6',
-            '&:hover': {
-                color: '#2C2B33',
-                backgroundColor: '#6678F6',
-            },
-            '&:disabled': {
-                backgroundColor: '#93959F',
-                color: '#3B3D48',
-            }
         },
         actionsContainer: {
             marginBottom: theme.spacing(2),
@@ -408,24 +380,23 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
 
                             <div className={classes.actionsContainer}>
                                 <div>
-                                    <Button
-                                        variant='contained'
-                                        disabled={activeStep === 0}
+                                    <ActionButton
                                         onClick={handleBack}
-                                        className={classes.backButton}
+                                        disabled={activeStep === 0}
+                                        buttonType='secondary'
                                     >
                                         Back
-                                    </Button>
-                                    <Button
-                                        variant='contained'
+                                    </ActionButton>
+
+                                    <ActionButton
                                         onClick={handleNext}
                                         disabled={!activeNextButton}
-                                        className={classes.nextButton}
+                                        buttonType='primary'
                                     >
                                         {activeStep === steps.length - 1
                                             ? 'Finish'
                                             : 'Next'}
-                                    </Button>
+                                    </ActionButton>
                                 </div>
                             </div>
                         </StepContent>
