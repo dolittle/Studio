@@ -14,6 +14,7 @@ import { ActionButton } from '../../theme/actionButton';
 type Props = {
     authorization: string
     classes: ClassNameMap<any>
+    onCancel: () => void;
 };
 
 export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) => {
@@ -21,7 +22,7 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
 
     const classes = props!.classes;
     const credentials = getCredentialsFromBasicAuth(props!.authorization);
-    const username = credentials.username;
+    const [username, setUsername] = useState(credentials.username);
     const [password, setPassword] = useState(credentials.password);
     const [showPassword, setShowPassword] = useState(false);
     const [saveProtection, setSaveProtection] = useState(false);
@@ -53,7 +54,8 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
                 className={classes.textField}
                 value={username}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    //
+                    setUsername(event.target.value!);
+                    setSaveProtection(true);
                 }}
             />
 
@@ -73,7 +75,8 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
                         className={classes.textField}
                         value={password}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            //
+                            setPassword(event.target.value!);
+                            setSaveProtection(true);
                         }}
                     />
                 </Grid>
@@ -101,7 +104,10 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
                 <div>
                     <ActionButton
                         onClick={() => {
-                            enqueueSnackbar('TODO: cancel', { variant: 'warning' });
+                            if (saveProtection) {
+                                enqueueSnackbar('TODO: cancel', { variant: 'warning' });
+                            }
+                            props!.onCancel();
                         }}
                         disabled={false}
                         buttonType='secondary'

@@ -180,7 +180,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
                         <IconButton
                             onClick={() => {
-
                                 setEditMode(!editMode);
                             }}
                             className={classes.editIcon}
@@ -195,7 +194,9 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
 
             <TabPanel value={value} index={0}>
-                <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} editMode={editMode} />
+                <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} editMode={editMode} setEditMode={(newValue) => {
+                    setEditMode(newValue);
+                }} />
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />

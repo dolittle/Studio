@@ -17,6 +17,7 @@ type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
     microservice: MicroservicePurchaseOrder;
     editMode: boolean;
+    setEditMode: (newValue: boolean) => void;
 };
 
 // Below is ugly and still not right
@@ -28,9 +29,6 @@ const useStyles = makeStyles((theme: Theme) =>
         button: {
             padding: 0,
             marginRight: theme.spacing(1),
-        },
-        actionsContainer: {
-            marginBottom: theme.spacing(2),
         },
         inactiveText: {
             padding: theme.spacing(0),
@@ -85,6 +83,7 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
 
     const _props = props!;
     const editMode = _props.editMode;
+    const setEditMode = _props.setEditMode;
     const ms = _props.microservice;
     const searchParams = new URLSearchParams(location.search);
 
@@ -121,7 +120,9 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
 
     const webhookCredentials = !editMode ?
         <ViewWebhookCredentials classes={classes} authorization={ms.extra.webhooks[0].authorization} />
-        : <EditWebhookCredentials classes={classes} authorization={ms.extra.webhooks[0].authorization} />;
+        : <EditWebhookCredentials classes={classes} authorization={ms.extra.webhooks[0].authorization} onCancel={() => {
+            setEditMode(false);
+        }} />;
 
     return (
         <div >
