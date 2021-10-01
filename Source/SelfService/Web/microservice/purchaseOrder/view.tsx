@@ -194,8 +194,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
 
             <TabPanel value={value} index={0}>
-                <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} editMode={editMode} setEditMode={(newValue) => {
-                    setEditMode(newValue);
+                <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} editMode={editMode} onCancel={() => {
+                    setEditMode(false);
                 }} />
             </TabPanel>
             <TabPanel value={value} index={1}>

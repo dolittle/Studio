@@ -17,7 +17,7 @@ type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
     microservice: MicroservicePurchaseOrder;
     editMode: boolean;
-    setEditMode: (newValue: boolean) => void;
+    onCancel: () => void;
 };
 
 // Below is ugly and still not right
@@ -83,7 +83,6 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
 
     const _props = props!;
     const editMode = _props.editMode;
-    const setEditMode = _props.setEditMode;
     const ms = _props.microservice;
     const searchParams = new URLSearchParams(location.search);
 
@@ -120,9 +119,7 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
 
     const webhookCredentials = !editMode ?
         <ViewWebhookCredentials classes={classes} authorization={ms.extra.webhooks[0].authorization} />
-        : <EditWebhookCredentials classes={classes} authorization={ms.extra.webhooks[0].authorization} onCancel={() => {
-            setEditMode(false);
-        }} />;
+        : <EditWebhookCredentials classes={classes} authorization={ms.extra.webhooks[0].authorization} onCancel={_props.onCancel} />;
 
     return (
         <div >
