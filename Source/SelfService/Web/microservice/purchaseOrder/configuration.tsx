@@ -226,6 +226,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     later.
                 </p>
                 <TextField
+                    required
                     id='microserviceName'
                     label='Name'
                     variant='outlined'
@@ -286,6 +287,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                 />
                 <p>Create Password</p>
                 <TextField
+                    required
                     id='outlined-password-input'
                     type='password'
                     label='Password'
