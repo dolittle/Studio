@@ -94,7 +94,6 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
     useEffect(() => {
         const firstTime = searchParams.get('firstTime')!;
         if (firstTime === '1') {
-            console.log('How many times');
             enqueueSnackbar('Microservice ‘Supplier PO API’ successfully created.');
         }
     }, []);
