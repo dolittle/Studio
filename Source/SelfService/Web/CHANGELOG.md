@@ -1,3 +1,22 @@
+# [1.5.0] - 2021-10-5 [PR: #118](https://github.com/dolittle/Studio/pull/118)
+Brings in #113, #115 and as a fake way to fake the flow into "view" screen of config, not the setup screen
+
+## Summary
+- Fake data flow on "view" screen (http://localhost:9007/selfservice/microservices/application/11b6cf47-5d9f-438f-8116-0d9828654657/Dev/view/043a71f8-a7fa-304a-9111-fb2eeea22206?waitForData=fakeit&dataState=waiting) change dataState from "waiting" to "waiting", "flowing", "error".
+- Creating a purchaseOrder mircoservice redirects to purchaseOrder view
+- The view screen is "first time" aware via query param
+- The view screen allows to toggle the edit of the username and password
+- Ability to click Generate password for the webhook password
+- Fake dataState via the queryParm for the DataStateIcon
+- Replaced a few cases of setNotification with the snackbar
+- Intoducing "save protection" logic when editing username and password
+
+
+Linked to
+- https://app.asana.com/0/1200899594200551/1201018124798231/f
+- https://www.figma.com/file/OPDbO214o4LjpTu316WyMf/Studio-Mockups?node-id=1403%3A72103
+
+
 # [1.4.1] - 2021-9-30 [PR: #117](https://github.com/dolittle/Studio/pull/117)
 ## Summary
 
