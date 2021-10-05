@@ -92,7 +92,7 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
                         <VisibilityIcon className={classes.icon} />
                     </IconButton>
 
-                    <GeneratePassword isCreate={true} password={password} setPassword={(newPassword) => {
+                    <GeneratePassword password={password} setPassword={(newPassword) => {
                         setPassword(newPassword);
                         setSaveProtection(true);
                     }}

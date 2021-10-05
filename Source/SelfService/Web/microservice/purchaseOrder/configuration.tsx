@@ -96,16 +96,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Configuration: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
+    const classes = useStyles();
 
     const _props = props!;
     const onSave = _props.onSave;
-
     const ms = _props.microservice;
-
-    const isCreate = ms.name === '' ? true : false;
-    const classes = useStyles();
-
-
+    const isCreate = ms.name === '';
     const initStep = !isCreate ? 3 : 0;
     const initMicroserviceName = !isCreate ? ms.name : '';
     // TODO this can be replaced once we land https://app.asana.com/0/0/1201032430663748/f
@@ -149,18 +145,17 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
         }
     };
 
-
     const allowMicroserviceName = (name): boolean => {
-        return name === '' || name.includes(' ') ? false : true;
+        return !(name === '' || name.includes(' '));
     };
 
     const allowUsername = (username): boolean => {
         const cleanedUsername = username.trim();
-        return cleanedUsername === '' || cleanedUsername.includes(' ') ? false : true;
+        return !(cleanedUsername === '' || cleanedUsername.includes(' '));
     };
 
     const allowPassword = (password): boolean => {
-        return password === '' ? false : true;
+        return password !== '';
     };
 
     const setPasswordAndCheckAction = (username: string, newPassword: string) => {
@@ -282,7 +277,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     }}
                 />
 
-                <GeneratePassword isCreate={isCreate} password={password} setPassword={(newPassword) => {
+                <GeneratePassword password={password} setPassword={(newPassword) => {
                     setPasswordAndCheckAction(username, newPassword);
                 }
                 } />

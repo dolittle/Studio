@@ -106,11 +106,7 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
 
         const kind = searchParams.get('kind') as string;
 
-        if (!kind) {
-            return '';
-        }
-
-        if (!items.map(e => e.kind).includes(kind)) {
+        if (!kind || !items.map(e => e.kind).includes(kind)) {
             return '';
         }
 

@@ -82,7 +82,7 @@ export const DataStateIcon: React.FunctionComponent<Props> = (props) => {
         },
     };
 
-    const option = options[state] ? options[state] : options.error;
+    const option = options[state] ?? options.error;
     const icon = option.icon;
     const iconText = option.text;
 
