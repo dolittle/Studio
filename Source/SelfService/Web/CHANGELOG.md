@@ -1,3 +1,45 @@
+# [1.4.1] - 2021-9-30 [PR: #117](https://github.com/dolittle/Studio/pull/117)
+## Summary
+
+Handle PurchaseOrderAPI creation errors by displaying an error snackbar with the message from the HTTP response.
+
+Preview (some of the HTTP responses are fixed in https://github.com/dolittle/platform-api/pull/34 as shown here):
+![image](https://user-images.githubusercontent.com/10163775/134651915-1ebd0335-962a-40be-b372-2b8517badb6e.png)
+
+### Added
+
+- Error handling to POAPI creation view
+
+
+# [1.4.0] - 2021-9-27 [PR: #116](https://github.com/dolittle/Studio/pull/116)
+## Summary
+
+Hides the delete button for the raw data log view card
+
+
+#### How to test
+- Start with a clean cluster (or without raw-data-log and purchase-order)
+- Click Microservices
+- Click Create new microservice
+- Click Create within the Purchase order api card
+- Select Infor graphic
+- Enter name
+- Click next
+- Enter username
+- Enter password
+- Click Next
+- Click Microservices
+- See that there is no delete button on the raw-data-log-v1 webhook microservice 
+
+### Added
+
+- canDelete property to microservice view card
+
+### Changed
+
+- Uses HTML5 hidden to hide delete button from raw data log microservice view card
+
+
 # [1.3.0] - 2021-9-22 [PR: #114](https://github.com/dolittle/Studio/pull/114)
 ## Summary
 

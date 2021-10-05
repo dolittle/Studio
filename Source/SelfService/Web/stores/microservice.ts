@@ -150,24 +150,19 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
             break;
         default:
             alert(`saving via store failed, kind: ${kind} not supported`);
-            return Promise.resolve(false as boolean);
-    }
-
-    if (!response) {
-        alert('Sad times');
-        return Promise.resolve(false);
+            return false;
     }
 
     // Add to store
     // Hairy stuff trying to keep track of the edit and the live
-    mergeMicroservicesFromGit([input]);
     const applicationId = input.dolittle.applicationId;
-    const environment = input.environment;
+    const application = await getApplication(applicationId);
+    mergeMicroservicesFromGit(application.microservices);
     const liveMicroservices = await getMicroservices(applicationId);
     //const filteredMicroservices = liveMicroservices.microservices.filter(microservice => microservice.environment === environment);
     mergeMicroservicesFromK8s(liveMicroservices.microservices);
     // TODO change to microserviceID
-    return Promise.resolve(true);
+    return true;
 };
 
 export const saveSimpleMicroservice = async (
