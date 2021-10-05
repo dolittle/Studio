@@ -12,8 +12,8 @@ export const makeBearer = (data: ConnectorWebhookConfigBearer): string => {
     return `Bearer ${data.token}`;
 };
 
-// getCredentialsFromBasicAuth assumes data is "Basic dXNlcjE6aGVsbG93b3JsZA==" where
-// dXNlcjE6aGVsbG93b3JsZA== is user1:helloworld
+// getCredentialsFromBasicAuth assumes the data is in format of "Basic dXNlcjE6aGVsbG93b3JsZA==" where
+// dXNlcjE6aGVsbG93b3JsZA== decoded is user1:helloworld
 export const getCredentialsFromBasicAuth = (data: string): ConnectorWebhookConfigBasic => {
     if (data === '') {
         return {

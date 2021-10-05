@@ -53,7 +53,7 @@ export const ActionButton: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();
     const _props = props!;
     const children = _props.children;
-    const onClick = _props.onClick ? _props.onClick : defaultOnClick;
+    const onClick = _props.onClick ?? defaultOnClick;
     const disabled = _props.disabled;
     const className = classes[_props.buttonType];
     return (

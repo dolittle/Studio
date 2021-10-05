@@ -20,7 +20,7 @@ export const SecondaryButton: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const title = _props.title;
     const icon = _props.icon;
-    const onClick = _props.onClick ? _props.onClick : defaultOnClick;
+    const onClick = _props.onClick ?? defaultOnClick;
     const titleColor = _props.titleColor ? _props.titleColor : defaultTitleColor;
     return (
         <div className="btn container">
