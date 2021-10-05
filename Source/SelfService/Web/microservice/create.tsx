@@ -4,13 +4,13 @@
 
 // TODO validate the data
 // TODO change action button from create to save
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router';
 
 import { Create as BusinessMomentsAdaptor } from './businessMomentsAdaptor/create';
 import { Create as Base } from './base/create';
 import { Create as StaticSite } from './staticSite/create';
-import { Container as PurchaseOrder } from './purchaseOrder/container';
+import { Create as PurchaseOrder } from './purchaseOrder/create';
 
 import { HttpResponseApplications2 } from '../api/api';
 
@@ -44,7 +44,7 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
     const classes = useStyles();
     const _props = props!;
     const environment = _props.environment;
-    const searchParams = new URLSearchParams(useLocation().search);
+    const searchParams = new URLSearchParams(location.search);
 
     const items = [
         {
@@ -106,15 +106,17 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
 
         const kind = searchParams.get('kind') as string;
 
-        if (!items.map(e => e.kind).includes(kind)) {
+        if (!kind || !items.map(e => e.kind).includes(kind)) {
             return '';
         }
+
         return kind;
     };
 
-    const kindFromParams = kindViaParams();
-
-    const [microserviceTypeState, setMicroserviceTypeState] = React.useState(kindFromParams);
+    const [microserviceTypeState, setMicroserviceTypeState] = React.useState(kindViaParams());
+    useEffect(() => {
+        setMicroserviceTypeState(kindViaParams());
+    }, [kindViaParams()]);
 
     const onCreate = (kind: string) => {
         searchParams.set('kind', kind);

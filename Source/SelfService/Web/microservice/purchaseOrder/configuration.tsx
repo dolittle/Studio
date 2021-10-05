@@ -8,24 +8,24 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { useSnackbar } from 'notistack';
 
-import { useGlobalContext } from '../../stores/notifications';
 import logoInfor from '../../images/infor.png'; // with import
 import logoIFS from '../../images/ifs.png';
 import logoSAP from '../../images/sap.png';
 
 import { Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import LoopIcon from '@material-ui/icons/Loop';
-import { backgroundColor } from '../../theme/viewCard';
+
 import {
     MicroservicePurchaseOrder,
     MicroserviceRawDataLogIngestorWebhookConfig,
     ConnectorWebhookConfigBasic,
 } from '../../api/index';
+import { getCredentialsFromBasicAuth, makeBasicAuth } from '../../utils/httpCredentials';
+import { GeneratePassword } from './generatePassword';
+import { ActionButton } from '../../theme/actionButton';
 
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
@@ -95,29 +95,34 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Configuration: React.FunctionComponent<Props> = (props) => {
-    const { setNotification } = useGlobalContext();
     const { enqueueSnackbar } = useSnackbar();
+    const classes = useStyles();
 
     const _props = props!;
     const onSave = _props.onSave;
-
     const ms = _props.microservice;
+    const isCreate = ms.name === '';
+    const initStep = !isCreate ? 3 : 0;
+    const initMicroserviceName = !isCreate ? ms.name : '';
+    // TODO this can be replaced once we land https://app.asana.com/0/0/1201032430663748/f
+    const initErpSystem = !isCreate ? 'infor' : '';
 
-    const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [msName, setMsName] = React.useState('');
-    const [erpSystem, setErpSystem] = React.useState('');
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    const authorization = ms.extra.webhooks[0]?.authorization ? ms.extra.webhooks[0].authorization : '';
+    const initCredentials = getCredentialsFromBasicAuth(authorization);
+
+    const [activeStep, setActiveStep] = React.useState(initStep);
+    const [msName, setMsName] = React.useState(initMicroserviceName);
+    const [erpSystem, setErpSystem] = React.useState(initErpSystem);
+    const [username, setUsername] = React.useState(initCredentials.username);
+    const [password, setPassword] = React.useState(initCredentials.password);
+    const [activeNextButton, setActiveNextButton] = React.useState(false);
 
     const steps = [
         'Select ERP system',
         'Provide a name',
-        'Configure ERP system',
-        'Wait for data',
+        'Configure ERP system'
     ];
 
-    // TODO change to data from platform-api
     const webhookPrefix = `https://${ms.extra.ingress.host}/api/webhooks`;
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
@@ -140,6 +145,29 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
         }
     };
 
+    const allowMicroserviceName = (name): boolean => {
+        return !(name === '' || name.includes(' '));
+    };
+
+    const allowUsername = (username): boolean => {
+        const cleanedUsername = username.trim();
+        return !(cleanedUsername === '' || cleanedUsername.includes(' '));
+    };
+
+    const allowPassword = (password): boolean => {
+        return password !== '';
+    };
+
+    const setPasswordAndCheckAction = (username: string, newPassword: string) => {
+        setPassword(newPassword);
+
+        if (allowUsername(username) && allowPassword(newPassword)) {
+            setActiveNextButton(true);
+        } else {
+            setActiveNextButton(false);
+        }
+    };
+
     const stepsContent = [
         <>
             <Typography component={'span'}>
@@ -156,14 +184,14 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
             >
                 <img src={logoInfor} onClick={() => {
                     setErpSystem('infor');
-                    setActiveStep(1);
+                    setActiveNextButton(true);
                 }} />
 
                 <img src={logoIFS} onClick={() => {
-                    setNotification(`Not yet supported, please reach out if interested to know when it will arrive`, 'info');
+                    enqueueSnackbar('Not yet supported, please reach out if interested to know when it will arrive');
                 }} />
                 <img src={logoSAP} onClick={() => {
-                    setNotification(`Not yet supported, please reach out if interested to know when it will arrive`, 'info');
+                    enqueueSnackbar('Not yet supported, please reach out if interested to know when it will arrive');
                 }} />
             </Grid>
         </>,
@@ -175,13 +203,22 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     later.
                 </p>
                 <TextField
+                    required
                     id='microserviceName'
                     label='Name'
                     variant='outlined'
                     className={classes.textField}
                     value={msName}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setMsName(event.target.value!);
+                        const _name = event.target.value!;
+                        setMsName(_name);
+
+                        if (allowMicroserviceName(_name)) {
+                            setActiveNextButton(true);
+                        } else {
+                            setActiveNextButton(false);
+                        }
+
                     }}
                 />
             </Typography>
@@ -215,11 +252,19 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     className={classes.textField}
                     value={username}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setUsername(event.target.value!);
+                        const _username = event.target.value!;
+                        setUsername(_username);
+
+                        if (allowUsername(_username) && allowPassword(password)) {
+                            setActiveNextButton(true);
+                        } else {
+                            setActiveNextButton(false);
+                        }
                     }}
                 />
                 <p>Create Password</p>
                 <TextField
+                    required
                     id='outlined-password-input'
                     type='password'
                     label='Password'
@@ -228,59 +273,65 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     className={classes.textField}
                     value={password}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setPassword(event.target.value!);
+                        setPasswordAndCheckAction(username, event.target.value!);
                     }}
                 />
-                <Button color='primary'>GENERATE AND COPY TO CLIPBOARD</Button>
+
+                <GeneratePassword password={password} setPassword={(newPassword) => {
+                    setPasswordAndCheckAction(username, newPassword);
+                }
+                } />
             </Typography >
-        </>,
-        <>
-            <Typography component={'span'}>
-                <LoopIcon className={classes.progressBar} />
-                <span className='waitForData'>WAITING FOR DATA</span>
-                <br />
-                <span>
-                    It may take a few moments for data to start flowing. If studio cannot
-                    connect to your ERP system, try trouble-shooting.
-                </span>
-                <Button color='primary'>TROUBLESHOOT</Button>
-            </Typography>
         </>,
     ];
 
 
     const handleNext = async () => {
-        if (activeStep === 0) {
-            if (erpSystem === '') {
-                setNotification('Please select an ERP system', 'error');
-                return;
+        // Only allow changes on isCreate
+        if (isCreate) {
+            if (activeStep === 0) {
+                if (erpSystem === '') {
+                    enqueueSnackbar('Please select an ERP system', { variant: 'error' });
+                    return;
+                }
+            }
+            if (activeStep === 1) {
+                // Validate name
+                if (!allowMicroserviceName(msName)) {
+                    enqueueSnackbar('Your name cannot be empty, nor with spaces', { variant: 'error' });
+                    return;
+                }
             }
         }
-        if (activeStep === 1) {
-            // Validate name
-            if (msName === '' || msName.includes(' ')) {
-                setNotification('Your name cannot be empty, nor with spaces', 'error');
-                return;
-            }
 
+        if (activeStep === 0) {
+            if (!allowMicroserviceName(msName)) {
+                setActiveNextButton(false);
+            }
         }
+
+        if (activeStep === 1) {
+            if (!allowUsername(username) || !allowPassword(password)) {
+                setActiveNextButton(false);
+            }
+        }
+
 
         if (activeStep === 2) {
             // Validate username
-            const cleanedUsername = username.trim();
-            if (cleanedUsername === '' || cleanedUsername.includes(' ')) {
-                setNotification('You need a username', 'error');
+            if (!allowUsername(username)) {
+                enqueueSnackbar('You need a username', { variant: 'error' });
                 return;
             }
 
             // Validate password
-            if (password === '') {
-                setNotification('We require a password', 'error');
+            if (!allowPassword(password)) {
+                enqueueSnackbar('We require a password', { variant: 'error' });
                 return;
             }
 
             ms.name = msName;
-            const authorization = makeBasicAuth({ username: cleanedUsername, password } as ConnectorWebhookConfigBasic);
+            const authorization = makeBasicAuth({ username: username.trim(), password } as ConnectorWebhookConfigBasic);
             ms.extra.webhooks = [
                 {
                     kind: webhookPoHead,
@@ -301,15 +352,15 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     };
 
     const handleBack = () => {
+        if (!isCreate && activeStep === 2) {
+            enqueueSnackbar('You cannot make changes to the name of the integration type', { variant: 'error' });
+            return;
+        }
+
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleReset = () => {
-        setActiveStep(0);
-    };
-
     return (
-
         <div className={classes.root}>
             <Stepper activeStep={activeStep} orientation='vertical'>
                 {steps.map((label, index) => (
@@ -324,43 +375,29 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
 
                             <div className={classes.actionsContainer}>
                                 <div>
-                                    <Button
-                                        disabled={activeStep === 0}
+                                    <ActionButton
                                         onClick={handleBack}
-                                        className={classes.button}
+                                        disabled={activeStep === 0}
+                                        buttonType='secondary'
                                     >
                                         Back
-                                    </Button>
-                                    <Button
-                                        variant='contained'
-                                        color='primary'
+                                    </ActionButton>
+
+                                    <ActionButton
                                         onClick={handleNext}
-                                        className={classes.button}
+                                        disabled={!activeNextButton}
+                                        buttonType='primary'
                                     >
                                         {activeStep === steps.length - 1
                                             ? 'Finish'
                                             : 'Next'}
-                                    </Button>
+                                    </ActionButton>
                                 </div>
                             </div>
                         </StepContent>
                     </Step>
                 ))}
             </Stepper>
-            {activeStep === steps.length && (
-                <Paper square elevation={0} className={classes.resetContainer}>
-                    <Typography>All steps completed - you&apos;re finished</Typography>
-                    <Button onClick={handleReset} className={classes.button}>
-                        Reset
-                    </Button>
-                </Paper>
-            )}
         </div>
     );
 };
-
-// TODO move to util as used in multiple places
-function makeBasicAuth(data: ConnectorWebhookConfigBasic): string {
-    const suffix = btoa(`${data.username}:${data.password}`);
-    return `Basic ${suffix}`;
-}
