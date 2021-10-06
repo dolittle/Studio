@@ -7,7 +7,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
+
 import Typography from '@material-ui/core/Typography';
 import { useSnackbar } from 'notistack';
 
@@ -21,7 +21,7 @@ import {
 } from '../../api/index';
 import { getCredentialsFromBasicAuth, makeBasicAuth } from '../../utils/httpCredentials';
 import { GeneratePassword } from './generatePassword';
-import { ActionButton } from '../../theme/actionButton';
+import { Button } from '../../theme/button';
 import { ErpIcon } from './erpIcon';
 
 type Props = {
@@ -118,7 +118,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
 
-    const copyPOHeadUrl = async () => {
+    const copyPOHeadUrl = async (event: React.MouseEvent<HTMLElement>) => {
         try {
             await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoHead}`);
             enqueueSnackbar('POHEAD URL copied to clipboard.');
@@ -127,7 +127,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
         }
     };
 
-    const copyPOLineUrl = async () => {
+    const copyPOLineUrl = async (event: React.MouseEvent<HTMLElement>) => {
         try {
             await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoLine}`);
             enqueueSnackbar('POLINE URL copied to clipboard.');
@@ -227,13 +227,14 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                 <span className={classes.inactiveText}>
                     {webhookPrefix} / m3/pohead
                 </span >
-                <Button color='primary' onClick={copyPOHeadUrl}>COPY TO CLIPBOARD</Button>
+                <Button
+                    onClick={copyPOHeadUrl}>COPY TO CLIPBOARD</Button>
 
                 <p>Webhook for purchase order line (POLINE)</p>
                 <span className={classes.inactiveText}>
                     {webhookPrefix} / m3/poline
                 </span >
-                <Button color='primary' onClick={copyPOLineUrl}>COPY TO CLIPBOARD</Button>
+                <Button onClick={copyPOLineUrl}>COPY TO CLIPBOARD</Button>
 
 
                 <p>Create username</p>
@@ -279,7 +280,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     ];
 
 
-    const handleNext = async () => {
+    const handleNext = async (event: React.MouseEvent<HTMLElement>) => {
         // Only allow changes on isCreate
         if (isCreate) {
             if (activeStep === 0) {
@@ -344,7 +345,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
-    const handleBack = () => {
+    const handleBack = (event: React.MouseEvent<HTMLElement>) => {
         if (!isCreate && activeStep === 2) {
             enqueueSnackbar('You cannot make changes to the name of the integration type', { variant: 'error' });
             return;
@@ -368,15 +369,15 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
 
                             <div className={classes.actionsContainer}>
                                 <div>
-                                    <ActionButton
+                                    <Button
                                         onClick={handleBack}
                                         disabled={activeStep === 0}
                                         buttonType='secondary'
                                     >
                                         Back
-                                    </ActionButton>
+                                    </Button>
 
-                                    <ActionButton
+                                    <Button
                                         onClick={handleNext}
                                         disabled={!activeNextButton}
                                         buttonType='primary'
@@ -384,7 +385,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                                         {activeStep === steps.length - 1
                                             ? 'Finish'
                                             : 'Next'}
-                                    </ActionButton>
+                                    </Button>
                                 </div>
                             </div>
                         </StepContent>

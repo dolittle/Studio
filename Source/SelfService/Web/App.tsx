@@ -25,6 +25,7 @@ import { LayoutWithSidebar } from './layout/layoutWithSidebar';
 import { ClassNameMap, CombinedClassKey, SnackbarProvider } from 'notistack';
 import Grow from '@material-ui/core/Grow';
 import { TransitionProps } from '@material-ui/core/transitions';
+import { ThemeScreen } from './screens/themeScreen';
 
 const themeDark = createTheme({
     //spacing: 8,
@@ -108,6 +109,10 @@ export const App = () => {
 
                                 <Route path="/insights/application/:applicationId/:environment">
                                     <InsightsScreen />
+                                </Route>
+
+                                <Route path="/debug/theme">
+                                    <ThemeScreen />
                                 </Route>
 
                                 <Route exact path="/problem">

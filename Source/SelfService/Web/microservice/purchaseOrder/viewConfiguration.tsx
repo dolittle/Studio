@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import Button from '@material-ui/core/Button';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Box, Grid, Typography } from '@material-ui/core';
 
@@ -12,6 +11,7 @@ import { MicroservicePurchaseOrder } from '../../api/index';
 
 import { ViewWebhookCredentials } from './viewWebhookCredentials';
 import { EditWebhookCredentials } from './editWebhookCredentials';
+import { ButtonText } from '../../theme/buttonText';
 
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
@@ -98,7 +98,7 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
         }
     }, []);
 
-    const copyPOHeadUrl = async () => {
+    const copyPOHeadUrl = async (event: React.MouseEvent<HTMLElement>) => {
         try {
             await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoHead}`);
             enqueueSnackbar('POHEAD URL copied to clipboard.');
@@ -107,7 +107,7 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
         }
     };
 
-    const copyPOLineUrl = async () => {
+    const copyPOLineUrl = async (event: React.MouseEvent<HTMLElement>) => {
         try {
             await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoLine}`);
             enqueueSnackbar('POLINE URL copied to clipboard.');
@@ -170,7 +170,11 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
                         <Grid
                             item xs={4}
                         >
-                            <Button className={classes.copyClipboardCallToAction} color='primary' onClick={copyPOHeadUrl}>COPY TO CLIPBOARD</Button>
+                            <ButtonText
+                                withIcon={false}
+                                onClick={copyPOHeadUrl}>
+                                COPY TO CLIPBOARD
+                            </ButtonText>
                         </Grid>
                     </Grid>
 
@@ -188,7 +192,11 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
                         <Grid
                             item xs={4}
                         >
-                            <Button className={classes.copyClipboardCallToAction} color='primary' onClick={copyPOLineUrl}>COPY TO CLIPBOARD</Button>
+                            <ButtonText
+                                withIcon={false}
+                                onClick={copyPOLineUrl}>
+                                COPY TO CLIPBOARD
+                            </ButtonText>
                         </Grid>
                     </Grid>
 

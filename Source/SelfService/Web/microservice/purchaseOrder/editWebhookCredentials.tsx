@@ -8,7 +8,7 @@ import { getCredentialsFromBasicAuth } from '../../utils/httpCredentials';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { ClassNameMap } from '@material-ui/styles/withStyles';
 import { GeneratePassword } from './generatePassword';
-import { ActionButton } from '../../theme/actionButton';
+import { Button } from '../../theme/button';
 
 
 type Props = {
@@ -102,7 +102,7 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
 
             <div className={classes.actionsContainer}>
                 <div>
-                    <ActionButton
+                    <Button
                         onClick={() => {
                             if (saveProtection) {
                                 enqueueSnackbar('TODO: cancel', { variant: 'warning' });
@@ -113,8 +113,8 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
                         buttonType='secondary'
                     >
                         Back
-                    </ActionButton>
-                    <ActionButton
+                    </Button>
+                    <Button
                         onClick={() => {
                             enqueueSnackbar('TODO: save', { variant: 'warning' });
                         }}
@@ -122,7 +122,7 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
                         buttonType='primary'
                     >
                         Save
-                    </ActionButton>
+                    </Button>
                 </div>
             </div>
         </>
