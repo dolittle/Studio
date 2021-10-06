@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Button as MuiButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import { backgroundColor } from './viewCard';
 
 type Props = {
     onClick?: (event: React.MouseEvent<HTMLElement>) => void;
@@ -23,26 +24,25 @@ const useStyles = makeStyles((theme: Theme) =>
         base: {
             textTransform: 'uppercase',
             padding: '8px 12px',
-            //marginTop: theme.spacing(1),
-            //marginRight: theme.spacing(1),
+            marginTop: theme.spacing(1),
+            marginRight: theme.spacing(1),
+            color: '#2C2B33',
         },
         primary: {
-            'marginTop': theme.spacing(1),
-            'marginRight': theme.spacing(1),
-            'color': '#2C2B33',
             'backgroundColor': '#6678F6',
             '&:hover': {
-                color: '#2C2B33',
                 backgroundColor: '#B3BBFB',
             },
             '&:disabled': {
                 backgroundColor: '#93959F',
                 color: '#3B3D48',
-            }
+            },
+            '&:focus': {
+                backgroundColor: '#8C9AF8',
+            },
         },
     })
 );
-
 
 export const Button: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();

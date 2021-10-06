@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Button as MuiButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import { backgroundColor } from './viewCard';
 
 type Props = {
     onClick?: (event: React.MouseEvent<HTMLElement>) => void;
@@ -22,32 +23,49 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         base: {
             textTransform: 'uppercase',
+            padding: '8px 12px',
             marginTop: theme.spacing(1),
             marginRight: theme.spacing(1),
+            backgroundColor: 'transparent'
         },
         secondary: {
             'color': '#FAFAFA',
-            '&:disabled': {
-                color: '#3B3D48',
-            },
+            'backgroundColor': 'transparent',
             '&:hover': {
-                color: '#3B3D48',
+                backgroundColor: 'transparent'
             },
+            '&:disabled': {
+                backgroundColor: 'transparent'
+            },
+            '&:active': {
+                backgroundColor: 'transparent'
+            },
+            '&:focus': {
+                backgroundColor: 'transparent'
+            }
+
         },
         primary: {
-            'marginTop': theme.spacing(1),
-            'marginRight': theme.spacing(1),
             'color': '#6678F6',
             '&:hover': {
                 color: '#B3BBFB',
+                backgroundColor: 'transparent'
             },
             '&:disabled': {
                 color: '#93959F',
+                backgroundColor: 'transparent'
+            },
+            '&:active': {
+                color: '#8C9AF8',
+                backgroundColor: 'transparent'
+            },
+            '&:focus': {
+                color: '#8C9AF8',
+                backgroundColor: 'transparent'
             }
         },
     })
 );
-
 
 export const ButtonText: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();
@@ -61,6 +79,7 @@ export const ButtonText: React.FunctionComponent<Props> = (props) => {
 
     return (
         <MuiButton
+            disableRipple={true}
             disabled={disabled}
             startIcon={startIcon}
             onClick={onClick}

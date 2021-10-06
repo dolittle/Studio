@@ -22,6 +22,7 @@ import {
 import { getCredentialsFromBasicAuth, makeBasicAuth } from '../../utils/httpCredentials';
 import { GeneratePassword } from './generatePassword';
 import { Button } from '../../theme/button';
+import { ButtonText } from '../../theme/buttonText';
 import { ErpIcon } from './erpIcon';
 
 type Props = {
@@ -369,13 +370,13 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
 
                             <div className={classes.actionsContainer}>
                                 <div>
-                                    <Button
+                                    <ButtonText
                                         onClick={handleBack}
                                         disabled={activeStep === 0}
                                         buttonType='secondary'
                                     >
                                         Back
-                                    </Button>
+                                    </ButtonText>
 
                                     <Button
                                         onClick={handleNext}
