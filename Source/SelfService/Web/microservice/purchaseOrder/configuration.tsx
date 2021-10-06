@@ -11,10 +11,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useSnackbar } from 'notistack';
 
-import logoInfor from '../../images/infor.png'; // with import
-import logoIFS from '../../images/ifs.png';
-import logoSAP from '../../images/sap.png';
-
 import { Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 
@@ -26,6 +22,7 @@ import {
 import { getCredentialsFromBasicAuth, makeBasicAuth } from '../../utils/httpCredentials';
 import { GeneratePassword } from './generatePassword';
 import { ActionButton } from '../../theme/actionButton';
+import { ErpIcon } from './erpIcon';
 
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
@@ -81,12 +78,6 @@ const useStyles = makeStyles((theme: Theme) =>
             '&.MuiStepIcon-active .MuiStepIcon-text': {
                 fill: '#B3BBFB'
             },
-            // TODO
-            //'&.MuiStepIcon-completed path': {
-            //    stroke: '#6678F6',
-            //    fill: 'white',
-            //    backgroundColor: 'red'
-            //},
             '&.MuiStepIcon-root .MuiStepIcon-text': {
                 fill: '#93959F'
             }
@@ -182,15 +173,17 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                 justifyContent='flex-start'
                 alignItems='center'
             >
-                <img src={logoInfor} onClick={() => {
+                <ErpIcon kind='infor' onClick={() => {
                     setErpSystem('infor');
                     setActiveNextButton(true);
                 }} />
 
-                <img src={logoIFS} onClick={() => {
+
+                <ErpIcon kind='ifs' onClick={() => {
                     enqueueSnackbar('Not yet supported, please reach out if interested to know when it will arrive');
                 }} />
-                <img src={logoSAP} onClick={() => {
+
+                <ErpIcon kind='sap' onClick={() => {
                     enqueueSnackbar('Not yet supported, please reach out if interested to know when it will arrive');
                 }} />
             </Grid>
