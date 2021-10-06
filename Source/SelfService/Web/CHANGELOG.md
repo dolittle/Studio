@@ -1,3 +1,11 @@
+# [1.5.1] - 2021-10-6 [PR: #120](https://github.com/dolittle/Studio/pull/120)
+## Summary
+
+ERP integration icons match that in figma
+
+Linked to https://app.asana.com/0/1201028542784316/1201126860304301/f
+
+
 # [1.5.0] - 2021-10-5 [PR: #118](https://github.com/dolittle/Studio/pull/118)
 Brings in #113, #115 and as a fake way to fake the flow into "view" screen of config, not the setup screen
 
