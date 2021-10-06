@@ -7,7 +7,6 @@ import clsx from 'clsx';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Button as MuiButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { backgroundColor } from './viewCard';
 
 type Props = {
     onClick?: (event: React.MouseEvent<HTMLElement>) => void;
@@ -32,15 +31,19 @@ const useStyles = makeStyles((theme: Theme) =>
             'color': '#FAFAFA',
             'backgroundColor': 'transparent',
             '&:hover': {
+                color: '#B3BBFB',
                 backgroundColor: 'transparent'
             },
             '&:disabled': {
+                color: '#93959F',
                 backgroundColor: 'transparent'
             },
             '&:active': {
+                color: '#8C9AF8',
                 backgroundColor: 'transparent'
             },
             '&:focus': {
+                color: '#8C9AF8',
                 backgroundColor: 'transparent'
             }
 
