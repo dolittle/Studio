@@ -4,8 +4,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import { Grid } from '@material-ui/core';
 
 
@@ -17,6 +15,7 @@ import { ConfigView } from './configView';
 import { ConfigViewK8s } from './configViewK8s';
 import { SecondaryButton } from '../../theme/secondaryButton';
 import { DownloadLogIcon } from '../../theme/icons';
+import { Tab, Tabs } from '../../theme/tabs';
 // TODO Doesnt seem ready for prime time, this is from the example and the github issue
 import { TabPanel } from '../../utils/materialUi';
 
@@ -75,7 +74,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 <Tabs
                     value={value}
                     onChange={handleChange}
-                    TabIndicatorProps={{ style: { background: '#ffffff' } }}
                 >
                     <Tab label="Config" />
                     <Tab label="Health Status" />

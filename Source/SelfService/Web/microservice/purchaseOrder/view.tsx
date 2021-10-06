@@ -6,8 +6,6 @@ import {
     Grid,
     IconButton,
     Typography,
-    Tabs,
-    Tab
 } from '@material-ui/core';
 import { TabPanel } from '../../utils/materialUi';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -22,6 +20,7 @@ import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
 import { ViewConfiguration } from './viewConfiguration';
 import { DataStateIcon } from './dataStateIcon';
+import { Tab, Tabs } from '../../theme/tabs';
 
 type Props = {
     applicationId: string
@@ -151,7 +150,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     <Tabs
                         value={value}
                         onChange={handleChange}
-                        TabIndicatorProps={{ style: { background: '#ffffff' } }}
                     >
                         <Tab label='Configuration' />
                         <Tab label='Health Status' />
