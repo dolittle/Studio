@@ -11,7 +11,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 type Props = {
     kind: 'infor' | 'ifs' | 'sap';
-    onClick: any;
+    onClick: (event: React.MouseEvent<HTMLImageElement>) => void;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-
 export const ErpIcon: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();
     const options = {
@@ -62,14 +61,12 @@ export const ErpIcon: React.FunctionComponent<Props> = (props) => {
         },
     };
 
+    const onClick = props!.onClick;
     const option = options[props!.kind];
-
 
     return (
         <div className={clsx(classes.container, option.className)}>
-            <img className={classes.icon} src={option.src} onClick={() => {
-                props!.onClick();
-            }} />
+            <img className={classes.icon} src={option.src} onClick={onClick} />
         </div>
     );
 };
