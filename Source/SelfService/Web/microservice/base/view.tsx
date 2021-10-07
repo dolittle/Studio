@@ -61,7 +61,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
         hasEditData = true;
     }
 
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(1);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
