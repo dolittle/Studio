@@ -36,7 +36,7 @@ const typography = {
     fontSize: 14,
     body1: {
         fontFamily: 'Rubik',
-        color: 'rgba(0,0,0,0.60)',
+        color: '#E9EAEC',
         fontSize: '14px',
         letterSpacing: '-0.01em',
         lineHeight: '16px'
