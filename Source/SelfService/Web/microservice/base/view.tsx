@@ -3,20 +3,20 @@
 
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
-import { Grid } from '@material-ui/core';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { Box, Divider, Grid } from '@material-ui/core';
+import { useReadable } from 'use-svelte-store';
 
 import { HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
-import { useReadable } from 'use-svelte-store';
 import { microservices } from '../../stores/microservice';
 import { ConfigView } from './configView';
 import { ConfigViewK8s } from './configViewK8s';
-
 import { Tab, Tabs } from '../../theme/tabs';
 // TODO Doesnt seem ready for prime time, this is from the example and the github issue
 import { TabPanel } from '../../utils/materialUi';
 import { DownloadButtons } from '../components/downloadButtons';
+import { classes } from '../../theme/theme';
 
 type Props = {
     applicationId: string
@@ -25,7 +25,16 @@ type Props = {
     podsData: HttpResponsePodStatus
 };
 
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        divider: {
+            backgroundColor: '#3B3D48'
+        }
+    })
+);
+
 export const View: React.FunctionComponent<Props> = (props) => {
+    const classes = useStyles();
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
     const _props = props!;
@@ -76,17 +85,21 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 </Tabs>
 
                 <TabPanel value={value} index={0}>
-                    {hasEditData
-                        ? <ConfigView microservice={currentMicroservice.edit} />
-                        : <ConfigViewK8s microservice={currentMicroservice.live} />
-                    }
+                    <Box ml={2}>
+                        {hasEditData
+                            ? <ConfigView microservice={currentMicroservice.edit} />
+                            : <ConfigViewK8s microservice={currentMicroservice.live} />
+                        }
+                    </Box>
 
-
-                    <DownloadButtons
-                        environment={environment}
-                        microserviceName={currentMicroservice.name}
-                        applicationId={applicationId}
-                    />
+                    <Divider className={classes.divider} />
+                    <Box ml={2}>
+                        <DownloadButtons
+                            environment={environment}
+                            microserviceName={currentMicroservice.name}
+                            applicationId={applicationId}
+                        />
+                    </Box>
                 </TabPanel>
 
                 <TabPanel value={value} index={1}>

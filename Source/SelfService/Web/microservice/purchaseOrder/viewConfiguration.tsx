@@ -72,6 +72,11 @@ const useStyles = makeStyles((theme: Theme) =>
                 color: 'white'
             },
         },
+        textWithLink: {
+            '& span': {
+                paddingRight: '48px',
+            },
+        }
     })
 );
 
@@ -128,80 +133,67 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
                 justifyContent="flex-start"
                 alignItems="stretch"
             >
-                <Box m={2} pt={3}>
-                    <Typography component="p" className={classes.label}>
-                        Purchase order API name
-                    </Typography>
 
-                    <Typography component="p" className={classes.data}>
-                        {msName}
-                    </Typography>
+                <Typography component="p" className={classes.label}>
+                    Purchase order API name
+                </Typography>
 
-
-                    <Typography component="p" className={classes.label}>
-                        uuid provided
-                    </Typography>
-
-                    <Typography component="p" className={classes.data}>
-                        {ms.dolittle.microserviceId}
-                    </Typography>
-
-                    <Typography component="p" className={classes.label}>
-                        Runtime image provided
-                    </Typography>
-
-                    <Typography component="p" className={classes.data}>
-                        {ms.extra.runtimeImage}
-                    </Typography>
+                <Typography component="p" className={classes.data}>
+                    {msName}
+                </Typography>
 
 
-                    <Typography component="p" className={classes.label}>
-                        Webhook for purchase order head (POHEAD)
-                    </Typography>
+                <Typography component="p" className={classes.label}>
+                    uuid provided
+                </Typography>
 
-                    <Grid container spacing={3}>
-                        <Grid item xs={8}>
-                            <span className={classes.inactiveText}>
-                                {webhookPrefix} / m3/pohead
-                            </span>
+                <Typography component="p" className={classes.data}>
+                    {ms.dolittle.microserviceId}
+                </Typography>
 
-                        </Grid>
+                <Typography component="p" className={classes.label}>
+                    Runtime image provided
+                </Typography>
 
-                        <Grid
-                            item xs={4}
-                        >
-                            <ButtonText
-                                withIcon={false}
-                                onClick={copyPOHeadUrl}>
-                                COPY TO CLIPBOARD
-                            </ButtonText>
-                        </Grid>
-                    </Grid>
+                <Typography component="p" className={classes.data}>
+                    {ms.extra.runtimeImage}
+                </Typography>
 
-                    <Typography component="p" className={classes.label}>
-                        Webhook for purchase order head (POLINE)
-                    </Typography>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8}>
-                            <span className={classes.inactiveText}>
-                                {webhookPrefix} / m3/poline
-                            </span>
 
-                        </Grid>
+                <Typography component="p" className={classes.label}>
+                    Webhook for purchase order head (POHEAD)
+                </Typography>
 
-                        <Grid
-                            item xs={4}
-                        >
-                            <ButtonText
-                                withIcon={false}
-                                onClick={copyPOLineUrl}>
-                                COPY TO CLIPBOARD
-                            </ButtonText>
-                        </Grid>
-                    </Grid>
 
-                    {webhookCredentials}
+                <Box m={1} pt={1} className={classes.textWithLink}>
+                    <span>
+                        {webhookPrefix} / m3/pohead
+                    </span>
+                    <ButtonText
+                        withIcon={false}
+                        onClick={copyPOHeadUrl}
+                    >
+                        COPY TO CLIPBOARD
+                    </ButtonText>
                 </Box>
+
+
+                <Typography component="p" className={classes.label}>
+                    Webhook for purchase order head (POLINE)
+                </Typography>
+                <Box m={1} pt={1} className={classes.textWithLink}>
+                    <span>
+                        {webhookPrefix} / m3/poline
+                    </span>
+                    <ButtonText
+                        withIcon={false}
+                        onClick={copyPOLineUrl}
+                    >
+                        COPY TO CLIPBOARD
+                    </ButtonText>
+                </Box>
+
+                {webhookCredentials}
             </Grid >
         </div >
     );

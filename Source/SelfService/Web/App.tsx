@@ -26,9 +26,26 @@ import { ClassNameMap, CombinedClassKey, SnackbarProvider } from 'notistack';
 import Grow from '@material-ui/core/Grow';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { ThemeScreen } from './screens/themeScreen';
+import '@fontsource/rubik';
+
+
+const typography = {
+    fontFamily: 'Rubik',
+    fontStyle: 'normal',
+    htmlFontSize: 14,
+    fontSize: 14,
+    body1: {
+        fontFamily: 'Rubik',
+        color: 'rgba(0,0,0,0.60)',
+        fontSize: '14px',
+        letterSpacing: '0.06em',
+        lineHeight: '12px'
+    }
+};
+
 
 const themeDark = createTheme({
-    //spacing: 8,
+    typography,
     palette: {
         background: {
             default: '#191A21',

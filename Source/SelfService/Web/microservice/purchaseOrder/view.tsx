@@ -6,6 +6,8 @@ import {
     Grid,
     IconButton,
     Typography,
+    Divider,
+    Box,
 } from '@material-ui/core';
 import { TabPanel } from '../../utils/materialUi';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -65,6 +67,9 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(2),
             textAlign: 'center',
         },
+        divider: {
+            backgroundColor: '#3B3D48'
+        }
     })
 );
 
@@ -193,15 +198,19 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
 
             <TabPanel value={value} index={0}>
-                <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} editMode={editMode} onCancel={() => {
-                    setEditMode(false);
-                }} />
-
-                <DownloadButtons
-                    environment={environment}
-                    microserviceName={currentMicroservice.name}
-                    applicationId={applicationId}
-                />
+                <Box ml={2}>
+                    <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} editMode={editMode} onCancel={() => {
+                        setEditMode(false);
+                    }} />
+                </Box>
+                <Divider className={classes.divider} />
+                <Box ml={2}>
+                    <DownloadButtons
+                        environment={environment}
+                        microserviceName={currentMicroservice.name}
+                        applicationId={applicationId}
+                    />
+                </Box>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
