@@ -12,6 +12,7 @@ import { MicroservicePurchaseOrder } from '../../api/index';
 import { ViewWebhookCredentials } from './viewWebhookCredentials';
 import { EditWebhookCredentials } from './editWebhookCredentials';
 import { ButtonText } from '../../theme/buttonText';
+import { RowWithLink } from './rowWithLink';
 
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
@@ -50,11 +51,10 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         label: {
-            padding: theme.spacing(1),
+            paddingBottom: theme.spacing(2),
             color: theme.palette.text.primary
         },
         data: {
-            padding: theme.spacing(1),
             color: theme.palette.text.secondary
         },
         textField: { //https://stackoverflow.com/a/60461876 excellent resource
@@ -75,11 +75,33 @@ const useStyles = makeStyles((theme: Theme) =>
         textWithLink: {
             '& span': {
                 paddingRight: '48px',
-            },
+            }
         }
     })
 );
 
+interface HeaderDataRowProps {
+    head: string
+    data: string
+}
+
+const HeaderDataRow: React.FunctionComponent<HeaderDataRowProps> = (props) => {
+    const classes = useStyles();
+    const head = props!.head;
+    const data = props!.data;
+
+    return (
+        <Box px={0} mx={0} py={1}>
+            <Typography component="p" className={classes.label}>
+                {head}
+            </Typography>
+
+            <Typography component="p" className={classes.data}>
+                {data}
+            </Typography>
+        </Box>
+    );
+};
 
 export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();
@@ -133,67 +155,66 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
                 justifyContent="flex-start"
                 alignItems="stretch"
             >
+                <HeaderDataRow
+                    head='Purchase order API name'
+                    data={msName}
+                />
 
-                <Typography component="p" className={classes.label}>
-                    Purchase order API name
-                </Typography>
+                <HeaderDataRow
+                    head='uuid provided'
+                    data={ms.dolittle.microserviceId}
+                />
 
-                <Typography component="p" className={classes.data}>
-                    {msName}
-                </Typography>
+                <HeaderDataRow
+                    head='Runtime image provided'
+                    data={ms.extra.runtimeImage}
+                />
 
-
-                <Typography component="p" className={classes.label}>
-                    uuid provided
-                </Typography>
-
-                <Typography component="p" className={classes.data}>
-                    {ms.dolittle.microserviceId}
-                </Typography>
-
-                <Typography component="p" className={classes.label}>
-                    Runtime image provided
-                </Typography>
-
-                <Typography component="p" className={classes.data}>
-                    {ms.extra.runtimeImage}
-                </Typography>
-
-
-                <Typography component="p" className={classes.label}>
-                    Webhook for purchase order head (POHEAD)
-                </Typography>
-
-
-                <Box m={1} pt={1} className={classes.textWithLink}>
-                    <span>
-                        {webhookPrefix} / m3/pohead
-                    </span>
-                    <ButtonText
-                        withIcon={false}
-                        onClick={copyPOHeadUrl}
-                    >
-                        COPY TO CLIPBOARD
-                    </ButtonText>
+                <Box py={1}>
+                    <RowWithLink
+                        title='Webhook for purchase order head (POHEAD)'
+                        prefix={
+                            <span>
+                                {webhookPrefix} / m3/pohead
+                            </span>
+                        }
+                        suffix={
+                            <Box m={-1.2}>
+                                <ButtonText
+                                    withIcon={false}
+                                    onClick={copyPOHeadUrl}
+                                >
+                                    COPY TO CLIPBOARD
+                                </ButtonText>
+                            </Box>
+                        }
+                    />
                 </Box>
 
-
-                <Typography component="p" className={classes.label}>
-                    Webhook for purchase order head (POLINE)
-                </Typography>
-                <Box m={1} pt={1} className={classes.textWithLink}>
-                    <span>
-                        {webhookPrefix} / m3/poline
-                    </span>
-                    <ButtonText
-                        withIcon={false}
-                        onClick={copyPOLineUrl}
-                    >
-                        COPY TO CLIPBOARD
-                    </ButtonText>
+                <Box py={1}>
+                    <RowWithLink
+                        title='Webhook for purchase order head (POLINE)'
+                        prefix={
+                            <span>
+                                {webhookPrefix} / m3/pohead
+                            </span>
+                        }
+                        suffix={
+                            <Box m={-1.2}>
+                                <ButtonText
+                                    withIcon={false}
+                                    onClick={copyPOLineUrl}
+                                >
+                                    COPY TO CLIPBOARD
+                                </ButtonText>
+                            </Box>
+                        }
+                    />
                 </Box>
 
-                {webhookCredentials}
+                <Box py={1}>
+                    {webhookCredentials}
+                </Box>
             </Grid >
         </div >
     );

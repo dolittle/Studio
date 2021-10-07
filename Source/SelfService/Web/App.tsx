@@ -38,8 +38,8 @@ const typography = {
         fontFamily: 'Rubik',
         color: 'rgba(0,0,0,0.60)',
         fontSize: '14px',
-        letterSpacing: '0.06em',
-        lineHeight: '12px'
+        letterSpacing: '-0.01em',
+        lineHeight: '16px'
     }
 };
 
