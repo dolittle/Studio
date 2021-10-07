@@ -14,6 +14,8 @@ type Props = {
     disabled?: boolean
     children: React.ReactNode;
     withIcon?: boolean;
+    // If startIcon is added, it will override withIcon
+    startIcon?: React.ReactNode;
 };
 
 const defaultOnClick = (event: React.MouseEvent<HTMLElement>) => { };
@@ -78,7 +80,9 @@ export const ButtonText: React.FunctionComponent<Props> = (props) => {
     const disabled = _props.disabled ?? false;
     const buttonType = _props.buttonType ?? 'primary';
     const buttonTypeClassName = classes[buttonType];
-    const startIcon = _props.withIcon ? <AddIcon /> : null;
+
+    let startIcon: React.ReactNode = _props.withIcon ? <AddIcon /> : null;
+    startIcon = _props.startIcon ?? startIcon;
 
     return (
         <MuiButton

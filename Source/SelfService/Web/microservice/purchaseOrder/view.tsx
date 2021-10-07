@@ -21,6 +21,7 @@ import { useReadable } from 'use-svelte-store';
 import { ViewConfiguration } from './viewConfiguration';
 import { DataStateIcon } from './dataStateIcon';
 import { Tab, Tabs } from '../../theme/tabs';
+import { DownloadButtons } from '../components/downloadButtons';
 
 type Props = {
     applicationId: string
@@ -195,6 +196,12 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} editMode={editMode} onCancel={() => {
                     setEditMode(false);
                 }} />
+
+                <DownloadButtons
+                    environment={environment}
+                    microserviceName={currentMicroservice.name}
+                    applicationId={applicationId}
+                />
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />

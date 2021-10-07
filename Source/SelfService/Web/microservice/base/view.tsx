@@ -6,19 +6,17 @@ import { useHistory } from 'react-router-dom';
 
 import { Grid } from '@material-ui/core';
 
-
-import { getServerUrlPrefix, HttpResponsePodStatus } from '../../api/api';
+import { HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
 import { microservices } from '../../stores/microservice';
 import { ConfigView } from './configView';
 import { ConfigViewK8s } from './configViewK8s';
-import { SecondaryButton } from '../../theme/secondaryButton';
-import { DownloadLogIcon } from '../../theme/icons';
+
 import { Tab, Tabs } from '../../theme/tabs';
 // TODO Doesnt seem ready for prime time, this is from the example and the github issue
 import { TabPanel } from '../../utils/materialUi';
-
+import { DownloadButtons } from '../components/downloadButtons';
 
 type Props = {
     applicationId: string
@@ -45,8 +43,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
         history.push(href);
         return null;
     }
-
-    const configMapPrefix = `${environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
 
     let hasEditData = false;
     if (currentMicroservice.edit &&
@@ -84,42 +80,19 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         ? <ConfigView microservice={currentMicroservice.edit} />
                         : <ConfigViewK8s microservice={currentMicroservice.live} />
                     }
+
+
+                    <DownloadButtons
+                        environment={environment}
+                        microserviceName={currentMicroservice.name}
+                        applicationId={applicationId}
+                    />
                 </TabPanel>
 
                 <TabPanel value={value} index={1}>
                     <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
                 </TabPanel>
             </div>
-
-            <SecondaryButton
-                title="Download secret env-variables yaml"
-                icon={DownloadLogIcon}
-                onClick={() => {
-                    const secretName = `${configMapPrefix}-secret-env-variables`;
-                    const href = `${getServerUrlPrefix()}/live/application/${applicationId}/secret/${secretName}?download=1&fileType=yaml`;
-                    window.open(href, '_blank');
-                }}
-            />
-
-            <SecondaryButton
-                title="Download config files yaml"
-                icon={DownloadLogIcon}
-                onClick={() => {
-                    const configMapName = `${configMapPrefix}-config-files`;
-                    const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
-                    window.open(href, '_blank');
-                }}
-            />
-
-            <SecondaryButton
-                title="Download env-variables yaml"
-                icon={DownloadLogIcon}
-                onClick={() => {
-                    const configMapName = `${configMapPrefix}-env-variables`;
-                    const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
-                    window.open(href, '_blank');
-                }}
-            />
         </Grid>
     );
 };
