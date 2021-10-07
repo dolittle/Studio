@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import { useSnackbar } from 'notistack';
 
 import { generate } from 'generate-password-browser';
+import { ButtonText } from '../../theme/buttonText';
 
 
 type Props = {
@@ -42,8 +42,10 @@ export const GeneratePassword: React.FunctionComponent<Props> = (props) => {
     };
 
     return (
-        <>
-            <Button color='primary' onClick={generatePasswordAndCopyToClipboard}>GENERATE AND COPY TO CLIPBOARD</Button>
-        </>
+        <ButtonText
+            withIcon={false}
+            onClick={generatePasswordAndCopyToClipboard}>
+            GENERATE AND COPY TO CLIPBOARD
+        </ButtonText>
     );
 };

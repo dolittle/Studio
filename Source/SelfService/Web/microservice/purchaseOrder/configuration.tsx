@@ -228,15 +228,22 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                 <span className={classes.inactiveText}>
                     {webhookPrefix} / m3/pohead
                 </span >
-                <Button
-                    onClick={copyPOHeadUrl}>COPY TO CLIPBOARD</Button>
+                <ButtonText
+                    withIcon={false}
+                    onClick={copyPOHeadUrl}>
+                    COPY TO CLIPBOARD
+                </ButtonText>
 
                 <p>Webhook for purchase order line (POLINE)</p>
                 <span className={classes.inactiveText}>
                     {webhookPrefix} / m3/poline
                 </span >
-                <Button onClick={copyPOLineUrl}>COPY TO CLIPBOARD</Button>
 
+                <ButtonText
+                    withIcon={false}
+                    onClick={copyPOLineUrl}>
+                    COPY TO CLIPBOARD
+                </ButtonText>
 
                 <p>Create username</p>
                 <TextField
