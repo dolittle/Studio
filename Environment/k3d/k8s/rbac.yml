@@ -10,39 +10,39 @@ metadata:
   name: developer
   namespace: application-11b6cf47-5d9f-438f-8116-0d9828654657
 rules:
-- apiGroups: [""]
-  resources:
-  - configmaps
-  resourceNames:
-    - dev-order-env-variables
-    - dev-order-config-files
-  verbs:
-  - get
-  - patch
-- apiGroups: [""]
-  resources:
-  - secrets
-  resourceNames:
-    - dev-order-secret-env-variables
-  verbs:
-  - get
-  - patch
-- apiGroups: [""]
-  resources:
-  - pods
-  - pods/log
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups: ["apps"]
-  resources:
-  - deployments
-  verbs:
-  - get
-  - list
-  - watch
-  - patch
+  - apiGroups: [""]
+    resources:
+      - configmaps
+    resourceNames:
+      - dev-order-env-variables
+      - dev-order-config-files
+    verbs:
+      - get
+      - patch
+  - apiGroups: [""]
+    resources:
+      - secrets
+    resourceNames:
+      - dev-order-secret-env-variables
+    verbs:
+      - get
+      - patch
+  - apiGroups: [""]
+    resources:
+      - pods
+      - pods/log
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+    verbs:
+      - get
+      - list
+      - watch
+      - patch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -60,6 +60,6 @@ roleRef:
   name: developer
   apiGroup: rbac.authorization.k8s.io
 subjects:
-- kind: User
-  name: local-dev
-  apiGroup: rbac.authorization.k8s.io
+  - kind: User
+    name: local-dev
+    apiGroup: rbac.authorization.k8s.io
