@@ -61,10 +61,10 @@ export const View: React.FunctionComponent<Props> = (props) => {
         hasEditData = true;
     }
 
-    const [value, setValue] = React.useState(1);
+    const [currentTab, setCurrentTab] = React.useState(1);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
+        setCurrentTab(newValue);
     };
 
     return (
@@ -77,14 +77,14 @@ export const View: React.FunctionComponent<Props> = (props) => {
             <h1>{currentMicroservice.name}</h1>
             <div>
                 <Tabs
-                    value={value}
+                    value={currentTab}
                     onChange={handleChange}
                 >
                     <Tab label="Config" />
                     <Tab label="Health Status" />
                 </Tabs>
 
-                <TabPanel value={value} index={0}>
+                <TabPanel value={currentTab} index={0}>
                     <Box ml={2}>
                         {hasEditData
                             ? <ConfigView microservice={currentMicroservice.edit} />
@@ -102,7 +102,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     </Box>
                 </TabPanel>
 
-                <TabPanel value={value} index={1}>
+                <TabPanel value={currentTab} index={1}>
                     <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
                 </TabPanel>
             </div>

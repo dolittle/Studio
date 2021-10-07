@@ -1,6 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
     Grid,
@@ -93,13 +93,22 @@ export const View: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
-    const [value, setValue] = useState(0);
-    const [editMode, setEditMode] = useState(false);
-
     // TODO modify when we know how we want to handle state of purchase order data
     // Fake it till we are ready
     const msName = currentMicroservice.name;
     const searchParams = new URLSearchParams(location.search);
+
+
+    useEffect(() => {
+        const firstTime = searchParams.get('firstTime')!;
+        if (firstTime === '1') {
+            enqueueSnackbar('Microservice ‘Supplier PO API’ successfully created.');
+        }
+    }, []);
+
+    const [currentTab, setCurrentTab] = useState(searchParams.get('firstTime') === '1' ? 0 : 1);
+    const [editMode, setEditMode] = useState(false);
+
 
     const getFakeState = (searchParams: URLSearchParams): string => {
         if (!searchParams.has('dataState')) {
@@ -110,7 +119,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const fakeState = getFakeState(searchParams);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
+        setCurrentTab(newValue);
     };
 
     const _onSave = (ms: MicroservicePurchaseOrder): void => {
@@ -154,7 +163,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
             >
                 <Grid item xs={10}>
                     <Tabs
-                        value={value}
+                        value={currentTab}
                         onChange={handleChange}
                     >
                         <Tab label='Configuration' />
@@ -197,7 +206,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
             </Grid>
 
 
-            <TabPanel value={value} index={0}>
+            <TabPanel value={currentTab} index={0}>
                 <Box ml={2}>
                     <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} editMode={editMode} onCancel={() => {
                         setEditMode(false);
@@ -212,7 +221,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     />
                 </Box>
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            <TabPanel value={currentTab} index={1}>
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
             </TabPanel>
         </Grid >

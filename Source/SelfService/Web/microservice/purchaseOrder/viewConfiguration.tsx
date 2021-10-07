@@ -1,6 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
@@ -111,19 +111,10 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const editMode = _props.editMode;
     const ms = _props.microservice;
-    const searchParams = new URLSearchParams(location.search);
-
     const webhookPrefix = `https://${ms.extra.ingress.host}/api/webhooks`;
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
     const msName = ms.name;
-
-    useEffect(() => {
-        const firstTime = searchParams.get('firstTime')!;
-        if (firstTime === '1') {
-            enqueueSnackbar('Microservice ‘Supplier PO API’ successfully created.');
-        }
-    }, []);
 
     const copyPOHeadUrl = async (event: React.MouseEvent<HTMLElement>) => {
         try {
