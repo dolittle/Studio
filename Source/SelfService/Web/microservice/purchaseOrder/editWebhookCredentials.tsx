@@ -9,6 +9,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import { ClassNameMap } from '@material-ui/styles/withStyles';
 import { GeneratePassword } from './generatePassword';
 import { Button } from '../../theme/button';
+import { ButtonText } from '../../theme/buttonText';
 
 
 type Props = {
@@ -102,7 +103,7 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
 
             <div className={classes.actionsContainer}>
                 <div>
-                    <Button
+                    <ButtonText
                         onClick={() => {
                             if (saveProtection) {
                                 enqueueSnackbar('TODO: cancel', { variant: 'warning' });
@@ -113,13 +114,12 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
                         buttonType='secondary'
                     >
                         Back
-                    </Button>
+                    </ButtonText>
                     <Button
                         onClick={() => {
                             enqueueSnackbar('TODO: save', { variant: 'warning' });
                         }}
                         disabled={false}
-                        buttonType='primary'
                     >
                         Save
                     </Button>

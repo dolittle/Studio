@@ -7,11 +7,9 @@ import clsx from 'clsx';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Button as MuiButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { backgroundColor } from './viewCard';
 
 type Props = {
     onClick?: (event: React.MouseEvent<HTMLElement>) => void;
-    buttonType?: 'primary' | 'secondary' // TODO is this needed?
     disabled?: boolean
     children: React.ReactNode;
     withIcon?: boolean;
@@ -50,8 +48,7 @@ export const Button: React.FunctionComponent<Props> = (props) => {
     const children = _props.children;
     const onClick = _props.onClick ?? defaultOnClick;
     const disabled = _props.disabled ?? false;
-    const buttonType = 'primary';
-    const buttonTypeClassName = classes[buttonType];
+    const buttonTypeClassName = classes.primary;
     const startIcon = _props.withIcon ? <AddIcon /> : null;
 
     return (

@@ -388,7 +388,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                                     <Button
                                         onClick={handleNext}
                                         disabled={!activeNextButton}
-                                        buttonType='primary'
                                     >
                                         {activeStep === steps.length - 1
                                             ? 'Finish'
