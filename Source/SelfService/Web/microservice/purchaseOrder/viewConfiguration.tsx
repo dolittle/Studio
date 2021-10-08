@@ -27,10 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
         actionsContainer: {
             marginBottom: theme.spacing(2),
         },
-        button: {
-            padding: 0,
-            marginRight: theme.spacing(1),
-        },
         inactiveText: {
             padding: theme.spacing(0),
             paddingRight: theme.spacing(10),
@@ -49,7 +45,6 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(0),
             lineHeight: 1.75,
         },
-
         label: {
             paddingBottom: theme.spacing(2),
             color: theme.palette.text.primary
@@ -71,11 +66,6 @@ const useStyles = makeStyles((theme: Theme) =>
             '&:hover .MuiOutlinedInput-input': {
                 color: 'white'
             },
-        },
-        textWithLink: {
-            '& span': {
-                paddingRight: '48px',
-            }
         }
     })
 );
