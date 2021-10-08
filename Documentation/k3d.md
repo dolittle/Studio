@@ -6,14 +6,14 @@
 - Have docker running
 
 
-# Install k3d
+## Install k3d
 ```sh
 curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
 ```
 
-# Setup folder structure to bootstrap Studio
+## Setup folder structure to bootstrap Studio
 - Little clunky, but we can change after
-## /tmp/dolittle-local-dev
+### /tmp/dolittle-local-dev
 - Used by Studio to bootstrap with a "customer" + "application" and "environment"
 
 ```sh
@@ -22,7 +22,13 @@ cd /tmp/dolittle-local-dev && git init && cd -
 cp -r Environment/k3d/git/* /tmp/dolittle-local-dev
 ```
 
-# Create the local cluster
+### /tmp/k3dvolume
+- Used by RawDataLog for persistence
+```sh
+mkdir -p /tmp/k3dvolume
+```
+
+## Create the local cluster
 ```sh
 k3d cluster create dolittle-dev \
     --servers 1 \
@@ -35,7 +41,7 @@ k3d cluster create dolittle-dev \
     --kubeconfig-switch-context
 ```
 
-# Setup Ingress
+## Setup Ingress
 - Using a real domain will require changing your /etc/hosts (hosts file)
 - Firefox and Chrome have special behaviour for "*.dev"
 
@@ -44,9 +50,7 @@ kubectl apply -f 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/con
 kubectl patch -n ingress-nginx service ingress-nginx-controller -p '{"spec": {"type": "LoadBalancer"}}'
 ```
 
-
-
-# Bootstrap the namespace
+## Bootstrap the namespace
 
 BEFORE APPLYING CHECK THAT YOU ARE IN THE CORRECT CONTEXT!
 
@@ -61,17 +65,17 @@ Execute the following commands in Studio repo while in the `k3d-dolittle-dev` k8
 
  ```sh
 cd Environment/k3d/k8s
-kubectl apply -f namespace.yml -f rbac.yml -f tenants.yml -f mongo.yml -f storage-class.yml -f persistent-volume.yml
+kubectl apply -f namespace.yml -f rbac.yml -f tenants.yml -f mongo.yml -f storage-class.yml -f persistent-volume.yml -f api-v1.yml
 cd -
 ```
 
-# Run self-service web
+## Run self-service web
 - In new terminal
 ```sh
 cd Source/SelfService/Web && yarn start:dev
 ```
 
-# Run self-service backend
+## Run self-service backend
 - in new terminal
 ```sh
 cd Source/SelfService/Backend
@@ -82,7 +86,7 @@ DEVELOPMENT_USER_ID="local-dev" \
 go run main.go
 ```
 
-# Run platform-api
+## Run platform-api
 - in new terminal
 - TODO https://app.asana.com/0/1200181647276434/1200931154475271/f
 
@@ -99,9 +103,20 @@ go run main.go microservice server --kube-config ~/.kube/config
 # for windows use --kube-config $USERPROFILE/.kube/config instead
 ```
 
-# Check out Studio
+## Check out Studio
 
 Navigate to `http://localhost:9007` for Studio and check out the goodness!!👍
+
+
+# Forward the cluster to local platform-api using Telepresence
+
+1. Install [Telepresence](https://www.telepresence.io/docs/latest/howtos/intercepts/)
+2. Connect to the local k3d cluster with `telepresence connect` (make sure you're in the k3d context)
+3. Intercept the mock platform-api deployment (defined in `Environment/k3d/k8s/api-v1.yml`) and forward that deployments `http` port to the local platform-api port (default is `8080`):
+```sh
+telepresence intercept dev-api-v1 --namespace system-api --port 8080:http --env-file ~/system-api-service-dev-api-v1.env
+```
+Now your local platform-api can speak with services inside the cluster with their DNS names, like `dev-test.application-11b6cf47-5d9f-438f-8116-0d9828654657.svc.cluster.local`.
 
 
 # Deleting

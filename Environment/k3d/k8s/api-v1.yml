@@ -1,0 +1,204 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    system: Api
+  name: system-api
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    system: Api
+  namespace: system-api
+  name: system-api-manager
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    system: Api
+  name: system-api-manager
+rules:
+  - apiGroups: ["", "apps", "networking.k8s.io", "extensions", "batch"]
+    resources:
+      - namespaces
+      - secrets
+      - configmaps
+      - ingresses
+      - pods
+      - pods/log
+      - deployments
+      - deployments/scale
+      - statefulsets
+      - services
+      - networkpolicies
+      - cronjobs
+    verbs:
+      - get
+      - list
+      - create
+      - patch
+      - delete
+      - update
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    system: Api
+  name: system-api-namespace-manager
+roleRef:
+  kind: ClusterRole
+  name: system-api-manager
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: system-api-manager
+    namespace: system-api
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    system: Api
+  name: system-api-impersonator
+subjects:
+  - kind: ServiceAccount
+    name: system-api-manager
+    namespace: system-api
+roleRef:
+  kind: ClusterRole
+  name: authentication-impersonator
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    system: Api
+    environment: Dev
+    service: Api-V1
+  name: dev-api-v1-secrets
+  namespace: system-api
+type: Opaque
+data:
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    system: Api
+    environment: Dev
+    service: Api-V1
+  name: dev-api-v1-secret-env-variables
+  namespace: system-api
+type: Opaque
+data:
+  HEADER_SECRET: FAKE
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    system: Api
+    environment: Dev
+    service: Api-V1
+  name: dev-api-v1-env-variables
+  namespace: system-api
+data:
+  LISTEN_ON: 0.0.0.0:8080
+  GIT_BRANCH: auto-dev
+  GIT_REPO_BRANCH: auto-dev
+  GIT_REPO_URL: git@github.com:dolittle-platform/Operations.git
+  AZURE_SUBSCRIPTION_ID: e7220048-8a2c-4537-994b-6f9b320692d7
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    system: Api
+    environment: Dev
+    service: Api-V1
+  name: dev-api-v1-config-files
+  namespace: system-api
+data:
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    system: Api
+    environment: Dev
+    service: Api-V1
+  name: dev-api-v1
+  namespace: system-api
+
+spec:
+  selector:
+    system: Api
+    environment: Dev
+    service: Api-V1
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    system: Api
+    environment: Dev
+    service: Api-V1
+  name: dev-api-v1
+  namespace: system-api
+spec:
+  selector:
+    matchLabels:
+      system: Api
+      environment: Dev
+      service: Api-V1
+  template:
+    metadata:
+      labels:
+        system: Api
+        environment: Dev
+        service: Api-V1
+    spec:
+      serviceAccountName: system-api-manager
+
+      containers:
+        - name: head
+          imagePullPolicy: Always
+          # this doesn't actually do anything, it just exists here for us
+          # to be able to intercept this deployment with telepresence and
+          # direct it to our own local platform-api
+          image: nginxdemos/hello
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: dev-api-v1-env-variables
+            - secretRef:
+                name: dev-api-v1-secret-env-variables
+          volumeMounts:
+            - mountPath: /app/data
+              name: config-files
+      volumes:
+        - name: secrets
+          secret:
+            secretName: dev-api-v1-secrets
+        - name: config-files
+          configMap:
+            name: dev-api-v1-config-files
