@@ -1,11 +1,12 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React, { useState } from 'react';
-import { Grid, IconButton, Typography } from '@material-ui/core';
+import { Box, Grid, IconButton, Typography } from '@material-ui/core';
 
 import { getCredentialsFromBasicAuth } from '../../utils/httpCredentials';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { ClassNameMap } from '@material-ui/styles/withStyles';
+import { RowWithLink } from './rowWithLink';
 
 type Props = {
     authorization: string
@@ -29,37 +30,37 @@ export const ViewWebhookCredentials: React.FunctionComponent<Props> = (props) =>
 
     return (
         <>
-            <Typography component="p" className={classes.label}>
-                Username
-            </Typography>
+            <Box px={0} mx={0} py={1}>
+                <Typography component="p" className={classes.label}>
+                    Username
+                </Typography>
 
-            <Typography component="p" className={classes.data}>
-                {username}
-            </Typography>
+                <Typography component="p" className={classes.data}>
+                    {username}
+                </Typography>
+            </Box>
 
-
-            <Typography component="p" className={classes.label}>
-                Password
-            </Typography>
-            <Grid container spacing={3}>
-                <Grid item xs={2}>
-                    <Typography component="p" className={classes.data}>
-                        {password}
-                    </Typography>
-                </Grid>
-
-                <Grid
-                    item xs={10}
-                >
-                    <IconButton onClick={() => {
-                        togglePassword();
-                    }}
-                        className={classes.iconRoot}
-                    >
-                        <VisibilityIcon className={classes.icon} />
-                    </IconButton>
-                </Grid>
-            </Grid>
+            <Box px={0} mx={0} py={1}>
+                <RowWithLink
+                    title='Password'
+                    prefix={
+                        <Typography component="p" className={classes.data}>
+                            {password}
+                        </Typography>
+                    }
+                    suffix={
+                        <Box m={-1.2}>
+                            <IconButton onClick={() => {
+                                togglePassword();
+                            }}
+                                className={classes.iconRoot}
+                            >
+                                <VisibilityIcon className={classes.icon} />
+                            </IconButton>
+                        </Box>
+                    }
+                />
+            </Box >
         </>
     );
 };
