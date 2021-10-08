@@ -16,7 +16,6 @@ import { Tab, Tabs } from '../../theme/tabs';
 // TODO Doesnt seem ready for prime time, this is from the example and the github issue
 import { TabPanel } from '../../utils/materialUi';
 import { DownloadButtons } from '../components/downloadButtons';
-import { classes } from '../../theme/theme';
 
 type Props = {
     applicationId: string
