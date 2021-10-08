@@ -22,6 +22,11 @@ cd /tmp/dolittle-local-dev && git init && cd -
 cp -r Environment/k3d/git/* /tmp/dolittle-local-dev
 ```
 
+### /tmp/k3dvolume
+```sh
+mkdir -p /tmp/k3dvolume
+```
+
 ## Create the local cluster
 ```sh
 k3d cluster create dolittle-dev \
