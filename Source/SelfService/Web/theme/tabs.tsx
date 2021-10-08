@@ -6,8 +6,6 @@ import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import MuiTabs from '@material-ui/core/Tabs';
 import MuiTab from '@material-ui/core/Tab';
 
-
-
 interface TabsProps {
     value: number;
     onChange: (event: React.ChangeEvent<{}>, newValue: number) => void;
