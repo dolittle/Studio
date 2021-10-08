@@ -25,9 +25,27 @@ import { LayoutWithSidebar } from './layout/layoutWithSidebar';
 import { ClassNameMap, CombinedClassKey, SnackbarProvider } from 'notistack';
 import Grow from '@material-ui/core/Grow';
 import { TransitionProps } from '@material-ui/core/transitions';
+import { ThemeScreen } from './screens/themeScreen';
+import '@fontsource/rubik';
+
+
+const typography = {
+    fontFamily: 'Rubik',
+    fontStyle: 'normal',
+    htmlFontSize: 14,
+    fontSize: 14,
+    body1: {
+        fontFamily: 'Rubik',
+        color: '#E9EAEC',
+        fontSize: '14px',
+        letterSpacing: '-0.01em',
+        lineHeight: '16px'
+    }
+};
+
 
 const themeDark = createTheme({
-    //spacing: 8,
+    typography,
     palette: {
         background: {
             default: '#191A21',
@@ -108,6 +126,10 @@ export const App = () => {
 
                                 <Route path="/insights/application/:applicationId/:environment">
                                     <InsightsScreen />
+                                </Route>
+
+                                <Route path="/debug/theme">
+                                    <ThemeScreen />
                                 </Route>
 
                                 <Route exact path="/problem">

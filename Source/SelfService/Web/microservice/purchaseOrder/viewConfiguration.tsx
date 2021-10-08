@@ -1,10 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import Button from '@material-ui/core/Button';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Box, Grid, Typography } from '@material-ui/core';
 
@@ -12,6 +11,8 @@ import { MicroservicePurchaseOrder } from '../../api/index';
 
 import { ViewWebhookCredentials } from './viewWebhookCredentials';
 import { EditWebhookCredentials } from './editWebhookCredentials';
+import { ButtonText } from '../../theme/buttonText';
+import { RowWithLink } from './rowWithLink';
 
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
@@ -25,10 +26,6 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         actionsContainer: {
             marginBottom: theme.spacing(2),
-        },
-        button: {
-            padding: 0,
-            marginRight: theme.spacing(1),
         },
         inactiveText: {
             padding: theme.spacing(0),
@@ -48,13 +45,11 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(0),
             lineHeight: 1.75,
         },
-
         label: {
-            padding: theme.spacing(1),
+            paddingBottom: theme.spacing(2),
             color: theme.palette.text.primary
         },
         data: {
-            padding: theme.spacing(1),
             color: theme.palette.text.secondary
         },
         textField: { //https://stackoverflow.com/a/60461876 excellent resource
@@ -71,10 +66,32 @@ const useStyles = makeStyles((theme: Theme) =>
             '&:hover .MuiOutlinedInput-input': {
                 color: 'white'
             },
-        },
+        }
     })
 );
 
+interface HeaderDataRowProps {
+    head: string
+    data: string
+}
+
+const HeaderDataRow: React.FunctionComponent<HeaderDataRowProps> = (props) => {
+    const classes = useStyles();
+    const head = props!.head;
+    const data = props!.data;
+
+    return (
+        <Box px={0} mx={0} py={1}>
+            <Typography component="p" className={classes.label}>
+                {head}
+            </Typography>
+
+            <Typography component="p" className={classes.data}>
+                {data}
+            </Typography>
+        </Box>
+    );
+};
 
 export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();
@@ -84,21 +101,12 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const editMode = _props.editMode;
     const ms = _props.microservice;
-    const searchParams = new URLSearchParams(location.search);
-
     const webhookPrefix = `https://${ms.extra.ingress.host}/api/webhooks`;
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
     const msName = ms.name;
 
-    useEffect(() => {
-        const firstTime = searchParams.get('firstTime')!;
-        if (firstTime === '1') {
-            enqueueSnackbar('Microservice ‘Supplier PO API’ successfully created.');
-        }
-    }, []);
-
-    const copyPOHeadUrl = async () => {
+    const copyPOHeadUrl = async (event: React.MouseEvent<HTMLElement>) => {
         try {
             await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoHead}`);
             enqueueSnackbar('POHEAD URL copied to clipboard.');
@@ -107,7 +115,7 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
         }
     };
 
-    const copyPOLineUrl = async () => {
+    const copyPOLineUrl = async (event: React.MouseEvent<HTMLElement>) => {
         try {
             await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoLine}`);
             enqueueSnackbar('POLINE URL copied to clipboard.');
@@ -128,70 +136,64 @@ export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
                 justifyContent="flex-start"
                 alignItems="stretch"
             >
-                <Box m={2} pt={3}>
-                    <Typography component="p" className={classes.label}>
-                        Purchase order API name
-                    </Typography>
+                <HeaderDataRow
+                    head='Purchase order API name'
+                    data={msName}
+                />
 
-                    <Typography component="p" className={classes.data}>
-                        {msName}
-                    </Typography>
+                <HeaderDataRow
+                    head='uuid provided'
+                    data={ms.dolittle.microserviceId}
+                />
 
+                <HeaderDataRow
+                    head='Runtime image provided'
+                    data={ms.extra.runtimeImage}
+                />
 
-                    <Typography component="p" className={classes.label}>
-                        uuid provided
-                    </Typography>
-
-                    <Typography component="p" className={classes.data}>
-                        {ms.dolittle.microserviceId}
-                    </Typography>
-
-                    <Typography component="p" className={classes.label}>
-                        Runtime image provided
-                    </Typography>
-
-                    <Typography component="p" className={classes.data}>
-                        {ms.extra.runtimeImage}
-                    </Typography>
-
-
-                    <Typography component="p" className={classes.label}>
-                        Webhook for purchase order head (POHEAD)
-                    </Typography>
-
-                    <Grid container spacing={3}>
-                        <Grid item xs={8}>
-                            <span className={classes.inactiveText}>
+                <Box py={1}>
+                    <RowWithLink
+                        title='Webhook for purchase order head (POHEAD)'
+                        prefix={
+                            <span>
                                 {webhookPrefix} / m3/pohead
                             </span>
+                        }
+                        suffix={
+                            <Box m={-1.2}>
+                                <ButtonText
+                                    withIcon={false}
+                                    onClick={copyPOHeadUrl}
+                                >
+                                    COPY TO CLIPBOARD
+                                </ButtonText>
+                            </Box>
+                        }
+                    />
+                </Box>
 
-                        </Grid>
-
-                        <Grid
-                            item xs={4}
-                        >
-                            <Button className={classes.copyClipboardCallToAction} color='primary' onClick={copyPOHeadUrl}>COPY TO CLIPBOARD</Button>
-                        </Grid>
-                    </Grid>
-
-                    <Typography component="p" className={classes.label}>
-                        Webhook for purchase order head (POLINE)
-                    </Typography>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8}>
-                            <span className={classes.inactiveText}>
-                                {webhookPrefix} / m3/poline
+                <Box py={1}>
+                    <RowWithLink
+                        title='Webhook for purchase order head (POLINE)'
+                        prefix={
+                            <span>
+                                {webhookPrefix} / m3/pohead
                             </span>
+                        }
+                        suffix={
+                            <Box m={-1.2}>
+                                <ButtonText
+                                    withIcon={false}
+                                    onClick={copyPOLineUrl}
+                                >
+                                    COPY TO CLIPBOARD
+                                </ButtonText>
+                            </Box>
+                        }
+                    />
+                </Box>
 
-                        </Grid>
-
-                        <Grid
-                            item xs={4}
-                        >
-                            <Button className={classes.copyClipboardCallToAction} color='primary' onClick={copyPOLineUrl}>COPY TO CLIPBOARD</Button>
-                        </Grid>
-                    </Grid>
-
+                <Box py={1}>
                     {webhookCredentials}
                 </Box>
             </Grid >

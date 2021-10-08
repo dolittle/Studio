@@ -3,23 +3,19 @@
 
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import { Grid } from '@material-ui/core';
-
-
-import { getServerUrlPrefix, HttpResponsePodStatus } from '../../api/api';
-import { HealthStatus } from '../view/healthStatus';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { Box, Divider, Grid } from '@material-ui/core';
 import { useReadable } from 'use-svelte-store';
+
+import { HttpResponsePodStatus } from '../../api/api';
+import { HealthStatus } from '../view/healthStatus';
 import { microservices } from '../../stores/microservice';
 import { ConfigView } from './configView';
 import { ConfigViewK8s } from './configViewK8s';
-import { SecondaryButton } from '../../theme/secondaryButton';
-import { DownloadLogIcon } from '../../theme/icons';
+import { Tab, Tabs } from '../../theme/tabs';
 // TODO Doesnt seem ready for prime time, this is from the example and the github issue
 import { TabPanel } from '../../utils/materialUi';
-
+import { DownloadButtons } from '../components/downloadButtons';
 
 type Props = {
     applicationId: string
@@ -28,7 +24,16 @@ type Props = {
     podsData: HttpResponsePodStatus
 };
 
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        divider: {
+            backgroundColor: '#3B3D48'
+        }
+    })
+);
+
 export const View: React.FunctionComponent<Props> = (props) => {
+    const classes = useStyles();
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
     const _props = props!;
@@ -47,8 +52,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
-    const configMapPrefix = `${environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
-
     let hasEditData = false;
     if (currentMicroservice.edit &&
         currentMicroservice.edit.dolittle &&
@@ -57,10 +60,10 @@ export const View: React.FunctionComponent<Props> = (props) => {
         hasEditData = true;
     }
 
-    const [value, setValue] = React.useState(0);
+    const [currentTab, setCurrentTab] = React.useState(1);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
+        setCurrentTab(newValue);
     };
 
     return (
@@ -73,55 +76,35 @@ export const View: React.FunctionComponent<Props> = (props) => {
             <h1>{currentMicroservice.name}</h1>
             <div>
                 <Tabs
-                    value={value}
+                    value={currentTab}
                     onChange={handleChange}
-                    TabIndicatorProps={{ style: { background: '#ffffff' } }}
                 >
                     <Tab label="Config" />
                     <Tab label="Health Status" />
                 </Tabs>
 
-                <TabPanel value={value} index={0}>
-                    {hasEditData
-                        ? <ConfigView microservice={currentMicroservice.edit} />
-                        : <ConfigViewK8s microservice={currentMicroservice.live} />
-                    }
+                <TabPanel value={currentTab} index={0}>
+                    <Box ml={2}>
+                        {hasEditData
+                            ? <ConfigView microservice={currentMicroservice.edit} />
+                            : <ConfigViewK8s microservice={currentMicroservice.live} />
+                        }
+                    </Box>
+
+                    <Divider className={classes.divider} />
+                    <Box ml={2}>
+                        <DownloadButtons
+                            environment={environment}
+                            microserviceName={currentMicroservice.name}
+                            applicationId={applicationId}
+                        />
+                    </Box>
                 </TabPanel>
 
-                <TabPanel value={value} index={1}>
+                <TabPanel value={currentTab} index={1}>
                     <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
                 </TabPanel>
             </div>
-
-            <SecondaryButton
-                title="Download secret env-variables yaml"
-                icon={DownloadLogIcon}
-                onClick={() => {
-                    const secretName = `${configMapPrefix}-secret-env-variables`;
-                    const href = `${getServerUrlPrefix()}/live/application/${applicationId}/secret/${secretName}?download=1&fileType=yaml`;
-                    window.open(href, '_blank');
-                }}
-            />
-
-            <SecondaryButton
-                title="Download config files yaml"
-                icon={DownloadLogIcon}
-                onClick={() => {
-                    const configMapName = `${configMapPrefix}-config-files`;
-                    const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
-                    window.open(href, '_blank');
-                }}
-            />
-
-            <SecondaryButton
-                title="Download env-variables yaml"
-                icon={DownloadLogIcon}
-                onClick={() => {
-                    const configMapName = `${configMapPrefix}-env-variables`;
-                    const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
-                    window.open(href, '_blank');
-                }}
-            />
         </Grid>
     );
 };

@@ -4,8 +4,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import {
     Grid,
-    Tabs,
-    Tab,
     Button
 } from '@material-ui/core';
 import { TabPanel } from '../../utils/materialUi';
@@ -18,6 +16,7 @@ import { MicroservicePurchaseOrder } from '../../api/index';
 import { HttpResponseApplications2 } from '../../api/api';
 import { useGlobalContext } from '../../stores/notifications';
 import { Configuration } from './configuration';
+import { Tab, Tabs } from '../../theme/tabs';
 
 type Props = {
     application: HttpResponseApplications2;
@@ -97,7 +96,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     <Tabs
                         value={0}
                         onChange={handleChange}
-                        TabIndicatorProps={{ style: { background: '#ffffff' } }}
                     >
                         <Tab label='Configuration' />
                         <Tab label='Health Status' />

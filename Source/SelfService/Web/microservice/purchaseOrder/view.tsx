@@ -1,13 +1,13 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
     Grid,
     IconButton,
     Typography,
-    Tabs,
-    Tab
+    Divider,
+    Box,
 } from '@material-ui/core';
 import { TabPanel } from '../../utils/materialUi';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -22,6 +22,8 @@ import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
 import { ViewConfiguration } from './viewConfiguration';
 import { DataStateIcon } from './dataStateIcon';
+import { Tab, Tabs } from '../../theme/tabs';
+import { DownloadButtons } from '../components/downloadButtons';
 
 type Props = {
     applicationId: string
@@ -65,6 +67,9 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(2),
             textAlign: 'center',
         },
+        divider: {
+            backgroundColor: '#3B3D48'
+        }
     })
 );
 
@@ -88,13 +93,22 @@ export const View: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
-    const [value, setValue] = useState(0);
-    const [editMode, setEditMode] = useState(false);
-
     // TODO modify when we know how we want to handle state of purchase order data
     // Fake it till we are ready
     const msName = currentMicroservice.name;
     const searchParams = new URLSearchParams(location.search);
+
+
+    useEffect(() => {
+        const firstTime = searchParams.get('firstTime')!;
+        if (firstTime === '1') {
+            enqueueSnackbar('Microservice ‘Supplier PO API’ successfully created.');
+        }
+    }, []);
+
+    const [currentTab, setCurrentTab] = useState(searchParams.get('firstTime') === '1' ? 0 : 1);
+    const [editMode, setEditMode] = useState(false);
+
 
     const getFakeState = (searchParams: URLSearchParams): string => {
         if (!searchParams.has('dataState')) {
@@ -105,7 +119,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const fakeState = getFakeState(searchParams);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
+        setCurrentTab(newValue);
     };
 
     const _onSave = (ms: MicroservicePurchaseOrder): void => {
@@ -149,9 +163,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
             >
                 <Grid item xs={10}>
                     <Tabs
-                        value={value}
+                        value={currentTab}
                         onChange={handleChange}
-                        TabIndicatorProps={{ style: { background: '#ffffff' } }}
                     >
                         <Tab label='Configuration' />
                         <Tab label='Health Status' />
@@ -193,12 +206,22 @@ export const View: React.FunctionComponent<Props> = (props) => {
             </Grid>
 
 
-            <TabPanel value={value} index={0}>
-                <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} editMode={editMode} onCancel={() => {
-                    setEditMode(false);
-                }} />
+            <TabPanel value={currentTab} index={0}>
+                <Box ml={2}>
+                    <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} editMode={editMode} onCancel={() => {
+                        setEditMode(false);
+                    }} />
+                </Box>
+                <Divider className={classes.divider} />
+                <Box ml={2}>
+                    <DownloadButtons
+                        environment={environment}
+                        microserviceName={currentMicroservice.name}
+                        applicationId={applicationId}
+                    />
+                </Box>
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            <TabPanel value={currentTab} index={1}>
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
             </TabPanel>
         </Grid >
