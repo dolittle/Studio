@@ -23,6 +23,7 @@ cp -r Environment/k3d/git/* /tmp/dolittle-local-dev
 ```
 
 ### /tmp/k3dvolume
+- Used by RawDataLog for persistence
 ```sh
 mkdir -p /tmp/k3dvolume
 ```
@@ -111,7 +112,7 @@ Navigate to `http://localhost:9007` for Studio and check out the goodness!!👍
 
 1. Install [Telepresence](https://www.telepresence.io/docs/latest/howtos/intercepts/)
 2. Connect to the local k3d cluster with `telepresence connect` (make sure you're in the k3d context)
-3. Intercept the mock platform-api deployment (defined in `Environment/k3d/k8s/api-v1.yml`) and forward that deployments `http` port to the local platform-api port:
+3. Intercept the mock platform-api deployment (defined in `Environment/k3d/k8s/api-v1.yml`) and forward that deployments `http` port to the local platform-api port (default is `8080`):
 ```sh
 telepresence intercept dev-api-v1 --namespace system-api --port 8080:http --env-file ~/system-api-service-dev-api-v1.env
 ```
