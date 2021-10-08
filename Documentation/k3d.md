@@ -113,7 +113,7 @@ Navigate to `http://localhost:9007` for Studio and check out the goodness!!👍
 2. Connect to the local k3d cluster with `telepresence connect` (make sure you're in the k3d context)
 3. Intercept the mock platform-api deployment (defined in `Environment/k3d/k8s/api-v1.yml`) and forward that deployments `http` port to the local platform-api port:
 ```sh
-telepresence intercept dev-api-v1 --namespace system-api --port <local platform-api port>:http --env-file ~/system-api-service-dev-api-v1.env
+telepresence intercept dev-api-v1 --namespace system-api --port 8080:http --env-file ~/system-api-service-dev-api-v1.env
 ```
 Now your local platform-api can speak with services inside the cluster with their DNS names, like `dev-test.application-11b6cf47-5d9f-438f-8116-0d9828654657.svc.cluster.local`.
 
