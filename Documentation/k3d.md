@@ -70,13 +70,13 @@ cd -
 ```
 
 ## Run self-service web
-- In new terminal
+In a new terminal:
 ```sh
 cd Source/SelfService/Web && yarn start:dev
 ```
 
 ## Run self-service backend
-- in new terminal
+In a new terminal:
 ```sh
 cd Source/SelfService/Backend
 HEADER_SECRET="FAKE" \
@@ -87,8 +87,7 @@ go run main.go
 ```
 
 ## Run platform-api
-- in new terminal
-- TODO https://app.asana.com/0/1200181647276434/1200931154475271/f
+In a new terminal:
 
 On *nix:
 
@@ -99,8 +98,7 @@ GIT_REPO_BRANCH=main \
 LISTEN_ON="localhost:8081" \
 HEADER_SECRET="FAKE" \
 AZURE_SUBSCRIPTION_ID="e7220048-8a2c-4537-994b-6f9b320692d7" \
-go run main.go microservice server --kube-config ~/.kube/config
-# for windows use --kube-config $USERPROFILE/.kube/config instead
+go run main.go microservice server
 ```
 
 ## Check out Studio
