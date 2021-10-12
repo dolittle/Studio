@@ -23,6 +23,7 @@
         "@material-ui/styles": "4.11.4",
         "@monaco-editor/react": "4.1.3",
         "@shared/web": "1.0.0",
+        "classnames": "^2.3.1",
         "generate-password-browser": "^1.1.0",
         "notistack": "1.0.10",
         "react-markdown": "6.0.2",

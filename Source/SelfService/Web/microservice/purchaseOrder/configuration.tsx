@@ -24,6 +24,7 @@ import { GeneratePassword } from './generatePassword';
 import { Button } from '../../theme/button';
 import { ButtonText } from '../../theme/buttonText';
 import { ErpIcon } from './erpIcon';
+import { useEnqueueSnackbar } from '../../theme/snackbar';
 
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
@@ -87,7 +88,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Configuration: React.FunctionComponent<Props> = (props) => {
-    const { enqueueSnackbar } = useSnackbar();
+    // const { useEnqueueSnackbar } = useSnackbar();
     const classes = useStyles();
 
     const _props = props!;
@@ -122,18 +123,18 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     const copyPOHeadUrl = async (event: React.MouseEvent<HTMLElement>) => {
         try {
             await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoHead}`);
-            enqueueSnackbar('POHEAD URL copied to clipboard.');
+            useEnqueueSnackbar('POHEAD URL copied to clipboard. ERROR PLSSSS', { variant: 'error' });
         } catch {
-            enqueueSnackbar('Failed to copy POHEAD URL to clipboard.', { variant: 'error' });
+            useEnqueueSnackbar('Failed to copy POHEAD URL to clipboard.', { variant: 'error' });
         }
     };
 
     const copyPOLineUrl = async (event: React.MouseEvent<HTMLElement>) => {
         try {
             await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoLine}`);
-            enqueueSnackbar('POLINE URL copied to clipboard.');
+            useEnqueueSnackbar('POLINE URL copied to clipboard.');
         } catch {
-            enqueueSnackbar('Failed to copy POLINE URL to clipboard.', { variant: 'error' });
+            useEnqueueSnackbar('Failed to copy POLINE URL to clipboard.', { variant: 'error' });
         }
     };
 
@@ -181,11 +182,11 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
 
 
                 <ErpIcon kind='ifs' onClick={() => {
-                    enqueueSnackbar('Not yet supported, please reach out if interested to know when it will arrive');
+                    useEnqueueSnackbar('Not yet supported, please reach out if interested to know when it will arrive');
                 }} />
 
                 <ErpIcon kind='sap' onClick={() => {
-                    enqueueSnackbar('Not yet supported, please reach out if interested to know when it will arrive');
+                    useEnqueueSnackbar('Not yet supported, please reach out if interested to know when it will arrive');
                 }} />
             </Grid>
         </>,
@@ -293,14 +294,14 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
         if (isCreate) {
             if (activeStep === 0) {
                 if (erpSystem === '') {
-                    enqueueSnackbar('Please select an ERP system', { variant: 'error' });
+                    useEnqueueSnackbar('Please select an ERP system', { variant: 'error' });
                     return;
                 }
             }
             if (activeStep === 1) {
                 // Validate name
                 if (!allowMicroserviceName(msName)) {
-                    enqueueSnackbar('Your name cannot be empty, nor with spaces', { variant: 'error' });
+                    useEnqueueSnackbar('Your name cannot be empty, nor with spaces', { variant: 'error' });
                     return;
                 }
             }
@@ -322,13 +323,13 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
         if (activeStep === 2) {
             // Validate username
             if (!allowUsername(username)) {
-                enqueueSnackbar('You need a username', { variant: 'error' });
+                useEnqueueSnackbar('You need a username', { variant: 'error' });
                 return;
             }
 
             // Validate password
             if (!allowPassword(password)) {
-                enqueueSnackbar('We require a password', { variant: 'error' });
+                useEnqueueSnackbar('We require a password', { variant: 'error' });
                 return;
             }
 
@@ -355,7 +356,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
 
     const handleBack = (event: React.MouseEvent<HTMLElement>) => {
         if (!isCreate && activeStep === 2) {
-            enqueueSnackbar('You cannot make changes to the name of the integration type', { variant: 'error' });
+            useEnqueueSnackbar('You cannot make changes to the name of the integration type', { variant: 'error' });
             return;
         }
 
