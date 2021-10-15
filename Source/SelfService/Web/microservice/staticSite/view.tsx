@@ -1,6 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
     Grid,
@@ -23,8 +23,7 @@ import { useReadable } from 'use-svelte-store';
 
 import { Tab, Tabs } from '../../theme/tabs';
 import { DownloadButtons } from '../components/downloadButtons';
-import { getFiles } from '../../api/staticFiles';
-import { Files } from './files';
+import { View as FilesView } from './files/view';
 
 
 type Props = {
@@ -100,25 +99,9 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const msName = currentMicroservice.name;
 
     const [currentTab, setCurrentTab] = useState(1);
-    const [editMode, setEditMode] = useState(false);
-    const [currentFiles, setCurrentFiles] = useState([] as string[]);
-
-
-
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setCurrentTab(newValue);
     };
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const data = await getFiles(applicationId, environment, microserviceId);
-                setCurrentFiles(data.files);
-            } catch (e) {
-                console.error(e);
-            }
-        })();
-    }, []);
 
     return (
         <Grid
@@ -195,10 +178,9 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
             </TabPanel>
             <TabPanel value={currentTab} index={2}>
-                <Files environment={environment}
+                <FilesView environment={environment}
                     microserviceId={microserviceId}
                     applicationId={applicationId}
-                    files={currentFiles}
                 />
             </TabPanel>
         </Grid >
