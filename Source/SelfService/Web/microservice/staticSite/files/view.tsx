@@ -3,6 +3,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Box } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
+
 import { getFiles, addFile, StaticFiles } from '../../../api/staticFiles';
 import { ListView } from './listView';
 import { UploadButton } from './upload';
@@ -20,6 +22,8 @@ export type CdnInfo = {
 };
 
 export const View: React.FunctionComponent<Props> = (props) => {
+    const { enqueueSnackbar } = useSnackbar();
+
     // TODO this should not be hardcoded
     // TODO Make sure we remove trailing slash
     const cdnInfo = {
@@ -80,6 +84,11 @@ export const View: React.FunctionComponent<Props> = (props) => {
     };
 
     const handleSubmit = async () => {
+        if (!selectedFile) {
+            enqueueSnackbar('You need to select a file first', { variant: 'error' });
+            return;
+        }
+
         let suffix = fileName.replace(cdnInfo.path, '');
         suffix = suffix.startsWith('/') ? suffix.substring(1) : suffix;
 

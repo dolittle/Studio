@@ -98,6 +98,8 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
 function whichSubView(currentMicroservice: any): string {
     // Today we try and map subviews based on kind, its not perfect
     let kind = currentMicroservice.kind;
+    // TODO this code block needs removing
+    // Kind via live should be possible since we add annotation "dolittle.io/microservice-kind"
     if (
         currentMicroservice?.live?.images[0]?.image === '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/dolittle/platform/platform-api:dev-x'
     ) {
@@ -105,9 +107,7 @@ function whichSubView(currentMicroservice: any): string {
     }
 
 
-    if (
-        currentMicroservice?.live?.kind === 'static-files-v1'
-    ) {
+    if (currentMicroservice?.live?.kind === 'static-files-v1') {
         kind = 'static-files-v1';
     }
 
