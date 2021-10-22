@@ -45,7 +45,7 @@ export const ListView: React.FunctionComponent<Props> = (props) => {
     const data = _props.data;
     const cdnInfo = _props.cdnInfo;
 
-    const items: ListItem[] = data.files.map<ListItem>(e => {
+    const items = data.files.map<ListItem>(e => {
         // No need for "/" between them
         const url = `${cdnInfo.domain}${e}`;
         return {
@@ -55,8 +55,6 @@ export const ListView: React.FunctionComponent<Props> = (props) => {
     });
 
     const onClickDelete = async (item: ListItem) => {
-        const fileName = item.fileName.replace(cdnInfo.prefix, '');
-        // TODO handle delete
         await deleteFile(applicationId, environment, microserviceId, item.fileName);
         enqueueSnackbar('item deleted');
         _props.afterDelete();

@@ -94,8 +94,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
-    // TODO modify when we know how we want to handle state of purchase order data
-    // Fake it till we are ready
     const msName = currentMicroservice.name;
 
     const [currentTab, setCurrentTab] = useState(1);

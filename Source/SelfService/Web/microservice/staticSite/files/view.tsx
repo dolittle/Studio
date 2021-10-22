@@ -34,10 +34,10 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const microserviceId = _props.microserviceId;
     const environment = _props.environment;
 
-    const [selectedFile, setSelectedFile] = React.useState(null);
-    const [fileName, setFileName] = React.useState('');
-    const [loading, setLoading] = React.useState(true);
-    const [reset, setReset] = React.useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [fileName, setFileName] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [reset, setReset] = useState(false);
 
     const [runtimeError, setRuntimeError] = React.useState(null as any);
     const [currentFiles, setCurrentFiles] = useState({ files: [] } as StaticFiles);
