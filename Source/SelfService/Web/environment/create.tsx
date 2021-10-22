@@ -66,20 +66,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 </Stack>
 
                 <PrimaryButton text="Create" onClick={(e => {
-                    // TODO create environment in the backend.
-                    const host = `${domainPrefix}${domainSuffix}`;
-
-                    const input = {
-                        tenantId,
-                        applicationId,
-                        name: environment,
-                        domainPrefix,
-                        host,
-                    } as HttpInputApplicationEnvironment;
-
                     // TODO Check if environment exists
-                    console.log('create environment');
-                    console.log(input);
                     setNotification('TODO: Create environment', 'info');
                 })} />
 
