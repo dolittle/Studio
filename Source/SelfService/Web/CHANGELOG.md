@@ -1,3 +1,10 @@
+# [1.6.1] - 2021-10-26 [PR: #132](https://github.com/dolittle/Studio/pull/132)
+## Summary
+
+Fix the workflows and release the unreleased features:
+- Removes the horizontal scrollbar from all pages (#128)
+
+
 # [1.6.0] - 2021-10-8 [PR: #121](https://github.com/dolittle/Studio/pull/121)
 ## Summary
 - When viewing a base microservice, it will default to "healthStatus".
