@@ -1,4 +1,4 @@
-name: Build - SelfService - Web
+name: Deploy - SelfService - Web
 
 on:
   pull_request:
