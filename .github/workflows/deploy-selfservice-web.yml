@@ -68,6 +68,7 @@ jobs:
         with:
           path: ${{ env.SOURCE_PATH }}/version.json
           version: ${{ steps.increment-version.outputs.next-version }}
+          merge-strategy: rebase
 
       - name: Prepend to Changelog
         if: ${{ steps.context.outputs.should-publish == 'true' && steps.context.outputs.release-type != 'prerelease' }}
