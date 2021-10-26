@@ -79,8 +79,6 @@ export type HttpInputApplicationEnvironment = {
     applicationId: string
     tenantId: string
     name: string
-    domainPrefix: string
-    host: string
     automationEnabled: boolean
     tenants: string[]
     ingresses: Map<string, MicroserviceIngressPath>

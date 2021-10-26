@@ -15,7 +15,7 @@ import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react/lib/ChoiceGroup
 
 import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 import { Config as RestConfig } from './configuration/RestConfiguration';
-import { saveBusinessMomentsAdaptorMicroservice } from '../../stores/microservice';
+import { getFirstIngressFromApplication, saveBusinessMomentsAdaptorMicroservice } from '../../stores/microservice';
 import { MicroserviceBusinessMomentAdaptor } from '../../api/index';
 
 import { HttpResponseApplications2 } from '../../api/api';
@@ -33,7 +33,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
-    const ingressInfo = application.environments.find(e => e.name === environment)!;
+    const ingressInfo = getFirstIngressFromApplication(application, environment);
 
     // TODO do something with
     const microserviceId = Guid.create().toString();
