@@ -18,8 +18,6 @@ import { uriWithAppPrefix } from '../store';
 import { useGlobalContext } from '../stores/notifications';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
-import { applications } from '../stores/state';
-
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
     const history = useHistory();
@@ -35,7 +33,6 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         clearGlobalState();
         getApplications().then(data => {
             // If only 1 item redirect
-            // TODO this should be an empty array
             if (data.applications.length === 1) {
                 const application = data.applications[0];
                 setCurrentEnvironment(application.environment);
