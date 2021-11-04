@@ -13,6 +13,7 @@ import { useReadable } from 'use-svelte-store';
 import { info, load, isLoaded } from '../stores/documentationInfo';
 import { Doc as VerifyKubernetesAccess } from './verifyKubernetesAccess';
 import { Doc as AccessContainerRegistry } from './accessContainerRegistry';
+import { Doc as SetupAzurePipelines } from './cicd/setupAzurePipelines';
 
 type Props = {
     environment: string
@@ -81,6 +82,15 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                                     Verify access to kubernetes
                                 </a>
                             </li>
+                            <li>
+                                <a href="#" onClick={(event) => {
+                                    event.preventDefault();
+                                    const href = `/documentation/application/${applicationId}/${environment}/ci-cd/-azure-pipelines`;
+                                    history.push(href);
+                                }}>
+                                    Setup Azure Pipelines
+                                </a>
+                            </li>
 
                         </ul>
                     </Route>
@@ -105,6 +115,17 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                         </Link>
                         <h1>Verify access to kubernetes</h1>
                         <VerifyKubernetesAccess {...docProps} />
+                    </Route>
+
+                    <Route exact path="/documentation/application/:applicationId/:environment/ci-cd/-azure-pipelines">
+                        <Link onClick={() => {
+                            const href = `/documentation/application/${applicationId}/${environment}/overview`;
+                            history.push(href);
+                        }}>
+                            Back
+                        </Link>
+                        <h1>Setup Azure Pipelines</h1>
+                        <SetupAzurePipelines {...docProps} />
                     </Route>
 
                     <Route>
