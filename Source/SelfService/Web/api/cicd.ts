@@ -15,8 +15,8 @@ export type KubernetesServiceAccountCredentials = {
 };
 
 // @throws {Error}
-export async function getKubernetesServiceAccount(applicationId: string): Promise<KubernetesServiceAccountCredentials> {
-    const url = `${getServerUrlPrefix()}/application/${applicationId}/cicd/credentials/service-account`;
+export async function getAzureDevopsKubernetesServiceAccount(applicationId: string): Promise<KubernetesServiceAccountCredentials> {
+    const url = `${getServerUrlPrefix()}/application/${applicationId}/cicd/credentials/service-account/azure-devops`;
 
     const response = await fetch(url, {
         method: 'GET',

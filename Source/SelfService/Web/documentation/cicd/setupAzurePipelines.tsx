@@ -5,8 +5,8 @@ import React from 'react';
 import { useSnackbar } from 'notistack';
 
 import { HttpResponseApplications2 } from '../../api/api';
-import { DownloadButton } from '../../theme/downloadButton';
-import { getKubernetesServiceAccount, getContainerRegistry } from '../../api/cicd';
+import { ButtonText } from '../../theme/buttonText';
+import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../api/cicd';
 type Props = {
     application: HttpResponseApplications2
     info: any
@@ -15,10 +15,11 @@ type Props = {
 export const Doc: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
     const applicationID = props!.application.id;
-    const buttonServiceAccount = <DownloadButton
+    const buttonServiceAccount = <ButtonText
+        withIcon={false}
         onClick={async (event: React.MouseEvent<HTMLElement>) => {
             try {
-                const data = await getKubernetesServiceAccount(applicationID);
+                const data = await getAzureDevopsKubernetesServiceAccount(applicationID);
                 await navigator.clipboard.writeText(JSON.stringify(data));
                 enqueueSnackbar('Kubernetes service account copied to clipboard.');
             } catch {
@@ -27,9 +28,11 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         }}
     >
         Copy Credentials to clipboard
-    </DownloadButton>;
+    </ButtonText>;
 
-    const buttonContainerRegistry = <DownloadButton
+
+    const buttonContainerRegistry = <ButtonText
+        withIcon={false}
         onClick={async (event: React.MouseEvent<HTMLElement>) => {
             try {
                 const data = await getContainerRegistry(applicationID);
@@ -41,7 +44,7 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         }}
     >
         Copy Credentials to clipboard
-    </DownloadButton>;
+    </ButtonText>;
 
     return (
         <>
