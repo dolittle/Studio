@@ -19,7 +19,7 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         onClick={async (event: React.MouseEvent<HTMLElement>) => {
             try {
                 const data = await getKubernetesServiceAccount(applicationID);
-                await navigator.clipboard.writeText(data);
+                await navigator.clipboard.writeText(JSON.stringify(data));
                 enqueueSnackbar('Kubernetes service account copied to clipboard.');
             } catch {
                 enqueueSnackbar('Failed to get data.', { variant: 'error' });
@@ -33,7 +33,7 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         onClick={async (event: React.MouseEvent<HTMLElement>) => {
             try {
                 const data = await getContainerRegistry(applicationID);
-                await navigator.clipboard.writeText(data);
+                await navigator.clipboard.writeText(JSON.stringify(data));
                 enqueueSnackbar('Container registry copied to clipboard.');
             } catch {
                 enqueueSnackbar('Failed to get data.', { variant: 'error' });

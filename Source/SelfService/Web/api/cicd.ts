@@ -2,8 +2,20 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import { getServerUrlPrefix } from './api';
 
+// https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+export type KubernetesContainerRegistryCredentials = {
+    '.dockerconfigjson': string;
+};
+
+// https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+export type KubernetesServiceAccountCredentials = {
+    'ca.crt': string;
+    'namespace': string;
+    'token': string;
+};
+
 // @throws {Error}
-export async function getKubernetesServiceAccount(applicationId: string): Promise<any> {
+export async function getKubernetesServiceAccount(applicationId: string): Promise<KubernetesServiceAccountCredentials> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}/cicd/credentials/service-account`;
 
     const response = await fetch(url, {
@@ -16,11 +28,11 @@ export async function getKubernetesServiceAccount(applicationId: string): Promis
         throw Error('Failed to service account');
     }
 
-    return await response.json() as any;
+    return await response.json() as KubernetesServiceAccountCredentials;
 }
 
 // @throws {Error}
-export async function getContainerRegistry(applicationId: string): Promise<any> {
+export async function getContainerRegistry(applicationId: string): Promise<KubernetesContainerRegistryCredentials> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}/cicd/credentials/container-registry`;
 
     const response = await fetch(url, {
@@ -33,6 +45,6 @@ export async function getContainerRegistry(applicationId: string): Promise<any> 
         throw Error('Failed to service account');
     }
 
-    return await response.json() as any;
+    return await response.json() as KubernetesContainerRegistryCredentials;
 }
 
