@@ -85,7 +85,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                             <li>
                                 <a href="#" onClick={(event) => {
                                     event.preventDefault();
-                                    const href = `/documentation/application/${applicationId}/${environment}/ci-cd/-azure-pipelines`;
+                                    const href = `/documentation/application/${applicationId}/${environment}/ci-cd/azure-pipelines`;
                                     history.push(href);
                                 }}>
                                     Setup Azure Pipelines
@@ -117,7 +117,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                         <VerifyKubernetesAccess {...docProps} />
                     </Route>
 
-                    <Route exact path="/documentation/application/:applicationId/:environment/ci-cd/-azure-pipelines">
+                    <Route exact path="/documentation/application/:applicationId/:environment/ci-cd/azure-pipelines">
                         <Link onClick={() => {
                             const href = `/documentation/application/${applicationId}/${environment}/overview`;
                             history.push(href);
