@@ -25,7 +25,7 @@ export async function getAzureDevopsKubernetesServiceAccount(applicationId: stri
 
     if (response.status !== 200) {
         console.error(response);
-        throw Error('Failed to service account');
+        throw Error('Failed to get azure-devops service account');
     }
 
     return await response.json() as KubernetesServiceAccountCredentials;
@@ -42,7 +42,7 @@ export async function getContainerRegistry(applicationId: string): Promise<Kuber
 
     if (response.status !== 200) {
         console.error(response);
-        throw Error('Failed to service account');
+        throw Error('Failed to get container registry');
     }
 
     return await response.json() as KubernetesContainerRegistryCredentials;
