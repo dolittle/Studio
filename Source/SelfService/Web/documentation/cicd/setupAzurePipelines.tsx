@@ -3,18 +3,37 @@
 
 import React from 'react';
 import { useSnackbar } from 'notistack';
+import Input from '@material-ui/core/Input';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 import { HttpResponseApplications2 } from '../../api/api';
 import { ButtonText } from '../../theme/buttonText';
 import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../api/cicd';
+
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            '& .MuiInput-input.Mui-disabled': {
+                color: theme.palette.text.secondary
+            }
+        }
+    })
+);
+
+
 type Props = {
     application: HttpResponseApplications2
     info: any
 };
 
 export const Doc: React.FunctionComponent<Props> = (props) => {
+    const classes = useStyles();
     const { enqueueSnackbar } = useSnackbar();
-    const applicationID = props!.application.id;
+    const _props = props!;
+    const info = _props.info;
+    const applicationID = _props.application.id;
+
     const buttonServiceAccount = <ButtonText
         withIcon={false}
         onClick={async (event: React.MouseEvent<HTMLElement>) => {
@@ -46,14 +65,34 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         Copy Credentials to clipboard
     </ButtonText>;
 
+    const clusterEndpoint = info.endpoints.cluster;
+    const containerRegistry = info.endpoints.containerRegistry;
+
     return (
         <>
-            <p>Work in progress...</p>
+            <h2>Endpoints</h2>
+            <h3>Cluster</h3>
 
-            <h2>Get credentials to deploy to the platform from the pipeline</h2>
+            <Input
+                fullWidth={true}
+                className={classes.root}
+                defaultValue={clusterEndpoint}
+                disabled
+                inputProps={{ 'aria-label': 'cluster endpoint' }} />
+
+            <h3>Container Registry</h3>
+            <Input className={classes.root}
+                fullWidth={true}
+                defaultValue={containerRegistry}
+                disabled
+                inputProps={{ 'aria-label': 'container registry endpoint' }} />
+
+
+            <h2>Credentials</h2>
+            <h3>Get credentials to deploy to the platform from the pipeline</h3>
             {buttonServiceAccount}
 
-            <h2>Get credentials to push to container registry</h2>
+            <h3>Get credentials to push to container registry</h3>
             {buttonContainerRegistry}
         </>
     );
