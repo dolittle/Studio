@@ -88,6 +88,10 @@ export function getServerUrlPrefix(): string {
     return '/selfservice/api';
 }
 
+export function getLatestRuntimeImage(): string {
+    return 'dolittle/runtime:7.1.0';
+}
+
 export async function getLiveApplications(): Promise<any> {
     const url = `${getServerUrlPrefix()}/live/applications`;
     const result = await fetch(
