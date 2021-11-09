@@ -1,3 +1,10 @@
+# [1.7.0] - 2021-11-9 [PR: #133](https://github.com/dolittle/Studio/pull/133)
+## Summary
+
+- Able  to download service account credentials, making it easier to setup azure pipeline.
+- Able to download container registery, making it easier to setup azure pipeline.
+
+
 # [1.6.1] - 2021-10-26 [PR: #132](https://github.com/dolittle/Studio/pull/132)
 ## Summary
 
