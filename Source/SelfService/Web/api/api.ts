@@ -84,12 +84,20 @@ export type HttpInputApplicationEnvironment = {
     ingresses: Map<string, MicroserviceIngressPath>
 };
 
+export type LatestRuntimeInfo = {
+    image: string
+    changelog: string
+};
+
 export function getServerUrlPrefix(): string {
     return '/selfservice/api';
 }
 
-export function getLatestRuntimeImage(): string {
-    return 'dolittle/runtime:7.1.0';
+export function getLatestRuntimeInfo(): LatestRuntimeInfo {
+    return {
+        image: 'dolittle/runtime:7.1.0',
+        changelog: 'https://github.com/dolittle/Runtime/releases/tag/v7.1.0',
+    };
 }
 
 export async function getLiveApplications(): Promise<any> {

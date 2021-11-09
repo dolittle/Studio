@@ -13,7 +13,7 @@ import { useSnackbar } from 'notistack';
 
 import { savePurchaseOrderMicroservice, getFirstIngressFromApplication } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
-import { HttpResponseApplications2, getLatestRuntimeImage } from '../../api/api';
+import { HttpResponseApplications2, getLatestRuntimeInfo } from '../../api/api';
 import { useGlobalContext } from '../../stores/notifications';
 import { Configuration } from './configuration';
 import { Tab, Tabs } from '../../theme/tabs';
@@ -36,7 +36,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     const microserviceId = Guid.create().toString();
     const headImage = 'dolittle/integrations-m3-purchaseorders:latest';
-    const latestRuntimeImage = getLatestRuntimeImage();
+    const runtimeInfo = getLatestRuntimeInfo();
     const ingressInfo = getFirstIngressFromApplication(_props.application, environment);
 
     const ms: MicroservicePurchaseOrder = {
@@ -56,7 +56,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 domainPrefix: ingressInfo.domainPrefix
             },
             headImage,
-            runtimeImage: latestRuntimeImage,
+            runtimeImage: runtimeInfo.image,
             webhooks: [],
             rawDataLogName: 'raw-data-log-v1',
         },

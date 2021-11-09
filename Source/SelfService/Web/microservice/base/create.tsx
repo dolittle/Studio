@@ -11,7 +11,7 @@ import { Guid } from '@dolittle/rudiments';
 
 import { getFirstIngressFromApplication, saveSimpleMicroservice } from '../../stores/microservice';
 import { MicroserviceSimple } from '../../api/index';
-import { HttpResponseApplications2, getLatestRuntimeImage } from '../../api/api';
+import { HttpResponseApplications2, getLatestRuntimeInfo } from '../../api/api';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -29,7 +29,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     // TODO do something with
     const microserviceId = Guid.create().toString();
 
-    const latestRuntimeImage = getLatestRuntimeImage();
+    const runtimeInfo = getLatestRuntimeInfo();
 
     const ms = {
         dolittle: {
@@ -43,7 +43,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         extra: {
             // nginxdemos/hello:latest
             headImage: 'nginxdemos/hello:latest', //'dolittle/spinner:0.0.0', // Doesnt work
-            runtimeImage: latestRuntimeImage,
+            runtimeImage: runtimeInfo.image,
             ingress: {
                 path: '/',
                 pathType: 'Prefix',
