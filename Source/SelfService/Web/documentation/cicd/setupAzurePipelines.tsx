@@ -10,7 +10,6 @@ import { HttpResponseApplications2 } from '../../api/api';
 import { ButtonText } from '../../theme/buttonText';
 import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../api/cicd';
 
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -20,7 +19,6 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     })
 );
-
 
 type Props = {
     application: HttpResponseApplications2
