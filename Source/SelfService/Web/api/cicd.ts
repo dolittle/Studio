@@ -16,7 +16,7 @@ export type KubernetesServiceAccountCredentials = {
 
 // @throws {Error}
 export async function getAzureDevopsKubernetesServiceAccount(applicationId: string): Promise<KubernetesServiceAccountCredentials> {
-    const url = `${getServerUrlPrefix()}/application/${applicationId}/cicd/credentials/service-account/azure-devops`;
+    const url = `${getServerUrlPrefix()}/application/${applicationId}/cicd/credentials/service-account/devops`;
 
     const response = await fetch(url, {
         method: 'GET',
@@ -28,7 +28,8 @@ export async function getAzureDevopsKubernetesServiceAccount(applicationId: stri
         throw Error('Failed to get azure-devops service account');
     }
 
-    return await response.json() as KubernetesServiceAccountCredentials;
+    const data = await response.json();
+    return data;
 }
 
 // @throws {Error}
@@ -45,6 +46,7 @@ export async function getContainerRegistry(applicationId: string): Promise<Kuber
         throw Error('Failed to get container registry');
     }
 
-    return await response.json() as KubernetesContainerRegistryCredentials;
+    const data = await response.json();
+    return data;
 }
 
