@@ -25,8 +25,8 @@
         "@shared/web": "1.0.0",
         "generate-password-browser": "^1.1.0",
         "notistack": "1.0.10",
-        "react-markdown": "6.0.2",
-        "remark-gfm": "1.0.0",
+        "react-markdown": "^7.1.0",
+        "remark-gfm": "^3.0.1",
         "url-loader": "^4.1.1",
         "use-react-router-breadcrumbs": "2.0.2"
     },

@@ -19,7 +19,6 @@ import { useGlobalContext } from '../stores/notifications';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
-
 export const ApplicationsScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { setCurrentEnvironment, clearGlobalState } = useGlobalContext();
