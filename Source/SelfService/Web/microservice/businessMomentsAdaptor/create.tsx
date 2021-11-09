@@ -18,7 +18,7 @@ import { Config as RestConfig } from './configuration/RestConfiguration';
 import { getFirstIngressFromApplication, saveBusinessMomentsAdaptorMicroservice } from '../../stores/microservice';
 import { MicroserviceBusinessMomentAdaptor } from '../../api/index';
 
-import { HttpResponseApplications2 } from '../../api/api';
+import { getLatestRuntimeInfo, HttpResponseApplications2 } from '../../api/api';
 import { Guid } from '@dolittle/rudiments';
 
 const stackTokens = { childrenGap: 15 };
@@ -37,13 +37,14 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     // TODO do something with
     const microserviceId = Guid.create().toString();
+    const runtimeInfo = getLatestRuntimeInfo();
 
     const fromStore = {
         businessmomentsadaptor: {
             image: '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/businessmomentsadaptor:latest',
         },
         runtime: {
-            image: 'dolittle/runtime:5.6.0'
+            image: runtimeInfo.image,
         }
     };
 
