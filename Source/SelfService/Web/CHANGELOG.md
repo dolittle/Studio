@@ -1,3 +1,12 @@
+# [1.8.0] - 2021-11-10 [PR: #134](https://github.com/dolittle/Studio/pull/134)
+## Summary
+
+- getLatestRuntimeInfo() returns the latest image and the link to the changelog
+- Creating base microservice uses getLatestRuntimeInfo() to get the runtime to use by default.
+- Creating purchaseOrderApi microservice uses getLatestRuntimeInfo() to get the runtime to use by default.
+- Creating businessMomentsAdaptor microservice uses getLatestRuntimeInfo() to get the runtime to use by default.
+
+
 # [1.7.0] - 2021-11-9 [PR: #133](https://github.com/dolittle/Studio/pull/133)
 ## Summary
 
