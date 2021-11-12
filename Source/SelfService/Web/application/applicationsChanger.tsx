@@ -2,17 +2,17 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-
-
-import { ShortInfoWithEnvironment } from '../api/api';
-
-import { useGlobalContext } from '../stores/notifications';
-
+import { useHistory } from 'react-router-dom';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles, Theme } from '@material-ui/core';
 import { createStyles } from '@material-ui/styles';
+
+
+
+import { ShortInfoWithEnvironment } from '../api/api';
+import { useGlobalContext } from '../stores/notifications';
 
 type Props = {
     applications: ShortInfoWithEnvironment[];
@@ -39,8 +39,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
+    const history = useHistory();
     const classes = useStyles();
-    const { setNotification, setCurrentApplicationId, setCurrentEnvironment } =
+    const { setCurrentApplicationId, setCurrentEnvironment } =
         useGlobalContext();
     const applications = props!.applications;
     const currentApplicationEnvironment = `${props!.applicationId}/${props!.environment}`;
@@ -73,8 +74,8 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
         }
 
         if (newApplication === 'createNew') {
-            // TODO I feel there is a better way
-            setNotification('TODO: Create application screen', 'info');
+            const href = '/application/create';
+            history.push(href);
             return;
         }
 

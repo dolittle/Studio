@@ -8,6 +8,7 @@ import React, {
 import { useHistory } from 'react-router-dom';
 import { List } from '@fluentui/react/lib/List';
 import { Link } from '@fluentui/react';
+import { useSnackbar } from 'notistack';
 
 import {
     getApplications,
@@ -15,37 +16,48 @@ import {
     ShortInfoWithEnvironment
 } from '../api/api';
 import { uriWithAppPrefix } from '../store';
-import { useGlobalContext } from '../stores/notifications';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { useGlobalContext } from '../stores/notifications';
+import { ButtonText } from '../theme/buttonText';
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
     const history = useHistory();
-    const { setCurrentEnvironment, clearGlobalState } = useGlobalContext();
+    const { enqueueSnackbar } = useSnackbar();
+
     const [data, setData] = useState({
         id: '',
         name: '',
         applications: []
     } as HttpResponseApplications);
+    const [loaded, setLoaded] = useState(false);
+    const { setCurrentEnvironment } = useGlobalContext();
 
     // TODO handle when not 200!
     useEffect(() => {
-        clearGlobalState();
-        getApplications().then(data => {
-            // If only 1 item redirect
-            if (data.applications.length === 1) {
-                const application = data.applications[0];
-                setCurrentEnvironment(application.environment);
-                window.location.href = uriWithAppPrefix(`/microservices/application/${application.id}/${application.environment}/overview`);
-                return;
-            }
+        Promise.all([
+            getApplications(),
+        ]).then(values => {
+            const data = values[0] as HttpResponseApplications;
+
+            // TODO bring this back maybe with a query string option
+            //if (data.applications.length === 1) {
+            //    const application = data.applications[0];
+            //    setCurrentEnvironment(application.environment);
+            //    window.location.href = uriWithAppPrefix(`/microservices/application/${application.id}/${application.environment}/overview`);
+            //    return;
+            //}
             setData(data);
-            return;
+
+            setLoaded(true);
+        }).catch((error) => {
+            console.log(error);
+            enqueueSnackbar('Failed getting data from the server', { variant: 'error' });
         });
     }, []);
 
 
-    if (data.id === '') {
+    if (!loaded) {
         return null;
     }
 
@@ -73,6 +85,13 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
                 </div>
 
                 <h1>Applications Screen</h1>
+
+                <ButtonText withIcon={true} onClick={() => {
+                    const href = '/application/create';
+                    history.push(href);
+
+                }}>Create new Application</ButtonText>
+
                 <List items={data.applications} onRenderCell={onRenderCell} />
             </LayoutWithSidebar >
         </>

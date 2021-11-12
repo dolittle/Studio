@@ -27,6 +27,7 @@ import Grow from '@material-ui/core/Grow';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { ThemeScreen } from './screens/themeScreen';
 import '@fontsource/rubik';
+import { ApplicationScreen } from './screens/applicationScreen';
 
 
 const typography = {
@@ -107,6 +108,11 @@ export const App = () => {
                                 <Route exact path="/applications">
                                     <ApplicationsScreen />
                                 </Route>
+
+                                <Route path="/application/">
+                                    <ApplicationScreen />
+                                </Route>
+
 
                                 <Route path="/environment/application/:applicationId">
                                     <EnvironmentScreen />
