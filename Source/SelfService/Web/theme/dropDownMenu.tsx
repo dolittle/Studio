@@ -5,6 +5,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { MenuItem } from '@material-ui/core';
 
 type Props = {
     onChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
@@ -39,26 +40,52 @@ const useStyles = makeStyles((theme: Theme) =>
             '& .MuiSelect-icon': {
                 color: '#6678F6'
             }
-        }
+        },
+        menuItem: {
+            '&$selected': {
+                // this is required so that hovering over the current selection works (in conjunction with the empty "selected" property)
+                '&:hover': {
+                    background: '#3B3D48'
+                }
+            },
+            '&:hover': {
+                background: '#3B3D48'
+            }
+        },
+        // this is required so that hovering over the current selection works (in conjunction with the "$selected" selector)
+        selected: {}
     })
 );
 
-// Based off the Select with the native attribute set (second last Age example)
-// https://v4.mui.com/components/selects/#native-select
+// Based off the simple Select with outline
+// https://v4.mui.com/components/selects/#simple-select
 export const DropDownMenu: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();
 
-    const options = props.items.map(item => <option value={item.value} key={item.value}>{item.displayValue}</option>);
+    const _props = props!;
+
+    const options = _props.items.map(item => <MenuItem value={item.value} key={item.value} classes={{ selected: classes.selected, root: classes.menuItem }} > {item.displayValue}</ MenuItem>);
 
     return (
         <div>
             <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel htmlFor="outlined-age-native-simple">{props.label}</InputLabel>
+                <InputLabel htmlFor="outlined-age-native-simple">{_props.label}</InputLabel>
                 <Select
-                    native
-                    value={props.value}
-                    onChange={props.onChange}
-                    label={props.label}
+                    // to make it expand downwards https://stackoverflow.com/a/61225313/5806412
+                    MenuProps={{
+                        anchorOrigin: {
+                            vertical: 'bottom',
+                            horizontal: 'left'
+                        },
+                        transformOrigin: {
+                            vertical: 'top',
+                            horizontal: 'left'
+                        },
+                        getContentAnchorEl: null
+                    }}
+                    value={_props.value}
+                    onChange={_props.onChange}
+                    label={_props.label}
                 >
                     {options}
                 </Select>
