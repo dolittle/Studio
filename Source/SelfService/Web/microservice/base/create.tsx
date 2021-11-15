@@ -12,6 +12,7 @@ import { Guid } from '@dolittle/rudiments';
 import { getFirstIngressFromApplication, saveSimpleMicroservice } from '../../stores/microservice';
 import { MicroserviceSimple } from '../../api/index';
 import { HttpResponseApplications2, getLatestRuntimeInfo } from '../../api/api';
+import { DropDownMenu } from '../../theme/dropDownMenu';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -67,6 +68,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     };
 
 
+
     const _onSave = (ms: MicroserviceSimple): void => {
         ms.name = msName;
         ms.extra.headImage = headImage;
@@ -74,10 +76,27 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         ms.extra.ingress.path = ingressPath;
         // TODO land the name we want here
         ms.extra.ingress.domainPrefix = ingressDomainPrefix;
-        saveSimpleMicroservice(ms).then(data => {
-            const href = `/microservices/application/${application.id}/${environment}/overview`;
-            history.push(href);
-        });
+        console.log(ms);
+
+        // saveSimpleMicroservice(ms).then(data => {
+        //     const href = `/microservices/application/${application.id}/${environment}/overview`;
+        //     history.push(href);
+        // });
+    };
+
+    const runtimeImageSelections = [
+        {
+            value: runtimeInfo.image,
+            displayValue: runtimeInfo.image
+        },
+        {
+            value: "none",
+            displayValue: "None"
+        }
+    ];
+    const handleRuntimeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        const _runtimeImage = event.target.value as string;
+        setRuntimeImage(_runtimeImage);
     };
 
     return (
@@ -97,11 +116,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 <TextField defaultValue={headImage} onChange={onChangeHandler(setHeadImage)} />
 
                 <Label>Runtime Image</Label>
-                <TextField defaultValue={runtimeImage} onChange={onChangeHandler(setRuntimeImage)} />
-
+                <DropDownMenu items={runtimeImageSelections} value={runtimeImage} onChange={handleRuntimeChange}></DropDownMenu>
 
                 <h1>Ingress</h1>
-
 
                 <Label>Path</Label>
                 <TextField placeholder="/" defaultValue={ingressPath} onChange={onChangeHandler(setIngressPath)} />
@@ -119,4 +136,3 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         </>
     );
 };
-
