@@ -67,8 +67,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         };
     };
 
-
-
     const _onSave = (ms: MicroserviceSimple): void => {
         ms.name = msName;
         ms.extra.headImage = headImage;
@@ -88,8 +86,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             displayValue: runtimeInfo.image
         },
         {
-            value: "none",
-            displayValue: "None"
+            value: 'none',
+            displayValue: 'None'
         }
     ];
     const handleRuntimeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
