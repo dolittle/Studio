@@ -76,12 +76,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         ms.extra.ingress.path = ingressPath;
         // TODO land the name we want here
         ms.extra.ingress.domainPrefix = ingressDomainPrefix;
-        console.log(ms);
-
-        // saveSimpleMicroservice(ms).then(data => {
-        //     const href = `/microservices/application/${application.id}/${environment}/overview`;
-        //     history.push(href);
-        // });
+        saveSimpleMicroservice(ms).then(data => {
+            const href = `/microservices/application/${application.id}/${environment}/overview`;
+            history.push(href);
+        });
     };
 
     const runtimeImageSelections = [
