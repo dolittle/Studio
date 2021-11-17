@@ -1,0 +1,147 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: system-monitoring-logs
+  name: distributor
+  labels:
+    system: Monitoring
+    monitoring: Logs
+    service: Distributor
+spec:
+  ports:
+    - port: 8080
+      name: http-metrics
+      targetPort: http-metrics
+  selector:
+    system: Monitoring
+    monitoring: Logs
+    service: Distributor
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: system-monitoring-logs
+  name: distributor
+  labels:
+    system: Monitoring
+    monitoring: Logs
+    service: Distributor
+data:
+  distributor.yaml: |
+    target: distributor
+    auth_enabled: true
+    server:
+      http_listen_port: 8080
+    limits_config:
+      enforce_metric_name: false
+      reject_old_samples: true
+      reject_old_samples_max_age: 168h
+    ingester_client:
+      pool_config:
+        health_check_ingesters: true
+      grpc_client_config:
+        max_recv_msg_size: 104857600
+        max_send_msg_size: 104857600
+        use_gzip_compression: true
+    ingester:
+      lifecycler:
+        ring:
+          replication_factor: 2
+          kvstore:
+            store: memberlist
+        join_after: 10s
+        min_ready_duration: 0s
+        final_sleep: 5s
+        num_tokens: 512
+    memberlist:
+      bind_port: 7946
+      join_members:
+        - dnssrvnoa+_memberlist._tcp.ingester.system-monitoring-logs.svc.cluster.local
+    schema_config:
+      configs:
+        - from: 2021-01-01
+          schema: v11
+          store: boltdb-shipper
+          object_store: azure
+          index:
+            prefix: loki_index_
+            period: 24h
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: system-monitoring-logs
+  name: distributor
+  labels:
+    system: Monitoring
+    monitoring: Logs
+    service: Distributor
+spec:
+  selector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Logs
+      service: Distributor
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        system: Monitoring
+        monitoring: Logs
+        service: Distributor
+    spec:
+      terminationGracePeriodSeconds: 30
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - distributor
+      containers:
+        - name: distributor
+          image: grafana/loki:2.1.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - -target=distributor
+            - -log.level=debug
+            - -config.file=/etc/loki/distributor.yaml
+          volumeMounts:
+            - name: config
+              mountPath: /etc/loki
+          ports:
+            - name: http-metrics
+              containerPort: 8080
+          securityContext:
+            readOnlyRootFilesystem: true
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http-metrics
+            initialDelaySeconds: 15
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 512Mi
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+      volumes:
+        - name: config
+          configMap:
+            name: distributor
