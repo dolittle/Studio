@@ -1,0 +1,391 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  namespace: system-monitoring-metrics
+  name: prometheus
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Prometheus
+rules:
+  - apiGroups: [""]
+    resources:
+      - nodes
+      - nodes/metrics
+      - services
+      - endpoints
+      - pods
+    verbs: ["get", "list", "watch"]
+  - nonResourceURLs:
+      - /metrics
+      - /metrics/cadvisor
+      - /metrics/resource
+      - /metrics/probes
+    verbs: ["get"]
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: system-monitoring-metrics
+  name: prometheus
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Prometheus
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  namespace: system-monitoring-metrics
+  name: prometheus
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Prometheus
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus
+subjects:
+  - kind: ServiceAccount
+    name: prometheus
+    namespace: system-monitoring-metrics
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: system-monitoring-metrics
+  name: prometheus
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Prometheus
+data:
+  config.yml: |
+    global:
+      scrape_interval: 20s
+      scrape_timeout: 10s
+      evaluation_interval: 1m
+
+    remote_write:
+      - name: cortex
+        url: http://distributor.system-monitoring-metrics.svc.cluster.local:8090/api/v1/push
+        basic_auth:
+          username: 'system'
+          password:
+        write_relabel_configs:
+          # @joel we drop these because they were overbearing or not specific/helpful to us
+          - action: drop
+            regex: (?:nginx_ingress_controller_request_|nginx_ingress_controller_response_|nginx_ingress_controller_bytes_|nginx_ingress_controller_ingress_upstream_|nginx_ingress_controller_requests).*
+            source_labels:
+              - __name__
+          - action: drop
+            regex: (?:apiserver_request_total).*
+            source_labels:
+              - __name__
+          - action: drop
+            regex: (?:container_).*
+            source_labels:
+              - __name__
+
+    rule_files:
+      - /etc/prometheus/ingress.rules.yml
+
+    scrape_configs:
+      - job_name: 'kubernetes-apiserver'
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          insecure_skip_verify: true
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - default
+            selectors:
+              - role: service
+                label: 'provider=kubernetes,component=apiserver'
+        relabel_configs:
+          - action: keep
+            regex: default;kubernetes;https
+            source_labels:
+              - __meta_kubernetes_namespace
+              - __meta_kubernetes_service_name
+              - __meta_kubernetes_endpoint_port_name
+        metric_relabel_configs:
+          - action: keep
+            regex: apiserver_request_total
+            source_labels:
+              - __name__
+      - job_name: 'kubernetes-kubelet'
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          insecure_skip_verify: true
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        kubernetes_sd_configs:
+          - role: node
+        relabel_configs:
+          - action: replace
+            target_label: node
+            source_labels:
+              - __meta_kubernetes_node_name
+        metric_relabel_configs:
+          - action: drop
+            regex: (?:kubelet_http_requests_duration_seconds_|kubelet_runtime_operations_duration_seconds_|rest_client_|storage_operation_duration_seconds_).*
+            source_labels:
+              - __name__
+      # @joel this one is also dfifferent from the others and doesn't specify
+      - job_name: 'kubernetes-cadvisor'
+        metrics_path: /metrics/cadvisor
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          insecure_skip_verify: true
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        kubernetes_sd_configs:
+          - role: node
+        relabel_configs:
+          - action: replace
+            target_label: node
+            source_labels:
+              - __meta_kubernetes_node_name
+      # @joel this differs from this tutorial https://devopscube.com/node-exporter-kubernetes/
+      - job_name: 'node-exporters'
+        kubernetes_sd_configs:
+          # @joel why is this specified for a namespace and pod?
+          - role: pod
+            namespaces:
+              names:
+                - system-monitoring-metrics
+            selectors:
+              - role: pod
+                label: 'system=Monitoring,monitoring=Metrics,service=Node-Exporter'
+        relabel_configs:
+          - action: keep
+            regex: metrics
+            source_labels:
+              - __meta_kubernetes_pod_container_port_name
+          - action: replace
+            target_label: instance
+            source_labels:
+              - __meta_kubernetes_pod_node_name
+          - action: replace
+            target_label: node
+            source_labels:
+              - __meta_kubernetes_pod_node_name
+        metric_relabel_configs:
+          - action: keep
+            regex: node_.*
+            source_labels:
+              - __name__
+      - job_name: 'monitoring'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - system-monitoring-metrics
+                - system-monitoring-logs
+            selectors:
+              - role: pod
+                label: 'system=Monitoring,service!=Node-Exporter'
+        relabel_configs:
+          - action: keep
+            regex: http-metrics
+            source_labels:
+              - __meta_kubernetes_pod_container_port_name
+          - action: replace
+            target_label: monitoring
+            source_labels:
+              - __meta_kubernetes_pod_label_monitoring
+          - action: replace
+            target_label: service
+            source_labels:
+              - __meta_kubernetes_pod_label_service
+          - action: replace
+            target_label: instance
+            source_labels:
+              - __meta_kubernetes_pod_name
+        metric_relabel_configs:
+          - action: keep
+            regex: (?:prometheus_|cortex_|loki_|thanos_|memberlist_|log_messages_|promtail_|logentry_|querier_|loki_canary_).*
+            source_labels:
+              - __name__
+      - job_name: 'ingress'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - system-ingress
+            selectors:
+              - role: pod
+                label: 'system=Ingress'
+        relabel_configs:
+          - action: keep
+            regex: health-metrics|metrics
+            source_labels:
+              - __meta_kubernetes_pod_container_port_name
+          - action: replace
+            target_label: ingress
+            source_labels:
+              - __meta_kubernetes_pod_label_ingress
+          - action: replace
+            target_label: instance
+            source_labels:
+              - __meta_kubernetes_pod_name
+        metric_relabel_configs:
+          - action: keep
+            regex: (?:nginx_|certmanager_).*
+            source_labels:
+              - __name__
+      - job_name: 'runtime'
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - action: keep
+            regex: true;true;true;true;true;true;true;runtime-metrics
+            source_labels:
+              - __meta_kubernetes_pod_annotationpresent_dolittle_io_tenant_id
+              - __meta_kubernetes_pod_annotationpresent_dolittle_io_application_id
+              - __meta_kubernetes_pod_annotationpresent_dolittle_io_microservice_id
+              - __meta_kubernetes_pod_labelpresent_tenant
+              - __meta_kubernetes_pod_labelpresent_application
+              - __meta_kubernetes_pod_labelpresent_environment
+              - __meta_kubernetes_pod_labelpresent_microservice
+              - __meta_kubernetes_pod_container_port_name
+          - action: replace
+            target_label: job
+            replacement: runtime
+          - action: replace
+            target_label: tenant_id
+            source_labels:
+              - __meta_kubernetes_pod_annotation_dolittle_io_tenant_id
+          - action: replace
+            target_label: application_id
+            source_labels:
+              - __meta_kubernetes_pod_annotation_dolittle_io_application_id
+          - action: replace
+            target_label: microservice_id
+            source_labels:
+              - __meta_kubernetes_pod_annotation_dolittle_io_microservice_id
+          - action: replace
+            target_label: tenant
+            source_labels:
+              - __meta_kubernetes_pod_label_tenant
+          - action: replace
+            target_label: application
+            source_labels:
+              - __meta_kubernetes_pod_label_application
+          - action: replace
+            target_label: environment
+            source_labels:
+              - __meta_kubernetes_pod_label_environment
+          - action: replace
+            target_label: microservice
+            source_labels:
+              - __meta_kubernetes_pod_label_microservice
+        metric_relabel_configs:
+          - action: keep
+            regex: (?:dolittle_system_|dolittle_shared_).*
+            source_labels:
+              - __name__
+  ingress.rules.yml: |
+    groups:
+    - name: nginx_ingress_controller_request_duration_seconds
+      rules:
+      - record: instance:nginx_ingress_controller_request_duration_seconds_bucket:sum
+        expr: sum(nginx_ingress_controller_request_duration_seconds_bucket) without (controller_class,controller_namespace,controller_pod,exported_ingress,host,method,namespace,path,service,status)
+      - record: instance:nginx_ingress_controller_request_duration_seconds_count:sum
+        expr: sum(nginx_ingress_controller_request_duration_seconds_count) without (controller_class,controller_namespace,controller_pod,exported_ingress,host,method,namespace,path,service,status)
+      - record: instance:nginx_ingress_controller_request_duration_seconds_sum:sum
+        expr: sum(nginx_ingress_controller_request_duration_seconds_sum) without (controller_class,controller_namespace,controller_pod,exported_ingress,host,method,namespace,path,service,status)
+    - name: nginx_ingress_controller_response_duration_seconds
+      rules:
+      - record: instance:nginx_ingress_controller_response_duration_seconds_bucket:sum
+        expr: sum(nginx_ingress_controller_response_duration_seconds_bucket) without (controller_class,controller_namespace,controller_pod,exported_ingress,host,method,namespace,path,service,status)
+      - record: instance:nginx_ingress_controller_response_duration_seconds_count:sum
+        expr: sum(nginx_ingress_controller_response_duration_seconds_count) without (controller_class,controller_namespace,controller_pod,exported_ingress,host,method,namespace,path,service,status)
+      - record: instance:nginx_ingress_controller_response_duration_seconds_sum:sum
+        expr: sum(nginx_ingress_controller_response_duration_seconds_sum) without (controller_class,controller_namespace,controller_pod,exported_ingress,host,method,namespace,path,service,status)
+    - name: nginx_ingress_controller_response_size
+      rules:
+      - record: instance:nginx_ingress_controller_response_size_bucket:sum
+        expr: sum(nginx_ingress_controller_response_size_bucket) without (controller_class,controller_namespace,controller_pod,exported_ingress,host,method,namespace,path,service,status)
+      - record: instance:nginx_ingress_controller_response_size_count:sum
+        expr: sum(nginx_ingress_controller_response_size_count) without (controller_class,controller_namespace,controller_pod,exported_ingress,host,method,namespace,path,service,status)
+      - record: instance:nginx_ingress_controller_response_size_sum:sum
+        expr: sum(nginx_ingress_controller_response_size_sum) without (controller_class,controller_namespace,controller_pod,exported_ingress,host,method,namespace,path,service,status)
+    - name: nginx_ingress_controller_requests
+      rules:
+      - record: instance_status:nginx_ingress_controller_requests:sum
+        expr: sum(nginx_ingress_controller_requests) without (controller_class,controller_namespace,controller_pod,exported_ingress,namespace,service)
+      - record: instance_status_type:nginx_ingress_controller_requests:sum
+        expr: sum(label_replace(sum(nginx_ingress_controller_requests) without (controller_class,controller_namespace,controller_pod,exported_ingress,namespace,service), "status_type", "${1}xx", "status", "(.)..")) without (status)
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: system-monitoring-metrics
+  name: prometheus
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Prometheus
+spec:
+  selector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Metrics
+      service: Prometheus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        system: Monitoring
+        monitoring: Metrics
+        service: Prometheus
+    spec:
+      serviceAccountName: prometheus
+      containers:
+        - name: prometheus
+          image: quay.io/prometheus/prometheus:v2.24.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - --log.level=debug
+            - --config.file=/etc/prometheus/config.yml
+            - --storage.tsdb.retention.time=2h
+            - --web.listen-address=:8080
+          volumeMounts:
+            - name: config
+              mountPath: /etc/prometheus
+          ports:
+            - name: http-metrics
+              containerPort: 8080
+          securityContext:
+            readOnlyRootFilesystem: true
+          readinessProbe:
+            httpGet:
+              path: /-/ready
+              port: http-metrics
+            initialDelaySeconds: 45
+          livenessProbe:
+            httpGet:
+              path: /-/ready
+              port: http-metrics
+            initialDelaySeconds: 45
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 512Mi
+      volumes:
+        - name: config
+          configMap:
+            name: prometheus

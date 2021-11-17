@@ -1,0 +1,151 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: system-monitoring-metrics
+  name: query-frontend
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Query-Frontend
+spec:
+  ports:
+    - port: 8080
+      name: http-metrics
+      targetPort: http-metrics
+  selector:
+    system: Monitoring
+    monitoring: Metrics
+    service: Query-Frontend
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: system-monitoring-metrics
+  name: query-frontend-headless
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Query-Frontend
+spec:
+  ports:
+    - port: 9095
+      name: grpclb
+      targetPort: grpc
+  clusterIP: None
+  publishNotReadyAddresses: true
+  selector:
+    system: Monitoring
+    monitoring: Metrics
+    service: Query-Frontend
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: system-monitoring-metrics
+  name: query-frontend
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Query-Frontend
+data:
+  query-frontend.yaml: |
+    target: query-frontend
+    auth_enabled: true
+    server:
+      http_listen_port: 8080
+      grpc_listen_port: 9095
+      grpc_server_max_recv_msg_size: 104857600
+      grpc_server_max_send_msg_size: 104857600
+      grpc_server_max_concurrent_streams: 1000
+    frontend:
+      grpc_client_config:
+        max_recv_msg_size: 104857600
+        max_send_msg_size: 16777216
+        use_gzip_compression: true
+    query_range:
+      results_cache:
+        cache:
+          enable_fifocache: true
+          fifocache:
+            max_size_bytes: 128MB
+            validity: 24h
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: system-monitoring-metrics
+  name: query-frontend
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Query-Frontend
+spec:
+  selector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Metrics
+      service: Query-Frontend
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        system: Monitoring
+        monitoring: Metrics
+        service: Query-Frontend
+    spec:
+      terminationGracePeriodSeconds: 180
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - query-frontend
+      containers:
+        - name: query-frontend
+          image: quay.io/cortexproject/cortex:v1.6.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - -target=query-frontend
+            - -log.level=debug
+            - -config.file=/etc/cortex/query-frontend.yaml
+          volumeMounts:
+            - name: config
+              mountPath: /etc/cortex
+          ports:
+            - name: http-metrics
+              containerPort: 8080
+            - name: grpc
+              containerPort: 9095
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http-metrics
+            initialDelaySeconds: 45
+          livenessProbe:
+            httpGet:
+              path: /ready
+              port: http-metrics
+            initialDelaySeconds: 45
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 256Mi
+            requests:
+              cpu: 10m
+              memory: 32Mi
+      volumes:
+        - name: config
+          configMap:
+            name: query-frontend

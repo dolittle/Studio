@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: system-monitoring-grafana
+  labels:
+    system: Monitoring
+    monitoring: Grafana

@@ -1,0 +1,166 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: system-monitoring-metrics
+  name: querier
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Querier
+spec:
+  ports:
+    - port: 8080
+      name: http-metrics
+      targetPort: http-metrics
+  selector:
+    system: Monitoring
+    monitoring: Metrics
+    service: Querier
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: system-monitoring-metrics
+  name: querier
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Querier
+data:
+  querier.yaml: |
+    target: querier
+    auth_enabled: true
+    server:
+      http_listen_port: 8080
+    querier:
+      active_query_tracker_dir: /data/cortex/querier
+      query_store_after: 7h00m
+      query_ingesters_within: 7h10m
+    ingester:
+      lifecycler:
+        ring:
+          replication_factor: 1
+          kvstore:
+            store: memberlist
+    store_gateway:
+      sharding_enabled: true
+      sharding_ring:
+        replication_factor: 1
+        kvstore:
+          store: memberlist
+    frontend_worker:
+      frontend_address: query-frontend-headless.system-monitoring-metrics.svc.cluster.local
+      grpc_client_config:
+        max_recv_msg_size: 104857600
+        max_send_msg_size: 16777216
+        use_gzip_compression: true
+    memberlist:
+      bind_port: 7946
+      join_members:
+        - dnssrvnoa+_memberlist._tcp.ingester.system-monitoring-metrics.svc.cluster.local
+        - dnssrvnoa+_memberlist._tcp.store-gateway.system-monitoring-metrics.svc.cluster.local
+    storage:
+      engine: blocks
+    blocks_storage:
+      backend: filesystem
+      filesystem:
+        dir: ""
+      bucket_store:
+          sync_dir: /data/cortex/tsdb-sync
+    # storage:
+    #   engine: blocks
+    # blocks_storage:
+    #   backend: azure
+    #   bucket_store:
+    #     sync_dir: /data/cortex/tsdb-sync
+    #     ignore_deletion_mark_delay: 1h
+    #     index_cache:
+    #       backend: inmemory
+    #       inmemory:
+    #         max_size_bytes: 1073741824
+    #   azure:
+    #     account_name: XXX
+    #     account_key: XXX
+    #     container_name: metrics
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: system-monitoring-metrics
+  name: querier
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Querier
+spec:
+  selector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Metrics
+      service: Querier
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        system: Monitoring
+        monitoring: Metrics
+        service: Querier
+    spec:
+      terminationGracePeriodSeconds: 180
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - querier
+      containers:
+        - name: querier
+          image: quay.io/cortexproject/cortex:v1.6.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - -target=querier
+            - -log.level=debug
+            - -config.file=/etc/cortex/querier.yaml
+          volumeMounts:
+            - name: config
+              mountPath: /etc/cortex
+            - name: tsdb-sync
+              mountPath: /data/cortex/tsdb-sync
+          ports:
+            - name: http-metrics
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http-metrics
+            initialDelaySeconds: 45
+          livenessProbe:
+            httpGet:
+              path: /ready
+              port: http-metrics
+            initialDelaySeconds: 45
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 512Mi
+      volumes:
+        - name: config
+          configMap:
+            name: querier
+        - name: tsdb-sync
+          hostPath:
+            path: /data/cortex/tsdb-sync

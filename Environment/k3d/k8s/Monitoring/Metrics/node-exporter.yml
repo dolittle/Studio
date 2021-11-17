@@ -1,0 +1,80 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  namespace: system-monitoring-metrics
+  name: node-exporter
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Node-Exporter
+spec:
+  selector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Metrics
+      service: Node-Exporter
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        system: Monitoring
+        monitoring: Metrics
+        service: Node-Exporter
+    spec:
+      securityContext:
+        fsGroup: 65534
+        runAsGroup: 65534
+        runAsNonRoot: true
+        runAsUser: 65534
+      hostPID: true
+      hostNetwork: true
+      containers:
+        - name: node-exporter
+          image: quay.io/prometheus/node-exporter:v1.0.1
+          args:
+            - --path.procfs=/host/proc
+            - --path.sysfs=/host/sys
+            - --path.rootfs=/host/root
+          ports:
+            - name: metrics
+              containerPort: 9100
+          livenessProbe:
+            httpGet:
+              path: /
+              port: metrics
+          readinessProbe:
+            httpGet:
+              path: /
+              port: metrics
+          resources:
+            limits:
+              cpu: 50m
+              memory: 48Mi
+            requests:
+              cpu: 25m
+              memory: 24Mi
+          volumeMounts:
+            - name: proc
+              mountPath: /host/proc
+              readOnly:  true
+            - name: sys
+              mountPath: /host/sys
+              readOnly: true
+            - name: root
+              mountPath: /host/root
+              mountPropagation: HostToContainer
+              readOnly: true
+      volumes:
+        - name: proc
+          hostPath:
+            path: /proc
+        - name: sys
+          hostPath:
+            path: /sys
+        - name: root
+          hostPath:
+            path: /

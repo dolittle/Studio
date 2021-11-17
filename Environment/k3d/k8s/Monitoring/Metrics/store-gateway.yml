@@ -1,0 +1,150 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: system-monitoring-metrics
+  name: store-gateway
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Store-Gateway
+spec:
+  ports:
+    - port: 8080
+      name: http-metrics
+      targetPort: http-metrics
+    - port: 9095
+      name: grpc
+      targetPort: grpc
+    - port: 7946
+      name: memberlist
+      targetPort: memberlist
+  clusterIP: None
+  selector:
+    system: Monitoring
+    monitoring: Metrics
+    service: Store-Gateway
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: system-monitoring-metrics
+  name: store-gateway
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Store-Gateway
+data:
+  store-gateway.yaml: |
+    target: store-gateway
+    auth_enabled: true
+    server:
+      http_listen_port: 8080
+      grpc_listen_port: 9095
+      grpc_server_max_recv_msg_size: 104857600
+      grpc_server_max_send_msg_size: 104857600
+      grpc_server_max_concurrent_streams: 1000
+    store_gateway:
+      sharding_enabled: true
+      sharding_ring:
+        replication_factor: 1
+        kvstore:
+          store: memberlist
+    memberlist:
+      bind_port: 7946
+      join_members:
+        - dnssrvnoa+_memberlist._tcp.store-gateway.system-monitoring-metrics.svc.cluster.local
+    storage:
+      engine: blocks
+    blocks_storage:
+      backend: filesystem
+      filesystem:
+        dir: ""
+      bucket_store:
+          sync_dir: /data/cortex/tsdb-sync
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: system-monitoring-metrics
+  name: store-gateway
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Store-Gateway
+spec:
+  selector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Metrics
+      service: Store-Gateway
+  serviceName: store-gateway
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        system: Monitoring
+        monitoring: Metrics
+        service: Store-Gateway
+    spec:
+      terminationGracePeriodSeconds: 2400
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - store-gateway
+      containers:
+        - name: store-gateway
+          image: quay.io/cortexproject/cortex:v1.6.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - -target=store-gateway
+            - -log.level=debug
+            - -config.file=/etc/cortex/store-gateway.yaml
+          volumeMounts:
+            - name: config
+              mountPath: /etc/cortex
+            - name: tsdb-sync
+              mountPath: /data/cortex/tsdb-sync
+          ports:
+            - name: http-metrics
+              containerPort: 8080
+            - name: grpc
+              containerPort: 9095
+            - name: memberlist
+              containerPort: 7946
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http-metrics
+            initialDelaySeconds: 60
+          livenessProbe:
+            httpGet:
+              path: /ready
+              port: http-metrics
+              scheme: HTTP
+            initialDelaySeconds: 180
+            periodSeconds: 30
+            failureThreshold: 20
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 2Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+      volumes:
+        - name: config
+          configMap:
+            name: store-gateway
+        - name: tsdb-sync
+          hostPath:
+            path: /data/cortex/tsdb-sync
