@@ -130,11 +130,8 @@ spec:
             failureThreshold: 20
           resources:
             limits:
-              cpu: 1000m
-              memory: 2Gi
-            requests:
               cpu: 500m
-              memory: 1Gi
+              memory: 500Mi
       volumes:
         - name: config
           configMap:

@@ -168,10 +168,7 @@ spec:
             initialDelaySeconds: 45
           resources:
             limits:
-              cpu: 1000m
-              memory: 1Gi
-            requests:
-              cpu: 100m
+              cpu: 500m
               memory: 512Mi
         - name: proxy
           image: nginx:1.19.6
@@ -197,10 +194,7 @@ spec:
             initialDelaySeconds: 45
           resources:
             limits:
-              cpu: 1000m
-              memory: 1Gi
-            requests:
-              cpu: 100m
+              cpu: 500m
               memory: 512Mi
       volumes:
         - name: config
