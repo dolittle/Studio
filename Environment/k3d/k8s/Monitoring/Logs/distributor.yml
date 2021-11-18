@@ -47,7 +47,7 @@ data:
     ingester:
       lifecycler:
         ring:
-          replication_factor: 2
+          replication_factor: 1
           kvstore:
             store: memberlist
         join_after: 10s
@@ -63,7 +63,7 @@ data:
         - from: 2021-01-01
           schema: v11
           store: boltdb-shipper
-          object_store: azure
+          object_store: filesystem
           index:
             prefix: loki_index_
             period: 24h
@@ -84,7 +84,7 @@ spec:
       system: Monitoring
       monitoring: Logs
       service: Distributor
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -131,16 +131,12 @@ spec:
             initialDelaySeconds: 15
           resources:
             limits:
-              cpu: 1000m
-              memory: 1Gi
-            requests:
-              cpu: 100m
+              cpu: 500m
               memory: 512Mi
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 10001
-        runAsGroup: 10001
-        fsGroup: 10001
+        runAsNonRoot: false
+        runAsUser: 0
+        fsGroup: 0
       volumes:
         - name: config
           configMap:

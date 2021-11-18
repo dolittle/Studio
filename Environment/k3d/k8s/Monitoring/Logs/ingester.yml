@@ -51,7 +51,7 @@ data:
     ingester:
       lifecycler:
         ring:
-          replication_factor: 2
+          replication_factor: 1
           kvstore:
             store: memberlist
         join_after: 10s
@@ -74,17 +74,15 @@ data:
         - from: 2021-01-01
           schema: v11
           store: boltdb-shipper
-          object_store: azure
+          object_store: filesystem
           index:
             prefix: loki_index_
             period: 24h
     storage_config:
-      azure:
-        account_name: XXX
-        account_key: XXX
-        container_name: logs
+      filesystem:
+        directory: /data/loki
       boltdb_shipper:
-        shared_store: azure
+        shared_store: filesystem
         active_index_directory: /data/loki/index
         cache_location: /data/loki/cache
         cache_ttl: 168h
@@ -106,7 +104,7 @@ spec:
       monitoring: Logs
       service: Ingester
   serviceName: ingester
-  replicas: 3
+  replicas: 1
   updateStrategy:
     type: RollingUpdate
   template:
@@ -138,8 +136,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /etc/loki
-            - name: storage
-              mountPath: /data
           ports:
             - name: http-metrics
               containerPort: 8080
@@ -156,27 +152,13 @@ spec:
             initialDelaySeconds: 30
           resources:
             limits:
-              cpu: 1000m
-              memory: 2Gi
-            requests:
               cpu: 500m
-              memory: 1Gi
+              memory: 500Mi
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 10001
-        runAsGroup: 10001
+        runAsNonRoot: false
+        runAsUser: 0
         fsGroup: 10001
       volumes:
         - name: config
           configMap:
             name: ingester
-  volumeClaimTemplates:
-    - metadata:
-        name: storage
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 16Gi
-        storageClassName: managed-premium

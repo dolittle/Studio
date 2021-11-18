@@ -679,10 +679,10 @@ spec:
         - name: promtail
           image: grafana/promtail:2.1.0
           env:
-          - name: HOSTNAME
-            valueFrom:
-              fieldRef:
-                fieldPath: spec.nodeName
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
           args:
             - -log.level=info
             - -config.file=/etc/promtail/promtail.yaml
@@ -694,19 +694,18 @@ spec:
             - name: journal
               mountPath: /host/var/log/journal
               mountPropagation: HostToContainer
-              readOnly:  true
-            - name: machine-id
-              mountPath: /etc/machine-id
-              readOnly:  true
+              readOnly: true
+            # - name: machine-id
+            #   mountPath: /etc/machine-id
+            #   readOnly: true
             - name: pods
               mountPath: /host/var/log/pods
               mountPropagation: HostToContainer
-              readOnly:  true
+              readOnly: true
           ports:
             - name: http-metrics
               containerPort: 8080
           securityContext:
-            readOnlyRootFilesystem: true
             runAsGroup: 0
             runAsUser: 0
           readinessProbe:
@@ -717,9 +716,6 @@ spec:
             initialDelaySeconds: 10
           resources:
             limits:
-              cpu: 200m
-              memory: 256Mi
-            requests:
               cpu: 100m
               memory: 128Mi
       volumes:
@@ -732,9 +728,9 @@ spec:
         - name: journal
           hostPath:
             path: /var/log/journal
-        - name: machine-id
-          hostPath:
-            path: /etc/machine-id
+        # - name: machine-id
+        #   hostPath:
+        #     path: /etc/machine-id
         - name: pods
           hostPath:
             path: /var/log/pods

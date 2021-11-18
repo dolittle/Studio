@@ -79,7 +79,7 @@ data:
         - from: 2021-01-01
           schema: v11
           store: boltdb-shipper
-          object_store: azure
+          object_store: filesystem
           index:
             prefix: loki_index_
             period: 24h
@@ -100,7 +100,7 @@ spec:
       system: Monitoring
       monitoring: Logs
       service: Query-Frontend
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -140,8 +140,6 @@ spec:
               containerPort: 8080
             - name: grpc
               containerPort: 9095
-          securityContext:
-            readOnlyRootFilesystem: true
           readinessProbe:
             httpGet:
               path: /ready
@@ -149,9 +147,6 @@ spec:
             initialDelaySeconds: 15
           resources:
             limits:
-              cpu: 1000m
-              memory: 2Gi
-            requests:
               cpu: 500m
               memory: 1Gi
       securityContext:
