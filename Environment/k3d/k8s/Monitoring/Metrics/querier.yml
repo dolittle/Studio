@@ -61,6 +61,9 @@ data:
       join_members:
         - dnssrvnoa+_memberlist._tcp.ingester.system-monitoring-metrics.svc.cluster.local
         - dnssrvnoa+_memberlist._tcp.store-gateway.system-monitoring-metrics.svc.cluster.local
+      min_join_backoff: 10s
+      max_join_retries: 10000
+
     storage:
       engine: blocks
     blocks_storage:
@@ -114,17 +117,17 @@ spec:
         monitoring: Metrics
         service: Querier
     spec:
-      terminationGracePeriodSeconds: 180
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - topologyKey: kubernetes.io/hostname
-              labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - querier
+      #terminationGracePeriodSeconds: 180
+      #affinity:
+      #  podAntiAffinity:
+      #    requiredDuringSchedulingIgnoredDuringExecution:
+      #      - topologyKey: kubernetes.io/hostname
+      #        labelSelector:
+      #          matchExpressions:
+      #            - key: name
+      #              operator: In
+      #              values:
+      #                - querier
       containers:
         - name: querier
           image: quay.io/cortexproject/cortex:v1.6.0

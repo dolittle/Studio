@@ -114,17 +114,17 @@ spec:
         monitoring: Logs
         service: Ingester
     spec:
-      terminationGracePeriodSeconds: 300
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - topologyKey: kubernetes.io/hostname
-              labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - ingester
+      #terminationGracePeriodSeconds: 300
+      #affinity:
+      #  podAntiAffinity:
+      #    requiredDuringSchedulingIgnoredDuringExecution:
+      #      - topologyKey: kubernetes.io/hostname
+      #        labelSelector:
+      #          matchExpressions:
+      #            - key: name
+      #              operator: In
+      #              values:
+      #                - ingester
       containers:
         - name: ingester
           image: grafana/loki:2.1.0

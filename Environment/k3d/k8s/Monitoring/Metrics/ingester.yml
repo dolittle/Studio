@@ -94,17 +94,17 @@ spec:
         monitoring: Metrics
         service: Ingester
     spec:
-      terminationGracePeriodSeconds: 2400
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - topologyKey: kubernetes.io/hostname
-              labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - ingester
+      #terminationGracePeriodSeconds: 2400
+      #affinity:
+      #  podAntiAffinity:
+      #    requiredDuringSchedulingIgnoredDuringExecution:
+      #      - topologyKey: kubernetes.io/hostname
+      #        labelSelector:
+      #          matchExpressions:
+      #            - key: name
+      #              operator: In
+      #              values:
+      #                - ingester
       containers:
         - name: ingester
           image: quay.io/cortexproject/cortex:v1.6.0
@@ -125,7 +125,8 @@ spec:
             httpGet:
               path: /ready
               port: http-metrics
-            initialDelaySeconds: 180
+            initialDelaySeconds: 1
+            #initialDelaySeconds: 180
             periodSeconds: 30
             failureThreshold: 20
           resources:
