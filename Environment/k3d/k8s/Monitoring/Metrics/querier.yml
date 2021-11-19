@@ -47,7 +47,7 @@ data:
     store_gateway:
       sharding_enabled: true
       sharding_ring:
-        replication_factor: 2
+        replication_factor: 1
         kvstore:
           store: memberlist
     frontend_worker:
