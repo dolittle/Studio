@@ -84,7 +84,7 @@ spec:
       monitoring: Metrics
       service: Ingester
   serviceName: ingester
-  replicas: 1
+  replicas: 2
   updateStrategy:
     type: RollingUpdate
   template:
