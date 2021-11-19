@@ -80,7 +80,7 @@ spec:
       monitoring: Metrics
       service: Store-Gateway
   serviceName: store-gateway
-  replicas: 2
+  replicas: 1
   updateStrategy:
     type: RollingUpdate
   template:
