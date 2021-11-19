@@ -1,4 +1,3 @@
-
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -22,7 +21,7 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              tenant: Dolittle
+              system: Monitoring
           podSelector:
             matchLabels:
               monitoring: Metrics
