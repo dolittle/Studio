@@ -54,6 +54,10 @@ data:
       bind_port: 7946
       join_members:
         - dnssrvnoa+_memberlist._tcp.store-gateway.system-monitoring-metrics.svc.cluster.local
+      min_join_backoff: 10s
+      max_join_retries: 10000
+      abort_if_cluster_join_fails: false
+      rejoin_interval: 10s
     storage:
       engine: blocks
     blocks_storage:
