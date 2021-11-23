@@ -136,16 +136,16 @@ spec:
         service: Distributor
     spec:
       #terminationGracePeriodSeconds: 60
-      #affinity:
-      #  podAntiAffinity:
-      #    requiredDuringSchedulingIgnoredDuringExecution:
-      #      - topologyKey: kubernetes.io/hostname
-      #        labelSelector:
-      #          matchExpressions:
-      #            - key: name
-      #              operator: In
-      #              values:
-      #                - distributor
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - distributor
       containers:
         - name: distributor
           image: quay.io/cortexproject/cortex:v1.6.0

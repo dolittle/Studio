@@ -102,16 +102,16 @@ spec:
         service: Query-Frontend
     spec:
       #terminationGracePeriodSeconds: 180
-      #affinity:
-      #  podAntiAffinity:
-      #    requiredDuringSchedulingIgnoredDuringExecution:
-      #      - topologyKey: kubernetes.io/hostname
-      #        labelSelector:
-      #          matchExpressions:
-      #            - key: name
-      #              operator: In
-      #              values:
-      #                - query-frontend
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - query-frontend
       containers:
         - name: query-frontend
           image: quay.io/cortexproject/cortex:v1.6.0

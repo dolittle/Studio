@@ -94,17 +94,17 @@ spec:
         monitoring: Metrics
         service: Store-Gateway
     spec:
-      terminationGracePeriodSeconds: 2400
-      #affinity:
-      #  podAntiAffinity:
-      #    requiredDuringSchedulingIgnoredDuringExecution:
-      #      - topologyKey: kubernetes.io/hostname
-      #        labelSelector:
-      #          matchExpressions:
-      #            - key: name
-      #              operator: In
-      #              values:
-      #                - store-gateway
+      #terminationGracePeriodSeconds: 2400
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - store-gateway
       containers:
         - name: store-gateway
           image: quay.io/cortexproject/cortex:v1.6.0

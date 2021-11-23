@@ -119,16 +119,16 @@ spec:
         service: Querier
     spec:
       #terminationGracePeriodSeconds: 180
-      #affinity:
-      #  podAntiAffinity:
-      #    requiredDuringSchedulingIgnoredDuringExecution:
-      #      - topologyKey: kubernetes.io/hostname
-      #        labelSelector:
-      #          matchExpressions:
-      #            - key: name
-      #              operator: In
-      #              values:
-      #                - querier
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - querier
       containers:
         - name: querier
           image: quay.io/cortexproject/cortex:v1.6.0

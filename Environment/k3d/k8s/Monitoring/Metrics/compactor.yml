@@ -72,16 +72,16 @@ spec:
         service: Compactor
     spec:
       #terminationGracePeriodSeconds: 240
-      #affinity:
-      #  podAntiAffinity:
-      #    requiredDuringSchedulingIgnoredDuringExecution:
-      #      - topologyKey: kubernetes.io/hostname
-      #        labelSelector:
-      #          matchExpressions:
-      #            - key: name
-      #              operator: In
-      #              values:
-      #                - compactor
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - compactor
       containers:
         - name: compactor
           image: quay.io/cortexproject/cortex:v1.6.0
