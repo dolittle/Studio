@@ -73,21 +73,6 @@ data:
         dir: ""
       bucket_store:
           sync_dir: /data/cortex/tsdb-sync
-    # storage:
-    #   engine: blocks
-    # blocks_storage:
-    #   backend: azure
-    #   bucket_store:
-    #     sync_dir: /data/cortex/tsdb-sync
-    #     ignore_deletion_mark_delay: 1h
-    #     index_cache:
-    #       backend: inmemory
-    #       inmemory:
-    #         max_size_bytes: 1073741824
-    #   azure:
-    #     account_name: XXX
-    #     account_key: XXX
-    #     container_name: metrics
 
 ---
 apiVersion: apps/v1
@@ -118,7 +103,6 @@ spec:
         monitoring: Metrics
         service: Querier
     spec:
-      #terminationGracePeriodSeconds: 180
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

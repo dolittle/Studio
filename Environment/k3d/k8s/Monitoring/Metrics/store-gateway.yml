@@ -94,7 +94,6 @@ spec:
         monitoring: Metrics
         service: Store-Gateway
     spec:
-      #terminationGracePeriodSeconds: 2400
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

@@ -101,7 +101,6 @@ spec:
         monitoring: Metrics
         service: Query-Frontend
     spec:
-      #terminationGracePeriodSeconds: 180
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

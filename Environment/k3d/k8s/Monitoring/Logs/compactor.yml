@@ -107,8 +107,6 @@ spec:
           ports:
             - name: http-metrics
               containerPort: 8080
-          #securityContext:
-          #  readOnlyRootFilesystem: true
           readinessProbe:
             httpGet:
               path: /ready

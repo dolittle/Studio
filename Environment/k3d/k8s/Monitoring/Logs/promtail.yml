@@ -695,9 +695,6 @@ spec:
               mountPath: /host/var/log/journal
               mountPropagation: HostToContainer
               readOnly: true
-            # - name: machine-id
-            #   mountPath: /etc/machine-id
-            #   readOnly: true
             - name: pods
               mountPath: /host/var/log/pods
               mountPropagation: HostToContainer
@@ -728,9 +725,6 @@ spec:
         - name: journal
           hostPath:
             path: /var/log/journal
-        # - name: machine-id
-        #   hostPath:
-        #     path: /etc/machine-id
         - name: pods
           hostPath:
             path: /var/log/pods

@@ -98,7 +98,6 @@ spec:
         monitoring: Metrics
         service: Ingester
     spec:
-      #terminationGracePeriodSeconds: 2400
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -130,7 +129,6 @@ spec:
               path: /ready
               port: http-metrics
             initialDelaySeconds: 1
-            #initialDelaySeconds: 180
             periodSeconds: 30
             failureThreshold: 20
           resources:

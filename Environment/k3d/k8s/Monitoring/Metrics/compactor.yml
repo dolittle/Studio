@@ -71,7 +71,6 @@ spec:
         monitoring: Metrics
         service: Compactor
     spec:
-      #terminationGracePeriodSeconds: 240
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -96,8 +95,6 @@ spec:
           ports:
             - name: http-metrics
               containerPort: 8080
-          # securityContext:
-          #   readOnlyRootFilesystem: true
           readinessProbe:
             httpGet:
               path: /ready

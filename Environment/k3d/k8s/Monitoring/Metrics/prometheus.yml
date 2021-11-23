@@ -77,7 +77,6 @@ data:
           username: 'system'
           password:
         write_relabel_configs:
-          # @joel we drop these because they were overbearing or not specific/helpful to us
           - action: drop
             regex: (?:nginx_ingress_controller_request_|nginx_ingress_controller_response_|nginx_ingress_controller_bytes_|nginx_ingress_controller_ingress_upstream_|nginx_ingress_controller_requests).*
             source_labels:
@@ -139,7 +138,6 @@ data:
             regex: (?:kubelet_http_requests_duration_seconds_|kubelet_runtime_operations_duration_seconds_|rest_client_|storage_operation_duration_seconds_).*
             source_labels:
               - __name__
-      # @joel this one is also dfifferent from the others and doesn't specify
       - job_name: 'kubernetes-cadvisor'
         metrics_path: /metrics/cadvisor
         scheme: https
@@ -154,10 +152,8 @@ data:
             target_label: node
             source_labels:
               - __meta_kubernetes_node_name
-      # @joel this differs from this tutorial https://devopscube.com/node-exporter-kubernetes/
       - job_name: 'node-exporters'
         kubernetes_sd_configs:
-          # @joel why is this specified for a namespace and pod?
           - role: pod
             namespaces:
               names:

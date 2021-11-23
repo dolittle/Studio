@@ -114,7 +114,6 @@ spec:
         monitoring: Logs
         service: Ingester
     spec:
-      #terminationGracePeriodSeconds: 300
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -143,8 +142,6 @@ spec:
               containerPort: 9095
             - name: memberlist
               containerPort: 7946
-          #securityContext:
-          #  readOnlyRootFilesystem: true
           readinessProbe:
             httpGet:
               path: /ready

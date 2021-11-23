@@ -135,7 +135,6 @@ spec:
         monitoring: Metrics
         service: Distributor
     spec:
-      #terminationGracePeriodSeconds: 60
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -184,8 +183,6 @@ spec:
           ports:
             - name: remote-write
               containerPort: 8090
-          # securityContext:
-          #   readOnlyRootFilesystem: true
           readinessProbe:
             httpGet:
               path: /ready
