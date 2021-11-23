@@ -1,3 +1,19 @@
+# [1.9.0] - 2021-11-23 [PR: #136](https://github.com/dolittle/Studio/pull/136)
+## Summary
+
+Adds a new dropdown menu and uses it for selecting the Runtime image when creating a new base microservice. If `None` is selected for the Runtime image the microservice won't have a Runtime container created.
+
+The new dropdown menu is styled according to this Figma design:
+![image](https://user-images.githubusercontent.com/10163775/141797437-5b9ae903-da0b-4546-9a11-393d452fd5ac.png)
+
+In action:
+![Peek 2021-11-15 15-20](https://user-images.githubusercontent.com/10163775/141797722-56badbd9-706c-4b6f-9b88-6e1526bb8005.gif)
+
+Related to https://github.com/dolittle/platform-api/pull/61
+
+Also adds `yarn.lock` into the repo.
+
+
 # [1.8.0] - 2021-11-10 [PR: #134](https://github.com/dolittle/Studio/pull/134)
 ## Summary
 
