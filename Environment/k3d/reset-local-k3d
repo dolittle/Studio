@@ -1,22 +1,31 @@
 #!/bin/bash
 
-PWD=pwd
+ROOT_PWD=$(git rev-parse --show-toplevel)
+cd $ROOT_PWD
 
-k3d cluster delete dolittle-dev 
+k3d cluster delete dolittle-dev
+
 rm -rf /tmp/dolittle-local-dev
 mkdir -p /tmp/dolittle-local-dev
 cd /tmp/dolittle-local-dev
 git init
 cd -
 
-k3d cluster create dolittle-dev --servers 1 --agents 1 --port 8080:80@loadbalancer --port 8443:443@loadbalancer --k3s-server-arg '--no-deploy=traefik' --registry-create --kubeconfig-switch-context -v /tmp/k3dvolume:/tmp/k3dvolume -v /etc/machine-id:/etc/machine-id
+k3d cluster create dolittle-dev \
+    --servers 1 \
+    --agents 1 \
+    --port 8080:80@loadbalancer \
+    --port 8443:443@loadbalancer \
+    --k3s-server-arg '--no-deploy=traefik' \
+    --registry-create \
+    --kubeconfig-switch-context \
+    -v /tmp/k3dvolume:/tmp/k3dvolume
 
-cd /home/joel/Dolittle/Studio
 cp -r Environment/k3d/git/* /tmp/dolittle-local-dev
+
 cd Environment/k3d/k8s/
 kubectl apply -f namespace.yml
 kubectl apply -f .
-
 
 cd Monitoring/
 kubectl apply -f Grafana/namespace.yml -f Logs/namespace.yml -f Metrics/namespace.yml
@@ -24,5 +33,4 @@ kubectl apply -f Grafana/
 kubectl apply -f Logs/
 kubectl apply -f Metrics/
 
-cd $PWD
-
+cd $ROOT_PWD
