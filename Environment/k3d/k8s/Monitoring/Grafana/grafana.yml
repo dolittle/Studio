@@ -102,7 +102,7 @@ data:
     apiVersion: 1
 
     datasources:
-      - name: prometheus
+      - name: Prometheus
         type: prometheus
         access: proxy
         url: http://query-frontend.system-monitoring-metrics.svc.cluster.local:8080/prometheus
@@ -110,7 +110,7 @@ data:
             httpHeaderName1: X-Scope-OrgID
         secureJsonData:
             httpHeaderValue1: system
-      - name: loki
+      - name: Loki
         type: loki
         access: proxy
         url: http://query-frontend.system-monitoring-logs.svc.cluster.local:8080

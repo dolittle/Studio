@@ -5,14 +5,18 @@
 - Install k3d
 - Have docker running
 
-## Install k3d
+### Install k3d
 ```sh
 curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
 ```
 
 ## The fast way of setting things up
 
-Use my handy [`reset-local-k3d`](https://github.com/joelhoisko/dotfiles/blob/xps-13/scripts/bin/reset-local-k3d) script, that automatically deletes the existing k3d cluster and recreates a new one with all of the things below applied.
+Run the [`reset-local-k3d`](https://github.com/joelhoisko/dotfiles/blob/xps-13/scripts/bin/reset-local-k3d) script, that automatically deletes the existing k3d cluster and recreates a new one with all the things below applied.
+
+```sh
+./Environment/k3d/reset-local-k3d
+```
 
 For manual steps, continue following the guide.
 
