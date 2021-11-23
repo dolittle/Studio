@@ -94,6 +94,7 @@ On *nix:
 ```sh
 GIT_REPO_DIRECTORY="/tmp/dolittle-local-dev" \
 GIT_REPO_DIRECTORY_ONLY="true" \
+GIT_REPO_DRY_RUN="true" \
 GIT_REPO_BRANCH=main \
 LISTEN_ON="localhost:8081" \
 HEADER_SECRET="FAKE" \

@@ -5,6 +5,7 @@ import React from 'react';
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import MuiTabs from '@material-ui/core/Tabs';
 import MuiTab from '@material-ui/core/Tab';
+import { CSSProperties } from '@material-ui/styles';
 
 interface TabsProps {
     value: number;
@@ -39,6 +40,6 @@ export const Tab = withStyles((theme: Theme) =>
             '&:focus': {
                 opacity: 1,
             },
-        },
+        } as CSSProperties,
     }),
 )((props: TabProps) => <MuiTab disableRipple {...props} />);
