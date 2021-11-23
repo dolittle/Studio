@@ -5,11 +5,16 @@
 - Install k3d
 - Have docker running
 
-
 ## Install k3d
 ```sh
 curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
 ```
+
+## The fast way of setting things up
+
+Use my handy [`reset-local-k3d`](https://github.com/joelhoisko/dotfiles/blob/xps-13/scripts/bin/reset-local-k3d) script, that automatically deletes the existing k3d cluster and recreates a new one with all of the things below applied.
+
+For manual steps, continue following the guide.
 
 ## Setup folder structure to bootstrap Studio
 - Little clunky, but we can change after
@@ -65,7 +70,8 @@ Execute the following commands in Studio repo while in the `k3d-dolittle-dev` k8
 
  ```sh
 cd Environment/k3d/k8s
-kubectl apply -f namespace.yml -f rbac.yml -f tenants.yml -f mongo.yml -f storage-class.yml -f persistent-volume.yml -f api-v1.yml -f network-policy.yml
+kubectl apply -f namespace.yml
+kubectl apply -f .
 cd -
 ```
 
