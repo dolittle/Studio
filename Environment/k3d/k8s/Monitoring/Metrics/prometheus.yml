@@ -85,10 +85,6 @@ data:
             regex: (?:apiserver_request_total).*
             source_labels:
               - __name__
-          - action: drop
-            regex: (?:container_).*
-            source_labels:
-              - __name__
 
     rule_files:
       - /etc/prometheus/ingress.rules.yml
@@ -120,6 +116,7 @@ data:
             regex: apiserver_request_total
             source_labels:
               - __name__
+
       - job_name: 'kubernetes-kubelet'
         scheme: https
         tls_config:
@@ -138,6 +135,7 @@ data:
             regex: (?:kubelet_http_requests_duration_seconds_|kubelet_runtime_operations_duration_seconds_|rest_client_|storage_operation_duration_seconds_).*
             source_labels:
               - __name__
+
       - job_name: 'kubernetes-cadvisor'
         metrics_path: /metrics/cadvisor
         scheme: https
@@ -152,6 +150,7 @@ data:
             target_label: node
             source_labels:
               - __meta_kubernetes_node_name
+
       - job_name: 'node-exporters'
         kubernetes_sd_configs:
           - role: pod
@@ -167,10 +166,6 @@ data:
             source_labels:
               - __meta_kubernetes_pod_container_port_name
           - action: replace
-            target_label: instance
-            source_labels:
-              - __meta_kubernetes_pod_node_name
-          - action: replace
             target_label: node
             source_labels:
               - __meta_kubernetes_pod_node_name
@@ -179,6 +174,7 @@ data:
             regex: node_.*
             source_labels:
               - __name__
+
       - job_name: 'monitoring'
         kubernetes_sd_configs:
           - role: pod
@@ -211,6 +207,7 @@ data:
             regex: (?:prometheus_|cortex_|loki_|thanos_|memberlist_|log_messages_|promtail_|logentry_|querier_|loki_canary_).*
             source_labels:
               - __name__
+
       - job_name: 'ingress'
         kubernetes_sd_configs:
           - role: pod
@@ -238,6 +235,7 @@ data:
             regex: (?:nginx_|certmanager_).*
             source_labels:
               - __name__
+
       - job_name: 'runtime'
         kubernetes_sd_configs:
           - role: pod
@@ -289,6 +287,33 @@ data:
             regex: (?:dolittle_system_|dolittle_shared_).*
             source_labels:
               - __name__
+
+      - job_name: kube-state-metrics
+        honor_labels: true
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - action: keep
+            source_labels:
+            - __meta_kubernetes_namespace
+            - __meta_kubernetes_pod_name
+            separator: '/'
+            regex: 'system-monitoring-metrics/kube-state-metrics.+'
+          - source_labels:
+            - __address__
+            action: replace
+            target_label: __address__
+            regex: (.+?)(\\:\\d+)?
+            replacement: $1
+          - source_labels:
+            - __meta_kubernetes_pod_name
+            action: replace
+            target_label: instance
+          - action: labelmap
+            regex: __meta_kubernetes_pod_label_(.+)
+          - action: replace
+            target_label: microservice
+
   ingress.rules.yml: |
     groups:
     - name: nginx_ingress_controller_request_duration_seconds

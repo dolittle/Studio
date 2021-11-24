@@ -513,6 +513,7 @@ data:
             target_label: microservice
             source_labels:
               - __meta_kubernetes_pod_label_microservice
+        # puts the logs into the customers tenant in Loki
         pipeline_stages:
           - cri: {}
           - tenant:
