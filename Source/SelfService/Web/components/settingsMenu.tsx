@@ -3,7 +3,6 @@
 
 import React from 'react';
 import { createStyles, makeStyles, Theme, withStyles } from '@material-ui/core/styles';
-import { useSnackbar } from 'notistack';
 import Menu, { MenuProps } from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -53,7 +52,7 @@ type Props = {
 
 export const SettingsMenu: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();
-    const { enqueueSnackbar } = useSnackbar();
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -84,16 +83,6 @@ export const SettingsMenu: React.FunctionComponent<Props> = (props) => {
                         const href = '/.auth/cookies/initiate';
                         window.location.href = href;
                         return;
-                    }} />
-                </StyledMenuItem>
-                <StyledMenuItem>
-                    <ListItemText primary="Who has Access" onClick={() => {
-                        enqueueSnackbar('TODO List who has access to this customer.', { variant: 'error' });
-                    }} />
-                </StyledMenuItem>
-                <StyledMenuItem>
-                    <ListItemText primary="My platform Access" onClick={() => {
-                        enqueueSnackbar('TODO show me what I have access to in the platform.', { variant: 'error' });
                     }} />
                 </StyledMenuItem>
             </StyledMenu>
