@@ -16,7 +16,7 @@ import {
     Theme
 } from '@material-ui/core';
 import { createStyles } from '@material-ui/styles';
-import { SettingsMenu } from './settingsMenu';
+import { AccountSettingsMenu } from './accountSettingsMenu';
 
 type Props = {
     applications: ShortInfoWithEnvironment[];
@@ -51,20 +51,21 @@ export const TopRightMenu: React.FunctionComponent<Props> = (props) => {
             >
                 <NotificationsIcon className={classes.icon} />
             </IconButton>
+
+            <AccountSettingsMenu child={
+                <IconButton aria-label="more-options" className={classes.root}>
+                    <AccountCircleIcon className={classes.icon} />
+                </IconButton>
+            } />
+
             <IconButton aria-label="account" onClick={() => {
-                enqueueSnackbar('TODO: Something with account info', { variant: 'error' });
+                enqueueSnackbar('TODO: More options?', { variant: 'error' });
             }}
                 className={classes.root}
             >
-                <AccountCircleIcon className={classes.icon} />
+                <MoreVertIcon className={classes.icon} />
             </IconButton>
 
-
-            <SettingsMenu child={
-                <IconButton aria-label="more-options" className={classes.root}>
-                    <MoreVertIcon className={classes.icon} />
-                </IconButton>
-            } />
         </>
     );
 };

@@ -50,7 +50,7 @@ type Props = {
     child: any; //IconButton
 };
 
-export const SettingsMenu: React.FunctionComponent<Props> = (props) => {
+export const AccountSettingsMenu: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
