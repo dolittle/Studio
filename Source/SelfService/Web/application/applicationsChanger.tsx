@@ -9,6 +9,7 @@ import { ShortInfoWithEnvironment } from '../api/api';
 import { useGlobalContext } from '../stores/notifications';
 
 import FormControl from '@material-ui/core/FormControl';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles, Theme } from '@material-ui/core';
@@ -60,6 +61,15 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
     items.push(
         <MenuItem className={classes.menuItem} key='createNew' value='createNew'>
             + New application
+        </MenuItem>
+    );
+
+    items.push(
+        <ListSubheader>Category 2</ListSubheader>
+    );
+    items.push(
+        <MenuItem className={classes.menuItem} key='changeCustomer' value='changeCustomer'>
+            Change Customer
         </MenuItem>
     );
 
