@@ -1,20 +1,27 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import {
+    Grid,
+    IconButton,
+    Typography,
+    Divider,
+    Box,
+} from '@material-ui/core';
+import { TabPanel } from '../../utils/materialUi';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Box, Divider, Grid } from '@material-ui/core';
-import { useReadable } from 'use-svelte-store';
+import { useSnackbar } from 'notistack';
 
 import { HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
+import { useReadable } from 'use-svelte-store';
 import { microservices } from '../../stores/microservice';
-import { ConfigView } from './configView';
-import { ConfigViewK8s } from './configViewK8s';
+import { ConfigView } from './viewConfiguration';
+import { ConfigViewK8s } from './viewConfigurationK8s';
 import { Tab, Tabs } from '../../theme/tabs';
-// TODO Doesnt seem ready for prime time, this is from the example and the github issue
-import { TabPanel } from '../../utils/materialUi';
 import { DownloadButtons } from '../components/downloadButtons';
 
 type Props = {
@@ -26,6 +33,39 @@ type Props = {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        deleteIcon: {
+            'padding': 0,
+            'marginRight': theme.spacing(1),
+            'fill': 'white',
+            '& .MuiSvgIcon-root': {
+                color: 'white',
+                marginRight: theme.spacing(1),
+            },
+            '& .MuiTypography-root': {
+                color: 'white',
+                textTransform: 'uppercase'
+            }
+        },
+        editIcon: {
+            'padding': 0,
+            'marginRight': theme.spacing(1),
+            'fill': '#6678F6',
+            '& .MuiSvgIcon-root': {
+                color: '#6678F6',
+                marginRight: theme.spacing(1),
+            },
+            '& .MuiTypography-root': {
+                color: '#6678F6',
+                textTransform: 'uppercase'
+            }
+        },
+        root: {
+            flexGrow: 1,
+        },
+        paper: {
+            padding: theme.spacing(2),
+            textAlign: 'center',
+        },
         divider: {
             backgroundColor: '#3B3D48'
         }
@@ -33,34 +73,35 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const View: React.FunctionComponent<Props> = (props) => {
+    const { enqueueSnackbar } = useSnackbar();
     const classes = useStyles();
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
+
     const _props = props!;
     const applicationId = _props.applicationId;
     const microserviceId = _props.microserviceId;
     const environment = _props.environment;
     const podsData = _props.podsData;
 
-    const [selectedKey, setSelectedKey] = useState('healthStatus');
-    // Want microservice name
-
     const currentMicroservice = $microservices.find(ms => ms.id === microserviceId);
     if (!currentMicroservice) {
-        const href = `/microservices/${applicationId}/${environment}/overview`;
+        const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);
         return null;
     }
 
+
     let hasEditData = false;
-    if (currentMicroservice.edit &&
-        currentMicroservice.edit.dolittle &&
+    if (currentMicroservice?.edit?.dolittle &&
         currentMicroservice.id !== '' &&
         currentMicroservice.kind !== '') {
         hasEditData = true;
     }
 
-    const [currentTab, setCurrentTab] = React.useState(1);
+    const msName = currentMicroservice.name;
+
+    const [currentTab, setCurrentTab] = useState(1);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setCurrentTab(newValue);
@@ -69,42 +110,90 @@ export const View: React.FunctionComponent<Props> = (props) => {
     return (
         <Grid
             container
-            direction="column"
-            justifyContent="flex-start"
-            alignItems="stretch"
+            direction='column'
+            justifyContent='flex-start'
         >
-            <h1>{currentMicroservice.name}</h1>
-            <div>
-                <Tabs
-                    value={currentTab}
-                    onChange={handleChange}
+
+            <Grid container
+                spacing={2}
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="flex-start"
+            >
+                <Grid item xs={3}>
+                    <Typography variant="h3" component="h3">{msName}</Typography>
+                </Grid>
+            </Grid>
+
+            <Grid
+                container
+                spacing={3}
+
+            >
+                <Grid item xs={10}>
+                    <Tabs
+                        value={currentTab}
+                        onChange={handleChange}
+                    >
+                        <Tab label='Configuration' />
+                        <Tab label='Health Status' />
+                    </Tabs>
+                </Grid>
+
+                <Grid
+                    item xs={2}
                 >
-                    <Tab label="Config" />
-                    <Tab label="Health Status" />
-                </Tabs>
+                    <Grid
+                        container
+                        direction='row'
+                        justifyContent='space-around'
+                        alignItems='flex-end'
+                    >
+                        <IconButton
+                            onClick={() => {
+                                enqueueSnackbar('TODO: Delete microservice', { variant: 'error' });
+                            }}
+                            className={classes.deleteIcon}
+                        >
+                            <DeleteIcon />
+                            <Typography>delete</Typography>
+                        </IconButton>
 
-                <TabPanel value={currentTab} index={0}>
-                    <Box ml={2}>
-                        {hasEditData
-                            ? <ConfigView microservice={currentMicroservice.edit} />
-                            : <ConfigViewK8s microservice={currentMicroservice.live} />
-                        }
-                    </Box>
 
-                    <Divider className={classes.divider} />
-                    <Box ml={2}>
-                        <DownloadButtons
-                            environment={environment}
-                            microserviceName={currentMicroservice.name}
-                            applicationId={applicationId}
-                        />
-                    </Box>
-                </TabPanel>
+                        <IconButton
+                            onClick={() => {
+                                enqueueSnackbar('TODO: Edit microservice', { variant: 'error' });
+                            }}
+                            className={classes.editIcon}
+                        >
+                            <EditIcon />
+                            <Typography>Edit</Typography>
+                        </IconButton>
+                    </Grid>
+                </Grid>
+            </Grid>
 
-                <TabPanel value={currentTab} index={1}>
-                    <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
-                </TabPanel>
-            </div>
-        </Grid>
+
+            <TabPanel value={currentTab} index={0}>
+                <Box ml={2}>
+                    {hasEditData
+                        ? <ConfigView microservice={currentMicroservice.edit} />
+                        : <ConfigViewK8s microservice={currentMicroservice.live} />
+                    }
+
+                </Box>
+                <Divider className={classes.divider} />
+                <Box ml={2}>
+                    <DownloadButtons
+                        environment={environment}
+                        microserviceName={currentMicroservice.name}
+                        applicationId={applicationId}
+                    />
+                </Box>
+            </TabPanel>
+            <TabPanel value={currentTab} index={1}>
+                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
+            </TabPanel>
+        </Grid >
     );
 };
