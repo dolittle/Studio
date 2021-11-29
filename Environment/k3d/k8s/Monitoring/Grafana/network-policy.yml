@@ -1,0 +1,79 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    system: Monitoring
+    monitoring: Grafana
+  name: grafana
+  namespace: system-monitoring-grafana
+spec:
+  podSelector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Grafana
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              system: Monitoring
+              monitoring: Grafana
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    system: Monitoring
+    monitoring: Logs
+    service: Query-Frontend
+  name: query-frontend-grafana
+  namespace: system-monitoring-logs
+spec:
+  podSelector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Logs
+      service: Query-Frontend
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              system: Monitoring
+              monitoring: Grafana
+          podSelector:
+              matchLabels:
+                system: Monitoring
+                monitoring: Grafana
+                component: Grafana
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Query-Frontend
+  name: query-frontend-grafana
+  namespace: system-monitoring-metrics
+spec:
+  podSelector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Metrics
+      service: Query-Frontend
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              system: Monitoring
+              monitoring: Grafana
+          podSelector:
+              matchLabels:
+                system: Monitoring
+                monitoring: Grafana
+                component: Grafana

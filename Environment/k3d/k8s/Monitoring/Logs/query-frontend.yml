@@ -1,0 +1,160 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: system-monitoring-logs
+  name: query-frontend
+  labels:
+    system: Monitoring
+    monitoring: Logs
+    service: Query-Frontend
+spec:
+  ports:
+    - port: 8080
+      name: http-metrics
+      targetPort: http-metrics
+  selector:
+    system: Monitoring
+    monitoring: Logs
+    service: Query-Frontend
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: system-monitoring-logs
+  name: query-frontend-headless
+  labels:
+    system: Monitoring
+    monitoring: Logs
+    service: Query-Frontend
+spec:
+  ports:
+    - port: 9095
+      name: grpclb
+      targetPort: grpc
+  clusterIP: None
+  publishNotReadyAddresses: true
+  selector:
+    system: Monitoring
+    monitoring: Logs
+    service: Query-Frontend
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: system-monitoring-logs
+  name: query-frontend
+  labels:
+    system: Monitoring
+    monitoring: Logs
+    service: Query-Frontend
+data:
+  query-frontend.yaml: |
+    target: query-frontend
+    auth_enabled: true
+    server:
+      http_listen_port: 8080
+      grpc_listen_port: 9095
+      grpc_server_max_recv_msg_size: 104857600
+      grpc_server_max_send_msg_size: 104857600
+      grpc_server_max_concurrent_streams: 1000
+    frontend:
+        compress_responses: true
+        log_queries_longer_than: 5s
+        max_outstanding_per_tenant: 100
+    query_range:
+      max_retries: 5
+      align_queries_with_step: true
+      split_queries_by_interval: 30m
+      cache_results: true
+      results_cache:
+        cache:
+          enable_fifocache: true
+          fifocache:
+            validity: 24h
+            max_size_bytes: 1GB
+    schema_config:
+      configs:
+        - from: 2021-01-01
+          schema: v11
+          store: boltdb-shipper
+          object_store: filesystem
+          index:
+            prefix: loki_index_
+            period: 24h
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: system-monitoring-logs
+  name: query-frontend
+  labels:
+    system: Monitoring
+    monitoring: Logs
+    service: Query-Frontend
+spec:
+  selector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Logs
+      service: Query-Frontend
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        system: Monitoring
+        monitoring: Logs
+        service: Query-Frontend
+    spec:
+      terminationGracePeriodSeconds: 30
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - query-frontend
+      containers:
+        - name: query-frontend
+          image: grafana/loki:2.1.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - -target=query-frontend
+            - -log.level=debug
+            - -config.file=/etc/loki/query-frontend.yaml
+          volumeMounts:
+            - name: config
+              mountPath: /etc/loki
+          ports:
+            - name: http-metrics
+              containerPort: 8080
+            - name: grpc
+              containerPort: 9095
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http-metrics
+            initialDelaySeconds: 15
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+      volumes:
+        - name: config
+          configMap:
+            name: query-frontend

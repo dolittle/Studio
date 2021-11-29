@@ -1,0 +1,106 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    system: Monitoring
+    monitoring: Grafana
+    component: PostgreSQL
+  name: postgresql
+  namespace: system-monitoring-grafana
+data:
+  POSTGRES_PASSWORD: cWlKZnB2Wlg1R0h5eVpXdmY4aEVPQ01xYnJZb1JaUzk=
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    system: Monitoring
+    monitoring: Grafana
+    component: PostgreSQL
+  name: postgresql
+  namespace: system-monitoring-grafana
+data:
+  init-grafana-db.sql: CREATE DATABASE grafana
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'en_US.utf8'
+    LC_CTYPE = 'en_US.utf8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    system: Monitoring
+    monitoring: Grafana
+    component: PostgreSQL
+  name: postgresql
+  namespace: system-monitoring-grafana
+spec:
+  selector:
+    system: Monitoring
+    monitoring: Grafana
+    component: PostgreSQL
+  clusterIP: None
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    system: Monitoring
+    monitoring: Grafana
+    component: PostgreSQL
+  name: postgresql
+  namespace: system-monitoring-grafana
+spec:
+  selector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Grafana
+      component: PostgreSQL
+  serviceName: postgresql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        system: Monitoring
+        monitoring: Grafana
+        component: PostgreSQL
+    spec:
+      containers:
+        - name: postgresql
+          image: postgres:9.6.19
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: POSTGRES_PASSWORD
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/pgdata"
+          ports:
+            - name: postgresql
+              containerPort: 5432
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 300m
+              memory: 256Mi
+          volumeMounts:
+            - name: postgresql-config
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: postgresql-config
+          configMap:
+            name: postgresql

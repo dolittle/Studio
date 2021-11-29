@@ -5,11 +5,20 @@
 - Install k3d
 - Have docker running
 
-
-## Install k3d
+### Install k3d
 ```sh
 curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
 ```
+
+## The fast way of setting things up
+
+Run the [`reset-local-k3d`](https://github.com/joelhoisko/dotfiles/blob/xps-13/scripts/bin/reset-local-k3d) script, that automatically deletes the existing k3d cluster and recreates a new one with all the things below applied.
+
+```sh
+./Environment/k3d/reset-local-k3d
+```
+
+For manual steps, continue following the guide.
 
 ## Setup folder structure to bootstrap Studio
 - Little clunky, but we can change after
@@ -65,9 +74,32 @@ Execute the following commands in Studio repo while in the `k3d-dolittle-dev` k8
 
  ```sh
 cd Environment/k3d/k8s
-kubectl apply -f namespace.yml -f rbac.yml -f tenants.yml -f mongo.yml -f storage-class.yml -f persistent-volume.yml -f api-v1.yml
+kubectl apply -f namespace.yml
+kubectl apply -f .
 cd -
 ```
+
+## (Optional) Bootstrap monitoring
+
+BEFORE APPLYING CHECK THAT YOU ARE IN THE CORRECT CONTEXT!
+
+First bootstrap the namespaces:
+```sh
+cd Environment/k3d/k8s/Monitoring
+kubectl apply -f Grafana/namespace.yml -f Logs/namespace.yml -f Metrics/namespace.yml
+```
+
+Then bootstrap all of the services (may take a minute to start them all):
+```sh
+kubectl apply -f Grafana/ -f Logs/ -f Metrics/
+```
+
+Then port-forward Grafana to explore the data:
+```sh
+kubectl -n system-monitoring-grafana port-forward svc/grafana 3000:80
+```
+
+Now open your browser at http://localhost:3000 and explore around. If any component reports of an `"empty ring"` or `"ingestercount <= 0"` type errors in the logs, just restart the pod and it will reconnect to it's respective ingester and fix the ring issue.
 
 ## Run self-service web
 In a new terminal:

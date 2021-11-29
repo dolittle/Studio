@@ -1,0 +1,731 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  namespace: system-monitoring-logs
+  name: promtail
+  labels:
+    system: Monitoring
+    monitoring: Logs
+    service: Promtail
+rules:
+  - apiGroups: [""]
+    resources:
+      - pods
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: system-monitoring-logs
+  name: promtail
+  labels:
+    system: Monitoring
+    monitoring: Logs
+    service: Promtail
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  namespace: system-monitoring-logs
+  name: promtail
+  labels:
+    system: Monitoring
+    monitoring: Logs
+    service: Promtail
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: promtail
+subjects:
+  - kind: ServiceAccount
+    name: promtail
+    namespace: system-monitoring-logs
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: system-monitoring-logs
+  name: promtail
+  labels:
+    system: Monitoring
+    monitoring: Logs
+    service: Promtail
+data:
+  promtail.yaml: |
+    server:
+      http_listen_port: 8080
+    positions:
+      filename: /run/promtail/positions.yaml
+      sync_period: 10s
+      ignore_invalid_yaml: false
+    clients:
+      - url: http://distributor.system-monitoring-logs.svc.cluster.local:8080/loki/api/v1/push
+        tenant_id: system
+    target_config:
+      sync_period: 10s
+    scrape_configs:
+      - job_name: 'node-journal'
+        journal:
+          json: false
+          max_age: 12h
+          path: /host/var/log/journal
+        relabel_configs:
+          - action: replace
+            target_label: job
+            replacement: node-journal
+          - action: replace
+            target_label: unit
+            source_labels:
+              - __journal__systemd_unit
+          - action: replace
+            target_label: node
+            source_labels:
+              - __journal__hostname
+      - job_name: 'canary'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - system-monitoring-logs
+            selectors:
+              - role: pod
+                label: 'system=Monitoring,monitoring=Logs,service=Canary'
+        relabel_configs:
+          - action: keep
+            regex: Monitoring;Logs;Canary;canary
+            source_labels:
+              - __meta_kubernetes_pod_label_system
+              - __meta_kubernetes_pod_label_monitoring
+              - __meta_kubernetes_pod_label_service
+              - __meta_kubernetes_pod_container_name
+          - action: replace
+            target_label: __host__
+            source_labels:
+              - __meta_kubernetes_pod_node_name
+          - action: replace
+            target_label: __pod_logs_path__
+            replacement: /host/var/log/pods/$1
+            separator: _
+            source_labels:
+              - __meta_kubernetes_namespace
+              - __meta_kubernetes_pod_name
+              - __meta_kubernetes_pod_uid
+          - action: replace
+            target_label: __path__
+            replacement: $1/*.log
+            separator: /
+            source_labels:
+              - __pod_logs_path__
+              - __meta_kubernetes_pod_container_name
+          - action: replace
+            target_label: job
+            replacement: canary
+          - action: replace
+            target_label: canary_instance
+            source_labels:
+              - __meta_kubernetes_pod_name
+        pipeline_stages:
+          - cri: {}
+          - drop:
+              source: stream
+              value: stderr
+          - labeldrop:
+              - stream
+              - filename
+      - job_name: 'monitoring'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - system-monitoring-metrics
+                - system-monitoring-logs
+            selectors:
+              - role: pod
+                label: 'system=Monitoring'
+        relabel_configs:
+          - action: keep
+            regex: Monitoring
+            source_labels:
+              - __meta_kubernetes_pod_label_system
+          - action: replace
+            target_label: __host__
+            source_labels:
+              - __meta_kubernetes_pod_node_name
+          - action: replace
+            target_label: __pod_logs_path__
+            replacement: /host/var/log/pods/$1
+            separator: _
+            source_labels:
+              - __meta_kubernetes_namespace
+              - __meta_kubernetes_pod_name
+              - __meta_kubernetes_pod_uid
+          - action: replace
+            target_label: __path__
+            replacement: $1/*.log
+            separator: /
+            source_labels:
+              - __pod_logs_path__
+              - __meta_kubernetes_pod_container_name
+          - action: replace
+            target_label: job
+            replacement: monitoring
+          - action: replace
+            target_label: monitoring
+            source_labels:
+              - __meta_kubernetes_pod_label_monitoring
+          - action: replace
+            target_label: service
+            source_labels:
+              - __meta_kubernetes_pod_label_service
+          - action: replace
+            target_label: instance
+            source_labels:
+              - __meta_kubernetes_pod_name
+        pipeline_stages:
+          - cri: {}
+          - labeldrop:
+              - stream
+              - filename
+      - job_name: 'ingress'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - system-ingress
+            selectors:
+              - role: pod
+                label: 'system=Ingress'
+        relabel_configs:
+          - action: keep
+            regex: Ingress;controller
+            source_labels:
+              - __meta_kubernetes_pod_label_system
+              - __meta_kubernetes_pod_container_name
+          - action: replace
+            target_label: __host__
+            source_labels:
+              - __meta_kubernetes_pod_node_name
+          - action: replace
+            target_label: __pod_logs_path__
+            replacement: /host/var/log/pods/$1
+            separator: _
+            source_labels:
+              - __meta_kubernetes_namespace
+              - __meta_kubernetes_pod_name
+              - __meta_kubernetes_pod_uid
+          - action: replace
+            target_label: __path__
+            replacement: $1/*.log
+            separator: /
+            source_labels:
+              - __pod_logs_path__
+              - __meta_kubernetes_pod_container_name
+          - action: replace
+            target_label: job
+            replacement: ingress
+          - action: replace
+            target_label: ingress
+            source_labels:
+              - __meta_kubernetes_pod_label_ingress
+          - action: replace
+            target_label: instance
+            source_labels:
+              - __meta_kubernetes_pod_name
+        pipeline_stages:
+          - cri: {}
+          - match:
+              selector: '{stream="stdout"} |~ `^ACCESS (?:"[^"]*" ){3}`'
+              stages:
+                - labeldrop:
+                    - ingress
+                    - instance
+                    - stream
+                    - filename
+                    - job
+                - regex:
+                    expression: '^ACCESS "(?P<tenant_id>[^"]*)" "(?P<application_id>[^"]*)" "(?P<microservice_id>[^"]*)" "(?P<application>[^"]*)" "(?P<environment>[^"]*)" "(?P<microservice>[^"]*)" (?P<content>\S+ \S+ \[[^\[]+\] "[^"]+" "[^"]+" (?P<status>\d+) (?P<body_bytes_sent>\d+) "[^"]+" "[^"]+" (?P<request_length>\d+) (?P<request_time>\d+(?:\.\d+)) (?P<upstream_response_length>(?:\d+|-)) (?P<upstream_response_time>(?:\d+(?:\.\d+)|-)) (?P<upstream_status>(?:\d+|-)))$'
+                - labels:
+                    application_id: application_id
+                    microservice_id: microservice_id
+                    application: application
+                    environment: environment
+                    microservice: microservice
+                - labels:
+                    tenant_id: tenant_id
+                    status: status
+                - metrics:
+                    requests_total:
+                        type: Counter
+                        prefix: dolittle_ingress_
+                        description: total number of requests handled
+                        config:
+                            match_all: true
+                            action: inc
+                - labeldrop:
+                  - status
+                - metrics:
+                    request_duration_seconds:
+                      type: Histogram
+                      prefix: dolittle_ingress_
+                      description: request processing time in seconds
+                      source: request_time
+                      config:
+                        action: inc
+                        buckets: [ 0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10 ]
+                    response_duration_seconds:
+                      type: Histogram
+                      prefix: dolittle_ingress_
+                      description: microservice response time in seconds
+                      source: upstream_response_time
+                      config:
+                        action: inc
+                        buckets: [ 0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10 ]
+                    request_size_bytes:
+                      type: Histogram
+                      prefix: dolittle_ingress_
+                      description: request size in bytes
+                      source: request_length
+                      config:
+                        action: inc
+                        buckets: [ 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000 ]
+                    response_size_bytes:
+                      type: Histogram
+                      prefix: dolittle_ingress_
+                      description: microservice response size in bytes
+                      source: upstream_response_length
+                      config:
+                        action: inc
+                        buckets: [ 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000 ]
+                    body_sent_bytes:
+                      type: Histogram
+                      prefix: dolittle_ingress_
+                      description: number of bytes written to the client
+                      source: body_bytes_sent
+                      config:
+                        action: inc
+                        buckets: [ 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000 ]
+                - labeldrop:
+                  - tenant_id
+                - template:
+                    source: job
+                    template: ingress-access
+                - labels:
+                    job: job
+                - output:
+                    source: content
+                - template:
+                    source: tenant_id
+                    template: '{{if .Value}}tenant-{{ ToLower .Value }}{{else}}system{{end}}'
+                - tenant:
+                    source: tenant_id
+          - labeldrop:
+              - stream
+              - filename
+      - job_name: 'ingress-cert-manager'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - system-ingress
+            selectors:
+              - role: pod
+                label: 'system=Ingress,ingress=Cert-Manager'
+        relabel_configs:
+          - action: keep
+            regex: Ingress;Cert-Manager
+            source_labels:
+              - __meta_kubernetes_pod_label_system
+              - __meta_kubernetes_pod_label_ingress
+          - action: replace
+            target_label: __host__
+            source_labels:
+              - __meta_kubernetes_pod_node_name
+          - action: replace
+            target_label: __pod_logs_path__
+            replacement: /host/var/log/pods/$1
+            separator: _
+            source_labels:
+              - __meta_kubernetes_namespace
+              - __meta_kubernetes_pod_name
+              - __meta_kubernetes_pod_uid
+          - action: replace
+            target_label: __path__
+            replacement: $1/*.log
+            separator: /
+            source_labels:
+              - __pod_logs_path__
+              - __meta_kubernetes_pod_container_name
+          - action: replace
+            target_label: job
+            replacement: ingress
+          - action: replace
+            target_label: ingress
+            source_labels:
+              - __meta_kubernetes_pod_label_ingress
+          - action: replace
+            target_label: cert_manager
+            source_labels:
+              - __meta_kubernetes_pod_label_cert_manager
+          - action: replace
+            target_label: instance
+            source_labels:
+              - __meta_kubernetes_pod_name
+        pipeline_stages:
+          - cri: {}
+          - labeldrop:
+              - stream
+              - filename
+      - job_name: 'runtime'
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - action: keep
+            regex: true;true;true;true;true;true;true;runtime
+            source_labels:
+              - __meta_kubernetes_pod_annotationpresent_dolittle_io_tenant_id
+              - __meta_kubernetes_pod_annotationpresent_dolittle_io_application_id
+              - __meta_kubernetes_pod_annotationpresent_dolittle_io_microservice_id
+              - __meta_kubernetes_pod_labelpresent_tenant
+              - __meta_kubernetes_pod_labelpresent_application
+              - __meta_kubernetes_pod_labelpresent_environment
+              - __meta_kubernetes_pod_labelpresent_microservice
+              - __meta_kubernetes_pod_container_name
+          - action: replace
+            target_label: __host__
+            source_labels:
+              - __meta_kubernetes_pod_node_name
+          - action: replace
+            target_label: __pod_logs_path__
+            replacement: /host/var/log/pods/$1
+            separator: _
+            source_labels:
+              - __meta_kubernetes_namespace
+              - __meta_kubernetes_pod_name
+              - __meta_kubernetes_pod_uid
+          - action: replace
+            target_label: __path__
+            replacement: $1/*.log
+            separator: /
+            source_labels:
+              - __pod_logs_path__
+              - __meta_kubernetes_pod_container_name
+          - action: replace
+            target_label: job
+            replacement: runtime
+          - action: replace
+            target_label: tenant_id
+            source_labels:
+              - __meta_kubernetes_pod_annotation_dolittle_io_tenant_id
+          - action: replace
+            target_label: application_id
+            source_labels:
+              - __meta_kubernetes_pod_annotation_dolittle_io_application_id
+          - action: replace
+            target_label: microservice_id
+            source_labels:
+              - __meta_kubernetes_pod_annotation_dolittle_io_microservice_id
+          - action: replace
+            target_label: tenant
+            source_labels:
+              - __meta_kubernetes_pod_label_tenant
+          - action: replace
+            target_label: application
+            source_labels:
+              - __meta_kubernetes_pod_label_application
+          - action: replace
+            target_label: environment
+            source_labels:
+              - __meta_kubernetes_pod_label_environment
+          - action: replace
+            target_label: microservice
+            source_labels:
+              - __meta_kubernetes_pod_label_microservice
+        pipeline_stages:
+          - cri: {}
+          - labeldrop:
+              - stream
+              - filename
+      - job_name: 'microservice'
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - action: keep
+            regex: true;true;true;true;true;true;true
+            source_labels:
+              - __meta_kubernetes_pod_annotationpresent_dolittle_io_tenant_id
+              - __meta_kubernetes_pod_annotationpresent_dolittle_io_application_id
+              - __meta_kubernetes_pod_annotationpresent_dolittle_io_microservice_id
+              - __meta_kubernetes_pod_labelpresent_tenant
+              - __meta_kubernetes_pod_labelpresent_application
+              - __meta_kubernetes_pod_labelpresent_environment
+              - __meta_kubernetes_pod_labelpresent_microservice
+          - action: drop
+            regex: runtime
+            source_labels:
+              - __meta_kubernetes_pod_container_name
+          - action: replace
+            target_label: __host__
+            source_labels:
+              - __meta_kubernetes_pod_node_name
+          - action: replace
+            target_label: __pod_logs_path__
+            replacement: /host/var/log/pods/$1
+            separator: _
+            source_labels:
+              - __meta_kubernetes_namespace
+              - __meta_kubernetes_pod_name
+              - __meta_kubernetes_pod_uid
+          - action: replace
+            target_label: __path__
+            replacement: $1/*.log
+            separator: /
+            source_labels:
+              - __pod_logs_path__
+              - __meta_kubernetes_pod_container_name
+          - action: replace
+            target_label: job
+            replacement: microservice
+          - action: replace
+            target_label: tenant_org
+            replacement: tenant-$1
+            source_labels:
+              - __meta_kubernetes_pod_annotation_dolittle_io_tenant_id
+          - action: replace
+            target_label: application_id
+            source_labels:
+              - __meta_kubernetes_pod_annotation_dolittle_io_application_id
+          - action: replace
+            target_label: microservice_id
+            source_labels:
+              - __meta_kubernetes_pod_annotation_dolittle_io_microservice_id
+          - action: replace
+            target_label: application
+            source_labels:
+              - __meta_kubernetes_pod_label_application
+          - action: replace
+            target_label: environment
+            source_labels:
+              - __meta_kubernetes_pod_label_environment
+          - action: replace
+            target_label: microservice
+            source_labels:
+              - __meta_kubernetes_pod_label_microservice
+        # puts the logs into the customers tenant in Loki
+        pipeline_stages:
+          - cri: {}
+          - tenant:
+              source: tenant_org
+          - labeldrop:
+              - tenant_org
+              - stream
+              - filename
+      - job_name: 'authentication'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - system-authentication
+            selectors:
+              - role: pod
+                label: 'system=Authentication'
+        relabel_configs:
+          - action: keep
+            regex: Authentication
+            source_labels:
+              - __meta_kubernetes_pod_label_system
+          - action: replace
+            target_label: __host__
+            source_labels:
+              - __meta_kubernetes_pod_node_name
+          - action: replace
+            target_label: __pod_logs_path__
+            replacement: /host/var/log/pods/$1
+            separator: _
+            source_labels:
+              - __meta_kubernetes_namespace
+              - __meta_kubernetes_pod_name
+              - __meta_kubernetes_pod_uid
+          - action: replace
+            target_label: __path__
+            replacement: $1/*.log
+            separator: /
+            source_labels:
+              - __pod_logs_path__
+              - __meta_kubernetes_pod_container_name
+          - action: replace
+            target_label: job
+            replacement: authentication
+          - action: replace
+            target_label: authentication
+            source_labels:
+              - __meta_kubernetes_pod_label_component
+          - action: replace
+            target_label: instance
+            source_labels:
+              - __meta_kubernetes_pod_name
+          - action: replace
+            target_label: container
+            source_labels:
+              - __meta_kubernetes_pod_container_name
+          - action: replace
+            target_label: environment
+            source_labels:
+              - __meta_kubernetes_pod_label_environment
+        pipeline_stages:
+          - cri: {}
+          - labeldrop:
+              - stream
+              - filename
+      - job_name: 'mongodb'
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - action: keep
+            regex: true;true;true;true;true;Mongo
+            source_labels:
+              - __meta_kubernetes_pod_annotationpresent_dolittle_io_tenant_id
+              - __meta_kubernetes_pod_annotationpresent_dolittle_io_application_id
+              - __meta_kubernetes_pod_labelpresent_tenant
+              - __meta_kubernetes_pod_labelpresent_application
+              - __meta_kubernetes_pod_labelpresent_environment
+              - __meta_kubernetes_pod_label_infrastructure
+          - action: replace
+            target_label: __host__
+            source_labels:
+              - __meta_kubernetes_pod_node_name
+          - action: replace
+            target_label: __pod_logs_path__
+            replacement: /host/var/log/pods/$1
+            separator: _
+            source_labels:
+              - __meta_kubernetes_namespace
+              - __meta_kubernetes_pod_name
+              - __meta_kubernetes_pod_uid
+          - action: replace
+            target_label: __path__
+            replacement: $1/*.log
+            separator: /
+            source_labels:
+              - __pod_logs_path__
+              - __meta_kubernetes_pod_container_name
+          - action: replace
+            target_label: job
+            replacement: mongodb
+          - action: replace
+            target_label: tenant_id
+            source_labels:
+              - __meta_kubernetes_pod_annotation_dolittle_io_tenant_id
+          - action: replace
+            target_label: application_id
+            source_labels:
+              - __meta_kubernetes_pod_annotation_dolittle_io_application_id
+          - action: replace
+            target_label: tenant
+            source_labels:
+              - __meta_kubernetes_pod_label_tenant
+          - action: replace
+            target_label: application
+            source_labels:
+              - __meta_kubernetes_pod_label_application
+          - action: replace
+            target_label: environment
+            source_labels:
+              - __meta_kubernetes_pod_label_environment
+          - action: replace
+            target_label: instance
+            source_labels:
+              - __meta_kubernetes_pod_name
+          - action: replace
+            target_label: container
+            source_labels:
+              - __meta_kubernetes_pod_container_name
+        pipeline_stages:
+          - cri: {}
+          - labeldrop:
+              - stream
+              - filename
+
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  namespace: system-monitoring-logs
+  name: promtail
+  labels:
+    system: Monitoring
+    monitoring: Logs
+    service: Promtail
+spec:
+  selector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Logs
+      service: Promtail
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        system: Monitoring
+        monitoring: Logs
+        service: Promtail
+    spec:
+      serviceAccountName: promtail
+      containers:
+        - name: promtail
+          image: grafana/promtail:2.1.0
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          args:
+            - -log.level=info
+            - -config.file=/etc/promtail/promtail.yaml
+          volumeMounts:
+            - name: config
+              mountPath: /etc/promtail
+            - name: run
+              mountPath: /run/promtail
+            - name: journal
+              mountPath: /host/var/log/journal
+              mountPropagation: HostToContainer
+              readOnly: true
+            - name: pods
+              mountPath: /host/var/log/pods
+              mountPropagation: HostToContainer
+              readOnly: true
+          ports:
+            - name: http-metrics
+              containerPort: 8080
+          securityContext:
+            runAsGroup: 0
+            runAsUser: 0
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http-metrics
+            failureThreshold: 5
+            initialDelaySeconds: 10
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+      volumes:
+        - name: config
+          configMap:
+            name: promtail
+        - name: run
+          hostPath:
+            path: /run/promtail
+        - name: journal
+          hostPath:
+            path: /var/log/journal
+        - name: pods
+          hostPath:
+            path: /var/log/pods

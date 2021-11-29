@@ -1,0 +1,58 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+  # cert-manager.io/cluster-issuer: "letsencrypt-production"
+  labels:
+    system: Monitoring
+    monitoring: Grafana
+    component: Grafana
+  name: grafana
+  namespace: system-monitoring-grafana
+spec:
+  ingressClassName: nginx
+
+  tls:
+    - hosts:
+        - grafana.dolittle.studio
+      secretName: grafana-studio-certificate
+
+  rules:
+    - host: grafana.dolittle.studio
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  name: http
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    system: Monitoring
+    monitoring: Grafana
+    component: Grafana
+  name: grafana-ingress
+  namespace: system-monitoring-grafana
+spec:
+  podSelector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Grafana
+      component: Grafana
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              system: Ingress
+          podSelector:
+            matchLabels:
+              system: Ingress
+              ingress: Nginx

@@ -1,0 +1,141 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: system-monitoring-metrics
+  name: ingester
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Ingester
+spec:
+  ports:
+    - port: 8080
+      name: http-metrics
+      targetPort: http-metrics
+    - port: 7946
+      name: memberlist
+      targetPort: memberlist
+  clusterIP: None
+  selector:
+    system: Monitoring
+    monitoring: Metrics
+    service: Ingester
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: system-monitoring-metrics
+  name: ingester
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Ingester
+data:
+  ingester.yaml: |
+    target: ingester
+    auth_enabled: true
+    server:
+      http_listen_port: 8080
+      grpc_listen_port: 9095
+      grpc_server_max_recv_msg_size: 104857600
+      grpc_server_max_send_msg_size: 104857600
+      grpc_server_max_concurrent_streams: 1000
+    limits:
+      enforce_metric_name: false
+      reject_old_samples: true
+      reject_old_samples_max_age: 168h
+    ingester:
+      lifecycler:
+        ring:
+          replication_factor: 1
+          kvstore:
+            store: memberlist
+        join_after: 10s
+        observe_period: 10s
+        min_ready_duration: 0s
+        final_sleep: 5s
+        num_tokens: 512
+    memberlist:
+      bind_port: 7946
+      join_members:
+        - dnssrvnoa+_memberlist._tcp.ingester.system-monitoring-metrics.svc.cluster.local
+      min_join_backoff: 10s
+      max_join_retries: 10000
+      abort_if_cluster_join_fails: false
+      rejoin_interval: 10s
+    storage:
+      engine: blocks
+    blocks_storage:
+      backend: filesystem
+      filesystem:
+        dir: ""
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: system-monitoring-metrics
+  name: ingester
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Ingester
+spec:
+  selector:
+    matchLabels:
+      system: Monitoring
+      monitoring: Metrics
+      service: Ingester
+  serviceName: ingester
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        system: Monitoring
+        monitoring: Metrics
+        service: Ingester
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - ingester
+      containers:
+        - name: ingester
+          image: quay.io/cortexproject/cortex:v1.6.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - -target=ingester
+            - -log.level=debug
+            - -config.file=/etc/cortex/ingester.yaml
+          volumeMounts:
+            - name: config
+              mountPath: /etc/cortex
+          ports:
+            - name: http-metrics
+              containerPort: 8080
+            - name: memberlist
+              containerPort: 7946
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http-metrics
+            initialDelaySeconds: 1
+            periodSeconds: 30
+            failureThreshold: 20
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+      volumes:
+        - name: config
+          configMap:
+            name: ingester
