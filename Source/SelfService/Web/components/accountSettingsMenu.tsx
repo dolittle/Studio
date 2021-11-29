@@ -88,4 +88,4 @@ export const AccountSettingsMenu: React.FunctionComponent<Props> = (props) => {
             </StyledMenu>
         </div>
     );
-}
+};
