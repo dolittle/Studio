@@ -43,11 +43,10 @@ export type HttpResponseApplications = {
     applications: ShortInfoWithEnvironment[]
 };
 
-export type HttpResponseApplications2 = { // Not a great name
+export type HttpResponseApplication = { // Not a great name
     id: string
     name: string
     tenantId: string
-    applications: ShortInfo[] // Is this with?
     environments: HttpInputApplicationEnvironment[]
     microservices: any[] // Not great
 };
@@ -124,7 +123,7 @@ export async function getApplications(): Promise<any> {
     return jsonResult;
 }
 
-export async function getApplication(applicationId: string): Promise<HttpResponseApplications2> {
+export async function getApplication(applicationId: string): Promise<HttpResponseApplication> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}`;
 
     const result = await fetch(
@@ -134,7 +133,7 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
             mode: 'cors'
         });
 
-    const jsonResult: HttpResponseApplications2 = await result.json();
+    const jsonResult: HttpResponseApplication = await result.json();
     return jsonResult;
 
 }

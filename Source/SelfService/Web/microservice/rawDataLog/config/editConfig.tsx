@@ -14,12 +14,12 @@ import { Config } from './config';
 import { saveRawDataLogIngestorMicroservice } from '../../../stores/microservice';
 import { MicroserviceRawDataLogIngestor } from '../../../api/index';
 
-import { HttpResponseApplications2 } from '../../../api/api';
+import { HttpResponseApplication } from '../../../api/api';
 
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     environment: string
     ms: MicroserviceRawDataLogIngestor
 };

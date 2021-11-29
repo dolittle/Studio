@@ -10,7 +10,7 @@ import {
     getMicroservices,
     getApplication,
     HttpResponseMicroservices,
-    HttpResponseApplications2,
+    HttpResponseApplication,
 } from '../api/api';
 import {
     MicroserviceSimple,
@@ -194,7 +194,7 @@ export const savePurchaseOrderMicroservice = async (
 };
 
 
-export const getFirstIngressFromApplication = (application: HttpResponseApplications2, environment: string): MicroserviceIngressPath => {
+export const getFirstIngressFromApplication = (application: HttpResponseApplication, environment: string): MicroserviceIngressPath => {
     const environmentInfo = application.environments.find(e => e.name === environment);
     if (!environmentInfo) {
         throw new Exception(`environment info missing for ${environment}`);

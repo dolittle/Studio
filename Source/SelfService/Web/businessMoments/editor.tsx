@@ -8,7 +8,7 @@ import { Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 import { BusinessMomentEditor } from './businessMomentEditor';
 
 import { loader } from '@monaco-editor/react';
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplication } from '../api/api';
 import { MicroserviceBusinessMomentAdaptor, BusinessMoment, HttpResponseBusinessMoments, BusinessMomentEntity } from '../api/index';
 import { Guid } from '@dolittle/rudiments';
 import { EntityEditor } from './entityEditor';
@@ -16,7 +16,7 @@ import { EntityEditor } from './entityEditor';
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     businessMoments: HttpResponseBusinessMoments
 };
 

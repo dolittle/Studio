@@ -10,13 +10,13 @@ import { Modal, DefaultButton } from '@fluentui/react';
 
 
 import { ViewCard } from './viewCard';
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplication } from '../api/api';
 import { MicroserviceBusinessMomentAdaptor, HttpResponseBusinessMoments } from '../api/index';
 import { withRouteApplicationProps } from '../utils/route';
 
 type Props = {
     environment: string
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     businessMoments: HttpResponseBusinessMoments
     microservices: any[]
 };

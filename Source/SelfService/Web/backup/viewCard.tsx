@@ -11,14 +11,14 @@ import {
 } from '@fluentui/react';
 
 import { mergeStyles } from '@fluentui/react/lib/Styling';
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplication } from '../api/api';
 import { cardStyles, commandTileClass, buttonStyles } from '../theme/viewCard';
 import { getLatestBackupLinkByApplication } from '../api/backups';
 import { useGlobalContext } from '../stores/notifications';
 
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     environment: string
 };
 

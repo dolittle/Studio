@@ -6,7 +6,7 @@ import { useSnackbar } from 'notistack';
 import Input from '@material-ui/core/Input';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-import { HttpResponseApplications2 } from '../../api/api';
+import { HttpResponseApplication } from '../../api/api';
 import { ButtonText } from '../../theme/buttonText';
 import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../api/cicd';
 
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     info: any
 };
 

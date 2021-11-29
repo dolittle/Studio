@@ -3,12 +3,12 @@
 import React from 'react';
 import { Stack } from '@fluentui/react/lib/Stack';
 
-import { HttpResponseApplications2 } from '../../api/api';
+import { HttpResponseApplication } from '../../api/api';
 
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     environment: string
 };
 

@@ -11,7 +11,7 @@ import { Pivot, PivotItem, IDropdownOption, DefaultButton } from '@fluentui/reac
 
 import CodeEditor, { loader } from '@monaco-editor/react';
 import { saveBusinessmoment } from '../stores/businessmoment';
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplication } from '../api/api';
 import { BusinessMoment, HttpInputBusinessMoment, BusinessMomentEntity } from '../api/index';
 
 
@@ -19,7 +19,7 @@ const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } 
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     connectors: IDropdownOption[]
     entities: IDropdownOption[]
     businessMoment: BusinessMoment

@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import React, { useState, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
     Grid,
     IconButton,
@@ -15,17 +15,17 @@ import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
 
-import { HttpResponsePodStatus } from '../../api/api';
+import { HttpResponseApplication, HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
-import { microservices } from '../../stores/microservice';
+import { getFirstIngressFromApplication, microservices } from '../../stores/microservice';
 import { ConfigView } from './viewConfiguration';
-import { ConfigViewK8s } from './viewConfigurationK8s';
 import { Tab, Tabs } from '../../theme/tabs';
 import { DownloadButtons } from '../components/downloadButtons';
+import { MicroserviceSimple } from '../../api/index';
 
 type Props = {
-    applicationId: string
+    application: HttpResponseApplication
     environment: string
     microserviceId: string
     podsData: HttpResponsePodStatus
@@ -79,26 +79,66 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
 
     const _props = props!;
-    const applicationId = _props.applicationId;
+    const application = _props.application;
     const microserviceId = _props.microserviceId;
     const environment = _props.environment;
     const podsData = _props.podsData;
 
     const currentMicroservice = $microservices.find(ms => ms.id === microserviceId);
     if (!currentMicroservice) {
-        const href = `/microservices/application/${applicationId}/${environment}/overview`;
+        const href = `/microservices/application/${application.id}/${environment}/overview`;
         history.push(href);
         return null;
     }
 
-
+    let ms = {} as MicroserviceSimple;
     let hasEditData = false;
     if (currentMicroservice?.edit?.dolittle &&
         currentMicroservice.id !== '' &&
         currentMicroservice.kind !== '') {
         hasEditData = true;
+        ms = currentMicroservice.edit;
     }
 
+    if (!hasEditData) {
+        // Can I not move this to the store?
+        let headImage = 'n/a';
+        try {
+            headImage = currentMicroservice.live.images.find(img => img.name === 'head').image;
+        } catch (e) {
+            // Intentional skip
+        }
+
+        let runtimeImage = 'n/a';
+        try {
+            runtimeImage = currentMicroservice.live.images.find(img => img.name === 'runtime').image;
+        } catch (e) {
+            // Intentional skip
+        }
+
+        const ingressInfo = getFirstIngressFromApplication(application, environment);
+
+        ms = {
+            dolittle: {
+                applicationId: application.id,
+                tenantId: application.tenantId,
+                microserviceId,
+            },
+            name: '',
+            kind: 'manual', // TODO something better?
+            environment: _props.environment,
+            extra: {
+                ingress: {
+                    path: '/todo', // TODO I think we should look this up
+                    pathType: 'Prefix',
+                    host: ingressInfo.host,
+                    domainPrefix: ingressInfo.domainPrefix
+                },
+                headImage,
+                runtimeImage,
+            },
+        };
+    }
     const msName = currentMicroservice.name;
 
     const [currentTab, setCurrentTab] = useState(1);
@@ -176,23 +216,19 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
             <TabPanel value={currentTab} index={0}>
                 <Box ml={2}>
-                    {hasEditData
-                        ? <ConfigView microservice={currentMicroservice.edit} />
-                        : <ConfigViewK8s microservice={currentMicroservice.live} />
-                    }
-
+                    <ConfigView microservice={ms} />
                 </Box>
                 <Divider className={classes.divider} />
                 <Box ml={2}>
                     <DownloadButtons
                         environment={environment}
                         microserviceName={currentMicroservice.name}
-                        applicationId={applicationId}
+                        applicationId={application.id}
                     />
                 </Box>
             </TabPanel>
             <TabPanel value={currentTab} index={1}>
-                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
+                <HealthStatus applicationId={application.id} status="TODO" environment={environment} data={podsData} />
             </TabPanel>
         </Grid >
     );

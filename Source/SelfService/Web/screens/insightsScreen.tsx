@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useHistory, Switch, generatePath } from 'react-router-dom';
 
-import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
+import { getApplication, getApplications, HttpResponseApplication, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
 
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 // Not scoped like svelte
@@ -24,7 +24,7 @@ export const InsightsScreen: React.FunctionComponent = () => {
     const applicationId = routeApplicationProps.applicationId;
     const environment = currentEnvironment;
 
-    const [application, setApplication] = useState({} as HttpResponseApplications2);
+    const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 

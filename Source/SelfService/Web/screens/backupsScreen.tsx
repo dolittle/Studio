@@ -9,7 +9,7 @@ import {
     generatePath
 } from 'react-router-dom';
 
-import { getApplication, HttpResponseApplications2 } from '../api/api';
+import { getApplication, HttpResponseApplication } from '../api/api';
 import { ViewCard } from '../backup/viewCard';
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
@@ -18,7 +18,7 @@ import { ListView } from '../backup/listView';
 import { useGlobalContext } from '../stores/notifications';
 
 type Props = {
-    application?: HttpResponseApplications2
+    application?: HttpResponseApplication
 };
 
 export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
@@ -27,7 +27,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
 
     const routeApplicationProps = withRouteApplicationProps('backups');
     const applicationId = routeApplicationProps.applicationId;
-    const [application, setApplication] = useState({} as HttpResponseApplications2);
+    const [application, setApplication] = useState({} as HttpResponseApplication);
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {

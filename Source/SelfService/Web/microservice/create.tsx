@@ -12,7 +12,7 @@ import { Create as Base } from './base/create';
 import { Create as StaticSite } from './staticSite/create';
 import { Create as PurchaseOrder } from './purchaseOrder/create';
 
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplication } from '../api/api';
 
 import { Grid, makeStyles, Theme } from '@material-ui/core';
 import { createStyles } from '@material-ui/styles';
@@ -20,7 +20,7 @@ import { SimpleCard } from './create/card';
 
 type Props = {
     environment: string
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
 };
 
 const useStyles = makeStyles((theme: Theme) =>

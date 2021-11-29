@@ -11,13 +11,13 @@ import { Guid } from '@dolittle/rudiments';
 
 import { getFirstIngressFromApplication, saveSimpleMicroservice } from '../../stores/microservice';
 import { MicroserviceSimple } from '../../api/index';
-import { HttpResponseApplications2, getLatestRuntimeInfo } from '../../api/api';
+import { HttpResponseApplication, getLatestRuntimeInfo } from '../../api/api';
 import { DropDownMenu } from '../../theme/dropDownMenu';
 
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     environment: string
 };
 

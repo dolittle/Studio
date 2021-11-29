@@ -4,11 +4,11 @@ import React from 'react';
 
 import { Box, Grid } from '@material-ui/core';
 
-import { MicroservicePurchaseOrder } from '../../api/index';
+import { MicroserviceSimple } from '../../api/index';
 import { HeaderDataRow } from './headDataRow';
 
 type Props = {
-    microservice: MicroservicePurchaseOrder;
+    microservice: MicroserviceSimple;
 };
 
 export const ConfigView: React.FunctionComponent<Props> = (props) => {

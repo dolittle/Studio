@@ -3,11 +3,11 @@
 
 import React from 'react';
 import { Create } from './create';
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplication } from '../api/api';
 
 type Props = {
     environment: string;
-    application: HttpResponseApplications2;
+    application: HttpResponseApplication;
 };
 
 export const MicroserviceNewScreen: React.FunctionComponent<Props> = (props) => {

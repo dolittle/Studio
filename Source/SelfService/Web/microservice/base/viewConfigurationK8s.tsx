@@ -4,7 +4,7 @@ import React from 'react';
 
 import { Box, Grid } from '@material-ui/core';
 
-import { MicroservicePurchaseOrder } from '../../api/index';
+import { MicroservicePurchaseOrder, MicroserviceSimple } from '../../api/index';
 import { HeaderDataRow } from './headDataRow';
 
 type Props = {
@@ -15,6 +15,7 @@ export const ConfigViewK8s: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const ms = _props.microservice;
     const msName = ms.name;
+    console.log(ms);
 
     let headImage = 'n/a';
     try {
@@ -29,6 +30,8 @@ export const ConfigViewK8s: React.FunctionComponent<Props> = (props) => {
     } catch (e) {
         // Intentional skip
     }
+
+
     return (
         <Grid
             container

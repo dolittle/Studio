@@ -18,13 +18,13 @@ import { Config as RestConfig } from './configuration/RestConfiguration';
 import { getFirstIngressFromApplication, saveBusinessMomentsAdaptorMicroservice } from '../../stores/microservice';
 import { MicroserviceBusinessMomentAdaptor } from '../../api/index';
 
-import { getLatestRuntimeInfo, HttpResponseApplications2 } from '../../api/api';
+import { getLatestRuntimeInfo, HttpResponseApplication } from '../../api/api';
 import { Guid } from '@dolittle/rudiments';
 
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     environment: string
 };
 
