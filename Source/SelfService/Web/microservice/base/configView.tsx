@@ -5,7 +5,7 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 
 import { MicroserviceSimple } from '../../api/index';
-import { HeaderDataRow } from './headDataRow';
+import { HeaderDataRow } from '../components/headDataRow';
 
 type Props = {
     microservice: MicroserviceSimple;

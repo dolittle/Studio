@@ -4,9 +4,8 @@ import React from 'react';
 
 import { Grid } from '@material-ui/core';
 
-import { HeaderDataRow } from './headDataRow';
+import { HeaderDataRow } from '../components/headDataRow';
 import { IngressURLWithCustomerTenantID, SimpleIngressPath } from '../../api/api';
-import { info } from '../../stores/documentationInfo';
 
 type Props = {
     urls: IngressURLWithCustomerTenantID[];
