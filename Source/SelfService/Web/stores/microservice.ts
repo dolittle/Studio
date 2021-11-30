@@ -40,7 +40,10 @@ const data = {
 export const microservices = writable(data.microservices);
 export const isLoaded = writable(data.isLoaded);
 export const loadMicroservices = (applicationId: string) => {
-    Promise.all([getApplication(applicationId), getMicroservices(applicationId)]).then(
+    Promise.all([
+        getApplication(applicationId),
+        getMicroservices(applicationId)
+    ]).then(
         (values) => {
             const applicationData = values[0];
             mergeMicroservicesFromGit(applicationData.microservices);

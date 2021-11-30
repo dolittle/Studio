@@ -19,10 +19,11 @@ import { HttpResponseApplication, HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
 import { getFirstIngressFromApplication, microservices } from '../../stores/microservice';
-import { ConfigView } from './viewConfiguration';
+import { View as ConfigView } from './configView';
 import { Tab, Tabs } from '../../theme/tabs';
 import { DownloadButtons } from '../components/downloadButtons';
 import { MicroserviceSimple } from '../../api/index';
+import { View as LiveIngressView } from './liveIngressView';
 
 type Props = {
     application: HttpResponseApplication
@@ -99,6 +100,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
         hasEditData = true;
         ms = currentMicroservice.edit;
     }
+    console.log(currentMicroservice.live);
 
     if (!hasEditData) {
         // Can I not move this to the store?
@@ -124,7 +126,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 tenantId: application.tenantId,
                 microserviceId,
             },
-            name: '',
+            name: currentMicroservice.name,
             kind: 'manual', // TODO something better?
             environment: _props.environment,
             extra: {
@@ -217,6 +219,10 @@ export const View: React.FunctionComponent<Props> = (props) => {
             <TabPanel value={currentTab} index={0}>
                 <Box ml={2}>
                     <ConfigView microservice={ms} />
+                </Box>
+                <Divider className={classes.divider} />
+                <Box ml={2}>
+                    <LiveIngressView urls={currentMicroservice.live.ingressUrls} paths={currentMicroservice.live.ingressPaths} />
                 </Box>
                 <Divider className={classes.divider} />
                 <Box ml={2}>

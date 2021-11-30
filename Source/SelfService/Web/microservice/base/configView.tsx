@@ -2,35 +2,19 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 
-import { Box, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
-import { MicroservicePurchaseOrder, MicroserviceSimple } from '../../api/index';
+import { MicroserviceSimple } from '../../api/index';
 import { HeaderDataRow } from './headDataRow';
 
 type Props = {
-    microservice: any;
+    microservice: MicroserviceSimple;
 };
 
-export const ConfigViewK8s: React.FunctionComponent<Props> = (props) => {
+export const View: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const ms = _props.microservice;
     const msName = ms.name;
-    console.log(ms);
-
-    let headImage = 'n/a';
-    try {
-        headImage = ms.images.find(img => img.name === 'head').image;
-    } catch (e) {
-        // Intentional skip
-    }
-
-    let runtimeImage = 'n/a';
-    try {
-        runtimeImage = ms.images.find(img => img.name === 'runtime').image;
-    } catch (e) {
-        // Intentional skip
-    }
-
 
     return (
         <Grid
@@ -58,7 +42,6 @@ export const ConfigViewK8s: React.FunctionComponent<Props> = (props) => {
                 head='Runtime image'
                 data={ms.extra.runtimeImage}
             />
-
         </Grid >
     );
 };

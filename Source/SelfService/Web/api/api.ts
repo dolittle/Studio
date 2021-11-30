@@ -35,6 +35,8 @@ export type MicroserviceInfo = {
     kind: string
     environment: string
     images: ImageInfo[]
+    ingressUrls: IngressURLWithCustomerTenantID[]
+    ingressPaths: SimpleIngressPath[]
 };
 
 export type HttpResponseApplications = {
@@ -43,10 +45,11 @@ export type HttpResponseApplications = {
     applications: ShortInfoWithEnvironment[]
 };
 
-export type HttpResponseApplication = { // Not a great name
+export type HttpResponseApplication = {
     id: string
     name: string
     tenantId: string
+    tenantName: string
     environments: HttpInputApplicationEnvironment[]
     microservices: any[] // Not great
 };
@@ -87,6 +90,19 @@ export type LatestRuntimeInfo = {
     image: string
     changelog: string
 };
+
+
+export type IngressURLWithCustomerTenantID = {
+    url: string
+    customerTenantID: string
+};
+
+
+export type SimpleIngressPath = {
+    path: string;
+    pathType: string;
+};
+
 
 export function getServerUrlPrefix(): string {
     return '/selfservice/api';
@@ -134,6 +150,10 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
         });
 
     const jsonResult: HttpResponseApplication = await result.json();
+    if (!jsonResult.microservices) {
+        jsonResult.microservices = [];
+    }
+
     return jsonResult;
 
 }
@@ -222,3 +242,4 @@ export async function getPodLogs(applicationId: string, podName: string, contain
 
     return jsonResult;
 }
+
