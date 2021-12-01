@@ -150,12 +150,8 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
         });
 
     const jsonResult: HttpResponseApplication = await result.json();
-    if (!jsonResult.microservices) {
-        jsonResult.microservices = [];
-    }
-
+    jsonResult.microservices = jsonResult.microservices || [];
     return jsonResult;
-
 }
 
 // getMicroservices by applicationId

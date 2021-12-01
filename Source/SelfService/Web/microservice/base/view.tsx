@@ -100,24 +100,13 @@ export const View: React.FunctionComponent<Props> = (props) => {
         hasEditData = true;
         ms = currentMicroservice.edit;
     }
-    console.log(currentMicroservice.live);
 
     if (!hasEditData) {
         // Can I not move this to the store?
-        let headImage = 'n/a';
-        try {
-            headImage = currentMicroservice.live.images.find(img => img.name === 'head').image;
-        } catch (e) {
-            // Intentional skip
-        }
-
-        let runtimeImage = 'n/a';
-        try {
-            runtimeImage = currentMicroservice.live.images.find(img => img.name === 'runtime').image;
-        } catch (e) {
-            // Intentional skip
-        }
-
+        const headImage = currentMicroservice.live.images.find(img => img.name === 'head')?.image
+            || 'n/a';
+        const runtimeImage = currentMicroservice.live.images.find(img => img.name === 'runtime')?.image
+            || 'n/a';
         const ingressInfo = getFirstIngressFromApplication(application, environment);
 
         ms = {
@@ -131,8 +120,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
             environment: _props.environment,
             extra: {
                 ingress: {
-                    path: '/todo', // TODO I think we should look this up
-                    pathType: 'Prefix',
+                    path: ingressInfo.path,
+                    pathType: ingressInfo.pathType,
                     host: ingressInfo.host,
                     domainPrefix: ingressInfo.domainPrefix
                 },
