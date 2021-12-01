@@ -10,7 +10,7 @@ import {
     getMicroservices,
     getApplication,
     HttpResponseMicroservices,
-    HttpResponseApplications2,
+    HttpResponseApplication,
 } from '../api/api';
 import {
     MicroserviceSimple,
@@ -40,7 +40,10 @@ const data = {
 export const microservices = writable(data.microservices);
 export const isLoaded = writable(data.isLoaded);
 export const loadMicroservices = (applicationId: string) => {
-    Promise.all([getApplication(applicationId), getMicroservices(applicationId)]).then(
+    Promise.all([
+        getApplication(applicationId),
+        getMicroservices(applicationId)
+    ]).then(
         (values) => {
             const applicationData = values[0];
             mergeMicroservicesFromGit(applicationData.microservices);
@@ -194,7 +197,7 @@ export const savePurchaseOrderMicroservice = async (
 };
 
 
-export const getFirstIngressFromApplication = (application: HttpResponseApplications2, environment: string): MicroserviceIngressPath => {
+export const getFirstIngressFromApplication = (application: HttpResponseApplication, environment: string): MicroserviceIngressPath => {
     const environmentInfo = application.environments.find(e => e.name === environment);
     if (!environmentInfo) {
         throw new Exception(`environment info missing for ${environment}`);

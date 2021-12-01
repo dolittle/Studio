@@ -8,14 +8,14 @@ import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 
 import { Label } from '@fluentui/react/lib/Label';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { HttpInputApplicationEnvironment, HttpResponseApplications2 } from '../api/api';
+import { HttpInputApplicationEnvironment, HttpResponseApplication } from '../api/api';
 import { useGlobalContext } from '../stores/notifications';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
 };
 
 export const Create: React.FunctionComponent<Props> = (props) => {

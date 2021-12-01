@@ -13,7 +13,7 @@ import Box from '@material-ui/core/Box';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import ShareIcon from '@material-ui/icons/Share';
 
-import { HttpResponseApplications2, ShortInfo } from '../api/api';
+import { HttpResponseApplication, ShortInfo } from '../api/api';
 
 
 import { BackupLink, getLink, BackupsForApplication, getBackupsByApplication, BackupLinkShareInput } from '../api/backups';
@@ -27,7 +27,7 @@ type BackupsDetailsList = {
 };
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     environment: string
 };
 

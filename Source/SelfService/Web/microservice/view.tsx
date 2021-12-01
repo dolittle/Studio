@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useReadable } from 'use-svelte-store';
 
-import { getPodStatus, HttpResponsePodStatus } from '../api/api';
+import { getPodStatus, HttpResponsePodStatus, HttpResponseApplication } from '../api/api';
 import { microservices } from '../stores/microservice';
 import { View as BaseView } from './base/view';
 import { View as BusinessMomentsAdaptorView } from './businessMomentsAdaptor/view';
@@ -13,7 +13,7 @@ import { View as RawDataLogView } from './rawDataLog/view';
 import { View as PurchaseOrderApiView } from './purchaseOrder/view';
 
 type Props = {
-    applicationId: string
+    application: HttpResponseApplication
     environment: string
     microserviceId: string
 };
@@ -22,7 +22,8 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
     const _props = props!;
-    const applicationId = _props.applicationId;
+    const application = _props.application;
+    const applicationId = application.id;
     const microserviceId = _props.microserviceId;
     const environment = _props.environment;
 
@@ -61,7 +62,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     switch (subView) {
         case 'simple':
             return (
-                <BaseView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
+                <BaseView application={application} environment={environment} microserviceId={microserviceId} podsData={podsData} />
             );
         case 'business-moments-adaptor':
             return (

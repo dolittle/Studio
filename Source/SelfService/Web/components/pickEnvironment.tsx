@@ -4,7 +4,7 @@ import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { useHistory, generatePath } from 'react-router-dom';
-import { HttpResponseApplications2, ShortInfoWithEnvironment } from '../api/api';
+import { HttpResponseApplication, ShortInfoWithEnvironment } from '../api/api';
 import { List } from '@fluentui/react/lib/List';
 import { useGlobalContext } from '../stores/notifications';
 
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = {
     applications: ShortInfoWithEnvironment[]
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     redirectTo: string
     openModal: boolean
 };

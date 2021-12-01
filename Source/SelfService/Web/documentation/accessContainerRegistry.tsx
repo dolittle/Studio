@@ -4,7 +4,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplication } from '../api/api';
 
 type Vars = {
     acrId: string
@@ -34,7 +34,7 @@ az acr repository list --name ${vars.acrId} -otable
 };
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     info: any
 };
 

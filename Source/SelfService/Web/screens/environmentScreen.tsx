@@ -11,7 +11,7 @@ import {
 
 import {
     getApplication,
-    HttpResponseApplications2
+    HttpResponseApplication
 } from '../api/api';
 
 import {
@@ -31,7 +31,7 @@ export const EnvironmentScreen: React.FunctionComponent = () => {
     const routeApplicationProps = withRouteApplicationProps('environment');
     const { currentEnvironment } = useGlobalContext();
     const applicationId = routeApplicationProps.applicationId;
-    const [application, setApplication] = useState({} as HttpResponseApplications2);
+    const [application, setApplication] = useState({} as HttpResponseApplication);
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {

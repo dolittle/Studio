@@ -35,6 +35,8 @@ export type MicroserviceInfo = {
     kind: string
     environment: string
     images: ImageInfo[]
+    ingressUrls: IngressURLWithCustomerTenantID[]
+    ingressPaths: SimpleIngressPath[]
 };
 
 export type HttpResponseApplications = {
@@ -43,11 +45,11 @@ export type HttpResponseApplications = {
     applications: ShortInfoWithEnvironment[]
 };
 
-export type HttpResponseApplications2 = { // Not a great name
+export type HttpResponseApplication = {
     id: string
     name: string
     tenantId: string
-    applications: ShortInfo[] // Is this with?
+    tenantName: string
     environments: HttpInputApplicationEnvironment[]
     microservices: any[] // Not great
 };
@@ -89,6 +91,19 @@ export type LatestRuntimeInfo = {
     changelog: string
 };
 
+
+export type IngressURLWithCustomerTenantID = {
+    url: string
+    customerTenantID: string
+};
+
+
+export type SimpleIngressPath = {
+    path: string;
+    pathType: string;
+};
+
+
 export function getServerUrlPrefix(): string {
     return '/selfservice/api';
 }
@@ -124,7 +139,7 @@ export async function getApplications(): Promise<any> {
     return jsonResult;
 }
 
-export async function getApplication(applicationId: string): Promise<HttpResponseApplications2> {
+export async function getApplication(applicationId: string): Promise<HttpResponseApplication> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}`;
 
     const result = await fetch(
@@ -134,9 +149,9 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
             mode: 'cors'
         });
 
-    const jsonResult: HttpResponseApplications2 = await result.json();
+    const jsonResult: HttpResponseApplication = await result.json();
+    jsonResult.microservices = jsonResult.microservices || [];
     return jsonResult;
-
 }
 
 // getMicroservices by applicationId
@@ -223,3 +238,4 @@ export async function getPodLogs(applicationId: string, podName: string, contain
 
     return jsonResult;
 }
+

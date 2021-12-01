@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 
 import { MicroservicePurchaseOrder } from '../../api/index';
 
@@ -13,6 +13,7 @@ import { ViewWebhookCredentials } from './viewWebhookCredentials';
 import { EditWebhookCredentials } from './editWebhookCredentials';
 import { ButtonText } from '../../theme/buttonText';
 import { RowWithLink } from './rowWithLink';
+import { HeaderDataRow } from '../components/headDataRow';
 
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
@@ -45,13 +46,6 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(0),
             lineHeight: 1.75,
         },
-        label: {
-            paddingBottom: theme.spacing(2),
-            color: theme.palette.text.primary
-        },
-        data: {
-            color: theme.palette.text.secondary
-        },
         textField: { //https://stackoverflow.com/a/60461876 excellent resource
             '& .MuiOutlinedInput-input': {
                 color: 'white'
@@ -70,28 +64,6 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-interface HeaderDataRowProps {
-    head: string
-    data: string
-}
-
-const HeaderDataRow: React.FunctionComponent<HeaderDataRowProps> = (props) => {
-    const classes = useStyles();
-    const head = props!.head;
-    const data = props!.data;
-
-    return (
-        <Box px={0} mx={0} py={1}>
-            <Typography component="p" className={classes.label}>
-                {head}
-            </Typography>
-
-            <Typography component="p" className={classes.data}>
-                {data}
-            </Typography>
-        </Box>
-    );
-};
 
 export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();

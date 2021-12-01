@@ -9,7 +9,7 @@ import {
     generatePath
 } from 'react-router-dom';
 
-import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
+import { getApplication, getApplications, HttpResponseApplication, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
 
@@ -33,7 +33,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
     const routeApplicationProps = withRouteApplicationProps('documentation');
     const applicationId = routeApplicationProps.applicationId;
 
-    const [application, setApplication] = useState({} as HttpResponseApplications2);
+    const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 

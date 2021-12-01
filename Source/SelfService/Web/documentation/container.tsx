@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useHistory, Switch } from 'react-router-dom';
 import { Link } from '@fluentui/react';
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplication } from '../api/api';
 
 
 import './documentation.scss';
@@ -17,7 +17,7 @@ import { Doc as SetupAzurePipelines } from './cicd/setupAzurePipelines';
 
 type Props = {
     environment: string
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
 };
 
 export const DocumentationContainerScreen: React.FunctionComponent<Props> = (props) => {

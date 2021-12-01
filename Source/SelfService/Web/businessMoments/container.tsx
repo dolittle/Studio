@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useParams, Switch } from 'react-router-dom';
 
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplication } from '../api/api';
 
 import { Editor as BusinessMomentEditor } from './editor';
 import { BusinessMomentsOverview } from './overview';
@@ -21,7 +21,7 @@ import { withRouteApplicationProps } from '../utils/route';
 
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     environment: string
 };
 

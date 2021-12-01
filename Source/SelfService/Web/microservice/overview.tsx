@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplication } from '../api/api';
 
 import '../microservice/microservice.scss';
 import { ViewCard } from './viewCard';
@@ -17,7 +17,7 @@ import { microservices } from '../stores/microservice';
 
 type Props = {
     environment: string
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
 };
 
 

@@ -5,7 +5,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplication } from '../api/api';
 
 
 
@@ -13,7 +13,7 @@ const stackTokens = { childrenGap: 15 };
 
 type Props = {
     environment: string
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
 };
 
 

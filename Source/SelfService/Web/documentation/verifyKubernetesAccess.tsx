@@ -4,7 +4,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
-import { HttpResponseApplications2 } from '../api/api';
+import { HttpResponseApplication } from '../api/api';
 
 type Vars = {
     clusterName: string
@@ -49,7 +49,7 @@ kubectl -n application-${vars.applicationId} get pods
 };
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     info: any
 };
 

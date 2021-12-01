@@ -14,7 +14,7 @@ import {
 import {
     getApplication,
     getApplications,
-    HttpResponseApplications2,
+    HttpResponseApplication,
     ShortInfoWithEnvironment,
     HttpResponseApplications,
     HttpResponseMicroservices,
@@ -33,12 +33,11 @@ import {
 // I wonder if scss is scoped like svelte. I hope so!
 // Not scoped like svelte
 import '../application/applicationScreen.scss';
-import { ApplicationsChanger } from '../application/applicationsChanger';
+
 import {
     mergeMicroservicesFromGit,
     mergeMicroservicesFromK8s
 } from '../stores/microservice';
-import { BreadCrumbContainer } from '../layout/breadcrumbs';
 
 import { withRouteApplicationProps } from '../utils/route';
 
@@ -48,8 +47,6 @@ import {
     PickEnvironment
 } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
-import { TopRightMenu } from '../components/topRightMenu';
-import { Grid } from '@material-ui/core';
 import { TopNavBar } from '../components/topNavBar';
 
 export const MicroservicesScreen: React.FunctionComponent = () => {
@@ -59,7 +56,7 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
     const routeApplicationProps = withRouteApplicationProps('microservices');
     const applicationId = routeApplicationProps.applicationId;
 
-    const [application, setApplication] = useState({} as HttpResponseApplications2);
+    const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 

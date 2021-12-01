@@ -13,13 +13,13 @@ import { useSnackbar } from 'notistack';
 
 import { savePurchaseOrderMicroservice, getFirstIngressFromApplication } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
-import { HttpResponseApplications2, getLatestRuntimeInfo } from '../../api/api';
+import { HttpResponseApplication, getLatestRuntimeInfo } from '../../api/api';
 import { useGlobalContext } from '../../stores/notifications';
 import { Configuration } from './configuration';
 import { Tab, Tabs } from '../../theme/tabs';
 
 type Props = {
-    application: HttpResponseApplications2;
+    application: HttpResponseApplication;
     environment: string;
 };
 

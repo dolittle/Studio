@@ -5,14 +5,14 @@ import React, { useEffect, useState } from 'react';
 import { Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 
-import { HttpResponseApplications2 } from '../../api/api';
+import { HttpResponseApplication } from '../../api/api';
 import { getRuntimeV1 } from '../../api/insights';
 import { DumpJson } from '../dumpJson';
 import { FaillingPartitionsSummary } from './failingPartitionsSummary';
 import { StateSummary } from './stateSummary';
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     environment: string
 };
 

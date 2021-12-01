@@ -9,7 +9,7 @@ import {
     Switch
 } from 'react-router-dom';
 
-import { getApplication, getApplications, HttpResponseApplications2, ShortInfoWithEnvironment, HttpResponseApplications, HttpResponseMicroservices, getMicroservices } from '../api/api';
+import { getApplication, getApplications, HttpResponseApplication, ShortInfoWithEnvironment, HttpResponseApplications, HttpResponseMicroservices, getMicroservices } from '../api/api';
 
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
@@ -31,7 +31,7 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
     const { currentEnvironment, currentApplicationId } = useGlobalContext();
     const routeApplicationProps = withRouteApplicationProps('business-moments');
     const applicationId = routeApplicationProps.applicationId;
-    const [application, setApplication] = useState({} as HttpResponseApplications2);
+    const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 

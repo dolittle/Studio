@@ -9,11 +9,11 @@
 import React from 'react';
 
 import { MicroserviceRawDataLogIngestor } from '../../../api/index';
-import { HttpResponseApplications2 } from '../../../api/api';
+import { HttpResponseApplication } from '../../../api/api';
 import { EditConfig } from './editConfig';
 
 type Props = {
-    application: HttpResponseApplications2
+    application: HttpResponseApplication
     environment: string
     ms: MicroserviceRawDataLogIngestor
 };

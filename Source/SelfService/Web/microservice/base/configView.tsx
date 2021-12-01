@@ -2,20 +2,20 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 
-import { Label } from '@fluentui/react/lib/Label';
-import { TextField } from '@fluentui/react/lib/TextField';
 import { Grid } from '@material-ui/core';
 
 import { MicroserviceSimple } from '../../api/index';
+import { HeaderDataRow } from '../components/headDataRow';
 
 type Props = {
-    microservice: MicroserviceSimple
+    microservice: MicroserviceSimple;
 };
 
-export const ConfigView: React.FunctionComponent<Props> = (props) => {
+export const View: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const ms = _props.microservice;
-    // TODO why am I seeing secretNamePrefix and not domainPrefix?
+    const msName = ms.name;
+
     return (
         <Grid
             container
@@ -23,34 +23,25 @@ export const ConfigView: React.FunctionComponent<Props> = (props) => {
             justifyContent="flex-start"
             alignItems="stretch"
         >
-            <h1>Microservice Specific</h1>
-            <Label>UUID</Label>
-            <TextField defaultValue={ms.dolittle.microserviceId} readOnly />
+            <HeaderDataRow
+                head='Name'
+                data={msName}
+            />
 
-            <Label>Name</Label>
-            <TextField defaultValue={ms.name} readOnly />
+            <HeaderDataRow
+                head='uuid provided'
+                data={ms.dolittle.microserviceId}
+            />
 
-            <Label>Environment</Label>
-            <TextField defaultValue={ms.environment} readOnly />
+            <HeaderDataRow
+                head='Head image'
+                data={ms.extra.headImage}
+            />
 
-            <Label>Head Image</Label>
-            <TextField defaultValue={ms.extra.headImage} readOnly />
-
-            <Label>Runtime Image</Label>
-            <TextField defaultValue={ms.extra.runtimeImage} readOnly />
-
-
-            <h1>Ingress</h1>
-
-            <Label>Path</Label>
-            <TextField placeholder="/" defaultValue={ms.extra.ingress.path} readOnly />
-
-            <Label>PathType</Label>
-            <TextField defaultValue={ms.extra.ingress.pathType} readOnly />
-
-            <Label>Domain Prefix</Label>
-            <TextField placeholder="" defaultValue={ms.extra.ingress.domainPrefix} readOnly />
-        </Grid>
+            <HeaderDataRow
+                head='Runtime image'
+                data={ms.extra.runtimeImage}
+            />
+        </Grid >
     );
 };
-
