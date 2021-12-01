@@ -1,3 +1,9 @@
+# [1.9.2] - 2021-12-1 [PR: #138](https://github.com/dolittle/Studio/pull/138)
+## Summary
+
+Via settings, possible to change customer
+
+
 # [1.9.1] - 2021-12-1 [PR: #139](https://github.com/dolittle/Studio/pull/139)
 ## Summary
 
