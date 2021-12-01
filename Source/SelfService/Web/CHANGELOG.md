@@ -1,3 +1,12 @@
+# [1.9.1] - 2021-12-1 [PR: #139](https://github.com/dolittle/Studio/pull/139)
+## Summary
+
+- Base configuartion view is not based on material-ui
+- Display customerTenantId and the ingress path (host + path)
+- Display Microservice Paths
+- Rename HttpResponseApplications2 to HttpResponseApplication
+
+
 # [1.9.0] - 2021-11-23 [PR: #136](https://github.com/dolittle/Studio/pull/136)
 ## Summary
 
