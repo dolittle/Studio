@@ -49,6 +49,22 @@ fi
 
 cp -r Environment/k3d/git/* /tmp/dolittle-local-dev
 
+#kubectl apply -f 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/baremetal/deploy.yaml'
+kubectl apply -f ingress.yaml
+kubectl patch -n ingress-nginx service ingress-nginx-controller -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl -n ingress-nginx patch deployments.apps ingress-nginx-controller -p '{
+    "spec": {
+        "template": {
+            "metadata": {
+                "labels": {
+                    "system": "Ingress",
+                    "ingress": "Nginx"
+                }
+            }
+        }
+    }
+}'
+
 cd Environment/k3d/k8s/
 kubectl apply -f namespace.yml
 kubectl apply -f .
