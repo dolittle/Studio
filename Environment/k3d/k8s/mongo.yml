@@ -63,8 +63,21 @@ spec:
         infrastructure: Mongo
     spec:
       containers:
+      - name: mongo
+        image: dolittle/mongodb:4.2.2
+        ports:
         - name: mongo
-          image: dolittle/mongodb:4.2.2
-          ports:
-            - name: mongo
-              containerPort: 27017
+          containerPort: 27017
+        volumeMounts:
+          - name: dev-mongo-storage
+            mountPath: /data/db
+
+  volumeClaimTemplates:
+    - metadata:
+        name: dev-mongo-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: "1Gi"
+        storageClassName: "managed-premium"
