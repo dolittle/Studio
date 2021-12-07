@@ -70,7 +70,7 @@ export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (prop
             {hasMicroservices && (
                 <div className="serv">
                     <ul>
-                        {$microservices.map((ms) => {
+                        {filteredMicroservices.map((ms) => {
                             return <li key={`${environment}-${ms.id}`}><ViewCard
                                 microserviceId={ms.id}
                                 microserviceName={ms.name}
