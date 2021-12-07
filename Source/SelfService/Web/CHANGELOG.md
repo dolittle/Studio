@@ -1,3 +1,9 @@
+# [1.9.3] - 2021-12-7 [PR: #141](https://github.com/dolittle/Studio/pull/141)
+## Summary
+
+Fixes that only the microservices that belong to the environment are showed in the microservices overview screen.
+
+
 # [1.9.2] - 2021-12-1 [PR: #138](https://github.com/dolittle/Studio/pull/138)
 ## Summary
 
