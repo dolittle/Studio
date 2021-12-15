@@ -4,15 +4,18 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
 
-import { HttpResponsePodStatus, PodInfo, ContainerStatusInfo } from '../../api/api';
+import { HttpResponsePodStatus, PodInfo, ContainerStatusInfo, restartMicroservice } from '../../api/api';
 import { ViewLogIcon, DownloadLogIcon } from '../../theme/icons';
+import { ButtonText } from '../../theme/buttonText';
 
 type Props = {
     status: string
     data: HttpResponsePodStatus
     environment: string
     applicationId: string
+    microserviceId: string
 };
 
 type Item = {
@@ -28,9 +31,11 @@ type Item = {
 };
 
 export const HealthStatus: React.FunctionComponent<Props> = (props) => {
+    const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
     const _props = props!;
     const applicationId = _props.applicationId;
+    const microserviceId = _props.microserviceId;
     const status = _props.status;
     const data = _props.data;
     const environment = _props.environment;
@@ -90,6 +95,16 @@ export const HealthStatus: React.FunctionComponent<Props> = (props) => {
 
     return (
         <Box component={Paper} m={2}>
+            <ButtonText
+                onClick={async () => {
+                    const success = await restartMicroservice(applicationId, environment, microserviceId);
+                    if (!success) {
+                        enqueueSnackbar('Failed to restart microservice', { variant: 'error' });
+                        return;
+                    }
+                    window.location = window.location;
+                }}
+            >Click to Restart the microservice</ButtonText>
             <TableContainer>
                 <Table size="small" aria-label="simple table">
                     <TableHead>
