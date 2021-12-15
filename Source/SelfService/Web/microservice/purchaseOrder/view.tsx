@@ -222,7 +222,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 </Box>
             </TabPanel>
             <TabPanel value={currentTab} index={1}>
-                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} data={podsData} />
+                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
             </TabPanel>
         </Grid >
     );

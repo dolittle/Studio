@@ -65,6 +65,10 @@ export type PodInfo = {
     containers: ContainerStatusInfo[]
 };
 
+export type HttpResponseMessage = {
+    message: string
+};
+
 export type HttpResponsePodStatus = {
     namespace: string
     microservice: ShortInfo
@@ -239,3 +243,13 @@ export async function getPodLogs(applicationId: string, podName: string, contain
     return jsonResult;
 }
 
+
+export async function restartMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/microservice/${microserviceId}/restart`;
+    const response = await fetch(url, {
+        method: 'DELETE',
+        mode: 'cors'
+    });
+
+    return response.status === 200;
+}

@@ -25,6 +25,7 @@ import { DownloadButtons } from '../components/downloadButtons';
 import { MicroserviceSimple } from '../../api/index';
 import { View as LiveIngressView } from './liveIngressView';
 
+
 type Props = {
     application: HttpResponseApplication
     environment: string
@@ -81,6 +82,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
     const _props = props!;
     const application = _props.application;
+    const applicationId = application.id;
     const microserviceId = _props.microserviceId;
     const environment = _props.environment;
     const podsData = _props.podsData;
@@ -111,7 +113,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
         ms = {
             dolittle: {
-                applicationId: application.id,
+                applicationId,
                 tenantId: application.tenantId,
                 microserviceId,
             },
@@ -217,13 +219,13 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 <Box ml={2}>
                     <DownloadButtons
                         environment={environment}
-                        microserviceName={currentMicroservice.name}
-                        applicationId={application.id}
+                        microserviceName={msName}
+                        applicationId={applicationId}
                     />
                 </Box>
             </TabPanel>
             <TabPanel value={currentTab} index={1}>
-                <HealthStatus applicationId={application.id} status="TODO" environment={environment} data={podsData} />
+                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
             </TabPanel>
         </Grid >
     );
