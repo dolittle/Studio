@@ -1,3 +1,9 @@
+# [1.9.4] - 2021-12-15 [PR: #142](https://github.com/dolittle/Studio/pull/142)
+## Summary
+
+- A button to restart the microservice.
+
+
 # [1.9.3] - 2021-12-7 [PR: #141](https://github.com/dolittle/Studio/pull/141)
 ## Summary
 
