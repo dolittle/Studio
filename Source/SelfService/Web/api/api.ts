@@ -265,3 +265,35 @@ export async function restartMicroservice(applicationId: string, environment: st
 
     return response.status === 200;
 }
+
+
+export async function getEnvironmentVariables(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponseEnvironmentVariables> {
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/microservice/${microserviceId}/environment-variables`;
+
+    const response = await fetch(url, {
+        method: 'GET',
+        mode: 'cors'
+    });
+
+    const data = await response.json();
+    return data;
+}
+
+export async function updateEnvironmentVariables(applicationId: string, environment: string, microserviceId: string, input: InputEnvironmentVariable[]): Promise<boolean> {
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/microservice/${microserviceId}/environment-variables`;
+
+    const response = await fetch(
+        url,
+        {
+            method: 'PUT',
+            body: JSON.stringify({
+                data: input
+            }),
+            mode: 'cors',
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+
+    return response.status === 200;
+}

@@ -3,13 +3,18 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 
-import { HttpResponseApplication, HttpResponseEnvironmentVariables, InputEnvironmentVariable } from '../../api/api';
+import {
+    getEnvironmentVariables,
+    HttpResponseApplication,
+    HttpResponseEnvironmentVariables,
+    InputEnvironmentVariable,
+    updateEnvironmentVariables,
+} from '../../api/api';
 import { ButtonText } from '../../theme/buttonText';
 import { DropDownMenu } from '../../theme/dropDownMenu';
-
 
 type Props = {
     environment: string
@@ -21,6 +26,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const { microserviceId } = useParams() as any;
     const { enqueueSnackbar } = useSnackbar();
 
+    const applicationId = _props.application.id;
+    const environment = _props.environment;
     const [loaded, setLoaded] = useState(false);
     const [currentData, setCurrentData] = useState([] as InputEnvironmentVariable[]);
     const [originalData, setOriginalData] = useState([] as InputEnvironmentVariable[]);
@@ -42,16 +49,15 @@ export const View: React.FunctionComponent<Props> = (props) => {
             ]
         } as HttpResponseEnvironmentVariables;
 
-        //Promise.all([
-        //    getEnvironmentVariables(applicationId, environment, microserviceId)
-        //]).then(values => {
-        //    setCurrentData(fakeData);
-        //    setLoaded(true);
-        //});
-        // Spreading does not work
-        setCurrentData(JSON.parse(JSON.stringify(fakeData.data)));
-        setOriginalData(JSON.parse(JSON.stringify(fakeData.data)));
-        setLoaded(true);
+        Promise.all([
+            getEnvironmentVariables(applicationId, environment, microserviceId)
+        ]).then(values => {
+            const data = values[0].data;
+            // Spreading does not work
+            setCurrentData(JSON.parse(JSON.stringify(data)));
+            setOriginalData(JSON.parse(JSON.stringify(data)));
+            setLoaded(true);
+        });
     }, []);
 
     if (!loaded) {
@@ -166,6 +172,13 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         }
                         enqueueSnackbar('Send to server as changes were detected', { variant: 'info' });
                         console.log(currentData);
+                        const success = await updateEnvironmentVariables(applicationId, environment, microserviceId, currentData);
+                        if (!success) {
+                            enqueueSnackbar('Environment variables are saved', { variant: 'error' });
+                            return;
+                        }
+                        // TODO make it clear to trigger a restart
+                        enqueueSnackbar('Environment variables are saved, you need to manually trigger a restart for them to take effect', { variant: 'info' });
                     }}
                 >Save</ButtonText>
 
