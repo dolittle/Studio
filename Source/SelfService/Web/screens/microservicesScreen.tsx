@@ -24,6 +24,7 @@ import { MicroservicesOverviewScreen } from '../microservice/overview';
 import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
 import { MicroserviceEditScreen } from '../microservice/microserviceEditScreen';
 import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';
+import { View as MicroserviceEnvironmentVariablesView } from '../microservice/environmentVariables/view';
 import { PodLogScreen } from '../microservice/podLogScreen';
 import {
     LayoutWithSidebar,
@@ -188,6 +189,10 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
 
                 <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId">
                     <MicroserviceViewScreen application={application} environment={currentEnvironment} />
+                </Route>
+
+                <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId/environment-variables">
+                    <MicroserviceEnvironmentVariablesView application={application} environment={currentEnvironment} />
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/pod/view/:podName/logs">

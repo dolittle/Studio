@@ -101,12 +101,24 @@ export type IngressURLWithCustomerTenantID = {
     customerTenantID: string
 };
 
-
 export type SimpleIngressPath = {
     path: string;
     pathType: string;
 };
 
+export type InputEnvironmentVariable = {
+    name: string;
+    value: string;
+    isSecret: boolean;
+};
+
+export type HttpInputEnvironmentVariables = {
+    data: InputEnvironmentVariable[];
+};
+
+export type HttpResponseEnvironmentVariables = {
+    data: InputEnvironmentVariable[];
+};
 
 export function getServerUrlPrefix(): string {
     return '/selfservice/api';
