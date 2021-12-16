@@ -151,11 +151,18 @@ export const View: React.FunctionComponent<Props> = (props) => {
                             return false;
                         });
                         if (allValid.length !== 0) {
-                            enqueueSnackbar('You cant have an empty name or value', { variant: 'info' });
+                            enqueueSnackbar('You cant have an empty name or value', { variant: 'error' });
                             return;
                         }
-                        enqueueSnackbar('Send to server as changes were detected', { variant: 'info' });
-                        console.log(currentData);
+
+                        const uniqueNames = currentData.map(item => item.name);
+                        if ((new Set(uniqueNames)).size !== uniqueNames.length) {
+                            enqueueSnackbar('You cant have duplicate names', { variant: 'error' });
+                            return;
+                        }
+
+                        enqueueSnackbar('Saving as changes were detected', { variant: 'info' });
+
                         const success = await updateEnvironmentVariables(applicationId, environment, microserviceId, currentData);
                         if (!success) {
                             enqueueSnackbar('Environment variables are saved', { variant: 'error' });
