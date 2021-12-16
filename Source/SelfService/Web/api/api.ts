@@ -282,13 +282,15 @@ export async function getEnvironmentVariables(applicationId: string, environment
 export async function updateEnvironmentVariables(applicationId: string, environment: string, microserviceId: string, input: InputEnvironmentVariable[]): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/microservice/${microserviceId}/environment-variables`;
 
+    const data = {
+        data: input
+    } as HttpInputEnvironmentVariables;
+
     const response = await fetch(
         url,
         {
             method: 'PUT',
-            body: JSON.stringify({
-                data: input
-            }),
+            body: JSON.stringify(data),
             mode: 'cors',
             headers: {
                 'content-type': 'application/json'

@@ -9,7 +9,6 @@ import { useSnackbar } from 'notistack';
 import {
     getEnvironmentVariables,
     HttpResponseApplication,
-    HttpResponseEnvironmentVariables,
     InputEnvironmentVariable,
     updateEnvironmentVariables,
 } from '../../api/api';
@@ -34,21 +33,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
 
     useEffect(() => {
-        const fakeData = {
-            data: [
-                {
-                    isSecret: false,
-                    name: 'HELLO',
-                    value: 'World'
-                },
-                {
-                    isSecret: false,
-                    name: 'PORT',
-                    value: '80'
-                },
-            ]
-        } as HttpResponseEnvironmentVariables;
-
         Promise.all([
             getEnvironmentVariables(applicationId, environment, microserviceId)
         ]).then(values => {
