@@ -1,3 +1,9 @@
+# [1.9.6] - 2021-12-17 [PR: #145](https://github.com/dolittle/Studio/pull/145)
+## Summary
+
+Nothing to see, just triggering labels.
+
+
 # [1.9.5] - 2021-12-17 [PR: #143](https://github.com/dolittle/Studio/pull/143)
 ## Summary
 
