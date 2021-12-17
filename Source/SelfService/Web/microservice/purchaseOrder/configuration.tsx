@@ -23,6 +23,7 @@ import { Button } from '../../theme/button';
 import { ButtonText } from '../../theme/buttonText';
 import { TextField } from '../../theme/textField';
 import { ErpIcon } from './erpIcon';
+import { copyToClipboard } from '../../utils/clipboard';
 
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
@@ -99,18 +100,18 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
 
-    const copyPOHeadUrl = async (event: React.MouseEvent<HTMLElement>) => {
+    const copyPOHeadUrl = (event: React.MouseEvent<HTMLElement>) => {
         try {
-            await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoHead}`);
+            copyToClipboard(`${webhookPrefix}/${webhookPoHead}`);
             enqueueSnackbar('POHEAD URL copied to clipboard.');
         } catch {
             enqueueSnackbar('Failed to copy POHEAD URL to clipboard.', { variant: 'error' });
         }
     };
 
-    const copyPOLineUrl = async (event: React.MouseEvent<HTMLElement>) => {
+    const copyPOLineUrl = (event: React.MouseEvent<HTMLElement>) => {
         try {
-            await navigator.clipboard.writeText(`${webhookPrefix}/${webhookPoLine}`);
+            copyToClipboard(`${webhookPrefix}/${webhookPoLine}`);
             enqueueSnackbar('POLINE URL copied to clipboard.');
         } catch {
             enqueueSnackbar('Failed to copy POLINE URL to clipboard.', { variant: 'error' });

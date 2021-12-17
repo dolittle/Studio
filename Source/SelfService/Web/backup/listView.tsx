@@ -17,8 +17,10 @@ import { ShortInfo } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
 
 
+import { useSnackbar } from 'notistack';
 import { BackupLink, getLink, BackupsForApplication, getBackupsByApplication, BackupLinkShareInput } from '../api/backups';
-import { useGlobalContext } from '../stores/notifications';
+import { copyToClipboard } from '../utils/clipboard';
+
 
 type BackupsDetailsList = {
     environment: string;
@@ -35,9 +37,10 @@ type Props = {
 
 export const ListView: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
+    const { enqueueSnackbar } = useSnackbar();
     const application = _props.application;
     const environment = _props.environment;
-    const { setNotification } = useGlobalContext();
+
 
     const [data, setData] = useState({} as BackupsForApplication);
     const [loaded, setLoaded] = useState(false);
@@ -115,8 +118,8 @@ export const ListView: React.FunctionComponent<Props> = (props) => {
                                     };
 
                                     const share: BackupLink = await getLink(input);
-                                    await navigator.clipboard.writeText(share.url);
-                                    setNotification('The download link is now in your clipboard', 'info');
+                                    copyToClipboard(share.url);
+                                    enqueueSnackbar('The download link is now in your clipboard', { variant: 'info' });
                                 }} /></TableCell>
                             </TableRow>
                         ))}

@@ -9,6 +9,7 @@ import copy from 'copy-to-clipboard';
 import { ButtonText } from '../../theme/buttonText';
 import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../api/cicd';
 import { Info } from '../../stores/documentationInfo';
+import { copyToClipboard } from '../../utils/clipboard';
 
 const styles = {
     '& .MuiInput-input.Mui-disabled': {
@@ -31,16 +32,9 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         onClick={async (event: React.MouseEvent<HTMLElement>) => {
             try {
                 const data = await getAzureDevopsKubernetesServiceAccount(applicationID);
-                // We have no idea if this works
-                copy(JSON.stringify(data), {
-                    debug: false,
-                });
-
-                //await navigator.clipboard.writeText(JSON.stringify(data));
+                copyToClipboard(JSON.stringify(data));
                 enqueueSnackbar('Kubernetes service account copied to clipboard.');
             } catch (e) {
-                console.log('error is', e);
-                debugger;
                 enqueueSnackbar('Failed to get data.', { variant: 'error' });
             }
         }}
@@ -54,7 +48,7 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         onClick={async (event: React.MouseEvent<HTMLElement>) => {
             try {
                 const data = await getContainerRegistry(applicationID);
-                await navigator.clipboard.writeText(JSON.stringify(data));
+                copyToClipboard(JSON.stringify(data));
                 enqueueSnackbar('Container registry copied to clipboard.');
             } catch {
                 enqueueSnackbar('Failed to get data.', { variant: 'error' });
