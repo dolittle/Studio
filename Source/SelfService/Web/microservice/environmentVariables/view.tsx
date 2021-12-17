@@ -70,7 +70,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         required
 
                         variant='outlined'
-                        //className={classes.textField}
                         value={item.name}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             let newValue = event.target.value!;
@@ -86,7 +85,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         id={`value-${index}`}
                         required
                         variant='outlined'
-                        //className={classes.textField}
                         value={item.value}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             const newValue = event.target.value!;
