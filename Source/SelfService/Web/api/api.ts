@@ -101,12 +101,24 @@ export type IngressURLWithCustomerTenantID = {
     customerTenantID: string
 };
 
-
 export type SimpleIngressPath = {
     path: string;
     pathType: string;
 };
 
+export type InputEnvironmentVariable = {
+    name: string;
+    value: string;
+    isSecret: boolean;
+};
+
+export type HttpInputEnvironmentVariables = {
+    data: InputEnvironmentVariable[];
+};
+
+export type HttpResponseEnvironmentVariables = {
+    data: InputEnvironmentVariable[];
+};
 
 export function getServerUrlPrefix(): string {
     return '/selfservice/api';
@@ -250,6 +262,40 @@ export async function restartMicroservice(applicationId: string, environment: st
         method: 'DELETE',
         mode: 'cors'
     });
+
+    return response.status === 200;
+}
+
+
+export async function getEnvironmentVariables(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponseEnvironmentVariables> {
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/microservice/${microserviceId}/environment-variables`;
+
+    const response = await fetch(url, {
+        method: 'GET',
+        mode: 'cors'
+    });
+
+    const data = await response.json();
+    return data;
+}
+
+export async function updateEnvironmentVariables(applicationId: string, environment: string, microserviceId: string, input: InputEnvironmentVariable[]): Promise<boolean> {
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/microservice/${microserviceId}/environment-variables`;
+
+    const data = {
+        data: input
+    } as HttpInputEnvironmentVariables;
+
+    const response = await fetch(
+        url,
+        {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            mode: 'cors',
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
 
     return response.status === 200;
 }
