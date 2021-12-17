@@ -1,3 +1,10 @@
+# [1.9.5] - 2021-12-17 [PR: #143](https://github.com/dolittle/Studio/pull/143)
+## Summary
+
+- View current environment variables for a microservice
+- Update microservice environment variables
+
+
 # [1.9.4] - 2021-12-15 [PR: #142](https://github.com/dolittle/Studio/pull/142)
 ## Summary
 
