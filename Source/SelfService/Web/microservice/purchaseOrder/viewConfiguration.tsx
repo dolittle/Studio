@@ -12,7 +12,7 @@ import { EditWebhookCredentials } from './editWebhookCredentials';
 import { ButtonText } from '../../theme/buttonText';
 import { RowWithLink } from './rowWithLink';
 import { HeaderDataRow } from '../components/headDataRow';
-import copyToClipboard from 'copy-to-clipboard';
+import { copyToClipboard } from '../../utils/clipboard';
 
 type Props = {
     onSave: (microservice: MicroservicePurchaseOrder) => any;
