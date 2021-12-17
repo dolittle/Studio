@@ -24,6 +24,7 @@ import { Tab, Tabs } from '../../theme/tabs';
 import { DownloadButtons } from '../components/downloadButtons';
 import { MicroserviceSimple } from '../../api/index';
 import { View as LiveIngressView } from './liveIngressView';
+import { ButtonText } from '../../theme/buttonText';
 
 
 type Props = {
@@ -217,6 +218,13 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 </Box>
                 <Divider className={classes.divider} />
                 <Box ml={2}>
+                    <ButtonText
+                        onClick={async () => {
+                            const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
+                            history.push(href);
+                        }}
+                    >Manage environment variables</ButtonText>
+
                     <DownloadButtons
                         environment={environment}
                         microserviceName={msName}
