@@ -4,7 +4,7 @@
 import React from 'react';
 import { useSnackbar } from 'notistack';
 import Input from '@mui/material/Input';
-
+import copy from 'copy-to-clipboard';
 
 import { ButtonText } from '../../theme/buttonText';
 import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../api/cicd';
@@ -31,9 +31,16 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         onClick={async (event: React.MouseEvent<HTMLElement>) => {
             try {
                 const data = await getAzureDevopsKubernetesServiceAccount(applicationID);
-                await navigator.clipboard.writeText(JSON.stringify(data));
+                // We have no idea if this works
+                copy(JSON.stringify(data), {
+                    debug: false,
+                });
+
+                //await navigator.clipboard.writeText(JSON.stringify(data));
                 enqueueSnackbar('Kubernetes service account copied to clipboard.');
-            } catch {
+            } catch (e) {
+                console.log('error is', e);
+                debugger;
                 enqueueSnackbar('Failed to get data.', { variant: 'error' });
             }
         }}
@@ -89,4 +96,3 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         </>
     );
 };
-
