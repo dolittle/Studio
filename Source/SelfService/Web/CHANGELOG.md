@@ -1,3 +1,9 @@
+# [1.9.7] - 2022-1-11 [PR: #147](https://github.com/dolittle/Studio/pull/147)
+## Summary
+
+- Disable creation of microservice, whilst we fix a few bugs
+
+
 # [1.9.6] - 2021-12-17 [PR: #145](https://github.com/dolittle/Studio/pull/145)
 ## Summary
 
