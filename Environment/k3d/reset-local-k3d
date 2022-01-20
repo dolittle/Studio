@@ -27,13 +27,22 @@ k3d cluster create dolittle-dev \
 
 CREATE_EXIT_CODE=$?
 if [ $CREATE_EXIT_CODE -ne 0 ]; then
-    echo "Error creating cluster"
+    cat <<_EOF_
+
+Error switching to the k3d context
+You might need to clean up docker
+
+docker network rm k3d-dolittle-dev
+docker rm k3d-dolittle-dev-registry
+_EOF_
+
     exit $CREATE_EXIT_CODE
 fi
 
 kubectl config use-context k3d-dolittle-dev
 CONTEXT_EXIT_CODE=$?
 if [ $CONTEXT_EXIT_CODE -ne 0 ]; then
+
     echo "Error switching to the k3d context"
     exit $CONTEXT_EXIT_CODE
 fi
