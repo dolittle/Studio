@@ -1,9 +1,12 @@
 #!/bin/bash
 
+echo "Resetting local k3d cluster"
 ROOT_PWD=$(git rev-parse --show-toplevel)
 cd $ROOT_PWD
 
 k3d cluster delete dolittle-dev
+
+echo "Deleted dolittle-dev k3d cluster"
 
 rm -rf /tmp/dolittle-local-dev
 mkdir -p /tmp/dolittle-local-dev
@@ -11,6 +14,7 @@ cd /tmp/dolittle-local-dev
 git init
 cd -
 
+echo "Creating dolittle-dev k3d cluster"
 k3d cluster create dolittle-dev \
     --servers 1 \
     --agents 1 \
@@ -20,6 +24,28 @@ k3d cluster create dolittle-dev \
     --registry-create \
     --kubeconfig-switch-context \
     -v /tmp/k3dvolume:/tmp/k3dvolume
+
+CREATE_EXIT_CODE=$?
+if [ $CREATE_EXIT_CODE -ne 0 ]; then
+    cat <<_EOF_
+
+Error switching to the k3d context
+You might need to clean up docker
+
+docker network rm k3d-dolittle-dev
+docker rm k3d-dolittle-dev-registry
+_EOF_
+
+    exit $CREATE_EXIT_CODE
+fi
+
+kubectl config use-context k3d-dolittle-dev
+CONTEXT_EXIT_CODE=$?
+if [ $CONTEXT_EXIT_CODE -ne 0 ]; then
+
+    echo "Error switching to the k3d context"
+    exit $CONTEXT_EXIT_CODE
+fi
 
 cp -r Environment/k3d/git/* /tmp/dolittle-local-dev
 
