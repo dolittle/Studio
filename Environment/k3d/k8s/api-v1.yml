@@ -22,12 +22,13 @@ metadata:
     system: Api
   name: system-api-manager
 rules:
-  - apiGroups: ["", "apps", "networking.k8s.io", "extensions", "batch"]
+  - apiGroups: ["", "apps", "networking.k8s.io", "extensions", "batch", "rbac.authorization.k8s.io"]
     resources:
       - namespaces
       - secrets
       - configmaps
       - ingresses
+      - pods/portforward
       - pods
       - pods/log
       - deployments
@@ -36,6 +37,9 @@ rules:
       - services
       - networkpolicies
       - cronjobs
+      - serviceaccounts
+      - roles
+      - rolebindings
     verbs:
       - get
       - list
