@@ -4,6 +4,10 @@
 import { Exception } from '@dolittle/rudiments';
 import { MicroserviceIngressPath } from './index';
 
+export type JobInfo = {
+    jobId: string
+};
+
 export type ShortInfo = {
     id: string
     name: string

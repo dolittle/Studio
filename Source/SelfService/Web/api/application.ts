@@ -1,7 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { Exception } from '@dolittle/rudiments';
-import { getServerUrlPrefix } from './api';
+import { getServerUrlPrefix, JobInfo, parseJSONResponse } from './api';
 
 export type HttpApplicationRequest = {
     id: string;
@@ -26,7 +25,7 @@ export async function getPersonalisedInfo(applicationId: string): Promise<any> {
 }
 
 
-export async function createApplication(input: HttpApplicationRequest): Promise<any> {
+export async function createApplication(input: HttpApplicationRequest): Promise<JobInfo | any> {
     const url = `${getServerUrlPrefix()}/application`;
     const response = await fetch(
         url,
@@ -39,16 +38,7 @@ export async function createApplication(input: HttpApplicationRequest): Promise<
             }
         });
 
-    const text = await response.text();
-
-    if (!response.ok) {
-        let jsonResponse;
-        try {
-            jsonResponse = JSON.parse(text);
-        } catch (error) {
-            throw Error('Failed to create application');
-        }
-    }
-
-    return JSON.parse(text);
+    const data = await parseJSONResponse(response);
+    debugger;
+    return data;
 }

@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { getServerUrlPrefix, parseJSONResponse } from './api';
+import { getServerUrlPrefix, JobInfo, parseJSONResponse } from './api';
 
 
 export type Customer = {
@@ -30,7 +30,7 @@ export async function getCustomers(): Promise<Customers> {
 }
 
 
-export async function createCustomer(input: HttpCustomerRequest): Promise<any> {
+export async function createCustomer(input: HttpCustomerRequest): Promise<JobInfo | any> {
     const url = `${getServerUrlPrefix()}/customer`;
     const response = await fetch(
         url,
@@ -46,3 +46,5 @@ export async function createCustomer(input: HttpCustomerRequest): Promise<any> {
     const data = await parseJSONResponse(response);
     return data;
 }
+
+

@@ -23,9 +23,6 @@ import { ButtonText } from '../theme/buttonText';
 import { Button } from '../theme/button';
 import { createApplication, HttpApplicationRequest } from '../api/application';
 import { ShortInfo } from '../api/api';
-import { applications } from '../stores/state';
-
-
 
 
 type Props = {
@@ -106,7 +103,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
 
     const [activeStep, setActiveStep] = React.useState(0);
-    const [application, setApplication] = React.useState({} as ShortInfo);
+    const [application, setApplication] = React.useState({
+        id: '',
+        name: '',
+    } as ShortInfo);
     const [contactName, setContactName] = React.useState('');
     const [contactEmail, setContactEmail] = React.useState('');
     const [environments, setEnvironments] = React.useState([
@@ -252,13 +252,11 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     const handleNext = async (event: React.MouseEvent<HTMLElement>) => {
         if (activeStep === 2) {
-            enqueueSnackbar('Create application', { variant: 'error' });
-
             const input: HttpApplicationRequest = {
                 id: application.id,
                 name: application.name,
                 tenantId: tenant.id,
-                environments: environments.map(e => e.shortName),
+                environments: environments.filter(e => e.checked).map(e => e.shortName),
             };
             try {
                 await createApplication(input);
