@@ -255,7 +255,6 @@ export async function getPodLogs(applicationId: string, podName: string, contain
     return jsonResult;
 }
 
-
 export async function restartMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/microservice/${microserviceId}/restart`;
     const response = await fetch(url, {
@@ -265,7 +264,6 @@ export async function restartMicroservice(applicationId: string, environment: st
 
     return response.status === 200;
 }
-
 
 export async function getEnvironmentVariables(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponseEnvironmentVariables> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/environment-variables`;
@@ -298,4 +296,19 @@ export async function updateEnvironmentVariables(applicationId: string, environm
         });
 
     return response.status === 200;
+}
+
+export async function parseJSONResponse(response: any): Promise<any> {
+    const text = await response.text();
+    if (!response.ok) {
+        let jsonResponse;
+        try {
+            jsonResponse = JSON.parse(text);
+        } catch (error) {
+            throw Error(`Couldn't parse the error message. The error was ${error}. Response Status ${response.status}. Response Body ${text}`);
+        }
+        throw Error(jsonResponse.message);
+    }
+    const data = JSON.parse(text);
+    return data;
 }

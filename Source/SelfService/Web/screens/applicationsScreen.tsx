@@ -15,7 +15,7 @@ import {
     HttpResponseApplications,
     ShortInfoWithEnvironment
 } from '../api/api';
-import { uriWithAppPrefix } from '../store';
+
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import { useGlobalContext } from '../stores/notifications';
