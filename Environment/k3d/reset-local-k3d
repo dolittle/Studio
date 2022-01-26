@@ -69,6 +69,8 @@ cd Environment/k3d/k8s/
 kubectl apply -f namespace.yml
 kubectl apply -f .
 
+kubectl apply -f ./Authentication/rbac-impersonator.yml
+
 cd Monitoring/
 kubectl apply -f Grafana/namespace.yml -f Logs/namespace.yml -f Metrics/namespace.yml
 kubectl apply -f Grafana/
