@@ -6,7 +6,6 @@
 // TODO change action button from create to save
 import React, { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import { useSnackbar } from 'notistack';
 
 
 import { Create as BusinessMomentsAdaptor } from './businessMomentsAdaptor/create';
@@ -40,7 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 export const Create: React.FunctionComponent<Props | undefined> = (props) => {
-    const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
     const location = useLocation();
 
@@ -122,12 +120,6 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
     }, [kindViaParams()]);
 
     const onCreate = (kind: string) => {
-        const disabled = true;
-        if (disabled) {
-            enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
-            return;
-        }
-
         searchParams.set('kind', kind);
         history.replace({ pathname: location.pathname, search: searchParams.toString() });
         setMicroserviceTypeState(kind);

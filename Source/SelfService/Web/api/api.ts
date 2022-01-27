@@ -85,6 +85,7 @@ export type HttpResponsePodLog = {
     logs: string
 };
 
+// TODO this changed
 export type HttpInputApplicationEnvironment = {
     applicationId: string
     tenantId: string
