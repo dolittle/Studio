@@ -203,7 +203,13 @@ export const getFirstIngressFromApplication = (application: HttpResponseApplicat
         throw new Exception(`environment info missing for ${environment}`);
     }
 
-    const customerTenant = environmentInfo.tenants[0];
-    const ingressInfo = environmentInfo.ingresses[customerTenant];
-    return ingressInfo;
+    return {
+        path: 'TODO: path',
+        host: 'TODO: host',
+        pathType: 'TODO: pathType',
+        domainPrefix: 'TODO: domainPrefix',
+    } as MicroserviceIngressPath;
+    //const customerTenant = environmentInfo.tenants[0];
+    //const ingressInfo = environmentInfo.ingresses[customerTenant];
+    //return ingressInfo;
 };
