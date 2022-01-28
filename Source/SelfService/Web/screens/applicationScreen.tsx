@@ -9,7 +9,7 @@ import {
     Route,
     useHistory,
     Switch,
-    generatePath
+    generatePath,
 } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
@@ -25,7 +25,7 @@ import {
     LayoutWithSidebar,
 } from '../layout/layoutWithSidebar';
 
-import { RouteNotFound } from '../components/notfound';
+import { Building } from '../application/building';
 
 export const ApplicationScreen: React.FunctionComponent = () => {
     const history = useHistory();
@@ -35,23 +35,30 @@ export const ApplicationScreen: React.FunctionComponent = () => {
     const [loaded, setLoaded] = useState(false);
     const [tenant, setTenant] = useState({} as ShortInfo);
 
-    useEffect(() => {
-        Promise.all([
-            getApplications(),
-        ]).then(values => {
-            const applicationsData = values[0] as HttpResponseApplications;
+    // TODO hack to make it work, not the final solution
+    if (!window.location.pathname.includes('/application/building/')) {
+        useEffect(() => {
+            Promise.all([
+                getApplications(),
+            ]).then(values => {
+                const applicationsData = values[0] as HttpResponseApplications;
 
-            setApplications(applicationsData.applications);
-            setTenant({
-                id: applicationsData.id,
-                name: applicationsData.name,
+                setApplications(applicationsData.applications);
+                setTenant({
+                    id: applicationsData.id,
+                    name: applicationsData.name,
+                });
+                setLoaded(true);
+            }).catch((error) => {
+                console.log(error);
+                enqueueSnackbar('Failed getting data from the server', { variant: 'error' });
             });
+        }, []);
+    } else {
+        useEffect(() => {
             setLoaded(true);
-        }).catch((error) => {
-            console.log(error);
-            enqueueSnackbar('Failed getting data from the server', { variant: 'error' });
-        });
-    }, []);
+        }, []);
+    }
 
     if (!loaded) {
         return null;
@@ -68,6 +75,9 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                     <Create tenant={tenant} />
                 </Route>
 
+                <Route exact path="/application/building/:applicationId">
+                    <Building />
+                </Route>
 
             </Switch>
 

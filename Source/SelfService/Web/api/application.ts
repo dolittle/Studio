@@ -11,6 +11,13 @@ export type HttpApplicationRequest = {
     environments: string[];
 };
 
+export type ApplicationBuildState = {
+    status: string;
+    startedAt: string;
+    finishedAt: string;
+};
+
+
 export async function getPersonalisedInfo(applicationId: string): Promise<any> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}/personalised-application-info`;
 
@@ -39,6 +46,18 @@ export async function createApplication(input: HttpApplicationRequest): Promise<
         });
 
     const data = await parseJSONResponse(response);
-    debugger;
+    return data;
+}
+
+export async function isApplicationOnline(applicationID: string): Promise<ApplicationBuildState | any> {
+    const url = `${getServerUrlPrefix()}/application/${applicationID}/check/isonline`;
+    const response = await fetch(
+        url,
+        {
+            method: 'GET',
+            mode: 'cors',
+        });
+
+    const data = await parseJSONResponse(response);
     return data;
 }

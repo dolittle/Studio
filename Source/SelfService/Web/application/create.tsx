@@ -23,8 +23,9 @@ import { ButtonText } from '../theme/buttonText';
 import { Button } from '../theme/button';
 import { createApplication, HttpApplicationRequest } from '../api/application';
 import { ShortInfo } from '../api/api';
+import { Guid } from '@dolittle/rudiments';
 
-
+// TODO rename tenant to customer
 type Props = {
     tenant: ShortInfo;
 };
@@ -95,6 +96,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const tenant = _props.tenant;
 
+    const newApplicationId = Guid.create().toString();
     const steps = [
         'Provide a name',
         'Provide contact info',
@@ -104,7 +106,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     const [activeStep, setActiveStep] = React.useState(0);
     const [application, setApplication] = React.useState({
-        id: '',
+        id: newApplicationId,
         name: '',
     } as ShortInfo);
     const [contactName, setContactName] = React.useState('');
@@ -261,8 +263,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             try {
                 await createApplication(input);
                 enqueueSnackbar('Application created', { variant: 'info' });
-                console.log(`kubectl delete namespace application-${application.id}
-                rm -rf /tmp/dolittle-local-dev/Source/V3/platform-api/453e04a7-4f9d-42f2-b36c-d51fa2c83fa3/${application.id}`);
             } catch (error) {
                 enqueueSnackbar('Error creating application', { variant: 'error' });
             }
