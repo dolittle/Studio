@@ -18,7 +18,7 @@ export const Building: React.FunctionComponent<Props> = (props) => {
 
     const [loaded, setLoaded] = useState(false);
     const [applicationBuildState, setApplicationBuildState] = useState({
-        state: '',
+        status: '',
         startedAt: '',
         finishedAt: '',
     } as ApplicationBuildState);
