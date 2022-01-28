@@ -11,6 +11,8 @@ import { View as BaseView } from './base/view';
 import { View as BusinessMomentsAdaptorView } from './businessMomentsAdaptor/view';
 import { View as RawDataLogView } from './rawDataLog/view';
 import { View as PurchaseOrderApiView } from './purchaseOrder/view';
+import { View as StaticFilesV1View } from './staticSite/view';
+
 
 type Props = {
     application: HttpResponseApplication
@@ -76,6 +78,10 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
             return (
                 <PurchaseOrderApiView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
             );
+        case 'static-files-v1':
+            return (
+                <StaticFilesV1View applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
+            );
         default:
             return (
                 <>
@@ -93,16 +99,19 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
 function whichSubView(currentMicroservice: any): string {
     // Today we try and map subviews based on kind, its not perfect
     let kind = currentMicroservice.kind;
+    // TODO this code block needs removing
+    // Kind via live should be possible since we add annotation "dolittle.io/microservice-kind"
     if (
-        currentMicroservice &&
-        currentMicroservice.live &&
-        currentMicroservice.live.images &&
-        currentMicroservice.live.images[0] &&
-        currentMicroservice.live.images[0].image &&
-        currentMicroservice.live.images[0].image === '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/dolittle/platform/platform-api:dev-x'
+        currentMicroservice?.live?.images[0]?.image === '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/dolittle/platform/platform-api:dev-x'
     ) {
         kind = 'raw-data-log-ingestor';
     }
+
+
+    if (currentMicroservice?.live?.kind === 'static-files-v1') {
+        kind = 'static-files-v1';
+    }
+
 
     if (kind === '') {
         kind = 'simple'; // TODO change
