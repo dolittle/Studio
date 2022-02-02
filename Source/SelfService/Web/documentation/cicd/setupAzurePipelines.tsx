@@ -6,9 +6,9 @@ import { useSnackbar } from 'notistack';
 import Input from '@material-ui/core/Input';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-import { HttpResponseApplication } from '../../api/api';
 import { ButtonText } from '../../theme/buttonText';
 import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../api/cicd';
+import { Info } from '../../stores/documentationInfo';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -21,8 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type Props = {
-    application: HttpResponseApplication
-    info: any
+    info: Info
 };
 
 export const Doc: React.FunctionComponent<Props> = (props) => {
@@ -30,7 +29,7 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
     const _props = props!;
     const info = _props.info;
-    const applicationID = _props.application.id;
+    const applicationID = info.applicationId;
 
     const buttonServiceAccount = <ButtonText
         withIcon={false}
