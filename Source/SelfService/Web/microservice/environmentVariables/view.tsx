@@ -166,6 +166,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
                             enqueueSnackbar('Environment variables are saved', { variant: 'error' });
                             return;
                         }
+
+                        setOriginalData(JSON.parse(JSON.stringify(currentData)));
                         // TODO make it clear to trigger a restart
                         enqueueSnackbar('Environment variables are saved, you need to manually trigger a restart for them to take effect', { variant: 'info' });
                     }}
