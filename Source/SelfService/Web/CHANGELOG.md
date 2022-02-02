@@ -1,3 +1,10 @@
+# [1.11.0] - 2022-2-2 [PR: #150](https://github.com/dolittle/Studio/pull/150)
+## Summary
+
+- Adding typing to the data coming via personalised-info endpoint.
+- Able to override the DOLITTLE_CUSTOMER_ID via `make develop-backend`.
+
+
 # [1.10.0] - 2022-2-2 [PR: #149](https://github.com/dolittle/Studio/pull/149)
 ## Summary
 
