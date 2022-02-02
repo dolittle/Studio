@@ -4,7 +4,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
-import { HttpResponseApplication } from '../api/api';
+import { Info } from '../stores/documentationInfo';
 
 type Vars = {
     clusterName: string
@@ -49,18 +49,16 @@ kubectl -n application-${vars.applicationId} get pods
 };
 
 type Props = {
-    application: HttpResponseApplication
-    info: any
+    info: Info
 };
 
 export const Doc: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
-    const application = _props.application;
     const info = _props.info;
 
     const vars = {
-        clusterName: 'Cluster-Production-Three',
-        resourceGroup: 'Infrastructure-Essential',
+        clusterName: info.clusterName,
+        resourceGroup: info.resourceGroup,
         subscriptionId: info.subscriptionId,
         applicationId: info.applicationId,
     } as Vars;

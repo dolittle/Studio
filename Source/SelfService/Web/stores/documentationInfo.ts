@@ -5,13 +5,32 @@ import {
     getPersonalisedInfo,
 } from '../api/application';
 
+export type Info = {
+    containerRegistryName: string;
+    subscriptionId: string;
+    applicationId: string;
+    endpoints: Endpoints;
+    resourceGroup: string;
+    clusterName: string;
+};
+
+export type Endpoints = {
+    cluster: string;
+    containerRegistry: string;
+};
+
 const data = {
     data: {
         subscriptionId: '',
         applicationId: '',
-        customer: {},
-        application: {},
-    } as any,
+        containerRegistryName: '',
+        endpoints: {
+            cluster: '',
+            containerRegistry: '',
+        } as Endpoints,
+        resourceGroup: '',
+        clusterName: '',
+    } as Info,
     isLoaded: false,
 };
 

@@ -52,10 +52,6 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
         return null;
     }
 
-    const docProps = {
-        application,
-        info: $info,
-    };
     return (
         <>
             <div className="documentation">
@@ -103,7 +99,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                             Back
                         </Link>
                         <h1>Container Registry Info</h1>
-                        <AccessContainerRegistry {...docProps} />
+                        <AccessContainerRegistry info={$info} />
                     </Route>
 
                     <Route exact path="/documentation/application/:applicationId/:environment/verify-kubernetes-access">
@@ -114,7 +110,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                             Back
                         </Link>
                         <h1>Verify access to kubernetes</h1>
-                        <VerifyKubernetesAccess {...docProps} />
+                        <VerifyKubernetesAccess info={$info} />
                     </Route>
 
                     <Route exact path="/documentation/application/:applicationId/:environment/ci-cd/azure-pipelines">
@@ -125,7 +121,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                             Back
                         </Link>
                         <h1>Setup Azure Pipelines</h1>
-                        <SetupAzurePipelines {...docProps} />
+                        <SetupAzurePipelines info={$info} />
                     </Route>
 
                     <Route>

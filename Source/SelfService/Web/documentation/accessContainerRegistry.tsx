@@ -4,7 +4,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
-import { HttpResponseApplication } from '../api/api';
+import { Info } from '../stores/documentationInfo';
 
 type Vars = {
     acrId: string
@@ -34,17 +34,15 @@ az acr repository list --name ${vars.acrId} -otable
 };
 
 type Props = {
-    application: HttpResponseApplication
-    info: any
+    info: Info
 };
 
 export const Doc: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
-    const application = _props.application;
     const info = _props.info;
 
     const vars = {
-        acrId: info.customer.container_registry_name,
+        acrId: info.containerRegistryName,
         subscriptionId: info.subscriptionId,
     } as Vars;
 
