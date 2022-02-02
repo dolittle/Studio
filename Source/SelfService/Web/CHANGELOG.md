@@ -1,3 +1,10 @@
+# [1.10.0] - 2022-2-2 [PR: #149](https://github.com/dolittle/Studio/pull/149)
+## Summary
+
+- Pass in the extact name of the Environment
+- On success from the server update original data
+
+
 # [1.9.7] - 2022-1-11 [PR: #147](https://github.com/dolittle/Studio/pull/147)
 ## Summary
 
