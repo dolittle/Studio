@@ -11,7 +11,7 @@ import { Modal, DefaultButton } from '@fluentui/react';
 
 
 import { ViewCard } from './viewCard';
-import { HttpResponseApplication } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
 import { MicroserviceBusinessMomentAdaptor, HttpResponseBusinessMoments } from '../api/index';
 import { withRouteApplicationProps } from '../utils/route';
 

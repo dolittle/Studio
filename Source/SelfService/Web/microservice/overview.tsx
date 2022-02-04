@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 
-import { HttpResponseApplication } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
 
 import '../microservice/microservice.scss';
 import { ViewCard } from './viewCard';

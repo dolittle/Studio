@@ -16,7 +16,6 @@ import { MicroservicesScreen } from './screens/microservicesScreen';
 import { GlobalContextProvider } from './stores/notifications';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { RouteNotFound } from './components/notfound';
-import { EnvironmentScreen } from './screens/environmentScreen';
 import { Screen as AdminScreen } from './screens/adminScreen';
 
 import { createTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
@@ -114,10 +113,6 @@ export const App = () => {
                                     <ApplicationScreen />
                                 </Route>
 
-
-                                <Route path="/environment/application/:applicationId">
-                                    <EnvironmentScreen />
-                                </Route>
 
                                 <Route path="/microservices/application/:applicationId/:environment">
                                     <MicroservicesScreen />

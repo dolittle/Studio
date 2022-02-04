@@ -2,13 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Pivot, PivotItem, IDropdownOption } from '@fluentui/react';
 import { BusinessMomentEditor } from './businessMomentEditor';
 
 import { loader } from '@monaco-editor/react';
-import { HttpResponseApplication } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
 import { MicroserviceBusinessMomentAdaptor, BusinessMoment, HttpResponseBusinessMoments, BusinessMomentEntity } from '../api/index';
 import { Guid } from '@dolittle/rudiments';
 import { EntityEditor } from './entityEditor';

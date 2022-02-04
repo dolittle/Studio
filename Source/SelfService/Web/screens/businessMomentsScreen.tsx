@@ -9,7 +9,6 @@ import {
     Switch
 } from 'react-router-dom';
 
-import { getApplication, getApplications, HttpResponseApplication, ShortInfoWithEnvironment, HttpResponseApplications, HttpResponseMicroservices, getMicroservices } from '../api/api';
 
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
@@ -25,6 +24,8 @@ import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { useGlobalContext } from '../stores/notifications';
 import { TopNavBar } from '../components/topNavBar';
+import { ShortInfoWithEnvironment, getMicroservices, HttpResponseMicroservices } from '../api/api';
+import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
 export const BusinessMomentsScreen: React.FunctionComponent = () => {
     const history = useHistory();

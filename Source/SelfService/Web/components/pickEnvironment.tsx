@@ -4,7 +4,8 @@ import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { useHistory, generatePath } from 'react-router-dom';
-import { HttpResponseApplication, ShortInfoWithEnvironment } from '../api/api';
+import { ShortInfoWithEnvironment } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
 import { List } from '@fluentui/react/lib/List';
 import { useGlobalContext } from '../stores/notifications';
 

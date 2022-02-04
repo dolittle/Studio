@@ -13,7 +13,8 @@ import Box from '@material-ui/core/Box';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import ShareIcon from '@material-ui/icons/Share';
 
-import { HttpResponseApplication, ShortInfo } from '../api/api';
+import { ShortInfo } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
 
 
 import { BackupLink, getLink, BackupsForApplication, getBackupsByApplication, BackupLinkShareInput } from '../api/backups';

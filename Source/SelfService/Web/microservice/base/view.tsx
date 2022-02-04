@@ -16,7 +16,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
 
-import { HttpResponseApplication, HttpResponsePodStatus } from '../../api/api';
+import { HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
 import { getFirstIngressFromApplication, microservices } from '../../stores/microservice';
@@ -26,6 +26,7 @@ import { DownloadButtons } from '../components/downloadButtons';
 import { MicroserviceSimple } from '../../api/index';
 import { View as LiveIngressView } from './liveIngressView';
 import { ButtonText } from '../../theme/buttonText';
+import { HttpResponseApplication } from '../../api/application';
 
 
 type Props = {

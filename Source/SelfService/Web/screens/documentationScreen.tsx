@@ -9,7 +9,7 @@ import {
     generatePath
 } from 'react-router-dom';
 
-import { getApplication, getApplications, HttpResponseApplication, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
+import { ShortInfoWithEnvironment } from '../api/api';
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
 
@@ -23,6 +23,12 @@ import { RouteNotFound } from '../components/notfound';
 import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
 import { useGlobalContext } from '../stores/notifications';
 import { TopNavBar } from '../components/topNavBar';
+import {
+    HttpResponseApplication,
+    getApplications,
+    getApplication,
+    HttpResponseApplications,
+} from '../api/application';
 
 
 

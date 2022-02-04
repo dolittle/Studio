@@ -9,16 +9,15 @@ import {
     Route,
     useHistory,
     Switch,
-    generatePath,
 } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import {
-    getApplications,
     ShortInfoWithEnvironment,
-    HttpResponseApplications,
     ShortInfo,
 } from '../api/api';
+
+import { getApplications, HttpResponseApplications } from '../api/application';
 
 import { Create } from '../application/create';
 import {

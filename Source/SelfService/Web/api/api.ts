@@ -43,20 +43,6 @@ export type MicroserviceInfo = {
     ingressPaths: SimpleIngressPath[]
 };
 
-export type HttpResponseApplications = {
-    id: string
-    name: string
-    applications: ShortInfoWithEnvironment[]
-};
-
-export type HttpResponseApplication = {
-    id: string
-    name: string
-    tenantId: string
-    tenantName: string
-    environments: HttpInputApplicationEnvironment[]
-    microservices: any[] // Not great
-};
 
 export type HttpResponseMicroservices = {
     application: ShortInfo
@@ -85,15 +71,7 @@ export type HttpResponsePodLog = {
     logs: string
 };
 
-// TODO this changed
-export type HttpInputApplicationEnvironment = {
-    applicationId: string
-    tenantId: string
-    name: string
-    automationEnabled: boolean
-    tenants: string[]
-    ingresses: Map<string, MicroserviceIngressPath>
-};
+
 
 export type LatestRuntimeInfo = {
     image: string
@@ -136,44 +114,7 @@ export function getLatestRuntimeInfo(): LatestRuntimeInfo {
     };
 }
 
-export async function getLiveApplications(): Promise<any> {
-    const url = `${getServerUrlPrefix()}/live/applications`;
-    const result = await fetch(
-        url,
-        {
-            method: 'GET',
-            mode: 'cors'
-        });
-    const jsonResult = await result.json();
-    return jsonResult;
-}
 
-export async function getApplications(): Promise<any> {
-    const url = `${getServerUrlPrefix()}/applications`;
-    const result = await fetch(
-        url,
-        {
-            method: 'GET',
-            mode: 'cors'
-        });
-    const jsonResult = await result.json();
-    return jsonResult;
-}
-
-export async function getApplication(applicationId: string): Promise<HttpResponseApplication> {
-    const url = `${getServerUrlPrefix()}/application/${applicationId}`;
-
-    const result = await fetch(
-        url,
-        {
-            method: 'GET',
-            mode: 'cors'
-        });
-
-    const jsonResult: HttpResponseApplication = await result.json();
-    jsonResult.microservices = jsonResult.microservices || [];
-    return jsonResult;
-}
 
 // getMicroservices by applicationId
 export async function getMicroservices(applicationId: string): Promise<HttpResponseMicroservices> {

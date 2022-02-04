@@ -14,7 +14,7 @@ import { Config } from './config';
 import { saveRawDataLogIngestorMicroservice } from '../../../stores/microservice';
 import { MicroserviceRawDataLogIngestor } from '../../../api/index';
 
-import { HttpResponseApplication } from '../../../api/api';
+import { HttpResponseApplication } from '../../../api/application';
 
 const stackTokens = { childrenGap: 15 };
 

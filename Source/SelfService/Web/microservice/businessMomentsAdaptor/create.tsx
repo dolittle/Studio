@@ -18,8 +18,9 @@ import { Config as RestConfig } from './configuration/RestConfiguration';
 import { getFirstIngressFromApplication, saveBusinessMomentsAdaptorMicroservice } from '../../stores/microservice';
 import { MicroserviceBusinessMomentAdaptor } from '../../api/index';
 
-import { getLatestRuntimeInfo, HttpResponseApplication } from '../../api/api';
+import { getLatestRuntimeInfo } from '../../api/api';
 import { Guid } from '@dolittle/rudiments';
+import { HttpResponseApplication } from '../../api/application';
 
 const stackTokens = { childrenGap: 15 };
 

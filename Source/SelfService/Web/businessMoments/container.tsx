@@ -2,9 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useParams, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
-import { HttpResponseApplication } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
 
 import { Editor as BusinessMomentEditor } from './editor';
 import { BusinessMomentsOverview } from './overview';

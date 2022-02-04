@@ -5,7 +5,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
-import { HttpResponseApplication } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
 
 
 

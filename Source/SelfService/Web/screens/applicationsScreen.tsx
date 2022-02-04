@@ -11,8 +11,6 @@ import { Link } from '@fluentui/react';
 import { useSnackbar } from 'notistack';
 
 import {
-    getApplications,
-    HttpResponseApplications,
     ShortInfoWithEnvironment
 } from '../api/api';
 
@@ -20,6 +18,7 @@ import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import { useGlobalContext } from '../stores/notifications';
 import { ButtonText } from '../theme/buttonText';
+import { HttpResponseApplications, getApplications } from '../api/application';
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
     const history = useHistory();

@@ -12,14 +12,11 @@ import {
     generatePath
 } from 'react-router-dom';
 import {
-    getApplication,
-    getApplications,
-    HttpResponseApplication,
     ShortInfoWithEnvironment,
-    HttpResponseApplications,
     HttpResponseMicroservices,
     getMicroservices
 } from '../api/api';
+
 import { MicroservicesOverviewScreen } from '../microservice/overview';
 import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
 import { MicroserviceEditScreen } from '../microservice/microserviceEditScreen';
@@ -49,6 +46,7 @@ import {
 } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
 import { TopNavBar } from '../components/topNavBar';
+import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
 export const MicroservicesScreen: React.FunctionComponent = () => {
     const history = useHistory();

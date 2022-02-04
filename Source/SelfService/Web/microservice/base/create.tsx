@@ -11,8 +11,9 @@ import { Guid } from '@dolittle/rudiments';
 
 import { getFirstIngressFromApplication, saveSimpleMicroservice } from '../../stores/microservice';
 import { MicroserviceSimple } from '../../api/index';
-import { HttpResponseApplication, getLatestRuntimeInfo } from '../../api/api';
+import { getLatestRuntimeInfo } from '../../api/api';
 import { DropDownMenu } from '../../theme/dropDownMenu';
+import { HttpResponseApplication } from '../../api/application';
 
 const stackTokens = { childrenGap: 15 };
 

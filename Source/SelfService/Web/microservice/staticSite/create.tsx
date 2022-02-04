@@ -3,7 +3,7 @@
 import React from 'react';
 import { Stack } from '@fluentui/react/lib/Stack';
 
-import { HttpResponseApplication } from '../../api/api';
+import { HttpResponseApplication } from '../../api/application';
 
 const stackTokens = { childrenGap: 15 };
 

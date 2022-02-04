@@ -1,6 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { getServerUrlPrefix, JobInfo, parseJSONResponse } from './api';
+import { getServerUrlPrefix, JobInfo, parseJSONResponse, ShortInfoWithEnvironment } from './api';
 
 export type HttpApplicationRequest = {
     id: string;
@@ -16,6 +16,29 @@ export type ApplicationBuildState = {
     startedAt: string;
     finishedAt: string;
 };
+
+export type HttpResponseApplications = {
+    id: string
+    name: string
+    applications: ShortInfoWithEnvironment[]
+};
+
+// TODO this changed
+export type HttpInputApplicationEnvironment = {
+    applicationId: string
+    name: string
+    automationEnabled: boolean
+};
+
+export type HttpResponseApplication = {
+    id: string
+    name: string
+    tenantId: string
+    tenantName: string
+    environments: HttpInputApplicationEnvironment[]
+    microservices: any[] // Not great
+};
+
 
 
 export async function getPersonalisedInfo(applicationId: string): Promise<any> {
@@ -60,4 +83,43 @@ export async function isApplicationOnline(applicationID: string): Promise<Applic
 
     const data = await parseJSONResponse(response);
     return data;
+}
+
+export async function getLiveApplications(): Promise<any> {
+    const url = `${getServerUrlPrefix()}/live/applications`;
+    const result = await fetch(
+        url,
+        {
+            method: 'GET',
+            mode: 'cors'
+        });
+    const jsonResult = await result.json();
+    return jsonResult;
+}
+
+export async function getApplications(): Promise<HttpResponseApplications> {
+    const url = `${getServerUrlPrefix()}/applications`;
+    const result = await fetch(
+        url,
+        {
+            method: 'GET',
+            mode: 'cors'
+        });
+    const jsonResult = await result.json();
+    return jsonResult;
+}
+
+export async function getApplication(applicationId: string): Promise<HttpResponseApplication> {
+    const url = `${getServerUrlPrefix()}/application/${applicationId}`;
+
+    const result = await fetch(
+        url,
+        {
+            method: 'GET',
+            mode: 'cors'
+        });
+
+    const jsonResult: HttpResponseApplication = await result.json();
+    jsonResult.microservices = jsonResult.microservices || [];
+    return jsonResult;
 }
