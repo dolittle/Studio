@@ -24,7 +24,7 @@ export const Editor: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
     const businessMoments = _props.businessMoments;
-    const { environment, applicationId, businessMomentId, microserviceId } = useParams() as any;
+    const { businessMomentId } = useParams() as any;
     const [loaded, setLoaded] = useState(false);
     const [selectedKey, setSelectedKey] = useState('businessMomentEditor');
     const applicationData = application;

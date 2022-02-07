@@ -7,7 +7,6 @@ export type HttpApplicationRequest = {
     name: string;
     //contactName: string;
     //contactEmail: string;
-    tenantId: string;
     environments: string[];
 };
 

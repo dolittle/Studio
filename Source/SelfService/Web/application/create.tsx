@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -25,10 +24,8 @@ import { createApplication, HttpApplicationRequest } from '../api/application';
 import { ShortInfo } from '../api/api';
 import { Guid } from '@dolittle/rudiments';
 
-// TODO rename tenant to customer
-type Props = {
-    tenant: ShortInfo;
-};
+
+type Props = {};
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -91,11 +88,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Create: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
     const classes = useStyles();
-
-    const history = useHistory();
-    const _props = props!;
-    const tenant = _props.tenant;
-
     const newApplicationId = Guid.create().toString();
     const steps = [
         'Provide a name',
@@ -257,7 +249,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             const input: HttpApplicationRequest = {
                 id: application.id,
                 name: application.name,
-                tenantId: tenant.id,
                 environments: environments.filter(e => e.checked).map(e => e.shortName),
             };
             try {

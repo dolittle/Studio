@@ -14,7 +14,6 @@ import { useSnackbar } from 'notistack';
 
 import {
     ShortInfoWithEnvironment,
-    ShortInfo,
 } from '../api/api';
 
 import { getApplications, HttpResponseApplications } from '../api/application';
@@ -32,7 +31,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
 
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
-    const [tenant, setTenant] = useState({} as ShortInfo);
 
     // TODO hack to make it work, not the final solution
     if (!window.location.pathname.includes('/application/building/')) {
@@ -41,12 +39,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                 getApplications(),
             ]).then(values => {
                 const applicationsData = values[0] as HttpResponseApplications;
-
                 setApplications(applicationsData.applications);
-                setTenant({
-                    id: applicationsData.id,
-                    name: applicationsData.name,
-                });
                 setLoaded(true);
             }).catch((error) => {
                 console.log(error);
@@ -71,7 +64,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
             <Switch>
 
                 <Route exact path="/application/create">
-                    <Create tenant={tenant} />
+                    <Create />
                 </Route>
 
                 <Route exact path="/application/building/:applicationId">
