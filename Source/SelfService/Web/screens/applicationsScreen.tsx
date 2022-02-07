@@ -24,11 +24,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
 
-    const [data, setData] = useState({
-        id: '',
-        name: '',
-        applications: []
-    } as HttpResponseApplications);
+    const [data, setData] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
     const { setCurrentEnvironment } = useGlobalContext();
 
@@ -37,7 +33,8 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         Promise.all([
             getApplications(),
         ]).then(values => {
-            const data = values[0] as HttpResponseApplications;
+            const response = values[0] as HttpResponseApplications;
+            const data = response.applications;
 
             // TODO bring this back maybe with a query string option
             //if (data.applications.length === 1) {
@@ -91,7 +88,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
 
                 }}>Create new Application</ButtonText>
 
-                <List items={data.applications} onRenderCell={onRenderCell} />
+                <List items={data} onRenderCell={onRenderCell} />
             </LayoutWithSidebar >
         </>
     );

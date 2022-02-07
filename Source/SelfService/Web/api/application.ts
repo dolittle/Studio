@@ -17,8 +17,6 @@ export type ApplicationBuildState = {
 };
 
 export type HttpResponseApplications = {
-    id: string
-    name: string
     applications: ShortInfoWithEnvironment[]
 };
 

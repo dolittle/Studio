@@ -40,7 +40,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
     const applicationId = routeApplicationProps.applicationId;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
-    const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
+    const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {

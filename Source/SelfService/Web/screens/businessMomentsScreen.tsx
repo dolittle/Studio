@@ -33,7 +33,7 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
     const routeApplicationProps = withRouteApplicationProps('business-moments');
     const applicationId = routeApplicationProps.applicationId;
     const [application, setApplication] = useState({} as HttpResponseApplication);
-    const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
+    const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {

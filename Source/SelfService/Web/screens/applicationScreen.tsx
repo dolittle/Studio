@@ -29,7 +29,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
 
-    const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
+    const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 
     // TODO hack to make it work, not the final solution
