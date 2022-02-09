@@ -17,6 +17,7 @@ export type ApplicationBuildState = {
 };
 
 export type HttpResponseApplications = {
+    canCreateApplication: boolean
     applications: ShortInfoWithEnvironment[]
 };
 

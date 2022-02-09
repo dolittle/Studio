@@ -26,6 +26,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
 
     const [data, setData] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
+    const [canCreateApplication, setCanCreateApplication] = useState(false);
     const { setCurrentEnvironment } = useGlobalContext();
 
     // TODO handle when not 200!
@@ -34,7 +35,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
             getApplications(),
         ]).then(values => {
             const response = values[0] as HttpResponseApplications;
-            const data = response.applications;
+            setCanCreateApplication(response.canCreateApplication);
 
             // TODO bring this back maybe with a query string option
             //if (data.applications.length === 1) {
@@ -43,7 +44,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
             //    window.location.href = uriWithAppPrefix(`/microservices/application/${application.id}/${application.environment}/overview`);
             //    return;
             //}
-            setData(data);
+            setData(response.applications);
 
             setLoaded(true);
         }).catch((error) => {
@@ -83,6 +84,11 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
                 <h1>Applications Screen</h1>
 
                 <ButtonText withIcon={true} onClick={() => {
+                    if (!canCreateApplication) {
+                        enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
+                        return;
+                    }
+
                     const href = '/application/create';
                     history.push(href);
 
