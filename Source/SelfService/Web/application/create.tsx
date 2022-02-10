@@ -2,6 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -86,6 +88,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 export const Create: React.FunctionComponent<Props> = (props) => {
+    const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
     const classes = useStyles();
     const newApplicationId = Guid.create().toString();
@@ -253,6 +256,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             };
             try {
                 await createApplication(input);
+                // redirect to build
+                const href = `/application/building/${application.id}`;
+                history.push(href);
+
                 enqueueSnackbar('Application created', { variant: 'info' });
             } catch (error) {
                 enqueueSnackbar('Error creating application', { variant: 'error' });
