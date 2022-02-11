@@ -197,20 +197,3 @@ export const savePurchaseOrderMicroservice = async (
     return saveMicroservice(input.kind, input);
 };
 
-
-export const getFirstIngressFromApplication = (application: HttpResponseApplication, environment: string): MicroserviceIngressPath => {
-    const environmentInfo = application.environments.find(e => e.name === environment);
-    if (!environmentInfo) {
-        throw new Exception(`environment info missing for ${environment}`);
-    }
-
-    return {
-        path: 'TODO: path',
-        host: 'TODO: host',
-        pathType: 'TODO: pathType',
-        domainPrefix: 'TODO: domainPrefix',
-    } as MicroserviceIngressPath;
-    //const customerTenant = environmentInfo.tenants[0];
-    //const ingressInfo = environmentInfo.ingresses[customerTenant];
-    //return ingressInfo;
-};

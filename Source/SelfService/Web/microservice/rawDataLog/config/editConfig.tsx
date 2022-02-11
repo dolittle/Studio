@@ -40,7 +40,7 @@ export const EditConfig: React.FunctionComponent<Props> = (props) => {
     return (
         <>
             <Stack horizontal tokens={stackTokens}>
-                <Config domain={ms.extra.ingress.host} action='insert' ms={ms} onSave={onSave} />
+                <Config domain={'TODO'} action='insert' ms={ms} onSave={onSave} />
             </Stack>
         </>
     );

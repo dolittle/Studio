@@ -15,7 +15,7 @@ import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react/lib/ChoiceGroup
 
 import { WebhooksConfig } from './configuration/WebhooksConfiguration';
 import { Config as RestConfig } from './configuration/RestConfiguration';
-import { getFirstIngressFromApplication, saveBusinessMomentsAdaptorMicroservice } from '../../stores/microservice';
+import { saveBusinessMomentsAdaptorMicroservice } from '../../stores/microservice';
 import { MicroserviceBusinessMomentAdaptor } from '../../api/index';
 
 import { getLatestRuntimeInfo } from '../../api/api';
@@ -34,7 +34,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
-    const ingressInfo = getFirstIngressFromApplication(application, environment);
 
     // TODO do something with
     const microserviceId = Guid.create().toString();
@@ -63,9 +62,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             runtimeImage: fromStore.runtime.image,
             ingress: {
                 path: '/api/webhooks-ingestor',
-                pathType: 'Prefix',
-                host: ingressInfo.host,
-                domainPrefix: ingressInfo.domainPrefix
+                pathType: 'Prefix'
             },
             connector: {
                 kind: 'webhook',
@@ -112,7 +109,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
             {connectorTypeState === 'webhook' && (
                 <Stack horizontal tokens={stackTokens}>
-                    <WebhooksConfig domain={ingressInfo.host} action='insert' ms={ms} onSave={onSave} />
+                    <WebhooksConfig domain={'TODO'} action='insert' ms={ms} onSave={onSave} />
                 </Stack>
             )}
 

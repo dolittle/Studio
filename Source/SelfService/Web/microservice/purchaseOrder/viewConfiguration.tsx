@@ -68,12 +68,13 @@ const useStyles = makeStyles((theme: Theme) =>
 export const ViewConfiguration: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();
     const { enqueueSnackbar } = useSnackbar();
-    const location = useLocation();
+
 
     const _props = props!;
     const editMode = _props.editMode;
     const ms = _props.microservice;
-    const webhookPrefix = `https://${ms.extra.ingress.host}/api/webhooks`;
+    // TODO get host from tenant
+    const webhookPrefix = `https://TODO/api/webhooks`;
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
     const msName = ms.name;
