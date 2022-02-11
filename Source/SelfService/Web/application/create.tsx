@@ -125,9 +125,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     ]);
 
     const [activeNextButton, setActiveNextButton] = React.useState(false);
-    const todoOnClick = () => {
-        enqueueSnackbar('TODO');
-    };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const newEnvironments = [...environments];
@@ -235,13 +232,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                         />
                     ))}
                 </FormGroup>
-
-                <ButtonText
-                    withIcon={false}
-                    onClick={todoOnClick}>
-                    TODO
-                </ButtonText>
-
             </Typography >
         </>,
     ];
