@@ -36,16 +36,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         ]).then(values => {
             const response = values[0] as HttpResponseApplications;
             setCanCreateApplication(response.canCreateApplication);
-
-            // TODO bring this back maybe with a query string option
-            //if (data.applications.length === 1) {
-            //    const application = data.applications[0];
-            //    setCurrentEnvironment(application.environment);
-            //    window.location.href = uriWithAppPrefix(`/microservices/application/${application.id}/${application.environment}/overview`);
-            //    return;
-            //}
             setData(response.applications);
-
             setLoaded(true);
         }).catch((error) => {
             console.log(error);

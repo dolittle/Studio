@@ -21,7 +21,6 @@ export type HttpResponseApplications = {
     applications: ShortInfoWithEnvironment[]
 };
 
-// TODO this changed
 export type HttpInputApplicationEnvironment = {
     applicationId: string
     name: string
