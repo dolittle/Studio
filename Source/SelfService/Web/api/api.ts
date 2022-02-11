@@ -2,7 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { Exception } from '@dolittle/rudiments';
-import { MicroserviceIngressPath } from './index';
+
+export type JobInfo = {
+    jobId: string
+};
 
 export type ShortInfo = {
     id: string
@@ -39,20 +42,6 @@ export type MicroserviceInfo = {
     ingressPaths: SimpleIngressPath[]
 };
 
-export type HttpResponseApplications = {
-    id: string
-    name: string
-    applications: ShortInfoWithEnvironment[]
-};
-
-export type HttpResponseApplication = {
-    id: string
-    name: string
-    tenantId: string
-    tenantName: string
-    environments: HttpInputApplicationEnvironment[]
-    microservices: any[] // Not great
-};
 
 export type HttpResponseMicroservices = {
     application: ShortInfo
@@ -81,14 +70,7 @@ export type HttpResponsePodLog = {
     logs: string
 };
 
-export type HttpInputApplicationEnvironment = {
-    applicationId: string
-    tenantId: string
-    name: string
-    automationEnabled: boolean
-    tenants: string[]
-    ingresses: Map<string, MicroserviceIngressPath>
-};
+
 
 export type LatestRuntimeInfo = {
     image: string
@@ -131,44 +113,7 @@ export function getLatestRuntimeInfo(): LatestRuntimeInfo {
     };
 }
 
-export async function getLiveApplications(): Promise<any> {
-    const url = `${getServerUrlPrefix()}/live/applications`;
-    const result = await fetch(
-        url,
-        {
-            method: 'GET',
-            mode: 'cors'
-        });
-    const jsonResult = await result.json();
-    return jsonResult;
-}
 
-export async function getApplications(): Promise<any> {
-    const url = `${getServerUrlPrefix()}/applications`;
-    const result = await fetch(
-        url,
-        {
-            method: 'GET',
-            mode: 'cors'
-        });
-    const jsonResult = await result.json();
-    return jsonResult;
-}
-
-export async function getApplication(applicationId: string): Promise<HttpResponseApplication> {
-    const url = `${getServerUrlPrefix()}/application/${applicationId}`;
-
-    const result = await fetch(
-        url,
-        {
-            method: 'GET',
-            mode: 'cors'
-        });
-
-    const jsonResult: HttpResponseApplication = await result.json();
-    jsonResult.microservices = jsonResult.microservices || [];
-    return jsonResult;
-}
 
 // getMicroservices by applicationId
 export async function getMicroservices(applicationId: string): Promise<HttpResponseMicroservices> {
@@ -255,7 +200,6 @@ export async function getPodLogs(applicationId: string, podName: string, contain
     return jsonResult;
 }
 
-
 export async function restartMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/microservice/${microserviceId}/restart`;
     const response = await fetch(url, {
@@ -265,7 +209,6 @@ export async function restartMicroservice(applicationId: string, environment: st
 
     return response.status === 200;
 }
-
 
 export async function getEnvironmentVariables(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponseEnvironmentVariables> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/environment-variables`;
@@ -298,4 +241,19 @@ export async function updateEnvironmentVariables(applicationId: string, environm
         });
 
     return response.status === 200;
+}
+
+export async function parseJSONResponse(response: any): Promise<any> {
+    const text = await response.text();
+    if (!response.ok) {
+        let jsonResponse;
+        try {
+            jsonResponse = JSON.parse(text);
+        } catch (error) {
+            throw Error(`Couldn't parse the error message. The error was ${error}. Response Status ${response.status}. Response Body ${text}`);
+        }
+        throw Error(jsonResponse.message);
+    }
+    const data = JSON.parse(text);
+    return data;
 }

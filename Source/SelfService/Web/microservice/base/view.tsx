@@ -16,16 +16,17 @@ import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
 
-import { HttpResponseApplication, HttpResponsePodStatus } from '../../api/api';
+import { HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
-import { getFirstIngressFromApplication, microservices } from '../../stores/microservice';
+import { microservices } from '../../stores/microservice';
 import { View as ConfigView } from './configView';
 import { Tab, Tabs } from '../../theme/tabs';
 import { DownloadButtons } from '../components/downloadButtons';
 import { MicroserviceSimple } from '../../api/index';
 import { View as LiveIngressView } from './liveIngressView';
 import { ButtonText } from '../../theme/buttonText';
+import { HttpResponseApplication } from '../../api/application';
 
 
 type Props = {
@@ -111,7 +112,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
             || 'n/a';
         const runtimeImage = currentMicroservice.live.images.find(img => img.name === 'runtime')?.image
             || 'n/a';
-        const ingressInfo = getFirstIngressFromApplication(application, environment);
+
 
         ms = {
             dolittle: {
@@ -124,10 +125,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
             environment: _props.environment,
             extra: {
                 ingress: {
-                    path: ingressInfo.path,
-                    pathType: ingressInfo.pathType,
-                    host: ingressInfo.host,
-                    domainPrefix: ingressInfo.domainPrefix
+                    path: currentMicroservice.extra.ingress.path,
+                    pathType: currentMicroservice.extra.ingress.pathType
                 },
                 headImage,
                 runtimeImage,

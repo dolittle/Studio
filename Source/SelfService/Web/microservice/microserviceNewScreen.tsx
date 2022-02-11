@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Create } from './create';
-import { HttpResponseApplication } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
 
 type Props = {
     environment: string;

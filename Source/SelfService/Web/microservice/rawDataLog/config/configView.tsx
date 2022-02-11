@@ -17,7 +17,7 @@ type WebhooksConfigProps = {
 
 export const ConfigView: React.FunctionComponent<WebhooksConfigProps> = (props) => {
     const ms = props!.microservice;
-    const domain = ms.extra.ingress.host;
+    const domain = 'TODO';
 
     return (
         <Stack tokens={stackTokens}>

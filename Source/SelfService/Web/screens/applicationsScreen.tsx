@@ -8,44 +8,44 @@ import React, {
 import { useHistory } from 'react-router-dom';
 import { List } from '@fluentui/react/lib/List';
 import { Link } from '@fluentui/react';
+import { useSnackbar } from 'notistack';
 
 import {
-    getApplications,
-    HttpResponseApplications,
     ShortInfoWithEnvironment
 } from '../api/api';
-import { uriWithAppPrefix } from '../store';
-import { useGlobalContext } from '../stores/notifications';
+
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { useGlobalContext } from '../stores/notifications';
+import { ButtonText } from '../theme/buttonText';
+import { HttpResponseApplications, getApplications } from '../api/application';
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
     const history = useHistory();
-    const { setCurrentEnvironment, clearGlobalState } = useGlobalContext();
-    const [data, setData] = useState({
-        id: '',
-        name: '',
-        applications: []
-    } as HttpResponseApplications);
+    const { enqueueSnackbar } = useSnackbar();
+
+    const [data, setData] = useState([] as ShortInfoWithEnvironment[]);
+    const [loaded, setLoaded] = useState(false);
+    const [canCreateApplication, setCanCreateApplication] = useState(false);
+    const { setCurrentEnvironment } = useGlobalContext();
 
     // TODO handle when not 200!
     useEffect(() => {
-        clearGlobalState();
-        getApplications().then(data => {
-            // If only 1 item redirect
-            if (data.applications.length === 1) {
-                const application = data.applications[0];
-                setCurrentEnvironment(application.environment);
-                window.location.href = uriWithAppPrefix(`/microservices/application/${application.id}/${application.environment}/overview`);
-                return;
-            }
-            setData(data);
-            return;
+        Promise.all([
+            getApplications(),
+        ]).then(values => {
+            const response = values[0] as HttpResponseApplications;
+            setCanCreateApplication(response.canCreateApplication);
+            setData(response.applications);
+            setLoaded(true);
+        }).catch((error) => {
+            console.log(error);
+            enqueueSnackbar('Failed getting data from the server', { variant: 'error' });
         });
     }, []);
 
 
-    if (data.id === '') {
+    if (!loaded) {
         return null;
     }
 
@@ -73,7 +73,19 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
                 </div>
 
                 <h1>Applications Screen</h1>
-                <List items={data.applications} onRenderCell={onRenderCell} />
+
+                <ButtonText withIcon={true} onClick={() => {
+                    if (!canCreateApplication) {
+                        enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
+                        return;
+                    }
+
+                    const href = '/application/create';
+                    history.push(href);
+
+                }}>Create new Application</ButtonText>
+
+                <List items={data} onRenderCell={onRenderCell} />
             </LayoutWithSidebar >
         </>
     );

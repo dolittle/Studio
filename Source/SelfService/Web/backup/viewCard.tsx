@@ -11,7 +11,7 @@ import {
 } from '@fluentui/react';
 
 import { mergeStyles } from '@fluentui/react/lib/Styling';
-import { HttpResponseApplication } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
 import { cardStyles, commandTileClass, buttonStyles } from '../theme/viewCard';
 import { getLatestBackupLinkByApplication } from '../api/backups';
 import { useGlobalContext } from '../stores/notifications';

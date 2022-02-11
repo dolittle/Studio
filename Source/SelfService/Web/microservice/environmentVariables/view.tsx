@@ -8,12 +8,13 @@ import { useSnackbar } from 'notistack';
 
 import {
     getEnvironmentVariables,
-    HttpResponseApplication,
     InputEnvironmentVariable,
     updateEnvironmentVariables,
 } from '../../api/api';
+
 import { ButtonText } from '../../theme/buttonText';
 import { DropDownMenu } from '../../theme/dropDownMenu';
+import { HttpResponseApplication } from '../../api/application';
 
 type Props = {
     environment: string

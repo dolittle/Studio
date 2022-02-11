@@ -9,7 +9,7 @@
 import React from 'react';
 
 import { MicroserviceRawDataLogIngestor } from '../../../api/index';
-import { HttpResponseApplication } from '../../../api/api';
+import { HttpResponseApplication } from '../../../api/application';
 import { EditConfig } from './editConfig';
 
 type Props = {

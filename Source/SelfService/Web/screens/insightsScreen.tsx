@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useHistory, Switch, generatePath } from 'react-router-dom';
 
-import { getApplication, getApplications, HttpResponseApplication, ShortInfoWithEnvironment, HttpResponseApplications } from '../api/api';
+import { ShortInfoWithEnvironment } from '../api/api';
 
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 // Not scoped like svelte
@@ -15,6 +15,12 @@ import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { useGlobalContext } from '../stores/notifications';
 import { TopNavBar } from '../components/topNavBar';
+import {
+    HttpResponseApplication,
+    getApplications,
+    getApplication,
+    HttpResponseApplications,
+} from '../api/application';
 
 export const InsightsScreen: React.FunctionComponent = () => {
     const history = useHistory();

@@ -3,11 +3,12 @@
 
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 
-import { HttpResponseApplication } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
 
 import '../microservice/microservice.scss';
 import { ViewCard } from './viewCard';
@@ -22,6 +23,7 @@ type Props = {
 
 
 export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (props) => {
+    const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as any;
 
     const history = useHistory();
@@ -56,7 +58,7 @@ export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (prop
                 <>
                     <PrimaryButton text="Create New Microservice" onClick={(e => {
                         if (!canEdit) {
-                            alert('Automation is disabled');
+                            enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
                             return;
                         }
                         const href = `/microservices/application/${application.id}/${environment}/create`;

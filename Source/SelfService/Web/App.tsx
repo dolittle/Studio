@@ -16,9 +16,9 @@ import { MicroservicesScreen } from './screens/microservicesScreen';
 import { GlobalContextProvider } from './stores/notifications';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { RouteNotFound } from './components/notfound';
-import { EnvironmentScreen } from './screens/environmentScreen';
+import { Screen as AdminScreen } from './screens/adminScreen';
 
-import { createTheme, makeStyles, Theme, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { DieAndRestart } from './components/dieAndRestart';
 import { LayoutWithSidebar } from './layout/layoutWithSidebar';
 
@@ -27,6 +27,7 @@ import Grow from '@material-ui/core/Grow';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { ThemeScreen } from './screens/themeScreen';
 import '@fontsource/rubik';
+import { ApplicationScreen } from './screens/applicationScreen';
 
 
 const typography = {
@@ -108,9 +109,10 @@ export const App = () => {
                                     <ApplicationsScreen />
                                 </Route>
 
-                                <Route path="/environment/application/:applicationId">
-                                    <EnvironmentScreen />
+                                <Route path="/application/">
+                                    <ApplicationScreen />
                                 </Route>
+
 
                                 <Route path="/microservices/application/:applicationId/:environment">
                                     <MicroservicesScreen />
@@ -126,6 +128,11 @@ export const App = () => {
 
                                 <Route path="/insights/application/:applicationId/:environment">
                                     <InsightsScreen />
+                                </Route>
+
+
+                                <Route path="/admin/">
+                                    <AdminScreen />
                                 </Route>
 
                                 <Route path="/debug/theme">

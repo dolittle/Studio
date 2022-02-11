@@ -11,12 +11,13 @@ import { Guid } from '@dolittle/rudiments';
 import { useSnackbar } from 'notistack';
 
 
-import { savePurchaseOrderMicroservice, getFirstIngressFromApplication } from '../../stores/microservice';
+import { savePurchaseOrderMicroservice } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
-import { HttpResponseApplication, getLatestRuntimeInfo } from '../../api/api';
+import { getLatestRuntimeInfo } from '../../api/api';
 import { useGlobalContext } from '../../stores/notifications';
 import { Configuration } from './configuration';
 import { Tab, Tabs } from '../../theme/tabs';
+import { HttpResponseApplication } from '../../api/application';
 
 type Props = {
     application: HttpResponseApplication;
@@ -37,7 +38,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const microserviceId = Guid.create().toString();
     const headImage = 'dolittle/integrations-m3-purchaseorders:latest';
     const runtimeInfo = getLatestRuntimeInfo();
-    const ingressInfo = getFirstIngressFromApplication(_props.application, environment);
 
     const ms: MicroservicePurchaseOrder = {
         dolittle: {
@@ -51,9 +51,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         extra: {
             ingress: {
                 path: '/api/webhooks',
-                pathType: 'Prefix',
-                host: ingressInfo.host,
-                domainPrefix: ingressInfo.domainPrefix
+                pathType: 'Prefix'
             },
             headImage,
             runtimeImage: runtimeInfo.image,

@@ -115,7 +115,7 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
         'Configure ERP system'
     ];
 
-    const webhookPrefix = `https://${ms.extra.ingress.host}/api/webhooks`;
+    const webhookPrefix = `https://TODO/api/webhooks`;
     const webhookPoHead = 'm3/pohead';
     const webhookPoLine = 'm3/poline';
 

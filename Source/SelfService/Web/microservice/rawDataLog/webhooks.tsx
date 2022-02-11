@@ -110,7 +110,7 @@ export const Webhooks: React.FunctionComponent<Props> = (props) => {
 
             {showWebhookEditor && (
                 <Edit
-                    domain={microservice.extra.ingress.host}
+                    domain={'TODO'}
                     ingressPath={microservice.extra.ingress.path}
                     key={webhookToEdit.uriSuffix}
                     webhook={webhookToEdit}

@@ -2,12 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useHistory, useParams, Route } from 'react-router-dom';
+import { useHistory, Route } from 'react-router-dom';
 import {
     Link,
 } from '@fluentui/react';
 
-import { HttpResponseApplication } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
 import { RuntimeV1Stats } from './runtimeStatsV1/runtimeV1Stats';
 
 type Props = {

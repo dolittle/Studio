@@ -2,7 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+
 import { CreateCard, CreateCardAdaptor } from './createCard';
 
 import { useBoolean } from '@fluentui/react-hooks';
@@ -10,7 +11,7 @@ import { Modal, DefaultButton } from '@fluentui/react';
 
 
 import { ViewCard } from './viewCard';
-import { HttpResponseApplication } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
 import { MicroserviceBusinessMomentAdaptor, HttpResponseBusinessMoments } from '../api/index';
 import { withRouteApplicationProps } from '../utils/route';
 
@@ -22,6 +23,7 @@ type Props = {
 };
 
 export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) => {
+    const { enqueueSnackbar } = useSnackbar();
     const _props = props!;
     const application = _props.application;
     const routeApplicationProps = withRouteApplicationProps('business-moments');
@@ -85,7 +87,7 @@ export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) =
             <h1>Business moments</h1>
             <DefaultButton onClick={() => {
                 if (!canEdit) {
-                    alert('Automation is disabled');
+                    enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
                     return;
                 }
                 showModal();

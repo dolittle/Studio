@@ -9,10 +9,11 @@ import { TextField } from '@fluentui/react/lib/TextField';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { Guid } from '@dolittle/rudiments';
 
-import { getFirstIngressFromApplication, saveSimpleMicroservice } from '../../stores/microservice';
+import { saveSimpleMicroservice } from '../../stores/microservice';
 import { MicroserviceSimple } from '../../api/index';
-import { HttpResponseApplication, getLatestRuntimeInfo } from '../../api/api';
+import { getLatestRuntimeInfo } from '../../api/api';
 import { DropDownMenu } from '../../theme/dropDownMenu';
+import { HttpResponseApplication } from '../../api/application';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -26,8 +27,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
-    const ingressInfo = getFirstIngressFromApplication(application, environment);
-    // TODO do something with
+
     const microserviceId = Guid.create().toString();
 
     const runtimeInfo = getLatestRuntimeInfo();
@@ -48,8 +48,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             ingress: {
                 path: '/',
                 pathType: 'Prefix',
-                host: ingressInfo.host,
-                domainPrefix: ingressInfo.domainPrefix
             }
         }
     } as MicroserviceSimple;
@@ -58,7 +56,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const [headImage, setHeadImage] = React.useState(ms.extra.headImage);
     const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
-    const [ingressDomainPrefix, setIngressDomainPrefix] = React.useState(ms.extra.ingress.domainPrefix);
+
     const onChangeHandler = (setter: React.Dispatch<React.SetStateAction<string>>): ((event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void) => {
         return (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string): void => {
             {
@@ -72,8 +70,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         ms.extra.headImage = headImage;
         ms.extra.runtimeImage = runtimeImage;
         ms.extra.ingress.path = ingressPath;
-        // TODO land the name we want here
-        ms.extra.ingress.domainPrefix = ingressDomainPrefix;
+
         saveSimpleMicroservice(ms).then(data => {
             const href = `/microservices/application/${application.id}/${environment}/overview`;
             history.push(href);
@@ -121,9 +118,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
                 <Label>PathType</Label>
                 <TextField placeholder="Prefix" defaultValue={ms.extra.ingress.pathType} readOnly />
-
-                <Label>Domain Prefix</Label>
-                <TextField placeholder="" defaultValue={ingressDomainPrefix} onChange={onChangeHandler(setIngressDomainPrefix)} readOnly />
             </Stack>
 
             <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
