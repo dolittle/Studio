@@ -1,3 +1,11 @@
+# [1.11.1] - 2022-2-11 [PR: #135](https://github.com/dolittle/Studio/pull/135)
+## Summary
+- Form to create application (one time)
+- Admin screen to create customer
+- Admin screen to list customers
+- Building branches without the hash suffix
+
+
 # [1.11.0] - 2022-2-2 [PR: #150](https://github.com/dolittle/Studio/pull/150)
 ## Summary
 
