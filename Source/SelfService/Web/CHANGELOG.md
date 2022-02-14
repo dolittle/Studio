@@ -1,3 +1,9 @@
+# [1.12.0] - 2022-2-14 [PR: #151](https://github.com/dolittle/Studio/pull/151)
+## Summary
+
+Fixing a bug when trying to map ingress details to the microservice, ignoring it for now, as the view is not even using the extra.ingress info.
+
+
 # [1.11.1] - 2022-2-11 [PR: #135](https://github.com/dolittle/Studio/pull/135)
 ## Summary
 - Form to create application (one time)
