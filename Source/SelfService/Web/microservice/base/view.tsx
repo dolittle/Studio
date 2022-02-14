@@ -114,6 +114,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
             || 'n/a';
 
 
+        // TODO currently we don't use the ms.extra.ingress in the view
+        // Look to "liveIngressView" for how we "set" the data to uniq paths
         ms = {
             dolittle: {
                 applicationId,
@@ -121,12 +123,12 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 microserviceId,
             },
             name: currentMicroservice.name,
-            kind: 'manual', // TODO something better?
+            kind: 'unknown',
             environment: _props.environment,
             extra: {
                 ingress: {
-                    path: currentMicroservice.extra.ingress.path,
-                    pathType: currentMicroservice.extra.ingress.pathType
+                    path: '',
+                    pathType: ''
                 },
                 headImage,
                 runtimeImage,
