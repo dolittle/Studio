@@ -1,3 +1,9 @@
+# [1.13.0] - 2022-2-16 [PR: #152](https://github.com/dolittle/Studio/pull/152)
+## Summary
+
+Via [Documentation /Verify access to kubernetes it bubbles up some helper commands
+
+
 # [1.12.0] - 2022-2-14 [PR: #151](https://github.com/dolittle/Studio/pull/151)
 ## Summary
 
