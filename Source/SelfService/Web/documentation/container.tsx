@@ -86,7 +86,6 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                                     Setup Azure Pipelines
                                 </a>
                             </li>
-
                         </ul>
                     </Route>
 
@@ -109,7 +108,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                             Back
                         </Link>
                         <h1>Verify access to kubernetes</h1>
-                        <VerifyKubernetesAccess info={$info} />
+                        <VerifyKubernetesAccess info={$info} environment={environment} />
                     </Route>
 
                     <Route exact path="/documentation/application/:applicationId/:environment/ci-cd/azure-pipelines">

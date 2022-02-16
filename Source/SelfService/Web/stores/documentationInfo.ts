@@ -5,19 +5,38 @@ import {
     getPersonalisedInfo,
 } from '../api/application';
 
-export type Info = {
+export interface Info {
     containerRegistryName: string;
     subscriptionId: string;
     applicationId: string;
     endpoints: Endpoints;
     resourceGroup: string;
     clusterName: string;
+    subjectRulesReviewStatus: SubjectRulesReviewStatus;
 };
 
-export type Endpoints = {
+export interface Endpoints {
     cluster: string;
     containerRegistry: string;
 };
+
+export interface ResourceRule {
+    verbs: string[];
+    apiGroups: string[];
+    resources: string[];
+    resourceNames: string[];
+}
+
+export interface NonResourceRule {
+    verbs: string[];
+    nonResourceURLs: string[];
+}
+
+export interface SubjectRulesReviewStatus {
+    resourceRules: ResourceRule[];
+    nonResourceRules: NonResourceRule[];
+    incomplete: boolean;
+}
 
 const data = {
     data: {
@@ -30,6 +49,11 @@ const data = {
         } as Endpoints,
         resourceGroup: '',
         clusterName: '',
+        subjectRulesReviewStatus: {
+            incomplete: false,
+            resourceRules: [] as ResourceRule[],
+            nonResourceRules: [] as NonResourceRule[],
+        } as SubjectRulesReviewStatus,
     } as Info,
     isLoaded: false,
 };
