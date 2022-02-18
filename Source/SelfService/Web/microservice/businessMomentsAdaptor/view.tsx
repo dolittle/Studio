@@ -12,7 +12,7 @@ import { getPodStatus, HttpResponsePodStatus, getServerUrlPrefix } from '../../a
 import { SecondaryButton } from '../../theme/secondaryButton';
 import { DownloadLogIcon } from '../../theme/icons';
 import { useReadable } from 'use-svelte-store';
-import { microservices } from '../../stores/microservice';
+import { microservices, MicroserviceStore } from '../../stores/microservice';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -35,7 +35,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const [selectedKey, setSelectedKey] = useState('healthStatus');
     // Want microservice name
 
-    const currentMicroservice = $microservices.find(ms => ms.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId);
     if (!currentMicroservice) {
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);

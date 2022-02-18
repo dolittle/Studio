@@ -19,7 +19,7 @@ import { useSnackbar } from 'notistack';
 import { HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
-import { microservices } from '../../stores/microservice';
+import { microservices, MicroserviceStore, canDeleteMicroservice, canEditMicroservice } from '../../stores/microservice';
 import { View as ConfigView } from './configView';
 import { Tab, Tabs } from '../../theme/tabs';
 import { DownloadButtons } from '../components/downloadButtons';
@@ -90,18 +90,19 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const environment = _props.environment;
     const podsData = _props.podsData;
 
-    const currentMicroservice = $microservices.find(ms => ms.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId);
     if (!currentMicroservice) {
         const href = `/microservices/application/${application.id}/${environment}/overview`;
         history.push(href);
         return null;
     }
 
+    const canDelete = canDeleteMicroservice(application.environments, environment, currentMicroservice.id);
+    const canEdit = canEditMicroservice(application.environments, environment, currentMicroservice.id);
+
     let ms = {} as MicroserviceSimple;
     let hasEditData = false;
-    if (currentMicroservice?.edit?.dolittle &&
-        currentMicroservice.id !== '' &&
-        currentMicroservice.kind !== '') {
+    if (canEdit) {
         hasEditData = true;
         ms = currentMicroservice.edit;
     }
@@ -187,7 +188,13 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     >
                         <IconButton
                             onClick={() => {
-                                enqueueSnackbar('TODO: Delete microservice', { variant: 'error' });
+                                if (!canDelete) {
+                                    enqueueSnackbar('Deleting microservice is disabled', { variant: 'error' });
+                                    return;
+                                }
+
+                                const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/delete`;
+                                history.push(href);
                             }}
                             className={classes.deleteIcon}
                         >

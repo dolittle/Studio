@@ -14,7 +14,7 @@ import '../microservice/microservice.scss';
 import { ViewCard } from './viewCard';
 
 import { useReadable } from 'use-svelte-store';
-import { microservices } from '../stores/microservice';
+import { canDeleteMicroservice, canEditMicroservices, microservices } from '../stores/microservice';
 
 type Props = {
     environment: string
@@ -32,7 +32,7 @@ export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (prop
     const applicationId = _props.application.id;
 
     const application = _props.application!;
-    const canEdit = application.environments.some(info => info.name === environment && info.automationEnabled);
+    const canEdit = canEditMicroservices(application.environments, environment);
 
     const filteredMicroservices = $microservices.filter(microservice => microservice.environment === environment);
     const hasMicroservices = filteredMicroservices.length > 0;
@@ -73,21 +73,15 @@ export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (prop
                 <div className="serv">
                     <ul>
                         {filteredMicroservices.map((ms) => {
+                            const canDelete = canDeleteMicroservice(application.environments, environment, ms.id);
+
                             return <li key={`${environment}-${ms.id}`}><ViewCard
                                 microserviceId={ms.id}
                                 microserviceName={ms.name}
                                 microserviceKind={ms.kind}
                                 applicationId={applicationId}
                                 environment={environment}
-                                canEdit={canEdit}
-                                canDelete={ms.kind !== 'raw-data-log-ingestor'}
-                                onAfterDelete={(microserviceId: string, environment: string) => {
-                                    console.log('I wonder if this store does this now');
-                                    console.log('worth noting below filters based on environment');
-                                    //const updated = currentMicroservices.filter(ms => ms.id !== microserviceId && ms.environment !== environment);
-                                    //setCurrentMicroservices(updated);
-                                    //setHasMicroservices(updated.length > 0);
-                                }}
+                                canDelete={canDelete}
                             /></li>;
                         })}
                     </ul>

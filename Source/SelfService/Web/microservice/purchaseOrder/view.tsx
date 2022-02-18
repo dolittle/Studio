@@ -15,7 +15,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
 
-import { microservices, savePurchaseOrderMicroservice } from '../../stores/microservice';
+import { microservices, MicroserviceStore, savePurchaseOrderMicroservice } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
 import { HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
@@ -86,7 +86,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const environment = _props.environment;
     const podsData = _props.podsData;
 
-    const currentMicroservice = $microservices.find(ms => ms.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId);
     if (!currentMicroservice) {
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);
