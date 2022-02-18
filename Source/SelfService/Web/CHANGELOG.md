@@ -1,3 +1,11 @@
+# [1.13.1] - 2022-2-18 [PR: #153](https://github.com/dolittle/Studio/pull/153)
+## Summary
+
+- Making the delete button for a microservice work via viewcard.
+- Making the delete button for a microservice work via microservice view.
+- Delete screen, to warn the action today is permanent.
+
+
 # [1.13.0] - 2022-2-16 [PR: #152](https://github.com/dolittle/Studio/pull/152)
 ## Summary
 
