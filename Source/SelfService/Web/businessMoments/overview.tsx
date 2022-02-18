@@ -14,6 +14,7 @@ import { ViewCard } from './viewCard';
 import { HttpResponseApplication } from '../api/application';
 import { MicroserviceBusinessMomentAdaptor, HttpResponseBusinessMoments } from '../api/index';
 import { withRouteApplicationProps } from '../utils/route';
+import { canEditMicroservices } from '../stores/microservice';
 
 type Props = {
     environment: string
@@ -33,7 +34,8 @@ export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) =
     const $microservices = _props.microservices;
     const $businessMoments = _props.businessMoments;
 
-    const canEdit = application.environments.some(info => info.name === environment && info.automationEnabled);
+    const canEdit = canEditMicroservices(application.environments, environment);
+
     const [isModalOpen, { setTrue: showModal, setFalse: hideModal }] = useBoolean(false);
 
 

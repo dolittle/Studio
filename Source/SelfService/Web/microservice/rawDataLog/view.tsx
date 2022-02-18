@@ -10,7 +10,7 @@ import { Pivot, PivotItem } from '@fluentui/react';
 import { HealthStatus } from '../view/healthStatus';
 import { HttpResponsePodStatus } from '../../api/api';
 import { useReadable } from 'use-svelte-store';
-import { microservices } from '../../stores/microservice';
+import { microservices, MicroserviceStore } from '../../stores/microservice';
 import { Webhooks } from './webhooks';
 import { ConfigView } from './config/configView';
 
@@ -33,7 +33,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const podsData = _props.podsData;
     const [selectedKey, setSelectedKey] = useState('healthStatus');
 
-    const currentMicroservice = $microservices.find(ms => ms.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId);
     if (!currentMicroservice) {
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);

@@ -20,7 +20,7 @@ import {
     MicroserviceIngressPath,
 } from '../api/index';
 
-import { getApplication, HttpResponseApplication } from '../api/application';
+import { getApplication, HttpInputApplicationEnvironment, HttpResponseApplication } from '../api/application';
 
 export type MicroserviceStore = {
     edit: any;
@@ -197,3 +197,53 @@ export const savePurchaseOrderMicroservice = async (
     return saveMicroservice(input.kind, input);
 };
 
+
+export const canEditMicroservices = (environments: HttpInputApplicationEnvironment[], environment: string): boolean => {
+    return environments.some(info => info.name === environment && info.automationEnabled);
+};
+
+
+export const canEditMicroservice = (environments: HttpInputApplicationEnvironment[], environment: string, microserviceId: string): boolean => {
+    const data = get(microservices);
+
+    const currentMicroservice: MicroserviceStore = data.find(ms => ms.id === microserviceId);
+    if (!currentMicroservice) {
+        return false;
+    }
+
+    if (!canDeleteMicroservice(environments, environment, microserviceId)) {
+        return false;
+    }
+
+    if (currentMicroservice.id === '') {
+        return false;
+    }
+
+    if (currentMicroservice.kind === '') {
+        return false;
+    }
+
+    if (currentMicroservice.kind === 'unknown') {
+        return false;
+    }
+
+    if (!currentMicroservice?.edit?.dolittle) {
+        return false;
+    }
+    return true;
+};
+
+export const canDeleteMicroservice = (environments: HttpInputApplicationEnvironment[], environment: string, microserviceId: string): boolean => {
+    const data = get(microservices);
+
+    const currentMicroservice: MicroserviceStore = data.find(ms => ms.id === microserviceId);
+    if (!currentMicroservice) {
+        return false;
+    }
+
+    if (currentMicroservice.kind === 'raw-data-log-ingestor') {
+        return false;
+    }
+
+    return canEditMicroservices(environments, environment);
+};

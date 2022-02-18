@@ -3,13 +3,13 @@
 
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useGlobalContext } from '../stores/notifications';
+import { useSnackbar } from 'notistack';
+
 import {
     DocumentCard,
 } from '@fluentui/react';
 import { cardStyles } from '../theme/viewCard';
 
-import { deleteMicroservice } from '../stores/microservice';
 import './microservice.scss';
 
 type Props = {
@@ -18,9 +18,7 @@ type Props = {
     microserviceKind: string
     applicationId: string
     environment: string
-    canEdit: boolean
     canDelete: boolean
-    onAfterDelete: (microserviceId: string, environment: string) => void;
 };
 
 const kindTitles = {
@@ -67,37 +65,33 @@ const kindTitles = {
 };
 
 export const ViewCard: React.FunctionComponent<Props> = (props) => {
-    const { setNotification } = useGlobalContext();
     const history = useHistory();
+    const { enqueueSnackbar } = useSnackbar();
+
     const _props = props!;
     const microserviceName = _props.microserviceName;
     const microserviceId = _props.microserviceId;
     const microserviceKind = _props.microserviceKind;
     const applicationId = _props.applicationId;
     const environment = _props.environment;
-    const canEdit = _props.canEdit;
     const canDelete = _props.canDelete;
 
     // Today we do not store the microservice type in the cluster, making it hard to say what it is
     const subTitle = kindTitles[microserviceKind] ? kindTitles[microserviceKind].subTitle : '';
     const kindIcon = kindTitles[microserviceKind] ? kindTitles[microserviceKind].icon : '';
 
-    const onClickStopPropagation = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): void => {
+    const onClickDelete = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): void => {
+        // Looking forward to dropping fluent, this is needed due to the onclick on the documentcardimport { useSnackbar } from 'notistack';
         event.stopPropagation();
         event.preventDefault();
-    };
 
-    const onClickDelete = async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
-        event.stopPropagation();
-        event.preventDefault();
-        const success = await deleteMicroservice(applicationId, environment, microserviceId);
-
-        if (!success) {
-            setNotification('Failed to delete', 'error');
+        if (!canDelete) {
+            enqueueSnackbar('Deleting microservice is disabled', { variant: 'error' });
             return;
         }
-        //setNotification('Microservice to deleted', 'info');
-        _props.onAfterDelete(microserviceId, environment);
+
+        const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/delete`;
+        history.push(href);
     };
 
     const onClickView = () => {
@@ -118,43 +112,19 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
 
                 <h1>{microserviceName}</h1>
                 <h2>{subTitle}</h2>
-                {createBottomBar(canEdit, canDelete, onClickDelete, onClickStopPropagation)}
+                <div className="bottomBar">
+                    <a href="#"
+                        onClick={onClickDelete}
+                        className="left"
+                    >
+                        Delete
+                    </a>
+                    {createStatus()}
+                </div>
             </div>
         </DocumentCard >
     );
 };
-
-function createBottomBar(canEdit: boolean, canDelete: boolean, onClickDelete, onClickStopPropagation) {
-    return (
-        <div className="bottomBar">
-            {canDelete ?
-                createDeleteButton(canEdit, onClickDelete, onClickStopPropagation)
-                : (null)
-            }
-            {createStatus()}
-        </div>
-    );
-}
-
-function createDeleteButton(canEdit: boolean, onClickDelete, onClickStopPropagation) {
-    return canEdit ?
-        (
-            <a href="#"
-                onClick={onClickDelete}
-                className="left"
-            >
-                Delete
-            </a>
-        ) :
-        (
-            <a href="#"
-                className="left"
-                onClick={onClickStopPropagation}
-            >
-                Delete
-            </a>
-        );
-}
 
 function createStatus() {
     return (
