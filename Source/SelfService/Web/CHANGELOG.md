@@ -1,3 +1,10 @@
+# [1.14.0] - 2022-2-22 [PR: #154](https://github.com/dolittle/Studio/pull/154)
+## Summary
+
+- Fixing the http contract for tenantId -> customerId and tenantName -> customerName.
+- Renaming to use DEVELOPMENT_CUSTOMER_ID and DEVELOPMENT_USER_ID
+
+
 # [1.13.1] - 2022-2-18 [PR: #153](https://github.com/dolittle/Studio/pull/153)
 ## Summary
 
