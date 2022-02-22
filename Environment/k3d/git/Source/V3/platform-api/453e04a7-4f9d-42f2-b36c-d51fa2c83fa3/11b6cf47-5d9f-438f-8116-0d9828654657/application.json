@@ -1,12 +1,12 @@
 {
     "id": "11b6cf47-5d9f-438f-8116-0d9828654657",
     "name": "Taco",
-    "tenantId": "453e04a7-4f9d-42f2-b36c-d51fa2c83fa3",
+    "customerId": "453e04a7-4f9d-42f2-b36c-d51fa2c83fa3",
     "tenantName": "Customer-Chris",
     "environments": [
         {
             "name": "Dev",
-            "tenantId": "453e04a7-4f9d-42f2-b36c-d51fa2c83fa3",
+            "customerId": "453e04a7-4f9d-42f2-b36c-d51fa2c83fa3",
             "applicationId": "11b6cf47-5d9f-438f-8116-0d9828654657",
             "tenants": [
                 "17426336-fb8e-4425-8ab7-07d488367be9"

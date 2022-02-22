@@ -12,12 +12,12 @@ import (
 )
 
 type AppConfig struct {
-	PlatformApiHost     string
-	ListenOn            string
-	SharedSecret        string
-	DevelopmentEnabled  bool
-	DevelopmentTenantID string
-	DevelopmentUserID   string
+	PlatformApiHost       string
+	ListenOn              string
+	SharedSecret          string
+	DevelopmentEnabled    bool
+	DevelopmentCustomerID string
+	DevelopmentUserID     string
 }
 
 func initConfig() AppConfig {
@@ -38,9 +38,9 @@ func initConfig() AppConfig {
 		appConfig.SharedSecret = "CHANGEME"
 	}
 
-	appConfig.DevelopmentTenantID = os.Getenv("DEVELOPMENT_TENANT_ID")
+	appConfig.DevelopmentCustomerID = os.Getenv("DEVELOPMENT_CUSTOMER_ID")
 	appConfig.DevelopmentUserID = os.Getenv("DEVELOPMENT_USER_ID")
-	appConfig.DevelopmentEnabled = (appConfig.DevelopmentTenantID != "" && appConfig.DevelopmentUserID != "")
+	appConfig.DevelopmentEnabled = (appConfig.DevelopmentCustomerID != "" && appConfig.DevelopmentUserID != "")
 
 	return appConfig
 }
@@ -96,7 +96,7 @@ func (s backend) AddSharedSecret(req *http.Request) {
 }
 
 func (s backend) AddDolittleHeaders(req *http.Request) {
-	req.Header.Set("Tenant-ID", s.appConfig.DevelopmentTenantID)
+	req.Header.Set("Tenant-ID", s.appConfig.DevelopmentCustomerID)
 	req.Header.Set("User-ID", s.appConfig.DevelopmentUserID)
 }
 

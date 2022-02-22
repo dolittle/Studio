@@ -120,7 +120,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
         ms = {
             dolittle: {
                 applicationId,
-                tenantId: application.tenantId,
+                customerId: application.customerId,
                 microserviceId,
             },
             name: currentMicroservice.name,

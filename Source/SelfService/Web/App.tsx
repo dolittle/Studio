@@ -73,7 +73,7 @@ export const App = () => {
     const { pathname } = useLocation();
     // Little hack to force redirect
     if (['', '/', uriWithAppPrefix('/')].includes(pathname)) {
-        // It is possible to know that the user just picked a tenant
+        // It is possible to know that the user just picked a customer
         // We could signal this to the applications page
         // This could then redirect, if the
         // We could offer redirect back to last page?

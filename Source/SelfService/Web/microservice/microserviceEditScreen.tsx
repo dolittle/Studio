@@ -19,7 +19,7 @@ type Props = {
 
 export const MicroserviceEditScreen: React.FunctionComponent<Props> = (props) => {
     // TODO Get from application
-    const tenantId = 'TODO';
+    const customerId = 'TODO';
     const { microserviceId } = useParams() as any;
     const applicationId = props!.application.id;
     return (
@@ -28,7 +28,7 @@ export const MicroserviceEditScreen: React.FunctionComponent<Props> = (props) =>
 
             <Stack tokens={stackTokens}>
                 <Text variant="xLarge" block>
-                    tenant: {tenantId}
+                    customer: {customerId}
                 </Text>
                 <Text variant="xLarge" block>
                     application: {applicationId}

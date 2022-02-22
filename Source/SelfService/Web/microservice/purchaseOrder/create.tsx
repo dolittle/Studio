@@ -42,7 +42,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const ms: MicroservicePurchaseOrder = {
         dolittle: {
             applicationId: application.id,
-            tenantId: application.tenantId,
+            customerId: application.customerId,
             microserviceId,
         },
         name: '',

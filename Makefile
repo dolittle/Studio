@@ -9,6 +9,6 @@ develop-backend:
 	cd Source/SelfService/Backend && \
 	HEADER_SECRET="FAKE" \
 	PLATFORM_API="localhost:8081" \
-	DEVELOPMENT_TENANT_ID="${DOLITTLE_CUSTOMER_ID}" \
+	DEVELOPMENT_CUSTOMER_ID="${DOLITTLE_CUSTOMER_ID}" \
 	DEVELOPMENT_USER_ID="${DOLITTLE_USER_ID}" \
 	go run main.go

@@ -20,12 +20,12 @@ yarn start:dev
 
 ### Backend
 
-- You will want a tenantID and userID to access data
+- You will want a customerID and userID to access data
 - The HEADER_SECRET should match the one running in the platform-api
 
 ```sh
 HEADER_SECRET="FAKE_SECRET" \
-DEVELOPMENT_TENANT_ID="FAKE_TENANT_ID" \
+DEVELOPMENT_CUSTOMER_ID="FAKE_CUSTOMER_ID" \
 DEVELOPMENT_USER_ID="FAKE_USER_ID" \
 go run main.go
 ```

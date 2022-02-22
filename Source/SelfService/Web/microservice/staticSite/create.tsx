@@ -18,7 +18,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         <Stack tokens={stackTokens}>
             <h1>TODO Static Site</h1>
             <h2>Env: {_props.environment}</h2>
-            <h2>TenantID: {_props.application.tenantId}</h2>
+            <h2>CustomerID: {_props.application.customerId}</h2>
         </Stack>
     );
 };
