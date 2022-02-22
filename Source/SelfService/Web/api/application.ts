@@ -30,8 +30,8 @@ export type HttpInputApplicationEnvironment = {
 export type HttpResponseApplication = {
     id: string
     name: string
-    tenantId: string
-    tenantName: string
+    customerId: string
+    customerName: string
     environments: HttpInputApplicationEnvironment[]
     microservices: any[] // Not great
 };

@@ -30,7 +30,7 @@ make develop-frontend
 cd Source/SelfService/Backend
 HEADER_SECRET="FAKE" \
 PLATFORM_API="localhost:8081" \
-DEVELOPMENT_TENANT_ID="2df99e98-3c9a-44fb-b066-3a866b11f534" \
+DEVELOPMENT_CUSTOMER_ID="2df99e98-3c9a-44fb-b066-3a866b11f534" \
 DEVELOPMENT_USER_ID="local-dev" \
 go run main.go
 ```
@@ -59,7 +59,7 @@ localhost:8081/application -d '
 {
   "id": "fake-application-123",
   "name": "Tree1",
-  "tenantId": "2df99e98-3c9a-44fb-b066-3a866b11f534",
+  "customerId": "2df99e98-3c9a-44fb-b066-3a866b11f534",
   "environments": ["Dev"]
 }'
 ```

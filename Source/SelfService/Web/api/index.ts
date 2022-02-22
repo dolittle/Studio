@@ -29,7 +29,7 @@ export type Connector = {
 
 export type MicroserviceDolittle = {
     applicationId: string;
-    tenantId: string;
+    customerId: string;
     microserviceId: string;
 };
 

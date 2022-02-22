@@ -51,7 +51,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const ms = {
         dolittle: {
             applicationId: application.id,
-            tenantId: application.tenantId,
+            customerId: application.customerId,
             microserviceId,
         },
         name: 'Webhook-101',

@@ -5,27 +5,6 @@ import { getServerUrlPrefix, ShortInfo } from './api';
 // HACK for getting testdata
 //const testData = require('./testdata/insights-runtime-v1.json');
 
-export type DolittleTenant = {
-    id: string
-    name: string
-};
-
-export type CustomerApplication = {
-    id: string
-    name: string
-    environment: string
-};
-
-
-export type CustomerDomain = {
-    name: string
-};
-
-export type ApplicationForListing = {
-    applications: CustomerApplication[]
-    tenant: DolittleTenant
-};
-
 export type BackupsForApplication = {
     application: ShortInfo
     environment: string
