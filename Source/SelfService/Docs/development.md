@@ -31,21 +31,3 @@ go run main.go
 ```
 
 At this point, you need platform-api [running](https://github.com/dolittle-entropy/platform-api/tree/main/docs)
-
-
-## Local dev setup with mocked backend
-
-If you're just working on the `Web` project, you can run the mocked backend that doesn't require a connection to the actual platform.
-So you can play around with all the APIs without worrying that you're affecting any deployments.
-
-### Run web
-
-```sh
-yarn start:dev
-```
-
-### Run mocked backend
-
-```sh
-yarn start:dev
-```
