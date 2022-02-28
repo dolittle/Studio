@@ -1,3 +1,10 @@
+# [1.15.0] - 2022-2-28 [PR: #156](https://github.com/dolittle/Studio/pull/156)
+## Summary
+
+- Adding 6.1.0 to the runtime list for create microservice
+- Moving to 7.8.0 for the latest runtime
+
+
 # [1.14.0] - 2022-2-22 [PR: #154](https://github.com/dolittle/Studio/pull/154)
 ## Summary
 
