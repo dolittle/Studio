@@ -11,7 +11,7 @@ import { Guid } from '@dolittle/rudiments';
 
 import { saveSimpleMicroservice } from '../../stores/microservice';
 import { MicroserviceSimple } from '../../api/index';
-import { getLatestRuntimeInfo } from '../../api/api';
+import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
 import { DropDownMenu } from '../../theme/dropDownMenu';
 import { HttpResponseApplication } from '../../api/application';
 
@@ -30,7 +30,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     const microserviceId = Guid.create().toString();
 
-    const runtimeInfo = getLatestRuntimeInfo();
+    const latestRuntimeInfo = getLatestRuntimeInfo();
 
     const ms = {
         dolittle: {
@@ -44,7 +44,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         extra: {
             // nginxdemos/hello:latest
             headImage: 'nginxdemos/hello:latest', //'dolittle/spinner:0.0.0', // Doesnt work
-            runtimeImage: runtimeInfo.image,
+            runtimeImage: latestRuntimeInfo.image,
             ingress: {
                 path: '/',
                 pathType: 'Prefix',
@@ -78,15 +78,13 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     };
 
     const runtimeImageSelections = [
-        {
-            value: runtimeInfo.image,
-            displayValue: runtimeInfo.image
-        },
+        ...getRuntimes().map(runtimeInfo => ({ value: runtimeInfo.image, displayValue: runtimeInfo.image })),
         {
             value: 'none',
             displayValue: 'None'
         }
     ];
+
     const handleRuntimeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         const _runtimeImage = event.target.value as string;
         setRuntimeImage(_runtimeImage);
