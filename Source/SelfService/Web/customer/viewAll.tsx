@@ -15,7 +15,6 @@ type Props = {
 
 };
 
-
 export const ViewAll: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
@@ -24,23 +23,20 @@ export const ViewAll: React.FunctionComponent<Props> = (props) => {
     const [customers, setCustomers] = useState([] as Customers);
 
     useEffect(() => {
-        Promise.all([
-            getCustomers(),
-        ]).then(values => {
-            const applicationsData = values[0];
+        getCustomers()
+            .then(customers => {
 
-            setCustomers(values[0]);
-            setLoaded(true);
-        }).catch((error) => {
-            console.log(error);
-            enqueueSnackbar('Failed getting data from the server', { variant: 'error' });
-        });
+                setCustomers(customers);
+                setLoaded(true);
+            }).catch((error) => {
+                console.log(error);
+                enqueueSnackbar('Failed getting data from the server', { variant: 'error' });
+            });
     }, []);
 
     if (!loaded) {
         return null;
     }
-
 
     return (
         <>
@@ -57,7 +53,9 @@ export const ViewAll: React.FunctionComponent<Props> = (props) => {
             <ul>
                 {customers.map((customer) => {
                     return <li key={`${customer.id}`}>
-                        <p>{customer.name} ({customer.id})</p>
+                        <a href={`/admin/customer/${customer.id}`}>
+                            <p>{customer.name} ({customer.id})</p>
+                        </a>
                     </li>;
                 })}
             </ul>

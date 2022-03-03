@@ -10,6 +10,7 @@ import {
 
 import { Create as CreateCustomer } from '../customer/create';
 import { ViewAll as ViewAllCustomers } from '../customer/viewAll';
+import { View as ViewCustomer } from '../customer/view';
 import {
     LayoutWithSidebar,
 } from '../layout/layoutWithSidebar';
@@ -32,6 +33,9 @@ export const Screen: React.FunctionComponent = () => {
                     <ViewAllCustomers />
                 </Route>
 
+                <Route exact path="/admin/customer/:customerId">
+                    <ViewCustomer />
+                </Route>
 
             </Switch>
 
