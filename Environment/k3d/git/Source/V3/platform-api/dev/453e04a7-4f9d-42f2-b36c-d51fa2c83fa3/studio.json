@@ -1,4 +1,5 @@
 {
     "build_overwrite": true,
+    "can_create_application": true,
     "disabled_environments": []
 }
