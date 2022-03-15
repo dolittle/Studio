@@ -111,10 +111,20 @@ export const View: React.FunctionComponent<any> = (props) => {
         <>
             <h1>Customer {customer.name}</h1>
             <div className={classes.root}>
-                <h3>Customer Id: {customerId}</h3>
-                <h3>Build overwrite: {String(config.buildOverwrite)}</h3>
-                <h3>Can create applications: {String(config.canCreateApplication)}</h3>
-                <h3>Disabled environments: {config.disabledEnvironments}</h3>
+                <ul>
+                    <li>
+                        Customer ID: {customerId}
+                    </li>
+                    <li>
+                        Build overwrite: {String(config.buildOverwrite)}
+                    </li>
+                    <li>
+                        Can create applications: {String(config.canCreateApplication)}
+                    </li>
+                    <li>
+                        Disabled environments: {config.disabledEnvironments}
+                    </li>
+                </ul>
                 <ButtonText
                     onClick={() => {
                         config.disabledEnvironments = config.disabledEnvironments.length ? [] : ['*'];
