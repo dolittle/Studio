@@ -1,3 +1,19 @@
+# [1.16.0] - 2022-3-15 [PR: #159](https://github.com/dolittle/Studio/pull/159)
+## Summary
+
+Adds new customer view on `/admin/customer/{customerID}`, which can be navigated to by clicking on a customers name in `/admin/customers` page.
+
+![image](https://user-images.githubusercontent.com/10163775/156578864-660d24a8-d2f9-4844-a350-b2f6bfa1edcf.png)
+
+On this page you can toggle between enabling or disabling all of the customers environments. It currently supports only enabling them all (aka no disabled environments) or disabled them all (having a `*` wildcard entry in the array).
+
+Also upgrades `@fluentui/react` package to `8.57.1`. This is because the frontend docker image had stopped mysteriously building earlier, upgrading the package fixed it.
+
+## Reference
+- [Related platform-api PR](https://github.com/dolittle/platform-api/pull/95)
+- [Asana](https://app.asana.com/0/1201885260673030/1201894099742054)
+
+
 # [1.15.0] - 2022-2-28 [PR: #156](https://github.com/dolittle/Studio/pull/156)
 ## Summary
 
