@@ -46,5 +46,3 @@ export async function createCustomer(input: HttpCustomerRequest): Promise<JobInf
     const data = await parseJSONResponse(response);
     return data;
 }
-
-

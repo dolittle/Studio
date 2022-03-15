@@ -14,8 +14,7 @@
         "ci": "yarn clean && yarn lint:ci && yarn build"
     },
     "dependencies": {
-        "@fluentui/react": "8.29.1",
-        "@fluentui/react-hooks": "8.2.7",
+        "@fluentui/react": "8.57.1",
         "@types/webpack": "5.28.0",
         "clean-webpack-plugin": "4.0.0-alpha.0",
         "copy-webpack-plugin": "9.0.1",
