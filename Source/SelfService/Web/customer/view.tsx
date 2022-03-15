@@ -107,6 +107,17 @@ export const View: React.FunctionComponent<any> = (props) => {
         return null;
     }
 
+    const displayDisabledEnvironments = (environments: string[]) => {
+        if (!environments.length) {
+            return 'none';
+        }
+        return <ul>
+            {environments.map(environment => {
+                return <li>{environment}</li>;
+            })}
+        </ul>;
+    }
+
     return (
         <>
             <h1>Customer {customer.name}</h1>
@@ -122,7 +133,7 @@ export const View: React.FunctionComponent<any> = (props) => {
                         Can create applications: {String(config.canCreateApplication)}
                     </li>
                     <li>
-                        Disabled environments: {config.disabledEnvironments}
+                        Disabled environments: {displayDisabledEnvironments(config.disabledEnvironments)}
                     </li>
                 </ul>
                 <ButtonText
@@ -136,6 +147,7 @@ export const View: React.FunctionComponent<any> = (props) => {
                                     return;
                                 }
                                 setToggleConfig(!toggleConfig);
+                                enqueueSnackbar('Save successfull', { variant: 'info' });
                             })
                             .catch(error => {
                                 console.log(error);
