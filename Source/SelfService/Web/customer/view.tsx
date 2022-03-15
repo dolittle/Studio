@@ -123,6 +123,7 @@ export const View: React.FunctionComponent<any> = (props) => {
                             .then(result => {
                                 if (!result) {
                                     enqueueSnackbar('Failed saving the config', { variant: 'error' });
+                                    return;
                                 }
                                 setToggleConfig(!toggleConfig);
                             })
