@@ -113,10 +113,10 @@ export const View: React.FunctionComponent<any> = (props) => {
         }
         return <ul>
             {environments.map(environment => {
-                return <li>{environment}</li>;
+                return <li key={`${environment}`}>{environment}</li>;
             })}
         </ul>;
-    }
+    };
 
     return (
         <>
