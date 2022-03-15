@@ -53,10 +53,16 @@ export const ViewAll: React.FunctionComponent<Props> = (props) => {
             <ul>
                 {customers.map((customer) => {
                     return <li key={`${customer.id}`}>
-                        <a href={`/admin/customer/${customer.id}`}>
-                            <p>{customer.name} ({customer.id})</p>
-                        </a>
-                    </li>;
+
+                        <ButtonText
+                            onClick={() => {
+                                const href = `/admin/customer/${customer.id}`;
+                                history.push(href);
+                            }}
+                        >
+                            {customer.name} ({customer.id})
+                        </ButtonText>
+                    </li>
                 })}
             </ul>
         </>
