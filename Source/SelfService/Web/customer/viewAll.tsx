@@ -62,7 +62,7 @@ export const ViewAll: React.FunctionComponent<Props> = (props) => {
                         >
                             {customer.name} ({customer.id})
                         </ButtonText>
-                    </li>
+                    </li>;
                 })}
             </ul>
         </>
