@@ -7,12 +7,12 @@
 
 ### Install k3d
 ```sh
-curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | TAG=v4.4.8 bash
 ```
 
 ## The fast way of setting things up
 
-Run the [`reset-local-k3d`](https://github.com/joelhoisko/dotfiles/blob/xps-13/scripts/bin/reset-local-k3d) script, that automatically deletes the existing k3d cluster and recreates a new one with all the things below applied.
+Run the reset-local-k3d script, that automatically deletes the existing k3d cluster and recreates a new one with all the things below applied.
 
 ```sh
 ./Environment/k3d/reset-local-k3d
@@ -104,18 +104,13 @@ Now open your browser at http://localhost:3000 and explore around. If any compon
 ## Run self-service web
 In a new terminal:
 ```sh
-cd Source/SelfService/Web && yarn start:dev
+make develop-frontend
 ```
 
 ## Run self-service backend
 In a new terminal:
 ```sh
-cd Source/SelfService/Backend
-HEADER_SECRET="FAKE" \
-PLATFORM_API="localhost:8081" \
-DEVELOPMENT_CUSTOMER_ID="453e04a7-4f9d-42f2-b36c-d51fa2c83fa3" \
-DEVELOPMENT_USER_ID="local-dev" \
-go run main.go
+make develop-backend
 ```
 
 ## Run platform-api
@@ -131,7 +126,7 @@ GIT_REPO_BRANCH=main \
 LISTEN_ON="localhost:8081" \
 HEADER_SECRET="FAKE" \
 AZURE_SUBSCRIPTION_ID="e7220048-8a2c-4537-994b-6f9b320692d7" \
-go run main.go microservice server
+go run main.go api server
 ```
 
 ## Check out Studio
