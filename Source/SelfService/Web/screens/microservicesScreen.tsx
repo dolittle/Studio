@@ -38,7 +38,7 @@ import {
     mergeMicroservicesFromK8s
 } from '../stores/microservice';
 
-import { withRouteApplicationProps } from '../utils/route';
+import { useRouteApplicationProps } from '../utils/route';
 
 import { useGlobalContext } from '../stores/notifications';
 import {
@@ -53,7 +53,7 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { setNotification, currentEnvironment, currentApplicationId } = useGlobalContext();
 
-    const routeApplicationProps = withRouteApplicationProps('microservices');
+    const routeApplicationProps = useRouteApplicationProps();
     const applicationId = routeApplicationProps.applicationId;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
@@ -172,32 +172,25 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
     return (
         <LayoutWithSidebar navigation={nav}>
             <TopNavBar routes={routes} applications={applications} applicationId={applicationId} environment={currentEnvironment} />
-
             <Switch>
                 <Route exact path="/microservices/application/:applicationId/:environment/overview">
                     <MicroservicesOverviewScreen application={application} environment={currentEnvironment} />
                 </Route>
-
                 <Route exact path="/microservices/application/:applicationId/:environment/create">
                     <MicroserviceNewScreen application={application} environment={currentEnvironment} />
                 </Route>
-
                 <Route exact path="/microservices/application/:applicationId/:environment/edit/:microserviceId">
                     <MicroserviceEditScreen application={application} environment={currentEnvironment} />
                 </Route>
-
                 <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId/delete">
                     <DeleteView application={application} environment={currentEnvironment} />
                 </Route>
-
                 <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId">
                     <MicroserviceViewScreen application={application} environment={currentEnvironment} />
                 </Route>
-
                 <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId/environment-variables">
                     <MicroserviceEnvironmentVariablesView application={application} environment={currentEnvironment} />
                 </Route>
-
                 <Route exact path="/microservices/application/:applicationId/:environment/pod/view/:podName/logs">
                     <PodLogScreen />
                 </Route>

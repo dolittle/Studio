@@ -20,7 +20,7 @@ import '../application/applicationScreen.scss';
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 import { BusinessMomentsContainerScreen } from '../businessMoments/container';
 import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
-import { withRouteApplicationProps } from '../utils/route';
+import { useRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { useGlobalContext } from '../stores/notifications';
 import { TopNavBar } from '../components/topNavBar';
@@ -30,7 +30,7 @@ import { HttpResponseApplication, getApplications, getApplication, HttpResponseA
 export const BusinessMomentsScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { currentEnvironment, currentApplicationId } = useGlobalContext();
-    const routeApplicationProps = withRouteApplicationProps('business-moments');
+    const routeApplicationProps = useRouteApplicationProps();
     const applicationId = routeApplicationProps.applicationId;
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);

@@ -18,7 +18,7 @@ import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import '../application/applicationScreen.scss';
 
 import { DocumentationContainerScreen } from '../documentation/container';
-import { withRouteApplicationProps } from '../utils/route';
+import { useRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
 import { useGlobalContext } from '../stores/notifications';
@@ -36,7 +36,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { setNotification, currentEnvironment, currentApplicationId } = useGlobalContext();
 
-    const routeApplicationProps = withRouteApplicationProps('documentation');
+    const routeApplicationProps = useRouteApplicationProps();
     const applicationId = routeApplicationProps.applicationId;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);

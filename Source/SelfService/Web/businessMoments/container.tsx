@@ -17,7 +17,7 @@ import '../application/applicationScreen.scss';
 import { useReadable } from 'use-svelte-store';
 import { businessmoments, load, isLoaded } from '../stores/businessmoment';
 import { microservices } from '../stores/microservice';
-import { withRouteApplicationProps } from '../utils/route';
+import { useRouteApplicationProps } from '../utils/route';
 
 
 type Props = {
@@ -28,7 +28,7 @@ type Props = {
 export const BusinessMomentsContainerScreen: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
-    const routeApplicationProps = withRouteApplicationProps('business-moments');
+    const routeApplicationProps = useRouteApplicationProps();
     const applicationId = routeApplicationProps.applicationId;
     const environment = _props.environment;
 

@@ -11,7 +11,7 @@ import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import '../application/applicationScreen.scss';
 import { PickEnvironment } from '../components/pickEnvironment';
 import { InsightsContainerScreen } from '../insights/container';
-import { withRouteApplicationProps } from '../utils/route';
+import { useRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { useGlobalContext } from '../stores/notifications';
 import { TopNavBar } from '../components/topNavBar';
@@ -26,7 +26,7 @@ export const InsightsScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { setError, currentEnvironment } = useGlobalContext();
 
-    const routeApplicationProps = withRouteApplicationProps('insights');
+    const routeApplicationProps = useRouteApplicationProps();
     const applicationId = routeApplicationProps.applicationId;
     const environment = currentEnvironment;
 
