@@ -48,12 +48,12 @@ import {
 import { RouteNotFound } from '../components/notfound';
 import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
+import { withRouteApplicationState } from './withRouteApplicationState';
 
-export const MicroservicesScreen: React.FunctionComponent = () => {
+export const MicroservicesScreen: React.FunctionComponent = withRouteApplicationState((routeApplicationProps) => {
     const history = useHistory();
     const { setNotification, currentEnvironment, currentApplicationId } = useGlobalContext();
 
-    const routeApplicationProps = useRouteApplicationProps();
     const applicationId = routeApplicationProps.applicationId;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
@@ -194,10 +194,8 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
                 <Route exact path="/microservices/application/:applicationId/:environment/pod/view/:podName/logs">
                     <PodLogScreen />
                 </Route>
-
                 <RouteNotFound redirectUrl={redirectUrl} />
             </Switch>
-
         </LayoutWithSidebar >
     );
-};
+});
