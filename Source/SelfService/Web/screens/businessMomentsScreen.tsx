@@ -30,7 +30,6 @@ import { withRouteApplicationState } from './withRouteApplicationState';
 export const BusinessMomentsScreen: React.FunctionComponent = withRouteApplicationState(({routeApplicationParams: routeApplicationProps}) => {
     const history = useHistory();
     const { currentEnvironment, currentApplicationId } = useGlobalContext();
-    const applicationId = routeApplicationProps.applicationId;
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
@@ -38,8 +37,8 @@ export const BusinessMomentsScreen: React.FunctionComponent = withRouteApplicati
     useEffect(() => {
         Promise.all([
             getApplications(),
-            getApplication(applicationId),
-            getMicroservices(applicationId),
+            getApplication(currentApplicationId),
+            getMicroservices(currentApplicationId),
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
@@ -111,14 +110,14 @@ export const BusinessMomentsScreen: React.FunctionComponent = withRouteApplicati
 
 
     const redirectUrl = generatePath('/business-moments/application/:applicationId/:environment/overview', {
-        applicationId,
+        applicationId: currentApplicationId,
         environment: currentEnvironment,
     });
 
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <TopNavBar routes={routes} applications={applications} applicationId={applicationId} environment={currentEnvironment} />
+            <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
 
 
             <Switch>

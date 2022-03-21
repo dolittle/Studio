@@ -52,8 +52,6 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
     const history = useHistory();
     const { setNotification, currentEnvironment, currentApplicationId } = useGlobalContext();
 
-    const applicationId = routeApplicationProps.applicationId;
-
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
@@ -61,8 +59,8 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
     useEffect(() => {
         Promise.all([
             getApplications(),
-            getApplication(applicationId),
-            getMicroservices(applicationId),
+            getApplication(currentApplicationId),
+            getMicroservices(currentApplicationId),
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
@@ -110,8 +108,7 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
         );
     }
 
-    const nav = getDefaultMenu(history, applicationId, currentEnvironment);
-
+    const nav = getDefaultMenu(history, currentApplicationId, currentEnvironment);
 
     const routes = [
         {
@@ -163,13 +160,13 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
 
 
     const redirectUrl = generatePath('/microservices/application/:applicationId/:environment/overview', {
-        applicationId,
+        applicationId: currentApplicationId,
         environment: currentEnvironment,
     });
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <TopNavBar routes={routes} applications={applications} applicationId={applicationId} environment={currentEnvironment} />
+            <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
             <Switch>
                 <Route exact path="/microservices/application/:applicationId/:environment/overview">
                     <MicroservicesOverviewScreen application={application} environment={currentEnvironment} />

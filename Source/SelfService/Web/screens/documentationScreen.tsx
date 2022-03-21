@@ -29,15 +29,13 @@ import {
     getApplication,
     HttpResponseApplications,
 } from '../api/application';
+import { withRouteApplicationState } from './withRouteApplicationState';
 
 
 
-export const DocumentationScreen: React.FunctionComponent = () => {
+export const DocumentationScreen: React.FunctionComponent = withRouteApplicationState(() => {
     const history = useHistory();
     const { setNotification, currentEnvironment, currentApplicationId } = useGlobalContext();
-
-    const routeApplicationParams = useRouteApplicationParams();
-    const applicationId = routeApplicationParams.applicationId;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
@@ -46,7 +44,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
     useEffect(() => {
         Promise.all([
             getApplications(),
-            getApplication(applicationId),
+            getApplication(currentApplicationId),
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
@@ -127,13 +125,13 @@ export const DocumentationScreen: React.FunctionComponent = () => {
     ];
 
     const redirectUrl = generatePath('/documentation/application/:applicationId/:environment/overview', {
-        applicationId,
+        applicationId: currentApplicationId,
         environment: currentEnvironment,
     });
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <TopNavBar routes={routes} applications={applications} applicationId={applicationId} environment={currentEnvironment} />
+            <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
 
             <Switch>
                 <Route path="/documentation/application/:applicationId/:environment">
@@ -143,4 +141,4 @@ export const DocumentationScreen: React.FunctionComponent = () => {
             </Switch>
         </LayoutWithSidebar >
     );
-};
+});

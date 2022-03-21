@@ -11,7 +11,6 @@ import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import '../application/applicationScreen.scss';
 import { PickEnvironment } from '../components/pickEnvironment';
 import { InsightsContainerScreen } from '../insights/container';
-import { useRouteApplicationParams } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { useGlobalContext } from '../stores/notifications';
 import { TopNavBar } from '../components/topNavBar';
@@ -21,13 +20,12 @@ import {
     getApplication,
     HttpResponseApplications,
 } from '../api/application';
+import { withRouteApplicationState } from './withRouteApplicationState';
 
-export const InsightsScreen: React.FunctionComponent = () => {
+export const InsightsScreen: React.FunctionComponent = withRouteApplicationState(() => {
     const history = useHistory();
-    const { setError, currentEnvironment } = useGlobalContext();
+    const { setError, currentEnvironment, currentApplicationId } = useGlobalContext();
 
-    const routeApplicationProps = useRouteApplicationParams();
-    const applicationId = routeApplicationProps.applicationId;
     const environment = currentEnvironment;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
@@ -38,7 +36,7 @@ export const InsightsScreen: React.FunctionComponent = () => {
 
         Promise.all([
             getApplications(),
-            getApplication(applicationId),
+            getApplication(currentApplicationId),
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
@@ -114,13 +112,13 @@ export const InsightsScreen: React.FunctionComponent = () => {
     ];
 
     const redirectUrl = generatePath('/insights/application/:applicationId/:environment/overview', {
-        applicationId,
+        applicationId: currentApplicationId,
         environment,
     });
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <TopNavBar routes={routes} applications={applications} applicationId={applicationId} environment={currentEnvironment} />
+            <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
 
             <Switch>
                 <Route path="/insights/application/:applicationId/:environment">
@@ -130,4 +128,4 @@ export const InsightsScreen: React.FunctionComponent = () => {
             </Switch>
         </LayoutWithSidebar >
     );
-};
+});
