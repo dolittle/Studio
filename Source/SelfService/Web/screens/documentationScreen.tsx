@@ -77,7 +77,7 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
         );
     }
 
-    if (!isEnvironmentValidFromUri(routeApplicationParams, applications, currentApplicationId, currentEnvironment)) {
+    if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}

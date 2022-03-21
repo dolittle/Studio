@@ -27,7 +27,7 @@ import { ShortInfoWithEnvironment, getMicroservices, HttpResponseMicroservices }
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 import { withRouteApplicationState } from './withRouteApplicationState';
 
-export const BusinessMomentsScreen: React.FunctionComponent = withRouteApplicationState(({routeApplicationParams: routeApplicationProps}) => {
+export const BusinessMomentsScreen: React.FunctionComponent = withRouteApplicationState(() => {
     const history = useHistory();
     const { currentEnvironment, currentApplicationId } = useGlobalContext();
     const [application, setApplication] = useState({} as HttpResponseApplication);
@@ -72,7 +72,7 @@ export const BusinessMomentsScreen: React.FunctionComponent = withRouteApplicati
         );
     }
 
-    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentApplicationId, currentEnvironment)) {
+    if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}

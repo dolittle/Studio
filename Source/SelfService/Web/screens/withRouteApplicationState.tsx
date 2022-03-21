@@ -9,10 +9,8 @@ export type PropsWithRouteApplicationProps = {
     routeApplicationParams: RouteApplicationParams
 };
 
-export function withRouteApplicationState<T extends PropsWithRouteApplicationProps>(
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    Component: ComponentType<T>
-) {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export function withRouteApplicationState(Component: ComponentType) {
     return React.memo(function RouteApplicationState() {
         const routeApplicationParams = useRouteApplicationParams();
         const {
@@ -32,6 +30,6 @@ export function withRouteApplicationState<T extends PropsWithRouteApplicationPro
             }
         }, []);
 
-        return <Component {...{routeApplicationParams} as T} />;
+        return <Component />;
     });
 }

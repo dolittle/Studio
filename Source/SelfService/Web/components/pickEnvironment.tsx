@@ -49,22 +49,10 @@ type Props = {
     openModal: boolean
 };
 
-export const isEnvironmentValidFromUri = (routeProps: RouteApplicationParams, applications: ShortInfoWithEnvironment[], currentApplicationId: string, currentEnvironment: string): boolean => {
-    // Give priority to this fist
-    // We want the second one for the uri change
-    let exists = applications.some((info) => {
+export const isEnvironmentValidFromUri = (applications: ShortInfoWithEnvironment[], currentApplicationId: string, currentEnvironment: string): boolean => {
+    return applications.some((info) => {
         return currentApplicationId === info.id && currentEnvironment === info.environment;
     });
-
-    if (exists) {
-        return exists;
-    }
-
-    exists = applications.some((info) => {
-        return routeProps.applicationId === info.id && routeProps.environment === info.environment;
-    });
-
-    return exists;
 };
 
 export const PickEnvironment: React.FunctionComponent<Props> = (props) => {

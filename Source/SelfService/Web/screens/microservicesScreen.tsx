@@ -48,7 +48,7 @@ import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 import { withRouteApplicationState } from './withRouteApplicationState';
 
-export const MicroservicesScreen: React.FunctionComponent = withRouteApplicationState(({routeApplicationParams: routeApplicationProps}) => {
+export const MicroservicesScreen: React.FunctionComponent = withRouteApplicationState(() => {
     const history = useHistory();
     const { setNotification, currentEnvironment, currentApplicationId } = useGlobalContext();
 
@@ -98,7 +98,7 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
         );
     }
 
-    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentApplicationId, currentEnvironment)) {
+    if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}
