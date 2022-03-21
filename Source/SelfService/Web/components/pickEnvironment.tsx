@@ -12,7 +12,7 @@ import { useGlobalContext } from '../stores/notifications';
 import {
     Link,
 } from '@fluentui/react';
-import { RouteApplicationProps } from '../utils/route';
+import { RouteApplicationParams } from '../utils/route';
 
 function rand() {
     return Math.round(Math.random() * 20) - 10;
@@ -49,7 +49,7 @@ type Props = {
     openModal: boolean
 };
 
-export const isEnvironmentValidFromUri = (routeProps: RouteApplicationProps, applications: ShortInfoWithEnvironment[], currentApplicationId: string, currentEnvironment: string): boolean => {
+export const isEnvironmentValidFromUri = (routeProps: RouteApplicationParams, applications: ShortInfoWithEnvironment[], currentApplicationId: string, currentEnvironment: string): boolean => {
     // Give priority to this fist
     // We want the second one for the uri change
     let exists = applications.some((info) => {

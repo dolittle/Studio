@@ -3,10 +3,10 @@
 
 import React, { useEffect, ComponentType } from 'react';
 import { useGlobalContext } from '../stores/notifications';
-import { RouteApplicationProps, useRouteApplicationProps } from '../utils/route';
+import { RouteApplicationParams, useRouteApplicationParams } from '../utils/route';
 
 export type PropsWithRouteApplicationProps = {
-    routeApplicationProps: RouteApplicationProps
+    routeApplicationParams: RouteApplicationParams
 };
 
 export function withRouteApplicationState<T extends PropsWithRouteApplicationProps>(
@@ -14,7 +14,7 @@ export function withRouteApplicationState<T extends PropsWithRouteApplicationPro
     Component: ComponentType<T>
 ) {
     return React.memo(function RouteApplicationState() {
-        const routeApplicationProps = useRouteApplicationProps();
+        const routeApplicationParams = useRouteApplicationParams();
         const {
             currentApplicationId,
             currentEnvironment,
@@ -23,15 +23,15 @@ export function withRouteApplicationState<T extends PropsWithRouteApplicationPro
         } = useGlobalContext();
 
         useEffect(() => {
-            if (currentApplicationId !== routeApplicationProps.applicationId) {
-                setCurrentApplicationId(routeApplicationProps.applicationId);
+            if (currentApplicationId !== routeApplicationParams.applicationId) {
+                setCurrentApplicationId(routeApplicationParams.applicationId);
             }
 
-            if (currentEnvironment !== routeApplicationProps.environment) {
-                setCurrentEnvironment(routeApplicationProps.environment);
+            if (currentEnvironment !== routeApplicationParams.environment) {
+                setCurrentEnvironment(routeApplicationParams.environment);
             }
         }, []);
 
-        return <Component {...({routeApplicationProps} as T)} />;
+        return <Component {...{routeApplicationParams} as T} />;
     });
 }

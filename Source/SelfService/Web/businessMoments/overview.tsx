@@ -13,7 +13,7 @@ import { Modal, DefaultButton } from '@fluentui/react';
 import { ViewCard } from './viewCard';
 import { HttpResponseApplication } from '../api/application';
 import { MicroserviceBusinessMomentAdaptor, HttpResponseBusinessMoments } from '../api/index';
-import { useRouteApplicationProps } from '../utils/route';
+import { useRouteApplicationParams } from '../utils/route';
 import { canEditMicroservices } from '../stores/microservice';
 
 type Props = {
@@ -27,7 +27,7 @@ export const BusinessMomentsOverview: React.FunctionComponent<Props> = (props) =
     const { enqueueSnackbar } = useSnackbar();
     const _props = props!;
     const application = _props.application;
-    const routeApplicationProps = useRouteApplicationProps();
+    const routeApplicationProps = useRouteApplicationParams();
     const applicationId = routeApplicationProps.applicationId;
     const environment = _props.environment;
 

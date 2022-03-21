@@ -20,17 +20,16 @@ import '../application/applicationScreen.scss';
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 import { BusinessMomentsContainerScreen } from '../businessMoments/container';
 import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
-import { useRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { useGlobalContext } from '../stores/notifications';
 import { TopNavBar } from '../components/topNavBar';
 import { ShortInfoWithEnvironment, getMicroservices, HttpResponseMicroservices } from '../api/api';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
+import { withRouteApplicationState } from './withRouteApplicationState';
 
-export const BusinessMomentsScreen: React.FunctionComponent = () => {
+export const BusinessMomentsScreen: React.FunctionComponent = withRouteApplicationState(({routeApplicationParams: routeApplicationProps}) => {
     const history = useHistory();
     const { currentEnvironment, currentApplicationId } = useGlobalContext();
-    const routeApplicationProps = useRouteApplicationProps();
     const applicationId = routeApplicationProps.applicationId;
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
@@ -131,4 +130,4 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
             </Switch>
         </LayoutWithSidebar >
     );
-};
+});

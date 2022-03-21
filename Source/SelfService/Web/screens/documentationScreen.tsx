@@ -18,7 +18,7 @@ import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import '../application/applicationScreen.scss';
 
 import { DocumentationContainerScreen } from '../documentation/container';
-import { useRouteApplicationProps } from '../utils/route';
+import { useRouteApplicationParams } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
 import { useGlobalContext } from '../stores/notifications';
@@ -36,8 +36,8 @@ export const DocumentationScreen: React.FunctionComponent = () => {
     const history = useHistory();
     const { setNotification, currentEnvironment, currentApplicationId } = useGlobalContext();
 
-    const routeApplicationProps = useRouteApplicationProps();
-    const applicationId = routeApplicationProps.applicationId;
+    const routeApplicationParams = useRouteApplicationParams();
+    const applicationId = routeApplicationParams.applicationId;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
@@ -79,7 +79,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
         );
     }
 
-    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentApplicationId, currentEnvironment)) {
+    if (!isEnvironmentValidFromUri(routeApplicationParams, applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}

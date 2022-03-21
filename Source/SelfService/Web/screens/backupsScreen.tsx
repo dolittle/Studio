@@ -13,7 +13,7 @@ import { getApplication, HttpResponseApplication } from '../api/application';
 import { ViewCard } from '../backup/viewCard';
 import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
-import { useRouteApplicationProps } from '../utils/route';
+import { useRouteApplicationParams } from '../utils/route';
 import { ListView } from '../backup/listView';
 import { useGlobalContext } from '../stores/notifications';
 
@@ -25,7 +25,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
     const { currentEnvironment } = useGlobalContext();
 
-    const routeApplicationProps = useRouteApplicationProps();
+    const routeApplicationProps = useRouteApplicationParams();
     const applicationId = routeApplicationProps.applicationId;
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [loaded, setLoaded] = useState(false);

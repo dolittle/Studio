@@ -3,15 +3,15 @@
 
 import { useParams } from 'react-router-dom';
 
-export type RouteApplicationProps = {
+export type RouteApplicationParams = {
     applicationId: string;
     environment: string;
 };
 
-export const useRouteApplicationProps = (): RouteApplicationProps => {
+export const useRouteApplicationParams = (): RouteApplicationParams => {
     const { applicationId, environment } = useParams();
     return {
         applicationId: applicationId || '',
         environment: environment || '',
-    } as RouteApplicationProps;
+    } as RouteApplicationParams;
 };
