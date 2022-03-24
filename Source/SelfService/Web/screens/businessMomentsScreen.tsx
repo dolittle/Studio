@@ -35,6 +35,9 @@ export const BusinessMomentsScreen: React.FunctionComponent = withRouteApplicati
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
+        if (!currentEnvironment || !currentApplicationId) {
+            return;
+        }
         Promise.all([
             getApplications(),
             getApplication(currentApplicationId),
@@ -58,7 +61,7 @@ export const BusinessMomentsScreen: React.FunctionComponent = withRouteApplicati
             mergeMicroservicesFromK8s(microservices);
             setLoaded(true);
         });
-    }, []);
+    }, [currentApplicationId, currentEnvironment]);
 
     if (!loaded) {
         return null;

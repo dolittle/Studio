@@ -33,7 +33,9 @@ export const InsightsScreen: React.FunctionComponent = withRouteApplicationState
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-
+        if (!currentEnvironment || !currentApplicationId) {
+            return;
+        }
         Promise.all([
             getApplications(),
             getApplication(currentApplicationId),
@@ -57,7 +59,7 @@ export const InsightsScreen: React.FunctionComponent = withRouteApplicationState
             history.push(href);
             return;
         });
-    }, []);
+    }, [currentApplicationId, currentEnvironment]);
 
     if (!loaded) {
         return null;

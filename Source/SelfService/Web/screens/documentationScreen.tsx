@@ -42,6 +42,10 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
+        if (!currentEnvironment || !currentApplicationId) {
+            return;
+        }
+
         Promise.all([
             getApplications(),
             getApplication(currentApplicationId),
@@ -63,7 +67,7 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
             console.log(error);
             setNotification('Failed getting data from the server', 'error');
         });
-    }, []);
+    }, [currentApplicationId, currentEnvironment]);
 
     if (!loaded) {
         return null;
