@@ -57,6 +57,10 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
+        if (!currentEnvironment || !currentApplicationId) {
+            return;
+        }
+
         Promise.all([
             getApplications(),
             getApplication(currentApplicationId),
@@ -75,7 +79,6 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
             setApplication(applicationData);
             mergeMicroservicesFromGit(applicationData.microservices);
 
-
             const microservicesData = values[2] as HttpResponseMicroservices;
             const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
             mergeMicroservicesFromK8s(microservices);
@@ -84,7 +87,7 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
             console.log(error);
             setNotification('Failed getting data from the server', 'error');
         });
-    }, []);
+    }, [currentEnvironment, currentApplicationId]);
 
     if (!loaded) {
         return null;
