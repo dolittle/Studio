@@ -21,11 +21,11 @@ export function withRouteApplicationState(Component: ComponentType) {
         } = useGlobalContext();
 
         useEffect(() => {
-            if (currentApplicationId !== routeApplicationParams.applicationId) {
+            if (routeApplicationParams.applicationId && currentApplicationId !== routeApplicationParams.applicationId) {
                 setCurrentApplicationId(routeApplicationParams.applicationId);
             }
 
-            if (currentEnvironment !== routeApplicationParams.environment) {
+            if (routeApplicationParams.environment && currentEnvironment !== routeApplicationParams.environment) {
                 setCurrentEnvironment(routeApplicationParams.environment);
             }
         }, []);
