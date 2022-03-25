@@ -176,24 +176,31 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
                 <Route exact path="/microservices/application/:applicationId/:environment/overview">
                     <MicroservicesOverviewScreen application={application} environment={currentEnvironment} />
                 </Route>
+
                 <Route exact path="/microservices/application/:applicationId/:environment/create">
                     <MicroserviceNewScreen application={application} environment={currentEnvironment} />
                 </Route>
+
                 <Route exact path="/microservices/application/:applicationId/:environment/edit/:microserviceId">
                     <MicroserviceEditScreen application={application} environment={currentEnvironment} />
                 </Route>
+
                 <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId/delete">
                     <DeleteView application={application} environment={currentEnvironment} />
                 </Route>
+
                 <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId">
                     <MicroserviceViewScreen application={application} environment={currentEnvironment} />
                 </Route>
+
                 <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId/environment-variables">
                     <MicroserviceEnvironmentVariablesView application={application} environment={currentEnvironment} />
                 </Route>
+
                 <Route exact path="/microservices/application/:applicationId/:environment/pod/view/:podName/logs">
                     <PodLogScreen />
                 </Route>
+
                 <RouteNotFound redirectUrl={redirectUrl} />
             </Switch>
         </LayoutWithSidebar >
