@@ -1,3 +1,14 @@
+# [1.16.1] - 2022-3-25 [PR: #163](https://github.com/dolittle/Studio/pull/163)
+## Summary
+Opening direct links to microservices in an environment failed sometimes. The cause of this failure is related to which environment the user has last visited. If the user has last been in "Dev", and the link is pointing to "Prod", it would fail. This information is currently stored in local storage.
+
+This PR introduces a higher-order component that reads the `environment` and `applicationId` parameters from the URL, and overwrites these in the global context, which also updates the value in local storage.
+
+### Fixed
+
+- Fix direct links to environments not working when pointing to another environment than the user last visited
+
+
 # [1.16.0] - 2022-3-15 [PR: #159](https://github.com/dolittle/Studio/pull/159)
 ## Summary
 
