@@ -27,9 +27,12 @@ import { ShortInfoWithEnvironment, getMicroservices, HttpResponseMicroservices }
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 import { withRouteApplicationState } from './withRouteApplicationState';
 
-export const BusinessMomentsScreen: React.FunctionComponent = withRouteApplicationState(() => {
+
+export const BusinessMomentsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
-    const { currentEnvironment, currentApplicationId } = useGlobalContext();
+    const currentEnvironment = routeApplicationParams.environment;
+    const currentApplicationId = routeApplicationParams.applicationId;
+
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);

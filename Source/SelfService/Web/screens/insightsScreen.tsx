@@ -22,9 +22,11 @@ import {
 } from '../api/application';
 import { withRouteApplicationState } from './withRouteApplicationState';
 
-export const InsightsScreen: React.FunctionComponent = withRouteApplicationState(() => {
+export const InsightsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
-    const { setError, currentEnvironment, currentApplicationId } = useGlobalContext();
+    const { setError } = useGlobalContext();
+    const currentEnvironment = routeApplicationParams.environment;
+    const currentApplicationId = routeApplicationParams.applicationId;
 
     const environment = currentEnvironment;
 

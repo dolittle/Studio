@@ -5,13 +5,17 @@ import React, { useEffect, ComponentType } from 'react';
 import { useGlobalContext } from '../stores/notifications';
 import { RouteApplicationParams, useRouteApplicationParams } from '../utils/route';
 
-export type PropsWithRouteApplicationProps = {
+export type WithRouteApplicationProps = {
     routeApplicationParams: RouteApplicationParams
 };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export function withRouteApplicationState(Component: ComponentType) {
-    return React.memo(function RouteApplicationState() {
+export function withRouteApplicationState<ComponentProps>(
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    WrappedComponent: ComponentType<ComponentProps & WithRouteApplicationProps>
+) {
+    // // eslint-disable-next-line @typescript-eslint/naming-convention
+    // export function withRouteApplicationState(Component: ComponentType) {
+    return React.memo(function RouteApplicationState(props: ComponentProps) {
         const routeApplicationParams = useRouteApplicationParams();
         const {
             currentApplicationId,
@@ -30,6 +34,6 @@ export function withRouteApplicationState(Component: ComponentType) {
             }
         }, []);
 
-        return <Component />;
+        return <WrappedComponent {...props as ComponentProps} routeApplicationParams={routeApplicationParams} />;
     });
 }
