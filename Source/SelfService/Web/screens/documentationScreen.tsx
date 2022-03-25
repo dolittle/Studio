@@ -18,7 +18,7 @@ import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import '../application/applicationScreen.scss';
 
 import { DocumentationContainerScreen } from '../documentation/container';
-import { withRouteApplicationProps } from '../utils/route';
+import { useRouteApplicationParams } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
 import { useGlobalContext } from '../stores/notifications';
@@ -29,24 +29,28 @@ import {
     getApplication,
     HttpResponseApplications,
 } from '../api/application';
+import { withRouteApplicationState } from './withRouteApplicationState';
 
 
 
-export const DocumentationScreen: React.FunctionComponent = () => {
+export const DocumentationScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
-    const { setNotification, currentEnvironment, currentApplicationId } = useGlobalContext();
-
-    const routeApplicationProps = withRouteApplicationProps('documentation');
-    const applicationId = routeApplicationProps.applicationId;
+    const { setNotification } = useGlobalContext();
+    const currentEnvironment = routeApplicationParams.environment;
+    const currentApplicationId = routeApplicationParams.applicationId;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
+        if (!currentEnvironment || !currentApplicationId) {
+            return;
+        }
+
         Promise.all([
             getApplications(),
-            getApplication(applicationId),
+            getApplication(currentApplicationId),
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
@@ -65,7 +69,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
             console.log(error);
             setNotification('Failed getting data from the server', 'error');
         });
-    }, []);
+    }, [currentApplicationId, currentEnvironment]);
 
     if (!loaded) {
         return null;
@@ -79,7 +83,7 @@ export const DocumentationScreen: React.FunctionComponent = () => {
         );
     }
 
-    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentApplicationId, currentEnvironment)) {
+    if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}
@@ -127,13 +131,13 @@ export const DocumentationScreen: React.FunctionComponent = () => {
     ];
 
     const redirectUrl = generatePath('/documentation/application/:applicationId/:environment/overview', {
-        applicationId,
+        applicationId: currentApplicationId,
         environment: currentEnvironment,
     });
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <TopNavBar routes={routes} applications={applications} applicationId={applicationId} environment={currentEnvironment} />
+            <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
 
             <Switch>
                 <Route path="/documentation/application/:applicationId/:environment">
@@ -143,4 +147,4 @@ export const DocumentationScreen: React.FunctionComponent = () => {
             </Switch>
         </LayoutWithSidebar >
     );
-};
+});

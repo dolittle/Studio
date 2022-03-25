@@ -11,7 +11,6 @@ import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import '../application/applicationScreen.scss';
 import { PickEnvironment } from '../components/pickEnvironment';
 import { InsightsContainerScreen } from '../insights/container';
-import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { useGlobalContext } from '../stores/notifications';
 import { TopNavBar } from '../components/topNavBar';
@@ -21,13 +20,14 @@ import {
     getApplication,
     HttpResponseApplications,
 } from '../api/application';
+import { withRouteApplicationState } from './withRouteApplicationState';
 
-export const InsightsScreen: React.FunctionComponent = () => {
+export const InsightsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
-    const { setError, currentEnvironment } = useGlobalContext();
+    const { setError } = useGlobalContext();
+    const currentEnvironment = routeApplicationParams.environment;
+    const currentApplicationId = routeApplicationParams.applicationId;
 
-    const routeApplicationProps = withRouteApplicationProps('insights');
-    const applicationId = routeApplicationProps.applicationId;
     const environment = currentEnvironment;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
@@ -35,10 +35,12 @@ export const InsightsScreen: React.FunctionComponent = () => {
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-
+        if (!currentEnvironment || !currentApplicationId) {
+            return;
+        }
         Promise.all([
             getApplications(),
-            getApplication(applicationId),
+            getApplication(currentApplicationId),
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
@@ -59,7 +61,7 @@ export const InsightsScreen: React.FunctionComponent = () => {
             history.push(href);
             return;
         });
-    }, []);
+    }, [currentApplicationId, currentEnvironment]);
 
     if (!loaded) {
         return null;
@@ -114,13 +116,13 @@ export const InsightsScreen: React.FunctionComponent = () => {
     ];
 
     const redirectUrl = generatePath('/insights/application/:applicationId/:environment/overview', {
-        applicationId,
+        applicationId: currentApplicationId,
         environment,
     });
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <TopNavBar routes={routes} applications={applications} applicationId={applicationId} environment={currentEnvironment} />
+            <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
 
             <Switch>
                 <Route path="/insights/application/:applicationId/:environment">
@@ -130,4 +132,4 @@ export const InsightsScreen: React.FunctionComponent = () => {
             </Switch>
         </LayoutWithSidebar >
     );
-};
+});

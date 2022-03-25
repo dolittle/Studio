@@ -20,27 +20,31 @@ import '../application/applicationScreen.scss';
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 import { BusinessMomentsContainerScreen } from '../businessMoments/container';
 import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
-import { withRouteApplicationProps } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { useGlobalContext } from '../stores/notifications';
 import { TopNavBar } from '../components/topNavBar';
 import { ShortInfoWithEnvironment, getMicroservices, HttpResponseMicroservices } from '../api/api';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
+import { withRouteApplicationState } from './withRouteApplicationState';
 
-export const BusinessMomentsScreen: React.FunctionComponent = () => {
+
+export const BusinessMomentsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
-    const { currentEnvironment, currentApplicationId } = useGlobalContext();
-    const routeApplicationProps = withRouteApplicationProps('business-moments');
-    const applicationId = routeApplicationProps.applicationId;
+    const currentEnvironment = routeApplicationParams.environment;
+    const currentApplicationId = routeApplicationParams.applicationId;
+
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
+        if (!currentEnvironment || !currentApplicationId) {
+            return;
+        }
         Promise.all([
             getApplications(),
-            getApplication(applicationId),
-            getMicroservices(applicationId),
+            getApplication(currentApplicationId),
+            getMicroservices(currentApplicationId),
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
@@ -60,7 +64,7 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
             mergeMicroservicesFromK8s(microservices);
             setLoaded(true);
         });
-    }, []);
+    }, [currentApplicationId, currentEnvironment]);
 
     if (!loaded) {
         return null;
@@ -74,7 +78,7 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
         );
     }
 
-    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentApplicationId, currentEnvironment)) {
+    if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}
@@ -112,14 +116,14 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
 
 
     const redirectUrl = generatePath('/business-moments/application/:applicationId/:environment/overview', {
-        applicationId,
+        applicationId: currentApplicationId,
         environment: currentEnvironment,
     });
 
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <TopNavBar routes={routes} applications={applications} applicationId={applicationId} environment={currentEnvironment} />
+            <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
 
 
             <Switch>
@@ -131,4 +135,4 @@ export const BusinessMomentsScreen: React.FunctionComponent = () => {
             </Switch>
         </LayoutWithSidebar >
     );
-};
+});

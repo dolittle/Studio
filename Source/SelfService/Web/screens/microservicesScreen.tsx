@@ -38,8 +38,6 @@ import {
     mergeMicroservicesFromK8s
 } from '../stores/microservice';
 
-import { withRouteApplicationProps } from '../utils/route';
-
 import { useGlobalContext } from '../stores/notifications';
 import {
     isEnvironmentValidFromUri,
@@ -48,23 +46,27 @@ import {
 import { RouteNotFound } from '../components/notfound';
 import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
+import { withRouteApplicationState } from './withRouteApplicationState';
 
-export const MicroservicesScreen: React.FunctionComponent = () => {
+export const MicroservicesScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
-    const { setNotification, currentEnvironment, currentApplicationId } = useGlobalContext();
-
-    const routeApplicationProps = withRouteApplicationProps('microservices');
-    const applicationId = routeApplicationProps.applicationId;
+    const { setNotification } = useGlobalContext();
+    const currentEnvironment = routeApplicationParams.environment;
+    const currentApplicationId = routeApplicationParams.applicationId;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
+        if (!currentEnvironment || !currentApplicationId) {
+            return;
+        }
+
         Promise.all([
             getApplications(),
-            getApplication(applicationId),
-            getMicroservices(applicationId),
+            getApplication(currentApplicationId),
+            getMicroservices(currentApplicationId),
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
@@ -79,7 +81,6 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
             setApplication(applicationData);
             mergeMicroservicesFromGit(applicationData.microservices);
 
-
             const microservicesData = values[2] as HttpResponseMicroservices;
             const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
             mergeMicroservicesFromK8s(microservices);
@@ -88,7 +89,7 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
             console.log(error);
             setNotification('Failed getting data from the server', 'error');
         });
-    }, []);
+    }, [currentEnvironment, currentApplicationId]);
 
     if (!loaded) {
         return null;
@@ -102,7 +103,7 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
         );
     }
 
-    if (!isEnvironmentValidFromUri(routeApplicationProps, applications, currentApplicationId, currentEnvironment)) {
+    if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}
@@ -112,8 +113,7 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
         );
     }
 
-    const nav = getDefaultMenu(history, applicationId, currentEnvironment);
-
+    const nav = getDefaultMenu(history, currentApplicationId, currentEnvironment);
 
     const routes = [
         {
@@ -165,14 +165,13 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
 
 
     const redirectUrl = generatePath('/microservices/application/:applicationId/:environment/overview', {
-        applicationId,
+        applicationId: currentApplicationId,
         environment: currentEnvironment,
     });
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <TopNavBar routes={routes} applications={applications} applicationId={applicationId} environment={currentEnvironment} />
-
+            <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
             <Switch>
                 <Route exact path="/microservices/application/:applicationId/:environment/overview">
                     <MicroservicesOverviewScreen application={application} environment={currentEnvironment} />
@@ -204,7 +203,6 @@ export const MicroservicesScreen: React.FunctionComponent = () => {
 
                 <RouteNotFound redirectUrl={redirectUrl} />
             </Switch>
-
         </LayoutWithSidebar >
     );
-};
+});
