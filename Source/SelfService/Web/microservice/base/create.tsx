@@ -51,6 +51,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             headImage: 'nginxdemos/hello:latest', //'dolittle/spinner:0.0.0', // Doesnt work
             headPort: 80,
             runtimeImage: latestRuntimeInfo.image,
+            isPublic: false,
             ingress: {
                 path: '/',
                 pathType: 'Prefix',
@@ -62,7 +63,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const [headImage, setHeadImage] = React.useState(ms.extra.headImage);
     const [headPort, setHeadPort] = React.useState(ms.extra.headPort);
     const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
-    const [isPublic, setIsPublic] = React.useState<boolean>(false);
+    const [isPublic, setIsPublic] = React.useState<boolean>(ms.extra.isPublic);
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
 
     const onChangeHandler = (setter: React.Dispatch<React.SetStateAction<string>>): ((event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void) => {
