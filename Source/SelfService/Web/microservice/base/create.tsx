@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Label } from '@fluentui/react/lib/Label';
@@ -13,6 +14,8 @@ import { saveSimpleMicroservice } from '../../stores/microservice';
 import { MicroserviceSimple } from '../../api/index';
 import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
 import { DropDownMenu } from '../../theme/dropDownMenu';
+import { TextField as ThemedTextField } from '../../theme/textField';
+
 import { HttpResponseApplication } from '../../api/application';
 
 const stackTokens = { childrenGap: 15 };
@@ -23,6 +26,7 @@ type Props = {
 };
 
 export const Create: React.FunctionComponent<Props> = (props) => {
+    const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
     const _props = props!;
     const application = _props.application;
@@ -44,6 +48,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         extra: {
             // nginxdemos/hello:latest
             headImage: 'nginxdemos/hello:latest', //'dolittle/spinner:0.0.0', // Doesnt work
+            headPort: 80,
             runtimeImage: latestRuntimeInfo.image,
             ingress: {
                 path: '/',
@@ -54,6 +59,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     const [msName, setMsName] = React.useState(ms.name);
     const [headImage, setHeadImage] = React.useState(ms.extra.headImage);
+    const [headPort, setHeadPort] = React.useState(ms.extra.headPort);
     const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
 
@@ -66,8 +72,15 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     };
 
     const _onSave = (ms: MicroserviceSimple): void => {
+
+        if (isNaN(headPort)) {
+            enqueueSnackbar('HeadPort is not a valid port', { variant: 'error' });
+            return;
+        }
+
         ms.name = msName;
         ms.extra.headImage = headImage;
+        ms.extra.headPort = headPort;
         ms.extra.runtimeImage = runtimeImage;
         ms.extra.ingress.path = ingressPath;
 
@@ -105,6 +118,17 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
                 <Label>Head Image</Label>
                 <TextField defaultValue={headImage} onChange={onChangeHandler(setHeadImage)} />
+
+                <ThemedTextField
+                    required
+                    id='headPort'
+                    label='Head Port'
+                    value={headPort.toString()}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        const newHeadPort = parseInt(event.target.value!, 10);
+                        setHeadPort(newHeadPort);
+                    }}
+                />
 
                 <Label>Runtime Image</Label>
                 <DropDownMenu items={runtimeImageSelections} value={runtimeImage} onChange={handleRuntimeChange}></DropDownMenu>

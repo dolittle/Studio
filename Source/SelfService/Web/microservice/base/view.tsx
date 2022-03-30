@@ -131,6 +131,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     path: '',
                     pathType: ''
                 },
+                headPort: 80,
                 headImage,
                 runtimeImage,
             },
