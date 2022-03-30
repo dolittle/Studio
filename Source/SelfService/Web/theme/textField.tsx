@@ -6,12 +6,12 @@ import clsx from 'clsx';
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { TextField as MuiTextField } from '@material-ui/core';
-import { DocumentationContainerScreen } from '../documentation/container';
 
 type Props = {
     id: string;
     label: string;
     value: string;
+    type?: string; // input type https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
     required?: boolean;
     disabled?: boolean;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -22,12 +22,6 @@ const defaultOnChange = (event: React.ChangeEvent<HTMLInputElement>) => { };
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         base: {
-            //textTransform: 'uppercase',
-            //padding: '8px 12px',
-            //marginTop: theme.spacing(1),
-            //marginRight: theme.spacing(1),
-            //color: '#2C2B33',
-
             '& .MuiOutlinedInput-input': {
                 color: 'white'
             },
@@ -51,6 +45,7 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
     const onChange = _props.onChange ?? defaultOnChange;
     const disabled = _props.disabled ?? false;
     const required = _props.required ?? true;
+    const type = _props.type ?? 'text';
     const value = _props.value;
     const label = _props.label;
     const id = _props.id;
@@ -61,6 +56,7 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
             id={id}
             label={label}
             variant='outlined'
+            type={type}
             className={clsx(classes.base)}
             value={value}
             onChange={onChange}

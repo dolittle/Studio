@@ -71,8 +71,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         };
     };
 
-    const _onSave = async (ms: MicroserviceSimple): void => {
-
+    const _onSave = async (ms: MicroserviceSimple): Promise<void> => {
         if (isNaN(headPort)) {
             enqueueSnackbar('HeadPort is not a valid port', { variant: 'error' });
             return;
@@ -83,7 +82,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         ms.extra.headPort = headPort;
         ms.extra.runtimeImage = runtimeImage;
         ms.extra.ingress.path = ingressPath;
-
 
         try {
             await saveSimpleMicroservice(ms);
@@ -127,6 +125,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     required
                     id='headPort'
                     label='Head Port'
+                    type='number'
                     value={headPort.toString()}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         const newHeadPort = parseInt(event.target.value!, 10);
