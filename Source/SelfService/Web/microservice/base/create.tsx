@@ -7,10 +7,10 @@ import { useSnackbar } from 'notistack';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Label } from '@fluentui/react/lib/Label';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { Toggle } from '@fluentui/react/lib/Toggle';
 import { Spinner } from '@fluentui/react/lib/Spinner';
 import { DropDownMenu } from '../../theme/dropDownMenu';
 import { TextField as ThemedTextField } from '../../theme/textField';
+import { Switch as ThemedSwitch } from '../../theme/switch';
 
 import { Guid } from '@dolittle/rudiments';
 import { saveSimpleMicroservice } from '../../stores/microservice';
@@ -112,7 +112,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         setRuntimeImage(_runtimeImage);
     };
 
-    const handleIsPublicToggleChanged = (ev: React.MouseEvent<HTMLElement>, checked?: boolean) => {
+    const handleIsPublicChanged = (ev: React.ChangeEvent<{}>, checked?: boolean) => {
         setIsPublic(checked ?? false);
     };
 
@@ -163,11 +163,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     }}
                 />
 
-                <Label>Runtime Image</Label>
-                <DropDownMenu items={runtimeImageSelections} value={runtimeImage} onChange={handleRuntimeChange}></DropDownMenu>
+                <DropDownMenu label='Runtime Image' items={runtimeImageSelections} value={runtimeImage} onChange={handleRuntimeChange}></DropDownMenu>
 
                 <h2>Ingress</h2>
-                <Toggle label='With public path?' onText='Public' offText='Private' onChange={handleIsPublicToggleChanged} checked={isPublic} />
+                <ThemedSwitch label='Public path' checked={isPublic} onChange={handleIsPublicChanged} />
                 {isPublic &&
                     <>
                         <ThemedTextField
@@ -178,7 +177,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                             onChange={onChangeHandler(setIngressPath)}
                         />
 
-                        <Label>PathType</Label>
                         <ThemedTextField
                             id="pathType"
                             label='PathType'
