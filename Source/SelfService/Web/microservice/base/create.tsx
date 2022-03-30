@@ -9,6 +9,7 @@ import { Label } from '@fluentui/react/lib/Label';
 import { TextField } from '@fluentui/react/lib/TextField';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { Toggle } from '@fluentui/react/lib/Toggle';
+import { Spinner } from '@fluentui/react/lib/Spinner';
 import { Guid } from '@dolittle/rudiments';
 
 import { saveSimpleMicroservice } from '../../stores/microservice';
@@ -65,6 +66,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
     const [isPublic, setIsPublic] = React.useState<boolean>(ms.extra.isPublic);
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const onChangeHandler = (setter: React.Dispatch<React.SetStateAction<string>>): ((event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void) => {
         return (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string): void => {
@@ -84,10 +86,13 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         ms.extra.headImage = headImage;
         ms.extra.headPort = headPort;
         ms.extra.runtimeImage = runtimeImage;
+        ms.extra.isPublic = isPublic;
         ms.extra.ingress.path = ingressPath;
 
+        setIsLoading(true);
         try {
             await saveSimpleMicroservice(ms);
+            setIsLoading(false);
             const href = `/microservices/application/${application.id}/${environment}/overview`;
             history.push(href);
         } catch (e) {
@@ -157,7 +162,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             </Stack>
 
             <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
-                <PrimaryButton text="Create" onClick={() => _onSave(ms)} />
+                {isLoading
+                    ? <PrimaryButton text="Creating" disabled><Spinner /></PrimaryButton>
+                    : <PrimaryButton text="Create" onClick={() => _onSave(ms)} />
+                }
             </Stack>
         </>
     );
