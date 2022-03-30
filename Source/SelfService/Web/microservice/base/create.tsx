@@ -55,6 +55,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         }
     } as MicroserviceSimple;
 
+    const [msId] = React.useState(ms.dolittle.microserviceId);
     const [msName, setMsName] = React.useState(ms.name);
     const [headImage, setHeadImage] = React.useState(ms.extra.headImage);
     const [headPort, setHeadPort] = React.useState(ms.extra.headPort);
@@ -120,7 +121,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     <ThemedTextField
                         id='uuid'
                         label='UUID'
-                        value={ms.dolittle.microserviceId}
+                        value={msId}
                         readOnly
                     />
                 </Grid>
