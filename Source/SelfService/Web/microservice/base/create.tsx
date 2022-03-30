@@ -5,12 +5,10 @@ import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import { Stack } from '@fluentui/react/lib/Stack';
-import { Label } from '@fluentui/react/lib/Label';
-import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { Spinner } from '@fluentui/react/lib/Spinner';
 import { DropDownMenu } from '../../theme/dropDownMenu';
 import { TextField as ThemedTextField } from '../../theme/textField';
 import { Switch as ThemedSwitch } from '../../theme/switch';
+import { Button as ThemedButton } from '../../theme/button';
 
 import { Guid } from '@dolittle/rudiments';
 import { saveSimpleMicroservice } from '../../stores/microservice';
@@ -18,6 +16,7 @@ import { MicroserviceSimple } from '../../api/index';
 import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
 
 import { HttpResponseApplication } from '../../api/application';
+import { Box, CircularProgress } from '@material-ui/core';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -190,8 +189,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
             <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
                 {isLoading
-                    ? <PrimaryButton text="Creating" disabled><Spinner /></PrimaryButton>
-                    : <PrimaryButton text="Create" onClick={() => _onSave(ms)} />
+                    ? <ThemedButton disabled>Creating<CircularProgress size='1.5rem' style={{ marginLeft: '0.5rem' }} /></ThemedButton>
+                    : <ThemedButton onClick={() => _onSave(ms)}>Create</ThemedButton>
                 }
             </Stack>
         </>
