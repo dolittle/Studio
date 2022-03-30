@@ -8,6 +8,7 @@ import { Stack } from '@fluentui/react/lib/Stack';
 import { Label } from '@fluentui/react/lib/Label';
 import { TextField } from '@fluentui/react/lib/TextField';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
+import { Toggle } from '@fluentui/react/lib/Toggle';
 import { Guid } from '@dolittle/rudiments';
 
 import { saveSimpleMicroservice } from '../../stores/microservice';
@@ -61,6 +62,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const [headImage, setHeadImage] = React.useState(ms.extra.headImage);
     const [headPort, setHeadPort] = React.useState(ms.extra.headPort);
     const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
+    const [isPublic, setIsPublic] = React.useState<boolean>(false);
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
 
     const onChangeHandler = (setter: React.Dispatch<React.SetStateAction<string>>): ((event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void) => {
@@ -105,10 +107,14 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         setRuntimeImage(_runtimeImage);
     };
 
+    const handleIsPublicToggleChanged = (ev: React.MouseEvent<HTMLElement>, checked?: boolean) => {
+        setIsPublic(checked ?? false);
+    };
+
     return (
         <>
             <Stack tokens={stackTokens}>
-                <h1>Microservice Specific</h1>
+                <h2>Microservice Specific</h2>
                 <Label>UUID</Label>
                 <TextField defaultValue={ms.dolittle.microserviceId} readOnly />
 
@@ -136,13 +142,17 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 <Label>Runtime Image</Label>
                 <DropDownMenu items={runtimeImageSelections} value={runtimeImage} onChange={handleRuntimeChange}></DropDownMenu>
 
-                <h1>Ingress</h1>
+                <h2>Ingress</h2>
+                <Toggle label='With public path?' onText='Public' offText='Private' onChange={handleIsPublicToggleChanged} checked={isPublic} />
+                {isPublic &&
+                    <>
+                        <Label>Path</Label>
+                        <TextField placeholder="/" defaultValue={ingressPath} onChange={onChangeHandler(setIngressPath)} />
 
-                <Label>Path</Label>
-                <TextField placeholder="/" defaultValue={ingressPath} onChange={onChangeHandler(setIngressPath)} />
-
-                <Label>PathType</Label>
-                <TextField placeholder="Prefix" defaultValue={ms.extra.ingress.pathType} readOnly />
+                        <Label>PathType</Label>
+                        <TextField placeholder="Prefix" defaultValue={ms.extra.ingress.pathType} readOnly />
+                    </>
+                }
             </Stack>
 
             <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
