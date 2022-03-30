@@ -4,7 +4,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { Stack } from '@fluentui/react/lib/Stack';
+import { CircularProgress, Grid } from '@material-ui/core';
 import { DropDownMenu } from '../../theme/dropDownMenu';
 import { TextField as ThemedTextField } from '../../theme/textField';
 import { Switch as ThemedSwitch } from '../../theme/switch';
@@ -16,9 +16,6 @@ import { MicroserviceSimple } from '../../api/index';
 import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
 
 import { HttpResponseApplication } from '../../api/application';
-import { Box, CircularProgress } from '@material-ui/core';
-
-const stackTokens = { childrenGap: 15 };
 
 type Props = {
     application: HttpResponseApplication
@@ -117,50 +114,58 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <Stack tokens={stackTokens}>
+            <Grid container direction='column' alignContent='stretch' spacing={2}>
                 <h2>Microservice Specific</h2>
+                <Grid item>
+                    <ThemedTextField
+                        id='uuid'
+                        label='UUID'
+                        value={ms.dolittle.microserviceId}
+                        readOnly
+                    />
+                </Grid>
 
-                <ThemedTextField
-                    id='uuid'
-                    label='UUID'
-                    value={ms.dolittle.microserviceId}
-                    readOnly
-                />
+                <Grid item>
+                    <ThemedTextField
+                        id='name'
+                        label='Name'
+                        value={msName}
+                        onChange={onChangeHandler(setMsName)}
+                    />
+                </Grid>
 
+                <Grid item>
+                    <ThemedTextField
+                        id='environment'
+                        label='Environment'
+                        placeholder="Dev"
+                        value={ms.environment}
+                        readOnly
+                    />
+                </Grid>
 
-                <ThemedTextField
-                    id='name'
-                    label='Name'
-                    value={msName}
-                    onChange={onChangeHandler(setMsName)}
-                />
+                <Grid item>
+                    <ThemedTextField
+                        id='headImage'
+                        label='Head Image'
+                        value={headImage}
+                        onChange={onChangeHandler(setHeadImage)}
+                    />
+                </Grid>
 
-                <ThemedTextField
-                    id='environment'
-                    label='Environment'
-                    placeholder="Dev"
-                    value={ms.environment}
-                    readOnly
-                />
-
-                <ThemedTextField
-                    id='headImage'
-                    label='Head Image'
-                    value={headImage}
-                    onChange={onChangeHandler(setHeadImage)}
-                />
-
-                <ThemedTextField
-                    required
-                    id='headPort'
-                    label='Head Port'
-                    type='number'
-                    value={headPort.toString()}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        const newHeadPort = parseInt(event.target.value!, 10);
-                        setHeadPort(newHeadPort);
-                    }}
-                />
+                <Grid item>
+                    <ThemedTextField
+                        required
+                        id='headPort'
+                        label='Head Port'
+                        type='number'
+                        value={headPort.toString()}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            const newHeadPort = parseInt(event.target.value!, 10);
+                            setHeadPort(newHeadPort);
+                        }}
+                    />
+                </Grid>
 
                 <DropDownMenu label='Runtime Image' items={runtimeImageSelections} value={runtimeImage} onChange={handleRuntimeChange}></DropDownMenu>
 
@@ -168,31 +173,35 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 <ThemedSwitch label='Public path' checked={isPublic} onChange={handleIsPublicChanged} />
                 {isPublic &&
                     <>
-                        <ThemedTextField
-                            id="ingressPath"
-                            label='Path'
-                            placeholder="/"
-                            value={ingressPath}
-                            onChange={onChangeHandler(setIngressPath)}
-                        />
+                        <Grid item>
+                            <ThemedTextField
+                                id="ingressPath"
+                                label='Path'
+                                placeholder="/"
+                                value={ingressPath}
+                                onChange={onChangeHandler(setIngressPath)}
+                            />
+                        </Grid>
 
-                        <ThemedTextField
-                            id="pathType"
-                            label='PathType'
-                            placeholder="Prefix"
-                            value={ms.extra.ingress.pathType}
-                            readOnly
-                        />
+                        <Grid item>
+                            <ThemedTextField
+                                id="pathType"
+                                label='PathType'
+                                placeholder="Prefix"
+                                value={ms.extra.ingress.pathType}
+                                readOnly
+                            />
+                        </Grid>
                     </>
                 }
-            </Stack>
+            </Grid>
 
-            <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
+            <Grid container direction='row' justifyContent='flex-end'>
                 {isLoading
                     ? <ThemedButton disabled>Creating<CircularProgress size='1.5rem' style={{ marginLeft: '0.5rem' }} /></ThemedButton>
                     : <ThemedButton onClick={() => _onSave(ms)}>Create</ThemedButton>
                 }
-            </Stack>
+            </Grid>
         </>
     );
 };
