@@ -71,7 +71,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         };
     };
 
-    const _onSave = (ms: MicroserviceSimple): void => {
+    const _onSave = async (ms: MicroserviceSimple): void => {
 
         if (isNaN(headPort)) {
             enqueueSnackbar('HeadPort is not a valid port', { variant: 'error' });
@@ -84,10 +84,14 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         ms.extra.runtimeImage = runtimeImage;
         ms.extra.ingress.path = ingressPath;
 
-        saveSimpleMicroservice(ms).then(data => {
+
+        try {
+            await saveSimpleMicroservice(ms);
             const href = `/microservices/application/${application.id}/${environment}/overview`;
             history.push(href);
-        });
+        } catch (e) {
+            enqueueSnackbar(e.message, { variant: 'error' });
+        }
     };
 
     const runtimeImageSelections = [
