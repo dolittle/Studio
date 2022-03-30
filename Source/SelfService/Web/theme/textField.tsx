@@ -14,6 +14,8 @@ type Props = {
     type?: string; // input type https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
     required?: boolean;
     disabled?: boolean;
+    placeholder?: string;
+    readOnly?: boolean;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -49,6 +51,8 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
     const value = _props.value;
     const label = _props.label;
     const id = _props.id;
+    const placeholder = _props.placeholder ?? '';
+    const readOnly = _props.readOnly ?? false;
     return (
         <MuiTextField
             required={required}
@@ -60,6 +64,8 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
             className={clsx(classes.base)}
             value={value}
             onChange={onChange}
+            placeholder={placeholder}
+            InputProps={{ readOnly }}
         />
     );
 };

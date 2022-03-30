@@ -6,17 +6,16 @@ import { useSnackbar } from 'notistack';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Label } from '@fluentui/react/lib/Label';
-import { TextField } from '@fluentui/react/lib/TextField';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { Toggle } from '@fluentui/react/lib/Toggle';
 import { Spinner } from '@fluentui/react/lib/Spinner';
-import { Guid } from '@dolittle/rudiments';
+import { DropDownMenu } from '../../theme/dropDownMenu';
+import { TextField as ThemedTextField } from '../../theme/textField';
 
+import { Guid } from '@dolittle/rudiments';
 import { saveSimpleMicroservice } from '../../stores/microservice';
 import { MicroserviceSimple } from '../../api/index';
 import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
-import { DropDownMenu } from '../../theme/dropDownMenu';
-import { TextField as ThemedTextField } from '../../theme/textField';
 
 import { HttpResponseApplication } from '../../api/application';
 
@@ -121,17 +120,36 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         <>
             <Stack tokens={stackTokens}>
                 <h2>Microservice Specific</h2>
-                <Label>UUID</Label>
-                <TextField defaultValue={ms.dolittle.microserviceId} readOnly />
 
-                <Label>Name</Label>
-                <TextField defaultValue={msName} onChange={onChangeHandler(setMsName)} />
+                <ThemedTextField
+                    id='uuid'
+                    label='UUID'
+                    value={ms.dolittle.microserviceId}
+                    readOnly
+                />
 
-                <Label>Environment</Label>
-                <TextField placeholder="Dev" defaultValue={ms.environment} readOnly />
 
-                <Label>Head Image</Label>
-                <TextField defaultValue={headImage} onChange={onChangeHandler(setHeadImage)} />
+                <ThemedTextField
+                    id='name'
+                    label='Name'
+                    value={msName}
+                    onChange={onChangeHandler(setMsName)}
+                />
+
+                <ThemedTextField
+                    id='environment'
+                    label='Environment'
+                    placeholder="Dev"
+                    value={ms.environment}
+                    readOnly
+                />
+
+                <ThemedTextField
+                    id='headImage'
+                    label='Head Image'
+                    value={headImage}
+                    onChange={onChangeHandler(setHeadImage)}
+                />
 
                 <ThemedTextField
                     required
@@ -152,11 +170,22 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 <Toggle label='With public path?' onText='Public' offText='Private' onChange={handleIsPublicToggleChanged} checked={isPublic} />
                 {isPublic &&
                     <>
-                        <Label>Path</Label>
-                        <TextField placeholder="/" defaultValue={ingressPath} onChange={onChangeHandler(setIngressPath)} />
+                        <ThemedTextField
+                            id="ingressPath"
+                            label='Path'
+                            placeholder="/"
+                            value={ingressPath}
+                            onChange={onChangeHandler(setIngressPath)}
+                        />
 
                         <Label>PathType</Label>
-                        <TextField placeholder="Prefix" defaultValue={ms.extra.ingress.pathType} readOnly />
+                        <ThemedTextField
+                            id="pathType"
+                            label='PathType'
+                            placeholder="Prefix"
+                            value={ms.extra.ingress.pathType}
+                            readOnly
+                        />
                     </>
                 }
             </Stack>
