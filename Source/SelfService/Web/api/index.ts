@@ -50,6 +50,7 @@ export type MicroserviceSimpleExtra = {
     headImage: string;
     runtimeImage: string;
     ingress: MicroserviceIngressPath;
+    isPublic: boolean;
 };
 
 export type MicroserviceBusinessMomentAdaptor = {
