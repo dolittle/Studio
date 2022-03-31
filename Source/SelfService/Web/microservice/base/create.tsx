@@ -88,11 +88,12 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         setIsLoading(true);
         try {
             await saveSimpleMicroservice(ms);
-            setIsLoading(false);
             const href = `/microservices/application/${application.id}/${environment}/overview`;
             history.push(href);
         } catch (e) {
             enqueueSnackbar(e.message, { variant: 'error' });
+        } finally {
+            setIsLoading(false);
         }
     };
 
