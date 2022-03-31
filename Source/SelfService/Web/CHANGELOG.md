@@ -1,3 +1,13 @@
+# [1.16.2] - 2022-3-31 [PR: #167](https://github.com/dolittle/Studio/pull/167)
+## Summary
+
+Fix microservice creation to default to a public microservice. This is because platform-api v4 has a breaking change where it defaults to private microservice creation if the `isPublic` property on the request is not set (as `bool` types in Go default to `false`).
+
+## Reference
+- https://github.com/dolittle/platform-api/pull/102
+- https://github.com/dolittle-platform/Operations/pull/192
+
+
 # [1.16.1] - 2022-3-25 [PR: #163](https://github.com/dolittle/Studio/pull/163)
 ## Summary
 Opening direct links to microservices in an environment failed sometimes. The cause of this failure is related to which environment the user has last visited. If the user has last been in "Dev", and the link is pointing to "Prod", it would fail. This information is currently stored in local storage.
