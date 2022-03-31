@@ -48,7 +48,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             ingress: {
                 path: '/',
                 pathType: 'Prefix',
-            }
+            },
+            isPublic: true
         }
     } as MicroserviceSimple;
 
