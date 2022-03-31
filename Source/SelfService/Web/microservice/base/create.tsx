@@ -4,7 +4,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { CircularProgress, Grid } from '@material-ui/core';
+import { CircularProgress, Grid, Typography } from '@material-ui/core';
 import { DropDownMenu } from '../../theme/dropDownMenu';
 import { TextField as ThemedTextField } from '../../theme/textField';
 import { Switch as ThemedSwitch } from '../../theme/switch';
@@ -115,23 +115,23 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <Grid container direction='column' alignContent='stretch' spacing={2}>
-                <h2>Microservice Specific</h2>
-                <Grid item>
-                    <ThemedTextField
-                        id='uuid'
-                        label='UUID'
-                        value={msId}
-                        readOnly
-                    />
-                </Grid>
-
+            <Typography component='h2' variant='h5' style={{ marginTop: '1rem' }}>Create base microservice</Typography>
+            <Grid container direction='column' alignContent='stretch' spacing={4} style={{ marginTop: '1rem', padding: '1rem' }}>
                 <Grid item>
                     <ThemedTextField
                         id='name'
                         label='Name'
                         value={msName}
                         onChange={onChangeHandler(setMsName)}
+                    />
+                </Grid>
+
+                <Grid item>
+                    <ThemedTextField
+                        id='uuid'
+                        label='UUID'
+                        value={msId}
+                        readOnly
                     />
                 </Grid>
 
@@ -168,10 +168,14 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     />
                 </Grid>
 
-                <DropDownMenu label='Runtime Image' items={runtimeImageSelections} value={runtimeImage} onChange={handleRuntimeChange}></DropDownMenu>
+                <Grid item>
+                    <DropDownMenu label='Runtime Image' items={runtimeImageSelections} value={runtimeImage} onChange={handleRuntimeChange}></DropDownMenu>
+                </Grid>
 
-                <h2>Ingress</h2>
-                <ThemedSwitch label='Public path' checked={isPublic} onChange={handleIsPublicChanged} />
+                <Grid item>
+                    <Typography component='h2' variant='h5'>Ingress</Typography>
+                    <ThemedSwitch label='Public path' checked={isPublic} onChange={handleIsPublicChanged} />
+                </Grid>
                 {isPublic &&
                     <>
                         <Grid item>
