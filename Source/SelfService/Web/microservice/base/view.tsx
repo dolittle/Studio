@@ -132,11 +132,9 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     pathType: ''
                 },
                 headPort: 80,
-                isPublic: false,
+                isPublic: true,
                 headImage,
                 runtimeImage,
-                // TODO this is now hardcoded just so that we can land https://github.com/dolittle/Studio/pull/167
-                isPublic: true
             },
         };
     }

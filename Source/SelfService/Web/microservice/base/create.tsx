@@ -52,7 +52,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 path: '/',
                 pathType: 'Prefix',
             },
-            isPublic: true
         }
     } as MicroserviceSimple;
 
