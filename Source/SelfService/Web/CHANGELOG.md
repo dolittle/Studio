@@ -1,3 +1,19 @@
+# [1.17.0] - 2022-4-1 [PR: #168](https://github.com/dolittle/Studio/pull/168)
+## Summary
+
+This PR will 
+- Introduce a toggle to allow the user to specify if they want to create a private or public microservice. This is set to private by default.
+- Bump latest selectable runtime version to 7.8.1
+- Contains the contents of https://github.com/dolittle/Studio/pull/165
+
+## Reference
+https://app.asana.com/0/1202023614957161/1202039820012594/f
+https://github.com/dolittle/platform-api/pull/105
+
+https://app.asana.com/0/1201955720774352/1201993650094128/f
+https://github.com/dolittle/platform-api/pull/102
+
+
 # [1.16.2] - 2022-3-31 [PR: #167](https://github.com/dolittle/Studio/pull/167)
 ## Summary
 
