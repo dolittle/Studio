@@ -1,3 +1,9 @@
+# [1.17.1] - 2022-4-1 [PR: #169](https://github.com/dolittle/Studio/pull/169)
+## Summary
+
+Remove duplicate isPublic properties, set to false when creating, and true when displaying
+
+
 # [1.17.0] - 2022-4-1 [PR: #168](https://github.com/dolittle/Studio/pull/168)
 ## Summary
 
