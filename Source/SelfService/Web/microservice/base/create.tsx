@@ -175,7 +175,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
                 <Grid item>
                     <Typography component='h2' variant='h5'>Ingress</Typography>
-                    <ThemedSwitch label='Public path' checked={isPublic} onChange={handleIsPublicChanged} />
+                    <ThemedSwitch label={isPublic ? 'Public path' : 'Private path'} checked={isPublic} onChange={handleIsPublicChanged} />
                 </Grid>
                 {isPublic &&
                     <>
