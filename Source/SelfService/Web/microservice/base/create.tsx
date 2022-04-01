@@ -64,14 +64,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
     const [isLoading, setIsLoading] = React.useState(false);
 
-    const onChangeHandler = (setter: React.Dispatch<React.SetStateAction<string>>): ((event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void) => {
-        return (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string): void => {
-            {
-                setter(newValue!);
-            };
-        };
-    };
-
     const _onSave = async (ms: MicroserviceSimple): Promise<void> => {
         if (isNaN(headPort)) {
             enqueueSnackbar('HeadPort is not a valid port', { variant: 'error' });
@@ -123,7 +115,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                         id='name'
                         label='Name'
                         value={msName}
-                        onChange={onChangeHandler(setMsName)}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            const newValue = event.target.value!;
+                            setMsName(newValue);
+                        }}
                     />
                 </Grid>
 
@@ -151,7 +146,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                         id='headImage'
                         label='Head Image'
                         value={headImage}
-                        onChange={onChangeHandler(setHeadImage)}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            const newValue = event.target.value!;
+                            setHeadImage(newValue);
+                        }}
                     />
                 </Grid>
 
@@ -163,8 +161,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                         type='number'
                         value={headPort.toString()}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            const newHeadPort = parseInt(event.target.value!, 10);
-                            setHeadPort(newHeadPort);
+                            const newValue = parseInt(event.target.value!, 10);
+                            setHeadPort(newValue);
                         }}
                     />
                 </Grid>
@@ -185,7 +183,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                                 label='Path'
                                 placeholder="/"
                                 value={ingressPath}
-                                onChange={onChangeHandler(setIngressPath)}
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                    const newValue = event.target.value!;
+                                    setIngressPath(newValue);
+                                }}
                             />
                         </Grid>
 
