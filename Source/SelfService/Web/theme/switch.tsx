@@ -11,7 +11,7 @@ export type Props = {
     checked?: boolean;
     label?: string;
     onChange: (event: React.ChangeEvent<{}>, checked: boolean) => void;
-}
+};
 
 const defaultOnClick = (event: React.ChangeEvent<{}>, checked: boolean) => { };
 
