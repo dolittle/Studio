@@ -20,7 +20,7 @@ import {
     MicroserviceIngressPath,
 } from '../api/index';
 
-import { getApplication, HttpInputApplicationEnvironment, HttpResponseApplication } from '../api/application';
+import { getApplication, HttpInputApplicationEnvironment } from '../api/application';
 
 export type MicroserviceStore = {
     edit: any;
@@ -41,10 +41,7 @@ const data = {
 export const microservices = writable(data.microservices);
 export const isLoaded = writable(data.isLoaded);
 export const loadMicroservices = (applicationId: string) => {
-    Promise.all([
-        getApplication(applicationId),
-        getMicroservices(applicationId)
-    ]).then(
+    Promise.all([getApplication(applicationId), getMicroservices(applicationId)]).then(
         (values) => {
             const applicationData = values[0];
             mergeMicroservicesFromGit(applicationData.microservices);
@@ -66,6 +63,12 @@ export const mergeMicroservicesFromGit = (items) => {
             edit: element,
             live: {
                 id: '',
+                name: '',
+                kind: '',
+                environment: '',
+                images: [],
+                ingressUrls: [],
+                ingressPaths: [],
             } as MicroserviceInfo,
         };
 
@@ -197,16 +200,25 @@ export const savePurchaseOrderMicroservice = async (
     return saveMicroservice(input.kind, input);
 };
 
-
-export const canEditMicroservices = (environments: HttpInputApplicationEnvironment[], environment: string): boolean => {
-    return environments.some(info => info.name === environment && info.automationEnabled);
+export const canEditMicroservices = (
+    environments: HttpInputApplicationEnvironment[],
+    environment: string
+): boolean => {
+    return environments.some(
+        (info) => info.name === environment && info.automationEnabled
+    );
 };
 
-
-export const canEditMicroservice = (environments: HttpInputApplicationEnvironment[], environment: string, microserviceId: string): boolean => {
+export const canEditMicroservice = (
+    environments: HttpInputApplicationEnvironment[],
+    environment: string,
+    microserviceId: string
+): boolean => {
     const data = get(microservices);
 
-    const currentMicroservice: MicroserviceStore = data.find(ms => ms.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = data.find(
+        (ms) => ms.id === microserviceId
+    );
     if (!currentMicroservice) {
         return false;
     }
@@ -233,10 +245,16 @@ export const canEditMicroservice = (environments: HttpInputApplicationEnvironmen
     return true;
 };
 
-export const canDeleteMicroservice = (environments: HttpInputApplicationEnvironment[], environment: string, microserviceId: string): boolean => {
+export const canDeleteMicroservice = (
+    environments: HttpInputApplicationEnvironment[],
+    environment: string,
+    microserviceId: string
+): boolean => {
     const data = get(microservices);
 
-    const currentMicroservice: MicroserviceStore = data.find(ms => ms.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = data.find(
+        (ms) => ms.id === microserviceId
+    );
     if (!currentMicroservice) {
         return false;
     }

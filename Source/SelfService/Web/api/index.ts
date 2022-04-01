@@ -48,7 +48,9 @@ export type MicroserviceSimple = {
 
 export type MicroserviceSimpleExtra = {
     headImage: string;
+    headPort: number;
     runtimeImage: string;
+    isPublic: boolean;
     ingress: MicroserviceIngressPath;
     isPublic: boolean;
 };

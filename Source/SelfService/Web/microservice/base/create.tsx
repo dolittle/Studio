@@ -2,20 +2,20 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
-import { Stack } from '@fluentui/react/lib/Stack';
-import { Label } from '@fluentui/react/lib/Label';
-import { TextField } from '@fluentui/react/lib/TextField';
-import { PrimaryButton } from '@fluentui/react/lib/Button';
+import { CircularProgress, Grid, Typography } from '@material-ui/core';
+import { DropDownMenu } from '../../theme/dropDownMenu';
+import { TextField as ThemedTextField } from '../../theme/textField';
+import { Switch as ThemedSwitch } from '../../theme/switch';
+import { Button as ThemedButton } from '../../theme/button';
+
 import { Guid } from '@dolittle/rudiments';
-
 import { saveSimpleMicroservice } from '../../stores/microservice';
 import { MicroserviceSimple } from '../../api/index';
 import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
-import { DropDownMenu } from '../../theme/dropDownMenu';
-import { HttpResponseApplication } from '../../api/application';
 
-const stackTokens = { childrenGap: 15 };
+import { HttpResponseApplication } from '../../api/application';
 
 type Props = {
     application: HttpResponseApplication
@@ -23,6 +23,7 @@ type Props = {
 };
 
 export const Create: React.FunctionComponent<Props> = (props) => {
+    const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
     const _props = props!;
     const application = _props.application;
@@ -44,7 +45,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         extra: {
             // nginxdemos/hello:latest
             headImage: 'nginxdemos/hello:latest', //'dolittle/spinner:0.0.0', // Doesnt work
+            headPort: 80,
             runtimeImage: latestRuntimeInfo.image,
+            isPublic: false,
             ingress: {
                 path: '/',
                 pathType: 'Prefix',
@@ -53,29 +56,38 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         }
     } as MicroserviceSimple;
 
+    const [msId] = React.useState(ms.dolittle.microserviceId);
     const [msName, setMsName] = React.useState(ms.name);
     const [headImage, setHeadImage] = React.useState(ms.extra.headImage);
+    const [headPort, setHeadPort] = React.useState(ms.extra.headPort);
     const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
+    const [isPublic, setIsPublic] = React.useState<boolean>(ms.extra.isPublic);
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
+    const [isLoading, setIsLoading] = React.useState(false);
 
-    const onChangeHandler = (setter: React.Dispatch<React.SetStateAction<string>>): ((event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void) => {
-        return (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string): void => {
-            {
-                setter(newValue!);
-            };
-        };
-    };
+    const _onSave = async (ms: MicroserviceSimple): Promise<void> => {
+        if (isNaN(headPort)) {
+            enqueueSnackbar('HeadPort is not a valid port', { variant: 'error' });
+            return;
+        }
 
-    const _onSave = (ms: MicroserviceSimple): void => {
         ms.name = msName;
         ms.extra.headImage = headImage;
+        ms.extra.headPort = headPort;
         ms.extra.runtimeImage = runtimeImage;
+        ms.extra.isPublic = isPublic;
         ms.extra.ingress.path = ingressPath;
 
-        saveSimpleMicroservice(ms).then(data => {
+        setIsLoading(true);
+        try {
+            await saveSimpleMicroservice(ms);
             const href = `/microservices/application/${application.id}/${environment}/overview`;
             history.push(href);
-        });
+        } catch (e) {
+            enqueueSnackbar(e.message, { variant: 'error' });
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const runtimeImageSelections = [
@@ -91,37 +103,113 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         setRuntimeImage(_runtimeImage);
     };
 
+    const handleIsPublicChanged = (ev: React.ChangeEvent<{}>, checked?: boolean) => {
+        setIsPublic(checked ?? false);
+    };
+
     return (
         <>
-            <Stack tokens={stackTokens}>
-                <h1>Microservice Specific</h1>
-                <Label>UUID</Label>
-                <TextField defaultValue={ms.dolittle.microserviceId} readOnly />
+            <Typography component='h2' variant='h5' style={{ marginTop: '1rem' }}>Create base microservice</Typography>
+            <Grid container direction='column' alignContent='stretch' spacing={4} style={{ marginTop: '1rem', padding: '1rem' }}>
+                <Grid item>
+                    <ThemedTextField
+                        id='name'
+                        label='Name'
+                        value={msName}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            const newValue = event.target.value!;
+                            setMsName(newValue);
+                        }}
+                    />
+                </Grid>
 
-                <Label>Name</Label>
-                <TextField defaultValue={msName} onChange={onChangeHandler(setMsName)} />
+                <Grid item>
+                    <ThemedTextField
+                        id='uuid'
+                        label='UUID'
+                        value={msId}
+                        readOnly
+                    />
+                </Grid>
 
-                <Label>Environment</Label>
-                <TextField placeholder="Dev" defaultValue={ms.environment} readOnly />
+                <Grid item>
+                    <ThemedTextField
+                        id='environment'
+                        label='Environment'
+                        placeholder="Dev"
+                        value={ms.environment}
+                        readOnly
+                    />
+                </Grid>
 
-                <Label>Head Image</Label>
-                <TextField defaultValue={headImage} onChange={onChangeHandler(setHeadImage)} />
+                <Grid item>
+                    <ThemedTextField
+                        id='headImage'
+                        label='Head Image'
+                        value={headImage}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            const newValue = event.target.value!;
+                            setHeadImage(newValue);
+                        }}
+                    />
+                </Grid>
 
-                <Label>Runtime Image</Label>
-                <DropDownMenu items={runtimeImageSelections} value={runtimeImage} onChange={handleRuntimeChange}></DropDownMenu>
+                <Grid item>
+                    <ThemedTextField
+                        required
+                        id='headPort'
+                        label='Head Port'
+                        type='number'
+                        value={headPort.toString()}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            const newValue = parseInt(event.target.value!, 10);
+                            setHeadPort(newValue);
+                        }}
+                    />
+                </Grid>
 
-                <h1>Ingress</h1>
+                <Grid item>
+                    <DropDownMenu label='Runtime Image' items={runtimeImageSelections} value={runtimeImage} onChange={handleRuntimeChange}></DropDownMenu>
+                </Grid>
 
-                <Label>Path</Label>
-                <TextField placeholder="/" defaultValue={ingressPath} onChange={onChangeHandler(setIngressPath)} />
+                <Grid item>
+                    <Typography component='h2' variant='h5'>Ingress</Typography>
+                    <ThemedSwitch label={isPublic ? 'Public' : 'Private'} checked={isPublic} onChange={handleIsPublicChanged} />
+                </Grid>
+                {isPublic &&
+                    <>
+                        <Grid item>
+                            <ThemedTextField
+                                id="ingressPath"
+                                label='Path'
+                                placeholder="/"
+                                value={ingressPath}
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                    const newValue = event.target.value!;
+                                    setIngressPath(newValue);
+                                }}
+                            />
+                        </Grid>
 
-                <Label>PathType</Label>
-                <TextField placeholder="Prefix" defaultValue={ms.extra.ingress.pathType} readOnly />
-            </Stack>
+                        <Grid item>
+                            <ThemedTextField
+                                id="pathType"
+                                label='PathType'
+                                placeholder="Prefix"
+                                value={ms.extra.ingress.pathType}
+                                readOnly
+                            />
+                        </Grid>
+                    </>
+                }
+            </Grid>
 
-            <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
-                <PrimaryButton text="Create" onClick={() => _onSave(ms)} />
-            </Stack>
+            <Grid container direction='row' justifyContent='flex-end'>
+                {isLoading
+                    ? <ThemedButton disabled>Creating<CircularProgress size='1.5rem' style={{ marginLeft: '0.5rem' }} /></ThemedButton>
+                    : <ThemedButton onClick={() => _onSave(ms)}>Create</ThemedButton>
+                }
+            </Grid>
         </>
     );
 };

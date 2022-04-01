@@ -68,7 +68,7 @@ export const DropDownMenu: React.FunctionComponent<Props> = (props) => {
 
     return (
         <div>
-            <FormControl variant="outlined" className={classes.formControl}>
+            <FormControl variant="outlined" className={classes.formControl} style={{ margin: 0 }}>
                 <InputLabel htmlFor="outlined-age-native-simple">{_props.label}</InputLabel>
                 <Select
                     // to make it expand downwards https://stackoverflow.com/a/61225313/5806412

@@ -131,6 +131,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     path: '',
                     pathType: ''
                 },
+                headPort: 80,
+                isPublic: false,
                 headImage,
                 runtimeImage,
                 // TODO this is now hardcoded just so that we can land https://github.com/dolittle/Studio/pull/167
