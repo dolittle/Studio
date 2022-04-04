@@ -108,8 +108,8 @@ export function getServerUrlPrefix(): string {
 
 export function getLatestRuntimeInfo(): LatestRuntimeInfo {
     return {
-        image: 'dolittle/runtime:7.8.1',
-        changelog: 'https://github.com/dolittle/Runtime/releases/tag/v7.8.1',
+        image: 'dolittle/runtime:8.0.0',
+        changelog: 'https://github.com/dolittle/Runtime/releases/tag/v8.0.0',
     };
 }
 
@@ -117,8 +117,8 @@ export function getLatestRuntimeInfo(): LatestRuntimeInfo {
 export function getRuntimes(): LatestRuntimeInfo[] {
     return [
         {
-            image: 'dolittle/runtime:7.8.1',
-            changelog: 'https://github.com/dolittle/Runtime/releases/tag/v7.8.1',
+            image: 'dolittle/runtime:8.0.0',
+            changelog: 'https://github.com/dolittle/Runtime/releases/tag/v8.0.0',
         },
         {
             image: 'dolittle/runtime:6.1.0',
