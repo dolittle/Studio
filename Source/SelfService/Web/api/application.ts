@@ -1,6 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { getServerUrlPrefix, JobInfo, parseJSONResponse, ShortInfoWithEnvironment } from './api';
+import { getServerUrlPrefix, JobInfo, parseJSONResponse, ShortInfoWithEnvironment, HttpResponseMessage } from './api';
+
+export type HttpInputApplicationAccess = {
+    email: string;
+};
 
 export type HttpApplicationEnvironmentCustomerTenant = {
     id: string;
@@ -45,6 +49,10 @@ export type HttpResponseApplication = {
     microservices: any[] // Not great
 };
 
+
+export type HttpResponseApplicationAccess = {
+    users: HttpInputApplicationAccess[];
+};
 
 
 export async function getPersonalisedInfo(applicationId: string): Promise<any> {
@@ -128,4 +136,55 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
     const jsonResult: HttpResponseApplication = await result.json();
     jsonResult.microservices = jsonResult.microservices || [];
     return jsonResult;
+}
+
+
+export async function getApplicationAccess(applicationId: string): Promise<HttpResponseApplicationAccess> {
+    const url = `${getServerUrlPrefix()}/application/${applicationId}/access/users`;
+
+    const response = await fetch(
+        url,
+        {
+            method: 'GET',
+            mode: 'cors'
+        });
+
+    const data = await parseJSONResponse(response);
+    return data;
+}
+
+export async function applicationAccessAddUser(applicationId: string, input: HttpInputApplicationAccess): Promise<HttpResponseMessage> {
+    const url = `${getServerUrlPrefix()}/application/${applicationId}/access/user`;
+
+    const response = await fetch(
+        url,
+        {
+            method: 'POST',
+            body: JSON.stringify(input),
+            mode: 'cors',
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+
+    const data = await parseJSONResponse(response);
+    return data;
+}
+
+export async function applicationAccessRemoveUser(applicationId: string, input: HttpInputApplicationAccess): Promise<HttpResponseMessage> {
+    const url = `${getServerUrlPrefix()}/application/${applicationId}/access/user`;
+
+    const response = await fetch(
+        url,
+        {
+            method: 'DELETE',
+            body: JSON.stringify(input),
+            mode: 'cors',
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+
+    const data = await parseJSONResponse(response);
+    return data;
 }
