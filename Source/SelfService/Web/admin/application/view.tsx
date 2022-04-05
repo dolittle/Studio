@@ -5,91 +5,55 @@ import React, { useEffect, useState } from 'react';
 
 import { useParams, useHistory } from 'react-router-dom';
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
-
 
 import { applicationAccessAddUser, getApplicationAccess, HttpInputApplicationAccess, applicationAccessRemoveUser } from '../../api/application';
 import { ButtonText } from '../../theme/buttonText';
 import { TextField } from '../../theme/textField';
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: '100%',
-        },
-        button: {
-            marginTop: theme.spacing(1),
-            marginRight: theme.spacing(1),
-        },
-        actionsContainer: {
-            marginBottom: theme.spacing(2),
-        },
-        resetContainer: {
-            padding: theme.spacing(3),
-        },
-        inactiveText: {
-            color: '#93959F',
-        },
-        progressBar: {
-            color: '#ff9366',
-        },
-
-        textField: { //https://stackoverflow.com/a/60461876 excellent resource
-            '& .MuiOutlinedInput-input': {
-                color: 'white'
-            },
-            '& .MuiInputLabel-root': {
-                color: 'white'
-            },
-            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-                color: 'white',
-                borderColor: 'white'
-            },
-            '&:hover .MuiOutlinedInput-input': {
-                color: 'white'
-            },
-        },
-        stepIcon: {
-            'color': '#3B3D48',
-            '&.MuiStepIcon-active': {
-                color: '#6678F6'
-            },
-            '&.MuiStepIcon-completed': {
-                color: '#6678F6'
-            },
-            '&.MuiStepIcon-active .MuiStepIcon-text': {
-                fill: '#B3BBFB'
-            },
-            '&.MuiStepIcon-root .MuiStepIcon-text': {
-                fill: '#93959F'
-            }
-        }
-    })
-);
+import { Customer, getCustomer } from '../../api/customer';
 
 export const View: React.FunctionComponent<any> = (props) => {
     const history = useHistory();
-    const classes = useStyles();
     const { enqueueSnackbar } = useSnackbar();
 
     const { customerId, applicationId } = useParams();
 
     const [loaded, setLoaded] = useState(false);
+    const [fetchDataError, setFetchDataError] = useState(false);
     const [users, setUsers] = useState([] as HttpInputApplicationAccess[]);
+    const [customer, setCustomer] = useState({} as Customer);
+
     const [userEmail, setUserEmail] = useState('');
 
 
     useEffect(() => {
-        getApplicationAccess(applicationId)
-            .then(access => {
-                setUsers(access.users);
-                setLoaded(true);
-            }).catch((error) => {
-                console.log(error);
-                enqueueSnackbar('Failed getting user list from the server', { variant: 'error' });
-            });
+        const fetchData = async () => {
+            const data = await Promise.all([
+                getCustomer(customerId),
+                getApplicationAccess(applicationId)
+            ]);
+            setCustomer(data[0].customer);
+            setUsers(data[1].users);
+            setLoaded(true);
+        };
+
+        fetchData().catch((e) => {
+            // TODO could be better with the message
+            enqueueSnackbar('Failed to get data from the server', { variant: 'error' });
+        });
     }, []);
+
+    if (fetchDataError) {
+        return (
+            <>
+                <p>Failed to fetch data</p>
+                <ButtonText onClick={async () => {
+                    const href = `/admin/customers`;
+                    history.push(href);
+                }}>Back to customers</ButtonText>
+            </>
+        );
+    }
 
     if (!loaded) {
         return null;
@@ -98,7 +62,15 @@ export const View: React.FunctionComponent<any> = (props) => {
 
     return (
         <>
+            <h1>Customer {customer.name}</h1>
+            <ButtonText onClick={async () => {
+                const href = `/admin/customer/${customerId}`;
+                history.push(href);
+            }}>Back to customer</ButtonText>
+
+
             <h1>Application Access View</h1>
+
             <TextField id="userEmail"
                 label='Email'
                 placeholder=""
@@ -109,6 +81,11 @@ export const View: React.FunctionComponent<any> = (props) => {
                 }}
             />
             <ButtonText onClick={async () => {
+                if (userEmail === '') {
+                    enqueueSnackbar('Email is empty', { variant: 'error' });
+                    return;
+                }
+
                 const input: HttpInputApplicationAccess = {
                     email: userEmail,
                 };
@@ -119,33 +96,31 @@ export const View: React.FunctionComponent<any> = (props) => {
                     setUsers(access.users);
                     setUserEmail('');
                 } catch (e) {
-                    enqueueSnackbar('Failed to add user', { variant: 'error' });
+                    enqueueSnackbar(e.message, { variant: 'error' });
                 }
             }}>Add User</ButtonText>
 
-            <div className={classes.root}>
-                <ul>
-                    {users.map(user => {
-                        return (
-                            <li key={user.email}>
-                                <span>{user.email}</span>
-                                <ButtonText onClick={async () => {
-                                    const input: HttpInputApplicationAccess = {
-                                        email: user.email
-                                    };
+            <ul>
+                {users.map(user => {
+                    return (
+                        <li key={user.email}>
+                            <span>{user.email}</span>
+                            <ButtonText onClick={async () => {
+                                const input: HttpInputApplicationAccess = {
+                                    email: user.email
+                                };
 
-                                    try {
-                                        await applicationAccessRemoveUser(applicationId, input);
-                                        const access = await getApplicationAccess(applicationId);
-                                        setUsers(access.users);
-                                    } catch (e) {
-                                        enqueueSnackbar('Failed to remove user', { variant: 'error' });
-                                    }
-                                }}>Remove User</ButtonText>
-                            </li>);
-                    })}
-                </ul>
-            </div>
+                                try {
+                                    await applicationAccessRemoveUser(applicationId, input);
+                                    const access = await getApplicationAccess(applicationId);
+                                    setUsers(access.users);
+                                } catch (e) {
+                                    enqueueSnackbar(e.message, { variant: 'error' });
+                                }
+                            }}>Remove User</ButtonText>
+                        </li>);
+                })}
+            </ul>
         </>
     );
 };
