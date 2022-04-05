@@ -10,7 +10,7 @@ import { useSnackbar } from 'notistack';
 
 
 import { getCustomer, CustomerDetailed } from '../api/customer';
-import { getStudioConfig, saveStudioConfig, Studio } from '../api/studio';
+import { saveStudioConfig, Studio } from '../api/studio';
 import { ButtonText } from '../theme/buttonText';
 
 const useStyles = makeStyles((theme: Theme) =>
