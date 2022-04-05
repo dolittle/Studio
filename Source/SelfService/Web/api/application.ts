@@ -51,6 +51,8 @@ export type HttpResponseApplication = {
 
 
 export type HttpResponseApplicationAccess = {
+    id: string;
+    name: string;
     users: HttpInputApplicationAccess[];
 };
 

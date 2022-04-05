@@ -7,7 +7,7 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { applicationAccessAddUser, getApplicationAccess, HttpInputApplicationAccess, applicationAccessRemoveUser } from '../../api/application';
+import { applicationAccessAddUser, getApplicationAccess, HttpInputApplicationAccess, applicationAccessRemoveUser, HttpResponseApplicationAccess } from '../../api/application';
 import { ButtonText } from '../../theme/buttonText';
 import { TextField } from '../../theme/textField';
 import { Customer, getCustomer } from '../../api/customer';
@@ -20,7 +20,7 @@ export const View: React.FunctionComponent<any> = (props) => {
 
     const [loaded, setLoaded] = useState(false);
     const [fetchDataError, setFetchDataError] = useState(false);
-    const [users, setUsers] = useState([] as HttpInputApplicationAccess[]);
+    const [accessInfo, setAccessInfo] = useState({} as HttpResponseApplicationAccess);
     const [customer, setCustomer] = useState({} as Customer);
 
     const [userEmail, setUserEmail] = useState('');
@@ -33,11 +33,12 @@ export const View: React.FunctionComponent<any> = (props) => {
                 getApplicationAccess(applicationId)
             ]);
             setCustomer(data[0].customer);
-            setUsers(data[1].users);
+            setAccessInfo(data[1]);
             setLoaded(true);
         };
 
         fetchData().catch((e) => {
+            setFetchDataError(true);
             // TODO could be better with the message
             enqueueSnackbar('Failed to get data from the server', { variant: 'error' });
         });
@@ -69,7 +70,8 @@ export const View: React.FunctionComponent<any> = (props) => {
             }}>Back to customer</ButtonText>
 
 
-            <h1>Application Access View</h1>
+            <h1>Application {accessInfo.name}</h1>
+            <h2>Access View</h2>
 
             <TextField id="userEmail"
                 label='Email'
@@ -93,7 +95,7 @@ export const View: React.FunctionComponent<any> = (props) => {
                 try {
                     await applicationAccessAddUser(applicationId, input);
                     const access = await getApplicationAccess(applicationId);
-                    setUsers(access.users);
+                    setAccessInfo(access);
                     setUserEmail('');
                 } catch (e) {
                     enqueueSnackbar(e.message, { variant: 'error' });
@@ -101,7 +103,7 @@ export const View: React.FunctionComponent<any> = (props) => {
             }}>Add User</ButtonText>
 
             <ul>
-                {users.map(user => {
+                {accessInfo.users.map(user => {
                     return (
                         <li key={user.email}>
                             <span>{user.email}</span>
@@ -113,7 +115,7 @@ export const View: React.FunctionComponent<any> = (props) => {
                                 try {
                                     await applicationAccessRemoveUser(applicationId, input);
                                     const access = await getApplicationAccess(applicationId);
-                                    setUsers(access.users);
+                                    setAccessInfo(access);
                                 } catch (e) {
                                     enqueueSnackbar(e.message, { variant: 'error' });
                                 }
