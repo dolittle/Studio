@@ -113,17 +113,13 @@ export function getLatestRuntimeInfo(): LatestRuntimeInfo {
     };
 }
 
-
 export function getRuntimes(): LatestRuntimeInfo[] {
     return [
-        {
-            image: 'dolittle/runtime:8.0.0',
-            changelog: 'https://github.com/dolittle/Runtime/releases/tag/v8.0.0',
-        },
+        getLatestRuntimeInfo(),
         {
             image: 'dolittle/runtime:6.1.0',
             changelog: 'https://github.com/dolittle/Runtime/releases/tag/v6.1.0',
-        }
+        },
     ];
 }
 
