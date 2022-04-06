@@ -1,3 +1,14 @@
+# [1.18.0] - 2022-4-6 [PR: #170](https://github.com/dolittle/Studio/pull/170)
+## Summary
+
+Add support for Runtime version 8.0.0 when creating a new base microservice
+
+Note: This needs changes in platform-api to add environment variable or configuration for `DOLITTLE__RUNTIME__EVENTSTORE__BACKWARDSCOMPATIBILITY__VERSION`
+
+## Reference
+- https://app.asana.com/0/1202023614957161/1202062723906543/f
+
+
 # [1.17.1] - 2022-4-1 [PR: #169](https://github.com/dolittle/Studio/pull/169)
 ## Summary
 
