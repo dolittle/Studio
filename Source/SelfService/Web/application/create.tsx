@@ -141,18 +141,39 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         const newEnvironments = [...environments];
         newEnvironments[environmentIndex].customerTenants.push(Guid.create().toString());
         setEnvironments(newEnvironments);
+        checkTenantIdValidity();
     };
 
     const handleRemoveTenant = (event: React.MouseEvent<HTMLElement>, environmentIndex: number, tenantIndex: number) => {
         const newEnvironments = [...environments];
         newEnvironments[environmentIndex].customerTenants.splice(tenantIndex, 1);
         setEnvironments(newEnvironments);
+        checkTenantIdValidity();
     };
 
     const handleCustomerTenantId = (event: React.ChangeEvent<HTMLInputElement>, environmentIndex: number, tenantIndex: number) => {
         const newEnvironments = [...environments];
         newEnvironments[environmentIndex].customerTenants[tenantIndex] = event.target.value;
         setEnvironments(newEnvironments);
+        checkTenantIdValidity();
+    };
+
+    const checkTenantIdValidity = () => {
+        let isValid = true;
+        environments.forEach(environment => environment.customerTenants.forEach(tenant => {
+            try {
+                const parsed = Guid.parse(tenant);
+                if (
+                    parsed.toString().includes('NaN')
+                    || tenant.length !== 36
+                ) {
+                    throw new Error('Invalid Guid');
+                }
+            } catch (error) {
+                isValid = false;
+            }
+        }));
+        setActiveNextButton(isValid);
     };
 
 
