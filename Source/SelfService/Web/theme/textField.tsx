@@ -17,6 +17,7 @@ type Props = {
     placeholder?: string;
     readOnly?: boolean;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    size?: 'small' | 'medium' | undefined;
 };
 
 const defaultOnChange = (event: React.ChangeEvent<HTMLInputElement>) => { };
@@ -53,6 +54,7 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
     const id = _props.id;
     const placeholder = _props.placeholder ?? '';
     const readOnly = _props.readOnly ?? false;
+    const size = _props.size ?? 'medium';
     return (
         <MuiTextField
             required={required}
@@ -66,6 +68,7 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
             onChange={onChange}
             placeholder={placeholder}
             InputProps={{ readOnly }}
+            size={size}
         />
     );
 };
