@@ -241,7 +241,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 <p>
                     Select at least (1) environment for your application or create a custom named one.*
                 </p>
-
                 {environments.map((environment, environmentIndex) => (
                     <>
                         <FormGroup>
@@ -256,45 +255,48 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                                 label={environment.name}
                             />
                         </FormGroup>
-                        <Box flexDirection='column' display='flex' justifyContent='flex-start' style={{ gap: '1rem' }}>
-                            {environment.customerTenants.map((tenant, tenantIndex) => (
-                                <Box display='flex' justifyContent='flex-start' style={{ gap: '1rem' }} key={tenantIndex}>
-                                    <ThemedTextField
-                                        id={'uuid' + tenantIndex.toString()}
-                                        label='UUID'
-                                        value={tenant}
-                                        onChange={(event) => handleCustomerTenantId(event, environmentIndex, tenantIndex)}
-                                        size='small'
-                                    />
-                                    <ThemedTextField
-                                        id={'name' + tenantIndex.toString()}
-                                        label='Name'
-                                        value=''
-                                        size='small'
-                                        disabled
-                                        readOnly
-                                        required={false}
-                                    />
-                                    <ButtonText
-                                        onClick={(event) => handleRemoveTenant(event, environmentIndex, tenantIndex)}
-                                        buttonType='secondary'
-                                        size='small'
-                                        startIcon={<RemoveIcon />}
-                                    >
-                                        Remove
-                                    </ButtonText>
+                        {environment.checked && (
+                            <>
+                                <Box flexDirection='column' display='flex' justifyContent='flex-start' style={{ gap: '1rem' }}>
+                                    {environment.customerTenants.map((tenant, tenantIndex) => (
+                                        <Box display='flex' justifyContent='flex-start' style={{ gap: '1rem' }} key={tenantIndex}>
+                                            <ThemedTextField
+                                                id={'uuid' + tenantIndex.toString()}
+                                                label='UUID'
+                                                value={tenant}
+                                                onChange={(event) => handleCustomerTenantId(event, environmentIndex, tenantIndex)}
+                                                size='small'
+                                            />
+                                            <ThemedTextField
+                                                id={'name' + tenantIndex.toString()}
+                                                label='Name'
+                                                value=''
+                                                size='small'
+                                                disabled
+                                                readOnly
+                                                required={false}
+                                            />
+                                            <ButtonText
+                                                onClick={(event) => handleRemoveTenant(event, environmentIndex, tenantIndex)}
+                                                buttonType='secondary'
+                                                size='small'
+                                                startIcon={<RemoveIcon />}
+                                            >
+                                                Remove
+                                            </ButtonText>
+                                        </Box>
+                                    ))}
                                 </Box>
-                            ))}
-                        </Box>
-                        <ButtonText
-                            onClick={(event) => handleAddTenant(event, environmentIndex)}
-                            buttonType='secondary'
-                            size='small'
-                            withIcon
-                        >
-                            Add tenant
-                        </ButtonText>
-
+                                <ButtonText
+                                    onClick={(event) => handleAddTenant(event, environmentIndex)}
+                                    buttonType='secondary'
+                                    size='small'
+                                    withIcon
+                                >
+                                    Add tenant
+                                </ButtonText>
+                            </>
+                        )}
                     </>
                 ))}
             </Typography >
