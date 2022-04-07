@@ -113,19 +113,19 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             name: 'Production',
             shortName: 'Prod',
             checked: true,
-            customerTenants: [] as string[]
+            customerTenants: [Guid.create().toString()] as string[]
         },
         {
             name: 'Development',
             shortName: 'Dev',
             checked: true,
-            customerTenants: [] as string[]
+            customerTenants: [Guid.create().toString()] as string[]
         },
         {
             name: 'Test',
             shortName: 'Test',
             checked: true,
-            customerTenants: [] as string[]
+            customerTenants: [Guid.create().toString()] as string[]
         },
     ]);
 
