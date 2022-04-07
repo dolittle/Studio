@@ -163,22 +163,27 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         let isValid = true;
         environments
             .filter(e => e.checked)
-            .forEach(environment => environment.customerTenants.forEach(tenant => {
-                if (!environment.checked) {
+            .forEach(environment => {
+                const atLeastOneCustomerTenant = environment.customerTenants.length === 0;
+                if (atLeastOneCustomerTenant) {
+                    isValid = false;
                     return;
                 }
-                try {
-                    const parsed = Guid.parse(tenant);
-                    if (
-                        parsed.toString().includes('NaN')
-                        || tenant.length !== 36
-                    ) {
-                        throw new Error('Invalid Guid');
+
+                environment.customerTenants.forEach(tenant => {
+                    let parsed: Guid;
+                    try {
+                        parsed = Guid.parse(tenant);
+                    } catch (error) {
+                        isValid = false;
+                        return;
                     }
-                } catch (error) {
-                    isValid = false;
-                }
-            }));
+                    if (parsed.toString().includes('NaN') || tenant.length !== 36) {
+                        isValid = false;
+                        return;
+                    }
+                });
+            });
 
         if (environments.every(e => !e.checked)) {
             isValid = false;
