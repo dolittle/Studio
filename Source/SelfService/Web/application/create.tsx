@@ -139,7 +139,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     const handleAddTenant = (event: React.MouseEvent<HTMLElement>, environmentIndex: number) => {
         const newEnvironments = [...environments];
-        newEnvironments[environmentIndex].customerTenants.push('');
+        newEnvironments[environmentIndex].customerTenants.push(Guid.create().toString());
         setEnvironments(newEnvironments);
     };
 
