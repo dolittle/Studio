@@ -101,7 +101,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     ];
 
 
-    const [activeStep, setActiveStep] = React.useState(2);
+    const [activeStep, setActiveStep] = React.useState(0);
     const [application, setApplication] = React.useState({
         id: newApplicationId,
         name: '',
@@ -338,11 +338,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     } as HttpApplicationEnvironment)),
             };
             try {
-                console.log(input);
-                // await createApplication(input);
+                await createApplication(input);
                 // redirect to build
-                // const href = `/application/building/${application.id}`;
-                // history.push(href);
+                const href = `/application/building/${application.id}`;
+                history.push(href);
 
                 enqueueSnackbar('Application created', { variant: 'info' });
             } catch (error) {
