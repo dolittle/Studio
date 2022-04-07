@@ -2,12 +2,21 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import { getServerUrlPrefix, JobInfo, parseJSONResponse, ShortInfoWithEnvironment } from './api';
 
+export type HttpApplicationEnvironmentCustomerTenant = {
+    id: string;
+};
+
+export type HttpApplicationEnvironment = {
+    name: string;
+    customerTenants: HttpApplicationEnvironmentCustomerTenant[];
+};
+
 export type HttpApplicationRequest = {
     id: string;
     name: string;
     //contactName: string;
     //contactEmail: string;
-    environments: string[];
+    environments: HttpApplicationEnvironment[];
 };
 
 export type ApplicationBuildState = {

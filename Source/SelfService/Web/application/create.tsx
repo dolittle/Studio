@@ -9,20 +9,22 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
-import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import RemoveIcon from '@material-ui/icons/HighlightOff';
+
 
 
 import Typography from '@material-ui/core/Typography';
 import { useSnackbar } from 'notistack';
 import Checkbox from '@material-ui/core/Checkbox';
+import { TextField as ThemedTextField } from '../theme/textField';
 
-
-import { Grid } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { ButtonText } from '../theme/buttonText';
 import { Button } from '../theme/button';
-import { createApplication, HttpApplicationRequest } from '../api/application';
+import { createApplication, HttpApplicationRequest, HttpApplicationEnvironment } from '../api/application';
 import { ShortInfo } from '../api/api';
 import { Guid } from '@dolittle/rudiments';
 
@@ -111,16 +113,19 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             name: 'Production',
             shortName: 'Prod',
             checked: true,
+            customerTenants: [Guid.create().toString()] as string[]
         },
         {
             name: 'Development',
             shortName: 'Dev',
             checked: true,
+            customerTenants: [Guid.create().toString()] as string[]
         },
         {
             name: 'Test',
             shortName: 'Test',
             checked: true,
+            customerTenants: [Guid.create().toString()] as string[]
         },
     ]);
 
@@ -130,7 +135,63 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         const newEnvironments = [...environments];
         newEnvironments[index].checked = event.target.checked;
         setEnvironments(newEnvironments);
+        checkTenantIdValidity();
     };
+
+    const handleAddTenant = (event: React.MouseEvent<HTMLElement>, environmentIndex: number) => {
+        const newEnvironments = [...environments];
+        newEnvironments[environmentIndex].customerTenants.push(Guid.create().toString());
+        setEnvironments(newEnvironments);
+        checkTenantIdValidity();
+    };
+
+    const handleRemoveTenant = (event: React.MouseEvent<HTMLElement>, environmentIndex: number, tenantIndex: number) => {
+        const newEnvironments = [...environments];
+        newEnvironments[environmentIndex].customerTenants.splice(tenantIndex, 1);
+        setEnvironments(newEnvironments);
+        checkTenantIdValidity();
+    };
+
+    const handleCustomerTenantId = (event: React.ChangeEvent<HTMLInputElement>, environmentIndex: number, tenantIndex: number) => {
+        const newEnvironments = [...environments];
+        newEnvironments[environmentIndex].customerTenants[tenantIndex] = event.target.value;
+        setEnvironments(newEnvironments);
+        checkTenantIdValidity();
+    };
+
+    const checkTenantIdValidity = () => {
+        let isValid = true;
+        environments
+            .filter(e => e.checked)
+            .forEach(environment => {
+                const atLeastOneCustomerTenant = environment.customerTenants.length === 0;
+                if (atLeastOneCustomerTenant) {
+                    isValid = false;
+                    return;
+                }
+
+                environment.customerTenants.forEach(tenant => {
+                    let parsed: Guid;
+                    try {
+                        parsed = Guid.parse(tenant);
+                    } catch (error) {
+                        isValid = false;
+                        return;
+                    }
+                    if (parsed.toString().includes('NaN') || tenant.length !== 36) {
+                        isValid = false;
+                        return;
+                    }
+                });
+            });
+
+        if (environments.every(e => !e.checked)) {
+            isValid = false;
+        }
+
+        setActiveNextButton(isValid);
+    };
+
 
     const stepsContent = [
         <>
@@ -217,21 +278,57 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 <p>
                     Select at least (1) environment for your application or create a custom named one.*
                 </p>
-
-                <FormGroup>
-                    {environments.map((environment, index) => (
-                        <FormControlLabel key={environment.shortName}
-                            control={
-                                <Checkbox
-                                    checked={environment.checked}
-                                    onChange={(event) => handleChange(event, index)}
-                                    name={environment.shortName}
-                                />
-                            }
-                            label={environment.name}
-                        />
-                    ))}
-                </FormGroup>
+                {environments.map((environment, environmentIndex) => (
+                    <>
+                        <FormGroup>
+                            <FormControlLabel key={environment.shortName}
+                                control={
+                                    <Checkbox
+                                        checked={environment.checked}
+                                        onChange={(event) => handleChange(event, environmentIndex)}
+                                        name={environment.shortName}
+                                    />
+                                }
+                                label={environment.name}
+                            />
+                        </FormGroup>
+                        {environment.checked && (
+                            <>
+                                <Box flexDirection='column' display='flex' justifyContent='flex-start' style={{ gap: '1rem' }}>
+                                    {environment.customerTenants.map((tenant, tenantIndex) => (
+                                        <Box display='flex' justifyContent='flex-start' style={{ gap: '1rem' }} key={tenantIndex}>
+                                            <ThemedTextField
+                                                id={'uuid' + tenantIndex.toString()}
+                                                label='UUID'
+                                                value={tenant}
+                                                onChange={(event) => handleCustomerTenantId(event, environmentIndex, tenantIndex)}
+                                                size='small'
+                                            />
+                                            {tenantIndex !== 0 && (
+                                                <ButtonText
+                                                    onClick={(event) => handleRemoveTenant(event, environmentIndex, tenantIndex)}
+                                                    buttonType='secondary'
+                                                    size='small'
+                                                    startIcon={<RemoveIcon />}
+                                                >
+                                                    Remove
+                                                </ButtonText>
+                                            )}
+                                        </Box>
+                                    ))}
+                                </Box>
+                                <ButtonText
+                                    onClick={(event) => handleAddTenant(event, environmentIndex)}
+                                    buttonType='secondary'
+                                    size='small'
+                                    withIcon
+                                >
+                                    Add tenant
+                                </ButtonText>
+                            </>
+                        )}
+                    </>
+                ))}
             </Typography >
         </>,
     ];
@@ -242,7 +339,12 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             const input: HttpApplicationRequest = {
                 id: application.id,
                 name: application.name,
-                environments: environments.filter(e => e.checked).map(e => e.shortName),
+                environments: environments
+                    .filter(e => e.checked)
+                    .map(e => ({
+                        name: e.shortName,
+                        customerTenants: e.customerTenants.map(t => ({ id: t }))
+                    } as HttpApplicationEnvironment)),
             };
             try {
                 await createApplication(input);
