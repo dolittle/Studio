@@ -135,6 +135,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         const newEnvironments = [...environments];
         newEnvironments[index].checked = event.target.checked;
         setEnvironments(newEnvironments);
+        checkTenantIdValidity();
     };
 
     const handleAddTenant = (event: React.MouseEvent<HTMLElement>, environmentIndex: number) => {
@@ -160,19 +161,29 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     const checkTenantIdValidity = () => {
         let isValid = true;
-        environments.forEach(environment => environment.customerTenants.forEach(tenant => {
-            try {
-                const parsed = Guid.parse(tenant);
-                if (
-                    parsed.toString().includes('NaN')
-                    || tenant.length !== 36
-                ) {
-                    throw new Error('Invalid Guid');
+        environments
+            .filter(e => e.checked)
+            .forEach(environment => environment.customerTenants.forEach(tenant => {
+                if (!environment.checked) {
+                    return;
                 }
-            } catch (error) {
-                isValid = false;
-            }
-        }));
+                try {
+                    const parsed = Guid.parse(tenant);
+                    if (
+                        parsed.toString().includes('NaN')
+                        || tenant.length !== 36
+                    ) {
+                        throw new Error('Invalid Guid');
+                    }
+                } catch (error) {
+                    isValid = false;
+                }
+            }));
+
+        if (environments.every(e => !e.checked)) {
+            isValid = false;
+        }
+
         setActiveNextButton(isValid);
     };
 
