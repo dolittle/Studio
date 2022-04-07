@@ -1,3 +1,9 @@
+# [1.19.0] - 2022-4-7 [PR: #173](https://github.com/dolittle/Studio/pull/173)
+## Summary
+
+Add ability to manually specify multiple tenants for each environment when creating an application.
+
+
 # [1.18.0] - 2022-4-6 [PR: #170](https://github.com/dolittle/Studio/pull/170)
 ## Summary
 
