@@ -9,8 +9,10 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
-import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import RemoveIcon from '@material-ui/icons/HighLightOff';
+
 
 
 import Typography from '@material-ui/core/Typography';
@@ -18,7 +20,7 @@ import { useSnackbar } from 'notistack';
 import Checkbox from '@material-ui/core/Checkbox';
 import { TextField as ThemedTextField } from '../theme/textField';
 
-import { Grid } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { ButtonText } from '../theme/buttonText';
 import { Button } from '../theme/button';
@@ -99,7 +101,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     ];
 
 
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = React.useState(2);
     const [application, setApplication] = React.useState({
         id: newApplicationId,
         name: '',
@@ -111,19 +113,19 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             name: 'Production',
             shortName: 'Prod',
             checked: true,
-            customerTenants: ['']
+            customerTenants: [] as string[]
         },
         {
             name: 'Development',
             shortName: 'Dev',
             checked: true,
-            customerTenants: ['']
+            customerTenants: [] as string[]
         },
         {
             name: 'Test',
             shortName: 'Test',
             checked: true,
-            customerTenants: ['']
+            customerTenants: [] as string[]
         },
     ]);
 
@@ -132,6 +134,18 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const newEnvironments = [...environments];
         newEnvironments[index].checked = event.target.checked;
+        setEnvironments(newEnvironments);
+    };
+
+    const handleAddTenant = (event: React.MouseEvent<HTMLElement>, environmentIndex: number) => {
+        const newEnvironments = [...environments];
+        newEnvironments[environmentIndex].customerTenants.push('');
+        setEnvironments(newEnvironments);
+    };
+
+    const handleRemoveTenant = (event: React.MouseEvent<HTMLElement>, environmentIndex: number, tenantIndex: number) => {
+        const newEnvironments = [...environments];
+        newEnvironments[environmentIndex].customerTenants.splice(tenantIndex, 1);
         setEnvironments(newEnvironments);
     };
 
@@ -228,9 +242,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     Select at least (1) environment for your application or create a custom named one.*
                 </p>
 
-                <FormGroup>
-                    {environments.map((environment, environmentIndex) => (
-                        <>
+                {environments.map((environment, environmentIndex) => (
+                    <>
+                        <FormGroup>
                             <FormControlLabel key={environment.shortName}
                                 control={
                                     <Checkbox
@@ -241,19 +255,48 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                                 }
                                 label={environment.name}
                             />
-                            {/* TODO: Add customer application ID logic */}
+                        </FormGroup>
+                        <Box flexDirection='column' display='flex' justifyContent='flex-start' style={{ gap: '1rem' }}>
                             {environment.customerTenants.map((tenant, tenantIndex) => (
-                                <ThemedTextField
-                                    key={tenantIndex}
-                                    id='id'
-                                    label='id'
-                                    value={tenant}
-                                    onChange={(event) => handleCustomerTenantId(event, environmentIndex, tenantIndex)}
-                                />
+                                <Box display='flex' justifyContent='flex-start' style={{ gap: '1rem' }} key={tenantIndex}>
+                                    <ThemedTextField
+                                        id={'uuid' + tenantIndex.toString()}
+                                        label='UUID'
+                                        value={tenant}
+                                        onChange={(event) => handleCustomerTenantId(event, environmentIndex, tenantIndex)}
+                                        size='small'
+                                    />
+                                    <ThemedTextField
+                                        id={'name' + tenantIndex.toString()}
+                                        label='Name'
+                                        value=''
+                                        size='small'
+                                        disabled
+                                        readOnly
+                                        required={false}
+                                    />
+                                    <ButtonText
+                                        onClick={(event) => handleRemoveTenant(event, environmentIndex, tenantIndex)}
+                                        buttonType='secondary'
+                                        size='small'
+                                        startIcon={<RemoveIcon />}
+                                    >
+                                        Remove
+                                    </ButtonText>
+                                </Box>
                             ))}
-                        </>
-                    ))}
-                </FormGroup>
+                        </Box>
+                        <ButtonText
+                            onClick={(event) => handleAddTenant(event, environmentIndex)}
+                            buttonType='secondary'
+                            size='small'
+                            withIcon
+                        >
+                            Add tenant
+                        </ButtonText>
+
+                    </>
+                ))}
             </Typography >
         </>,
     ];
