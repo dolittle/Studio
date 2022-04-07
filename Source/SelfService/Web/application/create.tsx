@@ -22,19 +22,10 @@ import { Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { ButtonText } from '../theme/buttonText';
 import { Button } from '../theme/button';
-import { createApplication, HttpApplicationRequest } from '../api/application';
+import { createApplication, HttpApplicationRequest, HttpApplicationEnvironment } from '../api/application';
 import { ShortInfo } from '../api/api';
 import { Guid } from '@dolittle/rudiments';
 
-// Per environment
-{
-    name: '',
-        customerTenants: [
-            {
-                id: '',
-            }
-        ]
-}
 
 type Props = {};
 
@@ -120,16 +111,19 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             name: 'Production',
             shortName: 'Prod',
             checked: true,
+            customerTenants: []
         },
         {
             name: 'Development',
             shortName: 'Dev',
             checked: true,
+            customerTenants: []
         },
         {
             name: 'Test',
             shortName: 'Test',
             checked: true,
+            customerTenants: []
         },
     ]);
 
@@ -259,7 +253,12 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             const input: HttpApplicationRequest = {
                 id: application.id,
                 name: application.name,
-                environments: environments.filter(e => e.checked).map(e => e.shortName),
+                environments: environments
+                    .filter(e => e.checked)
+                    .map(e => ({
+                        name: e.shortName,
+                        customerTenants: e.customerTenants
+                    } as HttpApplicationEnvironment)),
             };
             try {
                 await createApplication(input);
