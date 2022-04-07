@@ -304,23 +304,16 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                                                 onChange={(event) => handleCustomerTenantId(event, environmentIndex, tenantIndex)}
                                                 size='small'
                                             />
-                                            <ThemedTextField
-                                                id={'name' + tenantIndex.toString()}
-                                                label='Name'
-                                                value=''
-                                                size='small'
-                                                disabled
-                                                readOnly
-                                                required={false}
-                                            />
-                                            <ButtonText
-                                                onClick={(event) => handleRemoveTenant(event, environmentIndex, tenantIndex)}
-                                                buttonType='secondary'
-                                                size='small'
-                                                startIcon={<RemoveIcon />}
-                                            >
-                                                Remove
-                                            </ButtonText>
+                                            {tenantIndex !== 0 && (
+                                                <ButtonText
+                                                    onClick={(event) => handleRemoveTenant(event, environmentIndex, tenantIndex)}
+                                                    buttonType='secondary'
+                                                    size='small'
+                                                    startIcon={<RemoveIcon />}
+                                                >
+                                                    Remove
+                                                </ButtonText>
+                                            )}
                                         </Box>
                                     ))}
                                 </Box>
