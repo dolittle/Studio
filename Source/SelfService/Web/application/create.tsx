@@ -16,7 +16,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
 import { useSnackbar } from 'notistack';
 import Checkbox from '@material-ui/core/Checkbox';
-
+import { TextField as ThemedTextField } from '../theme/textField';
 
 import { Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
@@ -26,6 +26,15 @@ import { createApplication, HttpApplicationRequest } from '../api/application';
 import { ShortInfo } from '../api/api';
 import { Guid } from '@dolittle/rudiments';
 
+// Per environment
+{
+    name: '',
+        customerTenants: [
+            {
+                id: '',
+            }
+        ]
+}
 
 type Props = {};
 
@@ -220,16 +229,24 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
                 <FormGroup>
                     {environments.map((environment, index) => (
-                        <FormControlLabel key={environment.shortName}
-                            control={
-                                <Checkbox
-                                    checked={environment.checked}
-                                    onChange={(event) => handleChange(event, index)}
-                                    name={environment.shortName}
-                                />
-                            }
-                            label={environment.name}
-                        />
+                        <>
+                            <FormControlLabel key={environment.shortName}
+                                control={
+                                    <Checkbox
+                                        checked={environment.checked}
+                                        onChange={(event) => handleChange(event, index)}
+                                        name={environment.shortName}
+                                    />
+                                }
+                                label={environment.name}
+                            />
+                            <ThemedTextField
+                                id='name'
+                                label='Name'
+                                value=''
+
+                            />
+                        </>
                     ))}
                 </FormGroup>
             </Typography >
