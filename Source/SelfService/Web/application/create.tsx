@@ -111,19 +111,19 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             name: 'Production',
             shortName: 'Prod',
             checked: true,
-            customerTenants: []
+            customerTenants: ['']
         },
         {
             name: 'Development',
             shortName: 'Dev',
             checked: true,
-            customerTenants: []
+            customerTenants: ['']
         },
         {
             name: 'Test',
             shortName: 'Test',
             checked: true,
-            customerTenants: []
+            customerTenants: ['']
         },
     ]);
 
@@ -134,6 +134,13 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         newEnvironments[index].checked = event.target.checked;
         setEnvironments(newEnvironments);
     };
+
+    const handleCustomerTenantId = (event: React.ChangeEvent<HTMLInputElement>, environmentIndex: number, tenantIndex: number) => {
+        const newEnvironments = [...environments];
+        newEnvironments[environmentIndex].customerTenants[tenantIndex] = event.target.value;
+        setEnvironments(newEnvironments);
+    };
+
 
     const stepsContent = [
         <>
@@ -222,24 +229,28 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 </p>
 
                 <FormGroup>
-                    {environments.map((environment, index) => (
+                    {environments.map((environment, environmentIndex) => (
                         <>
                             <FormControlLabel key={environment.shortName}
                                 control={
                                     <Checkbox
                                         checked={environment.checked}
-                                        onChange={(event) => handleChange(event, index)}
+                                        onChange={(event) => handleChange(event, environmentIndex)}
                                         name={environment.shortName}
                                     />
                                 }
                                 label={environment.name}
                             />
-                            <ThemedTextField
-                                id='name'
-                                label='Name'
-                                value=''
-
-                            />
+                            {/* TODO: Add customer application ID logic */}
+                            {environment.customerTenants.map((tenant, tenantIndex) => (
+                                <ThemedTextField
+                                    key={tenantIndex}
+                                    id='id'
+                                    label='id'
+                                    value={tenant}
+                                    onChange={(event) => handleCustomerTenantId(event, environmentIndex, tenantIndex)}
+                                />
+                            ))}
                         </>
                     ))}
                 </FormGroup>
@@ -257,14 +268,15 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     .filter(e => e.checked)
                     .map(e => ({
                         name: e.shortName,
-                        customerTenants: e.customerTenants
+                        customerTenants: e.customerTenants.map(t => ({ id: t }))
                     } as HttpApplicationEnvironment)),
             };
             try {
-                await createApplication(input);
+                console.log(input);
+                // await createApplication(input);
                 // redirect to build
-                const href = `/application/building/${application.id}`;
-                history.push(href);
+                // const href = `/application/building/${application.id}`;
+                // history.push(href);
 
                 enqueueSnackbar('Application created', { variant: 'info' });
             } catch (error) {
