@@ -11,7 +11,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
-import RemoveIcon from '@material-ui/icons/HighLightOff';
+import RemoveIcon from '@material-ui/icons/HighlightOff';
 
 
 
