@@ -7,7 +7,7 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { applicationAccessAddUser, getApplicationAccess, HttpInputApplicationAccess, applicationAccessRemoveUser, HttpResponseApplicationAccess } from '../../api/application';
+import { adminApplicationAccessAddUser, getAdminApplicationAccess, HttpInputApplicationAccess, adminApplicationAccessRemoveUser, HttpResponseApplicationAccess } from '../../api/application';
 import { ButtonText } from '../../theme/buttonText';
 import { TextField } from '../../theme/textField';
 import { Customer, getCustomer } from '../../api/customer';
@@ -30,7 +30,7 @@ export const View: React.FunctionComponent<any> = (props) => {
         const fetchData = async () => {
             const data = await Promise.all([
                 getCustomer(customerId),
-                getApplicationAccess(applicationId)
+                getAdminApplicationAccess(customerId, applicationId)
             ]);
             setCustomer(data[0].customer);
             setAccessInfo(data[1]);
@@ -93,8 +93,8 @@ export const View: React.FunctionComponent<any> = (props) => {
                 };
 
                 try {
-                    await applicationAccessAddUser(applicationId, input);
-                    const access = await getApplicationAccess(applicationId);
+                    await adminApplicationAccessAddUser(customerId, applicationId, input);
+                    const access = await getAdminApplicationAccess(customerId, applicationId);
                     setAccessInfo(access);
                     setUserEmail('');
                 } catch (e) {
@@ -113,8 +113,8 @@ export const View: React.FunctionComponent<any> = (props) => {
                                 };
 
                                 try {
-                                    await applicationAccessRemoveUser(applicationId, input);
-                                    const access = await getApplicationAccess(applicationId);
+                                    await adminApplicationAccessRemoveUser(customerId, applicationId, input);
+                                    const access = await getAdminApplicationAccess(customerId, applicationId);
                                     setAccessInfo(access);
                                 } catch (e) {
                                     enqueueSnackbar(e.message, { variant: 'error' });

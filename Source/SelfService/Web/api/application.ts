@@ -141,8 +141,8 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
 }
 
 
-export async function getApplicationAccess(applicationId: string): Promise<HttpResponseApplicationAccess> {
-    const url = `${getServerUrlPrefix()}/application/${applicationId}/access/users`;
+export async function getAdminApplicationAccess(customerId: string, applicationId: string): Promise<HttpResponseApplicationAccess> {
+    const url = `${getServerUrlPrefix()}/admin/customer/${customerId}/application/${applicationId}/access/users`;
 
     const response = await fetch(
         url,
@@ -155,8 +155,8 @@ export async function getApplicationAccess(applicationId: string): Promise<HttpR
     return data;
 }
 
-export async function applicationAccessAddUser(applicationId: string, input: HttpInputApplicationAccess): Promise<HttpResponseMessage> {
-    const url = `${getServerUrlPrefix()}/application/${applicationId}/access/user`;
+export async function adminApplicationAccessAddUser(customerId: string, applicationId: string, input: HttpInputApplicationAccess): Promise<HttpResponseMessage> {
+    const url = `${getServerUrlPrefix()}/admin/customer/${customerId}/application/${applicationId}/access/user`;
 
     const response = await fetch(
         url,
@@ -173,8 +173,8 @@ export async function applicationAccessAddUser(applicationId: string, input: Htt
     return data;
 }
 
-export async function applicationAccessRemoveUser(applicationId: string, input: HttpInputApplicationAccess): Promise<HttpResponseMessage> {
-    const url = `${getServerUrlPrefix()}/application/${applicationId}/access/user`;
+export async function adminApplicationAccessRemoveUser(customerId: string, applicationId: string, input: HttpInputApplicationAccess): Promise<HttpResponseMessage> {
+    const url = `${getServerUrlPrefix()}/admin/customer/${customerId}/application/${applicationId}/access/user`;
 
     const response = await fetch(
         url,
