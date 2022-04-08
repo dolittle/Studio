@@ -41,6 +41,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const application = _props.application;
     const environment = _props.environment;
 
+    // TODO remove when it is possible to enable this via admin
+    application.connections.kafka = true;
+
     const microserviceId = Guid.create().toString();
 
     const latestRuntimeInfo = getLatestRuntimeInfo();
@@ -79,6 +82,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const [args, setArgs] = React.useState(ms.extra.headCommand.args);
     const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
     const [isPublic, setIsPublic] = React.useState<boolean>(ms.extra.isPublic);
+    const [showConnectionKafkaOption, setShowConnectionKafkaOption] = React.useState<boolean>(application.connections.kafka);
+    const [connectionKafka, setConnectionKafka] = React.useState(application.connections.kafka);
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -96,6 +101,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         ms.extra.ingress.path = ingressPath;
         ms.extra.headCommand.command = command;
         ms.extra.headCommand.args = args;
+        ms.extra.connections = {
+            kafka: connectionKafka
+        };
 
         setIsLoading(true);
         try {
@@ -126,6 +134,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         setIsPublic(checked ?? false);
     };
 
+    const handleConnectionKafkaChanged = (ev: React.ChangeEvent<{}>, checked?: boolean) => {
+        setConnectionKafka(checked ?? false);
+    };
 
     return (
         <>
@@ -243,6 +254,16 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                                 value={ms.extra.ingress.pathType}
                                 readOnly
                             />
+                        </Grid>
+                    </>
+                }
+
+
+                {showConnectionKafkaOption &&
+                    <>
+                        <Grid item>
+                            <Typography component='h2' variant='h5'>Give me kafka details</Typography>
+                            <ThemedSwitch label={connectionKafka ? 'yes' : 'no'} checked={connectionKafka} onChange={handleConnectionKafkaChanged} />
                         </Grid>
                     </>
                 }

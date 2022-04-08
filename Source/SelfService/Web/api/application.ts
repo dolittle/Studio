@@ -47,6 +47,7 @@ export type HttpResponseApplication = {
     customerName: string
     environments: HttpInputApplicationEnvironment[]
     microservices: any[] // Not great
+    connections: ApplicationsConnections
 };
 
 
@@ -56,6 +57,9 @@ export type HttpResponseApplicationAccess = {
     users: HttpInputApplicationAccess[];
 };
 
+export type ApplicationsConnections = {
+    kafka: boolean;
+};
 
 export async function getPersonalisedInfo(applicationId: string): Promise<any> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}/personalised-application-info`;
@@ -137,6 +141,9 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
 
     const jsonResult: HttpResponseApplication = await result.json();
     jsonResult.microservices = jsonResult.microservices || [];
+    jsonResult.connections = jsonResult.connections || {
+        kafka: false
+    };
     return jsonResult;
 }
 

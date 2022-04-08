@@ -139,7 +139,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 isPublic: true,
                 headImage,
                 runtimeImage,
-                headCommand
+                headCommand,
+                connections: application.connections,
             },
         };
     }
