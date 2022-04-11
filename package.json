@@ -18,12 +18,7 @@
     },
     "devDependencies": {},
     "resolutions": {
-        "selfservice.web/@types/react": "17.0.34",
-        "@shared/web/@types/react-dom/@types/react": "17.0.34",
-        "selfservice.web/@material-ui/core/@types/react-transition-group/@types/react": "17.0.34",
-        "selfservice.web/@material-ui/core/**/@types/react": "17.0.34",
-        "selfservice.web/@types/react-transition-group/@types/react": "17.0.34",
-        "selfservice.web/@types/react-dom/@types/react": "17.0.34"
+        "**/@types/react": "17.0.39"
     },
     "license": "MIT",
     "version": "0.0.0"
