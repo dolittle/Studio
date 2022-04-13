@@ -13,9 +13,11 @@
         "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",
         "ci": "yarn clean && yarn lint:ci && yarn build"
     },
-    "dependencies": {
-        "@fluentui/react": "8.57.1",
+    "dependencies": {},
+    "devDependencies": {
         "@types/webpack": "5.28.0",
+        "@types/react": "17.0.39",
+        "@types/react-dom": "17.0.9",
         "clean-webpack-plugin": "4.0.0-alpha.0",
         "copy-webpack-plugin": "9.0.1",
         "css-loader": "6.2.0",
@@ -36,10 +38,6 @@
         "webpack": "5.51.1",
         "webpack-cli": "4.9.0",
         "webpack-dev-server": "3.11.2"
-    },
-    "devDependencies": {
-        "@types/react": "17.0.39",
-        "@types/react-dom": "17.0.9"
     },
     "peerDependencies": {}
 }
