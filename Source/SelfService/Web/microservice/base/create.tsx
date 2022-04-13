@@ -82,8 +82,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             await saveSimpleMicroservice(ms);
             const href = `/microservices/application/${application.id}/${environment}/overview`;
             history.push(href);
-        } catch (e) {
-            enqueueSnackbar(e.message, { variant: 'error' });
+        } catch (e: unknown) {
+            const message = (e instanceof Error) ? e.message : 'Something went wrong when saving microservice';
+            enqueueSnackbar(message, { variant: 'error' });
         } finally {
             setIsLoading(false);
         }
