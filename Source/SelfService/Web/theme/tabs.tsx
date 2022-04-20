@@ -25,7 +25,7 @@ export const Tabs = withStyles({
             backgroundColor: '#6678F6',
         },
     },
-})((props: TabsProps) => <MuiTabs {...props} TabIndicatorProps={{ children: <span /> }} />);
+})((props: React.PropsWithChildren<TabsProps>) => <MuiTabs {...props} TabIndicatorProps={{ children: <span /> }} />);
 
 interface TabProps {
     label: string;
