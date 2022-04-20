@@ -6,11 +6,11 @@ import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { MenuItem } from '@mui/material';
 
 type Props = {
-    onChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
+    onChange: (event: SelectChangeEvent) => void;
     items: DropDownMenuItem[];
     value: string;
     label?: string;

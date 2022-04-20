@@ -4,7 +4,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Theme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
@@ -65,10 +65,10 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
         </MenuItem>
     );
 
-    const onChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const onChange = (event: SelectChangeEvent<string>) => {
         event.stopPropagation();
         event.preventDefault();
-        const newApplication = event.target.value as string;
+        const newApplication = event.target.value;
 
         if (newApplication === currentApplicationEnvironment) {
             return;

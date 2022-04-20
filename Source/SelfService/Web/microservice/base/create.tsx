@@ -4,7 +4,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { CircularProgress, Grid, Typography } from '@mui/material';
+import { CircularProgress, Grid, SelectChangeEvent, Typography } from '@mui/material';
 import { DropDownMenu } from '../../theme/dropDownMenu';
 import { TextField as ThemedTextField } from '../../theme/textField';
 import { Switch as ThemedSwitch } from '../../theme/switch';
@@ -98,8 +98,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         }
     ];
 
-    const handleRuntimeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        const _runtimeImage = event.target.value as string;
+    const handleRuntimeChange = (event: SelectChangeEvent<string>) => {
+        const _runtimeImage = event.target.value;
         setRuntimeImage(_runtimeImage);
     };
 
