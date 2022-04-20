@@ -2,8 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Box, Typography } from '@material-ui/core';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import { Box, Typography } from '@mui/material';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

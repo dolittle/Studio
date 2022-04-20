@@ -7,7 +7,10 @@ import logoInfor from '../../images/infor.png'; // with import
 import logoIFS from '../../images/ifs.png';
 import logoSAP from '../../images/sap.png';
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 
 type Props = {
     kind: 'infor' | 'ifs' | 'sap';

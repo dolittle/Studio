@@ -2,17 +2,19 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import StepContent from '@mui/material/StepContent';
 
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 
-import { Grid } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
+import { Grid } from '@mui/material';
+import TextField from '@mui/material/TextField';
 
 import {
     MicroservicePurchaseOrder,

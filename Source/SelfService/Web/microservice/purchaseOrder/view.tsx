@@ -8,11 +8,13 @@ import {
     Typography,
     Divider,
     Box,
-} from '@material-ui/core';
+} from '@mui/material';
 import { TabPanel } from '../../utils/materialUi';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useSnackbar } from 'notistack';
 
 import { microservices, MicroserviceStore, savePurchaseOrderMicroservice } from '../../stores/microservice';
@@ -185,7 +187,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                                 enqueueSnackbar('TODO: Delete microservice', { variant: 'error' });
                             }}
                             className={classes.deleteIcon}
-                        >
+                            size="large">
                             <DeleteIcon />
                             <Typography>delete</Typography>
                         </IconButton>
@@ -196,7 +198,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                                 setEditMode(!editMode);
                             }}
                             className={classes.editIcon}
-                        >
+                            size="large">
                             <EditIcon />
                             <Typography>Edit</Typography>
                         </IconButton>

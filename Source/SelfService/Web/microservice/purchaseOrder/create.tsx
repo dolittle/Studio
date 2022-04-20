@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import {
     Grid,
     Button
-} from '@material-ui/core';
+} from '@mui/material';
 import { TabPanel } from '../../utils/materialUi';
 import { Guid } from '@dolittle/rudiments';
 import { useSnackbar } from 'notistack';

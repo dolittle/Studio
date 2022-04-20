@@ -1,8 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import Modal from '@mui/material/Modal';
 import { useHistory, generatePath } from 'react-router-dom';
 import { ShortInfoWithEnvironment } from '../api/api';
 import { HttpResponseApplication } from '../api/application';

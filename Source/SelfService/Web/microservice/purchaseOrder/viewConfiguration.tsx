@@ -4,8 +4,10 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Box, Grid } from '@material-ui/core';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import { Box, Grid } from '@mui/material';
 
 import { MicroservicePurchaseOrder } from '../../api/index';
 

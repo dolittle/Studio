@@ -50,7 +50,8 @@ export const PodStatus: React.FunctionComponent<Props> = (props) => {
                         onClick={async () => {
                             const href = `/microservices/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
                             history.push(href);
-                        }} />
+                        }}
+                        size="large" />
 
                     <Text variant="medium" block>
                         {container.image}

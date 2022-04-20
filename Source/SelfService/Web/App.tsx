@@ -14,20 +14,29 @@ import { DocumentationScreen } from './screens/documentationScreen';
 import { InsightsScreen } from './screens/insightsScreen';
 import { MicroservicesScreen } from './screens/microservicesScreen';
 import { GlobalContextProvider } from './stores/notifications';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import CssBaseline from '@mui/material/CssBaseline';
 import { RouteNotFound } from './components/notfound';
 import { Screen as AdminScreen } from './screens/adminScreen';
 
-import { createTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider, Theme, StyledEngineProvider, adaptV4Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { DieAndRestart } from './components/dieAndRestart';
 import { LayoutWithSidebar } from './layout/layoutWithSidebar';
 
 import { ClassNameMap, CombinedClassKey, SnackbarProvider } from 'notistack';
-import Grow from '@material-ui/core/Grow';
-import { TransitionProps } from '@material-ui/core/transitions';
+import Grow from '@mui/material/Grow';
+import { TransitionProps } from '@mui/material/transitions';
 import { ThemeScreen } from './screens/themeScreen';
 import '@fontsource/rubik';
 import { ApplicationScreen } from './screens/applicationScreen';
+
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 
 const typography = {
@@ -45,7 +54,7 @@ const typography = {
 };
 
 
-const themeDark = createTheme({
+const themeDark = createTheme(adaptV4Theme({
     typography,
     palette: {
         background: {
@@ -57,7 +66,7 @@ const themeDark = createTheme({
             secondary: '#93959F',
         }
     },
-});
+}));
 
 const useSnackbarStyles = makeStyles({
     contentRoot: {
@@ -84,8 +93,8 @@ export const App = () => {
 
     const snackbarClasses = useSnackbarStyles();
 
-    return (
-        <>
+    return <>
+        <StyledEngineProvider injectFirst>
             <ThemeProvider theme={themeDark}>
                 <CssBaseline />
                 <GlobalContextProvider>
@@ -152,6 +161,6 @@ export const App = () => {
                     </SnackbarProvider>
                 </GlobalContextProvider>
             </ThemeProvider>
-        </>
-    );
+        </StyledEngineProvider>
+    </>;
 };

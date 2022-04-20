@@ -3,14 +3,14 @@
 
 import React from 'react';
 
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { ShortInfoWithEnvironment } from '../api/api';
 import { ApplicationsChanger } from '../application/applicationsChanger';
 
 import { useGlobalContext } from '../stores/notifications';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { applications } from '../stores/state';
 import { TopRightMenu } from './topRightMenu';

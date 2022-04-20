@@ -15,8 +15,9 @@ import { Create as PurchaseOrder } from './purchaseOrder/create';
 
 import { HttpResponseApplication } from '../api/application';
 
-import { Grid, makeStyles, Theme } from '@material-ui/core';
-import { createStyles } from '@material-ui/styles';
+import { Grid, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { createStyles } from '@mui/styles';
 import { SimpleCard } from './create/card';
 
 type Props = {

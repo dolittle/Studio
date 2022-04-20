@@ -2,7 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Alert, Color } from '@material-ui/lab';
+import { Alert } from '@mui/material';
+import { Color } from '@mui/lab';
 
 import { useGlobalContext } from '../stores/notifications';
 

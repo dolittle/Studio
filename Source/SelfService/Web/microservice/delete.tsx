@@ -3,9 +3,11 @@
 
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useSnackbar } from 'notistack';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useReadable } from 'use-svelte-store';
 import { microservices, deleteMicroservice, canDeleteMicroservice, MicroserviceStore } from '../stores/microservice';
 import { TabPanel } from '../utils/materialUi';
@@ -15,7 +17,7 @@ import {
     Grid,
     IconButton,
     Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 
 
 type Props = {
@@ -84,38 +86,36 @@ export const Delete: React.FunctionComponent<Props> = (props) => {
         history.push(href);
     };
 
-    return (
-        <>
-            <Grid
-                container
-                direction='column'
-                justifyContent='flex-start'
+    return <>
+        <Grid
+            container
+            direction='column'
+            justifyContent='flex-start'
+        >
+            <Grid container
+                spacing={2}
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="flex-start"
             >
-                <Grid container
-                    spacing={2}
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="flex-start"
-                >
-                    <Grid item xs={3}>
-                        <Typography variant="h3" component="h3">{msName}</Typography>
-                    </Grid>
+                <Grid item xs={3}>
+                    <Typography variant="h3" component="h3">{msName}</Typography>
                 </Grid>
+            </Grid>
 
-                <TabPanel value={0} index={0}>
-                    <h1>Delete Microservice</h1>
-                    <p>Currently this is not possible to undo</p>
-                    <p>Clicking on the button will delete the microservice</p>
+            <TabPanel value={0} index={0}>
+                <h1>Delete Microservice</h1>
+                <p>Currently this is not possible to undo</p>
+                <p>Clicking on the button will delete the microservice</p>
 
-                    <IconButton
-                        onClick={() => onClickDelete()}
-                        className={classes.deleteIcon}
-                    >
-                        <DeleteIcon />
-                        <Typography>delete</Typography>
-                    </IconButton>
-                </TabPanel>
-            </Grid >
-        </>
-    );
+                <IconButton
+                    onClick={() => onClickDelete()}
+                    className={classes.deleteIcon}
+                    size="large">
+                    <DeleteIcon />
+                    <Typography>delete</Typography>
+                </IconButton>
+            </TabPanel>
+        </Grid >
+    </>;
 };

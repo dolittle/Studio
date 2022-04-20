@@ -4,9 +4,11 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Button as MuiButton } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import { Button as MuiButton } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 type Props = {
     onClick?: (event: React.MouseEvent<HTMLElement>) => void;

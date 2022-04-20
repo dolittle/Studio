@@ -3,15 +3,18 @@
 import React from 'react';
 
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
 
-import Typography from '@material-ui/core/Typography';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 
-import { IconButton, Paper } from '@material-ui/core';
+import Typography from '@mui/material/Typography';
 
-import ErrorIcon from '@material-ui/icons/Error';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import CachedIcon from '@material-ui/icons/Cached';
+import { IconButton, Paper } from '@mui/material';
+
+import ErrorIcon from '@mui/icons-material/Error';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CachedIcon from '@mui/icons-material/Cached';
 
 type Props = {
     state: string;
@@ -88,13 +91,10 @@ export const DataStateIcon: React.FunctionComponent<Props> = (props) => {
 
     return (
         <Paper className={classes.paper}>
-            <IconButton
-                className={option.className}
-            >
+            <IconButton className={option.className} size="large">
                 {icon}
                 <Typography>{iconText}</Typography>
             </IconButton>
         </Paper>
-
     );
 };

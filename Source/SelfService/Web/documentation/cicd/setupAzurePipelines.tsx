@@ -3,8 +3,11 @@
 
 import React from 'react';
 import { useSnackbar } from 'notistack';
-import Input from '@material-ui/core/Input';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import Input from '@mui/material/Input';
+import { Theme } from '@mui/material/styles';
+
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import { ButtonText } from '../../theme/buttonText';
 import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../api/cicd';

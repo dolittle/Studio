@@ -2,10 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
-import MuiTabs from '@material-ui/core/Tabs';
-import MuiTab from '@material-ui/core/Tab';
-import { CSSProperties } from '@material-ui/styles';
+import { Theme } from '@mui/material/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import MuiTabs from '@mui/material/Tabs';
+import MuiTab from '@mui/material/Tab';
+import { CSSProperties } from '@mui/styles';
 
 interface TabsProps {
     value: number;

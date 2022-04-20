@@ -4,8 +4,10 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { TextField as MuiTextField } from '@material-ui/core';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import { TextField as MuiTextField } from '@mui/material';
 
 type Props = {
     id: string;

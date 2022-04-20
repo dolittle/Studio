@@ -3,19 +3,16 @@
 
 import React from 'react';
 
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useSnackbar } from 'notistack';
 
 import { ShortInfoWithEnvironment } from '../api/api';
 import { ApplicationsChanger } from '../application/applicationsChanger';
-import {
-    IconButton,
-    makeStyles,
-    Theme
-} from '@material-ui/core';
-import { createStyles } from '@material-ui/styles';
+import { IconButton, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { createStyles } from '@mui/styles';
 import { AccountSettingsMenu } from './accountSettingsMenu';
 
 type Props = {
@@ -41,31 +38,33 @@ export const TopRightMenu: React.FunctionComponent<Props> = (props) => {
     const classes = useStyles();
     const _props = props!;
 
-    return (
-        <>
-            <ApplicationsChanger applications={_props.applications} applicationId={_props.applicationId} environment={_props.environment} />
-            <IconButton aria-label="notification" onClick={() => {
+    return <>
+        <ApplicationsChanger applications={_props.applications} applicationId={_props.applicationId} environment={_props.environment} />
+        <IconButton
+            aria-label="notification"
+            onClick={() => {
                 enqueueSnackbar('TODO: Something with notifications', { variant: 'error' });
             }}
-                className={classes.root}
-            >
-                <NotificationsIcon className={classes.icon} />
+            className={classes.root}
+            size="large">
+            <NotificationsIcon className={classes.icon} />
+        </IconButton>
+
+        <AccountSettingsMenu child={
+            <IconButton aria-label="more-options" className={classes.root} size="large">
+                <AccountCircleIcon className={classes.icon} />
             </IconButton>
+        } />
 
-            <AccountSettingsMenu child={
-                <IconButton aria-label="more-options" className={classes.root}>
-                    <AccountCircleIcon className={classes.icon} />
-                </IconButton>
-            } />
-
-            <IconButton aria-label="account" onClick={() => {
+        <IconButton
+            aria-label="account"
+            onClick={() => {
                 enqueueSnackbar('TODO: More options?', { variant: 'error' });
             }}
-                className={classes.root}
-            >
-                <MoreVertIcon className={classes.icon} />
-            </IconButton>
+            className={classes.root}
+            size="large">
+            <MoreVertIcon className={classes.icon} />
+        </IconButton>
 
-        </>
-    );
+    </>;
 };
