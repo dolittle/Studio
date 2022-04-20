@@ -2,14 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Alert } from '@mui/material';
-import { Color } from '@mui/lab';
+import { Alert, AlertColor } from '@mui/material';
 
 import { useGlobalContext } from '../stores/notifications';
 
 export const AlertBox: React.FunctionComponent = () => {
     const { lastMessage, clearNotification } = useGlobalContext();
-    const severity = lastMessage.level as Color;
+    const severity = lastMessage.level as AlertColor;
     const dismiss = () => {
         window.clearTimeout(timer);
         clearNotification();
