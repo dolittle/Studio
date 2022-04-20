@@ -17,7 +17,6 @@ const StyledMenu = withStyles({
 })((props: MenuProps) => (
     <Menu
         elevation={0}
-        getContentAnchorEl={null}
         anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'center',

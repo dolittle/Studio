@@ -82,8 +82,7 @@ export const DropDownMenu: React.FunctionComponent<Props> = (props) => {
                         transformOrigin: {
                             vertical: 'top',
                             horizontal: 'left'
-                        },
-                        getContentAnchorEl: null
+                        }
                     }}
                     value={_props.value}
                     onChange={_props.onChange}
