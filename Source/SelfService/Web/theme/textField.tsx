@@ -2,11 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import clsx from 'clsx';
 
-import { Theme } from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
+import { SxProps } from '@mui/material/styles';
 import { TextField as MuiTextField } from '@mui/material';
 
 type Props = {
@@ -24,28 +21,23 @@ type Props = {
 
 const defaultOnChange = (event: React.ChangeEvent<HTMLInputElement>) => { };
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        base: {
-            '& .MuiOutlinedInput-input': {
-                color: 'white'
-            },
-            '& .MuiInputLabel-root': {
-                color: 'white'
-            },
-            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-                color: 'white',
-                borderColor: 'white'
-            },
-            '&:hover .MuiOutlinedInput-input': {
-                color: 'white'
-            },
-        },
-    })
-);
+const styles = {
+    '& .MuiOutlinedInput-input': {
+        color: 'white'
+    },
+    '& .MuiInputLabel-root': {
+        color: 'white'
+    },
+    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+        color: 'white',
+        borderColor: 'white'
+    },
+    '&:hover .MuiOutlinedInput-input': {
+        color: 'white'
+    },
+} as SxProps;
 
 export const TextField: React.FunctionComponent<Props> = (props) => {
-    const classes = useStyles();
     const _props = props!;
     const onChange = _props.onChange ?? defaultOnChange;
     const disabled = _props.disabled ?? false;
@@ -59,13 +51,13 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
     const size = _props.size ?? 'medium';
     return (
         <MuiTextField
+            sx={styles}
             required={required}
             disabled={disabled}
             id={id}
             label={label}
             variant='outlined'
             type={type}
-            className={clsx(classes.base)}
             value={value}
             onChange={onChange}
             placeholder={placeholder}
