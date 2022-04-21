@@ -6,9 +6,7 @@ import { useHistory } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Theme } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { createStyles } from '@mui/styles';
+import { SxProps } from '@mui/material';
 
 
 
@@ -21,27 +19,27 @@ type Props = {
     environment: string;
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        formControl: {
-            marginRight: theme.spacing(3),
+const styles = {
+    formControl: {
+        '&.MuiFormControl-root': {
+            marginRight: 3,
             minWidth: 120,
-            float: 'left',
         },
+        '& .MuiSelect-icon': {
+            color: 'white',
+        }
+    } as SxProps,
 
-        menuItem: {
-            justifyContent: 'flex-end',
-        },
+    menuItem: {
+        justifyContent: 'flex-end',
+    } as SxProps,
 
-        icon: {
-            fill: 'white',
-        },
-    })
-);
-
+    icon: {
+        fill: 'white',
+    } as SxProps,
+};
 export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
-    const classes = useStyles();
     const { setCurrentApplicationId, setCurrentEnvironment } =
         useGlobalContext();
     const applications = props!.applications;
@@ -53,14 +51,14 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
         const key = `${application.id}/${application.environment}`;
         const text = `${application.environment.toUpperCase()} ENVIRONMENT · ${application.name}`;
         return (
-            <MenuItem className={classes.menuItem} key={key} value={key}>
+            <MenuItem sx={styles.menuItem} key={key} value={key}>
                 {text}
             </MenuItem>
         );
     });
 
     items.push(
-        <MenuItem className={classes.menuItem} key='createNew' value='createNew'>
+        <MenuItem sx={styles.menuItem} key='createNew' value='createNew'>
             + New application
         </MenuItem>
     );
@@ -100,15 +98,11 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
     // TODO How can we fix the popper or the arrow to appear in the first menu item
     return (
         <>
-            <FormControl className={classes.formControl}>
+            <FormControl sx={styles.formControl}>
                 <Select
                     value={currentApplicationEnvironment}
                     onChange={onChange}
-                    inputProps={{
-                        classes: {
-                            icon: classes.icon,
-                        }
-                    }}
+                    variant='standard'
                 >
 
                     {items}
