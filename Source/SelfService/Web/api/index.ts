@@ -58,7 +58,7 @@ export type MicroserviceSimpleExtra = {
 export type MicroserviceHeadCommand = {
     commands: string[];
     args: string[];
-}
+};
 
 export type MicroserviceBusinessMomentAdaptor = {
     dolittle: MicroserviceDolittle;

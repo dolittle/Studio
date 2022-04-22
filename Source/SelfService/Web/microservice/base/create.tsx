@@ -63,8 +63,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const [msName, setMsName] = React.useState(ms.name);
     const [headImage, setHeadImage] = React.useState(ms.extra.headImage);
     const [headPort, setHeadPort] = React.useState(ms.extra.headPort);
-    const [commands, setCommands] = React.useState(ms.extra.headCommand.commands)
-    const [args, setArgs] = React.useState(ms.extra.headCommand.args)
+    const [commands, setCommands] = React.useState(ms.extra.headCommand.commands);
+    const [args, setArgs] = React.useState(ms.extra.headCommand.args);
     const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
     const [isPublic, setIsPublic] = React.useState<boolean>(ms.extra.isPublic);
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
