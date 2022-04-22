@@ -2,12 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 
-
-import { Theme } from '@mui/material/styles';
-
-import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
-
 import Typography from '@mui/material/Typography';
 
 import { IconButton, Paper } from '@mui/material';
@@ -21,66 +15,63 @@ type Props = {
 };
 
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        flowing: {
-            'fill': '#48E0CF',
-            '& .MuiSvgIcon-root': {
-                color: '#48E0CF',
-                marginRight: theme.spacing(1),
-            },
-            '& .MuiTypography-root': {
-                color: '#48E0CF',
-                textTransform: 'uppercase'
-            }
+const classes = {
+    flowing: {
+        'fill': '#48E0CF',
+        '& .MuiSvgIcon-root': {
+            color: '#48E0CF',
+            marginRight: 1,
         },
-        waiting: {
-            'fill': '#FF9366',
-            '& .MuiSvgIcon-root': {
-                color: '#FF9366',
-                marginRight: theme.spacing(1),
-            },
-            '& .MuiTypography-root': {
-                color: '#FF9366',
-                textTransform: 'uppercase'
-            }
+        '& .MuiTypography-root': {
+            color: '#48E0CF',
+            textTransform: 'uppercase'
+        }
+    },
+    waiting: {
+        'fill': '#FF9366',
+        '& .MuiSvgIcon-root': {
+            color: '#FF9366',
+            marginRight: 1,
         },
-        error: {
-            'fill': '#F66666',
-            '& .MuiSvgIcon-root': {
-                color: '#F66666',
-                marginRight: theme.spacing(1),
-            },
-            '& .MuiTypography-root': {
-                color: '#F66666',
-                textTransform: 'uppercase'
-            }
+        '& .MuiTypography-root': {
+            color: '#FF9366',
+            textTransform: 'uppercase'
+        }
+    },
+    error: {
+        'fill': '#F66666',
+        '& .MuiSvgIcon-root': {
+            color: '#F66666',
+            marginRight: 1,
         },
-        paper: {
-            padding: theme.spacing(1),
-            textAlign: 'center',
-        },
-    })
-);
+        '& .MuiTypography-root': {
+            color: '#F66666',
+            textTransform: 'uppercase'
+        }
+    },
+    paper: {
+        padding: 1,
+        textAlign: 'center',
+    },
+};
 
 export const DataStateIcon: React.FunctionComponent<Props> = (props) => {
-    const classes = useStyles();
     const state = props!.state;
 
     const options = {
         flowing: {
             className: classes.flowing,
             text: 'Data is flowing',
-            icon: (<CheckCircleIcon className={classes.flowing} />),
+            icon: (<CheckCircleIcon sx={classes.flowing} />),
         },
         error: {
             className: classes.error,
             text: 'Failing to sync',
-            icon: (<ErrorIcon className={classes.error} />),
+            icon: (<ErrorIcon sx={classes.error} />),
         },
         waiting: {
             className: classes.waiting,
-            icon: (<CachedIcon className={classes.waiting} />),
+            icon: (<CachedIcon sx={classes.waiting} />),
             text: 'Waiting for data'
         },
     };
@@ -90,8 +81,8 @@ export const DataStateIcon: React.FunctionComponent<Props> = (props) => {
     const iconText = option.text;
 
     return (
-        <Paper className={classes.paper}>
-            <IconButton className={option.className} size="large">
+        <Paper sx={classes.paper}>
+            <IconButton sx={option.className} size="large">
                 {icon}
                 <Typography>{iconText}</Typography>
             </IconButton>
