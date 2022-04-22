@@ -52,7 +52,13 @@ export type MicroserviceSimpleExtra = {
     runtimeImage: string;
     ingress: MicroserviceIngressPath;
     isPublic: boolean;
+    headCommand: MicroserviceHeadCommand;
 };
+
+export type MicroserviceHeadCommand = {
+    commands: string[];
+    args: string[];
+}
 
 export type MicroserviceBusinessMomentAdaptor = {
     dolittle: MicroserviceDolittle;

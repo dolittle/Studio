@@ -52,6 +52,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 path: '/',
                 pathType: 'Prefix',
             },
+            headCommand: {
+                commands: [],
+                args: []
+            }
         }
     } as MicroserviceSimple;
 
@@ -59,6 +63,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const [msName, setMsName] = React.useState(ms.name);
     const [headImage, setHeadImage] = React.useState(ms.extra.headImage);
     const [headPort, setHeadPort] = React.useState(ms.extra.headPort);
+    const [commands, setCommands] = React.useState(ms.extra.headCommand.commands)
+    const [args, setArgs] = React.useState(ms.extra.headCommand.args)
     const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
     const [isPublic, setIsPublic] = React.useState<boolean>(ms.extra.isPublic);
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
@@ -76,6 +82,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         ms.extra.runtimeImage = runtimeImage;
         ms.extra.isPublic = isPublic;
         ms.extra.ingress.path = ingressPath;
+        ms.extra.headCommand.commands = commands;
+        ms.extra.headCommand.args = args;
 
         setIsLoading(true);
         try {
@@ -163,6 +171,30 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             const newValue = parseInt(event.target.value!, 10);
                             setHeadPort(newValue);
+                        }}
+                    />
+                </Grid>
+
+                <Grid item>
+                    <ThemedTextField
+                        id='headCommands'
+                        label='Head Commands'
+                        value={commands[0]}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            const newValue = event.target.value!;
+                            setCommands([newValue]);
+                        }}
+                    />
+                </Grid>
+
+                <Grid item>
+                    <ThemedTextField
+                        id='headArgs'
+                        label='Head Command arguments'
+                        value={args[0]}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            const newValue = event.target.value!;
+                            setCommands([newValue]);
                         }}
                     />
                 </Grid>

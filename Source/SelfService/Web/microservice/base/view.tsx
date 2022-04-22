@@ -114,6 +114,10 @@ export const View: React.FunctionComponent<Props> = (props) => {
         const runtimeImage = currentMicroservice.live.images.find(img => img.name === 'runtime')?.image
             || 'n/a';
 
+        const headCommand = {
+            commands: [],
+            args: []
+        };
 
         // TODO currently we don't use the ms.extra.ingress in the view
         // Look to "liveIngressView" for how we "set" the data to uniq paths
@@ -135,6 +139,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 isPublic: true,
                 headImage,
                 runtimeImage,
+                headCommand
             },
         };
     }
