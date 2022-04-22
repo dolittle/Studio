@@ -194,7 +194,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                         value={args[0]}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             const newValue = event.target.value!;
-                            setCommands([newValue]);
+                            setArgs([newValue]);
                         }}
                     />
                 </Grid>
