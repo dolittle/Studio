@@ -75,7 +75,7 @@ export const View: React.FunctionComponent<any> = (props) => {
             const access = await getAdminApplicationAccess(customerId, applicationId);
             setAccessInfo(access);
             setUserEmail('');
-            enqueueSnackbar('Email added', { variant: 'info' });
+            enqueueSnackbar('Access granted, email added', { variant: 'info' });
         } catch (e) {
             enqueueSnackbar(e.message, { variant: 'error' });
         }
@@ -90,7 +90,7 @@ export const View: React.FunctionComponent<any> = (props) => {
             await adminApplicationAccessRemoveUser(customerId, applicationId, input);
             const access = await getAdminApplicationAccess(customerId, applicationId);
             setAccessInfo(access);
-            enqueueSnackbar('Email removed', { variant: 'info' });
+            enqueueSnackbar('Access revoked, email removed', { variant: 'info' });
         } catch (e) {
             enqueueSnackbar(e.message, { variant: 'error' });
         }
