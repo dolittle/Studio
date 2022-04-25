@@ -60,6 +60,41 @@ export const View: React.FunctionComponent<any> = (props) => {
         return null;
     }
 
+    const handleAddEmail = async () => {
+        if (userEmail === '') {
+            enqueueSnackbar('Email is empty', { variant: 'error' });
+            return;
+        }
+
+        const input: HttpInputApplicationAccess = {
+            email: userEmail,
+        };
+
+        try {
+            await adminApplicationAccessAddUser(customerId, applicationId, input);
+            const access = await getAdminApplicationAccess(customerId, applicationId);
+            setAccessInfo(access);
+            setUserEmail('');
+            enqueueSnackbar('Email added', { variant: 'info' });
+        } catch (e) {
+            enqueueSnackbar(e.message, { variant: 'error' });
+        }
+    };
+
+    const handleRemoveEmail = async (email: string) => {
+        const input: HttpInputApplicationAccess = {
+            email,
+        };
+
+        try {
+            await adminApplicationAccessRemoveUser(customerId, applicationId, input);
+            const access = await getAdminApplicationAccess(customerId, applicationId);
+            setAccessInfo(access);
+            enqueueSnackbar('Email removed', { variant: 'info' });
+        } catch (e) {
+            enqueueSnackbar(e.message, { variant: 'error' });
+        }
+    };
 
     return (
         <>
@@ -82,44 +117,14 @@ export const View: React.FunctionComponent<any> = (props) => {
                     setUserEmail(newValue);
                 }}
             />
-            <ButtonText onClick={async () => {
-                if (userEmail === '') {
-                    enqueueSnackbar('Email is empty', { variant: 'error' });
-                    return;
-                }
-
-                const input: HttpInputApplicationAccess = {
-                    email: userEmail,
-                };
-
-                try {
-                    await adminApplicationAccessAddUser(customerId, applicationId, input);
-                    const access = await getAdminApplicationAccess(customerId, applicationId);
-                    setAccessInfo(access);
-                    setUserEmail('');
-                } catch (e) {
-                    enqueueSnackbar(e.message, { variant: 'error' });
-                }
-            }}>Add User</ButtonText>
+            <ButtonText onClick={handleAddEmail}>Add User</ButtonText>
 
             <ul>
                 {accessInfo.users.map(user => {
                     return (
                         <li key={user.email}>
                             <span>{user.email}</span>
-                            <ButtonText onClick={async () => {
-                                const input: HttpInputApplicationAccess = {
-                                    email: user.email
-                                };
-
-                                try {
-                                    await adminApplicationAccessRemoveUser(customerId, applicationId, input);
-                                    const access = await getAdminApplicationAccess(customerId, applicationId);
-                                    setAccessInfo(access);
-                                } catch (e) {
-                                    enqueueSnackbar(e.message, { variant: 'error' });
-                                }
-                            }}>Remove User</ButtonText>
+                            <ButtonText onClick={() => handleRemoveEmail(user.email)}>Remove User</ButtonText>
                         </li>);
                 })}
             </ul>
