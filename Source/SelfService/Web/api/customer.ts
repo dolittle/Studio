@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { getServerUrlPrefix, JobInfo, parseJSONResponse, ShortInfoWithEnvironment } from './api';
+import { getServerUrlPrefix, JobInfo, parseJSONResponse, ShortInfo, ShortInfoWithEnvironment } from './api';
 import { Studio } from './studio';
 
 
@@ -11,11 +11,7 @@ export type CustomerDetailed = {
     studioConfig: Studio;
 };
 
-// TODO could be ShortInfo
-export type Customer = {
-    id: string;
-    name: string;
-};
+export type Customer = ShortInfo;
 
 export type Customers = Customer[];
 
