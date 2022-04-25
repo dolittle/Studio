@@ -1,3 +1,10 @@
+# [1.19.1] - 2022-4-25 [PR: #171](https://github.com/dolittle/Studio/pull/171)
+## Summary
+
+- Application view access screen, with add + remove
+- Link page to take you to the customers from the admin screen
+
+
 # [1.19.0] - 2022-4-7 [PR: #173](https://github.com/dolittle/Studio/pull/173)
 ## Summary
 
