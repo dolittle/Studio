@@ -41,9 +41,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const application = _props.application;
     const environment = _props.environment;
 
-    // TODO remove when it is possible to enable this via admin
-    application.connections.kafka = true;
-
     const microserviceId = Guid.create().toString();
 
     const latestRuntimeInfo = getLatestRuntimeInfo();
