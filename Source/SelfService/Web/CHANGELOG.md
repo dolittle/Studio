@@ -1,3 +1,9 @@
+# [1.20.1] - 2022-4-26 [PR: #180](https://github.com/dolittle/Studio/pull/180)
+## Summary
+
+Make the `TextField` for arguments not required.
+
+
 # [1.20.0] - 2022-4-26 [PR: #178](https://github.com/dolittle/Studio/pull/178)
 ## Summary
 
