@@ -4,7 +4,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { Box, CircularProgress, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import { CircularProgress, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import { DropDownMenu } from '../../theme/dropDownMenu';
 import { TextField as ThemedTextField } from '../../theme/textField';
 import { Switch as ThemedSwitch } from '../../theme/switch';
@@ -16,10 +16,6 @@ import { MicroserviceSimple } from '../../api/index';
 import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
 
 import { HttpResponseApplication } from '../../api/application';
-import { HeaderDataRow } from '../components/headDataRow';
-import { ButtonText } from '../../theme/buttonText';
-
-import RemoveIcon from '@material-ui/icons/HighlightOff';
 import { HeadArguments } from '../components/headArguments';
 
 
