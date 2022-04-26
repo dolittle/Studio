@@ -1,5 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { Box } from '@material-ui/core';
 import React from 'react';
 import { ButtonText } from '../../theme/buttonText';
@@ -15,26 +16,27 @@ type Props = {
 
 export const HeadArguments: React.FunctionComponent<Props> = (props) => {
 
-    const args = props.args;
-    const setArgs = props.setArgs;
+    const _props = props!;
+    const args = _props.args;
+    const setArgs = _props.setArgs;
 
     const handleArg = (event: React.ChangeEvent<HTMLInputElement>, argIndex: number) => {
         const newArgs = [...args];
         newArgs[argIndex] = event.target.value;
         setArgs(newArgs);
-    }
+    };
 
     const handleAddArg = (event: React.MouseEvent<HTMLElement>) => {
         const newArgs = [...args];
         newArgs.push('');
         setArgs(newArgs);
-    }
+    };
 
     const handleRemoveArg = (event: React.MouseEvent<HTMLElement>, argIndex: number) => {
         const newArgs = [...args];
-        newArgs.splice(argIndex, 1)
+        newArgs.splice(argIndex, 1);
         setArgs(newArgs);
-    }
+    };
 
     return (<>
         <Box flexDirection='column' display='flex' justifyContent='flex-start' style={{ gap: '1rem' }}>
