@@ -1,3 +1,11 @@
+# [1.20.0] - 2022-4-26 [PR: #178](https://github.com/dolittle/Studio/pull/178)
+## Summary
+
+Adds the ability to specify a command and/or many arguments for the head image. Both options are optional. The command overwrites the `ENTRYPOINT` of the Docker image, while the arguments overwrite the `CMD` and act as arguments for the command. If not specified the default `ENTRYPOINT` and `CMD` are used.
+
+![image](https://user-images.githubusercontent.com/10163775/165300466-4e1579f2-2620-4162-8584-6430191ea2f1.png)
+
+
 # [1.19.1] - 2022-4-25 [PR: #171](https://github.com/dolittle/Studio/pull/171)
 ## Summary
 
