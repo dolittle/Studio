@@ -45,6 +45,7 @@ export const HeadArguments: React.FunctionComponent<Props> = (props) => {
                     <TextField
                         id={'headArg' + argIndex.toString()}
                         label='Argument'
+                        required={false}
                         value={arg}
                         onChange={(event) => handleArg(event, argIndex)}
                         size='small'
