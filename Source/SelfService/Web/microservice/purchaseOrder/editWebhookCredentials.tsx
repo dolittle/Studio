@@ -1,27 +1,54 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React, { useState, useEffect } from 'react';
-import { Grid, IconButton, TextField, Typography } from '@mui/material';
+import { Box, Grid, IconButton, TextField, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
 import { getCredentialsFromBasicAuth } from '../../utils/httpCredentials';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { ClassNameMap } from '@mui/styles/withStyles';
 import { GeneratePassword } from './generatePassword';
 import { Button } from '../../theme/button';
 import { ButtonText } from '../../theme/buttonText';
 
 
 type Props = {
-    authorization: string
-    classes: ClassNameMap<any>
+    authorization: string;
     onCancel: () => void;
 };
+
+const styles = {
+    actionsContainer: {
+        marginBottom: 2,
+    },
+    iconRoot: {
+        padding: 0,
+        paddingLeft: 10,
+        marginRight: 1,
+    },
+    icon: {
+        fill: '#6678F6',
+    },
+    textField: { //https://stackoverflow.com/a/60461876 excellent resource
+        '& .MuiOutlinedInput-input': {
+            color: 'white'
+        },
+        '& .MuiInputLabel-root': {
+            color: 'white'
+        },
+        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+            color: 'white',
+            borderColor: theme => theme.palette.text.secondary
+        },
+        '&:hover .MuiOutlinedInput-input': {
+            color: 'white'
+        },
+    }
+};
+
 
 export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
 
-    const classes = props!.classes;
     const credentials = getCredentialsFromBasicAuth(props!.authorization);
     const [username, setUsername] = useState(credentials.username);
     const [password, setPassword] = useState(credentials.password);
@@ -41,7 +68,7 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
 
 
     return <>
-        <Typography component="p" className={classes.label}>
+        <Typography component="p">
             Username
         </Typography>
 
@@ -51,7 +78,7 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
             id='outlined-required'
             label='Username'
             variant='outlined'
-            className={classes.textField}
+            sx={styles.textField}
             value={username}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setUsername(event.target.value!);
@@ -60,7 +87,7 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
         />
 
 
-        <Typography component="p" className={classes.label}>
+        <Typography component="p">
             Password
         </Typography>
         <Grid container spacing={3}>
@@ -72,7 +99,7 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
                     label='Password'
                     autoComplete='current-password'
                     variant='outlined'
-                    className={classes.textField}
+                    sx={styles.textField}
                     value={password}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setPassword(event.target.value!);
@@ -88,9 +115,9 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
                     onClick={() => {
                         togglePassword();
                     }}
-                    className={classes.iconRoot}
+                    sx={styles.iconRoot}
                     size="large">
-                    <VisibilityIcon className={classes.icon} />
+                    <VisibilityIcon color='primary' sx={styles.icon} />
                 </IconButton>
 
                 <GeneratePassword password={password} setPassword={(newPassword) => {
@@ -101,7 +128,7 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
             </Grid>
         </Grid>
 
-        <div className={classes.actionsContainer}>
+        <Box sx={styles.actionsContainer}>
             <div>
                 <ButtonText
                     onClick={() => {
@@ -124,6 +151,6 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
                     Save
                 </Button>
             </div>
-        </div>
+        </Box>
     </>;
 };
