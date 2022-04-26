@@ -71,6 +71,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         }
     } as MicroserviceSimple;
 
+    const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
+
     const [msId] = React.useState(ms.dolittle.microserviceId);
     const [msName, setMsName] = React.useState(ms.name);
     const [headImage, setHeadImage] = React.useState(ms.extra.headImage);
@@ -79,8 +81,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const [args, setArgs] = React.useState(ms.extra.headCommand.args);
     const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
     const [isPublic, setIsPublic] = React.useState<boolean>(ms.extra.isPublic);
-    const [showConnectionKafkaOption, setShowConnectionKafkaOption] = React.useState<boolean>(application.connections.kafka);
-    const [connectionKafka, setConnectionKafka] = React.useState(application.connections.kafka);
+    const [showConnectionKafkaOption, setShowConnectionKafkaOption] = React.useState<boolean>(environmentInfo.connections.kafka);
+    const [connectionKafka, setConnectionKafka] = React.useState(environmentInfo.connections.kafka);
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -99,7 +101,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         ms.extra.headCommand.command = command;
         ms.extra.headCommand.args = args;
         ms.extra.connections = {
-            kafka: connectionKafka
+            kafka: connectionKafka,
+            m3Connector: connectionKafka
         };
 
         setIsLoading(true);
@@ -259,7 +262,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 {showConnectionKafkaOption &&
                     <>
                         <Grid item>
-                            <Typography component='h2' variant='h5'>Give me kafka details</Typography>
+                            <Typography component='h2' variant='h5'>Connect to m3 Connector</Typography>
                             <ThemedSwitch label={connectionKafka ? 'yes' : 'no'} checked={connectionKafka} onChange={handleConnectionKafkaChanged} />
                         </Grid>
                     </>

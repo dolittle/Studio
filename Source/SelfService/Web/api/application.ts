@@ -38,6 +38,7 @@ export type HttpInputApplicationEnvironment = {
     applicationId: string
     name: string
     automationEnabled: boolean
+    connections: ApplicationsConnections
 };
 
 export type HttpResponseApplication = {
@@ -47,7 +48,6 @@ export type HttpResponseApplication = {
     customerName: string
     environments: HttpInputApplicationEnvironment[]
     microservices: any[] // Not great
-    connections: ApplicationsConnections
 };
 
 
@@ -59,6 +59,7 @@ export type HttpResponseApplicationAccess = {
 
 export type ApplicationsConnections = {
     kafka: boolean;
+    m3Connector: boolean;
 };
 
 export async function getPersonalisedInfo(applicationId: string): Promise<any> {
@@ -141,9 +142,15 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
 
     const jsonResult: HttpResponseApplication = await result.json();
     jsonResult.microservices = jsonResult.microservices || [];
-    jsonResult.connections = jsonResult.connections || {
-        kafka: false
-    };
+
+    jsonResult.environments.map(environment => {
+        environment.connections = environment.connections || {
+            kafka: false,
+            m3Connector: false
+        };
+
+        return environment;
+    });
     return jsonResult;
 }
 
