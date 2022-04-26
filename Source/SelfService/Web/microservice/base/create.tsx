@@ -81,8 +81,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const [args, setArgs] = React.useState(ms.extra.headCommand.args);
     const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
     const [isPublic, setIsPublic] = React.useState<boolean>(ms.extra.isPublic);
-    const [showConnectionKafkaOption, setShowConnectionKafkaOption] = React.useState<boolean>(environmentInfo.connections.kafka);
-    const [connectionKafka, setConnectionKafka] = React.useState(environmentInfo.connections.kafka);
+    const [showConnectionM3ConnectorOption, setShowConnectionM3ConnectorOption] = React.useState<boolean>(environmentInfo.connections.m3Connector);
+    const [connectionM3Connector, setConnectionM3Connector] = React.useState(environmentInfo.connections.m3Connector);
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -101,8 +101,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         ms.extra.headCommand.command = command;
         ms.extra.headCommand.args = args;
         ms.extra.connections = {
-            kafka: connectionKafka,
-            m3Connector: connectionKafka
+            m3Connector: connectionM3Connector
         };
 
         setIsLoading(true);
@@ -134,8 +133,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         setIsPublic(checked ?? false);
     };
 
-    const handleConnectionKafkaChanged = (ev: React.ChangeEvent<{}>, checked?: boolean) => {
-        setConnectionKafka(checked ?? false);
+    const handleConnectionM3ConnectorChanged = (ev: React.ChangeEvent<{}>, checked?: boolean) => {
+        setConnectionM3Connector(checked ?? false);
     };
 
     return (
@@ -259,11 +258,11 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 }
 
 
-                {showConnectionKafkaOption &&
+                {showConnectionM3ConnectorOption &&
                     <>
                         <Grid item>
                             <Typography component='h2' variant='h5'>Connect to m3 Connector</Typography>
-                            <ThemedSwitch label={connectionKafka ? 'yes' : 'no'} checked={connectionKafka} onChange={handleConnectionKafkaChanged} />
+                            <ThemedSwitch label={connectionM3Connector ? 'yes' : 'no'} checked={connectionM3Connector} onChange={handleConnectionM3ConnectorChanged} />
                         </Grid>
                     </>
                 }

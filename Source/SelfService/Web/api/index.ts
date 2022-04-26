@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { ApplicationsConnections } from './application';
+
+import { HttpEnvironmentConnections } from './application';
 
 export type ConnectorWebhookConfigBearer = {
     token: string;
@@ -54,7 +55,7 @@ export type MicroserviceSimpleExtra = {
     ingress: MicroserviceIngressPath;
     isPublic: boolean;
     headCommand: MicroserviceHeadCommand;
-    connections: ApplicationsConnections;
+    connections: HttpEnvironmentConnections;
 };
 
 export type MicroserviceHeadCommand = {

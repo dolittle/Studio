@@ -38,7 +38,7 @@ export type HttpInputApplicationEnvironment = {
     applicationId: string
     name: string
     automationEnabled: boolean
-    connections: ApplicationsConnections
+    connections: HttpEnvironmentConnections
 };
 
 export type HttpResponseApplication = {
@@ -57,8 +57,7 @@ export type HttpResponseApplicationAccess = {
     users: HttpInputApplicationAccess[];
 };
 
-export type ApplicationsConnections = {
-    kafka: boolean;
+export type HttpEnvironmentConnections = {
     m3Connector: boolean;
 };
 
@@ -145,7 +144,6 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
 
     jsonResult.environments.map(environment => {
         environment.connections = environment.connections || {
-            kafka: false,
             m3Connector: false
         };
 
