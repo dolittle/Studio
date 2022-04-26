@@ -115,7 +115,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
             || 'n/a';
 
         const headCommand = {
-            commands: [],
+            command: [],
             args: []
         };
 

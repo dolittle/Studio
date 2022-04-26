@@ -56,7 +56,7 @@ export type MicroserviceSimpleExtra = {
 };
 
 export type MicroserviceHeadCommand = {
-    commands: string[];
+    command: string[];
     args: string[];
 };
 
