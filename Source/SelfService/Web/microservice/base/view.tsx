@@ -119,6 +119,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
             args: []
         };
 
+        const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
         // TODO currently we don't use the ms.extra.ingress in the view
         // Look to "liveIngressView" for how we "set" the data to uniq paths
         ms = {
@@ -140,7 +141,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 headImage,
                 runtimeImage,
                 headCommand,
-                connections: application.connections,
+                connections: environmentInfo.connections,
             },
         };
     }
