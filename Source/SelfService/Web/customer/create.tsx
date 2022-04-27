@@ -66,13 +66,13 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         stepIcon: {
             'color': '#3B3D48',
-            '&.MuiStepIcon-active': {
+            '&.MuiStepIcon-root.Mui-active': {
                 color: '#6678F6'
             },
-            '&.MuiStepIcon-completed': {
+            '&.MuiStepIcon-root.Mui-completed': {
                 color: '#6678F6'
             },
-            '&.MuiStepIcon-active .MuiStepIcon-text': {
+            '&.MuiStepIcon-root.Mui-active .MuiStepIcon-text': {
                 fill: '#B3BBFB'
             },
             '&.MuiStepIcon-root .MuiStepIcon-text': {
