@@ -15,9 +15,7 @@ import { Create as PurchaseOrder } from './purchaseOrder/create';
 
 import { HttpResponseApplication } from '../api/application';
 
-import { Grid, Theme } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { createStyles } from '@mui/styles';
+import { Box, Grid } from '@mui/material';
 import { SimpleCard } from './create/card';
 
 type Props = {
@@ -25,25 +23,22 @@ type Props = {
     application: HttpResponseApplication
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            flexGrow: 1,
-        },
-        paper: {
-            padding: theme.spacing(1),
-            textAlign: 'center',
-            color: theme.palette.text.secondary,
-        },
-    }),
-);
+const styles = {
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: 1,
+        textAlign: 'center',
+        color: (theme) => theme.palette.text.secondary,
+    },
+};
 
 
 export const Create: React.FunctionComponent<Props | undefined> = (props) => {
     const history = useHistory();
     const location = useLocation();
 
-    const classes = useStyles();
     const _props = props!;
     const environment = _props.environment;
     const searchParams = new URLSearchParams(location.search);
@@ -129,7 +124,7 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
     if (microserviceTypeState === '') {
         return <>
             <h1>Select a microservice</h1>
-            <div className={classes.root}>
+            <Box sx={styles.root}>
                 <Grid container spacing={1}>
                     {items.map(data => (
                         <Grid key={`pick-microservice-kind-${data.kind}`} item xs={4}>
@@ -137,7 +132,7 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
                         </Grid>
                     ))}
                 </Grid>
-            </div>
+            </Box>
         </>;
     }
 

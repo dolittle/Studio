@@ -5,9 +5,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 
-import { Theme } from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
@@ -16,7 +13,7 @@ import StepContent from '@mui/material/StepContent';
 import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { Button } from '../theme/button';
 import { createCustomer, HttpCustomerRequest } from '../api/customer';
@@ -27,67 +24,64 @@ type Props = {
 };
 
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: '100%',
-        },
-        button: {
-            marginTop: theme.spacing(1),
-            marginRight: theme.spacing(1),
-        },
-        actionsContainer: {
-            marginBottom: theme.spacing(2),
-        },
-        resetContainer: {
-            padding: theme.spacing(3),
-        },
-        inactiveText: {
-            color: '#93959F',
-        },
-        progressBar: {
-            color: '#ff9366',
-        },
+const styles = {
+    root: {
+        width: '100%',
+    },
+    button: {
+        marginTop: 1,
+        marginRight: 1,
+    },
+    actionsContainer: {
+        marginBottom: 2,
+    },
+    resetContainer: {
+        padding: 3,
+    },
+    inactiveText: {
+        color: '#93959F',
+    },
+    progressBar: {
+        color: '#ff9366',
+    },
 
-        textField: { //https://stackoverflow.com/a/60461876 excellent resource
-            '& .MuiOutlinedInput-input': {
-                color: 'white'
-            },
-            '& .MuiInputLabel-root': {
-                color: 'white'
-            },
-            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-                color: 'white',
-                borderColor: 'white'
-            },
-            '&:hover .MuiOutlinedInput-input': {
-                color: 'white'
-            },
+    textField: { //https://stackoverflow.com/a/60461876 excellent resource
+        '& .MuiOutlinedInput-input': {
+            color: 'white'
         },
-        stepIcon: {
-            'color': '#3B3D48',
-            '&.MuiStepIcon-root.Mui-active': {
-                color: '#6678F6'
-            },
-            '&.MuiStepIcon-root.Mui-completed': {
-                color: '#6678F6'
-            },
-            '&.MuiStepIcon-root.Mui-active .MuiStepIcon-text': {
-                fill: '#B3BBFB'
-            },
-            '&.MuiStepIcon-root .MuiStepIcon-text': {
-                fill: '#93959F'
-            }
+        '& .MuiInputLabel-root': {
+            color: 'white'
+        },
+        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+            color: 'white',
+            borderColor: 'white'
+        },
+        '&:hover .MuiOutlinedInput-input': {
+            color: 'white'
+        },
+    },
+    stepIcon: {
+        'color': '#3B3D48',
+        '&.MuiStepIcon-root.Mui-active': {
+            color: '#6678F6'
+        },
+        '&.MuiStepIcon-root.Mui-completed': {
+            color: '#6678F6'
+        },
+        '&.MuiStepIcon-root.Mui-active .MuiStepIcon-text': {
+            fill: '#B3BBFB'
+        },
+        '&.MuiStepIcon-root .MuiStepIcon-text': {
+            fill: '#93959F'
         }
-    })
-);
+    }
+};
 
 
 
 export const Create: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
-    const classes = useStyles();
 
     const steps = [
         'Provide a name',
@@ -119,7 +113,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     id='customerName'
                     label='Name'
                     variant='outlined'
-                    className={classes.textField}
+                    sx={styles.textField}
                     value={customerName}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setCustomerName(event.target.value!);
@@ -149,22 +143,21 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     return (
         <>
             <h1>Create Customer Screen</h1>
-            <div className={classes.root}>
+            <Box sx={styles.root}>
 
                 <Stepper activeStep={activeStep} orientation='vertical'>
                     {steps.map((label, index) => (
                         <Step key={label}>
                             <StepLabel StepIconProps={{
-                                classes: { root: classes.stepIcon }
+                                sx: styles.stepIcon
                             }}>
-                                <span className={activeStep >= index ? '' : classes.inactiveText}>{label}</span>
+                                <Box component='span' sx={activeStep >= index ? {} : styles.inactiveText}>{label}</Box>
                             </StepLabel>
                             <StepContent>
                                 {stepsContent[index]}
 
-                                <div className={classes.actionsContainer}>
-                                    <div
-                                    >
+                                <Box sx={styles.actionsContainer}>
+                                    <div>
                                         <Button
                                             onClick={() => {
                                                 const href = `/admin/customers`;
@@ -183,12 +176,12 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                                                 : 'Next'}
                                         </Button>
                                     </div>
-                                </div>
+                                </Box>
                             </StepContent>
                         </Step>
                     ))}
                 </Stepper>
-            </div>
+            </Box>
         </>
     );
 };
