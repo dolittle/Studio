@@ -25,29 +25,26 @@ type Props = {
     environment: string
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        deleteIcon: {
-            'padding': 0,
-            'marginRight': theme.spacing(1),
-            'fill': 'white',
-            '& .MuiSvgIcon-root': {
-                color: 'white',
-                marginRight: theme.spacing(1),
-            },
-            '& .MuiTypography-root': {
-                color: 'white',
-                textTransform: 'uppercase'
-            }
+const styles = {
+    deleteIcon: {
+        'padding': 0,
+        'marginRight': 1,
+        'fill': 'white',
+        '& .MuiSvgIcon-root': {
+            color: 'white',
+            marginRight: 1,
         },
+        '& .MuiTypography-root': {
+            color: 'white',
+            textTransform: 'uppercase'
+        }
+    },
 
-    })
-);
+};
 
 
 export const Delete: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
-    const classes = useStyles();
     const history = useHistory();
     const $microservices = useReadable(microservices) as any;
     const { microserviceId } = useParams() as any;
@@ -110,7 +107,7 @@ export const Delete: React.FunctionComponent<Props> = (props) => {
 
                 <IconButton
                     onClick={() => onClickDelete()}
-                    className={classes.deleteIcon}
+                    sx={styles.deleteIcon}
                     size="large">
                     <DeleteIcon />
                     <Typography>delete</Typography>
