@@ -67,9 +67,14 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             headCommand: {
                 command: [],
                 args: []
+            },
+            connections: {
+                m3Connector: false
             }
         }
     } as MicroserviceSimple;
+
+    const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
 
     const [msId] = React.useState(ms.dolittle.microserviceId);
     const [msName, setMsName] = React.useState(ms.name);
@@ -79,6 +84,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const [args, setArgs] = React.useState(ms.extra.headCommand.args);
     const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
     const [isPublic, setIsPublic] = React.useState<boolean>(ms.extra.isPublic);
+    const [showConnectionM3ConnectorOption, setShowConnectionM3ConnectorOption] = React.useState<boolean>(environmentInfo.connections.m3Connector);
+    const [connectionM3Connector, setConnectionM3Connector] = React.useState(environmentInfo.connections.m3Connector);
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -96,6 +103,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         ms.extra.ingress.path = ingressPath;
         ms.extra.headCommand.command = command;
         ms.extra.headCommand.args = args;
+        ms.extra.connections = {
+            m3Connector: connectionM3Connector
+        };
 
         setIsLoading(true);
         try {
@@ -126,6 +136,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         setIsPublic(checked ?? false);
     };
 
+    const handleConnectionM3ConnectorChanged = (ev: React.ChangeEvent<{}>, checked?: boolean) => {
+        setConnectionM3Connector(checked ?? false);
+    };
 
     return (
         <>
@@ -243,6 +256,16 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                                 value={ms.extra.ingress.pathType}
                                 readOnly
                             />
+                        </Grid>
+                    </>
+                }
+
+
+                {showConnectionM3ConnectorOption &&
+                    <>
+                        <Grid item>
+                            <Typography component='h2' variant='h5'>Connect to m3 Connector</Typography>
+                            <ThemedSwitch label={connectionM3Connector ? 'yes' : 'no'} checked={connectionM3Connector} onChange={handleConnectionM3ConnectorChanged} />
                         </Grid>
                     </>
                 }

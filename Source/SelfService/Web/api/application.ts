@@ -38,6 +38,7 @@ export type HttpInputApplicationEnvironment = {
     applicationId: string
     name: string
     automationEnabled: boolean
+    connections: HttpEnvironmentConnections
 };
 
 export type HttpResponseApplication = {
@@ -56,6 +57,9 @@ export type HttpResponseApplicationAccess = {
     users: HttpInputApplicationAccess[];
 };
 
+export type HttpEnvironmentConnections = {
+    m3Connector: boolean;
+};
 
 export async function getPersonalisedInfo(applicationId: string): Promise<any> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}/personalised-application-info`;
@@ -137,6 +141,14 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
 
     const jsonResult: HttpResponseApplication = await result.json();
     jsonResult.microservices = jsonResult.microservices || [];
+
+    jsonResult.environments.map(environment => {
+        environment.connections = environment.connections || {
+            m3Connector: false
+        };
+
+        return environment;
+    });
     return jsonResult;
 }
 
