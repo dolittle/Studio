@@ -1,3 +1,9 @@
+# [1.21.0] - 2022-4-28 [PR: #174](https://github.com/dolittle/Studio/pull/174)
+## Summary
+
+- Via microservice creation, if m3connector connection is enabled, give the user the option to connect m3connector for this microservice
+
+
 # [1.20.1] - 2022-4-26 [PR: #180](https://github.com/dolittle/Studio/pull/180)
 ## Summary
 
