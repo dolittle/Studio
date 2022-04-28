@@ -95,19 +95,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         }
     });
     function formSubmit(event) {
-        var request = new XMLHttpRequest();
-        // request.open('PUT', updateConfigMapUrl(), true);
-        // request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded" )
-
-        // request.onload = function() { // request successful
-        // // we can use server response to our request now
-        //   console.log(request.responseText);
-        // };
-
-        // request.onerror = function() {
-        //   // request failed
-        // };
-        // request.send(new FormData(event.target)); // create FormData from form that triggered event
 
         console.log(new FormData(event.target));
 
