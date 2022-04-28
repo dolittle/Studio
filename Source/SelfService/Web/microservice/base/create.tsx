@@ -67,6 +67,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             headCommand: {
                 command: [],
                 args: []
+            },
+            connections: {
+                m3Connector: false
             }
         }
     } as MicroserviceSimple;
