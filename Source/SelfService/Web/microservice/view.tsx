@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useReadable } from 'use-svelte-store';
 
-import { getPodStatus, HttpResponsePodStatus } from '../api/api';
+import { getConfigFiles, getPodStatus, getServerUrlPrefix, HttpResponsePodStatus, InputConfigFile, updateConfigFile } from '../api/api';
 import { microservices, MicroserviceStore } from '../stores/microservice';
 import { View as BaseView } from './base/view';
 import { View as BusinessMomentsAdaptorView } from './businessMomentsAdaptor/view';
@@ -28,6 +28,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     const microserviceId = _props.microserviceId;
     const environment = _props.environment;
 
+
     // Want microservice name
     const [podsData, setPodsData] = useState({
         namespace: '',
@@ -45,21 +46,96 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
+    const updateConfigMapUrl=()=>`${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files`
+
+
     useEffect(() => {
+
         Promise.all([
             getPodStatus(applicationId, environment, microserviceId)
-        ]).then(values => {
+        ]).then((values) => async function(){
             setPodsData(values[0]);
             setLoaded(true);
         });
-    }, []);
 
+        const fetchData = async () => {
+
+            const result = await getConfigFiles(applicationId, environment, microserviceId)
+
+            const newFile = `{"obj2" : { "field": 0}}`
+
+            // // consider strngifyign this
+            // const input = { name: "my-kingkong-file.json", value: newFile} as InputConfigFile
+
+            // const upsert = await updateConfigFile(applicationId, environment, microserviceId, input)
+          }
+
+          // call the function
+          fetchData()
+            // make sure to catch any error
+            .catch(console.error);;
+
+    }, []);
+    const fileSelector = document.getElementById('file-selector');
+
+    fileSelector?.addEventListener('change', (event: any) => {
+        const fileList = event.target.files;
+        console.log(fileList);
+        if (fileList[0]) {
+            var reader = new FileReader();
+            reader.readAsText(fileList[0], "UTF-8");
+            // reader.readAsDataURL(fileList[0]); USE THIS for images
+            reader.onload = function (evt:any) {
+               console.log(evt.target.result);
+
+            }
+            reader.onerror = function (evt) {
+                console.log("error reading file");
+            }
+        }
+    });
+    function formSubmit(event) {
+        var request = new XMLHttpRequest();
+        // request.open('PUT', updateConfigMapUrl(), true);
+        // request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded" )
+
+        // request.onload = function() { // request successful
+        // // we can use server response to our request now
+        //   console.log(request.responseText);
+        // };
+
+        // request.onerror = function() {
+        //   // request failed
+        // };
+        // request.send(new FormData(event.target)); // create FormData from form that triggered event
+
+        console.log(new FormData(event.target));
+
+        const upsert = updateConfigFile(applicationId, environment, microserviceId, {form: new FormData(event.target)})
+
+        event.preventDefault();
+    }
+
+    function attachFormSubmitEvent(){
+        document?.getElementById("form-file-selector")?.addEventListener("submit", formSubmit);
+      }
+
+      attachFormSubmitEvent()
+
+
+    return(
+        <form method="put" id="form-file-selector">
+            <input type="file" id="file-selector" name='file' />
+            <input type="submit" value="Submit"/>
+        </form>
+    )
 
     if (!loaded) {
         return null;
     }
 
     const subView = whichSubView(currentMicroservice);
+
     switch (subView) {
         case 'simple':
             return (
