@@ -38,50 +38,47 @@ type Props = {
     podsData: HttpResponsePodStatus
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        deleteIcon: {
-            'padding': 0,
-            'marginRight': theme.spacing(1),
-            'fill': 'white',
-            '& .MuiSvgIcon-root': {
-                color: 'white',
-                marginRight: theme.spacing(1),
-            },
-            '& .MuiTypography-root': {
-                color: 'white',
-                textTransform: 'uppercase'
-            }
+const styles = {
+    deleteIcon: {
+        'padding': 0,
+        'marginRight': 1,
+        'fill': 'white',
+        '& .MuiSvgIcon-root': {
+            color: 'white',
+            marginRight: 1,
         },
-        editIcon: {
-            'padding': 0,
-            'marginRight': theme.spacing(1),
-            'fill': '#6678F6',
-            '& .MuiSvgIcon-root': {
-                color: '#6678F6',
-                marginRight: theme.spacing(1),
-            },
-            '& .MuiTypography-root': {
-                color: '#6678F6',
-                textTransform: 'uppercase'
-            }
-        },
-        root: {
-            flexGrow: 1,
-        },
-        paper: {
-            padding: theme.spacing(2),
-            textAlign: 'center',
-        },
-        divider: {
-            backgroundColor: '#3B3D48'
+        '& .MuiTypography-root': {
+            color: 'white',
+            textTransform: 'uppercase'
         }
-    })
-);
+    },
+    editIcon: {
+        'padding': 0,
+        'marginRight': 1,
+        'fill': '#6678F6',
+        '& .MuiSvgIcon-root': {
+            color: '#6678F6',
+            marginRight: 1,
+        },
+        '& .MuiTypography-root': {
+            color: '#6678F6',
+            textTransform: 'uppercase'
+        }
+    },
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: 2,
+        textAlign: 'center',
+    },
+    divider: {
+        backgroundColor: '#3B3D48'
+    }
+};
 
 export const View: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
-    const classes = useStyles();
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
 
@@ -200,7 +197,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                                 const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/delete`;
                                 history.push(href);
                             }}
-                            className={classes.deleteIcon}
+                            sx={styles.deleteIcon}
                             size="large">
                             <DeleteIcon />
                             <Typography>delete</Typography>
@@ -211,7 +208,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                             onClick={() => {
                                 enqueueSnackbar('TODO: Edit microservice', { variant: 'error' });
                             }}
-                            className={classes.editIcon}
+                            sx={styles.editIcon}
                             size="large">
                             <EditIcon />
                             <Typography>Edit</Typography>
@@ -225,11 +222,11 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 <Box ml={2}>
                     <ConfigView microservice={ms} />
                 </Box>
-                <Divider className={classes.divider} />
+                <Divider sx={styles.divider} />
                 <Box ml={2}>
                     <LiveIngressView urls={currentMicroservice.live.ingressUrls} paths={currentMicroservice.live.ingressPaths} />
                 </Box>
-                <Divider className={classes.divider} />
+                <Divider sx={styles.divider} />
                 <Box ml={2}>
                     <ButtonText
                         onClick={async () => {
