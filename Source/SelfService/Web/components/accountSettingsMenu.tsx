@@ -3,9 +3,8 @@
 
 import React from 'react';
 import Menu, { MenuProps } from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import MenuItem, { MenuItemProps } from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
-import { MenuItemProps } from '@material-ui/core';
 import { Box } from '@mui/material';
 import { BoxProps } from '@mui/system';
 
