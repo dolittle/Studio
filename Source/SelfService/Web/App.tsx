@@ -18,7 +18,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { RouteNotFound } from './components/notfound';
 import { Screen as AdminScreen } from './screens/adminScreen';
 
-import { createTheme, ThemeProvider, Theme, StyledEngineProvider, adaptV4Theme } from '@mui/material/styles';
+import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { DieAndRestart } from './components/dieAndRestart';
 import { LayoutWithSidebar } from './layout/layoutWithSidebar';
 
@@ -29,14 +29,6 @@ import { ThemeScreen } from './screens/themeScreen';
 import '@fontsource/rubik';
 import { ApplicationScreen } from './screens/applicationScreen';
 import { Box } from '@mui/material';
-
-
-
-declare module '@mui/styles/defaultTheme' {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface DefaultTheme extends Theme { }
-}
-
 
 
 const typography = {
@@ -54,7 +46,7 @@ const typography = {
 };
 
 
-const themeDark = createTheme(adaptV4Theme({
+const themeDark = createTheme({
     typography,
     palette: {
         background: {
@@ -66,7 +58,7 @@ const themeDark = createTheme(adaptV4Theme({
             secondary: '#93959F',
         }
     },
-}));
+});
 
 const snackbarStyles = {
     '& .SnackbarContent-root.': {

@@ -41,7 +41,6 @@ export const Tab = (props: TabProps) => <MuiTab
         'fontSize': (theme) => theme.typography.pxToRem(15),
         'marginRight': 1,
         '&:focus': {
-            outline: '1px solid green',
             opacity: 1,
         },
     }}
