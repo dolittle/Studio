@@ -49,14 +49,27 @@ const typography = {
 const themeDark = createTheme({
     typography,
     palette: {
+        primary: {
+            main: '#8C9AF8',
+            light: '#b3bbfb',
+            dark: '#6678f6',
+            contrastText: '#191A21',
+        },
+        secondary: {
+            main: '#76E8DB',
+            light: '#A3EFE7',
+            dark: '#48E0CF',
+            contrastText: '#191A21',
+        },
         background: {
-            default: '#191A21',
+            default: '#0F1014',
             paper: '#191A21',
         },
         text: {
-            primary: '#E9EAEC',
-            secondary: '#93959F',
-        }
+            disabled: '#93959f',
+            primary: '#fafafa',
+            secondary: '#cecfd0',
+        },
     },
 });
 
