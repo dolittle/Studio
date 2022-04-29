@@ -2,46 +2,49 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Theme } from '@mui/material/styles';
-import withStyles from '@mui/styles/withStyles';
-import createStyles from '@mui/styles/createStyles';
 import MuiTabs from '@mui/material/Tabs';
 import MuiTab from '@mui/material/Tab';
-import { CSSProperties } from '@mui/styles';
 
 interface TabsProps {
     value: number;
     onChange: (event: React.ChangeEvent<{}>, newValue: number) => void;
+    children: React.ReactNode;
 }
 
-export const Tabs = withStyles({
-    indicator: {
-        'display': 'flex',
-        'justifyContent': 'center',
-        'backgroundColor': 'transparent',
-        '& > span': {
+export const Tabs = (props: TabsProps) => <MuiTabs
+    sx={{
+        '& .MuiTabs-indicator': {
+            display: 'flex',
+            justifyContent: 'center',
+            backgroundColor: 'transparent',
+        },
+        '& .MuiTabs-indicatorSpan': {
             maxWidth: 40,
             width: '100%',
             backgroundColor: '#6678F6',
-        },
-    },
-})((props: React.PropsWithChildren<TabsProps>) => <MuiTabs {...props} TabIndicatorProps={{ children: <span /> }} />);
+        }
+    }}
+    TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
+    textColor='inherit'
+    {...props}
+/>;
 
 interface TabProps {
     label: string;
 }
 
-export const Tab = withStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            'textTransform': 'none',
-            'color': '#fff',
-            'fontWeight': theme.typography.fontWeightRegular,
-            'fontSize': theme.typography.pxToRem(15),
-            'marginRight': theme.spacing(1),
-            '&:focus': {
-                opacity: 1,
-            },
-        } as CSSProperties,
-    }),
-)((props: TabProps) => <MuiTab disableRipple {...props} />);
+export const Tab = (props: TabProps) => <MuiTab
+    sx={{
+        'textTransform': 'none',
+        'color': '#fff',
+        'fontWeight': (theme) => theme.typography.fontWeightRegular,
+        'fontSize': (theme) => theme.typography.pxToRem(15),
+        'marginRight': 1,
+        '&:focus': {
+            outline: '1px solid green',
+            opacity: 1,
+        },
+    }}
+    disableRipple
+    {...props}
+/>;
