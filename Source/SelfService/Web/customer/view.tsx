@@ -1,15 +1,16 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Box } from '@mui/material';
-import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Customer, getCustomers } from '../api/customer';
-import { getStudioConfig, saveStudioConfig, Studio } from '../api/studio';
-import { ButtonText } from '../theme/buttonText';
+import { useParams, useHistory } from 'react-router-dom';
 
-const classes = {
+import { useSnackbar } from 'notistack';
+import { getCustomer, CustomerDetailed } from '../api/customer';
+import { saveStudioConfig, Studio } from '../api/studio';
+import { ButtonText } from '../theme/buttonText';
+import { Box } from '@mui/material';
+
+const styles = {
     root: {
         width: '100%',
     },
@@ -63,44 +64,30 @@ const classes = {
 };
 
 export const View: React.FunctionComponent<any> = (props) => {
+    const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
 
     const { customerId } = useParams();
-    const [configLoaded, setConfigLoaded] = useState(false);
+    //const [configLoaded, setConfigLoaded] = useState(false);
     const [customerLoaded, setCustomerLoaded] = useState(false);
     const [config, setConfig] = useState({} as Studio);
-    const [customer, setCustomer] = useState({} as Customer);
+    const [customer, setCustomer] = useState({} as CustomerDetailed);
     const [toggleConfig, setToggleConfig] = useState(false);
 
     useEffect(() => {
-        getCustomers()
-            .then(customers => {
-                const customer = customers.find(customer => customer.id === customerId);
-                if (!customer) {
-                    enqueueSnackbar('No customer with the given id found', { variant: 'error' });
-                    return;
-                }
+        getCustomer(customerId)
+            .then(customer => {
 
                 setCustomer(customer);
+                setConfig(customer.studioConfig);
                 setCustomerLoaded(true);
             }).catch((error) => {
                 console.log(error);
                 enqueueSnackbar('Failed getting customers data from the server', { variant: 'error' });
             });
-    }, []);
-
-    useEffect(() => {
-        getStudioConfig(customerId)
-            .then(config => {
-                setConfig(config);
-                setConfigLoaded(true);
-            }).catch((error) => {
-                console.log(error);
-                enqueueSnackbar('Failed getting customers studio config from the server', { variant: 'error' });
-            });
     }, [toggleConfig]);
 
-    if (!configLoaded || !customerLoaded) {
+    if (!customerLoaded) {
         return null;
     }
 
@@ -117,25 +104,25 @@ export const View: React.FunctionComponent<any> = (props) => {
 
     return (
         <>
-            <h1>Customer {customer.name}</h1>
-            <Box sx={classes.root}>
+            <h1>Customer {customer.customer.name}</h1>
+            <Box sx={styles.root}>
                 <ul>
                     <li>
                         Customer ID: {customerId}
                     </li>
                     <li>
-                        Build overwrite: {String(config.buildOverwrite)}
+                        Build overwrite: {String(customer.studioConfig.buildOverwrite)}
                     </li>
                     <li>
-                        Can create applications: {String(config.canCreateApplication)}
+                        Can create applications: {String(customer.studioConfig.canCreateApplication)}
                     </li>
                     <li>
-                        Disabled environments: {displayDisabledEnvironments(config.disabledEnvironments)}
+                        Disabled environments: {displayDisabledEnvironments(customer.studioConfig.disabledEnvironments)}
                     </li>
                 </ul>
                 <ButtonText
                     onClick={() => {
-                        config.disabledEnvironments = config.disabledEnvironments.length ? [] : ['*'];
+                        customer.studioConfig.disabledEnvironments = customer.studioConfig.disabledEnvironments.length ? [] : ['*'];
 
                         saveStudioConfig(customerId, config)
                             .then(result => {
@@ -151,8 +138,31 @@ export const View: React.FunctionComponent<any> = (props) => {
                                 enqueueSnackbar('Failed saving the config', { variant: 'error' });
                             });
                     }}>
-                    {config.disabledEnvironments.length ? 'Enable all environments' : 'Disable all environments'}
+                    {customer.studioConfig.disabledEnvironments.length ? 'Enable all environments' : 'Disable all environments'}
                 </ButtonText>
+
+                <h1>Applications</h1>
+
+                <ul>
+                    {[...new Set(customer.applications.map(application => {
+                        return {
+                            id: application.id,
+                            name: application.name,
+                        };
+                    }))].map((application) => {
+                        return (<>
+                            <h2 key={`${application.id}`}>{application.name} ({application.id})</h2>
+                            <ButtonText
+                                onClick={() => {
+                                    const href = `/admin/customer/${customerId}/application/${application.id}/user/access`;
+                                    history.push(href);
+                                }}
+                            >
+                                View Access
+                            </ButtonText>
+                        </>);
+                    })}
+                </ul>
             </Box>
         </>
     );
