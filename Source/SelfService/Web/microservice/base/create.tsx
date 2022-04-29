@@ -4,7 +4,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { CircularProgress, Grid, Typography } from '@material-ui/core';
+import { CircularProgress, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import { DropDownMenu } from '../../theme/dropDownMenu';
 import { TextField as ThemedTextField } from '../../theme/textField';
 import { Switch as ThemedSwitch } from '../../theme/switch';
@@ -16,6 +16,17 @@ import { MicroserviceSimple } from '../../api/index';
 import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
 
 import { HttpResponseApplication } from '../../api/application';
+import { HeadArguments } from '../components/headArguments';
+
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        data: {
+            paddingBottom: theme.spacing(1),
+            color: theme.palette.text.secondary
+        },
+    })
+);
 
 type Props = {
     application: HttpResponseApplication
@@ -25,6 +36,7 @@ type Props = {
 export const Create: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
+    const classes = useStyles();
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
@@ -52,15 +64,28 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 path: '/',
                 pathType: 'Prefix',
             },
+            headCommand: {
+                command: [],
+                args: []
+            },
+            connections: {
+                m3Connector: false
+            }
         }
     } as MicroserviceSimple;
+
+    const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
 
     const [msId] = React.useState(ms.dolittle.microserviceId);
     const [msName, setMsName] = React.useState(ms.name);
     const [headImage, setHeadImage] = React.useState(ms.extra.headImage);
     const [headPort, setHeadPort] = React.useState(ms.extra.headPort);
+    const [command, setCommand] = React.useState(ms.extra.headCommand.command);
+    const [args, setArgs] = React.useState(ms.extra.headCommand.args);
     const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
     const [isPublic, setIsPublic] = React.useState<boolean>(ms.extra.isPublic);
+    const [showConnectionM3ConnectorOption, setShowConnectionM3ConnectorOption] = React.useState<boolean>(environmentInfo.connections.m3Connector);
+    const [connectionM3Connector, setConnectionM3Connector] = React.useState(environmentInfo.connections.m3Connector);
     const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -76,6 +101,11 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         ms.extra.runtimeImage = runtimeImage;
         ms.extra.isPublic = isPublic;
         ms.extra.ingress.path = ingressPath;
+        ms.extra.headCommand.command = command;
+        ms.extra.headCommand.args = args;
+        ms.extra.connections = {
+            m3Connector: connectionM3Connector
+        };
 
         setIsLoading(true);
         try {
@@ -104,6 +134,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     const handleIsPublicChanged = (ev: React.ChangeEvent<{}>, checked?: boolean) => {
         setIsPublic(checked ?? false);
+    };
+
+    const handleConnectionM3ConnectorChanged = (ev: React.ChangeEvent<{}>, checked?: boolean) => {
+        setConnectionM3Connector(checked ?? false);
     };
 
     return (
@@ -168,6 +202,30 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 </Grid>
 
                 <Grid item>
+                    <Typography component="p" className={classes.data}>
+                        Override the default ENTRYPOINT in Docker
+                    </Typography>
+                    <ThemedTextField
+                        id='headCommand'
+                        label='Head Command'
+                        required={false}
+                        value={command[0]}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            // currently we want to only support specifying one command/ENTRYPOINT
+                            const newValue = event.target.value!;
+                            setCommand([newValue]);
+                        }}
+                    />
+                </Grid>
+
+                <Grid item>
+                    <Typography component="p" className={classes.data}>
+                        Override the default CMD in Docker
+                    </Typography>
+                    <HeadArguments args={args} setArgs={setArgs} />
+                </Grid>
+
+                <Grid item>
                     <DropDownMenu label='Runtime Image' items={runtimeImageSelections} value={runtimeImage} onChange={handleRuntimeChange}></DropDownMenu>
                 </Grid>
 
@@ -198,6 +256,16 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                                 value={ms.extra.ingress.pathType}
                                 readOnly
                             />
+                        </Grid>
+                    </>
+                }
+
+
+                {showConnectionM3ConnectorOption &&
+                    <>
+                        <Grid item>
+                            <Typography component='h2' variant='h5'>Connect to m3 Connector</Typography>
+                            <ThemedSwitch label={connectionM3Connector ? 'yes' : 'no'} checked={connectionM3Connector} onChange={handleConnectionM3ConnectorChanged} />
                         </Grid>
                     </>
                 }

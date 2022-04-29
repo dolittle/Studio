@@ -3,6 +3,7 @@
 
 import { getServerUrlPrefix, parseJSONResponse } from './api';
 
+// TODO should we call this studio config?
 export type Studio = {
     buildOverwrite: boolean;
     disabledEnvironments: string[];

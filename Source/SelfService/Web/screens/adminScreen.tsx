@@ -5,12 +5,15 @@ import React from 'react';
 import {
     Route,
     Switch,
+    useHistory,
 } from 'react-router-dom';
-
 
 import { Create as CreateCustomer } from '../customer/create';
 import { ViewAll as ViewAllCustomers } from '../customer/viewAll';
 import { View as ViewCustomer } from '../customer/view';
+import { View as ViewApplicationAccess } from '../admin/application/view';
+import { Button as ThemedButton } from '../theme/button';
+
 import {
     LayoutWithSidebar,
 } from '../layout/layoutWithSidebar';
@@ -18,8 +21,19 @@ import {
 
 
 export const Screen: React.FunctionComponent = () => {
+    const history = useHistory();
     const nav = [];
 
+
+    const welcome = (
+        <>
+            <h1>Hello Admin</h1>
+            <ThemedButton onClick={() => {
+                const href = `/admin/customers`;
+                history.push(href);
+            }}>Take me to the Customers</ThemedButton>
+        </>
+    );
 
     return (
         <LayoutWithSidebar navigation={nav}>
@@ -35,6 +49,14 @@ export const Screen: React.FunctionComponent = () => {
 
                 <Route exact path="/admin/customer/:customerId">
                     <ViewCustomer />
+                </Route>
+
+                <Route exact path="/admin/customer/:customerId/application/:applicationId/user/access">
+                    <ViewApplicationAccess />
+                </Route>
+
+                <Route exact path="/admin/">
+                    {welcome}
                 </Route>
 
             </Switch>

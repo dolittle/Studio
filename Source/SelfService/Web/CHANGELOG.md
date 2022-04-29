@@ -1,3 +1,30 @@
+# [1.21.0] - 2022-4-28 [PR: #174](https://github.com/dolittle/Studio/pull/174)
+## Summary
+
+- Via microservice creation, if m3connector connection is enabled, give the user the option to connect m3connector for this microservice
+
+
+# [1.20.1] - 2022-4-26 [PR: #180](https://github.com/dolittle/Studio/pull/180)
+## Summary
+
+Make the `TextField` for arguments not required.
+
+
+# [1.20.0] - 2022-4-26 [PR: #178](https://github.com/dolittle/Studio/pull/178)
+## Summary
+
+Adds the ability to specify a command and/or many arguments for the head image. Both options are optional. The command overwrites the `ENTRYPOINT` of the Docker image, while the arguments overwrite the `CMD` and act as arguments for the command. If not specified the default `ENTRYPOINT` and `CMD` are used.
+
+![image](https://user-images.githubusercontent.com/10163775/165300466-4e1579f2-2620-4162-8584-6430191ea2f1.png)
+
+
+# [1.19.1] - 2022-4-25 [PR: #171](https://github.com/dolittle/Studio/pull/171)
+## Summary
+
+- Application view access screen, with add + remove
+- Link page to take you to the customers from the admin screen
+
+
 # [1.19.0] - 2022-4-7 [PR: #173](https://github.com/dolittle/Studio/pull/173)
 ## Summary
 
