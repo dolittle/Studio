@@ -14,7 +14,7 @@ const styles = {
         color: theme => theme.palette.text.secondary
     },
 
-}
+};
 
 export interface HeaderDataRowProps {
     head: string

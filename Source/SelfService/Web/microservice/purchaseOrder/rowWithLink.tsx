@@ -14,7 +14,7 @@ const styles = {
         backgroundColor: 'inherit',
         color: '#93959F'
     },
-}
+};
 
 interface Props {
     prefix: React.ReactNode
