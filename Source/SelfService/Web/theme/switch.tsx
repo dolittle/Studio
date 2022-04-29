@@ -16,26 +16,30 @@ export type Props = {
 const defaultOnClick = (event: React.ChangeEvent<{}>, checked: boolean) => { };
 
 
-export const Switch = withStyles({
-    switchBase: {
-        'color': '#B3BBFB',
-        '&$checked': {
-            color: '#6678F6',
-        },
-        '&$checked + $track': {
-            backgroundColor: '#6678F6',
-        },
-    },
-    checked: {},
-    track: {
-        backgroundColor: '#93959F'
-    },
-})((props: Props) => {
+export const Switch = (props: Props) => {
     const checked = props.checked ?? false;
     const onChangeHandler = props.onChange ?? defaultOnClick;
     const label = props.label ?? '';
     return (<FormControlLabel
-        control={<MuiSwitch {...props} color='secondary' checked={checked} onChange={onChangeHandler} />}
+        control={<MuiSwitch
+            sx={{
+                '& .MuiSwitch-switchBase': {
+                    'color': '#B3BBFB',
+                    '&.Mui-checked': {
+                        'color': '#6678F6',
+                        '& + .MuiSwitch-track': {
+                            backgroundColor: '#6678F6',
+                        },
+                    },
+                },
+                '& .MuiSwitch-track': {
+                    backgroundColor: '#93959F'
+                },
+            }}
+            {...props}
+            color='secondary'
+            checked={checked}
+            onChange={onChangeHandler} />}
         label={label}
     />);
-});
+};
