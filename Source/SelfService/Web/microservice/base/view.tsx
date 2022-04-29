@@ -13,9 +13,6 @@ import {
 import { TabPanel } from '../../utils/materialUi';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Theme } from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
 import { useSnackbar } from 'notistack';
 
 import { HttpResponsePodStatus } from '../../api/api';

@@ -1,18 +1,15 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSnackbar } from 'notistack';
-import { Theme } from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
 import { useReadable } from 'use-svelte-store';
 import { microservices, deleteMicroservice, canDeleteMicroservice, MicroserviceStore } from '../stores/microservice';
 import { TabPanel } from '../utils/materialUi';
 
-import { HttpResponseApplication, HttpInputApplicationEnvironment } from '../api/application';
+import { HttpResponseApplication } from '../api/application';
 import {
     Grid,
     IconButton,
