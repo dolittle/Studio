@@ -103,8 +103,8 @@ export type HttpResponseEnvironmentVariables = {
     data: InputEnvironmentVariable[];
 };
 
-export type HttpResponseConfigFile = {
-    data: InputConfigFile;
+export type HttpResponseConfigFilesNamesList = {
+    data: string[];
 };
 
 export type InputConfigFile = {
@@ -267,19 +267,19 @@ export async function updateEnvironmentVariables(applicationId: string, environm
     return response.status === 200;
 }
 
-export async function getConfigFiles(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponseConfigFile> {
-    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files`;
+export async function getConfigFilesNamesList(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponseConfigFilesNamesList> {
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files/list`;
 
     const response = await fetch(url, {
         method: 'GET',
         mode: 'cors',
     });
 
-    const data: HttpResponseConfigFile = await response.json();
+    const data: HttpResponseConfigFilesNamesList = await response.json();
     return data;
 }
 
-export async function updateConfigFile(applicationId: string, environment: string, microserviceId: string, input: HttpInputConfigFile): Promise<boolean> {
+export async function updateConfigFiles(applicationId: string, environment: string, microserviceId: string, input: HttpInputConfigFile): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files`;
 
     const response = await fetch(
