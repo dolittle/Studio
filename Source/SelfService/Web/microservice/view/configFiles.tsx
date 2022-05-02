@@ -5,7 +5,7 @@ import React, {useEffect, useState} from 'react';
 import { getConfigFilesNamesList, updateConfigFiles } from '../../api/api';
 import { List } from '@fluentui/react/lib/List';
 import Typography from '@material-ui/core/Typography';
-import { Divider } from '@material-ui/core';
+import { Divider, Grid, Link } from '@material-ui/core';
 
 
 type Props = {
@@ -21,25 +21,6 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
 
     const [filesNamesList, setFilesNamesList] = useState<string[]>([])
 
-
-    const fileSelector = document.getElementById('file-selector');
-
-    fileSelector?.addEventListener('change', (event: any) => {
-        const fileList = event.target.files;
-
-        if (fileList[0]) {
-            var reader = new FileReader();
-            reader.readAsText(fileList[0], "UTF-8");
-            // reader.readAsDataURL(fileList[0]); USE THIS for images <<< try with  sending always binary
-            reader.onload = function (evt:any) {
-
-
-            }
-            reader.onerror = function (evt) {
-                console.log("error reading file");
-            }
-        }
-    });
     function formSubmit(event) {
 
         console.log(new FormData(event.target));
@@ -49,11 +30,11 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
         event.preventDefault();
     }
 
+    attachFormSubmitEvent()
+
     function attachFormSubmitEvent(){
         document?.getElementById("form-file-selector")?.addEventListener("submit", formSubmit);
-      }
-
-    attachFormSubmitEvent()
+    }
 
 
     useEffect(() => {
@@ -76,11 +57,24 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
 
     const onRenderCell =  (fileName: string | undefined, index: number | undefined): JSX.Element => {
         return (
-            <Typography variant="body1" component="body"
-            style={{
-                padding: "20px",
-                paddingLeft: '50px'
-            }}>{fileName}</Typography>
+            <Grid container spacing={2}>
+                 <Grid item
+                    style={{
+                        textAlign: "center"
+                    }}>
+                    <Typography variant="body1" >{fileName}</Typography>
+                </Grid>
+                <Grid item  style={{
+                        textAlign: "center",
+                        paddingBottom: "10px"
+                    }}>
+                    <Link onClick={() => {
+                        // const href = `/documentation/application/${applicationId}/${environment}/overview`;
+                    }}>
+                            Remove
+                    </Link>
+                </Grid>
+            </Grid>
         );
     };
 
@@ -93,14 +87,14 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
             component="h4"
             style={{
                 paddingBottom: '5px',
-            }}>See existing configuration files</Typography>
+            }}>Microservice configuration files</Typography>
         <Typography
             variant="body2"
             component="p"
             style={{
                 paddingBottom: '20px',
-            }}>mounted at /app/data</Typography>
-        <List items={filesNamesList} onRenderCell={onRenderCell} />
+            }}>/app/data</Typography>
+        <List items={filesNamesList} onRenderCell={onRenderCell} style={{backgroundColor: "white", width: "30%"}} />
         <Divider style={{ backgroundColor: '#3B3D48', marginTop: "20px", marginBottom: "20px" }}/>
         <Typography
             variant="h4"
