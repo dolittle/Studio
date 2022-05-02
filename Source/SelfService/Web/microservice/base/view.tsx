@@ -148,7 +148,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     }
     const msName = currentMicroservice.name;
 
-    const [currentTab, setCurrentTab] = useState(1);
+    const [currentTab, setCurrentTab] = useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setCurrentTab(newValue);
@@ -182,8 +182,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         value={currentTab}
                         onChange={handleChange}
                     >
-                        <Tab label='Configuration' />
                         <Tab label='Health Status' />
+                        <Tab label='Configuration' />
                         <Tab label='Configuration Files' />
                     </Tabs>
                 </Grid>
@@ -229,31 +229,31 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
 
             <TabPanel value={currentTab} index={0}>
-                <Box ml={2}>
-                    <ConfigView microservice={ms} />
-                </Box>
-                <Divider className={classes.divider} />
-                <Box ml={2}>
-                    <LiveIngressView urls={currentMicroservice.live.ingressUrls} paths={currentMicroservice.live.ingressPaths} />
-                </Box>
-                <Divider className={classes.divider} />
-                <Box ml={2}>
-                    <ButtonText
-                        onClick={async () => {
-                            const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
-                            history.push(href);
-                        }}
-                    >Manage environment variables</ButtonText>
-
-                    <DownloadButtons
-                        environment={environment}
-                        microserviceName={msName}
-                        applicationId={applicationId}
-                    />
-                </Box>
-            </TabPanel>
-            <TabPanel value={currentTab} index={1}>
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
+            </TabPanel>
+                <TabPanel value={currentTab} index={1}>
+                <Box ml={2}>
+                        <ConfigView microservice={ms} />
+                    </Box>
+                    <Divider className={classes.divider} />
+                    <Box ml={2}>
+                        <LiveIngressView urls={currentMicroservice.live.ingressUrls} paths={currentMicroservice.live.ingressPaths} />
+                    </Box>
+                    <Divider className={classes.divider} />
+                    <Box ml={2}>
+                        <ButtonText
+                            onClick={async () => {
+                                const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
+                                history.push(href);
+                            }}
+                        >Manage environment variables</ButtonText>
+
+                        <DownloadButtons
+                            environment={environment}
+                            microserviceName={msName}
+                            applicationId={applicationId}
+                        />
+                    </Box>
             </TabPanel>
 
             <TabPanel value={currentTab} index={2}>
