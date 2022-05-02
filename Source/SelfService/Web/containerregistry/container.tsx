@@ -65,8 +65,12 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
     return (
         <>
             <div>
+                <h1>Container Registry</h1>
+                <p>Url: {$info.endpoints.containerRegistry}</p>
+            </div>
+            <div>
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 480 }} aria-label="Docker images">
+                    <Table sx={{ minWidth: 480 }} aria-label="Docker images" size="small">
                         <TableHead>
                             <TableRow>
                                 <TableCell>Name</TableCell>
