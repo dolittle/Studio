@@ -46,67 +46,15 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
-    const updateConfigMapUrl=()=>`${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files/list`
-
-
     useEffect(() => {
-
         Promise.all([
             getPodStatus(applicationId, environment, microserviceId)
         ]).then((values) => {
             setPodsData(values[0]);
             setLoaded(true);
         });
-
-        const fetchData = async () => {
-
-            const result = await getConfigFilesNamesList(applicationId, environment, microserviceId)
-
-            // // consider strngifyign this
-            // const input = { name: "my-kingkong-file.json", value: newFile} as InputConfigFile
-
-            // const upsert = await updateConfigFile(applicationId, environment, microserviceId, input)
-          }
-
-          // call the function
-          fetchData()
-            // make sure to catch any error
-            .catch(console.error);;
-
     }, []);
-    const fileSelector = document.getElementById('file-selector');
-
-    fileSelector?.addEventListener('change', (event: any) => {
-        const fileList = event.target.files;
-
-        console.log(fileList);
-        if (fileList[0]) {
-            var reader = new FileReader();
-            reader.readAsText(fileList[0], "UTF-8");
-            // reader.readAsDataURL(fileList[0]); USE THIS for images <<< try with  sending always binary 
-            reader.onload = function (evt:any) {
-               console.log(evt.target.result);
-
-            }
-            reader.onerror = function (evt) {
-                console.log("error reading file");
-            }
-        }
-    });
-    function formSubmit(event) {
-
-        console.log(new FormData(event.target));
-
-        const upsert = updateConfigFiles(applicationId, environment, microserviceId, {form: new FormData(event.target)})
-
-        event.preventDefault();
-    }
-
-    function attachFormSubmitEvent(){
-        document?.getElementById("form-file-selector")?.addEventListener("submit", formSubmit);
-      }
-
-      attachFormSubmitEvent()
+   
 
     if (!loaded) {
         return null;
