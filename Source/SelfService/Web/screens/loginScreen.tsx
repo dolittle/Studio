@@ -35,7 +35,6 @@ export const LoginScreen: React.FunctionComponent = () => {
 
                         <ul>
                             <li>Backups</li>
-                            <li>Business Moments</li>
                             <li>Microservices</li>
                         </ul>
                     </div>
