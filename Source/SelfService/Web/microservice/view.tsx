@@ -83,7 +83,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         if (fileList[0]) {
             var reader = new FileReader();
             reader.readAsText(fileList[0], "UTF-8");
-            // reader.readAsDataURL(fileList[0]); USE THIS for images
+            // reader.readAsDataURL(fileList[0]); USE THIS for images <<< try with  sending always binary 
             reader.onload = function (evt:any) {
                console.log(evt.target.result);
 
