@@ -17,7 +17,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { RouteNotFound } from './components/notfound';
 import { Screen as AdminScreen } from './screens/adminScreen';
 
-import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { DieAndRestart } from './components/dieAndRestart';
 import { LayoutWithSidebar } from './layout/layoutWithSidebar';
 
@@ -30,6 +30,7 @@ import { ApplicationScreen } from './screens/applicationScreen';
 import { Box } from '@mui/material';
 import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
 import { M3ConnectorScreen } from './screens/m3connectorScreen';
+import { themeDark } from './theme/theme';
 
 const typography = {
     fontFamily: 'Rubik',
