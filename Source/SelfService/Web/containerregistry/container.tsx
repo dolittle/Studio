@@ -4,11 +4,16 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { HttpResponseApplication } from '../api/application';
+import {
+    Table, TableContainer, TableHead,
+    TableRow, TableCell, TableBody
+} from '@mui/material';
 
 //import './documentation.scss';
 
 import { useReadable } from 'use-svelte-store';
 import { info, load, isLoaded } from '../stores/documentationInfo';
+import Paper from '@mui/material/Paper';
 
 type Props = {
     environment: string
@@ -47,10 +52,37 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
         return null;
     }
 
+    const rows = [
+        { name: 'customer/application/productstructureextractor' },
+        { name: 'customer/application/excelsior' },
+        { name: 'customer/application/flattenedjsonproducer' },
+        { name: 'customer/application/ignite' },
+        { name: 'customer/application/productstructureextractor-jobs' },
+        { name: 'customer/application/supplier' },
+        { name: 'customer/application/webhooksingestor' }
+    ];
+
     return (
         <>
             <div>
-                <p>Get out of here</p>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 480 }} aria-label="Docker images">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Name</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows.map((row) => (
+                                <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                    <TableCell component="th" scope="row">
+                                        {row.name}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </div>
         </>
     );
