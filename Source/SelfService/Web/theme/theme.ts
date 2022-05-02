@@ -2,57 +2,57 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { createTheme } from '@mui/material/styles';
+import { TypographyOptions } from '@mui/material/styles/createTypography';
 
-const typography = {
+const typography: TypographyOptions = {
     fontFamily: '"Rubik", "Open sans", "Arial", sans-serif',
     fontWeightMedium: 500,
-
     h1: {
-        fontSize: '4.281rem',
+        fontSize: '3.75rem', //60px
         fontWeight: 800,
     },
     h2: {
-        fontSize: '3.429rem',
+        fontSize: '3rem', //48px
         fontWeight: 500,
     },
     h3: {
-        fontSize: '2.571rem',
+        fontSize: '2.25rem', //36px
         fontWeight: 500,
     },
     h4: {
-        fontSize: '2.143rem',
+        fontSize: '1.875rem', //30px
         fontWeight: 500,
     },
     h5: {
-        fontSize: '1.857rem',
+        fontSize: '1.625rem', //26px
         fontWeight: 500,
     },
     h6: {
-        fontSize: '1.571rem',
+        fontSize: '1.375rem', //22px
         fontWeight: 300,
     },
     subtitle1: {
-        fontSize: '1.429rem',
+        fontSize: '1.25rem', //20px
         fontWeight: 500,
     },
     subtitle2: {
-        fontSize: '1.286rem',
+        fontSize: '1.125rem', //18px
         fontWeight: 500,
     },
     body1: {
-        fontSize: '1.143rem',
+        fontSize: '1rem', //16px
     },
     body2: {
-        fontSize: '1rem',
+        fontSize: '0.875rem', //14px
     },
     button: {
-        fontSize: '0.857rem',
+        fontSize: '0.75rem', //12px
     },
     caption: {
-        fontSize: '0.857rem',
+        fontSize: '0.75rem', //12px
     },
     overline: {
-        fontSize: '0.714rem',
+        fontSize: '0.625rem', //10px
     },
 };
 export const themeDark = createTheme({
