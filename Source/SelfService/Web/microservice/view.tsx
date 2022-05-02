@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useReadable } from 'use-svelte-store';
 
-import { getConfigFiles, getPodStatus, getServerUrlPrefix, HttpResponsePodStatus, InputConfigFile, updateConfigFile } from '../api/api';
+import { getConfigFilesNamesList, getPodStatus, getServerUrlPrefix, HttpResponsePodStatus, InputConfigFile, updateConfigFiles } from '../api/api';
 import { microservices, MicroserviceStore } from '../stores/microservice';
 import { View as BaseView } from './base/view';
 import { View as BusinessMomentsAdaptorView } from './businessMomentsAdaptor/view';
@@ -46,23 +46,21 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
-    const updateConfigMapUrl=()=>`${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files`
+    const updateConfigMapUrl=()=>`${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files/list`
 
 
     useEffect(() => {
 
         Promise.all([
             getPodStatus(applicationId, environment, microserviceId)
-        ]).then((values) => async function(){
+        ]).then((values) => {
             setPodsData(values[0]);
             setLoaded(true);
         });
 
         const fetchData = async () => {
 
-            const result = await getConfigFiles(applicationId, environment, microserviceId)
-
-            const newFile = `{"obj2" : { "field": 0}}`
+            const result = await getConfigFilesNamesList(applicationId, environment, microserviceId)
 
             // // consider strngifyign this
             // const input = { name: "my-kingkong-file.json", value: newFile} as InputConfigFile
@@ -80,6 +78,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
 
     fileSelector?.addEventListener('change', (event: any) => {
         const fileList = event.target.files;
+
         console.log(fileList);
         if (fileList[0]) {
             var reader = new FileReader();
@@ -98,7 +97,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
 
         console.log(new FormData(event.target));
 
-        const upsert = updateConfigFile(applicationId, environment, microserviceId, {form: new FormData(event.target)})
+        const upsert = updateConfigFiles(applicationId, environment, microserviceId, {form: new FormData(event.target)})
 
         event.preventDefault();
     }
@@ -108,14 +107,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
       }
 
       attachFormSubmitEvent()
-
-
-    return(
-        <form method="put" id="form-file-selector">
-            <input type="file" id="file-selector" name='file' />
-            <input type="submit" value="Submit"/>
-        </form>
-    )
 
     if (!loaded) {
         return null;
