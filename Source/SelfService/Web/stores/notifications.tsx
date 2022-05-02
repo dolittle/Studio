@@ -65,8 +65,13 @@ const saveToLocalStorage = (key: string, newValue: any): any => {
     localStorage.setItem(key, JSON.stringify(newValue));
 };
 
+
+type GlobalContextProviderProps = {
+    children?: React.ReactNode
+};
+
 // eslint-disable-next-line react/prop-types
-export const GlobalContextProvider: React.FunctionComponent = ({ children }) => {
+export const GlobalContextProvider: React.FunctionComponent<GlobalContextProviderProps> = ({ children }) => {
     const location = useLocation();
 
     const initErrors = getFromLocalStorage('errors', []);
