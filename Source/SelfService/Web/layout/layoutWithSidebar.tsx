@@ -75,7 +75,10 @@ export const getDefaultMenu = (history: History<LocationState>, applicationId: s
             href: `/insights/application/${applicationId}/${environment}/overview`,
             name: 'Insights'
         },
-
+        {
+            href: `/containerregistry/application/${applicationId}/${environment}/overview`,
+            name: 'Container Registry'
+        },
         {
             href: `/documentation/application/${applicationId}/${environment}/overview`,
             name: 'Documentation'

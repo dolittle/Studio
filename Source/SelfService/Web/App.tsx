@@ -29,6 +29,7 @@ import { ThemeScreen } from './screens/themeScreen';
 import '@fontsource/rubik';
 import { ApplicationScreen } from './screens/applicationScreen';
 import { Box } from '@mui/material';
+import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
 
 
 const typography = {
@@ -132,6 +133,10 @@ export const App = () => {
 
                                     <Route path="/business-moments/application/:applicationId/:environment">
                                         <BusinessMomentsScreen />
+                                    </Route>
+
+                                    <Route path="/containerregistry/application/:applicationId/:environment">
+                                        <ContainerRegistryScreen />
                                     </Route>
 
                                     <Route path="/documentation/application/:applicationId/:environment">
