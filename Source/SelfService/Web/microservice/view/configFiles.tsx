@@ -28,6 +28,7 @@ createStyles({
 })
 );
 
+const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 
 export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
@@ -39,8 +40,6 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
 
     async function formSubmit(event) {
         event.preventDefault();
-
-        console.log(new FormData(event.target));
 
         const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, {form: new FormData(event.target)})
 
@@ -60,8 +59,6 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
 
     fileSelector?.addEventListener('change', (event: any) => {
         const fileList = event.target.files;
-        const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
-
         if (fileList[0].size > MAX_CONFIGMAP_ENTRY_SIZE) {
             alert("file cannot be larger than 3145728 bytes. Please select another file")
         }
@@ -133,6 +130,12 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
             style={{
                 paddingBottom: '5px',
             }}>Add new configuration file</Typography>
+        <Typography
+            variant="body2"
+            component="p"
+            style={{
+                paddingBottom: '20px',
+            }}>max file size: {MAX_CONFIGMAP_ENTRY_SIZE} bytes / 3.15mb</Typography>
         <form method="put" id="form-file-selector">
             <input type="file" id="file-selector" name='file' />
             <input type="submit" value="Submit"/>
