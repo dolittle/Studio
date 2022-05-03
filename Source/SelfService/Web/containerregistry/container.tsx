@@ -12,8 +12,9 @@ import {
 //import './documentation.scss';
 
 import { useReadable } from 'use-svelte-store';
-import { info, load, isLoaded } from '../stores/documentationInfo';
+import { info, isLoaded } from '../stores/documentationInfo';
 import Paper from '@mui/material/Paper';
+import { getReposInContainerRegistry, ContainerRegistryImages } from '../api/containerregistry';
 
 type Props = {
     environment: string
@@ -31,12 +32,17 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
     const $isLoaded = useReadable(isLoaded) as boolean;
 
     const [loaded, setLoaded] = useState(false);
+    const [containerRegistryImages, setContainerRegistryImages] = useState({
+        url: '',
+        images: [],
+    } as ContainerRegistryImages);
 
     useEffect(() => {
         if (!$isLoaded) {
             Promise.all([
-                load(applicationId),
+                getReposInContainerRegistry()
             ]).then(values => {
+                setContainerRegistryImages(values[0]);
                 setLoaded(true);
             });
         } else {
@@ -44,29 +50,16 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
         }
     }, []);
 
+
     if (!loaded) {
         return null;
     }
-
-    if ($info.applicationId === '') {
-        return null;
-    }
-
-    const rows = [
-        { name: 'customer/application/productstructureextractor' },
-        { name: 'customer/application/excelsior' },
-        { name: 'customer/application/flattenedjsonproducer' },
-        { name: 'customer/application/ignite' },
-        { name: 'customer/application/productstructureextractor-jobs' },
-        { name: 'customer/application/supplier' },
-        { name: 'customer/application/webhooksingestor' }
-    ];
 
     return (
         <>
             <div>
                 <h1>Container Registry</h1>
-                <p>Url: {$info.endpoints.containerRegistry}</p>
+                <p>{containerRegistryImages.url}</p>
             </div>
             <div>
                 <TableContainer component={Paper}>
@@ -77,7 +70,7 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
+                            {containerRegistryImages.images.map(row => (
                                 <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                     <TableCell component="th" scope="row">
                                         {row.name}
