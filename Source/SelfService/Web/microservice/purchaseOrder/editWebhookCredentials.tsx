@@ -29,24 +29,6 @@ const styles = {
     icon: {
         fill: '#6678F6',
     },
-<<<<<<< HEAD
-    textField: { //https://stackoverflow.com/a/60461876 excellent resource
-        '& .MuiOutlinedInput-input': {
-            color: 'white'
-        },
-        '& .MuiInputLabel-root': {
-            color: 'white'
-        },
-        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-            color: 'white',
-            borderColor: theme => theme.palette.text.secondary
-        },
-        '&:hover .MuiOutlinedInput-input': {
-            color: 'white'
-        },
-    }
-=======
->>>>>>> main
 };
 
 
@@ -81,11 +63,6 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
             required
             id='outlined-required'
             label='Username'
-<<<<<<< HEAD
-            variant='outlined'
-            sx={styles.textField}
-=======
->>>>>>> main
             value={username}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setUsername(event.target.value!);
@@ -105,11 +82,6 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
                     type={showPassword ? 'text' : 'password'}
                     label='Password'
                     autoComplete='current-password'
-<<<<<<< HEAD
-                    variant='outlined'
-                    sx={styles.textField}
-=======
->>>>>>> main
                     value={password}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setPassword(event.target.value!);
