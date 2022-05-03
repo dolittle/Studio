@@ -42,15 +42,20 @@ az acr repository list --name ${vars.acrId} -otable
 ~~~
 
 
-# Login to your registry in docker
+# Push images
 ~~~sh
-docker login ${vars.dockerCredentials.repoUrl}
+# pull down your exmaple of choice
+# .net hello world
+git clone git@github.com:dolittle-entropy/dotnet-hello-world
 
-# username (you'll have to type it into the CLI)
-username: ${vars.dockerCredentials.username}
+# build dotnet-hello-world docker image
+docker build -t dotnet-hello-world .
 
-# password (you'll have to type it into the CLI)
-password: ${vars.dockerCredentials.password}
+# tag the image with the url to container registry
+docker tag dotnet-hello-world:latest ${vars.dockerCredentials.repoUrl}/dotnet-hello-world:latest
+
+# push the image to container registry
+docker push ${vars.dockerCredentials.repoUrl}/dotnet-hello-world:latest
 ~~~
 
 `;
