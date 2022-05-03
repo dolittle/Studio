@@ -6,6 +6,9 @@ import { deleteConfigFile, getConfigFilesNamesList, updateConfigFiles } from '..
 import { List } from '@fluentui/react/lib/List';
 import Typography from '@material-ui/core/Typography';
 import { Divider, Grid, Link } from '@material-ui/core';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+
 
 
 type Props = {
@@ -14,12 +17,25 @@ type Props = {
     microserviceId: string
 };
 
+const useStyles = makeStyles((theme: Theme) =>
+createStyles({
+    base: {
+        '& .MuiTypography-body1': {
+            color: 'black',
+            align: "center"
+        }
+    },
+})
+);
 
 
 
 export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
 
     const [filesNamesList, setFilesNamesList] = useState<string[]>([])
+    const classes = useStyles();
+
+
 
     function formSubmit(event) {
 
@@ -59,9 +75,7 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
         return (
             <Grid container spacing={2}>
                  <Grid item
-                    style={{
-                        textAlign: "center"
-                    }}>
+                      className={clsx(classes.base)}>
                     <Typography variant="body1" >{fileName}</Typography>
                 </Grid>
                 <Grid item  style={{
@@ -71,10 +85,6 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
                     <Link onClick={() => {
                            if(!fileName) return;
                              deleteConfigFile(props.applicationId, props.environment, props.microserviceId, fileName)
-
-                        //    if(!result) {
-                        //        window.alert(`Could not fetch delete file`)
-                        //    }
                     }}>
                             Remove
                     </Link>
@@ -111,6 +121,5 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
             <input type="file" id="file-selector" name='file' />
             <input type="submit" value="Submit"/>
         </form>
-
     </>)
 }
