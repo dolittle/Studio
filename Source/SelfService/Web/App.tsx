@@ -28,11 +28,7 @@ import { ThemeScreen } from './screens/themeScreen';
 import '@fontsource/rubik';
 import { ApplicationScreen } from './screens/applicationScreen';
 import { Box } from '@mui/material';
-<<<<<<< HEAD
 import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
-=======
->>>>>>> main
-
 
 const typography = {
     fontFamily: 'Rubik',
