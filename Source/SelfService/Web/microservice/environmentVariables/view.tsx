@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
+import { Box, Paper, SelectChangeEvent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
 import {
@@ -96,8 +96,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     />
                 </TableCell>
                 <TableCell align="right">
-                    <DropDownMenu items={isSecretOptions} value={isSecret} onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                        const newValue = event.target.value as string;
+                    <DropDownMenu items={isSecretOptions} value={isSecret} onChange={(event: SelectChangeEvent<string>) => {
+                        const newValue = event.target.value;
                         const data = currentData;
                         data[index].isSecret = newValue === 'yes' ? true : false;
                         setCurrentData([...data]);

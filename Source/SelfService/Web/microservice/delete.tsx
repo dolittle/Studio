@@ -1,21 +1,20 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useSnackbar } from 'notistack';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useReadable } from 'use-svelte-store';
 import { microservices, deleteMicroservice, canDeleteMicroservice, MicroserviceStore } from '../stores/microservice';
 import { TabPanel } from '../utils/materialUi';
 
-import { HttpResponseApplication, HttpInputApplicationEnvironment } from '../api/application';
+import { HttpResponseApplication } from '../api/application';
 import {
     Grid,
     IconButton,
     Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 
 
 type Props = {
@@ -23,29 +22,26 @@ type Props = {
     environment: string
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        deleteIcon: {
-            'padding': 0,
-            'marginRight': theme.spacing(1),
-            'fill': 'white',
-            '& .MuiSvgIcon-root': {
-                color: 'white',
-                marginRight: theme.spacing(1),
-            },
-            '& .MuiTypography-root': {
-                color: 'white',
-                textTransform: 'uppercase'
-            }
+const styles = {
+    deleteIcon: {
+        'padding': 0,
+        'marginRight': 1,
+        'fill': 'white',
+        '& .MuiSvgIcon-root': {
+            color: 'white',
+            marginRight: 1,
         },
+        '& .MuiTypography-root': {
+            color: 'white',
+            textTransform: 'uppercase'
+        }
+    },
 
-    })
-);
+};
 
 
 export const Delete: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
-    const classes = useStyles();
     const history = useHistory();
     const $microservices = useReadable(microservices) as any;
     const { microserviceId } = useParams() as any;
@@ -84,38 +80,36 @@ export const Delete: React.FunctionComponent<Props> = (props) => {
         history.push(href);
     };
 
-    return (
-        <>
-            <Grid
-                container
-                direction='column'
-                justifyContent='flex-start'
+    return <>
+        <Grid
+            container
+            direction='column'
+            justifyContent='flex-start'
+        >
+            <Grid container
+                spacing={2}
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="flex-start"
             >
-                <Grid container
-                    spacing={2}
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="flex-start"
-                >
-                    <Grid item xs={3}>
-                        <Typography variant="h3" component="h3">{msName}</Typography>
-                    </Grid>
+                <Grid item xs={3}>
+                    <Typography variant="h3" component="h3">{msName}</Typography>
                 </Grid>
+            </Grid>
 
-                <TabPanel value={0} index={0}>
-                    <h1>Delete Microservice</h1>
-                    <p>Currently this is not possible to undo</p>
-                    <p>Clicking on the button will delete the microservice</p>
+            <TabPanel value={0} index={0}>
+                <h1>Delete Microservice</h1>
+                <p>Currently this is not possible to undo</p>
+                <p>Clicking on the button will delete the microservice</p>
 
-                    <IconButton
-                        onClick={() => onClickDelete()}
-                        className={classes.deleteIcon}
-                    >
-                        <DeleteIcon />
-                        <Typography>delete</Typography>
-                    </IconButton>
-                </TabPanel>
-            </Grid >
-        </>
-    );
+                <IconButton
+                    onClick={() => onClickDelete()}
+                    sx={styles.deleteIcon}
+                    size="large">
+                    <DeleteIcon />
+                    <Typography>delete</Typography>
+                </IconButton>
+            </TabPanel>
+        </Grid >
+    </>;
 };

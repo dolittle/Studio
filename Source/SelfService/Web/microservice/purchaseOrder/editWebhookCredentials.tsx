@@ -1,27 +1,40 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React, { useState, useEffect } from 'react';
-import { Grid, IconButton, TextField, Typography } from '@material-ui/core';
+import { Box, Grid, IconButton, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
 import { getCredentialsFromBasicAuth } from '../../utils/httpCredentials';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import { ClassNameMap } from '@material-ui/styles/withStyles';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { GeneratePassword } from './generatePassword';
 import { Button } from '../../theme/button';
 import { ButtonText } from '../../theme/buttonText';
+import { TextField } from '../../theme/textField';
 
 
 type Props = {
-    authorization: string
-    classes: ClassNameMap<any>
+    authorization: string;
     onCancel: () => void;
 };
+
+const styles = {
+    actionsContainer: {
+        marginBottom: 2,
+    },
+    iconRoot: {
+        padding: 0,
+        paddingLeft: 10,
+        marginRight: 1,
+    },
+    icon: {
+        fill: '#6678F6',
+    },
+};
+
 
 export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
 
-    const classes = props!.classes;
     const credentials = getCredentialsFromBasicAuth(props!.authorization);
     const [username, setUsername] = useState(credentials.username);
     const [password, setPassword] = useState(credentials.password);
@@ -40,91 +53,86 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
     });
 
 
-    return (
-        <>
-            <Typography component="p" className={classes.label}>
-                Username
-            </Typography>
+    return <>
+        <Typography component="p">
+            Username
+        </Typography>
 
 
-            <TextField
-                required
-                id='outlined-required'
-                label='Username'
-                variant='outlined'
-                className={classes.textField}
-                value={username}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    setUsername(event.target.value!);
-                    setSaveProtection(true);
-                }}
-            />
+        <TextField
+            required
+            id='outlined-required'
+            label='Username'
+            value={username}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setUsername(event.target.value!);
+                setSaveProtection(true);
+            }}
+        />
 
 
-            <Typography component="p" className={classes.label}>
-                Password
-            </Typography>
-            <Grid container spacing={3}>
-                <Grid item xs={2}>
-                    <TextField
-                        required
-                        id='outlined-password-input'
-                        type={showPassword ? 'text' : 'password'}
-                        label='Password'
-                        autoComplete='current-password'
-                        variant='outlined'
-                        className={classes.textField}
-                        value={password}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            setPassword(event.target.value!);
-                            setSaveProtection(true);
-                        }}
-                    />
-                </Grid>
-
-                <Grid
-                    item xs={10}
-                >
-                    <IconButton onClick={() => {
-                        togglePassword();
-                    }}
-                        className={classes.iconRoot}
-                    >
-                        <VisibilityIcon className={classes.icon} />
-                    </IconButton>
-
-                    <GeneratePassword password={password} setPassword={(newPassword) => {
-                        setPassword(newPassword);
+        <Typography component="p">
+            Password
+        </Typography>
+        <Grid container spacing={3}>
+            <Grid item xs={2}>
+                <TextField
+                    required
+                    id='outlined-password-input'
+                    type={showPassword ? 'text' : 'password'}
+                    label='Password'
+                    autoComplete='current-password'
+                    value={password}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        setPassword(event.target.value!);
                         setSaveProtection(true);
                     }}
-                    />
-                </Grid>
+                />
             </Grid>
 
-            <div className={classes.actionsContainer}>
-                <div>
-                    <ButtonText
-                        onClick={() => {
-                            if (saveProtection) {
-                                enqueueSnackbar('TODO: cancel', { variant: 'warning' });
-                            }
-                            props!.onCancel();
-                        }}
-                        disabled={false}
-                        buttonType='secondary'
-                    >
-                        Back
-                    </ButtonText>
-                    <Button
-                        onClick={() => {
-                            enqueueSnackbar('TODO: save', { variant: 'warning' });
-                        }}
-                        disabled={false}
-                    >
-                        Save
-                    </Button>
-                </div>
+            <Grid
+                item xs={10}
+            >
+                <IconButton
+                    onClick={() => {
+                        togglePassword();
+                    }}
+                    sx={styles.iconRoot}
+                    size="large">
+                    <VisibilityIcon color='primary' sx={styles.icon} />
+                </IconButton>
+
+                <GeneratePassword password={password} setPassword={(newPassword) => {
+                    setPassword(newPassword);
+                    setSaveProtection(true);
+                }}
+                />
+            </Grid>
+        </Grid>
+
+        <Box sx={styles.actionsContainer}>
+            <div>
+                <ButtonText
+                    onClick={() => {
+                        if (saveProtection) {
+                            enqueueSnackbar('TODO: cancel', { variant: 'warning' });
+                        }
+                        props!.onCancel();
+                    }}
+                    disabled={false}
+                    buttonType='secondary'
+                >
+                    Back
+                </ButtonText>
+                <Button
+                    onClick={() => {
+                        enqueueSnackbar('TODO: save', { variant: 'warning' });
+                    }}
+                    disabled={false}
+                >
+                    Save
+                </Button>
             </div>
-        </>
-    );
+        </Box>
+    </>;
 };

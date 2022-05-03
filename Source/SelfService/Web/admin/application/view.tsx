@@ -76,8 +76,9 @@ export const View: React.FunctionComponent<any> = (props) => {
             setAccessInfo(access);
             setUserEmail('');
             enqueueSnackbar('Access granted, email added', { variant: 'info' });
-        } catch (e) {
-            enqueueSnackbar(e.message, { variant: 'error' });
+        } catch (e: unknown) {
+            const message = (e instanceof Error) ? e.message : 'Something went wrong when adding email';
+            enqueueSnackbar(message, { variant: 'error' });
         }
     };
 
@@ -91,8 +92,9 @@ export const View: React.FunctionComponent<any> = (props) => {
             const access = await getAdminApplicationAccess(customerId, applicationId);
             setAccessInfo(access);
             enqueueSnackbar('Access revoked, email removed', { variant: 'info' });
-        } catch (e) {
-            enqueueSnackbar(e.message, { variant: 'error' });
+        } catch (e: unknown) {
+            const message = (e instanceof Error) ? e.message : 'Something went wrong when removing email';
+            enqueueSnackbar(message, { variant: 'error' });
         }
     };
 

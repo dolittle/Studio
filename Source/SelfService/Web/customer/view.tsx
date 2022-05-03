@@ -2,75 +2,53 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-
 import { useParams, useHistory } from 'react-router-dom';
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
-
-
 import { getCustomer, CustomerDetailed } from '../api/customer';
 import { saveStudioConfig, Studio } from '../api/studio';
 import { ButtonText } from '../theme/buttonText';
+import { Box } from '@mui/material';
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: '100%',
+const styles = {
+    root: {
+        width: '100%',
+    },
+    button: {
+        marginTop: 1,
+        marginRight: 1,
+    },
+    actionsContainer: {
+        marginBottom: 2,
+    },
+    resetContainer: {
+        padding: 3,
+    },
+    inactiveText: {
+        color: '#93959F',
+    },
+    progressBar: {
+        color: '#ff9366',
+    },
+    stepIcon: {
+        'color': '#3B3D48',
+        '&.MuiStepIcon-root.Mui-active': {
+            color: '#6678F6'
         },
-        button: {
-            marginTop: theme.spacing(1),
-            marginRight: theme.spacing(1),
+        '&.MuiStepIcon-root.Mui-completed': {
+            color: '#6678F6'
         },
-        actionsContainer: {
-            marginBottom: theme.spacing(2),
+        '&.MuiStepIcon-root.Mui-active .MuiStepIcon-text': {
+            fill: '#B3BBFB'
         },
-        resetContainer: {
-            padding: theme.spacing(3),
-        },
-        inactiveText: {
-            color: '#93959F',
-        },
-        progressBar: {
-            color: '#ff9366',
-        },
-
-        textField: { //https://stackoverflow.com/a/60461876 excellent resource
-            '& .MuiOutlinedInput-input': {
-                color: 'white'
-            },
-            '& .MuiInputLabel-root': {
-                color: 'white'
-            },
-            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-                color: 'white',
-                borderColor: 'white'
-            },
-            '&:hover .MuiOutlinedInput-input': {
-                color: 'white'
-            },
-        },
-        stepIcon: {
-            'color': '#3B3D48',
-            '&.MuiStepIcon-active': {
-                color: '#6678F6'
-            },
-            '&.MuiStepIcon-completed': {
-                color: '#6678F6'
-            },
-            '&.MuiStepIcon-active .MuiStepIcon-text': {
-                fill: '#B3BBFB'
-            },
-            '&.MuiStepIcon-root .MuiStepIcon-text': {
-                fill: '#93959F'
-            }
+        '&.MuiStepIcon-root .MuiStepIcon-text': {
+            fill: '#93959F'
         }
-    })
-);
+    }
+};
 
 export const View: React.FunctionComponent<any> = (props) => {
     const history = useHistory();
-    const classes = useStyles();
     const { enqueueSnackbar } = useSnackbar();
 
     const { customerId } = useParams();
@@ -111,7 +89,7 @@ export const View: React.FunctionComponent<any> = (props) => {
     return (
         <>
             <h1>Customer {customer.customer.name}</h1>
-            <div className={classes.root}>
+            <Box sx={styles.root}>
                 <ul>
                     <li>
                         Customer ID: {customerId}
@@ -169,7 +147,7 @@ export const View: React.FunctionComponent<any> = (props) => {
                         </>);
                     })}
                 </ul>
-            </div>
+            </Box>
         </>
     );
 };

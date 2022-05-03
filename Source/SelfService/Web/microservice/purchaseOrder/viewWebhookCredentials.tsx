@@ -1,20 +1,28 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React, { useState } from 'react';
-import { Box, Grid, IconButton, Typography } from '@material-ui/core';
+import { Box, IconButton, Typography } from '@mui/material';
 
 import { getCredentialsFromBasicAuth } from '../../utils/httpCredentials';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import { ClassNameMap } from '@material-ui/styles/withStyles';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { RowWithLink } from './rowWithLink';
 
 type Props = {
     authorization: string
-    classes: ClassNameMap<any>
+};
+
+const styles = {
+    iconRoot: {
+        padding: 0,
+        paddingLeft: 10,
+        marginRight: 1,
+    },
+    icon: {
+        fill: '#6678F6',
+    },
 };
 
 export const ViewWebhookCredentials: React.FunctionComponent<Props> = (props) => {
-    const classes = props!.classes;
     const credentials = getCredentialsFromBasicAuth(props!.authorization);
     const username = credentials.username;
     const hiddenPassword = '******';
@@ -28,39 +36,38 @@ export const ViewWebhookCredentials: React.FunctionComponent<Props> = (props) =>
         }
     };
 
-    return (
-        <>
-            <Box px={0} mx={0} py={1}>
-                <Typography component="p" className={classes.label}>
-                    Username
-                </Typography>
+    return <>
+        <Box px={0} mx={0} py={1}>
+            <Typography component="p">
+                Username
+            </Typography>
 
-                <Typography component="p" className={classes.data}>
-                    {username}
-                </Typography>
-            </Box>
+            <Typography component="p">
+                {username}
+            </Typography>
+        </Box>
 
-            <Box px={0} mx={0} py={1}>
-                <RowWithLink
-                    title='Password'
-                    prefix={
-                        <Typography component="p" className={classes.data}>
-                            {password}
-                        </Typography>
-                    }
-                    suffix={
-                        <Box m={-1.2}>
-                            <IconButton onClick={() => {
+        <Box px={0} mx={0} py={1}>
+            <RowWithLink
+                title='Password'
+                prefix={
+                    <Typography component="p">
+                        {password}
+                    </Typography>
+                }
+                suffix={
+                    <Box m={-1.2}>
+                        <IconButton
+                            onClick={() => {
                                 togglePassword();
                             }}
-                                className={classes.iconRoot}
-                            >
-                                <VisibilityIcon className={classes.icon} />
-                            </IconButton>
-                        </Box>
-                    }
-                />
-            </Box >
-        </>
-    );
+                            sx={styles.iconRoot}
+                            size="large">
+                            <VisibilityIcon sx={styles.icon} />
+                        </IconButton>
+                    </Box>
+                }
+            />
+        </Box >
+    </>;
 };

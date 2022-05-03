@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 
 import { HeaderDataRow } from '../components/headDataRow';
 import { IngressURLWithCustomerTenantID, SimpleIngressPath } from '../../api/api';
