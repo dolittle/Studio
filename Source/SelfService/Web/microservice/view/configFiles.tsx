@@ -42,7 +42,7 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
         event.preventDefault();
 
         const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, {form: new FormData(event.target)})
-
+        console.log("upsert", upsert);
         fetchConfigFilesNamesList()
 
     }
@@ -77,10 +77,8 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
 
 
     useEffect(() => {
-          // call the function
-          fetchConfigFilesNamesList()
-            // make sure to catch any error
-            .catch(console.error);;
+        fetchConfigFilesNamesList()
+        .catch(console.error);;
 
     }, []);
 
@@ -95,9 +93,13 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
                         textAlign: "center",
                         paddingBottom: "10px"
                     }}>
-                    <Link onClick={() => {
+                    <Link onClick={async () => {
                            if(!fileName) return;
-                             deleteConfigFile(props.applicationId, props.environment, props.microserviceId, fileName)
+
+                            await deleteConfigFile(props.applicationId, props.environment, props.microserviceId, fileName);
+
+                            fetchConfigFilesNamesList()
+                                .catch(console.error);;
                     }}>
                             Remove
                     </Link>
@@ -120,10 +122,10 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
             variant="body2"
             component="p"
             style={{
-                paddingBottom: '20px',
+                paddingBottom: '50px',
             }}>/app/data</Typography>
         <List items={filesNamesList} onRenderCell={onRenderCell} style={{backgroundColor: "white", width: "30%"}} />
-        <Divider style={{ backgroundColor: '#3B3D48', marginTop: "20px", marginBottom: "20px" }}/>
+        <Divider style={{ backgroundColor: '#3B3D48', marginTop: "40px", marginBottom: "20px" }}/>
         <Typography
             variant="h4"
             component="h4"
@@ -134,8 +136,14 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
             variant="body2"
             component="p"
             style={{
-                paddingBottom: '20px',
+                paddingBottom: '5px',
             }}>max file size: {MAX_CONFIGMAP_ENTRY_SIZE} bytes / 3.15mb</Typography>
+        <Typography
+            variant="body2"
+            component="p"
+            style={{
+                paddingBottom: '50px',
+            }}>submitting files with the same name will cause the original file to be replaced</Typography>
         <form method="put" id="form-file-selector">
             <input type="file" id="file-selector" name='file' />
             <input type="submit" value="Submit"/>
