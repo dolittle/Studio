@@ -2,15 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useHistory, Switch, Route, useParams } from 'react-router-dom';
-import { HttpResponseApplication } from '../api/application';
+import { useHistory, useParams } from 'react-router-dom';
 import {
     Table, TableContainer, TableHead,
     TableRow, TableCell, TableBody
 } from '@mui/material';
 
-import { useReadable } from 'use-svelte-store';
-import { info, isLoaded } from '../stores/documentationInfo';
 import Paper from '@mui/material/Paper';
 import { ContainerRegistryTags, getTagsInContainerRegistry } from '../api/containerregistry';
 
