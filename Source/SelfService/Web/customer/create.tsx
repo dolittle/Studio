@@ -14,8 +14,8 @@ import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 
 import { Box, Grid } from '@mui/material';
-import TextField from '@mui/material/TextField';
 import { Button } from '../theme/button';
+import { TextField as ThemedTextField } from '../theme/textField';
 import { createCustomer, HttpCustomerRequest } from '../api/customer';
 
 
@@ -44,6 +44,7 @@ const styles = {
     progressBar: {
         color: '#ff9366',
     },
+<<<<<<< HEAD
 
     textField: { //https://stackoverflow.com/a/60461876 excellent resource
         '& .MuiOutlinedInput-input': {
@@ -60,6 +61,8 @@ const styles = {
             color: 'white'
         },
     },
+=======
+>>>>>>> main
     stepIcon: {
         'color': '#3B3D48',
         '&.MuiStepIcon-root.Mui-active': {
@@ -108,12 +111,15 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 justifyContent='flex-start'
                 alignItems='center'
             >
-                <TextField
+                <ThemedTextField
                     required
                     id='customerName'
                     label='Name'
+<<<<<<< HEAD
                     variant='outlined'
                     sx={styles.textField}
+=======
+>>>>>>> main
                     value={customerName}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setCustomerName(event.target.value!);

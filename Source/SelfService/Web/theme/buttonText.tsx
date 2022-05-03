@@ -88,7 +88,6 @@ export const ButtonText: React.FunctionComponent<Props> = (props) => {
             disabled={disabled}
             startIcon={startIcon}
             onClick={onClick}
-            // className={clsx(classes.base, buttonTypeClassName, _props.className)}
             size={buttonSize}
         >
             {children}

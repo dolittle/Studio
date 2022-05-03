@@ -7,8 +7,6 @@
 import React, { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router';
 
-
-import { Create as BusinessMomentsAdaptor } from './businessMomentsAdaptor/create';
 import { Create as Base } from './base/create';
 import { Create as StaticSite } from './staticSite/create';
 import { Create as PurchaseOrder } from './purchaseOrder/create';
@@ -54,21 +52,6 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
                     <path d="M24.5601 18.1093L24.6152 18.0773L24.6152 12.6924L20 10L15.3845 12.6924L15.3845 18.0773L20 20.7692L24.5601 18.1093Z" fill="#E9EAEC" />
                     <path d="M19.1753 27.3401L19.2305 27.308L19.2305 21.9231L14.6152 19.2307L9.9997 21.9231L9.9997 27.308L14.6152 29.9999L19.1753 27.3401Z" fill="#E9EAEC" />
                     <path d="M29.9449 27.3401L30 27.308L30 21.9231L25.3847 19.2307L20.7692 21.9231L20.7692 27.308L25.3847 29.9999L29.9449 27.3401Z" fill="#E9EAEC" />
-                </svg>
-            )
-        },
-        {
-            kind: 'business-miner',
-            name: 'Business moment adapter',
-            description: 'Integrate your data into the Dolittle platform to mine for business moments.',
-            icon: (
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="20" cy="20" r="20" fill="#3B3D48" />
-                    <path d="M17.4197 26.3441L17.6668 26.0036C17.9648 25.5931 18.0351 25.0667 17.8558 24.5935L17.5432 23.7749L19.2393 23.135L16.8673 16.905L10.9118 19.158C10.6647 19.2521 10.4684 19.4356 10.3594 19.6771C10.2504 19.9186 10.2431 20.1866 10.3376 20.4329L10.386 20.5633L9.55015 20.8796C9.10918 21.0463 8.8887 21.5389 9.05588 21.9759L10.0832 24.6731C10.1631 24.8856 10.323 25.0547 10.5314 25.1464C10.6429 25.1971 10.7616 25.2213 10.8803 25.2213C10.9821 25.2213 11.0838 25.202 11.1832 25.1657L12.0191 24.8494C12.1766 25.2237 12.5448 25.4555 12.9349 25.4555C13.0512 25.4555 13.1699 25.4338 13.2862 25.3903L13.5091 25.3058L15.7697 29.732C15.8545 29.901 16.0265 30 16.2058 30C16.264 30 16.3221 29.9903 16.3803 29.9686L18.321 29.2345C18.4518 29.1838 18.556 29.08 18.6069 28.9496C18.6578 28.8192 18.6481 28.6719 18.5827 28.5487L17.4197 26.3441ZM12.5884 20.8893L12.3292 20.2132L15.8884 18.8658L15.9248 18.9624L16.1452 19.5419L13.2281 20.6454L12.5884 20.8893Z" fill="#E9EAEC" />
-                    <path d="M28.3547 24.2795C28.2409 24.4148 28.0737 24.4896 27.8992 24.4896C27.8605 24.4896 27.8193 24.4848 27.7781 24.4775L20.1024 22.9104L17.6553 16.4849L22.3557 10.238C22.4865 10.0642 22.7021 9.97481 22.9178 10.0062C23.1334 10.0376 23.3151 10.1825 23.3927 10.3853L28.4565 23.6855C28.5365 23.8859 28.4953 24.1153 28.3547 24.2795Z" fill="#E9EAEC" />
-                    <path d="M30.4214 15.8522L28.2698 16.6635L28.0978 16.212L27.9258 15.7604L30.0773 14.9491L30.2493 15.4006L30.4214 15.8522Z" fill="#E9EAEC" />
-                    <path d="M28.0176 11.7619L26.4258 13.416L26.0745 13.0827L25.7256 12.7495L27.3174 11.093L27.6663 11.4287L28.0176 11.7619Z" fill="#E9EAEC" />
-                    <path d="M30.9999 19.5977L30.9224 20.5587L28.6279 20.3752L28.7079 19.4117L30.9999 19.5977Z" fill="#E9EAEC" />
                 </svg>
             )
         },
@@ -146,10 +129,6 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
             >
                 {microserviceTypeState === 'dolittle-microservice' && (
                     <Base application={_props.application} environment={environment} />
-                )}
-
-                {microserviceTypeState === 'business-miner' && (
-                    <BusinessMomentsAdaptor application={_props.application} environment={environment} />
                 )}
 
                 {microserviceTypeState === 'static-site' && (

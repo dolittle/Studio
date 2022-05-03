@@ -13,7 +13,6 @@ import {
 
 import {
     MicroserviceSimple,
-    MicroserviceBusinessMomentAdaptor,
     MicroserviceDolittle,
     MicroserviceRawDataLogIngestor,
     MicroservicePurchaseOrder,
@@ -146,9 +145,6 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
         case 'simple':
             response = await apiSaveMicroservice(input);
             break;
-        case 'business-moments-adaptor':
-            response = await apiSaveMicroservice(input);
-            break;
         case 'raw-data-log-ingestor':
             response = await apiSaveMicroservice(input);
             break;
@@ -174,12 +170,6 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
 
 export const saveSimpleMicroservice = async (
     input: MicroserviceSimple
-): Promise<boolean> => {
-    return saveMicroservice(input.kind, input);
-};
-
-export const saveBusinessMomentsAdaptorMicroservice = async (
-    input: MicroserviceBusinessMomentAdaptor
 ): Promise<boolean> => {
     return saveMicroservice(input.kind, input);
 };

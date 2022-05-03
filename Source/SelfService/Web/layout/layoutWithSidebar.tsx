@@ -64,10 +64,6 @@ export const getDefaultMenu = (history: History<LocationState>, applicationId: s
             name: 'Backups'
         },
         {
-            href: `/business-moments/application/${applicationId}/${environment}/overview`,
-            name: 'Business Moments'
-        },
-        {
             href: `/microservices/application/${applicationId}/${environment}/overview`,
             name: 'Microservices'
         },

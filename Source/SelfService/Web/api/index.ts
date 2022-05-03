@@ -63,65 +63,6 @@ export type MicroserviceHeadCommand = {
     args: string[];
 };
 
-export type MicroserviceBusinessMomentAdaptor = {
-    dolittle: MicroserviceDolittle;
-    name: string;
-    kind: string;
-    environment: string;
-    extra: MicroserviceBusinessMomentAdaptorExtra;
-};
-
-export type MicroserviceBusinessMomentAdaptorExtra = {
-    headImage: string;
-    runtimeImage: string;
-    ingress: MicroserviceIngressPath;
-    connector: MicroserviceBusinessMomentAdaptorConnector;
-    moments: BusinessMoment[];
-    entities: BusinessMomentEntity[];
-};
-
-export type MicroserviceBusinessMomentAdaptorConnector = {
-    kind: string;
-    config: ConnectorWebhookConfig;
-};
-
-export type BusinessMoment = {
-    name: string;
-    uuid: string;
-    entityTypeId: string;
-    embeddingCode: string;
-    projectionCode: string;
-};
-
-export type BusinessMomentEntity = {
-    name: string;
-    entityTypeId: string;
-    idNameForRetrival: string;
-    filterCode: string;
-    transformCode: string;
-};
-
-export type HttpResponseBusinessMoments = {
-    applicationId: string;
-    environment: string;
-    moments: HttpInputBusinessMoment[];
-    entities: HttpInputBusinessMomentEntity[];
-};
-
-export type HttpInputBusinessMoment = {
-    applicationId: string;
-    environment: string;
-    microserviceId: string;
-    moment: BusinessMoment;
-};
-
-export type HttpInputBusinessMomentEntity = {
-    applicationId: string;
-    environment: string;
-    microserviceId: string;
-    entity: BusinessMomentEntity;
-};
-
 export type MicroserviceRawDataLogIngestor = {
     dolittle: MicroserviceDolittle;
     name: string;

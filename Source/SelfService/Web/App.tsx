@@ -9,7 +9,6 @@ import { ApplicationsScreen } from './screens/applicationsScreen';
 import { uriWithAppPrefix } from './store';
 import { LoginScreen } from './screens/loginScreen';
 import { BackupsScreen } from './screens/backupsScreen';
-import { BusinessMomentsScreen } from './screens/businessMomentsScreen';
 import { DocumentationScreen } from './screens/documentationScreen';
 import { InsightsScreen } from './screens/insightsScreen';
 import { MicroservicesScreen } from './screens/microservicesScreen';
@@ -29,7 +28,10 @@ import { ThemeScreen } from './screens/themeScreen';
 import '@fontsource/rubik';
 import { ApplicationScreen } from './screens/applicationScreen';
 import { Box } from '@mui/material';
+<<<<<<< HEAD
 import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
+=======
+>>>>>>> main
 
 
 const typography = {
@@ -126,17 +128,8 @@ export const App = () => {
                                         <ApplicationScreen />
                                     </Route>
 
-
                                     <Route path="/microservices/application/:applicationId/:environment">
                                         <MicroservicesScreen />
-                                    </Route>
-
-                                    <Route path="/business-moments/application/:applicationId/:environment">
-                                        <BusinessMomentsScreen />
-                                    </Route>
-
-                                    <Route path="/containerregistry/application/:applicationId/:environment">
-                                        <ContainerRegistryScreen />
                                     </Route>
 
                                     <Route path="/documentation/application/:applicationId/:environment">
@@ -147,6 +140,9 @@ export const App = () => {
                                         <InsightsScreen />
                                     </Route>
 
+                                    <Route path="/containerregistry/application/:applicationId/:environment">
+                                        <ContainerRegistryScreen />
+                                    </Route>
 
                                     <Route path="/admin/">
                                         <AdminScreen />
