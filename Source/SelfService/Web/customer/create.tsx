@@ -44,25 +44,6 @@ const styles = {
     progressBar: {
         color: '#ff9366',
     },
-<<<<<<< HEAD
-
-    textField: { //https://stackoverflow.com/a/60461876 excellent resource
-        '& .MuiOutlinedInput-input': {
-            color: 'white'
-        },
-        '& .MuiInputLabel-root': {
-            color: 'white'
-        },
-        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-            color: 'white',
-            borderColor: 'white'
-        },
-        '&:hover .MuiOutlinedInput-input': {
-            color: 'white'
-        },
-    },
-=======
->>>>>>> main
     stepIcon: {
         'color': '#3B3D48',
         '&.MuiStepIcon-root.Mui-active': {
@@ -115,11 +96,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     required
                     id='customerName'
                     label='Name'
-<<<<<<< HEAD
-                    variant='outlined'
-                    sx={styles.textField}
-=======
->>>>>>> main
                     value={customerName}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setCustomerName(event.target.value!);
