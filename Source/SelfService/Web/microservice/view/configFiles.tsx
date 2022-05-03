@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, {useEffect, useState} from 'react';
-import { getConfigFilesNamesList, updateConfigFiles } from '../../api/api';
+import { deleteConfigFile, getConfigFilesNamesList, updateConfigFiles } from '../../api/api';
 import { List } from '@fluentui/react/lib/List';
 import Typography from '@material-ui/core/Typography';
 import { Divider, Grid, Link } from '@material-ui/core';
@@ -69,7 +69,12 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
                         paddingBottom: "10px"
                     }}>
                     <Link onClick={() => {
-                        // const href = `/documentation/application/${applicationId}/${environment}/overview`;
+                           if(!fileName) return;
+                             deleteConfigFile(props.applicationId, props.environment, props.microserviceId, fileName)
+
+                        //    if(!result) {
+                        //        window.alert(`Could not fetch delete file`)
+                        //    }
                     }}>
                             Remove
                     </Link>
@@ -101,7 +106,7 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
             component="h4"
             style={{
                 paddingBottom: '5px',
-            }}>Add new configuration files</Typography>
+            }}>Add new configuration file</Typography>
         <form method="put" id="form-file-selector">
             <input type="file" id="file-selector" name='file' />
             <input type="submit" value="Submit"/>

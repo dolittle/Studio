@@ -116,6 +116,10 @@ export type HttpInputConfigFile = {
     form: FormData;
 };
 
+export type HttpInputDeleteConfigFile = {
+    key: string;
+};
+
 export function getServerUrlPrefix(): string {
     return '/selfservice/api';
 }
@@ -288,6 +292,26 @@ export async function updateConfigFiles(applicationId: string, environment: stri
             method: 'PUT',
             body: input.form,
             mode: 'cors',
+        });
+
+    return response.status === 200;
+}
+
+
+export async function deleteConfigFile(applicationId: string, environment: string, microserviceId: string, fileName: string): Promise<boolean> {
+
+    const data = {
+        key: fileName
+    } as HttpInputDeleteConfigFile;
+
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files`;
+
+    const response = await fetch(
+        url,
+        {
+            method: 'DELETE',
+            mode: 'cors',
+            body:  JSON.stringify(data)
         });
 
     return response.status === 200;
