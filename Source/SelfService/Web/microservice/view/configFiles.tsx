@@ -48,11 +48,25 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
 
     }
 
+    var fileSelector = document?.getElementById("form-file-selector")
+
+
     attachFormSubmitEvent()
 
     function attachFormSubmitEvent(){
-        document?.getElementById("form-file-selector")?.addEventListener("submit", formSubmit);
+        fileSelector?.addEventListener("submit", formSubmit);
     }
+
+
+    fileSelector?.addEventListener('change', (event: any) => {
+        const fileList = event.target.files;
+        const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
+
+        if (fileList[0].size > MAX_CONFIGMAP_ENTRY_SIZE) {
+            alert("file cannot be larger than 3145728 bytes. Please select another file")
+        }
+    });
+
 
     const fetchConfigFilesNamesList = async () => {
         const result = await getConfigFilesNamesList(props.applicationId, props.environment, props.microserviceId)
