@@ -9,8 +9,6 @@ import {
     TableRow, TableCell, TableBody
 } from '@mui/material';
 
-import { useReadable } from 'use-svelte-store';
-import { info, isLoaded } from '../stores/documentationInfo';
 import { View as Tags } from './tags';
 import Paper from '@mui/material/Paper';
 import { getReposInContainerRegistry, ContainerRegistryImages } from '../api/containerregistry';
