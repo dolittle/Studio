@@ -50,25 +50,6 @@ const styles = {
     progressBar: {
         color: '#ff9366',
     },
-<<<<<<< HEAD
-
-    textField: { //https://stackoverflow.com/a/60461876 excellent resource
-        '& .MuiOutlinedInput-input': {
-            color: 'white'
-        },
-        '& .MuiInputLabel-root': {
-            color: 'white'
-        },
-        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-            color: 'white',
-            borderColor: 'white'
-        },
-        '&:hover .MuiOutlinedInput-input': {
-            color: 'white'
-        },
-    },
-=======
->>>>>>> main
     stepIcon: {
         'color': '#3B3D48',
         '&.MuiStepIcon-root.Mui-active': {
@@ -199,11 +180,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     required
                     id='microserviceName'
                     label='Name'
-<<<<<<< HEAD
-                    variant='outlined'
-                    sx={styles.textField}
-=======
->>>>>>> main
                     value={msName}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         const _name = event.target.value!;
@@ -252,11 +228,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     required
                     id='outlined-required'
                     label='Username'
-<<<<<<< HEAD
-                    variant='outlined'
-                    sx={styles.textField}
-=======
->>>>>>> main
                     value={username}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         const _username = event.target.value!;
@@ -276,11 +247,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     type='password'
                     label='Password'
                     autoComplete='current-password'
-<<<<<<< HEAD
-                    variant='outlined'
-                    sx={styles.textField}
-=======
->>>>>>> main
                     value={password}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setPasswordAndCheckAction(username, event.target.value!);
