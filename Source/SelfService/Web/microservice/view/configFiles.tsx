@@ -37,13 +37,15 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
 
 
 
-    function formSubmit(event) {
+    async function formSubmit(event) {
+        event.preventDefault();
 
         console.log(new FormData(event.target));
 
-        const upsert = updateConfigFiles(props.applicationId, props.environment, props.microserviceId, {form: new FormData(event.target)})
+        const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, {form: new FormData(event.target)})
 
-        event.preventDefault();
+        fetchConfigFilesNamesList()
+
     }
 
     attachFormSubmitEvent()
@@ -52,18 +54,18 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
         document?.getElementById("form-file-selector")?.addEventListener("submit", formSubmit);
     }
 
+    const fetchConfigFilesNamesList = async () => {
+        const result = await getConfigFilesNamesList(props.applicationId, props.environment, props.microserviceId)
+
+        if(!result.data) {
+            window.alert(`Could not fetch config files`)
+        }
+
+        setFilesNamesList(result.data)
+      }
+
 
     useEffect(() => {
-        const fetchConfigFilesNamesList = async () => {
-            const result = await getConfigFilesNamesList(props.applicationId, props.environment, props.microserviceId)
-
-            if(!result.data) {
-                window.alert(`Could not fetch config files`)
-            }
-
-            setFilesNamesList(result.data)
-          }
-
           // call the function
           fetchConfigFilesNamesList()
             // make sure to catch any error
