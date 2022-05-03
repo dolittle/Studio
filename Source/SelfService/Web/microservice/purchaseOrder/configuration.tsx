@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 
 import { Box, Grid } from '@mui/material';
-import TextField from '@mui/material/TextField';
 
 import {
     MicroservicePurchaseOrder,
@@ -22,6 +21,7 @@ import { getCredentialsFromBasicAuth, makeBasicAuth } from '../../utils/httpCred
 import { GeneratePassword } from './generatePassword';
 import { Button } from '../../theme/button';
 import { ButtonText } from '../../theme/buttonText';
+import { TextField } from '../../theme/textField';
 import { ErpIcon } from './erpIcon';
 
 type Props = {
@@ -49,22 +49,6 @@ const styles = {
     },
     progressBar: {
         color: '#ff9366',
-    },
-
-    textField: { //https://stackoverflow.com/a/60461876 excellent resource
-        '& .MuiOutlinedInput-input': {
-            color: 'white'
-        },
-        '& .MuiInputLabel-root': {
-            color: 'white'
-        },
-        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-            color: 'white',
-            borderColor: 'white'
-        },
-        '&:hover .MuiOutlinedInput-input': {
-            color: 'white'
-        },
     },
     stepIcon: {
         'color': '#3B3D48',
@@ -196,8 +180,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     required
                     id='microserviceName'
                     label='Name'
-                    variant='outlined'
-                    sx={styles.textField}
                     value={msName}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         const _name = event.target.value!;
@@ -246,8 +228,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     required
                     id='outlined-required'
                     label='Username'
-                    variant='outlined'
-                    sx={styles.textField}
                     value={username}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         const _username = event.target.value!;
@@ -267,8 +247,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     type='password'
                     label='Password'
                     autoComplete='current-password'
-                    variant='outlined'
-                    sx={styles.textField}
                     value={password}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setPasswordAndCheckAction(username, event.target.value!);

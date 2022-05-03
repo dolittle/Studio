@@ -17,10 +17,9 @@ import RemoveIcon from '@mui/icons-material/HighlightOff';
 import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 import Checkbox from '@mui/material/Checkbox';
-import { TextField as ThemedTextField } from '../theme/textField';
 
 import { Box, Grid } from '@mui/material';
-import TextField from '@mui/material/TextField';
+import { TextField } from '../theme/textField';
 import { ButtonText } from '../theme/buttonText';
 import { Button } from '../theme/button';
 import { createApplication, HttpApplicationRequest, HttpApplicationEnvironment } from '../api/application';
@@ -50,22 +49,6 @@ const styles = {
     },
     progressBar: {
         color: '#ff9366',
-    },
-
-    textField: { //https://stackoverflow.com/a/60461876 excellent resource
-        '& .MuiOutlinedInput-input': {
-            color: 'white'
-        },
-        '& .MuiInputLabel-root': {
-            color: 'white'
-        },
-        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-            color: 'white',
-            borderColor: 'white'
-        },
-        '&:hover .MuiOutlinedInput-input': {
-            color: 'white'
-        },
     },
     stepIcon: {
         'color': '#3B3D48',
@@ -205,8 +188,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     required
                     id='applicationId'
                     label='Application ID'
-                    variant='outlined'
-                    sx={styles.textField}
                     value={application.id}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         const _application = { ...application };
@@ -220,8 +201,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     required
                     id='applicationName'
                     label='Name'
-                    variant='outlined'
-                    sx={styles.textField}
                     value={application.name}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         const _application = { ...application };
@@ -241,8 +220,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     required
                     id='contactName'
                     label='Contact Name'
-                    variant='outlined'
-                    sx={styles.textField}
                     value={contactName}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         const _name = event.target.value!;
@@ -255,8 +232,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     required
                     id='contactEmail'
                     label='Email'
-                    variant='outlined'
-                    sx={styles.textField}
                     value={contactEmail}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         const _name = event.target.value!;
@@ -292,7 +267,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                                 <Box flexDirection='column' display='flex' justifyContent='flex-start' style={{ gap: '1rem' }}>
                                     {environment.customerTenants.map((tenant, tenantIndex) => (
                                         <Box display='flex' justifyContent='flex-start' style={{ gap: '1rem' }} key={tenantIndex}>
-                                            <ThemedTextField
+                                            <TextField
                                                 id={'uuid' + tenantIndex.toString()}
                                                 label='UUID'
                                                 value={tenant}

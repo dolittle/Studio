@@ -30,22 +30,6 @@ const styles = {
     progressBar: {
         color: '#ff9366',
     },
-
-    textField: { //https://stackoverflow.com/a/60461876 excellent resource
-        '& .MuiOutlinedInput-input': {
-            color: 'white'
-        },
-        '& .MuiInputLabel-root': {
-            color: 'white'
-        },
-        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-            color: 'white',
-            borderColor: 'white'
-        },
-        '&:hover .MuiOutlinedInput-input': {
-            color: 'white'
-        },
-    },
     stepIcon: {
         'color': '#3B3D48',
         '&.MuiStepIcon-root.Mui-active': {

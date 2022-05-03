@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React, { useState, useEffect } from 'react';
-import { Box, Grid, IconButton, TextField, Typography } from '@mui/material';
+import { Box, Grid, IconButton, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
 import { getCredentialsFromBasicAuth } from '../../utils/httpCredentials';
@@ -9,6 +9,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { GeneratePassword } from './generatePassword';
 import { Button } from '../../theme/button';
 import { ButtonText } from '../../theme/buttonText';
+import { TextField } from '../../theme/textField';
 
 
 type Props = {
@@ -28,21 +29,6 @@ const styles = {
     icon: {
         fill: '#6678F6',
     },
-    textField: { //https://stackoverflow.com/a/60461876 excellent resource
-        '& .MuiOutlinedInput-input': {
-            color: 'white'
-        },
-        '& .MuiInputLabel-root': {
-            color: 'white'
-        },
-        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-            color: 'white',
-            borderColor: theme => theme.palette.text.secondary
-        },
-        '&:hover .MuiOutlinedInput-input': {
-            color: 'white'
-        },
-    }
 };
 
 
@@ -77,8 +63,6 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
             required
             id='outlined-required'
             label='Username'
-            variant='outlined'
-            sx={styles.textField}
             value={username}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setUsername(event.target.value!);
@@ -98,8 +82,6 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
                     type={showPassword ? 'text' : 'password'}
                     label='Password'
                     autoComplete='current-password'
-                    variant='outlined'
-                    sx={styles.textField}
                     value={password}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setPassword(event.target.value!);
