@@ -8,7 +8,6 @@ import { useReadable } from 'use-svelte-store';
 import { getPodStatus, HttpResponsePodStatus } from '../api/api';
 import { microservices, MicroserviceStore } from '../stores/microservice';
 import { View as BaseView } from './base/view';
-import { View as BusinessMomentsAdaptorView } from './businessMomentsAdaptor/view';
 import { View as RawDataLogView } from './rawDataLog/view';
 import { View as PurchaseOrderApiView } from './purchaseOrder/view';
 import { HttpResponseApplication } from '../api/application';
@@ -64,10 +63,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         case 'simple':
             return (
                 <BaseView application={application} environment={environment} microserviceId={microserviceId} podsData={podsData} />
-            );
-        case 'business-moments-adaptor':
-            return (
-                <BusinessMomentsAdaptorView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
             );
         case 'raw-data-log-ingestor':
             return (

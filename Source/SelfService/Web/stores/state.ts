@@ -5,12 +5,10 @@ import { get, writable } from 'use-svelte-store';
 const data = {
     microservices: [],
     applications: [],
-    businessMoments: [],
 };
 
 export const microservices = writable(data.microservices);
 export const applications = writable(data.applications);
-export const businessMoments = writable(data.businessMoments);
 
 export const setMicroservices = (items) => {
     microservices.set(items);
@@ -21,7 +19,7 @@ export const dump = () => {
 };
 
 export const addMicroservice = (item) => {
-    microservices.update(items => {
+    microservices.update((items) => {
         // TODO Do we need to edit
         items.push(item);
     });
