@@ -19,6 +19,42 @@ export type Image = {
     name: string;
 };
 
+export type Tag = {
+    name: string;
+};
+
+export type ContainerRegistryTags = {
+    name: string,
+    tags: Tag[]
+};
+
+export type HTTPResponseTags = {
+    name: string,
+    tags: string[]
+};
+
+export async function getTagsInContainerRegistry(image: string): Promise<ContainerRegistryTags> {
+    const url = `${getServerUrlPrefix()}/containerregistry/tags/${image}`;
+
+    const result = await fetch(
+        url,
+        {
+            method: 'GET',
+            mode: 'cors'
+        });
+    const jsonResult = await result.json() as HTTPResponseTags;
+    const items = jsonResult.tags.map(n => {
+        return {
+            name: n
+        };
+    });
+
+    return {
+        name: image,
+        tags: items,
+    };
+}
+
 export async function getReposInContainerRegistry(): Promise<ContainerRegistryImages> {
     const url = `${getServerUrlPrefix()}/containerregistry/images`;
 
