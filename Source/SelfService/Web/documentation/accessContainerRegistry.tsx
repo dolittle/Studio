@@ -10,8 +10,6 @@ import { getContainerRegistry } from '../api/cicd';
 
 export type DockerCredentials = {
     repoUrl: string
-    username: string
-    password: string
 };
 
 
