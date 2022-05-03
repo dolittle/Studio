@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useHistory, Switch, Route, Link } from 'react-router-dom';
+import { useHistory, Switch, Route } from 'react-router-dom';
 import { HttpResponseApplication } from '../api/application';
 import {
     Table, TableContainer, TableHead,
