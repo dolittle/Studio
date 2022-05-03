@@ -52,7 +52,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 <Table sx={{ minWidth: 480 }} aria-label="Docker images" size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Name</TableCell>
+                            <TableCell><b>Name</b></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
