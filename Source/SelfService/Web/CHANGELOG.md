@@ -1,3 +1,13 @@
+# [1.23.0] - 2022-5-3 [PR: #181](https://github.com/dolittle/Studio/pull/181)
+Solves: https://app.asana.com/0/1202121266838773/1202029655339366/f
+
+Remove all references to "business moments"
+- Remove menu item & route
+- Remove Backing code for route
+- Remove creating and viewing of Business Moments Adaptor
+- Remove data objects in api / stores
+
+
 # [1.22.0] - 2022-5-3 [PR: #176](https://github.com/dolittle/Studio/pull/176)
 ## Summary
 
