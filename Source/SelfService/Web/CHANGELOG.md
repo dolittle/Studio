@@ -1,3 +1,19 @@
+# [1.22.0] - 2022-5-3 [PR: #176](https://github.com/dolittle/Studio/pull/176)
+## Summary
+
+Followed migtation path from MUI v4 to v5 as described here: https://mui.com/material-ui/guides/migration-v4/
+Updated to and enabled react 18 as described here: https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html#updates-to-client-rendering-apis
+
+using the `sx`-prop in favour of `makeStyles()` - and updated across all components - more info here https://mui.com/material-ui/guides/migration-v4/#1-use-styled-or-sx-api
+
+### Changed
+
+- Update to Typescript 4.6.3
+- Update to React v18
+- Update from MUI v4 to MUI v5.6.2
+- Removed resolutions workaround as introduced in https://github.com/dolittle/Studio/pull/175
+
+
 # [1.21.0] - 2022-4-28 [PR: #174](https://github.com/dolittle/Studio/pull/174)
 ## Summary
 
