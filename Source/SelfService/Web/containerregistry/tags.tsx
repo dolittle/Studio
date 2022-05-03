@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
     Table, TableContainer, TableHead,
     TableRow, TableCell, TableBody
@@ -16,7 +16,6 @@ type Props = {
 };
 
 export const View: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
     const _props = props!;
     const { image } = useParams();
 
@@ -27,14 +26,12 @@ export const View: React.FunctionComponent<Props> = (props) => {
     } as ContainerRegistryTags);
 
     useEffect(() => {
-
         Promise.all([
             getTagsInContainerRegistry(image)
         ]).then(values => {
             setContainerRegistryTags(values[0]);
             setLoaded(true);
         });
-
     }, []);
 
 
