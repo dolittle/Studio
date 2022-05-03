@@ -95,8 +95,6 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         dockerCredentials: credentials
     } as Vars;
 
-    console.log(containerRegistry);
-    console.log(JSON.parse(atob(containerRegistry['.dockerconfigjson'])).auths);
     const data = template(vars);
     return (
         <ReactMarkdown remarkPlugins={[gfm]} >
