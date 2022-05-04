@@ -45,7 +45,7 @@ const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 export const Configuration: React.FunctionComponent<ConfigurationProps> = (props) => {
     const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
-
+    const [configFileModalVisibility, setConfigFileModalVisibility] = useState<boolean>(false);
 
     // This is reused. consider moving
     const configMapPrefix = `${props.environment.toLowerCase()}-${props.msName.toLowerCase()}`;
@@ -88,7 +88,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     return(
         <>
             <ChooseFileModal
-                open={true}
+                open={configFileModalVisibility}
                 maxUploadSize={MAX_CONFIGMAP_ENTRY_SIZE}
                 onFileSelectorSubmit={async (event)=>{
                     event.preventDefault();
@@ -97,6 +97,8 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
 
                     await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, configFileForm);
                     fetchConfigFilesNamesList();
+
+                    setConfigFileModalVisibility(false);
                 }}>
             </ChooseFileModal>
             <Box ml={2}>
@@ -125,7 +127,9 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                         <TextIconButton
                             icon={<AddCircleIcon/>}
                             onClick={(event: React.MouseEvent<HTMLElement>) => {
-                                document?.getElementById('file-selector')?.click()
+                                console.log("visility", configFileModalVisibility)
+                                // NOT WORKING TO CHANGE V
+                                setConfigFileModalVisibility(true);
                             }}
                         >
                             Add files

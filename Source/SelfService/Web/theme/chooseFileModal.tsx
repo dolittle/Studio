@@ -52,6 +52,7 @@ export default function ChooseFileModal (props){
 
     attachFormSubmitEvent();
 
+    console.log("visility", props.open)
 
 
     fileSelector?.addEventListener('change', sizeValidation);
@@ -60,7 +61,7 @@ export default function ChooseFileModal (props){
 
     return (
         <Modal
-            open={open}
+            open={props.open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
