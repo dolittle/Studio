@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Box, Divider, Grid, List, Typography } from '@mui/material';
+import { Box, Divider, Grid, Typography } from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import { deleteConfigFile, getConfigFilesNamesList, getServerUrlPrefix, IngressURLWithCustomerTenantID, SimpleIngressPath, updateConfigFiles } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
@@ -13,6 +13,7 @@ import { DownloadButtons } from '../components/downloadButtons';
 import ConfigFilesTable from './components/configFilesTable';
 import { ConfigView } from './configView';
 import { LiveIngressView } from './liveIngressView';
+
 
 export type ConfigurationProps = {
     applicationId: string
@@ -90,14 +91,19 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
         setFilesNamesList(result.data);
     };
 
-    const deleteFileFromMicroservice = async(fileName: string) => {
-        if (!fileName) return;
+    const deleteFileFromMicroservice = (event: React.MouseEvent<HTMLElement>) => {
+        // TODO make this work again
+        // if (!fileName) {
+        //     alert("filename not valid")
+        //     return;
+        // }
 
-        await deleteConfigFile(props.applicationId, props.environment, props.microserviceId, fileName);
+        // if(confirm(`Are you sure you want to delete ${fileName}?`)){
+        //     deleteConfigFile(props.applicationId, props.environment, props.microserviceId, fileName);
 
-        fetchConfigFilesNamesList()
-            .catch(console.error);
-
+        //     fetchConfigFilesNamesList()
+        //         .catch(console.error);
+        // }
     }
 
 
@@ -125,18 +131,19 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
             </Box>
             <Divider sx={styles.divider} />
             <Box ml={2}>
+                <h2>Configuration files</h2>
                 <Typography
-                    variant="h4"
-                    component="h4"
+                    variant="body2"
+                    component="p"
                     style={{
                         paddingBottom: '5px',
-                    }}>Configuration files</Typography>
+                    }}>max file size: {MAX_CONFIGMAP_ENTRY_SIZE} bytes / 3.15mb</Typography>
                 <Grid container spacing={3}>
                     <Grid item>
                         <TextIconButton
                             icon={<AddCircleIcon/>}
                             onClick={(event: React.MouseEvent<HTMLElement>) => {
-
+                                document?.getElementById('file-selector')?.click()
                             }}
                         >
                             Add files
@@ -156,24 +163,6 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                 </Grid>
                 <ConfigFilesTable filesNames={filesNamesList} onDeleteFileClick={deleteFileFromMicroservice}></ConfigFilesTable>
                 <Divider style={{ backgroundColor: '#3B3D48', marginTop: '40px', marginBottom: '20px' }} />
-                <Typography
-                    variant="h4"
-                    component="h4"
-                    style={{
-                        paddingBottom: '5px',
-                    }}>Add new configuration file</Typography>
-                <Typography
-                    variant="body2"
-                    component="p"
-                    style={{
-                        paddingBottom: '5px',
-                    }}>max file size: {MAX_CONFIGMAP_ENTRY_SIZE} bytes / 3.15mb</Typography>
-                <Typography
-                    variant="body2"
-                    component="p"
-                    style={{
-                        paddingBottom: '50px',
-                    }}>submitting files with the same name will cause the original file to be replaced</Typography>
                 <form method="put" id="config-file-selector-form">
                     <input type="file" id="file-selector" name='file' />
                     <input type="submit" value="Submit" />

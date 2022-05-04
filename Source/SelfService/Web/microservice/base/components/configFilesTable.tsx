@@ -6,9 +6,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 
 
-type DeleteFileFromMicroservice = (fileName: string)=>Promise<void>
+export type DeleteFileFromMicroservice = (event: React.MouseEvent<HTMLElement>)=> void
 
 export interface ConfigFilesTableProps {
     filesNames: string[],
@@ -46,6 +48,7 @@ export default function ConfigFilesTable(props: ConfigFilesTableProps) {
             <TableCell align="left">Name</TableCell>
             <TableCell align="left">Date Added</TableCell>
             <TableCell align="left">Added By</TableCell>
+            <TableCell align="left">Delete</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -58,6 +61,7 @@ export default function ConfigFilesTable(props: ConfigFilesTableProps) {
               <TableCell align="left">{row.fileName}</TableCell>
               <TableCell align="left">{row.dateAdded}</TableCell>
               <TableCell align="left">{row.addedBy}</TableCell>
+              <TableCell align="left"><IconButton onClick={props.onDeleteFileClick}><DeleteIcon color="primary"/></IconButton></TableCell>
             </TableRow>
           ))}
         </TableBody>
