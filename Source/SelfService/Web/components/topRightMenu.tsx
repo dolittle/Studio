@@ -3,19 +3,14 @@
 
 import React from 'react';
 
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useSnackbar } from 'notistack';
 
 import { ShortInfoWithEnvironment } from '../api/api';
 import { ApplicationsChanger } from '../application/applicationsChanger';
-import {
-    IconButton,
-    makeStyles,
-    Theme
-} from '@material-ui/core';
-import { createStyles } from '@material-ui/styles';
+import { IconButton, SxProps } from '@mui/material';
 import { AccountSettingsMenu } from './accountSettingsMenu';
 
 type Props = {
@@ -24,48 +19,47 @@ type Props = {
     environment: string;
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            padding: 0,
-            marginRight: theme.spacing(1),
-        },
-        icon: {
-            fill: 'white',
-        },
-    })
-);
+const styles = {
+    iconButton: {
+        padding: 0,
+        marginRight: 1,
+    } as SxProps,
+    icon: {
+        fill: 'white',
+    } as SxProps,
+};
 
 export const TopRightMenu: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
-    const classes = useStyles();
     const _props = props!;
 
-    return (
-        <>
-            <ApplicationsChanger applications={_props.applications} applicationId={_props.applicationId} environment={_props.environment} />
-            <IconButton aria-label="notification" onClick={() => {
+    return <>
+        <ApplicationsChanger applications={_props.applications} applicationId={_props.applicationId} environment={_props.environment} />
+        <IconButton
+            sx={styles.iconButton}
+            aria-label="notification"
+            onClick={() => {
                 enqueueSnackbar('TODO: Something with notifications', { variant: 'error' });
             }}
-                className={classes.root}
-            >
-                <NotificationsIcon className={classes.icon} />
+            size="large">
+            <NotificationsIcon sx={styles.icon} />
+        </IconButton>
+
+        <AccountSettingsMenu child={
+            <IconButton aria-label="more-options" sx={styles.iconButton} size="large">
+                <AccountCircleIcon sx={styles.icon} />
             </IconButton>
+        } />
 
-            <AccountSettingsMenu child={
-                <IconButton aria-label="more-options" className={classes.root}>
-                    <AccountCircleIcon className={classes.icon} />
-                </IconButton>
-            } />
-
-            <IconButton aria-label="account" onClick={() => {
+        <IconButton
+            aria-label="account"
+            onClick={() => {
                 enqueueSnackbar('TODO: More options?', { variant: 'error' });
             }}
-                className={classes.root}
-            >
-                <MoreVertIcon className={classes.icon} />
-            </IconButton>
+            sx={styles.iconButton}
+            size="large">
+            <MoreVertIcon sx={styles.icon} />
+        </IconButton>
 
-        </>
-    );
+    </>;
 };

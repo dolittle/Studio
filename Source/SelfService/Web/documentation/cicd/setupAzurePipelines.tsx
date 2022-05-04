@@ -3,29 +3,24 @@
 
 import React from 'react';
 import { useSnackbar } from 'notistack';
-import Input from '@material-ui/core/Input';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import Input from '@mui/material/Input';
+
 
 import { ButtonText } from '../../theme/buttonText';
 import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../api/cicd';
 import { Info } from '../../stores/documentationInfo';
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            '& .MuiInput-input.Mui-disabled': {
-                color: theme.palette.text.secondary
-            }
-        }
-    })
-);
+const styles = {
+    '& .MuiInput-input.Mui-disabled': {
+        '-webkit-text-fill-color': (theme) => theme.palette.text.secondary
+    }
+};
 
 type Props = {
     info: Info
 };
 
 export const Doc: React.FunctionComponent<Props> = (props) => {
-    const classes = useStyles();
     const { enqueueSnackbar } = useSnackbar();
     const _props = props!;
     const info = _props.info;
@@ -72,13 +67,13 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
 
             <Input
                 fullWidth={true}
-                className={classes.root}
+                sx={styles}
                 defaultValue={clusterEndpoint}
                 disabled
                 inputProps={{ 'aria-label': 'cluster endpoint' }} />
 
             <h3>Container Registry</h3>
-            <Input className={classes.root}
+            <Input sx={styles}
                 fullWidth={true}
                 defaultValue={containerRegistry}
                 disabled

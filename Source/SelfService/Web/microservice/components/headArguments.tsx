@@ -1,12 +1,12 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 import React from 'react';
 import { ButtonText } from '../../theme/buttonText';
 
 import { TextField } from '../../theme/textField';
-import RemoveIcon from '@material-ui/icons/HighlightOff';
+import RemoveIcon from '@mui/icons-material/HighlightOff';
 
 
 type Props = {

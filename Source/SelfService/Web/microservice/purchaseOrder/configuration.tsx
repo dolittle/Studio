@@ -2,17 +2,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import StepContent from '@mui/material/StepContent';
 
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 
-import { Grid } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
+import { Box, Grid } from '@mui/material';
 
 import {
     MicroservicePurchaseOrder,
@@ -23,6 +21,7 @@ import { getCredentialsFromBasicAuth, makeBasicAuth } from '../../utils/httpCred
 import { GeneratePassword } from './generatePassword';
 import { Button } from '../../theme/button';
 import { ButtonText } from '../../theme/buttonText';
+import { TextField } from '../../theme/textField';
 import { ErpIcon } from './erpIcon';
 
 type Props = {
@@ -31,64 +30,45 @@ type Props = {
 };
 
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: '100%',
+const styles = {
+    root: {
+        width: '100%',
+    },
+    button: {
+        marginTop: 1,
+        marginRight: 1,
+    },
+    actionsContainer: {
+        marginBottom: 2,
+    },
+    resetContainer: {
+        padding: 3,
+    },
+    inactiveText: {
+        color: '#93959F',
+    },
+    progressBar: {
+        color: '#ff9366',
+    },
+    stepIcon: {
+        'color': '#3B3D48',
+        '&.MuiStepIcon-root.Mui-active': {
+            color: '#6678F6'
         },
-        button: {
-            marginTop: theme.spacing(1),
-            marginRight: theme.spacing(1),
+        '&.MuiStepIcon-root.Mui-completed': {
+            color: '#6678F6'
         },
-        actionsContainer: {
-            marginBottom: theme.spacing(2),
+        '&.MuiStepIcon-root.Mui-active .MuiStepIcon-text': {
+            fill: '#B3BBFB'
         },
-        resetContainer: {
-            padding: theme.spacing(3),
-        },
-        inactiveText: {
-            color: '#93959F',
-        },
-        progressBar: {
-            color: '#ff9366',
-        },
-
-        textField: { //https://stackoverflow.com/a/60461876 excellent resource
-            '& .MuiOutlinedInput-input': {
-                color: 'white'
-            },
-            '& .MuiInputLabel-root': {
-                color: 'white'
-            },
-            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-                color: 'white',
-                borderColor: 'white'
-            },
-            '&:hover .MuiOutlinedInput-input': {
-                color: 'white'
-            },
-        },
-        stepIcon: {
-            'color': '#3B3D48',
-            '&.MuiStepIcon-active': {
-                color: '#6678F6'
-            },
-            '&.MuiStepIcon-completed': {
-                color: '#6678F6'
-            },
-            '&.MuiStepIcon-active .MuiStepIcon-text': {
-                fill: '#B3BBFB'
-            },
-            '&.MuiStepIcon-root .MuiStepIcon-text': {
-                fill: '#93959F'
-            }
+        '&.MuiStepIcon-root .MuiStepIcon-text': {
+            fill: '#93959F'
         }
-    })
-);
+    }
+};
 
 export const Configuration: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
-    const classes = useStyles();
 
     const _props = props!;
     const onSave = _props.onSave;
@@ -200,8 +180,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     required
                     id='microserviceName'
                     label='Name'
-                    variant='outlined'
-                    className={classes.textField}
                     value={msName}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         const _name = event.target.value!;
@@ -225,9 +203,9 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     password can be used for both endpoints.
                 </p>
                 <p>Webhook for purchase order head (POHEAD)</p>
-                <span className={classes.inactiveText}>
+                <Box component='span' sx={styles.inactiveText}>
                     {webhookPrefix} / m3/pohead
-                </span >
+                </Box >
                 <ButtonText
                     withIcon={false}
                     onClick={copyPOHeadUrl}>
@@ -235,9 +213,9 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                 </ButtonText>
 
                 <p>Webhook for purchase order line (POLINE)</p>
-                <span className={classes.inactiveText}>
+                <Box component='span' sx={styles.inactiveText}>
                     {webhookPrefix} / m3/poline
-                </span >
+                </Box>
 
                 <ButtonText
                     withIcon={false}
@@ -250,8 +228,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     required
                     id='outlined-required'
                     label='Username'
-                    variant='outlined'
-                    className={classes.textField}
                     value={username}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         const _username = event.target.value!;
@@ -271,8 +247,6 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                     type='password'
                     label='Password'
                     autoComplete='current-password'
-                    variant='outlined'
-                    className={classes.textField}
                     value={password}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setPasswordAndCheckAction(username, event.target.value!);
@@ -363,19 +337,19 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
     };
 
     return (
-        <div className={classes.root}>
+        <Box sx={styles.root}>
             <Stepper activeStep={activeStep} orientation='vertical'>
                 {steps.map((label, index) => (
                     <Step key={label}>
                         <StepLabel StepIconProps={{
-                            classes: { root: classes.stepIcon }
+                            sx: styles.stepIcon
                         }}>
-                            <span className={activeStep >= index ? '' : classes.inactiveText}>{label}</span>
+                            <Box component='span' sx={activeStep >= index ? {} : styles.inactiveText}>{label}</Box>
                         </StepLabel>
                         <StepContent>
                             {stepsContent[index]}
 
-                            <div className={classes.actionsContainer}>
+                            <Box sx={styles.actionsContainer}>
                                 <div>
                                     <ButtonText
                                         onClick={handleBack}
@@ -394,11 +368,11 @@ export const Configuration: React.FunctionComponent<Props> = (props) => {
                                             : 'Next'}
                                     </Button>
                                 </div>
-                            </div>
+                            </Box>
                         </StepContent>
                     </Step>
                 ))}
             </Stepper>
-        </div>
+        </Box>
     );
 };

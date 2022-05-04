@@ -4,7 +4,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { CircularProgress, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import { CircularProgress, Grid, SelectChangeEvent, Typography } from '@mui/material';
 import { DropDownMenu } from '../../theme/dropDownMenu';
 import { TextField as ThemedTextField } from '../../theme/textField';
 import { Switch as ThemedSwitch } from '../../theme/switch';
@@ -19,14 +19,12 @@ import { HttpResponseApplication } from '../../api/application';
 import { HeadArguments } from '../components/headArguments';
 
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        data: {
-            paddingBottom: theme.spacing(1),
-            color: theme.palette.text.secondary
-        },
-    })
-);
+const styles = {
+    data: {
+        paddingBottom: 1,
+        color: (theme) => theme.palette.text.secondary
+    },
+};
 
 type Props = {
     application: HttpResponseApplication
@@ -36,7 +34,6 @@ type Props = {
 export const Create: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
-    const classes = useStyles();
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
@@ -112,8 +109,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             await saveSimpleMicroservice(ms);
             const href = `/microservices/application/${application.id}/${environment}/overview`;
             history.push(href);
-        } catch (e) {
-            enqueueSnackbar(e.message, { variant: 'error' });
+        } catch (e: unknown) {
+            const message = (e instanceof Error) ? e.message : 'Something went wrong when saving microservice';
+            enqueueSnackbar(message, { variant: 'error' });
         } finally {
             setIsLoading(false);
         }
@@ -127,8 +125,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         }
     ];
 
-    const handleRuntimeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        const _runtimeImage = event.target.value as string;
+    const handleRuntimeChange = (event: SelectChangeEvent<string>) => {
+        const _runtimeImage = event.target.value;
         setRuntimeImage(_runtimeImage);
     };
 
@@ -202,7 +200,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 </Grid>
 
                 <Grid item>
-                    <Typography component="p" className={classes.data}>
+                    <Typography component="p" sx={styles.data}>
                         Override the default ENTRYPOINT in Docker
                     </Typography>
                     <ThemedTextField
@@ -219,7 +217,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 </Grid>
 
                 <Grid item>
-                    <Typography component="p" className={classes.data}>
+                    <Typography component="p" sx={styles.data}>
                         Override the default CMD in Docker
                     </Typography>
                     <HeadArguments args={args} setArgs={setArgs} />

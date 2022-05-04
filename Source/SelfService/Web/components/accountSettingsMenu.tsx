@@ -2,19 +2,20 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { createStyles, makeStyles, Theme, withStyles } from '@material-ui/core/styles';
-import Menu, { MenuProps } from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Menu, { MenuProps } from '@mui/material/Menu';
+import MenuItem, { MenuItemProps } from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
+import { Box } from '@mui/material';
+import { BoxProps } from '@mui/system';
 
-const StyledMenu = withStyles({
-    paper: {
-        border: '1px solid #d3d4d5',
-    },
-})((props: MenuProps) => (
+const StyledMenu = (props: MenuProps) => (
     <Menu
+        sx={{
+            '&.MuiMenu-root .MuiPaper-root': {
+                border: '1px solid #d3d4d5'
+            }
+        }}
         elevation={0}
-        getContentAnchorEl={null}
         anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'center',
@@ -25,34 +26,24 @@ const StyledMenu = withStyles({
         }}
         {...props}
     />
-));
-
-const StyledMenuItem = withStyles((theme) => ({
-    root: {
-        '&:focus': {
-            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-                color: theme.palette.common.white,
-            },
-        },
-    },
-}))(MenuItem);
-
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        inline: {
-            display: 'inline',
-        },
-    })
 );
+
+const StyledMenuItem = (props: MenuItemProps) => <MenuItem sx={{
+    '&:focus': {
+        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+            color: (theme) => theme.palette.common.white,
+        }
+    }
+}} {...props} />;
+
+
+const InlineBox = (props: BoxProps) => <Box sx={{ display: 'inline' }} {...props} />;
 
 type Props = {
     child: any; //IconButton
 };
 
 export const AccountSettingsMenu: React.FunctionComponent<Props> = (props) => {
-    const classes = useStyles();
-
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -66,10 +57,10 @@ export const AccountSettingsMenu: React.FunctionComponent<Props> = (props) => {
     const child = props!.child;
 
     return (
-        <div className={classes.inline}>
-            <div className={classes.inline} onClick={handleClick}>
+        <InlineBox>
+            <InlineBox onClick={handleClick}>
                 {child}
-            </div>
+            </InlineBox>
 
             <StyledMenu
                 id="customized-menu"
@@ -86,6 +77,6 @@ export const AccountSettingsMenu: React.FunctionComponent<Props> = (props) => {
                     }} />
                 </StyledMenuItem>
             </StyledMenu>
-        </div>
+        </InlineBox>
     );
 };

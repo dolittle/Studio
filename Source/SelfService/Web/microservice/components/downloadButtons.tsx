@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { getServerUrlPrefix } from '../../api/api';
 import { DownloadButton } from '../../theme/downloadButton';
 

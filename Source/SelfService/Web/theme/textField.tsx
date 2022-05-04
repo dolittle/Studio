@@ -2,10 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import clsx from 'clsx';
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { TextField as MuiTextField } from '@material-ui/core';
+import { SxProps } from '@mui/material/styles';
+import { TextField as MuiTextField } from '@mui/material';
 
 type Props = {
     id: string;
@@ -18,32 +17,28 @@ type Props = {
     readOnly?: boolean;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     size?: 'small' | 'medium' | undefined;
+    autoComplete?: string;
 };
 
 const defaultOnChange = (event: React.ChangeEvent<HTMLInputElement>) => { };
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        base: {
-            '& .MuiOutlinedInput-input': {
-                color: 'white'
-            },
-            '& .MuiInputLabel-root': {
-                color: 'white'
-            },
-            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-                color: 'white',
-                borderColor: 'white'
-            },
-            '&:hover .MuiOutlinedInput-input': {
-                color: 'white'
-            },
-        },
-    })
-);
+const styles = {
+    '& .MuiOutlinedInput-input': {
+        color: 'white'
+    },
+    '& .MuiInputLabel-root': {
+        color: 'white'
+    },
+    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+        color: 'white',
+        borderColor: 'white'
+    },
+    '&:hover .MuiOutlinedInput-input': {
+        color: 'white'
+    },
+} as SxProps;
 
 export const TextField: React.FunctionComponent<Props> = (props) => {
-    const classes = useStyles();
     const _props = props!;
     const onChange = _props.onChange ?? defaultOnChange;
     const disabled = _props.disabled ?? false;
@@ -55,19 +50,21 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
     const placeholder = _props.placeholder ?? '';
     const readOnly = _props.readOnly ?? false;
     const size = _props.size ?? 'medium';
+    const autoComplete = _props.autoComplete ?? undefined;
     return (
         <MuiTextField
+            sx={styles}
             required={required}
             disabled={disabled}
             id={id}
             label={label}
             variant='outlined'
             type={type}
-            className={clsx(classes.base)}
             value={value}
             onChange={onChange}
             placeholder={placeholder}
             InputProps={{ readOnly }}
+            autoComplete={autoComplete}
             size={size}
         />
     );

@@ -1,8 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
+import Modal from '@mui/material/Modal';
+import { Box } from '@mui/material';
 import { useHistory, generatePath } from 'react-router-dom';
 import { ShortInfoWithEnvironment } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
@@ -29,18 +29,16 @@ function getModalStyle() {
     };
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        paper: {
-            position: 'absolute',
-            width: 400,
-            backgroundColor: theme.palette.background.paper,
-            border: '2px solid #000',
-            boxShadow: theme.shadows[5],
-            padding: theme.spacing(2, 4, 3),
-        },
-    }),
-);
+const styles = {
+    paper: {
+        position: 'absolute',
+        width: 400,
+        backgroundColor: (theme) => theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: (theme) => theme.shadows[5],
+        padding: (theme) => theme.spacing(2, 4, 3),
+    },
+};
 
 type Props = {
     applications: ShortInfoWithEnvironment[]
@@ -61,7 +59,6 @@ export const PickEnvironment: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
 
-    const classes = useStyles();
     // getModalStyle is not a pure function, we roll the style only on the first render
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(_props.openModal);
@@ -98,10 +95,10 @@ export const PickEnvironment: React.FunctionComponent<Props> = (props) => {
     };
 
     const body = (
-        <div style={modalStyle} className={classes.paper}>
+        <Box sx={styles.paper} style={modalStyle}>
             <h1>Pick an environment</h1>
             <List items={environments} onRenderCell={onRenderCell} />
-        </div>
+        </Box>
     );
 
     return (

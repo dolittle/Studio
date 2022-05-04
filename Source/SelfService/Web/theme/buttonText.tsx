@@ -2,11 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import clsx from 'clsx';
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Button as MuiButton } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { SxProps } from '@mui/material/styles';
+import { Button as MuiButton } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 type Props = {
     onClick?: (event: React.MouseEvent<HTMLElement>) => void;
@@ -22,64 +21,61 @@ type Props = {
 
 const defaultOnClick = (event: React.MouseEvent<HTMLElement>) => { };
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        base: {
-            textTransform: 'uppercase',
-            padding: '8px 12px',
-            backgroundColor: 'transparent',
+const styles = {
+    base: {
+        textTransform: 'uppercase',
+        padding: '8px 12px',
+        backgroundColor: 'transparent',
+    } as SxProps,
+    secondary: {
+        'color': '#FAFAFA',
+        'backgroundColor': 'transparent',
+        '&:hover': {
+            color: '#B3BBFB',
+            backgroundColor: 'transparent'
         },
-        secondary: {
-            'color': '#FAFAFA',
-            'backgroundColor': 'transparent',
-            '&:hover': {
-                color: '#B3BBFB',
-                backgroundColor: 'transparent'
-            },
-            '&:disabled': {
-                color: '#93959F',
-                backgroundColor: 'transparent'
-            },
-            '&:active': {
-                color: '#8C9AF8',
-                backgroundColor: 'transparent'
-            },
-            '&:focus': {
-                color: '#8C9AF8',
-                backgroundColor: 'transparent'
-            }
+        '&:disabled': {
+            color: '#93959F',
+            backgroundColor: 'transparent'
+        },
+        '&:active': {
+            color: '#8C9AF8',
+            backgroundColor: 'transparent'
+        },
+        '&:focus': {
+            color: '#8C9AF8',
+            backgroundColor: 'transparent'
+        }
 
+    } as SxProps,
+    primary: {
+        'color': '#6678F6',
+        '&:hover': {
+            color: '#B3BBFB',
+            backgroundColor: 'transparent'
         },
-        primary: {
-            'color': '#6678F6',
-            '&:hover': {
-                color: '#B3BBFB',
-                backgroundColor: 'transparent'
-            },
-            '&:disabled': {
-                color: '#93959F',
-                backgroundColor: 'transparent'
-            },
-            '&:active': {
-                color: '#8C9AF8',
-                backgroundColor: 'transparent'
-            },
-            '&:focus': {
-                color: '#8C9AF8',
-                backgroundColor: 'transparent'
-            }
+        '&:disabled': {
+            color: '#93959F',
+            backgroundColor: 'transparent'
         },
-    })
-);
+        '&:active': {
+            color: '#8C9AF8',
+            backgroundColor: 'transparent'
+        },
+        '&:focus': {
+            color: '#8C9AF8',
+            backgroundColor: 'transparent'
+        }
+    } as SxProps,
+};
 
 export const ButtonText: React.FunctionComponent<Props> = (props) => {
-    const classes = useStyles();
     const _props = props!;
     const children = _props.children;
     const onClick = _props.onClick ?? defaultOnClick;
     const disabled = _props.disabled ?? false;
     const buttonType = _props.buttonType ?? 'primary';
-    const buttonTypeClassName = classes[buttonType];
+    const buttonTypeStyles = styles[buttonType];
     const buttonSize = _props.size ?? 'medium';
 
     let startIcon: React.ReactNode = _props.withIcon ? <AddIcon /> : null;
@@ -87,11 +83,11 @@ export const ButtonText: React.FunctionComponent<Props> = (props) => {
 
     return (
         <MuiButton
+            sx={{ ...styles.base, ...buttonTypeStyles } as SxProps}
             disableRipple={true}
             disabled={disabled}
             startIcon={startIcon}
             onClick={onClick}
-            className={clsx(classes.base, buttonTypeClassName, _props.className)}
             size={buttonSize}
         >
             {children}

@@ -3,7 +3,7 @@
 
 import React, { useEffect } from 'react';
 import { useHistory, Link as RouterLink } from 'react-router-dom';
-import { Link, Box } from '@material-ui/core';
+import { Link, Box } from '@mui/material';
 import { useGlobalContext } from '../stores/notifications';
 
 
