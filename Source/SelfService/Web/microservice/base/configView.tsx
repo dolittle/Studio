@@ -11,7 +11,7 @@ type Props = {
     microservice: MicroserviceSimple;
 };
 
-export const View: React.FunctionComponent<Props> = (props) => {
+export const ConfigView: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const ms = _props.microservice;
     const msName = ms.name;

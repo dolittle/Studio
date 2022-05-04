@@ -12,7 +12,7 @@ type Props = {
     paths: SimpleIngressPath[];
 };
 
-export const View: React.FunctionComponent<Props> = (props) => {
+export const LiveIngressView: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const urls = _props.urls;
     const paths = _props.paths;
