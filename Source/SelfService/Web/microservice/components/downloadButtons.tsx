@@ -38,16 +38,6 @@ export const DownloadButtons: React.FunctionComponent<Props> = (props) => {
 
             <DownloadButton
                 onClick={(event: React.MouseEvent<HTMLElement>) => {
-                    const configMapName = `${configMapPrefix}-config-files`;
-                    const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
-                    window.open(href, '_blank');
-                }}
-            >
-                Download config files yaml
-            </DownloadButton>
-
-            <DownloadButton
-                onClick={(event: React.MouseEvent<HTMLElement>) => {
                     const configMapName = `${configMapPrefix}-env-variables`;
                     const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
                     window.open(href, '_blank');

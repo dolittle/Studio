@@ -17,9 +17,6 @@ export const LiveIngressView: React.FunctionComponent<Props> = (props) => {
     const urls = _props.urls;
     const paths = _props.paths;
 
-
-    console.log("urls", urls)
-    console.log("paths", paths)
     const tenantEndpoints = urls.map(info => {
         const data = `${info.url} (${info.customerTenantID})`;
         // React is unhappy when customTenantID is empty multiple times

@@ -1,13 +1,14 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Box, Divider, List, Typography } from '@mui/material';
+import { Box, Divider, Grid, List, Typography } from '@mui/material';
 import React, {useEffect, useState} from 'react';
-import { deleteConfigFile, getConfigFilesNamesList, IngressURLWithCustomerTenantID, SimpleIngressPath, updateConfigFiles } from '../../api/api';
+import { deleteConfigFile, getConfigFilesNamesList, getServerUrlPrefix, IngressURLWithCustomerTenantID, SimpleIngressPath, updateConfigFiles } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 
 
 import { ButtonText } from '../../theme/buttonText';
+import { DownloadButton } from '../../theme/downloadButton';
 import { DownloadButtons } from '../components/downloadButtons';
 import ConfigFilesTable from './components/configFilesTable';
 import { ConfigView } from './configView';
@@ -42,6 +43,10 @@ const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 export const Configuration: React.FunctionComponent<ConfigurationProps> = (props) => {
     const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
+
+    // This is reused. consider moving
+    const configMapPrefix = `${props.environment.toLowerCase()}-${props.msName.toLowerCase()}`;
+
     async function onFileSelectorSubmit(event) {
         event.preventDefault();
 
@@ -105,7 +110,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
             <Divider sx={styles.divider} />
             <Box ml={2}>
                 <LiveIngressView urls={props.ingressUrls} paths={props.ingressPaths} />
-                </Box>
+            </Box>
             <Divider sx={styles.divider} />
             <Box ml={2}>
                 <ButtonText
@@ -125,13 +130,20 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                     component="h4"
                     style={{
                         paddingBottom: '5px',
-                    }}>Microservice configuration files</Typography>
-                <Typography
-                    variant="body2"
-                    component="p"
-                    style={{
-                        paddingBottom: '50px',
-                    }}>/app/data</Typography>
+                    }}>Configuration files</Typography>
+                <Grid container spacing={3}>
+                    <Grid item>
+                        <DownloadButton
+                            onClick={(event: React.MouseEvent<HTMLElement>) => {
+                                const configMapName = `${configMapPrefix}-config-files`;
+                                const href = `${getServerUrlPrefix()}/live/application/${props.applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
+                                window.open(href, '_blank');
+                            }}
+                        >
+                            Download config files yaml
+                        </DownloadButton>
+                    </Grid>
+                </Grid>
                 <ConfigFilesTable filesNames={filesNamesList} onDeleteFileClick={deleteFileFromMicroservice}></ConfigFilesTable>
                 <Divider style={{ backgroundColor: '#3B3D48', marginTop: '40px', marginBottom: '20px' }} />
                 <Typography
