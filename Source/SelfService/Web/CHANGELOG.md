@@ -1,3 +1,9 @@
+# [1.23.1] - 2022-5-4 [PR: #185](https://github.com/dolittle/Studio/pull/185)
+## Summary
+
+- Fixed bug in customer screen within admin where view access would be repeated for each environment
+
+
 # [1.23.0] - 2022-5-3 [PR: #181](https://github.com/dolittle/Studio/pull/181)
 Solves: https://app.asana.com/0/1202121266838773/1202029655339366/f
 
