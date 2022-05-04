@@ -17,16 +17,11 @@ import { useSnackbar } from 'notistack';
 
 import { HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
-import { ConfigFiles } from '../view/configFiles';
 import { useReadable } from 'use-svelte-store';
 import { microservices, MicroserviceStore, canDeleteMicroservice, canEditMicroservice } from '../../stores/microservice';
-import { ConfigView } from './configView';
 import { Configuration } from './configuration';
 import { Tab, Tabs } from '../../theme/tabs';
-import { DownloadButtons } from '../components/downloadButtons';
 import { MicroserviceSimple } from '../../api/index';
-import { LiveIngressView } from './liveIngressView';
-import { ButtonText } from '../../theme/buttonText';
 import { HttpResponseApplication } from '../../api/application';
 
 
@@ -181,7 +176,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     >
                         <Tab label='Health Status' />
                         <Tab label='Configuration' />
-                        <Tab label='Configuration Files' />
                     </Tabs>
                 </Grid>
 
@@ -229,45 +223,19 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
             </TabPanel>
             <TabPanel value={currentTab} index={1}>
-                {/* <Configuration
+                <Configuration
                     applicationId={applicationId}
                     environment={environment}
                     microserviceId={microserviceId}
                     msName={msName}
-                    ingressUrls={}
-                    ingressPaths={}
-                    ms={}
+                    ingressUrls={currentMicroservice.live.ingressUrls}
+                    ingressPaths={currentMicroservice.live.ingressPaths}
+                    ms={ms}
                     onClick={async () => {
                         const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
                         history.push(href);
                     }}
-                /> */}
-                <Box ml={2}>
-                    <ConfigView microservice={ms} />
-                </Box>
-                <Divider sx={styles.divider} />
-                <Box ml={2}>
-                    <LiveIngressView urls={currentMicroservice.live.ingressUrls} paths={currentMicroservice.live.ingressPaths} />
-                </Box>
-                <Divider sx={styles.divider} />
-                <Box ml={2}>
-                    <ButtonText
-                        onClick={async () => {
-                            const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
-                            history.push(href);
-                        }}
-                    >Manage environment variables</ButtonText>
-
-                        <DownloadButtons
-                            environment={environment}
-                            microserviceName={msName}
-                            applicationId={applicationId}
-                        />
-                    </Box>
-            </TabPanel>
-
-            <TabPanel value={currentTab} index={2}>
-                <ConfigFiles applicationId={applicationId} environment={environment} microserviceId={microserviceId} />
+                />
             </TabPanel>
         </Grid >
     );
