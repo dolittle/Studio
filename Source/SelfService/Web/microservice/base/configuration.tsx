@@ -13,7 +13,7 @@ import { DownloadButtons } from '../components/downloadButtons';
 import ConfigFilesTable from './components/configFilesTable';
 import { ConfigView } from './configView';
 import { LiveIngressView } from './liveIngressView';
-import FileUploadModal from '../../theme/modal';
+import ChooseFileModal from '../../theme/chooseFileModal';
 
 
 export type ConfigurationProps = {
@@ -87,18 +87,18 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
 
     return(
         <>
-            <FileUploadModal
+            <ChooseFileModal
                 open={true}
                 maxUploadSize={MAX_CONFIGMAP_ENTRY_SIZE}
                 onFileSelectorSubmit={async (event)=>{
                     event.preventDefault();
 
-                    const fData = new FormData(event.target);
+                    const configFileForm = new FormData(event.target);
 
-                    await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, fData);
+                    await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, configFileForm);
                     fetchConfigFilesNamesList();
                 }}>
-            </FileUploadModal>
+            </ChooseFileModal>
             <Box ml={2}>
                 <ConfigView microservice={props.ms} />
             </Box>

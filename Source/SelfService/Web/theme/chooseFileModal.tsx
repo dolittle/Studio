@@ -10,7 +10,6 @@ export type OnSubmit = () => boolean //returns true if user submitted a file.
 export type OnFileSelectorSubmit = (event: React.MouseEvent<HTMLElement>) => Promise<void> | void;
 export interface FileUploadModalProps {
     open: boolean,
-    onSubmit: OnSubmit,
     onFileSelectorSubmit: OnFileSelectorSubmit,
     body: string
     header: string
@@ -32,7 +31,7 @@ const style = {
 
 
 
-export default function FileUploadModal (props){
+export default function ChooseFileModal (props){
     const [open, setOpen] = useState(props.open);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
