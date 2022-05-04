@@ -13,6 +13,7 @@ import { DownloadButtons } from '../components/downloadButtons';
 import ConfigFilesTable from './components/configFilesTable';
 import { ConfigView } from './configView';
 import { LiveIngressView } from './liveIngressView';
+import FileUploadModal from '../../theme/modal';
 
 
 export type ConfigurationProps = {
@@ -44,33 +45,10 @@ const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 export const Configuration: React.FunctionComponent<ConfigurationProps> = (props) => {
     const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
+    
 
     // This is reused. consider moving
     const configMapPrefix = `${props.environment.toLowerCase()}-${props.msName.toLowerCase()}`;
-
-    async function onFileSelectorSubmit(event) {
-        event.preventDefault();
-
-        const fData = new FormData(event.target);
-
-        await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, fData);
-        fetchConfigFilesNamesList();
-    }
-
-    const fileSelector = document?.getElementById('config-file-selector-form');
-
-    const attachFormSubmitEvent = () => {
-        fileSelector?.addEventListener('submit', onFileSelectorSubmit);
-    }
-    attachFormSubmitEvent();
-
-
-    fileSelector?.addEventListener('change', (event: any) => {
-        const fileList = event.target.files;
-        if (fileList[0].size > MAX_CONFIGMAP_ENTRY_SIZE) {
-            alert('file cannot be larger than 3145728 bytes. Please select another file');
-        }
-    });
 
 
 
@@ -107,9 +85,20 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     }
 
 
-
     return(
         <>
+            <FileUploadModal
+                open={true}
+                maxUploadSize={MAX_CONFIGMAP_ENTRY_SIZE}
+                onFileSelectorSubmit={async (event)=>{
+                    event.preventDefault();
+
+                    const fData = new FormData(event.target);
+
+                    await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, fData);
+                    fetchConfigFilesNamesList();
+                }}>
+            </FileUploadModal>
             <Box ml={2}>
                 <ConfigView microservice={props.ms} />
             </Box>
@@ -117,7 +106,6 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
             <Box ml={2}>
                 <LiveIngressView urls={props.ingressUrls} paths={props.ingressPaths} />
             </Box>
-            <Divider sx={styles.divider} />
             <Box ml={2}>
                 <ButtonText
                     onClick={props.onClick}
@@ -163,10 +151,6 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                 </Grid>
                 <ConfigFilesTable filesNames={filesNamesList} onDeleteFileClick={deleteFileFromMicroservice}></ConfigFilesTable>
                 <Divider style={{ backgroundColor: '#3B3D48', marginTop: '40px', marginBottom: '20px' }} />
-                <form method="put" id="config-file-selector-form">
-                    <input type="file" id="file-selector" name='file' />
-                    <input type="submit" value="Submit" />
-                </form>
             </Box>
         </>
     )
