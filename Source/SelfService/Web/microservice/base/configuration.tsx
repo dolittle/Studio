@@ -101,23 +101,24 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
         <>
             <Box ml={2}>
                 <ConfigView microservice={props.ms} />
-                </Box>
-                <Divider sx={styles.divider} />
-                <Box ml={2}>
-                    <LiveIngressView urls={props.ingressUrls} paths={props.ingressPaths} />
-                </Box>
-                <Divider sx={styles.divider} />
-                <Box ml={2}>
-                    <ButtonText
-                        onClick={props.onClick}
-                    >Manage environment variables</ButtonText>
-
-                        <DownloadButtons
-                            environment={props.environment}
-                            microserviceName={props.msName}
-                            applicationId={props.applicationId}
-                        />
             </Box>
+            <Divider sx={styles.divider} />
+            <Box ml={2}>
+                <LiveIngressView urls={props.ingressUrls} paths={props.ingressPaths} />
+                </Box>
+            <Divider sx={styles.divider} />
+            <Box ml={2}>
+                <ButtonText
+                    onClick={props.onClick}
+                >Manage environment variables</ButtonText>
+
+                    <DownloadButtons
+                        environment={props.environment}
+                        microserviceName={props.msName}
+                        applicationId={props.applicationId}
+                    />
+            </Box>
+            <Divider sx={styles.divider} />
             <Box ml={2}>
                 <Typography
                     variant="h4"

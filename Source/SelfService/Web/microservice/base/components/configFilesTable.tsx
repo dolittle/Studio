@@ -42,10 +42,10 @@ export default function ConfigFilesTable(props: ConfigFilesTableProps) {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="right">Path</TableCell>
-            <TableCell align="right">Name</TableCell>
-            <TableCell align="right">Date Added</TableCell>
-            <TableCell align="right">Added By</TableCell>
+            <TableCell align="left">Path</TableCell>
+            <TableCell align="left">Name</TableCell>
+            <TableCell align="left">Date Added</TableCell>
+            <TableCell align="left">Added By</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -55,9 +55,9 @@ export default function ConfigFilesTable(props: ConfigFilesTableProps) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">{row.path}</TableCell>
-              <TableCell align="right">{row.fileName}</TableCell>
-              <TableCell align="right">{row.dateAdded}</TableCell>
-              <TableCell align="right">{row.addedBy}</TableCell>
+              <TableCell align="left">{row.fileName}</TableCell>
+              <TableCell align="left">{row.dateAdded}</TableCell>
+              <TableCell align="left">{row.addedBy}</TableCell>
             </TableRow>
           ))}
         </TableBody>
