@@ -1,3 +1,16 @@
+# [1.3.1] - 2022-5-2 [PR: #179](https://github.com/dolittle/Studio/pull/179)
+## Summary
+
+Fixes make develop-backend
+
+
+Remember to remove sections that you don't need or use.
+
+### Added
+
+- added x/sys to sum and mod files for Selfervice Backend
+
+
 # [1.2.0] - 2021-11-23 [PR: #136](https://github.com/dolittle/Studio/pull/136)
 ## Summary
 
