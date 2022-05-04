@@ -6,7 +6,7 @@ import React from 'react';
 import { Button } from '../theme/button';
 
 import { ButtonText } from '../theme/buttonText';
-import { TextIconButton } from '../theme/downloadButton';
+import { TextIconButton } from '../theme/textIconButton';
 
 type Props = {
 };

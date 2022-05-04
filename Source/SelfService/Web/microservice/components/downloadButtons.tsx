@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Grid } from '@mui/material';
 import { getServerUrlPrefix } from '../../api/api';
-import { TextIconButton } from '../../theme/downloadButton';
+import { TextIconButton } from '../../theme/textIconButton';
 
 interface Props {
     applicationId: string

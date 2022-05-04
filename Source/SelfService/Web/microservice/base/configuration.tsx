@@ -8,7 +8,7 @@ import { MicroserviceSimple } from '../../api/index';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import { ButtonText } from '../../theme/buttonText';
-import { TextIconButton } from '../../theme/downloadButton';
+import { TextIconButton } from '../../theme/textIconButton';
 import { DownloadButtons } from '../components/downloadButtons';
 import ConfigFilesTable from './components/configFilesTable';
 import { ConfigView } from './configView';
@@ -136,7 +136,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                         <TextIconButton
                             icon={<AddCircleIcon/>}
                             onClick={(event: React.MouseEvent<HTMLElement>) => {
-                                
+
                             }}
                         >
                             Add files
