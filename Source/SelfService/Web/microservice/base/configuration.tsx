@@ -3,12 +3,13 @@
 
 import { Box, Divider, List, Typography } from '@mui/material';
 import React, {useEffect, useState} from 'react';
-import { getConfigFilesNamesList, IngressURLWithCustomerTenantID, SimpleIngressPath, updateConfigFiles } from '../../api/api';
+import { deleteConfigFile, getConfigFilesNamesList, IngressURLWithCustomerTenantID, SimpleIngressPath, updateConfigFiles } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 
 
 import { ButtonText } from '../../theme/buttonText';
 import { DownloadButtons } from '../components/downloadButtons';
+import ConfigFilesTable from './components/configFilesTable';
 import { ConfigView } from './configView';
 import { LiveIngressView } from './liveIngressView';
 
@@ -84,6 +85,16 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
         setFilesNamesList(result.data);
     };
 
+    const deleteFileFromMicroservice = async(fileName: string) => {
+        if (!fileName) return;
+
+        await deleteConfigFile(props.applicationId, props.environment, props.microserviceId, fileName);
+
+        fetchConfigFilesNamesList()
+            .catch(console.error);
+
+    }
+
 
 
     return(
@@ -120,7 +131,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                     style={{
                         paddingBottom: '50px',
                     }}>/app/data</Typography>
-                {/* <List items={filesNamesList} onRenderCell={onRenderCell} style={{ backgroundColor: 'white', width: '30%' }} /> */}
+                <ConfigFilesTable filesNames={filesNamesList} onDeleteFileClick={deleteFileFromMicroservice}></ConfigFilesTable>
                 <Divider style={{ backgroundColor: '#3B3D48', marginTop: '40px', marginBottom: '20px' }} />
                 <Typography
                     variant="h4"
