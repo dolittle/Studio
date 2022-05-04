@@ -17,6 +17,7 @@ import { useSnackbar } from 'notistack';
 
 import { HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
+import { Logs } from '../view/logs';
 import { useReadable } from 'use-svelte-store';
 import { microservices, MicroserviceStore, canDeleteMicroservice, canEditMicroservice } from '../../stores/microservice';
 import { View as ConfigView } from './configView';
@@ -179,6 +180,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     >
                         <Tab label='Configuration' />
                         <Tab label='Health Status' />
+                        <Tab label='Logs' />
                     </Tabs>
                 </Grid>
 
@@ -248,6 +250,9 @@ export const View: React.FunctionComponent<Props> = (props) => {
             </TabPanel>
             <TabPanel value={currentTab} index={1}>
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
+            </TabPanel>
+            <TabPanel value={currentTab} index={2}>
+                <Logs applicationId={applicationId} environment={environment} microserviceId={microserviceId} />
             </TabPanel>
         </Grid >
     );
