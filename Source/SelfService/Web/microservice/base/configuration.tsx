@@ -8,7 +8,7 @@ import { MicroserviceSimple } from '../../api/index';
 
 
 import { ButtonText } from '../../theme/buttonText';
-import { DownloadButton } from '../../theme/downloadButton';
+import { TextIconButton } from '../../theme/downloadButton';
 import { DownloadButtons } from '../components/downloadButtons';
 import ConfigFilesTable from './components/configFilesTable';
 import { ConfigView } from './configView';
@@ -133,7 +133,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                     }}>Configuration files</Typography>
                 <Grid container spacing={3}>
                     <Grid item>
-                        <DownloadButton
+                        <TextIconButton
                             onClick={(event: React.MouseEvent<HTMLElement>) => {
                                 const configMapName = `${configMapPrefix}-config-files`;
                                 const href = `${getServerUrlPrefix()}/live/application/${props.applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
@@ -141,7 +141,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             }}
                         >
                             Download config files yaml
-                        </DownloadButton>
+                        </TextIconButton>
                     </Grid>
                 </Grid>
                 <ConfigFilesTable filesNames={filesNamesList} onDeleteFileClick={deleteFileFromMicroservice}></ConfigFilesTable>

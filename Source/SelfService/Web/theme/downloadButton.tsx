@@ -12,7 +12,7 @@ interface Props {
 
 const defaultOnClick = (event: React.MouseEvent<HTMLElement>) => { };
 
-export const DownloadButton: React.FunctionComponent<Props> = (props) => {
+export const TextIconButton: React.FunctionComponent<Props> = (props) => {
     const children = props!.children;
     const onClick = props!.onClick ?? defaultOnClick;
 
