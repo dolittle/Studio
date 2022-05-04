@@ -18,6 +18,8 @@ export const LiveIngressView: React.FunctionComponent<Props> = (props) => {
     const paths = _props.paths;
 
 
+    console.log("urls", urls)
+    console.log("paths", paths)
     const tenantEndpoints = urls.map(info => {
         const data = `${info.url} (${info.customerTenantID})`;
         // React is unhappy when customTenantID is empty multiple times
@@ -30,6 +32,7 @@ export const LiveIngressView: React.FunctionComponent<Props> = (props) => {
         return <HeaderDataRow key={infoPath} head='' data={infoPath} />;
     });
 
+
     return (
 
         <Grid
@@ -38,8 +41,12 @@ export const LiveIngressView: React.FunctionComponent<Props> = (props) => {
             justifyContent="flex-start"
             alignItems="stretch"
         >
-            <h2>Tenant Endpoints</h2>
-            {tenantEndpoints}
+            {tenantEndpoints.length > 0 &&
+            <>
+                <h2>Tenant Endpoints</h2>
+                {tenantEndpoints}
+            </>
+            }
 
             <h2>Microservice Paths</h2>
             {microservicePaths}
