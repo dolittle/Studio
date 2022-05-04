@@ -45,7 +45,7 @@ const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 export const Configuration: React.FunctionComponent<ConfigurationProps> = (props) => {
     const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
-    
+
 
     // This is reused. consider moving
     const configMapPrefix = `${props.environment.toLowerCase()}-${props.msName.toLowerCase()}`;
@@ -120,12 +120,6 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
             <Divider sx={styles.divider} />
             <Box ml={2}>
                 <h2>Configuration files</h2>
-                <Typography
-                    variant="body2"
-                    component="p"
-                    style={{
-                        paddingBottom: '5px',
-                    }}>max file size: {MAX_CONFIGMAP_ENTRY_SIZE} bytes / 3.15mb</Typography>
                 <Grid container spacing={3}>
                     <Grid item>
                         <TextIconButton
