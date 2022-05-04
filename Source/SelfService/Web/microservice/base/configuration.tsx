@@ -5,7 +5,7 @@ import { Box, Divider, Grid, List, Typography } from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import { deleteConfigFile, getConfigFilesNamesList, getServerUrlPrefix, IngressURLWithCustomerTenantID, SimpleIngressPath, updateConfigFiles } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
-
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import { ButtonText } from '../../theme/buttonText';
 import { TextIconButton } from '../../theme/downloadButton';
@@ -132,6 +132,16 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                         paddingBottom: '5px',
                     }}>Configuration files</Typography>
                 <Grid container spacing={3}>
+                    <Grid item>
+                        <TextIconButton
+                            icon={<AddCircleIcon/>}
+                            onClick={(event: React.MouseEvent<HTMLElement>) => {
+                                
+                            }}
+                        >
+                            Add files
+                        </TextIconButton>
+                    </Grid>
                     <Grid item>
                         <TextIconButton
                             onClick={(event: React.MouseEvent<HTMLElement>) => {
