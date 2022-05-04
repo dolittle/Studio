@@ -112,10 +112,6 @@ export type InputConfigFile = {
     value: string;
 };
 
-export type HttpInputConfigFile = {
-    form: FormData;
-};
-
 export type HttpInputDeleteConfigFile = {
     key: string;
 };
@@ -283,14 +279,14 @@ export async function getConfigFilesNamesList(applicationId: string, environment
     return data;
 }
 
-export async function updateConfigFiles(applicationId: string, environment: string, microserviceId: string, input: HttpInputConfigFile): Promise<boolean> {
+export async function updateConfigFiles(applicationId: string, environment: string, microserviceId: string, form: FormData): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files`;
 
     const response = await fetch(
         url,
         {
             method: 'PUT',
-            body: input.form,
+            body: form,
             mode: 'cors',
         });
 

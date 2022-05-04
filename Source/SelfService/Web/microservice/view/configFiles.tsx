@@ -30,23 +30,21 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props: Props) => {
 
     const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
 
-    async function formSubmit(event) {
+    async function onFileSelectorSubmit(event) {
         event.preventDefault();
 
-        const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, { form: new FormData(event.target) });
-        console.log('upsert', upsert);
+        const fData = new FormData(event.target);
+
+        await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, fData);
         fetchConfigFilesNamesList();
-
     }
 
-    const fileSelector = document?.getElementById('form-file-selector');
+    const fileSelector = document?.getElementById('config-file-selector-form');
 
-
+    const attachFormSubmitEvent = () => {
+        fileSelector?.addEventListener('submit', onFileSelectorSubmit);
+    }
     attachFormSubmitEvent();
-
-    function attachFormSubmitEvent() {
-        fileSelector?.addEventListener('submit', formSubmit);
-    }
 
 
     fileSelector?.addEventListener('change', (event: any) => {
@@ -138,7 +136,7 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props: Props) => {
                 style={{
                     paddingBottom: '50px',
                 }}>submitting files with the same name will cause the original file to be replaced</Typography>
-            <form method="put" id="form-file-selector">
+            <form method="put" id="config-file-selector-form">
                 <input type="file" id="file-selector" name='file' />
                 <input type="submit" value="Submit" />
             </form>
