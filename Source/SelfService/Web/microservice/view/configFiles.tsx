@@ -1,13 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { deleteConfigFile, getConfigFilesNamesList, updateConfigFiles } from '../../api/api';
 import { List } from '@fluentui/react/lib/List';
-import Typography from '@material-ui/core/Typography';
-import { Divider, Grid, Link } from '@material-ui/core';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
+import { Divider, Grid, Link, Typography } from '@mui/material';
 
 
 
@@ -17,91 +14,88 @@ type Props = {
     microserviceId: string
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-createStyles({
+const styles = {
     base: {
         '& .MuiTypography-body1': {
             color: 'black',
-            align: "center"
+            align: 'center'
         }
     },
-})
-);
+};
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 
-export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
+export const ConfigFiles: React.FunctionComponent<Props> = (props: Props) => {
 
-    const [filesNamesList, setFilesNamesList] = useState<string[]>([])
-    const classes = useStyles();
-
-
+    const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
 
     async function formSubmit(event) {
         event.preventDefault();
 
-        const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, {form: new FormData(event.target)})
-        console.log("upsert", upsert);
-        fetchConfigFilesNamesList()
+        const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, { form: new FormData(event.target) });
+        console.log('upsert', upsert);
+        fetchConfigFilesNamesList();
 
     }
 
-    var fileSelector = document?.getElementById("form-file-selector")
+    const fileSelector = document?.getElementById('form-file-selector');
 
 
-    attachFormSubmitEvent()
+    attachFormSubmitEvent();
 
-    function attachFormSubmitEvent(){
-        fileSelector?.addEventListener("submit", formSubmit);
+    function attachFormSubmitEvent() {
+        fileSelector?.addEventListener('submit', formSubmit);
     }
 
 
     fileSelector?.addEventListener('change', (event: any) => {
         const fileList = event.target.files;
         if (fileList[0].size > MAX_CONFIGMAP_ENTRY_SIZE) {
-            alert("file cannot be larger than 3145728 bytes. Please select another file")
+            alert('file cannot be larger than 3145728 bytes. Please select another file');
         }
     });
 
 
     const fetchConfigFilesNamesList = async () => {
-        const result = await getConfigFilesNamesList(props.applicationId, props.environment, props.microserviceId)
+        const result = await getConfigFilesNamesList(props.applicationId, props.environment, props.microserviceId);
 
-        if(!result.data) {
-            window.alert(`Could not fetch config files`)
+        if (!result.data) {
+            window.alert(`Could not fetch config files`);
         }
 
-        setFilesNamesList(result.data)
-      }
+        setFilesNamesList(result.data);
+    };
 
 
     useEffect(() => {
         fetchConfigFilesNamesList()
-        .catch(console.error);;
+            .catch(console.error);;
 
     }, []);
 
-    const onRenderCell =  (fileName: string | undefined, index: number | undefined): JSX.Element => {
+    const onRenderCell = (fileName: string | undefined, index: number | undefined): JSX.Element => {
         return (
             <Grid container spacing={2}>
-                 <Grid item
-                      className={clsx(classes.base)}>
+                <Grid
+                    item
+                    sx={styles.base}
+                >
                     <Typography variant="body1" >{fileName}</Typography>
                 </Grid>
-                <Grid item  style={{
-                        textAlign: "center",
-                        paddingBottom: "10px"
-                    }}>
+                <Grid item style={{
+                    textAlign: 'center',
+                    paddingBottom: '10px'
+                }}>
                     <Link onClick={async () => {
-                           if(!fileName) return;
+                        if (!fileName) return;
 
-                            await deleteConfigFile(props.applicationId, props.environment, props.microserviceId, fileName);
+                        await deleteConfigFile(props.applicationId, props.environment, props.microserviceId, fileName);
 
-                            fetchConfigFilesNamesList()
-                                .catch(console.error);;
+                        fetchConfigFilesNamesList()
+                            .catch(console.error);
                     }}>
-                            Remove
+                        Remove
                     </Link>
                 </Grid>
             </Grid>
@@ -110,43 +104,43 @@ export const ConfigFiles: React.FunctionComponent<Props> = (props) => {
 
 
 
-    return(
-    <>
-        <Typography
-            variant="h4"
-            component="h4"
-            style={{
-                paddingBottom: '5px',
-            }}>Microservice configuration files</Typography>
-        <Typography
-            variant="body2"
-            component="p"
-            style={{
-                paddingBottom: '50px',
-            }}>/app/data</Typography>
-        <List items={filesNamesList} onRenderCell={onRenderCell} style={{backgroundColor: "white", width: "30%"}} />
-        <Divider style={{ backgroundColor: '#3B3D48', marginTop: "40px", marginBottom: "20px" }}/>
-        <Typography
-            variant="h4"
-            component="h4"
-            style={{
-                paddingBottom: '5px',
-            }}>Add new configuration file</Typography>
-        <Typography
-            variant="body2"
-            component="p"
-            style={{
-                paddingBottom: '5px',
-            }}>max file size: {MAX_CONFIGMAP_ENTRY_SIZE} bytes / 3.15mb</Typography>
-        <Typography
-            variant="body2"
-            component="p"
-            style={{
-                paddingBottom: '50px',
-            }}>submitting files with the same name will cause the original file to be replaced</Typography>
-        <form method="put" id="form-file-selector">
-            <input type="file" id="file-selector" name='file' />
-            <input type="submit" value="Submit"/>
-        </form>
-    </>)
-}
+    return (
+        <>
+            <Typography
+                variant="h4"
+                component="h4"
+                style={{
+                    paddingBottom: '5px',
+                }}>Microservice configuration files</Typography>
+            <Typography
+                variant="body2"
+                component="p"
+                style={{
+                    paddingBottom: '50px',
+                }}>/app/data</Typography>
+            <List items={filesNamesList} onRenderCell={onRenderCell} style={{ backgroundColor: 'white', width: '30%' }} />
+            <Divider style={{ backgroundColor: '#3B3D48', marginTop: '40px', marginBottom: '20px' }} />
+            <Typography
+                variant="h4"
+                component="h4"
+                style={{
+                    paddingBottom: '5px',
+                }}>Add new configuration file</Typography>
+            <Typography
+                variant="body2"
+                component="p"
+                style={{
+                    paddingBottom: '5px',
+                }}>max file size: {MAX_CONFIGMAP_ENTRY_SIZE} bytes / 3.15mb</Typography>
+            <Typography
+                variant="body2"
+                component="p"
+                style={{
+                    paddingBottom: '50px',
+                }}>submitting files with the same name will cause the original file to be replaced</Typography>
+            <form method="put" id="form-file-selector">
+                <input type="file" id="file-selector" name='file' />
+                <input type="submit" value="Submit" />
+            </form>
+        </>);
+};
