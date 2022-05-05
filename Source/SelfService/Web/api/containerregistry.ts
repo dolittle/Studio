@@ -33,8 +33,8 @@ export type HTTPResponseTags = {
     tags: string[]
 };
 
-export async function getTagsInContainerRegistry(image: string): Promise<ContainerRegistryTags> {
-    const url = `${getServerUrlPrefix()}/containerregistry/tags/${image}`;
+export async function getTagsInContainerRegistry(applicationId: string, image: string): Promise<ContainerRegistryTags> {
+    const url = `${getServerUrlPrefix()}/application/${applicationId}/containerregistry/tags/${image}`;
 
     const result = await fetch(
         url,
@@ -55,8 +55,8 @@ export async function getTagsInContainerRegistry(image: string): Promise<Contain
     };
 }
 
-export async function getReposInContainerRegistry(): Promise<ContainerRegistryImages> {
-    const url = `${getServerUrlPrefix()}/containerregistry/images`;
+export async function getReposInContainerRegistry(applicationId: string): Promise<ContainerRegistryImages> {
+    const url = `${getServerUrlPrefix()}/application/${applicationId}/containerregistry/images`;
 
     const result = await fetch(
         url,

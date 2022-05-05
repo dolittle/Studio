@@ -33,7 +33,7 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
 
     useEffect(() => {
         Promise.all([
-            getReposInContainerRegistry()
+            getReposInContainerRegistry(applicationId)
         ]).then(values => {
             setContainerRegistryImages(values[0]);
             setLoaded(true);
@@ -88,7 +88,7 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
                         </TableContainer>
                     </Route>
                     <Route path="/containerregistry/application/:applicationId/:environment/overview/tags/:image+">
-                        <Tags url={containerRegistryImages.url} />
+                        <Tags url={containerRegistryImages.url} applicationId={applicationId} />
                     </Route>
                 </Switch>
             </div>

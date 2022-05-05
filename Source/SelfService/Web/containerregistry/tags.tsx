@@ -13,11 +13,13 @@ import { ContainerRegistryTags, getTagsInContainerRegistry } from '../api/contai
 
 type Props = {
     url: string
+    applicationId: string
 };
 
 export const View: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const { image } = useParams();
+    const applicationId = _props.applicationId;
 
     const [loaded, setLoaded] = useState(false);
     const [containerRegistryTags, setContainerRegistryTags] = useState({
@@ -27,7 +29,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
     useEffect(() => {
         Promise.all([
-            getTagsInContainerRegistry(image)
+            getTagsInContainerRegistry(applicationId, image)
         ]).then(values => {
             setContainerRegistryTags(values[0]);
             setLoaded(true);
