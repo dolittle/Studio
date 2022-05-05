@@ -48,15 +48,10 @@ export function SelectFileModal (props: SelectFileModalModalProps){
         if (fileList[0].size > (props?.maxUploadSize ?? 30000000)) {
             alert(`file cannot be larger than ${props.maxUploadSize} bytes. Please select another file`);
         }
-    }
+    };
 
 
-    console.log("visility", props.open)
-
-
-    fileSelector?.addEventListener('change', sizeValidation);
-
-
+    console.log('visility', props.open);
 
     return (
         <Modal
@@ -69,7 +64,7 @@ export function SelectFileModal (props: SelectFileModalModalProps){
                 <Typography id="modal-modal-title" variant="h6" component="h2">{props.header}</Typography>
                 <Typography id="modal-modal-title" variant="h6" component="h2">{props.body}</Typography>
                 <form method="put" id="config-file-selector-form" onSubmit={handleFormSubmit}>
-                    <input type="file" id="file-selector" name='file' />
+                    <input type="file" id="file-selector" name='file' onChange={sizeValidation} />
                     <input type="submit" value="Submit" />
                 </form>
             </Box>
