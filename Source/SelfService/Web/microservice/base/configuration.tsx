@@ -163,7 +163,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                                 console.log('visility', configFileModalVisibility);
                                 // NOT WORKING TO CHANGE V
                                 // setConfigFileModalVisibility(true);
-                                document?.getElementById('config-file-selector-form')?.dispatchEvent('submit');
+                                document?.getElementById('config-file-selector-form');
                             }}
                         >
                             Add files
