@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 
 export type OnSubmit = () => boolean //returns true if user submitted a file.
 export type OnFileSelectorSubmit = (event: SubmitEvent) => any
-export interface ChoseFileModalProps {
+export interface SelectFileModalModalProps {
     open: boolean,
     onFileSelectorSubmit: OnFileSelectorSubmit,
     body?: string
@@ -31,7 +31,7 @@ const style = {
 
 
 
-export default function ChoseFileModal (props: ChoseFileModalProps){
+export function SelectFileModal (props: SelectFileModalModalProps){
     const [open, setOpen] = useState(props.open);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
