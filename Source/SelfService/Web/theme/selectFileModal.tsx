@@ -64,8 +64,8 @@ export function SelectFileModal(props: SelectFileModalModalProps) {
                 <Typography id="modal-modal-title" variant="h6" component="h2">{props.header}</Typography>
                 <Typography id="modal-modal-title" variant="h6" component="h2">{props.body}</Typography>
                 <form method="put" id="config-file-selector-form" onSubmit={handleFormSubmit}>
-                    <input type="file" id="file-selector" name='file' onChange={sizeValidation} />
-                    <input type="submit" value="Submit" />
+                    <Button component="label"><input type="file" id="file-selector" name='file' hidden onChange={sizeValidation}/>select file</Button>
+                    <Button type='submit'>submit</Button>
                 </form>
             </Box>
         </Modal>
