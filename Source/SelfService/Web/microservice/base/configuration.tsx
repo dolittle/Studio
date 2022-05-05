@@ -90,19 +90,16 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
              <SelectFileModal
                 open={configFileModalVisibility}
                 maxUploadSize={MAX_CONFIGMAP_ENTRY_SIZE}
-                onFileSelectorSubmit={async (event:any)=>{
-                    console.log("onFileSelectorSubmit", event)
-
+                onFileSelectorSubmit={async (event) => {
                     event.preventDefault();
 
-
-                    const configFileForm = new FormData(event.target);
+                    const configFileForm = new FormData(event.target as HTMLFormElement);
 
                     await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, configFileForm);
                     fetchConfigFilesNamesList();
 
                     setConfigFileModalVisibility(false);
-                }}/>
+                }} />
             <Box ml={2}>
                 <ConfigView microservice={props.ms} />
             </Box>
