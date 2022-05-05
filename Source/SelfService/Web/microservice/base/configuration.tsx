@@ -8,7 +8,7 @@ import { MicroserviceSimple } from '../../api/index';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import { ButtonText } from '../../theme/buttonText';
-import { TextIconButton } from '../../theme/textIconButton';
+import { DownloadButton } from '../../theme/downloadButton';
 import { DownloadButtons } from '../components/downloadButtons';
 import ConfigFilesTable from './components/configFilesTable';
 import { ConfigView } from './configView';
@@ -123,8 +123,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                 <h2>Configuration files</h2>
                 <Grid container spacing={3}>
                     <Grid item>
-                        <TextIconButton
-                            icon={<AddCircleIcon />}
+                        <DownloadButton
                             onClick={(event: React.MouseEvent<HTMLElement>) => {
                                 console.log('visility', configFileModalVisibility);
                                 // NOT WORKING TO CHANGE V
@@ -132,10 +131,10 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             }}
                         >
                             Add files
-                        </TextIconButton>
+                        </DownloadButton>
                     </Grid>
                     <Grid item>
-                        <TextIconButton
+                        <DownloadButton
                             onClick={(event: React.MouseEvent<HTMLElement>) => {
                                 const configMapName = `${configMapPrefix}-config-files`;
                                 const href = `${getServerUrlPrefix()}/live/application/${props.applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
@@ -143,7 +142,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             }}
                         >
                             Download config files yaml
-                        </TextIconButton>
+                        </DownloadButton>
                     </Grid>
                 </Grid>
                 <ConfigFilesTable filesNames={filesNamesList} onDeleteFileClick={deleteFileFromMicroservice}></ConfigFilesTable>

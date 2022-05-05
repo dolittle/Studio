@@ -8,17 +8,15 @@ import SvgIcon, { SvgIconTypeMap } from '@mui/material/SvgIcon';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 interface Props {
-    icon?: React.ReactNode;
     onClick?: (event: React.MouseEvent<HTMLElement>) => void;
     children: React.ReactNode;
 }
 
 const defaultOnClick = (event: React.MouseEvent<HTMLElement>) => { };
 
-export const TextIconButton: React.FunctionComponent<Props> = (props) => {
+export const DownloadButton: React.FunctionComponent<Props> = (props) => {
     const children = props!.children;
     const onClick = props!.onClick ?? defaultOnClick;
-    const icon = props.icon ?? <GetAppIcon />;
 
     return (
         <ButtonText
@@ -26,7 +24,7 @@ export const TextIconButton: React.FunctionComponent<Props> = (props) => {
             disabled={false}
             withIcon={false}
             onClick={onClick}
-            startIcon={icon}
+            startIcon={<GetAppIcon />}
         >
             {children}
         </ButtonText>

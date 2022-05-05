@@ -6,7 +6,7 @@ import React from 'react';
 import { Button } from '../theme/button';
 
 import { ButtonText } from '../theme/buttonText';
-import { TextIconButton } from '../theme/textIconButton';
+import { DownloadButton } from '../theme/downloadButton';
 
 type Props = {
 };
@@ -48,7 +48,7 @@ export const ThemeScreen: React.FunctionComponent<Props> = (props) => {
                     <ButtonText buttonType={'secondary'} withIcon={true} disabled={true}>Disabled</ButtonText>
 
                     <p>DownloadButton</p>
-                    <TextIconButton>Enabled</TextIconButton>
+                    <DownloadButton>Enabled</DownloadButton>
                 </Box>
             </Grid>
         </>

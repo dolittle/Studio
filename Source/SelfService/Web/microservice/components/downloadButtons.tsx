@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Grid } from '@mui/material';
 import { getServerUrlPrefix } from '../../api/api';
-import { TextIconButton } from '../../theme/textIconButton';
+import { DownloadButton } from '../../theme/downloadButton';
 
 interface Props {
     applicationId: string
@@ -26,7 +26,7 @@ export const DownloadButtons: React.FunctionComponent<Props> = (props) => {
             justifyContent="flex-start"
             alignItems="flex-start"
         >
-            <TextIconButton
+            <DownloadButton
                 onClick={(event: React.MouseEvent<HTMLElement>) => {
                     const secretName = `${configMapPrefix}-secret-env-variables`;
                     const href = `${getServerUrlPrefix()}/live/application/${applicationId}/secret/${secretName}?download=1&fileType=yaml`;
@@ -34,9 +34,9 @@ export const DownloadButtons: React.FunctionComponent<Props> = (props) => {
                 }}
             >
                 Download secret env-variables yaml
-            </TextIconButton>
+            </DownloadButton>
 
-            <TextIconButton
+            <DownloadButton
                 onClick={(event: React.MouseEvent<HTMLElement>) => {
                     const configMapName = `${configMapPrefix}-env-variables`;
                     const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
@@ -44,7 +44,7 @@ export const DownloadButtons: React.FunctionComponent<Props> = (props) => {
                 }}
             >
                 Download env-variables yaml
-            </TextIconButton>
+            </DownloadButton>
         </Grid>
     );
 };
