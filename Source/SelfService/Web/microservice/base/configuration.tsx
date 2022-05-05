@@ -43,7 +43,7 @@ const styles = {
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 
-export const Configuration: React.FunctionComponent<ConfigurationProps> = (props) => {
+export const Configuration: React.FunctionComponent<ConfigurationProps> = (props: ConfigurationProps) => {
     const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
     const [configFileModalVisibility, setConfigFileModalVisibility] = useState<boolean>(false);
 
