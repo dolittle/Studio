@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { Box, Divider, Grid, Typography } from '@mui/material';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { deleteConfigFile, getConfigFilesNamesList, getServerUrlPrefix, IngressURLWithCustomerTenantID, SimpleIngressPath, updateConfigFiles } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -82,12 +82,12 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
         //     fetchConfigFilesNamesList()
         //         .catch(console.error);
         // }
-    }
+    };
 
 
-    return(
+    return (
         <>
-             <SelectFileModal
+            <SelectFileModal
                 open={configFileModalVisibility}
                 maxUploadSize={MAX_CONFIGMAP_ENTRY_SIZE}
                 onFileSelectorSubmit={async (event) => {
@@ -112,11 +112,11 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                     onClick={props.onClick}
                 >Manage environment variables</ButtonText>
 
-                    <DownloadButtons
-                        environment={props.environment}
-                        microserviceName={props.msName}
-                        applicationId={props.applicationId}
-                    />
+                <DownloadButtons
+                    environment={props.environment}
+                    microserviceName={props.msName}
+                    applicationId={props.applicationId}
+                />
             </Box>
             <Divider sx={styles.divider} />
             <Box ml={2}>
@@ -124,9 +124,9 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                 <Grid container spacing={3}>
                     <Grid item>
                         <TextIconButton
-                            icon={<AddCircleIcon/>}
+                            icon={<AddCircleIcon />}
                             onClick={(event: React.MouseEvent<HTMLElement>) => {
-                                console.log("visility", configFileModalVisibility)
+                                console.log('visility', configFileModalVisibility);
                                 // NOT WORKING TO CHANGE V
                                 setConfigFileModalVisibility(true);
                             }}
@@ -150,5 +150,5 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                 <Divider style={{ backgroundColor: '#3B3D48', marginTop: '40px', marginBottom: '20px' }} />
             </Box>
         </>
-    )
-}
+    );
+};
