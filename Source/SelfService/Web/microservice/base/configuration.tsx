@@ -47,6 +47,8 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
     const [configFileModalVisibility, setConfigFileModalVisibility] = useState<boolean>(false);
 
+    const [file, setFile] = useState<File | null>(null);
+
     // This is reused. consider moving
     const configMapPrefix = `${props.environment.toLowerCase()}-${props.msName.toLowerCase()}`;
 
@@ -81,6 +83,11 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
             fetchConfigFilesNamesList()
                 .catch(console.error);
         }
+    };
+
+    const onFileSelect=(event)=>{
+        const newValue = event.target.files[0];
+        setFile(event.target.files[0]);
     };
 
 
@@ -127,7 +134,10 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             onClick={(event: React.MouseEvent<HTMLElement>) => {
                                 console.log('visility', configFileModalVisibility);
                                 // NOT WORKING TO CHANGE V
-                                setConfigFileModalVisibility(true);
+                                // setConfigFileModalVisibility(true);
+
+                                document?.getElementById('file-selector')?.click();
+
                             }}
                         >
                             Add files
@@ -144,6 +154,11 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             Download config files yaml
                         </DownloadButton>
                     </Grid>
+                    <form method="put" id="config-file-selector-form" hidden>
+                        <input type="file" id="file-selector" name='file' onChange={onFileSelect} />
+                        <input type="submit" value="Submit" />
+                    </form>
+
                 </Grid>
                 <ConfigFilesTable filesNames={filesNamesList} onDeleteFileClick={deleteFileFromMicroservice}></ConfigFilesTable>
                 <Divider style={{ backgroundColor: '#3B3D48', marginTop: '40px', marginBottom: '20px' }} />
