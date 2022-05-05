@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import React, { useState } from 'react';
+import { Grid } from '@mui/material';
 
 export type OnSubmit = () => boolean; //returns true if user submitted a file.
 export type OnFileSelectorSubmit = (event: React.FormEvent<HTMLFormElement>) => void;
@@ -27,6 +28,7 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    height: 200
 };
 
 
@@ -35,6 +37,7 @@ export function SelectFileModal(props: SelectFileModalModalProps) {
     const [open, setOpen] = useState(props.open);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [fileName, setFileName] = useState('');
 
     const fileSelector = document?.getElementById('config-file-selector-form');
 
@@ -42,16 +45,21 @@ export function SelectFileModal(props: SelectFileModalModalProps) {
         props.onFileSelectorSubmit(event);
     };
 
-    const sizeValidation = (event) => {
-        const fileList = event.target.files;
-        console.log('FILE SIZE', fileList[0].size);
-        if (fileList[0].size > (props?.maxUploadSize ?? 30000000)) {
-            alert(`file cannot be larger than ${props.maxUploadSize} bytes. Please select another file`);
-        }
+    const onFileSelected = (event) => {
+        const file = event.target.files[0];
+
+        setFileName(file.name);
+        sizeValidation(file);
     };
 
+    const sizeValidation = (file): boolean => {
+        if (file.size > (props?.maxUploadSize ?? 30000000)) {
+            alert(`file cannot be larger than ${props.maxUploadSize} bytes. Please select another file`);
+            return false;
+        }
 
-    console.log('visility', props.open);
+        return true;
+    };
 
     return (
         <Modal
@@ -63,10 +71,14 @@ export function SelectFileModal(props: SelectFileModalModalProps) {
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">{props.header}</Typography>
                 <Typography id="modal-modal-title" variant="h6" component="h2">{props.body}</Typography>
-                <form method="put" id="config-file-selector-form" onSubmit={handleFormSubmit}>
-                    <Button component="label"><input type="file" id="file-selector" name='file' hidden onChange={sizeValidation}/>select file</Button>
-                    <Button type='submit'>submit</Button>
-                </form>
+
+                <Grid container spacing={2} direction="row">
+                    <Grid item xs={12}><Typography id="" variant="body2" component="p">{fileName}</Typography></Grid>
+                    <Grid item>,<form method="put" id="config-file-selector-form" onSubmit={handleFormSubmit}>
+                        <Button component="label"><input type="file" id="file-selector" name='file' hidden onChange={onFileSelected}/>select file</Button>
+                        <Button type='submit' sx={{}}>add</Button>
+                    </form></Grid>
+                </Grid>
             </Box>
         </Modal>
     );
