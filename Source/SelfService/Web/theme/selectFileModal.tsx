@@ -7,12 +7,12 @@ import Modal from '@mui/material/Modal';
 import React, { useState } from 'react';
 
 export type OnSubmit = () => boolean //returns true if user submitted a file.
-export type OnFileSelectorSubmit = (event: React.MouseEvent<HTMLElement>) => Promise<void> | void;
-export interface FileUploadModalProps {
+export type OnFileSelectorSubmit = (event: SubmitEvent) => any
+export interface ChoseFileModalProps {
     open: boolean,
     onFileSelectorSubmit: OnFileSelectorSubmit,
-    body: string
-    header: string
+    body?: string
+    header?: string
     maxUploadSize?: number // bytes
 }
 
@@ -31,7 +31,7 @@ const style = {
 
 
 
-export default function ChooseFileModal (props){
+export default function ChoseFileModal (props: ChoseFileModalProps){
     const [open, setOpen] = useState(props.open);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -44,7 +44,8 @@ export default function ChooseFileModal (props){
 
     const sizeValidation=(event)=> {
         const fileList = event.target.files;
-        if (fileList[0].size > props.maxUploadSize ?? 30000000) {
+        console.log("FILE SIZE",fileList[0].size)
+        if (fileList[0].size > (props?.maxUploadSize ?? 30000000)) {
             alert(`file cannot be larger than ${props.maxUploadSize} bytes. Please select another file`);
         }
     }
