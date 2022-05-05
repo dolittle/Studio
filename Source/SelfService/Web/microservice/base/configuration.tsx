@@ -90,14 +90,13 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
              <SelectFileModal
                 open={configFileModalVisibility}
                 maxUploadSize={MAX_CONFIGMAP_ENTRY_SIZE}
-                onFileSelectorSubmit={async (event: SubmitEvent)=>{
-                    console.log("onFileSelectorSubmit")
+                onFileSelectorSubmit={async (event:any)=>{
+                    console.log("onFileSelectorSubmit", event)
 
                     event.preventDefault();
 
-                    const form = event.submitter as HTMLFormElement;
 
-                    const configFileForm = new FormData(form);
+                    const configFileForm = new FormData(event.target);
 
                     await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, configFileForm);
                     fetchConfigFilesNamesList();
