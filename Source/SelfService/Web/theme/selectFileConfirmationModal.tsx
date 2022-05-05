@@ -7,11 +7,14 @@ import Modal from '@mui/material/Modal';
 import React, { useState } from 'react';
 import { Grid } from '@mui/material';
 
-export type OnSubmit = () => boolean; //returns true if user submitted a file.
-export type OnFileSelectorSubmit = (event: React.FormEvent<HTMLFormElement>) => void;
+export type OnAdd = (event) => void;
+export type OnCancel = () => void;
+
 export interface SelectFileConfirmationModalProps {
     open: boolean,
     fileName: string,
+    onCancel: OnCancel,
+    onAdd: OnAdd,
     fileSize?: number,
 }
 
@@ -47,7 +50,14 @@ export function SelectFileConfirmationModal(props: SelectFileConfirmationModalPr
         >
             <Box sx={style}>
                 <Grid container spacing={2} direction="row">
-                    <Grid item xs={12}><Typography id="" variant="body2" component="p">{props.fileName}</Typography></Grid>
+                    <Grid item xs={12}>
+                        <Typography id="" variant="body2" component="p">{props.fileName}</Typography>
+                        <Typography id="" variant="body2" component="p">{props.fileSize} bytes</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button onClick={props.onCancel}>cancel</Button>
+                        <Button onClick={props.onAdd}>add</Button>
+                    </Grid>
                 </Grid>
             </Box>
         </Modal>
