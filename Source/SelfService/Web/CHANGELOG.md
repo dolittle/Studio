@@ -1,3 +1,21 @@
+# [1.24.0] - 2022-5-5 [PR: #182](https://github.com/dolittle/Studio/pull/182)
+# New features
+
+### Personalized docs: how to create docker image and push to Container Registry
+<img width="1287" alt="Screenshot 2022-05-03 at 22 51 03" src="https://user-images.githubusercontent.com/8811/166563811-000897d2-ba79-4ad5-8346-8efb98c490bf.png">
+
+### Browse Container Registry in Studio
+<img width="1277" alt="Screenshot 2022-05-03 at 21 23 30" src="https://user-images.githubusercontent.com/8811/166542666-1344aa7e-4229-4d84-a2e4-6fbcf91c3301.png">
+
+<img width="1282" alt="Screenshot 2022-05-03 at 21 23 57" src="https://user-images.githubusercontent.com/8811/166543202-b334b57b-6731-4643-a6c1-7cc05f5b5357.png">
+
+
+# [1.23.1] - 2022-5-4 [PR: #185](https://github.com/dolittle/Studio/pull/185)
+## Summary
+
+- Fixed bug in customer screen within admin where view access would be repeated for each environment
+
+
 # [1.23.0] - 2022-5-3 [PR: #181](https://github.com/dolittle/Studio/pull/181)
 Solves: https://app.asana.com/0/1202121266838773/1202029655339366/f
 

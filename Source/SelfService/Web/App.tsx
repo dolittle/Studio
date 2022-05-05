@@ -28,7 +28,7 @@ import { ThemeScreen } from './screens/themeScreen';
 import '@fontsource/rubik';
 import { ApplicationScreen } from './screens/applicationScreen';
 import { Box } from '@mui/material';
-
+import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
 
 const typography = {
     fontFamily: 'Rubik',
@@ -136,6 +136,9 @@ export const App = () => {
                                         <InsightsScreen />
                                     </Route>
 
+                                    <Route path="/containerregistry/application/:applicationId/:environment">
+                                        <ContainerRegistryScreen />
+                                    </Route>
 
                                     <Route path="/admin/">
                                         <AdminScreen />

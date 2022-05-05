@@ -86,6 +86,23 @@ export const View: React.FunctionComponent<any> = (props) => {
         </ul>;
     };
 
+    // Beautiful hot mess, to take application + environment and shape it to have unique applications with a list of environments
+    const applications = [...new Set(
+        customer.applications.
+            filter((a, i) => customer.applications.
+                findIndex((b) => a.id === b.id) === i).
+            map(application => {
+                return {
+                    id: application.id,
+                    name: application.name,
+                    environments: [] as string[]
+                };
+            })
+    )].map(application => {
+        application.environments = customer.applications.filter((a, i) => a.id === application.id).map(application => application.environment);
+        return application;
+    });
+
     return (
         <>
             <h1>Customer {customer.customer.name}</h1>
@@ -125,17 +142,12 @@ export const View: React.FunctionComponent<any> = (props) => {
                     {customer.studioConfig.disabledEnvironments.length ? 'Enable all environments' : 'Disable all environments'}
                 </ButtonText>
 
-                <h1>Applications</h1>
+                <h2>Applications</h2>
 
-                <ul>
-                    {[...new Set(customer.applications.map(application => {
-                        return {
-                            id: application.id,
-                            name: application.name,
-                        };
-                    }))].map((application) => {
+                <div>
+                    {applications.map((application) => {
                         return (<>
-                            <h2 key={`${application.id}`}>{application.name} ({application.id})</h2>
+                            <h1 key={`${application.id}`}>{application.name} ({application.id})</h1>
                             <ButtonText
                                 onClick={() => {
                                     const href = `/admin/customer/${customerId}/application/${application.id}/user/access`;
@@ -144,9 +156,20 @@ export const View: React.FunctionComponent<any> = (props) => {
                             >
                                 View Access
                             </ButtonText>
+
+                            <h3>Environments</h3>
+                            <ul>
+                                {application.environments.map((environment) => {
+                                    return (
+                                        <>
+                                            <li>{environment}</li>
+                                        </>
+                                    );
+                                })}
+                            </ul>
                         </>);
                     })}
-                </ul>
+                </div>
             </Box>
         </>
     );
