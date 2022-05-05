@@ -69,19 +69,18 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
         setFilesNamesList(result.data);
     };
 
-    const deleteFileFromMicroservice = (event: React.MouseEvent<HTMLElement>) => {
-        // TODO make this work again
-        // if (!fileName) {
-        //     alert("filename not valid")
-        //     return;
-        // }
+    const deleteFileFromMicroservice = async (fileName: string) => {
+        if (!fileName) {
+            alert('filename not valid');
+            return;
+        }
 
-        // if(confirm(`Are you sure you want to delete ${fileName}?`)){
-        //     deleteConfigFile(props.applicationId, props.environment, props.microserviceId, fileName);
+        if(confirm(`Are you sure you want to delete ${fileName}?`)){
+            await deleteConfigFile(props.applicationId, props.environment, props.microserviceId, fileName);
 
-        //     fetchConfigFilesNamesList()
-        //         .catch(console.error);
-        // }
+            fetchConfigFilesNamesList()
+                .catch(console.error);
+        }
     };
 
 
