@@ -1,8 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
-import { Box, Paper } from '@mui/material';
+import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import { Box, Paper, TextField } from '@mui/material';
 
 type Props = {
     applicationId: string
@@ -40,6 +40,20 @@ function lokiQueryString(query: LokiQueryParams): string {
         .join('&');
 }
 
+type ThrottledState<T> = { realtime: T, throttled: T };
+
+function useThrottledState<T = undefined>(initialState: T | (() => T), throttlingMilliseconds: number): [ThrottledState<T>, Dispatch<SetStateAction<T>>] {
+    const [realtime, setRealtime] = useState(initialState);
+    const [throttled, setThrottled] = useState(realtime);
+
+    useEffect(() => {
+        const timeout = window.setTimeout(() => setThrottled(realtime), throttlingMilliseconds);
+        return () => window.clearTimeout(timeout);
+    }, [realtime]);
+
+    return [{ realtime, throttled }, setRealtime];
+}
+
 type LogLines = [string, string][];
 
 export const Logs: React.FunctionComponent<Props> = (props) => {
@@ -49,6 +63,7 @@ export const Logs: React.FunctionComponent<Props> = (props) => {
     const microserviceId = _props.microserviceId;
 
     const [logLines, setLogLines] = useState<LogLines>([]);
+    const [searchText, setSearchText] = useThrottledState('', 1000);
 
     useEffect(() => {
         const queryString = lokiQueryString({
@@ -59,7 +74,7 @@ export const Logs: React.FunctionComponent<Props> = (props) => {
                     environment,
                     microservice_id: microserviceId,
                 },
-                pipeline: '',
+                pipeline: searchText.throttled === '' ? '' : `|= "${searchText.throttled}"`,
             },
             start: (Date.now() - 86400000) * 1e6,
             end: Date.now() * 1e6,
@@ -76,13 +91,20 @@ export const Logs: React.FunctionComponent<Props> = (props) => {
             })
             .then(response => response.json())
             .then(response => {
-                setLogLines(response.data.result[0].values);
+                if (response.data.result.length > 0) setLogLines(response.data.result[0].values);
+                else setLogLines([]);
             });
-    }, [applicationId, environment, microserviceId]);
+    }, [applicationId, environment, microserviceId, searchText.throttled]);
 
     return (
         <Box component={Paper} m={2}>
             <h2>Here come the logs for the last day:</h2>
+            <TextField
+                id='serach'
+                variant='outlined'
+                value={searchText.realtime}
+                onChange={(event) => setSearchText(event.target.value)}
+            />
             <pre style={{ whiteSpace: 'pre' }}>
                 {
                     logLines
