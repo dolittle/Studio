@@ -6,7 +6,7 @@ import { useHistory, Switch, Route } from 'react-router-dom';
 import { HttpResponseApplication } from '../api/application';
 
 import { View as Tags } from './tags';
-import { View as Repos } from './repos';
+import { View as Images } from './images';
 import { View as Welcome } from './welcome';
 
 import { getReposInContainerRegistry, ContainerRegistryImages } from '../api/containerregistry';
@@ -53,12 +53,11 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
                 <h1>Container Registry</h1>
             </div>
 
-
             <div>
                 <Switch>
                     <Route exact path="/containerregistry/application/:applicationId/:environment/overview" >
                         {hasImages && (
-                            <Repos applicationId={applicationId} environment={environment} data={containerRegistryImages} />
+                            <Images applicationId={applicationId} environment={environment} data={containerRegistryImages} />
                         )}
 
                         {!hasImages && (
