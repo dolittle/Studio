@@ -7,7 +7,7 @@ import Modal from '@mui/material/Modal';
 import React, { useState } from 'react';
 
 export type OnSubmit = () => boolean //returns true if user submitted a file.
-export type OnFileSelectorSubmit = (event: SubmitEvent) => any
+export type OnFileSelectorSubmit = (event: React.FormEvent<HTMLFormElement>) => void;
 export interface SelectFileModalModalProps {
     open: boolean,
     onFileSelectorSubmit: OnFileSelectorSubmit,
@@ -38,9 +38,9 @@ export function SelectFileModal (props: SelectFileModalModalProps){
 
     const fileSelector = document?.getElementById('config-file-selector-form');
 
-    const attachFormSubmitEvent = () => {
-        fileSelector?.addEventListener('submit', props.onFileSelectorSubmit);
-    }
+    const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        props.onFileSelectorSubmit(event);
+    };
 
     const sizeValidation=(event)=> {
         const fileList = event.target.files;
@@ -50,8 +50,6 @@ export function SelectFileModal (props: SelectFileModalModalProps){
         }
     }
 
-
-    attachFormSubmitEvent();
 
     console.log("visility", props.open)
 
@@ -70,7 +68,7 @@ export function SelectFileModal (props: SelectFileModalModalProps){
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">{props.header}</Typography>
                 <Typography id="modal-modal-title" variant="h6" component="h2">{props.body}</Typography>
-                <form method="put" id="config-file-selector-form">
+                <form method="put" id="config-file-selector-form" onSubmit={handleFormSubmit}>
                     <input type="file" id="file-selector" name='file' />
                     <input type="submit" value="Submit" />
                 </form>
