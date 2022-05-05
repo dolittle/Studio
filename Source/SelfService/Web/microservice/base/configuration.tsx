@@ -14,6 +14,7 @@ import ConfigFilesTable from './components/configFilesTable';
 import { ConfigView } from './configView';
 import { LiveIngressView } from './liveIngressView';
 import { SelectFileModal } from '../../theme/selectFileModal';
+import { SelectFileConfirmationModal } from '../../theme/selectFileConfirmationModal';
 
 
 export type ConfigurationProps = {
@@ -47,7 +48,8 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
     const [configFileModalVisibility, setConfigFileModalVisibility] = useState<boolean>(false);
 
-    const [file, setFile] = useState<File | null>(null);
+    const [file, setFile] = useState<File>(new File([], ''));
+    const [formData, setFormData] = useState<any>(new FormData());
 
     // This is reused. consider moving
     const configMapPrefix = `${props.environment.toLowerCase()}-${props.msName.toLowerCase()}`;
@@ -88,8 +90,20 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     const onFileSelect=(event)=>{
         const newValue = event.target.files[0];
         setFile(event.target.files[0]);
+        setConfigFileModalVisibility(true);
+
     };
 
+    const onFileAdd=(event)=>{
+        event.preventDefault();
+
+    //    Doesnt work
+        // setFormData(new FormData(event.target));
+        // console.log(event);
+        // updateConfigFiles(props.applicationId, props.environment, props.microserviceId, formData);
+        // fetchConfigFilesNamesList();
+        // setConfigFileModalVisibility(false);
+    };
 
     return (
         <>
@@ -106,6 +120,20 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
 
                     setConfigFileModalVisibility(false);
                 }} />
+
+            <SelectFileConfirmationModal
+                open={configFileModalVisibility}
+                fileSize={file.size}
+                fileName={file.name}
+                onCancel={()=>{
+                    setConfigFileModalVisibility(false);
+                }}
+                onAdd={async ()=>{
+
+                    document?.getElementById('file-submit')?.click();
+
+
+                }}/>
             <Box ml={2}>
                 <ConfigView microservice={props.ms} />
             </Box>
@@ -135,9 +163,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                                 console.log('visility', configFileModalVisibility);
                                 // NOT WORKING TO CHANGE V
                                 // setConfigFileModalVisibility(true);
-
-                                document?.getElementById('file-selector')?.click();
-
+                                document?.getElementById('config-file-selector-form')?.dispatchEvent('submit');
                             }}
                         >
                             Add files
@@ -154,9 +180,9 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             Download config files yaml
                         </DownloadButton>
                     </Grid>
-                    <form method="put" id="config-file-selector-form" hidden>
+                    <form method="put" id="config-file-selector-form" hidden  onSubmit={onFileAdd}>
                         <input type="file" id="file-selector" name='file' onChange={onFileSelect} />
-                        <input type="submit" value="Submit" />
+                        <input type="submit" id="file-submit" value="Submit" />
                     </form>
 
                 </Grid>
