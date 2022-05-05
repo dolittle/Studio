@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import React, { useState } from 'react';
 
-export type OnSubmit = () => boolean //returns true if user submitted a file.
+export type OnSubmit = () => boolean; //returns true if user submitted a file.
 export type OnFileSelectorSubmit = (event: React.FormEvent<HTMLFormElement>) => void;
 export interface SelectFileModalModalProps {
     open: boolean,
@@ -31,7 +31,7 @@ const style = {
 
 
 
-export function SelectFileModal (props: SelectFileModalModalProps){
+export function SelectFileModal(props: SelectFileModalModalProps) {
     const [open, setOpen] = useState(props.open);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -42,9 +42,9 @@ export function SelectFileModal (props: SelectFileModalModalProps){
         props.onFileSelectorSubmit(event);
     };
 
-    const sizeValidation=(event)=> {
+    const sizeValidation = (event) => {
         const fileList = event.target.files;
-        console.log("FILE SIZE",fileList[0].size)
+        console.log('FILE SIZE', fileList[0].size);
         if (fileList[0].size > (props?.maxUploadSize ?? 30000000)) {
             alert(`file cannot be larger than ${props.maxUploadSize} bytes. Please select another file`);
         }
@@ -59,7 +59,7 @@ export function SelectFileModal (props: SelectFileModalModalProps){
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-            >
+        >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">{props.header}</Typography>
                 <Typography id="modal-modal-title" variant="h6" component="h2">{props.body}</Typography>
