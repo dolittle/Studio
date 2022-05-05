@@ -55,6 +55,14 @@ export default function ConfigFilesTable(props: ConfigFilesTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
+            {rows.length === 0&&
+                <TableRow
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                        <TableCell align="center" colSpan={5}>No entries</TableCell>
+                </TableRow>
+
+            }
           {rows.map((row) => (
             <TableRow
               key={row.fileName}
