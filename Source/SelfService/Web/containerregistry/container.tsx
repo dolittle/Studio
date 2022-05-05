@@ -4,13 +4,11 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, Switch, Route } from 'react-router-dom';
 import { HttpResponseApplication } from '../api/application';
-import {
-    Table, TableContainer, TableHead,
-    TableRow, TableCell, TableBody
-} from '@mui/material';
 
 import { View as Tags } from './tags';
-import Paper from '@mui/material/Paper';
+import { View as Repos } from './repos';
+import { View as Welcome } from './welcome';
+
 import { getReposInContainerRegistry, ContainerRegistryImages } from '../api/containerregistry';
 
 type Props = {
@@ -45,50 +43,36 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
         return null;
     }
 
+
+    const hasImages = containerRegistryImages.images.length > 0;
+
+
     return (
         <>
             <div>
                 <h1>Container Registry</h1>
             </div>
+
+
             <div>
                 <Switch>
                     <Route exact path="/containerregistry/application/:applicationId/:environment/overview" >
-                        <p>{containerRegistryImages.url}</p>
-                        <TableContainer component={Paper}>
-                            <Table sx={{ minWidth: 480 }} aria-label="Docker images" size="small">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell><b>Name</b></TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {containerRegistryImages.images.map(row => (
-                                        <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                                onClick={(event) => {
-                                                    event.preventDefault();
-                                                    const href = `/containerregistry/application/${applicationId}/${environment}/overview/tags/${row.name}`;
-                                                    history.push(href);
-                                                }}
-                                                sx={{
-                                                    '&:hover': {
-                                                        textDecoration: 'underline',
-                                                        cursor: 'pointer',
-                                                    }
-                                                }}
-                                            >
-                                                {row.name}
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                        {hasImages && (
+                            <Repos applicationId={applicationId} environment={environment} data={containerRegistryImages} />
+                        )}
+
+                        {!hasImages && (
+                            <Welcome applicationId={applicationId} />
+                        )}
                     </Route>
                     <Route path="/containerregistry/application/:applicationId/:environment/overview/tags/:image+">
-                        <Tags url={containerRegistryImages.url} applicationId={applicationId} />
+                        {hasImages && (
+                            <Tags url={containerRegistryImages.url} applicationId={applicationId} />
+                        )}
+
+                        {!hasImages && (
+                            <Welcome applicationId={applicationId} />
+                        )}
                     </Route>
                 </Switch>
             </div>

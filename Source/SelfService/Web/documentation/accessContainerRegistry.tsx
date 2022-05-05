@@ -43,17 +43,17 @@ az acr repository list --name ${vars.acrId} -otable
 # Push images
 ~~~sh
 # pull down your exmaple of choice
-# .net hello world
-git clone git@github.com:dolittle-entropy/dotnet-hello-world
+# golang hello world
+git clone git@github.com:dolittle-entropy/go-hello-world
 
-# build dotnet-hello-world docker image
-docker build -t dotnet-hello-world .
+# build go-hello-world docker image
+docker build -t go-hello-world .
 
 # tag the image with the url to container registry
-docker tag dotnet-hello-world:latest ${vars.dockerCredentials.repoUrl}/dotnet-hello-world:latest
+docker tag go-hello-world:latest ${vars.dockerCredentials.repoUrl}/go-hello-world:latest
 
 # push the image to container registry
-docker push ${vars.dockerCredentials.repoUrl}/dotnet-hello-world:latest
+docker push ${vars.dockerCredentials.repoUrl}/go-hello-world:latest
 ~~~
 
 `;
