@@ -123,7 +123,8 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                 <h2>Configuration files</h2>
                 <Grid container spacing={3}>
                     <Grid item>
-                        <DownloadButton
+                        <ButtonText
+                            startIcon={<AddCircleIcon />}
                             onClick={(event: React.MouseEvent<HTMLElement>) => {
                                 console.log('visility', configFileModalVisibility);
                                 // NOT WORKING TO CHANGE V
@@ -131,7 +132,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             }}
                         >
                             Add files
-                        </DownloadButton>
+                        </ButtonText>
                     </Grid>
                     <Grid item>
                         <DownloadButton
