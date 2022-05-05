@@ -47,6 +47,13 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
     const hasImages = containerRegistryImages.images.length > 0;
 
 
+    // Force redirect if no images to the welcome screen
+    if (!hasImages && !window.location.pathname.endsWith('/overview/welcome')) {
+        const href = `/containerregistry/application/${applicationId}/${environment}/overview/welcome`;
+        history.push(href);
+        return null;
+    }
+
     return (
         <>
             <div>
@@ -55,23 +62,15 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
 
             <div>
                 <Switch>
-                    <Route exact path="/containerregistry/application/:applicationId/:environment/overview" >
-                        {hasImages && (
-                            <Images applicationId={applicationId} environment={environment} data={containerRegistryImages} />
-                        )}
+                    <Route exact path="/containerregistry/application/:applicationId/:environment/overview/welcome" >
+                        <Welcome applicationId={applicationId} />
+                    </Route>
 
-                        {!hasImages && (
-                            <Welcome applicationId={applicationId} />
-                        )}
+                    <Route exact path="/containerregistry/application/:applicationId/:environment/overview" >
+                        <Images applicationId={applicationId} environment={environment} data={containerRegistryImages} />
                     </Route>
                     <Route path="/containerregistry/application/:applicationId/:environment/overview/tags/:image+">
-                        {hasImages && (
-                            <Tags url={containerRegistryImages.url} applicationId={applicationId} />
-                        )}
-
-                        {!hasImages && (
-                            <Welcome applicationId={applicationId} />
-                        )}
+                        <Tags url={containerRegistryImages.url} applicationId={applicationId} />
                     </Route>
                 </Switch>
             </div>
