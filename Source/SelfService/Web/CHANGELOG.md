@@ -1,3 +1,15 @@
+# [1.25.0] - 2022-5-6 [PR: #184](https://github.com/dolittle/Studio/pull/184)
+Summary
+
+Frontend solution for config files management until frontend can be focused on
+
+Added
+
+Tab in individual microservice view listing config files located at /app/data
+upload new file form + functionality
+remove file button + functionality
+
+
 # [1.24.0] - 2022-5-5 [PR: #182](https://github.com/dolittle/Studio/pull/182)
 # New features
 
