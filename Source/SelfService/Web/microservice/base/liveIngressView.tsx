@@ -12,11 +12,10 @@ type Props = {
     paths: SimpleIngressPath[];
 };
 
-export const View: React.FunctionComponent<Props> = (props) => {
+export const LiveIngressView: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const urls = _props.urls;
     const paths = _props.paths;
-
 
     const tenantEndpoints = urls.map(info => {
         const data = `${info.url} (${info.customerTenantID})`;
@@ -30,6 +29,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
         return <HeaderDataRow key={infoPath} head='' data={infoPath} />;
     });
 
+
     return (
 
         <Grid
@@ -38,8 +38,12 @@ export const View: React.FunctionComponent<Props> = (props) => {
             justifyContent="flex-start"
             alignItems="stretch"
         >
-            <h2>Tenant Endpoints</h2>
-            {tenantEndpoints}
+            {tenantEndpoints.length > 0 &&
+            <>
+                <h2>Tenant Endpoints</h2>
+                {tenantEndpoints}
+            </>
+            }
 
             <h2>Microservice Paths</h2>
             {microservicePaths}

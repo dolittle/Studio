@@ -4,6 +4,8 @@
 import React from 'react';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { ButtonText } from './buttonText';
+import SvgIcon, { SvgIconTypeMap } from '@mui/material/SvgIcon';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 interface Props {
     onClick?: (event: React.MouseEvent<HTMLElement>) => void;

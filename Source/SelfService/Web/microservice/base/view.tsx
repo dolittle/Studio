@@ -19,12 +19,9 @@ import { HttpResponsePodStatus } from '../../api/api';
 import { HealthStatus } from '../view/healthStatus';
 import { useReadable } from 'use-svelte-store';
 import { microservices, MicroserviceStore, canDeleteMicroservice, canEditMicroservice } from '../../stores/microservice';
-import { View as ConfigView } from './configView';
+import { Configuration } from './configuration';
 import { Tab, Tabs } from '../../theme/tabs';
-import { DownloadButtons } from '../components/downloadButtons';
 import { MicroserviceSimple } from '../../api/index';
-import { View as LiveIngressView } from './liveIngressView';
-import { ButtonText } from '../../theme/buttonText';
 import { HttpResponseApplication } from '../../api/application';
 
 
@@ -143,7 +140,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     }
     const msName = currentMicroservice.name;
 
-    const [currentTab, setCurrentTab] = useState(1);
+    const [currentTab, setCurrentTab] = useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setCurrentTab(newValue);
@@ -177,8 +174,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         value={currentTab}
                         onChange={handleChange}
                     >
-                        <Tab label='Configuration' />
                         <Tab label='Health Status' />
+                        <Tab label='Configuration' />
                     </Tabs>
                 </Grid>
 
@@ -223,31 +220,22 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
 
             <TabPanel value={currentTab} index={0}>
-                <Box ml={2}>
-                    <ConfigView microservice={ms} />
-                </Box>
-                <Divider sx={styles.divider} />
-                <Box ml={2}>
-                    <LiveIngressView urls={currentMicroservice.live.ingressUrls} paths={currentMicroservice.live.ingressPaths} />
-                </Box>
-                <Divider sx={styles.divider} />
-                <Box ml={2}>
-                    <ButtonText
-                        onClick={async () => {
-                            const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
-                            history.push(href);
-                        }}
-                    >Manage environment variables</ButtonText>
-
-                    <DownloadButtons
-                        environment={environment}
-                        microserviceName={msName}
-                        applicationId={applicationId}
-                    />
-                </Box>
+                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
             </TabPanel>
             <TabPanel value={currentTab} index={1}>
-                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
+                <Configuration
+                    applicationId={applicationId}
+                    environment={environment}
+                    microserviceId={microserviceId}
+                    msName={msName}
+                    ingressUrls={currentMicroservice.live.ingressUrls}
+                    ingressPaths={currentMicroservice.live.ingressPaths}
+                    ms={ms}
+                    onClick={async () => {
+                        const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
+                        history.push(href);
+                    }}
+                />
             </TabPanel>
         </Grid >
     );

@@ -98,8 +98,22 @@ export type HttpInputEnvironmentVariables = {
     data: InputEnvironmentVariable[];
 };
 
+
 export type HttpResponseEnvironmentVariables = {
     data: InputEnvironmentVariable[];
+};
+
+export type HttpResponseConfigFilesNamesList = {
+    data: string[];
+};
+
+export type InputConfigFile = {
+    name: string;
+    value: string;
+};
+
+export type HttpInputDeleteConfigFile = {
+    key: string;
 };
 
 export function getServerUrlPrefix(): string {
@@ -252,6 +266,56 @@ export async function updateEnvironmentVariables(applicationId: string, environm
 
     return response.status === 200;
 }
+
+export async function getConfigFilesNamesList(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponseConfigFilesNamesList> {
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files/list`;
+
+    const response = await fetch(url, {
+        method: 'GET',
+        mode: 'cors',
+    });
+
+    const data: HttpResponseConfigFilesNamesList = await response.json();
+    return data;
+}
+
+export async function updateConfigFiles(applicationId: string, environment: string, microserviceId: string, form: FormData): Promise<any> {
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files`;
+
+    const response = await fetch(
+        url,
+        {
+            method: 'PUT',
+            body: form,
+            mode: 'cors',
+        });
+
+    const parsedResponse = await response.json();
+
+    return response.status === 200 ? { success: true } : { success: false, error: parsedResponse.message};
+}
+
+
+export async function deleteConfigFile(applicationId: string, environment: string, microserviceId: string, fileName: string): Promise<boolean> {
+
+    const data = {
+        key: fileName
+    } as HttpInputDeleteConfigFile;
+
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files`;
+
+    const response = await fetch(
+        url,
+        {
+            method: 'DELETE',
+            mode: 'cors',
+            body:  JSON.stringify(data)
+        });
+
+    return response.status === 200;
+}
+
+
 
 export async function parseJSONResponse(response: any): Promise<any> {
     const text = await response.text();

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useReadable } from 'use-svelte-store';
 
-import { getPodStatus, HttpResponsePodStatus } from '../api/api';
+import { getConfigFilesNamesList, getPodStatus, getServerUrlPrefix, HttpResponsePodStatus, InputConfigFile, updateConfigFiles } from '../api/api';
 import { microservices, MicroserviceStore } from '../stores/microservice';
 import { View as BaseView } from './base/view';
 import { View as RawDataLogView } from './rawDataLog/view';
@@ -27,6 +27,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     const microserviceId = _props.microserviceId;
     const environment = _props.environment;
 
+
     // Want microservice name
     const [podsData, setPodsData] = useState({
         namespace: '',
@@ -47,7 +48,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     useEffect(() => {
         Promise.all([
             getPodStatus(applicationId, environment, microserviceId)
-        ]).then(values => {
+        ]).then((values) => {
             setPodsData(values[0]);
             setLoaded(true);
         });
@@ -59,6 +60,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     }
 
     const subView = whichSubView(currentMicroservice);
+
     switch (subView) {
         case 'simple':
             return (
