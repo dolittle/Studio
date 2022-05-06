@@ -119,10 +119,9 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
             enqueueSnackbar(upsert.error, { variant: 'error', persist: false });
             setvalidFile(false);
         }else {
-            console.log(upsert);
             fetchConfigFilesNamesList();
-            setConfigFileModalVisibility(false);
         }
+        setConfigFileModalVisibility(false);
 
 
     };
