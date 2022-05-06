@@ -279,7 +279,7 @@ export async function getConfigFilesNamesList(applicationId: string, environment
     return data;
 }
 
-export async function updateConfigFiles(applicationId: string, environment: string, microserviceId: string, form: FormData): Promise<boolean> {
+export async function updateConfigFiles(applicationId: string, environment: string, microserviceId: string, form: FormData): Promise<any> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files`;
 
     const response = await fetch(
@@ -290,7 +290,9 @@ export async function updateConfigFiles(applicationId: string, environment: stri
             mode: 'cors',
         });
 
-    return response.status === 200;
+    const parsedResponse = await response.json();
+
+    return response.status === 200 ? { success: true } : { success: false, error: parsedResponse.message};
 }
 
 

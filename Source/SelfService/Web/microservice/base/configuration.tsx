@@ -113,11 +113,17 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     const onFileAdd=async (event)=>{
         setFormData(new FormData(event.target as HTMLFormElement));
         console.log(new FormData(event.target as HTMLFormElement));
-        const upsertResponse = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, new FormData(event.target as HTMLFormElement));
+        const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, new FormData(event.target as HTMLFormElement));
 
-       console.log(upsertResponse);
-        fetchConfigFilesNamesList();
-        setConfigFileModalVisibility(false);
+        if(upsert.success === false) {
+            enqueueSnackbar(upsert.error, { variant: 'error', persist: false });
+            setvalidFile(false);
+        }else {
+            console.log(upsert);
+            fetchConfigFilesNamesList();
+            setConfigFileModalVisibility(false);
+        }
+
 
     };
 
@@ -135,7 +141,6 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                     const event = new Event('submit', {bubbles: true,   cancelable: false});
 
                     document?.getElementById('config-file-selector-form')?.dispatchEvent(event);
-                    // form.submit();
                 }}/>
             <Box ml={2}>
                 <ConfigView microservice={props.ms} />
