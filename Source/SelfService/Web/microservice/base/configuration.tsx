@@ -112,13 +112,13 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
 
     const onFileAdd=(event)=>{
         event.preventDefault();
-
     //    Doesnt work
-        // setFormData(new FormData(event.target));
-        // console.log(event);
+        setFormData(new FormData(event.target as HTMLFormElement));
+        console.log(new FormData(event.target as HTMLFormElement));
         // updateConfigFiles(props.applicationId, props.environment, props.microserviceId, formData);
         // fetchConfigFilesNamesList();
         // setConfigFileModalVisibility(false);
+
     };
 
     return (
@@ -146,10 +146,8 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                     setConfigFileModalVisibility(false);
                 }}
                 onAdd={()=>{
-
-                    document?.getElementById('config-file-selector-form')?.click();
-
-
+                    const form= document?.getElementById('config-file-selector-form') as HTMLFormElement;
+                    form.submit();
                 }}/>
             <Box ml={2}>
                 <ConfigView microservice={props.ms} />
@@ -198,7 +196,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             Download config files yaml
                         </DownloadButton>
                     </Grid>
-                    <form method="put" id="config-file-selector-form" hidden  onSubmit={onFileAdd}>
+                    <form method="put" id="config-file-selector-form" hidden onSubmit={onFileAdd}>
                         <input type="file" id="file-selector" name='file' onChange={onFileSelect} />
                         <input type="submit" id="file-submit" value="Submit" />
                     </form>
