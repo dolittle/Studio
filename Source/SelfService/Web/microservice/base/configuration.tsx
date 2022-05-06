@@ -110,14 +110,12 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
 
     };
 
-    const onFileAdd=(event)=>{
-        console.log('ON FILE ADD');
-
-        // event.preventDefault();
-    //    Doesnt work
+    const onFileAdd=async (event)=>{
         setFormData(new FormData(event.target as HTMLFormElement));
         console.log(new FormData(event.target as HTMLFormElement));
-        updateConfigFiles(props.applicationId, props.environment, props.microserviceId, new FormData(event.target as HTMLFormElement));
+        const upsertResponse = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, new FormData(event.target as HTMLFormElement));
+
+       console.log(upsertResponse);
         fetchConfigFilesNamesList();
         setConfigFileModalVisibility(false);
 
@@ -125,20 +123,6 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
 
     return (
         <>
-            {/* <SelectFileModal
-                open={configFileModalVisibility}
-                maxUploadSize={MAX_CONFIGMAP_ENTRY_SIZE}
-                onFileSelectorSubmit={async (event) => {
-                    event.preventDefault();
-
-                    const configFileForm = new FormData(event.target as HTMLFormElement);
-
-                    await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, configFileForm);
-                    fetchConfigFilesNamesList();
-
-                    setConfigFileModalVisibility(false);
-                }} /> */}
-
             <SelectFileConfirmationModal
                 open={configFileModalVisibility}
                 disableAdd={!validFile}
