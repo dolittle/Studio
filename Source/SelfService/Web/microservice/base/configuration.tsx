@@ -111,13 +111,15 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     };
 
     const onFileAdd=(event)=>{
-        event.preventDefault();
+        console.log('ON FILE ADD');
+
+        // event.preventDefault();
     //    Doesnt work
         setFormData(new FormData(event.target as HTMLFormElement));
         console.log(new FormData(event.target as HTMLFormElement));
-        // updateConfigFiles(props.applicationId, props.environment, props.microserviceId, formData);
-        // fetchConfigFilesNamesList();
-        // setConfigFileModalVisibility(false);
+        updateConfigFiles(props.applicationId, props.environment, props.microserviceId, new FormData(event.target as HTMLFormElement));
+        fetchConfigFilesNamesList();
+        setConfigFileModalVisibility(false);
 
     };
 
@@ -146,8 +148,10 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                     setConfigFileModalVisibility(false);
                 }}
                 onAdd={()=>{
-                    const form= document?.getElementById('config-file-selector-form') as HTMLFormElement;
-                    form.submit();
+                    const event = new Event('submit', {bubbles: true,   cancelable: false});
+
+                    document?.getElementById('config-file-selector-form')?.dispatchEvent(event);
+                    // form.submit();
                 }}/>
             <Box ml={2}>
                 <ConfigView microservice={props.ms} />
