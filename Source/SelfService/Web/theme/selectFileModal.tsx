@@ -76,7 +76,7 @@ export function SelectFileModal(props: SelectFileModalModalProps) {
                     <Grid item xs={12}><Typography id="" variant="body2" component="p">{fileName}</Typography></Grid>
                     <Grid item>,<form method="put" id="config-file-selector-form" onSubmit={handleFormSubmit}>
                         <Button component="label"><input type="file" id="file-selector" name='file' hidden onChange={onFileSelected}/>select file</Button>
-                        <Button type='submit' sx={{}}>add</Button>
+                        <Button type='submit'>add</Button>
                     </form></Grid>
                 </Grid>
             </Box>

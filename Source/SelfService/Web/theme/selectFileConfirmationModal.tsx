@@ -15,6 +15,7 @@ export interface SelectFileConfirmationModalProps {
     fileName: string,
     onCancel: OnCancel,
     onAdd: OnAdd,
+    disableAdd: boolean,
     fileSize?: number,
 }
 
@@ -56,7 +57,7 @@ export function SelectFileConfirmationModal(props: SelectFileConfirmationModalPr
                     </Grid>
                     <Grid item xs={12}>
                         <Button onClick={props.onCancel}>cancel</Button>
-                        <Button onClick={props.onAdd}>add</Button>
+                        <Button onClick={props.onAdd} disabled={props.disableAdd}>add</Button>
                     </Grid>
                 </Grid>
             </Box>

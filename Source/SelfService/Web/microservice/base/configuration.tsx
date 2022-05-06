@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { deleteConfigFile, getConfigFilesNamesList, getServerUrlPrefix, IngressURLWithCustomerTenantID, SimpleIngressPath, updateConfigFiles } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { useSnackbar } from 'notistack';
 
 import { ButtonText } from '../../theme/buttonText';
 import { DownloadButton } from '../../theme/downloadButton';
@@ -49,7 +50,9 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     const [configFileModalVisibility, setConfigFileModalVisibility] = useState<boolean>(false);
 
     const [file, setFile] = useState<File>(new File([], ''));
+    const [validFile, setvalidFile] = useState<boolean>(false);
     const [formData, setFormData] = useState<any>(new FormData());
+    const { enqueueSnackbar } = useSnackbar();
 
     // This is reused. consider moving
     const configMapPrefix = `${props.environment.toLowerCase()}-${props.msName.toLowerCase()}`;
@@ -87,9 +90,22 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
         }
     };
 
+    const sizeValidation = (file): boolean => {
+        if (file.size > MAX_CONFIGMAP_ENTRY_SIZE) {
+            setvalidFile(false);
+            enqueueSnackbar(`file cannot be larger than ${MAX_CONFIGMAP_ENTRY_SIZE} bytes. Please select another file`, { variant: 'error', persist: false });
+            return false;
+        }
+
+        setvalidFile(true);
+        return true;
+    };
+
     const onFileSelect=(event)=>{
-        const newValue = event.target.files[0];
-        setFile(event.target.files[0]);
+        const file = event.target.files[0];
+        sizeValidation(file);
+
+        setFile(file);
         setConfigFileModalVisibility(true);
 
     };
@@ -107,7 +123,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
 
     return (
         <>
-            <SelectFileModal
+            {/* <SelectFileModal
                 open={configFileModalVisibility}
                 maxUploadSize={MAX_CONFIGMAP_ENTRY_SIZE}
                 onFileSelectorSubmit={async (event) => {
@@ -119,18 +135,19 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                     fetchConfigFilesNamesList();
 
                     setConfigFileModalVisibility(false);
-                }} />
+                }} /> */}
 
             <SelectFileConfirmationModal
                 open={configFileModalVisibility}
+                disableAdd={!validFile}
                 fileSize={file.size}
                 fileName={file.name}
                 onCancel={()=>{
                     setConfigFileModalVisibility(false);
                 }}
-                onAdd={async ()=>{
+                onAdd={()=>{
 
-                    document?.getElementById('file-submit')?.click();
+                    document?.getElementById('config-file-selector-form')?.click();
 
 
                 }}/>
@@ -163,7 +180,8 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                                 console.log('visility', configFileModalVisibility);
                                 // NOT WORKING TO CHANGE V
                                 // setConfigFileModalVisibility(true);
-                                document?.getElementById('config-file-selector-form');
+                                document?.getElementById('file-selector')?.click();
+
                             }}
                         >
                             Add files
