@@ -99,21 +99,16 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
         return true;
     };
 
-    const onFileSelect=(event)=>{
-        const file = event.target.files[0];
+    const onFileSelect = (file: File) => {
+        console.log('file', file);
         sizeValidation(file);
 
         setFile(file);
         setConfigFileModalVisibility(true);
-
     };
 
-    const onFileAdd=async (event)=>{
-        event.preventDefault();
-
-        const fData = new FormData(event.target as HTMLFormElement);
-
-        const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, fData);
+    const onFileAdd = async (formData: FormData)=>{
+        const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, formData);
 
         if(upsert.success === false) {
             enqueueSnackbar(upsert.error, { variant: 'error', persist: false });
@@ -122,8 +117,6 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
             fetchConfigFilesNamesList();
         }
         setConfigFileModalVisibility(false);
-
-
     };
 
     return (
