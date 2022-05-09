@@ -100,7 +100,6 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     };
 
     const onFileSelect = (file: File) => {
-        console.log('file', file);
         sizeValidation(file);
 
         setFile(file);
