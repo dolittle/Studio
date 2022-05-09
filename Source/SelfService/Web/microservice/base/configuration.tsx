@@ -16,7 +16,7 @@ import { ConfigView } from './configView';
 import { LiveIngressView } from './liveIngressView';
 import { SelectFileModal } from '../../theme/selectFileModal';
 import { SelectFileConfirmationModal } from '../../theme/selectFileConfirmationModal';
-import HTMLHiddenForm from './htmlHiddenForm';
+import HTMLHiddenForm from './components/htmlHiddenForm';
 
 
 export type ConfigurationProps = {
