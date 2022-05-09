@@ -1,13 +1,14 @@
 # [1.25.0] - 2022-5-6 [PR: #184](https://github.com/dolittle/Studio/pull/184)
-Summary
+# Summary
 
-Frontend solution for config files management until frontend can be focused on
+Frontend solution for managing configuration files in hosted microservices
 
-Added
+# New features
 
-Tab in individual microservice view listing config files located at /app/data
-upload new file form + functionality
-remove file button + functionality
+- Section in Microservice Configuration page displaying files mounted at /app/data/.
+- Ability to upload new file
+- Ability to remove a single file
+- Validation messages for failed uploads
 
 
 # [1.24.0] - 2022-5-5 [PR: #182](https://github.com/dolittle/Studio/pull/182)
@@ -107,7 +108,7 @@ Remove duplicate isPublic properties, set to false when creating, and true when 
 # [1.17.0] - 2022-4-1 [PR: #168](https://github.com/dolittle/Studio/pull/168)
 ## Summary
 
-This PR will 
+This PR will
 - Introduce a toggle to allow the user to specify if they want to create a private or public microservice. This is set to private by default.
 - Bump latest selectable runtime version to 7.8.1
 - Contains the contents of https://github.com/dolittle/Studio/pull/165
@@ -372,7 +373,7 @@ Hides the delete button for the raw data log view card
 - Enter password
 - Click Next
 - Click Microservices
-- See that there is no delete button on the raw-data-log-v1 webhook microservice 
+- See that there is no delete button on the raw-data-log-v1 webhook microservice
 
 ### Added
 
@@ -445,7 +446,7 @@ Frontend Components for Purchase Order API Microservice is added. What is requir
 
 Some modifications are required to do to satisfy the Figma design.
 
-Merging #99 #102 
+Merging #99 #102
 
 ### Added
 
