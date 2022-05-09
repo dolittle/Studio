@@ -5,9 +5,10 @@ Frontend solution for managing configuration files in hosted microservices
 
 # New features
 
-- Section in Microservice  onfiguration page displaying files mounted at /app/data/.
+- Section in Microservice Configuration page displaying files mounted at /app/data/.
 - Ability to upload new file
 - Ability to remove a single file
+- Validation messages for failed uploads
 
 
 # [1.24.0] - 2022-5-5 [PR: #182](https://github.com/dolittle/Studio/pull/182)
