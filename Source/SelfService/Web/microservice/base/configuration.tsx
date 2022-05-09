@@ -51,13 +51,10 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
 
     const [file, setFile] = useState<File>(new File([], ''));
     const [validFile, setvalidFile] = useState<boolean>(false);
-    const [formData, setFormData] = useState<any>(new FormData());
     const { enqueueSnackbar } = useSnackbar();
 
     // This is reused. consider moving
     const configMapPrefix = `${props.environment.toLowerCase()}-${props.msName.toLowerCase()}`;
-
-
 
 
     useEffect(() => {
@@ -113,9 +110,9 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     const onFileAdd=async (event)=>{
         event.preventDefault();
 
-        setFormData(new FormData(event.target as HTMLFormElement));
+        const fData = new FormData(event.target as HTMLFormElement);
 
-        const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, new FormData(event.target as HTMLFormElement));
+        const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, fData);
 
         if(upsert.success === false) {
             enqueueSnackbar(upsert.error, { variant: 'error', persist: false });
@@ -138,7 +135,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                 onCancel={()=>{
                     setConfigFileModalVisibility(false);
                 }}
-                onAdd={(e)=>{
+                onAdd={()=>{
                     const event = new Event('submit', {bubbles: true,   cancelable: true});
 
                     document?.getElementById('config-file-selector-form')?.dispatchEvent(event);
@@ -168,13 +165,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                     <Grid item>
                         <ButtonText
                             startIcon={<AddCircleIcon />}
-                            onClick={(event: React.MouseEvent<HTMLElement>) => {
-                                console.log('visility', configFileModalVisibility);
-                                // NOT WORKING TO CHANGE V
-                                // setConfigFileModalVisibility(true);
-                                document?.getElementById('file-selector')?.click();
-
-                            }}
+                            onClick={(event: React.MouseEvent<HTMLElement>) => document?.getElementById('file-selector')?.click()}
                         >
                             Add files
                         </ButtonText>
