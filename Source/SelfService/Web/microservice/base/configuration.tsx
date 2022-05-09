@@ -16,6 +16,7 @@ import { ConfigView } from './configView';
 import { LiveIngressView } from './liveIngressView';
 import { SelectFileModal } from '../../theme/selectFileModal';
 import { SelectFileConfirmationModal } from '../../theme/selectFileConfirmationModal';
+import HTMLHiddenForm from './htmlHiddenForm';
 
 
 export type ConfigurationProps = {
@@ -181,11 +182,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             Download config files yaml
                         </DownloadButton>
                     </Grid>
-                    <form method="put" id="config-file-selector-form" hidden onSubmit={onFileAdd}target="_blank">
-                        <input type="file" id="file-selector" name='file' onChange={onFileSelect} />
-                        <input type="submit" id="file-submit" value="Submit" />
-                    </form>
-
+                    <HTMLHiddenForm onFileAdd={onFileAdd} onFileSelect={onFileSelect}/>
                 </Grid>
                 <ConfigFilesTable filesNames={filesNamesList} onDeleteFileClick={deleteFileFromMicroservice}></ConfigFilesTable>
                 <Divider style={{ backgroundColor: '#3B3D48', marginTop: '40px', marginBottom: '20px' }} />
