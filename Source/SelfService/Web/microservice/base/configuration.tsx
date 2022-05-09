@@ -111,8 +111,10 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     };
 
     const onFileAdd=async (event)=>{
+        event.preventDefault();
+
         setFormData(new FormData(event.target as HTMLFormElement));
-        console.log(new FormData(event.target as HTMLFormElement));
+
         const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, new FormData(event.target as HTMLFormElement));
 
         if(upsert.success === false) {
@@ -136,8 +138,8 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                 onCancel={()=>{
                     setConfigFileModalVisibility(false);
                 }}
-                onAdd={()=>{
-                    const event = new Event('submit', {bubbles: true,   cancelable: false});
+                onAdd={(e)=>{
+                    const event = new Event('submit', {bubbles: true,   cancelable: true});
 
                     document?.getElementById('config-file-selector-form')?.dispatchEvent(event);
                 }}/>
@@ -188,7 +190,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             Download config files yaml
                         </DownloadButton>
                     </Grid>
-                    <form method="put" id="config-file-selector-form" hidden onSubmit={onFileAdd}>
+                    <form method="put" id="config-file-selector-form" hidden onSubmit={onFileAdd}target="_blank">
                         <input type="file" id="file-selector" name='file' onChange={onFileSelect} />
                         <input type="submit" id="file-submit" value="Submit" />
                     </form>
