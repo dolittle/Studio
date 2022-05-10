@@ -7,8 +7,8 @@ export type OnFileAdd = (form: FormData, event?) => void;
 export type OnFileSelect = (file: File, event?) => void;
 
 export interface FileUploadFormProps {
-    onFileAdd: OnFileAdd,
-    onFileSelect: OnFileSelect
+    onFileAdded: OnFileAdd,
+    onFileSelected: OnFileSelect
 };
 
 export type FileUploadFormRef = {
@@ -45,7 +45,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
         const onFileSubmitted = (event) => {
             event.preventDefault();
             const form = new FormData(event.target as HTMLFormElement);
-            props.onFileAdd(form, event);
+            props.onFileAdded(form, event);
         };
 
 
@@ -55,7 +55,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
          */
         const onFileSelect = (event) => {
             const file = event?.target?.files[0];
-            props.onFileSelect(file, event);
+            props.onFileSelected(file, event);
         };
 
         return (

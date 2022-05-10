@@ -51,13 +51,13 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     const [configFileModalVisibility, setConfigFileModalVisibility] = useState<boolean>(false);
 
     const [file, setFile] = useState<File>(new File([], ''));
-    const [validFile, setvalidFile] = useState<boolean>(false);
+    const [validFile, setValidFile] = useState<boolean>(false);
     const { enqueueSnackbar } = useSnackbar();
 
     // This is reused. consider moving
     const configMapPrefix = `${props.environment.toLowerCase()}-${props.msName.toLowerCase()}`;
 
-    const fileUploadRef = useRef<HTMLHiddenFormRef>(null);
+    const fileUploadRef = useRef<FileUploadFormRef>(null);
 
     useEffect(() => {
         fetchConfigFilesNamesList()
@@ -81,7 +81,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
             return;
         }
 
-        if(confirm(`Are you sure you want to delete ${fileName}?`)){
+        if (confirm(`Are you sure you want to delete ${fileName}?`)) {
             await deleteConfigFile(props.applicationId, props.environment, props.microserviceId, fileName);
 
             fetchConfigFilesNamesList()
@@ -91,12 +91,12 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
 
     const sizeValidation = (file): boolean => {
         if (file.size > MAX_CONFIGMAP_ENTRY_SIZE) {
-            setvalidFile(false);
+            setValidFile(false);
             enqueueSnackbar(`file cannot be larger than ${MAX_CONFIGMAP_ENTRY_SIZE} bytes. Please select another file`, { variant: 'error', persist: false });
             return false;
         }
 
-        setvalidFile(true);
+        setValidFile(true);
         return true;
     };
 
@@ -107,13 +107,13 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
         setConfigFileModalVisibility(true);
     };
 
-    const onFileAdd = async (formData: FormData)=>{
+    const onFileAdd = async (formData: FormData) => {
         const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, formData);
 
-        if(upsert.success === false) {
+        if (upsert.success === false) {
             enqueueSnackbar(upsert.error, { variant: 'error', persist: false });
-            setvalidFile(false);
-        }else {
+            setValidFile(false);
+        } else {
             fetchConfigFilesNamesList();
         }
         setConfigFileModalVisibility(false);
@@ -126,7 +126,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                 disableAdd={!validFile}
                 fileSize={file.size}
                 fileName={file.name}
-                onCancel={()=>{
+                onCancel={() => {
                     setConfigFileModalVisibility(false);
                 }}
                 onAdd={() => {
@@ -173,7 +173,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             Download config files yaml
                         </DownloadButton>
                     </Grid>
-                    <FileUploadForm ref={fileUploadRef} onFileAdd={onFileAdd} onFileSelect={onFileSelect} />
+                    <FileUploadForm ref={fileUploadRef} onFileAdded={onFileAdd} onFileSelected={onFileSelect} />
                 </Grid>
                 <ConfigFilesTable filesNames={filesNamesList} onDeleteFileClick={deleteFileFromMicroservice}></ConfigFilesTable>
                 <Divider style={{ backgroundColor: '#3B3D48', marginTop: '40px', marginBottom: '20px' }} />
