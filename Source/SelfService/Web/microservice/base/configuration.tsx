@@ -100,14 +100,13 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
         return true;
     };
 
-    const onFileSelect = (file: File) => {
+    const validateAndShowConfirmationDialog = (file: File) => {
         sizeValidation(file);
-
         setFile(file);
         setConfigFileModalVisibility(true);
     };
 
-    const onFileAdd = async (formData: FormData) => {
+    const saveConfigFile = async (formData: FormData) => {
         const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, formData);
 
         if (upsert.success === false) {
@@ -173,7 +172,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             Download config files yaml
                         </DownloadButton>
                     </Grid>
-                    <FileUploadForm ref={fileUploadRef} onFileAdded={onFileAdd} onFileSelected={onFileSelect} />
+                    <FileUploadForm ref={fileUploadRef} onFileAdded={saveConfigFile} onFileSelected={validateAndShowConfirmationDialog} />
                 </Grid>
                 <ConfigFilesTable filesNames={filesNamesList} onDeleteFileClick={deleteFileFromMicroservice}></ConfigFilesTable>
                 <Divider style={{ backgroundColor: '#3B3D48', marginTop: '40px', marginBottom: '20px' }} />
