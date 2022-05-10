@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { Box, Divider, Grid, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { deleteConfigFile, getConfigFilesNamesList, getServerUrlPrefix, IngressURLWithCustomerTenantID, SimpleIngressPath, updateConfigFiles } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -16,7 +16,7 @@ import { ConfigView } from './configView';
 import { LiveIngressView } from './liveIngressView';
 import { SelectFileModal } from '../../theme/selectFileModal';
 import { SelectFileConfirmationModal } from '../../theme/selectFileConfirmationModal';
-import HTMLHiddenForm from './components/htmlHiddenForm';
+import { HTMLHiddenForm, HTMLHiddenFormRef } from './components/htmlHiddenForm';
 
 
 export type ConfigurationProps = {
@@ -57,6 +57,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     // This is reused. consider moving
     const configMapPrefix = `${props.environment.toLowerCase()}-${props.msName.toLowerCase()}`;
 
+    const fileUploadRef = useRef<HTMLHiddenFormRef>(null);
 
     useEffect(() => {
         fetchConfigFilesNamesList()
@@ -128,11 +129,9 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                 onCancel={()=>{
                     setConfigFileModalVisibility(false);
                 }}
-                onAdd={()=>{
-                    const event = new Event('submit', {bubbles: true,   cancelable: true});
-
-                    document?.getElementById('config-file-selector-form')?.dispatchEvent(event);
-                }}/>
+                onAdd={() => {
+                    fileUploadRef.current?.confirmSelectedFile();
+                }} />
             <Box ml={2}>
                 <ConfigView microservice={props.ms} />
             </Box>
@@ -158,7 +157,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                     <Grid item>
                         <ButtonText
                             startIcon={<AddCircleIcon />}
-                            onClick={(event: React.MouseEvent<HTMLElement>) => document?.getElementById('file-selector')?.click()}
+                            onClick={() => fileUploadRef.current?.promptForFile()}
                         >
                             Add files
                         </ButtonText>
@@ -174,7 +173,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             Download config files yaml
                         </DownloadButton>
                     </Grid>
-                    <HTMLHiddenForm onFileAdd={onFileAdd} onFileSelect={onFileSelect}/>
+                    <HTMLHiddenForm ref={fileUploadRef} onFileAdd={onFileAdd} onFileSelect={onFileSelect} />
                 </Grid>
                 <ConfigFilesTable filesNames={filesNamesList} onDeleteFileClick={deleteFileFromMicroservice}></ConfigFilesTable>
                 <Divider style={{ backgroundColor: '#3B3D48', marginTop: '40px', marginBottom: '20px' }} />
