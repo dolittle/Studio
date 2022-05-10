@@ -76,6 +76,10 @@ export const getDefaultMenu = (history: History<LocationState>, applicationId: s
             name: 'Container Registry'
         },
         {
+            href: `/m3connector/application/${applicationId}/overview`,
+            name: 'M3 Connector'
+        },
+        {
             href: `/documentation/application/${applicationId}/${environment}/overview`,
             name: 'Documentation'
         },

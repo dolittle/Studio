@@ -29,6 +29,7 @@ import '@fontsource/rubik';
 import { ApplicationScreen } from './screens/applicationScreen';
 import { Box } from '@mui/material';
 import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
+import { M3ConnectorScreen } from './screens/m3connectorScreen';
 
 const typography = {
     fontFamily: 'Rubik',
@@ -138,6 +139,10 @@ export const App = () => {
 
                                     <Route path="/containerregistry/application/:applicationId/:environment">
                                         <ContainerRegistryScreen />
+                                    </Route>
+
+                                    <Route path="/m3connector/application/:applicationId">
+                                        <M3ConnectorScreen />
                                     </Route>
 
                                     <Route path="/admin/">
