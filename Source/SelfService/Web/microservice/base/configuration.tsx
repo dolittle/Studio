@@ -61,7 +61,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
 
     useEffect(() => {
         fetchConfigFilesNamesList()
-            .catch(console.error);;
+            .catch(console.error);
 
     }, []);
 
@@ -69,7 +69,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
         const result = await getConfigFilesNamesList(props.applicationId, props.environment, props.microserviceId);
 
         if (!result.data) {
-            window.alert(`Could not fetch config files`);
+            enqueueSnackbar(`Could not fetch config files`, { variant: 'error', persist: false });
         }
 
         setFilesNamesList(result.data);
@@ -77,7 +77,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
 
     const deleteFileFromMicroservice = async (fileName: string) => {
         if (!fileName) {
-            alert('filename not valid');
+            enqueueSnackbar('filename not valid', { variant: 'error', persist: false });
             return;
         }
 
