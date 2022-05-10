@@ -16,7 +16,7 @@ import { ConfigView } from './configView';
 import { LiveIngressView } from './liveIngressView';
 import { SelectFileModal } from '../../theme/selectFileModal';
 import { SelectFileConfirmationModal } from '../../theme/selectFileConfirmationModal';
-import { HTMLHiddenForm, HTMLHiddenFormRef } from './components/htmlHiddenForm';
+import { FileUploadForm, FileUploadFormRef } from './components/fileUploadForm';
 
 
 export type ConfigurationProps = {
@@ -173,7 +173,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             Download config files yaml
                         </DownloadButton>
                     </Grid>
-                    <HTMLHiddenForm ref={fileUploadRef} onFileAdd={onFileAdd} onFileSelect={onFileSelect} />
+                    <FileUploadForm ref={fileUploadRef} onFileAdd={onFileAdd} onFileSelect={onFileSelect} />
                 </Grid>
                 <ConfigFilesTable filesNames={filesNamesList} onDeleteFileClick={deleteFileFromMicroservice}></ConfigFilesTable>
                 <Divider style={{ backgroundColor: '#3B3D48', marginTop: '40px', marginBottom: '20px' }} />

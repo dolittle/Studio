@@ -6,12 +6,12 @@ import React, { useRef, useImperativeHandle } from 'react';
 export type OnFileAdd = (form: FormData, event?) => void;
 export type OnFileSelect = (file: File, event?) => void;
 
-export interface HTMLHiddenFormProps {
+export interface FileUploadFormProps {
     onFileAdd: OnFileAdd,
     onFileSelect: OnFileSelect
 };
 
-export type HTMLHiddenFormRef = {
+export type FileUploadFormRef = {
     promptForFile: () => void,
     confirmSelectedFile: () => void
 };
@@ -22,14 +22,14 @@ export type HTMLHiddenFormRef = {
  * @param props
  * @returns
  */
-export const HTMLHiddenForm = React.forwardRef<HTMLHiddenFormRef, HTMLHiddenFormProps>(
-    (props: HTMLHiddenFormProps, ref: React.ForwardedRef<HTMLHiddenFormRef>) => {
+export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadFormProps>(
+    (props: FileUploadFormProps, ref: React.ForwardedRef<FileUploadFormRef>) => {
         const formRef = useRef<HTMLFormElement>(null);
         const fileInputRef = useRef<HTMLInputElement>(null);
 
         useImperativeHandle(
             ref,
-            (): HTMLHiddenFormRef => ({
+            (): FileUploadFormRef => ({
                 promptForFile: () => fileInputRef?.current?.click(),
                 confirmSelectedFile: () => {
                     const event = new Event('submit', { bubbles: true, cancelable: true });
@@ -53,7 +53,7 @@ export const HTMLHiddenForm = React.forwardRef<HTMLHiddenFormRef, HTMLHiddenForm
          * Serves change event and file from target
          * @param event
          */
-        const onFileSelected = (event) => {
+        const onFileSelect = (event) => {
             const file = event?.target?.files[0];
             props.onFileSelect(file, event);
         };
@@ -64,7 +64,7 @@ export const HTMLHiddenForm = React.forwardRef<HTMLHiddenFormRef, HTMLHiddenForm
                     type="file"
                     id="file-selector"
                     name='file'
-                    onChange={onFileSelected}
+                    onChange={onFileSelect}
                     ref={fileInputRef}
                 />
                 <input type="submit" id="file-submit" value="Submit" />
