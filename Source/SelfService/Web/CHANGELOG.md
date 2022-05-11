@@ -1,3 +1,18 @@
+# [1.25.1] - 2022-5-11 [PR: #188](https://github.com/dolittle/Studio/pull/188)
+## Summary
+
+Fix firefox file upload not working. Refactor code slightly to improve code quality
+
+
+### Changed
+
+- Moved part of the form logic to its own component. Cleans up the code slightly.
+
+### Fixed
+
+- File upload not working for Firefox. Firefox uses default browser behaviour where the button click inside a form triggers the onsubmit event
+
+
 # [1.25.0] - 2022-5-6 [PR: #184](https://github.com/dolittle/Studio/pull/184)
 # Summary
 
