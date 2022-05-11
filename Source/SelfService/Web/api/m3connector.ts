@@ -28,13 +28,22 @@ export async function getData(applicationId: string, environment: string): Promi
     const jsonResult = await result.json() as any;
 
     const data = jsonResult.data ?? {};
+    const configDataStr = data['config.json'] ?? '';
+    let configData = {
+        brokerUrl: '',
+        topics: [] as string[]
+    };
+
+    try {
+        configData = JSON.parse(configDataStr);
+    } catch (e) {
+        // do nothing
+    }
+
     return {
         accessKey: data['accessKey.pem'] ?? '',
         ca: data['ca.pem'] ?? '',
         certificate: data['certificate.pem'] ?? '',
-        config: data['config.json'] ?? {
-            brokerUrl: '',
-            topics: [] as string[]
-        },
+        config: configData,
     } as M3ConnectorData;
 }
