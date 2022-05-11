@@ -37,28 +37,45 @@ export const View: React.FunctionComponent<Props> = (props) => {
             <h2>Config</h2>
             <TextareaAutosize
                 value={JSON.stringify(data.config, null, '  ')}
-                style={{ width: 600 }}
+                style={{ width: '100%' }}
             />
+            <p>Click on the links below, to reveal the content</p>
 
-            <h2>accessKey.pem</h2>
-            <TextareaAutosize
-                value={data.accessKey}
-                style={{ width: 600 }}
-            />
-
-            <h2>ca.pem</h2>
-            <TextareaAutosize
-                value={data.ca}
-                style={{ width: 600 }}
-            />
-
-
-            <h2>certificate.pem</h2>
-            <TextareaAutosize
-                value={data.certificate}
-                style={{ width: 600 }}
-            />
-
+            <CollapsibleTextareaWithTitle title={'accessKey.pem'} value={data.accessKey} open={false} />
+            <CollapsibleTextareaWithTitle title={'certificate.pem'} value={data.certificate} open={false} />
+            <CollapsibleTextareaWithTitle title={'ca.pem'} value={data.ca} open={false} />
         </>
     );
 };
+
+
+type CollapsibleTextareaWithTitleProps = {
+    value: string
+    title: string
+    open: boolean
+};
+
+function CollapsibleTextareaWithTitle(props: CollapsibleTextareaWithTitleProps) {
+    const { title, value, open } = props!;
+    const [_open, _setOpen] = React.useState(open);
+
+    const handleClick = () => {
+        _setOpen(!_open);
+    };
+
+    return (
+        <div >
+            <h2
+                onClick={handleClick}
+                style={{
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
+                }}>{title}</h2>
+            {_open ?
+                <TextareaAutosize
+                    value={value}
+                    style={{ width: '100%' }}
+                /> : null}
+        </div>
+    );
+}
