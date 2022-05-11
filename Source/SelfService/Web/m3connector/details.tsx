@@ -34,7 +34,12 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <h1>Data</h1>
+            <h2>Config</h2>
+            <TextareaAutosize
+                value={JSON.stringify(data.config, null, '  ')}
+                style={{ width: 600 }}
+            />
+
             <h2>accessKey.pem</h2>
             <TextareaAutosize
                 value={data.accessKey}
@@ -54,11 +59,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 style={{ width: 600 }}
             />
 
-            <h2>Config</h2>
-            <TextareaAutosize
-                value={JSON.stringify(data.config, null, '  ')}
-                style={{ width: 600 }}
-            />
         </>
     );
 };
