@@ -40,6 +40,7 @@ export async function getData(applicationId: string, environment: string): Promi
         // do nothing
     }
 
+
     return {
         accessKey: data['accessKey.pem'] ?? '',
         ca: data['ca.pem'] ?? '',
