@@ -14,7 +14,6 @@ import { DownloadButtons } from '../components/downloadButtons';
 import ConfigFilesTable from './components/configFilesTable';
 import { ConfigView } from './configView';
 import { LiveIngressView } from './liveIngressView';
-import { SelectFileModal } from '../../theme/selectFileModal';
 import { SelectFileConfirmationModal } from '../../theme/selectFileConfirmationModal';
 import { FileUploadForm, FileUploadFormRef } from './components/fileUploadForm';
 
