@@ -34,9 +34,13 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
+            <h2>Config</h2>
+            <TextareaAutosize
+                value={JSON.stringify(data.config, null, '  ')}
+                style={{ width: '100%' }}
+            />
             <p>Click on the links below, to reveal the content</p>
 
-            <CollapsibleTextareaWithTitle title={'Config'} value={JSON.stringify(data.config, null, '  ')} open={false} />
             <CollapsibleTextareaWithTitle title={'accessKey.pem'} value={data.accessKey} open={false} />
             <CollapsibleTextareaWithTitle title={'certificate.pem'} value={data.certificate} open={false} />
             <CollapsibleTextareaWithTitle title={'ca.pem'} value={data.ca} open={false} />
