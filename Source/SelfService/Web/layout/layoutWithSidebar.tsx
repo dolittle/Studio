@@ -143,7 +143,7 @@ export const getMenuWithApplication = (history: History<LocationState>, applicat
     if (hasConnector) {
         // Put before documentation link
         items.splice(items.length - 1, 0, {
-            href: `/m3connector/application/${applicationId}/overview`,
+            href: `/m3connector/application/${applicationId}/${environment}/details`,
             name: 'M3 Connector'
         });
     }
