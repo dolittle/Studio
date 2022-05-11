@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { Box, Divider, Grid, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { deleteConfigFile, getConfigFilesNamesList, getServerUrlPrefix, IngressURLWithCustomerTenantID, SimpleIngressPath, updateConfigFiles } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -14,8 +14,8 @@ import { DownloadButtons } from '../components/downloadButtons';
 import ConfigFilesTable from './components/configFilesTable';
 import { ConfigView } from './configView';
 import { LiveIngressView } from './liveIngressView';
-import { SelectFileModal } from '../../theme/selectFileModal';
 import { SelectFileConfirmationModal } from '../../theme/selectFileConfirmationModal';
+import { FileUploadForm, FileUploadFormRef } from './components/fileUploadForm';
 
 
 export type ConfigurationProps = {
@@ -31,12 +31,6 @@ export type ConfigurationProps = {
 
 
 const styles = {
-    base: {
-        '& .MuiTypography-body1': {
-            color: 'black',
-            align: 'center'
-        }
-    },
     divider: {
         backgroundColor: '#3B3D48'
     }
@@ -50,19 +44,17 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
     const [configFileModalVisibility, setConfigFileModalVisibility] = useState<boolean>(false);
 
     const [file, setFile] = useState<File>(new File([], ''));
-    const [validFile, setvalidFile] = useState<boolean>(false);
-    const [formData, setFormData] = useState<any>(new FormData());
+    const [validFile, setValidFile] = useState<boolean>(false);
     const { enqueueSnackbar } = useSnackbar();
 
     // This is reused. consider moving
     const configMapPrefix = `${props.environment.toLowerCase()}-${props.msName.toLowerCase()}`;
 
-
-
+    const fileUploadRef = useRef<FileUploadFormRef>(null);
 
     useEffect(() => {
         fetchConfigFilesNamesList()
-            .catch(console.error);;
+            .catch(console.error);
 
     }, []);
 
@@ -70,7 +62,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
         const result = await getConfigFilesNamesList(props.applicationId, props.environment, props.microserviceId);
 
         if (!result.data) {
-            window.alert(`Could not fetch config files`);
+            enqueueSnackbar(`Could not fetch config files`, { variant: 'error', persist: false });
         }
 
         setFilesNamesList(result.data);
@@ -78,11 +70,11 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
 
     const deleteFileFromMicroservice = async (fileName: string) => {
         if (!fileName) {
-            alert('filename not valid');
+            enqueueSnackbar('filename not valid', { variant: 'error', persist: false });
             return;
         }
 
-        if(confirm(`Are you sure you want to delete ${fileName}?`)){
+        if (confirm(`Are you sure you want to delete ${fileName}?`)) {
             await deleteConfigFile(props.applicationId, props.environment, props.microserviceId, fileName);
 
             fetchConfigFilesNamesList()
@@ -92,38 +84,31 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
 
     const sizeValidation = (file): boolean => {
         if (file.size > MAX_CONFIGMAP_ENTRY_SIZE) {
-            setvalidFile(false);
+            setValidFile(false);
             enqueueSnackbar(`file cannot be larger than ${MAX_CONFIGMAP_ENTRY_SIZE} bytes. Please select another file`, { variant: 'error', persist: false });
             return false;
         }
 
-        setvalidFile(true);
+        setValidFile(true);
         return true;
     };
 
-    const onFileSelect=(event)=>{
-        const file = event.target.files[0];
+    const validateAndShowConfirmationDialog = (file: File) => {
         sizeValidation(file);
-
         setFile(file);
         setConfigFileModalVisibility(true);
-
     };
 
-    const onFileAdd=async (event)=>{
-        setFormData(new FormData(event.target as HTMLFormElement));
-        console.log(new FormData(event.target as HTMLFormElement));
-        const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, new FormData(event.target as HTMLFormElement));
+    const saveConfigFile = async (formData: FormData) => {
+        const upsert = await updateConfigFiles(props.applicationId, props.environment, props.microserviceId, formData);
 
-        if(upsert.success === false) {
+        if (upsert.success === false) {
             enqueueSnackbar(upsert.error, { variant: 'error', persist: false });
-            setvalidFile(false);
-        }else {
+            setValidFile(false);
+        } else {
             fetchConfigFilesNamesList();
         }
         setConfigFileModalVisibility(false);
-
-
     };
 
     return (
@@ -133,14 +118,8 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                 disableAdd={!validFile}
                 fileSize={file.size}
                 fileName={file.name}
-                onCancel={()=>{
-                    setConfigFileModalVisibility(false);
-                }}
-                onAdd={()=>{
-                    const event = new Event('submit', {bubbles: true,   cancelable: false});
-
-                    document?.getElementById('config-file-selector-form')?.dispatchEvent(event);
-                }}/>
+                onCancel={() => setConfigFileModalVisibility(false)}
+                onAdd={() => fileUploadRef.current?.confirmSelectedFile()} />
             <Box ml={2}>
                 <ConfigView microservice={props.ms} />
             </Box>
@@ -166,13 +145,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                     <Grid item>
                         <ButtonText
                             startIcon={<AddCircleIcon />}
-                            onClick={(event: React.MouseEvent<HTMLElement>) => {
-                                console.log('visility', configFileModalVisibility);
-                                // NOT WORKING TO CHANGE V
-                                // setConfigFileModalVisibility(true);
-                                document?.getElementById('file-selector')?.click();
-
-                            }}
+                            onClick={() => fileUploadRef.current?.promptForFile()}
                         >
                             Add files
                         </ButtonText>
@@ -188,11 +161,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                             Download config files yaml
                         </DownloadButton>
                     </Grid>
-                    <form method="put" id="config-file-selector-form" hidden onSubmit={onFileAdd}>
-                        <input type="file" id="file-selector" name='file' onChange={onFileSelect} />
-                        <input type="submit" id="file-submit" value="Submit" />
-                    </form>
-
+                    <FileUploadForm ref={fileUploadRef} onFileAdded={saveConfigFile} onFileSelected={validateAndShowConfirmationDialog} />
                 </Grid>
                 <ConfigFilesTable filesNames={filesNamesList} onDeleteFileClick={deleteFileFromMicroservice}></ConfigFilesTable>
                 <Divider style={{ backgroundColor: '#3B3D48', marginTop: '40px', marginBottom: '20px' }} />
