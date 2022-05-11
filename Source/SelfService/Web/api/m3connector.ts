@@ -27,7 +27,7 @@ export async function getData(applicationId: string, environment: string): Promi
         });
     const jsonResult = await result.json() as any;
 
-    const data = jsonResult.data;
+    const data = jsonResult.data ?? {};
     return {
         accessKey: data['accessKey.pem'] ?? '',
         ca: data['ca.pem'] ?? '',
