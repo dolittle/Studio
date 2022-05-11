@@ -11,7 +11,7 @@ import {
 
 import { getApplication, HttpResponseApplication } from '../api/application';
 import { ViewCard } from '../backup/viewCard';
-import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { useRouteApplicationParams } from '../utils/route';
 import { ListView } from '../backup/listView';
@@ -58,7 +58,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
         );
     }
     const environments = application.environments;
-    const nav = getDefaultMenu(history, application.id, currentEnvironment);
+    const nav = getMenuWithApplication(history, application, currentEnvironment);
 
     const routes = [
         {

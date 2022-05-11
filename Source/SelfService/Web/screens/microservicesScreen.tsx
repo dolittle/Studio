@@ -26,7 +26,7 @@ import { Delete as DeleteView } from '../microservice/delete';
 import { PodLogScreen } from '../microservice/podLogScreen';
 import {
     LayoutWithSidebar,
-    getDefaultMenu
+    getMenuWithApplication
 } from '../layout/layoutWithSidebar';
 
 // I wonder if scss is scoped like svelte. I hope so!
@@ -113,7 +113,7 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
         );
     }
 
-    const nav = getDefaultMenu(history, currentApplicationId, currentEnvironment);
+    const nav = getMenuWithApplication(history, application, currentEnvironment);
 
     const routes = [
         {

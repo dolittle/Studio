@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 
 import { ShortInfoWithEnvironment } from '../api/api';
-import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
 
 import { RouteNotFound } from '../components/notfound';
@@ -85,7 +85,7 @@ export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplica
         );
     }
 
-    const nav = getDefaultMenu(history, application.id, currentEnvironment);
+    const nav = getMenuWithApplication(history, application, currentEnvironment);
 
     const routes = [];
 

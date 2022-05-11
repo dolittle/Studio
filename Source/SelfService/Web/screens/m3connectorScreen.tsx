@@ -9,11 +9,11 @@ import {
 } from 'react-router-dom';
 
 import { getApplication, HttpResponseApplication } from '../api/application';
-import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { useRouteApplicationParams } from '../utils/route';
 import { useGlobalContext } from '../stores/notifications';
-import { getData } from '../api/m3connector';
+
 import { Container } from '../m3connector/container';
 
 type Props = {
@@ -56,7 +56,8 @@ export const M3ConnectorScreen: React.FunctionComponent<Props> = (props) => {
             </>
         );
     }
-    const nav = getDefaultMenu(history, application.id, currentEnvironment);
+
+    const nav = getMenuWithApplication(history, application, currentEnvironment);
 
     const routes = [];
 

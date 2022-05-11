@@ -8,6 +8,7 @@ import { History, LocationState } from 'history';
 
 import './layout.scss';
 import { AlertBox } from '../components/alertBox';
+import { HttpResponseApplication } from '../api/application';
 
 type Props = {
     navigation: React.ReactNode
@@ -57,6 +58,28 @@ export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
     );
 };
 
+export const getDefaultMenuWithItems = (history: History<LocationState>, items: any[]): React.ReactNode => {
+    return (
+        <>
+            <ul>
+                {items.map(link => {
+                    return (
+                        <li key={link.name}>
+                            <a href="#" onClick={(event) => {
+                                event.preventDefault();
+                                const href = link.href;
+                                history.push(href);
+                            }}>
+                                {link.name}
+                            </a>
+                        </li>
+                    );
+                })}
+            </ul>
+        </>
+    );
+};
+
 export const getDefaultMenu = (history: History<LocationState>, applicationId: string, environment: string): React.ReactNode => {
     const items = [
         {
@@ -85,23 +108,47 @@ export const getDefaultMenu = (history: History<LocationState>, applicationId: s
         },
     ];
 
-    return (
-        <>
-            <ul>
-                {items.map(link => {
-                    return (
-                        <li key={link.name}>
-                            <a href="#" onClick={(event) => {
-                                event.preventDefault();
-                                const href = link.href;
-                                history.push(href);
-                            }}>
-                                {link.name}
-                            </a>
-                        </li>
-                    );
-                })}
-            </ul>
-        </>
-    );
+    return getDefaultMenuWithItems(history, items);
+};
+
+
+export const getMenuWithApplication = (history: History<LocationState>, application: HttpResponseApplication, environment: string): React.ReactNode => {
+    const applicationId = application.id;
+
+    const hasConnector = application.environments.find(_environment => _environment.connections.m3Connector);
+    const items = [
+        {
+            href: `/backups/application/${applicationId}/overview`,
+            name: 'Backups'
+        },
+        {
+            href: `/microservices/application/${applicationId}/${environment}/overview`,
+            name: 'Microservices'
+        },
+        {
+            href: `/insights/application/${applicationId}/${environment}/overview`,
+            name: 'Insights'
+        },
+        {
+            href: `/containerregistry/application/${applicationId}/${environment}/overview`,
+            name: 'Container Registry'
+        },
+        {
+            href: `/documentation/application/${applicationId}/${environment}/overview`,
+            name: 'Documentation'
+        },
+    ];
+
+
+    if (hasConnector) {
+        // Put before documentation link
+        items.splice(items.length - 1, 0, {
+            href: `/m3connector/application/${applicationId}/overview`,
+            name: 'M3 Connector'
+        });
+    }
+
+
+
+    return getDefaultMenuWithItems(history, items);
 };
