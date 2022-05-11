@@ -1,3 +1,9 @@
+# [1.27.0] - 2022-5-11 [PR: #191](https://github.com/dolittle/Studio/pull/191)
+## Summary
+
+Via m3connector screen, clicking on the links will reveal the contents
+
+
 # [1.26.0] - 2022-5-11 [PR: #190](https://github.com/dolittle/Studio/pull/190)
 Previous PR that was merged to main didn't trigger.
 
