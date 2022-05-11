@@ -1,3 +1,7 @@
+# [1.26.0] - 2022-5-11 [PR: #190](https://github.com/dolittle/Studio/pull/190)
+Previous PR that was merged to main didn't trigger.
+
+
 # [1.25.1] - 2022-5-11 [PR: #188](https://github.com/dolittle/Studio/pull/188)
 ## Summary
 
