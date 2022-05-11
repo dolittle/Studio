@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 
 import { ShortInfoWithEnvironment } from '../api/api';
-import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
 
 // I wonder if scss is scoped like svelte. I hope so!
@@ -18,7 +18,6 @@ import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import '../application/applicationScreen.scss';
 
 import { DocumentationContainerScreen } from '../documentation/container';
-import { useRouteApplicationParams } from '../utils/route';
 import { RouteNotFound } from '../components/notfound';
 import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
 import { useGlobalContext } from '../stores/notifications';
@@ -93,7 +92,7 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
         );
     }
 
-    const nav = getDefaultMenu(history, application.id, currentEnvironment);
+    const nav = getMenuWithApplication(history, application, currentEnvironment);
 
     const routes = [
         {

@@ -6,22 +6,21 @@ import {
     Route,
     Switch,
     useHistory,
-    generatePath
 } from 'react-router-dom';
 
 import { getApplication, HttpResponseApplication } from '../api/application';
-import { ViewCard } from '../backup/viewCard';
 import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { useRouteApplicationParams } from '../utils/route';
-import { ListView } from '../backup/listView';
 import { useGlobalContext } from '../stores/notifications';
+
+import { Container } from '../m3connector/container';
 
 type Props = {
     application?: HttpResponseApplication
 };
 
-export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
+export const M3ConnectorScreen: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
     const { currentEnvironment } = useGlobalContext();
 
@@ -53,37 +52,15 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
     if (application.id === '') {
         return (
             <>
-                <h1>Application with this environment not found</h1>
+                <h1>Application  not found</h1>
             </>
         );
     }
-    const environments = application.environments;
+
     const nav = getMenuWithApplication(history, application, currentEnvironment);
 
-    const routes = [
-        {
-            path: '/backups/application/:applicationId',
-            to: generatePath('/backups/application/:applicationId/overview', {
-                applicationId: application.id,
-            }),
-            name: 'Backups'
-        },
-        {
-            path: '/backups/application/:applicationId/overview',
-            to: generatePath('/backups/application/:applicationId/overview', {
-                applicationId: application.id,
-            }),
-            name: 'Overview',
-        },
-        {
-            path: '/backups/application/:applicationId/:environment/list',
-            to: generatePath('/backups/application/:applicationId/:environment/list', {
-                applicationId: application.id,
-                environment: currentEnvironment
-            }),
-            name: currentEnvironment,
-        }
-    ];
+    const routes = [];
+
     return (
         <>
             <LayoutWithSidebar navigation={nav}>
@@ -93,22 +70,8 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
                     </div>
                 </div>
                 <Switch>
-                    <Route exact path="/backups/application/:applicationId/overview">
-                        <div className="serv">
-                            <ul>
-                                {environments.map((environment) => {
-                                    return <li key={environment.name}>
-                                        <ViewCard application={application} environment={environment.name} />
-                                    </li>;
-                                })}
-                            </ul>
-                        </div>
-                    </Route>
-                    <Route exact path="/backups/application/:applicationId/:environment/list">
-                        <ListView application={application} environment={currentEnvironment} />
-                    </Route>
-                    <Route>
-                        <h1>Something has gone wrong: backups</h1>
+                    <Route path="/m3connector/application/:applicationId">
+                        <Container application={application} />
                     </Route>
                 </Switch>
             </LayoutWithSidebar>

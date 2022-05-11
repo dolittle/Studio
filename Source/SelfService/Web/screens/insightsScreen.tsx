@@ -6,7 +6,7 @@ import { Route, useHistory, Switch, generatePath } from 'react-router-dom';
 
 import { ShortInfoWithEnvironment } from '../api/api';
 
-import { getDefaultMenu, LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 // Not scoped like svelte
 import '../application/applicationScreen.scss';
 import { PickEnvironment } from '../components/pickEnvironment';
@@ -85,7 +85,7 @@ export const InsightsScreen: React.FunctionComponent = withRouteApplicationState
         );
     }
 
-    const nav = getDefaultMenu(history, application.id, environment);
+    const nav = getMenuWithApplication(history, application, currentEnvironment);
 
     const routes = [
         {
