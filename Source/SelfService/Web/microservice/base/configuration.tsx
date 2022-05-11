@@ -32,12 +32,6 @@ export type ConfigurationProps = {
 
 
 const styles = {
-    base: {
-        '& .MuiTypography-body1': {
-            color: 'black',
-            align: 'center'
-        }
-    },
     divider: {
         backgroundColor: '#3B3D48'
     }
