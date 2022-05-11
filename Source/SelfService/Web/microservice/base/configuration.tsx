@@ -125,12 +125,8 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
                 disableAdd={!validFile}
                 fileSize={file.size}
                 fileName={file.name}
-                onCancel={() => {
-                    setConfigFileModalVisibility(false);
-                }}
-                onAdd={() => {
-                    fileUploadRef.current?.confirmSelectedFile();
-                }} />
+                onCancel={() => setConfigFileModalVisibility(false)}
+                onAdd={() => fileUploadRef.current?.confirmSelectedFile()} />
             <Box ml={2}>
                 <ConfigView microservice={props.ms} />
             </Box>
