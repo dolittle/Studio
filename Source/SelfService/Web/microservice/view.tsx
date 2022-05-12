@@ -11,6 +11,7 @@ import { View as BaseView } from './base/view';
 import { View as RawDataLogView } from './rawDataLog/view';
 import { View as PurchaseOrderApiView } from './purchaseOrder/view';
 import { HttpResponseApplication } from '../api/application';
+import { Typography } from '@mui/material';
 
 type Props = {
     application: HttpResponseApplication
@@ -77,7 +78,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         default:
             return (
                 <>
-                    <h1>Not supported</h1>
+                    <Typography variant='h1' my={2}>Not supported</Typography>
                     <p>This is an error or our part</p>
                     <p>Kind is &quot;{currentMicroservice.kind}&quot;.</p>
                     <p>Subview is &quot;{subView}&quot;.</p>

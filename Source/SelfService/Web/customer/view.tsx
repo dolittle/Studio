@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import { getCustomer, CustomerDetailed } from '../api/customer';
 import { saveStudioConfig, Studio } from '../api/studio';
 import { ButtonText } from '../theme/buttonText';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const styles = {
     root: {
@@ -105,7 +105,7 @@ export const View: React.FunctionComponent<any> = (props) => {
 
     return (
         <>
-            <h1>Customer {customer.customer.name}</h1>
+            <Typography variant='h1' my={2}>Customer {customer.customer.name}</Typography>
             <Box sx={styles.root}>
                 <ul>
                     <li>
@@ -142,12 +142,12 @@ export const View: React.FunctionComponent<any> = (props) => {
                     {customer.studioConfig.disabledEnvironments.length ? 'Enable all environments' : 'Disable all environments'}
                 </ButtonText>
 
-                <h2>Applications</h2>
+                <Typography variant='h2' my={2}>Applications</Typography>
 
                 <div>
                     {applications.map((application) => {
                         return (<>
-                            <h1 key={`${application.id}`}>{application.name} ({application.id})</h1>
+                            <Typography variant='h3' my={2} key={`${application.id}`}>{application.name} ({application.id})</Typography>
                             <ButtonText
                                 onClick={() => {
                                     const href = `/admin/customer/${customerId}/application/${application.id}/user/access`;
@@ -157,7 +157,7 @@ export const View: React.FunctionComponent<any> = (props) => {
                                 View Access
                             </ButtonText>
 
-                            <h3>Environments</h3>
+                            <Typography variant='h4' my={2}>Environments</Typography>
                             <ul>
                                 {application.environments.map((environment) => {
                                     return (

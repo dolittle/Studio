@@ -13,6 +13,7 @@ import { info, load, isLoaded } from '../stores/documentationInfo';
 import { Doc as VerifyKubernetesAccess } from './verifyKubernetesAccess';
 import { Doc as AccessContainerRegistry } from './accessContainerRegistry';
 import { Doc as SetupAzurePipelines } from './cicd/setupAzurePipelines';
+import { Typography } from '@mui/material';
 
 type Props = {
     environment: string
@@ -96,7 +97,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                         }}>
                             Back
                         </Link>
-                        <h1>Container Registry Info</h1>
+                        <Typography variant='h1' my={2}>Container Registry Info</Typography>
                         <AccessContainerRegistry info={$info} />
                     </Route>
 
@@ -107,7 +108,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                         }}>
                             Back
                         </Link>
-                        <h1>Verify access to kubernetes</h1>
+                        <Typography variant='h1' my={2}>Verify access to kubernetes</Typography>
                         <VerifyKubernetesAccess info={$info} environment={environment} />
                     </Route>
 
@@ -118,12 +119,12 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                         }}>
                             Back
                         </Link>
-                        <h1>Setup Azure Pipelines</h1>
+                        <Typography variant='h1' my={2}>Setup Azure Pipelines</Typography>
                         <SetupAzurePipelines info={$info} />
                     </Route>
 
                     <Route>
-                        <h1>Something has gone wrong: documentation</h1>
+                        <Typography variant='h1' my={2}>Something has gone wrong: documentation</Typography>
                     </Route>
                 </Switch>
             </div>

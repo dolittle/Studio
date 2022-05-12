@@ -5,6 +5,7 @@ import React from 'react';
 import { HttpResponseApplication } from '../api/application';
 import { useHistory } from 'react-router-dom';
 import { ButtonText } from '../theme/buttonText';
+import { Typography } from '@mui/material';
 
 type Props = {
     application: HttpResponseApplication
@@ -28,12 +29,12 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <h1>Overview</h1>
+            <Typography variant='h1' my={2}>Overview</Typography>
 
 
             {environments.map(row => (
                 <>
-                    <h2>{row.name}</h2>
+                    <Typography variant='h2' my={2}>{row.name}</Typography>
 
                     <ButtonText onClick={async () => {
                         const environment = row.name;

@@ -24,6 +24,7 @@ import {
 } from '../api/application';
 import { withRouteApplicationState } from './withRouteApplicationState';
 import { ContainerRegistryContainer } from '../containerregistry/container';
+import { Typography } from '@mui/material';
 
 
 
@@ -70,7 +71,7 @@ export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplica
     if (application.id === '') {
         return (
             <>
-                <h1>Application with this environment not found</h1>
+                <Typography variant='h1' my={2}>Application with this environment not found</Typography>
             </>
         );
     }

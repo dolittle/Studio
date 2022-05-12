@@ -15,6 +15,7 @@ import { ViewCard } from './viewCard';
 
 import { useReadable } from 'use-svelte-store';
 import { canDeleteMicroservice, canEditMicroservices, microservices } from '../stores/microservice';
+import { Typography } from '@mui/material';
 
 type Props = {
     environment: string
@@ -68,7 +69,7 @@ export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (prop
             )}
 
 
-            <h3>Microservices</h3>
+            <Typography variant='h1' my={2}>Microservices</Typography>
             {hasMicroservices && (
                 <div className="serv">
                     <ul>

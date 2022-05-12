@@ -15,6 +15,7 @@ import { HttpResponseApplication } from '../api/application';
 import { cardStyles, commandTileClass, buttonStyles } from '../theme/viewCard';
 import { getLatestBackupLinkByApplication } from '../api/backups';
 import { useGlobalContext } from '../stores/notifications';
+import { Typography } from '@mui/material';
 
 
 type Props = {
@@ -63,8 +64,8 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
     return (
         <DocumentCard key={`${name}-${environment}`} styles={cardStyles}>
             <div className={conversationTileClass}>
-                <h1>{name}</h1>
-                <h2>{environmentName}</h2>
+                <Typography variant='h1' my={2}>{name}</Typography>
+                <Typography variant='h2' my={2}>{environmentName}</Typography>
                 <CommandBar styles={commandTileClass} items={_items} />
             </div>
         </DocumentCard>

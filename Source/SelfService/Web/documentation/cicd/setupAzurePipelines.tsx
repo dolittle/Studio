@@ -9,6 +9,7 @@ import Input from '@mui/material/Input';
 import { ButtonText } from '../../theme/buttonText';
 import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../api/cicd';
 import { Info } from '../../stores/documentationInfo';
+import { Typography } from '@mui/material';
 
 const styles = {
     '& .MuiInput-input.Mui-disabled': {
@@ -62,8 +63,8 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <h2>Endpoints</h2>
-            <h3>Cluster</h3>
+            <Typography variant='h2' my={2}>Endpoints</Typography>
+            <Typography variant='h3' my={2}>Cluster</Typography>
 
             <Input
                 fullWidth={true}
@@ -72,7 +73,7 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
                 disabled
                 inputProps={{ 'aria-label': 'cluster endpoint' }} />
 
-            <h3>Container Registry</h3>
+            <Typography variant='h3' my={2}>Container Registry</Typography>
             <Input sx={styles}
                 fullWidth={true}
                 defaultValue={containerRegistry}
@@ -80,11 +81,11 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
                 inputProps={{ 'aria-label': 'container registry endpoint' }} />
 
 
-            <h2>Credentials</h2>
-            <h3>Get credentials to deploy to the platform from the pipeline</h3>
+            <Typography variant='h2' my={2}>Credentials</Typography>
+            <Typography variant='h3' my={2}>Get credentials to deploy to the platform from the pipeline</Typography>
             {buttonServiceAccount}
 
-            <h3>Get credentials to push to container registry</h3>
+            <Typography variant='h3' my={2}>Get credentials to push to container registry</Typography>
             {buttonContainerRegistry}
         </>
     );

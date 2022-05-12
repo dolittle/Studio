@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Paper, SelectChangeEvent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { Box, Paper, SelectChangeEvent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
 import {
@@ -118,7 +118,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <h1>Environment Variables</h1>
+            <Typography variant='h1' my={2}>Environment Variables</Typography>
 
             <Box component={Paper} m={2}>
                 <ButtonText

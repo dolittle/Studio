@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import React from 'react';
 import { Button } from '../theme/button';
 
@@ -15,7 +15,7 @@ export const ThemeScreen: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     return (
         <>
-            <h1>Theme Assets</h1>
+            <Typography variant='h1' my={2}>Theme Assets</Typography>
             <Grid
                 container
                 direction="column"

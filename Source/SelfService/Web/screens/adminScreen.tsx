@@ -17,6 +17,7 @@ import { Button as ThemedButton } from '../theme/button';
 import {
     LayoutWithSidebar,
 } from '../layout/layoutWithSidebar';
+import { Typography } from '@mui/material';
 
 
 
@@ -27,7 +28,7 @@ export const Screen: React.FunctionComponent = () => {
 
     const welcome = (
         <>
-            <h1>Hello Admin</h1>
+            <Typography variant='h1' my={2}>Hello Admin</Typography>
             <ThemedButton onClick={() => {
                 const href = `/admin/customers`;
                 history.push(href);

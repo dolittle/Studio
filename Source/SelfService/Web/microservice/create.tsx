@@ -13,7 +13,7 @@ import { Create as PurchaseOrder } from './purchaseOrder/create';
 
 import { HttpResponseApplication } from '../api/application';
 
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { SimpleCard } from './create/card';
 
 type Props = {
@@ -106,7 +106,7 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
 
     if (microserviceTypeState === '') {
         return <>
-            <h1>Select a microservice</h1>
+            <Typography variant='h1' my={2}>Select a microservice</Typography>
             <Box sx={styles.root}>
                 <Grid container spacing={1}>
                     {items.map(data => (

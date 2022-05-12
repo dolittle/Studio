@@ -124,7 +124,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <h1>Create Customer Screen</h1>
+            <Typography variant='h1' my={2}>Create Customer Screen</Typography>
             <Box sx={styles.root}>
 
                 <Stepper activeStep={activeStep} orientation='vertical'>

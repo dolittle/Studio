@@ -7,6 +7,7 @@ import { useSnackbar } from 'notistack';
 
 
 import { isApplicationOnline, ApplicationBuildState } from '../api/application';
+import { Typography } from '@mui/material';
 
 type Props = {
 
@@ -44,12 +45,12 @@ export const Building: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <h1>Building {applicationId}</h1>
+            <Typography variant='h1' my={2}>Building {applicationId}</Typography>
 
-            <h2>Please refresh to see if it has finished</h2>
+            <Typography variant='h2' my={2}>Please refresh to see if it has finished</Typography>
 
 
-            <h2>Status</h2>
+            <Typography variant='h2' my={2}>Status</Typography>
             <p>This might take a few moments</p>
             <p>Current State is {applicationBuildState.status}</p>
             <p>Started building at {applicationBuildState.startedAt}</p>
@@ -58,7 +59,7 @@ export const Building: React.FunctionComponent<Props> = (props) => {
 
 
 
-            <h2>What is happening?</h2>
+            <Typography variant='h2' my={2}>What is happening?</Typography>
 
             <ul>
                 <li>Setting up your application in the platform</li>

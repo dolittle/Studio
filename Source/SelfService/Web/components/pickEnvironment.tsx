@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 import Modal from '@mui/material/Modal';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useHistory, generatePath } from 'react-router-dom';
 import { ShortInfoWithEnvironment } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
@@ -96,7 +96,7 @@ export const PickEnvironment: React.FunctionComponent<Props> = (props) => {
 
     const body = (
         <Box sx={styles.paper} style={modalStyle}>
-            <h1>Pick an environment</h1>
+            <Typography variant='h1' my={2}>Pick an environment</Typography>
             <List items={environments} onRenderCell={onRenderCell} />
         </Box>
     );

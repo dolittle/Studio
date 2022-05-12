@@ -8,6 +8,7 @@ import { HttpResponseApplication } from '../api/application';
 import { View as Overview } from './overview';
 import { View as Details } from './details';
 import { View as Setup } from './setup';
+import { Typography } from '@mui/material';
 
 
 type Props = {
@@ -22,7 +23,7 @@ export const Container: React.FunctionComponent<Props> = (props) => {
     return (
         <>
 
-            <h1>M3 Connector</h1>
+            <Typography variant='h1' my={2}>M3 Connector</Typography>
             <Switch>
                 <Route exact path="/m3connector/application/:applicationId/overview">
                     <Overview application={application} />

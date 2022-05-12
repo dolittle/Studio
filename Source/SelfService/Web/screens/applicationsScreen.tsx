@@ -19,6 +19,7 @@ import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import { useGlobalContext } from '../stores/notifications';
 import { ButtonText } from '../theme/buttonText';
 import { HttpResponseApplications, getApplications } from '../api/application';
+import { Typography } from '@mui/material';
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
     const history = useHistory();
@@ -72,7 +73,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
                     </div>
                 </div>
 
-                <h1>Applications Screen</h1>
+                <Typography variant='h1' my={2}>Applications Screen</Typography>
 
                 <ButtonText withIcon={true} onClick={() => {
                     if (!canCreateApplication) {

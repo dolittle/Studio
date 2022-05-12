@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
 import { HttpResponseApplication } from '../api/application';
+import { Typography } from '@mui/material';
 
 
 
@@ -24,7 +25,7 @@ export const MicroserviceEditScreen: React.FunctionComponent<Props> = (props) =>
     const applicationId = props!.application.id;
     return (
         <>
-            <h1>Microservice Edit Screen</h1>
+            <Typography variant='h1' my={2}>Microservice Edit Screen</Typography>
 
             <Stack tokens={stackTokens}>
                 <Text variant="xLarge" block>
