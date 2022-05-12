@@ -27,52 +27,11 @@ import { TransitionProps } from '@mui/material/transitions';
 import { ThemeScreen } from './screens/themeScreen';
 import '@fontsource/rubik';
 import { ApplicationScreen } from './screens/applicationScreen';
-import { Box } from '@mui/material';
+import { Box, createTheme } from '@mui/material';
 import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
 import { M3ConnectorScreen } from './screens/m3connectorScreen';
 import { themeDark } from './theme/theme';
 
-const typography = {
-    fontFamily: 'Rubik',
-    fontStyle: 'normal',
-    htmlFontSize: 14,
-    fontSize: 14,
-    body1: {
-        fontFamily: 'Rubik',
-        color: '#E9EAEC',
-        fontSize: '14px',
-        letterSpacing: '-0.01em',
-        lineHeight: '16px'
-    }
-};
-
-
-const themeDark = createTheme({
-    typography,
-    palette: {
-        primary: {
-            main: '#8C9AF8',
-            light: '#b3bbfb',
-            dark: '#6678f6',
-            contrastText: '#191A21',
-        },
-        secondary: {
-            main: '#76E8DB',
-            light: '#A3EFE7',
-            dark: '#48E0CF',
-            contrastText: '#191A21',
-        },
-        background: {
-            default: '#0F1014',
-            paper: '#191A21',
-        },
-        text: {
-            disabled: '#93959f',
-            primary: '#fafafa',
-            secondary: '#cecfd0',
-        },
-    },
-});
 
 const snackbarStyles = {
     '& .SnackbarContent-root.': {
