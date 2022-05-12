@@ -27,11 +27,11 @@ export const HeaderDataRow: React.FunctionComponent<HeaderDataRowProps> = (props
 
     return (
         <Box px={0} mx={0} py={1}>
-            <Typography component="p" sx={styles.label}>
+            <Typography sx={styles.label}>
                 {head}
             </Typography>
 
-            <Typography component="p" sx={styles.data}>
+            <Typography sx={styles.data}>
                 {data}
             </Typography>
         </Box>

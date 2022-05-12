@@ -81,7 +81,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     const stepsContent = [
         <>
-            <Typography component={'span'}>
+            <Typography component='span'>
                 <p>
                     Customer Name
                 </p>

@@ -145,7 +145,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 alignItems="flex-start"
             >
                 <Grid item xs={3}>
-                    <Typography variant="h3" component="h3">{msName}</Typography>
+                    <Typography variant="h3">{msName}</Typography>
                 </Grid>
                 <Grid item xs={3}>
                     <DataStateIcon state={fakeState} />
