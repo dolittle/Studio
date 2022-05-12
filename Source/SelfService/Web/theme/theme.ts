@@ -8,28 +8,29 @@ const typography: TypographyOptions = {
     fontFamily: '"Rubik", "Open sans", "Arial", sans-serif',
     fontWeightMedium: 500,
     h1: {
-        fontSize: '3.75rem', //60px
+        fontSize: '1.625rem', //26px
         fontWeight: 800,
     },
     h2: {
-        fontSize: '3rem', //48px
+        fontSize: '1.5rem', //24px
         fontWeight: 500,
     },
     h3: {
-        fontSize: '2.25rem', //36px
+        fontSize: '1.375rem', //22px
         fontWeight: 500,
     },
     h4: {
-        fontSize: '1.875rem', //30px
+        fontSize: '1.25rem', //20px
         fontWeight: 500,
     },
     h5: {
-        fontSize: '1.625rem', //26px
-        fontWeight: 500,
+        fontSize: '1.25rem', //20px
+        fontWeight: 300,
     },
     h6: {
-        fontSize: '1.375rem', //22px
+        fontSize: '1rem', //16px
         fontWeight: 300,
+        textTransform: 'uppercase',
     },
     subtitle1: {
         fontSize: '1.25rem', //20px
