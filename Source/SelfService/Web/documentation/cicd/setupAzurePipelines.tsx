@@ -4,11 +4,12 @@
 import React from 'react';
 import { useSnackbar } from 'notistack';
 import Input from '@mui/material/Input';
-
+import copy from 'copy-to-clipboard';
 
 import { ButtonText } from '../../theme/buttonText';
 import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../api/cicd';
 import { Info } from '../../stores/documentationInfo';
+import { copyToClipboard } from '../../utils/clipboard';
 
 const styles = {
     '& .MuiInput-input.Mui-disabled': {
@@ -31,9 +32,9 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         onClick={async (event: React.MouseEvent<HTMLElement>) => {
             try {
                 const data = await getAzureDevopsKubernetesServiceAccount(applicationID);
-                await navigator.clipboard.writeText(JSON.stringify(data));
+                copyToClipboard(JSON.stringify(data));
                 enqueueSnackbar('Kubernetes service account copied to clipboard.');
-            } catch {
+            } catch (e) {
                 enqueueSnackbar('Failed to get data.', { variant: 'error' });
             }
         }}
@@ -47,7 +48,7 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         onClick={async (event: React.MouseEvent<HTMLElement>) => {
             try {
                 const data = await getContainerRegistry(applicationID);
-                await navigator.clipboard.writeText(JSON.stringify(data));
+                copyToClipboard(JSON.stringify(data));
                 enqueueSnackbar('Container registry copied to clipboard.');
             } catch {
                 enqueueSnackbar('Failed to get data.', { variant: 'error' });
@@ -89,4 +90,3 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         </>
     );
 };
-

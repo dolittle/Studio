@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack';
 
 import { generate } from 'generate-password-browser';
 import { ButtonText } from '../../theme/buttonText';
-
+import { copyToClipboard } from '../../utils/clipboard';
 
 type Props = {
     password: string;
@@ -18,27 +18,27 @@ export const GeneratePassword: React.FunctionComponent<Props> = (props) => {
     const setPassword = props!.setPassword;
     // Using setPassword does not instantly update the password
     let _password = password;
-    const copyToClipboard = async () => {
+    const _copyToClipboard = () => {
         if (_password === '') {
             enqueueSnackbar('Password is empty, nothing to copy to clipboard.', { variant: 'error' });
             return;
         }
 
         try {
-            await navigator.clipboard.writeText(`${_password}`);
+            copyToClipboard(`${_password}`);
             enqueueSnackbar('Password copied to clipboard.');
         } catch {
             enqueueSnackbar('Failed to copy password to clipboard.', { variant: 'error' });
         }
     };
 
-    const generatePasswordAndCopyToClipboard = async () => {
+    const generatePasswordAndCopyToClipboard = () => {
         _password = generate({
             length: 10,
             numbers: true
         });
         setPassword(_password);
-        await copyToClipboard();
+        _copyToClipboard();
     };
 
     return (
