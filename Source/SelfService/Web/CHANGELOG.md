@@ -1,3 +1,12 @@
+# [1.28.0] - 2022-5-16 [PR: #192](https://github.com/dolittle/Studio/pull/192)
+## Summary
+
+
+Introduce Dolittle Material Theme - Minimal visual changes, but a better inheritance of colors and ease of use as we go forward with future styles
+- Dark color palette & typography based on Figma
+- Introduce `<Typography>` component in place of headers across Studio
+
+
 # [1.27.0] - 2022-5-11 [PR: #191](https://github.com/dolittle/Studio/pull/191)
 ## Summary
 
