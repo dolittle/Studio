@@ -93,12 +93,12 @@ export const Delete: React.FunctionComponent<Props> = (props) => {
                 alignItems="flex-start"
             >
                 <Grid item xs={3}>
-                    <Typography variant="h3" component="h3">{msName}</Typography>
+                    <Typography variant="h3">{msName}</Typography>
                 </Grid>
             </Grid>
 
             <TabPanel value={0} index={0}>
-                <h1>Delete Microservice</h1>
+                <Typography variant='h2'>Delete Microservice</Typography>
                 <p>Currently this is not possible to undo</p>
                 <p>Clicking on the button will delete the microservice</p>
 

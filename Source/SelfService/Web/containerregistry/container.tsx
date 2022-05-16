@@ -10,6 +10,7 @@ import { View as Images } from './images';
 import { View as Welcome } from './welcome';
 
 import { getReposInContainerRegistry, ContainerRegistryImages } from '../api/containerregistry';
+import { Typography } from '@mui/material';
 
 type Props = {
     environment: string
@@ -57,7 +58,7 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
     return (
         <>
             <div>
-                <h1>Container Registry</h1>
+                <Typography variant='h1' my={2}>Container Registry</Typography>
             </div>
 
             <div>

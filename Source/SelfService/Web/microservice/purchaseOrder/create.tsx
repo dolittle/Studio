@@ -4,7 +4,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import {
     Grid,
-    Button
+    Button,
+    Typography
 } from '@mui/material';
 import { TabPanel } from '../../utils/materialUi';
 import { Guid } from '@dolittle/rudiments';
@@ -83,7 +84,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             direction='column'
             justifyContent='flex-start'
         >
-            <h1>Create purchase order API</h1>
+            <Typography variant='h1' my={2}>Create purchase order API</Typography>
 
             <Grid
                 container

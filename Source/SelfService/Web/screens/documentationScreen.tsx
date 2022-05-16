@@ -29,6 +29,7 @@ import {
     HttpResponseApplications,
 } from '../api/application';
 import { withRouteApplicationState } from './withRouteApplicationState';
+import { Typography } from '@mui/material';
 
 
 
@@ -77,7 +78,7 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
     if (application.id === '') {
         return (
             <>
-                <h1>Application with this environment not found</h1>
+                <Typography variant='h1' my={2}>Application with this environment not found</Typography>
             </>
         );
     }

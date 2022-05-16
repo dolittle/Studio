@@ -7,6 +7,7 @@ import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react';
 
 import { getPodLogs, HttpResponsePodLog } from '../api/api';
+import { Typography } from '@mui/material';
 
 
 const stackTokens = { childrenGap: 15 };
@@ -35,7 +36,7 @@ export const PodLogScreen: React.FunctionComponent = () => {
 
     return (
         <>
-            <h1>Pod View Screen</h1>
+            <Typography variant='h1' my={2}>Pod View Screen</Typography>
 
             <Stack tokens={stackTokens}>
                 <Text variant="xLarge" block>

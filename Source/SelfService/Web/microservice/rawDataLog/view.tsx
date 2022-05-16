@@ -13,6 +13,7 @@ import { useReadable } from 'use-svelte-store';
 import { microservices, MicroserviceStore } from '../../stores/microservice';
 import { Webhooks } from './webhooks';
 import { ConfigView } from './config/configView';
+import { Typography } from '@mui/material';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -43,7 +44,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     return (
         <>
             <Stack tokens={stackTokens}>
-                <h1>{currentMicroservice.name}</h1>
+                <Typography variant='h1' my={2}>{currentMicroservice.name}</Typography>
                 <Pivot selectedKey={selectedKey}
                     onLinkClick={(item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) => {
                         const key = item?.props.itemKey as string;

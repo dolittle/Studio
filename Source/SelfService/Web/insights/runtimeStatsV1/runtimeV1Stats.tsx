@@ -10,6 +10,7 @@ import { getRuntimeV1 } from '../../api/insights';
 import { DumpJson } from '../dumpJson';
 import { FaillingPartitionsSummary } from './failingPartitionsSummary';
 import { StateSummary } from './stateSummary';
+import { Typography } from '@mui/material';
 
 type Props = {
     application: HttpResponseApplication
@@ -51,8 +52,8 @@ export const RuntimeV1Stats: React.FunctionComponent<Props> = (props) => {
     if (errorLoading) {
         return (
             <>
-                <h1>We failed you.</h1>
-                <h2>We might need to connect the platform-api to your application</h2>
+                <Typography variant='h1' my={2}>We failed you.</Typography>
+                <Typography variant='h2' my={2}>We might need to connect the platform-api to your application</Typography>
             </>
         );
     }
@@ -60,7 +61,7 @@ export const RuntimeV1Stats: React.FunctionComponent<Props> = (props) => {
     if (!loaded) {
         return (
             <>
-                <h1>Stand by, we are getting a fresh copy</h1>
+                <Typography variant='h1' my={2}>Stand by, we are getting a fresh copy</Typography>
             </>
         );
     }

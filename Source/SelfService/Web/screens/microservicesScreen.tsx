@@ -47,6 +47,7 @@ import { RouteNotFound } from '../components/notfound';
 import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 import { withRouteApplicationState } from './withRouteApplicationState';
+import { Typography } from '@mui/material';
 
 export const MicroservicesScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
@@ -98,7 +99,7 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
     if (application.id === '') {
         return (
             <>
-                <h1>Application with this environment not found</h1>
+                <Typography variant='h1' my={2}>Application with this environment not found</Typography>
             </>
         );
     }

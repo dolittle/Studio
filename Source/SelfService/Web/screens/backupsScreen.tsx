@@ -16,6 +16,7 @@ import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { useRouteApplicationParams } from '../utils/route';
 import { ListView } from '../backup/listView';
 import { useGlobalContext } from '../stores/notifications';
+import { Typography } from '@mui/material';
 
 type Props = {
     application?: HttpResponseApplication
@@ -53,7 +54,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
     if (application.id === '') {
         return (
             <>
-                <h1>Application with this environment not found</h1>
+                <Typography variant='h1' my={2}>Application with this environment not found</Typography>
             </>
         );
     }
@@ -108,7 +109,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
                         <ListView application={application} environment={currentEnvironment} />
                     </Route>
                     <Route>
-                        <h1>Something has gone wrong: backups</h1>
+                        <Typography variant='h1' my={2}>Something has gone wrong: backups</Typography>
                     </Route>
                 </Switch>
             </LayoutWithSidebar>

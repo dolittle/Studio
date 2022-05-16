@@ -4,6 +4,7 @@ import React from 'react';
 import { Stack } from '@fluentui/react/lib/Stack';
 
 import { HttpResponseApplication } from '../../api/application';
+import { Typography } from '@mui/material';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -16,9 +17,9 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     return (
         <Stack tokens={stackTokens}>
-            <h1>TODO Static Site</h1>
-            <h2>Env: {_props.environment}</h2>
-            <h2>CustomerID: {_props.application.customerId}</h2>
+            <Typography variant='h1' my={2}>TODO Static Site</Typography>
+            <Typography variant='h2' my={2}>Env: {_props.environment}</Typography>
+            <Typography variant='h2' my={2}>CustomerID: {_props.application.customerId}</Typography>
         </Stack>
     );
 };

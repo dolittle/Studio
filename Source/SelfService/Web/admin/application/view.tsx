@@ -11,6 +11,7 @@ import { adminApplicationAccessAddUser, getAdminApplicationAccess, HttpInputAppl
 import { ButtonText } from '../../theme/buttonText';
 import { TextField } from '../../theme/textField';
 import { Customer, getCustomer } from '../../api/customer';
+import { Typography } from '@mui/material';
 
 export const View: React.FunctionComponent<any> = (props) => {
     const history = useHistory();
@@ -100,15 +101,15 @@ export const View: React.FunctionComponent<any> = (props) => {
 
     return (
         <>
-            <h1>Customer {customer.name}</h1>
+            <Typography variant='h1' my={2}>Customer {customer.name}</Typography>
             <ButtonText onClick={async () => {
                 const href = `/admin/customer/${customerId}`;
                 history.push(href);
             }}>Back to customer</ButtonText>
 
 
-            <h1>Application {accessInfo.name}</h1>
-            <h2>Access View</h2>
+            <Typography variant='h1' my={2}>Application {accessInfo.name}</Typography>
+            <Typography variant='h2' my={2}>Access View</Typography>
 
             <TextField id="userEmail"
                 label='Email'

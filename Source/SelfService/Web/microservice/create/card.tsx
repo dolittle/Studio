@@ -63,18 +63,18 @@ export const SimpleCard: React.FunctionComponent<Props> = (props) => {
                         kindIcon
                     }
                     title={
-                        <Typography variant="h5" component="h2">
+                        <Typography variant="h2">
                             {name}
                         </Typography>
                     }
                     subheader={
-                        <Typography variant="body2" component="h3">
+                        <Typography variant="subtitle2" component="h3">
                             Microservice
                         </Typography>
                     }
                 />
 
-                <Typography variant="body2" component="p">
+                <Typography>
                     {description}
                 </Typography>
             </CardContent>

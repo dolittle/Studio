@@ -17,7 +17,6 @@ import { LiveIngressView } from './liveIngressView';
 import { SelectFileConfirmationModal } from '../../theme/selectFileConfirmationModal';
 import { FileUploadForm, FileUploadFormRef } from './components/fileUploadForm';
 
-
 export type ConfigurationProps = {
     applicationId: string
     environment: string
@@ -140,7 +139,7 @@ export const Configuration: React.FunctionComponent<ConfigurationProps> = (props
             </Box>
             <Divider sx={styles.divider} />
             <Box ml={2}>
-                <h2>Configuration files</h2>
+                <Typography variant='h2' my={2}>Configuration files</Typography>
                 <Grid container spacing={3}>
                     <Grid item>
                         <ButtonText

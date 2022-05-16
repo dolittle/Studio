@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 import { HeaderDataRow } from '../components/headDataRow';
 import { IngressURLWithCustomerTenantID, SimpleIngressPath } from '../../api/api';
@@ -39,13 +39,13 @@ export const LiveIngressView: React.FunctionComponent<Props> = (props) => {
             alignItems="stretch"
         >
             {tenantEndpoints.length > 0 &&
-            <>
-                <h2>Tenant Endpoints</h2>
-                {tenantEndpoints}
-            </>
+                <>
+                    <Typography variant='h2' my={2}>Tenant Endpoints</Typography>
+                    {tenantEndpoints}
+                </>
             }
 
-            <h2>Microservice Paths</h2>
+            <Typography variant='h2' my={2}>Microservice Paths</Typography>
             {microservicePaths}
         </Grid >
     );

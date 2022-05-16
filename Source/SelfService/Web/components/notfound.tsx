@@ -4,6 +4,7 @@
 import React from 'react';
 import { Route, useHistory, Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
+import { Typography } from '@mui/material';
 
 
 type Props = {
@@ -21,7 +22,7 @@ export const RouteNotFound: React.FunctionComponent<Props> = (props) => {
     return (
         <>
             <Route>
-                <h1>We are unable to find this link</h1>
+                <Typography variant='h1' my={2}>We are unable to find this link</Typography>
                 <Link component={RouterLink} to={props!.redirectUrl}>
                     Link
                 </Link>

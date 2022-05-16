@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { getCustomers, Customers } from '../api/customer';
 import { ButtonText } from '../theme/buttonText';
+import { Typography } from '@mui/material';
 
 
 type Props = {
@@ -48,7 +49,7 @@ export const ViewAll: React.FunctionComponent<Props> = (props) => {
                 Create new Customer
             </ButtonText>
 
-            <h1>View Customers</h1>
+            <Typography variant='h1' my={2}>View Customers</Typography>
 
             <ul>
                 {customers.map((customer) => {

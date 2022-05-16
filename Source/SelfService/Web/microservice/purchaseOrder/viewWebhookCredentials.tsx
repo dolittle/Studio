@@ -38,11 +38,11 @@ export const ViewWebhookCredentials: React.FunctionComponent<Props> = (props) =>
 
     return <>
         <Box px={0} mx={0} py={1}>
-            <Typography component="p">
+            <Typography>
                 Username
             </Typography>
 
-            <Typography component="p">
+            <Typography>
                 {username}
             </Typography>
         </Box>
@@ -51,7 +51,7 @@ export const ViewWebhookCredentials: React.FunctionComponent<Props> = (props) =>
             <RowWithLink
                 title='Password'
                 prefix={
-                    <Typography component="p">
+                    <Typography>
                         {password}
                     </Typography>
                 }

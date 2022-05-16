@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { Typography } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -34,7 +35,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <h2>Config</h2>
+            <Typography variant='h2' my={2}>Config</Typography>
             <TextareaAutosize
                 value={JSON.stringify(data.config, null, '  ')}
                 style={{ width: '100%' }}
@@ -65,12 +66,12 @@ function CollapsibleTextareaWithTitle(props: CollapsibleTextareaWithTitleProps) 
 
     return (
         <div >
-            <h2
+            <Typography variant='h2' my={2}
                 onClick={handleClick}
                 style={{
                     textDecoration: 'underline',
                     cursor: 'pointer'
-                }}>{title}</h2>
+                }}>{title}</Typography>
             {_open ?
                 <TextareaAutosize
                     value={value}

@@ -15,6 +15,7 @@ import { useRouteApplicationParams } from '../utils/route';
 import { useGlobalContext } from '../stores/notifications';
 
 import { Container } from '../m3connector/container';
+import { Typography } from '@mui/material';
 
 type Props = {
     application?: HttpResponseApplication
@@ -52,7 +53,7 @@ export const M3ConnectorScreen: React.FunctionComponent<Props> = (props) => {
     if (application.id === '') {
         return (
             <>
-                <h1>Application  not found</h1>
+                <Typography variant='h1' my={2}>Application  not found</Typography>
             </>
         );
     }

@@ -3,7 +3,7 @@
 
 import React, { useEffect } from 'react';
 import { useHistory, Link as RouterLink } from 'react-router-dom';
-import { Link, Box } from '@mui/material';
+import { Link, Box, Typography } from '@mui/material';
 import { useGlobalContext } from '../stores/notifications';
 
 
@@ -21,13 +21,13 @@ export const DieAndRestart: React.FunctionComponent = () => {
     return (
         <>
 
-            <h1>Something has gone terribly wrong</h1>
+            <Typography variant='h1' my={2}>Something has gone terribly wrong</Typography>
             <p>Please click on the link below to try and recover</p>
             <Link component={RouterLink} to="/applications">
                 Link
             </Link>
             <Box fontFamily="Monospace">
-                <h1>Help us, help you</h1>
+                <Typography variant='h1' my={2}>Help us, help you</Typography>
                 <p>Take a screenshot of the below and get in touch with P&amp;D</p>
                 <pre>{JSON.stringify(dump, null, '  ')}</pre>
             </Box>

@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getPersonalisedInfo } from '../api/application';
 
@@ -37,7 +38,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
             <p>Your container registry is empty</p>
             <br />
 
-            <h1>How to access and add an image to your container registry</h1>
+            <Typography variant='h1' my={2}>How to access and add an image to your container registry</Typography>
             <br />
             <AccessContainerRegistry info={info} />
         </>

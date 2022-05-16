@@ -140,7 +140,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <Typography component='h2' variant='h5' style={{ marginTop: '1rem' }}>Create base microservice</Typography>
+            <Typography variant='h1' style={{ marginTop: '1rem' }}>Create base microservice</Typography>
             <Grid container direction='column' alignContent='stretch' spacing={4} style={{ marginTop: '1rem', padding: '1rem' }}>
                 <Grid item>
                     <ThemedTextField
@@ -200,7 +200,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 </Grid>
 
                 <Grid item>
-                    <Typography component="p" sx={styles.data}>
+                    <Typography sx={styles.data}>
                         Override the default ENTRYPOINT in Docker
                     </Typography>
                     <ThemedTextField
@@ -217,7 +217,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 </Grid>
 
                 <Grid item>
-                    <Typography component="p" sx={styles.data}>
+                    <Typography sx={styles.data}>
                         Override the default CMD in Docker
                     </Typography>
                     <HeadArguments args={args} setArgs={setArgs} />
@@ -228,7 +228,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 </Grid>
 
                 <Grid item>
-                    <Typography component='h2' variant='h5'>Ingress</Typography>
+                    <Typography variant='h2'>Ingress</Typography>
                     <ThemedSwitch label={isPublic ? 'Public' : 'Private'} checked={isPublic} onChange={handleIsPublicChanged} />
                 </Grid>
                 {isPublic &&
@@ -262,7 +262,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 {showConnectionM3ConnectorOption &&
                     <>
                         <Grid item>
-                            <Typography component='h2' variant='h5'>Connect to m3 Connector</Typography>
+                            <Typography variant='h2'>Connect to m3 Connector</Typography>
                             <ThemedSwitch label={connectionM3Connector ? 'yes' : 'no'} checked={connectionM3Connector} onChange={handleConnectionM3ConnectorChanged} />
                         </Grid>
                     </>

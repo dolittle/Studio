@@ -54,7 +54,7 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
 
 
     return <>
-        <Typography component="p">
+        <Typography>
             Username
         </Typography>
 
@@ -71,7 +71,7 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
         />
 
 
-        <Typography component="p">
+        <Typography>
             Password
         </Typography>
         <Grid container spacing={3}>

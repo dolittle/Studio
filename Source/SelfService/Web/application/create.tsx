@@ -173,7 +173,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     const stepsContent = [
         <>
-            <Typography component={'span'}>
+            <Typography component='span'>
                 <p>
                     Let’s name your application
                 </p>
@@ -212,7 +212,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             </Grid>
         </>,
         <>
-            <Typography component={'span'}>
+            <Typography component='span'>
                 <p>
                     Who should we contact regarding important updates for your application?
                 </p>
@@ -244,7 +244,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
             </Typography>
         </>,
         <>
-            <Typography component={'span'}>
+            <Typography component='span'>
                 <p>
                     Select at least (1) environment for your application or create a custom named one.*
                 </p>
@@ -338,7 +338,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <h1>Create Application Screen</h1>
+            <Typography variant='h1' my={2}>Create Application Screen</Typography>
             <Box sx={styles.root}>
 
                 <Stepper activeStep={activeStep} orientation='vertical'>

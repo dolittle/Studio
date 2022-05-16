@@ -9,6 +9,7 @@ import {
 
 import { HttpResponseApplication } from '../api/application';
 import { RuntimeV1Stats } from './runtimeStatsV1/runtimeV1Stats';
+import { Typography } from '@mui/material';
 
 type Props = {
     application: HttpResponseApplication
@@ -24,7 +25,7 @@ export const InsightsContainerScreen: React.FunctionComponent<Props> = (props) =
     return (
         <>
             <Route exact path="/insights/application/:applicationId/:environment/overview">
-                <h2>Explore application: {application.name}</h2>
+                <Typography variant='h2' my={2}>Explore application: {application.name}</Typography>
 
                 <Link underline onClick={() => {
                     const href = `/insights/application/${application.id}/${environment}/runtime-v1`;
@@ -40,8 +41,8 @@ export const InsightsContainerScreen: React.FunctionComponent<Props> = (props) =
                 }}>
                     Back
                 </Link>
-                <h1>Runtime Insights</h1>
-                <h2>Useful for debugging</h2>
+                <Typography variant='h1' my={2}>Runtime Insights</Typography>
+                <Typography variant='h2' my={2}>Useful for debugging</Typography>
                 <RuntimeV1Stats application={application} environment={environment} />
             </Route>
         </>

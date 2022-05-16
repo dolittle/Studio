@@ -11,6 +11,7 @@ import {
 import { cardStyles } from '../theme/viewCard';
 
 import './microservice.scss';
+import { Typography } from '@mui/material';
 
 type Props = {
     microserviceName: string
@@ -99,8 +100,8 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
                     {kindIcon}
                 </div>
 
-                <h1>{microserviceName}</h1>
-                <h2>{subTitle}</h2>
+                <Typography variant='h1' my={2}>{microserviceName}</Typography>
+                <Typography variant='h2' my={2}>{subTitle}</Typography>
                 <div className="bottomBar">
                     <a href="#"
                         onClick={onClickDelete}
