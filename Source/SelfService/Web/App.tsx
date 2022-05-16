@@ -30,8 +30,8 @@ import { ApplicationScreen } from './screens/applicationScreen';
 import { Box, createTheme } from '@mui/material';
 import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
 import { M3ConnectorScreen } from './screens/m3connectorScreen';
+import { LogsScreen } from './screens/logsScreen';
 import { themeDark } from './theme/theme';
-
 
 const snackbarStyles = {
     '& .SnackbarContent-root.': {
@@ -40,7 +40,7 @@ const snackbarStyles = {
     },
     '& .SnackbarContent-root.SnackbarItem-variantError': {
         backgroundColor: '#F44040',
-    }
+    },
 };
 
 export const App = () => {
@@ -56,77 +56,87 @@ export const App = () => {
         return null;
     }
 
-    return <>
-        <StyledEngineProvider injectFirst>
-            <ThemeProvider theme={themeDark}>
-                <CssBaseline />
-                <GlobalContextProvider>
-                    <Box sx={snackbarStyles}>
-                        <SnackbarProvider
-                            maxSnack={1}
-                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                            TransitionComponent={Grow as React.ComponentType<TransitionProps>}
-                        >
-                            <BrowserRouter basename={uriWithAppPrefix('')}>
-                                <Switch>
-                                    <Route exact path="/login">
-                                        <LoginScreen />
-                                    </Route>
+    return (
+        <>
+            <StyledEngineProvider injectFirst>
+                <ThemeProvider theme={themeDark}>
+                    <CssBaseline />
+                    <GlobalContextProvider>
+                        <Box sx={snackbarStyles}>
+                            <SnackbarProvider
+                                maxSnack={1}
+                                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                                TransitionComponent={
+                                    Grow as React.ComponentType<TransitionProps>
+                                }
+                            >
+                                <BrowserRouter basename={uriWithAppPrefix('')}>
+                                    <Switch>
+                                        <Route exact path='/login'>
+                                            <LoginScreen />
+                                        </Route>
 
-                                    <Route path="/backups/application/:applicationId">
-                                        <BackupsScreen />
-                                    </Route>
+                                        <Route path='/backups/application/:applicationId'>
+                                            <BackupsScreen />
+                                        </Route>
 
-                                    <Route exact path="/applications">
-                                        <ApplicationsScreen />
-                                    </Route>
+                                        <Route exact path='/applications'>
+                                            <ApplicationsScreen />
+                                        </Route>
 
-                                    <Route path="/application/">
-                                        <ApplicationScreen />
-                                    </Route>
+                                        <Route path='/application/'>
+                                            <ApplicationScreen />
+                                        </Route>
 
-                                    <Route path="/microservices/application/:applicationId/:environment">
-                                        <MicroservicesScreen />
-                                    </Route>
+                                        <Route path='/microservices/application/:applicationId/:environment'>
+                                            <MicroservicesScreen />
+                                        </Route>
 
-                                    <Route path="/documentation/application/:applicationId/:environment">
-                                        <DocumentationScreen />
-                                    </Route>
+                                        <Route path='/documentation/application/:applicationId/:environment'>
+                                            <DocumentationScreen />
+                                        </Route>
 
-                                    <Route path="/insights/application/:applicationId/:environment">
-                                        <InsightsScreen />
-                                    </Route>
+                                        <Route path='/insights/application/:applicationId/:environment'>
+                                            <InsightsScreen />
+                                        </Route>
 
-                                    <Route path="/containerregistry/application/:applicationId/:environment">
-                                        <ContainerRegistryScreen />
-                                    </Route>
+                                        <Route path='/containerregistry/application/:applicationId/:environment'>
+                                            <ContainerRegistryScreen />
+                                        </Route>
 
-                                    <Route path="/m3connector/application/:applicationId">
-                                        <M3ConnectorScreen />
-                                    </Route>
+                                        <Route path='/m3connector/application/:applicationId'>
+                                            <M3ConnectorScreen />
+                                        </Route>
 
-                                    <Route path="/admin/">
-                                        <AdminScreen />
-                                    </Route>
+                                        <Route path='/logs/application/:applicationId/:environment'>
+                                            <M3ConnectorScreen />
+                                        </Route>
 
-                                    <Route path="/debug/theme">
-                                        <ThemeScreen />
-                                    </Route>
+                                        <Route path='/admin/'>
+                                            <AdminScreen />
+                                        </Route>
 
-                                    <Route exact path="/problem">
-                                        <LayoutWithSidebar navigation={[]}>
-                                            <DieAndRestart />
-                                        </LayoutWithSidebar>
+                                        <Route path='/debug/theme'>
+                                            <ThemeScreen />
+                                        </Route>
 
-                                    </Route>
+                                        <Route exact path='/problem'>
+                                            <LayoutWithSidebar navigation={[]}>
+                                                <DieAndRestart />
+                                            </LayoutWithSidebar>
+                                        </Route>
 
-                                    <RouteNotFound redirectUrl="/applications" auto={true} />
-                                </Switch>
-                            </BrowserRouter>
-                        </SnackbarProvider>
-                    </Box>
-                </GlobalContextProvider>
-            </ThemeProvider>
-        </StyledEngineProvider>
-    </>;
+                                        <RouteNotFound
+                                            redirectUrl='/applications'
+                                            auto={true}
+                                        />
+                                    </Switch>
+                                </BrowserRouter>
+                            </SnackbarProvider>
+                        </Box>
+                    </GlobalContextProvider>
+                </ThemeProvider>
+            </StyledEngineProvider>
+        </>
+    );
 };

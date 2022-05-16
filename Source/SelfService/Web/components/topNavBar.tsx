@@ -11,14 +11,12 @@ import { ApplicationsChanger } from '../application/applicationsChanger';
 
 import { useGlobalContext } from '../stores/notifications';
 import { Grid } from '@mui/material';
-import { BreadCrumbContainer } from '../layout/breadcrumbs';
+import { BreadCrumbContainer, BreadcrumbsRoute } from '../layout/breadcrumbs';
 import { applications } from '../stores/state';
 import { TopRightMenu } from './topRightMenu';
 
-
-
 type Props = {
-    routes: any[];// TODO struct it
+    routes: BreadcrumbsRoute[];
     applications: ShortInfoWithEnvironment[];
     applicationId: string;
     environment: string;
@@ -28,19 +26,18 @@ export const TopNavBar: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     return (
         <>
-            <div id="topNavBar" >
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="space-between"
-                >
+            <div id='topNavBar'>
+                <Grid container direction='row' justifyContent='space-between'>
                     <BreadCrumbContainer routes={_props.routes} />
                     <Grid>
-                        <TopRightMenu applications={_props.applications} applicationId={_props.applicationId} environment={_props.environment} />
+                        <TopRightMenu
+                            applications={_props.applications}
+                            applicationId={_props.applicationId}
+                            environment={_props.environment}
+                        />
                     </Grid>
                 </Grid>
             </div>
-
         </>
     );
 };
