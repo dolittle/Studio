@@ -109,7 +109,7 @@ export const App = () => {
                                         </Route>
 
                                         <Route path='/logs/application/:applicationId/:environment'>
-                                            <M3ConnectorScreen />
+                                            <LogsScreen />
                                         </Route>
 
                                         <Route path='/admin/'>
