@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { TextField } from '@mui/material';
+import { Chip, Grid, TextField } from '@mui/material';
 import React, { useEffect, useCallback, useState } from 'react';
 import { ButtonText } from '../theme/buttonText';
 
@@ -42,8 +42,14 @@ export const LogFilterPanel = ({ filters, setSearchFilters }: LogFilterPanelProp
 
     return (
         <>
-            <SearchFilter onSearch={onSearched} />
-            <ActiveFilters filters={filters} updateFilters={onUpdateFilters} />
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    <SearchFilter onSearch={onSearched} />
+                </Grid>
+                <Grid item xs={12}>
+                    <ActiveFilters filters={filters} updateFilters={onUpdateFilters} />
+                </Grid>
+            </Grid>
         </>
     );
 };
@@ -68,6 +74,7 @@ export const SearchFilter = (props: SearchFilterProps) => {
         <TextField
             onKeyDown={handleKeypress}
             onChange={handleOnChange}
+            fullWidth
             id={''}
             label={''}
             value={query}
@@ -79,16 +86,45 @@ export const SearchFilter = (props: SearchFilterProps) => {
 
 
 export type ActiveFiltersProps = {
-    filters?: LogFilterObject;
+    filters: LogFilterObject;
     updateFilters: (filters: LogFilterObject) => void
 };
 
 export const ActiveFilters = (props: ActiveFiltersProps) => {
+
     const clearFilters = () => {
         props.updateFilters({ searchTerms: [] });
-    }
-    return <>
-        <div>ActiveFilters: {props.filters?.searchTerms.join(', ')}</div>
-        <div><ButtonText onClick={clearFilters}>Clear</ButtonText></div>
-    </>;
+    };
+
+    const removeTerm = (term: string, index: number) => {
+        const terms = [...props.filters.searchTerms];
+        terms.splice(index, 1);
+        props.updateFilters({
+            ...props.filters,
+            searchTerms: terms
+        });
+    };
+
+    return (
+        <>
+            <ButtonText
+                size='small'
+                disabled={props.filters.searchTerms.length === 0}
+                onClick={clearFilters}
+                buttonType='secondary'
+            >
+                Clear Filters
+            </ButtonText>
+            {props.filters.searchTerms.map((s, index) =>
+                <Chip
+                    key={index.toString()}
+                    label={`"${s}"`}
+                    onDelete={() => { removeTerm(s, index); }}
+                    color='primary'
+                    size='small'
+                    sx={{ ml: 1 }}
+                />
+            )}
+        </>
+    );
 };
