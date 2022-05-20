@@ -107,7 +107,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
     return (
         <LayoutWithSidebar navigation={nav}>
             <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
-            <LogPanel time={{ last: 86400 }} query={{ labels: { applicationId: currentApplicationId, environment: currentEnvironment } }} />
+            <LogPanel time={{ last: 86400 * 1e9 }} query={{ labels: { job: 'microservice', application_id: currentApplicationId, environment: currentEnvironment } }} />
         </LayoutWithSidebar >
     );
 });
