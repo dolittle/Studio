@@ -1,0 +1,7 @@
+#!/bin/bash
+echo "Stopping local k3d cluster"
+ROOT_PWD=$(git rev-parse --show-toplevel)
+cd $ROOT_PWD
+
+k3d cluster stop dolittle-dev
+echo "Stopped dolittle-dev k3d cluster"
