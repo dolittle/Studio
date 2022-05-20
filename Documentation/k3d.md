@@ -18,7 +18,13 @@ Run the reset-local-k3d script, that automatically deletes the existing k3d clus
 ./Environment/k3d/reset-local-k3d
 ```
 
-For manual steps, continue following the guide.
+## Start the cluster
+> NOTE: This requires the cluster to be setup in order to work. Follow either the manual steps or run reset-local-k3d
+```sh
+./Environment/k3d/start-local-k3d
+```
+
+# For manual steps, continue following the guide.
 
 ## Setup folder structure to bootstrap Studio
 - Little clunky, but we can change after
