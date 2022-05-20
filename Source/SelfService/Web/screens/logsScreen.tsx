@@ -35,6 +35,8 @@ import {
 import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
+import { LogPanel } from '../logs/logPanel';
+
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
     const { setNotification } = useGlobalContext();
@@ -105,7 +107,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
     return (
         <LayoutWithSidebar navigation={nav}>
             <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
-            <h1>Logs here I come</h1>
+            <LogPanel time={{ last: 86400 }} query={{ labels: { applicationId: currentApplicationId, environment: currentEnvironment } }} />
         </LayoutWithSidebar >
     );
 });
