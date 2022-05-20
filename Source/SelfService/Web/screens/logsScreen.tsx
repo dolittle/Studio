@@ -36,6 +36,7 @@ import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
 import { LogPanel } from '../logging/logPanel';
+import { LogFilterObject, LogFilterPanel } from '../logging/logFilterPanel';
 
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
@@ -46,6 +47,9 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
+
+    const [filters, setFilters] = useState<LogFilterObject>({ searchTerms: [] });
+
 
     useEffect(() => {
         if (!currentEnvironment || !currentApplicationId) {
@@ -107,7 +111,10 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
     return (
         <LayoutWithSidebar navigation={nav}>
             <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
-            <LogPanel time={{ last: 86400 }} query={{ labels: { applicationId: currentApplicationId, environment: currentEnvironment } }} />
+            <LogFilterPanel filters={filters} setSearchFilters={setFilters} />
+
+            <LogPanel time={{ last: 86400 }} query={{ labels: { applicationId: currentApplicationId, environment: currentEnvironment }, pipeline: filters.searchTerms }} />
         </LayoutWithSidebar >
     );
 });
+
