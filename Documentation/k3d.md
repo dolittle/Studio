@@ -23,6 +23,10 @@ Run the reset-local-k3d script, that automatically deletes the existing k3d clus
 ```sh
 ./Environment/k3d/start-local-k3d
 ```
+## Stop the cluster
+```sh
+./Environment/k3d/stop-local-k3d
+```
 
 # For manual steps, continue following the guide.
 
