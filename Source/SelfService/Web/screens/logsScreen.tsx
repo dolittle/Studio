@@ -35,7 +35,7 @@ import {
 import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
-import { LogPanel } from '../logs/logPanel';
+import { LogPanel } from '../logging/logPanel';
 
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
