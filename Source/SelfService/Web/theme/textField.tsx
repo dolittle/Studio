@@ -4,7 +4,7 @@
 import React from 'react';
 
 import { SxProps } from '@mui/material/styles';
-import { TextField as MuiTextField } from '@mui/material';
+import { InputAdornment, TextField as MuiTextField } from '@mui/material';
 
 type Props = {
     id: string;
@@ -20,6 +20,7 @@ type Props = {
     size?: 'small' | 'medium' | undefined;
     autoComplete?: string;
     fullWidth?: boolean;
+    startIcon?: React.ReactNode;
 };
 
 const styles = {
@@ -53,6 +54,12 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
     const size = _props.size ?? 'medium';
     const autoComplete = _props.autoComplete ?? undefined;
     const fullWidth = _props.fullWidth ?? undefined;
+    const startIcon = _props.startIcon
+        ? (
+            <InputAdornment position='start'>
+                {_props.startIcon}
+            </InputAdornment>
+        ) : undefined;
 
     return (
         <MuiTextField
@@ -67,7 +74,10 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
             onChange={onChange}
             onKeyDown={onKeyDown}
             placeholder={placeholder}
-            InputProps={{ readOnly }}
+            InputProps={{
+                readOnly,
+                startAdornment: startIcon
+            }}
             autoComplete={autoComplete}
             size={size}
             fullWidth={fullWidth}

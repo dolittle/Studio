@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
+import { Search } from '@mui/icons-material';
 import { TextField } from '../../theme/textField';
 
 export type SearchFilterProps = {
@@ -30,6 +31,7 @@ export const SearchFilter = (props: SearchFilterProps) => {
             value={query}
             size='small'
             placeholder='Search'
+            startIcon={<Search />}
         />
     </div>;
 };
