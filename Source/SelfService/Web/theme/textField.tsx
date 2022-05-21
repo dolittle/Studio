@@ -16,11 +16,11 @@ type Props = {
     placeholder?: string;
     readOnly?: boolean;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
     size?: 'small' | 'medium' | undefined;
     autoComplete?: string;
+    fullWidth?: boolean;
 };
-
-const defaultOnChange = (event: React.ChangeEvent<HTMLInputElement>) => { };
 
 const styles = {
     '& .MuiOutlinedInput-input': {
@@ -40,7 +40,8 @@ const styles = {
 
 export const TextField: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
-    const onChange = _props.onChange ?? defaultOnChange;
+    const onChange = _props.onChange ?? undefined;
+    const onKeyDown = _props.onKeyDown ?? undefined;
     const disabled = _props.disabled ?? false;
     const required = _props.required ?? true;
     const type = _props.type ?? 'text';
@@ -51,6 +52,8 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
     const readOnly = _props.readOnly ?? false;
     const size = _props.size ?? 'medium';
     const autoComplete = _props.autoComplete ?? undefined;
+    const fullWidth = _props.fullWidth ?? undefined;
+
     return (
         <MuiTextField
             sx={styles}
@@ -62,10 +65,12 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
             type={type}
             value={value}
             onChange={onChange}
+            onKeyDown={onKeyDown}
             placeholder={placeholder}
             InputProps={{ readOnly }}
             autoComplete={autoComplete}
             size={size}
+            fullWidth={fullWidth}
         />
     );
 };
