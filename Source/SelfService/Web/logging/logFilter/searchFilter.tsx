@@ -3,7 +3,17 @@
 
 import React, { useState } from 'react';
 import { Search } from '@mui/icons-material';
-import { TextField } from '../../theme/textField';
+import { InputAdornment, SxProps, TextField } from '@mui/material';
+// import { TextField } from '../../theme/textField';
+
+const styles = {
+    '& .MuiOutlinedInput-root': {
+        backgroundColor: '#8C9AF808',
+    },
+    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'transparent'
+    }
+} as SxProps;
 
 export type SearchFilterProps = {
     onSearch: (query: string) => void;
@@ -23,6 +33,7 @@ export const SearchFilter = (props: SearchFilterProps) => {
     };
     return <div>
         <TextField
+            sx={styles}
             onKeyDown={handleKeypress}
             onChange={handleOnChange}
             fullWidth
@@ -31,7 +42,9 @@ export const SearchFilter = (props: SearchFilterProps) => {
             value={query}
             size='small'
             placeholder='Search'
-            startIcon={<Search />}
+            InputProps={{
+                startAdornment: <InputAdornment position='start'><Search /></InputAdornment>
+            }}
         />
     </div>;
 };
