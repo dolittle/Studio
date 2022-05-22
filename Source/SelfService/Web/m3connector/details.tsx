@@ -33,8 +33,18 @@ export const View: React.FunctionComponent<Props> = (props) => {
         return null;
     }
 
+    const downloadCode = (e) => {
+        e.preventDefault();
+        const form = document.getElementById('download-form');
+        form?.setAttribute('action', `/selfservice/api/application/${applicationId}/${environment}/codegenerator/m3connector-consumer`)
+        form?.submit();
+    };
+
     return (
         <>
+            <form id="download-form" method="post">
+                <a href='' onClick={downloadCode}>Download sample code</a>
+            </form>
             <Typography variant='h2' my={2}>Config</Typography>
             <TextareaAutosize
                 value={JSON.stringify(data.config, null, '  ')}
