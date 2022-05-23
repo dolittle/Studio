@@ -50,7 +50,13 @@ export const SearchFilter = (props: SearchFilterProps) => {
             size='small'
             placeholder='Search'
             InputProps={{
-                startAdornment: <InputAdornment position='start'><Search /></InputAdornment>
+                startAdornment:
+                    <InputAdornment
+                        position='start'
+                        onClick={submitQuery}
+                    >
+                        <Search />
+                    </InputAdornment>
             }}
         />
     </div>;
