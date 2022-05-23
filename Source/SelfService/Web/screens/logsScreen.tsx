@@ -35,16 +35,14 @@ import {
 import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
-import { LogLine } from '../logging/loki/logLines';
 import { useLogsFromLast } from '../logging/loki/useLogsFromLast';
 import { LogFilterObject, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
 import { LogPanel } from '../logging/logPanel';
+import { parseLogLine } from '../logging/lineParsing';
 
 const logFilterToPipeline = (filter: LogFilterObject): string[] => {
     return filter.searchTerms.map(term => `|= "${term}"`);
 };
-
-const logLineToOutput = (line: LogLine): string => line.line;
 
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
@@ -60,7 +58,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
 
     const labels = { job: 'microservice', application_id: currentApplicationId, environment: currentEnvironment };
     const pipeline = logFilterToPipeline(filters);
-    const logs = useLogsFromLast(86400 * 1e9, true, labels, pipeline, 1000, logLineToOutput);
+    const logs = useLogsFromLast(86400 * 1e9, true, labels, pipeline, 1000, parseLogLine);
 
 
     useEffect(() => {
