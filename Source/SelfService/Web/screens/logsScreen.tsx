@@ -35,8 +35,12 @@ import {
 import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
-import { LogPanel } from '../logging/logPanel';
+import { LogPanel, LogPanelQuery } from '../logging/logPanel';
 import { LogFilterObject, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
+
+const logFilterToPipeline = (filter: LogFilterObject): string[] | undefined => {
+    return filter.searchTerms.map(term => `|= "${term}"`);
+};
 
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
@@ -112,7 +116,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
         <LayoutWithSidebar navigation={nav}>
             <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
             <LogFilterPanel filters={filters} setSearchFilters={setFilters} />
-            <LogPanel time={{ last: 86400 * 1e9 }} query={{ labels: { job: 'microservice', application_id: currentApplicationId, environment: currentEnvironment }, pipeline: filters.searchTerms }} />
+            <LogPanel time={{ last: 86400 * 1e9 }} query={{ labels: { job: 'microservice', application_id: currentApplicationId, environment: currentEnvironment }, pipeline: logFilterToPipeline(filters) }} />
         </LayoutWithSidebar >
     );
 });
