@@ -36,7 +36,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const downloadCode = (e) => {
         e.preventDefault();
         const form = document.getElementById('download-form') as HTMLFormElement;
-        form?.setAttribute('action', `/selfservice/api/application/${applicationId}/${environment}/codegenerator/m3connector-consumer`)
+        form?.setAttribute('action', `/selfservice/api/application/${applicationId}/${environment}/codegenerator/m3connector-consumer`);
         form?.submit();
     };
 
