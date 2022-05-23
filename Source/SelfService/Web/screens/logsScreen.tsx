@@ -35,12 +35,15 @@ import {
 import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
-import { LogPanel, LogPanelQuery } from '../logging/logPanel';
+import { LogLine } from '../logging/loki/logLines';
+import { useLogsFromLast } from '../logging/loki/useLogsFromLast';
 import { LogFilterObject, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
 
-const logFilterToPipeline = (filter: LogFilterObject): string[] | undefined => {
+const logFilterToPipeline = (filter: LogFilterObject): string[] => {
     return filter.searchTerms.map(term => `|= "${term}"`);
 };
+
+const logLineToOutput = (line: LogLine): string => line.line;
 
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
@@ -53,6 +56,10 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
     const [loaded, setLoaded] = useState(false);
 
     const [filters, setFilters] = useState<LogFilterObject>({ searchTerms: [] });
+
+    const labels = { job: 'microservice', application_id: currentApplicationId, environment: currentEnvironment };
+    const pipeline = logFilterToPipeline(filters);
+    const logResults = useLogsFromLast(86400 * 1e9, true, labels, pipeline, 1000, logLineToOutput);
 
 
     useEffect(() => {
@@ -123,7 +130,10 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
                     mt={3}
                 >
                     <LogFilterPanel filters={filters} setSearchFilters={setFilters} />
-                    <LogPanel time={{ last: 86400 * 1e9 }} query={{ labels: { job: 'microservice', application_id: currentApplicationId, environment: currentEnvironment }, pipeline: logFilterToPipeline(filters) }} />
+                    {logResults.loading && <p>Loading...</p>}
+                    <pre>
+                        {logResults.lines.map(_ => _.line).join('\n')}
+                    </pre>
                 </Box>
             </Box>
         </LayoutWithSidebar >
