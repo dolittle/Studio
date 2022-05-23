@@ -38,6 +38,7 @@ import { HttpResponseApplication, getApplications, getApplication, HttpResponseA
 import { LogLine } from '../logging/loki/logLines';
 import { useLogsFromLast } from '../logging/loki/useLogsFromLast';
 import { LogFilterObject, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
+import { LogPanel } from '../logging/logPanel';
 
 const logFilterToPipeline = (filter: LogFilterObject): string[] => {
     return filter.searchTerms.map(term => `|= "${term}"`);
@@ -59,7 +60,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
 
     const labels = { job: 'microservice', application_id: currentApplicationId, environment: currentEnvironment };
     const pipeline = logFilterToPipeline(filters);
-    const logResults = useLogsFromLast(86400 * 1e9, true, labels, pipeline, 1000, logLineToOutput);
+    const logs = useLogsFromLast(86400 * 1e9, true, labels, pipeline, 1000, logLineToOutput);
 
 
     useEffect(() => {
@@ -130,10 +131,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
                     mt={3}
                 >
                     <LogFilterPanel filters={filters} setSearchFilters={setFilters} />
-                    {logResults.loading && <p>Loading...</p>}
-                    <pre>
-                        {logResults.lines.map(_ => _.line).join('\n')}
-                    </pre>
+                    <LogPanel logs={logs} />
                 </Box>
             </Box>
         </LayoutWithSidebar >
