@@ -21,7 +21,8 @@ module.exports = (env, argv) => {
                 pathRewrite: { '^/api/system/monitoring/logs/v1/': '/loki/api/v1/' },
                 headers: {
                     'x-scope-orgid': 'tenant-453e04a7-4f9d-42f2-b36c-d51fa2c83fa3'
-                }
+                },
+                ws: true,
             },
         };
         config.devServer.before = (app, server, compiler) => { };

@@ -2,24 +2,21 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { LogLine } from './logLines';
-import { QueryRangeResponse } from './types';
+import { DataLabels } from './types';
 
 /**
- * Parses and merges all streams from a Loki query-range request into a single list of log lines.
- * @param response The Loki query range response to parse and merge lines from.
+ * Parses and merges all streams from a Loki response into a single list of log lines.
+ * @param streams The streams to merge.
  * @returns Parsed and merged LogLines from the response.
  */
-export const parseAndMergeAllStreams = (response: QueryRangeResponse): LogLine[] => {
-    if (response.data.resultType !== 'streams') {
-        return [];
-    }
+export const parseAndMergeAllStreams = (streams: { stream: DataLabels, values: [string, string][] }[]): LogLine[] => {
 
     const lines: LogLine[] = [];
 
-    for (const result of response.data.result) {
-        for (const line of result.values) {
+    for (const stream of streams) {
+        for (const line of stream.values) {
             lines.push({
-                labels: result.stream,
+                labels: stream.stream,
                 timestamp: parseInt(line[0]),
                 line: line[1],
             });

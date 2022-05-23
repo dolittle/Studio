@@ -2,12 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { useEffect, useRef, useState } from 'react';
-import { from, Subject } from 'rxjs';
-import { distinctUntilChanged, map, concatMap, startWith, scan, tap } from 'rxjs/operators';
+import { from, Observable, Subject } from 'rxjs';
+import { distinctUntilChanged, map, concatMap, startWith, scan, tap, switchMap } from 'rxjs/operators';
 
-import { LogLine, ObservableLogLines } from './logLines';
-import { DataLabels, QueryRangeRequest } from './types';
+import { LogLine, TransformedLogLine, ObservableLogLines } from './logLines';
+import { DataLabels, QueryRangeRequest, TailResponseMessage } from './types';
 import { labelsAndPipelineToLogQL, queryRange } from './queries';
+import { tail } from './streaming';
 import { parseAndMergeAllStreams } from './parsing';
 
 type Parameters = {
@@ -15,6 +16,23 @@ type Parameters = {
     last: number;
     newestFirst: boolean;
     limit: number;
+};
+
+const tailAfterLastReceivedLine = <T>(query: QueryRangeRequest, lines: TransformedLogLine<T>[]): Observable<TailResponseMessage> => {
+    const lastReceivedTime = lines.reduce((previous, current) => Math.max(previous, current.timestamp), query.start!);
+    return tail({ query: query.query, start: lastReceivedTime + 1, limit: query.limit });
+};
+
+const ensureUniqueTimestamps = <T>(lines: TransformedLogLine<T>[]): void => {
+    let i = 1;
+    while (i < lines.length) {
+        if (lines[i - 1].timestamp === lines[i].timestamp) {
+            lines.splice(i, 1);
+            continue;
+        }
+
+        i++;
+    }
 };
 
 /**
@@ -49,15 +67,32 @@ export const useLogsFromLast = <T>(last: number, newestFirst: boolean, labels: D
         );
 
         const fetches = queries.pipe(
-            concatMap(query => from(queryRange(query)).pipe(
-                map(parseAndMergeAllStreams),
+            switchMap(query => from(queryRange(query)).pipe(
+                map((response): LogLine[] => {
+                    if (response.data.resultType === 'streams') {
+                        return parseAndMergeAllStreams(response.data.result);
+                    }
+                    return [];
+                }),
                 map(lines => lines.map(line => ({ ...line, data: transform(line) }))),
+
+                concatMap((lines) => tailAfterLastReceivedLine(query, lines).pipe(
+                    map(message => parseAndMergeAllStreams(message.streams)),
+                    map(lines => lines.map(line => ({ ...line, data: transform(line) }))),
+                    scan((lastLines, newLines) => {
+                        return lastLines.concat(newLines);
+                    }, lines),
+                )),
+
                 tap(lines => lines.sort((a, b) => {
                     if (query.direction === 'forward') {
                         return a.timestamp - b.timestamp;
                     }
                     return b.timestamp - a.timestamp;
                 })),
+
+                tap(ensureUniqueTimestamps),
+
                 map((lines): ObservableLogLines<T> => ({ loading: false, lines })),
                 startWith<ObservableLogLines<T>>({ loading: true, lines: [] }),
             ))

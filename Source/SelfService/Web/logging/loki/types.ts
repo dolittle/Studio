@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-type CommonQueryRequestProperties = {
+type CommonRequestProperties = {
     /**
      * The LogQL query to perform.
      */
@@ -11,6 +11,9 @@ type CommonQueryRequestProperties = {
      * The max number of entries to return. It defaults to 100. Only applies to query types which produce a stream(log lines) response.
      */
     limit?: number;
+};
+
+type CommonQueryRequestProperties = CommonRequestProperties & {
 
     /**
      *  Determines the sort order of logs. Supported values are forward or backward. Defaults to backward.
@@ -99,7 +102,7 @@ type StreamsData = {
      */
     result: {
         /**
-         * The metric labels.
+         * The stream labels.
          */
         stream: DataLabels;
 
@@ -168,4 +171,55 @@ export type QueryRangeResponse = CommonQueryResponseProperties & {
      * The result of the query.
      */
     data: MatrixData | StreamsData;
+};
+
+/**
+ * Defines the properties of a '/loki/api/v1/tail' request.
+ */
+export type TailRequest = CommonRequestProperties & {
+    /**
+     * The start time for the query as a nanosecond Unix epoch. Defaults to one hour ago.
+     */
+    start?: number;
+
+    /**
+     *  The number of seconds to delay retrieving logs to let slow loggers catch up. Defaults to 0 and cannot be larger than 5.
+     */
+    delay_for?: number;
+};
+
+
+/**
+ * Defines the properties of a '/loki/api/v1/tail' response message.
+ */
+export type TailResponseMessage = {
+    /**
+     * The newly arrived stream entries.
+     */
+    streams: {
+        /**
+         * The stream labels.
+         */
+        stream: DataLabels;
+
+        /**
+         * The pairs of stream [timestamp, log line].
+         */
+        values: [string, string][];
+    }[];
+
+    /**
+     * Dropped stream entries.
+     */
+    dropped_entries?: {
+        /**
+         * The stream labels.
+         */
+        labels: DataLabels;
+
+        /**
+         * The dropped entry timestamp.
+         */
+        timestamp: string;
+    }[];
 };
