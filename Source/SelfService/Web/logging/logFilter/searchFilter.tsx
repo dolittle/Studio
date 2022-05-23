@@ -8,7 +8,7 @@ import { InputAdornment, SxProps, TextField } from '@mui/material';
 
 const styles = {
     '& .MuiOutlinedInput-root': {
-        backgroundColor: '#8C9AF808',
+        backgroundColor: 'rgba(140, 154, 248, 0.08)',
     },
     '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
         borderColor: 'transparent'
