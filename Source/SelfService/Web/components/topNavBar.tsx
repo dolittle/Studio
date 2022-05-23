@@ -10,7 +10,7 @@ import { ShortInfoWithEnvironment } from '../api/api';
 import { ApplicationsChanger } from '../application/applicationsChanger';
 
 import { useGlobalContext } from '../stores/notifications';
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { BreadCrumbContainer, BreadcrumbsRoute } from '../layout/breadcrumbs';
 import { applications } from '../stores/state';
 import { TopRightMenu } from './topRightMenu';
@@ -26,7 +26,7 @@ export const TopNavBar: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     return (
         <>
-            <div id='topNavBar'>
+            <Box mb={2} id='topNavBar'>
                 <Grid container direction='row' justifyContent='space-between'>
                     <BreadCrumbContainer routes={_props.routes} />
                     <Grid>
@@ -37,7 +37,7 @@ export const TopNavBar: React.FunctionComponent<Props> = (props) => {
                         />
                     </Grid>
                 </Grid>
-            </div>
+            </Box>
         </>
     );
 };

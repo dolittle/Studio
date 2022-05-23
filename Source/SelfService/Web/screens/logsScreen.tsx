@@ -9,7 +9,7 @@ import {
     useHistory,
 } from 'react-router-dom';
 
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import {
     ShortInfoWithEnvironment,
@@ -114,9 +114,18 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
-            <LogFilterPanel filters={filters} setSearchFilters={setFilters} />
-            <LogPanel time={{ last: 86400 * 1e9 }} query={{ labels: { job: 'microservice', application_id: currentApplicationId, environment: currentEnvironment }, pipeline: logFilterToPipeline(filters) }} />
+            <Box
+                px={3}
+            >
+                <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
+                <Typography variant='h1'>Logs</Typography>
+                <Box
+                    mt={3}
+                >
+                    <LogFilterPanel filters={filters} setSearchFilters={setFilters} />
+                    <LogPanel time={{ last: 86400 * 1e9 }} query={{ labels: { job: 'microservice', application_id: currentApplicationId, environment: currentEnvironment }, pipeline: logFilterToPipeline(filters) }} />
+                </Box>
+            </Box>
         </LayoutWithSidebar >
     );
 });

@@ -4,11 +4,10 @@
 import React, { useState } from 'react';
 import { Search } from '@mui/icons-material';
 import { InputAdornment, SxProps, TextField } from '@mui/material';
-// import { TextField } from '../../theme/textField';
 
 const styles = {
     '& .MuiOutlinedInput-root': {
-        backgroundColor: '#8C9AF808',
+        backgroundColor: 'rgba(140, 154, 248, 0.08)',
     },
     '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
         borderColor: 'transparent'
@@ -27,10 +26,18 @@ export const SearchFilter = (props: SearchFilterProps) => {
 
     const handleKeypress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key.toLowerCase() === 'enter') {
-            props.onSearch(query);
-            setQuery('');
+            submitQuery();
         }
+
     };
+    const submitQuery = () => {
+        if (!query) {
+            return;
+        }
+        props.onSearch(query);
+        setQuery('');
+    };
+
     return <div>
         <TextField
             sx={styles}
@@ -43,7 +50,13 @@ export const SearchFilter = (props: SearchFilterProps) => {
             size='small'
             placeholder='Search'
             InputProps={{
-                startAdornment: <InputAdornment position='start'><Search /></InputAdornment>
+                startAdornment:
+                    <InputAdornment
+                        position='start'
+                        onClick={submitQuery}
+                    >
+                        <Search />
+                    </InputAdornment>
             }}
         />
     </div>;
