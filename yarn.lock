@@ -391,6 +391,11 @@
     "@fluentui/set-version" "^8.2.0"
     tslib "^2.1.0"
 
+"@fontsource/roboto-mono@^4.5.7":
+  version "4.5.7"
+  resolved "https://registry.yarnpkg.com/@fontsource/roboto-mono/-/roboto-mono-4.5.7.tgz#69a89b679ab962ea3591438f35833b09f0f8980f"
+  integrity sha512-1uBjM95BEz7zJlmmnpNAM5afMvIxx0wqr86eA76vRqZw8OF5wmsRqYfF3caHuVarBH9/AGN7t9h+3UXK8fjq/Q==
+
 "@fontsource/rubik@^4.5.0":
   version "4.5.9"
   resolved "https://registry.yarnpkg.com/@fontsource/rubik/-/rubik-4.5.9.tgz#46e81911b601183699a117edfdd32c05cad1fd49"

@@ -26,6 +26,7 @@ import Grow from '@mui/material/Grow';
 import { TransitionProps } from '@mui/material/transitions';
 import { ThemeScreen } from './screens/themeScreen';
 import '@fontsource/rubik';
+import '@fontsource/roboto-mono';
 import { ApplicationScreen } from './screens/applicationScreen';
 import { Box, createTheme } from '@mui/material';
 import { ContainerRegistryScreen } from './screens/containerRegistryScreen';

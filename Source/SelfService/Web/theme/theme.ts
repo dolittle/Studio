@@ -4,6 +4,23 @@
 import { createTheme, PaletteOptions } from '@mui/material/styles';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
 
+declare module '@mui/material/styles' {
+    interface TypographyVariants {
+        monospace: React.CSSProperties;
+    }
+
+    // allow configuration using `createTheme`
+    interface TypographyVariantsOptions {
+        monospace?: React.CSSProperties;
+    }
+}
+
+declare module '@mui/material/Typography' {
+    interface TypographyPropsVariantOverrides {
+        monospace: true;
+    }
+}
+
 const typography: TypographyOptions = {
     fontFamily: '"Rubik", "Open sans", "Arial", sans-serif',
     fontWeightMedium: 500,
@@ -54,6 +71,11 @@ const typography: TypographyOptions = {
     },
     overline: {
         fontSize: '0.625rem', //10px
+    },
+    monospace: {
+        fontSize: '0.825rem', //13px
+        fontWeight: 400,
+        fontFamily: 'Roboto Mono',
     },
 };
 const darkPalette: PaletteOptions = {
