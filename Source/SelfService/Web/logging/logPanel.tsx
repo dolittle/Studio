@@ -28,7 +28,7 @@ export const LogPanel = (props: LogPanelProps) => {
         <Grid container spacing={2} sx={{ pt: 2 }}>
             {props.logs.failed
                 ?
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                     <Alert severity='error' variant='outlined'>
                         <AlertTitle>Something went wrong</AlertTitle>
                         Please try again later. If the problem persists, please <Link href="mailto:support@dolittle.com">contact support</Link>.
@@ -37,7 +37,7 @@ export const LogPanel = (props: LogPanelProps) => {
                 :
                 props.logs.lines.length === 0
                     ?
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                         <Alert severity='info' variant='outlined'>
                             <AlertTitle>No logs found</AlertTitle>
                             Try adjusting the filters, or verify that your microservices are running.
@@ -46,7 +46,14 @@ export const LogPanel = (props: LogPanelProps) => {
                     :
                     <Grid item xs={12}>
                         <Paper elevation={1} sx={{ p: 2 }}>
-                            <Box component='pre' sx={{ m: 0, whiteSpace: 'break-space' }}>
+                            <Box
+                                component='pre'
+                                sx={{
+                                    m: 0,
+                                    whiteSpace: 'pre-wrap',
+                                    typography: 'monospace'
+                                }}
+                            >
                                 {props.logs.lines.map(line => <LogLine key={line.timestamp} line={line.data} />)}
                             </Box>
                         </Paper>
