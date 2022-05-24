@@ -1,3 +1,9 @@
+# [1.29.0] - 2022-5-24 [PR: #195](https://github.com/dolittle/Studio/pull/195)
+## Summary
+
+Added a "Logs" page that displays the logs for all microservices in the current environment - the last 24 hours (max 1000 lines). The logs can be filtered with "including" free text search filters.
+
+
 # [1.28.0] - 2022-5-16 [PR: #192](https://github.com/dolittle/Studio/pull/192)
 ## Summary
 
