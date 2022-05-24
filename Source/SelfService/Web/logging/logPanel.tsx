@@ -46,7 +46,7 @@ export const LogPanel = (props: LogPanelProps) => {
                     :
                     <Grid item xs={12}>
                         <Paper elevation={1} sx={{ p: 2 }}>
-                            <Box component='pre' sx={{ m: 0, whiteSpace: 'break-space' }}>
+                            <Box component='pre' sx={{ m: 0, whiteSpace: 'pre-wrap' }}>
                                 {props.logs.lines.map(line => <LogLine key={line.timestamp} line={line.data} />)}
                             </Box>
                         </Paper>
