@@ -43,7 +43,27 @@ export type ObservableLogLines<T> = {
     loading: boolean;
 
     /**
+     * An indicator wheter or not the request failed.
+     */
+    failed: boolean;
+
+    /**
+     * The request failure - if indicated.
+     */
+    error?: unknown;
+
+    /**
      * The observable transformed log lines.
      */
     lines: TransformedLogLine<T>[];
+};
+
+/**
+ * Defines the result of an observable query that returns log lines from Loki with some transform, and an indication whether or not there are more lines available to query.
+ */
+export type ObservablePartialLogLines<T> = ObservableLogLines<T> & {
+    /**
+     * An indicator set to true if there (probably) are more lines avaliable to query.
+     */
+    moreLinesAvailable: boolean;
 };

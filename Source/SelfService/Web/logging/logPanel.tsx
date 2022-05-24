@@ -2,71 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+import { Alert, AlertTitle, Box, Grid, Link, Paper } from '@mui/material';
 
 import { ObservableLogLines } from './loki/logLines';
 
-import { ColoredLine, ColoredLineSection, TerminalColor } from './lineParsing';
+import { ColoredLine } from './lineParsing';
+import { LogLine } from './logLine';
 
-const coloredLineSectionCss = (section: ColoredLineSection): React.CSSProperties => {
-    let color = 'inherit', backgroundColor = 'inherit';
-
-    switch (section.foreground) {
-        case TerminalColor.Black:
-            color = 'black';
-            break;
-        case TerminalColor.Blue:
-            color = 'blue';
-            break;
-        case TerminalColor.Cyan:
-            color = 'cyan';
-            break;
-        case TerminalColor.Green:
-            color = 'green';
-            break;
-        case TerminalColor.Magenta:
-            color = 'magenta';
-            break;
-        case TerminalColor.Red:
-            color = 'red';
-            break;
-        case TerminalColor.White:
-            color = 'white';
-            break;
-        case TerminalColor.Yellow:
-            color = 'yellow';
-            break;
-    }
-
-    switch (section.background) {
-        case TerminalColor.Black:
-            backgroundColor = 'black';
-            break;
-        case TerminalColor.Blue:
-            backgroundColor = 'blue';
-            break;
-        case TerminalColor.Cyan:
-            backgroundColor = 'cyan';
-            break;
-        case TerminalColor.Green:
-            backgroundColor = 'green';
-            break;
-        case TerminalColor.Magenta:
-            backgroundColor = 'magenta';
-            break;
-        case TerminalColor.Red:
-            backgroundColor = 'red';
-            break;
-        case TerminalColor.White:
-            backgroundColor = 'white';
-            break;
-        case TerminalColor.Yellow:
-            backgroundColor = 'yellow';
-            break;
-    }
-
-    return { color, backgroundColor };
-
-};
 
 /**
  * The props for a {@link LogPanel} component.
@@ -83,14 +25,33 @@ export type LogPanelProps = {
  */
 export const LogPanel = (props: LogPanelProps) => {
     return (
-        <>
-            {props.logs.lines.map(line => (
-                <pre key={line.timestamp}>
-                    {line.data.sections.map((section, i) => (
-                        <span key={i} style={coloredLineSectionCss(section)}>{section.text}</span>
-                    ))}
-                </pre>
-            ))}
-        </>
+        <Grid container spacing={2} sx={{ pt: 2 }}>
+            {props.logs.failed
+                ?
+                <Grid item xs={6}>
+                    <Alert severity='error' variant='outlined'>
+                        <AlertTitle>Something went wrong</AlertTitle>
+                        Please try again later. If the problem persists, please <Link href="mailto:support@dolittle.com">contact support</Link>.
+                    </Alert>
+                </Grid>
+                :
+                props.logs.lines.length === 0
+                    ?
+                    <Grid item xs={6}>
+                        <Alert severity='info' variant='outlined'>
+                            <AlertTitle>No logs found</AlertTitle>
+                            Try adjusting the filters, or verify that your microservices are running.
+                        </Alert>
+                    </Grid>
+                    :
+                    <Grid item xs={12}>
+                        <Paper elevation={1} sx={{ p: 2 }}>
+                            <Box component='pre' sx={{ m: 0, whiteSpace: 'break-space' }}>
+                                {props.logs.lines.map(line => <LogLine key={line.timestamp} line={line.data} />)}
+                            </Box>
+                        </Paper>
+                    </Grid>
+            }
+        </Grid>
     );
 };

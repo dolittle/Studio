@@ -2,8 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { useEffect, useRef, useState } from 'react';
-import { from, Observable, Subject } from 'rxjs';
-import { distinctUntilChanged, map, concatMap, startWith, scan, tap, switchMap } from 'rxjs/operators';
+import { of, from, Observable, Subject } from 'rxjs';
+import { distinctUntilChanged, map, catchError, concatMap, startWith, scan, tap, switchMap } from 'rxjs/operators';
 
 import { LogLine, TransformedLogLine, ObservableLogLines } from './logLines';
 import { DataLabels, QueryRangeRequest, TailResponseMessage } from './types';
@@ -36,6 +36,11 @@ const ensureUniqueTimestamps = <T>(lines: TransformedLogLine<T>[]): void => {
     }
 };
 
+// TODO: Does it even make sense to allow querying forward when useLogsFromLast?
+// With the streaming implementation now, it will attempt to retrieve any skipped logs using the tail request.
+// We might want to hardcode the Loki request to be backward (fetch the newest logs) - fix the limit - and just report that there are more logs we didn't retrieve.
+// Then the UX should point you to useLogsFromRange to get the ones you missed (maybe with a graph showing log count as bars).
+
 /**
  * Returns log lines fetched from Loki from the specified timespan up until now, and streams new incoming log lines.
  * The log lines are re-fetched whenever the arguments change.
@@ -48,7 +53,7 @@ const ensureUniqueTimestamps = <T>(lines: TransformedLogLine<T>[]): void => {
  * @returns An observable object of loglines with transformed extra data.
  */
 export const useLogsFromLast = <T>(last: number, newestFirst: boolean, labels: DataLabels, pipeline: string[], limit: number, transform: (line: LogLine) => T): ObservableLogLines<T> => {
-    const [result, setResult] = useState<ObservableLogLines<T>>({ loading: false, lines: [] });
+    const [result, setResult] = useState<ObservableLogLines<T>>({ loading: false, failed: false, lines: [] });
     const subject = useRef<Subject<Parameters>>();
 
     useEffect(() => {
@@ -77,13 +82,14 @@ export const useLogsFromLast = <T>(last: number, newestFirst: boolean, labels: D
                 }),
                 map(lines => lines.map(line => ({ ...line, data: transform(line) }))),
 
-                concatMap((lines) => tailAfterLastReceivedLine(query, lines).pipe(
-                    map(message => parseAndMergeAllStreams(message.streams)),
-                    map(lines => lines.map(line => ({ ...line, data: transform(line) }))),
-                    scan((lastLines, newLines) => {
-                        return lastLines.concat(newLines);
-                    }, lines),
-                )),
+                // TODO: Enable toggling of this tail stuff
+                // concatMap((lines) => tailAfterLastReceivedLine(query, lines).pipe(
+                //     map(message => parseAndMergeAllStreams(message.streams)),
+                //     map(lines => lines.map(line => ({ ...line, data: transform(line) }))),
+                //     scan((lastLines, newLines) => {
+                //         return lastLines.concat(newLines);
+                //     }, lines),
+                // )),
 
                 tap(lines => lines.sort((a, b) => {
                     if (query.direction === 'forward') {
@@ -94,16 +100,20 @@ export const useLogsFromLast = <T>(last: number, newestFirst: boolean, labels: D
 
                 tap(ensureUniqueTimestamps),
 
-                map((lines): ObservableLogLines<T> => ({ loading: false, lines })),
-                startWith<ObservableLogLines<T>>({ loading: true, lines: [] }),
-            ))
+                map((lines): ObservableLogLines<T> => ({ loading: false, failed: false, lines })),
+                startWith<ObservableLogLines<T>>({ loading: true, failed: false, lines: [] }),
+            )),
+            catchError(error => of({ loading: false, failed: true, error, lines: [] })),
         );
 
         const results = fetches.pipe(
             scan((last, next) => ({
                 loading: next.loading,
                 lines: next.loading ? last.lines : next.lines,
-            }), { loading: false, lines: [] } as ObservableLogLines<T>),
+                failed: next.failed,
+                error: next.error,
+            }), { loading: false, failed: false, lines: [] } as ObservableLogLines<T>),
+            // tap(_ => _.lines = []),
         );
 
         const subscription = results.subscribe(setResult);
