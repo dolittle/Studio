@@ -121,7 +121,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
     return (
         <LayoutWithSidebar navigation={nav}>
             <Box
-                px={3}
+                px={{ xs: 1, md: 3 }}
             >
                 <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
                 <Typography variant='h1'>Logs</Typography>
