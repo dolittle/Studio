@@ -1,3 +1,11 @@
+# [1.29.1] - 2022-5-24 [PR: #196](https://github.com/dolittle/Studio/pull/196)
+## Summary
+
+Small adjustments to the padding and breakpoints
+Makes some small adjustments to the log panel font styling by introducing Roboto Mono, and a new font-type `monospace`.
+Loading the different variants of Rubik properly so it can be used correctly by MUI.
+
+
 # [1.29.0] - 2022-5-24 [PR: #195](https://github.com/dolittle/Studio/pull/195)
 ## Summary
 
