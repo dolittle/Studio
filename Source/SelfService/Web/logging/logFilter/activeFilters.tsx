@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Chip } from '@mui/material';
+import { Chip, Typography } from '@mui/material';
 import React from 'react';
 import { ButtonText } from '../../theme/buttonText';
 import { LogFilterObject } from './logFilterPanel';
@@ -46,6 +46,12 @@ export const ActiveFilters = (props: ActiveFiltersProps) => {
                     sx={{ ml: 1 }}
                 />
             )}
+            <Typography variant='body1' component='span' sx={{ mx: 2 }}>|</Typography>
+            <Chip
+                label='Last 24 hours'
+                color='primary'
+                size='small'
+            />
         </>
     );
 };
