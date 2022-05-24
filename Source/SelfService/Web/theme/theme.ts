@@ -73,7 +73,7 @@ const typography: TypographyOptions = {
         fontSize: '0.625rem', //10px
     },
     monospace: {
-        fontSize: '0.825rem', //13px
+        fontSize: '0.8125rem', //13px
         fontWeight: 400,
         fontFamily: 'Roboto Mono',
     },
