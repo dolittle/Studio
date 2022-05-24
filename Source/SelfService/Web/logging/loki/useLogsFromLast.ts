@@ -24,6 +24,7 @@ const tailAfterLastReceivedLine = <T>(query: QueryRangeRequest, lines: Transform
 };
 
 const ensureUniqueTimestamps = <T>(lines: TransformedLogLine<T>[]): void => {
+    // TODO: We probably want to be smarter here if there are logs from different streams with the same timestamp
     let i = 1;
     while (i < lines.length) {
         if (lines[i - 1].timestamp === lines[i].timestamp) {
@@ -36,7 +37,7 @@ const ensureUniqueTimestamps = <T>(lines: TransformedLogLine<T>[]): void => {
 };
 
 /**
- * Returns log lines fetched from Loki from the specified timespan up until now.
+ * Returns log lines fetched from Loki from the specified timespan up until now, and streams new incoming log lines.
  * The log lines are re-fetched whenever the arguments change.
  * @param last The timespan to fetch log lines within, in nanoseconds.
  * @param newestFirst True to return the newest log lines first in the returned list, false to return the oldest log lines first. This also affects which log lines are returned if there are more than the specified limit within the timespan.
