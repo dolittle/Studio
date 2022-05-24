@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: system-monitoring-metrics
+  name: querier-node-port
+  labels:
+    system: Monitoring
+    monitoring: Metrics
+    service: Querier
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 31001
+      name: http-metrics
+      targetPort: http-metrics
+  selector:
+    system: Monitoring
+    monitoring: Metrics
+    service: Querier

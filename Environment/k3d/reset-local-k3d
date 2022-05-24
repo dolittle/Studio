@@ -20,6 +20,8 @@ k3d cluster create dolittle-dev \
     --agents 1 \
     --port 8080:80@loadbalancer \
     --port 8443:443@loadbalancer \
+    --port 8801:31001@loadbalancer \
+    --port 8802:31002@loadbalancer \
     --k3s-server-arg '--no-deploy=traefik' \
     --registry-create \
     --kubeconfig-switch-context \

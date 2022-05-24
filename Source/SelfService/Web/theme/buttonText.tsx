@@ -34,10 +34,6 @@ const styles = {
             color: '#B3BBFB',
             backgroundColor: 'transparent'
         },
-        '&:disabled': {
-            color: '#93959F',
-            backgroundColor: 'transparent'
-        },
         '&:active': {
             color: '#8C9AF8',
             backgroundColor: 'transparent'
@@ -45,7 +41,11 @@ const styles = {
         '&:focus': {
             color: '#8C9AF8',
             backgroundColor: 'transparent'
-        }
+        },
+        '&:disabled': {
+            color: '#93959F',
+            backgroundColor: 'transparent'
+        },
 
     } as SxProps,
     primary: {
@@ -54,10 +54,6 @@ const styles = {
             color: '#B3BBFB',
             backgroundColor: 'transparent'
         },
-        '&:disabled': {
-            color: '#93959F',
-            backgroundColor: 'transparent'
-        },
         '&:active': {
             color: '#8C9AF8',
             backgroundColor: 'transparent'
@@ -65,7 +61,11 @@ const styles = {
         '&:focus': {
             color: '#8C9AF8',
             backgroundColor: 'transparent'
-        }
+        },
+        '&:disabled': {
+            color: '#93959F',
+            backgroundColor: 'transparent'
+        },
     } as SxProps,
 };
 

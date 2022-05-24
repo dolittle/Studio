@@ -4,7 +4,7 @@
 import React from 'react';
 
 import { SxProps } from '@mui/material/styles';
-import { TextField as MuiTextField } from '@mui/material';
+import { InputAdornment, TextField as MuiTextField } from '@mui/material';
 
 type Props = {
     id: string;
@@ -16,11 +16,12 @@ type Props = {
     placeholder?: string;
     readOnly?: boolean;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
     size?: 'small' | 'medium' | undefined;
     autoComplete?: string;
+    fullWidth?: boolean;
+    startIcon?: React.ReactNode;
 };
-
-const defaultOnChange = (event: React.ChangeEvent<HTMLInputElement>) => { };
 
 const styles = {
     '& .MuiOutlinedInput-input': {
@@ -40,7 +41,8 @@ const styles = {
 
 export const TextField: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
-    const onChange = _props.onChange ?? defaultOnChange;
+    const onChange = _props.onChange ?? undefined;
+    const onKeyDown = _props.onKeyDown ?? undefined;
     const disabled = _props.disabled ?? false;
     const required = _props.required ?? true;
     const type = _props.type ?? 'text';
@@ -51,6 +53,14 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
     const readOnly = _props.readOnly ?? false;
     const size = _props.size ?? 'medium';
     const autoComplete = _props.autoComplete ?? undefined;
+    const fullWidth = _props.fullWidth ?? undefined;
+    const startIcon = _props.startIcon
+        ? (
+            <InputAdornment position='start'>
+                {_props.startIcon}
+            </InputAdornment>
+        ) : undefined;
+
     return (
         <MuiTextField
             sx={styles}
@@ -62,10 +72,15 @@ export const TextField: React.FunctionComponent<Props> = (props) => {
             type={type}
             value={value}
             onChange={onChange}
+            onKeyDown={onKeyDown}
             placeholder={placeholder}
-            InputProps={{ readOnly }}
+            InputProps={{
+                readOnly,
+                startAdornment: startIcon
+            }}
             autoComplete={autoComplete}
             size={size}
+            fullWidth={fullWidth}
         />
     );
 };
