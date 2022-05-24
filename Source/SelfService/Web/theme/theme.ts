@@ -23,10 +23,10 @@ declare module '@mui/material/Typography' {
 
 const typography: TypographyOptions = {
     fontFamily: '"Rubik", "Open sans", "Arial", sans-serif',
-    fontWeightMedium: 500,
+    fontWeightMedium: 400,
     h1: {
         fontSize: '1.625rem', //26px
-        fontWeight: 800,
+        fontWeight: 500,
     },
     h2: {
         fontSize: '1.5rem', //24px
