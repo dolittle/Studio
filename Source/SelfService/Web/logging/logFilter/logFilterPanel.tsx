@@ -44,7 +44,7 @@ export const LogFilterPanel = ({ filters, setSearchFilters }: LogFilterPanelProp
     return (
         <>
             <Grid container spacing={2}>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                     <SearchFilter onSearch={onSearched} />
                 </Grid>
                 <Grid item xs={12}>
