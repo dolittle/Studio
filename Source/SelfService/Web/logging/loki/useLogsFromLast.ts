@@ -13,14 +13,14 @@ import { parseAndMergeAllStreams } from './parsing';
 
 type Parameters = {
     query: string;
-    last: number;
+    last: bigint;
     newestFirst: boolean;
     limit: number;
 };
 
 const tailAfterLastReceivedLine = <T>(query: QueryRangeRequest, lines: TransformedLogLine<T>[]): Observable<TailResponseMessage> => {
-    const lastReceivedTime = lines.reduce((previous, current) => Math.max(previous, current.timestamp), query.start!);
-    return tail({ query: query.query, start: lastReceivedTime + 1, limit: query.limit });
+    const lastReceivedTime = lines.reduce((previous, current) => previous > current.timestamp ? previous : current.timestamp, query.start!);
+    return tail({ query: query.query, start: lastReceivedTime + 1n, limit: query.limit });
 };
 
 const ensureUniqueTimestamps = <T>(lines: TransformedLogLine<T>[]): void => {
@@ -52,7 +52,7 @@ const ensureUniqueTimestamps = <T>(lines: TransformedLogLine<T>[]): void => {
  * @param transform The transform to apply to add extra data to each logline before returning.
  * @returns An observable object of loglines with transformed extra data.
  */
-export const useLogsFromLast = <T>(last: number, newestFirst: boolean, labels: DataLabels, pipeline: string[], limit: number, transform: (line: LogLine) => T): ObservableLogLines<T> => {
+export const useLogsFromLast = <T>(last: bigint, newestFirst: boolean, labels: DataLabels, pipeline: string[], limit: number, transform: (line: LogLine) => T): ObservableLogLines<T> => {
     const [result, setResult] = useState<ObservableLogLines<T>>({ loading: false, failed: false, lines: [] });
     const subject = useRef<Subject<Parameters>>();
 
@@ -64,7 +64,7 @@ export const useLogsFromLast = <T>(last: number, newestFirst: boolean, labels: D
             map((p): QueryRangeRequest => {
                 const { query, last, newestFirst, limit } = p;
 
-                const end = Date.now() * 1e6;
+                const end = BigInt(Date.now()) * 1_000_000n;
                 const start = end - last;
                 const direction = newestFirst ? 'backward' : 'forward';
 
@@ -93,9 +93,20 @@ export const useLogsFromLast = <T>(last: number, newestFirst: boolean, labels: D
 
                 tap(lines => lines.sort((a, b) => {
                     if (query.direction === 'forward') {
-                        return a.timestamp - b.timestamp;
+                        if (a.timestamp > b.timestamp) {
+                            return 1;
+                        } else if (a.timestamp < b.timestamp) {
+                            return -1;
+                        }
+                        return 0;
+                    } else {
+                        if (a.timestamp < b.timestamp) {
+                            return 1;
+                        } else if (a.timestamp > b.timestamp) {
+                            return -1;
+                        }
+                        return 0;
                     }
-                    return b.timestamp - a.timestamp;
                 })),
 
                 tap(ensureUniqueTimestamps),

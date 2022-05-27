@@ -15,7 +15,7 @@ export type LogLine = {
     /**
      * The nanosecond Unix epoch timestamp of when the log line was scraped.
      */
-    timestamp: number;
+    timestamp: bigint;
 
     /**
      * The log line as text.

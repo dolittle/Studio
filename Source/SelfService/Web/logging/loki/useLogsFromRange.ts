@@ -12,8 +12,8 @@ import { parseAndMergeAllStreams } from './parsing';
 
 type Parameters = {
     query: string;
-    from: number;
-    to: number;
+    from: bigint;
+    to: bigint;
     newestFirst: boolean;
     limit: number;
 };
@@ -40,7 +40,7 @@ export type LoadMoreLinesIfAvailable = (limit: number) => void;
  * @param transform The transform to apply to add extra data to each logline before returning.
  * @returns An observable object of loglines with transformed extra data, and a function to call to load more lines if available.
  */
-export const useLogsFromRange = <T>(from: number, to: number, newestFirst: boolean, labels: DataLabels, pipeline: string[], limit: number, transform: (line: LogLine) => T): [ObservablePartialLogLines<T>, LoadMoreLinesIfAvailable] => {
+export const useLogsFromRange = <T>(from: bigint, to: bigint, newestFirst: boolean, labels: DataLabels, pipeline: string[], limit: number, transform: (line: LogLine) => T): [ObservablePartialLogLines<T>, LoadMoreLinesIfAvailable] => {
     const [result, setResult] = useState<ObservablePartialLogLines<T>>({ loading: false, failed: false, lines: [], moreLinesAvailable: false });
     const subject = useRef<Subject<Parameters>>();
     const loadMoreSubject = useRef<Subject<number>>();
@@ -71,14 +71,14 @@ export const useLogsFromRange = <T>(from: number, to: number, newestFirst: boole
                             }));
 
                         return next.pipe(
-                            concatMap(state => {
-                                return rxFrom(queryRange({
-                                    query: state.parameters.query,
-                                    start: state.parameters.from,
-                                    end: state.parameters.to,
-                                    direction: state.parameters.newestFirst ? 'backward' : 'forward',
-                                    limit: state.parameters.limit,
-                                })).pipe(
+                            concatMap(state => rxFrom(queryRange({
+                                query: state.parameters.query,
+                                start: state.parameters.from,
+                                end: state.parameters.to,
+                                direction: state.parameters.newestFirst ? 'backward' : 'forward',
+                                limit: state.parameters.limit,
+                            }))
+                                .pipe(
                                     map((response): LogLine[] => {
                                         if (response.data.resultType === 'streams') {
                                             return parseAndMergeAllStreams(response.data.result);
@@ -111,10 +111,10 @@ export const useLogsFromRange = <T>(from: number, to: number, newestFirst: boole
                                             const endOfLinesTimestamp = lines[lines.length - 1].timestamp;
 
                                             if (state.parameters.newestFirst) {
-                                                parameters.to = endOfLinesTimestamp - 1;
+                                                parameters.to = endOfLinesTimestamp - 1n;
                                                 fetchedLines = state.lines.concat(lines);
                                             } else {
-                                                parameters.from = endOfLinesTimestamp + 1;
+                                                parameters.from = endOfLinesTimestamp + 1n;
                                                 fetchedLines = lines.concat(state.lines);
                                             }
                                         }
@@ -126,8 +126,7 @@ export const useLogsFromRange = <T>(from: number, to: number, newestFirst: boole
                                         return { initialFetch: false, loading: false, parameters, lines: fetchedLines, moreLinesAvailable };
                                     }),
                                     startWith<State<T>>({ initialFetch: false, loading: true, parameters: state.parameters, lines: state.lines, moreLinesAvailable: false }),
-                                );
-                            }),
+                                )),
                         );
                     }, 1),
                     map(({ loading, lines, moreLinesAvailable }): ObservablePartialLogLines<T> => ({ loading, failed: false, lines, moreLinesAvailable })),

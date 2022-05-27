@@ -54,7 +54,7 @@ export const LogPanel = (props: LogPanelProps) => {
                                     typography: 'monospace'
                                 }}
                             >
-                                {props.logs.lines.map(line => <LogLine key={line.timestamp} line={line.data} />)}
+                                {props.logs.lines.map(line => <LogLine key={line.timestamp.toString()} line={line.data} />)}
                             </Box>
                         </Paper>
                     </Grid>

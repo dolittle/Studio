@@ -125,7 +125,7 @@ export type QueryRequest = CommonQueryRequestProperties & {
     /**
      * The evaluation time for the query as a nanosecond Unix epoch. Defaults to now.
      */
-    time?: number;
+    time?: bigint;
 };
 
 /**
@@ -145,12 +145,12 @@ export type QueryRangeRequest = CommonQueryRequestProperties & {
     /**
      * The start time for the query as a nanosecond Unix epoch. Defaults to one hour ago.
      */
-    start?: number;
+    start?: bigint;
 
     /**
      * The end time for the query as a nanosecond Unix epoch. Defaults to now.
      */
-    end?: number;
+    end?: bigint;
 
     /**
      * Query resolution step width in duration format or float number of seconds.
@@ -180,7 +180,7 @@ export type TailRequest = CommonRequestProperties & {
     /**
      * The start time for the query as a nanosecond Unix epoch. Defaults to one hour ago.
      */
-    start?: number;
+    start?: bigint;
 
     /**
      *  The number of seconds to delay retrieving logs to let slow loggers catch up. Defaults to 0 and cannot be larger than 5.

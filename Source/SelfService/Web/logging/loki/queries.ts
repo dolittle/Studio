@@ -23,7 +23,7 @@ export const labelsAndPipelineToLogQL = (labels: DataLabels, pipeline: string[])
 export const buildRequestQuerystring = (request: QueryRequest | QueryRangeRequest): string =>
     Object.entries(request)
         .filter(entry => entry[1] !== undefined)
-        .map(entry => `${encodeURIComponent(entry[0])}=${encodeURIComponent(entry[1])}`)
+        .map(entry => `${encodeURIComponent(entry[0])}=${encodeURIComponent(entry[1].toString())}`)
         .join('&');
 
 const fetchFromLokiEnsuringJson = async (path: string, request: QueryRequest | QueryRangeRequest): Promise<any> => {
