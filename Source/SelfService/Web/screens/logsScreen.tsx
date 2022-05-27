@@ -58,7 +58,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
 
     const labels = { job: 'microservice', application_id: currentApplicationId, environment: currentEnvironment };
     const pipeline = logFilterToPipeline(filters);
-    const logs = useLogsFromLast(86400 * 1e9, true, labels, pipeline, 1000, parseLogLine);
+    const logs = useLogsFromLast(86_400n * 1_000_000_000n, true, labels, pipeline, 1000, parseLogLine);
 
 
     useEffect(() => {

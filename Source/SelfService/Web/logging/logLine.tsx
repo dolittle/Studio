@@ -73,8 +73,12 @@ export type LogLineProps = {
 };
 
 export const LogLine = (props: LogLineProps) => {
+    // TODO: The tab-width is dependent on styling. How do we make sure we don't change this?
+    const leadingWhitespace = props.line.leading.spaces + props.line.leading.tabs * 8;
+    const leadingEmSpace = `${leadingWhitespace * 0.6}em`;
+
     return (
-        <Box>
+        <Box style={{ paddingLeft: leadingEmSpace, textIndent: `-${leadingEmSpace}` }}>
             {props.line.sections.map((section, i) => (
                 <span key={i} /*style={coloredLineSectionCss(section)}*/>{section.text}</span>
             ))}

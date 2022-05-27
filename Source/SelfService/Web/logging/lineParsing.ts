@@ -18,6 +18,10 @@ export type ColoredLineSection = SectionStyle & {
 
 export type ColoredLine = {
     sections: ColoredLineSection[];
+    leading: {
+        spaces: number;
+        tabs: number;
+    };
 };
 
 const setSectionCsiSgrStyle = (style: SectionStyle, parameters: string): void => {
@@ -145,7 +149,6 @@ const seekPlainText = (raw: string, position: number): number => {
     return consumed;
 };
 
-
 const setSectionStyleFromEscapeSequence = (style: SectionStyle, sequence: string): void => {
     if (sequence.charCodeAt(0) === 0x1B && sequence.charCodeAt(1) === 0x5B) {
         // Control Sequence Introducer sequence
@@ -158,12 +161,33 @@ const setSectionStyleFromEscapeSequence = (style: SectionStyle, sequence: string
     }
 };
 
+const countLeadingSpacesAndTabs = (raw: string): [number, number] => {
+    let spaces = 0, tabs = 0;
+
+    loop: for (let i = 0; i < raw.length; i++) {
+        switch (raw.charCodeAt(i)) {
+            case 0x20:
+                spaces++;
+                break;
+            case 0x09:
+                tabs++;
+                break;
+            default:
+                break loop;
+        }
+    }
+
+    return [spaces, tabs];
+};
+
 export const parseLogLine = (line: LogLine): ColoredLine => {
     const sections: ColoredLineSection[] = [];
 
     const raw = line.line, N = raw.length, currentStyle: SectionStyle = {};
-    let i = 0;
 
+    const [spaces, tabs] = countLeadingSpacesAndTabs(raw);
+
+    let i = 0;
     while (i < N) {
         const textCharacters = seekPlainText(raw, i);
         if (textCharacters > 0) {
@@ -182,5 +206,5 @@ export const parseLogLine = (line: LogLine): ColoredLine => {
         break;
     }
 
-    return { sections };
+    return { sections, leading: { spaces, tabs } };
 };
