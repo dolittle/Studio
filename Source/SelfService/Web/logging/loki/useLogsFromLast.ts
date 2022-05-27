@@ -23,19 +23,6 @@ const tailAfterLastReceivedLine = <T>(query: QueryRangeRequest, lines: Transform
     return tail({ query: query.query, start: lastReceivedTime + 1n, limit: query.limit });
 };
 
-const ensureUniqueTimestamps = <T>(lines: TransformedLogLine<T>[]): void => {
-    // TODO: We probably want to be smarter here if there are logs from different streams with the same timestamp
-    let i = 1;
-    while (i < lines.length) {
-        if (lines[i - 1].timestamp === lines[i].timestamp) {
-            lines.splice(i, 1);
-            continue;
-        }
-
-        i++;
-    }
-};
-
 // TODO: Does it even make sense to allow querying forward when useLogsFromLast?
 // With the streaming implementation now, it will attempt to retrieve any skipped logs using the tail request.
 // We might want to hardcode the Loki request to be backward (fetch the newest logs) - fix the limit - and just report that there are more logs we didn't retrieve.
@@ -108,9 +95,6 @@ export const useLogsFromLast = <T>(last: bigint, newestFirst: boolean, labels: D
                         return 0;
                     }
                 })),
-
-                tap(ensureUniqueTimestamps),
-
                 map((lines): ObservableLogLines<T> => ({ loading: false, failed: false, lines })),
                 startWith<ObservableLogLines<T>>({ loading: true, failed: false, lines: [] }),
             )),
