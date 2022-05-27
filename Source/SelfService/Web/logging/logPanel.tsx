@@ -1,8 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
-import { Alert, AlertTitle, Box, Grid, Link, Paper } from '@mui/material';
+import React, { useState } from 'react';
+import { Alert, AlertTitle, Box, Divider, FormControlLabel, FormGroup, Grid, Link, Paper, Switch } from '@mui/material';
 
 import { ObservableLogLines } from './loki/logLines';
 
@@ -18,12 +18,19 @@ export type LogPanelProps = {
      * The retrieved logs to render.
      */
     logs: ObservableLogLines<ColoredLine>;
+
+    /**
+     * The title to render on the top of the panel.
+     */
+    title: React.ReactNode;
 };
 
 /**
  * A component that renders {@link ObservableLogLines} in a log panel.
  */
 export const LogPanel = (props: LogPanelProps) => {
+    const [showTimestamp, setShowTimestamp] = useState(false);
+
     return (
         <Grid container spacing={2} sx={{ pt: 2 }}>
             {props.logs.failed
@@ -46,15 +53,40 @@ export const LogPanel = (props: LogPanelProps) => {
                     :
                     <Grid item xs={12}>
                         <Paper elevation={1} sx={{ p: 2 }}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} md={10}>{props.title}</Grid>
+                                <Grid item xs={12} md={1}>
+                                    <FormGroup>
+                                        <FormControlLabel
+                                            label='Timestamp'
+                                            control={<Switch
+                                                checked={showTimestamp}
+                                                onChange={(event) => setShowTimestamp(event.target.checked)}
+                                            />}
+                                        />
+                                    </FormGroup>
+                                </Grid>
+                            </Grid>
+                            <Divider sx={{ borderColor: 'background.paper', m: 1 }} />
                             <Box
                                 component='pre'
                                 sx={{
-                                    m: 0,
-                                    whiteSpace: 'pre-wrap',
-                                    typography: 'monospace'
+                                    'm': 0,
+                                    'whiteSpace': 'pre-wrap',
+                                    'typography': 'monospace',
+                                    '&.hide-timestamp div.log-line-timestamp': {
+                                        display: 'none',
+                                    },
                                 }}
+                                className={showTimestamp ? '' : 'hide-timestamp'}
                             >
-                                {props.logs.lines.map(line => <LogLine key={line.timestamp.toString()} line={line.data} />)}
+                                {props.logs.lines.map(line =>
+                                    <LogLine
+                                        key={line.timestamp.toString()}
+                                        timestamp={line.timestamp}
+                                        line={line.data}
+                                    />
+                                )}
                             </Box>
                         </Paper>
                     </Grid>

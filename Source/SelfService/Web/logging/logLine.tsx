@@ -1,8 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Box } from '@mui/material';
 import React from 'react';
+import { Box } from '@mui/material';
 
 import { ColoredLine, ColoredLineSection, TerminalColor } from './lineParsing';
 
@@ -69,7 +69,19 @@ const coloredLineSectionCss = (section: ColoredLineSection): React.CSSProperties
 };
 
 export type LogLineProps = {
+    timestamp: bigint;
     line: ColoredLine;
+};
+
+const formatTimestamp = (timestamp: bigint): string => {
+    const date = new Date(Number(timestamp / 1_000_000n));
+    return `${date.getFullYear()
+        }-${(date.getMonth() + 1).toString().padStart(2, '0')
+        }-${date.getDate().toString().padStart(2, '0')
+        } ${date.getHours().toString().padStart(2, '0')
+        }:${date.getMinutes().toString().padStart(2, '0')
+        }:${date.getSeconds().toString().padStart(2, '0')
+        }`;
 };
 
 export const LogLine = (props: LogLineProps) => {
@@ -78,10 +90,17 @@ export const LogLine = (props: LogLineProps) => {
     const leadingEmSpace = `${leadingWhitespace * 0.6}em`;
 
     return (
-        <Box style={{ paddingLeft: leadingEmSpace, textIndent: `-${leadingEmSpace}` }}>
-            {props.line.sections.map((section, i) => (
-                <span key={i} /*style={coloredLineSectionCss(section)}*/>{section.text}</span>
-            ))}
+        <Box>
+            <Box className='log-line-timestamp' sx={{ display: 'table-cell', whiteSpace: 'nowrap', pr: 2 }}>
+                {formatTimestamp(props.timestamp)}
+            </Box>
+            <Box
+                sx={{ display: 'table-cell' }}
+                style={leadingWhitespace > 0 ? { paddingLeft: leadingEmSpace, textIndent: `-${leadingEmSpace}` } : undefined}>
+                {props.line.sections.map((section, i) => (
+                    <span key={i} /*style={coloredLineSectionCss(section)}*/>{section.text}</span>
+                ))}
+            </Box>
         </Box>
     );
 };

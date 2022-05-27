@@ -141,8 +141,11 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
                     mt={3}
                 >
                     <LogFilterPanel microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
-                    <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>Displaying logs for {application.name} Application, {currentEnvironment} Environment</Typography>
-                    <LogPanel logs={logs} />
+                    <LogPanel
+                        logs={logs}
+                        title={
+                            <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>Displaying <b>live logs</b> for {application.name} Application, {currentEnvironment} Environment</Typography>
+                        } />
                 </Box>
             </Box>
         </LayoutWithSidebar >

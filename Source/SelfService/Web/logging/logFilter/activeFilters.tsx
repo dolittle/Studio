@@ -48,7 +48,7 @@ export const ActiveFilters = (props: ActiveFiltersProps) => {
             )}
             <Typography variant='body1' component='span' sx={{ mx: 2 }}>|</Typography>
             <Chip
-                label='Last 24 hours'
+                label='Live logs'
                 color='primary'
                 size='small'
             />
