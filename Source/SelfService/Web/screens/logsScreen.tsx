@@ -145,7 +145,8 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
                         logs={logs}
                         title={
                             <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>Displaying <b>live logs</b> for {application.name} Application, {currentEnvironment} Environment</Typography>
-                        } />
+                        }
+                        enableShowLineContextButton={filters.searchTerms.length > 0} />
                 </Box>
             </Box>
         </LayoutWithSidebar >

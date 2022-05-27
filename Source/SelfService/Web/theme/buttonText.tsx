@@ -17,6 +17,7 @@ type Props = {
     startIcon?: React.ReactNode;
     className?: any;
     size?: 'small' | 'medium' | 'large';
+    sx?: SxProps;
 };
 
 const defaultOnClick = (event: React.MouseEvent<HTMLElement>) => { };
@@ -69,7 +70,7 @@ const styles = {
     } as SxProps,
 };
 
-export const ButtonText: React.FunctionComponent<Props> = (props) => {
+export const ButtonText = (props: Props) => {
     const _props = props!;
     const children = _props.children;
     const onClick = _props.onClick ?? defaultOnClick;
@@ -83,7 +84,7 @@ export const ButtonText: React.FunctionComponent<Props> = (props) => {
 
     return (
         <MuiButton
-            sx={{ ...styles.base, ...buttonTypeStyles } as SxProps}
+            sx={{ ...styles.base, ...buttonTypeStyles, ...props.sx } as SxProps}
             disableRipple={true}
             disabled={disabled}
             startIcon={startIcon}

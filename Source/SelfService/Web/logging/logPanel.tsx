@@ -8,6 +8,7 @@ import { ObservableLogLines } from './loki/logLines';
 
 import { ColoredLine } from './lineParsing';
 import { LogLine } from './logLine';
+import { DataLabels } from './loki/types';
 
 
 /**
@@ -23,6 +24,11 @@ export type LogPanelProps = {
      * The title to render on the top of the panel.
      */
     title: React.ReactNode;
+
+    /**
+     * Whether or not to show the 'Show log line context' button.
+     */
+    enableShowLineContextButton: boolean;
 };
 
 /**
@@ -30,6 +36,10 @@ export type LogPanelProps = {
  */
 export const LogPanel = (props: LogPanelProps) => {
     const [showTimestamp, setShowTimestamp] = useState(false);
+
+    const handleOnClickShowLineContext = (timestamp: bigint, labels: DataLabels) => {
+        alert(`Show context for ${JSON.stringify(labels)} around ${timestamp}`);
+    };
 
     return (
         <Grid container spacing={2} sx={{ pt: 2 }}>
@@ -84,7 +94,10 @@ export const LogPanel = (props: LogPanelProps) => {
                                     <LogLine
                                         key={line.timestamp.toString()}
                                         timestamp={line.timestamp}
+                                        labels={line.labels}
                                         line={line.data}
+                                        enableShowLineContextButton={props.enableShowLineContextButton}
+                                        onClickShowLineContext={handleOnClickShowLineContext}
                                     />
                                 )}
                             </Box>

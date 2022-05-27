@@ -5,6 +5,8 @@ import React from 'react';
 import { Box } from '@mui/material';
 
 import { ColoredLine, ColoredLineSection, TerminalColor } from './lineParsing';
+import { ButtonText } from '../theme/buttonText';
+import { DataLabels } from './loki/types';
 
 
 const coloredLineSectionCss = (section: ColoredLineSection): React.CSSProperties => {
@@ -70,7 +72,10 @@ const coloredLineSectionCss = (section: ColoredLineSection): React.CSSProperties
 
 export type LogLineProps = {
     timestamp: bigint;
+    labels: DataLabels;
     line: ColoredLine;
+    enableShowLineContextButton: boolean;
+    onClickShowLineContext: (timestamp: bigint, labels: DataLabels, event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 };
 
 const formatTimestamp = (timestamp: bigint): string => {
@@ -91,6 +96,17 @@ export const LogLine = (props: LogLineProps) => {
 
     return (
         <Box>
+            {
+                props.enableShowLineContextButton &&
+                <Box sx={{ display: 'table-cell', whiteSpace: 'nowrap', pr: 2 }}>
+                    <ButtonText
+                        size='small'
+                        buttonType='secondary'
+                        sx={{ p: 0 }}
+                        onClick={event => props.onClickShowLineContext(props.timestamp, props.labels, event)}
+                    >Show</ButtonText>
+                </Box>
+            }
             <Box className='log-line-timestamp' sx={{ display: 'table-cell', whiteSpace: 'nowrap', pr: 2 }}>
                 {formatTimestamp(props.timestamp)}
             </Box>
