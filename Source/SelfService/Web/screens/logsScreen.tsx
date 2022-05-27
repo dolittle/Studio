@@ -36,7 +36,7 @@ import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
 import { useLogsFromLast } from '../logging/loki/useLogsFromLast';
-import { LogFilterObject, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
+import { LogFilterMicroservice, LogFilterObject, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
 import { LogPanel } from '../logging/logPanel';
 import { parseLogLine } from '../logging/lineParsing';
 
@@ -56,7 +56,14 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
 
     const [filters, setFilters] = useState<LogFilterObject>({ searchTerms: [] });
 
-    const labels = { job: 'microservice', application_id: currentApplicationId, environment: currentEnvironment };
+    const labels = {
+        job: 'microservice',
+        application_id: currentApplicationId,
+        environment: currentEnvironment,
+        microservice_id: filters.microservice !== undefined && filters.microservice.length > 0
+            ? filters.microservice.map(_ => _.id)
+            : undefined,
+    };
     const pipeline = logFilterToPipeline(filters);
     const logs = useLogsFromLast(86_400n * 1_000_000_000n, true, labels, pipeline, 1000, parseLogLine);
 
@@ -118,6 +125,11 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
 
     const nav = getMenuWithApplication(history, application, currentEnvironment);
 
+    const availableMicroservices: LogFilterMicroservice[] = application.microservices.map(microservice => ({
+        id: microservice.dolittle.microserviceId,
+        name: microservice.name,
+    }));
+
     return (
         <LayoutWithSidebar navigation={nav}>
             <Box
@@ -128,7 +140,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
                 <Box
                     mt={3}
                 >
-                    <LogFilterPanel filters={filters} setSearchFilters={setFilters} />
+                    <LogFilterPanel microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
                     <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>Displaying logs for {application.name} Application, {currentEnvironment} Environment</Typography>
                     <LogPanel logs={logs} />
                 </Box>

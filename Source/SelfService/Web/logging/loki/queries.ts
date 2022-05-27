@@ -5,13 +5,27 @@ import { DataLabels, QueryRequest, QueryResponse, QueryRangeRequest, QueryRangeR
 import { FailedToFetchFromLoki } from './failedToFetchFromLoki';
 
 /**
+ * Represents a set of labels to query for.
+ */
+export type QueryLabels = {
+    [label: string]: string | string[] | undefined;
+};
+
+/**
  * Generates a LogQL query from a label selector an filtering pipeline.
  * @param labels The metric or stream labels to select.
  * @param pipeline The filtering pipeline to apply.
  * @returns The LogQL query string.
  */
-export const labelsAndPipelineToLogQL = (labels: DataLabels, pipeline: string[]): string => {
-    const selector = Object.entries(labels).map(entry => `${entry[0]}="${entry[1]}"`).join(',');
+export const labelsAndPipelineToLogQL = (labels: QueryLabels, pipeline: string[]): string => {
+    const selector = Object.entries(labels)
+        .filter(entry => entry[1] !== undefined)
+        .map(entry => Array.isArray(entry[1])
+            ? entry[1].length > 1
+                ? `${entry[0]}=~"${entry[1].join('|')}"`
+                : `${entry[0]}="${entry[1][0]}"`
+            : `${entry[0]}="${entry[1]}"`)
+        .join(',');
     return `{${selector}}${pipeline.join(' ')}`;
 };
 

@@ -6,8 +6,8 @@ import { of, from, Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, map, catchError, concatMap, startWith, scan, tap, switchMap } from 'rxjs/operators';
 
 import { LogLine, TransformedLogLine, ObservableLogLines } from './logLines';
-import { DataLabels, QueryRangeRequest, TailResponseMessage } from './types';
-import { labelsAndPipelineToLogQL, queryRange } from './queries';
+import { QueryRangeRequest, TailResponseMessage } from './types';
+import { labelsAndPipelineToLogQL, QueryLabels, queryRange } from './queries';
 import { tail } from './streaming';
 import { parseAndMergeAllStreams } from './parsing';
 
@@ -39,7 +39,7 @@ const tailAfterLastReceivedLine = <T>(query: QueryRangeRequest, lines: Transform
  * @param transform The transform to apply to add extra data to each logline before returning.
  * @returns An observable object of loglines with transformed extra data.
  */
-export const useLogsFromLast = <T>(last: bigint, newestFirst: boolean, labels: DataLabels, pipeline: string[], limit: number, transform: (line: LogLine) => T): ObservableLogLines<T> => {
+export const useLogsFromLast = <T>(last: bigint, newestFirst: boolean, labels: QueryLabels, pipeline: string[], limit: number, transform: (line: LogLine) => T): ObservableLogLines<T> => {
     const [result, setResult] = useState<ObservableLogLines<T>>({ loading: false, failed: false, lines: [] });
     const subject = useRef<Subject<Parameters>>();
 

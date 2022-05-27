@@ -5,6 +5,7 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import { ActiveFilters } from './activeFilters';
 import { SearchFilter } from './searchFilter';
+import { MicroserviceFilter } from './microserviceFilter';
 
 export type LogFilterDateRange = {
     start: number;
@@ -23,12 +24,12 @@ export type LogFilterObject = {
 
 
 export type LogFilterPanelProps = {
-    microservices?: LogFilterMicroservice[];
+    microservices: LogFilterMicroservice[];
     filters: LogFilterObject;
     setSearchFilters: (filter: LogFilterObject) => void;
 };
 
-export const LogFilterPanel = ({ filters, setSearchFilters }: LogFilterPanelProps) => {
+export const LogFilterPanel = ({ microservices, filters, setSearchFilters }: LogFilterPanelProps) => {
 
     const onUpdateFilters = (filters: LogFilterObject) => {
         setSearchFilters(filters);
@@ -41,11 +42,24 @@ export const LogFilterPanel = ({ filters, setSearchFilters }: LogFilterPanelProp
         });
     };
 
+    const onSelectMicroservices = (selection: LogFilterMicroservice[]) => {
+        setSearchFilters({
+            ...filters,
+            microservice: selection,
+        });
+    };
+
     return (
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
                     <SearchFilter onSearch={onSearched} />
+                </Grid>
+                <Grid item xs={2}>
+                    <MicroserviceFilter
+                        availableMicroservices={microservices}
+                        selectedMicroservices={filters.microservice}
+                        onSelectMicroservices={onSelectMicroservices} />
                 </Grid>
                 <Grid item xs={12}>
                     <ActiveFilters filters={filters} updateFilters={onUpdateFilters} />

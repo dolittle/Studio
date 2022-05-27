@@ -6,8 +6,7 @@ import { of, from as rxFrom, Observable, Subject, EMPTY } from 'rxjs';
 import { distinctUntilChanged, map, concatMap, startWith, scan, tap, take, switchMap, expand, catchError } from 'rxjs/operators';
 
 import { LogLine, TransformedLogLine, ObservablePartialLogLines } from './logLines';
-import { DataLabels } from './types';
-import { labelsAndPipelineToLogQL, queryRange } from './queries';
+import { labelsAndPipelineToLogQL, queryRange, QueryLabels } from './queries';
 import { parseAndMergeAllStreams } from './parsing';
 
 type Parameters = {
@@ -40,7 +39,7 @@ export type LoadMoreLinesIfAvailable = (limit: number) => void;
  * @param transform The transform to apply to add extra data to each logline before returning.
  * @returns An observable object of loglines with transformed extra data, and a function to call to load more lines if available.
  */
-export const useLogsFromRange = <T>(from: bigint, to: bigint, newestFirst: boolean, labels: DataLabels, pipeline: string[], limit: number, transform: (line: LogLine) => T): [ObservablePartialLogLines<T>, LoadMoreLinesIfAvailable] => {
+export const useLogsFromRange = <T>(from: bigint, to: bigint, newestFirst: boolean, labels: QueryLabels, pipeline: string[], limit: number, transform: (line: LogLine) => T): [ObservablePartialLogLines<T>, LoadMoreLinesIfAvailable] => {
     const [result, setResult] = useState<ObservablePartialLogLines<T>>({ loading: false, failed: false, lines: [], moreLinesAvailable: false });
     const subject = useRef<Subject<Parameters>>();
     const loadMoreSubject = useRef<Subject<number>>();
