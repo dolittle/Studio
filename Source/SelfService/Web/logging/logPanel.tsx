@@ -105,7 +105,7 @@ export const LogPanel = (props: LogPanelProps) => {
             ? 'all Microservices'
             : props.microservices?.length === 1
                 ? `${props.microservices?.[0].name} Microservice`
-                : `${props.microservices?.join(', ')} Microservices`;
+                : `${props.microservices?.map(_ => _.name).join(', ')} Microservices`;
 
     const title = <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>Displaying <b>{props.timespan}</b> for {props.application} Application, {props.environment} Environment, {microservices}</Typography>;
 
