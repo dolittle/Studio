@@ -14,7 +14,7 @@ export type ActiveFiltersProps = {
 export const ActiveFilters = (props: ActiveFiltersProps) => {
 
     const clearFilters = () => {
-        props.updateFilters({ searchTerms: [] });
+        props.updateFilters({ ...props.filters, searchTerms: [] });
     };
 
     const removeTerm = (term: string, index: number) => {

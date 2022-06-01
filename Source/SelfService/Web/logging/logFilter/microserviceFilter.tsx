@@ -49,6 +49,7 @@ export const MicroserviceFilter = (props: MicroserviceFilterProps) => {
             onChange={handleOnChange}
         >
             {props.availableMicroservices.map((microservice, i) => (
+                // TODO: Add checkboxes here
                 <MenuItem key={i} value={microservice.id}>{microservice.name}</MenuItem>
             ))}
         </Select>

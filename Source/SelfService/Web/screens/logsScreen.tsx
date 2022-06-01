@@ -37,6 +37,7 @@ import { HttpResponseApplication, getApplications, getApplication, HttpResponseA
 
 import { LogFilterMicroservice, LogFilterObject, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
 import { LogPanelRelative } from '../logging/logPanelRelative';
+import { LogPanelAbsolute } from '../logging/logPanelAbsolute';
 
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
@@ -48,7 +49,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 
-    const [filters, setFilters] = useState<LogFilterObject>({ searchTerms: [] });
+    const [filters, setFilters] = useState<LogFilterObject>({ dateRange: 'live', searchTerms: [] });
 
     useEffect(() => {
         if (!currentEnvironment || !currentApplicationId) {
@@ -115,14 +116,24 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
                 <Typography variant='h1'>Logs</Typography>
                 <Box mt={3}>
                     <LogFilterPanel microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
-                    <LogPanelRelative
-                        application={application.name}
-                        applicationId={currentApplicationId}
-                        environment={currentEnvironment}
-                        filters={filters}
-                        last={86_400n * 1_000_000_000n}
-                        showContextButtonInLines
-                    />
+                    {
+                        filters.dateRange === 'live'
+                            ? <LogPanelRelative
+                                application={application.name}
+                                applicationId={currentApplicationId}
+                                environment={currentEnvironment}
+                                filters={filters}
+                                last={86_400n * 1_000_000_000n}
+                                showContextButtonInLines />
+                            : <LogPanelAbsolute
+                                application={application.name}
+                                applicationId={currentApplicationId}
+                                environment={currentEnvironment}
+                                filters={filters}
+                                from={filters.dateRange.start}
+                                to={filters.dateRange.stop}
+                                showContextButtonInLines />
+                    }
                 </Box>
             </Box>
         </LayoutWithSidebar >

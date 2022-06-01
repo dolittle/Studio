@@ -78,6 +78,7 @@ export type LogLineProps = {
     onClickShowLineContext: (timestamp: bigint, labels: DataLabels, event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 };
 
+// TODO: Use DateFns for this
 const formatTimestamp = (timestamp: bigint): string => {
     const date = new Date(Number(timestamp / 1_000_000n));
     return `${date.getFullYear()
