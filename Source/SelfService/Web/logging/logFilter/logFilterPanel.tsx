@@ -1,8 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Grid } from '@mui/material';
+
 import { ActiveFilters } from './activeFilters';
 import { SearchFilter } from './searchFilter';
 import { MicroserviceFilter } from './microserviceFilter';
@@ -32,30 +33,30 @@ export type LogFilterPanelProps = {
 
 export const LogFilterPanel = ({ microservices, filters, setSearchFilters }: LogFilterPanelProps) => {
 
-    const onUpdateFilters = useCallback((filters: LogFilterObject) => {
+    const onUpdateFilters = (filters: LogFilterObject) => {
         setSearchFilters(filters);
-    }, [setSearchFilters]);
+    };
 
-    const onSearched = useCallback((query: string) => {
+    const onSearched = (query: string) => {
         setSearchFilters({
             ...filters,
             searchTerms: filters.searchTerms.concat(query)
         });
-    }, [setSearchFilters]);
+    };
 
-    const onSelectMicroservices = useCallback((selection: LogFilterMicroservice[]) => {
+    const onSelectMicroservices = (selection: LogFilterMicroservice[]) => {
         setSearchFilters({
             ...filters,
             microservice: selection,
         });
-    }, [setSearchFilters]);
+    };
 
-    const onSetDateRange = useCallback((range: LogFilterDateRange) => {
+    const onSetDateRange = (range: LogFilterDateRange) => {
         setSearchFilters({
             ...filters,
             dateRange: range,
         });
-    }, [setSearchFilters]);
+    };
 
     return (
         <>
