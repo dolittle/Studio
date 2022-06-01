@@ -111,16 +111,18 @@ export const LogPanel = (props: LogPanelProps) => {
                 <Paper elevation={1} sx={{ p: 2 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} md={10}>{title}</Grid>
-                        <Grid item xs={12} md={1}>
-                            <FormGroup>
-                                <FormControlLabel
-                                    label='Timestamp'
-                                    control={<Switch
-                                        checked={showTimestamp}
-                                        onChange={(event) => setShowTimestamp(event.target.checked)}
-                                    />}
-                                />
-                            </FormGroup>
+                        <Grid item xs={12} md={2}>
+                            <Box display='flex' justifyContent='flex-end'>
+                                <FormGroup>
+                                    <FormControlLabel
+                                        label='Timestamp'
+                                        control={<Switch
+                                            checked={showTimestamp}
+                                            onChange={(event) => setShowTimestamp(event.target.checked)}
+                                        />}
+                                    />
+                                </FormGroup>
+                            </Box>
                         </Grid>
                     </Grid>
                     <Divider sx={{ borderColor: 'background.paper', m: 1 }} />
