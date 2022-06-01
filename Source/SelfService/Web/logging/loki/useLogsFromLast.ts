@@ -70,13 +70,13 @@ export const useLogsFromLast = <T>(last: bigint, newestFirst: boolean, labels: Q
                 map(lines => lines.map(line => ({ ...line, data: transform(line) }))),
 
                 // TODO: Enable toggling of this tail stuff
-                // concatMap((lines) => tailAfterLastReceivedLine(query, lines).pipe(
-                //     map(message => parseAndMergeAllStreams(message.streams)),
-                //     map(lines => lines.map(line => ({ ...line, data: transform(line) }))),
-                //     scan((lastLines, newLines) => {
-                //         return lastLines.concat(newLines);
-                //     }, lines),
-                // )),
+                concatMap((lines) => tailAfterLastReceivedLine(query, lines).pipe(
+                    map(message => parseAndMergeAllStreams(message.streams)),
+                    map(lines => lines.map(line => ({ ...line, data: transform(line) }))),
+                    scan((lastLines, newLines) => {
+                        return lastLines.concat(newLines);
+                    }, lines),
+                )),
 
                 tap(lines => lines.sort((a, b) => {
                     if (query.direction === 'forward') {
