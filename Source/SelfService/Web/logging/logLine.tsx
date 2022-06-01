@@ -3,6 +3,8 @@
 
 import React from 'react';
 import { Box } from '@mui/material';
+import { format } from 'date-fns';
+import { nb } from 'date-fns/locale';
 
 import { ColoredLine, ColoredLineSection, TerminalColor } from './lineParsing';
 import { ButtonText } from '../theme/buttonText';
@@ -78,16 +80,9 @@ export type LogLineProps = {
     onClickShowLineContext: (timestamp: bigint, labels: DataLabels, event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 };
 
-// TODO: Use DateFns for this
 const formatTimestamp = (timestamp: bigint): string => {
     const date = new Date(Number(timestamp / 1_000_000n));
-    return `${date.getFullYear()
-        }-${(date.getMonth() + 1).toString().padStart(2, '0')
-        }-${date.getDate().toString().padStart(2, '0')
-        } ${date.getHours().toString().padStart(2, '0')
-        }:${date.getMinutes().toString().padStart(2, '0')
-        }:${date.getSeconds().toString().padStart(2, '0')
-        }`;
+    return format(date, '[yyyy-MM-dd HH:mm:ss]');
 };
 
 export const LogLine = (props: LogLineProps) => {
