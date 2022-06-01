@@ -54,6 +54,7 @@ export const LogPanelRelative = (props: LogPanelRelativeProps) => {
         application={props.application}
         environment={props.environment}
         microservices={props.filters.microservice}
+        timespan='live logs'
         logs={logs}
         enableShowLineContextButton={props.showContextButtonInLines}
     />;

@@ -49,6 +49,11 @@ export type LogPanelProps = {
     microservices?: LogFilterMicroservice[];
 
     /**
+     * The human readable description of what timespan the logs are displayed for.
+     */
+    timespan: string;
+
+    /**
      * The retrieved logs to render.
      */
     logs: ObservableLogLines<ColoredLine>;
@@ -95,7 +100,6 @@ export const LogPanel = (props: LogPanelProps) => {
         );
     }
 
-    // TODO: Change the title when live/range is displayed
     const microservices =
         props.microservices?.length ?? 0 === 0
             ? 'all Microservices'
@@ -103,7 +107,7 @@ export const LogPanel = (props: LogPanelProps) => {
                 ? `${props.microservices?.[0].name} Microservice`
                 : `${props.microservices?.join(', ')} Microservices`;
 
-    const title = <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>Displaying <b>live logs</b> for {props.application} Application, {props.environment} Environment, {microservices}</Typography>;
+    const title = <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>Displaying <b>{props.timespan}</b> for {props.application} Application, {props.environment} Environment, {microservices}</Typography>;
 
     return (
         <Grid container spacing={2} sx={{ pt: 2 }}>

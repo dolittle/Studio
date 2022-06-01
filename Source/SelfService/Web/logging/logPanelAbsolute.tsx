@@ -58,6 +58,7 @@ export const LogPanelAbsolute = (props: LogPanelAbsoluteProps) => {
         application={props.application}
         environment={props.environment}
         microservices={props.filters.microservice}
+        timespan='date range logs'
         logs={logs}
         enableShowLineContextButton={props.showContextButtonInLines}
     />;
