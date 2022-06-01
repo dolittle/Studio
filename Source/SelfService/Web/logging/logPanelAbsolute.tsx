@@ -43,7 +43,7 @@ export type LogPanelAbsoluteProps = {
     /**
      * Whether or not to display the 'SHOW' context button for each line.
      */
-    showContextButtonInLines: boolean;
+    showContextButtonInLines?: boolean;
 };
 
 export const LogPanelAbsolute = (props: LogPanelAbsoluteProps) => {

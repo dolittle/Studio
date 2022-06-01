@@ -56,7 +56,7 @@ export type LogPanelProps = {
     /**
      * Whether or not to show the 'Show log line context' button.
      */
-    enableShowLineContextButton: boolean;
+    enableShowLineContextButton?: boolean;
 };
 
 /**
@@ -138,7 +138,7 @@ export const LogPanel = (props: LogPanelProps) => {
                     >
                         <LogLines
                             lines={props.logs.lines}
-                            showContextButtonInLines={props.enableShowLineContextButton}
+                            showContextButtonInLines={props.enableShowLineContextButton ?? false}
                             onClickShowContextButton={handleOnClickShowLineContext}
                         />
                     </Box>

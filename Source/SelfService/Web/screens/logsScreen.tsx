@@ -124,7 +124,8 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
                                 environment={currentEnvironment}
                                 filters={filters}
                                 last={86_400n * 1_000_000_000n}
-                                showContextButtonInLines />
+                            // showContextButtonInLines
+                            />
                             : <LogPanelAbsolute
                                 application={application.name}
                                 applicationId={currentApplicationId}
@@ -132,7 +133,8 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
                                 filters={filters}
                                 from={filters.dateRange.start}
                                 to={filters.dateRange.stop}
-                                showContextButtonInLines />
+                            // showContextButtonInLines
+                            />
                     }
                 </Box>
             </Box>

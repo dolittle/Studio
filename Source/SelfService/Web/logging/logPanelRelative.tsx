@@ -39,7 +39,7 @@ export type LogPanelRelativeProps = {
     /**
      * Whether or not to display the 'SHOW' context button for each line.
      */
-    showContextButtonInLines: boolean;
+    showContextButtonInLines?: boolean;
 };
 
 export const LogPanelRelative = (props: LogPanelRelativeProps) => {
