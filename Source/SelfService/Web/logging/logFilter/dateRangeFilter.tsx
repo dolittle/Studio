@@ -2,12 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useEffect } from 'react';
-import { MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { Box, InputProps, MenuItem, SelectChangeEvent, TextField } from '@mui/material';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { nb } from 'date-fns/locale';
 
 import { LogFilterDateRange } from './logFilterPanel';
+import { FilterSelect } from './filterSelect';
 
 export type DateRangeFilterProps = {
     range: LogFilterDateRange;
@@ -93,33 +94,44 @@ export const DateRangeFilter = (props: DateRangeFilterProps) => {
         }
     };
 
+    const dateTimePickerInputProps: Partial<InputProps> = {
+        size: 'small',
+    };
+
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={nb}>
-            <Select
-                variant='standard'
+            <FilterSelect
                 value={selectValue}
                 onChange={handleOnChange}
             >
                 <MenuItem value='live'>Live logs</MenuItem>
-                <MenuItem value='daterange'>Date range</MenuItem>
-            </Select>
+                <MenuItem value='daterange'>Date range...</MenuItem>
+            </FilterSelect>
             {
                 props.range !== 'live' &&
                 <>
-                    <DateTimePicker
-                        renderInput={(props) => <TextField {...props} variant='outlined' label='Start' />}
-                        mask='__.__.____ __:__'
-                        value={startDate}
-                        onChange={handleOnStartDateChange}
-                        maxDateTime={stopDate === null ? undefined : stopDate}
-                    />
-                    <DateTimePicker
-                        renderInput={(props) => <TextField {...props} variant='outlined' label='End' />}
-                        mask='__.__.____ __:__'
-                        value={stopDate}
-                        onChange={handleOnStopDateChange}
-                        minDateTime={startDate === null ? undefined : startDate}
-                    />
+                    <Box component='span'>
+                        <DateTimePicker
+                            renderInput={(props) => <TextField {...props} variant='outlined' />}
+                            InputProps={dateTimePickerInputProps}
+                            label='Start'
+                            mask='__.__.____ __:__'
+                            value={startDate}
+                            onChange={handleOnStartDateChange}
+                            maxDateTime={stopDate === null ? undefined : stopDate}
+                        />
+                    </Box>
+                    <Box component='span'>
+                        <DateTimePicker
+                            renderInput={(props) => <TextField {...props} variant='outlined' />}
+                            InputProps={dateTimePickerInputProps}
+                            mask='__.__.____ __:__'
+                            label='End'
+                            value={stopDate}
+                            onChange={handleOnStopDateChange}
+                            minDateTime={startDate === null ? undefined : startDate}
+                        />
+                    </Box>
                 </>
             }
         </LocalizationProvider>

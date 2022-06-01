@@ -2,9 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { MenuItem, SelectChangeEvent } from '@mui/material';
 
 import { LogFilterMicroservice } from './logFilterPanel';
+import { FilterSelect } from './filterSelect';
 
 export type MicroserviceFilterProps = {
     availableMicroservices: LogFilterMicroservice[];
@@ -40,8 +41,7 @@ export const MicroserviceFilter = (props: MicroserviceFilterProps) => {
     };
 
     return (
-        <Select
-            variant='standard'
+        <FilterSelect
             multiple={true}
             displayEmpty
             value={selectedMicroserviceIds}
@@ -52,6 +52,6 @@ export const MicroserviceFilter = (props: MicroserviceFilterProps) => {
                 // TODO: Add checkboxes here
                 <MenuItem key={i} value={microservice.id}>{microservice.name}</MenuItem>
             ))}
-        </Select>
+        </FilterSelect>
     );
 };
