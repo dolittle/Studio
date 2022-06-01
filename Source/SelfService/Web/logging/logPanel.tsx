@@ -101,7 +101,7 @@ export const LogPanel = (props: LogPanelProps) => {
     }
 
     const microservices =
-        props.microservices?.length ?? 0 === 0
+        props.microservices === undefined || props.microservices?.length === 0
             ? 'all Microservices'
             : props.microservices?.length === 1
                 ? `${props.microservices?.[0].name} Microservice`
