@@ -1,3 +1,20 @@
+# [1.30.0] - 2022-6-2 [PR: #197](https://github.com/dolittle/Studio/pull/197)
+## Summary
+
+- Change the "Last 24 hours" into -> "Live logs" and enable streaming.
+- Move the _selection description_ into the title of the LogPanel.
+- Add `Timestamp` switch to the LogPanel, that turns on timestamps for each log line.
+- Fix indentation of wrapped lines, the wrapped lines will now be indented the same amount as the leading whitespace of the original line.
+- Enable "Date Range" selection to view logs from a absolute range (and implement the code to fetch logs from a range)
+- Add the Microservice selection multi select dropdown, and corresponding chips in the filters.
+
+To fix a bug with the math of nanosecond timestamps returned by Loki, I needed to use BigInts - which required an upgrade of the TypeScript target to ES2020. I believe this is OK now, and 90% reported by caniuse.com supports this feature.
+
+Hidden updates we will use later:
+- When using logs from range, internally there is a loadMoreLogs function returned that can be used to fetch the next N number of lines to display. This is intended to be used when viewing "Date Range" logs, and the user scrolls to the end (top or bottom) of the panel to view more logs. It also returns a boolean describing whether or not there are more logs to fetch.
+- The `SHOW` context button in log lines are also implemented, and will call a provided handler function with the correct labels and timestamp to show the context of the logs in question. It is hidden right now - but can be used to implement the context view, and then enable the button.
+
+
 # [1.29.1] - 2022-5-24 [PR: #196](https://github.com/dolittle/Studio/pull/196)
 ## Summary
 
