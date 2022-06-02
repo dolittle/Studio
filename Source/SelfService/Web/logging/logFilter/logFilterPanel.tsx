@@ -61,10 +61,10 @@ export const LogFilterPanel = ({ microservices, filters, setSearchFilters }: Log
     return (
         <>
             <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} lg={4}>
                     <SearchFilter onSearch={onSearched} />
                 </Grid>
-                <Grid item xs={12} md={6} sx={{ '& > *': { ml: 2 } }}>
+                <Grid item xs={12} lg={8} sx={{ '& > *': { ml: 2, py: 0.5 } }}>
                     <MicroserviceFilter
                         availableMicroservices={microservices}
                         selectedMicroservices={filters.microservice}

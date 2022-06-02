@@ -110,30 +110,37 @@ export const DateRangeFilter = (props: DateRangeFilterProps) => {
             {
                 props.range !== 'live' &&
                 <>
-                    <Box component='span'>
-                        <DateTimePicker
-                            renderInput={(props) => <TextField {...props} variant='outlined' />}
-                            InputProps={dateTimePickerInputProps}
-                            label='Start'
-                            mask='__.__.____ __:__'
-                            value={startDate}
-                            onChange={handleOnStartDateChange}
-                            maxDateTime={stopDate === null ? undefined : stopDate}
-                        />
-                    </Box>
-                    <Box component='span'>
-                        <DateTimePicker
-                            renderInput={(props) => <TextField {...props} variant='outlined' />}
-                            InputProps={dateTimePickerInputProps}
-                            mask='__.__.____ __:__'
-                            label='End'
-                            value={stopDate}
-                            onChange={handleOnStopDateChange}
-                            minDateTime={startDate === null ? undefined : startDate}
-                        />
+                    <Box component='span'
+                        sx={{
+                            display: 'inline-block',
+                            verticalAlign: 'top'
+                        }}
+                    >
+                        <Box component='span' mr={1}>
+                            <DateTimePicker
+                                renderInput={(props) => <TextField {...props} variant='outlined' />}
+                                InputProps={dateTimePickerInputProps}
+                                label='Start'
+                                mask='__.__.____ __:__'
+                                value={startDate}
+                                onChange={handleOnStartDateChange}
+                                maxDateTime={stopDate === null ? undefined : stopDate}
+                            />
+                        </Box>
+                        <Box component='span'>
+                            <DateTimePicker
+                                renderInput={(props) => <TextField {...props} variant='outlined' />}
+                                InputProps={dateTimePickerInputProps}
+                                mask='__.__.____ __:__'
+                                label='End'
+                                value={stopDate}
+                                onChange={handleOnStopDateChange}
+                                minDateTime={startDate === null ? undefined : startDate}
+                            />
+                        </Box>
                     </Box>
                 </>
             }
-        </LocalizationProvider>
+        </LocalizationProvider >
     );
 };
