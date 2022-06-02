@@ -17,7 +17,7 @@ export const parseAndMergeAllStreams = (streams: { stream: DataLabels, values: [
         for (const line of stream.values) {
             lines.push({
                 labels: stream.stream,
-                timestamp: parseInt(line[0]),
+                timestamp: BigInt(line[0]),
                 line: line[1],
             });
         }

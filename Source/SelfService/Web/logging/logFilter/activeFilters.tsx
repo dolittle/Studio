@@ -4,7 +4,7 @@
 import { Chip, Typography } from '@mui/material';
 import React from 'react';
 import { ButtonText } from '../../theme/buttonText';
-import { LogFilterObject } from './logFilterPanel';
+import { LogFilterMicroservice, LogFilterObject } from './logFilterPanel';
 
 export type ActiveFiltersProps = {
     filters: LogFilterObject;
@@ -14,7 +14,7 @@ export type ActiveFiltersProps = {
 export const ActiveFilters = (props: ActiveFiltersProps) => {
 
     const clearFilters = () => {
-        props.updateFilters({ searchTerms: [] });
+        props.updateFilters({ ...props.filters, searchTerms: [] });
     };
 
     const removeTerm = (term: string, index: number) => {
@@ -23,6 +23,17 @@ export const ActiveFilters = (props: ActiveFiltersProps) => {
         props.updateFilters({
             ...props.filters,
             searchTerms: terms
+        });
+    };
+
+    const removeMicroservice = (microservice: LogFilterMicroservice, index: number) => {
+        if (props.filters.microservice === undefined) return;
+
+        const microservices = [...props.filters.microservice];
+        microservices.splice(index, 1);
+        props.updateFilters({
+            ...props.filters,
+            microservice: microservices
         });
     };
 
@@ -38,17 +49,27 @@ export const ActiveFilters = (props: ActiveFiltersProps) => {
             </ButtonText>
             {props.filters.searchTerms.map((s, index) =>
                 <Chip
-                    key={index.toString()}
+                    key={index}
                     label={`"${s}"`}
-                    onDelete={() => { removeTerm(s, index); }}
+                    onDelete={() => removeTerm(s, index)}
                     color='primary'
                     size='small'
                     sx={{ ml: 1 }}
                 />
             )}
             <Typography variant='body1' component='span' sx={{ mx: 2 }}>|</Typography>
+            {props.filters.microservice?.map((microservice, index) =>
+                <Chip
+                    key={index}
+                    label={microservice.name}
+                    onDelete={() => removeMicroservice(microservice, index)}
+                    color='primary'
+                    size='small'
+                    sx={{ mr: 1 }}
+                />
+            )}
             <Chip
-                label='Last 24 hours'
+                label={props.filters.dateRange === 'live' ? 'Live logs' : 'Date range'}
                 color='primary'
                 size='small'
             />

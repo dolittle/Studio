@@ -35,14 +35,9 @@ import {
 import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
-import { useLogsFromLast } from '../logging/loki/useLogsFromLast';
-import { LogFilterObject, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
-import { LogPanel } from '../logging/logPanel';
-import { parseLogLine } from '../logging/lineParsing';
-
-const logFilterToPipeline = (filter: LogFilterObject): string[] => {
-    return filter.searchTerms.map(term => `|= "${term}"`);
-};
+import { LogFilterMicroservice, LogFilterObject, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
+import { LogPanelRelative } from '../logging/logPanelRelative';
+import { LogPanelAbsolute } from '../logging/logPanelAbsolute';
 
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
@@ -54,12 +49,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 
-    const [filters, setFilters] = useState<LogFilterObject>({ searchTerms: [] });
-
-    const labels = { job: 'microservice', application_id: currentApplicationId, environment: currentEnvironment };
-    const pipeline = logFilterToPipeline(filters);
-    const logs = useLogsFromLast(86400 * 1e9, true, labels, pipeline, 1000, parseLogLine);
-
+    const [filters, setFilters] = useState<LogFilterObject>({ dateRange: 'live', searchTerms: [] });
 
     useEffect(() => {
         if (!currentEnvironment || !currentApplicationId) {
@@ -99,11 +89,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
     }
 
     if (application.id === '') {
-        return (
-            <>
-                <Typography variant='h1' my={2}>Application with this environment not found</Typography>
-            </>
-        );
+        return <Typography variant='h1' my={2}>Application with this environment not found</Typography>;
     }
 
     if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
@@ -118,19 +104,38 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
 
     const nav = getMenuWithApplication(history, application, currentEnvironment);
 
+    const availableMicroservices: LogFilterMicroservice[] = application.microservices.map(microservice => ({
+        id: microservice.dolittle.microserviceId,
+        name: microservice.name,
+    }));
+
     return (
         <LayoutWithSidebar navigation={nav}>
-            <Box
-                px={{ xs: 1, md: 3 }}
-            >
+            <Box px={{ xs: 1, md: 3 }}>
                 <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
                 <Typography variant='h1'>Logs</Typography>
-                <Box
-                    mt={3}
-                >
-                    <LogFilterPanel filters={filters} setSearchFilters={setFilters} />
-                    <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>Displaying logs for {application.name} Application, {currentEnvironment} Environment</Typography>
-                    <LogPanel logs={logs} />
+                <Box mt={3}>
+                    <LogFilterPanel microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
+                    {
+                        filters.dateRange === 'live'
+                            ? <LogPanelRelative
+                                application={application.name}
+                                applicationId={currentApplicationId}
+                                environment={currentEnvironment}
+                                filters={filters}
+                                last={86_400n * 1_000_000_000n}
+                            // showContextButtonInLines
+                            />
+                            : <LogPanelAbsolute
+                                application={application.name}
+                                applicationId={currentApplicationId}
+                                environment={currentEnvironment}
+                                filters={filters}
+                                from={filters.dateRange.start}
+                                to={filters.dateRange.stop}
+                            // showContextButtonInLines
+                            />
+                    }
                 </Box>
             </Box>
         </LayoutWithSidebar >

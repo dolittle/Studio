@@ -2,20 +2,27 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { useEffect, useRef, useState } from 'react';
-import { from as rxFrom, Observable, Subject } from 'rxjs';
-import { distinctUntilChanged, map, concatMap, startWith, scan, tap, switchMap } from 'rxjs/operators';
+import { of, from as rxFrom, Observable, Subject, EMPTY } from 'rxjs';
+import { distinctUntilChanged, map, concatMap, startWith, scan, tap, take, switchMap, expand, catchError } from 'rxjs/operators';
 
 import { LogLine, TransformedLogLine, ObservablePartialLogLines } from './logLines';
-import { DataLabels, QueryRangeRequest } from './types';
-import { labelsAndPipelineToLogQL, queryRange } from './queries';
+import { labelsAndPipelineToLogQL, queryRange, QueryLabels } from './queries';
 import { parseAndMergeAllStreams } from './parsing';
 
 type Parameters = {
     query: string;
-    from: number;
-    to: number;
+    from: bigint;
+    to: bigint;
     newestFirst: boolean;
     limit: number;
+};
+
+type State<T> = {
+    initialFetch: boolean;
+    parameters: Parameters;
+    loading: boolean;
+    lines: TransformedLogLine<T>[];
+    moreLinesAvailable: boolean;
 };
 
 export type LoadMoreLinesIfAvailable = (limit: number) => void;
@@ -32,67 +39,111 @@ export type LoadMoreLinesIfAvailable = (limit: number) => void;
  * @param transform The transform to apply to add extra data to each logline before returning.
  * @returns An observable object of loglines with transformed extra data, and a function to call to load more lines if available.
  */
-export const useLogsFromRange = <T>(from: number, to: number, newestFirst: boolean, labels: DataLabels, pipeline: string[], limit: number, transform: (line: LogLine) => T): [ObservablePartialLogLines<T>, LoadMoreLinesIfAvailable] => {
+export const useLogsFromRange = <T>(from: bigint, to: bigint, newestFirst: boolean, labels: QueryLabels, pipeline: string[], limit: number, transform: (line: LogLine) => T): [ObservablePartialLogLines<T>, LoadMoreLinesIfAvailable] => {
     const [result, setResult] = useState<ObservablePartialLogLines<T>>({ loading: false, failed: false, lines: [], moreLinesAvailable: false });
     const subject = useRef<Subject<Parameters>>();
     const loadMoreSubject = useRef<Subject<number>>();
 
-    // useEffect(() => {
-    //     const s = subject.current = new Subject();
-    //     const loadMore = loadMoreSubject.current = new Subject();
+    useEffect(() => {
+        const s = subject.current = new Subject();
+        const loadMore = loadMoreSubject.current = new Subject();
 
-    //     const incomingQueries = s.pipe(
-    //         distinctUntilChanged((p, c) => p.limit === c.limit && p.newestFirst === c.newestFirst && p.from === c.from && p.to === c.to && p.query === c.query),
-    //     );
+        const queries = s.pipe(
+            distinctUntilChanged((p, c) => p.limit === c.limit && p.newestFirst === c.newestFirst && p.from === c.from && p.to === c.to && p.query === c.query),
+        );
 
-    //     const queries = incomingQueries.pipe(
-    //         map((p): QueryRangeRequest => {
-    //             const { query, from, to, newestFirst, limit } = p;
+        const fetches = queries.pipe(
+            switchMap(parameters => {
+                const initialState: State<T> = { initialFetch: true, loading: false, parameters, lines: [], moreLinesAvailable: false };
 
-    //             const direction = newestFirst ? 'backward' : 'forward';
+                return of(initialState).pipe(
+                    expand(state => {
+                        if (state.loading || (!state.initialFetch && !state.moreLinesAvailable)) {
+                            return EMPTY;
+                        }
 
-    //             return { query, start: from, end: to, direction, limit };
-    //         })
-    //     );
+                        const next: Observable<State<T>> = state.initialFetch
+                            ? of(state)
+                            : loadMore.pipe(take(1), map(limit => {
+                                const parameters = { ...state.parameters, limit };
+                                return { ...state, parameters };
+                            }));
 
-    //     const fetches = queries.pipe(
-    //         switchMap(query => rxFrom(queryRange(query)).pipe(
-    //             map((response): LogLine[] => {
-    //                 if (response.data.resultType === 'streams') {
-    //                     return parseAndMergeAllStreams(response.data.result);
-    //                 }
-    //                 return [];
-    //             }),
-    //             map(lines => lines.map(line => ({ ...line, data: transform(line) }))),
-    //             tap(lines => lines.sort((a, b) => {
-    //                 if (query.direction === 'forward') {
-    //                     return a.timestamp - b.timestamp;
-    //                 }
-    //                 return b.timestamp - a.timestamp;
-    //             })),
+                        return next.pipe(
+                            concatMap(state => rxFrom(queryRange({
+                                query: state.parameters.query,
+                                start: state.parameters.from,
+                                end: state.parameters.to,
+                                direction: state.parameters.newestFirst ? 'backward' : 'forward',
+                                limit: state.parameters.limit,
+                            }))
+                                .pipe(
+                                    map((response): LogLine[] => {
+                                        if (response.data.resultType === 'streams') {
+                                            return parseAndMergeAllStreams(response.data.result);
+                                        }
+                                        return [];
+                                    }),
+                                    map(lines => lines.map(line => ({ ...line, data: transform(line) }))),
+                                    tap(lines => lines.sort((a, b) => {
+                                        if (!state.parameters.newestFirst) {
+                                            if (a.timestamp > b.timestamp) {
+                                                return 1;
+                                            } else if (a.timestamp < b.timestamp) {
+                                                return -1;
+                                            }
+                                            return 0;
+                                        } else {
+                                            if (a.timestamp < b.timestamp) {
+                                                return 1;
+                                            } else if (a.timestamp > b.timestamp) {
+                                                return -1;
+                                            }
+                                            return 0;
+                                        }
+                                    })),
+                                    map((lines): State<T> => {
+                                        const parameters = { ...state.parameters };
+                                        let fetchedLines = state.lines;
 
-    //             map((lines): ObservablePartialLogLines<T> => ({ loading: false, lines, moreLinesAvailable: false })),
-    //             startWith<ObservablePartialLogLines<T>>({ loading: true, lines: [], moreLinesAvailable: false }),
-    //         )),
-    //         tap(value => {
-    //             console.log('NEXT', value);
-    //         })
-    //     );
+                                        if (lines.length > 0) {
+                                            const endOfLinesTimestamp = lines[lines.length - 1].timestamp;
 
-    //     loadMore.subscribe({
-    //         next: (limit) => console.log('Load', limit, 'more logs'),
-    //     });
+                                            if (state.parameters.newestFirst) {
+                                                parameters.to = endOfLinesTimestamp - 1n;
+                                                fetchedLines = state.lines.concat(lines);
+                                            } else {
+                                                parameters.from = endOfLinesTimestamp + 1n;
+                                                fetchedLines = lines.concat(state.lines);
+                                            }
+                                        }
 
-    //     const subscription = fetches.subscribe(setResult);
-    //     return () => subscription.unsubscribe();
-    // }, []);
+                                        const moreLinesAvailable =
+                                            state.parameters.limit === lines.length &&
+                                            parameters.from < parameters.to;
 
-    // useEffect(() => {
-    //     if (subject.current === undefined) return;
+                                        return { initialFetch: false, loading: false, parameters, lines: fetchedLines, moreLinesAvailable };
+                                    }),
+                                    startWith<State<T>>({ initialFetch: false, loading: true, parameters: state.parameters, lines: state.lines, moreLinesAvailable: false }),
+                                )),
+                        );
+                    }, 1),
+                    map(({ loading, lines, moreLinesAvailable }): ObservablePartialLogLines<T> => ({ loading, failed: false, lines, moreLinesAvailable })),
+                );
+            }),
+            catchError(error => of({ loading: false, failed: true, error, lines: [], moreLinesAvailable: false })),
+        );
 
-    //     subject.current.next({ query: labelsAndPipelineToLogQL(labels, pipeline), from, to, newestFirst, limit });
+        const subscription = fetches.subscribe(setResult);
+        return () => subscription.unsubscribe();
+    }, []);
 
-    // }, [subject.current, from, to, newestFirst, labels, pipeline, limit]);
+    useEffect(() => {
+        if (subject.current === undefined) return;
+
+        subject.current.next({ query: labelsAndPipelineToLogQL(labels, pipeline), from, to, newestFirst, limit });
+
+    }, [subject.current, from, to, newestFirst, labels, pipeline, limit]);
 
     return [
         result,

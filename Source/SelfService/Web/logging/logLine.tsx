@@ -1,10 +1,14 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Box } from '@mui/material';
 import React from 'react';
+import { Box } from '@mui/material';
+import { format } from 'date-fns';
+import { nb } from 'date-fns/locale';
 
 import { ColoredLine, ColoredLineSection, TerminalColor } from './lineParsing';
+import { ButtonText } from '../theme/buttonText';
+import { DataLabels } from './loki/types';
 
 
 const coloredLineSectionCss = (section: ColoredLineSection): React.CSSProperties => {
@@ -69,15 +73,46 @@ const coloredLineSectionCss = (section: ColoredLineSection): React.CSSProperties
 };
 
 export type LogLineProps = {
+    timestamp: bigint;
+    labels: DataLabels;
     line: ColoredLine;
+    enableShowLineContextButton: boolean;
+    onClickShowLineContext: (timestamp: bigint, labels: DataLabels, event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+};
+
+const formatTimestamp = (timestamp: bigint): string => {
+    const date = new Date(Number(timestamp / 1_000_000n));
+    return format(date, '[yyyy-MM-dd HH:mm:ss]');
 };
 
 export const LogLine = (props: LogLineProps) => {
+    // TODO: The tab-width is dependent on styling. How do we make sure we don't change this?
+    const leadingWhitespace = props.line.leading.spaces + props.line.leading.tabs * 8;
+    const leadingEmSpace = `${leadingWhitespace * 0.6}em`;
+
     return (
         <Box>
-            {props.line.sections.map((section, i) => (
-                <span key={i} /*style={coloredLineSectionCss(section)}*/>{section.text}</span>
-            ))}
+            {
+                props.enableShowLineContextButton &&
+                <Box sx={{ display: 'table-cell', whiteSpace: 'nowrap', pr: 2 }}>
+                    <ButtonText
+                        size='small'
+                        buttonType='secondary'
+                        sx={{ p: 0 }}
+                        onClick={event => props.onClickShowLineContext(props.timestamp, props.labels, event)}
+                    >Show</ButtonText>
+                </Box>
+            }
+            <Box className='log-line-timestamp' sx={{ display: 'table-cell', whiteSpace: 'nowrap', pr: 2 }}>
+                {formatTimestamp(props.timestamp)}
+            </Box>
+            <Box
+                sx={{ display: 'table-cell' }}
+                style={leadingWhitespace > 0 ? { paddingLeft: leadingEmSpace, textIndent: `-${leadingEmSpace}` } : undefined}>
+                {props.line.sections.map((section, i) => (
+                    <span key={i} /*style={coloredLineSectionCss(section)}*/>{section.text}</span>
+                ))}
+            </Box>
         </Box>
     );
 };
