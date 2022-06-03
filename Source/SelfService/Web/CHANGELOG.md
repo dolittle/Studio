@@ -1,3 +1,8 @@
+# [1.30.1] - 2022-6-3 [PR: #198](https://github.com/dolittle/Studio/pull/198)
+## Summary
+ - Fixes so that the microservice filter dropdown only shows microservices for the current environment
+
+
 # [1.30.0] - 2022-6-2 [PR: #197](https://github.com/dolittle/Studio/pull/197)
 ## Summary
 
