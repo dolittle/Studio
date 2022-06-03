@@ -104,10 +104,12 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
 
     const nav = getMenuWithApplication(history, application, currentEnvironment);
 
-    const availableMicroservices: LogFilterMicroservice[] = application.microservices.map(microservice => ({
-        id: microservice.dolittle.microserviceId,
-        name: microservice.name,
-    }));
+    const availableMicroservices: LogFilterMicroservice[] = application.microservices
+        .filter(_ => _.environment === currentEnvironment)
+        .map(microservice => ({
+            id: microservice.dolittle.microserviceId,
+            name: microservice.name,
+        }));
 
     return (
         <LayoutWithSidebar navigation={nav}>
