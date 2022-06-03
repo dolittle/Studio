@@ -122,6 +122,7 @@ jobs:
     needs:
       - changes
       - release
+    name: Deploy SelfService Web to development
     uses: ./github/workflows/update-container-image.yml
     secrets: inherit
     with:
@@ -135,6 +136,7 @@ jobs:
     needs:
       - changes
       - release
+    name: Deploy SelfService Web to production
     uses: ./github/workflows/update-container-image.yml
     secrets: inherit
     with:
