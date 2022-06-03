@@ -1,4 +1,4 @@
-name: Deploy - SelfService - Web
+name: Release and deploy SelfService Web
 
 on:
   pull_request:
@@ -6,7 +6,6 @@ on:
       - closed
     branches:
       - main
-      - "!development"
 
 env:
   PRERELEASE_BRANCHES: "" # Comma separated list of prerelease branch names. 'alpha,rc, ...'
@@ -16,9 +15,16 @@ env:
 
 jobs:
   changes:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     outputs:
       has-changes: ${{ steps.filter.outputs.src }}
+      should-publish: ${{ steps.context.outputs.should-publish }}
+      release-type: ${{ steps.context.outputs.release-type }}
+      current-version: ${{ steps.context.outputs.current-version }}
+      pr-body: ${{ steps.context.outputs.pr-body }}
+      pr-url: ${{ steps.context.outputs.pr-url }}
+      next-version: ${{ steps.increment-version.outputs.next-version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -31,9 +37,24 @@ jobs:
               - '${{ env.SOURCE_PATH }}/**'
               - 'Source/Shared/**'
 
-  deploy:
+      - name: Establish context
+        id: context
+        uses: dolittle/establish-context-action@v2
+        with:
+          prerelease-branches: ${{ env.PRERELEASE_BRANCHES }}
+          version-file: ${{ env.SOURCE_PATH }}/version.json
+
+      - name: Increment version
+        id: increment-version
+        if: ${{ steps.context.outputs.should-publish == 'true' }}
+        uses: dolittle/increment-version-action@v2
+        with:
+          version: ${{ steps.context.outputs.current-version }}
+          release-type: ${{ steps.context.outputs.release-type }}
+
+  release:
     needs: changes
-    if: ${{ needs.changes.outputs.has-changes == 'true' }}
+    if: needs.changes.outputs.has-changes == 'true' && needs.changes.outputs.should-publish == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -54,56 +75,71 @@ jobs:
           prerelease-branches: ${{ env.PRERELEASE_BRANCHES }}
           version-file: ${{ env.SOURCE_PATH }}/version.json
 
-      - name: Increment version
-        id: increment-version
-        if: ${{ steps.context.outputs.should-publish == 'true' }}
-        uses: dolittle/increment-version-action@v2
-        with:
-          version: ${{ steps.context.outputs.current-version }}
-          release-type: ${{ steps.context.outputs.release-type }}
-
       - name: Write version info
-        if: ${{ steps.context.outputs.should-publish == 'true' }}
         uses: dolittle/write-version-to-file-action@v2
         with:
           path: ${{ env.SOURCE_PATH }}/version.json
-          version: ${{ steps.increment-version.outputs.next-version }}
+          version: ${{ needs.changes.outputs.next-version }}
           merge-strategy: rebase
 
       - name: Prepend to Changelog
-        if: ${{ steps.context.outputs.should-publish == 'true' && steps.context.outputs.release-type != 'prerelease' }}
+        if: needs.changes.outputs.release-type != 'prerelease'
         uses: dolittle/add-to-changelog-action@v2
         with:
-          version: ${{ steps.increment-version.outputs.next-version }}
-          body: ${{ steps.context.outputs.pr-body }}
-          pr-url: ${{ steps.context.outputs.pr-url }}
+          version: ${{ needs.changes.outputs.next-version }}
+          body: ${{ needs.changes.outputs.pr-body }}
+          pr-url: ${{ needs.changes.outputs.pr-url }}
           changelog-path: ${{ env.SOURCE_PATH }}/CHANGELOG.md
           user-email: build@dolittle.com
           user-name: dolittle-build
 
       - name: Create GitHub Release
-        if: ${{ steps.context.outputs.should-publish == 'true' }}
         uses: dolittle/github-release-action@v2
         with:
           token: ${{  secrets.BUILD_PAT  }}
-          version: ${{ steps.increment-version.outputs.next-version }}
-          body: ${{ steps.context.outputs.pr-body }}
+          version: ${{ needs.changes.outputs.next-version }}
+          body: ${{ needs.changes.outputs.pr-body }}
           microservice: SelfService-Web
 
       - name: Push Semantic Image to Docker Hub
         uses: docker/build-push-action@v2
-        if: ${{ steps.context.outputs.should-publish == 'true' }}
         with:
           push: true
           context: .
           file: ./${{ env.DOCKER_FILE }}
-          tags: ${{ env.DOCKER_IMAGE_TAG }}:${{ steps.increment-version.outputs.next-version }}
+          tags: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
 
       - name: Push latest tag to Docker Hub
         uses: docker/build-push-action@v2
-        if: ${{ steps.context.outputs.should-publish == 'true' && steps.context.outputs.release-type != 'prerelease' }}
+        if: needs.changes.outputs.release-type != 'prerelease'
         with:
           push: true
           context: .
           file: ./${{ env.DOCKER_FILE }}
           tags: ${{ env.DOCKER_IMAGE_TAG }}:latest
+
+  deploy-dev:
+    needs:
+      - changes
+      - release
+    uses: ./github/workflows/update-container-image.yml
+    secrets: inherit
+    with:
+      namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+      deployment: dev-selfserviceweb
+      image: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
+      environment: dev
+      environment-url: https://dev.dolittle.studio/
+
+  deploy-prod:
+    needs:
+      - changes
+      - release
+    uses: ./github/workflows/update-container-image.yml
+    secrets: inherit
+    with:
+      namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+      deployment: prod-selfserviceweb
+      image: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
+      environment: prod
+      environment-url: https://dolittle.studio/
