@@ -1,4 +1,4 @@
-name: Release and deploy SelfService Backend
+name: Deploy - SelfService - Backend
 
 on:
   pull_request:
