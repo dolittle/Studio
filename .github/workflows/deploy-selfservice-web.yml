@@ -123,7 +123,7 @@ jobs:
       - changes
       - release
     name: Deploy SelfService Web to development
-    uses: ./github/workflows/update-container-image.yml
+    uses: ./.github/workflows/update-container-image.yml
     secrets: inherit
     with:
       namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
@@ -137,7 +137,7 @@ jobs:
       - changes
       - release
     name: Deploy SelfService Web to production
-    uses: ./github/workflows/update-container-image.yml
+    uses: ./.github/workflows/update-container-image.yml
     secrets: inherit
     with:
       namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
