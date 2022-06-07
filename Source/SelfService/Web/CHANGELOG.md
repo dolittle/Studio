@@ -1,3 +1,9 @@
+# [1.30.2] - 2022-6-7 [PR: #201](https://github.com/dolittle/Studio/pull/201)
+## Summary
+
+Fix deployment workflows from using the `env` context.
+
+
 # [1.30.1] - 2022-6-3 [PR: #198](https://github.com/dolittle/Studio/pull/198)
 ## Summary
  - Fixes so that the microservice filter dropdown only shows microservices for the current environment
