@@ -1,3 +1,3 @@
 # SelfService - Web
 
-Frontend to Selfservice
+Frontend to SelfService

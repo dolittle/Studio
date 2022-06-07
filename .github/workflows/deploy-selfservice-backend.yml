@@ -11,7 +11,6 @@ env:
   PRERELEASE_BRANCHES: "" # Comma separated list of prerelease branch names. 'alpha,rc, ...'
   SOURCE_PATH: "Source/SelfService/Backend"
   DOCKER_FILE: "Source/SelfService/Backend/Dockerfile"
-  DOCKER_IMAGE_TAG: "dolittle/self-service-backend"
 
 jobs:
   changes:
@@ -106,7 +105,7 @@ jobs:
           push: true
           context: ${{ env.SOURCE_PATH }}
           file: ./${{ env.DOCKER_FILE }}
-          tags: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
+          tags: dolittle/self-service-backend:${{ needs.changes.outputs.next-version }}
 
       - name: Push latest tag to Docker Hub
         uses: docker/build-push-action@v2
@@ -115,7 +114,7 @@ jobs:
           push: true
           context: ${{ env.SOURCE_PATH }}
           file: ./${{ env.DOCKER_FILE }}
-          tags: ${{ env.DOCKER_IMAGE_TAG }}:latest
+          tags: dolittle/self-service-backend:latest
 
   deploy-dev:
     needs:
@@ -127,7 +126,7 @@ jobs:
     with:
       namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
       deployment: dev-selfservicebackend
-      image: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
+      image: dolittle/self-service-backend:${{ needs.changes.outputs.next-version }}
       environment: dev
       environment-url: https://dev.dolittle.studio/
 
@@ -141,6 +140,6 @@ jobs:
     with:
       namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
       deployment: prod-selfservicebackend
-      image: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
+      image: dolittle/self-service-backend:${{ needs.changes.outputs.next-version }}
       environment: prod
       environment-url: https://dolittle.studio/
