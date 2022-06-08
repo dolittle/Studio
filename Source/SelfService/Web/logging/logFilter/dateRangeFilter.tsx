@@ -75,7 +75,7 @@ export const DateRangeFilter = (props: DateRangeFilterProps) => {
     const handleOnStartDateChange = (value: Date | null) => {
         setStartDate(value);
 
-        if (props.range !== 'live' && value !== null && BigInt(value.valueOf()) * 1_000_000n < props.range.stop) {
+        if (props.range !== 'live' && value && isValidDate(value) && BigInt(value.valueOf()) * 1_000_000n < props.range.stop) {
             props.onSetDateRange({
                 start: BigInt(value.valueOf()) * 1_000_000n,
                 stop: props.range.stop,
@@ -84,15 +84,18 @@ export const DateRangeFilter = (props: DateRangeFilterProps) => {
     };
 
     const handleOnStopDateChange = (value: Date | null) => {
+
         setStopDate(value);
 
-        if (props.range !== 'live' && value !== null && BigInt(value.valueOf()) * 1_000_000n > props.range.start) {
+        if (props.range !== 'live' && value && isValidDate(value) && BigInt(value.valueOf()) * 1_000_000n > props.range.start) {
             props.onSetDateRange({
                 start: props.range.start,
                 stop: BigInt(value.valueOf()) * 1_000_000n,
             });
         }
     };
+
+    const isValidDate = (date: Date | null): boolean => date?.toString().toLowerCase() !== 'invalid date';
 
     const dateTimePickerInputProps: Partial<InputProps> = {
         size: 'small',
