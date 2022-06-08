@@ -1,3 +1,9 @@
+# [1.30.3] - 2022-6-8 [PR: #202](https://github.com/dolittle/Studio/pull/202)
+## Summary
+
+- Fixes crashing app when manually entering invalid date in logs date-range filter
+
+
 # [1.30.2] - 2022-6-7 [PR: #201](https://github.com/dolittle/Studio/pull/201)
 ## Summary
 
