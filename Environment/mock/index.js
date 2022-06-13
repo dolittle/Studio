@@ -1,17 +1,31 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-const app = require('express')();
+const express = require('express');
+
+const { logging, notImplemented } = require('./middlewares');
 
 const applications = require('./api/applications');
+const logs = require('./monitoring/logs');
 
-app.use(applications);
 
-app.use((req, res) => {
-    console.error('Received request for', req.url, 'this endpoint is not implemented.');
-    res.status(404).end('Not implemented!');
-});
+// SelfService Backend API
+const backend = express();
+backend.use(logging);
 
-app.listen(3007, () => {
-    console.log('Listening at http://localhost:3007');
-});
+backend.use(applications);
+
+backend.use(notImplemented);
+
+// Loki API
+const loki = express();
+require('express-ws')(loki);
+loki.use(logging);
+
+loki.use('/loki/api/v1', logs);
+
+loki.use(notImplemented);
+
+// Start servers
+backend.listen(3007, () => console.log('SelfService Backend mock listening on http://localhost:3007'));
+loki.listen(8802, () => console.log('Loki mock listening on http://localhost:8802'));
