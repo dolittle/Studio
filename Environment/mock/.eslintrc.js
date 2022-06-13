@@ -7,6 +7,9 @@ module.exports = {
         'node_modules',
     ],
     parser: 'espree',
+    parserOptions: {
+        ecmaVersion: 'latest',
+    },
     env: {
         node: true,
         es6: true,
