@@ -76,7 +76,9 @@ routes.get('/query_range', (req, res) => {
     console.log('Getting logs');
     const query = parseQuery(req.query.query);
     const result = queryGeneratedLogs(query, BigInt(req.query.start), BigInt(req.query.end), parseInt(req.query.limit), req.query.direction);
-    res.status(200).json(result).end();
+    global.setTimeout(() => {
+        res.status(200).json(result).end();
+    }, 2000);
 });
 
 routes.ws('/tail', (ws, req) => {
