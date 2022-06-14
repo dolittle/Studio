@@ -59,10 +59,6 @@ generateRandomLogsEveryOtherSecond(generated);
 
 
 exports.queryGeneratedLogs = (query, from, to, limit, direction) => {
-    if (direction === 'forward') {
-        throw new Error('Direction forward is not implemented');
-    }
-
     const filtered = generated.filter(({ stream, line }) => {
         if (line[0] < from || line[0] > to) {
             return false;
@@ -97,10 +93,19 @@ exports.queryGeneratedLogs = (query, from, to, limit, direction) => {
         }
 
         return true;
-    }).slice(0, limit);
+    });
+
+    let limited = filtered;
+    if (limited.length > limit) {
+        if (direction === 'forward') {
+            limited = filtered.slice(0, limit);
+        } else {
+            limited = filtered.slice(-limit);
+        }
+    }
 
     const grouped = [];
-    grouping: for (const entry of filtered) {
+    grouping: for (const entry of limited) {
         for (const [stream, entries] of grouped) {
             if (stream === entry.stream) {
                 entries.push(entry.line);
