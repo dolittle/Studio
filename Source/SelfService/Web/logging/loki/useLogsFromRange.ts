@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { of, from as rxFrom, Observable, Subject, EMPTY } from 'rxjs';
-import { distinctUntilChanged, map, concatMap, startWith, scan, tap, take, switchMap, expand, catchError } from 'rxjs/operators';
+import { distinctUntilChanged, map, concatMap, startWith, tap, take, switchMap, expand, catchError } from 'rxjs/operators';
 
 import { LogLine, TransformedLogLine, ObservablePartialLogLines } from './logLines';
 import { labelsAndPipelineToLogQL, queryRange, QueryLabels } from './queries';
@@ -127,7 +127,7 @@ export const useLogsFromRange = <T>(from: bigint, to: bigint, newestFirst: boole
                                     startWith<State<T>>({ initialFetch: false, loading: true, parameters: state.parameters, lines: state.lines, moreLinesAvailable: false }),
                                 )),
                         );
-                    }, 1),
+                    }),
                     map(({ loading, lines, moreLinesAvailable }): ObservablePartialLogLines<T> => ({ loading, failed: false, lines, moreLinesAvailable })),
                 );
             }),
