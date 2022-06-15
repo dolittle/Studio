@@ -63,6 +63,16 @@ export type LogPanelProps = {
      * Whether or not to show the 'Show log line context' button.
      */
     enableShowLineContextButton?: boolean;
+
+    /**
+     * Elements to add after the LogPanel title divider, just before any actual log lines.
+     */
+    header?: React.ReactNode;
+
+    /**
+     * Elements to add to the end of the LogPanel, just after all actual log lines.
+     */
+    footer?: React.ReactNode;
 };
 
 /**
@@ -143,6 +153,7 @@ export const LogPanel = (props: LogPanelProps) => {
                         }}
                         className={showTimestamp ? '' : 'hide-timestamp'}
                     >
+                        {props.header}
                         <LogLines
                             lines={props.logs.lines}
                             showContextButtonInLines={props.enableShowLineContextButton ?? false}
@@ -154,6 +165,7 @@ export const LogPanel = (props: LogPanelProps) => {
                                 enableShowLineContextButton={props.enableShowLineContextButton ?? false}
                             />
                         }
+                        {props.footer}
                     </Box>
                 </Paper>
             </Grid>
