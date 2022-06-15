@@ -118,7 +118,7 @@ export const LogLine = (props: LogLineProps) => {
             <Box sx={{ flexGrow: 1 }} style={leadingWhitespace > 0 ? { paddingLeft: leadingEmSpace, textIndent: `-${leadingEmSpace}` } : undefined}>
                 {
                     props.loading === true
-                        ? <><Skeleton /><Skeleton /></>
+                        ? <><Skeleton /><Skeleton /><Skeleton /></>
                         : props.line.sections.map((section, i) => (
                             <span key={i} /*style={coloredLineSectionCss(section)}*/>{section.text}</span>
                         ))

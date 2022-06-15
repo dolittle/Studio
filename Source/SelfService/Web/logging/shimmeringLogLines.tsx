@@ -24,12 +24,4 @@ export const ShimmeringLogLines = (props: ShimmeringLogLinesProps) =>
             timestamp={shimmerTimestamp}
             line={shimmerLine}
         />
-        <LogLine
-            loading
-            enableShowLineContextButton={props.enableShowLineContextButton}
-            onClickShowLineContext={noopClickHandler}
-            labels={shimmerLabels}
-            timestamp={shimmerTimestamp}
-            line={shimmerLine}
-        />
     </>;
