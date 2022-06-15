@@ -1,3 +1,21 @@
+# [1.30.4] - 2022-6-15 [PR: #204](https://github.com/dolittle/Studio/pull/204)
+## Summary
+
+Adds shimmering LogLines in a LogPanel that is currently loading more logs. Also fixed the "No logs found" message so that it does not appear while loading logs.
+
+Note: A slightly annoying behaviour is - if you toggle the Timestamp while shimmering lines are shown, the animation is not in sync with the text. But this is kind of edge case, as the loading doesn't really appear for long.
+
+![image](https://user-images.githubusercontent.com/1014990/173665357-8d1964b0-0fc3-476c-b255-e4786861cf9b.png)
+
+### Changed
+
+- The `useLogsFromLast` no longer retains the last loaded logs while loading more, this seems more in line with the designed UX with these new shimmering lines.
+
+### Fixed
+
+- A tiny bug in `useLogFromRange` caused it to not update the state to `loading: true` while fetching logs.
+
+
 # [1.30.3] - 2022-6-8 [PR: #202](https://github.com/dolittle/Studio/pull/202)
 ## Summary
 
