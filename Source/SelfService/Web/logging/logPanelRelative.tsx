@@ -40,15 +40,20 @@ export type LogPanelRelativeProps = {
      * Whether or not to display the 'SHOW' context button for each line.
      */
     showContextButtonInLines?: boolean;
+
+    /**
+     * The maximum number of lines to fetch.
+     * Defaults to 1000;
+     */
+    numberOfLines?: number;
 };
 
 export const LogPanelRelative = (props: LogPanelRelativeProps) => {
     const [labels, pipeline] = logPanelQueryLabels(props.applicationId, props.environment, props.filters);
 
-    const newestFirst = true; // TODO: Where to move these
-    const limit = 1000;
+    const newestFirst = true; // TODO: What is required to support ordering the other way? Might impact the hooks and the LogPanel.
 
-    const logs = useLogsFromLast(props.last, newestFirst, labels, pipeline, limit, parseLogLine);
+    const logs = useLogsFromLast(props.last, newestFirst, labels, pipeline, props.numberOfLines ?? 1000, parseLogLine);
 
     return <LogPanel
         application={props.application}
