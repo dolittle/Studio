@@ -22,22 +22,20 @@ export type LogLinesProps = {
      */
     onClickShowContextButton: (timestamp: bigint, labels: DataLabels) => void;
 };
-
 export const LogLines = React.memo(function LogLines(props: LogLinesProps) {
+    console.log('lines', props.lines);
     return (
         <>
-            {
-                props.lines.map(line =>
-                    <LogLine
-                        key={line.timestamp.toString()}
-                        timestamp={line.timestamp}
-                        labels={line.labels}
-                        line={line.data}
-                        enableShowLineContextButton={props.showContextButtonInLines}
-                        onClickShowLineContext={props.onClickShowContextButton}
-                    />
-                )
-            }
+            {props.lines.map((line) => (
+                <LogLine
+                    key={line.timestamp.toString()}
+                    timestamp={line.timestamp}
+                    labels={line.labels}
+                    line={line.data}
+                    enableShowLineContextButton={props.showContextButtonInLines}
+                    onClickShowLineContext={props.onClickShowContextButton}
+                />
+            ))}
         </>
     );
 });
