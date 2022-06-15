@@ -102,16 +102,7 @@ export const useLogsFromLast = <T>(last: bigint, newestFirst: boolean, labels: Q
             catchError(error => of({ loading: false, failed: true, error, lines: [] })),
         );
 
-        const results = fetches.pipe(
-            scan((last, next) => ({
-                loading: next.loading,
-                lines: next.loading ? last.lines : next.lines,
-                failed: next.failed,
-                error: next.error,
-            }), { loading: false, failed: false, lines: [] } as ObservableLogLines<T>),
-        );
-
-        const subscription = results.subscribe(setResult);
+        const subscription = fetches.subscribe(setResult);
         return () => subscription.unsubscribe();
     }, []);
 

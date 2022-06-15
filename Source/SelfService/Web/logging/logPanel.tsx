@@ -10,6 +10,7 @@ import { QueryLabels } from './loki/queries';
 
 import { LogFilterMicroservice, LogFilterObject } from './logFilter/logFilterPanel';
 import { ColoredLine } from './lineParsing';
+import { ShimmeringLogLines } from './shimmeringLogLines';
 import { LogLines } from './logLines';
 
 
@@ -87,7 +88,7 @@ export const LogPanel = (props: LogPanelProps) => {
         );
     }
 
-    if (props.logs.lines.length === 0) {
+    if (!props.logs.loading && props.logs.lines.length === 0) {
         return (
             <Grid container spacing={2} sx={{ pt: 2 }}>
                 <Grid item xs={12} md={6}>
@@ -147,6 +148,12 @@ export const LogPanel = (props: LogPanelProps) => {
                             showContextButtonInLines={props.enableShowLineContextButton ?? false}
                             onClickShowContextButton={handleOnClickShowLineContext}
                         />
+                        {
+                            props.logs.loading &&
+                            <ShimmeringLogLines
+                                enableShowLineContextButton={props.enableShowLineContextButton ?? false}
+                            />
+                        }
                     </Box>
                 </Paper>
             </Grid>

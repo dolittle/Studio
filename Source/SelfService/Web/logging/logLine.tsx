@@ -2,9 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
 import { format } from 'date-fns';
-import { nb } from 'date-fns/locale';
 
 import { ColoredLine, ColoredLineSection, TerminalColor } from './lineParsing';
 import { ButtonText } from '../theme/buttonText';
@@ -73,6 +72,7 @@ const coloredLineSectionCss = (section: ColoredLineSection): React.CSSProperties
 };
 
 export type LogLineProps = {
+    loading?: boolean;
     timestamp: bigint;
     labels: DataLabels;
     line: ColoredLine;
@@ -85,33 +85,44 @@ const formatTimestamp = (timestamp: bigint): string => {
     return format(date, '[yyyy-MM-dd HH:mm:ss]');
 };
 
+const SkeletonWhenLoading = (props: { loading?: boolean, children: React.ReactNode }) =>
+    props.loading === true
+        ? <Skeleton>{props.children}</Skeleton>
+        : <>{props.children}</>;
+
 export const LogLine = (props: LogLineProps) => {
     // TODO: The tab-width is dependent on styling. How do we make sure we don't change this?
     const leadingWhitespace = props.line.leading.spaces + props.line.leading.tabs * 8;
     const leadingEmSpace = `${leadingWhitespace * 0.6}em`;
 
     return (
-        <Box>
+        <Box sx={{ display: 'flex' }}>
             {
                 props.enableShowLineContextButton &&
-                <Box sx={{ display: 'table-cell', whiteSpace: 'nowrap', pr: 2 }}>
-                    <ButtonText
-                        size='small'
-                        buttonType='secondary'
-                        sx={{ p: 0 }}
-                        onClick={event => props.onClickShowLineContext(props.timestamp, props.labels, event)}
-                    >Show</ButtonText>
+                <Box sx={{ whiteSpace: 'nowrap', pr: 2 }}>
+                    <SkeletonWhenLoading loading={props.loading}>
+                        <ButtonText
+                            size='small'
+                            buttonType='secondary'
+                            sx={{ p: 0 }}
+                            onClick={event => props.onClickShowLineContext(props.timestamp, props.labels, event)}
+                        >Show</ButtonText>
+                    </SkeletonWhenLoading>
                 </Box>
             }
-            <Box className='log-line-timestamp' sx={{ display: 'table-cell', whiteSpace: 'nowrap', pr: 2 }}>
-                {formatTimestamp(props.timestamp)}
+            <Box className='log-line-timestamp' sx={{ whiteSpace: 'nowrap', pr: 2 }}>
+                <SkeletonWhenLoading loading={props.loading}>
+                    <span>{formatTimestamp(props.timestamp)}</span>
+                </SkeletonWhenLoading>
             </Box>
-            <Box
-                sx={{ display: 'table-cell' }}
-                style={leadingWhitespace > 0 ? { paddingLeft: leadingEmSpace, textIndent: `-${leadingEmSpace}` } : undefined}>
-                {props.line.sections.map((section, i) => (
-                    <span key={i} /*style={coloredLineSectionCss(section)}*/>{section.text}</span>
-                ))}
+            <Box sx={{ flexGrow: 1 }} style={leadingWhitespace > 0 ? { paddingLeft: leadingEmSpace, textIndent: `-${leadingEmSpace}` } : undefined}>
+                {
+                    props.loading === true
+                        ? <><Skeleton /><Skeleton /><Skeleton /></>
+                        : props.line.sections.map((section, i) => (
+                            <span key={i} /*style={coloredLineSectionCss(section)}*/>{section.text}</span>
+                        ))
+                }
             </Box>
         </Box>
     );
