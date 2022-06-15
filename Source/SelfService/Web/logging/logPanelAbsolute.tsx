@@ -1,9 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useCallback, MutableRefObject } from 'react';
+import { InView } from 'react-intersection-observer';
 
-import { useLogsFromRange } from './loki/useLogsFromRange';
+import { useLogsFromRange, LoadMoreLinesIfAvailable } from './loki/useLogsFromRange';
 
 import { parseLogLine } from './lineParsing';
 import { LogFilterObject } from './logFilter/logFilterPanel';
@@ -44,15 +45,42 @@ export type LogPanelAbsoluteProps = {
      * Whether or not to display the 'SHOW' context button for each line.
      */
     showContextButtonInLines?: boolean;
+
+    /**
+     * The maximum number of lines to fetch in the first request.
+     * Defaults to 1000;
+     */
+    initialNumberOfLines?: number;
+
+    /**
+     * Whether or not automatic fetching of new lines when scrolling to the bottom should be enabled.
+     */
+    autoLoadMoreLogs?: boolean;
+
+    /**
+     * The maximum number of lines to fetch in the first request.
+     * Defaults to 100;
+     */
+    autoLoadMoreNumberOfLines?: number;
+
+    /**
+     * An optional ref that will be set to the function to call to load more logs lines if they are available.
+     */
+    loadMoreLogsRef?: MutableRefObject<LoadMoreLinesIfAvailable>;
 };
 
 export const LogPanelAbsolute = (props: LogPanelAbsoluteProps) => {
     const [labels, pipeline] = logPanelQueryLabels(props.applicationId, props.environment, props.filters);
 
-    const newestFirst = true; // TODO: Where to move these
-    const limit = 1000;
+    const newestFirst = true; // TODO: What is required to support ordering the other way? Might impact the hooks and the LogPanel.
 
-    const [logs, loadMoreLogs] = useLogsFromRange(props.from, props.to, newestFirst, labels, pipeline, limit, parseLogLine);
+    const [logs, loadMoreLogs] = useLogsFromRange(props.from, props.to, newestFirst, labels, pipeline, props.initialNumberOfLines ?? 1000, parseLogLine);
+
+    if (props.loadMoreLogsRef !== undefined) props.loadMoreLogsRef.current = loadMoreLogs;
+
+    const handleInViewChange = useCallback((visible: boolean) => {
+        if (props.autoLoadMoreLogs === true && visible) loadMoreLogs(props.autoLoadMoreNumberOfLines ?? 100);
+    }, [props.autoLoadMoreLogs, props.autoLoadMoreNumberOfLines, loadMoreLogs]);
 
     return <LogPanel
         application={props.application}
@@ -61,5 +89,12 @@ export const LogPanelAbsolute = (props: LogPanelAbsoluteProps) => {
         timespan='date range logs'
         logs={logs}
         enableShowLineContextButton={props.showContextButtonInLines}
+        footer={
+            <InView
+                onChange={handleInViewChange}
+                // TODO: We can set the rootMargin to trigger earlier than reaching the actual bottom
+                fallbackInView={false} // TODO: This will mean that infinite scrolling doesn't work on old browsers, do we care?
+            />
+        }
     />;
 };

@@ -135,6 +135,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
                                 filters={filters}
                                 from={filters.dateRange.start}
                                 to={filters.dateRange.stop}
+                                autoLoadMoreLogs
                             // showContextButtonInLines
                             />
                     }
