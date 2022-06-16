@@ -59,7 +59,7 @@ export type LogPanelAbsoluteProps = {
 
     /**
      * The maximum number of lines to fetch in the first request.
-     * Defaults to 100;
+     * Defaults to 1000;
      */
     autoLoadMoreNumberOfLines?: number;
 
@@ -79,7 +79,7 @@ export const LogPanelAbsolute = (props: LogPanelAbsoluteProps) => {
     if (props.loadMoreLogsRef !== undefined) props.loadMoreLogsRef.current = loadMoreLogs;
 
     const handleInViewChange = useCallback((visible: boolean) => {
-        if (props.autoLoadMoreLogs === true && visible) loadMoreLogs(props.autoLoadMoreNumberOfLines ?? 100);
+        if (props.autoLoadMoreLogs === true && visible) loadMoreLogs(props.autoLoadMoreNumberOfLines ?? 1000);
     }, [props.autoLoadMoreLogs, props.autoLoadMoreNumberOfLines, loadMoreLogs]);
 
     return <LogPanel
@@ -93,7 +93,7 @@ export const LogPanelAbsolute = (props: LogPanelAbsoluteProps) => {
             <InView
                 onChange={handleInViewChange}
                 // TODO: We can set the rootMargin to trigger earlier than reaching the actual bottom
-                fallbackInView={false} // TODO: This will mean that infinite scrolling doesn't work on old browsers, do we care?
+                fallbackInView={false}
             />
         }
     />;
