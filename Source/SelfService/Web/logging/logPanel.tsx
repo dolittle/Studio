@@ -115,8 +115,7 @@ export const LogPanel = (props: LogPanelProps) => {
                 <Grid item xs={12} md={6}>
                     <Alert severity='error' variant='outlined'>
                         <AlertTitle>Something went wrong</AlertTitle>
-                        Please try again later. If the problem persists, please{' '}
-                        <Link href='mailto:support@dolittle.com'>contact support</Link>.
+                        Please try again later. If the problem persists, please <Link href='mailto:support@dolittle.com'>contact support</Link>.
                     </Alert>
                 </Grid>
             </Grid>
@@ -146,8 +145,7 @@ export const LogPanel = (props: LogPanelProps) => {
 
     const title = (
         <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>
-            Displaying <b>{props.timespan}</b> for {props.application} Application,{' '}
-            {props.environment} Environment, {microservices}
+            Displaying <b>{props.timespan}</b> for {props.application} Application, {props.environment} Environment, {microservices}
         </Typography>
     );
 
