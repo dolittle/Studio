@@ -9,9 +9,9 @@ import { ColoredLine, ColoredLineSection, TerminalColor } from './lineParsing';
 import { ButtonText } from '../theme/buttonText';
 import { DataLabels } from './loki/types';
 
-
 const coloredLineSectionCss = (section: ColoredLineSection): React.CSSProperties => {
-    let color = 'inherit', backgroundColor = 'inherit';
+    let color = 'inherit',
+        backgroundColor = 'inherit';
 
     switch (section.foreground) {
         case TerminalColor.Black:
@@ -68,7 +68,6 @@ const coloredLineSectionCss = (section: ColoredLineSection): React.CSSProperties
     }
 
     return { color, backgroundColor };
-
 };
 
 export type LogLineProps = {
@@ -77,7 +76,11 @@ export type LogLineProps = {
     labels: DataLabels;
     line: ColoredLine;
     enableShowLineContextButton: boolean;
-    onClickShowLineContext: (timestamp: bigint, labels: DataLabels, event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+    onClickShowLineContext: (
+        timestamp: bigint,
+        labels: DataLabels,
+        event: React.MouseEvent<HTMLElement, MouseEvent>
+    ) => void;
 };
 
 const formatTimestamp = (timestamp: bigint): string => {
@@ -85,10 +88,12 @@ const formatTimestamp = (timestamp: bigint): string => {
     return format(date, '[yyyy-MM-dd HH:mm:ss]');
 };
 
-const SkeletonWhenLoading = (props: { loading?: boolean, children: React.ReactNode }) =>
-    props.loading === true
-        ? <Skeleton>{props.children}</Skeleton>
-        : <>{props.children}</>;
+const SkeletonWhenLoading = (props: { loading?: boolean; children: React.ReactNode }) =>
+    props.loading === true ? (
+        <Skeleton>{props.children}</Skeleton>
+    ) : (
+        <>{props.children}</>
+    );
 
 export const LogLine = (props: LogLineProps) => {
     // TODO: The tab-width is dependent on styling. How do we make sure we don't change this?
@@ -97,32 +102,64 @@ export const LogLine = (props: LogLineProps) => {
 
     return (
         <Box sx={{ display: 'flex' }}>
-            {
-                props.enableShowLineContextButton &&
-                <Box sx={{ whiteSpace: 'nowrap', pr: 2 }}>
+            {props.enableShowLineContextButton && (
+                <Box sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
                     <SkeletonWhenLoading loading={props.loading}>
                         <ButtonText
                             size='small'
                             buttonType='secondary'
                             sx={{ p: 0 }}
-                            onClick={event => props.onClickShowLineContext(props.timestamp, props.labels, event)}
-                        >Show</ButtonText>
+                            onClick={(event) =>
+                                props.onClickShowLineContext(
+                                    props.timestamp,
+                                    props.labels,
+                                    event
+                                )
+                            }
+                        >
+                            Show
+                        </ButtonText>
                     </SkeletonWhenLoading>
                 </Box>
-            }
-            <Box className='log-line-timestamp' sx={{ whiteSpace: 'nowrap', pr: 2 }}>
+            )}
+            <Box className='log-line-timestamp' sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
                 <SkeletonWhenLoading loading={props.loading}>
                     <span>{formatTimestamp(props.timestamp)}</span>
                 </SkeletonWhenLoading>
             </Box>
-            <Box sx={{ flexGrow: 1 }} style={leadingWhitespace > 0 ? { paddingLeft: leadingEmSpace, textIndent: `-${leadingEmSpace}` } : undefined}>
-                {
-                    props.loading === true
-                        ? <><Skeleton /><Skeleton /><Skeleton /></>
-                        : props.line.sections.map((section, i) => (
-                            <span key={i} /*style={coloredLineSectionCss(section)}*/>{section.text}</span>
-                        ))
+            <Box
+                className='log-line-microservice'
+                sx={{ whiteSpace: 'nowrap', pr: 2, width: '7em', flexShrink: 0, textOverflow: 'ellipsis', overflow: 'hidden' }}
+                title={props.labels.microservice}
+            >
+                <SkeletonWhenLoading loading={props.loading}>
+                    <span>{props.labels.microservice}</span>
+                </SkeletonWhenLoading>
+            </Box>
+            <Box
+                sx={{ flexGrow: 1 }}
+                style={
+                    leadingWhitespace > 0
+                        ? {
+                            paddingLeft: leadingEmSpace,
+                            textIndent: `-${leadingEmSpace}`,
+                        }
+                        : undefined
                 }
+            >
+                {props.loading === true ? (
+                    <>
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                    </>
+                ) : (
+                    props.line.sections.map((section, i) => (
+                        <span key={i} /*style={coloredLineSectionCss(section)}*/>
+                            {section.text}
+                        </span>
+                    ))
+                )}
             </Box>
         </Box>
     );

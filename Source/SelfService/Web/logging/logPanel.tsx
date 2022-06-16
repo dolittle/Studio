@@ -2,7 +2,19 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useCallback } from 'react';
-import { Alert, AlertTitle, Box, Divider, FormControlLabel, FormGroup, Grid, Link, Paper, Switch, Typography } from '@mui/material';
+import {
+    Alert,
+    AlertTitle,
+    Box,
+    Divider,
+    FormControlLabel,
+    FormGroup,
+    Grid,
+    Link,
+    Paper,
+    Switch,
+    Typography,
+} from '@mui/material';
 
 import { ObservableLogLines } from './loki/logLines';
 import { DataLabels } from './loki/types';
@@ -13,22 +25,25 @@ import { ColoredLine } from './lineParsing';
 import { ShimmeringLogLines } from './shimmeringLogLines';
 import { LogLines } from './logLines';
 
-
-export const logPanelQueryLabels = (applicationId: string, environment: string, filters: LogFilterObject): [QueryLabels, string[]] => {
+export const logPanelQueryLabels = (
+    applicationId: string,
+    environment: string,
+    filters: LogFilterObject
+): [QueryLabels, string[]] => {
     const labels = {
         job: 'microservice',
         application_id: applicationId,
         environment,
-        microservice_id: filters.microservice !== undefined && filters.microservice.length > 0
-            ? filters.microservice.map(_ => _.id)
-            : undefined,
+        microservice_id:
+            filters.microservice !== undefined && filters.microservice.length > 0
+                ? filters.microservice.map((_) => _.id)
+                : undefined,
     };
 
-    const pipeline = filters.searchTerms.map(term => `|= "${term}"`);
+    const pipeline = filters.searchTerms.map((term) => `|= "${term}"`);
 
     return [labels, pipeline];
 };
-
 
 /**
  * The props for a {@link LogPanel} component.
@@ -70,10 +85,29 @@ export type LogPanelProps = {
  */
 export const LogPanel = (props: LogPanelProps) => {
     const [showTimestamp, setShowTimestamp] = useState(false);
+    const [showMicroservice, setShowMicroservice] = useState(false);
 
-    const handleOnClickShowLineContext = useCallback((timestamp: bigint, labels: DataLabels) => {
-        alert(`Show context for ${JSON.stringify(labels)} around ${timestamp}`);
-    }, []);
+    const handleOnClickShowLineContext = useCallback(
+        (timestamp: bigint, labels: DataLabels) => {
+            alert(`Show context for ${JSON.stringify(labels)} around ${timestamp}`);
+        },
+        []
+    );
+
+    const showMicroserviceAndTimestamp = (
+        showMicroservice: boolean,
+        showTimestamp: boolean
+    ) => {
+        if (showMicroservice && showTimestamp) {
+            return '';
+        } else if (showMicroservice) {
+            return 'hide-timestamp';
+        } else if (showTimestamp) {
+            return 'hide-microservice';
+        } else {
+            return 'hide-microservice hide-timestamp';
+        }
+    };
 
     if (props.logs.failed) {
         return (
@@ -81,7 +115,7 @@ export const LogPanel = (props: LogPanelProps) => {
                 <Grid item xs={12} md={6}>
                     <Alert severity='error' variant='outlined'>
                         <AlertTitle>Something went wrong</AlertTitle>
-                        Please try again later. If the problem persists, please <Link href="mailto:support@dolittle.com">contact support</Link>.
+                        Please try again later. If the problem persists, please <Link href='mailto:support@dolittle.com'>contact support</Link>.
                     </Alert>
                 </Grid>
             </Grid>
@@ -94,7 +128,8 @@ export const LogPanel = (props: LogPanelProps) => {
                 <Grid item xs={12} md={6}>
                     <Alert severity='info' variant='outlined'>
                         <AlertTitle>No logs found</AlertTitle>
-                        Try adjusting the filters, or verify that your microservices are running.
+                        Try adjusting the filters, or verify that your microservices are
+                        running.
                     </Alert>
                 </Grid>
             </Grid>
@@ -106,25 +141,50 @@ export const LogPanel = (props: LogPanelProps) => {
             ? 'all Microservices'
             : props.microservices?.length === 1
                 ? `${props.microservices?.[0].name} Microservice`
-                : `${props.microservices?.map(_ => _.name).join(', ')} Microservices`;
+                : `${props.microservices?.map((_) => _.name).join(', ')} Microservices`;
 
-    const title = <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>Displaying <b>{props.timespan}</b> for {props.application} Application, {props.environment} Environment, {microservices}</Typography>;
+    const title = (
+        <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>
+            Displaying <b>{props.timespan}</b> for {props.application} Application, {props.environment} Environment, {microservices}
+        </Typography>
+    );
 
     return (
         <Grid container spacing={2} sx={{ pt: 2 }}>
             <Grid item xs={12}>
                 <Paper elevation={1} sx={{ p: 2 }}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} md={10}>{title}</Grid>
+                        <Grid item xs={12} md={10}>
+                            {title}
+                        </Grid>
                         <Grid item xs={12} md={2}>
                             <Box display='flex' justifyContent='flex-end'>
                                 <FormGroup>
                                     <FormControlLabel
                                         label='Timestamp'
-                                        control={<Switch
-                                            checked={showTimestamp}
-                                            onChange={(event) => setShowTimestamp(event.target.checked)}
-                                        />}
+                                        control={
+                                            <Switch
+                                                checked={showTimestamp}
+                                                onChange={(event) =>
+                                                    setShowTimestamp(event.target.checked)
+                                                }
+                                            />
+                                        }
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <FormControlLabel
+                                        label='Microservice'
+                                        control={
+                                            <Switch
+                                                checked={showMicroservice}
+                                                onChange={(event) =>
+                                                    setShowMicroservice(
+                                                        event.target.checked
+                                                    )
+                                                }
+                                            />
+                                        }
                                     />
                                 </FormGroup>
                             </Box>
@@ -137,23 +197,32 @@ export const LogPanel = (props: LogPanelProps) => {
                             'm': 0,
                             'whiteSpace': 'pre-wrap',
                             'typography': 'monospace',
-                            '&.hide-timestamp div.log-line-timestamp': {
+                            '&.hide-timestamp .log-line-timestamp': {
+                                display: 'none',
+                            },
+                            '&.hide-microservice .log-line-microservice': {
                                 display: 'none',
                             },
                         }}
-                        className={showTimestamp ? '' : 'hide-timestamp'}
+                        className={showMicroserviceAndTimestamp(
+                            showMicroservice,
+                            showTimestamp
+                        )}
                     >
                         <LogLines
                             lines={props.logs.lines}
-                            showContextButtonInLines={props.enableShowLineContextButton ?? false}
+                            showContextButtonInLines={
+                                props.enableShowLineContextButton ?? false
+                            }
                             onClickShowContextButton={handleOnClickShowLineContext}
                         />
-                        {
-                            props.logs.loading &&
+                        {props.logs.loading && (
                             <ShimmeringLogLines
-                                enableShowLineContextButton={props.enableShowLineContextButton ?? false}
+                                enableShowLineContextButton={
+                                    props.enableShowLineContextButton ?? false
+                                }
                             />
-                        }
+                        )}
                     </Box>
                 </Paper>
             </Grid>
