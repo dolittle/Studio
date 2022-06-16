@@ -1,3 +1,17 @@
+# [1.32.0] - 2022-6-16 [PR: #205](https://github.com/dolittle/Studio/pull/205)
+## Summary
+
+Adds "infinite scrolling" to the date-range log view (`LogPanelAbsolute`). This works by adding an empty div to the bottom of the `LogPanel` and when it is scrolled into the viewport, it triggers loading more logs (which only happens if there are more to load).
+
+Currently this will only work on browsers with the `IntersectionObserver` api supported: https://caniuse.com/mdn-api_intersectionobserver. Which I believe is fine. For browsers without the support, no auto-loading will happen.
+
+### Added
+
+- `LogPanel` accepts extra content before and after the log-lines with a `header` and `footer` property.
+- Some hardcoded values in `LogPanelRelative` and `LogPanelAbsolute` are exposed now with props as defaults.
+- `LogPanelAbsolute` now accepts a Ref as a prop that will be set to the `loadMoreLogs` function so it ready to accept loading more logs from the outside. This made sense to prepare it for the "Context Popover" that we might get to.
+
+
 # [1.31.0] - 2022-6-16 [PR: #207](https://github.com/dolittle/Studio/pull/207)
 ## Summary
 
