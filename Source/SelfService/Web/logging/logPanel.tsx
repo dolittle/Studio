@@ -44,7 +44,7 @@ type LogContextDialogState = {
 };
 
 const LogContextDialog = (state: LogContextDialogState, setState: React.Dispatch<React.SetStateAction<LogContextDialogState>>, showTimestamp: boolean) =>
-    <Dialog open={state.show} maxWidth='lg' fullWidth scroll='paper'>
+    <Dialog open={state.show} maxWidth='xl' fullWidth scroll='paper' onClose={() => setState({ ...state, show: false })}>
         <DialogTitle>Detailed view</DialogTitle>
         <LogsInRange
             applicationId={state.applicationId}
