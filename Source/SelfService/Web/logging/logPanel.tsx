@@ -105,7 +105,7 @@ export const LogPanel = (props: LogPanelProps) => {
         } else if (showTimestamp) {
             return 'hide-microservice';
         } else {
-            return 'hide-microservice-timestamp';
+            return 'hide-microservice hide-timestamp';
         }
     };
 
@@ -203,12 +203,6 @@ export const LogPanel = (props: LogPanelProps) => {
                                 display: 'none',
                             },
                             '&.hide-microservice div.log-line-microservice': {
-                                display: 'none',
-                            },
-                            '&.hide-microservice-timestamp div.log-line-microservice': {
-                                display: 'none',
-                            },
-                            '&.hide-microservice-timestamp div.log-line-timestamp': {
                                 display: 'none',
                             },
                         }}
