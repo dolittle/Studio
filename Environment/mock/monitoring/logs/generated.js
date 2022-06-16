@@ -10,28 +10,39 @@ const streams = [
         application_id: '11b6cf47-5d9f-438f-8116-0d9828654657',
         environment: 'Dev',
         microservice_id: '7e78b802-e246-467b-9946-1deabf8042ef',
+        microservice: 'Welcome',
     },
     {
         job: 'microservice',
         application_id: '11b6cf47-5d9f-438f-8116-0d9828654657',
         environment: 'Dev',
         microservice_id: '16965610-e419-40f1-b550-4841e93553b9',
-    }
+        microservice: 'Sayonara',
+    },
 ];
 
 const generator = new Jabber([
-    'error', 'err',
-    'warning', 'warn',
-    'critical', 'crit',
-    'debug', 'dbg',
+    'error',
+    'err',
+    'warning',
+    'warn',
+    'critical',
+    'crit',
+    'debug',
+    'dbg',
     'info',
-    'trace', 'trc',
-    'failed', 'failure',
-    'exception', 'Exception',
+    'trace',
+    'trc',
+    'failed',
+    'failure',
+    'exception',
+    'Exception',
 ]);
 
 const generateRandomLogs = () => {
-    const generateLinesFrom = Math.floor(new Date(Date.now()).setHours(0, 0, 0, 0) / 1000);
+    const generateLinesFrom = Math.floor(
+        new Date(Date.now()).setHours(0, 0, 0, 0) / 1000
+    );
     const generateLinesTo = Math.floor(Date.now() / 1000);
 
     const lines = [];
@@ -43,7 +54,7 @@ const generateRandomLogs = () => {
     }
     console.log('Generated', lines.length, 'random log lines');
     return lines;
-}
+};
 
 const generateRandomLogsEveryOtherSecond = (lines) => {
     global.setInterval(() => {
@@ -56,7 +67,6 @@ const generateRandomLogsEveryOtherSecond = (lines) => {
 
 const generated = generateRandomLogs();
 generateRandomLogsEveryOtherSecond(generated);
-
 
 exports.queryGeneratedLogs = (query, from, to, limit, direction) => {
     const filtered = generated.filter(({ stream, line }) => {
@@ -73,7 +83,9 @@ exports.queryGeneratedLogs = (query, from, to, limit, direction) => {
                     if (stream[label] === value) return false;
                     break;
                 default:
-                    console.error(`Selector operator ${operator} is not implemented (label: ${label}, value: ${value}). This filter will be ignored.`);
+                    console.error(
+                        `Selector operator ${operator} is not implemented (label: ${label}, value: ${value}). This filter will be ignored.`
+                    );
                     break;
             }
         }
@@ -87,7 +99,9 @@ exports.queryGeneratedLogs = (query, from, to, limit, direction) => {
                     if (line[1].includes(value)) return false;
                     break;
                 default:
-                    console.error(`Pipeline operation ${operation} is not implemented. This filter will be ignored.`);
+                    console.error(
+                        `Pipeline operation ${operation} is not implemented. This filter will be ignored.`
+                    );
                     break;
             }
         }
@@ -121,12 +135,12 @@ exports.queryGeneratedLogs = (query, from, to, limit, direction) => {
             resultType: 'streams',
             result: grouped.map((group) => ({
                 stream: group[0],
-                values: group[1].map(_ => [_[0].toString(), _[1]]),
+                values: group[1].map((_) => [_[0].toString(), _[1]]),
             })),
             stats: {},
         },
     };
-}
+};
 
 exports.tailGeneratedLogs = (query, start, limit, direction, callback) => {
     const sendResults = (result) => {
