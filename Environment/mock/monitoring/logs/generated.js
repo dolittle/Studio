@@ -16,7 +16,13 @@ const streams = [
         application_id: '11b6cf47-5d9f-438f-8116-0d9828654657',
         environment: 'Dev',
         microservice_id: '16965610-e419-40f1-b550-4841e93553b9',
-    }
+    },
+    {
+        job: 'microservice',
+        application_id: '11b6cf47-5d9f-438f-8116-0d9828654657',
+        environment: 'Prod',
+        microservice_id: '7e78b802-e246-467b-9946-1deabf8042ef',
+    },
 ];
 
 const generator = new Jabber([
