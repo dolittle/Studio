@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import { InView } from 'react-intersection-observer';
 import {
     Alert,
@@ -23,35 +23,63 @@ import {
 
 import { ButtonText } from '../theme/buttonText';
 
-import { ObservableLogLines } from './loki/logLines';
-import { LoadMoreLinesIfAvailable } from './loki/useLogsFromRange';
+import { ObservableLogLines, ObservablePartialLogLines } from './loki/logLines';
 import { DataLabels } from './loki/types';
-import { QueryLabels } from './loki/queries';
 
-import { LogFilterMicroservice, LogFilterObject } from './logFilter/logFilterPanel';
+import { LogFilterObject } from './logFilter/logFilterPanel';
 import { ColoredLine } from './lineParsing';
 import { LogLines } from './logLines';
-import { LogLinesAbsolute } from './logLinesAbsolute';
+import { LogsInRange, LoadMoreLogs } from './logsInRange';
 
-export const logPanelQueryLabels = (
+
+type LogContextDialogState = {
+    show: boolean;
+    application: string,
     applicationId: string,
-    environment: string,
-    filters: LogFilterObject
-): [QueryLabels, string[]] => {
-    const labels = {
-        job: 'microservice',
-        application_id: applicationId,
-        environment,
-        microservice_id:
-            filters.microservice !== undefined && filters.microservice.length > 0
-                ? filters.microservice.map((_) => _.id)
-                : undefined,
-    };
-
-    const pipeline = filters.searchTerms.map((term) => `|= "${term}"`);
-
-    return [labels, pipeline];
+    environment: string;
+    microservice: string,
+    microserviceId: string,
+    from: bigint,
+    to: bigint,
 };
+
+const LogContextDialog = (state: LogContextDialogState, setState: React.Dispatch<React.SetStateAction<LogContextDialogState>>, showTimestamp: boolean) =>
+    <Dialog open={state.show} maxWidth='lg' fullWidth scroll='paper'>
+        <DialogTitle>Detailed view</DialogTitle>
+        <LogsInRange
+            applicationId={state.applicationId}
+            environment={state.environment}
+            filters={{ dateRange: { start: state.from, stop: state.to }, searchTerms: [], microservice: [{ id: state.microserviceId, name: state.microservice }] }}
+            from={state.from}
+            to={state.to}
+            firstFetchLimit={10}
+            moreFetchLimit={10}
+            render={(logs, loadMoreLogs) => (
+                <>
+                    <DialogContent>
+                        <LogLines
+                            logs={logs}
+                            showTimestamp={showTimestamp}
+                            sx={{
+                                '& > div:first-of-type': {
+                                    color: '#75e8db', // TODO: Where does this color come from?
+                                },
+                            }}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <ButtonText
+                            onClick={() => setState({ ...state, show: false })}
+                        >Close</ButtonText>
+                        <ButtonText
+                            onClick={() => loadMoreLogs()}
+                        >Show more</ButtonText>
+                    </DialogActions>
+                </>
+            )}
+        />
+    </Dialog>;
+
 
 /**
  * The props for a {@link LogPanel} component.
@@ -72,21 +100,20 @@ export type LogPanelProps = {
      */
     filters: LogFilterObject;
 
+    /**
+     * Whether or not automatic fetching of new lines when scrolling to the bottom should be enabled.
+     */
+    autoLoadMoreLogs?: boolean;
 
-    logs: ObservableLogLines<ColoredLine>;
+    /**
+     * The fetched logs to display in the panel.
+     */
+    logs: ObservableLogLines<ColoredLine> | ObservablePartialLogLines<ColoredLine>;
 
-    loadMoreLogs?: () => void;
-};
-
-type LogContextState = {
-    show: boolean;
-    application: string,
-    applicationId: string,
-    environment: string;
-    microservice: string,
-    microserviceId: string,
-    from: bigint,
-    to: bigint,
+    /**
+     * The function to call to load more logs (if available).
+     */
+    loadMoreLogs?: LoadMoreLogs;
 };
 
 /**
@@ -96,7 +123,7 @@ export const LogPanel = (props: LogPanelProps) => {
     const [showTimestamp, setShowTimestamp] = useState(false);
     const [showMicroservice, setShowMicroservice] = useState(false);
 
-    const [logContext, setLogContext] = useState<LogContextState>({
+    const [logContextDialog, setLogContextDialog] = useState<LogContextDialogState>({
         show: false,
         application: '',
         applicationId: '',
@@ -107,10 +134,8 @@ export const LogPanel = (props: LogPanelProps) => {
         to: 0n,
     });
 
-    const handleOnClickShowLineContext = useCallback((timestamp: bigint, labels: DataLabels) => {
-        //alert(`Show context for ${JSON.stringify(labels)} around ${timestamp}`);
-        console.log('Showing context for', labels);
-        setLogContext({
+    const handleOnClickShowLineContext = useCallback((timestamp: bigint, labels: DataLabels) =>
+        setLogContextDialog({
             show: true,
             application: labels.application,
             applicationId: labels.application_id,
@@ -119,12 +144,12 @@ export const LogPanel = (props: LogPanelProps) => {
             microserviceId: labels.microservice_id,
             from: timestamp - 86_400_000_000_000n,
             to: timestamp,
-        });
-    }, [setLogContext]);
+        })
+        , [setLogContextDialog]);
 
     const handleInViewChange = useCallback((visible: boolean) => {
-        if (visible) props.loadMoreLogs?.();
-    }, [props.loadMoreLogs]);
+        if (visible && props.autoLoadMoreLogs === true) props.loadMoreLogs?.();
+    }, [props.autoLoadMoreLogs, props.loadMoreLogs]);
 
     if (props.logs.failed) {
         return (
@@ -166,45 +191,11 @@ export const LogPanel = (props: LogPanelProps) => {
         </Typography>
     );
 
+    const dialog = LogContextDialog(logContextDialog, setLogContextDialog, showTimestamp);
 
     return (
         <>
-            <Dialog open={logContext.show} maxWidth='lg' fullWidth scroll='paper'>
-                <DialogTitle>Detailed view</DialogTitle>
-                <LogLinesAbsolute
-                    applicationId={logContext.applicationId}
-                    environment={logContext.environment}
-                    filters={{ dateRange: { start: logContext.from, stop: logContext.to }, searchTerms: [], microservice: [{ id: logContext.microserviceId, name: logContext.microservice }] }}
-                    from={logContext.from}
-                    to={logContext.to}
-                    initialNumberOfLines={10}
-                    autoLoadMoreLogs
-                    autoLoadMoreNumberOfLines={10}
-                    render={(logs, loadMoreLogs) => (
-                        <>
-                            <DialogContent>
-                                <LogLines
-                                    logs={logs}
-                                    showTimestamp={showTimestamp}
-                                    sx={{
-                                        '& > div:first-child': {
-                                            color: '#75e8db', // TODO: Where does this color come from?
-                                        },
-                                    }}
-                                />
-                            </DialogContent>
-                            <DialogActions>
-                                <ButtonText
-                                    onClick={() => setLogContext(state => ({ ...state, show: false }))}
-                                >Close</ButtonText>
-                                <ButtonText
-                                    onClick={() => loadMoreLogs()}
-                                >Show more</ButtonText>
-                            </DialogActions>
-                        </>
-                    )}
-                />
-            </Dialog>
+            {dialog}
             <Grid container spacing={2} sx={{ pt: 2 }}>
                 <Grid item xs={12}>
                     <Paper elevation={1} sx={{ p: 2 }}>
@@ -220,9 +211,7 @@ export const LogPanel = (props: LogPanelProps) => {
                                             control={
                                                 <Switch
                                                     checked={showTimestamp}
-                                                    onChange={(event) =>
-                                                        setShowTimestamp(event.target.checked)
-                                                    }
+                                                    onChange={(event) => setShowTimestamp(event.target.checked)}
                                                 />
                                             }
                                         />
@@ -233,11 +222,7 @@ export const LogPanel = (props: LogPanelProps) => {
                                             control={
                                                 <Switch
                                                     checked={showMicroservice}
-                                                    onChange={(event) =>
-                                                        setShowMicroservice(
-                                                            event.target.checked
-                                                        )
-                                                    }
+                                                    onChange={(event) => setShowMicroservice(event.target.checked)}
                                                 />
                                             }
                                         />
