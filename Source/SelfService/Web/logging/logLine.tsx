@@ -75,8 +75,8 @@ export type LogLineProps = {
     timestamp: bigint;
     labels: DataLabels;
     line: ColoredLine;
-    enableShowLineContextButton: boolean;
-    onClickShowLineContext: (
+    showContextButton?: boolean;
+    onClickShowLineContext?: (
         timestamp: bigint,
         labels: DataLabels,
         event: React.MouseEvent<HTMLElement, MouseEvent>
@@ -102,7 +102,7 @@ export const LogLine = (props: LogLineProps) => {
 
     return (
         <Box sx={{ display: 'flex' }}>
-            {props.enableShowLineContextButton && (
+            {props.showContextButton === true && (
                 <Box sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
                     <SkeletonWhenLoading loading={props.loading}>
                         <ButtonText
@@ -110,7 +110,7 @@ export const LogLine = (props: LogLineProps) => {
                             buttonType='secondary'
                             sx={{ p: 0 }}
                             onClick={(event) =>
-                                props.onClickShowLineContext(
+                                props.onClickShowLineContext?.(
                                     props.timestamp,
                                     props.labels,
                                     event

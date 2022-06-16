@@ -1,7 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
+import { InView } from 'react-intersection-observer';
 import {
     Alert,
     AlertTitle,
@@ -14,16 +15,23 @@ import {
     Paper,
     Switch,
     Typography,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
 } from '@mui/material';
 
+import { ButtonText } from '../theme/buttonText';
+
 import { ObservableLogLines } from './loki/logLines';
+import { LoadMoreLinesIfAvailable } from './loki/useLogsFromRange';
 import { DataLabels } from './loki/types';
 import { QueryLabels } from './loki/queries';
 
 import { LogFilterMicroservice, LogFilterObject } from './logFilter/logFilterPanel';
 import { ColoredLine } from './lineParsing';
-import { ShimmeringLogLines } from './shimmeringLogLines';
 import { LogLines } from './logLines';
+import { LogLinesAbsolute } from './logLinesAbsolute';
 
 export const logPanelQueryLabels = (
     applicationId: string,
@@ -60,34 +68,25 @@ export type LogPanelProps = {
     environment: string;
 
     /**
-     * The Environment to the logs are for.
+     * The filters to apply to the logs query.
      */
-    microservices?: LogFilterMicroservice[];
+    filters: LogFilterObject;
 
-    /**
-     * The human readable description of what timespan the logs are displayed for.
-     */
-    timespan: string;
 
-    /**
-     * The retrieved logs to render.
-     */
     logs: ObservableLogLines<ColoredLine>;
 
-    /**
-     * Whether or not to show the 'Show log line context' button.
-     */
-    enableShowLineContextButton?: boolean;
+    loadMoreLogs?: () => void;
+};
 
-    /**
-     * Elements to add after the LogPanel title divider, just before any actual log lines.
-     */
-    header?: React.ReactNode;
-
-    /**
-     * Elements to add to the end of the LogPanel, just after all actual log lines.
-     */
-    footer?: React.ReactNode;
+type LogContextState = {
+    show: boolean;
+    application: string,
+    applicationId: string,
+    environment: string;
+    microservice: string,
+    microserviceId: string,
+    from: bigint,
+    to: bigint,
 };
 
 /**
@@ -97,27 +96,35 @@ export const LogPanel = (props: LogPanelProps) => {
     const [showTimestamp, setShowTimestamp] = useState(false);
     const [showMicroservice, setShowMicroservice] = useState(false);
 
-    const handleOnClickShowLineContext = useCallback(
-        (timestamp: bigint, labels: DataLabels) => {
-            alert(`Show context for ${JSON.stringify(labels)} around ${timestamp}`);
-        },
-        []
-    );
+    const [logContext, setLogContext] = useState<LogContextState>({
+        show: false,
+        application: '',
+        applicationId: '',
+        environment: '',
+        microservice: '',
+        microserviceId: '',
+        from: 0n,
+        to: 0n,
+    });
 
-    const showMicroserviceAndTimestamp = (
-        showMicroservice: boolean,
-        showTimestamp: boolean
-    ) => {
-        if (showMicroservice && showTimestamp) {
-            return '';
-        } else if (showMicroservice) {
-            return 'hide-timestamp';
-        } else if (showTimestamp) {
-            return 'hide-microservice';
-        } else {
-            return 'hide-microservice hide-timestamp';
-        }
-    };
+    const handleOnClickShowLineContext = useCallback((timestamp: bigint, labels: DataLabels) => {
+        //alert(`Show context for ${JSON.stringify(labels)} around ${timestamp}`);
+        console.log('Showing context for', labels);
+        setLogContext({
+            show: true,
+            application: labels.application,
+            applicationId: labels.application_id,
+            environment: labels.environment,
+            microservice: labels.microservice,
+            microserviceId: labels.microservice_id,
+            from: timestamp - 86_400_000_000_000n,
+            to: timestamp,
+        });
+    }, [setLogContext]);
+
+    const handleInViewChange = useCallback((visible: boolean) => {
+        if (visible) props.loadMoreLogs?.();
+    }, [props.loadMoreLogs]);
 
     if (props.logs.failed) {
         return (
@@ -147,97 +154,113 @@ export const LogPanel = (props: LogPanelProps) => {
     }
 
     const microservices =
-        props.microservices === undefined || props.microservices?.length === 0
+        props.filters.microservice === undefined || props.filters.microservice?.length === 0
             ? 'all Microservices'
-            : props.microservices?.length === 1
-                ? `${props.microservices?.[0].name} Microservice`
-                : `${props.microservices?.map((_) => _.name).join(', ')} Microservices`;
+            : props.filters.microservice?.length === 1
+                ? `${props.filters.microservice?.[0].name} Microservice`
+                : `${props.filters.microservice?.map((_) => _.name).join(', ')} Microservices`;
 
     const title = (
         <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>
-            Displaying <b>{props.timespan}</b> for {props.application} Application, {props.environment} Environment, {microservices}
+            Displaying <b>{props.filters.dateRange === 'live' ? 'live logs' : 'date range logs'}</b> for {props.application} Application, {props.environment} Environment, {microservices}
         </Typography>
     );
 
+
     return (
-        <Grid container spacing={2} sx={{ pt: 2 }}>
-            <Grid item xs={12}>
-                <Paper elevation={1} sx={{ p: 2 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} md={10}>
-                            {title}
+        <>
+            <Dialog open={logContext.show} maxWidth='lg' fullWidth scroll='paper'>
+                <DialogTitle>Detailed view</DialogTitle>
+                <LogLinesAbsolute
+                    applicationId={logContext.applicationId}
+                    environment={logContext.environment}
+                    filters={{ dateRange: { start: logContext.from, stop: logContext.to }, searchTerms: [], microservice: [{ id: logContext.microserviceId, name: logContext.microservice }] }}
+                    from={logContext.from}
+                    to={logContext.to}
+                    initialNumberOfLines={10}
+                    autoLoadMoreLogs
+                    autoLoadMoreNumberOfLines={10}
+                    render={(logs, loadMoreLogs) => (
+                        <>
+                            <DialogContent>
+                                <LogLines
+                                    logs={logs}
+                                    showTimestamp={showTimestamp}
+                                    sx={{
+                                        '& > div:first-child': {
+                                            color: '#75e8db', // TODO: Where does this color come from?
+                                        },
+                                    }}
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <ButtonText
+                                    onClick={() => setLogContext(state => ({ ...state, show: false }))}
+                                >Close</ButtonText>
+                                <ButtonText
+                                    onClick={() => loadMoreLogs()}
+                                >Show more</ButtonText>
+                            </DialogActions>
+                        </>
+                    )}
+                />
+            </Dialog>
+            <Grid container spacing={2} sx={{ pt: 2 }}>
+                <Grid item xs={12}>
+                    <Paper elevation={1} sx={{ p: 2 }}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} md={10}>
+                                {title}
+                            </Grid>
+                            <Grid item xs={12} md={2}>
+                                <Box display='flex' justifyContent='flex-end'>
+                                    <FormGroup>
+                                        <FormControlLabel
+                                            label='Timestamp'
+                                            control={
+                                                <Switch
+                                                    checked={showTimestamp}
+                                                    onChange={(event) =>
+                                                        setShowTimestamp(event.target.checked)
+                                                    }
+                                                />
+                                            }
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <FormControlLabel
+                                            label='Microservice'
+                                            control={
+                                                <Switch
+                                                    checked={showMicroservice}
+                                                    onChange={(event) =>
+                                                        setShowMicroservice(
+                                                            event.target.checked
+                                                        )
+                                                    }
+                                                />
+                                            }
+                                        />
+                                    </FormGroup>
+                                </Box>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12} md={2}>
-                            <Box display='flex' justifyContent='flex-end'>
-                                <FormGroup>
-                                    <FormControlLabel
-                                        label='Timestamp'
-                                        control={
-                                            <Switch
-                                                checked={showTimestamp}
-                                                onChange={(event) =>
-                                                    setShowTimestamp(event.target.checked)
-                                                }
-                                            />
-                                        }
-                                    />
-                                </FormGroup>
-                                <FormGroup>
-                                    <FormControlLabel
-                                        label='Microservice'
-                                        control={
-                                            <Switch
-                                                checked={showMicroservice}
-                                                onChange={(event) =>
-                                                    setShowMicroservice(
-                                                        event.target.checked
-                                                    )
-                                                }
-                                            />
-                                        }
-                                    />
-                                </FormGroup>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider sx={{ borderColor: 'background.paper', m: 1 }} />
-                    <Box
-                        component='pre'
-                        sx={{
-                            'm': 0,
-                            'whiteSpace': 'pre-wrap',
-                            'typography': 'monospace',
-                            '&.hide-timestamp .log-line-timestamp': {
-                                display: 'none',
-                            },
-                            '&.hide-microservice .log-line-microservice': {
-                                display: 'none',
-                            },
-                        }}
-                        className={showMicroserviceAndTimestamp(
-                            showMicroservice,
-                            showTimestamp
-                        )}
-                    >
-                        {props.header}
+                        <Divider sx={{ borderColor: 'background.paper', m: 1 }} />
                         <LogLines
-                            lines={props.logs.lines}
-                            showContextButtonInLines={
-                                props.enableShowLineContextButton ?? false
-                            }
+                            logs={props.logs}
+                            showContextButton
+                            showTimestamp={showTimestamp}
+                            showMicroservice={showMicroservice}
                             onClickShowContextButton={handleOnClickShowLineContext}
                         />
-                        {props.logs.loading && (
-                            <ShimmeringLogLines
-                                enableShowLineContextButton={
-                                    props.enableShowLineContextButton ?? false
-                                }
-                            />
-                        )}
-                        {props.footer}
-                    </Box>
-                </Paper>
+                        <InView
+                            onChange={handleInViewChange}
+                            // TODO: We can set the rootMargin to trigger earlier than reaching the actual bottom
+                            fallbackInView={false}
+                        />
+                    </Paper>
+                </Grid>
             </Grid>
-        </Grid>
+        </>
     );
 };

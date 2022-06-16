@@ -36,8 +36,11 @@ import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
 import { LogFilterMicroservice, LogFilterObject, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
-import { LogPanelRelative } from '../logging/logPanelRelative';
-import { LogPanelAbsolute } from '../logging/logPanelAbsolute';
+import { LogLinesRelative } from '../logging/logLinesRelative';
+import { LogLinesAbsolute } from '../logging/logLinesAbsolute';
+import { LogPanel } from '../logging/logPanel';
+
+const DAY_NANOSECONDS = 86_400_000_000_000n;
 
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
@@ -120,23 +123,36 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
                     <LogFilterPanel microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
                     {
                         filters.dateRange === 'live'
-                            ? <LogPanelRelative
-                                application={application.name}
+                            ? <LogLinesRelative
                                 applicationId={currentApplicationId}
                                 environment={currentEnvironment}
                                 filters={filters}
-                                last={86_400n * 1_000_000_000n}
-                            // showContextButtonInLines
+                                last={DAY_NANOSECONDS}
+                                render={logs => (
+                                    <LogPanel
+                                        application={application.name}
+                                        environment={currentEnvironment}
+                                        filters={filters}
+                                        logs={logs}
+                                    />
+                                )}
                             />
-                            : <LogPanelAbsolute
-                                application={application.name}
+                            : <LogLinesAbsolute
                                 applicationId={currentApplicationId}
                                 environment={currentEnvironment}
                                 filters={filters}
                                 from={filters.dateRange.start}
                                 to={filters.dateRange.stop}
                                 autoLoadMoreLogs
-                            // showContextButtonInLines
+                                render={(logs, loadMoreLogs) => (
+                                    <LogPanel
+                                        application={application.name}
+                                        environment={currentEnvironment}
+                                        filters={filters}
+                                        logs={logs}
+                                        loadMoreLogs={loadMoreLogs}
+                                    />
+                                )}
                             />
                     }
                 </Box>
