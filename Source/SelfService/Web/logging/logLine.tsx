@@ -83,9 +83,9 @@ export type LogLineProps = {
     ) => void;
 };
 
-const formatTimestamp = (timestamp: bigint): string => {
+export const formatTimestamp = (timestamp: bigint): string => {
     const date = new Date(Number(timestamp / 1_000_000n));
-    return format(date, '[yyyy-MM-dd HH:mm:ss]');
+    return format(date, 'yyyy-MM-dd HH:mm:ss');
 };
 
 const SkeletonWhenLoading = (props: { loading?: boolean; children: React.ReactNode }) =>
@@ -124,7 +124,7 @@ export const LogLine = (props: LogLineProps) => {
             )}
             <Box className='log-line-timestamp' sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
                 <SkeletonWhenLoading loading={props.loading}>
-                    <span>{formatTimestamp(props.timestamp)}</span>
+                    <span>[{formatTimestamp(props.timestamp)}]</span>
                 </SkeletonWhenLoading>
             </Box>
             <Box

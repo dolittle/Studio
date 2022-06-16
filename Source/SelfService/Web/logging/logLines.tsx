@@ -8,7 +8,7 @@ import { Box, SxProps, Theme } from '@mui/material';
 import { ObservableLogLines } from './loki/logLines';
 import { DataLabels } from './loki/types';
 
-import { LogLine } from './logLine';
+import { formatTimestamp, LogLine } from './logLine';
 import { ColoredLine } from './lineParsing';
 import { ShimmeringLogLines } from './shimmeringLogLines';
 
@@ -40,6 +40,11 @@ export type LogLinesProps = {
     showTimestamp?: boolean;
 
     /**
+     * Whether or not to display the start and end of the date range at the beginning and end of the lines.
+     */
+    showDateRangeHeaderAndFooter?: boolean;
+
+    /**
      * The callback to call when a 'SHOW' context button is clicked.
      */
     onClickShowContextButton?: (timestamp: bigint, labels: DataLabels) => void;
@@ -63,6 +68,18 @@ export const LogLines = (props: LogLinesProps) => {
         />
     )), [props.logs.lines, props.showContextButton]);
 
+    const startRangeHeader = props.logs.lines.length > 0 && props.showDateRangeHeaderAndFooter === true
+        ? <Box sx={{ textAlign: 'center', pb: 1 }}>
+            <b>Start of date range: {formatTimestamp(props.logs.lines[0].timestamp)}</b>
+        </Box>
+        : null;
+
+    const endRangeFooter = props.logs.lines.length > 0 && props.showDateRangeHeaderAndFooter === true
+        ? <Box sx={{ textAlign: 'center', pt: 1 }}>
+            <b>End of date range: {formatTimestamp(props.logs.lines[props.logs.lines.length - 1].timestamp)}</b>
+        </Box>
+        : null;
+
     return (
         <Box
             component='pre'
@@ -80,7 +97,9 @@ export const LogLines = (props: LogLinesProps) => {
             }}
             className={showMicroserviceAndTimestampToClass(props.showMicroservice, props.showTimestamp)}
         >
+            {startRangeHeader}
             {lines}
+            {endRangeFooter}
             {props.logs.loading &&
                 <ShimmeringLogLines showContextButton={props.showContextButton} />
             }
