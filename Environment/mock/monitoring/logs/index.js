@@ -78,7 +78,7 @@ routes.get('/query_range', (req, res) => {
     const result = queryGeneratedLogs(query, BigInt(req.query.start), BigInt(req.query.end), parseInt(req.query.limit), req.query.direction);
     global.setTimeout(() => {
         res.status(200).json(result).end();
-    }, 2000);
+    }, 0);
 });
 
 routes.ws('/tail', (ws, req) => {
