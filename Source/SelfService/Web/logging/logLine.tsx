@@ -103,7 +103,7 @@ export const LogLine = (props: LogLineProps) => {
     return (
         <Box sx={{ display: 'flex' }}>
             {props.enableShowLineContextButton && (
-                <Box sx={{ whiteSpace: 'nowrap', pr: 2 }}>
+                <Box sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
                     <SkeletonWhenLoading loading={props.loading}>
                         <ButtonText
                             size='small'
