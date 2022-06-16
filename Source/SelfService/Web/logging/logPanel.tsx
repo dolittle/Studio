@@ -141,8 +141,8 @@ export const LogPanel = (props: LogPanelProps) => {
         props.microservices === undefined || props.microservices?.length === 0
             ? 'all Microservices'
             : props.microservices?.length === 1
-            ? `${props.microservices?.[0].name} Microservice`
-            : `${props.microservices?.map((_) => _.name).join(', ')} Microservices`;
+                ? `${props.microservices?.[0].name} Microservice`
+                : `${props.microservices?.map((_) => _.name).join(', ')} Microservices`;
 
     const title = (
         <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>
@@ -163,6 +163,19 @@ export const LogPanel = (props: LogPanelProps) => {
                             <Box display='flex' justifyContent='flex-end'>
                                 <FormGroup>
                                     <FormControlLabel
+                                        label='Timestamp'
+                                        control={
+                                            <Switch
+                                                checked={showTimestamp}
+                                                onChange={(event) =>
+                                                    setShowTimestamp(event.target.checked)
+                                                }
+                                            />
+                                        }
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <FormControlLabel
                                         label='Microservice'
                                         control={
                                             <Switch
@@ -171,19 +184,6 @@ export const LogPanel = (props: LogPanelProps) => {
                                                     setShowMicroservice(
                                                         event.target.checked
                                                     )
-                                                }
-                                            />
-                                        }
-                                    />
-                                </FormGroup>
-                                <FormGroup>
-                                    <FormControlLabel
-                                        label='Timestamp'
-                                        control={
-                                            <Switch
-                                                checked={showTimestamp}
-                                                onChange={(event) =>
-                                                    setShowTimestamp(event.target.checked)
                                                 }
                                             />
                                         }
@@ -199,10 +199,10 @@ export const LogPanel = (props: LogPanelProps) => {
                             'm': 0,
                             'whiteSpace': 'pre-wrap',
                             'typography': 'monospace',
-                            '&.hide-timestamp div.log-line-timestamp': {
+                            '&.hide-timestamp .log-line-timestamp': {
                                 display: 'none',
                             },
-                            '&.hide-microservice div.log-line-microservice': {
+                            '&.hide-microservice .log-line-microservice': {
                                 display: 'none',
                             },
                         }}

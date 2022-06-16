@@ -122,12 +122,16 @@ export const LogLine = (props: LogLineProps) => {
                     </SkeletonWhenLoading>
                 </Box>
             )}
-            <Box className='log-line-timestamp' sx={{ whiteSpace: 'nowrap', pr: 2 }}>
+            <Box className='log-line-timestamp' sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
                 <SkeletonWhenLoading loading={props.loading}>
                     <span>{formatTimestamp(props.timestamp)}</span>
                 </SkeletonWhenLoading>
             </Box>
-            <Box className='log-line-microservice' sx={{ whiteSpace: 'nowrap', pr: 2 }}>
+            <Box
+                className='log-line-microservice'
+                sx={{ whiteSpace: 'nowrap', pr: 2, width: '7em', flexShrink: 0, textOverflow: 'ellipsis', overflow: 'hidden' }}
+                title={props.labels.microservice}
+            >
                 <SkeletonWhenLoading loading={props.loading}>
                     <span>{props.labels.microservice}</span>
                 </SkeletonWhenLoading>
@@ -137,9 +141,9 @@ export const LogLine = (props: LogLineProps) => {
                 style={
                     leadingWhitespace > 0
                         ? {
-                              paddingLeft: leadingEmSpace,
-                              textIndent: `-${leadingEmSpace}`,
-                          }
+                            paddingLeft: leadingEmSpace,
+                            textIndent: `-${leadingEmSpace}`,
+                        }
                         : undefined
                 }
             >

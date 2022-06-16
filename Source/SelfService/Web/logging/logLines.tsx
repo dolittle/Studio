@@ -23,7 +23,6 @@ export type LogLinesProps = {
     onClickShowContextButton: (timestamp: bigint, labels: DataLabels) => void;
 };
 export const LogLines = React.memo(function LogLines(props: LogLinesProps) {
-    console.log('lines', props.lines);
     return (
         <>
             {props.lines.map((line) => (
