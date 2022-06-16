@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { Route, BrowserRouter, useLocation, Switch } from 'react-router-dom';
+import { QueryParamProvider } from 'use-query-params';
 
 import { ApplicationsScreen } from './screens/applicationsScreen';
 
@@ -75,66 +76,68 @@ export const App = () => {
                                 }
                             >
                                 <BrowserRouter basename={uriWithAppPrefix('')}>
-                                    <Switch>
-                                        <Route exact path='/login'>
-                                            <LoginScreen />
-                                        </Route>
+                                    <QueryParamProvider ReactRouterRoute={Route}>
+                                        <Switch>
+                                            <Route exact path='/login'>
+                                                <LoginScreen />
+                                            </Route>
 
-                                        <Route path='/backups/application/:applicationId'>
-                                            <BackupsScreen />
-                                        </Route>
+                                            <Route path='/backups/application/:applicationId'>
+                                                <BackupsScreen />
+                                            </Route>
 
-                                        <Route exact path='/applications'>
-                                            <ApplicationsScreen />
-                                        </Route>
+                                            <Route exact path='/applications'>
+                                                <ApplicationsScreen />
+                                            </Route>
 
-                                        <Route path='/application/'>
-                                            <ApplicationScreen />
-                                        </Route>
+                                            <Route path='/application/'>
+                                                <ApplicationScreen />
+                                            </Route>
 
-                                        <Route path='/microservices/application/:applicationId/:environment'>
-                                            <MicroservicesScreen />
-                                        </Route>
+                                            <Route path='/microservices/application/:applicationId/:environment'>
+                                                <MicroservicesScreen />
+                                            </Route>
 
-                                        <Route path='/documentation/application/:applicationId/:environment'>
-                                            <DocumentationScreen />
-                                        </Route>
+                                            <Route path='/documentation/application/:applicationId/:environment'>
+                                                <DocumentationScreen />
+                                            </Route>
 
-                                        <Route path='/insights/application/:applicationId/:environment'>
-                                            <InsightsScreen />
-                                        </Route>
+                                            <Route path='/insights/application/:applicationId/:environment'>
+                                                <InsightsScreen />
+                                            </Route>
 
-                                        <Route path='/containerregistry/application/:applicationId/:environment'>
-                                            <ContainerRegistryScreen />
-                                        </Route>
+                                            <Route path='/containerregistry/application/:applicationId/:environment'>
+                                                <ContainerRegistryScreen />
+                                            </Route>
 
-                                        <Route path='/m3connector/application/:applicationId'>
-                                            <M3ConnectorScreen />
-                                        </Route>
+                                            <Route path='/m3connector/application/:applicationId'>
+                                                <M3ConnectorScreen />
+                                            </Route>
 
-                                        <Route path='/logs/application/:applicationId/:environment'>
-                                            <LogsScreen />
-                                        </Route>
+                                            <Route path='/logs/application/:applicationId/:environment'>
+                                                <LogsScreen />
+                                            </Route>
 
-                                        <Route path='/admin/'>
-                                            <AdminScreen />
-                                        </Route>
+                                            <Route path='/admin/'>
+                                                <AdminScreen />
+                                            </Route>
 
-                                        <Route path='/debug/theme'>
-                                            <ThemeScreen />
-                                        </Route>
+                                            <Route path='/debug/theme'>
+                                                <ThemeScreen />
+                                            </Route>
 
-                                        <Route exact path='/problem'>
-                                            <LayoutWithSidebar navigation={[]}>
-                                                <DieAndRestart />
-                                            </LayoutWithSidebar>
-                                        </Route>
+                                            <Route exact path='/problem'>
+                                                <LayoutWithSidebar navigation={[]}>
+                                                    <DieAndRestart />
+                                                </LayoutWithSidebar>
+                                            </Route>
 
-                                        <RouteNotFound
-                                            redirectUrl='/applications'
-                                            auto={true}
-                                        />
-                                    </Switch>
+                                            <RouteNotFound
+                                                redirectUrl='/applications'
+                                                auto={true}
+                                            />
+                                        </Switch>
+                                    </QueryParamProvider>
                                 </BrowserRouter>
                             </SnackbarProvider>
                         </Box>

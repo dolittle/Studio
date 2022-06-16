@@ -3,8 +3,7 @@
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Route } from 'react-router-dom';
-import { QueryParamProvider } from 'use-query-params';
+import { BrowserRouter } from 'react-router-dom';
 
 import { VersionInfo } from '@shared/web';
 
@@ -17,8 +16,6 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
     <BrowserRouter>
-        <QueryParamProvider ReactRouterRoute={Route}>
-            <App />
-        </QueryParamProvider>
+        <App />
     </BrowserRouter>
 );
