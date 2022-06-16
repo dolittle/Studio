@@ -41,6 +41,7 @@
         "use-react-router-breadcrumbs": "2.0.2"
     },
     "devDependencies": {
+        "@types/react-router-dom": "^5.3.3",
         "use-svelte-store": "1.3.3"
     }
 }
