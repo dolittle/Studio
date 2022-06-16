@@ -4,17 +4,17 @@
 import React from 'react';
 
 import { useLogsFromLast } from './loki/useLogsFromLast';
+import { DataLabels } from './loki/types';
+
 
 import { LogFilterObject } from './logFilter/logFilterPanel';
-import { parseLogLine } from './lineParsing';
+import { ColoredLine, parseLogLine } from './lineParsing';
+import { LogLines } from './logLines';
 import { LogPanel, logPanelQueryLabels } from './logPanel';
+import { Observable } from 'rxjs';
+import { ObservableLogLines } from './loki/logLines';
 
-export type LogPanelRelativeProps = {
-    /**
-     * The Application to get logs for.
-     */
-    application: string;
-
+export type LogLinesRelativeProps = {
     /**
      * The ApplicationID to get logs for.
      */
@@ -37,30 +37,28 @@ export type LogPanelRelativeProps = {
     last: bigint;
 
     /**
-     * Whether or not to display the 'SHOW' context button for each line.
-     */
-    showContextButtonInLines?: boolean;
-
-    /**
      * The maximum number of lines to fetch.
      * Defaults to 1000;
      */
     numberOfLines?: number;
+
+    render: (logs: ObservableLogLines<ColoredLine>) => JSX.Element;
 };
 
-export const LogPanelRelative = (props: LogPanelRelativeProps) => {
+export const LogLinesRelative = (props: LogLinesRelativeProps) => {
     const [labels, pipeline] = logPanelQueryLabels(props.applicationId, props.environment, props.filters);
 
     const newestFirst = true; // TODO: What is required to support ordering the other way? Might impact the hooks and the LogPanel.
 
     const logs = useLogsFromLast(props.last, newestFirst, labels, pipeline, props.numberOfLines ?? 1000, parseLogLine);
 
-    return <LogPanel
-        application={props.application}
-        environment={props.environment}
-        microservices={props.filters.microservice}
-        timespan='live logs'
-        logs={logs}
-        enableShowLineContextButton={props.showContextButtonInLines}
-    />;
+    return props.render(logs);
+
+    // return <LogLines
+    //     logs={logs}
+    //     showContextButton={props.showContextButton}
+    //     showMicroservice={props.showMicroservice}
+    //     showTimestamp={props.showTimestamp}
+    //     onClickShowContextButton={props.onClickShowContextButton}
+    // />;
 };

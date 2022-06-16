@@ -11,14 +11,14 @@ const shimmerTimestamp = 0n;
 const shimmerLine = { sections: [], leading: { spaces: 0, tabs: 0 } };
 
 export type ShimmeringLogLinesProps = {
-    enableShowLineContextButton: boolean;
+    showContextButton?: boolean;
 };
 
 export const ShimmeringLogLines = (props: ShimmeringLogLinesProps) =>
     <>
         <LogLine
             loading
-            enableShowLineContextButton={props.enableShowLineContextButton}
+            showContextButton={props.showContextButton}
             onClickShowLineContext={noopClickHandler}
             labels={shimmerLabels}
             timestamp={shimmerTimestamp}

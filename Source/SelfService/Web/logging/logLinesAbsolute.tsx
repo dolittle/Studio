@@ -5,17 +5,15 @@ import React, { useCallback, MutableRefObject } from 'react';
 import { InView } from 'react-intersection-observer';
 
 import { useLogsFromRange, LoadMoreLinesIfAvailable } from './loki/useLogsFromRange';
+import { DataLabels } from './loki/types';
 
-import { parseLogLine } from './lineParsing';
 import { LogFilterObject } from './logFilter/logFilterPanel';
-import { LogPanel, logPanelQueryLabels } from './logPanel';
+import { ColoredLine, parseLogLine } from './lineParsing';
+import { LogLines } from './logLines';
+import { logPanelQueryLabels } from './logPanel';
+import { ObservablePartialLogLines } from './loki/logLines';
 
-export type LogPanelAbsoluteProps = {
-    /**
-     * The Application to get logs for.
-     */
-    application: string;
-
+export type LogLinesAbsoluteProps = {
     /**
      * The ApplicationID to get logs for.
      */
@@ -42,11 +40,6 @@ export type LogPanelAbsoluteProps = {
     to: bigint;
 
     /**
-     * Whether or not to display the 'SHOW' context button for each line.
-     */
-    showContextButtonInLines?: boolean;
-
-    /**
      * The maximum number of lines to fetch in the first request.
      * Defaults to 1000;
      */
@@ -66,10 +59,12 @@ export type LogPanelAbsoluteProps = {
     /**
      * An optional ref that will be set to the function to call to load more logs lines if they are available.
      */
-    loadMoreLogsRef?: MutableRefObject<LoadMoreLinesIfAvailable>;
+    loadMoreLogsRef?: MutableRefObject<LoadMoreLinesIfAvailable | undefined>;
+
+    render: (logs: ObservablePartialLogLines<ColoredLine>, loadMoreLogs: () => void) => JSX.Element;
 };
 
-export const LogPanelAbsolute = (props: LogPanelAbsoluteProps) => {
+export const LogLinesAbsolute = (props: LogLinesAbsoluteProps) => {
     const [labels, pipeline] = logPanelQueryLabels(props.applicationId, props.environment, props.filters);
 
     const newestFirst = true; // TODO: What is required to support ordering the other way? Might impact the hooks and the LogPanel.
@@ -78,23 +73,9 @@ export const LogPanelAbsolute = (props: LogPanelAbsoluteProps) => {
 
     if (props.loadMoreLogsRef !== undefined) props.loadMoreLogsRef.current = loadMoreLogs;
 
-    const handleInViewChange = useCallback((visible: boolean) => {
-        if (props.autoLoadMoreLogs === true && visible) loadMoreLogs(props.autoLoadMoreNumberOfLines ?? 1000);
+    const loadMoreLogs2 = useCallback(() => {
+        if (props.autoLoadMoreLogs === true) loadMoreLogs(props.autoLoadMoreNumberOfLines ?? 1000);
     }, [props.autoLoadMoreLogs, props.autoLoadMoreNumberOfLines, loadMoreLogs]);
 
-    return <LogPanel
-        application={props.application}
-        environment={props.environment}
-        microservices={props.filters.microservice}
-        timespan='date range logs'
-        logs={logs}
-        enableShowLineContextButton={props.showContextButtonInLines}
-        footer={
-            <InView
-                onChange={handleInViewChange}
-                // TODO: We can set the rootMargin to trigger earlier than reaching the actual bottom
-                fallbackInView={false}
-            />
-        }
-    />;
+    return props.render(logs, loadMoreLogs2);
 };
