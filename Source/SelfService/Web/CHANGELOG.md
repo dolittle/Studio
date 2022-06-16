@@ -1,3 +1,10 @@
+# [1.31.0] - 2022-6-16 [PR: #207](https://github.com/dolittle/Studio/pull/207)
+## Summary
+
+ A microservice name column has been added to the log panel. This can be triggered via a new switch toggle in the header. 
+![image](https://user-images.githubusercontent.com/22228314/174037958-0eb162c8-8258-4544-99a7-d6814646d42e.png)
+
+
 # [1.30.4] - 2022-6-15 [PR: #204](https://github.com/dolittle/Studio/pull/204)
 ## Summary
 
