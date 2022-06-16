@@ -236,6 +236,7 @@ export const LogPanel = (props: LogPanelProps) => {
                             showContextButton
                             showTimestamp={showTimestamp}
                             showMicroservice={showMicroservice}
+                            showDateRangeHeaderAndFooter={props.filters.dateRange !== 'live'}
                             onClickShowContextButton={handleOnClickShowLineContext}
                         />
                         <InView
