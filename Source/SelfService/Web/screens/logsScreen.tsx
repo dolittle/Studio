@@ -1,46 +1,33 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, {
-    useEffect,
-    useState
-} from 'react';
-import {
-    useHistory,
-} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { Box, Typography } from '@mui/material';
 
-import {
-    ShortInfoWithEnvironment,
-    HttpResponseMicroservices,
-    getMicroservices
-} from '../api/api';
+import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../api/api';
+import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
+import { useGlobalContext } from '../stores/notifications';
+import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithSidebar';
+import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
+import { TopNavBar } from '../components/topNavBar';
+
+import { LogFilterMicroservice, LogFilterObject, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
+import { LogsInRange } from '../logging/logsInRange';
+import { LogsFromLast } from '../logging/logsFromLast';
+import { LogPanel } from '../logging/logPanel';
+
 import { withRouteApplicationState } from './withRouteApplicationState';
 
 import '../application/applicationScreen.scss';
 
-import {
-    mergeMicroservicesFromGit,
-    mergeMicroservicesFromK8s
-} from '../stores/microservice';
-
-import { useGlobalContext } from '../stores/notifications';
-import {
-    isEnvironmentValidFromUri,
-    PickEnvironment
-} from '../components/pickEnvironment';
-import { TopNavBar } from '../components/topNavBar';
-import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
-
-import { LogFilterMicroservice, LogFilterObject, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
-import { LogLinesRelative } from '../logging/logLinesRelative';
-import { LogLinesAbsolute } from '../logging/logLinesAbsolute';
-import { LogPanel } from '../logging/logPanel';
-
-const DAY_NANOSECONDS = 86_400_000_000_000n;
+/**
+ * A day in Loki (log backend) time. Nanoseconds.
+ */
+const DAY = 86_400_000_000_000n;
 
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
@@ -123,11 +110,11 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
                     <LogFilterPanel microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
                     {
                         filters.dateRange === 'live'
-                            ? <LogLinesRelative
+                            ? <LogsFromLast
                                 applicationId={currentApplicationId}
                                 environment={currentEnvironment}
                                 filters={filters}
-                                last={DAY_NANOSECONDS}
+                                last={DAY}
                                 render={logs => (
                                     <LogPanel
                                         application={application.name}
@@ -137,19 +124,19 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
                                     />
                                 )}
                             />
-                            : <LogLinesAbsolute
+                            : <LogsInRange
                                 applicationId={currentApplicationId}
                                 environment={currentEnvironment}
                                 filters={filters}
                                 from={filters.dateRange.start}
                                 to={filters.dateRange.stop}
-                                autoLoadMoreLogs
                                 render={(logs, loadMoreLogs) => (
                                     <LogPanel
                                         application={application.name}
                                         environment={currentEnvironment}
                                         filters={filters}
                                         logs={logs}
+                                        autoLoadMoreLogs
                                         loadMoreLogs={loadMoreLogs}
                                     />
                                 )}

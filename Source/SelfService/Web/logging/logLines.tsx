@@ -45,15 +45,8 @@ export type LogLinesProps = {
     onClickShowContextButton?: (timestamp: bigint, labels: DataLabels) => void;
 
     /**
-     * Elements to add after the LogPanel title divider, just before any actual log lines.
+     * Styling of the <pre> container of the log lines.
      */
-    header?: React.ReactNode;
-
-    /**
-     * Elements to add to the end of the LogPanel, just after all actual log lines.
-     */
-    footer?: React.ReactNode;
-
     sx?: SxProps<Theme>;
 };
 
@@ -87,12 +80,10 @@ export const LogLines = (props: LogLinesProps) => {
             }}
             className={showMicroserviceAndTimestampToClass(props.showMicroservice, props.showTimestamp)}
         >
-            {props.header}
             {lines}
             {props.logs.loading &&
                 <ShimmeringLogLines showContextButton={props.showContextButton} />
             }
-            {props.footer}
         </Box>
     );
 };
