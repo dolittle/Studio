@@ -1,3 +1,25 @@
+# [1.33.0] - 2022-6-17 [PR: #208](https://github.com/dolittle/Studio/pull/208)
+## Summary
+
+Added the `SHOW` button on log lines in the `LogPanel` that, when clicked, opens a dialog that displays logs without any filters for the microservice that logged this line. The dialog shows the selected log line at the top, and initially 10 more back in time. A button can be clicked to load 10 more (as many times as you want) further back in time, to a maximum time of one day back.
+
+This is useful in two cases:
+1) When you have filtered the logs to find an interesting line (e.g. a specific exception), and you want to see the logs leading up to that exception.
+2) When viewing logs from multiple microservices, and you find a line of interest. In this case clicking the context would "hide" the logs from all the other microservices.
+
+![image](https://user-images.githubusercontent.com/1014990/174119948-c66c9401-046a-4246-88ca-833de7634ef8.png)
+
+Also added a header and footer in the `LogLines` view that shows the beginning and end of the currently shown date ranges. These will show (in conjunction with the timestamp) when we did find stored logs.
+
+![image](https://user-images.githubusercontent.com/1014990/174120199-c14b4004-fe22-4b5e-af30-d3c083dae884.png)
+
+
+### Changed
+
+- To be able to reuse the `LogLines` and `useLogs...` hooks to render the dialog. The structure of the components had to change quite a bit. Props have moved around a little, and the `LogPanelAbsolute` and `LogPanelRelative` have changed into `LogsInRange` and `LogsFromLast` components respectively, that accepts a render function prop used to render the actual component showing the logs.
+- The `header` and `footer` props of the `LogPanel` was also removed, as it did not make sense anymore with the restructuring.
+
+
 # [1.32.0] - 2022-6-16 [PR: #205](https://github.com/dolittle/Studio/pull/205)
 ## Summary
 
