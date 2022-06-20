@@ -33,6 +33,7 @@
         "generate-password-browser": "^1.1.0",
         "notistack": "2.0.4",
         "query-string": "^7.1.1",
+        "react-intersection-observer": "^9.3.3",
         "react-markdown": "^7.1.0",
         "remark-gfm": "^3.0.1",
         "rxjs": "^7.5.5",
