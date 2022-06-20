@@ -11,10 +11,14 @@ type Props = {
     applicationId: string
 };
 
+type ViewParams = {
+    environment: string;
+};
+
 export const View: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const applicationId = _props.applicationId;
-    const { environment } = useParams();
+    const { environment } = useParams<ViewParams>();
 
     const [loaded, setLoaded] = useState(false);
     const [data, setData] = useState({} as M3ConnectorData);

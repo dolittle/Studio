@@ -16,9 +16,13 @@ type Props = {
     applicationId: string
 };
 
+type ViewParams = {
+    image: string;
+};
+
 export const View: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
-    const { image } = useParams();
+    const { image } = useParams<ViewParams>();
     const applicationId = _props.applicationId;
 
     const [loaded, setLoaded] = useState(false);

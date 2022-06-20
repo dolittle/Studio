@@ -47,11 +47,15 @@ const styles = {
     }
 };
 
+type ViewParams = {
+    customerId: string;
+};
+
 export const View: React.FunctionComponent<any> = (props) => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
 
-    const { customerId } = useParams();
+    const { customerId } = useParams<ViewParams>();
     //const [configLoaded, setConfigLoaded] = useState(false);
     const [customerLoaded, setCustomerLoaded] = useState(false);
     const [config, setConfig] = useState({} as Studio);
