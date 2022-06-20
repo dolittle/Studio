@@ -4,7 +4,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { useQueryParams, ArrayParam, StringParam, withDefault } from 'use-query-params';
 import { Box, Typography } from '@mui/material';
 
 import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../api/api';
@@ -16,7 +15,8 @@ import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithS
 import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
 import { TopNavBar } from '../components/topNavBar';
 
-import { LogFilterMicroservice, LogFilterObject, LogFilterDateRange, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
+import { LogFilterMicroservice, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
+import { useLogFilters } from '../logging/logFilter/useLogFilters';
 import { LogsInRange } from '../logging/logsInRange';
 import { LogsFromLast } from '../logging/logsFromLast';
 import { LogPanel } from '../logging/logPanel';
@@ -29,55 +29,6 @@ import '../application/applicationScreen.scss';
  * A day in Loki (log backend) time. Nanoseconds.
  */
 const DAY = 86_400_000_000_000n;
-
-const useFilters = (initialFilters: LogFilterObject, availableMicroservices: LogFilterMicroservice[]): [LogFilterObject, React.Dispatch<React.SetStateAction<LogFilterObject>>] => {
-    const [query, setQuery] = useQueryParams({
-        range: withDefault(StringParam, initialFilters.dateRange === 'live' ? 'live' : 'daterange'),
-        from: withDefault(StringParam, initialFilters.dateRange === 'live' ? undefined : initialFilters.dateRange.start.toString()),
-        to: withDefault(StringParam, initialFilters.dateRange === 'live' ? undefined : initialFilters.dateRange.stop.toString()),
-        search: withDefault(ArrayParam, initialFilters.searchTerms),
-        microservice: withDefault(ArrayParam, initialFilters.microservice?.map(_ => _.id)),
-    });
-
-    let dateRange: LogFilterDateRange = 'live';
-    if (query.range === 'daterange') {
-        try {
-            dateRange = {
-                start: BigInt(query.from!),
-                stop: BigInt(query.to!),
-            };
-        } catch {
-            dateRange = 'live';
-        }
-    }
-
-    let searchTerms: string[] = [];
-    if (query.search !== undefined && query.search !== null) {
-        searchTerms = query.search.filter(_ => _ !== null && _.length > 0) as string[];
-    }
-
-    let microservice: LogFilterMicroservice[] | undefined;
-    if (query.microservice !== undefined && query.microservice !== null) {
-        microservice = query.microservice
-            .filter(_ => _ !== null && _.length > 0 && availableMicroservices.some(ms => ms.id === _))
-            .map(id => availableMicroservices.find(ms => ms.id === id)!);
-    }
-
-    const filters: LogFilterObject = { dateRange, searchTerms, microservice };
-
-    const setFilters = (action: React.SetStateAction<LogFilterObject>) => {
-        const { dateRange, searchTerms, microservice } = typeof action === 'function' ? action(filters) : action;
-        setQuery({
-            range: dateRange === 'live' ? 'live' : 'daterange',
-            from: dateRange === 'live' ? undefined : dateRange.start.toString(),
-            to: dateRange === 'live' ? undefined : dateRange.stop.toString(),
-            search: searchTerms.length > 0 ? searchTerms : undefined,
-            microservice: microservice !== undefined && microservice.length > 0 ? microservice.map(_ => _.id) : undefined,
-        }, 'replace'); // TODO: We can use 'push' or 'replace' here depending on whether we want to modify the filters with back/forward buttons
-    };
-
-    return [filters, setFilters];
-};
 
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
@@ -98,7 +49,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
             }))
         : [];
 
-    const [filters, setFilters] = useFilters({ dateRange: 'live', searchTerms: [] }, availableMicroservices);
+    const [filters, setFilters] = useLogFilters({ dateRange: 'live', searchTerms: [] }, availableMicroservices);
 
     useEffect(() => {
         if (!currentEnvironment || !currentApplicationId) {
