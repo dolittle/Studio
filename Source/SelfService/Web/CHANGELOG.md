@@ -1,3 +1,13 @@
+# [1.34.0] - 2022-6-21 [PR: #206](https://github.com/dolittle/Studio/pull/206)
+## Summary
+
+This PR does two things:
+1) It stores the state of the `LogsScreen` in the URL search querystring, this means that it can be shared with others and you can reload the page without resetting the filters.
+2) The `ApplicationsChanger` component reuses whatever URL search querystring for the current URL when switching environments. Together with the first change, this means that switching environments/apps while looking at logs will keep the filters after switching environments.
+
+While working on it, I found a little bit of a strange setup with multiple routers that made the querystring changes not propagate properly - and I don't know if that is intended usage. But I think we can leave this for later. Also 2) is a little bit hacky, but I don't think we should bother with doing it more properly (passing in props) before we have had a chance to revisit the structure and state management of the app as a whole.
+
+
 # [1.33.0] - 2022-6-17 [PR: #208](https://github.com/dolittle/Studio/pull/208)
 ## Summary
 
