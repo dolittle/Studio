@@ -9,7 +9,7 @@ export type RouteApplicationParams = {
 };
 
 export const useRouteApplicationParams = (): RouteApplicationParams => {
-    const { applicationId, environment } = useParams();
+    const { applicationId, environment } = useParams<RouteApplicationParams>();
     return {
         applicationId: applicationId || '',
         environment: environment || '',

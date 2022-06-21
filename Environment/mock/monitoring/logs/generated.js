@@ -19,7 +19,14 @@ const streams = [
         application: 'Taco',
         environment: 'Dev',
         microservice_id: '16965610-e419-40f1-b550-4841e93553b9',
-        microservice: 'Sayonara Japan',
+    },
+    {
+        job: 'microservice',
+        application_id: '11b6cf47-5d9f-438f-8116-0d9828654657',
+        application: 'Taco',
+        environment: 'Prod',
+        microservice_id: '7e78b802-e246-467b-9946-1deabf8042ef',
+        microservice: 'Welcome',
     },
 ];
 

@@ -15,7 +15,8 @@ import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithS
 import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
 import { TopNavBar } from '../components/topNavBar';
 
-import { LogFilterMicroservice, LogFilterObject, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
+import { LogFilterMicroservice, LogFilterPanel } from '../logging/logFilter/logFilterPanel';
+import { useLogFilters } from '../logging/logFilter/useLogFilters';
 import { LogsInRange } from '../logging/logsInRange';
 import { LogsFromLast } from '../logging/logsFromLast';
 import { LogPanel } from '../logging/logPanel';
@@ -39,7 +40,16 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
 
-    const [filters, setFilters] = useState<LogFilterObject>({ dateRange: 'live', searchTerms: [] });
+    const availableMicroservices: LogFilterMicroservice[] = application?.microservices !== undefined
+        ? application.microservices
+            .filter(_ => _.environment === currentEnvironment)
+            .map(microservice => ({
+                id: microservice.dolittle.microserviceId,
+                name: microservice.name,
+            }))
+        : [];
+
+    const [filters, setFilters] = useLogFilters({ dateRange: 'live', searchTerms: [] }, availableMicroservices);
 
     useEffect(() => {
         if (!currentEnvironment || !currentApplicationId) {
@@ -93,13 +103,6 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
     }
 
     const nav = getMenuWithApplication(history, application, currentEnvironment);
-
-    const availableMicroservices: LogFilterMicroservice[] = application.microservices
-        .filter(_ => _.environment === currentEnvironment)
-        .map(microservice => ({
-            id: microservice.dolittle.microserviceId,
-            name: microservice.name,
-        }));
 
     return (
         <LayoutWithSidebar navigation={nav}>

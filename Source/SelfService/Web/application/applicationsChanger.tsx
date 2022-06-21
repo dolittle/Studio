@@ -86,10 +86,11 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
         setCurrentApplicationId(newApplicationId);
         setCurrentEnvironment(newEnvironment);
 
-        const parts = window.location.pathname.split(
-            `/${currentApplicationEnvironment}/`
-        );
-        const href = `${parts[0]}/${newApplication}/${parts[1]}`;
+        const parts = window.location.pathname.split(`/${currentApplicationEnvironment}`);
+        // TODO: We just slap on any search querystring here, so it will be reused after the environment switch. We might want to do this more properly later?
+        // Like sending in extra params to this changer perhaps?
+        // This was done mainly to support keeping the filters in the LogsScreen.tsx.
+        const href = `${parts[0]}/${newApplication}${parts[1]}${history.location.search}`;
 
         // We use window here, as its a hack to get around the selfservice being duplicated
         window.location.href = href;
