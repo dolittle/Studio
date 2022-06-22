@@ -9,32 +9,32 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { HtmlInterceptorPlugin } = require('./HtmlInterceptorPlugin');
 
 export default (basePath, title) => {
-  return [
-    new ForkTsCheckerWebpackPlugin(),
+    return [
+        new ForkTsCheckerWebpackPlugin(),
 
-    new CleanWebpackPlugin({
-      dangerouslyAllowCleanPatternsOutsideProject: true,
-      dry: false,
-      cleanStaleWebpackAssets: false,
-      cleanOnceBeforeBuildPatterns: ['**/*.*']
-    }),
+        new CleanWebpackPlugin({
+            dangerouslyAllowCleanPatternsOutsideProject: true,
+            dry: false,
+            cleanStaleWebpackAssets: false,
+            cleanOnceBeforeBuildPatterns: ['**/*.*']
+        }),
 
-    new HtmlWebpackPlugin({
-      template: path.resolve(process.cwd(), 'index.ejs'),
-      templateParameters: {
+        new HtmlWebpackPlugin({
+            template: path.resolve(process.cwd(), 'index.ejs'),
+            templateParameters: {
 
-      },
-      publicPath: basePath,
-      metadata: {
-        title,
-        baseUrl: basePath
-      },
-      favicon: './images/favicon.svg',
-    }),
+            },
+            publicPath: basePath,
+            metadata: {
+                title,
+                baseUrl: basePath
+            },
+            favicon: './images/favicon.svg',
+        }),
 
-    new HtmlInterceptorPlugin({}),
-    new MiniCssExtractPlugin({
-      filename: './styles.css',
-    }),
-  ];
+        new HtmlInterceptorPlugin({}),
+        new MiniCssExtractPlugin({
+            filename: './styles.css',
+        }),
+    ];
 };
