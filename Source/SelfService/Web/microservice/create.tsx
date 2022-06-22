@@ -8,7 +8,6 @@ import React, { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router';
 
 import { Create as Base } from './base/create';
-import { Create as StaticSite } from './staticSite/create';
 import { Create as PurchaseOrder } from './purchaseOrder/create';
 
 import { HttpResponseApplication } from '../api/application';
@@ -52,17 +51,6 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
                     <path d="M24.5601 18.1093L24.6152 18.0773L24.6152 12.6924L20 10L15.3845 12.6924L15.3845 18.0773L20 20.7692L24.5601 18.1093Z" fill="#E9EAEC" />
                     <path d="M19.1753 27.3401L19.2305 27.308L19.2305 21.9231L14.6152 19.2307L9.9997 21.9231L9.9997 27.308L14.6152 29.9999L19.1753 27.3401Z" fill="#E9EAEC" />
                     <path d="M29.9449 27.3401L30 27.308L30 21.9231L25.3847 19.2307L20.7692 21.9231L20.7692 27.308L25.3847 29.9999L29.9449 27.3401Z" fill="#E9EAEC" />
-                </svg>
-            )
-        },
-        {
-            kind: 'static-site',
-            name: 'Static Site',
-            description: 'Setup container to serve static content with ease.',
-            icon: (
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M40 20C40 31.0457 31.0457 40 20 40C8.9543 40 0 31.0457 0 20C0 8.9543 8.9543 0 20 0C31.0457 0 40 8.9543 40 20Z" fill="#3B3D48" />
-                    <path d="M22 10H14C12.9 10 12.01 10.9 12.01 12L12 28C12 29.1 12.89 30 13.99 30H26C27.1 30 28 29.1 28 28V16L22 10ZM24 26H16V24H24V26ZM24 22H16V20H24V22ZM21 17V11.5L26.5 17H21Z" fill="#E9EAEC" />
                 </svg>
             )
         },
@@ -129,10 +117,6 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
             >
                 {microserviceTypeState === 'dolittle-microservice' && (
                     <Base application={_props.application} environment={environment} />
-                )}
-
-                {microserviceTypeState === 'static-site' && (
-                    <StaticSite application={_props.application} environment={environment} />
                 )}
 
                 {microserviceTypeState === 'purchase-order-api' && (
