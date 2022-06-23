@@ -13,11 +13,16 @@ import { TextField } from '../../theme/textField';
 import { Customer, getCustomer } from '../../api/customer';
 import { Typography } from '@mui/material';
 
+type ViewParams = {
+    customerId: string;
+    applicationId: string;
+};
+
 export const View: React.FunctionComponent<any> = (props) => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
 
-    const { customerId, applicationId } = useParams();
+    const { customerId, applicationId } = useParams<ViewParams>();
 
     const [loaded, setLoaded] = useState(false);
     const [fetchDataError, setFetchDataError] = useState(false);

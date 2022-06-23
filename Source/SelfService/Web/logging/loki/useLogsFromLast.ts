@@ -76,6 +76,7 @@ export const useLogsFromLast = <T>(last: bigint, newestFirst: boolean, labels: Q
                     scan((lastLines, newLines) => {
                         return lastLines.concat(newLines);
                     }, lines),
+                    startWith(lines),
                 )),
 
                 tap(lines => lines.sort((a, b) => {
@@ -101,17 +102,7 @@ export const useLogsFromLast = <T>(last: bigint, newestFirst: boolean, labels: Q
             catchError(error => of({ loading: false, failed: true, error, lines: [] })),
         );
 
-        const results = fetches.pipe(
-            scan((last, next) => ({
-                loading: next.loading,
-                lines: next.loading ? last.lines : next.lines,
-                failed: next.failed,
-                error: next.error,
-            }), { loading: false, failed: false, lines: [] } as ObservableLogLines<T>),
-            // tap(_ => _.lines = []),
-        );
-
-        const subscription = results.subscribe(setResult);
+        const subscription = fetches.subscribe(setResult);
         return () => subscription.unsubscribe();
     }, []);
 

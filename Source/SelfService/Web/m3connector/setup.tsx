@@ -10,9 +10,13 @@ type Props = {
     application: HttpResponseApplication
 };
 
+type ViewParams = {
+    environment: string;
+};
+
 export const View: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
-    const { environment } = useParams();
+    const { environment } = useParams<ViewParams>();
     const _props = props!;
     const application = _props.application;
     const applicationId = application.id;

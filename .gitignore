@@ -126,3 +126,5 @@ Environments/data
 *.scss.d.ts
 
 !Source/Data
+
+!Environment/mock/monitoring/logs

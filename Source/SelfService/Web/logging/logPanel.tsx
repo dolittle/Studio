@@ -2,32 +2,29 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useCallback } from 'react';
-import { Alert, AlertTitle, Box, Divider, FormControlLabel, FormGroup, Grid, Link, Paper, Switch, Typography } from '@mui/material';
+import { InView } from 'react-intersection-observer';
+import {
+    Alert,
+    AlertTitle,
+    Box,
+    Divider,
+    FormControlLabel,
+    FormGroup,
+    Grid,
+    Link,
+    Paper,
+    Switch,
+    Typography,
+} from '@mui/material';
 
-import { ObservableLogLines } from './loki/logLines';
+import { ObservableLogLines, ObservablePartialLogLines } from './loki/logLines';
 import { DataLabels } from './loki/types';
-import { QueryLabels } from './loki/queries';
 
-import { LogFilterMicroservice, LogFilterObject } from './logFilter/logFilterPanel';
+import { LogFilterObject } from './logFilter/logFilterPanel';
 import { ColoredLine } from './lineParsing';
 import { LogLines } from './logLines';
-
-
-export const logPanelQueryLabels = (applicationId: string, environment: string, filters: LogFilterObject): [QueryLabels, string[]] => {
-    const labels = {
-        job: 'microservice',
-        application_id: applicationId,
-        environment,
-        microservice_id: filters.microservice !== undefined && filters.microservice.length > 0
-            ? filters.microservice.map(_ => _.id)
-            : undefined,
-    };
-
-    const pipeline = filters.searchTerms.map(term => `|= "${term}"`);
-
-    return [labels, pipeline];
-};
-
+import { LoadMoreLogs } from './logsInRange';
+import { LogContextDialog, LogContextDialogState } from './logContexDialog';
 
 /**
  * The props for a {@link LogPanel} component.
@@ -44,24 +41,24 @@ export type LogPanelProps = {
     environment: string;
 
     /**
-     * The Environment to the logs are for.
+     * The filters to apply to the logs query.
      */
-    microservices?: LogFilterMicroservice[];
+    filters: LogFilterObject;
 
     /**
-     * The human readable description of what timespan the logs are displayed for.
+     * Whether or not automatic fetching of new lines when scrolling to the bottom should be enabled.
      */
-    timespan: string;
+    autoLoadMoreLogs?: boolean;
 
     /**
-     * The retrieved logs to render.
+     * The fetched logs to display in the panel.
      */
-    logs: ObservableLogLines<ColoredLine>;
+    logs: ObservableLogLines<ColoredLine> | ObservablePartialLogLines<ColoredLine>;
 
     /**
-     * Whether or not to show the 'Show log line context' button.
+     * The function to call to load more logs (if available).
      */
-    enableShowLineContextButton?: boolean;
+    loadMoreLogs?: LoadMoreLogs;
 };
 
 /**
@@ -69,10 +66,40 @@ export type LogPanelProps = {
  */
 export const LogPanel = (props: LogPanelProps) => {
     const [showTimestamp, setShowTimestamp] = useState(false);
+    const [showMicroservice, setShowMicroservice] = useState(false);
 
-    const handleOnClickShowLineContext = useCallback((timestamp: bigint, labels: DataLabels) => {
-        alert(`Show context for ${JSON.stringify(labels)} around ${timestamp}`);
-    }, []);
+    const [logContextDialog, setLogContextDialog] = useState<LogContextDialogState>({
+        show: false,
+        application: '',
+        applicationId: '',
+        environment: '',
+        microservice: '',
+        microserviceId: '',
+        from: 0n,
+        to: 0n,
+    });
+
+    const handleOnClickShowLineContext = useCallback(
+        (timestamp: bigint, labels: DataLabels) =>
+            setLogContextDialog({
+                show: true,
+                application: labels.application,
+                applicationId: labels.application_id,
+                environment: labels.environment,
+                microservice: labels.microservice,
+                microserviceId: labels.microservice_id,
+                from: timestamp - 86_400_000_000_000n,
+                to: timestamp,
+            }),
+        [setLogContextDialog]
+    );
+
+    const handleInViewChange = useCallback(
+        (visible: boolean) => {
+            if (visible && props.autoLoadMoreLogs === true) props.loadMoreLogs?.();
+        },
+        [props.autoLoadMoreLogs, props.loadMoreLogs]
+    );
 
     if (props.logs.failed) {
         return (
@@ -80,20 +107,22 @@ export const LogPanel = (props: LogPanelProps) => {
                 <Grid item xs={12} md={6}>
                     <Alert severity='error' variant='outlined'>
                         <AlertTitle>Something went wrong</AlertTitle>
-                        Please try again later. If the problem persists, please <Link href="mailto:support@dolittle.com">contact support</Link>.
+                        Please try again later. If the problem persists, please{' '}
+                        <Link href='mailto:support@dolittle.com'>contact support</Link>.
                     </Alert>
                 </Grid>
             </Grid>
         );
     }
 
-    if (props.logs.lines.length === 0) {
+    if (!props.logs.loading && props.logs.lines.length === 0) {
         return (
             <Grid container spacing={2} sx={{ pt: 2 }}>
                 <Grid item xs={12} md={6}>
                     <Alert severity='info' variant='outlined'>
                         <AlertTitle>No logs found</AlertTitle>
-                        Try adjusting the filters, or verify that your microservices are running.
+                        Try adjusting the filters, or verify that your microservices are
+                        running.
                     </Alert>
                 </Grid>
             </Grid>
@@ -101,55 +130,90 @@ export const LogPanel = (props: LogPanelProps) => {
     }
 
     const microservices =
-        props.microservices === undefined || props.microservices?.length === 0
+        props.filters.microservice === undefined ||
+        props.filters.microservice?.length === 0
             ? 'all Microservices'
-            : props.microservices?.length === 1
-                ? `${props.microservices?.[0].name} Microservice`
-                : `${props.microservices?.map(_ => _.name).join(', ')} Microservices`;
+            : props.filters.microservice?.length === 1
+            ? `${props.filters.microservice?.[0].name} Microservice`
+            : `${props.filters.microservice
+                  ?.map((_) => _.name)
+                  .join(', ')} Microservices`;
 
-    const title = <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>Displaying <b>{props.timespan}</b> for {props.application} Application, {props.environment} Environment, {microservices}</Typography>;
+    const title = (
+        <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>
+            Displaying{' '}
+            <b>{props.filters.dateRange === 'live' ? 'live logs' : 'date range logs'}</b>{' '}
+            for {props.application} Application, {props.environment} Environment,{' '}
+            {microservices}
+        </Typography>
+    );
+
+    const dialog = LogContextDialog(logContextDialog, setLogContextDialog, showTimestamp);
 
     return (
-        <Grid container spacing={2} sx={{ pt: 2 }}>
-            <Grid item xs={12}>
-                <Paper elevation={1} sx={{ p: 2 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} md={10}>{title}</Grid>
-                        <Grid item xs={12} md={2}>
-                            <Box display='flex' justifyContent='flex-end'>
-                                <FormGroup>
-                                    <FormControlLabel
-                                        label='Timestamp'
-                                        control={<Switch
-                                            checked={showTimestamp}
-                                            onChange={(event) => setShowTimestamp(event.target.checked)}
-                                        />}
-                                    />
-                                </FormGroup>
-                            </Box>
+        <>
+            {dialog}
+            <Grid container spacing={2} sx={{ pt: 2 }}>
+                <Grid item xs={12}>
+                    <Paper elevation={1} sx={{ p: 2 }}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} md={10}>
+                                {title}
+                            </Grid>
+                            <Grid item xs={12} md={2}>
+                                <Box display='flex' justifyContent='flex-end'>
+                                    <FormGroup>
+                                        <FormControlLabel
+                                            label='Timestamp'
+                                            control={
+                                                <Switch
+                                                    checked={showTimestamp}
+                                                    onChange={(event) =>
+                                                        setShowTimestamp(
+                                                            event.target.checked
+                                                        )
+                                                    }
+                                                />
+                                            }
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <FormControlLabel
+                                            label='Microservice'
+                                            control={
+                                                <Switch
+                                                    checked={showMicroservice}
+                                                    onChange={(event) =>
+                                                        setShowMicroservice(
+                                                            event.target.checked
+                                                        )
+                                                    }
+                                                />
+                                            }
+                                        />
+                                    </FormGroup>
+                                </Box>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    <Divider sx={{ borderColor: 'background.paper', m: 1 }} />
-                    <Box
-                        component='pre'
-                        sx={{
-                            'm': 0,
-                            'whiteSpace': 'pre-wrap',
-                            'typography': 'monospace',
-                            '&.hide-timestamp div.log-line-timestamp': {
-                                display: 'none',
-                            },
-                        }}
-                        className={showTimestamp ? '' : 'hide-timestamp'}
-                    >
+                        <Divider sx={{ borderColor: 'background.paper', m: 1 }} />
                         <LogLines
-                            lines={props.logs.lines}
-                            showContextButtonInLines={props.enableShowLineContextButton ?? false}
+                            logs={props.logs}
+                            showContextButton
+                            showTimestamp={showTimestamp}
+                            showMicroservice={showMicroservice}
+                            showDateRangeHeaderAndFooter={
+                                props.filters.dateRange !== 'live'
+                            }
                             onClickShowContextButton={handleOnClickShowLineContext}
                         />
-                    </Box>
-                </Paper>
+                        <InView
+                            onChange={handleInViewChange}
+                            // TODO: We can set the rootMargin to trigger earlier than reaching the actual bottom
+                            fallbackInView={false}
+                        />
+                    </Paper>
+                </Grid>
             </Grid>
-        </Grid>
+        </>
     );
 };

@@ -1,3 +1,86 @@
+# [1.34.0] - 2022-6-21 [PR: #206](https://github.com/dolittle/Studio/pull/206)
+## Summary
+
+This PR does two things:
+1) It stores the state of the `LogsScreen` in the URL search querystring, this means that it can be shared with others and you can reload the page without resetting the filters.
+2) The `ApplicationsChanger` component reuses whatever URL search querystring for the current URL when switching environments. Together with the first change, this means that switching environments/apps while looking at logs will keep the filters after switching environments.
+
+While working on it, I found a little bit of a strange setup with multiple routers that made the querystring changes not propagate properly - and I don't know if that is intended usage. But I think we can leave this for later. Also 2) is a little bit hacky, but I don't think we should bother with doing it more properly (passing in props) before we have had a chance to revisit the structure and state management of the app as a whole.
+
+
+# [1.33.0] - 2022-6-17 [PR: #208](https://github.com/dolittle/Studio/pull/208)
+## Summary
+
+Added the `SHOW` button on log lines in the `LogPanel` that, when clicked, opens a dialog that displays logs without any filters for the microservice that logged this line. The dialog shows the selected log line at the top, and initially 10 more back in time. A button can be clicked to load 10 more (as many times as you want) further back in time, to a maximum time of one day back.
+
+This is useful in two cases:
+1) When you have filtered the logs to find an interesting line (e.g. a specific exception), and you want to see the logs leading up to that exception.
+2) When viewing logs from multiple microservices, and you find a line of interest. In this case clicking the context would "hide" the logs from all the other microservices.
+
+![image](https://user-images.githubusercontent.com/1014990/174119948-c66c9401-046a-4246-88ca-833de7634ef8.png)
+
+Also added a header and footer in the `LogLines` view that shows the beginning and end of the currently shown date ranges. These will show (in conjunction with the timestamp) when we did find stored logs.
+
+![image](https://user-images.githubusercontent.com/1014990/174120199-c14b4004-fe22-4b5e-af30-d3c083dae884.png)
+
+
+### Changed
+
+- To be able to reuse the `LogLines` and `useLogs...` hooks to render the dialog. The structure of the components had to change quite a bit. Props have moved around a little, and the `LogPanelAbsolute` and `LogPanelRelative` have changed into `LogsInRange` and `LogsFromLast` components respectively, that accepts a render function prop used to render the actual component showing the logs.
+- The `header` and `footer` props of the `LogPanel` was also removed, as it did not make sense anymore with the restructuring.
+
+
+# [1.32.0] - 2022-6-16 [PR: #205](https://github.com/dolittle/Studio/pull/205)
+## Summary
+
+Adds "infinite scrolling" to the date-range log view (`LogPanelAbsolute`). This works by adding an empty div to the bottom of the `LogPanel` and when it is scrolled into the viewport, it triggers loading more logs (which only happens if there are more to load).
+
+Currently this will only work on browsers with the `IntersectionObserver` api supported: https://caniuse.com/mdn-api_intersectionobserver. Which I believe is fine. For browsers without the support, no auto-loading will happen.
+
+### Added
+
+- `LogPanel` accepts extra content before and after the log-lines with a `header` and `footer` property.
+- Some hardcoded values in `LogPanelRelative` and `LogPanelAbsolute` are exposed now with props as defaults.
+- `LogPanelAbsolute` now accepts a Ref as a prop that will be set to the `loadMoreLogs` function so it ready to accept loading more logs from the outside. This made sense to prepare it for the "Context Popover" that we might get to.
+
+
+# [1.31.0] - 2022-6-16 [PR: #207](https://github.com/dolittle/Studio/pull/207)
+## Summary
+
+ A microservice name column has been added to the log panel. This can be triggered via a new switch toggle in the header. 
+![image](https://user-images.githubusercontent.com/22228314/174037958-0eb162c8-8258-4544-99a7-d6814646d42e.png)
+
+
+# [1.30.4] - 2022-6-15 [PR: #204](https://github.com/dolittle/Studio/pull/204)
+## Summary
+
+Adds shimmering LogLines in a LogPanel that is currently loading more logs. Also fixed the "No logs found" message so that it does not appear while loading logs.
+
+Note: A slightly annoying behaviour is - if you toggle the Timestamp while shimmering lines are shown, the animation is not in sync with the text. But this is kind of edge case, as the loading doesn't really appear for long.
+
+![image](https://user-images.githubusercontent.com/1014990/173665357-8d1964b0-0fc3-476c-b255-e4786861cf9b.png)
+
+### Changed
+
+- The `useLogsFromLast` no longer retains the last loaded logs while loading more, this seems more in line with the designed UX with these new shimmering lines.
+
+### Fixed
+
+- A tiny bug in `useLogFromRange` caused it to not update the state to `loading: true` while fetching logs.
+
+
+# [1.30.3] - 2022-6-8 [PR: #202](https://github.com/dolittle/Studio/pull/202)
+## Summary
+
+- Fixes crashing app when manually entering invalid date in logs date-range filter
+
+
+# [1.30.2] - 2022-6-7 [PR: #201](https://github.com/dolittle/Studio/pull/201)
+## Summary
+
+Fix deployment workflows from using the `env` context.
+
+
 # [1.30.1] - 2022-6-3 [PR: #198](https://github.com/dolittle/Studio/pull/198)
 ## Summary
  - Fixes so that the microservice filter dropdown only shows microservices for the current environment

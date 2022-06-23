@@ -1,0 +1,88 @@
+name: Update Configmaps Field
+
+on:
+  workflow_call:
+    inputs:
+      namespace:
+        description: 'Namespace of the deployment'
+        required: true
+        type: string
+      name:
+        description: 'Name of the configmap in k8s'
+        required: true
+        type: string
+      field:
+        description: 'Name of the field within the configmaps data property'
+        required: true
+        type: string
+      value:
+        description: 'Value to set to the field'
+        required: true
+        type: string
+      environment:
+        description: 'GitHub environment to run the job on, optional'
+        required: false
+        type: string
+      environment-url:
+        description:  'GitHub environments URL, can only be defined if environment is also defined, optional'
+        required: false
+        type: string
+        default: ''
+    secrets:
+      K8S_CLUSTER_URL:
+        description: 'URL for the kubernetes cluster'
+        required: true
+      K8S_DEVOPS_SECRET:
+        description: |
+          The complete kubernetes secret object (YAML or JSON) for a serviceaccounts token.
+          The serviceaccount needs permissions to patch configmaps in the given namespace'
+        required: true
+    
+jobs:
+  patch-json:
+    runs-on: ubuntu-latest
+    outputs:
+      patch-json: ${{ steps.patch-json.outputs.patch_json }}
+    steps:
+      - name: Create patch JSON
+        id: patch-json
+        run: |
+          echo ::set-output name=patch_json::'{"data": { "${{ inputs.field }}": "${{ inputs.value }}" }}'
+    
+  update-config-map-with-environment-url:
+    if: inputs.environment-url != ''
+    runs-on: ubuntu-latest
+    needs:
+      - patch-json
+    environment: 
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.environment-url }}
+    steps:
+      - uses: azure/k8s-set-context@v2
+        with: 
+          method: service-account
+          k8s-url: ${{ secrets.K8S_CLUSTER_URL }}
+          k8s-secret: ${{ secrets.K8S_DEVOPS_SECRET }}
+
+      - name: Update configmaps field
+        run: |
+          kubectl -n ${{ inputs.namespace }} patch configmap ${{ inputs.name }} --type merge -p '${{ needs.patch-json.outputs.patch-json }}'
+
+  # If the environment-url would be an empty string, GitHub prints a warning annotation for it.
+  # By using a separate action that omits the url from the environment property we can avoid that warning.
+  update-config-map-without-environment-url:
+    if: inputs.environment-url == ''
+    runs-on: ubuntu-latest
+    needs:
+      - patch-json
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: azure/k8s-set-context@v2
+        with: 
+          method: service-account
+          k8s-url: ${{ secrets.K8S_CLUSTER_URL }}
+          k8s-secret: ${{ secrets.K8S_DEVOPS_SECRET }}
+
+      - name: Update configmaps field
+        run: |
+          kubectl -n ${{ inputs.namespace }} patch configmap ${{ inputs.name }} --type merge -p '${{ needs.patch-json.outputs.patch-json }}'
