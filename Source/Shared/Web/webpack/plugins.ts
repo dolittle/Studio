@@ -29,7 +29,7 @@ export default (basePath, title) => {
                 title,
                 baseUrl: basePath
             },
-            favicon: './images/favicon.svg',
+            favicon: './images/favicon.png',
         }),
 
         new HtmlInterceptorPlugin({}),
