@@ -1,5 +1,5 @@
 import React from "react"
-import { themeOptions as darkThemeOptions } from '../src/muiDarkTheme';
+import { themeOptions as darkThemeOptions } from '../muiDarkTheme';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material'
 
