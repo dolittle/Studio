@@ -1,3 +1,15 @@
+# [1.34.2] - 2022-6-27 [PR: #210](https://github.com/dolittle/Studio/pull/210)
+## Summary
+
+Removed code that involves 'create new static site microservice' as it is no longer in use.
+
+### Removed
+
+Removed Card and options in code to select 'kind=static-site' .
+
+![image](https://user-images.githubusercontent.com/19160439/174993400-7064d094-4d79-456b-b980-a66041a0a592.png)
+
+
 # [1.34.1] - 2022-6-27 [PR: #209](https://github.com/dolittle/Studio/pull/209)
 ## Summary
 
