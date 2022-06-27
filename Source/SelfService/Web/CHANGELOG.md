@@ -1,3 +1,20 @@
+# [1.34.1] - 2022-6-27 [PR: #209](https://github.com/dolittle/Studio/pull/209)
+## Summary
+
+The appearance of the page has been changed in the browser tab.
+
+<img width="167" alt="Screenshot 2022-06-21 at 14 09 45" src="https://user-images.githubusercontent.com/19160439/174795910-9bb62377-4e8d-4bf8-848d-eafc382cfac5.png">
+
+
+### Added
+
+Added favicon in two formats: in most cases svg format, but also in favicon.ico format for edge cases.
+
+### Changed
+
+ Changed page tiltle tag from 'Studio' to 'Dolittle Studio' for better UX.
+
+
 # [1.34.0] - 2022-6-21 [PR: #206](https://github.com/dolittle/Studio/pull/206)
 ## Summary
 
