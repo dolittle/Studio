@@ -119,32 +119,30 @@ export const getDefaultMenuWithItems = (
             <ul>
                 {items.map((link) => {
                     return (
-                        <a key={link.name}>
+                        <Box key={link.name}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                const href = link.href;
+                                history.push(href);
+                            }}
+                            sx={{
+                                display: 'flex',
+                                whiteSpace: 'nowrap',
+                                padding: '0.5rem 1rem',
+                                cursor: 'pointer'
+                            }}
+                        >
                             <Box
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    const href = link.href;
-                                    history.push(href);
-                                }}
                                 sx={{
-                                    display: 'flex',
-                                    whiteSpace: 'nowrap',
-                                    padding: '0.5rem 1rem',
-                                    cursor: 'pointer'
+                                    marginRight: '1rem'
                                 }}
                             >
-                                <Box
-                                    sx={{
-                                        marginRight: '1rem'
-                                    }}
-                                >
-                                    {link.icon}
-                                </Box>
-                                <Box>
-                                    {link.name}
-                                </Box>
+                                {link.icon}
                             </Box>
-                        </a>
+                            <Box>
+                                {link.name}
+                            </Box>
+                        </Box>
                     );
                 })}
             </ul>
