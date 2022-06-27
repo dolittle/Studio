@@ -7,6 +7,17 @@ import { History, LocationState } from 'history';
 import './layout.scss';
 import { AlertBox } from '../components/alertBox';
 import { HttpResponseApplication } from '../api/application';
+import {
+    BackupRounded,
+    HexagonRounded,
+    InsightsRounded,
+    FindInPageRounded,
+    TextSnippetRounded,
+    RemoveCircleRounded,
+    PolylineRounded
+} from '@mui/icons-material';
+import { Box } from '@mui/material';
+
 
 type Props = {
     navigation: React.ReactNode;
@@ -108,18 +119,31 @@ export const getDefaultMenuWithItems = (
             <ul>
                 {items.map((link) => {
                     return (
-                        <li key={link.name}>
-                            <a
-                                href='#'
+                        <a key={link.name}>
+                            <Box
                                 onClick={(event) => {
                                     event.preventDefault();
                                     const href = link.href;
                                     history.push(href);
                                 }}
+                                sx={{
+                                    display: 'flex',
+                                    whiteSpace: 'nowrap',
+                                    padding: '0.5rem 1rem'
+                                }}
                             >
-                                {link.name}
-                            </a>
-                        </li>
+                                <Box
+                                    sx={{
+                                        marginRight: '1rem'
+                                    }}
+                                >
+                                    {link.icon}
+                                </Box>
+                                <Box>
+                                    {link.name}
+                                </Box>
+                            </Box>
+                        </a>
                     );
                 })}
             </ul>
@@ -141,26 +165,33 @@ export const getMenuWithApplication = (
         {
             href: `/backups/application/${applicationId}/overview`,
             name: 'Backups',
+            icon: <BackupRounded/>
         },
         {
             href: `/microservices/application/${applicationId}/${environment}/overview`,
             name: 'Microservices',
+            icon: <HexagonRounded />
         },
         {
             href: `/insights/application/${applicationId}/${environment}/overview`,
             name: 'Insights',
+            icon: <InsightsRounded />
         },
         {
             href: `/containerregistry/application/${applicationId}/${environment}/overview`,
             name: 'Container Registry',
+            // TODO: need to import the svg for container registry manually
+            icon: <RemoveCircleRounded />
         },
         {
             href: `/documentation/application/${applicationId}/${environment}/overview`,
             name: 'Documentation',
+            icon: <FindInPageRounded/>
         },
         {
             href: `/logs/application/${applicationId}/${environment}`,
             name: 'Logs',
+            icon: <TextSnippetRounded/>
         },
     ];
 
@@ -169,6 +200,7 @@ export const getMenuWithApplication = (
         items.splice(items.length - 1, 0, {
             href: `/m3connector/application/${applicationId}/${environment}/details`,
             name: 'M3 Connector',
+            icon: <PolylineRounded/>
         });
     }
 
