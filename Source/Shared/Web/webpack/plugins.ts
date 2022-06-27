@@ -28,7 +28,8 @@ export default (basePath, title) => {
             metadata: {
                 title,
                 baseUrl: basePath
-            }
+            },
+            favicon: './images/favicon.png',
         }),
 
         new HtmlInterceptorPlugin({}),

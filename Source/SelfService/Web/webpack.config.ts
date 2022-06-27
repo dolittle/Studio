@@ -26,5 +26,5 @@ module.exports = (env, argv) => {
             },
         };
         config.devServer.before = (app, server, compiler) => { };
-    }, 9007, 'Studio');
+    }, 9007, 'Dolittle Studio');
 };
