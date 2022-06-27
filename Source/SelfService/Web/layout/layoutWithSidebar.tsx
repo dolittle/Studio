@@ -129,7 +129,8 @@ export const getDefaultMenuWithItems = (
                                 sx={{
                                     display: 'flex',
                                     whiteSpace: 'nowrap',
-                                    padding: '0.5rem 1rem'
+                                    padding: '0.5rem 1rem',
+                                    cursor: 'pointer'
                                 }}
                             >
                                 <Box
