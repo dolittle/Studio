@@ -22,7 +22,7 @@ export const logFilterToLabelsAndPipeline = (applicationId: string, environment:
                 : undefined,
     };
 
-    const pipeline = filters.searchTerms.map((term) => `|= "${term}"`);
+    const pipeline = filters.searchTerms.map((term) => `|~ "${term}"`);
 
     return [labels, pipeline];
 };

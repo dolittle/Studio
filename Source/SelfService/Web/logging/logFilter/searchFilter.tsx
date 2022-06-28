@@ -51,7 +51,7 @@ export const SearchFilter = (props: SearchFilterProps) => {
             label={''}
             value={query}
             size='small'
-            placeholder='Search is case sensitive...'
+            placeholder='Search...'
             InputProps={{
                 startAdornment:
                     <InputAdornment
