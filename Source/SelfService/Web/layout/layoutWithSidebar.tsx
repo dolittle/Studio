@@ -13,12 +13,10 @@ import {
     InsightsRounded,
     FindInPageRounded,
     TextSnippetRounded,
-    RemoveCircleRounded,
     PolylineRounded
 } from '@mui/icons-material';
 import { Box } from '@mui/material';
-// @ts-ignore
-import { ContainerRegistryRounded } from '@Shared/web/assets/icons';
+import { ContainerRegistryRounded } from '../assets/icons';
 
 
 type Props = {
@@ -181,8 +179,7 @@ export const getMenuWithApplication = (
         {
             href: `/containerregistry/application/${applicationId}/${environment}/overview`,
             name: 'Container Registry',
-            // TODO: need to import the svg for container registry manually
-            icon: <ContainerRegistryRounded/>
+            icon: <ContainerRegistryRounded />
         },
         {
             href: `/documentation/application/${applicationId}/${environment}/overview`,
