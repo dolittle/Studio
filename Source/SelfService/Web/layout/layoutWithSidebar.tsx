@@ -17,6 +17,7 @@ import {
 } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import { ContainerRegistryRounded } from '../assets/icons';
+import { DolittleLogoMedium } from '../assets/logos';
 
 
 type Props = {
@@ -33,7 +34,10 @@ export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
             <div className='with-sidebar'>
                 <div>
                     <div className='sidebar'>
-                        <svg
+                        <div className="logo">
+                            <DolittleLogoMedium />
+                        </div>
+                        {/* <svg
                             onClick={() => (window.location.pathname = '/selfservice/')}
                             className='logo'
                             width='86'
@@ -97,7 +101,7 @@ export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
                                     <rect width='86' height='20' fill='white' />
                                 </clipPath>
                             </defs>
-                        </svg>
+                        </svg> */}
                         {navigationPanel}
                     </div>
                     <div className='not-sidebar'>
@@ -164,7 +168,7 @@ export const getMenuWithApplication = (
         {
             href: `/backups/application/${applicationId}/overview`,
             name: 'Backups',
-            icon: <BackupRounded/>
+            icon: <BackupRounded />
         },
         {
             href: `/microservices/application/${applicationId}/${environment}/overview`,
@@ -184,12 +188,12 @@ export const getMenuWithApplication = (
         {
             href: `/documentation/application/${applicationId}/${environment}/overview`,
             name: 'Documentation',
-            icon: <FindInPageRounded/>
+            icon: <FindInPageRounded />
         },
         {
             href: `/logs/application/${applicationId}/${environment}`,
             name: 'Logs',
-            icon: <TextSnippetRounded/>
+            icon: <TextSnippetRounded />
         },
     ];
 
@@ -198,7 +202,7 @@ export const getMenuWithApplication = (
         items.splice(items.length - 1, 0, {
             href: `/m3connector/application/${applicationId}/${environment}/details`,
             name: 'M3 Connector',
-            icon: <PolylineRounded/>
+            icon: <PolylineRounded />
         });
     }
 
