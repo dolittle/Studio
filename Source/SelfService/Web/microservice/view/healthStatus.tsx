@@ -7,7 +7,8 @@ import { Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHea
 import { useSnackbar } from 'notistack';
 
 import { HttpResponsePodStatus, PodInfo, ContainerStatusInfo, restartMicroservice } from '../../api/api';
-import { ViewLogIcon, DownloadLogIcon } from '../../theme/icons';
+// @ts-ignore
+import { ViewLogIcon, DownloadLogIcon } from '@Shared/Web/assets/icons';
 import { ButtonText } from '../../theme/buttonText';
 
 type Props = {
