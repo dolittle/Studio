@@ -13,7 +13,8 @@ import {
     InsightsRounded,
     FindInPageRounded,
     TextSnippetRounded,
-    PolylineRounded
+    PolylineRounded,
+    SettingsRounded
 } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import { ContainerRegistryRounded } from '../assets/icons';
@@ -164,6 +165,11 @@ export const getMenuWithApplication = (
             href: `/documentation/application/${applicationId}/${environment}/overview`,
             name: 'Documentation',
             icon: <FindInPageRounded />
+        },
+        {
+            href: '/.auth/cookies/initiate',
+            name: 'Change Customer',
+            icon: <SettingsRounded />
         }
 
     ];

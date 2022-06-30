@@ -45,11 +45,11 @@ export const TopRightMenu: React.FunctionComponent<Props> = (props) => {
             <NotificationsIcon sx={styles.icon} />
         </IconButton>
 
-        <AccountSettingsMenu child={
+        {/* <AccountSettingsMenu child={
             <IconButton aria-label="more-options" sx={styles.iconButton} size="large">
                 <AccountCircleIcon sx={styles.icon} />
             </IconButton>
-        } />
+        } /> */}
 
         <IconButton
             aria-label="account"
