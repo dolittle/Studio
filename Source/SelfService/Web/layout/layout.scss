@@ -46,6 +46,11 @@
     text-transform: uppercase;
   }
 
+  .sidebarBottomMenu {
+    position: fixed;
+    bottom: 0;
+  }
+
   .not-sidebar {
     /* ↓ grow from nothing */
     flex-basis: 0;
