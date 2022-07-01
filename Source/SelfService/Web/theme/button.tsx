@@ -4,6 +4,7 @@
 import React from 'react';
 
 import { SxProps } from '@mui/material/styles';
+import { themeDark } from './theme';
 import { Button as MuiButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -22,19 +23,19 @@ const styles = {
         padding: '8px 12px',
         marginTop: 1,
         marginRight: 1,
-        color: '#2C2B33',
+        color: themeDark.palette.divider,
     } as SxProps,
     primary: {
-        'backgroundColor': '#6678F6',
+        'backgroundColor': themeDark.palette.primary.main,
         '&:hover': {
-            backgroundColor: '#B3BBFB',
+            backgroundColor: themeDark.palette.primary.light,
         },
         '&:disabled': {
-            backgroundColor: '#93959F',
+            backgroundColor: themeDark.palette.text.disabled,
             color: '#3B3D48',
         },
         '&:focus': {
-            backgroundColor: '#8C9AF8',
+            backgroundColor: themeDark.palette.primary.main,
         },
     } as SxProps,
 };
