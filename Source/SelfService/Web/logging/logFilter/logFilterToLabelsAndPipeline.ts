@@ -23,8 +23,7 @@ export const logFilterToLabelsAndPipeline = (applicationId: string, environment:
     };
 
     const pipeline = filters.searchTerms
-        .map((term) => term.replace(/[.*+?^${}()|\\"]/g, '\\$&'))
-        .map((term) => term.replace(/[[\]]/g, '\\\\$&'))
+        .map((term) => term.replace(/[.*+?^${}()|[\]\\"]/g, '\\\\$&'))
         .map((term) => `|~"(?i)${term}"`);
 
     return [labels, pipeline];
