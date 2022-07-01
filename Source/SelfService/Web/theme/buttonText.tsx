@@ -5,7 +5,8 @@ import React from 'react';
 
 import { SxProps } from '@mui/material/styles';
 import { Button as MuiButton } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { themeDark } from './theme';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 type Props = {
     onClick?: (event: React.MouseEvent<HTMLElement>) => void;
@@ -29,42 +30,42 @@ const styles = {
         backgroundColor: 'transparent',
     } as SxProps,
     secondary: {
-        'color': '#FAFAFA',
+        'color': themeDark.palette.text.primary,
         'backgroundColor': 'transparent',
         '&:hover': {
-            color: '#B3BBFB',
+            color: themeDark.palette.primary.light,
             backgroundColor: 'transparent'
         },
         '&:active': {
-            color: '#8C9AF8',
+            color: themeDark.palette.primary.main,
             backgroundColor: 'transparent'
         },
         '&:focus': {
-            color: '#8C9AF8',
+            color: themeDark.palette.primary.main,
             backgroundColor: 'transparent'
         },
         '&:disabled': {
-            color: '#93959F',
+            color: themeDark.palette.text.disabled,
             backgroundColor: 'transparent'
         },
 
     } as SxProps,
     primary: {
-        'color': '#6678F6',
+        'color': themeDark.palette.primary.main,
         '&:hover': {
-            color: '#B3BBFB',
+            color: themeDark.palette.primary.light,
             backgroundColor: 'transparent'
         },
         '&:active': {
-            color: '#8C9AF8',
+            color: themeDark.palette.primary.main,
             backgroundColor: 'transparent'
         },
         '&:focus': {
-            color: '#8C9AF8',
+            color: themeDark.palette.primary.main,
             backgroundColor: 'transparent'
         },
         '&:disabled': {
-            color: '#93959F',
+            color: themeDark.palette.text.disabled,
             backgroundColor: 'transparent'
         },
     } as SxProps,
@@ -79,7 +80,7 @@ export const ButtonText = (props: Props) => {
     const buttonTypeStyles = styles[buttonType];
     const buttonSize = _props.size ?? 'medium';
 
-    let startIcon: React.ReactNode = _props.withIcon ? <AddIcon /> : null;
+    let startIcon: React.ReactNode = _props.withIcon ? <AddCircleIcon /> : null;
     startIcon = _props.startIcon ?? startIcon;
 
     return (

@@ -64,7 +64,7 @@ const typography: TypographyOptions = {
         fontSize: '0.875rem', //14px
     },
     button: {
-        fontSize: '0.875rem', //14px
+        fontSize: '0.75rem', //14px
     },
     caption: {
         fontSize: '0.75rem', //12px
