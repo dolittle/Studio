@@ -6,20 +6,31 @@ import React, {
     useEffect
 } from 'react';
 import { useHistory } from 'react-router-dom';
-import { List } from '@fluentui/react/lib/List';
-import { Link } from '@fluentui/react';
 import { useSnackbar } from 'notistack';
 
 import {
     ShortInfoWithEnvironment
 } from '../api/api';
 
-import { BreadCrumbContainer } from '../layout/breadcrumbs';
-import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { LayoutWithoutSidebar } from '../layout/layoutWithoutSidebar';
 import { useGlobalContext } from '../stores/notifications';
-import { ButtonText } from '../theme/buttonText';
 import { HttpResponseApplications, getApplications } from '../api/application';
-import { Typography } from '@mui/material';
+
+import { Box, Typography } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
+
+import './applicationsScreen.scss';
+import { ButtonText } from '../theme/buttonText';
+import { Button } from '../theme/button';
+import { MainLogo } from '../theme/assets/logos/logos';
+
+const styles = {
+    'marginBlockStart': '98px',
+    'marginBlockEnd': '148px',
+    '& button:first-child': {
+        marginInlineEnd: '66px'
+    }
+};
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
     const history = useHistory();
@@ -29,6 +40,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
     const [loaded, setLoaded] = useState(false);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
     const { setCurrentEnvironment } = useGlobalContext();
+
 
     // TODO handle when not 200!
     useEffect(() => {
@@ -50,30 +62,19 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         return null;
     }
 
-    const onRenderCell = (item?: ShortInfoWithEnvironment, index?: number | undefined): JSX.Element => {
-        const application = item!;
-        return (
-            <Link onClick={() => {
-                setCurrentEnvironment(application.environment);
-                const href = `/microservices/application/${application.id}/${application.environment}/overview`;
-                history.push(href);
-            }}
-                underline>
-                {application.name.toUpperCase()} - {application.environment}
-            </Link>
-        );
+    const onEnvironmentChoose = (application) => {
+        setCurrentEnvironment(application.environment);
+        const href = `/microservices/application/${application.id}/${application.environment}/overview`;
+        history.push(href);
     };
 
     return (
         <>
-            <LayoutWithSidebar navigation={[]}>
-                <div id="topNavBar" className="nav flex-container">
-                    <div className="left flex-start">
-                        <BreadCrumbContainer routes={[]} />
-                    </div>
-                </div>
+            <LayoutWithoutSidebar>
 
-                <Typography variant='h1' my={2}>Applications Screen</Typography>
+                <Typography variant='h2' my={2} sx={{ letterSpacing: '-0.5px', lineHeight: '26px', mb: '28px' }}>
+                    Select Your Application & Environment
+                </Typography>
 
                 <ButtonText withIcon={true} onClick={() => {
                     if (!canCreateApplication) {
@@ -86,8 +87,27 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
 
                 }}>Create new Application</ButtonText>
 
-                <List items={data} onRenderCell={onRenderCell} />
-            </LayoutWithSidebar >
+                <ul className='application-select-wrapper'>
+                    {data.map(application => {
+                        return (
+                            <Button key={application.environment} onClick={() => onEnvironmentChoose(application)}
+                            >
+                                {application.name} - {application.environment}
+                            </Button>
+                        );
+                    })}
+                </ul>
+
+                <Box sx={styles}>
+                    {/* TODO: Add links */}
+                    <ButtonText sx={{ color: '#FFFFFF' }} startIcon={<ArrowBack />}>Back to tenant</ButtonText>
+                    <ButtonText sx={{ color: '#FFFFFF' }}>Log Out</ButtonText>
+                </Box>
+
+                {/* TODO: Add a link to the main page? */}
+                <MainLogo />
+
+            </LayoutWithoutSidebar>
         </>
     );
 };
