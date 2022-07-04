@@ -1,3 +1,12 @@
+# [1.34.3] - 2022-7-4 [PR: #213](https://github.com/dolittle/Studio/pull/213)
+## Summary
+
+- Search filter placeholder text style changed to italic
+- Updated search to be case insensitive
+
+![image](https://user-images.githubusercontent.com/102054/176217994-c1621820-85ed-4407-ac5e-c179120eb9ad.png)
+
+
 # [1.34.2] - 2022-6-27 [PR: #210](https://github.com/dolittle/Studio/pull/210)
 ## Summary
 

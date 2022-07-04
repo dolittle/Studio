@@ -7,11 +7,14 @@ import { InputAdornment, SxProps, TextField } from '@mui/material';
 
 const styles = {
     '& .MuiOutlinedInput-root': {
-        backgroundColor: 'rgba(140, 154, 248, 0.08)',
+        'backgroundColor': 'rgba(140, 154, 248, 0.08)',
+        '& ::placeholder': {
+            fontStyle: 'italic'
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'transparent'
+        },
     },
-    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-        borderColor: 'transparent'
-    }
 } as SxProps;
 
 export type SearchFilterProps = {
@@ -48,7 +51,7 @@ export const SearchFilter = (props: SearchFilterProps) => {
             label={''}
             value={query}
             size='small'
-            placeholder='Search'
+            placeholder='Search...'
             InputProps={{
                 startAdornment:
                     <InputAdornment
