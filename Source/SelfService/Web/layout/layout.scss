@@ -5,7 +5,7 @@
 
 .logo {
     display: block;
-    margin: 0.5rem 0 2.75rem 1rem;
+    margin: 0.5rem 0 2.75rem 0;
     cursor: pointer;
 }
 
@@ -35,10 +35,6 @@
     margin: 0;
   }
 
-  .sidebar li {
-    margin: 30px 0px;
-
-  }
   .sidebar a {
     color: #ffffff;
     white-space: nowrap;

@@ -16,14 +16,24 @@ import {
     PolylineRounded,
     SettingsRounded
 } from '@mui/icons-material';
-import { Box } from '@mui/material';
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { ContainerRegistryRounded } from '../assets/icons';
 import { DolittleLogoMedium } from '../assets/logos';
+import { margin } from '@mui/system';
 
 
 type Props = {
     navigation: React.ReactNode;
     children: React.ReactNode;
+};
+
+const handleMenuItemClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    link: string,
+    history: History<LocationState>
+) => {
+    event.preventDefault();
+    history.push(link);
 };
 
 export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
@@ -57,40 +67,48 @@ export const getDefaultMenuWithItems = (
 ): React.ReactNode => {
     return (
         <>
-            <ul>
+            <List>
                 {topItems.map((link) => {
                     return (
-                        <Box key={link.name}
+                        <ListItemButton
+                            disableGutters
+                            key={link.name}
+                            selected={window.location.href.includes(link.href)}
                             onClick={(event) => {
-                                event.preventDefault();
-                                const href = link.href;
-                                history.push(href);
+                                handleMenuItemClick(event, link.href, history);
                             }}
                             sx={{
                                 display: 'flex',
                                 whiteSpace: 'nowrap',
                                 padding: '0.5rem 1rem',
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+                                // negative margins here to let the list item
+                                // highlight overflow the padding of the sidebar
+                                margin: '0 -1rem'
                             }}
                         >
-                            <Box
+                            <ListItemIcon
                                 sx={{
-                                    marginRight: '1rem'
+                                    marginRight: '1rem',
+                                    minWidth: '0'
                                 }}
                             >
                                 {link.icon}
-                            </Box>
-                            <Box>
+                            </ListItemIcon>
+                            <ListItemText>
                                 {link.name}
-                            </Box>
-                        </Box>
+                            </ListItemText>
+                        </ListItemButton>
                     );
                 })}
-            </ul>
-            <ul className='sidebarBottomMenu'>
+            </List>
+            <List className='sidebarBottomMenu'>
                 {bottomItems.map((link) => {
                     return (
-                        <Box key={link.name}
+                        <ListItemButton
+                            disableGutters
+                            key={link.name}
+                            selected={window.location.href.includes(link.href)}
                             onClick={(event) => {
                                 event.preventDefault();
                                 const href = link.href;
@@ -100,24 +118,25 @@ export const getDefaultMenuWithItems = (
                                 display: 'flex',
                                 whiteSpace: 'nowrap',
                                 padding: '0.5rem 1rem',
-                                bottom:'0',
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+                                margin: '0 -1rem'
                             }}
                         >
-                            <Box
+                            <ListItemIcon
                                 sx={{
-                                    marginRight: '1rem'
+                                    marginRight: '1rem',
+                                    minWidth: '0'
                                 }}
                             >
                                 {link.icon}
-                            </Box>
-                            <Box>
+                            </ListItemIcon>
+                            <ListItemText>
                                 {link.name}
-                            </Box>
-                        </Box>
+                            </ListItemText>
+                        </ListItemButton>
                     );
                 })}
-            </ul>
+            </List>
         </>
     );
 };
