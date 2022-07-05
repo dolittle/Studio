@@ -19,9 +19,10 @@ import {
 import { getApplications, HttpResponseApplications } from '../api/application';
 
 import { Create } from '../application/create';
-import {
+/* import {
     LayoutWithSidebar,
-} from '../layout/layoutWithSidebar';
+} from '../layout/layoutWithSidebar'; */
+import { LayoutWithoutSidebar } from '../layout/layoutWithoutSidebar';
 
 import { Building } from '../application/building';
 
@@ -58,9 +59,9 @@ export const ApplicationScreen: React.FunctionComponent = () => {
 
     const nav = [];
 
-
     return (
-        <LayoutWithSidebar navigation={nav}>
+        <LayoutWithoutSidebar>
+
             <Switch>
 
                 <Route exact path="/application/create">
@@ -73,6 +74,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
 
             </Switch>
 
-        </LayoutWithSidebar >
+        </LayoutWithoutSidebar >
     );
 };
