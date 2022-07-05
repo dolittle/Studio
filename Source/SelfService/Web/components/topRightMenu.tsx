@@ -11,7 +11,6 @@ import { useSnackbar } from 'notistack';
 import { ShortInfoWithEnvironment } from '../api/api';
 import { ApplicationsChanger } from '../application/applicationsChanger';
 import { IconButton, SxProps } from '@mui/material';
-import { AccountSettingsMenu } from './accountSettingsMenu';
 
 type Props = {
     applications: ShortInfoWithEnvironment[];
@@ -44,12 +43,6 @@ export const TopRightMenu: React.FunctionComponent<Props> = (props) => {
             size="large">
             <NotificationsIcon sx={styles.icon} />
         </IconButton>
-
-        {/* <AccountSettingsMenu child={
-            <IconButton aria-label="more-options" sx={styles.iconButton} size="large">
-                <AccountCircleIcon sx={styles.icon} />
-            </IconButton>
-        } /> */}
 
         <IconButton
             aria-label="account"
