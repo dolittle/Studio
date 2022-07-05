@@ -66,7 +66,12 @@ export const getDefaultMenuWithItems = (
 ): React.ReactNode => {
     return (
         <>
-            <List>
+            <List
+                sx={{
+                    padding: '0',
+                    margin: '0'
+                }}
+            >
                 {mainNavigationItems.map((link) => {
                     return (
                         <ListItemButton
@@ -102,7 +107,14 @@ export const getDefaultMenuWithItems = (
                     );
                 })}
             </List>
-            <List className='sidebarBottomMenu'>
+            <List
+                sx={{
+                    padding: '0',
+                    margin: '0',
+                    position: 'fixed',
+                    bottom: '0'
+                }}
+            >
                 {secondaryNavigationItems.map((link) => {
                     return (
                         <ListItemButton
