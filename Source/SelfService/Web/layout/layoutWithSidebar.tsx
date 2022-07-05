@@ -61,13 +61,13 @@ export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
 
 export const getDefaultMenuWithItems = (
     history: History<LocationState>,
-    topItems: any[],
-    bottomItems: any[]
+    mainNavigationItems: any[],
+    secondaryNavigationItems: any[]
 ): React.ReactNode => {
     return (
         <>
             <List>
-                {topItems.map((link) => {
+                {mainNavigationItems.map((link) => {
                     return (
                         <ListItemButton
                             disableGutters
@@ -103,7 +103,7 @@ export const getDefaultMenuWithItems = (
                 })}
             </List>
             <List className='sidebarBottomMenu'>
-                {bottomItems.map((link) => {
+                {secondaryNavigationItems.map((link) => {
                     return (
                         <ListItemButton
                             disableGutters
