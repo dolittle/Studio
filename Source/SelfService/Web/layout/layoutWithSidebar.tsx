@@ -16,7 +16,7 @@ import {
     PolylineRounded,
     SettingsRounded
 } from '@mui/icons-material';
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper } from '@mui/material';
 import { ContainerRegistryRounded } from '../assets/icons';
 import { DolittleLogoMedium } from '../assets/logos';
 import { margin } from '@mui/system';
@@ -44,12 +44,12 @@ export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
         <>
             <div className='with-sidebar'>
                 <div>
-                    <div className='sidebar'>
+                    <Paper elevation={4} className='sidebar'>
                         <div className="logo">
                             <DolittleLogoMedium />
                         </div>
                         {navigationPanel}
-                    </div>
+                    </Paper>
                     <div className='not-sidebar'>
                         <AlertBox />
                         {children}
