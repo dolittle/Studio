@@ -31,8 +31,6 @@
 
   .sidebar ul {
     list-style-type: none;
-    padding: 0;
-    margin: 0;
   }
 
   .sidebar a {
@@ -40,11 +38,6 @@
     white-space: nowrap;
     text-decoration: none;
     text-transform: uppercase;
-  }
-
-  .sidebarBottomMenu {
-    position: fixed;
-    bottom: 0;
   }
 
   .not-sidebar {
