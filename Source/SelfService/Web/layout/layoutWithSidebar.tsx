@@ -16,10 +16,9 @@ import {
     PolylineRounded,
     SettingsRounded
 } from '@mui/icons-material';
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper } from '@mui/material';
+import { List, ListItemButton, ListItemIcon, ListItemText, Paper, Theme } from '@mui/material';
 import { ContainerRegistryRounded } from '../assets/icons';
 import { DolittleLogoMedium } from '../assets/logos';
-import { margin } from '@mui/system';
 
 
 type Props = {
@@ -90,7 +89,8 @@ export const getDefaultMenuWithItems = (
                             <ListItemIcon
                                 sx={{
                                     marginRight: '1rem',
-                                    minWidth: '0'
+                                    minWidth: '0',
+                                    color: (theme: Theme) => theme.palette.text.secondary
                                 }}
                             >
                                 {link.icon}
@@ -125,7 +125,8 @@ export const getDefaultMenuWithItems = (
                             <ListItemIcon
                                 sx={{
                                     marginRight: '1rem',
-                                    minWidth: '0'
+                                    minWidth: '0',
+                                    color: (theme: Theme) => theme.palette.text.secondary
                                 }}
                             >
                                 {link.icon}
