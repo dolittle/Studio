@@ -16,20 +16,20 @@ import { LayoutWithoutSidebar } from '../layout/layoutWithoutSidebar';
 import { useGlobalContext } from '../stores/notifications';
 import { HttpResponseApplications, getApplications } from '../api/application';
 
+import { themeDark } from '../theme/theme';
+import './applicationsScreen.scss';
 import { Box, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
-
-import './applicationsScreen.scss';
 import { ButtonText } from '../theme/buttonText';
 import { Button } from '../theme/button';
-import { MainLogo } from '../theme/assets/logos/logos';
 
 const styles = {
-    'marginBlockStart': '98px',
-    'marginBlockEnd': '148px',
-    '& button:first-child': {
-        marginInlineEnd: '66px'
-    }
+    '& button': {
+        color: themeDark.palette.text.primary
+    },
+    /*     '& button:first-of-type': {
+            marginInlineEnd: '66px'
+        } */
 };
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
@@ -40,7 +40,6 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
     const [loaded, setLoaded] = useState(false);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
     const { setCurrentEnvironment } = useGlobalContext();
-
 
     // TODO handle when not 200!
     useEffect(() => {
@@ -57,7 +56,6 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         });
     }, []);
 
-
     if (!loaded) {
         return null;
     }
@@ -72,7 +70,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         <>
             <LayoutWithoutSidebar>
 
-                <Typography variant='h2' my={2} sx={{ letterSpacing: '-0.5px', lineHeight: '26px', mb: '28px' }}>
+                <Typography variant='h2' my={2} mb={5} sx={{ letterSpacing: '-0.5px', lineHeight: '26px' }}>
                     Select Your Application & Environment
                 </Typography>
 
@@ -98,14 +96,11 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
                     })}
                 </ul>
 
-                <Box sx={styles}>
+                <Box mt={12.5} sx={styles}>
                     {/* TODO: Add links */}
-                    <ButtonText sx={{ color: '#FFFFFF' }} startIcon={<ArrowBack />}>Back to tenant</ButtonText>
-                    <ButtonText sx={{ color: '#FFFFFF' }}>Log Out</ButtonText>
+                    <ButtonText startIcon={<ArrowBack />}>Back to tenant</ButtonText>
+                    {/* <ButtonText>Log Out</ButtonText> */}
                 </Box>
-
-                {/* TODO: Add a link to the main page? */}
-                <MainLogo />
 
             </LayoutWithoutSidebar>
         </>

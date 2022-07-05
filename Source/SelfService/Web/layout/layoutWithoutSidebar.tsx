@@ -4,18 +4,19 @@
 import React from 'react';
 
 import { Container } from '@mui/material';
-import { BgLogo } from '../theme/assets/logos/logos';
+import { BgLogo, MainLogo } from '../theme/assets/logos/logos';
 
 interface Props {
     children: React.ReactNode;
 }
 
-const layoutContainerStyles = {
+const styles = {
+    width: '456px',
     position: 'absolute',
     top: '20%',
     right: '20%',
     transform: 'translate(20%, 0%)',
-    textAlign: 'center'
+    textAlign: 'center',
 };
 
 export const LayoutWithoutSidebar: React.FunctionComponent<Props> = (props: Props) => {
@@ -24,8 +25,9 @@ export const LayoutWithoutSidebar: React.FunctionComponent<Props> = (props: Prop
     return (
         <>
             <BgLogo />
-            <Container maxWidth='sm' sx={layoutContainerStyles} disableGutters>
+            <Container maxWidth='sm' sx={styles} disableGutters>
                 {children}
+                <MainLogo mt={18.5} />
             </Container>
         </>
     );
