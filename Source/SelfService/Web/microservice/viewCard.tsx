@@ -101,15 +101,8 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
                     >
                         Delete
                     </a>
-                    {createStatus()}
                 </div>
             </div>
         </DocumentCard >
     );
 };
-
-function createStatus() {
-    return (
-        <div className="right">STATUS:TODO</div>
-    );
-}
