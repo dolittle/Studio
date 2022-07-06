@@ -1,3 +1,28 @@
+# [1.35.0] - 2022-7-6 [PR: #214](https://github.com/dolittle/Studio/pull/214)
+## Summary
+
+This PR brings in a refreshed side menu to Studio. This enables users to see and navigate features in Studio better than before. Icons help you quickly recognize different pages, and you can easily see which page you are currently on by looking at the active item in the menu. Also, the menu had been divided into two sections to help the users distill the actions they can take from the menu.
+![image](https://user-images.githubusercontent.com/22228314/177161207-19e67836-9b6d-46ff-a557-0351eccc6172.png)
+
+
+### Added
+
+- Mui Icons to the side menu items.
+- Custom icons on the container registry menu item.
+- New Dolittle Logo on the top.
+- Hover and active status indicators for the menu items.
+- A bottom item section for the side menu.
+
+### Changed
+
+- "Change customer" option has been moved from the top-right menu to the bottom of the side menu.
+- Side menu is now rendered using MUI `<List>` component family instead of standard HTML `<ul>` and `<li>` components. 
+
+### Fixed
+
+- Fixed the styling to accommodate the changes mentioned above and to make it look like the mockups.
+
+
 # [1.34.3] - 2022-7-4 [PR: #213](https://github.com/dolittle/Studio/pull/213)
 ## Summary
 
