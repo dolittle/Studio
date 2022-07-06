@@ -2,15 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useSnackbar } from 'notistack';
-
 import { ShortInfoWithEnvironment } from '../api/api';
 import { ApplicationsChanger } from '../application/applicationsChanger';
-import { IconButton, SxProps } from '@mui/material';
+import { SxProps } from '@mui/material';
 
 type Props = {
     applications: ShortInfoWithEnvironment[];
@@ -29,30 +23,9 @@ const styles = {
 };
 
 export const TopRightMenu: React.FunctionComponent<Props> = (props) => {
-    const { enqueueSnackbar } = useSnackbar();
     const _props = props!;
 
     return <>
         <ApplicationsChanger applications={_props.applications} applicationId={_props.applicationId} environment={_props.environment} />
-        <IconButton
-            sx={styles.iconButton}
-            aria-label="notification"
-            onClick={() => {
-                enqueueSnackbar('TODO: Something with notifications', { variant: 'error' });
-            }}
-            size="large">
-            <NotificationsIcon sx={styles.icon} />
-        </IconButton>
-
-        <IconButton
-            aria-label="account"
-            onClick={() => {
-                enqueueSnackbar('TODO: More options?', { variant: 'error' });
-            }}
-            sx={styles.iconButton}
-            size="large">
-            <MoreVertIcon sx={styles.icon} />
-        </IconButton>
-
     </>;
 };
