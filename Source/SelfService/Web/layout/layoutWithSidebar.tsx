@@ -164,7 +164,7 @@ export const getMenuWithApplication = (
     const hasConnector = application.environments.find(
         (_environment) => _environment.connections.m3Connector
     );
-    const topItems = [
+    const mainNavigationItems = [
         {
             href: `/backups/application/${applicationId}/overview`,
             name: 'Backups',
@@ -192,7 +192,7 @@ export const getMenuWithApplication = (
         },
     ];
 
-    const bottomItems = [
+    const secondaryNavigationItems = [
         {
             href: `/documentation/application/${applicationId}/${environment}/overview`,
             name: 'Documentation',
@@ -208,12 +208,12 @@ export const getMenuWithApplication = (
 
     if (hasConnector) {
         // Put before documentation link
-        topItems.splice(topItems.length - 1, 0, {
+        mainNavigationItems.splice(mainNavigationItems.length - 1, 0, {
             href: `/m3connector/application/${applicationId}/${environment}/details`,
             name: 'M3 Connector',
             icon: <PolylineRounded />
         });
     }
 
-    return getDefaultMenuWithItems(history, topItems, bottomItems);
+    return getDefaultMenuWithItems(history, mainNavigationItems, secondaryNavigationItems);
 };
