@@ -236,7 +236,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         const _name = event.target.value!;
                         setContactEmail(_name);
-                        enqueueSnackbar('TODO');
                         setActiveNextButton(true);
                     }}
                 />
