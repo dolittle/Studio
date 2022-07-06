@@ -98,7 +98,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
 
                 <Box mt={12.5} sx={styles}>
                     {/* TODO: Add links */}
-                    <ButtonText startIcon={<ArrowBack />}>Back to tenant</ButtonText>
+                    <ButtonText startIcon={<ArrowBack />}>Select new customer</ButtonText>
                     {/* <ButtonText>Log Out</ButtonText> */}
                 </Box>
 
