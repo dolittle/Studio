@@ -1,3 +1,16 @@
+# [2.0.0] - 2022-7-7 [PR: #211](https://github.com/dolittle/Studio/pull/211)
+## Summary
+
+This PR brings in the Design System Component library from [Dolittle Entropy ](https://github.com/dolittle-entropy/design-system) to a standalone project in Studio.
+
+### Added
+
+- Storybook that allows us to interact with different states of a component (stories) without having to run code locally.
+- A first component called `Button` that leverages MUI at its core with a wrapper on top to suit our needs.
+- A folder structure that follows the atomic design
+- Theming to view our atoms/molecules/organisms/pages like the way we intend to use them
+
+
 # [1.35.0] - 2022-7-6 [PR: #214](https://github.com/dolittle/Studio/pull/214)
 ## Summary
 
