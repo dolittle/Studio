@@ -1,3 +1,9 @@
+# [2.0.2] - 2022-7-7 [PR: #217](https://github.com/dolittle/Studio/pull/217)
+## Summary
+
+Fixes the issue of changing the customer button not working properly by forcing a reload of the webpage instead of using the router.
+
+
 # [2.0.1] - 2022-7-7 [PR: #215](https://github.com/dolittle/Studio/pull/215)
 ## Summary
 
