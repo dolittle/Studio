@@ -18,7 +18,7 @@ import { HttpResponseApplications, getApplications } from '../api/application';
 
 import { themeDark } from '../theme/theme';
 import './applicationsScreen.scss';
-import { Box, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { ButtonText } from '../theme/buttonText';
 import { Button } from '../theme/button';
@@ -27,6 +27,7 @@ const styles = {
     '& button': {
         color: themeDark.palette.text.primary
     },
+    /* TODO: Add functionality to logout button */
     /*     '& button:first-of-type': {
             marginInlineEnd: '66px'
         } */
@@ -97,8 +98,11 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
                 </ul>
 
                 <Box mt={12.5} sx={styles}>
-                    {/* TODO: Add links */}
-                    <ButtonText startIcon={<ArrowBack />}>Select new customer</ButtonText>
+                    <Link
+                        href='/.auth/cookies/initiate'>
+                        <ButtonText startIcon={<ArrowBack />}>Select new customer</ButtonText>
+                    </Link>
+                    {/* TODO: Add functionality to logout button */}
                     {/* <ButtonText>Log Out</ButtonText> */}
                 </Box>
 
