@@ -1,33 +1,18 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, {
-    useEffect,
-    useState
-} from 'react';
-import {
-    Route,
-    useHistory,
-    Switch,
-} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route, Switch, } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import {
-    ShortInfoWithEnvironment,
-} from '../api/api';
-
+import { ShortInfoWithEnvironment } from '../api/api';
 import { getApplications, HttpResponseApplications } from '../api/application';
-
-import { Create } from '../application/create';
-/* import {
-    LayoutWithSidebar,
-} from '../layout/layoutWithSidebar'; */
-import { AppView } from '../layout/appView';
-
 import { Building } from '../application/building';
 
+import { Create } from '../application/create';
+import { AppView } from '../layout/appView';
+
 export const ApplicationScreen: React.FunctionComponent = () => {
-    const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
 
     const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
@@ -57,13 +42,9 @@ export const ApplicationScreen: React.FunctionComponent = () => {
         return null;
     }
 
-    const nav = [];
-
     return (
         <AppView>
-
             <Switch>
-
                 <Route exact path="/application/create">
                     <Create />
                 </Route>
@@ -71,9 +52,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                 <Route exact path="/application/building/:applicationId">
                     <Building />
                 </Route>
-
             </Switch>
-
         </AppView >
     );
 };
