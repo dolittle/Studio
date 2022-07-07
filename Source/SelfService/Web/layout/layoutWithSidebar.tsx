@@ -26,6 +26,16 @@ type Props = {
     children: React.ReactNode;
 };
 
+export type NavigationMenuItem = {
+    href: string;
+    name: string
+    icon: JSX.Element;
+    forceReload?: boolean;
+};
+
+export type NavigationListItemButtonProps = ListItemButtonBaseProps & {
+    navigationMenuItem: NavigationMenuItem , history: History<LocationState>
+};
 
 export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
     const navigationPanel = props!.navigation;
@@ -69,6 +79,7 @@ export const getDefaultMenuWithItems = (
                         <NavigationListItemButton
                             key={navigationItem.name}
                             navigationMenuItem={navigationItem}
+                            history={history}
                         >
                             <ListItemIcon
                                 sx={{
@@ -99,6 +110,7 @@ export const getDefaultMenuWithItems = (
                         <NavigationListItemButton
                             key={link.name}
                             navigationMenuItem={link}
+                            history={history}
                         >
                             <ListItemIcon
                                 sx={{
@@ -119,12 +131,8 @@ export const getDefaultMenuWithItems = (
         </>
     );
 };
-export type NavigationListItemButtonProps = ListItemButtonBaseProps & {
-    navigationMenuItem: NavigationMenuItem;
-};
 
-
-export const NavigationListItemButton = ({navigationMenuItem, ...props}: NavigationListItemButtonProps) => {
+export const NavigationListItemButton = ({navigationMenuItem, history, ...props}: NavigationListItemButtonProps) => {
     const defaultProps: ListItemButtonBaseProps = {
         disableGutters: true,
         selected: window.location.href.includes(navigationMenuItem.href),
@@ -136,29 +144,21 @@ export const NavigationListItemButton = ({navigationMenuItem, ...props}: Navigat
             margin: '0 -1rem'
         }
     };
-    return navigationMenuItem.forceReload ? (
+
+    return (
         <ListItemButton
             {...defaultProps}
             onClick={(event) => {
                 event.preventDefault();
                 const href = navigationMenuItem.href;
-                window.location.href = href;
+                navigationMenuItem.forceReload ?
+                window.location.href = href
+                :
+                history.push(href);
             }}
             {...props}
-        />) : (
-        <ListItemButton
-            {...defaultProps}
-            component='a'
-            href={navigationMenuItem.href}
-            {...props}
         />);
-};
 
-export type NavigationMenuItem = {
-    href: string;
-    name: string
-    icon: JSX.Element;
-    forceReload?: boolean;
 };
 
 export const getMenuWithApplication = (
@@ -172,7 +172,7 @@ export const getMenuWithApplication = (
         (_environment) => _environment.connections.m3Connector
     );
 
-    const topItems: NavigationMenuItem[] = [
+    const mainNavigationItems: NavigationMenuItem[] = [
         {
             href: `/backups/application/${applicationId}/overview`,
             name: 'Backups',
@@ -200,7 +200,7 @@ export const getMenuWithApplication = (
         },
     ];
 
-    const bottomItems = [
+    const secondaryNavigationItems: NavigationMenuItem[] = [
         {
             href: `/documentation/application/${applicationId}/${environment}/overview`,
             name: 'Documentation',
@@ -209,19 +209,20 @@ export const getMenuWithApplication = (
         {
             href: '/.auth/cookies/initiate',
             name: 'Change Customer',
-            icon: <SettingsRounded />
+            icon: <SettingsRounded />,
+            forceReload: true
         }
 
     ];
 
     if (hasConnector) {
         // Put before documentation link
-        topItems.splice(topItems.length - 1, 0, {
+        mainNavigationItems.splice(mainNavigationItems.length - 1, 0, {
             href: `/m3connector/application/${applicationId}/${environment}/details`,
             name: 'M3 Connector',
             icon: <PolylineRounded />
         });
     }
 
-    return getDefaultMenuWithItems(history, topItems, bottomItems);
+    return getDefaultMenuWithItems(history, mainNavigationItems, secondaryNavigationItems);
 };
