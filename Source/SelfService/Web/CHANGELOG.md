@@ -1,3 +1,18 @@
+# [2.0.1] - 2022-7-7 [PR: #215](https://github.com/dolittle/Studio/pull/215)
+## Summary
+
+This PR brings a more polished look to Studio by removing "TODOs" from various parts of the application.
+
+### Changed
+- Side menu item objects are now consistently named across the file layoutWithSideBar.tsx
+
+### Removed
+
+- Removed the `STATUS:TODO` from the Microservice cards
+- Removed the snackbar TODO when typing in the contact email in the Create new application flow.
+- Removed the bell icon and the three-dot menu from the top right of every page as they were "TODOs" as well.
+
+
 # [2.0.0] - 2022-7-7 [PR: #211](https://github.com/dolittle/Studio/pull/211)
 ## Summary
 
