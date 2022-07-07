@@ -22,7 +22,7 @@ import { Create } from '../application/create';
 /* import {
     LayoutWithSidebar,
 } from '../layout/layoutWithSidebar'; */
-import { LayoutWithoutSidebar } from '../layout/layoutWithoutSidebar';
+import { AppView } from '../layout/appView';
 
 import { Building } from '../application/building';
 
@@ -60,7 +60,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
     const nav = [];
 
     return (
-        <LayoutWithoutSidebar>
+        <AppView>
 
             <Switch>
 
@@ -74,6 +74,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
 
             </Switch>
 
-        </LayoutWithoutSidebar >
+        </AppView >
     );
 };

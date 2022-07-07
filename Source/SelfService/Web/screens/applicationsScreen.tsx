@@ -12,7 +12,7 @@ import {
     ShortInfoWithEnvironment
 } from '../api/api';
 
-import { LayoutWithoutSidebar } from '../layout/layoutWithoutSidebar';
+import { AppView } from '../layout/appView';
 import { useGlobalContext } from '../stores/notifications';
 import { HttpResponseApplications, getApplications } from '../api/application';
 
@@ -69,7 +69,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
 
     return (
         <>
-            <LayoutWithoutSidebar>
+            <AppView>
 
                 <Typography variant='h2' my={2} mb={5} sx={{ letterSpacing: '-0.5px', lineHeight: '26px' }}>
                     Select Your Application & Environment
@@ -106,7 +106,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
                     {/* <ButtonText>Log Out</ButtonText> */}
                 </Box>
 
-            </LayoutWithoutSidebar>
+            </AppView>
         </>
     );
 };
