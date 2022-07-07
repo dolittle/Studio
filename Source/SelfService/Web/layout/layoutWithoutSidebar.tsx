@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { BgLogo, MainLogo } from '../theme/assets/logos/logos';
 
 interface Props {
@@ -11,12 +11,18 @@ interface Props {
 }
 
 const styles = {
-    width: '456px',
-    position: 'absolute',
-    top: '20%',
-    right: '20%',
-    transform: 'translate(20%, 0%)',
-    textAlign: 'center',
+    backgroundLogoContainer: {
+        maxInlineSize: '793px',
+        blockSize: '100vh'
+    },
+    mainContainer: {
+        width: '456px',
+        position: 'absolute',
+        top: '20%',
+        right: '20%',
+        transform: 'translate(20%, 0%)',
+        textAlign: 'center',
+    }
 };
 
 export const LayoutWithoutSidebar: React.FunctionComponent<Props> = (props: Props) => {
@@ -24,10 +30,12 @@ export const LayoutWithoutSidebar: React.FunctionComponent<Props> = (props: Prop
 
     return (
         <>
-            <BgLogo />
-            <Container maxWidth='sm' sx={styles} disableGutters>
+            <Box sx={styles.backgroundLogoContainer}>
+                <BgLogo />
+            </Box>
+            <Container maxWidth='sm' sx={styles.mainContainer} disableGutters>
                 {children}
-                <MainLogo mt={18.5} />
+                <MainLogo mt={18.5} mb={18.5} />
             </Container>
         </>
     );
