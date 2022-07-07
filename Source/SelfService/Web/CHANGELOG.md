@@ -1,3 +1,31 @@
+# [2.0.1] - 2022-7-7 [PR: #215](https://github.com/dolittle/Studio/pull/215)
+## Summary
+
+This PR brings a more polished look to Studio by removing "TODOs" from various parts of the application.
+
+### Changed
+- Side menu item objects are now consistently named across the file layoutWithSideBar.tsx
+
+### Removed
+
+- Removed the `STATUS:TODO` from the Microservice cards
+- Removed the snackbar TODO when typing in the contact email in the Create new application flow.
+- Removed the bell icon and the three-dot menu from the top right of every page as they were "TODOs" as well.
+
+
+# [2.0.0] - 2022-7-7 [PR: #211](https://github.com/dolittle/Studio/pull/211)
+## Summary
+
+This PR brings in the Design System Component library from [Dolittle Entropy ](https://github.com/dolittle-entropy/design-system) to a standalone project in Studio.
+
+### Added
+
+- Storybook that allows us to interact with different states of a component (stories) without having to run code locally.
+- A first component called `Button` that leverages MUI at its core with a wrapper on top to suit our needs.
+- A folder structure that follows the atomic design
+- Theming to view our atoms/molecules/organisms/pages like the way we intend to use them
+
+
 # [1.35.0] - 2022-7-6 [PR: #214](https://github.com/dolittle/Studio/pull/214)
 ## Summary
 
