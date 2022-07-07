@@ -27,7 +27,7 @@ const styles = {
     }
 };
 
-export const LayoutWithoutSidebar: React.FunctionComponent<Props> = (props: Props) => {
+export const AppView: React.FunctionComponent<Props> = (props: Props) => {
     const children = props!.children;
 
     return (
