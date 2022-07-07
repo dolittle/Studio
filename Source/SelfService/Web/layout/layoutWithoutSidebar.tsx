@@ -16,12 +16,14 @@ const styles = {
         blockSize: '100vh'
     },
     mainContainer: {
-        width: '456px',
+        inlineSize: '100%',
+        maxInlineSize: '496px',
         position: 'absolute',
         top: '20%',
         right: '20%',
         transform: 'translate(20%, 0%)',
         textAlign: 'center',
+        padding: '20px'
     }
 };
 
@@ -33,10 +35,10 @@ export const LayoutWithoutSidebar: React.FunctionComponent<Props> = (props: Prop
             <Box sx={styles.backgroundLogoContainer}>
                 <BgLogo />
             </Box>
-            <Container maxWidth='sm' sx={styles.mainContainer} disableGutters>
+            <Box sx={styles.mainContainer}>
                 {children}
                 <MainLogo mt={18.5} mb={18.5} />
-            </Container>
+            </Box>
         </>
     );
 };
