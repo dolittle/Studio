@@ -21,6 +21,20 @@ declare module '@mui/material/Typography' {
     }
 }
 
+declare module '@mui/material/styles' {
+    interface BreakpointOverrides {
+        xs: false; // removes the `xs` breakpoint
+        sm: false;
+        md: false;
+        lg: false;
+        xl: false;
+        mobile: true; // adds the `mobile` breakpoint
+        tablet: true;
+        laptop: true;
+        desktop: true;
+    }
+}
+
 const typography: TypographyOptions = {
     fontFamily: '"Rubik", "Open sans", "Arial", sans-serif',
     fontWeightMedium: 400,
@@ -103,7 +117,7 @@ const darkPalette: PaletteOptions = {
         secondary: '#cecfd0',
     },
     error: {
-        main: '#F88C8C',
+        main: '#F66666',
         light: '#FBB3B3',
         dark: '#F66666',
         contrastText: '#191A21',
@@ -128,7 +142,20 @@ const darkPalette: PaletteOptions = {
     },
     divider: '#2C2B33',
 };
+const breakpoints = {
+    values: {
+        mobile: 0,
+        tablet: 640,
+        laptop: 1024,
+        desktop: 1200,
+    },
+};
+
 export const themeDark = createTheme({
     palette: darkPalette,
     typography,
+});
+
+export const responsive = createTheme({
+    breakpoints
 });
