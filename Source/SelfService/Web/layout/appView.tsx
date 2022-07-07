@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Box, Container } from '@mui/material';
+import { Box } from '@mui/material';
 import { BgLogo, MainLogo } from '../theme/assets/logos/logos';
 
 interface Props {
