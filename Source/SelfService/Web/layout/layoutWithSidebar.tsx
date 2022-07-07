@@ -16,7 +16,7 @@ import {
     PolylineRounded,
     SettingsRounded
 } from '@mui/icons-material';
-import { List, ListItemButton, ListItemIcon, ListItemText, Paper, Theme } from '@mui/material';
+import { List, ListItemButton, ListItemButtonBaseProps, ListItemButtonProps, ListItemIcon, ListItemText, Paper, Theme } from '@mui/material';
 import { ContainerRegistryRounded } from '../assets/icons';
 import { DolittleLogoMedium } from '../assets/logos';
 
@@ -26,13 +26,15 @@ type Props = {
     children: React.ReactNode;
 };
 
-const handleMenuItemClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    link: string,
-    history: History<LocationState>
-) => {
-    event.preventDefault();
-    history.push(link);
+export type NavigationMenuItem = {
+    href: string;
+    name: string
+    icon: JSX.Element;
+    forceReload?: boolean;
+};
+
+export type NavigationListItemButtonProps = ListItemButtonBaseProps & {
+    navigationMenuItem: NavigationMenuItem , history: History<LocationState>
 };
 
 export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
@@ -72,24 +74,12 @@ export const getDefaultMenuWithItems = (
                     margin: '0'
                 }}
             >
-                {mainNavigationItems.map((link) => {
+                {mainNavigationItems.map((navigationItem) => {
                     return (
-                        <ListItemButton
-                            disableGutters
-                            key={link.name}
-                            selected={window.location.href.includes(link.href)}
-                            onClick={(event) => {
-                                handleMenuItemClick(event, link.href, history);
-                            }}
-                            sx={{
-                                display: 'flex',
-                                whiteSpace: 'nowrap',
-                                padding: '0.5rem 1rem',
-                                cursor: 'pointer',
-                                // negative margins here to let the list item
-                                // highlight overflow the padding of the sidebar
-                                margin: '0 -1rem'
-                            }}
+                        <NavigationListItemButton
+                            key={navigationItem.name}
+                            navigationMenuItem={navigationItem}
+                            history={history}
                         >
                             <ListItemIcon
                                 sx={{
@@ -98,12 +88,12 @@ export const getDefaultMenuWithItems = (
                                     color: (theme: Theme) => theme.palette.text.secondary
                                 }}
                             >
-                                {link.icon}
+                                {navigationItem.icon}
                             </ListItemIcon>
                             <ListItemText>
-                                {link.name}
+                                {navigationItem.name}
                             </ListItemText>
-                        </ListItemButton>
+                        </NavigationListItemButton>
                     );
                 })}
             </List>
@@ -117,22 +107,10 @@ export const getDefaultMenuWithItems = (
             >
                 {secondaryNavigationItems.map((link) => {
                     return (
-                        <ListItemButton
-                            disableGutters
+                        <NavigationListItemButton
                             key={link.name}
-                            selected={window.location.href.includes(link.href)}
-                            onClick={(event) => {
-                                event.preventDefault();
-                                const href = link.href;
-                                history.push(href);
-                            }}
-                            sx={{
-                                display: 'flex',
-                                whiteSpace: 'nowrap',
-                                padding: '0.5rem 1rem',
-                                cursor: 'pointer',
-                                margin: '0 -1rem'
-                            }}
+                            navigationMenuItem={link}
+                            history={history}
                         >
                             <ListItemIcon
                                 sx={{
@@ -146,12 +124,41 @@ export const getDefaultMenuWithItems = (
                             <ListItemText>
                                 {link.name}
                             </ListItemText>
-                        </ListItemButton>
+                        </NavigationListItemButton>
                     );
                 })}
             </List>
         </>
     );
+};
+
+export const NavigationListItemButton = ({navigationMenuItem, history, ...props}: NavigationListItemButtonProps) => {
+    const defaultProps: ListItemButtonBaseProps = {
+        disableGutters: true,
+        selected: window.location.href.includes(navigationMenuItem.href),
+        sx:{
+            display: 'flex',
+            whiteSpace: 'nowrap',
+            padding: '0.5rem 1rem',
+            cursor: 'pointer',
+            margin: '0 -1rem'
+        }
+    };
+
+    return (
+        <ListItemButton
+            {...defaultProps}
+            onClick={(event) => {
+                event.preventDefault();
+                const href = navigationMenuItem.href;
+                navigationMenuItem.forceReload ?
+                window.location.href = href
+                :
+                history.push(href);
+            }}
+            {...props}
+        />);
+
 };
 
 export const getMenuWithApplication = (
@@ -164,7 +171,8 @@ export const getMenuWithApplication = (
     const hasConnector = application.environments.find(
         (_environment) => _environment.connections.m3Connector
     );
-    const mainNavigationItems = [
+
+    const mainNavigationItems: NavigationMenuItem[] = [
         {
             href: `/backups/application/${applicationId}/overview`,
             name: 'Backups',
@@ -192,7 +200,7 @@ export const getMenuWithApplication = (
         },
     ];
 
-    const secondaryNavigationItems = [
+    const secondaryNavigationItems: NavigationMenuItem[] = [
         {
             href: `/documentation/application/${applicationId}/${environment}/overview`,
             name: 'Documentation',
@@ -201,7 +209,8 @@ export const getMenuWithApplication = (
         {
             href: '/.auth/cookies/initiate',
             name: 'Change Customer',
-            icon: <SettingsRounded />
+            icon: <SettingsRounded />,
+            forceReload: true
         }
 
     ];
