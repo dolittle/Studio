@@ -27,7 +27,7 @@ declare module '@mui/material/styles' {
         sm: false;
         md: false;
         lg: false;
-        xl: false;
+        xl: true;
         mobile: true; // adds the `mobile` breakpoint
         tablet: true;
         laptop: true;
@@ -144,6 +144,7 @@ const darkPalette: PaletteOptions = {
 };
 const breakpoints = {
     values: {
+        xl: 1536,
         mobile: 0,
         tablet: 640,
         laptop: 1024,
