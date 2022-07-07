@@ -1,23 +1,17 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, {
-    useState,
-    useEffect
-} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import {
-    ShortInfoWithEnvironment
-} from '../api/api';
-
+import { ShortInfoWithEnvironment } from '../api/api';
 import { AppView } from '../layout/appView';
 import { useGlobalContext } from '../stores/notifications';
 import { HttpResponseApplications, getApplications } from '../api/application';
 
-import { themeDark } from '../theme/theme';
 import './applicationsScreen.scss';
+import { themeDark } from '../theme/theme';
 import { Box, Link, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { ButtonText } from '../theme/buttonText';
@@ -70,7 +64,6 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
     return (
         <>
             <AppView>
-
                 <Typography variant='h2' my={2} mb={5} sx={{ letterSpacing: '-0.5px', lineHeight: '26px' }}>
                     Select Your Application & Environment
                 </Typography>
@@ -105,7 +98,6 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
                     {/* TODO: Add functionality to logout button */}
                     {/* <ButtonText>Log Out</ButtonText> */}
                 </Box>
-
             </AppView>
         </>
     );
