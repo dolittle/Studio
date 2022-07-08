@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import { ShortInfoWithEnvironment } from '../api/api';
