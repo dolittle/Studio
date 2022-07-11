@@ -56,9 +56,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         });
     }, []);
 
-    if (!loaded) {
-        return null;
-    }
+    if (!loaded) return null;
 
     const onEnvironmentChoose = (application) => {
         setCurrentEnvironment(application.environment);
@@ -115,10 +113,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
                         >Select new customer
                         </Button>
                     </Link>
-                    {/* TODO: Add functionality to logout button */}
-                    {/* <Link href=''>
-                        <Button sx={styles.button}>Log Out</Button>
-                    </Link> */}
+                    {/* <Button sx={styles.button}>Log Out</Button> */}
                 </Box>
             </AppView>
         </>
