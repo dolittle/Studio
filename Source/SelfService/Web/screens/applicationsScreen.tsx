@@ -10,21 +10,26 @@ import { AppView } from '../layout/appView';
 import { useGlobalContext } from '../stores/notifications';
 import { HttpResponseApplications, getApplications } from '../api/application';
 
-import './applicationsScreen.scss';
 import { themeDark } from '../theme/theme';
-import { Box, Link, Typography } from '@mui/material';
-import { ArrowBack } from '@mui/icons-material';
-import { ButtonText } from '../theme/buttonText';
-import { Button } from '../theme/button';
+import { Box, Button, Link, Typography } from '@mui/material';
+import { AddCircle, ArrowBack } from '@mui/icons-material';
 
 const styles = {
-    '& button': {
-        color: themeDark.palette.text.primary
+    title: {
+        letterSpacing: '-0.5px',
+        lineHeight: '26px'
     },
-    /* TODO: Add functionality to logout button */
-    /*     '& button:first-of-type': {
-            marginInlineEnd: '66px'
-        } */
+    button: {
+        letterSpacing: '0.06em'
+    },
+    environmentButtons: {
+        display: 'block',
+        minWidth: '155px',
+        minHeight: '36px',
+        marginBlockStart: '-4px',
+        marginBlockEnd: '16px',
+        marginInline: 'auto',
+    }
 };
 
 export const ApplicationsScreen: React.FunctionComponent = () => {
@@ -61,28 +66,39 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         history.push(href);
     };
 
+    const handleCreate = () => {
+        if (!canCreateApplication) {
+            enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
+            return;
+        }
+
+        const href = '/application/create';
+        history.push(href);
+    };
+
     return (
         <>
             <AppView>
-                <Typography variant='h2' my={2} mb={5} sx={{ letterSpacing: '-0.5px', lineHeight: '26px' }}>
+                <Typography variant='h2' my={2} mb={5} sx={styles.title}>
                     Select Your Application & Environment
                 </Typography>
 
-                <ButtonText withIcon={true} onClick={() => {
-                    if (!canCreateApplication) {
-                        enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
-                        return;
-                    }
+                <Button
+                    variant='text'
+                    startIcon={<AddCircle />}
+                    sx={styles.button}
+                    onClick={handleCreate}>
+                    Create new Application
+                </Button>
 
-                    const href = '/application/create';
-                    history.push(href);
-
-                }}>Create new Application</ButtonText>
-
-                <ul className='application-select-wrapper'>
+                <ul style={{ padding: '0' }}>
                     {data.map(application => {
                         return (
-                            <Button key={application.environment} onClick={() => onEnvironmentChoose(application)}
+                            <Button
+                                variant='contained'
+                                sx={{ ...styles.environmentButtons, ...styles.button }}
+                                key={application.environment}
+                                onClick={() => onEnvironmentChoose(application)}
                             >
                                 {application.name} - {application.environment}
                             </Button>
@@ -93,10 +109,16 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
                 <Box mt={12.5} sx={styles}>
                     <Link
                         href='/.auth/cookies/initiate'>
-                        <ButtonText startIcon={<ArrowBack />}>Select new customer</ButtonText>
+                        <Button
+                            startIcon={<ArrowBack />}
+                            sx={{ ...styles.button, color: themeDark.palette.text.primary }}
+                        >Select new customer
+                        </Button>
                     </Link>
                     {/* TODO: Add functionality to logout button */}
-                    {/* <ButtonText>Log Out</ButtonText> */}
+                    {/* <Link href=''>
+                        <Button sx={styles.button}>Log Out</Button>
+                    </Link> */}
                 </Box>
             </AppView>
         </>
