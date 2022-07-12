@@ -1,0 +1,11 @@
+{
+    "name": "Dolittle Studio",
+    "short_name": "Dolittle Studio",
+    "icons": [{
+        "src": "assets/favicons/google-touch-icon.png",
+        "sizes": "512x512"
+    }],
+    "background_color": "#1D2025",
+    "theme_color": "#1D2025",
+    "display": "fullscreen"
+}

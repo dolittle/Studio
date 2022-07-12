@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { HtmlInterceptorPlugin } = require('./HtmlInterceptorPlugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 export default (basePath, title) => {
     return [
@@ -29,7 +30,28 @@ export default (basePath, title) => {
                 title,
                 baseUrl: basePath
             },
-            favicon: './images/favicon.ico',
+        }),
+
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: './assets/favicons/apple-touch-icon.png',
+                    to: './assets/favicons/'
+                },
+                {
+                    from: './assets/favicons/google-touch-icon.png',
+                    to: './assets/favicons/'
+                },
+                {
+                    from: './assets/favicons/favicon.svg',
+                    to: './assets/favicons/'
+                },
+                {
+                    from: './assets/favicons/safary-mask-icon.svg',
+                    to: './assets/favicons/'
+                },
+                { from: 'favicon.ico', },
+            ]
         }),
 
         new HtmlInterceptorPlugin({}),
