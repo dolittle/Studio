@@ -1,3 +1,13 @@
+# [2.0.3] - 2022-7-13 [PR: #220](https://github.com/dolittle/Studio/pull/220)
+## Summary
+
+Added correct favicons for many different devices and browsers.
+
+### Added
+
+- Favicons in different sizes and formats.
+
+
 # [2.0.2] - 2022-7-7 [PR: #217](https://github.com/dolittle/Studio/pull/217)
 ## Summary
 
