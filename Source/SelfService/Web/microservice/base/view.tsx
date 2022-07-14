@@ -205,15 +205,15 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         </IconButton>
 
 
-                        <IconButton
-                            onClick={() => {
-                                enqueueSnackbar('TODO: Edit microservice', { variant: 'error' });
-                            }}
-                            sx={styles.editIcon}
-                            size="large">
-                            <EditIcon />
-                            <Typography>Edit</Typography>
-                        </IconButton>
+                        {/*<IconButton*/}
+                        {/*    onClick={() => {*/}
+                        {/*        enqueueSnackbar('TODO: Edit microservice', { variant: 'error' });*/}
+                        {/*    }}*/}
+                        {/*    sx={styles.editIcon}*/}
+                        {/*    size="large">*/}
+                        {/*    <EditIcon />*/}
+                        {/*    <Typography>Edit</Typography>*/}
+                        {/*</IconButton>*/}
                     </Grid>
                 </Grid>
             </Grid>

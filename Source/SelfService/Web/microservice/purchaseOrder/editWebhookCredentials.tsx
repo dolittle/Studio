@@ -110,29 +110,29 @@ export const EditWebhookCredentials: React.FunctionComponent<Props> = (props) =>
             </Grid>
         </Grid>
 
-        <Box sx={styles.actionsContainer}>
-            <div>
-                <ButtonText
-                    onClick={() => {
-                        if (saveProtection) {
-                            enqueueSnackbar('TODO: cancel', { variant: 'warning' });
-                        }
-                        props!.onCancel();
-                    }}
-                    disabled={false}
-                    buttonType='secondary'
-                >
-                    Back
-                </ButtonText>
-                <Button
-                    onClick={() => {
-                        enqueueSnackbar('TODO: save', { variant: 'warning' });
-                    }}
-                    disabled={false}
-                >
-                    Save
-                </Button>
-            </div>
-        </Box>
+        {/*<Box sx={styles.actionsContainer}>*/}
+        {/*    <div>*/}
+        {/*        <ButtonText*/}
+        {/*            onClick={() => {*/}
+        {/*                if (saveProtection) {*/}
+        {/*                    enqueueSnackbar('TODO: cancel', { variant: 'warning' });*/}
+        {/*                }*/}
+        {/*                props!.onCancel();*/}
+        {/*            }}*/}
+        {/*            disabled={false}*/}
+        {/*            buttonType='secondary'*/}
+        {/*        >*/}
+        {/*            Back*/}
+        {/*        </ButtonText>*/}
+        {/*        <Button*/}
+        {/*            onClick={() => {*/}
+        {/*                enqueueSnackbar('TODO: save', { variant: 'warning' });*/}
+        {/*            }}*/}
+        {/*            disabled={false}*/}
+        {/*        >*/}
+        {/*            Save*/}
+        {/*        </Button>*/}
+        {/*    </div>*/}
+        {/*</Box>*/}
     </>;
 };

@@ -176,15 +176,15 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         justifyContent='space-around'
                         alignItems='flex-end'
                     >
-                        <IconButton
-                            onClick={() => {
-                                enqueueSnackbar('TODO: Delete microservice', { variant: 'error' });
-                            }}
-                            sx={classes.deleteIcon}
-                            size="large">
-                            <DeleteIcon />
-                            <Typography>delete</Typography>
-                        </IconButton>
+                        {/*<IconButton*/}
+                        {/*    onClick={() => {*/}
+                        {/*        enqueueSnackbar('TODO: Delete microservice', { variant: 'error' });*/}
+                        {/*    }}*/}
+                        {/*    sx={classes.deleteIcon}*/}
+                        {/*    size="large">*/}
+                        {/*    <DeleteIcon />*/}
+                        {/*    <Typography>delete</Typography>*/}
+                        {/*</IconButton>*/}
 
 
                         <IconButton
@@ -218,7 +218,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 </Box>
             </TabPanel>
             <TabPanel value={currentTab} index={1}>
-                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
+                <HealthStatus applicationId={applicationId} status="" environment={environment} microserviceId={microserviceId} data={podsData} />
             </TabPanel>
         </Grid >
     );

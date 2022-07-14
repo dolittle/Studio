@@ -74,11 +74,11 @@ export const HealthStatus: React.FunctionComponent<Props> = (props) => {
                             justifyContent="space-between"
                             alignItems="stretch"
                         >
-                            <div onClick={() => {
-                                alert('TODO: Download logs');
-                            }}>
-                                {DownloadLogIcon}
-                            </div>
+                            {/*<div onClick={() => {*/}
+                            {/*    alert('TODO: Download logs');*/}
+                            {/*}}>*/}
+                            {/*    {DownloadLogIcon}*/}
+                            {/*</div>*/}
                             <div onClick={() => {
                                 const href = `/microservices/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
                                 history.push(href);

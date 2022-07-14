@@ -49,11 +49,11 @@ export const Webhooks: React.FunctionComponent<Props> = (props) => {
                 horizontal
             >
                 <>
-                    <a onClick={() => {
-                        alert('TODO: View Sample');
-                    }}>
-                        View Sample
-                    </a>
+                    {/*<a onClick={() => {*/}
+                    {/*    alert('TODO: View Sample');*/}
+                    {/*}}>*/}
+                    {/*    View Sample*/}
+                    {/*</a>*/}
 
                     <a onClick={() => {
                         setWebhookToEdit(item as MicroserviceRawDataLogIngestorWebhookConfig);
