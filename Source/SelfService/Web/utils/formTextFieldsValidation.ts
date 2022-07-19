@@ -22,7 +22,7 @@ const validateEmail = (error: FormErrorStates, email: string) => {
     const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/;
 
     if (!email.trim() || !email.match(emailRegex)) {
-        error.contactEmailError.emailErrorMessage = 'Please enter a valid email address';
+        error.contactEmailError.emailErrorMessage = 'Please enter a valid email address.';
         error.contactEmailError.emailError = true;
     } else {
         error.contactEmailError.emailErrorMessage = '';
@@ -32,7 +32,7 @@ const validateEmail = (error: FormErrorStates, email: string) => {
 
 const validateContactName = (error: FormErrorStates, contactName: string) => {
     if (!contactName.trim()) {
-        error.contactNameError.nameErrorMessage = 'Contact name required';
+        error.contactNameError.nameErrorMessage = 'Contact name required.';
         error.contactNameError.nameError = true;
     } else {
         error.contactNameError.nameErrorMessage = '';
@@ -42,7 +42,7 @@ const validateContactName = (error: FormErrorStates, contactName: string) => {
 
 const validateAppName = (error: FormErrorStates, app: ShortInfo) => {
     if (/\W/.test(app.name) || app.name.trim().length < 2) {
-        error.applicationNameError.appErrorMessage = 'Name can only contain alphanumeric characters';
+        error.applicationNameError.appErrorMessage = 'Name can only contain alphanumeric characters.';
         error.applicationNameError.appError = true;
     } else {
         error.applicationNameError.appErrorMessage = '';
