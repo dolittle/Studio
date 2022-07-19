@@ -22,7 +22,7 @@ const styles = {
     }
 };
 
-export const CreateAlert: React.FunctionComponent = () => {
+export const CreateAlert: React.FC = () => {
     const unicodeSpaceChar = '\u0020';
     const { alertWrapper, supportLink } = styles;
 

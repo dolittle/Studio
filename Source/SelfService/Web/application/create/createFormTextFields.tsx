@@ -3,6 +3,9 @@
 
 import React from 'react';
 
+import { FormErrorStates } from '../../utils/formTextFieldsValidation';
+import { ShortInfo } from '../../api/api';
+
 import { themeDark } from '../../theme/theme';
 import { Box, TextField } from '@mui/material';
 
@@ -38,8 +41,20 @@ const styles = {
     },
 };
 
+export type CreateFormTextFieldsProps = {
+    formError: FormErrorStates,
+    app: ShortInfo,
+    onAppChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    contactName: string,
+    onNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    contactEmail: string,
+    onEmailChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+};
+
 // TODO: add types
-export const CreateFormTextFields = ({ formError, app, onAppChange, contactName, onNameChange, contactEmail, onEmailChange }: any) => {
+export const CreateFormTextFields: React.FC<CreateFormTextFieldsProps> = (
+    { formError, app, onAppChange, contactName, onNameChange, contactEmail, onEmailChange }: CreateFormTextFieldsProps) => {
+
     const {
         applicationNameError: { appError, appErrorMessage },
         contactNameError: { nameError, nameErrorMessage },

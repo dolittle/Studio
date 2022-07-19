@@ -25,10 +25,12 @@ const styles = {
     }
 };
 
-// TODO: add types
-export const CreateFormCheckbox = ({ environments, onChange }:
-    { environments: EnvironmentsProps, onChange: any }) => {
+export type CreateFormCheckboxProps = {
+    environments: EnvironmentsProps,
+    handleOnChange: (event: React.ChangeEvent<HTMLInputElement>, environmentIndex: number) => void;
+};
 
+export const CreateFormCheckbox: React.FC<CreateFormCheckboxProps> = ({ environments, handleOnChange }: CreateFormCheckboxProps) => {
     const { formFieldsWrapper, formGroup, label } = styles;
 
     return (
@@ -41,7 +43,7 @@ export const CreateFormCheckbox = ({ environments, onChange }:
                             <Checkbox
                                 checked={environment.checked}
                                 disabled={environment.disabled}
-                                onChange={(event) => onChange(event, environmentIndex)}
+                                onChange={(event) => handleOnChange(event, environmentIndex)}
                                 name={environment.shortName}
                             />
                         }

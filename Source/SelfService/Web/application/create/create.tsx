@@ -84,10 +84,9 @@ const initialEnvironmentState = [
     },
 ];
 
-export const Create: React.FunctionComponent = () => {
+export const Create: React.FC = () => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
-
     const newApplicationId = Guid.create().toString();
 
     const [application, setApplication] = useState({
@@ -119,7 +118,7 @@ export const Create: React.FunctionComponent = () => {
         setContactEmail(_name);
     };
 
-    const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, index: number) => {
+    const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, index: number): void => {
         const newEnvironments = [...environments];
         newEnvironments[index].checked = event.target.checked;
         setEnvironments(newEnvironments);
@@ -175,9 +174,9 @@ export const Create: React.FunctionComponent = () => {
 
                 <Typography variant='body1' mt={4} mb={4} sx={secondaryTitle}>Select Environments</Typography>
 
-                <CreateFormCheckbox environments={environments} onChange={handleCheckboxChange} />
+                <CreateFormCheckbox environments={environments} handleOnChange={handleCheckboxChange} />
 
-                <CreateFormActionButtons onSubmit={handleApplicationCreate} />
+                <CreateFormActionButtons handleOnSubmit={handleApplicationCreate} />
 
                 {serverError && <CreateAlert />}
             </Box>

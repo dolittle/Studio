@@ -20,8 +20,11 @@ const styles = {
     },
 };
 
-// TODO: Add types
-export const CreateFormActionButtons = ({ onSubmit }: any) => {
+export type CreateFormActionButtonsProps = {
+    handleOnSubmit: () => Promise<void>;
+};
+
+export const CreateFormActionButtons: React.FC<CreateFormActionButtonsProps> = ({ handleOnSubmit }: CreateFormActionButtonsProps) => {
     const history = useHistory();
 
     const handleCancel = () => {
@@ -41,7 +44,7 @@ export const CreateFormActionButtons = ({ onSubmit }: any) => {
 
             <Button variant='text'
                 sx={{ ...actionButtons, color: themeDark.palette.primary.main }}
-                onClick={onSubmit}
+                onClick={handleOnSubmit}
             >
                 Create
             </Button>
