@@ -9,7 +9,7 @@ import { ShortInfoWithEnvironment } from '../api/api';
 import { getApplications, HttpResponseApplications } from '../api/application';
 import { Building } from '../application/building';
 
-import { Create } from '../application/create';
+import { Create } from '../application/create/create';
 import { AppView } from '../layout/appView';
 
 export const ApplicationScreen: React.FunctionComponent = () => {
