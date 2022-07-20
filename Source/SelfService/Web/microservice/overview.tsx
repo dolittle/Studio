@@ -11,15 +11,50 @@ import '../microservice/microservice.scss';
 import { ViewCard } from './viewCard';
 
 import { useReadable } from 'use-svelte-store';
-import { canDeleteMicroservice, canEditMicroservices, microservices } from '../stores/microservice';
+import { canEditMicroservices, microservices } from '../stores/microservice';
+
+import { themeDark } from '../theme/theme';
 import { Button, Typography } from '@mui/material';
+import { RocketLaunch, ArrowUpward } from '@mui/icons-material';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 type Props = {
     environment: string
     application: HttpResponseApplication
 };
 
-
+const styles = {
+    svg: {
+        color: 'rgba(255, 255, 255, 0.38)',
+        inlineSize: '1.25rem',
+        blockSize: '1.25rem',
+        verticalAlign: 'middle'
+    },
+    table: {
+        minWidth: 650
+    },
+    tableRow: {
+        '&:last-child td, &:last-child th': {
+            border: 0
+        },
+        '&:hover': {
+            background: 'rgba(255, 255, 255, 0.12)',
+        },
+    },
+    createMicroserviceBtn: {
+        background: 'linear-Gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%), #191A21',
+        fontSize: '13px',
+        fontWeight: '500',
+        marginBlockStart: '17px'
+    },
+};
 
 export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -57,36 +92,54 @@ export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (prop
         history.push(href);
     };
 
+    const { createMicroserviceBtn, svg, table, tableRow } = styles;
     return (
         <>
             {!hasEnvironments && (
                 <Button onClick={handleCreateEnvironment}>Create New Environment</Button>
             )}
 
-            {hasEnvironments && (
-                <Button onClick={handleCreateMicroservice}>Create New Microservice</Button>
-            )}
-
-
             <Typography variant='h1' my={2}>Microservices</Typography>
-            {hasMicroservices && (
-                <div className="serv">
-                    <ul>
-                        {filteredMicroservices.map((ms) => {
-                            const canDelete = canDeleteMicroservice(application.environments, environment, ms.id);
 
-                            return <li key={`${environment}-${ms.id}`}><ViewCard
-                                microserviceId={ms.id}
-                                microserviceName={ms.name}
-                                microserviceKind={ms.kind}
-                                applicationId={applicationId}
-                                environment={environment}
-                                canDelete={canDelete}
-                            /></li>;
-                        })}
-                    </ul>
-                </div>
+            {hasMicroservices && (
+                <TableContainer component={Paper}>
+                    <Table sx={table} aria-label="Microservices table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Name <ArrowUpward sx={svg} /></TableCell>
+                                <TableCell>Container Image <ArrowUpward sx={svg} /></TableCell>
+                                <TableCell>Runtime <ArrowUpward sx={svg} />
+                                </TableCell>
+                                <TableCell>Public URL <ArrowUpward sx={svg} /></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {filteredMicroservices.map((ms) => {
+                                return (
+                                    <TableRow key={`${environment}-${ms.id}`} sx={tableRow}>
+                                        <TableCell>{ms.name}</TableCell>
+                                        <TableCell>{ms.kind}</TableCell>
+                                        <TableCell>{applicationId}</TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+
             )}
+
+            {hasEnvironments && (
+                <Button
+                    onClick={handleCreateMicroservice}
+                    startIcon={<RocketLaunch />}
+                    fullWidth
+                    sx={createMicroserviceBtn}
+                >
+                    Deploy New Microservice
+                </Button>
+            )}
+
 
             {!hasMicroservices && (
                 <p>You currently do not have any microservices.</p>
