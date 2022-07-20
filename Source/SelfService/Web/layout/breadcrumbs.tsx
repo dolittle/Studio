@@ -57,7 +57,6 @@ export const BreadCrumbContainer: React.FunctionComponent<Props> = (props) => {
 };
 
 function _getCustomDivider(key: number): JSX.Element {
-    const _key = `bcd-${key}`;
     return (
         <span key={key} aria-hidden='true' style={{ cursor: 'pointer', padding: 5 }}>
             <SeperatorArrow style={{ verticalAlign: 'middle' }} />
