@@ -5,9 +5,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { PrimaryButton } from '@fluentui/react/lib/Button';
-
-
 import { HttpResponseApplication } from '../api/application';
 
 import '../microservice/microservice.scss';
@@ -15,12 +12,13 @@ import { ViewCard } from './viewCard';
 
 import { useReadable } from 'use-svelte-store';
 import { canDeleteMicroservice, canEditMicroservices, microservices } from '../stores/microservice';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 type Props = {
     environment: string
     application: HttpResponseApplication
 };
+
 
 
 export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (props) => {
@@ -43,29 +41,30 @@ export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (prop
     const newEnvironments = [...new Set(tempEnvironments)];
     const hasEnvironments = newEnvironments.length > 0;
 
+    const handleCreateMicroservice = () => {
+        if (!canEdit) {
+            enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
+            return;
+        }
+
+        const href = `/microservices/application/${application.id}/${environment}/create`;
+        history.push(href);
+    };
+
+    const handleCreateEnvironment = () => {
+        // TODO How to stop this if automation disabled, currently on the environment level
+        const href = `/environment/application/${application.id}/create`;
+        history.push(href);
+    };
+
     return (
         <>
             {!hasEnvironments && (
-                <>
-                    <PrimaryButton text="Create New Environment" onClick={(e => {
-                        // TODO How to stop this if automation disabled, currently on the environment level
-                        const href = `/environment/application/${application.id}/create`;
-                        history.push(href);
-                    })} />
-                </>
+                <Button onClick={handleCreateEnvironment}>Create New Environment</Button>
             )}
 
             {hasEnvironments && (
-                <>
-                    <PrimaryButton text="Create New Microservice" onClick={(e => {
-                        if (!canEdit) {
-                            enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
-                            return;
-                        }
-                        const href = `/microservices/application/${application.id}/${environment}/create`;
-                        history.push(href);
-                    })} />
-                </>
+                <Button onClick={handleCreateMicroservice}>Create New Microservice</Button>
             )}
 
 
