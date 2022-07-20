@@ -4,7 +4,9 @@
 import React from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
-import './breadcrumbs.scss';
+import { SeperatorArrow } from '../assets/icons';
+
+import { Link } from '@mui/material';
 
 export type BreadcrumbsRoute = {
     path: string;
@@ -16,6 +18,14 @@ type Props = {
     routes: BreadcrumbsRoute[];
 };
 
+const styles = {
+    fontWeight: '400',
+    fontSize: '16px',
+    lineHeight: '20px',
+    color: '#FAFAFA',
+    textDecoration: 'none'
+};
+
 export const BreadCrumbContainer: React.FunctionComponent<Props> = (props) => {
     const history = useHistory();
 
@@ -25,33 +35,32 @@ export const BreadCrumbContainer: React.FunctionComponent<Props> = (props) => {
     });
 
     const items = crumbs.map((_item, i) => {
-        const a = [
+        const links = [
             i > 0 && _getCustomDivider(i),
-            <a
+            <Link
                 key={`bc-${i}`}
                 href={_item.to}
+                sx={styles}
                 onClick={(event) => {
                     event.preventDefault();
                     history.push(_item.to);
                 }}
             >
                 {_item.name}
-            </a>,
+            </Link>,
         ];
-        return a;
+
+        return links;
     });
-    return (
-        <>
-            <div className='breadcrumbs'>{items}</div>
-        </>
-    );
+
+    return <div>{items}</div>;
 };
 
 function _getCustomDivider(key: number): JSX.Element {
     const _key = `bcd-${key}`;
     return (
         <span key={key} aria-hidden='true' style={{ cursor: 'pointer', padding: 5 }}>
-            /
+            <SeperatorArrow style={{ verticalAlign: 'middle' }} />
         </span>
     );
 }
