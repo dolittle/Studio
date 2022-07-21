@@ -10,7 +10,7 @@ import { getApplications, HttpResponseApplications } from '../api/application';
 import { Building } from '../application/building';
 
 import { Create } from '../application/create/create';
-import { AppView } from '../layout/appView';
+import { LoginWrapper } from '../layout/loginWrapper';
 
 export const ApplicationScreen: React.FunctionComponent = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -43,7 +43,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
     }
 
     return (
-        <AppView>
+        <LoginWrapper>
             <Switch>
                 <Route exact path="/application/create">
                     <Create />
@@ -53,6 +53,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                     <Building />
                 </Route>
             </Switch>
-        </AppView >
+        </LoginWrapper >
     );
 };
