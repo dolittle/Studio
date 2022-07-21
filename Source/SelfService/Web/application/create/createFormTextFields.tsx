@@ -22,7 +22,7 @@ const styles = {
     formField: {
         'letterSpacing': '0.15px',
         [themeDark.breakpoints.down('sm')]: {
-            marginBlockEnd: '20px'
+            marginBlockEnd: '1.25rem'
         },
         '& .MuiInputLabel-root.Mui-error': {
             'color': dark,
@@ -51,7 +51,6 @@ export type CreateFormTextFieldsProps = {
     onEmailChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
 };
 
-// TODO: add types
 export const CreateFormTextFields: React.FC<CreateFormTextFieldsProps> = (
     { formError, app, onAppChange, contactName, onNameChange, contactEmail, onEmailChange }: CreateFormTextFieldsProps) => {
 
