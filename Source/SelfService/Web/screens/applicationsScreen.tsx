@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import { ShortInfoWithEnvironment } from '../api/api';
-import { AppView } from '../layout/appView';
+import { LoginWrapper } from '../layout/loginWrapper';
 import { useGlobalContext } from '../stores/notifications';
 import { HttpResponseApplications, getApplications } from '../api/application';
 
@@ -76,7 +76,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
 
     return (
         <>
-            <AppView>
+            <LoginWrapper>
                 <Typography variant='h2' my={2} mb={5} sx={styles.title}>
                     Select Your Application & Environment
                 </Typography>
@@ -115,7 +115,7 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
                     </Link>
                     {/* <Button sx={styles.button}>Log Out</Button> */}
                 </Box>
-            </AppView>
+            </LoginWrapper>
         </>
     );
 };
