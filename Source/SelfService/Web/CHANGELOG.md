@@ -1,3 +1,30 @@
+# [2.0.4] - 2022-7-21 [PR: #218](https://github.com/dolittle/Studio/pull/218)
+## Summary
+
+Improved login flow. This is the first page user sees after login. User can create new application, which includes the application name, contact name, contact email and selecting which environments they would like their application to have.
+
+<img width="1310" alt="Screenshot 2022-07-19 at 16 15 52" src="https://user-images.githubusercontent.com/19160439/179759347-6a94579e-bf33-4744-9261-7086c0f4edfe.png">
+
+### Added
+
+1. Created layout without left sidebar.
+2. Created right sided layout.
+3. Basic form validation.
+
+### Changed
+
+-Removed stepper from 'Create new application' and reaplaced it with form.
+-Refactored 'create' component into multiple smaller ones.
+
+### Fixed
+
+-General styling and updated theme.
+
+### Removed
+
+-Unnecessary code.
+
+
 # [2.0.3] - 2022-7-13 [PR: #220](https://github.com/dolittle/Studio/pull/220)
 ## Summary
 
