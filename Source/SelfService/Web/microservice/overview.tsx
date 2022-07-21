@@ -41,6 +41,7 @@ const styles = {
         minWidth: 650
     },
     tableRow: {
+        'borderColor': 'rgba(255, 255, 255, 0.12)',
         '&:last-child td, &:last-child th': {
             border: 0
         },
@@ -48,11 +49,15 @@ const styles = {
             background: 'rgba(255, 255, 255, 0.12)',
         },
     },
+    tableCell: {
+
+    },
     createMicroserviceBtn: {
         background: 'linear-Gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%), #191A21',
         fontSize: '13px',
         fontWeight: '500',
-        marginBlockStart: '17px'
+        marginBlockStart: '17px',
+        minBlockSize: '36px'
     },
 };
 
@@ -92,7 +97,7 @@ export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (prop
         history.push(href);
     };
 
-    const { createMicroserviceBtn, svg, table, tableRow } = styles;
+    const { createMicroserviceBtn, svg, table, tableRow, tableCell } = styles;
     return (
         <>
             {!hasEnvironments && (
@@ -116,9 +121,10 @@ export const MicroservicesOverviewScreen: React.FunctionComponent<Props> = (prop
                         <TableBody>
                             {filteredMicroservices.map((ms) => {
                                 return (
-                                    <TableRow key={`${environment}-${ms.id}`} sx={tableRow}>
+                                    <TableRow key={`${environment}-${ms.id}`} hover>
                                         <TableCell>{ms.name}</TableCell>
                                         <TableCell>{ms.kind}</TableCell>
+                                        <TableCell>{applicationId}</TableCell>
                                         <TableCell>{applicationId}</TableCell>
                                     </TableRow>
                                 );
