@@ -10,7 +10,7 @@ import { Box, Button } from '@mui/material';
 const styles = {
     actionBtnWrapper: {
         [themeDark.breakpoints.down('sm')]: {
-            marginBlockStart: '60px'
+            marginBlockStart: '3.75rem'
         },
     },
     actionButtons: {
@@ -36,7 +36,7 @@ export const CreateFormActionButtons: React.FC<CreateFormActionButtonsProps> = (
     return (
         <Box sx={actionBtnWrapper}>
             <Button variant='text'
-                sx={{ ...actionButtons, marginInlineEnd: '64px' }}
+                sx={{ ...actionButtons, marginInlineEnd: '4rem' }}
                 onClick={handleCancel}
             >
                 Cancel

@@ -8,7 +8,7 @@ import { Alert, AlertTitle, Typography, Link } from '@mui/material';
 
 const styles = {
     alertWrapper: {
-        'marginBlockStart': '48px',
+        'marginBlockStart': '3rem',
         'borderColor': themeDark.palette.error.dark,
         'textAlign': 'left',
         '& .MuiAlert-icon': {
@@ -23,19 +23,18 @@ const styles = {
 };
 
 export const CreateAlert: React.FC = () => {
-    const unicodeSpaceChar = '\u0020';
     const { alertWrapper, supportLink } = styles;
 
     return (
         <Alert sx={alertWrapper} variant="outlined" severity="error">
             <AlertTitle>Oops, something went wrong</AlertTitle>
             <Typography variant='body2'>
-                Please try again later. If problem persists, please {unicodeSpaceChar}
+                {'Please try again later. If problem persists, please '}
                 <Link
                     sx={supportLink}
                     href='mailto: support@dolittle.com'>
                     contact support
-                </Link>.
+                </Link>{'.'}
             </Typography>
         </Alert>
     );
