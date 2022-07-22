@@ -41,7 +41,7 @@ const validateContactName = (error: FormErrorStates, contactName: string) => {
 };
 
 const validateAppName = (error: FormErrorStates, app: ShortInfo) => {
-    if (/\W/.test(app.name) || app.name.trim().length < 2) {
+    if (/\W/.test(app.name) || !app.name.trim().length) {
         error.applicationNameError.appErrorMessage = 'Name can only contain alphanumeric characters.';
         error.applicationNameError.appError = true;
     } else {
