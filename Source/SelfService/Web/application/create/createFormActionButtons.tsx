@@ -21,7 +21,7 @@ const styles = {
 };
 
 export type CreateFormActionButtonsProps = {
-    handleOnSubmit: () => Promise<void>;
+    handleOnSubmit: () => Promise<void>
 };
 
 export const CreateFormActionButtons: React.FC<CreateFormActionButtonsProps> = ({ handleOnSubmit }: CreateFormActionButtonsProps) => {
