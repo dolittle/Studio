@@ -19,20 +19,28 @@ const styles = {
         letterSpacing: '-0.5px',
         lineHeight: '26px'
     },
+    listWrapper: {
+        padding: '0',
+        display: 'inline-block'
+    },
+    createBtnWrapper: {
+        inlineSize: '100%',
+    },
     button: {
         letterSpacing: '0.06em'
     },
     environmentButtons: {
         display: 'block',
-        minWidth: '155px',
-        minHeight: '36px',
+        inlineSize: '100%',
+        minInlineSize: '155px',
+        minBlockSize: '36px',
         marginBlockStart: '-4px',
-        marginBlockEnd: '16px',
+        marginBlockEnd: '1rem',
         marginInline: 'auto',
     }
 };
 
-export const ApplicationsScreen: React.FunctionComponent = () => {
+export const ApplicationsScreen: React.FC = () => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -59,8 +67,9 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
     if (!loaded) return null;
 
     const onEnvironmentChoose = (application) => {
-        setCurrentEnvironment(application.environment);
-        const href = `/microservices/application/${application.id}/${application.environment}/overview`;
+        const { environment, id } = application;
+        setCurrentEnvironment(environment);
+        const href = `/microservices/application/${id}/${environment}/overview`;
         history.push(href);
     };
 
@@ -74,48 +83,48 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         history.push(href);
     };
 
+    const { title, listWrapper, createBtnWrapper, button, environmentButtons } = styles;
     return (
-        <>
-            <LoginWrapper>
-                <Typography variant='h2' my={2} mb={5} sx={styles.title}>
-                    Select Your Application & Environment
-                </Typography>
+        <LoginWrapper>
+            <Typography variant='h2' my={2} mb={5} sx={title}>
+                Select Your Application & Environment
+            </Typography>
 
+            <Box sx={createBtnWrapper}>
                 <Button
                     variant='text'
                     startIcon={<AddCircle />}
-                    sx={styles.button}
+                    sx={button}
                     onClick={handleCreate}>
                     Create new Application
                 </Button>
+            </Box>
 
-                <ul style={{ padding: '0' }}>
-                    {data.map(application => {
-                        return (
-                            <Button
-                                variant='contained'
-                                sx={{ ...styles.environmentButtons, ...styles.button }}
-                                key={application.environment}
-                                onClick={() => onEnvironmentChoose(application)}
-                            >
-                                {application.name} - {application.environment}
-                            </Button>
-                        );
-                    })}
-                </ul>
-
-                <Box mt={12.5} sx={styles}>
-                    <Link
-                        href='/.auth/cookies/initiate'>
+            <ul style={listWrapper}>
+                {data.map(application => {
+                    return (
                         <Button
-                            startIcon={<ArrowBack />}
-                            sx={{ ...styles.button, color: themeDark.palette.text.primary }}
-                        >Select new customer
+                            variant='contained'
+                            sx={{ ...environmentButtons, ...button }}
+                            key={application.environment}
+                            onClick={() => onEnvironmentChoose(application)}
+                        >
+                            {application.name} - {application.environment}
                         </Button>
-                    </Link>
-                    {/* <Button sx={styles.button}>Log Out</Button> */}
-                </Box>
-            </LoginWrapper>
-        </>
+                    );
+                })}
+            </ul>
+
+            <Box mt={12.5}>
+                <Link href='/.auth/cookies/initiate' sx={{ textDecoration: 'none' }}>
+                    <Button
+                        startIcon={<ArrowBack />}
+                        sx={{ ...button, color: themeDark.palette.text.primary }}
+                    >Select new customer
+                    </Button>
+                </Link>
+                {/* <Button sx={button}>Log Out</Button> */}
+            </Box>
+        </LoginWrapper>
     );
 };
