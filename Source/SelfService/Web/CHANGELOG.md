@@ -1,3 +1,25 @@
+# [2.0.5] - 2022-7-25 [PR: #223](https://github.com/dolittle/Studio/pull/223)
+## Summary
+
+Made application buttons to be as wide as the longest button is.
+
+Fixed error message on 'application name' field for not giving error when name is only one char long because it is not what error message would suggest.
+
+Removed underline styling from 'select new customer' link.
+
+<img width="476" alt="Screenshot 2022-07-22 at 10 10 13" src="https://user-images.githubusercontent.com/19160439/180430310-7a4a996e-a6b2-40a9-aead-59804413824c.png">
+
+### Fixed
+
+- Application selection buttons width
+- Text field error handling
+- Link appearance on Safary and Chrome
+
+### Removed
+
+- Unnecessary punctuations
+
+
 # [2.0.4] - 2022-7-21 [PR: #218](https://github.com/dolittle/Studio/pull/218)
 ## Summary
 
