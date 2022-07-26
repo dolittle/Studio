@@ -1,88 +1,71 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { aTagBackgroundColor } from '../../theme/viewCard';
-import { CardHeader } from '@mui/material';
-import { red } from '@mui/material/colors';
-import { useGlobalContext } from '../../stores/notifications';
+
+import { themeDark } from '../../theme/theme';
+import { Button, Card, CardActions, CardContent, CardHeader, Link, Typography } from '@mui/material';
 
 const styles = {
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: (theme) => theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
-    avatar: {
-        backgroundColor: red[500],
+    card: {
+        'display': 'flex',
+        'flexDirection': 'column',
+        'justifyContent': 'space-between',
+        'inlineSize': '100%',
+        'blockSize': '100%',
+        ':hover': {
+            background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.09) 100%), #191A21',
+            boxShadow: '0px 2px 4px - 1px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12)'
+        }
     },
     button: {
-        color: aTagBackgroundColor,
+        color: themeDark.palette.primary.main,
+        fontWeight: 500,
+        fontSize: '0.75rem',
+        lineHeight: '1.375rem',
+        letterSpacing: '0.06em'
+    },
+    link: {
+        color: themeDark.palette.text.primary,
+        textDecoration: 'none'
     }
 };
 
-type Props = {
+type SimpleCardProps = {
     kind: string
     name: string
     description: string
-    icon?: React.ReactNode
     onCreate: (kind: string) => void;
 };
 
-export const SimpleCard: React.FunctionComponent<Props> = (props) => {
-    const { setNotification } = useGlobalContext();
-    const name = props!.name;
-    const description = props!.description;
-    const kind = props!.kind;
-
+export const SimpleCard: React.FC<SimpleCardProps> = ({ kind, name, description, onCreate }: SimpleCardProps) => {
     const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         event.preventDefault();
-        props!.onCreate(kind);
+        onCreate(kind);
     };
 
-    const kindIcon = props!.icon;
+    const { card, button, link } = styles;
     return (
-        <Card key={`microservice-${kind}`}>
-            <CardContent>
-                <CardHeader
-                    avatar={
-                        kindIcon
-                    }
-                    title={
-                        <Typography variant="h2">
-                            {name}
-                        </Typography>
-                    }
-                    subheader={
-                        <Typography variant="subtitle2" component="h3">
-                            Microservice
-                        </Typography>
-                    }
-                />
+        <Card key={`microservice-${kind}`} sx={card} elevation={1} >
+            <CardHeader title={<Typography variant="h5">{name}</Typography>} />
 
-                <Typography>
-                    {description}
-                </Typography>
+            <CardContent>
+                <Typography variant='body2'>{description}</Typography>
             </CardContent>
+
             <CardActions>
-                <Button size="small" onClick={() => {
-                    setNotification('TODO: Learn more', 'info');
-                }}>Learn More</Button>
-                <Button sx={styles.button} size="small" onClick={onClick}>Create</Button>
+                <Button sx={button}>
+                    <Link
+                        sx={{ ...button, ...link }}
+                        href='https://dolittle.io/docs/platform/requirements/'
+                        target='_blanc'
+                    >
+                        Learn more
+                    </Link>
+                </Button>
+
+                <Button sx={button} size="small" onClick={onClick}>Deploy</Button>
             </CardActions>
         </Card>
     );

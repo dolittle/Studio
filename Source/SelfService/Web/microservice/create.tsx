@@ -1,10 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-
 // TODO validate the data
-// TODO change action button from create to save
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 
 import { Create as Base } from './base/create';
@@ -12,32 +10,18 @@ import { Create as PurchaseOrder } from './purchaseOrder/create';
 
 import { HttpResponseApplication } from '../api/application';
 
-import { Box, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { SimpleCard } from './create/card';
 
-type Props = {
+type CreateProps = {
     environment: string
     application: HttpResponseApplication
 };
 
-const styles = {
-    root: {
-        flexGrow: 1,
-    },
-    paper: {
-        padding: 1,
-        textAlign: 'center',
-        color: (theme) => theme.palette.text.secondary,
-    },
-};
-
-
-export const Create: React.FunctionComponent<Props | undefined> = (props) => {
+export const Create: React.FC<CreateProps> = ({ environment, application }: CreateProps) => {
     const history = useHistory();
     const location = useLocation();
 
-    const _props = props!;
-    const environment = _props.environment;
     const searchParams = new URLSearchParams(location.search);
 
     const items = [
@@ -81,7 +65,7 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
         return kind;
     };
 
-    const [microserviceTypeState, setMicroserviceTypeState] = React.useState(kindViaParams());
+    const [microserviceTypeState, setMicroserviceTypeState] = useState(kindViaParams());
     useEffect(() => {
         setMicroserviceTypeState(kindViaParams());
     }, [kindViaParams()]);
@@ -93,36 +77,35 @@ export const Create: React.FunctionComponent<Props | undefined> = (props) => {
     };
 
     if (microserviceTypeState === '') {
-        return <>
-            <Typography variant='h1' my={2}>Select a microservice</Typography>
-            <Box sx={styles.root}>
-                <Grid container spacing={1}>
+        return (
+            <>
+                <Typography variant='h1' my={3}>Microservices</Typography>
+
+                <Grid container rowSpacing={4} columnSpacing={4} sx={{ maxInlineSize: '920px' }}>
                     {items.map(data => (
-                        <Grid key={`pick-microservice-kind-${data.kind}`} item xs={4}>
+                        <Grid key={`pick-microservice-kind-${data.kind}`} item xs>
                             <SimpleCard {...data} onCreate={onCreate} />
                         </Grid>
                     ))}
                 </Grid>
-            </Box>
-        </>;
+            </>
+        );
     }
 
     return (
-        <>
-            <Grid
-                container
-                direction="column"
-                justifyContent="flex-start"
-                alignItems="stretch"
-            >
-                {microserviceTypeState === 'dolittle-microservice' && (
-                    <Base application={_props.application} environment={environment} />
-                )}
+        <Grid
+            container
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="stretch"
+        >
+            {microserviceTypeState === 'dolittle-microservice' && (
+                <Base application={application} environment={environment} />
+            )}
 
-                {microserviceTypeState === 'purchase-order-api' && (
-                    <PurchaseOrder application={_props.application} environment={environment} />
-                )}
-            </Grid>
-        </>
+            {microserviceTypeState === 'purchase-order-api' && (
+                <PurchaseOrder application={application} environment={environment} />
+            )}
+        </Grid>
     );
 };
