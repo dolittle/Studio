@@ -7,8 +7,6 @@ import { useSnackbar } from 'notistack';
 
 import { HttpResponseApplication } from '../../api/application';
 
-import '../../microservice/microservice.scss';
-
 import { useReadable } from 'use-svelte-store';
 import { canEditMicroservices, microservices } from '../../stores/microservice';
 
@@ -18,44 +16,35 @@ import { RocketLaunch } from '@mui/icons-material';
 import { EnhancedTableBody } from './enhancedTableBody';
 
 const styles = {
-    table: {
-        minWidth: 650
-    },
-    tableRow: {
-        '&:last-child td, &:last-child th': {
-            border: 0
-        },
-    },
     createMicroserviceBtn: {
         background: 'linear-Gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%), #191A21',
-        fontSize: '13px',
+        fontSize: '0.8125rem',
         fontWeight: '500',
-        marginBlockStart: '17px',
+        marginBlockStart: '1.0625rem',
         minBlockSize: '36px'
     },
 };
 
-type Props = {
+type MicroservicesOverviewScreenProps = {
     environment: string
     application: HttpResponseApplication
 };
 
-export const MicroservicesOverviewScreen: React.FC<Props> = (props) => {
+export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenProps> = (
+    { environment, application }: MicroservicesOverviewScreenProps) => {
+
+    const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as any;
 
-    const history = useHistory();
-    const _props = props!;
-    const environment = _props.environment;
-    const applicationId = _props.application.id;
+    const { environments, id } = application;
 
-    const application = _props.application!;
-    const canEdit = canEditMicroservices(application.environments, environment);
+    const canEdit = canEditMicroservices(environments, environment);
 
     const filteredMicroservices = $microservices.filter(microservice => microservice.environment === environment);
     const hasMicroservices = filteredMicroservices.length > 0;
 
-    let tempEnvironments = application.environments.map(e => e.name);
+    let tempEnvironments = environments.map(e => e.name);
     tempEnvironments = [...tempEnvironments, ...$microservices.map(item => item.environment)];
     const newEnvironments = [...new Set(tempEnvironments)];
     const hasEnvironments = newEnvironments.length > 0;
@@ -66,13 +55,13 @@ export const MicroservicesOverviewScreen: React.FC<Props> = (props) => {
             return;
         }
 
-        const href = `/microservices/application/${application.id}/${environment}/create`;
+        const href = `/microservices/application/${id}/${environment}/create`;
         history.push(href);
     };
 
     const handleCreateEnvironment = () => {
         // TODO How to stop this if automation disabled, currently on the environment level
-        const href = `/environment/application/${application.id}/create`;
+        const href = `/environment/application/${id}/create`;
         history.push(href);
     };
 
@@ -86,7 +75,7 @@ export const MicroservicesOverviewScreen: React.FC<Props> = (props) => {
 
             {hasMicroservices && <EnhancedTableBody
                 data={filteredMicroservices}
-                applicationId={applicationId}
+                applicationId={id}
                 environment={environment}
             />}
 
