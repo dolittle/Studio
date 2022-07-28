@@ -14,6 +14,7 @@ import { Button, Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 import { EnhancedTableBody } from './enhancedTableBody';
+import { NoMicroservices } from '../noMicroservices';
 
 const styles = {
     createMicroserviceBtn: {
@@ -90,10 +91,7 @@ export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenPr
                 </Button>
             )}
 
-
-            {!hasMicroservices && (
-                <p>You currently do not have any microservices.</p>
-            )}
+            {!hasMicroservices && <NoMicroservices onCreate={handleCreateMicroservice} />}
         </>
     );
 };
