@@ -183,6 +183,8 @@ export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenPr
         );
     };
 
+    console.log(rows)
+
     const columns: GridColDef[] = [
         {
             field: 'name',
@@ -209,10 +211,11 @@ export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenPr
             }
         },
         {
-            field: 'publicURL',
+            field: 'isPublic',
             headerName: 'Public URL',
             minWidth: 200,
             flex: 1,
+            sortable: false,
             // TODO: Tooltip needs public urls. Put them into title.
             renderCell: function tooltip(params: GridRenderCellParams) {
                 return (
@@ -220,7 +223,7 @@ export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenPr
                         <span>{params.row.edit.extra.isPublic ? 'Available' : 'None'}</span>
                     </Tooltip>
                 );
-            }
+            },
         },
         {
             field: 'status',
@@ -229,6 +232,9 @@ export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenPr
             flex: 1,
             renderCell: function statusInfo(params: GridRenderCellParams) {
                 return <>{microserviceStatusInfo(params)}</>;
+            },
+            sortComparator: (v1, v2, param1: any, param2: any) => {
+                return param1.value[0].phase.localeCompare(param2.value[0].phase);
             },
         },
     ];
