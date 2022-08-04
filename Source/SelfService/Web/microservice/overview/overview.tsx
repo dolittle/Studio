@@ -213,21 +213,21 @@ export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenPr
             headerName: 'Public URL',
             minWidth: 200,
             flex: 1,
-            // TODO: Tooltip needs public urls
-            // eslint-disable-next-line react/display-name
-            renderCell: (params: GridRenderCellParams) => (
-                <Tooltip title={``} arrow>
-                    <span>{params.row.edit.extra.isPublic ? 'Available' : 'None'}</span>
-                </Tooltip>
-            ),
+            // TODO: Tooltip needs public urls. Put them into title.
+            renderCell: function tooltip(params: GridRenderCellParams) {
+                return (
+                    <Tooltip title={``} arrow>
+                        <span>{params.row.edit.extra.isPublic ? 'Available' : 'None'}</span>
+                    </Tooltip>
+                );
+            }
         },
         {
             field: 'status',
             headerName: 'Status',
             minWidth: 200,
             flex: 1,
-            // eslint-disable-next-line react/display-name
-            renderCell: (params: GridRenderCellParams) => {
+            renderCell: function statusInfo(params: GridRenderCellParams) {
                 return <>{microserviceStatusInfo(params)}</>;
             },
         },
