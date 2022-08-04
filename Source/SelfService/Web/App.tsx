@@ -33,7 +33,7 @@ import '@fontsource/rubik/500.css';
 import '@fontsource/rubik/700.css';
 import '@fontsource/roboto-mono';
 import { ApplicationScreen } from './screens/applicationScreen';
-import { Box, createTheme } from '@mui/material';
+import { Box } from '@mui/material';
 import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
 import { M3ConnectorScreen } from './screens/m3connectorScreen';
 import { LogsScreen } from './screens/logsScreen';
