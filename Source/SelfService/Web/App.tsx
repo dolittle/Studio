@@ -4,6 +4,7 @@
 import React from 'react';
 import { Route, BrowserRouter, useLocation, Switch } from 'react-router-dom';
 import { QueryParamProvider } from 'use-query-params';
+import { LicenseInfo } from '@mui/x-license-pro';
 
 import { ApplicationsScreen } from './screens/applicationsScreen';
 
@@ -37,6 +38,8 @@ import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
 import { M3ConnectorScreen } from './screens/m3connectorScreen';
 import { LogsScreen } from './screens/logsScreen';
 import { themeDark } from './theme/theme';
+
+LicenseInfo.setLicenseKey('4a83cf3032e8518adfbe8694d092262dTz00ODUxMyxFPTE2OTEyMjE0ODgxODUsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=');
 
 const snackbarStyles = {
     '& .SnackbarContent-root.': {
