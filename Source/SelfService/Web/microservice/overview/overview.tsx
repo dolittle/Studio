@@ -187,11 +187,13 @@ export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenPr
         {
             field: 'name',
             headerName: 'Name',
+            minWidth: 200,
             flex: 1
         },
         {
             field: 'image',
             headerName: 'Container Image',
+            minWidth: 200,
             flex: 1,
             valueGetter: (params: GridValueGetterParams) =>
                 `${params.row.edit.extra.headImage || ''}`,
@@ -199,6 +201,7 @@ export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenPr
         {
             field: 'runtime',
             headerName: 'Runtime',
+            minWidth: 200,
             flex: 1,
             valueGetter: (params: GridValueGetterParams) => {
                 const runtimeNumber = params.row.edit.extra.runtimeImage.replace(/[dolittle/runtime:]/gi, '');
@@ -208,6 +211,7 @@ export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenPr
         {
             field: 'publicURL',
             headerName: 'Public URL',
+            minWidth: 200,
             flex: 1,
             // TODO: Tooltip needs public urls
             // eslint-disable-next-line react/display-name
@@ -220,6 +224,7 @@ export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenPr
         {
             field: 'status',
             headerName: 'Status',
+            minWidth: 200,
             flex: 1,
             // eslint-disable-next-line react/display-name
             renderCell: (params: GridRenderCellParams) => {

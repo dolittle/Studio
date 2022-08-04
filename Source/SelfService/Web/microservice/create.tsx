@@ -10,8 +10,19 @@ import { Create as PurchaseOrder } from './purchaseOrder/create';
 
 import { HttpResponseApplication } from '../api/application';
 
+import { themeDark } from '../theme/theme';
 import { Grid, Typography } from '@mui/material';
+
 import { SimpleCard } from './create/card';
+
+const styles = {
+    gridContainer: {
+        maxInlineSize: '920px',
+        [themeDark.breakpoints.down('md')]: {
+            flexDirection: 'column'
+        }
+    }
+};
 
 type CreateProps = {
     environment: string
@@ -81,9 +92,9 @@ export const Create: React.FC<CreateProps> = ({ environment, application }: Crea
             <>
                 <Typography variant='h1' my={3}>Microservices</Typography>
 
-                <Grid container rowSpacing={4} columnSpacing={4} sx={{ maxInlineSize: '920px' }}>
+                <Grid container rowSpacing={4} columnSpacing={4} sx={styles.gridContainer}>
                     {items.map(data => (
-                        <Grid key={`pick-microservice-kind-${data.kind}`} item xs={6}>
+                        <Grid key={`pick-microservice-kind-${data.kind}`} item xs={12} md={6}>
                             <SimpleCard {...data} onCreate={onCreate} />
                         </Grid>
                     ))}
