@@ -1,28 +1,24 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-//
+
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import {
-    Grid,
-    IconButton,
-    Typography,
-    Divider,
-    Box,
-} from '@mui/material';
-import { TabPanel } from '../../utils/materialUi';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useSnackbar } from 'notistack';
 
-import { HttpResponsePodStatus } from '../../api/api';
-import { HealthStatus } from '../view/healthStatus';
+import { useSnackbar } from 'notistack';
 import { useReadable } from 'use-svelte-store';
+
 import { microservices, MicroserviceStore, canDeleteMicroservice, canEditMicroservice } from '../../stores/microservice';
 import { Configuration } from './configuration';
-import { Tab, Tabs } from '../../theme/tabs';
+import { HttpResponsePodStatus } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import { HttpResponseApplication } from '../../api/application';
 
+import { Tab, Tabs } from '../../theme/tabs';
+import { Grid, IconButton, Typography } from '@mui/material';
+import { TabPanel } from '../../utils/materialUi';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import { HealthStatus } from '../view/healthStatus';
 
 type Props = {
     application: HttpResponseApplication
@@ -70,7 +66,7 @@ const styles = {
     }
 };
 
-export const View: React.FunctionComponent<Props> = (props) => {
+export const View: React.FC<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
@@ -137,6 +133,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
             },
         };
     }
+
     const msName = currentMicroservice.name;
 
     const [currentTab, setCurrentTab] = useState(0);
@@ -145,13 +142,22 @@ export const View: React.FunctionComponent<Props> = (props) => {
         setCurrentTab(newValue);
     };
 
+    const handleDelete = () => {
+        if (!canDelete) {
+            enqueueSnackbar('Deleting microservice is disabled', { variant: 'error' });
+            return;
+        }
+
+        const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/delete`;
+        history.push(href);
+    };
+
     return (
         <Grid
             container
             direction='column'
             justifyContent='flex-start'
         >
-
             <Grid container
                 spacing={2}
                 direction="row"
@@ -163,24 +169,16 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 </Grid>
             </Grid>
 
-            <Grid
-                container
-                spacing={3}
+            <Grid container spacing={3}>
 
-            >
                 <Grid item xs={10}>
-                    <Tabs
-                        value={currentTab}
-                        onChange={handleChange}
-                    >
+                    <Tabs value={currentTab} onChange={handleChange}>
                         <Tab label='Health Status' />
                         <Tab label='Configuration' />
                     </Tabs>
                 </Grid>
 
-                <Grid
-                    item xs={2}
-                >
+                <Grid item xs={2}>
                     <Grid
                         container
                         direction='row'
@@ -188,15 +186,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         alignItems='flex-end'
                     >
                         <IconButton
-                            onClick={() => {
-                                if (!canDelete) {
-                                    enqueueSnackbar('Deleting microservice is disabled', { variant: 'error' });
-                                    return;
-                                }
-
-                                const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/delete`;
-                                history.push(href);
-                            }}
+                            onClick={handleDelete}
                             sx={styles.deleteIcon}
                             size="large">
                             <DeleteIcon />
@@ -206,10 +196,10 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 </Grid>
             </Grid>
 
-
             <TabPanel value={currentTab} index={0}>
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
             </TabPanel>
+
             <TabPanel value={currentTab} index={1}>
                 <Configuration
                     applicationId={applicationId}
