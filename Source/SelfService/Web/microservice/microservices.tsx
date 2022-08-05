@@ -5,16 +5,16 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { HttpResponseApplication } from '../../api/application';
+import { HttpResponseApplication } from '../api/application';
 
 import { useReadable } from 'use-svelte-store';
-import { canEditMicroservices, microservices } from '../../stores/microservice';
+import { canEditMicroservices, microservices } from '../stores/microservice';
 
 import { Button, Typography } from '@mui/material';
 
-import { NoMicroservices } from '../noMicroservices';
-import { DataTable, MicroserviceObject } from '../dataTable';
-import { CreateButton } from '../createButton';
+import { NoMicroservices } from './noMicroservices';
+import { DataTable, MicroserviceObject } from './dataTable';
+import { CreateButton } from './createButton';
 
 type MicroservicesOverviewScreenProps = {
     environment: string
