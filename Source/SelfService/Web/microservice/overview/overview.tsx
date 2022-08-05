@@ -258,7 +258,7 @@ export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenPr
                     onRowClick={(params) => onTableRowClick(params.row.id)}
                 /></Box>}
 
-            {hasEnvironments && (
+            {hasEnvironments && hasMicroservices && (
                 <Button
                     onClick={handleCreateMicroservice}
                     startIcon={<RocketLaunch />}
