@@ -10,7 +10,6 @@ import {
     Box,
 } from '@mui/material';
 import { TabPanel } from '../../utils/materialUi';
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useSnackbar } from 'notistack';
 
@@ -176,16 +175,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         justifyContent='space-around'
                         alignItems='flex-end'
                     >
-                        <IconButton
-                            onClick={() => {
-                                enqueueSnackbar('TODO: Delete microservice', { variant: 'error' });
-                            }}
-                            sx={classes.deleteIcon}
-                            size="large">
-                            <DeleteIcon />
-                            <Typography>delete</Typography>
-                        </IconButton>
-
 
                         <IconButton
                             onClick={() => {
@@ -199,6 +188,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
                     </Grid>
                 </Grid>
+
             </Grid>
 
 

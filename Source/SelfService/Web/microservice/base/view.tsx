@@ -12,7 +12,6 @@ import {
 } from '@mui/material';
 import { TabPanel } from '../../utils/materialUi';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import { useSnackbar } from 'notistack';
 
 import { HttpResponsePodStatus } from '../../api/api';
@@ -202,17 +201,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
                             size="large">
                             <DeleteIcon />
                             <Typography>delete</Typography>
-                        </IconButton>
-
-
-                        <IconButton
-                            onClick={() => {
-                                enqueueSnackbar('TODO: Edit microservice', { variant: 'error' });
-                            }}
-                            sx={styles.editIcon}
-                            size="large">
-                            <EditIcon />
-                            <Typography>Edit</Typography>
                         </IconButton>
                     </Grid>
                 </Grid>
