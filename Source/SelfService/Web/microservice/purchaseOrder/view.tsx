@@ -1,27 +1,25 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import {
-    Grid,
-    IconButton,
-    Typography,
-    Divider,
-    Box,
-} from '@mui/material';
-import { TabPanel } from '../../utils/materialUi';
-import EditIcon from '@mui/icons-material/Edit';
+
 import { useSnackbar } from 'notistack';
+import { useReadable } from 'use-svelte-store';
 
 import { microservices, MicroserviceStore, savePurchaseOrderMicroservice } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
 import { HttpResponsePodStatus } from '../../api/api';
-import { HealthStatus } from '../view/healthStatus';
-import { useReadable } from 'use-svelte-store';
 import { ViewConfiguration } from './viewConfiguration';
-import { DataStateIcon } from './dataStateIcon';
+
 import { Tab, Tabs } from '../../theme/tabs';
+import { DataStateIcon } from './dataStateIcon';
+import { Grid, IconButton, Typography, Divider, Box, } from '@mui/material';
+import { TabPanel } from '../../utils/materialUi';
+import EditIcon from '@mui/icons-material/Edit';
+
 import { DownloadButtons } from '../components/downloadButtons';
+import { HealthStatus } from '../view/healthStatus';
 
 type Props = {
     applicationId: string
@@ -69,7 +67,7 @@ const classes = {
     }
 };
 
-export const View: React.FunctionComponent<Props> = (props) => {
+export const View: React.FC<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
@@ -93,7 +91,6 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const msName = currentMicroservice.name;
     const searchParams = new URLSearchParams(location.search);
 
-
     useEffect(() => {
         const firstTime = searchParams.get('firstTime')!;
         if (firstTime === '1') {
@@ -104,13 +101,13 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const [currentTab, setCurrentTab] = useState(searchParams.get('firstTime') === '1' ? 0 : 1);
     const [editMode, setEditMode] = useState(false);
 
-
     const getFakeState = (searchParams: URLSearchParams): string => {
         if (!searchParams.has('dataState')) {
             return 'waiting';
         }
         return searchParams.get('dataState') as string;
     };
+
     const fakeState = getFakeState(searchParams);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -129,13 +126,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
         }).catch(reason => console.log(reason));
     };
 
-
     return (
-        <Grid
-            container
-            direction='column'
-            justifyContent='flex-start'
-        >
+        <Grid container direction='column' justifyContent='flex-start'>
 
             <Grid container
                 spacing={2}
@@ -146,36 +138,27 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 <Grid item xs={3}>
                     <Typography variant="h3">{msName}</Typography>
                 </Grid>
+
                 <Grid item xs={3}>
                     <DataStateIcon state={fakeState} />
                 </Grid>
             </Grid>
 
-            <Grid
-                container
-                spacing={3}
-
-            >
+            <Grid container spacing={3}>
                 <Grid item xs={10}>
-                    <Tabs
-                        value={currentTab}
-                        onChange={handleChange}
-                    >
+                    <Tabs value={currentTab} onChange={handleChange}>
                         <Tab label='Configuration' />
                         <Tab label='Health Status' />
                     </Tabs>
                 </Grid>
 
-                <Grid
-                    item xs={2}
-                >
+                <Grid item xs={2}>
                     <Grid
                         container
                         direction='row'
                         justifyContent='space-around'
                         alignItems='flex-end'
                     >
-
                         <IconButton
                             onClick={() => {
                                 setEditMode(!editMode);
@@ -185,12 +168,9 @@ export const View: React.FunctionComponent<Props> = (props) => {
                             <EditIcon />
                             <Typography>Edit</Typography>
                         </IconButton>
-
                     </Grid>
                 </Grid>
-
             </Grid>
-
 
             <TabPanel value={currentTab} index={0}>
                 <Box ml={2}>
@@ -198,7 +178,9 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         setEditMode(false);
                     }} />
                 </Box>
+
                 <Divider sx={classes.divider} />
+
                 <Box ml={2}>
                     <DownloadButtons
                         environment={environment}
@@ -207,9 +189,11 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     />
                 </Box>
             </TabPanel>
+
             <TabPanel value={currentTab} index={1}>
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
             </TabPanel>
+
         </Grid >
     );
 };
