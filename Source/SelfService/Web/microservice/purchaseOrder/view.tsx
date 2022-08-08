@@ -29,19 +29,6 @@ type Props = {
 };
 
 const classes = {
-    deleteIcon: {
-        'padding': 0,
-        'marginRight': 1,
-        'fill': 'white',
-        '& .MuiSvgIcon-root': {
-            color: 'white',
-            marginRight: 1,
-        },
-        '& .MuiTypography-root': {
-            color: 'white',
-            textTransform: 'uppercase'
-        }
-    },
     editIcon: {
         'padding': 0,
         'marginRight': 1,
