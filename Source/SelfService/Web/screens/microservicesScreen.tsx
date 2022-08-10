@@ -17,7 +17,7 @@ import {
     getMicroservices
 } from '../api/api';
 
-import { MicroservicesOverviewScreen } from '../microservice/microservices';
+import { MicroservicesOverviewScreen } from '../microservice/microservice';
 import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
 import { MicroserviceEditScreen } from '../microservice/microserviceEditScreen';
 import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';

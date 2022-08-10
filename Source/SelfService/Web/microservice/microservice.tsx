@@ -14,16 +14,14 @@ import { Button, Typography } from '@mui/material';
 
 import { NoMicroservices } from './noMicroservices';
 import { DataTable, MicroserviceObject } from './dataTable';
-import { CreateButton } from './createButton';
+import { DeployButton } from './deployButton';
 
 type MicroservicesOverviewScreenProps = {
     environment: string
     application: HttpResponseApplication
 };
 
-export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenProps> = (
-    { environment, application }: MicroservicesOverviewScreenProps) => {
-
+export const MicroservicesOverviewScreen = ({ environment, application }: MicroservicesOverviewScreenProps) => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as MicroserviceObject[];
@@ -65,11 +63,11 @@ export const MicroservicesOverviewScreen: React.FC<MicroservicesOverviewScreenPr
 
             <Typography variant='h1' my={2}>Microservices</Typography>
 
-            {hasMicroservices && <DataTable application={application} environment={environment} microservices={filteredMicroservices} />}
+            {!hasMicroservices && <DataTable application={application} environment={environment} microservices={filteredMicroservices} />}
 
-            {hasEnvironments && hasMicroservices && <CreateButton handleClick={handleCreateMicroservice} />}
+            {!hasEnvironments && hasMicroservices && <DeployButton handleClick={handleCreateMicroservice} />}
 
-            {!hasMicroservices && <NoMicroservices onCreate={handleCreateMicroservice} />}
+            {hasMicroservices && <NoMicroservices onCreate={handleCreateMicroservice} />}
         </>
     );
 };

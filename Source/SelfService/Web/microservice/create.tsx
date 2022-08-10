@@ -18,9 +18,6 @@ import { SimpleCard } from './create/card';
 const styles = {
     gridContainer: {
         maxInlineSize: '920px',
-        [themeDark.breakpoints.down('md')]: {
-            flexDirection: 'column'
-        }
     }
 };
 
@@ -29,7 +26,7 @@ type CreateProps = {
     application: HttpResponseApplication
 };
 
-export const Create: React.FC<CreateProps> = ({ environment, application }: CreateProps) => {
+export const Create = ({ environment, application }: CreateProps) => {
     const history = useHistory();
     const location = useLocation();
 
@@ -103,7 +100,6 @@ export const Create: React.FC<CreateProps> = ({ environment, application }: Crea
         );
     }
 
-    // This does not return anything for me. Not sure what it should do.
     return (
         <Grid
             container
