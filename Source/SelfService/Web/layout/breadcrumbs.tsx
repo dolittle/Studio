@@ -4,62 +4,58 @@
 import React from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
-import { SeperatorArrow } from '../assets/icons';
-
-import { Link } from '@mui/material';
-
-export type BreadcrumbsRoute = {
-    path: string;
-    to: string;
-    name: string;
-};
-
-type Props = {
-    routes: BreadcrumbsRoute[];
-};
+import { themeDark } from '../theme/theme';
+import { Link, Breadcrumbs, Stack } from '@mui/material';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const styles = {
-    fontWeight: '400',
-    fontSize: '16px',
-    lineHeight: '20px',
-    color: '#FAFAFA',
+    fontWeight: 400,
+    fontSize: '1rem',
+    lineHeight: '1.25rem',
+    color: themeDark.palette.text.primary,
     textDecoration: 'none'
 };
 
-export const BreadCrumbContainer: React.FunctionComponent<Props> = (props) => {
+export type BreadcrumbsRoute = {
+    path: string
+    to: string
+    name: string
+};
+
+type Props = {
+    routes: BreadcrumbsRoute[]
+};
+
+export const BreadCrumbContainer = (props: Props) => {
     const history = useHistory();
 
-    const crumbs = props!.routes.filter((r) => {
-        const match = useRouteMatch(r.path);
-        return match ? r : false;
-    });
+    const crumbs = props!.routes.filter((route) => useRouteMatch(route.path) ? route : false);
 
-    const items = crumbs.map((_item, i) => {
+    const breadcrumbs = crumbs.map((item, index) => {
         const links = [
-            i > 0 && _getCustomDivider(i),
             <Link
-                key={`bc-${i}`}
-                href={_item.to}
+                key={index}
+                href={item.to}
                 sx={styles}
-                onClick={(event) => {
+                onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
                     event.preventDefault();
-                    history.push(_item.to);
-                }}
-            >
-                {_item.name}
-            </Link>,
+                    history.push(item.to);
+                }}>
+                {item.name}
+            </Link >
         ];
 
         return links;
     });
 
-    return <div>{items}</div>;
-};
-
-function _getCustomDivider(key: number): JSX.Element {
     return (
-        <span key={key} aria-hidden='true' style={{ cursor: 'pointer', padding: 5 }}>
-            <SeperatorArrow style={{ verticalAlign: 'middle' }} />
-        </span>
+        <Stack spacing={2}>
+            <Breadcrumbs
+                separator={<NavigateNextIcon fontSize="small" />}
+                aria-label="breadcrumb"
+            >
+                {breadcrumbs}
+            </Breadcrumbs>
+        </Stack>
     );
-}
+};
