@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { getPodStatus, MicroserviceInfo } from '../api/api';
@@ -10,12 +10,11 @@ import { HttpResponseApplication } from '../api/application';
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 
 import { themeDark } from '../theme/theme';
-import { Box, Tooltip, Typography } from '@mui/material';
-import { CheckCircleRounded, ErrorRounded, WarningRounded } from '@mui/icons-material';
+import { Box, Paper, Tooltip, Typography } from '@mui/material';
+import { CheckCircleRounded, ErrorRounded, WarningRounded, QuestionMark } from '@mui/icons-material';
 
 const styles = {
     dataTable: {
-        'background': 'linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%), #191A21;',
         '.MuiDataGrid-row': {
             cursor: 'pointer'
         },
@@ -42,8 +41,8 @@ const styles = {
         },
         '.MuiDataGrid-sortIcon': {
             color: 'rgba(255, 255, 255, 0.38);',
-            width: '20px',
-            height: '20px'
+            width: '1.25rem',
+            height: '1.25rem'
         },
         '.MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted) .MuiDataGrid-sortIcon': {
             opacity: 1
@@ -54,60 +53,97 @@ const styles = {
         justifyContent: 'center'
     },
     statusTitle: {
-        fontWeight: '500',
-        fontSize: '12px',
-        lineHeight: '22px',
-        letterSpacing: '0.06em',
+        fontWeight: 500,
+        fontSize: '0.75rem',
+        lineHeight: '1.375rem',
+        letterSpacing: '0.06rem',
         textTransform: 'uppercase',
-        marginInlineStart: '10px'
+        ml: 1.25
     }
 };
 
 export type MicroserviceObject = {
-    id: string,
-    name: string,
-    kind: string,
-    environment: string,
-    live: MicroserviceInfo,
-    edit: {},
+    id: string
+    name: string
+    kind: string
+    environment: string
+    live: MicroserviceInfo
+    edit: {
+        extra: {
+            isPublic: boolean
+        }
+    }
     status?: []
 };
 
 type DataTableProps = {
-    environment: string,
-    application: HttpResponseApplication,
+    environment: string
+    application: HttpResponseApplication
     microservices: MicroserviceObject[]
 };
 
-export const DataTable: React.FC<DataTableProps> = ({ application, environment, microservices }: DataTableProps) => {
+export const DataTable = ({ application, environment, microservices }: DataTableProps) => {
     const history = useHistory();
     const [rows, setRows] = useState<(MicroserviceObject | undefined)[]>([]);
 
+    const getMicroserviceStatus = useCallback(async (microserviceId: string) => {
+        const status = await getPodStatus(application.id, environment, microserviceId);
+        return status.pods;
+    }, [application.id, environment]);
+
     useEffect(() => {
-        const mapStatusToMicroservicesAndSetState = async () => {
-            const rows = await Promise.all(microservices.map(async microservice => {
-                const status = await getMicroserviceStatus(microservice.id);
+        Promise.all(microservices.map(async microservice => {
+            const status = await getMicroserviceStatus(microservice.id);
 
-                return {
-                    ...microservice,
-                    status
-                } as MicroserviceObject;
-            }));
+            return {
+                ...microservice,
+                status
+            } as MicroserviceObject;
+        }))
+            .then(setRows);
+    }, []);
 
-            setRows(rows);
-        };
+    const microserviceStatusInfo = (params: GridRenderCellParams) => {
+        try {
+            const status = params.row.status[0].phase;
+            const checkStatus = status.toLowerCase();
 
-        mapStatusToMicroservicesAndSetState();
-    }, [setRows]);
+            let color = themeDark.palette.text.primary;
+            let icon = <QuestionMark sx={{ color }} />;
 
-    const getMicroserviceStatus = (microserviceId: string) => {
-        return new Promise((resolve, reject) => {
-            resolve(
-                getPodStatus(application.id, environment, microserviceId)
-                    .then(res => res.pods)
-                    .catch(err => reject(err))
+            if (checkStatus.includes('running')) {
+                icon = <CheckCircleRounded />;
+            } else if (checkStatus.includes('pending')) {
+                color = themeDark.palette.warning.main;
+                icon = <WarningRounded sx={{ color }} />;
+            } else if (checkStatus.includes('failed')) {
+                color = themeDark.palette.error.main;
+                icon = <ErrorRounded sx={{ color }} />;
+            }
+
+            return (
+                <Box sx={styles.status}>
+                    {icon}
+                    <Typography sx={{ ...styles.statusTitle, color }}>{status}</Typography>
+                </Box>
             );
-        });
+        } catch (err) {
+            console.error(`Error with '${params.row.name}' status.`);
+            return '';
+        }
+    };
+
+    const customUrlFieldSort = (v1, v2, param1, param2) => {
+        const firstObject = rows.filter((row: any) => row.id === param1.id);
+        const secondObject = rows.filter((row: any) => row.id === param2.id);
+
+        const isFirstPublic = firstObject[0]?.edit.extra.isPublic;
+        const isSecondPublic = secondObject[0]?.edit.extra.isPublic;
+
+        const compareFirst = isFirstPublic ? 'Available' : 'None';
+        const compareSecond = isSecondPublic ? 'Available' : 'None';
+
+        return compareFirst.localeCompare(compareSecond);
     };
 
     const columns: GridColDef[] = [
@@ -115,7 +151,7 @@ export const DataTable: React.FC<DataTableProps> = ({ application, environment, 
             field: 'name',
             headerName: 'Name',
             minWidth: 200,
-            flex: 1
+            flex: 1,
         },
         {
             field: 'image',
@@ -131,8 +167,8 @@ export const DataTable: React.FC<DataTableProps> = ({ application, environment, 
             minWidth: 200,
             flex: 1,
             valueGetter: (params: GridValueGetterParams) => {
-                const runtimeNumber = params.row.edit.extra.runtimeImage.replace(/[dolittle/runtime:]/gi, '');
-                return `${runtimeNumber || 'None'}`;
+                const runtimeVersion = params.row.edit.extra.runtimeImage.replace(/dolittle\/runtime:/gi, '');
+                return `${runtimeVersion || 'None'}`;
             }
         },
         {
@@ -140,7 +176,6 @@ export const DataTable: React.FC<DataTableProps> = ({ application, environment, 
             headerName: 'Public URL',
             minWidth: 200,
             flex: 1,
-            sortable: false,
             // TODO: Tooltip needs public urls. Map them into title.
             renderCell: function tooltip(params: GridRenderCellParams) {
                 return (
@@ -149,6 +184,7 @@ export const DataTable: React.FC<DataTableProps> = ({ application, environment, 
                     </Tooltip>
                 );
             },
+            sortComparator: customUrlFieldSort
         },
         {
             field: 'status',
@@ -158,36 +194,11 @@ export const DataTable: React.FC<DataTableProps> = ({ application, environment, 
             renderCell: function statusInfo(params: GridRenderCellParams) {
                 return <>{microserviceStatusInfo(params)}</>;
             },
-            sortComparator: (v1, v2, param1: any, param2: any) => {
+            sortComparator: (v1, v2, param1, param2) => {
                 return param1.value[0].phase.localeCompare(param2.value[0].phase);
             },
         },
     ];
-
-    const microserviceStatusInfo = (params: GridRenderCellParams) => {
-        const status = params.row.status[0].phase;
-        const checkStatus = status.toLowerCase();
-
-        let color = themeDark.palette.text.primary;
-        let icon = <ErrorRounded sx={{ color }} />;
-
-        if (checkStatus.includes('running')) {
-            icon = <CheckCircleRounded />;
-        } else if (checkStatus.includes('pending')) {
-            color = themeDark.palette.warning.main;
-            icon = <WarningRounded sx={{ color }} />;
-        } else if (checkStatus.includes('failed')) {
-            color = themeDark.palette.error.main;
-            icon = <ErrorRounded sx={{ color }} />;
-        }
-
-        return (
-            <Box sx={styles.status}>
-                {icon}
-                <Typography sx={{ ...styles.statusTitle, color }}>{status}</Typography>
-            </Box>
-        );
-    };
 
     const onTableRowClick = (microserviceId: string) => {
         const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}`;
@@ -195,7 +206,7 @@ export const DataTable: React.FC<DataTableProps> = ({ application, environment, 
     };
 
     return (
-        <Box sx={{ inlineSize: '100%' }}>
+        <Box component={Paper} sx={{ inlineSize: '100%' }}>
             <DataGridPro
                 rows={rows}
                 columns={columns}

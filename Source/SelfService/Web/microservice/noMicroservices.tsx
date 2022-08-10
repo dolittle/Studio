@@ -3,37 +3,21 @@
 
 import React from 'react';
 
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 const styles = {
-    // Hack for keeping content responsive - temporarily.
-    responsiveContainer: {
-        minInlineSize: '400px',
-        minBlockSize: '600px',
-        position: 'relative'
-    },
-    wrapper: {
-        textAlign: 'center',
-        lineHeight: '20px',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-30%, -50%)'
-    },
-    buttonWrapper: {
+    deployButtonWrapper: {
         position: 'relative',
         inlineSize: '413px',
         blockSize: '174px',
-        marginInline: 'auto'
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     deployButton: {
-        'paddingInline': '100px',
-        'paddingBlock': '75px',
-        'background': 'rgba(140, 154, 248, 0.08)',
-        ':hover': {
-            background: 'rgba(255, 255, 255, 0.12)'
-        }
+        inlineSize: '100%',
+        blockSize: '100%'
     },
     dashedBorder: {
         'inlineSize': '100%',
@@ -61,33 +45,38 @@ type NoMicroservicesProps = {
     onCreate: () => void;
 };
 
-export const NoMicroservices: React.FC<NoMicroservicesProps> = ({ onCreate }: NoMicroservicesProps) => {
-    const { dashedBorder, deployButton, wrapper, buttonWrapper, responsiveContainer } = styles;
-
+export const NoMicroservices = ({ onCreate }: NoMicroservicesProps) => {
     return (
-        <Box sx={responsiveContainer}>
-            <Box maxWidth={540} sx={wrapper}>
-                <Typography variant='h2' sx={{ lineHeight: '26px' }}>No microservices deployed yet...</Typography>
+        <Grid
+            container
+            spacing={0}
+            direction='column'
+            alignItems='center'
+            justifyContent='center'
+            sx={{ minHeight: '80vh' }}
+        >
 
-                <Box sx={buttonWrapper} mt={6.75} mb={5.75}>
-                    <Box sx={dashedBorder}></Box>
-                    <Button
-                        startIcon={<RocketLaunch />}
-                        sx={deployButton}
-                        onClick={onCreate}
-                    >
-                        Deploy NEW microservice
-                    </Button>
-                </Box>
+            <Typography variant='h2' sx={{ lineHeight: '26px' }}>No microservices deployed yet...</Typography>
 
-                <Typography variant='body1' mb={2}>
-                    After you deploy your first microservice it will appear here.
-                </Typography>
-
-                <Typography variant='body1'>
-                    To deploy a new mircoservice click on the ‘deploy new microservice’ button or ‘deploy new’ tab at the top.
-                </Typography>
+            <Box component={Paper} mt={6.75} mb={5.75} sx={styles.deployButtonWrapper}>
+                <Box sx={styles.dashedBorder}></Box>
+                <Button
+                    startIcon={<RocketLaunch />}
+                    sx={styles.deployButton}
+                    onClick={onCreate}
+                >
+                    Deploy NEW microservice
+                </Button>
             </Box>
-        </Box>
+
+            <Typography variant='body1' mb={2}>
+                After you deploy your first microservice it will appear here.
+            </Typography>
+
+            <Typography variant='body1'>
+                To deploy a new mircoservice click on the ‘deploy new microservice’ button or ‘deploy new’ tab at the top.
+            </Typography>
+
+        </Grid>
     );
 };

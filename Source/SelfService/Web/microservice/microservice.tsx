@@ -63,11 +63,11 @@ export const MicroservicesOverviewScreen = ({ environment, application }: Micros
 
             <Typography variant='h1' my={2}>Microservices</Typography>
 
-            {!hasMicroservices && <DataTable application={application} environment={environment} microservices={filteredMicroservices} />}
+            {hasMicroservices && <DataTable application={application} environment={environment} microservices={filteredMicroservices} />}
 
-            {!hasEnvironments && hasMicroservices && <DeployButton handleClick={handleCreateMicroservice} />}
+            {hasEnvironments && hasMicroservices && <DeployButton handleClick={handleCreateMicroservice} />}
 
-            {hasMicroservices && <NoMicroservices onCreate={handleCreateMicroservice} />}
+            {!hasMicroservices && <NoMicroservices onCreate={handleCreateMicroservice} />}
         </>
     );
 };

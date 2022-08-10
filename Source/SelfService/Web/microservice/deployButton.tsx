@@ -7,7 +7,7 @@ import { Box, Button, Paper } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 type DeployButtonProps = {
-    handleClick: () => void;
+    handleClick: () => void
 };
 
 export const DeployButton = ({ handleClick }: DeployButtonProps) => {

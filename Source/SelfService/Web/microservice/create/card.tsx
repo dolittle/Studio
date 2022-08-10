@@ -11,7 +11,6 @@ const styles = {
         'display': 'flex',
         'flexDirection': 'column',
         'justifyContent': 'space-between',
-        'inlineSize': '100%',
         'blockSize': '100%',
         ':hover': {
             background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.09) 100%), #191A21',
@@ -25,7 +24,7 @@ const styles = {
         lineHeight: '1.375rem',
         letterSpacing: '0.06em'
     },
-    link: {
+    learnMoreLink: {
         color: themeDark.palette.text.primary,
         textDecoration: 'none'
     }
@@ -35,19 +34,19 @@ type SimpleCardProps = {
     kind: string
     name: string
     description: string
-    onCreate: (kind: string) => void;
+    onCreate: (kind: string) => void
 };
 
-export const SimpleCard: React.FC<SimpleCardProps> = ({ kind, name, description, onCreate }: SimpleCardProps) => {
+export const SimpleCard = ({ kind, name, description, onCreate }: SimpleCardProps) => {
+
     const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         event.preventDefault();
         onCreate(kind);
     };
 
-    const { card, button, link } = styles;
     return (
-        <Card key={`microservice-${kind}`} sx={card} elevation={1} >
+        <Card key={`microservice-${kind}`} sx={styles.card} elevation={1}>
             <CardHeader title={<Typography variant="h5">{name}</Typography>} />
 
             <CardContent>
@@ -55,17 +54,17 @@ export const SimpleCard: React.FC<SimpleCardProps> = ({ kind, name, description,
             </CardContent>
 
             <CardActions>
-                <Button sx={button}>
+                <Button sx={styles.button}>
                     <Link
-                        sx={{ ...button, ...link }}
+                        sx={{ ...styles.button, ...styles.learnMoreLink }}
                         href='https://dolittle.io/docs/platform/requirements/'
-                        target='_blanc'
+                        target='_blank'
                     >
                         Learn more
                     </Link>
                 </Button>
 
-                <Button sx={button} size="small" onClick={onClick}>Deploy</Button>
+                <Button sx={styles.button} size="small" onClick={onClick}>Deploy</Button>
             </CardActions>
         </Card>
     );
