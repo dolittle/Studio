@@ -7,6 +7,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import { themeDark } from '../theme/theme';
 import { Link, Breadcrumbs, Stack } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { ChevronRight } from '@mui/icons-material';
 
 const styles = {
     fontWeight: 400,
@@ -51,7 +52,7 @@ export const BreadCrumbContainer = (props: Props) => {
     return (
         <Stack spacing={2}>
             <Breadcrumbs
-                separator={<NavigateNextIcon fontSize="small" />}
+                separator={<ChevronRight fontSize="small" sx={{ color: 'rgba(255, 255, 255, 0.38);', }} />}
                 aria-label="breadcrumb"
             >
                 {breadcrumbs}
