@@ -6,7 +6,6 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import { themeDark } from '../theme/theme';
 import { Link, Breadcrumbs, Stack } from '@mui/material';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { ChevronRight } from '@mui/icons-material';
 
 const styles = {
