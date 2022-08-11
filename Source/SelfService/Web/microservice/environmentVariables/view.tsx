@@ -73,8 +73,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         variant='outlined'
                         value={item.name}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            let newValue = event.target.value!;
-                            newValue = newValue.toUpperCase();
+                            const newValue = event.target.value!;
                             const data = currentData;
                             data[index].name = newValue;
                             setCurrentData([...data]);
