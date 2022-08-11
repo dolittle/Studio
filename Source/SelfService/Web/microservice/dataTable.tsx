@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { getPodStatus, MicroserviceInfo } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
 
-import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams, gridStringOrNumberComparator } from '@mui/x-data-grid-pro';
 
 import { themeDark } from '../theme/theme';
 import { Box, Paper, Tooltip, Typography } from '@mui/material';
@@ -62,6 +62,53 @@ const styles = {
     }
 };
 
+// TODO: Does not sort properly with numbers and string 'None' mixed.
+export const sortByRuntimeVersion = (params: GridValueGetterParams) => {
+    const runtimeVersion = params.row.edit.extra.runtimeImage.replace(/dolittle\/runtime:/gi, '');
+    return `${runtimeVersion || 'None'}`;
+};
+
+const tooltipCell = (params: GridRenderCellParams) => (
+    // TODO: Tooltip needs public urls. Map them into title.
+    <Tooltip title={``} arrow>
+        <span>{params.row.edit.extra.isPublic ? 'Available' : 'None'}</span>
+    </Tooltip>
+);
+
+const microserviceStatusInfo = (params: GridRenderCellParams) => {
+    try {
+        const status = params.row.status[0].phase;
+        const checkStatus = status.toLowerCase();
+
+        let color = themeDark.palette.text.primary;
+        let icon = <QuestionMark sx={{ color }} />;
+
+        if (checkStatus.includes('running')) {
+            icon = <CheckCircleRounded />;
+        } else if (checkStatus.includes('pending')) {
+            color = themeDark.palette.warning.main;
+            icon = <WarningRounded sx={{ color }} />;
+        } else if (checkStatus.includes('failed')) {
+            color = themeDark.palette.error.main;
+            icon = <ErrorRounded sx={{ color }} />;
+        }
+
+        return (
+            <Box sx={styles.status}>
+                {icon}
+                <Typography sx={{ ...styles.statusTitle, color }}>{status}</Typography>
+            </Box>
+        );
+    } catch (err) {
+        console.error(`Error with '${params.row.name}' status.`);
+        return '';
+    }
+};
+
+const statusCell = (params: GridRenderCellParams) => (
+    <>{microserviceStatusInfo(params)}</>
+);
+
 export type MicroserviceObject = {
     id: string
     name: string
@@ -103,36 +150,6 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             .then(setRows);
     }, []);
 
-    const microserviceStatusInfo = (params: GridRenderCellParams) => {
-        try {
-            const status = params.row.status[0].phase;
-            const checkStatus = status.toLowerCase();
-
-            let color = themeDark.palette.text.primary;
-            let icon = <QuestionMark sx={{ color }} />;
-
-            if (checkStatus.includes('running')) {
-                icon = <CheckCircleRounded />;
-            } else if (checkStatus.includes('pending')) {
-                color = themeDark.palette.warning.main;
-                icon = <WarningRounded sx={{ color }} />;
-            } else if (checkStatus.includes('failed')) {
-                color = themeDark.palette.error.main;
-                icon = <ErrorRounded sx={{ color }} />;
-            }
-
-            return (
-                <Box sx={styles.status}>
-                    {icon}
-                    <Typography sx={{ ...styles.statusTitle, color }}>{status}</Typography>
-                </Box>
-            );
-        } catch (err) {
-            console.error(`Error with '${params.row.name}' status.`);
-            return '';
-        }
-    };
-
     const customUrlFieldSort = (v1, v2, param1, param2) => {
         const firstObject = rows.filter((row: any) => row.id === param1.id);
         const secondObject = rows.filter((row: any) => row.id === param2.id);
@@ -166,24 +183,14 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             headerName: 'Runtime',
             minWidth: 200,
             flex: 1,
-            valueGetter: (params: GridValueGetterParams) => {
-                const runtimeVersion = params.row.edit.extra.runtimeImage.replace(/dolittle\/runtime:/gi, '');
-                return `${runtimeVersion || 'None'}`;
-            }
+            valueGetter: sortByRuntimeVersion
         },
         {
             field: 'isPublic',
             headerName: 'Public URL',
             minWidth: 200,
             flex: 1,
-            // TODO: Tooltip needs public urls. Map them into title.
-            renderCell: function tooltip(params: GridRenderCellParams) {
-                return (
-                    <Tooltip title={``} arrow>
-                        <span>{params.row.edit.extra.isPublic ? 'Available' : 'None'}</span>
-                    </Tooltip>
-                );
-            },
+            renderCell: tooltipCell,
             sortComparator: customUrlFieldSort
         },
         {
@@ -191,12 +198,9 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             headerName: 'Status',
             minWidth: 200,
             flex: 1,
-            renderCell: function statusInfo(params: GridRenderCellParams) {
-                return <>{microserviceStatusInfo(params)}</>;
-            },
-            sortComparator: (v1, v2, param1, param2) => {
-                return param1.value[0].phase.localeCompare(param2.value[0].phase);
-            },
+            renderCell: statusCell,
+            sortComparator: (v1, v2, param1, param2) =>
+                param1.value[0].phase.localeCompare(param2.value[0].phase)
         },
     ];
 
