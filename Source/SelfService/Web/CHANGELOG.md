@@ -1,3 +1,10 @@
+# [2.0.7] - 2022-8-11 [PR: #228](https://github.com/dolittle/Studio/pull/228)
+## Summary
+
+- Removes forced capitalization of variable names
+- Lets the input fields fill the column space, giving more space to view the content
+
+
 # [2.0.6] - 2022-8-9 [PR: #226](https://github.com/dolittle/Studio/pull/226)
 ## Summary
 
