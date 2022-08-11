@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { getPodStatus, MicroserviceInfo } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
 
-import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams, gridStringOrNumberComparator } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 
 import { themeDark } from '../theme/theme';
 import { Box, Paper, Tooltip, Typography } from '@mui/material';
@@ -62,7 +62,6 @@ const styles = {
     }
 };
 
-// TODO: Does not sort properly with numbers and string 'None' mixed.
 export const sortByRuntimeVersion = (params: GridValueGetterParams) => {
     const runtimeVersion = params.row.edit.extra.runtimeImage.replace(/dolittle\/runtime:/gi, '');
     return `${runtimeVersion || 'None'}`;
