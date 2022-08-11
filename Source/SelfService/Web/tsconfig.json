@@ -9,8 +9,7 @@
         "noEmit": true
     },
     "references": [
-        {
-            "path": "../../Shared/Web",
-        }
+        { "path": "../../Shared/Web" },
+        { "path": "../../Shared/Styling" }
     ]
 }
