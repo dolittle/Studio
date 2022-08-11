@@ -14,40 +14,6 @@ import { Box, Paper, Tooltip, Typography } from '@mui/material';
 import { CheckCircleRounded, ErrorRounded, WarningRounded, QuestionMark } from '@mui/icons-material';
 
 const styles = {
-    dataTable: {
-        '.MuiDataGrid-row': {
-            cursor: 'pointer'
-        },
-        '.MuiDataGrid-columnSeparator': {
-            display: 'none'
-        },
-        '.MuiDataGrid-columnHeader:focus': {
-            outline: 'none'
-        },
-        '.MuiDataGrid-columnHeader:focus-within': {
-            outline: 'none'
-        },
-        '.MuiDataGrid-columnHeaderDraggableContainer': {
-            outline: 'none'
-        },
-        '.MuiDataGrid-cell:focus-within': {
-            outline: 'none'
-        },
-        '.MuiIconButton-root': {
-            'visibility': 'visible',
-            ':hover': {
-                backgroundColor: 'transparent'
-            }
-        },
-        '.MuiDataGrid-sortIcon': {
-            color: 'rgba(255, 255, 255, 0.38);',
-            width: '1.25rem',
-            height: '1.25rem'
-        },
-        '.MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted) .MuiDataGrid-sortIcon': {
-            opacity: 1
-        }
-    },
     status: {
         display: 'flex',
         justifyContent: 'center'
@@ -218,7 +184,6 @@ export const DataTable = ({ application, environment, microservices }: DataTable
                 autoHeight={true}
                 loading={!rows}
                 disableSelectionOnClick
-                sx={styles.dataTable}
                 onRowClick={(params) => onTableRowClick(params.row.id)}
             /></Box>
     );
