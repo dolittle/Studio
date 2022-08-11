@@ -1,27 +1,46 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, {
-    useState,
-    useEffect
-} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { List } from '@fluentui/react/lib/List';
-import { Link } from '@fluentui/react';
 import { useSnackbar } from 'notistack';
 
-import {
-    ShortInfoWithEnvironment
-} from '../api/api';
-
-import { BreadCrumbContainer } from '../layout/breadcrumbs';
-import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { ShortInfoWithEnvironment } from '../api/api';
+import { LoginWrapper } from '../layout/loginWrapper';
 import { useGlobalContext } from '../stores/notifications';
-import { ButtonText } from '../theme/buttonText';
 import { HttpResponseApplications, getApplications } from '../api/application';
-import { Typography } from '@mui/material';
 
-export const ApplicationsScreen: React.FunctionComponent = () => {
+import { themeDark } from '../theme/theme';
+import { Box, Button, Link, Typography } from '@mui/material';
+import { AddCircle, ArrowBack } from '@mui/icons-material';
+
+const styles = {
+    title: {
+        letterSpacing: '-0.5px',
+        lineHeight: '26px'
+    },
+    listWrapper: {
+        padding: '0',
+        display: 'inline-block'
+    },
+    createBtnWrapper: {
+        inlineSize: '100%',
+    },
+    button: {
+        letterSpacing: '0.06em'
+    },
+    environmentButtons: {
+        display: 'block',
+        inlineSize: '100%',
+        minInlineSize: '155px',
+        minBlockSize: '36px',
+        marginBlockStart: '-4px',
+        marginBlockEnd: '1rem',
+        marginInline: 'auto',
+    }
+};
+
+export const ApplicationsScreen: React.FC = () => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -45,49 +64,67 @@ export const ApplicationsScreen: React.FunctionComponent = () => {
         });
     }, []);
 
+    if (!loaded) return null;
 
-    if (!loaded) {
-        return null;
-    }
-
-    const onRenderCell = (item?: ShortInfoWithEnvironment, index?: number | undefined): JSX.Element => {
-        const application = item!;
-        return (
-            <Link onClick={() => {
-                setCurrentEnvironment(application.environment);
-                const href = `/microservices/application/${application.id}/${application.environment}/overview`;
-                history.push(href);
-            }}
-                underline>
-                {application.name.toUpperCase()} - {application.environment}
-            </Link>
-        );
+    const onEnvironmentChoose = (application) => {
+        const { environment, id } = application;
+        setCurrentEnvironment(environment);
+        const href = `/microservices/application/${id}/${environment}/overview`;
+        history.push(href);
     };
 
+    const handleCreate = () => {
+        if (!canCreateApplication) {
+            enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
+            return;
+        }
+
+        const href = '/application/create';
+        history.push(href);
+    };
+
+    const { title, listWrapper, createBtnWrapper, button, environmentButtons } = styles;
     return (
-        <>
-            <LayoutWithSidebar navigation={[]}>
-                <div id="topNavBar" className="nav flex-container">
-                    <div className="left flex-start">
-                        <BreadCrumbContainer routes={[]} />
-                    </div>
-                </div>
+        <LoginWrapper>
+            <Typography variant='h2' my={2} mb={5} sx={title}>
+                Select Your Application & Environment
+            </Typography>
 
-                <Typography variant='h1' my={2}>Applications Screen</Typography>
+            <Box sx={createBtnWrapper}>
+                <Button
+                    variant='text'
+                    startIcon={<AddCircle />}
+                    sx={button}
+                    onClick={handleCreate}>
+                    Create new Application
+                </Button>
+            </Box>
 
-                <ButtonText withIcon={true} onClick={() => {
-                    if (!canCreateApplication) {
-                        enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
-                        return;
-                    }
+            <ul style={listWrapper}>
+                {data.map(application => {
+                    return (
+                        <Button
+                            variant='contained'
+                            sx={{ ...environmentButtons, ...button }}
+                            key={application.environment}
+                            onClick={() => onEnvironmentChoose(application)}
+                        >
+                            {application.name} - {application.environment}
+                        </Button>
+                    );
+                })}
+            </ul>
 
-                    const href = '/application/create';
-                    history.push(href);
-
-                }}>Create new Application</ButtonText>
-
-                <List items={data} onRenderCell={onRenderCell} />
-            </LayoutWithSidebar >
-        </>
+            <Box mt={12.5}>
+                <Link href='/.auth/cookies/initiate' sx={{ textDecoration: 'none' }}>
+                    <Button
+                        startIcon={<ArrowBack />}
+                        sx={{ ...button, color: themeDark.palette.text.primary }}
+                    >Select new customer
+                    </Button>
+                </Link>
+                {/* <Button sx={button}>Log Out</Button> */}
+            </Box>
+        </LoginWrapper>
     );
 };
