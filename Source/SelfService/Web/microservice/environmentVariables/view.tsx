@@ -69,7 +69,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     <TextField
                         id={`name-${index}`}
                         required
-
+                        fullWidth={true}
                         variant='outlined'
                         value={item.name}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,10 +80,11 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         }}
                     />
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="left">
                     <TextField
                         id={`value-${index}`}
                         required
+                        fullWidth={true}
                         variant='outlined'
                         value={item.value}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -179,7 +180,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell align="left">Name</TableCell>
-                                <TableCell align="right">Value</TableCell>
+                                <TableCell align="left">Value</TableCell>
                                 <TableCell align="right">Is Secret</TableCell>
                                 <TableCell align="right">Action</TableCell>
                             </TableRow>
