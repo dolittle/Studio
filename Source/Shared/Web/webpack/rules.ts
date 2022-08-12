@@ -1,6 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+
+import { template as SvgrTemplate } from '../svgr/template';
+
 export default [
     {
         test: /\.[tj]s[x]*$/i,
@@ -17,8 +20,25 @@ export default [
         type: 'asset/resource',
     },
     {
-        test: /\.svg/,
-        type: 'asset/inline'
+        test: /\.svg$/,
+        exclude: /node_modules/,
+        issuer: /\.tsx?$/,
+        resourceQuery: { not: /url/ },
+        loader: '@svgr/webpack',
+        options: {
+            jsx: {
+                babelConfig: {
+                    plugins: ['../svgr/convert-svg-to-box-plugin.js'],
+                },
+            },
+            template: SvgrTemplate,
+        },
+    },
+    {
+        test: /\.svg$/,
+        exclude: /node_modules/,
+        resourceQuery: /url/,
+        type: 'asset/resource',
     },
     {
         test: /\.(scss|css)$/,
