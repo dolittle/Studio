@@ -7,6 +7,7 @@ import { Button, Select, SelectProps, Theme } from '@mui/material';
 
 const styles = {
     wrapper: {
+        'height': '2.5rem',
         '.MuiSelect-select:focus': {
             backgroundColor: 'transparent'
         },
