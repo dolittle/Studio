@@ -6,11 +6,12 @@
             "es2019",
             "DOM"
         ],
-        "noEmit": true
+        // "noEmit": true
     },
     "references": [
+        { "path": "../../DesignSystem" },
         { "path": "../../Shared/Web" },
-        { "path": "../../Shared/Styling" },
-        { "path": "../../DesignSystem"}
-    ]
+        { "path": "../../Shared/Styling" }
+    ],
+    "include": [ "**/*.ts", "**/*.tsx" ]
 }

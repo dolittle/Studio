@@ -7,7 +7,6 @@ import TerserPlugin from 'terser-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 
 type Args = {[key: string]: string};
@@ -47,7 +46,7 @@ function webpack(env: Args, argv: Args) {
                     exclude: /(node_modules)/,
                     loader: 'ts-loader',
                     options: {
-                        transpileOnly: true,
+                        transpileOnly: false,
                         projectReferences: true,
                         allowTsInNodeModules: true
                     }
@@ -97,7 +96,6 @@ function webpack(env: Args, argv: Args) {
             before: (app, server, compiler) => {}
         },
         plugins: [
-            new ForkTsCheckerWebpackPlugin(),
             new CleanWebpackPlugin({
                 dangerouslyAllowCleanPatternsOutsideProject: true,
                 dry: false,

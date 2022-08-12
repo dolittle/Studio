@@ -36,7 +36,5 @@
         "preserveConstEnums": true,
         "newLine": "lf"
     },
-    "exclude": [
-        "**/dist"
-    ]
+    "exclude": [ "**/dist", "**/wwwroot" ]
 }
