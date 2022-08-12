@@ -51,27 +51,32 @@ const microserviceStatusInfo = (params: GridRenderCellParams) => {
     let color = themeDark.palette.text.primary;
     let icon = <QuestionMark sx={{ color }} />;
 
-    const status = params.row.status[0]?.phase;
-    if (status === undefined) return 'N/A';
+    try {
+        const status = params.row.status[0]?.phase;
+        if (status === undefined) return 'N/A';
 
-    const checkStatus = status.toLowerCase();
+        const checkStatus = status.toLowerCase();
 
-    if (checkStatus.includes('running')) {
-        icon = <CheckCircleRounded />;
-    } else if (checkStatus.includes('pending')) {
-        color = themeDark.palette.warning.main;
-        icon = <WarningRounded sx={{ color }} />;
-    } else if (checkStatus.includes('failed')) {
-        color = themeDark.palette.error.main;
-        icon = <ErrorRounded sx={{ color }} />;
+        if (checkStatus.includes('running')) {
+            icon = <CheckCircleRounded />;
+        } else if (checkStatus.includes('pending')) {
+            color = themeDark.palette.warning.main;
+            icon = <WarningRounded sx={{ color }} />;
+        } else if (checkStatus.includes('failed')) {
+            color = themeDark.palette.error.main;
+            icon = <ErrorRounded sx={{ color }} />;
+        }
+
+        return (
+            <Box sx={styles.status}>
+                {icon}
+                <Typography sx={{ ...styles.statusTitle, color }}>{status}</Typography>
+            </Box>
+        );
+    } catch (err) {
+        console.error(`Problem with ${params.row.name} status.`);
+        return 'N/A';
     }
-
-    return (
-        <Box sx={styles.status}>
-            {icon}
-            <Typography sx={{ ...styles.statusTitle, color }}>{status}</Typography>
-        </Box>
-    );
 };
 
 const statusCell = (params: GridRenderCellParams) => (
