@@ -2,25 +2,24 @@
     "name": "@shared/web",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/index.js",
-    "author": "",
+    "author": "Dolittle",
     "license": "MIT",
     "private": true,
     "scripts": {
-        "lint": "echo \"No-op\"",
-        "lint:ci": "echo \"No-op\"",
-        "ci": "echo \"No-op\""
+        "build": "tsc -b",
+        "clean": "tsc -b --clean",
+        "lint": "eslint '**/*.{js,ts,tsx}' --no-error-on-unmatched-pattern --quiet --fix",
+        "lint:ci": "eslint '**/*.{js,ts,tsx}' --no-error-on-unmatched-pattern --quiet",
+        "ci": "yarn clean && yarn lint:ci && yarn build"
     },
     "dependencies": {
+        "@types/react": "18.0.17",
+        "@types/react-dom": "18.0.1",
+        "@types/react-router-dom": "5.3.3",
         "history": "5.3.0",
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "react-router-dom": "5.2.0"
     },
-    "devDependencies": {
-        "@types/react": "18.0.17",
-        "@types/react-dom": "18.0.1",
-        "@types/react-router-dom": "5.3.3"
-    },
-    "peerDependencies": {}
+    "devDependencies": {}
 }

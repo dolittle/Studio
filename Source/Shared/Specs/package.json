@@ -2,22 +2,29 @@
     "name": "@shared/specs",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/index.js",
     "author": "Dolittle",
     "license": "MIT",
     "private": true,
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc -b",
+        "clean": "tsc -b --clean",
+        "lint": "eslint '**/*.{js,ts,tsx}' --no-error-on-unmatched-pattern --quiet --fix",
+        "lint:ci": "eslint '**/*.{js,ts,tsx}' --no-error-on-unmatched-pattern --quiet",
+        "ci": "yarn clean && yarn lint:ci && yarn build"
+    },
     "dependencies": {},
     "devDependencies": {
-        "@types/chai": "4.2.21",
         "@types/chai-as-promised": "7.1.4",
+        "@types/chai": "4.2.21",
         "@types/mocha": "8.0.4",
-        "@types/sinon": "9.0.8",
         "@types/sinon-chai": "3.2.5",
-        "chai": "4.3.4",
+        "@types/sinon": "9.0.8",
         "chai-as-promised": "7.1.1",
+        "chai": "4.3.4",
         "mocha": "8.2.1",
-        "sinon": "9.0.3",
         "sinon-chai": "3.7.0",
+        "sinon": "9.0.3",
         "ts-sinon": "2.0.1"
     }
 }
