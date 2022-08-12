@@ -14,7 +14,7 @@ export const Filled = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Filled.args = {
   variant: 'filled',
-  label: 'Filled Buttn',
+  label: 'Filled Button',
 };
 
 export const Text = Template.bind({});

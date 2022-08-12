@@ -1,19 +1,27 @@
 const path = require('path');
 
 module.exports = {
-  "stories": [
-    "../atoms/**/*.stories.@(js|jsx|ts|tsx)"
+  stories: [
+    '../atoms/**/*.stories.@(js|jsx|ts|tsx)'
   ],
-  "addons": [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
-    "@storybook/preset-create-react-app"
+
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+    '@storybook/preset-create-react-app'
   ],
-  "framework": "@storybook/react",
-  "core": {
-    "builder": "@storybook/builder-webpack5"
+
+  framework: '@storybook/react',
+
+  core: {
+    builder: '@storybook/builder-webpack5'
   },
+
+  staticDirs: [
+      '../public'
+  ],
+
   webpackFinal: (config) => {
     config.module.rules.push({
       test: /\.(ts|tsx)?$/,

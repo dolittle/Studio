@@ -1,28 +1,30 @@
 {
-  "name": "@dolittle/design-system",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
-  },
-  "dependencies": {
-    "@shared/styling": "1.0.0"
-  },
-  "devDependencies": {
-    "@shared/web": "1.0.0",
-    "@storybook/addon-actions": "6.5.10",
-    "@storybook/addon-interactions": "6.5.10",
-    "@storybook/addon-links": "6.5.10",
-    "@storybook/node-logger": "6.5.10",
-    "@storybook/react": "6.5.10",
-    "@storybook/builder-webpack5": "6.5.10",
-    "@storybook/manager-webpack5": "6.5.10",
-    "@storybook/preset-create-react-app": "4.1.2",
-    "@storybook/testing-library": "0.0.13",
-    "@storybook/addon-essentials": "6.5.10",
-    "react-scripts": "5.0.1"
-},
-"otherDeps": {
-  }
+    "name": "@dolittle/design-system",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "build": "build-storybook --output-dir wwwroot",
+        "start:dev": "start-storybook -p 6006",
+        "clean": "echo noop",
+        "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
+        "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",
+        "ci": "yarn clean && yarn lint:ci && yarn build"
+    },
+    "dependencies": {
+        "@shared/styling": "1.0.0"
+    },
+    "devDependencies": {
+        "@shared/web": "1.0.0",
+        "@storybook/addon-actions": "6.5.10",
+        "@storybook/addon-essentials": "6.5.10",
+        "@storybook/addon-interactions": "6.5.10",
+        "@storybook/addon-links": "6.5.10",
+        "@storybook/builder-webpack5": "6.5.10",
+        "@storybook/manager-webpack5": "6.5.10",
+        "@storybook/node-logger": "6.5.10",
+        "@storybook/preset-create-react-app": "4.1.2",
+        "@storybook/react": "6.5.10",
+        "@storybook/testing-library": "0.0.13",
+        "react-scripts": "5.0.1"
+    }
 }
