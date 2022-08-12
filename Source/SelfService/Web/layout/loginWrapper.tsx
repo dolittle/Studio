@@ -5,6 +5,7 @@ import React from 'react';
 
 import { Box } from '@mui/material';
 import { BgLogo, MainLogo } from '../theme/assets/logos/logos';
+import Logo from '../theme/assets/logos/logo.svg';
 
 const styles = {
     backgroundLogoContainer: {
@@ -35,7 +36,7 @@ export const LoginWrapper: React.FC<LoginWrapperProps> = ({ children }: LoginWra
             </Box>
             <Box sx={styles.mainContainer}>
                 {children}
-                <MainLogo my={18.5} />
+                <Logo my={18.5} />
             </Box>
         </>
     );
