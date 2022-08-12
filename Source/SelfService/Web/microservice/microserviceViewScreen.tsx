@@ -11,12 +11,8 @@ type Props = {
     application: HttpResponseApplication
 };
 
-export const MicroserviceViewScreen: React.FunctionComponent<Props> = (props) => {
-
+export const MicroserviceViewScreen = (props: Props) => {
     const { microserviceId } = useParams() as any;
-    return (
-        <>
-            <Overview application={props!.application} environment={props!.environment} microserviceId={microserviceId} />
-        </>
-    );
+
+    return <Overview application={props!.application} environment={props!.environment} microserviceId={microserviceId} />;
 };
