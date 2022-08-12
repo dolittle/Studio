@@ -13,13 +13,13 @@ import CopyPlugin from 'copy-webpack-plugin';
 type Args = {[key: string]: string};
 
 const basePath = '/selfservice/';
-const title = "Dolittle Studio";
+const title = 'Dolittle Studio';
 const defaultPort = 9007;
 
 function webpack(env: Args, argv: Args) {
     const isProduction = argv.mode === 'production';
     const port = process.env.port || argv.port || defaultPort;
-    
+
     return {
         mode: isProduction ? 'production' : 'development',
         entry: './index.tsx' as any,
@@ -70,7 +70,7 @@ function webpack(env: Args, argv: Args) {
         devServer: {
             historyApiFallback: { index: basePath },
             host: '0.0.0.0',
-            port: port,
+            port,
             publicPath: basePath,
             contentBase: process.cwd(),
             proxy: {
@@ -106,9 +106,7 @@ function webpack(env: Args, argv: Args) {
             }),
             new HtmlWebpackPlugin({
                 template: path.resolve(process.cwd(), 'index.ejs'),
-                templateParameters: {
-    
-                },
+                templateParameters: {},
                 publicPath: basePath,
                 metadata: {
                     title,
@@ -145,7 +143,6 @@ function webpack(env: Args, argv: Args) {
                 new TerserPlugin({
                     terserOptions: {
                         sourceMap: false,
-        
                         // We want the class names and function names to be there for the IoC to work its magic
                         keep_classnames: true,
                         keep_fnames: true
