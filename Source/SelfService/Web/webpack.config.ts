@@ -12,7 +12,7 @@ import CopyPlugin from 'copy-webpack-plugin';
 
 type Args = {[key: string]: string};
 
-const basePath = './selfservice/';
+const basePath = '/selfservice/';
 const title = "Dolittle Studio";
 const defaultPort = 9007;
 
@@ -66,55 +66,7 @@ function webpack(env: Args, argv: Args) {
                 },
             ],
         },
-        plugins: [
-            new ForkTsCheckerWebpackPlugin(),
-    
-            new CleanWebpackPlugin({
-                dangerouslyAllowCleanPatternsOutsideProject: true,
-                dry: false,
-                cleanStaleWebpackAssets: false,
-                cleanOnceBeforeBuildPatterns: ['**/*.*']
-            }),
-    
-            new HtmlWebpackPlugin({
-                template: path.resolve(process.cwd(), 'index.ejs'),
-                templateParameters: {
-    
-                },
-                publicPath: basePath,
-                metadata: {
-                    title,
-                    baseUrl: basePath
-                },
-            }),
-    
-            new CopyPlugin({
-                patterns: [
-                    {
-                        from: './assets/favicons/apple-touch-icon.png',
-                        to: './assets/favicons/'
-                    },
-                    {
-                        from: './assets/favicons/google-touch-icon.png',
-                        to: './assets/favicons/'
-                    },
-                    {
-                        from: './assets/favicons/favicon.svg',
-                        to: './assets/favicons/'
-                    },
-                    {
-                        from: './assets/favicons/safary-mask-icon.svg',
-                        to: './assets/favicons/'
-                    },
-                    { from: 'favicon.ico', },
-                ]
-            }),
-            new MiniCssExtractPlugin({
-                filename: './styles.css',
-            }),
-        ],
         devtool: isProduction ? false : 'inline-source-map',
-        
         devServer: {
             historyApiFallback: { index: basePath },
             host: '0.0.0.0',
@@ -144,6 +96,50 @@ function webpack(env: Args, argv: Args) {
             },
             before: (app, server, compiler) => {}
         },
+        plugins: [
+            new ForkTsCheckerWebpackPlugin(),
+            new CleanWebpackPlugin({
+                dangerouslyAllowCleanPatternsOutsideProject: true,
+                dry: false,
+                cleanStaleWebpackAssets: false,
+                cleanOnceBeforeBuildPatterns: ['**/*.*']
+            }),
+            new HtmlWebpackPlugin({
+                template: path.resolve(process.cwd(), 'index.ejs'),
+                templateParameters: {
+    
+                },
+                publicPath: basePath,
+                metadata: {
+                    title,
+                    baseUrl: basePath
+                },
+            }),
+            new CopyPlugin({
+                patterns: [
+                    {
+                        from: './assets/favicons/apple-touch-icon.png',
+                        to: './assets/favicons/'
+                    },
+                    {
+                        from: './assets/favicons/google-touch-icon.png',
+                        to: './assets/favicons/'
+                    },
+                    {
+                        from: './assets/favicons/favicon.svg',
+                        to: './assets/favicons/'
+                    },
+                    {
+                        from: './assets/favicons/safary-mask-icon.svg',
+                        to: './assets/favicons/'
+                    },
+                    { from: 'favicon.ico', },
+                ]
+            }),
+            new MiniCssExtractPlugin({
+                filename: './styles.css',
+            }),
+        ],
         optimization: {
             minimizer: [
                 new TerserPlugin({
