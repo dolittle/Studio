@@ -6,6 +6,7 @@
     "license": "MIT",
     "private": true,
     "scripts": {
+        "lint": "echo \"No-op\"",
         "lint:ci": "echo \"No-op\"",
         "ci": "echo \"No-op\""
     },

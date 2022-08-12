@@ -7,11 +7,9 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "build": "tsc -b tsconfig.json",
-        "clean": "tsc -b --clean",
-        "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
-        "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",
-        "ci": "yarn clean && yarn lint:ci && yarn build"
+        "lint": "echo \"No-op\"",
+        "lint:ci": "echo \"No-op\"",
+        "ci": "echo \"No-op\""
     },
     "dependencies": {
         "history": "5.3.0",
