@@ -6,7 +6,6 @@
             "es2019",
             "DOM"
         ],
-        // "noEmit": true
     },
     "references": [
         { "path": "../Shared/Web"},
