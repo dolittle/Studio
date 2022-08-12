@@ -1,3 +1,25 @@
+# [2.1.0] - 2022-8-12 [PR: #224](https://github.com/dolittle/Studio/pull/224)
+## Summary
+
+This PR make microservice overview page look more clean and beautiful.
+
+<img width="1015" alt="Screenshot 2022-08-10 at 18 19 40" src="https://user-images.githubusercontent.com/19160439/183942471-d1e6dfcf-5803-4906-842d-be2e553b4124.png">
+
+### Added
+
+- MUI Pro for data table
+- No microservides page
+
+### Changed
+
+- Top navbar-breadcrumbs look
+- Custom breadcrumbs setub to MUI breadcrumbs
+
+### Removed
+
+- Fluent-UI from microservices page
+
+
 # [2.0.7] - 2022-8-11 [PR: #228](https://github.com/dolittle/Studio/pull/228)
 ## Summary
 
