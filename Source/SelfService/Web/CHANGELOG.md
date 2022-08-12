@@ -1,3 +1,11 @@
+# [2.1.1] - 2022-8-12 [PR: #227](https://github.com/dolittle/Studio/pull/227)
+## Summary
+
+Brings back the DesignSystem and Storybook introduced by @soumikgm a while back. This required a bit of finagling with `tsconfig` and `package.json` files to bring it back into a building state. The final result is that we have a working Storybook that builds, and the components defined in there can be imported in the `SelfService/Web` project with e.g. `import { Button } from '@dolittle/design-system/atoms/Button'`. This works with WebPack and hot-reloading while editing (although a bit slow).
+
+Further, to improve DX - I have reconfigured the build pipeline and checks in GitHub. Now, we build `DesignSystem`, `SelfService/Web` and `SelfService/Backend` on every push. This means that there is less of a chance of us inadvertently doing something that breaks one of these things without noticing in a PR. It also means that when merged to master - we will see a build result on the commit.
+
+
 # [2.1.0] - 2022-8-12 [PR: #224](https://github.com/dolittle/Studio/pull/224)
 ## Summary
 
