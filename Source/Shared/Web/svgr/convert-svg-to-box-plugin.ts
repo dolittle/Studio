@@ -1,7 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-module.exports = ({ types: t }) => ({
+import Babel, { PluginObj } from '@babel/core';
+
+export default ({ types: t }: typeof Babel): PluginObj => ({
     visitor: {
         JSXOpeningElement({node}) {
             if (!t.isJSXIdentifier(node.name) || node.name.name !== 'svg') return;

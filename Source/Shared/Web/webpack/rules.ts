@@ -1,8 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-
 import { template as SvgrTemplate } from '../svgr/template';
+import path from 'path';
 
 export default [
     {
@@ -28,7 +28,7 @@ export default [
         options: {
             jsx: {
                 babelConfig: {
-                    plugins: ['../svgr/convert-svg-to-box-plugin.js'],
+                    plugins: [ path.resolve(__dirname, '..', 'svgr', 'convert-svg-to-box-plugin.js') ],
                 },
             },
             template: SvgrTemplate,
