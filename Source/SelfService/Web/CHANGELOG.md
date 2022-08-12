@@ -1,3 +1,26 @@
+# [2.0.7] - 2022-8-11 [PR: #228](https://github.com/dolittle/Studio/pull/228)
+## Summary
+
+- Removes forced capitalization of variable names
+- Lets the input fields fill the column space, giving more space to view the content
+
+
+# [2.0.6] - 2022-8-9 [PR: #226](https://github.com/dolittle/Studio/pull/226)
+## Summary
+
+Removed unused 'edit' and 'delete' buttons with them styles.
+
+<img width="289" alt="Screenshot 2022-08-08 at 11 59 05" src="https://user-images.githubusercontent.com/19160439/183380603-aecaa143-214c-4e94-b38e-591a543efba8.png">
+
+### Removed
+
+- Unused 'edit' and 'delete' buttons from deployed microservices page.
+
+### Fixed
+
+- Formatted code since it was quite messy.
+
+
 # [2.0.5] - 2022-7-25 [PR: #223](https://github.com/dolittle/Studio/pull/223)
 ## Summary
 
