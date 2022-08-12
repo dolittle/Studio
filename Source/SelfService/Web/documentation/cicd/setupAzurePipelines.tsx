@@ -13,6 +13,7 @@ import { Typography } from '@mui/material';
 
 const styles = {
     '& .MuiInput-input.Mui-disabled': {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         '-webkit-text-fill-color': (theme) => theme.palette.text.secondary
     }
 };

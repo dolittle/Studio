@@ -1,5 +1,5 @@
 {
-    "extends": "../../../tsconfig.json",
+    "extends": "../../tsconfig.json",
     "compilerOptions": {
         "outDir": "./wwwroot",
         "lib": [
@@ -8,9 +8,8 @@
         ],
     },
     "references": [
-        { "path": "../../DesignSystem" },
-        { "path": "../../Shared/Web" },
-        { "path": "../../Shared/Styling" }
+        { "path": "../Shared/Web"},
+        { "path": "../Shared/Styling"},
     ],
     "include": [ "**/*.ts", "**/*.tsx" ]
 }

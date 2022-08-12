@@ -16,3 +16,4 @@ Dockerfile
 **/wwwroot
 **/build
 **/Distribution
+**/dist
