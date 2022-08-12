@@ -19,6 +19,7 @@
         "@shared/web": "1.0.0",
 
         "@date-io/date-fns": "2.15.0",
+        "@dolittle/design-system": "1.0.0",
         "@dolittle/rudiments": "5.0.1",
         "@monaco-editor/react": "4.4.5",
         "date-fns": "2.29.1",

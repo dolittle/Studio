@@ -10,6 +10,7 @@
     },
     "references": [
         { "path": "../../Shared/Web" },
-        { "path": "../../Shared/Styling" }
+        { "path": "../../Shared/Styling" },
+        { "path": "../../DesignSystem"}
     ]
 }
