@@ -1,8 +1,11 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import React from 'react';
 import {Button as MuiButton} from '@mui/material';
 
 type ButtonProps = {
-  variant: 'filled' | 'text' | 'outlined'; 
+  variant: 'filled' | 'text' | 'outlined';
   disabled?: boolean;
   label: string;
   color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
@@ -10,7 +13,7 @@ type ButtonProps = {
   startWithIcon?: any;
   endWithIcon?: any;
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
-}
+};
 
 export const Button = (props: ButtonProps) => {
 
@@ -24,15 +27,15 @@ export const Button = (props: ButtonProps) => {
   const endWithIcon = _props.endWithIcon;
 
   return (
-    <MuiButton 
+    <MuiButton
       variant = {variant}
       disabled = {disabled}
       color = {color}
       size = {size}
       startIcon = {startWithIcon}
       endIcon = {endWithIcon}
-    > 
-      {label} 
+    >
+      {label}
     </MuiButton>
   );
 };
