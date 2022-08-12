@@ -128,8 +128,48 @@ const darkPalette: PaletteOptions = {
     },
     divider: '#2C2B33',
 };
-
+const customComponentStyles: {} = {
+    MuiDataGrid: {
+        styleOverrides: {
+            root: {
+                '.MuiDataGrid-row': {
+                    cursor: 'pointer'
+                },
+                '.MuiDataGrid-columnSeparator': {
+                    display: 'none'
+                },
+                '.MuiDataGrid-columnHeader:focus': {
+                    outline: 'none'
+                },
+                '.MuiDataGrid-columnHeader:focus-within': {
+                    outline: 'none'
+                },
+                '.MuiDataGrid-columnHeaderDraggableContainer': {
+                    outline: 'none'
+                },
+                '.MuiDataGrid-cell:focus-within': {
+                    outline: 'none'
+                },
+                '.MuiIconButton-root': {
+                    'visibility': 'visible',
+                    ':hover': {
+                        backgroundColor: 'transparent'
+                    }
+                },
+                '.MuiDataGrid-sortIcon': {
+                    color: 'rgba(255, 255, 255, 0.38);',
+                    width: '1.25rem',
+                    height: '1.25rem'
+                },
+                '.MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted) .MuiDataGrid-sortIcon': {
+                    opacity: 1
+                }
+            },
+        },
+    },
+};
 export const themeDark = createTheme({
     palette: darkPalette,
     typography,
+    components: customComponentStyles
 });

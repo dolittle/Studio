@@ -22,7 +22,6 @@ type Props = {
 const styles = {
     formControl: {
         '&.MuiFormControl-root': {
-            marginRight: 3,
             minWidth: 120,
         },
         '& .MuiSelect-icon': {

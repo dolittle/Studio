@@ -27,6 +27,7 @@
         "@mui/lab": "5.0.0-alpha.78",
         "@mui/material": "5.6.2",
         "@mui/styles": "5.6.2",
+        "@mui/x-data-grid-pro": "5.15.0",
         "@mui/x-date-pickers": "^5.0.0-alpha.4",
         "@shared/web": "1.0.1",
         "date-fns": "^2.28.0",
