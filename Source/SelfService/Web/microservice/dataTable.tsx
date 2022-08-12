@@ -28,46 +28,50 @@ const styles = {
     }
 };
 
-export const sortByRuntimeVersion = (params: GridValueGetterParams) => {
-    const runtimeVersion = params.row.edit.extra.runtimeImage.replace(/dolittle\/runtime:/gi, '');
+const sortByRuntimeVersion = (params: GridValueGetterParams) => {
+    const runtimeVersion = params.row.edit?.extra?.runtimeImage?.replace(/dolittle\/runtime:/gi, '');
+    if (runtimeVersion === undefined) return 'N/A';
+
     return `${runtimeVersion || 'None'}`;
 };
 
-const tooltipCell = (params: GridRenderCellParams) => (
-    // TODO: Tooltip needs public urls. Map them into title.
-    <Tooltip title={``} arrow>
-        <span>{params.row.edit.extra.isPublic ? 'Available' : 'None'}</span>
-    </Tooltip>
-);
+const tooltipCell = (params: GridRenderCellParams) => {
+    const publicUrl = params.row.edit?.extra?.isPublic;
+    if (publicUrl === undefined) return 'N/A';
+
+    return (
+        // TODO: Tooltip needs public urls. Map them into title.
+        <Tooltip title={``} arrow>
+            <span>{params.row.edit?.extra?.isPublic ? 'Available' : 'None'}</span>
+        </Tooltip>
+    );
+};
 
 const microserviceStatusInfo = (params: GridRenderCellParams) => {
-    try {
-        const status = params.row.status[0].phase;
-        const checkStatus = status.toLowerCase();
+    let color = themeDark.palette.text.primary;
+    let icon = <QuestionMark sx={{ color }} />;
 
-        let color = themeDark.palette.text.primary;
-        let icon = <QuestionMark sx={{ color }} />;
+    const status = params.row.status[0]?.phase;
+    if (status === undefined) return 'N/A';
 
-        if (checkStatus.includes('running')) {
-            icon = <CheckCircleRounded />;
-        } else if (checkStatus.includes('pending')) {
-            color = themeDark.palette.warning.main;
-            icon = <WarningRounded sx={{ color }} />;
-        } else if (checkStatus.includes('failed')) {
-            color = themeDark.palette.error.main;
-            icon = <ErrorRounded sx={{ color }} />;
-        }
+    const checkStatus = status.toLowerCase();
 
-        return (
-            <Box sx={styles.status}>
-                {icon}
-                <Typography sx={{ ...styles.statusTitle, color }}>{status}</Typography>
-            </Box>
-        );
-    } catch (err) {
-        console.error(`Error with '${params.row.name}' status.`);
-        return '';
+    if (checkStatus.includes('running')) {
+        icon = <CheckCircleRounded />;
+    } else if (checkStatus.includes('pending')) {
+        color = themeDark.palette.warning.main;
+        icon = <WarningRounded sx={{ color }} />;
+    } else if (checkStatus.includes('failed')) {
+        color = themeDark.palette.error.main;
+        icon = <ErrorRounded sx={{ color }} />;
     }
+
+    return (
+        <Box sx={styles.status}>
+            {icon}
+            <Typography sx={{ ...styles.statusTitle, color }}>{status}</Typography>
+        </Box>
+    );
 };
 
 const statusCell = (params: GridRenderCellParams) => (
@@ -81,7 +85,7 @@ export type MicroserviceObject = {
     environment: string
     live: MicroserviceInfo
     edit: {
-        extra: {
+        extra?: {
             isPublic: boolean
         }
     }
@@ -115,12 +119,13 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             .then(setRows);
     }, []);
 
+    const getUrlRowById = (param) => rows.filter((row: any) => row.id === param.id);
     const customUrlFieldSort = (v1, v2, param1, param2) => {
-        const firstObject = rows.filter((row: any) => row.id === param1.id);
-        const secondObject = rows.filter((row: any) => row.id === param2.id);
+        const firstObject = getUrlRowById(param1.id);
+        const secondObject = getUrlRowById(param2.id);
 
-        const isFirstPublic = firstObject[0]?.edit.extra.isPublic;
-        const isSecondPublic = secondObject[0]?.edit.extra.isPublic;
+        const isFirstPublic = firstObject[0]?.edit?.extra?.isPublic;
+        const isSecondPublic = secondObject[0]?.edit?.extra?.isPublic;
 
         const compareFirst = isFirstPublic ? 'Available' : 'None';
         const compareSecond = isSecondPublic ? 'Available' : 'None';
@@ -141,7 +146,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             minWidth: 200,
             flex: 1,
             valueGetter: (params: GridValueGetterParams) =>
-                `${params.row.edit.extra.headImage || ''}`,
+                `${params.row.edit?.extra?.headImage || 'N/A'}`,
         },
         {
             field: 'runtime',
@@ -165,7 +170,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             flex: 1,
             renderCell: statusCell,
             sortComparator: (v1, v2, param1, param2) =>
-                param1.value[0].phase.localeCompare(param2.value[0].phase)
+                param1.value[0]?.phase?.localeCompare(param2.value[0]?.phase)
         },
     ];
 
