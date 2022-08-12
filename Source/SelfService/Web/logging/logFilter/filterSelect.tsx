@@ -6,40 +6,34 @@ import React from 'react';
 import { Button, Select, SelectProps, Theme } from '@mui/material';
 
 const styles = {
-    wrapper: {
-        'height': '2.5rem',
-        '.MuiSelect-select:focus': {
-            backgroundColor: 'transparent'
-        },
-        '.MuiSelect-iconOpen': {
-            color: (theme: Theme) => theme.palette.primary.main
-        },
-        '& svg': {
-            right: '-0.3125rem'
-        },
-        '&:before, &:hover:not(.Mui-disabled):before, &:after': {
-            border: 'none',
-        },
-        ':hover': {
-            '& svg': {
-                color: (theme: Theme) => theme.palette.primary.main
-            }
-        },
+    'height': '2.5rem',
+    '.MuiSelect-select:focus': {
+        backgroundColor: 'transparent'
     },
-    inputField: {
-        textDecoration: 'none',
-        typography: 'button'
+    '.MuiSelect-iconOpen': {
+        color: (theme: Theme) => theme.palette.primary.main
+    },
+    '& svg': {
+        right: '-0.3125rem'
+    },
+    '&:before, &:hover:not(.Mui-disabled):before, &:after': {
+        border: 'none',
+    },
+    ':hover': {
+        '& svg': {
+            color: (theme: Theme) => theme.palette.primary.main
+        }
     }
 };
 
 export type FilterSelectProps<T> = SelectProps<T>;
 
 export const FilterSelect = <T,>(props: FilterSelectProps<T>) =>
-    <Button variant='text' disableRipple sx={styles.wrapper}>
+    <Button variant='text' disableRipple sx={styles}>
         <Select
             {...props}
             variant='standard'
             disableUnderline
-            sx={{ ...styles.inputField, ...props.sx }}
+            sx={{ typography: 'button', ...props.sx }}
         />
     </Button>;
