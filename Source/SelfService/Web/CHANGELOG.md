@@ -1,3 +1,19 @@
+# [2.1.2] - 2022-8-15 [PR: #230](https://github.com/dolittle/Studio/pull/230)
+## Summary
+
+This PR will fix errors with microservices overview data table, when data is undefined.
+
+<img width="1037" alt="Screenshot 2022-08-12 at 17 49 44" src="https://user-images.githubusercontent.com/19160439/184381791-c3c35de4-2d29-4ebb-b847-4c2b3a3e0ba3.png">
+
+### Changed
+
+- Refactored customUrlFieldSort function
+
+### Fixed
+
+- Microservices data table errors
+
+
 # [2.1.1] - 2022-8-12 [PR: #227](https://github.com/dolittle/Studio/pull/227)
 ## Summary
 
