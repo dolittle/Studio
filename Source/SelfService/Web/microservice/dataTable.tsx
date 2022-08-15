@@ -9,8 +9,7 @@ import { HttpResponseApplication } from '../api/application';
 
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 
-import { themeDark } from '../theme/theme';
-import { Box, Paper, Tooltip, Typography } from '@mui/material';
+import { Box, Paper, Tooltip, Theme, Typography } from '@mui/material';
 import { CheckCircleRounded, ErrorRounded, WarningRounded, QuestionMark } from '@mui/icons-material';
 
 const styles = {
@@ -35,53 +34,82 @@ const sortByRuntimeVersion = (params: GridValueGetterParams) => {
     return `${runtimeVersion || 'None'}`;
 };
 
-const tooltipCell = (params: GridRenderCellParams) => {
-    const publicUrl = params.row.edit?.extra?.isPublic;
-    if (!publicUrl) return 'N/A';
+const publicUrlCell = (params: GridRenderCellParams) => {
+    const hasPublicUrl = params.row.edit?.extra?.isPublic;
 
     return (
         // TODO: Tooltip needs public urls. Map them into title.
         <Tooltip title={``} arrow>
-            <span>{params.row.edit?.extra?.isPublic ? 'Available' : 'None'}</span>
+            <span>
+                {hasPublicUrl === true ? 'Available' :
+                    hasPublicUrl === false ? 'None' :
+                        'N/A'
+                }
+            </span>
         </Tooltip>
     );
 };
 
-const microserviceStatusInfo = (params: GridRenderCellParams) => {
-    let color = themeDark.palette.text.primary;
-    let icon = <QuestionMark sx={{ color }} />;
+enum MicroserviceStatus {
+    Running = 0,
+    Pending = 1,
+    Failing = 2,
+    Unknown = 3,
+}
 
-    try {
-        const status = params.row.status[0]?.phase;
-        if (!status) return 'N/A';
+const getMicroserviceState = (phase?: string): MicroserviceStatus => {
+    const checkStatus = phase?.toLowerCase?.();
 
-        const checkStatus = status.toLowerCase();
-
-        if (checkStatus.includes('running')) {
-            icon = <CheckCircleRounded />;
-        } else if (checkStatus.includes('pending')) {
-            color = themeDark.palette.warning.main;
-            icon = <WarningRounded sx={{ color }} />;
-        } else if (checkStatus.includes('failed')) {
-            color = themeDark.palette.error.main;
-            icon = <ErrorRounded sx={{ color }} />;
-        }
-
-        return (
-            <Box sx={styles.status}>
-                {icon}
-                <Typography sx={{ ...styles.statusTitle, color }}>{status}</Typography>
-            </Box>
-        );
-    } catch (err) {
-        console.error(`Problem with ${params.row.name} status.`);
-        return 'N/A';
+    if (typeof checkStatus !== 'string') {
+        return MicroserviceStatus.Unknown;
+    } else if (checkStatus.includes('running')) {
+        return MicroserviceStatus.Running;
+    } else if (checkStatus.includes('pending')) {
+        return MicroserviceStatus.Pending;
+    } else if (checkStatus.includes('failed')) {
+        return MicroserviceStatus.Failing;
     }
+
+    return MicroserviceStatus.Unknown;
 };
 
-const statusCell = (params: GridRenderCellParams) => (
-    <>{microserviceStatusInfo(params)}</>
-);
+const statusCell = (params: GridRenderCellParams) => {
+    let color = (theme: Theme) => theme.palette.text.primary;
+    let icon = <QuestionMark sx={{ color }} />;
+    let status = 'N/A';
+
+    switch (getMicroserviceState(params.row.status[0]?.phase)) {
+        case MicroserviceStatus.Running:
+            icon = <CheckCircleRounded />;
+            status = 'Running';
+            break;
+        case MicroserviceStatus.Pending:
+            color = (theme: Theme) => theme.palette.warning.main;
+            icon = <WarningRounded sx={{ color }} />;
+            status = 'Pending';
+            break;
+        case MicroserviceStatus.Failing:
+            color = (theme: Theme) => theme.palette.error.main;
+            icon = <ErrorRounded sx={{ color }} />;
+            status = 'Failed';
+            break;
+        case MicroserviceStatus.Unknown:
+            return 'N/A';
+    }
+
+    return (
+        <Box sx={styles.status}>
+            {icon}
+            <Typography sx={{ ...styles.statusTitle, color }}>{status}</Typography>
+        </Box>
+    );
+};
+
+const customStatusFieldSort = (_, __, left, right) => {
+    const leftStatus = getMicroserviceState(left.value[0]?.phase);
+    const rightStatus = getMicroserviceState(right.value[0]?.phase);
+    return leftStatus - rightStatus;
+};
 
 export type MicroserviceObject = {
     id: string
@@ -124,10 +152,9 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             .then(setRows);
     }, []);
 
-    const getUrlRowById = (param) => rows.filter((row: any) => row.id === param.id);
     const customUrlFieldSort = (v1, v2, param1, param2) => {
-        const firstObject = getUrlRowById(param1.id);
-        const secondObject = getUrlRowById(param2.id);
+        const firstObject = rows.filter((row: any) => row.id === param1.id);
+        const secondObject = rows.filter((row: any) => row.id === param2.id);
 
         const isFirstPublic = firstObject[0]?.edit?.extra?.isPublic;
         const isSecondPublic = secondObject[0]?.edit?.extra?.isPublic;
@@ -165,7 +192,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             headerName: 'Public URL',
             minWidth: 200,
             flex: 1,
-            renderCell: tooltipCell,
+            renderCell: publicUrlCell,
             sortComparator: customUrlFieldSort
         },
         {
@@ -174,8 +201,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             minWidth: 200,
             flex: 1,
             renderCell: statusCell,
-            sortComparator: (v1, v2, param1, param2) =>
-                param1.value[0]?.phase?.localeCompare(param2.value[0]?.phase)
+            sortComparator: customStatusFieldSort
         },
     ];
 
