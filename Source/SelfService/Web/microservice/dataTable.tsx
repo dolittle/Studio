@@ -30,14 +30,14 @@ const styles = {
 
 const sortByRuntimeVersion = (params: GridValueGetterParams) => {
     const runtimeVersion = params.row.edit?.extra?.runtimeImage?.replace(/dolittle\/runtime:/gi, '');
-    if (runtimeVersion === undefined) return 'N/A';
+    if (!runtimeVersion) return 'N/A';
 
     return `${runtimeVersion || 'None'}`;
 };
 
 const tooltipCell = (params: GridRenderCellParams) => {
     const publicUrl = params.row.edit?.extra?.isPublic;
-    if (publicUrl === undefined) return 'N/A';
+    if (!publicUrl) return 'N/A';
 
     return (
         // TODO: Tooltip needs public urls. Map them into title.
@@ -53,7 +53,7 @@ const microserviceStatusInfo = (params: GridRenderCellParams) => {
 
     try {
         const status = params.row.status[0]?.phase;
-        if (status === undefined) return 'N/A';
+        if (!status) return 'N/A';
 
         const checkStatus = status.toLowerCase();
 
