@@ -29,9 +29,8 @@ const styles = {
 
 const sortByRuntimeVersion = (params: GridValueGetterParams) => {
     const runtimeVersion = params.row.edit?.extra?.runtimeImage?.replace(/dolittle\/runtime:/gi, '');
-    if (!runtimeVersion) return 'N/A';
 
-    return `${runtimeVersion || 'None'}`;
+    return `${runtimeVersion || 'N/A'}`;
 };
 
 const publicUrlCell = (params: GridRenderCellParams) => {
