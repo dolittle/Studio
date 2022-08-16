@@ -18,14 +18,12 @@ Run the reset-local-k3d script, that automatically deletes the existing k3d clus
 ./Environment/k3d/reset-local-k3d
 ```
 
-## Start the cluster
-> NOTE: This requires the cluster to be setup in order to work. Follow either the manual steps or run reset-local-k3d
+## Stopping and starting the cluster
+Once you've setup the cluster for the first time, you can stop and (re)start the cluster with the following commands.
+This is useful to free up a few resources on your machine while you're working on something else.
 ```sh
-./Environment/k3d/start-local-k3d
-```
-## Stop the cluster
-```sh
-./Environment/k3d/stop-local-k3d
+k3d cluster stop dolittle-dev
+k3d cluster start dolittle-dev
 ```
 
 # For manual steps, continue following the guide.

@@ -1,7 +1,0 @@
-#!/bin/bash
-echo "Starting local k3d cluster"
-ROOT_PWD=$(git rev-parse --show-toplevel)
-cd $ROOT_PWD
-
-k3d cluster start dolittle-dev
-echo "Started dolittle-dev k3d cluster"
