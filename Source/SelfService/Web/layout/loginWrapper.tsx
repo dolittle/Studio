@@ -5,22 +5,33 @@ import React from 'react';
 
 import { Box } from '@mui/material';
 import { BgLogo, MainLogo } from '../theme/assets/logos/logos';
+import Symbol from '../theme/assets/logos/symbol.svg?url';
 import Logo from '../theme/assets/logos/logo.svg';
 
 const styles = {
-    backgroundLogoContainer: {
-        maxInlineSize: '793px',
-        blockSize: '100vh'
+    backgroundSymbol: {
+        textAlign: 'right',
+        minHeight: '100vh',
+        backgroundImage: `url(${Symbol})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'auto 142vh',
+        backgroundPosition: '-60vh -25vh'
     },
-    mainContainer: {
-        inlineSize: '100%',
-        maxInlineSize: '496px',
-        position: 'absolute',
-        top: '20%',
-        right: '20%',
-        transform: 'translate(20%, 0%)',
-        textAlign: 'center',
-        padding: '20px'
+    mainContent: {
+        'textAlign': 'center',
+        'width': '100vw',
+        'maxWidth': '33.8125rem',
+        'ml': 'auto',
+        '@media (min-width: 33.8125rem)': {
+            mr: 'calc((100vw - 33.8125rem)*0.233)'
+        },
+        'p': '1.25rem',
+        'pt': '12.5rem'
+    },
+    logo: {
+        width: 166,
+        height: 39,
+        mt: 18.5
     }
 };
 
@@ -28,16 +39,11 @@ export type LoginWrapperProps = {
     children: React.ReactNode;
 };
 
-export const LoginWrapper: React.FC<LoginWrapperProps> = ({ children }: LoginWrapperProps) => {
-    return (
-        <>
-            <Box sx={styles.backgroundLogoContainer}>
-                <BgLogo />
-            </Box>
-            <Box sx={styles.mainContainer}>
-                {children}
-                <Logo my={18.5} />
-            </Box>
-        </>
-    );
-};
+export const LoginWrapper = ({ children }: LoginWrapperProps) => (
+    <Box sx={styles.backgroundSymbol}>
+        <Box sx={styles.mainContent}>
+            {children}
+            <Logo sx={styles.logo} />
+        </Box>
+    </Box>
+);
