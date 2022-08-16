@@ -27,7 +27,6 @@ const endOfToday = () => {
     return date;
 };
 
-
 export const DateRangeFilter = (props: DateRangeFilterProps) => {
     const [startDate, setStartDate] = useState<Date | null>(beginningOfToday);
     const [stopDate, setStopDate] = useState<Date | null>(endOfToday);
