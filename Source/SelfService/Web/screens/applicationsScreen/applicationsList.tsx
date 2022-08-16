@@ -26,17 +26,17 @@ const styles = {
 
 type ApplicationsListProps = {
     data: ShortInfoWithEnvironment[],
-    handleClick: (application: ShortInfoWithEnvironment) => void;
+    onChoose: (application: ShortInfoWithEnvironment) => void;
 };
 
-export const ApplicationsList = ({ data, handleClick }: ApplicationsListProps) => (
+export const ApplicationsList = ({ data, onChoose }: ApplicationsListProps) => (
     <List sx={styles.list}>
         {data.map(application => (
             <Button
                 variant='contained'
                 sx={styles.button}
                 key={application.environment}
-                onClick={() => handleClick(application)}
+                onClick={() => onChoose(application)}
             >
                 {application.name} - {application.environment}
             </Button>

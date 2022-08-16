@@ -13,16 +13,16 @@ const styles = {
 };
 
 type CreateButtonProps = {
-    handleClick: () => void
+    onCreate: () => void
 };
 
-export const CreateButton = ({ handleClick }: CreateButtonProps) => (
+export const CreateButton = ({ onCreate }: CreateButtonProps) => (
     <Box sx={{ inlineSize: '100%' }}>
         <Button
             variant='text'
             startIcon={<AddCircle />}
             sx={styles}
-            onClick={handleClick}>
+            onClick={onCreate}>
             Create new Application
         </Button>
     </Box>

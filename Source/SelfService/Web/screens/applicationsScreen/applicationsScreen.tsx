@@ -72,9 +72,9 @@ export const ApplicationsScreen = () => {
                 Select Your Application & Environment
             </Typography>
 
-            <CreateButton handleClick={handleCreate} />
+            <CreateButton onCreate={handleCreate} />
 
-            <ApplicationsList data={data} handleClick={onEnvironmentChoose} />
+            <ApplicationsList data={data} onChoose={onEnvironmentChoose} />
 
             <ActionButtons />
 
