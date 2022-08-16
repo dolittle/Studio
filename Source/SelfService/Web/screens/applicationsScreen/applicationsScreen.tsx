@@ -13,6 +13,7 @@ import { HttpResponseApplications, getApplications } from '../../api/application
 import { Box, Button, Theme, Typography } from '@mui/material';
 import { AddCircle } from '@mui/icons-material';
 
+import { ApplicationsList } from './applicationsList';
 import { ActionButtons } from './actionButtons';
 
 const styles = {
@@ -20,7 +21,7 @@ const styles = {
         letterSpacing: '-0.5px',
         lineHeight: '26px'
     },
-    listWrapper: {
+    applicationsList: {
         padding: '0',
         display: 'inline-block'
     },
@@ -32,15 +33,6 @@ const styles = {
         typography: 'body2',
         fontWeight: 500,
         color: (theme: Theme) => theme.palette.text.primary
-    },
-    environmentButtons: {
-        display: 'block',
-        inlineSize: '100%',
-        minInlineSize: '155px',
-        minBlockSize: '36px',
-        marginBlockStart: '-4px',
-        marginBlockEnd: '1rem',
-        marginInline: 'auto',
     }
 };
 
@@ -87,7 +79,7 @@ export const ApplicationsScreen: React.FC = () => {
         history.push(href);
     };
 
-    const { title, listWrapper, createBtnWrapper, button, environmentButtons } = styles;
+    const { title, createBtnWrapper, button } = styles;
     return (
         <LoginWrapper>
             <Typography variant='h2' my={2} mb={5} sx={title}>
@@ -104,19 +96,8 @@ export const ApplicationsScreen: React.FC = () => {
                 </Button>
             </Box>
 
-            <ul style={listWrapper}>
-                {data.map(application => {
-                    return (
-                        <Button
-                            variant='contained'
-                            sx={{ ...environmentButtons, ...button }}
-                            key={application.environment}
-                            onClick={() => onEnvironmentChoose(application)}
-                        >
-                            {application.name} - {application.environment}
-                        </Button>
-                    );
-                })}
+            <ul style={styles.applicationsList}>
+                <ApplicationsList data={data} handleClick={onEnvironmentChoose} />
             </ul>
 
             <Box sx={{ mt: 12.5 }}>
