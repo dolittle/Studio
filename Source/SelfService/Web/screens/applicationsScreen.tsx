@@ -10,8 +10,7 @@ import { LoginWrapper } from '../layout/loginWrapper';
 import { useGlobalContext } from '../stores/notifications';
 import { HttpResponseApplications, getApplications } from '../api/application';
 
-import { themeDark } from '../theme/theme';
-import { Box, Button, Link, Typography } from '@mui/material';
+import { Box, Button, Link, Theme, Typography } from '@mui/material';
 import { AddCircle, ArrowBack } from '@mui/icons-material';
 
 const styles = {
@@ -27,7 +26,10 @@ const styles = {
         inlineSize: '100%',
     },
     button: {
-        letterSpacing: '0.06em'
+        letterSpacing: '0.06em',
+        typography: 'body2',
+        fontWeight: 500,
+        color: (theme: Theme) => theme.palette.text.primary
     },
     environmentButtons: {
         display: 'block',
@@ -119,11 +121,13 @@ export const ApplicationsScreen: React.FC = () => {
                 <Link href='/.auth/cookies/initiate' sx={{ textDecoration: 'none' }}>
                     <Button
                         startIcon={<ArrowBack />}
-                        sx={{ ...button, color: themeDark.palette.text.primary }}
+                        sx={{ ...button, mr: 8 }}
                     >Select new customer
                     </Button>
                 </Link>
-                {/* <Button sx={button}>Log Out</Button> */}
+                <Link href={'/.auth/cookies/logout'}>
+                    <Button sx={button}>Log Out</Button>
+                </Link>
             </Box>
         </LoginWrapper>
     );
