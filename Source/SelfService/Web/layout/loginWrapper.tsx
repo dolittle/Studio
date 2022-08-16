@@ -4,7 +4,6 @@
 import React from 'react';
 
 import { Box } from '@mui/material';
-import { BgLogo, MainLogo } from '../theme/assets/logos/logos';
 import Symbol from '../theme/assets/logos/symbol.svg?url';
 import Logo from '../theme/assets/logos/logo.svg';
 
