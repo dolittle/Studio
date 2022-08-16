@@ -5,13 +5,15 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { ShortInfoWithEnvironment } from '../api/api';
-import { LoginWrapper } from '../layout/loginWrapper';
-import { useGlobalContext } from '../stores/notifications';
-import { HttpResponseApplications, getApplications } from '../api/application';
+import { ShortInfoWithEnvironment } from '../../api/api';
+import { LoginWrapper } from '../../layout/loginWrapper';
+import { useGlobalContext } from '../../stores/notifications';
+import { HttpResponseApplications, getApplications } from '../../api/application';
 
-import { Box, Button, Link, Theme, Typography } from '@mui/material';
-import { AddCircle, ArrowBack } from '@mui/icons-material';
+import { Box, Button, Theme, Typography } from '@mui/material';
+import { AddCircle } from '@mui/icons-material';
+
+import { ActionButtons } from './actionButtons';
 
 const styles = {
     title: {
@@ -26,7 +28,7 @@ const styles = {
         inlineSize: '100%',
     },
     button: {
-        letterSpacing: '0.06em',
+        letterSpacing: '0.059rem',
         typography: 'body2',
         fontWeight: 500,
         color: (theme: Theme) => theme.palette.text.primary
@@ -117,18 +119,8 @@ export const ApplicationsScreen: React.FC = () => {
                 })}
             </ul>
 
-            <Box mt={12.5}>
-                <Link href='/.auth/cookies/initiate' sx={{ textDecoration: 'none' }}>
-                    <Button
-                        startIcon={<ArrowBack />}
-                        sx={{ ...button, mr: 8 }}
-                    >Select new customer
-                    </Button>
-                </Link>
-                <Link href={'/.auth/cookies/logout'}>
-                    <Button sx={button}>Log Out</Button>
-                </Link>
-            </Box>
+            <ActionButtons />
+
         </LoginWrapper>
     );
 };
