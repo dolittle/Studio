@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Button, Theme } from '@mui/material';
+import { Box, Button, Theme } from '@mui/material';
 import { AddCircle } from '@mui/icons-material';
 
 const styles = {
@@ -17,11 +17,13 @@ type CreateButtonProps = {
 };
 
 export const CreateButton = ({ handleClick }: CreateButtonProps) => (
-    <Button
-        variant='text'
-        startIcon={<AddCircle />}
-        sx={styles}
-        onClick={handleClick}>
-        Create new Application
-    </Button>
+    <Box sx={{ inlineSize: '100%' }}>
+        <Button
+            variant='text'
+            startIcon={<AddCircle />}
+            sx={styles}
+            onClick={handleClick}>
+            Create new Application
+        </Button>
+    </Box>
 );

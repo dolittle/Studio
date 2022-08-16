@@ -10,27 +10,20 @@ import { LoginWrapper } from '../../layout/loginWrapper';
 import { useGlobalContext } from '../../stores/notifications';
 import { HttpResponseApplications, getApplications } from '../../api/application';
 
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 import { CreateButton } from './createButton';
 import { ApplicationsList } from './applicationsList';
 import { ActionButtons } from './actionButtons';
 
 const styles = {
-    title: {
-        letterSpacing: '-0.5px',
-        lineHeight: '26px'
-    },
-    applicationsList: {
-        padding: '0',
-        display: 'inline-block'
-    },
-    createBtnWrapper: {
-        inlineSize: '100%',
-    }
+    my: 2,
+    mb: 5,
+    letterSpacing: '-0.5px',
+    lineHeight: '1.625rem'
 };
 
-export const ApplicationsScreen: React.FC = () => {
+export const ApplicationsScreen = () => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -73,24 +66,17 @@ export const ApplicationsScreen: React.FC = () => {
         history.push(href);
     };
 
-    const { title, createBtnWrapper } = styles;
     return (
         <LoginWrapper>
-            <Typography variant='h2' my={2} mb={5} sx={title}>
+            <Typography variant='h2' sx={styles}>
                 Select Your Application & Environment
             </Typography>
 
-            <Box sx={createBtnWrapper}>
-                <CreateButton handleClick={handleCreate} />
-            </Box>
+            <CreateButton handleClick={handleCreate} />
 
-            <ul style={styles.applicationsList}>
-                <ApplicationsList data={data} handleClick={onEnvironmentChoose} />
-            </ul>
+            <ApplicationsList data={data} handleClick={onEnvironmentChoose} />
 
-            <Box sx={{ mt: 12.5 }}>
-                <ActionButtons />
-            </Box>
+            <ActionButtons />
 
         </LoginWrapper>
     );

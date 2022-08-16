@@ -5,16 +5,23 @@ import React from 'react';
 
 import { ShortInfoWithEnvironment } from '../../api/api';
 
-import { Button } from '@mui/material';
+import { Button, List } from '@mui/material';
 
 const styles = {
-    display: 'block',
-    inlineSize: '100%',
-    minInlineSize: '9.6875rem',
-    minBlockSize: '2.25rem',
-    letterSpacing: '0.06em',
-    typography: 'body2',
-    fontWeight: 500,
+    list: {
+        p: 0,
+        mt: 2.5,
+        display: 'inline-block'
+    },
+    button: {
+        display: 'block',
+        inlineSize: '100%',
+        minInlineSize: '9.6875rem',
+        minBlockSize: '2.25rem',
+        letterSpacing: '0.06em',
+        typography: 'body2',
+        fontWeight: 500,
+    }
 };
 
 type ApplicationsListProps = {
@@ -23,18 +30,17 @@ type ApplicationsListProps = {
 };
 
 export const ApplicationsList = ({ data, handleClick }: ApplicationsListProps) => (
-    <>
-        {data.map(application => {
-            return (
-                <Button
-                    variant='contained'
-                    sx={styles}
-                    key={application.environment}
-                    onClick={() => handleClick(application)}
-                >
-                    {application.name} - {application.environment}
-                </Button>
-            );
-        })}
-    </>
+    <List sx={styles.list}>
+        {data.map(application => (
+            <Button
+                variant='contained'
+                sx={styles.button}
+                key={application.environment}
+                onClick={() => handleClick(application)}
+            >
+                {application.name} - {application.environment}
+            </Button>
+        )
+        )}
+    </List>
 );
