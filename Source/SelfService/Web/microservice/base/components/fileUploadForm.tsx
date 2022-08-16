@@ -23,7 +23,7 @@ export type FileUploadFormRef = {
  * @returns
  */
 export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadFormProps>(
-    (props: FileUploadFormProps, ref: React.ForwardedRef<FileUploadFormRef>) => {
+    function FileUploadForm(props: FileUploadFormProps, ref: React.ForwardedRef<FileUploadFormRef>) {
         const formRef = useRef<HTMLFormElement>(null);
         const fileInputRef = useRef<HTMLInputElement>(null);
 

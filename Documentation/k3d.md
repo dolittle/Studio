@@ -18,7 +18,15 @@ Run the reset-local-k3d script, that automatically deletes the existing k3d clus
 ./Environment/k3d/reset-local-k3d
 ```
 
-For manual steps, continue following the guide.
+## Stopping and starting the cluster
+Once you've setup the cluster for the first time, you can stop and (re)start the cluster with the following commands.
+This is useful to free up a few resources on your machine while you're working on something else.
+```sh
+k3d cluster stop dolittle-dev
+k3d cluster start dolittle-dev
+```
+
+# For manual steps, continue following the guide.
 
 ## Setup folder structure to bootstrap Studio
 - Little clunky, but we can change after

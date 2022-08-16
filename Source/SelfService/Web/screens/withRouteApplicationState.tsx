@@ -9,12 +9,7 @@ export type WithRouteApplicationProps = {
     routeApplicationParams: RouteApplicationParams
 };
 
-export function withRouteApplicationState<ComponentProps>(
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    WrappedComponent: ComponentType<ComponentProps & WithRouteApplicationProps>
-) {
-    // // eslint-disable-next-line @typescript-eslint/naming-convention
-    // export function withRouteApplicationState(Component: ComponentType) {
+export function withRouteApplicationState<ComponentProps>(wrapped: ComponentType<ComponentProps & WithRouteApplicationProps>) {
     return React.memo(function RouteApplicationState(props: ComponentProps) {
         const routeApplicationParams = useRouteApplicationParams();
         const {
@@ -34,6 +29,7 @@ export function withRouteApplicationState<ComponentProps>(
             }
         }, []);
 
-        return <WrappedComponent {...props as ComponentProps} routeApplicationParams={routeApplicationParams} />;
+        const WrappedComponent = wrapped;
+        return <WrappedComponent {...props} routeApplicationParams={routeApplicationParams} />;
     });
 }

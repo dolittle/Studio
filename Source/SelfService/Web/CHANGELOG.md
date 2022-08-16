@@ -1,3 +1,49 @@
+# [2.1.2] - 2022-8-15 [PR: #230](https://github.com/dolittle/Studio/pull/230)
+## Summary
+
+This PR will fix errors with microservices overview data table, when data is undefined.
+
+<img width="1037" alt="Screenshot 2022-08-12 at 17 49 44" src="https://user-images.githubusercontent.com/19160439/184381791-c3c35de4-2d29-4ebb-b847-4c2b3a3e0ba3.png">
+
+### Changed
+
+- Refactored customUrlFieldSort function
+
+### Fixed
+
+- Microservices data table errors
+
+
+# [2.1.1] - 2022-8-12 [PR: #227](https://github.com/dolittle/Studio/pull/227)
+## Summary
+
+Brings back the DesignSystem and Storybook introduced by @soumikgm a while back. This required a bit of finagling with `tsconfig` and `package.json` files to bring it back into a building state. The final result is that we have a working Storybook that builds, and the components defined in there can be imported in the `SelfService/Web` project with e.g. `import { Button } from '@dolittle/design-system/atoms/Button'`. This works with WebPack and hot-reloading while editing (although a bit slow).
+
+Further, to improve DX - I have reconfigured the build pipeline and checks in GitHub. Now, we build `DesignSystem`, `SelfService/Web` and `SelfService/Backend` on every push. This means that there is less of a chance of us inadvertently doing something that breaks one of these things without noticing in a PR. It also means that when merged to master - we will see a build result on the commit.
+
+
+# [2.1.0] - 2022-8-12 [PR: #224](https://github.com/dolittle/Studio/pull/224)
+## Summary
+
+This PR make microservice overview page look more clean and beautiful.
+
+<img width="1015" alt="Screenshot 2022-08-10 at 18 19 40" src="https://user-images.githubusercontent.com/19160439/183942471-d1e6dfcf-5803-4906-842d-be2e553b4124.png">
+
+### Added
+
+- MUI Pro for data table
+- No microservides page
+
+### Changed
+
+- Top navbar-breadcrumbs look
+- Custom breadcrumbs setub to MUI breadcrumbs
+
+### Removed
+
+- Fluent-UI from microservices page
+
+
 # [2.0.7] - 2022-8-11 [PR: #228](https://github.com/dolittle/Studio/pull/228)
 ## Summary
 

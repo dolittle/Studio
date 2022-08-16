@@ -1,0 +1,30 @@
+{
+    "name": "@shared/styling",
+    "version": "1.0.0",
+    "description": "",
+    "author": "Dolittle",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "build": "tsc -b",
+        "clean": "tsc -b --clean",
+        "lint": "eslint '**/*.{js,ts,tsx}' --no-error-on-unmatched-pattern --quiet --fix",
+        "lint:ci": "eslint '**/*.{js,ts,tsx}' --no-error-on-unmatched-pattern --quiet",
+        "ci": "yarn clean && yarn lint:ci && yarn build"
+    },
+    "dependencies": {
+        "@emotion/react": "11.10.0",
+        "@emotion/styled": "11.10.0",
+        "@fluentui/react": "8.87.1",
+        "@fontsource/roboto-mono": "4.5.8",
+        "@fontsource/rubik": "4.5.11",
+        "@mui/icons-material": "5.8.4",
+        "@mui/lab": "5.0.0-alpha.94",
+        "@mui/material": "5.10.0",
+        "@mui/styles": "5.9.3",
+        "@mui/x-data-grid-pro": "5.15.0",
+        "@mui/x-date-pickers": "5.0.0-beta.4",
+        "@mui/x-license-pro": "5.15.0"
+    },
+    "devDependencies": {}
+}

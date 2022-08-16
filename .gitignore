@@ -128,3 +128,5 @@ Environments/data
 !Source/Data
 
 !Environment/mock/monitoring/logs
+
+yarn.lock

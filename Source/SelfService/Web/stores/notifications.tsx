@@ -70,7 +70,6 @@ type GlobalContextProviderProps = {
     children?: React.ReactNode
 };
 
-// eslint-disable-next-line react/prop-types
 export const GlobalContextProvider: React.FunctionComponent<GlobalContextProviderProps> = ({ children }) => {
     const location = useLocation();
 

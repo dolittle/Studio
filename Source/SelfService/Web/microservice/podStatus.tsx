@@ -27,8 +27,6 @@ type PodInfoItem = {
 export const PodStatus: React.FunctionComponent<Props> = (props) => {
 
     const history = useHistory();
-    // TODO what is this?
-    // eslint-disable-next-line react/prop-types
     const data = props!.data;
     const environment = props!.environment;
 

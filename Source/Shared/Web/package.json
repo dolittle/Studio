@@ -1,16 +1,15 @@
 {
     "name": "@shared/web",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "description": "",
-    "main": "dist/index.js",
-    "author": "",
+    "author": "Dolittle",
     "license": "MIT",
     "private": true,
     "scripts": {
-        "build": "tsc -b tsconfig.json",
+        "build": "tsc -b",
         "clean": "tsc -b --clean",
-        "lint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
-        "lint:ci": "eslint '**/*.{js,ts,tsx}' --quiet",
+        "lint": "eslint '**/*.{js,ts,tsx}' --no-error-on-unmatched-pattern --quiet --fix",
+        "lint:ci": "eslint '**/*.{js,ts,tsx}' --no-error-on-unmatched-pattern --quiet",
         "ci": "yarn clean && yarn lint:ci && yarn build"
     },
     "dependencies": {
@@ -43,6 +42,5 @@
         "webpack": "5.72.0",
         "webpack-cli": "4.10.0",
         "webpack-dev-server": "3.11.3"
-    },
-    "peerDependencies": {}
+    }
 }
