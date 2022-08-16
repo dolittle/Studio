@@ -10,9 +10,9 @@ import { LoginWrapper } from '../../layout/loginWrapper';
 import { useGlobalContext } from '../../stores/notifications';
 import { HttpResponseApplications, getApplications } from '../../api/application';
 
-import { Box, Button, Theme, Typography } from '@mui/material';
-import { AddCircle } from '@mui/icons-material';
+import { Box, Typography } from '@mui/material';
 
+import { CreateButton } from './createButton';
 import { ApplicationsList } from './applicationsList';
 import { ActionButtons } from './actionButtons';
 
@@ -27,12 +27,6 @@ const styles = {
     },
     createBtnWrapper: {
         inlineSize: '100%',
-    },
-    button: {
-        letterSpacing: '0.059rem',
-        typography: 'body2',
-        fontWeight: 500,
-        color: (theme: Theme) => theme.palette.text.primary
     }
 };
 
@@ -79,7 +73,7 @@ export const ApplicationsScreen: React.FC = () => {
         history.push(href);
     };
 
-    const { title, createBtnWrapper, button } = styles;
+    const { title, createBtnWrapper } = styles;
     return (
         <LoginWrapper>
             <Typography variant='h2' my={2} mb={5} sx={title}>
@@ -87,13 +81,7 @@ export const ApplicationsScreen: React.FC = () => {
             </Typography>
 
             <Box sx={createBtnWrapper}>
-                <Button
-                    variant='text'
-                    startIcon={<AddCircle />}
-                    sx={button}
-                    onClick={handleCreate}>
-                    Create new Application
-                </Button>
+                <CreateButton handleClick={handleCreate} />
             </Box>
 
             <ul style={styles.applicationsList}>
