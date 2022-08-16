@@ -119,7 +119,9 @@ export const ApplicationsScreen: React.FC = () => {
                 })}
             </ul>
 
-            <ActionButtons />
+            <Box sx={{ mt: 12.5 }}>
+                <ActionButtons />
+            </Box>
 
         </LoginWrapper>
     );

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Box, Button, Link, Theme } from '@mui/material';
+import { Button, Link, Theme } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 
 const styles = {
@@ -14,7 +14,7 @@ const styles = {
 };
 
 export const ActionButtons = () => (
-    <Box sx={{ mt: 12.5 }}>
+    <>
         <Link href='/.auth/cookies/initiate' sx={{ textDecoration: 'none' }}>
             <Button
                 startIcon={<ArrowBack />}
@@ -25,5 +25,5 @@ export const ActionButtons = () => (
         <Link href={'/.auth/cookies/logout'}>
             <Button sx={styles}>Log Out</Button>
         </Link>
-    </Box >
+    </>
 );
