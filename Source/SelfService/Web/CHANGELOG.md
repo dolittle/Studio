@@ -1,3 +1,30 @@
+# [2.1.4] - 2022-8-17 [PR: #231](https://github.com/dolittle/Studio/pull/231)
+## Summary
+
+Made login flow styles consistent with authentication side.
+
+<img width="1315" alt="Screenshot 2022-08-16 at 17 31 59" src="https://user-images.githubusercontent.com/19160439/184905905-86cbe159-c1ed-49fc-8ee1-df4a1b7645c6.png">
+
+### Added
+
+- Babel plugin for faster MUI builds
+- Loading of .svg files as <Box component=svg /> to webpack and typescript
+- Logout button to 'Select Your Application & Environment' page
+
+### Changed
+
+- Describe the outwards facing code change
+
+### Fixed
+
+- Describe the fix and the bug
+- Overall code refactoring and extraction
+
+### Removed
+
+- Unused logo files
+
+
 # [2.1.3] - 2022-8-17 [PR: #225](https://github.com/dolittle/Studio/pull/225)
 ## Summary
 
