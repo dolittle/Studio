@@ -1,3 +1,15 @@
+# [2.1.3] - 2022-8-17 [PR: #225](https://github.com/dolittle/Studio/pull/225)
+## Summary
+
+Fixed menu dropdown styles when hovered and added padding.
+
+<img width="339" alt="Screenshot 2022-08-08 at 10 32 02" src="https://user-images.githubusercontent.com/19160439/183364028-9cdf8ec1-963e-4c97-add1-2e535190ac6f.png">
+
+### Fixed
+
+- Menu items hover and focused state style
+
+
 # [2.1.2] - 2022-8-15 [PR: #230](https://github.com/dolittle/Studio/pull/230)
 ## Summary
 
