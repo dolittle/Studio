@@ -10,7 +10,7 @@ import { HttpResponsePodStatus, PodInfo, ContainerStatusInfo, restartMicroservic
 import { ViewLogIcon, DownloadLogIcon } from '../../assets/icons';
 import { ButtonText } from '../../theme/buttonText';
 
-type Props = {
+type HealthStatusProps = {
     status: string
     data: HttpResponsePodStatus
     environment: string
@@ -30,15 +30,9 @@ type Item = {
     container: ContainerStatusInfo
 };
 
-export const HealthStatus: React.FunctionComponent<Props> = (props) => {
+export const HealthStatus = ({ applicationId, microserviceId, data, environment }: HealthStatusProps) => {
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
-    const _props = props!;
-    const applicationId = _props.applicationId;
-    const microserviceId = _props.microserviceId;
-    const status = _props.status;
-    const data = _props.data;
-    const environment = _props.environment;
 
     const items: any[] = data.pods.flatMap(pod => {
         return pod.containers.map((container, index) => {
