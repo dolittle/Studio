@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Pivot, PivotItem } from '@fluentui/react';
 
-import { HealthStatus } from '../view/healthStatus';
+import { HealthStatus } from '../healthStatus/healthStatus';
 import { HttpResponsePodStatus } from '../../api/api';
 import { useReadable } from 'use-svelte-store';
 import { microservices, MicroserviceStore } from '../../stores/microservice';

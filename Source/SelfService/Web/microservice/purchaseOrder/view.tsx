@@ -19,7 +19,7 @@ import { TabPanel } from '../../utils/materialUi';
 import EditIcon from '@mui/icons-material/Edit';
 
 import { DownloadButtons } from '../components/downloadButtons';
-import { HealthStatus } from '../view/healthStatus';
+import { HealthStatus } from '../healthStatus/healthStatus';
 
 type Props = {
     applicationId: string

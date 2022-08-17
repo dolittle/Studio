@@ -18,7 +18,7 @@ import { Grid, IconButton, Typography } from '@mui/material';
 import { TabPanel } from '../../utils/materialUi';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { HealthStatus } from '../view/healthStatus';
+import { HealthStatus } from '../healthStatus/healthStatus';
 
 type Props = {
     application: HttpResponseApplication
