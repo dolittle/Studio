@@ -3,12 +3,24 @@
 
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { useSnackbar } from 'notistack';
 
 import { HttpResponsePodStatus, PodInfo, ContainerStatusInfo, restartMicroservice } from '../../api/api';
+import { useSnackbar } from 'notistack';
+
+import { Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { RestartAlt } from '@mui/icons-material';
+
 import { ViewLogIcon, DownloadLogIcon } from '../../assets/icons';
 import { ButtonText } from '../../theme/buttonText';
+
+
+const styles = {
+    restartBtn: {
+        fontWeight: 500,
+        lineHeight: '22px',
+        letterSpacing: '0.06em'
+    }
+};
 
 type HealthStatusProps = {
     status: string
@@ -86,38 +98,41 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
         });
     }) as any[];
 
+    const handleRestart = async () => {
+        const success = await restartMicroservice(applicationId, environment, microserviceId);
+
+        if (!success) {
+            enqueueSnackbar('Failed to restart microservice', { variant: 'error' });
+            return;
+        }
+
+        window.location = window.location;
+    };
 
     return (
-        <Box component={Paper} m={2}>
-            <ButtonText
-                onClick={async () => {
-                    const success = await restartMicroservice(applicationId, environment, microserviceId);
-                    if (!success) {
-                        enqueueSnackbar('Failed to restart microservice', { variant: 'error' });
-                        return;
-                    }
-                    window.location = window.location;
-                }}
-            >Click to Restart the microservice</ButtonText>
-            <TableContainer>
-                <Table size="small" aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="left">Name</TableCell>
-                            <TableCell align="right">Status</TableCell>
-                            <TableCell align="right">Restarts</TableCell>
-                            <TableCell align="right">Age</TableCell>
-                            <TableCell align="right">Started</TableCell>
-                            <TableCell align="right">Container</TableCell>
-                            <TableCell align="right">View Logs</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {items}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Box>
-    );
+        <>
+            <ButtonText sx={styles.restartBtn} startIcon={<RestartAlt />} onClick={handleRestart}>Restart microservice</ButtonText>
 
+            <Box component={Paper}>
+                <TableContainer>
+                    <Table size="small" aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="left">Name</TableCell>
+                                <TableCell align="right">Status</TableCell>
+                                <TableCell align="right">Restarts</TableCell>
+                                <TableCell align="right">Age</TableCell>
+                                <TableCell align="right">Started</TableCell>
+                                <TableCell align="right">Container</TableCell>
+                                <TableCell align="right">View Logs</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {items}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Box>
+        </>
+    );
 };
