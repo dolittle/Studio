@@ -4,37 +4,19 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { useSnackbar } from 'notistack';
 import { useReadable } from 'use-svelte-store';
 
-import { microservices, MicroserviceStore, canDeleteMicroservice, canEditMicroservice } from '../../stores/microservice';
+import { microservices, MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
 import { Configuration } from './configuration';
 import { HttpResponsePodStatus } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import { HttpResponseApplication } from '../../api/application';
 
 import { Tab, Tabs } from '../../theme/tabs';
-import { Grid, IconButton, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { TabPanel } from '../../utils/materialUi';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 import { HealthStatus } from '../healthStatus/healthStatus';
-
-const styles = {
-    deleteIcon: {
-        'padding': 0,
-        'marginRight': 1,
-        'fill': 'white',
-        '& .MuiSvgIcon-root': {
-            color: 'white',
-            marginRight: 1,
-        },
-        '& .MuiTypography-root': {
-            color: 'white',
-            textTransform: 'uppercase'
-        }
-    }
-};
 
 type ViewProps = {
     application: HttpResponseApplication
@@ -44,7 +26,6 @@ type ViewProps = {
 };
 
 export const View = ({ application, microserviceId, environment, podsData }: ViewProps) => {
-    const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
 
@@ -57,7 +38,6 @@ export const View = ({ application, microserviceId, environment, podsData }: Vie
         return null;
     }
 
-    const canDelete = canDeleteMicroservice(application.environments, environment, currentMicroservice.id);
     const canEdit = canEditMicroservice(application.environments, environment, currentMicroservice.id);
 
     let ms = {} as MicroserviceSimple;
@@ -114,59 +94,14 @@ export const View = ({ application, microserviceId, environment, podsData }: Vie
         setCurrentTab(newValue);
     };
 
-    const handleDelete = () => {
-        if (!canDelete) {
-            enqueueSnackbar('Deleting microservice is disabled', { variant: 'error' });
-            return;
-        }
-
-        const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/delete`;
-        history.push(href);
-    };
-
     return (
-        <Grid
-            container
-            direction='column'
-            justifyContent='flex-start'
-        >
-            <Grid container
-                spacing={2}
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-            >
-                <Grid item xs={3}>
-                    <Typography variant="h3">{msName}</Typography>
-                </Grid>
-            </Grid>
+        <>
+            <Typography variant="h3">{msName}</Typography>
 
-            <Grid container spacing={3}>
-
-                <Grid item xs={10}>
-                    <Tabs value={currentTab} onChange={handleChange}>
-                        <Tab label='Health Status' />
-                        <Tab label='Configuration' />
-                    </Tabs>
-                </Grid>
-
-                <Grid item xs={2}>
-                    <Grid
-                        container
-                        direction='row'
-                        justifyContent='space-around'
-                        alignItems='flex-end'
-                    >
-                        <IconButton
-                            onClick={handleDelete}
-                            sx={styles.deleteIcon}
-                            size="large">
-                            <DeleteIcon />
-                            <Typography>delete</Typography>
-                        </IconButton>
-                    </Grid>
-                </Grid>
-            </Grid>
+            <Tabs value={currentTab} onChange={handleChange}>
+                <Tab label='Health Status' />
+                <Tab label='Configuration' />
+            </Tabs>
 
             <TabPanel value={currentTab} index={0}>
                 <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
@@ -187,6 +122,6 @@ export const View = ({ application, microserviceId, environment, podsData }: Vie
                     }}
                 />
             </TabPanel>
-        </Grid >
+        </>
     );
 };
