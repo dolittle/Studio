@@ -21,6 +21,7 @@ const styles = {
         letterSpacing: '0.06em',
         typography: 'body2',
         fontWeight: 500,
+        mb: 2,
     }
 };
 
