@@ -13,6 +13,9 @@
         "ci": "yarn clean && yarn lint:ci && yarn build"
     },
     "dependencies": {
+        "@svgr/babel-plugin-transform-svg-component": "6.3.1",
+        "@svgr/core": "6.3.1",
+        "@svgr/webpack": "6.3.1",
         "@types/react": "18.0.17",
         "@types/react-dom": "18.0.1",
         "@types/react-router-dom": "5.3.3",
@@ -21,5 +24,13 @@
         "react-dom": "18.2.0",
         "react-router-dom": "5.2.0"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "@types/babel__core": "7.1.19"
+    },
+    "peerDependencies": {
+        "webpack": "5.x"
+    },
+    "exports": {
+        "./svgr/loader": "./dist/svgr/loader"
+    }
 }

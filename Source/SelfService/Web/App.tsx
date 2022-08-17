@@ -6,7 +6,7 @@ import { Route, BrowserRouter, useLocation, Switch } from 'react-router-dom';
 import { QueryParamProvider } from 'use-query-params';
 import { LicenseInfo } from '@mui/x-license-pro';
 
-import { ApplicationsScreen } from './screens/applicationsScreen';
+import { ApplicationsScreen } from './screens/applicationsScreen/applicationsScreen';
 
 import { uriWithAppPrefix } from './store';
 import { LoginScreen } from './screens/loginScreen';
