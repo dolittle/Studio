@@ -33,29 +33,6 @@ const styles = {
             color: 'white',
             textTransform: 'uppercase'
         }
-    },
-    editIcon: {
-        'padding': 0,
-        'marginRight': 1,
-        'fill': '#6678F6',
-        '& .MuiSvgIcon-root': {
-            color: '#6678F6',
-            marginRight: 1,
-        },
-        '& .MuiTypography-root': {
-            color: '#6678F6',
-            textTransform: 'uppercase'
-        }
-    },
-    root: {
-        flexGrow: 1,
-    },
-    paper: {
-        padding: 2,
-        textAlign: 'center',
-    },
-    divider: {
-        backgroundColor: '#3B3D48'
     }
 };
 
