@@ -12,11 +12,43 @@ import { HttpResponsePodStatus } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import { HttpResponseApplication } from '../../api/application';
 
-import { Tab, Tabs } from '../../theme/tabs';
-import { Typography } from '@mui/material';
+import { Tabs, Tab, Typography } from '@mui/material';
 import { TabPanel } from '../../utils/materialUi';
+import { styled } from '@mui/material/styles';
 
 import { HealthStatus } from '../healthStatus/healthStatus';
+
+interface StyledTabsProps {
+    children?: React.ReactNode;
+    value: number;
+    onChange: (event: React.SyntheticEvent, newValue: number) => void;
+}
+
+const StyledTabs = styled(((props: StyledTabsProps) => (
+    <Tabs
+        {...props}
+        TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
+    />
+)))<StyledTabsProps>(({ theme }) => ({
+    '& .MuiTabs-indicator': {
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+    },
+    '& .MuiTabs-indicatorSpan': {
+        maxWidth: 40,
+        width: '100%',
+        backgroundColor: theme.palette.primary.main,
+    },
+}));
+
+const styles = {
+    tabs: {
+        fontWeight: 500,
+        fontSize: 13,
+        letterSpacing: '0.06em'
+    }
+};
 
 type ViewProps = {
     application: HttpResponseApplication
@@ -98,16 +130,12 @@ export const View = ({ application, microserviceId, environment, podsData }: Vie
         <>
             <Typography variant="h3">{msName}</Typography>
 
-            <Tabs value={currentTab} onChange={handleChange}>
-                <Tab label='Health Status' />
-                <Tab label='Configuration' />
-            </Tabs>
+            <StyledTabs value={currentTab} onChange={handleChange}>
+                <Tab sx={styles.tabs} label='Configuration' />
+                <Tab sx={styles.tabs} label='Health Status' />
+            </StyledTabs>
 
             <TabPanel value={currentTab} index={0}>
-                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
-            </TabPanel>
-
-            <TabPanel value={currentTab} index={1}>
                 <Configuration
                     applicationId={applicationId}
                     environment={environment}
@@ -121,6 +149,10 @@ export const View = ({ application, microserviceId, environment, podsData }: Vie
                         history.push(href);
                     }}
                 />
+            </TabPanel>
+
+            <TabPanel value={currentTab} index={1}>
+                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
             </TabPanel>
         </>
     );
