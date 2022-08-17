@@ -20,13 +20,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { HealthStatus } from '../healthStatus/healthStatus';
 
-type Props = {
-    application: HttpResponseApplication
-    environment: string
-    microserviceId: string
-    podsData: HttpResponsePodStatus
-};
-
 const styles = {
     deleteIcon: {
         'padding': 0,
@@ -66,17 +59,19 @@ const styles = {
     }
 };
 
-export const View: React.FC<Props> = (props) => {
+type ViewProps = {
+    application: HttpResponseApplication
+    environment: string
+    microserviceId: string
+    podsData: HttpResponsePodStatus
+};
+
+export const View = ({ application, microserviceId, environment, podsData }: ViewProps) => {
     const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
 
-    const _props = props!;
-    const application = _props.application;
     const applicationId = application.id;
-    const microserviceId = _props.microserviceId;
-    const environment = _props.environment;
-    const podsData = _props.podsData;
 
     const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId);
     if (!currentMicroservice) {
@@ -118,7 +113,7 @@ export const View: React.FC<Props> = (props) => {
             },
             name: currentMicroservice.name,
             kind: 'unknown',
-            environment: _props.environment,
+            environment: environment,
             extra: {
                 ingress: {
                     path: '',
