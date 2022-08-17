@@ -22,7 +22,7 @@ export const ActionButtons = () => (
             </Button>
         </Link>
 
-        <Link href={'/.auth/cookies/logout'}>
+        <Link href={'/.auth/cookies/logout'} sx={{ textDecoration: 'none' }}>
             <Button sx={styles}>Log Out</Button>
         </Link>
     </Box>
