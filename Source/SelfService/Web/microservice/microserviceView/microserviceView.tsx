@@ -16,7 +16,7 @@ import { Tabs, Tab, Typography } from '@mui/material';
 import { TabPanel } from '../../utils/materialUi';
 import { styled } from '@mui/material/styles';
 
-import { HealthStatus } from '../healthStatus/healthStatus';
+import { HealthStatus } from './healthStatus';
 
 interface StyledTabsProps {
     children?: React.ReactNode;
@@ -50,14 +50,14 @@ const styles = {
     }
 };
 
-type ViewProps = {
+type MicroserviceViewProps = {
     application: HttpResponseApplication
     environment: string
     microserviceId: string
     podsData: HttpResponsePodStatus
 };
 
-export const View = ({ application, microserviceId, environment, podsData }: ViewProps) => {
+export const MicroserviceView = ({ application, microserviceId, environment, podsData }: MicroserviceViewProps) => {
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
 

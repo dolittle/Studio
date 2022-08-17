@@ -11,11 +11,11 @@ import { useSnackbar } from 'notistack';
 import { ButtonText } from '../../theme/buttonText';
 import { DownloadButton } from '../../theme/downloadButton';
 import { DownloadButtons } from '../components/downloadButtons';
-import ConfigFilesTable from './components/configFilesTable';
-import { ConfigView } from './configView';
-import { LiveIngressView } from './liveIngressView';
+import ConfigFilesTable from '../base/components/configFilesTable';
+import { ConfigView } from '../base/configView';
+import { LiveIngressView } from '../base/liveIngressView';
 import { SelectFileConfirmationModal } from '../../theme/selectFileConfirmationModal';
-import { FileUploadForm, FileUploadFormRef } from './components/fileUploadForm';
+import { FileUploadForm, FileUploadFormRef } from '../base/components/fileUploadForm';
 
 export type ConfigurationProps = {
     applicationId: string
