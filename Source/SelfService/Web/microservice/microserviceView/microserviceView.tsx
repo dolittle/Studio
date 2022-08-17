@@ -13,8 +13,8 @@ import { MicroserviceSimple } from '../../api/index';
 import { HttpResponseApplication } from '../../api/application';
 
 import { Tabs, Tab, Typography } from '@mui/material';
-import { TabPanel } from '../../utils/materialUi';
 import { styled } from '@mui/material/styles';
+import { TabPanel } from '../../utils/materialUi';
 
 import { HealthStatus } from './healthStatus';
 
@@ -102,7 +102,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
             },
             name: currentMicroservice.name,
             kind: 'unknown',
-            environment: environment,
+            environment,
             extra: {
                 ingress: {
                     path: '',
@@ -120,9 +120,9 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
 
     const msName = currentMicroservice.name;
 
-    const [currentTab, setCurrentTab] = useState(0);
+    const [currentTab, setCurrentTab] = useState(1);
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    const handleChange = (event: React.SyntheticEvent, newValue: any) => {
         setCurrentTab(newValue);
     };
 
