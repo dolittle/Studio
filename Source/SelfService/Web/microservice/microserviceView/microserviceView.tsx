@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useReadable } from 'use-svelte-store';
@@ -12,7 +12,7 @@ import { HttpResponsePodStatus } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import { HttpResponseApplication } from '../../api/application';
 
-import { Tabs, Tab, Typography } from '@mui/material';
+import { Button, Tabs, Tab, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { TabPanel } from '../../utils/materialUi';
 
@@ -60,6 +60,24 @@ type MicroserviceViewProps = {
 export const MicroserviceView = ({ application, microserviceId, environment, podsData }: MicroserviceViewProps) => {
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
+
+    const [microserviceStatus, setMicroserviceStatus] = useState('N/A');
+
+    useEffect(() => {
+        podsData.pods.flatMap(pod => {
+            const checkStatus = pod.phase.toLowerCase();
+
+            if (checkStatus.includes('failing')) {
+                setMicroserviceStatus('Failing');
+            } else if (checkStatus.includes('pending')) {
+                setMicroserviceStatus('Pending');
+            } else if (checkStatus.includes('running')) {
+                setMicroserviceStatus('Running');
+            } else {
+                setMicroserviceStatus('N/A');
+            }
+        });
+    }, []);
 
     const applicationId = application.id;
 
@@ -129,6 +147,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
     return (
         <>
             <Typography variant="h3">{msName}</Typography>
+            <Button variant='contained' sx={{ color: 'red' }}>{microserviceStatus}</Button>
 
             <StyledTabs value={currentTab} onChange={handleChange}>
                 <Tab sx={styles.tabs} label='Configuration' />
