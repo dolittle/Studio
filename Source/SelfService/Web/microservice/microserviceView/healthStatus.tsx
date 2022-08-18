@@ -111,9 +111,14 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
 
     return (
         <>
-            <ButtonText sx={styles.restartBtn} startIcon={<RestartAlt />} onClick={handleRestart}>Restart microservice</ButtonText>
+            <ButtonText
+                sx={styles.restartBtn}
+                startIcon={<RestartAlt />}
+                onClick={handleRestart}>
+                Restart microservice
+            </ButtonText>
 
-            <Box component={Paper}>
+            <Box component={Paper} sx={{ mt: 2.5 }}>
                 <TableContainer>
                     <Table size="small" aria-label="simple table">
                         <TableHead>

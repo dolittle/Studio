@@ -12,9 +12,8 @@ import { HttpResponsePodStatus } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import { HttpResponseApplication } from '../../api/application';
 
-import { Button, Tabs, Tab, Typography } from '@mui/material';
+import { Box, Button, Tabs, Tab, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { TabPanel } from '../../utils/materialUi';
 
 import { HealthStatus } from './healthStatus';
 
@@ -22,6 +21,12 @@ interface StyledTabsProps {
     children?: React.ReactNode;
     value: number;
     onChange: (event: React.SyntheticEvent, newValue: number) => void;
+}
+
+interface TabPanelProps {
+    children?: React.ReactNode;
+    index: number;
+    value: number;
 }
 
 const StyledTabs = styled(((props: StyledTabsProps) => (
@@ -42,11 +47,35 @@ const StyledTabs = styled(((props: StyledTabsProps) => (
     },
 }));
 
+const TabPanel = ({ children, value, index, ...other }: TabPanelProps) => (
+    <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`tabpanel-${index}`}
+        aria-labelledby={`tab-${index}`}
+        {...other}
+    >
+        {value === index && (
+            <Box>
+                {children}
+            </Box>
+        )}
+    </div>
+);
+
 const styles = {
     tabs: {
-        fontWeight: 500,
-        fontSize: 13,
-        letterSpacing: '0.06em'
+        'fontWeight': 500,
+        'fontSize': 13,
+        'letterSpacing': '0.06em',
+        '&:first-of-type': {
+            mr: 8
+        }
+    },
+    removePadding: {
+        '& .MuiBox-root': {
+            padding: 0
+        }
     }
 };
 
@@ -146,10 +175,12 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
 
     return (
         <>
-            <Typography variant="h3">{msName}</Typography>
-            <Button variant='contained' sx={{ color: 'red' }}>{microserviceStatus}</Button>
+            <Box sx={{ display: 'flex', mb: 3.25 }}>
+                <Typography variant="h1">{msName}</Typography>
+                <Button variant='contained' sx={{ color: 'red', ml: 3 }}>{microserviceStatus}</Button>
+            </Box>
 
-            <StyledTabs value={currentTab} onChange={handleChange}>
+            <StyledTabs value={currentTab} onChange={handleChange} sx={{ mb: 4 }}>
                 <Tab sx={styles.tabs} label='Configuration' />
                 <Tab sx={styles.tabs} label='Health Status' />
             </StyledTabs>
