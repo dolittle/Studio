@@ -13,8 +13,7 @@ const styles = {
         minHeight: '100vh',
         backgroundImage: `url(${Symbol})`,
         backgroundRepeat: 'no-repeat',
-        backgroundSize: 'auto 142vh',
-        backgroundPosition: '-60vh -25vh'
+        backgroundSize: 'auto 100vh',
     },
     mainContent: {
         'textAlign': 'center',
