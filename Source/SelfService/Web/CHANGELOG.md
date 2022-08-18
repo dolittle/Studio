@@ -1,3 +1,9 @@
+# [2.1.5] - 2022-8-18 [PR: #229](https://github.com/dolittle/Studio/pull/229)
+## Summary
+
+Shows the environment variables alphabetically on load in the edit page
+
+
 # [2.1.4] - 2022-8-17 [PR: #231](https://github.com/dolittle/Studio/pull/231)
 ## Summary
 
