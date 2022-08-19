@@ -1,3 +1,17 @@
+# [2.1.6] - 2022-8-19 [PR: #235](https://github.com/dolittle/Studio/pull/235)
+## Summary
+
+Fixes an issue we have where navigating back to e.g. `dolittle.studio` after logging out caused a cached version of the frontend to be loaded - which then failed to get any data because the user is not logged in. By changing the server of the SelfService/Web frontend to NGINX, and setting up explicit caching rules - the browsers should now only cache the static files (which webpack invalidates by changing the name) and not any paths leading to the `index.html` file. This means that the frontend will be reloaded on any browser navigation.
+
+### Changed
+
+- The SelfService/Web server from `gostatic` to `nginx` to allow more control of the serving of content.
+
+### Fixed
+
+- The SPA caching that caused strange behaviour when navigating after logging out, and old versions of the SPA served after new deployments until a manual refresh.
+
+
 # [2.1.5] - 2022-8-18 [PR: #229](https://github.com/dolittle/Studio/pull/229)
 ## Summary
 
