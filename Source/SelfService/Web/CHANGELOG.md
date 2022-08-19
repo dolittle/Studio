@@ -1,3 +1,22 @@
+# [2.1.7] - 2022-8-19 [PR: #236](https://github.com/dolittle/Studio/pull/236)
+## Summary
+
+Improves the initial page-load time by removing the unused (and not published) `manifest.json` file. This file is part of the PWA framework (https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) - and I don't think we need it now.
+
+The way it was setup today introduced a delay in the initial page-load time because it:
+1. Caused an unnecessary request to a file that did not exist (so no caching) which seems to block the DOM content loaded. So it would not allow any React rendering before this failing request completed.
+2. Chrome seems to load this file without any cookies - meaning that it was treated as an unauthenticated request, and was redirect to the login page (which is also a little bit slow).
+
+
+### Fixed
+
+- The `<base>` tag was moved before the `<link>` tags to make it apply to those URLs as well. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+### Removed
+
+- The unused `manifest.json` file and the corresponding `<link>` tag to speed up initial page-load.
+
+
 # [2.1.6] - 2022-8-19 [PR: #235](https://github.com/dolittle/Studio/pull/235)
 ## Summary
 
