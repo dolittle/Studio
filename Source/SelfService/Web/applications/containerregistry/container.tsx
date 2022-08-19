@@ -67,7 +67,7 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
 
                     <Route path="/welcome" element={<Welcome applicationId={applicationId} />} />
 
-                    <Route path="/tags/:image" element={<Tags url={containerRegistryImages.url} applicationId={applicationId} />} />
+                    <Route path="/tags/:image" element={<Tags url={containerRegistryImages.url} applicationId={applicationId} environment={environment} />} />
                 </Routes>
             </div>
         </>

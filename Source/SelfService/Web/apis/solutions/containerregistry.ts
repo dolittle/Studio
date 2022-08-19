@@ -20,7 +20,11 @@ export type Image = {
 };
 
 export type Tag = {
-    name: string;
+    name: string,
+    createdTime: Date,
+    lastUpdateTime: Date,
+    digest: string,
+    signed: boolean
 };
 
 export type ContainerRegistryTags = {
@@ -28,13 +32,21 @@ export type ContainerRegistryTags = {
     tags: Tag[]
 };
 
+export type HTTPResponseTag = {
+    name: string,
+    createdTime: string,
+    lastUpdateTime: string,
+    digest: string,
+    signed: boolean
+};
+
 export type HTTPResponseTags = {
     name: string,
-    tags: string[]
+    tags: HTTPResponseTag[]
 };
 
 export async function getTagsInContainerRegistry(applicationId: string, image: string): Promise<ContainerRegistryTags> {
-    const url = `${getServerUrlPrefix()}/application/${applicationId}/containerregistry/tags/${image}`;
+    const url = `${getServerUrlPrefix()}/application/${applicationId}/containerregistry/image-tags/${image}`;
 
     const result = await fetch(
         url,
@@ -43,9 +55,14 @@ export async function getTagsInContainerRegistry(applicationId: string, image: s
             mode: 'cors'
         });
     const jsonResult = await result.json() as HTTPResponseTags;
+
     const items = jsonResult.tags.map(n => {
         return {
-            name: n
+            name: n.name,
+            createdTime: new Date(n.createdTime),
+            lastUpdateTime: new Date(n.lastUpdateTime),
+            digest: n.digest,
+            signed: n.signed
         };
     });
 
