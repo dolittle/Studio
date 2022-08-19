@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import { getPodStatus, MicroserviceInfo } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
+import { MicroserviceStatus, getMicroserviceState } from '../utils/microserviceState';
 
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 
@@ -49,28 +50,28 @@ const publicUrlCell = (params: GridRenderCellParams) => {
     );
 };
 
-enum MicroserviceStatus {
-    Running = 0,
-    Pending = 1,
-    Failing = 2,
-    Unknown = 3,
-}
+// enum MicroserviceStatus {
+//     Running = 0,
+//     Pending = 1,
+//     Failing = 2,
+//     Unknown = 3,
+// }
 
-const getMicroserviceState = (phase?: string): MicroserviceStatus => {
-    const checkStatus = phase?.toLowerCase?.();
+// const getMicroserviceState = (phase?: string): MicroserviceStatus => {
+//     const checkStatus = phase?.toLowerCase?.();
 
-    if (typeof checkStatus !== 'string') {
-        return MicroserviceStatus.Unknown;
-    } else if (checkStatus.includes('running')) {
-        return MicroserviceStatus.Running;
-    } else if (checkStatus.includes('pending')) {
-        return MicroserviceStatus.Pending;
-    } else if (checkStatus.includes('failed')) {
-        return MicroserviceStatus.Failing;
-    }
+//     if (typeof checkStatus !== 'string') {
+//         return MicroserviceStatus.Unknown;
+//     } else if (checkStatus.includes('running')) {
+//         return MicroserviceStatus.Running;
+//     } else if (checkStatus.includes('pending')) {
+//         return MicroserviceStatus.Pending;
+//     } else if (checkStatus.includes('failed')) {
+//         return MicroserviceStatus.Failing;
+//     }
 
-    return MicroserviceStatus.Unknown;
-};
+//     return MicroserviceStatus.Unknown;
+// };
 
 const statusCell = (params: GridRenderCellParams) => {
     let color = (theme: Theme) => theme.palette.text.primary;
