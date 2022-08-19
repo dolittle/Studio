@@ -1,4 +1,4 @@
-FROM node:16.16.0 AS shared-build
+FROM node:16.16.0 AS build
 
 # Install dependencies
 WORKDIR /build
@@ -21,8 +21,11 @@ WORKDIR /build/Source/SelfService/Web
 RUN yarn build
 
 # Copy bundled artifacts
-FROM pierrezemb/gostatic as base
-WORKDIR /app
-COPY --from=shared-build /build/Source/SelfService/Web/wwwroot ./public
+FROM nginx:1.23.1
 
-ENTRYPOINT ["/goStatic"]
+COPY --from=build /build/Source/SelfService/Web/wwwroot /usr/share/nginx/html
+COPY Source/SelfService/Web/.docker/nginx.conf /etc/nginx/nginx.conf
+COPY Source/SelfService/Web/.docker/custom-entrypoint.sh /custom-entrypoint.sh
+
+# Replace NGINX entrypoint so we don't break compatibility with previous gostatic images when deployed
+ENTRYPOINT ["/custom-entrypoint.sh"]
