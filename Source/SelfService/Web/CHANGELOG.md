@@ -1,3 +1,14 @@
+# [2.1.8] - 2022-8-22 [PR: #233](https://github.com/dolittle/Studio/pull/233)
+## Summary
+Capitalized first letter in data table runtime version column.
+
+<img width="1000" alt="Screenshot 2022-08-18 at 14 57 00" src="https://user-images.githubusercontent.com/19160439/185389002-edee114e-30df-4dcf-b721-5811350b2cc8.png">
+
+### Fixed
+
+- Capitalized first letter in runtime version
+
+
 # [2.1.7] - 2022-8-19 [PR: #236](https://github.com/dolittle/Studio/pull/236)
 ## Summary
 
