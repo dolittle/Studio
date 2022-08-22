@@ -13,6 +13,46 @@ import { RestartAlt } from '@mui/icons-material';
 import { ViewLogIcon, DownloadLogIcon } from '../../assets/icons';
 import { ButtonText } from '../../theme/buttonText';
 
+import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
+
+const columns: GridColDef[] = [
+    {
+        field: 'container',
+        headerName: 'Container',
+        minWidth: 200,
+        flex: 1,
+    },
+    {
+        field: 'restarts',
+        headerName: 'Restarts',
+        minWidth: 200,
+        flex: 1
+    },
+    {
+        field: 'age',
+        headerName: 'Age',
+        minWidth: 200,
+        flex: 1
+    },
+    {
+        field: 'started',
+        headerName: 'Started',
+        minWidth: 200,
+        flex: 1
+    },
+    {
+        field: 'status',
+        headerName: 'Status',
+        minWidth: 200,
+        flex: 1
+    },
+    {
+        field: 'download',
+        headerName: 'Download logs',
+        minWidth: 200,
+        flex: 1
+    },
+];
 
 const styles = {
     restartBtn: {
@@ -46,7 +86,10 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
 
+    //console.log(data)
+
     const items: any[] = data.pods.flatMap(pod => {
+        console.log(pod)
         return pod.containers.map((container, index) => {
             const name = index === 0 ? pod.name : '';
             const item = {
@@ -59,11 +102,15 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                 restarts: container.restarts,
                 container,
                 pod,
+                id: microserviceId
             } as Item;
+
+            //console.log(item)
+            return item
 
             const podInfo = item!.pod;
 
-            return (
+            /* return (
                 <TableRow key={item.key}>
                     <TableCell align="left">
                         {item.name}
@@ -94,9 +141,11 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                         </Grid>
                     </TableCell>
                 </TableRow>
-            );
+            ); */
         });
     }) as any[];
+
+    //console.log(items)
 
     const handleRestart = async () => {
         const success = await restartMicroservice(applicationId, environment, microserviceId);
@@ -119,7 +168,17 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
             </ButtonText>
 
             <Box component={Paper} sx={{ mt: 2.5 }}>
-                <TableContainer>
+                <DataGridPro
+                    rows={items}
+                    columns={columns}
+                    disableColumnMenu
+                    hideFooter
+                    autoHeight={true}
+                    loading={!items}
+                    disableSelectionOnClick
+                //onRowClick={(params) => onTableRowClick(params.row.id)}
+                />
+                {/*  <TableContainer>
                     <Table size="small" aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -136,7 +195,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                             {items}
                         </TableBody>
                     </Table>
-                </TableContainer>
+                </TableContainer> */}
             </Box>
         </>
     );
