@@ -1,56 +1,138 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { HttpResponsePodStatus, PodInfo, ContainerStatusInfo, restartMicroservice } from '../../api/api';
 import { useSnackbar } from 'notistack';
 
-import { Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { RestartAlt } from '@mui/icons-material';
-
-import { ViewLogIcon, DownloadLogIcon } from '../../assets/icons';
+import { Box, Paper, Typography } from '@mui/material';
+import { DownloadRounded, RestartAlt, ExpandMore, ExpandLess } from '@mui/icons-material';
 import { ButtonText } from '../../theme/buttonText';
 
-import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
+import {
+    DataGridPro,
+    DataGridProProps,
+    GridColDef,
+    GridRowId,
+    GridValueGetterParams,
+    gridDetailPanelExpandedRowsContentCacheSelector,
+    useGridSelector,
+    useGridApiContext,
+    GRID_DETAIL_PANEL_TOGGLE_COL_DEF,
+    GridRenderCellParams
+} from '@mui/x-data-grid-pro';
+
+const DetailPanelContent = () => (
+    <Box component={Paper} sx={{ height: '100%' }}>
+        <Typography variant="body2" sx={{ pl: 7.5, py: 1 }}>There are no logs printed for this microservice.</Typography>
+    </Box>
+);
+
+const formatTime = (time: string) => {
+    if (time) {
+        const splitTime = time.split(/[hm.]/g);
+
+        if (time.includes('h') && +splitTime[0] >= 24) {
+            const days = Math.floor(+splitTime[0] / 24);
+            const hours = +splitTime[0] % 24;
+            const minutes = +splitTime[1];
+            const seconds = +splitTime[2];
+
+            return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        } else if (time.includes('h')) {
+            const hours = +splitTime[0] % 24;
+            const minutes = +splitTime[1];
+            const seconds = +splitTime[2];
+
+            return `${hours}h ${minutes}m ${seconds}s`;
+        } else if (time.includes('m')) {
+            const minutes = +splitTime[0];
+            const seconds = +splitTime[1];
+
+            return `${minutes}m ${seconds}s`;
+        } else if (time.includes('.')) {
+            const seconds = +splitTime[0];
+
+            return `${seconds}s`;
+        } else {
+            return 'N/A';
+        }
+    } else {
+        return 'N/A';
+    }
+};
+
+const formatStartingDate = (initialDate: string) => {
+    if (initialDate) {
+        const splitDate = initialDate.split(' ');
+
+        const date = splitDate[0].split('-').join('/');
+        const time = splitDate[1];
+
+        return `${date} ${time}`;
+    } else {
+        return 'N/A';
+    }
+};
 
 const columns: GridColDef[] = [
     {
-        field: 'container',
+        field: 'image',
         headerName: 'Container',
-        minWidth: 200,
+        headerClassName: 'negativeRowSpanHack',
+        sortable: false,
+        minWidth: 600,
         flex: 1,
     },
     {
         field: 'restarts',
         headerName: 'Restarts',
-        minWidth: 200,
-        flex: 1
+        sortable: false,
+        minWidth: 90,
+        flex: 1,
+        headerAlign: 'right',
+        align: 'right'
     },
     {
         field: 'age',
         headerName: 'Age',
-        minWidth: 200,
-        flex: 1
+        sortable: false,
+        minWidth: 180,
+        flex: 1,
+        headerAlign: 'right',
+        align: 'right',
+        valueGetter: (params: GridValueGetterParams) =>
+            formatTime(params.row?.age)
     },
     {
         field: 'started',
         headerName: 'Started',
+        sortable: false,
         minWidth: 200,
-        flex: 1
+        flex: 1,
+        headerAlign: 'right',
+        align: 'right',
+        valueGetter: (params: GridValueGetterParams) =>
+            formatStartingDate(params.row?.started)
     },
     {
-        field: 'status',
+        field: 'state',
         headerName: 'Status',
+        sortable: false,
         minWidth: 200,
         flex: 1
     },
     {
         field: 'download',
         headerName: 'Download logs',
-        minWidth: 200,
-        flex: 1
+        sortable: false,
+        minWidth: 100,
+        flex: 1,
+        headerAlign: 'center',
+        align: 'center',
+        renderCell: () => <DownloadRounded />
     },
 ];
 
@@ -59,6 +141,23 @@ const styles = {
         fontWeight: 500,
         lineHeight: '22px',
         letterSpacing: '0.06em'
+    },
+    podTitle: {
+        minHeight: '46px',
+        alignContent: 'center',
+        alignItems: 'center',
+        padding: '10px'
+
+    },
+    dataTableWrapper: {
+        'mt': 2.5,
+        '& .negativeRowSpanHack': {
+            // ml: -6.25,
+            mr: 6.25,
+        },
+        '& .MuiDataGrid-columnHeader[data-field="__detail_panel_toggle__"]': {
+            display: 'none'
+        }
     }
 };
 
@@ -86,10 +185,13 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
 
-    //console.log(data)
+    const [detailPanelExpandedRowIds, setDetailPanelExpandedRowIds] = useState<GridRowId[]>([]);
+
+    const handleDetailPanelExpandedRowIdsChange = useCallback((newIds: GridRowId[]) => {
+        setDetailPanelExpandedRowIds(newIds);
+    }, [],);
 
     const items: any[] = data.pods.flatMap(pod => {
-        console.log(pod)
         return pod.containers.map((container, index) => {
             const name = index === 0 ? pod.name : '';
             const item = {
@@ -102,13 +204,12 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                 restarts: container.restarts,
                 container,
                 pod,
-                id: microserviceId
+                id: `${pod.name}-${container.name}`
             } as Item;
 
-            //console.log(item)
-            return item
+            return item;
 
-            const podInfo = item!.pod;
+            //const podInfo = item!.pod;
 
             /* return (
                 <TableRow key={item.key}>
@@ -158,6 +259,11 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
         window.location = window.location;
     };
 
+    const getDetailPanelContent = useCallback<NonNullable<DataGridProProps['getDetailPanelContent']>>(() =>
+        <DetailPanelContent />, []);
+
+    const getDetailPanelHeight = useCallback(() => 'auto', []);
+
     return (
         <>
             <ButtonText
@@ -167,35 +273,29 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                 Restart microservice
             </ButtonText>
 
-            <Box component={Paper} sx={{ mt: 2.5 }}>
+            <Box component={Paper} sx={styles.dataTableWrapper}>
+                <Box component={Paper} sx={styles.podTitle}>
+                    <Typography>{`Pod: ${items[0]?.pod?.name || 'N/A'}`}</Typography>
+                </Box>
+
                 <DataGridPro
                     rows={items}
                     columns={columns}
                     disableColumnMenu
                     hideFooter
+                    headerHeight={46}
+                    rowHeight={46}
                     autoHeight={true}
-                    loading={!items}
                     disableSelectionOnClick
-                //onRowClick={(params) => onTableRowClick(params.row.id)}
+                    getDetailPanelHeight={getDetailPanelHeight}
+                    getDetailPanelContent={getDetailPanelContent}
+                    detailPanelExpandedRowIds={detailPanelExpandedRowIds}
+                    onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
+                    components={{
+                        DetailPanelExpandIcon: ExpandMore,
+                        DetailPanelCollapseIcon: ExpandLess,
+                    }}
                 />
-                {/*  <TableContainer>
-                    <Table size="small" aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="left">Name</TableCell>
-                                <TableCell align="right">Status</TableCell>
-                                <TableCell align="right">Restarts</TableCell>
-                                <TableCell align="right">Age</TableCell>
-                                <TableCell align="right">Started</TableCell>
-                                <TableCell align="right">Container</TableCell>
-                                <TableCell align="right">View Logs</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {items}
-                        </TableBody>
-                    </Table>
-                </TableContainer> */}
             </Box>
         </>
     );
