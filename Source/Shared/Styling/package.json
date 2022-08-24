@@ -15,7 +15,7 @@
     "dependencies": {
         "@emotion/react": "11.10.0",
         "@emotion/styled": "11.10.0",
-        "@fluentui/react": "8.87.1",
+        "@fluentui/react": "8.91.1",
         "@fontsource/roboto-mono": "4.5.8",
         "@fontsource/rubik": "4.5.11",
         "@mui/icons-material": "5.8.4",
