@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.56 131.07">
     <defs>
         <linearGradient id="symbol-gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop stop-color="#202128" stop-opacity="0.9"/>
-            <stop offset="1" stop-color="#23252E" stop-opacity="0.05"/>
+            <stop stop-color="#202128" stop-opacity="1"/>
+            <stop offset="1" stop-color="#23252E" stop-opacity="0"/>
         </linearGradient>
         <style>path {fill: url(#symbol-gradient);}</style>
     </defs>
