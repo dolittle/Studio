@@ -27,10 +27,11 @@ const styles = {
     }
 };
 
+const capitalize = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
 const sortByRuntimeVersion = (params: GridValueGetterParams) => {
     const runtimeVersion = params.row.edit?.extra?.runtimeImage?.replace(/dolittle\/runtime:/gi, '');
 
-    return `${runtimeVersion || 'N/A'}`;
+    return `${capitalize(runtimeVersion) || 'N/A'}`;
 };
 
 const publicUrlCell = (params: GridRenderCellParams) => {

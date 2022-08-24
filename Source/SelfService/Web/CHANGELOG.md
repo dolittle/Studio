@@ -1,3 +1,53 @@
+# [2.1.8] - 2022-8-22 [PR: #233](https://github.com/dolittle/Studio/pull/233)
+## Summary
+Capitalized first letter in data table runtime version column.
+
+<img width="1000" alt="Screenshot 2022-08-18 at 14 57 00" src="https://user-images.githubusercontent.com/19160439/185389002-edee114e-30df-4dcf-b721-5811350b2cc8.png">
+
+### Fixed
+
+- Capitalized first letter in runtime version
+
+
+# [2.1.7] - 2022-8-19 [PR: #236](https://github.com/dolittle/Studio/pull/236)
+## Summary
+
+Improves the initial page-load time by removing the unused (and not published) `manifest.json` file. This file is part of the PWA framework (https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) - and I don't think we need it now.
+
+The way it was setup today introduced a delay in the initial page-load time because it:
+1. Caused an unnecessary request to a file that did not exist (so no caching) which seems to block the DOM content loaded. So it would not allow any React rendering before this failing request completed.
+2. Chrome seems to load this file without any cookies - meaning that it was treated as an unauthenticated request, and was redirect to the login page (which is also a little bit slow).
+
+
+### Fixed
+
+- The `<base>` tag was moved before the `<link>` tags to make it apply to those URLs as well. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+### Removed
+
+- The unused `manifest.json` file and the corresponding `<link>` tag to speed up initial page-load.
+
+
+# [2.1.6] - 2022-8-19 [PR: #235](https://github.com/dolittle/Studio/pull/235)
+## Summary
+
+Fixes an issue we have where navigating back to e.g. `dolittle.studio` after logging out caused a cached version of the frontend to be loaded - which then failed to get any data because the user is not logged in. By changing the server of the SelfService/Web frontend to NGINX, and setting up explicit caching rules - the browsers should now only cache the static files (which webpack invalidates by changing the name) and not any paths leading to the `index.html` file. This means that the frontend will be reloaded on any browser navigation.
+
+### Changed
+
+- The SelfService/Web server from `gostatic` to `nginx` to allow more control of the serving of content.
+
+### Fixed
+
+- The SPA caching that caused strange behaviour when navigating after logging out, and old versions of the SPA served after new deployments until a manual refresh.
+
+
+# [2.1.5] - 2022-8-18 [PR: #229](https://github.com/dolittle/Studio/pull/229)
+## Summary
+
+Shows the environment variables alphabetically on load in the edit page
+
+
 # [2.1.4] - 2022-8-17 [PR: #231](https://github.com/dolittle/Studio/pull/231)
 ## Summary
 

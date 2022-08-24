@@ -7,15 +7,15 @@
             <%- htmlWebpackPlugin.options.metadata.title %>
         </title>
 
-        <meta name="theme-color" content="#1D2025">
-        <link rel="manifest" href="manifest.json">
+        <base href="<%- htmlWebpackPlugin.options.metadata.baseUrl %>">
         <link rel="icon" href="assets/favicons/favicon.svg">
         <link rel=”mask-icon” href=”assets/favicons/safary-mask-icon.svg” color="#ff6f33">
         <link rel="apple-touch-icon" href="assets/favicons/apple-touch-icon.png">
         <link rel="icon" href="favicon.ico">
 
+        <meta name="theme-color" content="#1D2025">
+
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <base href="<%- htmlWebpackPlugin.options.metadata.baseUrl %>">
     </head>
 
     <body style="background-color: #0F1014">
