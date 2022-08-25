@@ -27,11 +27,21 @@ const styles = {
     }
 };
 
-const capitalize = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
+const capitalize = (str: string) => {
+    if(str.length < 1){
+        return str;
+    }
+
+    return str?.length > 0 ? str.charAt(0).toUpperCase() + str.slice(1) : str;
+};
+
 const sortByRuntimeVersion = (params: GridValueGetterParams) => {
     const runtimeVersion = params.row.edit?.extra?.runtimeImage?.replace(/dolittle\/runtime:/gi, '');
+    if(typeof runtimeVersion !== 'string'){
+        return 'N/A';
+    }
 
-    return `${capitalize(runtimeVersion) || 'N/A'}`;
+    return capitalize(runtimeVersion);
 };
 
 const publicUrlCell = (params: GridRenderCellParams) => {
@@ -170,7 +180,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             field: 'name',
             headerName: 'Name',
             minWidth: 200,
-            flex: 1,
+            flex: 1
         },
         {
             field: 'image',
@@ -178,7 +188,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             minWidth: 200,
             flex: 1,
             valueGetter: (params: GridValueGetterParams) =>
-                `${params.row.edit?.extra?.headImage || 'N/A'}`,
+                `${params.row.edit?.extra?.headImage || 'N/A'}`
         },
         {
             field: 'runtime',
@@ -202,7 +212,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             flex: 1,
             renderCell: statusCell,
             sortComparator: customStatusFieldSort
-        },
+        }
     ];
 
     const onTableRowClick = (microserviceId: string) => {
