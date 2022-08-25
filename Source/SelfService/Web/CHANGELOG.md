@@ -1,3 +1,9 @@
+# [2.1.10] - 2022-8-25 [PR: #237](https://github.com/dolittle/Studio/pull/237)
+## Summary
+
+Guards against missing runtime version in microservices page
+
+
 # [2.1.9] - 2022-8-25 [PR: #232](https://github.com/dolittle/Studio/pull/232)
 ## Summary
 
