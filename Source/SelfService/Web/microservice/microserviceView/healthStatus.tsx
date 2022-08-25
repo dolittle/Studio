@@ -24,6 +24,8 @@ import {
     GridRenderCellParams
 } from '@mui/x-data-grid-pro';
 
+import { statusCell } from '../microserviceStatus';
+
 const DetailPanelContent = () => (
     <Box component={Paper} sx={{ height: '100%' }}>
         <Typography variant="body2" sx={{ pl: 7.5, py: 1 }}>There are no logs printed for this microservice.</Typography>
@@ -122,7 +124,8 @@ const columns: GridColDef[] = [
         headerName: 'Status',
         sortable: false,
         minWidth: 200,
-        flex: 1
+        flex: 1,
+        renderCell: statusCell
     },
     {
         field: 'download',
@@ -152,7 +155,6 @@ const styles = {
     dataTableWrapper: {
         'mt': 2.5,
         '& .negativeRowSpanHack': {
-            // ml: -6.25,
             mr: 6.25,
         },
         '& .MuiDataGrid-columnHeader[data-field="__detail_panel_toggle__"]': {
