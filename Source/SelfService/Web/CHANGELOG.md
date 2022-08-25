@@ -1,3 +1,21 @@
+# [2.1.9] - 2022-8-25 [PR: #232](https://github.com/dolittle/Studio/pull/232)
+## Summary
+
+Added background color for body what resolves white loading screen.
+
+Changed background Dolittle logo color for having more contrast.
+
+<img width="1287" alt="Screenshot 2022-08-18 at 11 36 06" src="https://user-images.githubusercontent.com/19160439/185350109-4c28d956-e6f8-4204-8ce1-159abc8194ee.png">
+
+### Added
+
+- Body background color
+
+### Changed
+
+- Background logo color
+
+
 # [2.1.8] - 2022-8-22 [PR: #233](https://github.com/dolittle/Studio/pull/233)
 ## Summary
 Capitalized first letter in data table runtime version column.
