@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import {Button as MuiButton} from '@mui/material';
+import { Button as MuiButton } from '@mui/material';
 
 type ButtonProps = {
   variant: 'filled' | 'text' | 'outlined';
@@ -12,6 +12,7 @@ type ButtonProps = {
   size?: 'small' | 'medium' | 'large';
   startWithIcon?: any;
   endWithIcon?: any;
+  sx?: {};
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
@@ -25,15 +26,18 @@ export const Button = (props: ButtonProps) => {
   const size = _props.size ?? 'small';
   const startWithIcon = _props.startWithIcon;
   const endWithIcon = _props.endWithIcon;
+  const sx = _props.sx;
 
   return (
     <MuiButton
-      variant = {variant}
-      disabled = {disabled}
-      color = {color}
-      size = {size}
-      startIcon = {startWithIcon}
-      endIcon = {endWithIcon}
+      variant={variant}
+      disabled={disabled}
+      color={color}
+      size={size}
+      startIcon={startWithIcon}
+      endIcon={endWithIcon}
+      sx={sx}
+      disableElevation
     >
       {label}
     </MuiButton>
