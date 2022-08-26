@@ -87,10 +87,11 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
     const history = useHistory();
 
     const containerStatus: string[] = [];
-
+    //console.log(podsData);
     const rows = podsData.pods.flatMap(pod => {
-        return pod.containers.map((container, index) => {
+        return pod.containers.map((container) => {
             const item = {
+                name: pod.name,
                 image: container.image,
                 state: container.state,
                 started: container.started,
@@ -103,6 +104,8 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
             return item;
         });
     });
+
+    console.log(rows);
 
     const applicationId = application.id;
 

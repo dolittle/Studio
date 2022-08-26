@@ -34,28 +34,28 @@ const DetailPanelContent = () => (
 
 const formatTime = (time: string) => {
     if (time) {
-        const splitTime = time.split(/[hm.]/g);
+        const splitedTime = time.split(/[hm.]/g);
 
-        if (time.includes('h') && +splitTime[0] >= 24) {
-            const days = Math.floor(+splitTime[0] / 24);
-            const hours = +splitTime[0] % 24;
-            const minutes = +splitTime[1];
-            const seconds = +splitTime[2];
+        if (time.includes('h') && +splitedTime[0] >= 24) {
+            const days = Math.floor(+splitedTime[0] / 24);
+            const hours = +splitedTime[0] % 24;
+            const minutes = +splitedTime[1];
+            const seconds = +splitedTime[2];
 
             return `${days}d ${hours}h ${minutes}m ${seconds}s`;
         } else if (time.includes('h')) {
-            const hours = +splitTime[0] % 24;
-            const minutes = +splitTime[1];
-            const seconds = +splitTime[2];
+            const hours = +splitedTime[0] % 24;
+            const minutes = +splitedTime[1];
+            const seconds = +splitedTime[2];
 
             return `${hours}h ${minutes}m ${seconds}s`;
         } else if (time.includes('m')) {
-            const minutes = +splitTime[0];
-            const seconds = +splitTime[1];
+            const minutes = +splitedTime[0];
+            const seconds = +splitedTime[1];
 
             return `${minutes}m ${seconds}s`;
         } else if (time.includes('.')) {
-            const seconds = +splitTime[0];
+            const seconds = +splitedTime[0];
 
             return `${seconds}s`;
         } else {
@@ -68,10 +68,9 @@ const formatTime = (time: string) => {
 
 const formatStartingDate = (initialDate: string) => {
     if (initialDate) {
-        const splitDate = initialDate.split(' ');
-
-        const date = splitDate[0].split('-').join('/');
-        const time = splitDate[1];
+        const splitedDate = initialDate.split(' ');
+        const date = splitedDate[0].split('-').join('/');
+        const time = splitedDate[1];
 
         return `${date} ${time}`;
     } else {
@@ -150,7 +149,11 @@ const styles = {
         alignContent: 'center',
         alignItems: 'center',
         padding: '10px'
-
+    },
+    title: {
+        fontWeight: 500,
+        lineHeight: '24px',
+        letterSpacing: '0.17px',
     },
     dataTableWrapper: {
         'mt': 2.5,
@@ -160,27 +163,21 @@ const styles = {
         '& .MuiDataGrid-columnHeader[data-field="__detail_panel_toggle__"]': {
             display: 'none'
         }
+    },
+    dataTable: {
+        '& .MuiDataGrid-columnHeaderTitle': {
+            fontWeight: 500,
+            letterSpacing: '0.17px'
+        }
     }
 };
 
 type HealthStatusProps = {
-    status: string
-    data: HttpResponsePodStatus
-    environment: string
-    applicationId: string
-    microserviceId: string
-};
-
-type Item = {
-    key: string
-    name: string
-    state: string
-    age: string
-    image: string
-    started: string
-    restarts: number
-    pod: PodInfo
-    container: ContainerStatusInfo
+    status: string;
+    data: any;
+    environment: string;
+    applicationId: string;
+    microserviceId: string;
 };
 
 export const HealthStatus = ({ applicationId, microserviceId, data, environment }: HealthStatusProps) => {
@@ -193,60 +190,61 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
         setDetailPanelExpandedRowIds(newIds);
     }, [],);
 
-    const items: any[] = data.pods.flatMap(pod => {
-        return pod.containers.map((container, index) => {
-            const name = index === 0 ? pod.name : '';
-            const item = {
-                key: `${pod.name}-${container.name}`,
-                name,
-                image: container.image,
-                state: container.state,
-                started: container.started,
-                age: container.age,
-                restarts: container.restarts,
-                container,
-                pod,
-                id: `${pod.name}-${container.name}`
-            } as Item;
+    // const items: any[] = data.pods.flatMap(pod => {
+    //     return pod.containers.map((container, index) => {
+    //         const name = index === 0 ? pod.name : '';
+    //         const item = {
+    //             key: `${pod.name}-${container.name}`,
+    //             name,
+    //             image: container.image,
+    //             state: container.state,
+    //             started: container.started,
+    //             age: container.age,
+    //             restarts: container.restarts,
+    //             container,
+    //             pod,
+    //             id: `${pod.name}-${container.name}`
+    //         } as Item;
 
-            return item;
+    //         return item;
 
-            //const podInfo = item!.pod;
+    //         //const podInfo = item!.pod;
 
-            /* return (
-                <TableRow key={item.key}>
-                    <TableCell align="left">
-                        {item.name}
-                    </TableCell>
-                    <TableCell align="right">{item.state}</TableCell>
-                    <TableCell align="right">{item.restarts}</TableCell>
-                    <TableCell align="right">{item.age}</TableCell>
-                    <TableCell align="right">{item.started}</TableCell>
-                    <TableCell align="right">{item.image}</TableCell>
-                    <TableCell align="right">
-                        <Grid
-                            container
-                            direction="row"
-                            justifyContent="space-between"
-                            alignItems="stretch"
-                        >
-                            <div onClick={() => {
-                                alert('TODO: Download logs');
-                            }}>
-                                {DownloadLogIcon}
-                            </div>
-                            <div onClick={() => {
-                                const href = `/microservices/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
-                                history.push(href);
-                            }}>
-                                {ViewLogIcon}
-                            </div>
-                        </Grid>
-                    </TableCell>
-                </TableRow>
-            ); */
-        });
-    }) as any[];
+    //         /* return (
+    //             <TableRow key={item.key}>
+    //                 <TableCell align="left">
+    //                     {item.name}
+    //                 </TableCell>
+    //                 <TableCell align="right">{item.state}</TableCell>
+    //                 <TableCell align="right">{item.restarts}</TableCell>
+    //                 <TableCell align="right">{item.age}</TableCell>
+    //                 <TableCell align="right">{item.started}</TableCell>
+    //                 <TableCell align="right">{item.image}</TableCell>
+    //                 <TableCell align="right">
+    //                     <Grid
+    //                         container
+    //                         direction="row"
+    //                         justifyContent="space-between"
+    //                         alignItems="stretch"
+    //                     >
+    //                         <div onClick={() => {
+    //                             alert('TODO: Download logs');
+    //                         }}>
+    //                             {DownloadLogIcon}
+    //                         </div>
+    //                         <div onClick={() => {
+    //                             const href = `/microservices/application/11b6cf47-5d9f-438f-8116-0d9828654657/dev/pod/view/dev-gbh-56887895f5-chp6d/logs?containerName=docker.io/nginxdemos/hello:latest`;
+    //                             const href = `/microservices/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
+    //                             history.push(href);
+    //                         }}>
+    //                             {ViewLogIcon}
+    //                         </div>
+    //                     </Grid>
+    //                 </TableCell>
+    //             </TableRow>
+    //         ); */
+    //     });
+    // }) as any[];
 
     //console.log(items)
 
@@ -263,8 +261,10 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
 
     const getDetailPanelContent = useCallback<NonNullable<DataGridProProps['getDetailPanelContent']>>(() =>
         <DetailPanelContent />, []);
-
     const getDetailPanelHeight = useCallback(() => 'auto', []);
+
+    const DetailPanelExpandIcon = () => <ExpandMore fontSize='medium' />;
+    const DetailPanelCollapseIcon = () => <ExpandLess fontSize='medium' />;
 
     return (
         <>
@@ -277,11 +277,11 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
 
             <Box component={Paper} sx={styles.dataTableWrapper}>
                 <Box component={Paper} sx={styles.podTitle}>
-                    <Typography>{`Pod: ${items[0]?.pod?.name || 'N/A'}`}</Typography>
+                    <Typography variant='body2' sx={styles.title}>{`Pod: ${data[0]?.name || 'N/A'}`}</Typography>
                 </Box>
 
                 <DataGridPro
-                    rows={items}
+                    rows={data}
                     columns={columns}
                     disableColumnMenu
                     hideFooter
@@ -293,9 +293,10 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                     getDetailPanelContent={getDetailPanelContent}
                     detailPanelExpandedRowIds={detailPanelExpandedRowIds}
                     onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
+                    sx={styles.dataTable}
                     components={{
-                        DetailPanelExpandIcon: ExpandMore,
-                        DetailPanelCollapseIcon: ExpandLess,
+                        DetailPanelExpandIcon,
+                        DetailPanelCollapseIcon
                     }}
                 />
             </Box>
