@@ -44,7 +44,7 @@ export type MicroserviceObject = {
             isPublic: boolean
         }
     }
-    state?: string
+    phase?: string
 };
 
 type DataTableProps = {
@@ -68,7 +68,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
 
             return {
                 ...microservice,
-                state: status[0]?.phase
+                phase: status[0]?.phase
             } as MicroserviceObject;
         }))
             .then(setRows);
@@ -118,7 +118,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             sortComparator: customUrlFieldSort
         },
         {
-            field: 'state',
+            field: 'phase',
             headerName: 'Status',
             minWidth: 200,
             flex: 1,
