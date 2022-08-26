@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useReadable } from 'use-svelte-store';
@@ -12,10 +12,11 @@ import { HttpResponsePodStatus } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import { HttpResponseApplication } from '../../api/application';
 
-import { Box, Button, Tabs, Tab, Typography } from '@mui/material';
+import { Box, Tabs, Tab, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { HealthStatus } from './healthStatus';
+import { ConstainerHealthStatus } from '../microserviceStatus';
 
 interface StyledTabsProps {
     children?: React.ReactNode;
@@ -71,42 +72,37 @@ const styles = {
         '&:first-of-type': {
             mr: 8
         }
-    },
-    removePadding: {
-        '& .MuiBox-root': {
-            padding: 0
-        }
     }
 };
 
 type MicroserviceViewProps = {
-    application: HttpResponseApplication
-    environment: string
-    microserviceId: string
-    podsData: HttpResponsePodStatus
+    application: HttpResponseApplication;
+    environment: string;
+    microserviceId: string;
+    podsData: HttpResponsePodStatus;
 };
 
 export const MicroserviceView = ({ application, microserviceId, environment, podsData }: MicroserviceViewProps) => {
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
 
-    const [microserviceStatus, setMicroserviceStatus] = useState('N/A');
+    const containerStatus: string[] = [];
 
-    useEffect(() => {
-        podsData.pods.flatMap(pod => {
-            const checkStatus = pod.phase.toLowerCase();
+    const rows = podsData.pods.flatMap(pod => {
+        return pod.containers.map((container, index) => {
+            const item = {
+                image: container.image,
+                state: container.state,
+                started: container.started,
+                age: container.age,
+                restarts: container.restarts,
+                id: `${pod.name}-${container.name}`
+            };
 
-            if (checkStatus.includes('failing')) {
-                setMicroserviceStatus('Failing');
-            } else if (checkStatus.includes('pending')) {
-                setMicroserviceStatus('Pending');
-            } else if (checkStatus.includes('running')) {
-                setMicroserviceStatus('Running');
-            } else {
-                setMicroserviceStatus('N/A');
-            }
+            containerStatus.push(item.state);
+            return item;
         });
-    }, []);
+    });
 
     const applicationId = application.id;
 
@@ -129,9 +125,9 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
     if (!hasEditData) {
         // Can I not move this to the store?
         const headImage = currentMicroservice.live.images.find(img => img.name === 'head')?.image
-            || 'n/a';
+            || 'N/A';
         const runtimeImage = currentMicroservice.live.images.find(img => img.name === 'runtime')?.image
-            || 'n/a';
+            || 'N/A';
 
         const headCommand = {
             command: [],
@@ -177,7 +173,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         <>
             <Box sx={{ display: 'flex', mb: 3.25 }}>
                 <Typography variant="h1">{msName}</Typography>
-                <Button variant='contained' sx={{ color: 'red', ml: 3 }}>{microserviceStatus}</Button>
+                <ConstainerHealthStatus status={containerStatus} />
             </Box>
 
             <StyledTabs value={currentTab} onChange={handleChange} sx={{ mb: 4 }}>
@@ -202,7 +198,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
             </TabPanel>
 
             <TabPanel value={currentTab} index={1}>
-                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
+                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={rows} />
             </TabPanel>
         </>
     );
