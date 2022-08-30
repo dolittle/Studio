@@ -105,7 +105,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         });
     });
 
-    console.log(rows);
+    //console.log(rows);
 
     const applicationId = application.id;
 

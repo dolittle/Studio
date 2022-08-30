@@ -170,6 +170,11 @@ const styles = {
         '& .MuiDataGrid-root': {
             borderRadius: '0 0 4px 4px'
         }
+    },
+    dataTable: {
+        '& .MuiDataGrid-row': {
+            cursor: 'default'
+        },
     }
 };
 
@@ -247,6 +252,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                     getDetailPanelContent={getDetailPanelContent}
                     detailPanelExpandedRowIds={detailPanelExpandedRowIds}
                     onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
+                    sx={styles.dataTable}
                     components={{
                         DetailPanelExpandIcon,
                         DetailPanelCollapseIcon
