@@ -186,65 +186,18 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
 
     const [detailPanelExpandedRowIds, setDetailPanelExpandedRowIds] = useState<GridRowId[]>([]);
 
-    const handleDetailPanelExpandedRowIdsChange = useCallback((newIds: GridRowId[]) => {
-        setDetailPanelExpandedRowIds(newIds);
-    }, [],);
+    const handleDetailPanelExpandedRowIdsChange = (newIds: GridRowId[]) => {
+        if (detailPanelExpandedRowIds.length) {
+            // Remove previosly expanded row id
+            newIds = newIds.slice(-1);
+            setDetailPanelExpandedRowIds(newIds);
+        } else {
+            setDetailPanelExpandedRowIds(newIds);
+        }
+    };
 
-    // const items: any[] = data.pods.flatMap(pod => {
-    //     return pod.containers.map((container, index) => {
-    //         const name = index === 0 ? pod.name : '';
-    //         const item = {
-    //             key: `${pod.name}-${container.name}`,
-    //             name,
-    //             image: container.image,
-    //             state: container.state,
-    //             started: container.started,
-    //             age: container.age,
-    //             restarts: container.restarts,
-    //             container,
-    //             pod,
-    //             id: `${pod.name}-${container.name}`
-    //         } as Item;
-
-    //         return item;
-
-    //         //const podInfo = item!.pod;
-
-    //         /* return (
-    //             <TableRow key={item.key}>
-    //                 <TableCell align="left">
-    //                     {item.name}
-    //                 </TableCell>
-    //                 <TableCell align="right">{item.state}</TableCell>
-    //                 <TableCell align="right">{item.restarts}</TableCell>
-    //                 <TableCell align="right">{item.age}</TableCell>
-    //                 <TableCell align="right">{item.started}</TableCell>
-    //                 <TableCell align="right">{item.image}</TableCell>
-    //                 <TableCell align="right">
-    //                     <Grid
-    //                         container
-    //                         direction="row"
-    //                         justifyContent="space-between"
-    //                         alignItems="stretch"
-    //                     >
-    //                         <div onClick={() => {
-    //                             alert('TODO: Download logs');
-    //                         }}>
-    //                             {DownloadLogIcon}
-    //                         </div>
-    //                         <div onClick={() => {
-    //                             const href = `/microservices/application/11b6cf47-5d9f-438f-8116-0d9828654657/dev/pod/view/dev-gbh-56887895f5-chp6d/logs?containerName=docker.io/nginxdemos/hello:latest`;
-    //                             const href = `/microservices/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
-    //                             history.push(href);
-    //                         }}>
-    //                             {ViewLogIcon}
-    //                         </div>
-    //                     </Grid>
-    //                 </TableCell>
-    //             </TableRow>
-    //         ); */
-    //     });
-    // }) as any[];
+    //const podInfo = item!.pod;
+    // const href = `/microservices/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
 
     //console.log(items)
 
