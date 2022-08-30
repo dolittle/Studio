@@ -84,14 +84,14 @@ const columns: GridColDef[] = [
         headerName: 'Container',
         headerClassName: 'negativeRowSpanHack',
         sortable: false,
-        minWidth: 600,
+        minWidth: 584,
         flex: 1,
     },
     {
         field: 'restarts',
         headerName: 'Restarts',
         sortable: false,
-        minWidth: 90,
+        minWidth: 100,
         flex: 1,
         headerAlign: 'right',
         align: 'right'
@@ -111,7 +111,7 @@ const columns: GridColDef[] = [
         field: 'started',
         headerName: 'Started',
         sortable: false,
-        minWidth: 200,
+        minWidth: 216,
         flex: 1,
         headerAlign: 'right',
         align: 'right',
@@ -122,7 +122,7 @@ const columns: GridColDef[] = [
         field: 'state',
         headerName: 'Status',
         sortable: false,
-        minWidth: 200,
+        minWidth: 168,
         flex: 1,
         renderCell: statusCell
     },
@@ -130,11 +130,11 @@ const columns: GridColDef[] = [
         field: 'download',
         headerName: 'Download logs',
         sortable: false,
-        minWidth: 100,
+        minWidth: 132,
         flex: 1,
         headerAlign: 'center',
         align: 'center',
-        renderCell: () => <DownloadRounded />
+        renderCell: () => <DownloadRounded fontSize='small' />
     },
 ];
 
@@ -164,10 +164,21 @@ const styles = {
             display: 'none'
         }
     },
+    // move to the theme
     dataTable: {
         '& .MuiDataGrid-columnHeaderTitle': {
             fontWeight: 500,
             letterSpacing: '0.17px'
+        },
+        '& .MuiDataGrid-row': {
+            minHeight: '42px !important'
+        },
+        '&.MuiDataGrid-root .MuiDataGrid-cell': {
+            whiteSpace: 'normal !important',
+            wordWrap: 'break-word'
+        },
+        '& .MuiDataGrid-cellContent': {
+            p: '11px 0'
         }
     }
 };
@@ -239,7 +250,10 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                     disableColumnMenu
                     hideFooter
                     headerHeight={46}
-                    rowHeight={46}
+
+                    //rowHeight={42}
+                    getRowHeight={() => 'auto'}
+                    //getEstimatedRowHeight={() => 42}
                     autoHeight={true}
                     disableSelectionOnClick
                     getDetailPanelHeight={getDetailPanelHeight}
