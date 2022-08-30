@@ -34,23 +34,23 @@ const publicUrlCell = (params: GridRenderCellParams) => {
 };
 
 export type MicroserviceObject = {
-    id: string
-    name: string
-    kind: string
-    environment: string
-    live: MicroserviceInfo
+    id: string;
+    name: string;
+    kind: string;
+    environment: string;
+    live: MicroserviceInfo;
     edit: {
         extra?: {
-            isPublic: boolean
-        }
-    }
-    phase?: string
+            isPublic: boolean;
+        };
+    };
+    phase?: string;
 };
 
 type DataTableProps = {
-    environment: string
-    application: HttpResponseApplication
-    microservices: MicroserviceObject[]
+    environment: string;
+    application: HttpResponseApplication;
+    microservices: MicroserviceObject[];
 };
 
 export const DataTable = ({ application, environment, microservices }: DataTableProps) => {
@@ -91,13 +91,13 @@ export const DataTable = ({ application, environment, microservices }: DataTable
         {
             field: 'name',
             headerName: 'Name',
-            minWidth: 200,
+            minWidth: 270,
             flex: 1,
         },
         {
             field: 'image',
             headerName: 'Container Image',
-            minWidth: 200,
+            minWidth: 270,
             flex: 1,
             valueGetter: (params: GridValueGetterParams) =>
                 `${params.row.edit?.extra?.headImage || 'N/A'}`,
@@ -105,14 +105,14 @@ export const DataTable = ({ application, environment, microservices }: DataTable
         {
             field: 'runtime',
             headerName: 'Runtime',
-            minWidth: 200,
+            minWidth: 270,
             flex: 1,
             valueGetter: sortByRuntimeVersion
         },
         {
             field: 'isPublic',
             headerName: 'Public URL',
-            minWidth: 200,
+            minWidth: 270,
             flex: 1,
             renderCell: publicUrlCell,
             sortComparator: customUrlFieldSort
@@ -120,7 +120,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
         {
             field: 'phase',
             headerName: 'Status',
-            minWidth: 200,
+            minWidth: 270,
             flex: 1,
             renderCell: statusCell,
             sortComparator: customStatusFieldSort
@@ -140,6 +140,8 @@ export const DataTable = ({ application, environment, microservices }: DataTable
                 disableColumnMenu
                 hideFooter
                 autoHeight={true}
+                headerHeight={46}
+                getRowHeight={() => 'auto'}
                 loading={!rows}
                 disableSelectionOnClick
                 onRowClick={(params) => onTableRowClick(params.row.id)}

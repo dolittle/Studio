@@ -148,7 +148,11 @@ const styles = {
         minHeight: '46px',
         alignContent: 'center',
         alignItems: 'center',
-        padding: '10px'
+        padding: '10px',
+        mt: 2.5,
+        border: '1px solid rgba(14, 13, 16, 1);',
+        borderBottom: 'none',
+        borderRadius: '4px 4px 0 0'
     },
     title: {
         fontWeight: 500,
@@ -156,29 +160,15 @@ const styles = {
         letterSpacing: '0.17px',
     },
     dataTableWrapper: {
-        'mt': 2.5,
+        borderRadius: '0 0 4px 4px',
         '& .negativeRowSpanHack': {
             mr: 6.25,
         },
         '& .MuiDataGrid-columnHeader[data-field="__detail_panel_toggle__"]': {
             display: 'none'
-        }
-    },
-    // move to the theme
-    dataTable: {
-        '& .MuiDataGrid-columnHeaderTitle': {
-            fontWeight: 500,
-            letterSpacing: '0.17px'
         },
-        '& .MuiDataGrid-row': {
-            minHeight: '42px !important'
-        },
-        '&.MuiDataGrid-root .MuiDataGrid-cell': {
-            whiteSpace: 'normal !important',
-            wordWrap: 'break-word'
-        },
-        '& .MuiDataGrid-cellContent': {
-            p: '11px 0'
+        '& .MuiDataGrid-root': {
+            borderRadius: '0 0 4px 4px'
         }
     }
 };
@@ -239,28 +229,24 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                 Restart microservice
             </ButtonText>
 
-            <Box component={Paper} sx={styles.dataTableWrapper}>
-                <Box component={Paper} sx={styles.podTitle}>
-                    <Typography variant='body2' sx={styles.title}>{`Pod: ${data[0]?.name || 'N/A'}`}</Typography>
-                </Box>
+            <Box component={Paper} sx={styles.podTitle}>
+                <Typography variant='body2' sx={styles.title}>{`Pod: ${data[0]?.name || 'N/A'}`}</Typography>
+            </Box>
 
+            <Box component={Paper} sx={styles.dataTableWrapper}>
                 <DataGridPro
                     rows={data}
                     columns={columns}
                     disableColumnMenu
                     hideFooter
                     headerHeight={46}
-
-                    //rowHeight={42}
                     getRowHeight={() => 'auto'}
-                    //getEstimatedRowHeight={() => 42}
                     autoHeight={true}
                     disableSelectionOnClick
                     getDetailPanelHeight={getDetailPanelHeight}
                     getDetailPanelContent={getDetailPanelContent}
                     detailPanelExpandedRowIds={detailPanelExpandedRowIds}
                     onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
-                    sx={styles.dataTable}
                     components={{
                         DetailPanelExpandIcon,
                         DetailPanelCollapseIcon

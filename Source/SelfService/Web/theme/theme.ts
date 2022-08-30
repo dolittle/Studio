@@ -132,7 +132,12 @@ const customComponentStyles: {} = {
     MuiDataGrid: {
         styleOverrides: {
             root: {
+                '.MuiDataGrid-columnHeaderTitle': {
+                    fontWeight: 500,
+                    letterSpacing: '0.17px'
+                },
                 '.MuiDataGrid-row': {
+                    minHeight: '2.625rem',
                     cursor: 'pointer'
                 },
                 '.MuiDataGrid-columnSeparator': {
@@ -163,6 +168,13 @@ const customComponentStyles: {} = {
                 },
                 '.MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted) .MuiDataGrid-sortIcon': {
                     opacity: 1
+                },
+                '.MuiDataGrid-cell': {
+                    whiteSpace: 'normal',
+                    wordWrap: 'break-word'
+                },
+                '.MuiDataGrid-cellContent': {
+                    padding: '0.6875rem 0'
                 }
             },
         },
