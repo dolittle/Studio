@@ -14,7 +14,7 @@ import { validateTextFields, FormErrorStates } from '../../utils/formTextFieldsV
 import { themeDark } from '../../theme/theme';
 import { Box, Typography } from '@mui/material';
 
-import { CreateAlert } from './createAlert';
+import { Notification } from '../../theme/Notification';
 import { CreateFormCheckbox } from './createFormCheckbox';
 import { CreateFormTextFields } from './createFormTextFields';
 import { CreateFormActionButtons } from './createFormActionButtons';
@@ -155,6 +155,8 @@ export const Create: React.FC = () => {
         return;
     };
 
+    const errorMessage = 'Oops, something went wrong';
+
     const { title, secondaryTitle } = styles;
     return (
         <>
@@ -178,7 +180,7 @@ export const Create: React.FC = () => {
 
                 <CreateFormActionButtons handleOnSubmit={handleApplicationCreate} />
 
-                {serverError && <CreateAlert />}
+                {serverError && <Notification title={errorMessage} sx={{ mt: 6 }} />}
             </Box>
         </>
     );

@@ -11,6 +11,8 @@ import { Box, Paper, Typography } from '@mui/material';
 import { DownloadRounded, RestartAlt, ExpandMore, ExpandLess } from '@mui/icons-material';
 import { ButtonText } from '../../theme/buttonText';
 
+import { Notification } from '../../theme/Notification';
+
 import {
     DataGridPro,
     DataGridProProps,
@@ -224,6 +226,9 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
 
     const DetailPanelExpandIcon = () => <ExpandMore fontSize='medium' />;
     const DetailPanelCollapseIcon = () => <ExpandLess fontSize='medium' />;
+    //console.log(data);
+
+    const errorMessage = 'Cannot display microservice containers';
 
     return (
         <>
@@ -234,31 +239,36 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                 Restart microservice
             </ButtonText>
 
-            <Box component={Paper} sx={styles.podTitle}>
-                <Typography variant='body2' sx={styles.title}>{`Pod: ${data[0]?.name || 'N/A'}`}</Typography>
-            </Box>
+            {!data && <Notification title={errorMessage} sx={{ mt: 2.5, maxWidth: '32.5rem' }} />}
 
-            <Box component={Paper} sx={styles.dataTableWrapper}>
-                <DataGridPro
-                    rows={data}
-                    columns={columns}
-                    disableColumnMenu
-                    hideFooter
-                    headerHeight={46}
-                    getRowHeight={() => 'auto'}
-                    autoHeight={true}
-                    disableSelectionOnClick
-                    getDetailPanelHeight={getDetailPanelHeight}
-                    getDetailPanelContent={getDetailPanelContent}
-                    detailPanelExpandedRowIds={detailPanelExpandedRowIds}
-                    onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
-                    sx={styles.dataTable}
-                    components={{
-                        DetailPanelExpandIcon,
-                        DetailPanelCollapseIcon
-                    }}
-                />
-            </Box>
+            {data &&
+                <>
+                    <Box component={Paper} sx={styles.podTitle}>
+                        <Typography variant='body2' sx={styles.title}>{`Pod: ${data[0]?.name || 'N/A'}`}</Typography>
+                    </Box>
+
+                    <Box component={Paper} sx={styles.dataTableWrapper}>
+                        <DataGridPro
+                            rows={data}
+                            columns={columns}
+                            disableColumnMenu
+                            hideFooter
+                            headerHeight={46}
+                            getRowHeight={() => 'auto'}
+                            autoHeight={true}
+                            disableSelectionOnClick
+                            getDetailPanelHeight={getDetailPanelHeight}
+                            getDetailPanelContent={getDetailPanelContent}
+                            detailPanelExpandedRowIds={detailPanelExpandedRowIds}
+                            onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
+                            sx={styles.dataTable}
+                            components={{
+                                DetailPanelExpandIcon,
+                                DetailPanelCollapseIcon
+                            }}
+                        />
+                    </Box>
+                </>}
         </>
     );
 };
