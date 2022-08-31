@@ -180,9 +180,16 @@ const styles = {
     }
 };
 
+
+
+const DetailPanelExpandIcon = () => <ExpandMore fontSize='medium' />;
+const DetailPanelCollapseIcon = () => <ExpandLess fontSize='medium' />;
+
+const errorMessage = 'Cannot display microservice containers';
+
 type HealthStatusProps = {
     status: string;
-    data: any;
+    data: HttpResponsePodStatus;
     environment: string;
     applicationId: string;
     microserviceId: string;
@@ -195,19 +202,14 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
     const [detailPanelExpandedRowIds, setDetailPanelExpandedRowIds] = useState<GridRowId[]>([]);
 
     const handleDetailPanelExpandedRowIdsChange = (newIds: GridRowId[]) => {
-        if (detailPanelExpandedRowIds.length) {
-            // Remove previosly expanded row id
+        if (detailPanelExpandedRowIds) {
+            // Remove previously expanded row id
             newIds = newIds.slice(-1);
             setDetailPanelExpandedRowIds(newIds);
         } else {
             setDetailPanelExpandedRowIds(newIds);
         }
     };
-
-    //const podInfo = item!.pod;
-    // const href = `/microservices/application/${applicationId}/${environment}/pod/view/${podInfo.name}/logs?containerName=${container.name}`;
-
-    //console.log(items)
 
     const handleRestart = async () => {
         const success = await restartMicroservice(applicationId, environment, microserviceId);
@@ -224,11 +226,51 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
         <DetailPanelContent />, []);
     const getDetailPanelHeight = useCallback(() => 'auto', []);
 
-    const DetailPanelExpandIcon = () => <ExpandMore fontSize='medium' />;
-    const DetailPanelCollapseIcon = () => <ExpandLess fontSize='medium' />;
-    //console.log(data);
+    const dataTable: any[] = data.pods?.flatMap(pod => {
+        const rows = pod.containers.map((container, index) => {
+            const name = index === 0 ? pod.name : '';
 
-    const errorMessage = 'Cannot display microservice containers';
+            return {
+                id: `${pod.name}-${container.name}`,
+                name,
+                image: container.image,
+                state: container.state,
+                started: container.started,
+                age: container.age,
+                restarts: container.restarts,
+            };
+        });
+
+        return (
+            <Box key={rows[0]?.id}>
+                <Box component={Paper} sx={styles.podTitle}>
+                    <Typography variant='body2' sx={styles.title}>{`Pod: ${rows[0]?.name || 'N/A'}`}</Typography>
+                </Box>
+
+                <Box component={Paper} sx={styles.dataTableWrapper}>
+                    <DataGridPro
+                        rows={rows}
+                        columns={columns}
+                        disableColumnMenu
+                        hideFooter
+                        headerHeight={46}
+                        getRowHeight={() => 'auto'}
+                        autoHeight={true}
+                        disableSelectionOnClick
+                        getDetailPanelHeight={getDetailPanelHeight}
+                        getDetailPanelContent={getDetailPanelContent}
+                        detailPanelExpandedRowIds={detailPanelExpandedRowIds}
+                        onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
+                        sx={styles.dataTable}
+                        components={{
+                            DetailPanelExpandIcon,
+                            DetailPanelCollapseIcon
+                        }}
+                    />
+                </Box>
+            </Box>
+        );
+    });
 
     return (
         <>
@@ -241,34 +283,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
 
             {!data && <Notification title={errorMessage} sx={{ mt: 2.5, maxWidth: '32.5rem' }} />}
 
-            {data &&
-                <>
-                    <Box component={Paper} sx={styles.podTitle}>
-                        <Typography variant='body2' sx={styles.title}>{`Pod: ${data[0]?.name || 'N/A'}`}</Typography>
-                    </Box>
-
-                    <Box component={Paper} sx={styles.dataTableWrapper}>
-                        <DataGridPro
-                            rows={data}
-                            columns={columns}
-                            disableColumnMenu
-                            hideFooter
-                            headerHeight={46}
-                            getRowHeight={() => 'auto'}
-                            autoHeight={true}
-                            disableSelectionOnClick
-                            getDetailPanelHeight={getDetailPanelHeight}
-                            getDetailPanelContent={getDetailPanelContent}
-                            detailPanelExpandedRowIds={detailPanelExpandedRowIds}
-                            onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
-                            sx={styles.dataTable}
-                            components={{
-                                DetailPanelExpandIcon,
-                                DetailPanelCollapseIcon
-                            }}
-                        />
-                    </Box>
-                </>}
+            {dataTable}
         </>
     );
 };

@@ -86,26 +86,13 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
 
-    const containerStatus: string[] = [];
-    //console.log(podsData);
-    const rows = podsData.pods.flatMap(pod => {
-        return pod.containers.map((container) => {
-            const item = {
-                name: pod.name,
-                image: container.image,
-                state: container.state,
-                started: container.started,
-                age: container.age,
-                restarts: container.restarts,
-                id: `${pod.name}-${container.name}`
-            };
-
-            containerStatus.push(item.state);
-            return item;
+    const getContainerStatuses = () => {
+        return podsData.pods.flatMap(pod => {
+            return pod.containers.map((container) => {
+                return container.state;
+            });
         });
-    });
-
-    //console.log(rows);
+    };
 
     const applicationId = application.id;
 
@@ -176,7 +163,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         <>
             <Box sx={{ display: 'flex', mb: 3.25 }}>
                 <Typography variant="h1">{msName}</Typography>
-                <ConstainerHealthStatus status={containerStatus} />
+                <ConstainerHealthStatus status={getContainerStatuses()} />
             </Box>
 
             <StyledTabs value={currentTab} onChange={handleChange} sx={{ mb: 4 }}>
@@ -201,7 +188,12 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
             </TabPanel>
 
             <TabPanel value={currentTab} index={1}>
-                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={rows} />
+                <HealthStatus
+                    applicationId={applicationId}
+                    status="TODO" environment={environment}
+                    microserviceId={microserviceId}
+                    data={podsData}
+                />
             </TabPanel>
         </>
     );
