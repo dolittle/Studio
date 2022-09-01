@@ -16,7 +16,6 @@ const styles = {
         alignContent: 'center',
         alignItems: 'center',
         padding: '10px',
-        mt: 2.5,
         border: '1px solid rgba(14, 13, 16, 1);',
         borderBottom: 'none',
         borderRadius: '4px 4px 0 0'

@@ -16,7 +16,9 @@ const styles = {
     restartBtn: {
         fontWeight: 500,
         lineHeight: '22px',
-        letterSpacing: '0.06em'
+        letterSpacing: '0.06em',
+        mb: 2.5,
+        mt: 3.5
     },
     notification: {
         mt: 2.5,

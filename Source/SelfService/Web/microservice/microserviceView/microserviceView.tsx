@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useReadable } from 'use-svelte-store';
@@ -12,68 +12,12 @@ import { HttpResponsePodStatus } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import { HttpResponseApplication } from '../../api/application';
 
-import { Box, Tabs, Tab, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, Typography } from '@mui/material';
+
+import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
 
 import { HealthStatus } from './healthStatus/healthStatus';
 import { ConstainerHealthStatus } from '../microserviceStatus';
-
-interface StyledTabsProps {
-    children?: React.ReactNode;
-    value: number;
-    onChange: (event: React.SyntheticEvent, newValue: number) => void;
-}
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-}
-
-const StyledTabs = styled(((props: StyledTabsProps) => (
-    <Tabs
-        {...props}
-        TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-    />
-)))<StyledTabsProps>(({ theme }) => ({
-    '& .MuiTabs-indicator': {
-        display: 'flex',
-        justifyContent: 'center',
-        backgroundColor: 'transparent',
-    },
-    '& .MuiTabs-indicatorSpan': {
-        maxWidth: 40,
-        width: '100%',
-        backgroundColor: theme.palette.primary.main,
-    },
-}));
-
-const TabPanel = ({ children, value, index, ...other }: TabPanelProps) => (
-    <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`tabpanel-${index}`}
-        aria-labelledby={`tab-${index}`}
-        {...other}
-    >
-        {value === index && (
-            <Box>
-                {children}
-            </Box>
-        )}
-    </div>
-);
-
-const styles = {
-    tabs: {
-        'fontWeight': 500,
-        'fontSize': 13,
-        'letterSpacing': '0.06em',
-        '&:first-of-type': {
-            mr: 8
-        }
-    }
-};
 
 type MicroserviceViewProps = {
     application: HttpResponseApplication;
@@ -153,12 +97,6 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
 
     const msName = currentMicroservice.name;
 
-    const [currentTab, setCurrentTab] = useState(1);
-
-    const handleChange = (event: React.SyntheticEvent, newValue: any) => {
-        setCurrentTab(newValue);
-    };
-
     return (
         <>
             <Box sx={{ display: 'flex', mb: 3.25 }}>
@@ -166,35 +104,36 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                 <ConstainerHealthStatus status={getContainerStatuses()} />
             </Box>
 
-            <StyledTabs value={currentTab} onChange={handleChange} sx={{ mb: 4 }}>
-                <Tab sx={styles.tabs} label='Configuration' />
-                <Tab sx={styles.tabs} label='Health Status' />
-            </StyledTabs>
-
-            <TabPanel value={currentTab} index={0}>
-                <Configuration
-                    applicationId={applicationId}
-                    environment={environment}
-                    microserviceId={microserviceId}
-                    msName={msName}
-                    ingressUrls={currentMicroservice.live.ingressUrls}
-                    ingressPaths={currentMicroservice.live.ingressPaths}
-                    ms={ms}
-                    onClick={async () => {
-                        const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
-                        history.push(href);
-                    }}
-                />
-            </TabPanel>
-
-            <TabPanel value={currentTab} index={1}>
-                <HealthStatus
-                    applicationId={applicationId}
-                    status="TODO" environment={environment}
-                    microserviceId={microserviceId}
-                    data={podsData}
-                />
-            </TabPanel>
+            <Tabs
+                tabs={[
+                    {
+                        label: 'Configuration',
+                        render: () => <Configuration
+                            applicationId={applicationId}
+                            environment={environment}
+                            microserviceId={microserviceId}
+                            msName={msName}
+                            ingressUrls={currentMicroservice.live.ingressUrls}
+                            ingressPaths={currentMicroservice.live.ingressPaths}
+                            ms={ms}
+                            onClick={async () => {
+                                const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
+                                history.push(href);
+                            }}
+                        />
+                    },
+                    {
+                        label: 'Health Status',
+                        render: () => <HealthStatus
+                            applicationId={applicationId}
+                            status="TODO"
+                            environment={environment}
+                            microserviceId={microserviceId}
+                            data={podsData}
+                        />
+                    }
+                ]}
+            />
         </>
     );
 };
