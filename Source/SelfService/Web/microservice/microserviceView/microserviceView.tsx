@@ -15,7 +15,7 @@ import { HttpResponseApplication } from '../../api/application';
 import { Box, Tabs, Tab, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { HealthStatus } from './healthStatus';
+import { HealthStatus } from './healthStatus/healthStatus';
 import { ConstainerHealthStatus } from '../microserviceStatus';
 
 interface StyledTabsProps {
