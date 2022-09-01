@@ -4,7 +4,7 @@
 import React from 'react';
 
 import { GridRenderCellParams } from '@mui/x-data-grid-pro';
-import { Box, Theme, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { CheckCircleRounded, ErrorRounded, WarningRounded, QuestionMark } from '@mui/icons-material';
 
 import { Button } from '../../../DesignSystem/atoms/Button/Button';
@@ -56,45 +56,39 @@ const getMicroserviceState = (phase?: string): MicroserviceStatus => {
 };
 
 const statusInfo = (status: string) => {
-    let primary = (theme: Theme) => theme.palette.text.primary;
-    let info = (theme: Theme) => theme.palette.info.main;
-    let success = (theme: Theme) => theme.palette.success.main;
-    let warning = (theme: Theme) => theme.palette.warning.main;
-    let error = (theme: Theme) => theme.palette.error.dark;
-
-    let backgroundColor = info;
-    let color = primary;
+    let backgroundColor = 'info.main';
+    let color = 'text.primary';
     let icon = <QuestionMark />;
     let iconWithColor = <QuestionMark sx={{ color }} />;
     let label = 'N/A';
 
     switch (getMicroserviceState(status)) {
         case MicroserviceStatus.Running:
-            backgroundColor = success;
+            backgroundColor = 'success.main';
             icon = <CheckCircleRounded />;
             iconWithColor = <CheckCircleRounded sx={{ color }} />;
             label = 'Running';
             break;
         case MicroserviceStatus.Pending:
-            backgroundColor = warning;
-            color = warning;
+            backgroundColor = 'warning.main';
+            color = 'warning.main';
             icon = <WarningRounded />;
             iconWithColor = <WarningRounded sx={{ color }} />;
             label = 'Pending';
             break;
         case MicroserviceStatus.Failing:
-            backgroundColor = error;
-            color = error;
+            backgroundColor = 'error.dark';
+            color = 'error.dark';
             icon = <ErrorRounded />;
             iconWithColor = <ErrorRounded sx={{ color }} />;
             label = 'Failed';
             break;
         case MicroserviceStatus.Unknown:
-            backgroundColor;
-            color;
-            icon;
-            iconWithColor;
-            label;
+            backgroundColor = 'info.main';
+            color = 'text.primary';
+            icon = <QuestionMark />;
+            iconWithColor = <QuestionMark sx={{ color }} />;
+            label = 'N/A';
     }
 
     return {
