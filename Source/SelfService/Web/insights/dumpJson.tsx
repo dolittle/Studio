@@ -7,15 +7,15 @@ type Props = {
     data: any
 };
 
-export const DumpJson: React.FunctionComponent<Props> = (props) => {
-    const _props = props!;
-    const data = _props.data;
+export const DumpJson = (props: Props) => {
+    // const _props = props!;
+    // const data = _props.data;
 
     return (
         <>
-            <pre style={{ whiteSpace: 'pre' }}>
+            {/* <pre style={{ whiteSpace: 'pre' }}>
                 {JSON.stringify(data, null, ' ')}
-            </pre>
+            </pre> */}
         </>
     );
 };
