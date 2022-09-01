@@ -13,15 +13,15 @@ const styles = {
             backgroundColor: 'transparent'
         },
         '& .MuiTabs-indicatorSpan': {
-            maxWidth: 40,
+            maxWidth: '40px',
             width: '100%',
             backgroundColor: 'primary.main'
         }
     },
     tab: {
         color: 'text.secondary',
-        fontWeight: 500,
-        fontSize: 13,
+        fontWeight: '500',
+        fontSize: '13px',
         letterSpacing: '0.06em',
         '&:first-of-type': {
             mr: 8
@@ -30,7 +30,7 @@ const styles = {
             color: 'primary.main'
         }
     }
-}
+};
 
 export type Tab = {
     label: string
