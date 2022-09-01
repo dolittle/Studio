@@ -28,7 +28,7 @@ const styles = {
         letterSpacing: '0.17px'
     },
     dataTableWrapper: {
-        borderRadius: '0 0 0.25rem 0.25rem',
+        'borderRadius': '0 0 0.25rem 0.25rem',
         '& .negativeRowSpanHack': {
             mr: 6.25,
         },
@@ -76,7 +76,7 @@ export const DataTable = ({ data }: any) => {
         data.pods?.flatMap(pod => {
             const rows = pod.containers.map((container: ContainerStatusInfo, index: number) => {
                 const name = index === 0 ? pod.name : '';
-                console.log(container)
+
                 return {
                     id: `${pod.name}-${container.name}`,
                     name,
@@ -118,5 +118,5 @@ export const DataTable = ({ data }: any) => {
                 </Box>
             );
         })
-    )
+    );
 };

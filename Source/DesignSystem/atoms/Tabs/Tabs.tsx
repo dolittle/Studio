@@ -19,10 +19,10 @@ const styles = {
         }
     },
     tab: {
-        color: 'text.secondary',
-        fontWeight: '500',
-        fontSize: '13px',
-        letterSpacing: '0.06em',
+        'color': 'text.secondary',
+        'fontWeight': 500,
+        'fontSize': 13,
+        'letterSpacing': '0.06em',
         '&:first-of-type': {
             mr: 8
         },
