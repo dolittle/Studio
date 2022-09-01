@@ -2,22 +2,22 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useHistory, Route } from 'react-router-dom';
+//import { useHistory, Route } from 'react-router-dom';
 
 import { HttpResponseApplication } from '../api/application';
-import { RuntimeV1Stats } from './runtimeStatsV1/runtimeV1Stats';
-import { Link, Typography } from '@mui/material';
+//import { RuntimeV1Stats } from './runtimeStatsV1/runtimeV1Stats';
+//import { Link, Typography } from '@mui/material';
 
 type Props = {
     application: HttpResponseApplication
     environment: string
 };
 
-export const InsightsContainerScreen: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
-    const _props = props!;
-    const application = _props.application;
-    const environment = _props.environment;
+export const InsightsContainerScreen = (props: Props) => {
+    // const history = useHistory();
+    // const _props = props!;
+    // const application = _props.application;
+    // const environment = _props.environment;
 
     return (
         <>

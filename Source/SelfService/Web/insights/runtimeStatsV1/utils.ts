@@ -21,4 +21,3 @@ export function getFailingPartions(data: any): any[] {
             });
         });
 };
-
