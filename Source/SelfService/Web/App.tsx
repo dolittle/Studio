@@ -12,7 +12,7 @@ import { uriWithAppPrefix } from './store';
 import { LoginScreen } from './screens/loginScreen';
 import { BackupsScreen } from './screens/backupsScreen';
 import { DocumentationScreen } from './screens/documentationScreen';
-import { InsightsScreen } from './screens/insightsScreen';
+//import { InsightsScreen } from './screens/insightsScreen';
 import { MicroservicesScreen } from './screens/microservicesScreen';
 import { GlobalContextProvider } from './stores/notifications';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -105,9 +105,9 @@ export const App = () => {
                                                 <DocumentationScreen />
                                             </Route>
 
-                                            <Route path='/insights/application/:applicationId/:environment'>
+                                            {/* <Route path='/insights/application/:applicationId/:environment'>
                                                 <InsightsScreen />
-                                            </Route>
+                                            </Route> */}
 
                                             <Route path='/containerregistry/application/:applicationId/:environment'>
                                                 <ContainerRegistryScreen />

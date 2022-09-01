@@ -18,7 +18,7 @@ import {
     HttpResponseApplication,
     getApplications,
     getApplication,
-    HttpResponseApplications,
+    HttpResponseApplications
 } from '../api/application';
 import { withRouteApplicationState } from './withRouteApplicationState';
 import { Typography } from '@mui/material';
@@ -122,7 +122,8 @@ export const InsightsScreen: React.FunctionComponent = withRouteApplicationState
     });
 
     return (
-        <LayoutWithSidebar navigation={nav}>
+        <>
+            {/*         <LayoutWithSidebar navigation={nav}>
             <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
 
             <Switch>
@@ -131,6 +132,7 @@ export const InsightsScreen: React.FunctionComponent = withRouteApplicationState
                 </Route>
                 <RouteNotFound redirectUrl={redirectUrl} />
             </Switch>
-        </LayoutWithSidebar >
+        </LayoutWithSidebar> */}
+        </>
     );
 });
