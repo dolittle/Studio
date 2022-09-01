@@ -15,7 +15,7 @@ import { DataTable } from './dataTable';
 const styles = {
     restartBtn: {
         fontWeight: 500,
-        lineHeight: '22px',
+        lineHeight: '1.375rem',
         letterSpacing: '0.06em',
         mb: 2.5,
         mt: 3.5

@@ -3,6 +3,8 @@
 
 import React, { useCallback, useState } from 'react';
 
+import { ContainerStatusInfo } from 'Source/SelfService/Web/api/api';
+
 import { Box, Paper, Typography } from '@mui/material';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
 
@@ -12,21 +14,21 @@ import { DataGridPro, DataGridProProps, GridRowId } from '@mui/x-data-grid-pro';
 
 const styles = {
     podTitle: {
-        minHeight: '46px',
+        minHeight: 5.75,
         alignContent: 'center',
         alignItems: 'center',
-        padding: '10px',
+        p: 1.25,
         border: '1px solid rgba(14, 13, 16, 1);',
         borderBottom: 'none',
-        borderRadius: '4px 4px 0 0'
+        borderRadius: '0.25rem 0.25rem 0 0'
     },
     title: {
         fontWeight: 500,
-        lineHeight: '24px',
-        letterSpacing: '0.17px',
+        lineHeight: '1.5rem',
+        letterSpacing: '0.17px'
     },
     dataTableWrapper: {
-        borderRadius: '0 0 4px 4px',
+        borderRadius: '0 0 0.25rem 0.25rem',
         '& .negativeRowSpanHack': {
             mr: 6.25,
         },
@@ -34,13 +36,13 @@ const styles = {
             display: 'none'
         },
         '& .MuiDataGrid-root': {
-            borderRadius: '0 0 4px 4px'
+            borderRadius: '0 0 0.25rem 0.25rem'
         }
     },
     dataTable: {
         '& .MuiDataGrid-row': {
             cursor: 'default'
-        },
+        }
     }
 };
 
@@ -48,7 +50,7 @@ const DetailPanelExpandIcon = () => <ExpandMore fontSize='medium' />;
 const DetailPanelCollapseIcon = () => <ExpandLess fontSize='medium' />;
 
 const DetailPanelContent = () => (
-    <Box component={Paper} sx={{ height: '100%' }}>
+    <Box component={Paper} sx={{ height: 1 }}>
         <Typography variant="body2" sx={{ pl: 7.5, py: 1 }}>There are no logs printed for this microservice.</Typography>
     </Box>
 );
@@ -72,9 +74,9 @@ export const DataTable = ({ data }: any) => {
 
     return (
         data.pods?.flatMap(pod => {
-            const rows = pod.containers.map((container, index) => {
+            const rows = pod.containers.map((container: ContainerStatusInfo, index: number) => {
                 const name = index === 0 ? pod.name : '';
-
+                console.log(container)
                 return {
                     id: `${pod.name}-${container.name}`,
                     name,
