@@ -7,35 +7,27 @@ import { ContainerStatusInfo } from 'Source/SelfService/Web/api/api';
 
 import { Box, Paper, Typography } from '@mui/material';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
-import { DataGridPro, GridRowId, DataGridProProps } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridRowId } from '@mui/x-data-grid-pro';
 
 import { PodLogScreen } from '../../podLogScreen';
 import { columns } from './dataTableColumns';
 
 const styles = {
     podTitle: {
-        minHeight: 5.75,
-        alignContent: 'center',
-        alignItems: 'center',
-        p: 1.25,
-        border: '1px solid rgba(14, 13, 16, 1);',
-        borderBottom: 'none',
-        borderRadius: '0.25rem 0.25rem 0 0'
-    },
-    title: {
         fontWeight: 500,
         lineHeight: '1.5rem',
-        letterSpacing: '0.17px'
+        letterSpacing: '0.17px',
+        minHeight: 5.75,
+        p: 1.25,
+        borderBottom: '1px solid rgba(14, 13, 16, 1)'
     },
     dataTableWrapper: {
+        'mb': 3,
         '& .negativeRowSpanHack': {
             mr: 6.25,
         },
         '& .MuiDataGrid-columnHeader[data-field="__detail_panel_toggle__"]': {
             display: 'none'
-        },
-        '& .MuiDataGrid-root': {
-            borderRadius: '0 0 0.25rem 0.25rem'
         }
     },
     dataTable: {
@@ -47,11 +39,24 @@ const styles = {
 
 const DetailPanelExpandIcon = () => <ExpandMore fontSize='medium' />;
 const DetailPanelCollapseIcon = () => <ExpandLess fontSize='medium' />;
+const CustomToolbar = (rows: Rows[]) =>
+    <Typography variant='body2' sx={styles.podTitle}>{`Pod: ${rows[0]?.podName || 'N/A'}`}</Typography>
+
+type Rows = {
+    id: string
+    podName: string
+    containerName: string
+    state: string
+    age: string
+    image: string
+    started: string
+    restarts: number
+};
 
 type DataTableProps = {
     data: any
     applicationId: string
-}
+};
 
 export const DataTable = ({ data, applicationId }: DataTableProps) => {
     const [detailPanelExpandedRowIds, setDetailPanelExpandedRowIds] = useState<GridRowId[]>([]);
@@ -87,35 +92,30 @@ export const DataTable = ({ data, applicationId }: DataTableProps) => {
                     age: container.age,
                     restarts: container.restarts
                 };
-            });
+            }) as Rows[];
 
             return (
-                <Box key={rows[0]?.id}>
-                    <Box component={Paper} sx={styles.podTitle}>
-                        <Typography variant='body2' sx={styles.title}>{`Pod: ${rows[0]?.podName || 'N/A'}`}</Typography>
-                    </Box>
-
-                    <Box component={Paper} sx={styles.dataTableWrapper}>
-                        <DataGridPro
-                            rows={rows}
-                            columns={columns}
-                            disableColumnMenu
-                            hideFooter
-                            headerHeight={46}
-                            getRowHeight={() => 'auto'}
-                            autoHeight={true}
-                            disableSelectionOnClick
-                            getDetailPanelContent={({ row }) => <DetailPanelContent row={row} />}
-                            getDetailPanelHeight={getDetailPanelHeight}
-                            detailPanelExpandedRowIds={detailPanelExpandedRowIds}
-                            onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
-                            sx={styles.dataTable}
-                            components={{
-                                DetailPanelExpandIcon,
-                                DetailPanelCollapseIcon
-                            }}
-                        />
-                    </Box>
+                <Box key={rows[0]?.id} component={Paper} sx={styles.dataTableWrapper}>
+                    <DataGridPro
+                        rows={rows}
+                        columns={columns}
+                        disableColumnMenu
+                        hideFooter
+                        headerHeight={46}
+                        getRowHeight={() => 'auto'}
+                        autoHeight={true}
+                        disableSelectionOnClick
+                        getDetailPanelContent={({ row }) => <DetailPanelContent row={row} />}
+                        getDetailPanelHeight={getDetailPanelHeight}
+                        detailPanelExpandedRowIds={detailPanelExpandedRowIds}
+                        onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
+                        sx={styles.dataTable}
+                        components={{
+                            DetailPanelExpandIcon,
+                            DetailPanelCollapseIcon,
+                            Toolbar: () => CustomToolbar(rows)
+                        }}
+                    />
                 </Box>
             );
         })
