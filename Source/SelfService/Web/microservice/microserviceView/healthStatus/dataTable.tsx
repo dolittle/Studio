@@ -66,9 +66,6 @@ export const DataTable = ({ data, applicationId }: DataTableProps) => {
         }
     };
 
-    const getDetailPanelContent = useCallback<NonNullable<DataGridProProps['getDetailPanelContent']>>(({ row }) =>
-        <DetailPanelContent row={row} />, []);
-
     const DetailPanelContent = ({ row }) => (
         <Box component={Paper}>
             <PodLogScreen applicationId={applicationId} podName={row.podName} containerName={row.containerName} />
@@ -108,7 +105,7 @@ export const DataTable = ({ data, applicationId }: DataTableProps) => {
                             getRowHeight={() => 'auto'}
                             autoHeight={true}
                             disableSelectionOnClick
-                            getDetailPanelContent={getDetailPanelContent}
+                            getDetailPanelContent={({ row }) => <DetailPanelContent row={row} />}
                             getDetailPanelHeight={getDetailPanelHeight}
                             detailPanelExpandedRowIds={detailPanelExpandedRowIds}
                             onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
