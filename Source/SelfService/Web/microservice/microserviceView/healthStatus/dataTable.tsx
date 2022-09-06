@@ -7,10 +7,10 @@ import { ContainerStatusInfo } from 'Source/SelfService/Web/api/api';
 
 import { Box, Paper, Typography } from '@mui/material';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
+import { DataGridPro, GridRowId, DataGridProProps } from '@mui/x-data-grid-pro';
 
+import { PodLogScreen } from '../../podLogScreen';
 import { columns } from './dataTableColumns';
-
-import { DataGridPro, DataGridProProps, GridRowId } from '@mui/x-data-grid-pro';
 
 const styles = {
     podTitle: {
@@ -28,7 +28,6 @@ const styles = {
         letterSpacing: '0.17px'
     },
     dataTableWrapper: {
-        'borderRadius': '0 0 0.25rem 0.25rem',
         '& .negativeRowSpanHack': {
             mr: 6.25,
         },
@@ -49,18 +48,17 @@ const styles = {
 const DetailPanelExpandIcon = () => <ExpandMore fontSize='medium' />;
 const DetailPanelCollapseIcon = () => <ExpandLess fontSize='medium' />;
 
-const DetailPanelContent = () => (
-    <Box component={Paper} sx={{ height: 1 }}>
-        <Typography variant="body2" sx={{ pl: 7.5, py: 1 }}>There are no logs printed for this microservice.</Typography>
-    </Box>
-);
+type DataTableProps = {
+    data: any
+    applicationId: string
+}
 
-export const DataTable = ({ data }: any) => {
+export const DataTable = ({ data, applicationId }: DataTableProps) => {
     const [detailPanelExpandedRowIds, setDetailPanelExpandedRowIds] = useState<GridRowId[]>([]);
 
     const handleDetailPanelExpandedRowIdsChange = (newIds: GridRowId[]) => {
         if (detailPanelExpandedRowIds) {
-            // Remove previously expanded row id so only one panel can be expanded at the time.
+            // Remove previously expanded row id so only one panel can be expanded at the same time.
             newIds = newIds.slice(-1);
             setDetailPanelExpandedRowIds(newIds);
         } else {
@@ -68,30 +66,36 @@ export const DataTable = ({ data }: any) => {
         }
     };
 
-    const getDetailPanelContent = useCallback<NonNullable<DataGridProProps['getDetailPanelContent']>>(() =>
-        <DetailPanelContent />, []);
+    const getDetailPanelContent = useCallback<NonNullable<DataGridProProps['getDetailPanelContent']>>(({ row }) =>
+        <DetailPanelContent row={row} />, []);
+
+    const DetailPanelContent = ({ row }) => (
+        <Box component={Paper}>
+            <PodLogScreen applicationId={applicationId} podName={row.podName} containerName={row.containerName} />
+        </Box>
+    );
+
     const getDetailPanelHeight = useCallback(() => 'auto', []);
 
     return (
         data.pods?.flatMap(pod => {
-            const rows = pod.containers.map((container: ContainerStatusInfo, index: number) => {
-                const name = index === 0 ? pod.name : '';
-
+            const rows = pod.containers.map((container: ContainerStatusInfo) => {
                 return {
                     id: `${pod.name}-${container.name}`,
-                    name,
+                    podName: pod.name,
+                    containerName: container.name,
                     image: container.image,
                     state: container.state,
                     started: container.started,
                     age: container.age,
-                    restarts: container.restarts,
+                    restarts: container.restarts
                 };
             });
 
             return (
                 <Box key={rows[0]?.id}>
                     <Box component={Paper} sx={styles.podTitle}>
-                        <Typography variant='body2' sx={styles.title}>{`Pod: ${rows[0]?.name || 'N/A'}`}</Typography>
+                        <Typography variant='body2' sx={styles.title}>{`Pod: ${rows[0]?.podName || 'N/A'}`}</Typography>
                     </Box>
 
                     <Box component={Paper} sx={styles.dataTableWrapper}>
@@ -104,8 +108,8 @@ export const DataTable = ({ data }: any) => {
                             getRowHeight={() => 'auto'}
                             autoHeight={true}
                             disableSelectionOnClick
-                            getDetailPanelHeight={getDetailPanelHeight}
                             getDetailPanelContent={getDetailPanelContent}
+                            getDetailPanelHeight={getDetailPanelHeight}
                             detailPanelExpandedRowIds={detailPanelExpandedRowIds}
                             onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
                             sx={styles.dataTable}

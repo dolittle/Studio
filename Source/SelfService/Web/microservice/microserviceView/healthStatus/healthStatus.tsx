@@ -61,7 +61,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
 
             {!data && <Notification title={errorMessage} sx={styles.notification} />}
 
-            {data && <DataTable data={data} />}
+            {data && <DataTable data={data} applicationId={applicationId} />}
         </>
     );
 };
