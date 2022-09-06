@@ -22,7 +22,7 @@ const styles = {
     },
     notification: {
         mt: 2.5,
-        maxWidth: '32.5rem'
+        maxWidth: 520
     }
 };
 

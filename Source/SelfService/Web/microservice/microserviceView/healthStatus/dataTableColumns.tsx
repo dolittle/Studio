@@ -15,7 +15,7 @@ export const columns: GridColDef[] = [
         headerName: 'Container',
         headerClassName: 'negativeRowSpanHack',
         sortable: false,
-        minWidth: 584,
+        minWidth: 534,
         flex: 1,
     },
     {
