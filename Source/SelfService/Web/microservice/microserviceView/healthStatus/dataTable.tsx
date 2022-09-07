@@ -73,7 +73,7 @@ export const DataTable = ({ data, applicationId }: DataTableProps) => {
 
     const DetailPanelContent = ({ row }) => (
         <Box component={Paper}>
-            <PodLogScreen applicationId={applicationId} podName={row.podName} containerName={row.containerName} />
+            <PodLogScreen applicationId={row.application} podName={row.podName} containerName={row.containerName} />
         </Box>
     );
 
@@ -86,6 +86,7 @@ export const DataTable = ({ data, applicationId }: DataTableProps) => {
                     id: `${pod.name}-${container.name}`,
                     podName: pod.name,
                     containerName: container.name,
+                    application: applicationId,
                     image: container.image,
                     state: container.state,
                     started: container.started,

@@ -1,13 +1,37 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid-pro';
+import { CSVLink } from 'react-csv';
+import { getPodLogs } from '../../../api/api';
+
+import { GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { DownloadRounded } from '@mui/icons-material';
 
 import { formatTime, formatStartingDate } from './helpers';
 import { statusCell } from '../../microserviceStatus';
+
+const DownloadLogs = (params: GridRenderCellParams) => {
+    const [data, setData] = useState({ logs: '' });
+
+    useEffect(() => {
+        getPodLogs(params.row.application, params.row.podName, params.row.containerName).then(data => {
+            setData(data);
+            return;
+        });
+    }, []);
+
+    return (
+        <CSVLink
+            data={data.logs}
+            filename={`${params.row.podName}-${params.row.containerName}.csv`}
+            target="_blank"
+        >
+            <DownloadRounded fontSize='small' sx={{ color: 'text.primary' }} />
+        </CSVLink>
+    )
+};
 
 export const columns: GridColDef[] = [
     {
@@ -65,6 +89,6 @@ export const columns: GridColDef[] = [
         flex: 1,
         headerAlign: 'center',
         align: 'center',
-        renderCell: () => <DownloadRounded fontSize='small' />
+        renderCell: DownloadLogs
     },
 ];
