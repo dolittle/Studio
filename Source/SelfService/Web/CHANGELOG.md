@@ -1,3 +1,13 @@
+# [2.1.11] - 2022-9-8 [PR: #238](https://github.com/dolittle/Studio/pull/238)
+## Summary
+
+Commented out all code related to 'Insight' page doe need for needing improvements (access the db directly instead of using APIs) etc.
+
+### Removed
+
+- Hided Insight menu item and its content.
+
+
 # [2.1.10] - 2022-8-25 [PR: #237](https://github.com/dolittle/Studio/pull/237)
 ## Summary
 
