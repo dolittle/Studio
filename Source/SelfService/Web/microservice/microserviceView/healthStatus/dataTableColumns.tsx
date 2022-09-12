@@ -3,17 +3,23 @@
 
 import React, { useState, useEffect } from 'react';
 
+import { useSnackbar } from 'notistack';
+
 import { CSVLink } from 'react-csv';
+
 import { getPodLogs } from '../../../api/api';
 
 import { GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
-import { DownloadRounded } from '@mui/icons-material';
+import { Button, IconButton, Link } from '@mui/material';
+import { Close, DownloadRounded } from '@mui/icons-material';
 
 import { formatTime, formatStartingDate } from './helpers';
 import { statusCell } from '../../microserviceStatus';
 
 const DownloadLogs = (params: GridRenderCellParams) => {
     const [data, setData] = useState({ logs: '' });
+
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     useEffect(() => {
         getPodLogs(params.row.application, params.row.podName, params.row.containerName).then(data => {
@@ -22,14 +28,38 @@ const DownloadLogs = (params: GridRenderCellParams) => {
         });
     }, []);
 
+    const logsBlob = new Blob([data.logs], { type: 'text/plain' })
+    const containerImage = params.row.image.replace(':', '/')
+
+    const handleNotification = () => {
+        enqueueSnackbar(`'${containerImage}' logs have been downloaded.`, {
+            variant: 'default',
+            persist: true,
+            anchorOrigin: { horizontal: 'left', vertical: 'bottom' },
+            action: (key) => (
+                <>
+                    <Button
+                        size='small'
+                        onClick={() => alert(`Clicked on action of snackbar with id: ${key}`)}
+                    >
+                        Open
+                    </Button>
+                    <IconButton onClick={() => closeSnackbar(key)}>
+                        <Close />
+                    </IconButton>
+                </>
+            )
+        });
+    };
+
     return (
-        <CSVLink
-            data={data.logs}
-            filename={`${params.row.podName}-${params.row.containerName}.csv`}
-            target="_blank"
+        <Link
+            href={URL.createObjectURL(logsBlob)}
+            download={`${containerImage}.log`}
+            onClick={handleNotification}
         >
             <DownloadRounded fontSize='small' sx={{ color: 'text.primary' }} />
-        </CSVLink>
+        </Link>
     )
 };
 
