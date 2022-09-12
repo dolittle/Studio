@@ -40,18 +40,23 @@ const styles = {
 const DetailPanelExpandIcon = () => <ExpandMore fontSize='medium' />;
 const DetailPanelCollapseIcon = () => <ExpandLess fontSize='medium' />;
 const CustomToolbar = (rows: Rows[]) =>
-    <Typography variant='body2' sx={styles.podTitle}>{`Pod: ${rows[0]?.podName || 'N/A'}`}</Typography>
+    <Typography variant='body2' sx={styles.podTitle}>{`Pod: ${rows[0]?.podName || 'N/A'}`}</Typography>;
 
 type Rows = {
     id: string
     podName: string
     containerName: string
+    application: string
     state: string
     age: string
     image: string
     started: string
     restarts: number
 };
+
+type Row = {
+    row: Rows
+}
 
 type DataTableProps = {
     data: any
@@ -71,7 +76,7 @@ export const DataTable = ({ data, applicationId }: DataTableProps) => {
         }
     };
 
-    const DetailPanelContent = ({ row }) => (
+    const DetailPanelContent = ({ row }: Row) => (
         <Box component={Paper}>
             <PodLogScreen applicationId={row.application} podName={row.podName} containerName={row.containerName} />
         </Box>

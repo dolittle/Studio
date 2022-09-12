@@ -95,5 +95,5 @@ export const DownloadLogs = (params: GridRenderCellParams) => {
         >
             <DownloadRounded fontSize='small' sx={{ color: 'text.primary' }} />
         </Link>
-    )
+    );
 };
