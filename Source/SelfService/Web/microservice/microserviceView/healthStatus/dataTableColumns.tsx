@@ -17,7 +17,7 @@ export const columns: GridColDef[] = [
     },
     {
         field: 'restarts',
-        headerName: 'Restarts',
+        headerName: 'Crashes',
         sortable: false,
         minWidth: 100,
         flex: 1,
