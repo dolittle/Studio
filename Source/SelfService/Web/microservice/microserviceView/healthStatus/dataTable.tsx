@@ -56,7 +56,7 @@ type Rows = {
 
 type Row = {
     row: Rows
-}
+};
 
 type DataTableProps = {
     data: any

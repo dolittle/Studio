@@ -102,7 +102,7 @@ const statusInfo = (status: string) => {
 
 export type ConstainerHealthStatusProps = {
     status: string[]
-}
+};
 
 export const ConstainerHealthStatus = ({ status }: ConstainerHealthStatusProps) => {
     const { backgroundColor, icon, label } = statusInfo(status.join(' '));
