@@ -47,7 +47,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
             return;
         }
 
-        window.location = window.location;
+        window.location.reload();
     };
 
     return (
@@ -59,9 +59,10 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                 Restart microservice
             </ButtonText>
 
-            {!data && <Notification title={errorMessage} sx={styles.notification} />}
-
-            {data && <DataTable data={data} applicationId={applicationId} />}
+            {data
+                ? <DataTable data={data} applicationId={applicationId} />
+                : <Notification title={errorMessage} sx={styles.notification} />
+            }
         </>
     );
 };

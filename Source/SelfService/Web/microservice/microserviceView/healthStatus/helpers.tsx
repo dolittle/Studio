@@ -4,6 +4,8 @@
 import React, { useState, useEffect } from 'react';
 
 import { useSnackbar } from 'notistack';
+import formatDuration from 'date-fns/formatDuration';
+import parseISO from 'date-fns/parseISO';
 
 import { getPodLogs } from '../../../api/api';
 
@@ -14,28 +16,28 @@ import Slide from '@mui/material/Slide';
 
 export const formatTime = (time: string) => {
     if (time) {
-        const splitedTime = time.split(/[hm.]/g);
+        const splitedTime = time.split(/[hm.]/g).map(Number);
 
-        if (time.includes('h') && +splitedTime[0] >= 24) {
-            const days = Math.floor(+splitedTime[0] / 24);
-            const hours = +splitedTime[0] % 24;
-            const minutes = +splitedTime[1];
-            const seconds = +splitedTime[2];
+        if (time.includes('h') && splitedTime[0] >= 24) {
+            const days = Math.floor(splitedTime[0] / 24);
+            const hours = splitedTime[0] % 24;
+            const minutes = splitedTime[1];
+            const seconds = splitedTime[2];
 
             return `${days}d ${hours}h ${minutes}m ${seconds}s`;
         } else if (time.includes('h')) {
-            const hours = +splitedTime[0] % 24;
-            const minutes = +splitedTime[1];
-            const seconds = +splitedTime[2];
+            const hours = splitedTime[0] % 24;
+            const minutes = splitedTime[1];
+            const seconds = splitedTime[2];
 
             return `${hours}h ${minutes}m ${seconds}s`;
         } else if (time.includes('m')) {
-            const minutes = +splitedTime[0];
-            const seconds = +splitedTime[1];
+            const minutes = splitedTime[0];
+            const seconds = splitedTime[1];
 
             return `${minutes}m ${seconds}s`;
         } else if (time.includes('.')) {
-            const seconds = +splitedTime[0];
+            const seconds = splitedTime[0];
 
             return `${seconds}s`;
         } else {
@@ -47,15 +49,9 @@ export const formatTime = (time: string) => {
 };
 
 export const formatStartingDate = (initialDate: string) => {
-    if (initialDate) {
-        const splitedDate = initialDate.split(' ');
-        const date = splitedDate[0].split('-').join('/');
-        const time = splitedDate[1];
+    const time = initialDate.replace(/\+[^.]+$/, '').split('-').join('/');
 
-        return `${date} ${time}`;
-    } else {
-        return 'N/A';
-    };
+    return initialDate ? time : 'N/A';
 };
 
 export const DownloadLogs = (params: GridRenderCellParams) => {
@@ -64,11 +60,8 @@ export const DownloadLogs = (params: GridRenderCellParams) => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     useEffect(() => {
-        getPodLogs(params.row.application, params.row.podName, params.row.containerName).then(data => {
-            setData(data);
-            return;
-        });
-    }, []);
+        getPodLogs(params.row.application, params.row.podName, params.row.containerName).then(setData);
+    }, [params.row.application, params.row.podName, params.row.containerName]);
 
     const logsBlob = new Blob([data.logs], { type: 'text/plain' });
     const containerImage = params.row.image.replace(':', '/');

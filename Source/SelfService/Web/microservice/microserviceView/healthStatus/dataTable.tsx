@@ -39,10 +39,10 @@ const styles = {
 
 const DetailPanelExpandIcon = () => <ExpandMore fontSize='medium' />;
 const DetailPanelCollapseIcon = () => <ExpandLess fontSize='medium' />;
-const CustomToolbar = (rows: Rows[]) =>
+const CustomToolbar = (rows: DataTableItems[]) =>
     <Typography variant='body2' sx={styles.podTitle}>{`Pod: ${rows[0]?.podName || 'N/A'}`}</Typography>;
 
-type Rows = {
+type DataTableItems = {
     id: string
     podName: string
     containerName: string
@@ -54,8 +54,8 @@ type Rows = {
     restarts: number
 };
 
-type Row = {
-    row: Rows
+type DataTableRow = {
+    row: DataTableItems
 };
 
 type DataTableProps = {
@@ -76,7 +76,7 @@ export const DataTable = ({ data, applicationId }: DataTableProps) => {
         }
     };
 
-    const DetailPanelContent = ({ row }: Row) => (
+    const DetailPanelContent = ({ row }: DataTableRow) => (
         <Box component={Paper}>
             <PodLogScreen applicationId={row.application} podName={row.podName} containerName={row.containerName} />
         </Box>
@@ -86,7 +86,7 @@ export const DataTable = ({ data, applicationId }: DataTableProps) => {
 
     return (
         data.pods?.flatMap(pod => {
-            const rows = pod.containers.map((container: ContainerStatusInfo) => {
+            const items = pod.containers.map((container: ContainerStatusInfo) => {
                 return {
                     id: `${pod.name}-${container.name}`,
                     podName: pod.name,
@@ -98,12 +98,12 @@ export const DataTable = ({ data, applicationId }: DataTableProps) => {
                     age: container.age,
                     restarts: container.restarts
                 };
-            }) as Rows[];
+            }) as DataTableItems[];
 
             return (
-                <Box key={rows[0]?.id} component={Paper} sx={styles.dataTableWrapper}>
+                <Box key={items[0]?.id} component={Paper} sx={styles.dataTableWrapper}>
                     <DataGridPro
-                        rows={rows}
+                        rows={items}
                         columns={columns}
                         disableColumnMenu
                         hideFooter
@@ -119,7 +119,7 @@ export const DataTable = ({ data, applicationId }: DataTableProps) => {
                         components={{
                             DetailPanelExpandIcon,
                             DetailPanelCollapseIcon,
-                            Toolbar: () => CustomToolbar(rows)
+                            Toolbar: () => CustomToolbar(items)
                         }}
                     />
                 </Box>

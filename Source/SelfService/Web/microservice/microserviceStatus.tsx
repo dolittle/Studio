@@ -100,11 +100,11 @@ const statusInfo = (status: string) => {
     };
 };
 
-export type ConstainerHealthStatusProps = {
+export type ContainerHealthStatusProps = {
     status: string[]
 };
 
-export const ConstainerHealthStatus = ({ status }: ConstainerHealthStatusProps) => {
+export const ContainerHealthStatus = ({ status }: ContainerHealthStatusProps) => {
     const { backgroundColor, icon, label } = statusInfo(status.join(' '));
 
     return (

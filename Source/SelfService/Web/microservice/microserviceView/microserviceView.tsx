@@ -17,7 +17,7 @@ import { Box, Typography } from '@mui/material';
 import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
 
 import { HealthStatus } from './healthStatus/healthStatus';
-import { ConstainerHealthStatus } from '../microserviceStatus';
+import { ContainerHealthStatus } from '../microserviceStatus';
 
 type MicroserviceViewProps = {
     application: HttpResponseApplication;
@@ -30,13 +30,8 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
 
-    const getContainerStatuses = () => {
-        return podsData.pods.flatMap(pod => {
-            return pod.containers.map((container) => {
-                return container.state;
-            });
-        });
-    };
+    const getContainerStatuses = () => podsData.pods.flatMap(pod =>
+        pod.containers.map(container => container.state));
 
     const applicationId = application.id;
 
@@ -101,7 +96,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         <>
             <Box sx={{ display: 'flex', mb: 3.25 }}>
                 <Typography variant="h1">{msName}</Typography>
-                <ConstainerHealthStatus status={getContainerStatuses()} />
+                <ContainerHealthStatus status={getContainerStatuses()} />
             </Box>
 
             <Tabs

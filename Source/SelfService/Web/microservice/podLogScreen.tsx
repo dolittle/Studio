@@ -17,19 +17,17 @@ export const PodLogScreen = ({ applicationId, podName, containerName }: any) => 
         });
     }, []);
 
-    return (
-        <>
-            {!data.logs && (
-                <Typography variant="body2" sx={{ pl: 7.5, py: 1 }}>
-                    There are no logs printed for this microservice.
-                </Typography>
-            )}
+    if (!data.logs) {
+        return (
+            <Typography variant="body2" sx={{ pl: 7.5, py: 1 }}>
+                There are no logs printed for this microservice.
+            </Typography>
+        );
+    }
 
-            {data.logs && (
-                <pre style={{ padding: '0.5rem 0.625rem 1.1875rem 3rem', margin: '0', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
-                    {data.logs}
-                </pre>
-            )}
-        </>
+    return (
+        <pre style={{ padding: '0.5rem 0.625rem 1.1875rem 3rem', margin: '0', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+            {data.logs}
+        </pre>
     );
 };
