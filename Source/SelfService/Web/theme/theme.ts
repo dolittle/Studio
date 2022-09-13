@@ -51,26 +51,31 @@ const typography: TypographyOptions = {
     },
     subtitle1: {
         fontSize: '1.25rem', //20px
-        fontWeight: 500,
+        fontWeight: 400,
     },
     subtitle2: {
         fontSize: '1.125rem', //18px
-        fontWeight: 500,
+        fontWeight: 600,
     },
     body1: {
         fontSize: '1rem', //16px
+        fontWeight: 400,
     },
     body2: {
         fontSize: '0.875rem', //14px
+        fontWeight: 400,
     },
     button: {
         fontSize: '0.75rem', //12px
+        fontWeight: 500,
     },
     caption: {
-        fontSize: '0.75rem', //12px
+        fontSize: '0.75rem', //
+        fontWeight: 400,
     },
     overline: {
         fontSize: '0.625rem', //10px
+        fontWeight: 400,
     },
     monospace: {
         fontSize: '0.8125rem', //13px
@@ -125,7 +130,7 @@ const darkPalette: PaletteOptions = {
         dark: '#5EBA82',
         contrastText: '#191A21',
     },
-    divider: '#2C2B33',
+    divider: 'rgba(44, 43, 51, 0.9);',
 };
 const customComponentStyles: {} = {
     MuiDataGrid: {
