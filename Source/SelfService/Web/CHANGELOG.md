@@ -1,3 +1,13 @@
+# [2.2.0] - 2022-9-13 [PR: #240](https://github.com/dolittle/Studio/pull/240)
+## Summary
+
+Updated Theme colors.
+
+### Changed
+
+- Theme colors
+
+
 # [2.1.11] - 2022-9-8 [PR: #238](https://github.com/dolittle/Studio/pull/238)
 ## Summary
 
