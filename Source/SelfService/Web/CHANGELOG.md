@@ -1,3 +1,15 @@
+# [2.3.0] - 2022-9-13 [PR: #242](https://github.com/dolittle/Studio/pull/242)
+## Summary
+
+Theme font weights was outdated and needed update.
+
+<img width="300" alt="Screenshot 2022-09-13 at 17 11 13" src="https://user-images.githubusercontent.com/19160439/189923933-9ebe3ea7-fa0b-4502-9b32-c9d4ff71b361.png">
+
+### Changed
+
+- Updated theme font weights and divider opacity.
+
+
 # [2.2.0] - 2022-9-13 [PR: #240](https://github.com/dolittle/Studio/pull/240)
 ## Summary
 
