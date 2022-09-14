@@ -3,20 +3,13 @@
 
 import React from 'react';
 
-import { Alert, AlertTitle, Link, Theme, Typography } from '@mui/material';
+import { Alert, AlertTitle, Link, Typography } from '@mui/material';
 
 const styles = {
     alertWrapper: {
-        'borderColor': (theme: Theme) => theme.palette.error.dark,
-        'textAlign': 'left',
-        '& .MuiAlert-icon': {
-            color: (theme: Theme) => theme.palette.error.dark,
-        }
+        borderColor: 'error.dark',
+        textAlign: 'left',
     },
-    supportLink: {
-        color: (theme: Theme) => theme.palette.primary.main,
-        textDecoration: 'underline'
-    }
 };
 
 type NotificationProps = {
@@ -31,7 +24,6 @@ export const Notification = ({ title, sx }: NotificationProps) => (
         <Typography variant='body2'>
             {'Please try again later. If problem persists, please '}
             <Link
-                sx={styles.supportLink}
                 href='mailto: support@dolittle.com'>
                 contact support
             </Link>{'.'}
