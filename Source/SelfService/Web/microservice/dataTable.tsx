@@ -11,10 +11,21 @@ import { statusCell, customStatusFieldSort } from './microserviceStatus';
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Box, Paper, Tooltip } from '@mui/material';
 
+const capitalize = (str: string) => {
+    if(str.length < 1){
+        return str;
+    }
+
+    return str?.length > 0 ? str.charAt(0).toUpperCase() + str.slice(1) : str;
+};
+
 const sortByRuntimeVersion = (params: GridValueGetterParams) => {
     const runtimeVersion = params.row.edit?.extra?.runtimeImage?.replace(/dolittle\/runtime:/gi, '');
+    if(typeof runtimeVersion !== 'string'){
+        return 'N/A';
+    }
 
-    return `${runtimeVersion || 'N/A'}`;
+    return capitalize(runtimeVersion);
 };
 
 const publicUrlCell = (params: GridRenderCellParams) => {
@@ -100,7 +111,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             minWidth: 270,
             flex: 1,
             valueGetter: (params: GridValueGetterParams) =>
-                `${params.row.edit?.extra?.headImage || 'N/A'}`,
+                `${params.row.edit?.extra?.headImage || 'N/A'}`
         },
         {
             field: 'runtime',
@@ -124,7 +135,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
             flex: 1,
             renderCell: statusCell,
             sortComparator: customStatusFieldSort
-        },
+        }
     ];
 
     const onTableRowClick = (microserviceId: string) => {

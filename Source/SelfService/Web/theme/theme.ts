@@ -51,26 +51,31 @@ const typography: TypographyOptions = {
     },
     subtitle1: {
         fontSize: '1.25rem', //20px
-        fontWeight: 500,
+        fontWeight: 400,
     },
     subtitle2: {
         fontSize: '1.125rem', //18px
-        fontWeight: 500,
+        fontWeight: 600,
     },
     body1: {
         fontSize: '1rem', //16px
+        fontWeight: 400,
     },
     body2: {
         fontSize: '0.875rem', //14px
+        fontWeight: 400,
     },
     button: {
         fontSize: '0.75rem', //12px
+        fontWeight: 500,
     },
     caption: {
-        fontSize: '0.75rem', //12px
+        fontSize: '0.75rem', //
+        fontWeight: 400,
     },
     overline: {
         fontSize: '0.625rem', //10px
+        fontWeight: 400,
     },
     monospace: {
         fontSize: '0.8125rem', //13px
@@ -82,8 +87,8 @@ const darkPalette: PaletteOptions = {
     mode: 'dark',
     primary: {
         main: '#8C9AF8',
-        light: '#b3bbfb',
-        dark: '#6678f6',
+        light: '#B3BBFB',
+        dark: '#6678F6',
         contrastText: '#191A21',
     },
     secondary: {
@@ -97,15 +102,14 @@ const darkPalette: PaletteOptions = {
         paper: '#191A21',
     },
     text: {
-        disabled: '#93959f',
-        // hint: '#CECFD0',
-        primary: '#fafafa',
-        secondary: '#cecfd0',
+        disabled: '#93959F',
+        primary: '#FAFAFA',
+        secondary: '#CECFD0',
     },
     error: {
-        main: '#F88C8C',
+        main: '#F66666',
         light: '#FBB3B3',
-        dark: '#F66666',
+        dark: '#C55252',
         contrastText: '#191A21',
     },
     warning: {
@@ -115,18 +119,18 @@ const darkPalette: PaletteOptions = {
         contrastText: '#191A21',
     },
     info: {
-        main: '#8cd0f8',
-        light: '#A3D9F9',
-        dark: '#70a6c6',
+        main: '#8CD0F8',
+        light: '#C0FFFF',
+        dark: '#599FC5',
         contrastText: '#191A21',
     },
     success: {
-        main: '#76e8a2',
+        main: '#76E8A2',
         light: '#91EDB5',
         dark: '#5EBA82',
         contrastText: '#191A21',
     },
-    divider: '#2C2B33',
+    divider: 'rgba(44, 43, 51, 0.9);',
 };
 const customComponentStyles: {} = {
     MuiDataGrid: {

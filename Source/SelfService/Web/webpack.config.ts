@@ -56,8 +56,17 @@ function webpack(env: Args, argv: Args) {
                     type: 'asset/resource',
                 },
                 {
-                    test: /\.svg/,
-                    type: 'asset/inline'
+                    test: /\.svg$/,
+                    exclude: /node_modules/,
+                    issuer: /\.tsx?$/,
+                    resourceQuery: { not: /url/ },
+                    loader: '@shared/web/svgr/loader',
+                },
+                {
+                    test: /\.svg$/,
+                    exclude: /node_modules/,
+                    resourceQuery: /url/,
+                    type: 'asset/resource',
                 },
                 {
                     test: /\.(scss|css)$/,

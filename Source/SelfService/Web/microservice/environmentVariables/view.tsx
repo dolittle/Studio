@@ -37,7 +37,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
         Promise.all([
             getEnvironmentVariables(applicationId, environment, microserviceId)
         ]).then(values => {
-            const data = values[0].data;
+            // Order by name to avoid random sort order
+            const data = values[0].data.sort((env1, env2) => env1.name > env2.name ? 1 : -1);
             // Spreading does not work
             setCurrentData(JSON.parse(JSON.stringify(data)));
             setOriginalData(JSON.parse(JSON.stringify(data)));

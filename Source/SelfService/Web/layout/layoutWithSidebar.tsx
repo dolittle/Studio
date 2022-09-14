@@ -34,7 +34,7 @@ export type NavigationMenuItem = {
 };
 
 export type NavigationListItemButtonProps = ListItemButtonBaseProps & {
-    navigationMenuItem: NavigationMenuItem , history: History<LocationState>
+    navigationMenuItem: NavigationMenuItem, history: History<LocationState>
 };
 
 export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
@@ -132,11 +132,11 @@ export const getDefaultMenuWithItems = (
     );
 };
 
-export const NavigationListItemButton = ({navigationMenuItem, history, ...props}: NavigationListItemButtonProps) => {
+export const NavigationListItemButton = ({ navigationMenuItem, history, ...props }: NavigationListItemButtonProps) => {
     const defaultProps: ListItemButtonBaseProps = {
         disableGutters: true,
         selected: window.location.href.includes(navigationMenuItem.href),
-        sx:{
+        sx: {
             display: 'flex',
             whiteSpace: 'nowrap',
             padding: '0.5rem 1rem',
@@ -152,9 +152,9 @@ export const NavigationListItemButton = ({navigationMenuItem, history, ...props}
                 event.preventDefault();
                 const href = navigationMenuItem.href;
                 navigationMenuItem.forceReload ?
-                window.location.href = href
-                :
-                history.push(href);
+                    window.location.href = href
+                    :
+                    history.push(href);
             }}
             {...props}
         />);
@@ -183,11 +183,11 @@ export const getMenuWithApplication = (
             name: 'Microservices',
             icon: <HexagonRounded />
         },
-        {
-            href: `/insights/application/${applicationId}/${environment}/overview`,
-            name: 'Insights',
-            icon: <InsightsRounded />
-        },
+        // {
+        //     href: `/insights/application/${applicationId}/${environment}/overview`,
+        //     name: 'Insights',
+        //     icon: <InsightsRounded />
+        // },
         {
             href: `/containerregistry/application/${applicationId}/${environment}/overview`,
             name: 'Container Registry',

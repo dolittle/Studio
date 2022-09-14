@@ -1,3 +1,148 @@
+# [2.3.0] - 2022-9-13 [PR: #242](https://github.com/dolittle/Studio/pull/242)
+## Summary
+
+Theme font weights was outdated and needed update.
+
+<img width="300" alt="Screenshot 2022-09-13 at 17 11 13" src="https://user-images.githubusercontent.com/19160439/189923933-9ebe3ea7-fa0b-4502-9b32-c9d4ff71b361.png">
+
+### Changed
+
+- Updated theme font weights and divider opacity.
+
+
+# [2.2.0] - 2022-9-13 [PR: #240](https://github.com/dolittle/Studio/pull/240)
+## Summary
+
+Updated Theme colors.
+
+### Changed
+
+- Theme colors
+
+
+# [2.1.11] - 2022-9-8 [PR: #238](https://github.com/dolittle/Studio/pull/238)
+## Summary
+
+Commented out all code related to 'Insight' page doe need for needing improvements (access the db directly instead of using APIs) etc.
+
+### Removed
+
+- Hided Insight menu item and its content.
+
+
+# [2.1.10] - 2022-8-25 [PR: #237](https://github.com/dolittle/Studio/pull/237)
+## Summary
+
+Guards against missing runtime version in microservices page
+
+
+# [2.1.9] - 2022-8-25 [PR: #232](https://github.com/dolittle/Studio/pull/232)
+## Summary
+
+Added background color for body what resolves white loading screen.
+
+Changed background Dolittle logo color for having more contrast.
+
+<img width="1287" alt="Screenshot 2022-08-18 at 11 36 06" src="https://user-images.githubusercontent.com/19160439/185350109-4c28d956-e6f8-4204-8ce1-159abc8194ee.png">
+
+### Added
+
+- Body background color
+
+### Changed
+
+- Background logo color
+
+
+# [2.1.8] - 2022-8-22 [PR: #233](https://github.com/dolittle/Studio/pull/233)
+## Summary
+Capitalized first letter in data table runtime version column.
+
+<img width="1000" alt="Screenshot 2022-08-18 at 14 57 00" src="https://user-images.githubusercontent.com/19160439/185389002-edee114e-30df-4dcf-b721-5811350b2cc8.png">
+
+### Fixed
+
+- Capitalized first letter in runtime version
+
+
+# [2.1.7] - 2022-8-19 [PR: #236](https://github.com/dolittle/Studio/pull/236)
+## Summary
+
+Improves the initial page-load time by removing the unused (and not published) `manifest.json` file. This file is part of the PWA framework (https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) - and I don't think we need it now.
+
+The way it was setup today introduced a delay in the initial page-load time because it:
+1. Caused an unnecessary request to a file that did not exist (so no caching) which seems to block the DOM content loaded. So it would not allow any React rendering before this failing request completed.
+2. Chrome seems to load this file without any cookies - meaning that it was treated as an unauthenticated request, and was redirect to the login page (which is also a little bit slow).
+
+
+### Fixed
+
+- The `<base>` tag was moved before the `<link>` tags to make it apply to those URLs as well. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+### Removed
+
+- The unused `manifest.json` file and the corresponding `<link>` tag to speed up initial page-load.
+
+
+# [2.1.6] - 2022-8-19 [PR: #235](https://github.com/dolittle/Studio/pull/235)
+## Summary
+
+Fixes an issue we have where navigating back to e.g. `dolittle.studio` after logging out caused a cached version of the frontend to be loaded - which then failed to get any data because the user is not logged in. By changing the server of the SelfService/Web frontend to NGINX, and setting up explicit caching rules - the browsers should now only cache the static files (which webpack invalidates by changing the name) and not any paths leading to the `index.html` file. This means that the frontend will be reloaded on any browser navigation.
+
+### Changed
+
+- The SelfService/Web server from `gostatic` to `nginx` to allow more control of the serving of content.
+
+### Fixed
+
+- The SPA caching that caused strange behaviour when navigating after logging out, and old versions of the SPA served after new deployments until a manual refresh.
+
+
+# [2.1.5] - 2022-8-18 [PR: #229](https://github.com/dolittle/Studio/pull/229)
+## Summary
+
+Shows the environment variables alphabetically on load in the edit page
+
+
+# [2.1.4] - 2022-8-17 [PR: #231](https://github.com/dolittle/Studio/pull/231)
+## Summary
+
+Made login flow styles consistent with authentication side.
+
+<img width="1315" alt="Screenshot 2022-08-16 at 17 31 59" src="https://user-images.githubusercontent.com/19160439/184905905-86cbe159-c1ed-49fc-8ee1-df4a1b7645c6.png">
+
+### Added
+
+- Babel plugin for faster MUI builds
+- Loading of .svg files as <Box component=svg /> to webpack and typescript
+- Logout button to 'Select Your Application & Environment' page
+
+### Changed
+
+- Describe the outwards facing code change
+
+### Fixed
+
+- Describe the fix and the bug
+- Overall code refactoring and extraction
+
+### Removed
+
+- Unused logo files
+
+
+# [2.1.3] - 2022-8-17 [PR: #225](https://github.com/dolittle/Studio/pull/225)
+## Summary
+
+Fixed menu dropdown styles when hovered and added padding.
+
+<img width="339" alt="Screenshot 2022-08-08 at 10 32 02" src="https://user-images.githubusercontent.com/19160439/183364028-9cdf8ec1-963e-4c97-add1-2e535190ac6f.png">
+
+### Fixed
+
+- Menu items hover and focused state style
+
+
 # [2.1.2] - 2022-8-15 [PR: #230](https://github.com/dolittle/Studio/pull/230)
 ## Summary
 

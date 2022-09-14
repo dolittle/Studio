@@ -106,46 +106,44 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <Box px={{ xs: 1, md: 3 }}>
-                <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
-                <Typography variant='h1'>Logs</Typography>
-                <Box mt={3}>
-                    <LogFilterPanel microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
-                    {
-                        filters.dateRange === 'live'
-                            ? <LogsFromLast
-                                applicationId={currentApplicationId}
-                                environment={currentEnvironment}
-                                filters={filters}
-                                last={DAY}
-                                render={logs => (
-                                    <LogPanel
-                                        application={application.name}
-                                        environment={currentEnvironment}
-                                        filters={filters}
-                                        logs={logs}
-                                    />
-                                )}
-                            />
-                            : <LogsInRange
-                                applicationId={currentApplicationId}
-                                environment={currentEnvironment}
-                                filters={filters}
-                                from={filters.dateRange.start}
-                                to={filters.dateRange.stop}
-                                render={(logs, loadMoreLogs) => (
-                                    <LogPanel
-                                        application={application.name}
-                                        environment={currentEnvironment}
-                                        filters={filters}
-                                        logs={logs}
-                                        autoLoadMoreLogs
-                                        loadMoreLogs={loadMoreLogs}
-                                    />
-                                )}
-                            />
-                    }
-                </Box>
+            <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
+            <Typography variant='h1'>Logs</Typography>
+            <Box mt={3}>
+                <LogFilterPanel microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
+                {
+                    filters.dateRange === 'live'
+                        ? <LogsFromLast
+                            applicationId={currentApplicationId}
+                            environment={currentEnvironment}
+                            filters={filters}
+                            last={DAY}
+                            render={logs => (
+                                <LogPanel
+                                    application={application.name}
+                                    environment={currentEnvironment}
+                                    filters={filters}
+                                    logs={logs}
+                                />
+                            )}
+                        />
+                        : <LogsInRange
+                            applicationId={currentApplicationId}
+                            environment={currentEnvironment}
+                            filters={filters}
+                            from={filters.dateRange.start}
+                            to={filters.dateRange.stop}
+                            render={(logs, loadMoreLogs) => (
+                                <LogPanel
+                                    application={application.name}
+                                    environment={currentEnvironment}
+                                    filters={filters}
+                                    logs={logs}
+                                    autoLoadMoreLogs
+                                    loadMoreLogs={loadMoreLogs}
+                                />
+                            )}
+                        />
+                }
             </Box>
         </LayoutWithSidebar >
     );
