@@ -4,7 +4,9 @@
 import React, { useState, useEffect } from 'react';
 
 import { useSnackbar } from 'notistack';
-import formatDuration from 'date-fns/formatDuration';
+import { formatDuration, intervalToDuration, Locale, sub } from 'date-fns';
+import { enUS } from 'date-fns/locale';
+
 import parseISO from 'date-fns/parseISO';
 
 import { getPodLogs } from '../../../api/api';
@@ -14,38 +16,53 @@ import { IconButton, Link } from '@mui/material';
 import { Close, DownloadRounded } from '@mui/icons-material';
 import Slide from '@mui/material/Slide';
 
-export const formatTime = (time: string) => {
-    if (time) {
-        const splitedTime = time.split(/[hm.]/g).map(Number);
-
-        if (time.includes('h') && splitedTime[0] >= 24) {
-            const days = Math.floor(splitedTime[0] / 24);
-            const hours = splitedTime[0] % 24;
-            const minutes = splitedTime[1];
-            const seconds = splitedTime[2];
-
-            return `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        } else if (time.includes('h')) {
-            const hours = splitedTime[0] % 24;
-            const minutes = splitedTime[1];
-            const seconds = splitedTime[2];
-
-            return `${hours}h ${minutes}m ${seconds}s`;
-        } else if (time.includes('m')) {
-            const minutes = splitedTime[0];
-            const seconds = splitedTime[1];
-
-            return `${minutes}m ${seconds}s`;
-        } else if (time.includes('.')) {
-            const seconds = splitedTime[0];
-
-            return `${seconds}s`;
-        } else {
-            return 'N/A';
+const shortDurationLocale: Locale = {
+    formatDistance(token, count) {
+        switch (token) {
+            case 'xYears':
+                return `${count}y`;
+            case 'xMonths':
+                return `${count}m`;
+            case 'xWeeks':
+                return `${count}w`;
+            case 'xDays':
+                return `${count}d`;
+            case 'xHours':
+                return `${count}h`;
+            case 'xMinutes':
+                return `${count}m`;
+            case 'xSeconds':
+                return `${count}s`;
+            default:
+                return enUS.formatDistance!(token, count);
         }
-    } else {
+    },
+};
+
+export const formatTime = (time: string) => {
+    if (typeof time !== 'string') {
         return 'N/A';
+    }
+
+    const match = time.match(/^(?:(?<hours>\d+)h)?(?:(?<minutes>\d+)m)?(?:(?<seconds>[\d.]+)s)?(?:(?<milliseconds>[\d.]+)ms)?(?:(?<microseconds>[\d.]+)µs)?(?:(?<nanoseconds>[\d.]+)ns)?$/);
+    if (!match?.groups) {
+        return 'N/A';
+    }
+
+    const { hours, minutes, seconds, milliseconds, microseconds, nanoseconds } = match.groups;
+
+    const duration = {
+        hours: parseFloat(hours) || 0,
+        minutes: parseFloat(minutes) || 0,
+        seconds: (parseFloat(seconds) || 0) + (parseFloat(milliseconds) || 0)*1e3 + (parseFloat(microseconds) || 0)*1e6 + (parseFloat(nanoseconds) || 0)*1e9,
     };
+
+    const normalisedDuration = intervalToDuration({
+        start: sub(Date.now(), duration),
+        end: Date.now(),
+    });
+
+    return formatDuration(normalisedDuration, { format: [ 'days', 'hours', 'minutes', 'seconds' ], locale: shortDurationLocale });
 };
 
 export const formatStartingDate = (initialDate: string) => {
