@@ -6,26 +6,10 @@ import { useHistory } from 'react-router-dom';
 
 import { getPodStatus, MicroserviceInfo } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
+import { statusCell, customStatusFieldSort } from './microserviceStatus';
 
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
-
-import { Box, Paper, Tooltip, Theme, Typography } from '@mui/material';
-import { CheckCircleRounded, ErrorRounded, WarningRounded, QuestionMark } from '@mui/icons-material';
-
-const styles = {
-    status: {
-        display: 'flex',
-        justifyContent: 'center'
-    },
-    statusTitle: {
-        fontWeight: 500,
-        fontSize: '0.75rem',
-        lineHeight: '1.375rem',
-        letterSpacing: '0.06rem',
-        textTransform: 'uppercase',
-        ml: 1.25
-    }
-};
+import { Box, Paper, Tooltip } from '@mui/material';
 
 const capitalize = (str: string) => {
     if(str.length < 1){
@@ -60,85 +44,24 @@ const publicUrlCell = (params: GridRenderCellParams) => {
     );
 };
 
-enum MicroserviceStatus {
-    Running = 0,
-    Pending = 1,
-    Failing = 2,
-    Unknown = 3,
-}
-
-const getMicroserviceState = (phase?: string): MicroserviceStatus => {
-    const checkStatus = phase?.toLowerCase?.();
-
-    if (typeof checkStatus !== 'string') {
-        return MicroserviceStatus.Unknown;
-    } else if (checkStatus.includes('running')) {
-        return MicroserviceStatus.Running;
-    } else if (checkStatus.includes('pending')) {
-        return MicroserviceStatus.Pending;
-    } else if (checkStatus.includes('failed')) {
-        return MicroserviceStatus.Failing;
-    }
-
-    return MicroserviceStatus.Unknown;
-};
-
-const statusCell = (params: GridRenderCellParams) => {
-    let color = (theme: Theme) => theme.palette.text.primary;
-    let icon = <QuestionMark sx={{ color }} />;
-    let status = 'N/A';
-
-    switch (getMicroserviceState(params.row.status[0]?.phase)) {
-        case MicroserviceStatus.Running:
-            icon = <CheckCircleRounded />;
-            status = 'Running';
-            break;
-        case MicroserviceStatus.Pending:
-            color = (theme: Theme) => theme.palette.warning.main;
-            icon = <WarningRounded sx={{ color }} />;
-            status = 'Pending';
-            break;
-        case MicroserviceStatus.Failing:
-            color = (theme: Theme) => theme.palette.error.main;
-            icon = <ErrorRounded sx={{ color }} />;
-            status = 'Failed';
-            break;
-        case MicroserviceStatus.Unknown:
-            return 'N/A';
-    }
-
-    return (
-        <Box sx={styles.status}>
-            {icon}
-            <Typography sx={{ ...styles.statusTitle, color }}>{status}</Typography>
-        </Box>
-    );
-};
-
-const customStatusFieldSort = (_, __, left, right) => {
-    const leftStatus = getMicroserviceState(left.value[0]?.phase);
-    const rightStatus = getMicroserviceState(right.value[0]?.phase);
-    return leftStatus - rightStatus;
-};
-
 export type MicroserviceObject = {
-    id: string
-    name: string
-    kind: string
-    environment: string
-    live: MicroserviceInfo
+    id: string;
+    name: string;
+    kind: string;
+    environment: string;
+    live: MicroserviceInfo;
     edit: {
         extra?: {
-            isPublic: boolean
-        }
-    }
-    status?: []
+            isPublic: boolean;
+        };
+    };
+    phase?: string;
 };
 
 type DataTableProps = {
-    environment: string
-    application: HttpResponseApplication
-    microservices: MicroserviceObject[]
+    environment: string;
+    application: HttpResponseApplication;
+    microservices: MicroserviceObject[];
 };
 
 export const DataTable = ({ application, environment, microservices }: DataTableProps) => {
@@ -156,7 +79,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
 
             return {
                 ...microservice,
-                status
+                phase: status[0]?.phase
             } as MicroserviceObject;
         }))
             .then(setRows);
@@ -179,13 +102,13 @@ export const DataTable = ({ application, environment, microservices }: DataTable
         {
             field: 'name',
             headerName: 'Name',
-            minWidth: 200,
-            flex: 1
+            minWidth: 270,
+            flex: 1,
         },
         {
             field: 'image',
             headerName: 'Container Image',
-            minWidth: 200,
+            minWidth: 270,
             flex: 1,
             valueGetter: (params: GridValueGetterParams) =>
                 `${params.row.edit?.extra?.headImage || 'N/A'}`
@@ -193,22 +116,22 @@ export const DataTable = ({ application, environment, microservices }: DataTable
         {
             field: 'runtime',
             headerName: 'Runtime',
-            minWidth: 200,
+            minWidth: 270,
             flex: 1,
             valueGetter: sortByRuntimeVersion
         },
         {
             field: 'isPublic',
             headerName: 'Public URL',
-            minWidth: 200,
+            minWidth: 270,
             flex: 1,
             renderCell: publicUrlCell,
             sortComparator: customUrlFieldSort
         },
         {
-            field: 'status',
+            field: 'phase',
             headerName: 'Status',
-            minWidth: 200,
+            minWidth: 270,
             flex: 1,
             renderCell: statusCell,
             sortComparator: customStatusFieldSort
@@ -228,6 +151,8 @@ export const DataTable = ({ application, environment, microservices }: DataTable
                 disableColumnMenu
                 hideFooter
                 autoHeight={true}
+                headerHeight={46}
+                getRowHeight={() => 'auto'}
                 loading={!rows}
                 disableSelectionOnClick
                 onRowClick={(params) => onTableRowClick(params.row.id)}

@@ -2,30 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
-import { Stack } from '@fluentui/react/lib/Stack';
-import { Text } from '@fluentui/react';
 
-import { getPodLogs, HttpResponsePodLog } from '../api/api';
 import { Typography } from '@mui/material';
 
+import { getPodLogs, HttpResponsePodLog } from '../api/api';
 
-const stackTokens = { childrenGap: 15 };
-
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-}
-
-export const PodLogScreen: React.FunctionComponent = () => {
-    const { applicationId, podName } = useParams() as any;
-    const query = useQuery();
-    // TODO need to expose the options here
-    const containerName = query.has('containerName') ? query.get('containerName') as string : '';
-    const [data, setData] = useState({
-        applicationId: '',
-        podName: '',
-        logs: ''
-    } as HttpResponsePodLog);
+export const PodLogScreen = ({ applicationId, podName, containerName }: any) => {
+    const [data, setData] = useState({ logs: '' } as HttpResponsePodLog);
 
     useEffect(() => {
         getPodLogs(applicationId, podName, containerName).then(data => {
@@ -34,26 +17,17 @@ export const PodLogScreen: React.FunctionComponent = () => {
         });
     }, []);
 
+    if (!data.logs) {
+        return (
+            <Typography variant="body2" sx={{ pl: 7.5, py: 1 }}>
+                There are no logs printed for this microservice.
+            </Typography>
+        );
+    }
+
     return (
-        <>
-            <Typography variant='h1' my={2}>Pod View Screen</Typography>
-
-            <Stack tokens={stackTokens}>
-                <Text variant="xLarge" block>
-                    application: {applicationId}
-                </Text>
-                <Text variant="xLarge" block>
-                    podName: {podName}
-                </Text>
-
-                {data.logs !== '' && (
-                    <>
-                        <pre style={{ whiteSpace: 'pre' }}>
-                            {data.logs}
-                        </pre>
-                    </>
-                )}
-            </Stack >
-        </>
+        <pre style={{ padding: '0.5rem 0.625rem 1.1875rem 3rem', margin: '0', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+            {data.logs}
+        </pre>
     );
 };

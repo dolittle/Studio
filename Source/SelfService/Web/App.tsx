@@ -49,6 +49,10 @@ const snackbarStyles = {
     '& .SnackbarContent-root.SnackbarItem-variantError': {
         backgroundColor: '#F44040',
     },
+    '& .SnackbarContainer-left .SnackbarItem-contentRoot': {
+        color: '#ffffff',
+        backgroundColor: '#323232'
+    }
 };
 
 export const App = () => {

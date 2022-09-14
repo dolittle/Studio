@@ -7,7 +7,7 @@ import { useReadable } from 'use-svelte-store';
 
 import { getConfigFilesNamesList, getPodStatus, getServerUrlPrefix, HttpResponsePodStatus, InputConfigFile, updateConfigFiles } from '../api/api';
 import { microservices, MicroserviceStore } from '../stores/microservice';
-import { View as BaseView } from './base/view';
+import { MicroserviceView as BaseView } from './microserviceView/microserviceView';
 import { View as RawDataLogView } from './rawDataLog/view';
 import { View as PurchaseOrderApiView } from './purchaseOrder/view';
 import { HttpResponseApplication } from '../api/application';
@@ -27,7 +27,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     const applicationId = application.id;
     const microserviceId = _props.microserviceId;
     const environment = _props.environment;
-
 
     // Want microservice name
     const [podsData, setPodsData] = useState({
