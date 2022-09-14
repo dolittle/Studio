@@ -4,10 +4,8 @@
 import React, { useState, useEffect } from 'react';
 
 import { useSnackbar } from 'notistack';
-import { formatDuration, intervalToDuration, Locale, sub } from 'date-fns';
+import { format, formatDuration, intervalToDuration, Locale, parse, sub } from 'date-fns';
 import { enUS } from 'date-fns/locale';
-
-import parseISO from 'date-fns/parseISO';
 
 import { getPodLogs } from '../../../api/api';
 
@@ -66,9 +64,16 @@ export const formatTime = (time: string) => {
 };
 
 export const formatStartingDate = (initialDate: string) => {
-    const time = initialDate.replace(/\+[^.]+$/, '').split('-').join('/');
+    if (typeof initialDate !== 'string') {
+        return 'N/A';
+    }
 
-    return initialDate ? time : 'N/A';
+    const parsedDate = parse(initialDate, `yyyy-MM-dd HH:mm:ss xxxx 'UTC'`, Date.now());
+    if (isNaN(parsedDate.valueOf())) {
+        return 'N/A';
+    }
+
+    return format(parsedDate, 'yyyy/MM/dd HH:mm:ss');
 };
 
 export const DownloadLogs = (params: GridRenderCellParams) => {
