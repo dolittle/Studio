@@ -1,3 +1,28 @@
+# [2.4.0] - 2022-9-14 [PR: #239](https://github.com/dolittle/Studio/pull/239)
+## Summary
+
+Updated Health Status page so it would offer better user experience.
+
+<img width="1488" alt="Screenshot 2022-09-12 at 19 33 25" src="https://user-images.githubusercontent.com/19160439/189708018-8178a179-320b-4c55-af4b-854dbf47609c.png">
+
+### Added
+
+- Tabs component to Storybook
+- Storybook button component custom style support as 'sx'
+
+### Changed
+
+- MUI Data Table to MUI Data Grid Pro
+
+### Fixed
+
+- Updated Fluent UI because of their side bug
+
+### Removed
+
+- Fluent UI from components, that I did worked on
+
+
 # [2.3.0] - 2022-9-13 [PR: #242](https://github.com/dolittle/Studio/pull/242)
 ## Summary
 
