@@ -14,9 +14,20 @@ const Template: ComponentStory<typeof Summary> = (props) => <Summary {...props} 
 
 export const Normal = Template.bind({});
 Normal.args = {
-    now: { value: 10.1123456789774261321, tooltip: 'hello now' },
-    avg: { value: 12 },
+    now: 10.1123456789774261321,
+    avg: 12,
     max: 87,
     digits: 2,
-    unit: '%'
+    description: 'CPU usage',
+    period: 'from last restart',
+    unit: '%',
 };
+
+export const Default = Template.bind({});
+Default.args = {
+    now: 10.1123456789774261321,
+    avg: 12,
+    max: 87,
+    period: 'last 24h',
+};
+

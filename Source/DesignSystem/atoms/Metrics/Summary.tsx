@@ -1,37 +1,41 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
-import Tooltip from '@mui/material/Tooltip';
 
-const number = (summary: SummaryValue, digits?: number) => {
-    const value = typeof summary === 'number' ? summary : summary.value;
-    const formatted = digits !== undefined ? value.toFixed(digits) : value.toString();
+import { Box, Tooltip } from '@mui/material';
 
-    if (typeof summary === 'number' || summary.tooltip === undefined) {
-        return <span>{formatted}</span>;
-    }
-
-    return (
-        <Tooltip title={summary.tooltip}>
-            <span>{formatted}</span>
-        </Tooltip>
-    );
-};
-
-type SummaryValue = number | { value: number, tooltip?: string };
+const fmt = (summary: number, digits?: number) =>
+    digits !== undefined
+        ? summary.toFixed(digits)
+        : summary.toString();
 
 export type SummaryProps = {
-    now: SummaryValue
-    avg: SummaryValue
-    max: SummaryValue
+    now: number;
+    avg: number;
+    max: number;
+    period: string;
+    description?: string;
     digits?: number;
-    unit?: string
+    unit?: string;
 };
 
 export const Summary = (props: SummaryProps) => {
+    const description = props.description ?? '';
+
     return (
-        <>
-            { number(props.now, props.digits) } | { number(props.avg, props.digits) } | { number(props.max, props.digits) } {props.unit ?? ''}
-        </>
+        <Box sx={{whiteSpace: 'pre'}}>
+            <Tooltip title={`Average ${description} ${props.period}`}>
+                <span>{fmt(props.avg, props.digits)}</span>
+            </Tooltip>
+            {' | '}
+            <Tooltip title={`Maximum ${description} ${props.period}`}>
+                <span>{fmt(props.max, props.digits)}</span>
+            </Tooltip>
+            {' | '}
+            <Tooltip title={`Current ${description}`}>
+                <span>{fmt(props.now, props.digits)}</span>
+            </Tooltip>
+            { props.unit && ' ' + props.unit }
+        </Box>
     );
 };
