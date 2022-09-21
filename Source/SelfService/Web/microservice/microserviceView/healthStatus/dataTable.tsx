@@ -23,12 +23,10 @@ const styles = {
     },
     dataTableWrapper: {
         'mb': 3,
-        '& .negativeRowSpanHack': {
-            mr: 6.25,
+        // Moves the Container-column header left, so that it covers the "detail expand icon" column as well
+        '& .move-container-header-left': {
+            left: -50, // The default column with for the DataGrid (used for the detail expand icon colum)
         },
-        '& .MuiDataGrid-columnHeader[data-field="__detail_panel_toggle__"]': {
-            display: 'none'
-        }
     },
     dataTable: {
         '& .MuiDataGrid-row': {
