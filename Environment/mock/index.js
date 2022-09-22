@@ -7,14 +7,13 @@ const { logging, notImplemented } = require('./middlewares');
 
 const applications = require('./api/applications');
 const logs = require('./monitoring/logs');
+const metrics = require('./monitoring/metrics');
 
 
 // SelfService Backend API
 const backend = express();
 backend.use(logging);
-
 backend.use(applications);
-
 backend.use(notImplemented);
 
 // Loki API
@@ -23,6 +22,7 @@ require('express-ws')(loki);
 loki.use(logging);
 
 loki.use('/loki/api/v1', logs);
+loki.use('/prometheus/api/v1', metrics);
 
 loki.use(notImplemented);
 
