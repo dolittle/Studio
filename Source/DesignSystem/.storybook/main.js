@@ -2,7 +2,11 @@ const path = require('path');
 
 module.exports = {
   stories: [
-    '../atoms/**/*.stories.@(js|jsx|ts|tsx)'
+    {
+        directory: '../atoms',
+        files: '**/*.stories.tsx',
+        titlePrefix: 'Atoms',
+    },
   ],
 
   addons: [
