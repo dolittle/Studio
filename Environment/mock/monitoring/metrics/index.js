@@ -65,7 +65,7 @@ routes.get('/query', (req, res) => {
 routes.get('/query_range', (req, res) => {
     console.log('Getting metrics');
     const query = parseQuery(req.query.query);
-    const result = queryRange(query, BigInt(req.query.start), BigInt(req.query.end), parseInt(req.query.limit), req.query.direction);
+    const result = queryRange(query, BigInt(req.query.start), BigInt(req.query.end), parseFloat(req.query.step));
     global.setTimeout(() => {
         res.status(200).json(result).end();
     }, 0);

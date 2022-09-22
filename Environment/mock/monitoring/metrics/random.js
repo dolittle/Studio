@@ -19,12 +19,14 @@ const microservices = [
 const metrics = {
     'microservice:head_container_cpu_usage_seconds:rate_max': {
         range: [0, 2],
-        interval: 60,
-        per_container: false,
+        rate: 0.1,
+        step: 60,
+        per_container: true,
     },
     'default': {
         range: [0, 1],
-        interval: 60,
+        rate: 0.01,
+        step: 60,
         per_container: false,
     }
 }
@@ -79,16 +81,39 @@ exports.queryInstant = (query, time) => {
     };
 };
 
-exports.queryRange = (query, from, to, limit, direction) => {
+exports.queryRange = (query, start, end, step) => {
+    const microservices = findMicroservicesFrom(query.labels);
+    const spec = metrics[query.metric] ?? metrics.default;
+
+    step = Math.max(step, spec.step);
+    step = BigInt(Math.ceil(step));
+
+    const generated = createMetricsFor(microservices, spec.per_container)
+        .map(metric => {
+            const values = [];
+
+            let time = start;
+            let value = spec.range[0] + Math.random()*(spec.range[1]-spec.range[0]);
+            while (time <= end) {
+                values.push([
+                    Number(time),
+                    value.toString(),
+                ]);
+
+                time += step;
+
+                value += Math.random()*spec.rate - spec.rate/2;
+                value = Math.max(spec.range[0], Math.min(spec.range[1], value))
+            }
+
+            return { ...metric, values };
+        });
+
     return {
         status: 'success',
         data: {
             resultType: 'matrix',
-            result: grouped.map((group) => ({
-                stream: group[0],
-                values: group[1].map((_) => [_[0].toString(), _[1]]),
-            })),
-            stats: {},
+            result: generated,
         },
     };
 };
