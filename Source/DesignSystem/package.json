@@ -14,7 +14,10 @@
         "ci": "yarn clean && yarn lint:ci && yarn build"
     },
     "dependencies": {
-        "@shared/styling": "1.0.0"
+        "@shared/styling": "1.0.0",
+        "vega": "5.22.1",
+        "vega-lite": "5.5.0",
+        "react-vega": "7.6.0"
     },
     "devDependencies": {
         "@shared/web": "1.0.0",

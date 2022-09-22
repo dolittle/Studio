@@ -7,6 +7,11 @@ module.exports = {
         files: '**/*.stories.tsx',
         titlePrefix: 'Atoms',
     },
+    {
+        directory: '../molecules',
+        files: '**/*.stories.tsx',
+        titlePrefix: 'Molecules',
+    },
   ],
 
   addons: [
