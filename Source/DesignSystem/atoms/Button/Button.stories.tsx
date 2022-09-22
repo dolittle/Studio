@@ -5,7 +5,12 @@ import { componentStories } from '@dolittle/design-system';
 
 import { Button } from './Button';
 
-const { metadata, createStory } = componentStories(Button);
+const { metadata, createStory } = componentStories(Button, {
+    actions: {
+        onClick: 'clicked',
+    },
+});
+
 export default metadata;
 
 export const Filled = createStory({
