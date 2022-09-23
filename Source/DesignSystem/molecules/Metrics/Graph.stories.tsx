@@ -12,6 +12,8 @@ const { metadata, createStory } = componentStories(Graph);
 export default metadata;
 
 export const Normal = createStory({
+    title: 'CPU Usage',
+    subtitle: 'Last 24 hours',
     data: [
         {
             group: 'Head',
