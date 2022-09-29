@@ -1,23 +1,17 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo } from 'react';
-import { createClassFromSpec } from 'react-vega';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { createClassFromSpec, Vega, VisualizationSpec } from 'react-vega';
+import { timeFormatLocale, TimeInterval } from 'vega';
 
 import { Grid, Paper, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-const Chart = createClassFromSpec({
-    mode: 'vega-lite',
-    spec: {
+const spec: VisualizationSpec = {
         width: 'container',
         height: 'container',
         background: '#0000',
-        mark: {
-            type: 'area',
-            line: true,
-            fillOpacity: 0.2,
-        },
         config: {
             legend: {
                 disable: true,
@@ -38,30 +32,70 @@ const Chart = createClassFromSpec({
                 stroke: '#504D4D',
             }
         },
-        encoding: {
-            x: {
-                field: 'time',
-                type: 'temporal',
+        layer: [
+            {
+                mark: {
+                    type: 'area',
+                    line: true,
+                    fillOpacity: 0.2,
+                },
+                encoding: {
+                    x: {
+                        field: 'time',
+                        type: 'temporal',
+                        scale: {
+                            type: 'time',
+                        },
+                        axis: {
+                            labelExpr: `
+                                hours(datum.value) == 0
+                                    ? timeFormat(datum.value, '%b %-d')
+                                    : timeFormat(datum.value, '%H:%M')
+                            `,
+                        },
+                    },
+                    y: {
+                        field: 'value',
+                        type: 'quantitative',
+                        stack: false,
+                    },
+                    color: {
+                        field: 'index',
+                        type: 'nominal',
+                        scale: {
+                            range: [
+                                { expr: 'themeColor("primary")' },
+                                { expr: 'themeColor("secondary")' },
+                            ]
+                        }
+                    },
+                },
             },
-            y: {
-                field: 'value',
-                type: 'quantitative',
-                stack: false,
-            },
-            color: {
-                field: 'index',
-                type: 'nominal',
-                scale: {
-                    range: [
-                        { expr: 'themeColor("primary")' },
-                        { expr: 'themeColor("secondary")' },
-                    ]
+            {
+                mark: {
+                    type: 'rule',
+                    strokeDash: [4, 4],
+                },
+                encoding: {
+                    y: {
+                        field: 'value',
+                        aggregate: 'mean',
+                    },
+                    color: {
+                        field: 'index',
+                        type: 'nominal',
+                        scale: {
+                            range: [
+                                { expr: 'themeColor("primary")' },
+                                { expr: 'themeColor("secondary")' },
+                            ]
+                        }
+                    },
                 }
-            },
-        },
+            }
+        ],
         data: { name: 'table' },
-    }
-});
+    };
 
 type DataPoint = { time: number, value: number };
 
@@ -135,9 +169,36 @@ export const Graph = (props: GraphProps) => {
                     { props.subtitle && <Typography variant='subtitle2'>{props.subtitle}</Typography> }
                 </Grid>
                 <Grid item xs={6}>
+                    {
+                        props.data.map((dataset, n) => (
+                            <Grid container key={n} sx={{ textAlign: 'right' }}>
+                                <Grid item xs={4} >
+                                    <Typography variant='body2' sx={{ textTransform: 'uppercase' }}>{dataset.group}</Typography>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Typography variant='body2'>
+                                        <svg viewBox='0 0 10 10' preserveAspectRatio='none' style={{ lineHeight: 1, height: '1em', width: '2.6em', verticalAlign: 'middle', margin: '0 1em' }}>
+                                            <line x1='0' y1='5' x2='10' y2='5' stroke={theme.palette[n % 2 === 0 ? 'primary' : 'secondary'].dark } strokeWidth='2' strokeDasharray='1,1' />
+                                        </svg>
+                                        Average since last restart
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Typography variant='body2'>
+                                        <svg viewBox='0 0 10 10' preserveAspectRatio='none' style={{ lineHeight: 1, height: '1em', width: '2.6em', verticalAlign: 'middle', margin: '0 1em' }}>
+                                            <line x1='0' y1='5' x2='10' y2='5' stroke={theme.palette[n % 2 === 0 ? 'primary' : 'secondary'].dark } strokeWidth='2' />
+                                        </svg>
+                                        {dataset.name}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        ))
+                    }
                 </Grid>
                 <Grid item xs={12}  sx={{ height: 200 }}>
-                    <Chart
+                    <Vega
+                        mode='vega'
+                        spec={spec}
                         actions={false}
                         style={{ height: '100%', width: '100%' }}
                         data={{ table }}
