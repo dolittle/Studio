@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import { EnvironmentsProps } from './create';
-
-import { themeDark } from '../../theme/theme';
 import { Box, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
+import { themeDark } from '@dolittle/design-system';
+
+import { EnvironmentsProps } from './create';
 
 const styles = {
     formFieldsWrapper: {

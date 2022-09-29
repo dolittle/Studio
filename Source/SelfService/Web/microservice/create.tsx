@@ -5,13 +5,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 
+import { Grid, Typography } from '@mui/material';
+import { themeDark } from '@dolittle/design-system';
+
 import { Create as Base } from './base/create';
 import { Create as PurchaseOrder } from './purchaseOrder/create';
 
 import { HttpResponseApplication } from '../api/application';
-
-import { themeDark } from '../theme/theme';
-import { Grid, Typography } from '@mui/material';
 
 import { SimpleCard } from './create/card';
 

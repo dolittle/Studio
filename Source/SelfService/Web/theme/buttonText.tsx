@@ -5,8 +5,8 @@ import React from 'react';
 
 import { SxProps } from '@mui/material/styles';
 import { Button as MuiButton } from '@mui/material';
-import { themeDark } from './theme';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { themeDark } from '@dolittle/design-system';
 
 type Props = {
     onClick?: (event: React.MouseEvent<HTMLElement>) => void;

@@ -6,6 +6,8 @@ import { Route, BrowserRouter, useLocation, Switch } from 'react-router-dom';
 import { QueryParamProvider } from 'use-query-params';
 import { LicenseInfo } from '@mui/x-license-pro';
 
+import { themeDark } from '@dolittle/design-system';
+
 import { ApplicationsScreen } from './screens/applicationsScreen/applicationsScreen';
 
 import { uriWithAppPrefix } from './store';
@@ -27,17 +29,11 @@ import { SnackbarProvider } from 'notistack';
 import Grow from '@mui/material/Grow';
 import { TransitionProps } from '@mui/material/transitions';
 import { ThemeScreen } from './screens/themeScreen';
-import '@fontsource/rubik/300.css';
-import '@fontsource/rubik/400.css';
-import '@fontsource/rubik/500.css';
-import '@fontsource/rubik/700.css';
-import '@fontsource/roboto-mono';
 import { ApplicationScreen } from './screens/applicationScreen';
 import { Box } from '@mui/material';
 import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
 import { M3ConnectorScreen } from './screens/m3connectorScreen';
 import { LogsScreen } from './screens/logsScreen';
-import { themeDark } from './theme/theme';
 
 LicenseInfo.setLicenseKey('4a83cf3032e8518adfbe8694d092262dTz00ODUxMyxFPTE2OTEyMjE0ODgxODUsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=');
 

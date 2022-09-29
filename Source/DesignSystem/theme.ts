@@ -4,6 +4,12 @@
 import { createTheme, PaletteOptions } from '@mui/material/styles';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
 
+import '@fontsource/rubik/300.css';
+import '@fontsource/rubik/400.css';
+import '@fontsource/rubik/500.css';
+import '@fontsource/rubik/700.css';
+import '@fontsource/roboto-mono';
+
 declare module '@mui/material/styles' {
     interface TypographyVariants {
         monospace: React.CSSProperties;
@@ -184,6 +190,7 @@ const customComponentStyles: {} = {
         },
     },
 };
+
 export const themeDark = createTheme({
     palette: darkPalette,
     typography,

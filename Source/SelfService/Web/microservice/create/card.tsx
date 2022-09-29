@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import { themeDark } from '../../theme/theme';
 import { Button, Card, CardActions, CardContent, CardHeader, Link, Typography } from '@mui/material';
+import { themeDark } from '@dolittle/design-system';
 
 const styles = {
     card: {
