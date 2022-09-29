@@ -5,15 +5,22 @@ import React from 'react';
 
 import { Box, Tooltip } from '@mui/material';
 
-const fmt = (summary: number, digits?: number) =>
-    digits !== undefined
-        ? summary.toFixed(digits)
-        : summary.toString();
+const fmt = (summary?: number, digits?: number) => {
+    if (summary === undefined) {
+        return 'N/A';
+    }
+
+    if (digits !== undefined) {
+        return summary.toFixed(digits);
+    }
+
+    return summary.toString();
+};
 
 export type SummaryProps = {
-    now: number;
-    avg: number;
-    max: number;
+    now?: number;
+    avg?: number;
+    max?: number;
     period: string;
     description?: string;
     digits?: number;

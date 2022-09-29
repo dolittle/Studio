@@ -3,11 +3,9 @@
 
 import React, { useCallback, useState } from 'react';
 
-import { ContainerStatusInfo } from 'Source/SelfService/Web/api/api';
-
 import { Box, Paper, Typography } from '@mui/material';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
-import { DataGridPro, GridRowId } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridRowId, GridRowParams } from '@mui/x-data-grid-pro';
 
 import { PodLogScreen } from '../../podLogScreen';
 import { columns } from './dataTableColumns';
@@ -37,10 +35,16 @@ const styles = {
 
 const DetailPanelExpandIcon = () => <ExpandMore fontSize='medium' />;
 const DetailPanelCollapseIcon = () => <ExpandLess fontSize='medium' />;
-const CustomToolbar = (rows: DataTableItems[]) =>
+const CustomToolbar = (rows: DataTableRow[]) =>
     <Typography variant='body2' sx={styles.podTitle}>{`Pod: ${rows[0]?.podName || 'N/A'}`}</Typography>;
 
-type DataTableItems = {
+export type DataTableStats = {
+    average: number;
+    maximum: number;
+    current: number;
+};
+
+export type DataTableRow = {
     id: string
     podName: string
     containerName: string
@@ -50,18 +54,15 @@ type DataTableItems = {
     image: string
     started: string
     restarts: number
+    cpu?: DataTableStats
+    memory?: DataTableStats
 };
 
-type DataTableRow = {
-    row: DataTableItems
+export type DataTableProps = {
+    rows: DataTableRow[]
 };
 
-type DataTableProps = {
-    data: any
-    applicationId: string
-};
-
-export const DataTable = ({ data, applicationId }: DataTableProps) => {
+export const DataTable = ({ rows }: DataTableProps) => {
     const [detailPanelExpandedRowIds, setDetailPanelExpandedRowIds] = useState<GridRowId[]>([]);
 
     const handleDetailPanelExpandedRowIdsChange = (newIds: GridRowId[]) => {
@@ -74,7 +75,7 @@ export const DataTable = ({ data, applicationId }: DataTableProps) => {
         }
     };
 
-    const DetailPanelContent = ({ row }: DataTableRow) => (
+    const DetailPanelContent = ({row}: {row: DataTableRow}) => (
         <Box component={Paper}>
             <PodLogScreen applicationId={row.application} podName={row.podName} containerName={row.containerName} />
         </Box>
@@ -83,45 +84,27 @@ export const DataTable = ({ data, applicationId }: DataTableProps) => {
     const getDetailPanelHeight = useCallback(() => 'auto', []);
 
     return (
-        data.pods?.flatMap(pod => {
-            const items = pod.containers.map((container: ContainerStatusInfo) => {
-                return {
-                    id: `${pod.name}-${container.name}`,
-                    podName: pod.name,
-                    containerName: container.name,
-                    application: applicationId,
-                    image: container.image,
-                    state: container.state,
-                    started: container.started,
-                    age: container.age,
-                    restarts: container.restarts
-                };
-            }) as DataTableItems[];
-
-            return (
-                <Box key={items[0]?.id} component={Paper} sx={styles.dataTableWrapper}>
-                    <DataGridPro
-                        rows={items}
-                        columns={columns}
-                        disableColumnMenu
-                        hideFooter
-                        headerHeight={46}
-                        getRowHeight={() => 'auto'}
-                        autoHeight={true}
-                        disableSelectionOnClick
-                        getDetailPanelContent={({ row }) => <DetailPanelContent row={row} />}
-                        getDetailPanelHeight={getDetailPanelHeight}
-                        detailPanelExpandedRowIds={detailPanelExpandedRowIds}
-                        onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
-                        sx={styles.dataTable}
-                        components={{
-                            DetailPanelExpandIcon,
-                            DetailPanelCollapseIcon,
-                            Toolbar: () => CustomToolbar(items)
-                        }}
-                    />
-                </Box>
-            );
-        })
+        <Box component={Paper} sx={styles.dataTableWrapper}>
+            <DataGridPro
+                rows={rows}
+                columns={columns}
+                disableColumnMenu
+                hideFooter
+                headerHeight={46}
+                getRowHeight={() => 'auto'}
+                autoHeight={true}
+                disableSelectionOnClick
+                getDetailPanelContent={({ row }: GridRowParams<DataTableRow>) => <DetailPanelContent row={row} />}
+                getDetailPanelHeight={getDetailPanelHeight}
+                detailPanelExpandedRowIds={detailPanelExpandedRowIds}
+                onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
+                sx={styles.dataTable}
+                components={{
+                    DetailPanelExpandIcon,
+                    DetailPanelCollapseIcon,
+                    Toolbar: () => CustomToolbar(rows)
+                }}
+            />
+        </Box>
     );
 };

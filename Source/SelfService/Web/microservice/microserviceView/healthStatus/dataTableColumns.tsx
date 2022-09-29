@@ -10,6 +10,7 @@ import { Summary } from '@dolittle/design-system/atoms/Metrics/Summary';
 
 import { formatTime, formatStartingDate, DownloadLogs } from './helpers';
 import { statusCell } from '../../microserviceStatus';
+import { DataTableRow } from './dataTable';
 
 export const columns: GridColDef[] = [
     {
@@ -37,7 +38,7 @@ export const columns: GridColDef[] = [
         flex: 1,
         headerAlign: 'right',
         align: 'right',
-        valueGetter: (params: GridValueGetterParams) =>
+        valueGetter: (params: GridValueGetterParams<any, DataTableRow>) =>
             formatTime(params.row?.age)
     },
     {
@@ -48,7 +49,7 @@ export const columns: GridColDef[] = [
         flex: 1,
         headerAlign: 'right',
         align: 'right',
-        valueGetter: (params: GridValueGetterParams) =>
+        valueGetter: (params: GridValueGetterParams<any, DataTableRow>) =>
             formatStartingDate(params.row?.started)
     },
     {
@@ -62,8 +63,8 @@ export const columns: GridColDef[] = [
             <Box className='MuiDataGrid-columnHeaderTitle'>
                 CPU <Box component='span' sx={{fontSize: '0.75rem', fontWeight: '400'}}>Avg | Max | Now</Box>
             </Box>,
-        renderCell: (params: GridRenderCellParams) =>
-            <Summary now={50} avg={10} max={80} unit='%' description='CPU usage' period='last 24h' digits={0} />,
+        renderCell: (params: GridRenderCellParams<any, DataTableRow>) =>
+            <Summary now={params.row.cpu?.current} avg={params.row.cpu?.average} max={params.row.cpu?.maximum} unit='%' description='CPU usage' period='last 24h' digits={0} />,
     },
     {
         field: 'memory',
@@ -77,8 +78,8 @@ export const columns: GridColDef[] = [
             <Box className='MuiDataGrid-columnHeaderTitle'>
                 Memory <Box component='span' sx={{fontSize: '0.75rem', fontWeight: '400'}}>Avg | Max | Now</Box>
             </Box>,
-        renderCell: (params: GridRenderCellParams) =>
-            <Summary now={2} avg={1} max={9.2} unit='MiB' description='Memory usage' period='last 24h' digits={2} />,
+        renderCell: (params: GridRenderCellParams<any, DataTableRow>) =>
+            <Summary now={params.row.memory?.current} avg={params.row.memory?.average} max={params.row.memory?.maximum} unit='MiB' description='Memory usage' period='last 24h' digits={0} />,
     },
     {
         field: 'state',

@@ -6,13 +6,13 @@ import React, { useEffect } from 'react';
 import { RestartAlt } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
 
-import { HttpResponsePodStatus, restartMicroservice } from '../../../api/api';
+import { ContainerStatusInfo, HttpResponsePodStatus, restartMicroservice } from '../../../api/api';
 
-import { useMetricsFromLast } from '../../../metrics/useMetrics';
+import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 
 import { Notification } from '../../../theme/Notification';
 import { ButtonText } from '../../../theme/buttonText';
-import { DataTable } from './dataTable';
+import { DataTable, DataTableRow, DataTableStats } from './dataTable';
 
 const styles = {
     restartBtn: {
@@ -26,6 +26,18 @@ const styles = {
         mt: 2.5,
         maxWidth: 520
     }
+};
+
+const computeStats = (metric: Metric | undefined, scale: number): DataTableStats | undefined => {
+    if (metric === undefined) {
+        return undefined;
+    }
+
+    const current = metric.values[metric.values.length - 1].value * scale;
+    const maximum = metric.values.reduce((max, datapoint) => datapoint.value > max ? datapoint.value : max, 0) * scale;
+    const average = metric.values.reduce((sum, datapoint) => sum + datapoint.value, 0) / (metric.values.length ?? 1) * scale;
+
+    return { average, maximum, current };
 };
 
 const errorMessage = 'Cannot display microservice containers';
@@ -52,18 +64,34 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
         window.location.reload();
     };
 
-    const cpu = useMetricsFromLast('microservice:head_container_cpu_usage_seconds:rate_max', 86_400, 60);
 
-    // const cpuUsage = /* */[];
+    const cpu = useMetricsFromLast(`microservice:container_cpu_usage_seconds:rate_max{application_id="${applicationId}", environment="${environment}", microservice_id="${microserviceId}"}`, 86_400, 60);
+    const memory = useMetricsFromLast(`microservice:container_memory_working_set_bytes:max{application_id="${applicationId}", environment="${environment}", microservice_id="${microserviceId}"}`, 86_400, 60);
 
-    // useEffect(() => {
-    //     queryRange({
-    //         query: 'microservice:head_container_cpu_usage_seconds:rate_max',
-    //         start: BigInt(Date.now()) - 84_400n,
-    //         end: BigInt(Date.now()),
-    //         step: 60,
-    //     }).then(data => console.log('Data', data));
-    // }, []);
+    const containerTables = data.pods?.map(pod => {
+        const rows = pod.containers.map((container: ContainerStatusInfo) => {
+            const containerCPU = cpu.metrics.find(_ => _.labels.container === container.name);
+            const containerMemory = memory.metrics.find(_ => _.labels.container === container.name);
+
+            const row = {
+                id: `${pod.name}-${container.name}`,
+                podName: pod.name,
+                containerName: container.name,
+                application: applicationId,
+                image: container.image,
+                state: container.state,
+                started: container.started,
+                age: container.age,
+                restarts: container.restarts,
+                cpu: computeStats(containerCPU, 100),
+                memory: computeStats(containerMemory, 1 / 1_048_576),
+            };
+
+            return row;
+        });
+
+        return <DataTable key={pod.name} rows={rows} />;
+    });
 
     return (
         <>
@@ -74,12 +102,8 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                 Restart microservice
             </ButtonText>
 
-            {
-                cpu.loading && <h1>Loading CPU Metrics</h1>
-            }
-
-            {data
-                ? <DataTable data={data} applicationId={applicationId} />
+            {containerTables.length > 0
+                ? containerTables
                 : <Notification title={errorMessage} sx={styles.notification} />
             }
         </>
