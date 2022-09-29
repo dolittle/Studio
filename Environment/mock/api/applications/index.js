@@ -315,4 +315,16 @@ routes.get('/live/application/:applicationId/environment/:environmentId/microser
     }
 
     res.status(404).end(`Application ${applicationId}, environment ${environmentId}, microservice ${microserviceId} not found`)
-})
+});
+
+routes.get('/live/application/:applicationId/pod/:podName/logs', (req, res) => {
+    const {applicationId, podName} = req.params;
+    const {containerName} = req.query;
+
+    console.warn('Getting live microservice Pod logs', applicationId, podName, containerName, '. This will only return empty data.');
+    res.status(200).json({
+        applicationId,
+        podName,
+        logs: 'This Kubernetes logs endpoint is not implemented in the mocked backed...',
+    }).end();
+});
