@@ -167,7 +167,7 @@ export const Graph = (props: GraphProps) => {
             <Grid container spacing={2}>
                 <Grid item xs={6}>
                     <Typography variant='subtitle1'>{props.title}</Typography>
-                    { props.subtitle && <Typography variant='subtitle2'>{props.subtitle}</Typography> }
+                    { props.subtitle && <Typography variant='subtitle2' color='text.disabled'>{props.subtitle}</Typography> }
                 </Grid>
                 <Grid item xs={6}>
                     {
