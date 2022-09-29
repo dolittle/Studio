@@ -30,15 +30,15 @@ export const useMetricsFromLast = (query: string, last: number, step: number): M
 
         queryRange({
             query,
-            start: BigInt(Date.now() - last),
-            end: BigInt(Date.now()),
+            start: Date.now()/1000 - last,
+            end: Date.now()/1000,
             step,
         }).then((response) => {
             if (aborted) return;
 
             const metrics = response.data.result.map(metric => ({
                 labels: metric.metric,
-                values: metric.values.map(point => ({ time: point[0], value: parseFloat(point[1])})),
+                values: metric.values.map(point => ({ time: point[0]*1000, value: parseFloat(point[1])})),
             }));
 
             setMetrics(metrics);

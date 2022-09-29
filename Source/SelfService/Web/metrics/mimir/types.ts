@@ -77,10 +77,9 @@ export type MatrixData = {
  */
 export type QueryInstantRequest = CommonQueryRequestProperties & {
     /**
-     * The time for the query as a nanosecond Unix epoch. Defaults to now.
-     * TODO: Should this be seconds or nanoseconds?
+     * The time for the query as a Unix epoch in seconds. Defaults to now.
      */
-    time?: bigint;
+    time?: number;
 };
 
 
@@ -100,16 +99,14 @@ export type QueryInstantResponse = CommonQueryResponseProperties & {
  */
 export type QueryRangeRequest = CommonQueryRequestProperties & {
     /**
-     * The start time for the query as a nanosecond Unix epoch.
-     * TODO: Should this be seconds or nanoseconds?
+     * The start time for the query as a Unix epoch in seconds.
      */
-    start: bigint;
+    start: number;
 
     /**
-     * The end time for the query as a nanosecond Unix epoch.
-     * TODO: Should this be seconds or nanoseconds?
+     * The end time for the query as a Unix epoch in seconds.
      */
-    end: bigint;
+    end: number;
 
     /**
      * Query resolution step width in seconds.

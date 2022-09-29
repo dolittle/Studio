@@ -25,7 +25,7 @@ const metrics = {
     },
     'microservice:container_memory_working_set_bytes:max': {
         range: [52_428_800, 2_147_483_648],
-        rate: 1_048_576,
+        rate: 10_048_576,
         step: 60,
         per_container: true,
     },
@@ -73,7 +73,7 @@ exports.queryInstant = (query, time) => {
         .map(metric => ({
             ...metric,
             value: [
-                Number(time/1000n),
+                time,
                 (spec.range[0] + Math.random()*(spec.range[1]-spec.range[0])).toString(),
             ]
         }));
@@ -92,7 +92,6 @@ exports.queryRange = (query, start, end, step) => {
     const spec = metrics[query.metric] ?? metrics.default;
 
     step = Math.max(step, spec.step);
-    step = BigInt(Math.ceil(step));
 
     const generated = createMetricsFor(microservices, spec.per_container)
         .map(metric => {
@@ -102,7 +101,7 @@ exports.queryRange = (query, start, end, step) => {
             let value = spec.range[0] + Math.random()*(spec.range[1]-spec.range[0]);
             while (time <= end) {
                 values.push([
-                    Number(time),
+                    time,
                     value.toString(),
                 ]);
 
