@@ -17,9 +17,15 @@ const microservices = [
 ];
 
 const metrics = {
-    'microservice:head_container_cpu_usage_seconds:rate_max': {
+    'microservice:container_cpu_usage_seconds:rate_max': {
         range: [0, 2],
         rate: 0.1,
+        step: 60,
+        per_container: true,
+    },
+    'microservice:container_memory_working_set_bytes:max': {
+        range: [52_428_800, 2_147_483_648],
+        rate: 1_048_576,
         step: 60,
         per_container: true,
     },
