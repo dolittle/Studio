@@ -1,10 +1,12 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
+import { useSnackbar } from 'notistack';
 
 import { RestartAlt } from '@mui/icons-material';
-import { useSnackbar } from 'notistack';
+
+import { DataSet, Graph } from '@dolittle/design-system/molecules/Metrics/Graph';
 
 import { ContainerStatusInfo, HttpResponsePodStatus, restartMicroservice } from '../../../api/api';
 
@@ -12,7 +14,7 @@ import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 
 import { Notification } from '../../../theme/Notification';
 import { ButtonText } from '../../../theme/buttonText';
-import { DataTable, DataTableRow, DataTableStats } from './dataTable';
+import { DataTable, DataTableStats } from './dataTable';
 
 const styles = {
     restartBtn: {
@@ -93,6 +95,22 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
         return <DataTable key={pod.name} rows={rows} />;
     });
 
+    const cpuGraphData = useMemo(() =>
+        cpu.metrics.map(metric => ({
+            group: metric.labels.container,
+            name: 'CPU Usage',
+            values: metric.values,
+        }))
+    , [cpu.metrics]);
+
+    const memoryGraphData = useMemo(() =>
+        memory.metrics.map(metric => ({
+            group: metric.labels.container,
+            name: 'Memory Usage',
+            values: metric.values.map(({ time, value }) => ({ time, value: value / 1_048_576 })),
+        }))
+    , [memory.metrics]);
+
     return (
         <>
             <ButtonText
@@ -105,6 +123,15 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
             {containerTables.length > 0
                 ? containerTables
                 : <Notification title={errorMessage} sx={styles.notification} />
+            }
+
+            {cpu.loading
+                ? null
+                : <Graph title='CPU Usage' subtitle='Last 24 hours' sx={{ mt: 3 }} data={cpuGraphData} />
+            }
+            {memory.loading
+                ? null
+                : <Graph title='Memory Usage' subtitle='Last 24 hours' sx={{ mt: 3 }} data={memoryGraphData} />
             }
         </>
     );

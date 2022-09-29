@@ -6,7 +6,7 @@ import { createClassFromSpec, Vega, VisualizationSpec } from 'react-vega';
 import { timeFormatLocale, TimeInterval } from 'vega';
 
 import { Grid, Paper, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, SxProps, Theme } from '@mui/material/styles';
 
 const spec: VisualizationSpec = {
         width: 'container',
@@ -109,6 +109,7 @@ export type GraphProps = {
     title: string;
     subtitle?: string;
     data: DataSet[];
+    sx?: SxProps<Theme>;
 };
 
 export const Graph = (props: GraphProps) => {
@@ -162,7 +163,7 @@ export const Graph = (props: GraphProps) => {
     }), [theme]);
 
     return (
-        <Paper elevation={1} sx={{ p: 2 }}>
+        <Paper elevation={1} sx={{ p: 2, ...props.sx }}>
             <Grid container spacing={2}>
                 <Grid item xs={6}>
                     <Typography variant='subtitle1'>{props.title}</Typography>
