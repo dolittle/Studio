@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 
 import { HttpResponsePodStatus, restartMicroservice } from '../../../api/api';
 
-import { queryRange } from '../../../metrics/mimir/queries'
+import { useMetricsFromLast } from '../../../metrics/useMetrics';
 
 import { Notification } from '../../../theme/Notification';
 import { ButtonText } from '../../../theme/buttonText';
@@ -52,14 +52,18 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
         window.location.reload();
     };
 
-    useEffect(() => {
-        queryRange({
-            query: 'microservice:head_container_cpu_usage_seconds:rate_max',
-            start: BigInt(Date.now()) - 84_400n,
-            end: BigInt(Date.now()),
-            step: 60,
-        }).then(data => console.log('Data', data));
-    }, []);
+    const cpu = useMetricsFromLast('microservice:head_container_cpu_usage_seconds:rate_max', 86_400, 60);
+
+    // const cpuUsage = /* */[];
+
+    // useEffect(() => {
+    //     queryRange({
+    //         query: 'microservice:head_container_cpu_usage_seconds:rate_max',
+    //         start: BigInt(Date.now()) - 84_400n,
+    //         end: BigInt(Date.now()),
+    //         step: 60,
+    //     }).then(data => console.log('Data', data));
+    // }, []);
 
     return (
         <>
@@ -69,6 +73,10 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                 onClick={handleRestart}>
                 Restart microservice
             </ButtonText>
+
+            {
+                cpu.loading && <h1>Loading CPU Metrics</h1>
+            }
 
             {data
                 ? <DataTable data={data} applicationId={applicationId} />
