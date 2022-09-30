@@ -17,9 +17,16 @@ declare module '@mui/material/styles' {
         monospace: React.CSSProperties;
     }
 
-    // allow configuration using `createTheme`
     interface TypographyVariantsOptions {
         monospace?: React.CSSProperties;
+    }
+
+    interface Palette {
+        outlineborder: Palette['divider'];
+    }
+
+    interface PaletteOptions {
+        outlineborder?: PaletteOptions['divider'];
     }
 }
 
@@ -155,6 +162,7 @@ const palette: PaletteOptions = {
         paper: '#191A21',
     },
     divider: '#2C2B33E6',
+    outlineborder: '#504D4D',
 };
 
 const components: Components = {
