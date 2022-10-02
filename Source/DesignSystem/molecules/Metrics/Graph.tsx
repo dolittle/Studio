@@ -4,29 +4,36 @@
 import React, { useMemo } from 'react';
 import { Vega } from 'react-vega';
 
-import { useTheme, Grid, Paper, SxProps, Theme, Typography } from '@mui/material';
+import { Box, Paper, Stack, SxProps, Theme, Typography } from '@mui/material';
 
+import { DataSet, Legend } from '../../atoms/Metrics';
 import { useThemedSpec } from './theming';
 
-type DataPoint = { time: number, value: number };
-
-export type DataSet = {
-    group: string;
-    name: string;
-    values: DataPoint[];
-};
-
+/**
+ * The props for a {@link Graph} component.
+ */
 export type GraphProps = {
     title: string;
     subtitle?: string;
     data: DataSet[];
+    height?: number;
     sx?: SxProps<Theme>;
 };
 
+/**
+ * A graph (line-plot) of a dataset.
+ * @param props The {@link GraphProps} for the component instance.
+ * @returns The rendered {@link JSX.Element}.
+ */
 export const Graph = (props: GraphProps) => {
     const [spec, vegaRef] = useThemedSpec({
         width: 'container',
         height: 'container',
+        autosize: {
+            contains: 'content',
+            type: 'pad',
+        },
+        padding: 0,
         background: '#0000',
         config: {
             legend: {
@@ -53,6 +60,8 @@ export const Graph = (props: GraphProps) => {
                 mark: {
                     type: 'area',
                     line: true,
+                    strokeWidth: 2,
+                    strokeJoin: 'round',
                     fillOpacity: 0.2,
                 },
                 encoding: {
@@ -87,7 +96,9 @@ export const Graph = (props: GraphProps) => {
             {
                 mark: {
                     type: 'rule',
-                    strokeDash: [4, 4],
+                    strokeWidth: 2,
+                    strokeCap: 'round',
+                    strokeDash: [2, 4],
                 },
                 encoding: {
                     y: {
@@ -107,57 +118,28 @@ export const Graph = (props: GraphProps) => {
         data: { name: 'table' },
     });
 
-    const theme = useTheme();
-
     const table = useMemo(() =>
         props.data.flatMap((dataset, index) => dataset.values.map(datapoint => ({ ...datapoint, index })))
         , [props.data]);
 
     return (
-        <Paper elevation={1} sx={{ p: 2, ...props.sx }}>
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
+        <Paper elevation={1} sx={{ pt: 2, pr: 6, pb: 3, pl: 8, ...props.sx }}>
+            <Stack direction='row' justifyContent='space-between' sx={{ mb: 3 }}>
+                <Box>
                     <Typography variant='subtitle1'>{props.title}</Typography>
                     {props.subtitle && <Typography variant='subtitle2' color='text.disabled'>{props.subtitle}</Typography>}
-                </Grid>
-                <Grid item xs={6}>
-                    {
-                        props.data.map((dataset, n) => (
-                            <Grid container key={n} sx={{ textAlign: 'right' }}>
-                                <Grid item xs={4} >
-                                    <Typography variant='body2' sx={{ textTransform: 'uppercase' }}>{dataset.group}</Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant='body2'>
-                                        <svg viewBox='0 0 10 10' preserveAspectRatio='none' style={{ lineHeight: 1, height: '1em', width: '2.6em', verticalAlign: 'middle', margin: '0 1em' }}>
-                                            <line x1='0' y1='5' x2='10' y2='5' stroke={theme.palette[n % 2 === 0 ? 'primary' : 'secondary'].dark} strokeWidth='2' strokeDasharray='1,1' />
-                                        </svg>
-                                        Average since last restart
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant='body2'>
-                                        <svg viewBox='0 0 10 10' preserveAspectRatio='none' style={{ lineHeight: 1, height: '1em', width: '2.6em', verticalAlign: 'middle', margin: '0 1em' }}>
-                                            <line x1='0' y1='5' x2='10' y2='5' stroke={theme.palette[n % 2 === 0 ? 'primary' : 'secondary'].dark} strokeWidth='2' />
-                                        </svg>
-                                        {dataset.name}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        ))
-                    }
-                </Grid>
-                <Grid item xs={12} sx={{ height: 200 }}>
-                    <Vega
-                        mode='vega-lite'
-                        spec={spec}
-                        actions={false}
-                        style={{ height: '100%', width: '100%' }}
-                        ref={vegaRef}
-                        data={{ table }}
-                    />
-                </Grid>
-            </Grid>
+                </Box>
+                <Legend data={props.data} />
+            </Stack>
+            <Vega
+                mode='vega-lite'
+                spec={spec}
+                actions={false}
+                height={props.height ?? 200}
+                style={{ width: '100%', direction: 'rtl' }}
+                ref={vegaRef}
+                data={{ table }}
+            />
         </Paper>
     );
 };
