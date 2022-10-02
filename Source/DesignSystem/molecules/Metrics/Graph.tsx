@@ -15,6 +15,7 @@ import { useThemedSpec } from './theming';
 export type GraphProps = {
     title: string;
     subtitle?: string;
+    unit?: string;
     data: DataSet[];
     height?: number;
     sx?: SxProps<Theme>;
@@ -126,7 +127,7 @@ export const Graph = (props: GraphProps) => {
         <Paper elevation={1} sx={{ pt: 2, pr: 6, pb: 3, pl: 8, ...props.sx }}>
             <Stack direction='row' justifyContent='space-between' sx={{ mb: 3 }}>
                 <Box>
-                    <Typography variant='subtitle1'>{props.title}</Typography>
+                    <Typography variant='subtitle1'>{props.title}{ props.unit !== undefined && ` - ${props.unit}`}</Typography>
                     {props.subtitle && <Typography variant='subtitle2' color='text.disabled'>{props.subtitle}</Typography>}
                 </Box>
                 <Legend data={props.data} />

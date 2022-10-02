@@ -6,7 +6,7 @@ import { useSnackbar } from 'notistack';
 
 import { RestartAlt } from '@mui/icons-material';
 
-import { DataSet, Graph } from '@dolittle/design-system/molecules/Metrics/Graph';
+import { Graph } from '@dolittle/design-system/molecules/Metrics/Graph';
 
 import { ContainerStatusInfo, HttpResponsePodStatus, restartMicroservice } from '../../../api/api';
 
@@ -127,11 +127,11 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
 
             {cpu.loading
                 ? null
-                : <Graph title='CPU Usage' subtitle='Last 24 hours' sx={{ mt: 3 }} data={cpuGraphData} />
+                : <Graph title='CPU Usage' unit='CPUs' subtitle='Last 24 hours' sx={{ mt: 3 }} data={cpuGraphData} />
             }
             {memory.loading
                 ? null
-                : <Graph title='Memory Usage' subtitle='Last 24 hours' sx={{ mt: 3 }} data={memoryGraphData} />
+                : <Graph title='Memory Usage' unit='MiB' subtitle='Last 24 hours' sx={{ mt: 3 }} data={memoryGraphData} />
             }
         </>
     );
