@@ -43,7 +43,7 @@ const styles = {
 
 export type CreateFormTextFieldsProps = {
     formError: FormErrorStates,
-    app: ShortInfo,
+    newApplication: ShortInfo,
     onAppChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
     contactName: string,
     onNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
@@ -52,7 +52,7 @@ export type CreateFormTextFieldsProps = {
 };
 
 export const CreateFormTextFields: React.FC<CreateFormTextFieldsProps> = (
-    { formError, app, onAppChange, contactName, onNameChange, contactEmail, onEmailChange }: CreateFormTextFieldsProps) => {
+    { formError, newApplication, onAppChange, contactName, onNameChange, contactEmail, onEmailChange }: CreateFormTextFieldsProps) => {
 
     const {
         applicationNameError: { appError, appErrorMessage },
@@ -70,7 +70,7 @@ export const CreateFormTextFields: React.FC<CreateFormTextFieldsProps> = (
                     helperText={appErrorMessage}
                     id='applicationName'
                     label='Application Name'
-                    value={app.name}
+                    value={newApplication.name}
                     size='small'
                     onChange={onAppChange}
                     sx={formField}

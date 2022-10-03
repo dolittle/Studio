@@ -90,7 +90,7 @@ export const Create: React.FC = () => {
     const { enqueueSnackbar } = useSnackbar();
     const newApplicationId = Guid.create().toString();
 
-    const [application, setApplication] = useState({
+    const [newApplication, setNewApplication] = useState({
         id: newApplicationId,
         name: '',
     } as ShortInfo);
@@ -101,10 +101,10 @@ export const Create: React.FC = () => {
     const [serverError, setServerError] = useState<boolean>(false);
 
     const handleApplicationNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const _application = { ...application };
+        const _application = { ...newApplication };
         _application.name = event.target.value!;
         setFormError({ ...formError, applicationNameError: { appErrorMessage: '', appError: false } });
-        setApplication(_application);
+        setNewApplication(_application);
     };
 
     const handleContactNameChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -127,12 +127,12 @@ export const Create: React.FC = () => {
     };
 
     const handleApplicationCreate = async () => {
-        const isValid = validateTextFields(formError, setFormError, application, contactName, contactEmail);
+        const isValid = validateTextFields(formError, setFormError, newApplication, contactName, contactEmail);
 
         if (isValid) {
             const input: HttpApplicationRequest = {
-                id: application.id,
-                name: application.name,
+                id: newApplication.id,
+                name: newApplication.name,
                 environments: environments
                     .filter(e => e.checked)
                     .map(e => ({
@@ -142,7 +142,7 @@ export const Create: React.FC = () => {
             };
             try {
                 await createApplication(input);
-                const href = `/application/building/${application.id}`;
+                const href = `/application/building/${newApplication.id}`;
                 history.push(href);
                 setServerError(false);
                 enqueueSnackbar('Application created', { variant: 'info' });
@@ -168,7 +168,7 @@ export const Create: React.FC = () => {
 
                 <CreateFormTextFields
                     formError={formError}
-                    app={application}
+                    newApplication={newApplication}
                     onAppChange={handleApplicationNameChange}
                     contactName={contactName}
                     onNameChange={handleContactNameChange}
