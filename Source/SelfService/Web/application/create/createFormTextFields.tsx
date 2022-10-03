@@ -23,16 +23,6 @@ const styles = {
         [themeDark.breakpoints.down('sm')]: {
             mb: 2.5
         },
-        '& .MuiInputLabel-root.Mui-error': {
-            'color': 'error.dark',
-            '& .MuiFormLabel-asterisk.Mui-error': {
-                color: 'error.dark',
-            },
-        },
-        '& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
-            color: 'error.dark',
-            borderColor: 'error.dark'
-        },
         '& .MuiFormHelperText-root.Mui-error': {
             color: 'error.light',
             letterSpacing: '0.4px'
