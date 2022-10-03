@@ -34,6 +34,9 @@ const validateContactName = (error: FormErrorStates, contactName: string) => {
     if (!contactName.trim()) {
         error.contactNameError.nameErrorMessage = 'Contact name required.';
         error.contactNameError.nameError = true;
+    } else if (!/^[a-zA-Z0-9]+$/.test(contactName)) {
+        error.contactNameError.nameErrorMessage = 'Name can only contain alphanumeric characters.';
+        error.contactNameError.nameError = true;
     } else {
         error.contactNameError.nameErrorMessage = '';
         error.contactNameError.nameError = false;
@@ -41,7 +44,10 @@ const validateContactName = (error: FormErrorStates, contactName: string) => {
 };
 
 const validateAppName = (error: FormErrorStates, app: ShortInfo) => {
-    if (/\W/.test(app.name) || !app.name.trim().length) {
+    if (!app.name.trim().length) {
+        error.applicationNameError.appErrorMessage = 'Application name required.';
+        error.applicationNameError.appError = true;
+    } else if (!/^[a-zA-Z0-9]+$/.test(app.name)) {
         error.applicationNameError.appErrorMessage = 'Name can only contain alphanumeric characters.';
         error.applicationNameError.appError = true;
     } else {
