@@ -4,8 +4,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { themeDark } from '../../theme/theme';
 import { Box, Button } from '@mui/material';
+import { themeDark } from '@dolittle/design-system';
 
 const styles = {
     actionBtnWrapper: {

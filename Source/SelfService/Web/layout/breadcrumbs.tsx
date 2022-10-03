@@ -4,9 +4,9 @@
 import React from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
-import { themeDark } from '../theme/theme';
 import { Link, Breadcrumbs, Stack } from '@mui/material';
 import { ChevronRight } from '@mui/icons-material';
+import { themeDark } from '@dolittle/design-system';
 
 const styles = {
     fontWeight: 400,

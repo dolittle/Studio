@@ -7,15 +7,22 @@ const { logging, notImplemented } = require('./middlewares');
 
 const applications = require('./api/applications');
 const logs = require('./monitoring/logs');
+const metrics = require('./monitoring/metrics');
 
 
 // SelfService Backend API
 const backend = express();
 backend.use(logging);
-
 backend.use(applications);
-
 backend.use(notImplemented);
+
+// Prometheus API
+const prometheus = express();
+prometheus.use(logging);
+
+prometheus.use('/prometheus/api/v1', metrics);
+
+prometheus.use(notImplemented);
 
 // Loki API
 const loki = express();
@@ -28,4 +35,5 @@ loki.use(notImplemented);
 
 // Start servers
 backend.listen(3007, () => console.log('SelfService Backend mock listening on http://localhost:3007'));
+prometheus.listen(8801, () => console.log('Prometheus mock listening on http://localhost:8801'));
 loki.listen(8802, () => console.log('Loki mock listening on http://localhost:8802'));

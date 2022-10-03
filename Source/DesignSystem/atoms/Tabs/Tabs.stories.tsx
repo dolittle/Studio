@@ -2,19 +2,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { componentStories } from '@dolittle/design-system';
+
 import { Tabs } from './Tabs';
 
-export default {
-    title: 'Tabs',
-    component: Tabs,
-} as ComponentMeta<typeof Tabs>;
+const { metadata, createStory } = componentStories(Tabs);
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Tabs> = (props) => <Tabs {...props} />;
+export default metadata;
 
-export const Normal = Template.bind({});
-Normal.args = {
+export const Normal = createStory({
     tabs: [
         {
             label: 'First tab',
@@ -25,10 +21,9 @@ Normal.args = {
             render: () => <h1>World</h1>
         },
     ]
-};
+});
 
-export const Another = Template.bind({});
-Another.args = {
+export const Another = createStory({
     tabs: [
         {
             label: 'First tab with a very very very very long label',
@@ -39,4 +34,4 @@ Another.args = {
             render: () => <h1>World</h1>
         },
     ]
-};
+});

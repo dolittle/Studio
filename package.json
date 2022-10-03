@@ -3,7 +3,9 @@
     "license": "MIT",
     "private": true,
     "workspaces": [
-        "Source/**/*"
+        "Source/SelfService/Web",
+        "Source/DesignSystem",
+        "Source/Shared/*"
     ],
     "dependencies": {},
     "devDependencies": {

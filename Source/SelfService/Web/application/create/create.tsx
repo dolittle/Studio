@@ -5,13 +5,14 @@ import React, { ChangeEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
+import { Guid } from '@dolittle/rudiments';
+import { themeDark } from '@dolittle/design-system';
+
 import { createApplication, HttpApplicationRequest, HttpApplicationEnvironment } from '../../api/application';
 import { ShortInfo } from '../../api/api';
-import { Guid } from '@dolittle/rudiments';
 import { checkTenantIdValidity } from '../../utils/tenantValidation';
 import { validateTextFields, FormErrorStates } from '../../utils/formTextFieldsValidation';
 
-import { themeDark } from '../../theme/theme';
 import { Box, Typography } from '@mui/material';
 
 import { Notification } from '../../theme/Notification';

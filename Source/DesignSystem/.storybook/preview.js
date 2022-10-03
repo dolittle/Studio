@@ -1,13 +1,11 @@
 import React from "react"
-import { themeOptions as darkThemeOptions } from '../muiDarkTheme';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { themeDark } from '../theme';
+import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material'
-
-const darkTheme =  createTheme(darkThemeOptions);
 
 export const decorators = [
   Story => (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={themeDark}>
       <CssBaseline/>
       <Story />
     </ThemeProvider>
@@ -15,7 +13,6 @@ export const decorators = [
 ];
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
     matchers: {
       color: /(background|color)$/i,

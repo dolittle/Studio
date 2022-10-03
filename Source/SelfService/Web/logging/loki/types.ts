@@ -1,6 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { DataLabels, VectorData, MatrixData } from '../../metrics/mimir/types';
+export { DataLabels, VectorData, MatrixData } from '../../metrics/mimir/types';
+
 type CommonRequestProperties = {
     /**
      * The LogQL query to perform.
@@ -28,69 +31,6 @@ type CommonQueryResponseProperties = {
     status: 'success';
 };
 
-type QueryResponseStatistics = {};
-
-/**
- * Defines a set of labels for a metric or log stream.
- */
-export type DataLabels = {
-    [label: string]: string;
-};
-
-type VectorData = {
-    /**
-     * The data result type.
-     */
-    resultType: 'vector';
-
-    /**
-     * The result of the query.
-     */
-    result: {
-        /**
-         * The metric labels.
-         */
-        metric: DataLabels;
-
-        /**
-         * The current metric [timestamp, value].
-         */
-        value: [number, string];
-    }[];
-
-    /**
-     * The statistics of the query execution.
-     */
-    stats: QueryResponseStatistics;
-};
-
-type MatrixData = {
-    /**
-     * The data result type.
-     */
-    resultType: 'matrix';
-
-    /**
-     * The result of the query.
-     */
-    result: {
-        /**
-         * The metric labels.
-         */
-        metric: DataLabels;
-
-        /**
-         * The pairs of metric [timestamp, value].
-         */
-        values: [number, string][];
-    }[];
-
-    /**
-     * The statistics of the query execution.
-     */
-    stats: QueryResponseStatistics;
-};
-
 type StreamsData = {
     /**
      * The data result type.
@@ -111,11 +51,6 @@ type StreamsData = {
          */
         values: [string, string][];
     }[];
-
-    /**
-     * The statistics of the query execution.
-     */
-    stats: QueryResponseStatistics;
 };
 
 /**

@@ -3,11 +3,11 @@
 
 import React from 'react';
 
+import { Box, TextField } from '@mui/material';
+import { themeDark } from '@dolittle/design-system';
+
 import { FormErrorStates } from '../../utils/formTextFieldsValidation';
 import { ShortInfo } from '../../api/api';
-
-import { themeDark } from '../../theme/theme';
-import { Box, TextField } from '@mui/material';
 
 const { dark, light } = themeDark.palette.error;
 const styles = {

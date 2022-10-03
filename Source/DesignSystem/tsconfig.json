@@ -11,5 +11,5 @@
         { "path": "../Shared/Web"},
         { "path": "../Shared/Styling"},
     ],
-    "include": [ "**/*.ts", "**/*.tsx" ]
+    "include": [ "**/*.ts", "**/*.tsx", "**/*.json" ]
 }
