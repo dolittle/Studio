@@ -46,7 +46,7 @@ const validateContactName = (error: FormErrorStates, contactName: string) => {
 };
 
 const validateAppName = (error: FormErrorStates, applicationName: ShortInfo) => {
-    if (!applicationName.name.trim().length) {
+    if (!applicationName.name.trim()) {
         error.applicationNameError.appErrorMessage = 'Application name required.';
         error.applicationNameError.appError = true;
     } else if (!alphaChars.test(applicationName.name)) {
