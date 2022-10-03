@@ -24,18 +24,20 @@ const styles = {
     title: {
         letterSpacing: '-0.5px',
         lineHeight: '26px',
+        mb: 11
     },
     secondaryTitle: {
         textAlign: 'start',
+        mb: 4
     },
     formFieldsWrapper: {
         display: 'flex',
         justifyContent: 'space-between',
         [themeDark.breakpoints.down('sm')]: {
             flexDirection: 'column',
-            margin: '0',
+            m: 0
         }
-    },
+    }
 };
 
 export type EnvironmentsProps = {
@@ -85,7 +87,9 @@ const initialEnvironmentState = [
     },
 ];
 
-export const Create: React.FC = () => {
+const errorMessage = 'Oops, something went wrong';
+
+export const Create = () => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
     const newApplicationId = Guid.create().toString();
@@ -156,15 +160,12 @@ export const Create: React.FC = () => {
         return;
     };
 
-    const errorMessage = 'Oops, something went wrong';
-
-    const { title, secondaryTitle } = styles;
     return (
         <>
-            <Typography variant='h2' mb={11} sx={title}>Create New Application</Typography>
+            <Typography variant='h2' sx={styles.title}>Create New Application</Typography>
 
             <Box component="form">
-                <Typography variant='body1' mb={4} sx={secondaryTitle}>Please provide the following information</Typography>
+                <Typography variant='body1' sx={styles.secondaryTitle}>Please provide the following information</Typography>
 
                 <CreateFormTextFields
                     formError={formError}
@@ -175,7 +176,7 @@ export const Create: React.FC = () => {
                     contactEmail={contactEmail}
                     onEmailChange={handleEmailChange} />
 
-                <Typography variant='body1' mt={4} mb={4} sx={secondaryTitle}>Select Environments</Typography>
+                <Typography variant='body1' sx={{ mt: 4, ...styles.secondaryTitle }}>Select Environments</Typography>
 
                 <CreateFormCheckbox environments={environments} handleOnChange={handleCheckboxChange} />
 

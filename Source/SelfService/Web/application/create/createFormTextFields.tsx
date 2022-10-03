@@ -9,33 +9,32 @@ import { themeDark } from '@dolittle/design-system';
 import { FormErrorStates } from '../../utils/formTextFieldsValidation';
 import { ShortInfo } from '../../api/api';
 
-const { dark, light } = themeDark.palette.error;
 const styles = {
     formFieldsWrapper: {
         display: 'flex',
         justifyContent: 'space-between',
         [themeDark.breakpoints.down('sm')]: {
             flexDirection: 'column',
-            margin: '0',
+            m: 0,
         }
     },
     formField: {
         'letterSpacing': '0.15px',
         [themeDark.breakpoints.down('sm')]: {
-            marginBlockEnd: '1.25rem'
+            mb: 2.5
         },
         '& .MuiInputLabel-root.Mui-error': {
-            'color': dark,
+            'color': 'error.dark',
             '& .MuiFormLabel-asterisk.Mui-error': {
-                color: dark,
+                color: 'error.dark',
             },
         },
         '& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
-            color: dark,
-            borderColor: dark
+            color: 'error.dark',
+            borderColor: 'error.dark'
         },
         '& .MuiFormHelperText-root.Mui-error': {
-            color: light,
+            color: 'error.light',
             letterSpacing: '0.4px'
         }
     },
@@ -51,7 +50,7 @@ export type CreateFormTextFieldsProps = {
     onEmailChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
 };
 
-export const CreateFormTextFields: React.FC<CreateFormTextFieldsProps> = (
+export const CreateFormTextFields = (
     { formError, newApplication, onAppChange, contactName, onNameChange, contactEmail, onEmailChange }: CreateFormTextFieldsProps) => {
 
     const {
