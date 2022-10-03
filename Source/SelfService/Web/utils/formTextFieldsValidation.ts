@@ -43,11 +43,11 @@ const validateContactName = (error: FormErrorStates, contactName: string) => {
     }
 };
 
-const validateAppName = (error: FormErrorStates, app: ShortInfo) => {
-    if (!app.name.trim().length) {
+const validateAppName = (error: FormErrorStates, applicationName: ShortInfo) => {
+    if (!applicationName.name.trim().length) {
         error.applicationNameError.appErrorMessage = 'Application name required.';
         error.applicationNameError.appError = true;
-    } else if (!/^[a-zA-Z0-9]+$/.test(app.name)) {
+    } else if (!/^[a-zA-Z0-9]+$/.test(applicationName.name)) {
         error.applicationNameError.appErrorMessage = 'Name can only contain alphanumeric characters.';
         error.applicationNameError.appError = true;
     } else {
@@ -59,13 +59,14 @@ const validateAppName = (error: FormErrorStates, app: ShortInfo) => {
 export const validateTextFields = (
     formError: FormErrorStates,
     setFormError: React.Dispatch<React.SetStateAction<FormErrorStates>>,
-    application: ShortInfo,
+
+    applicationName: ShortInfo,
     contactName: string,
     contactEmail: string) => {
 
     const errors = { ...formError };
 
-    validateAppName(errors, application);
+    validateAppName(errors, applicationName);
     validateContactName(errors, contactName);
     validateEmail(errors, contactEmail);
 
