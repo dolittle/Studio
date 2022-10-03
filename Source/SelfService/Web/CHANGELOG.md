@@ -1,3 +1,27 @@
+# [2.5.0] - 2022-10-3 [PR: #243](https://github.com/dolittle/Studio/pull/243)
+## Summary
+
+Adds container-level CPU and Memory usage metrics for each Microservice in the HealthStatus page. Each row in the container table gets the average / max / current metrics for the last 24 hours - and below the table a line chart displays the metrics measured every 1 minute.
+
+![image](https://user-images.githubusercontent.com/1014990/193535765-0dbd8519-3e86-4e8e-acf9-b3d6c666648d.png)
+
+
+### Added
+
+- Graph, Legend and Summary components to the DesignSystem
+- The metrics display for CPU and Memory in the HealthStatus Microservice page.
+- Metrics mock data in `Environments/mock` backend - and implement some more platform-api endpoints so we can get to the HealthStatus page using the mock backend.
+
+### Changed
+
+- A component-factory helper function in DesignSystem to reduce the boilerplate for creating Component Stories.
+- Automatic title generation for DesignSystem Stories in Storybook.
+
+### Fixed
+
+- The `onClick` in the DesignSystem Button component was not set, so you could not click it.
+
+
 # [2.4.0] - 2022-9-14 [PR: #239](https://github.com/dolittle/Studio/pull/239)
 ## Summary
 
