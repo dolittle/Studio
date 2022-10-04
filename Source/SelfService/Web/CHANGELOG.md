@@ -1,3 +1,18 @@
+# [2.5.1] - 2022-10-4 [PR: #244](https://github.com/dolittle/Studio/pull/244)
+## Summary
+
+Adds a `range` and `domain` property on the `Graph` component so that we can make the empty-state look a bit better. The HealthStatus page should now look like this when there is no data:
+![image](https://user-images.githubusercontent.com/1014990/193765926-616154f9-5ab0-4aa5-b265-4a5f7447b693.png)
+
+### Added
+
+- `range` and `domain` props to set the extends on a `Graph` component explicitly. By default they are calculated from the data.
+
+### Changed
+
+- The `HealthStatus` page sets the domain to be the last 24 hours - and sensible ranges for CPU and Memory.
+
+
 # [2.5.0] - 2022-10-3 [PR: #243](https://github.com/dolittle/Studio/pull/243)
 ## Summary
 
