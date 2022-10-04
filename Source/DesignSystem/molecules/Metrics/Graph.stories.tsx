@@ -14,6 +14,7 @@ export default metadata;
 export const Normal = createStory({
     title: 'CPU Usage',
     subtitle: 'Last 24 hours',
+    unit: 'CPUs',
     data: [
         {
             group: 'Head',
@@ -26,4 +27,14 @@ export const Normal = createStory({
             values: data.second,
         },
     ],
+    range: [0, 2],
+});
+
+export const Empty = createStory({
+    title: 'CPU Usage',
+    subtitle: 'Last 24 hours',
+    unit: 'CPUs',
+    data: [],
+    domain: [ data.first[0].time, data.first.slice(-1)[0].time ],
+    range: [0, 2],
 });
