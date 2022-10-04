@@ -66,7 +66,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
         window.location.reload();
     };
 
-
+    const timeRange = useMemo<[number, number]>(() => [ Date.now()-86_400_000, Date.now() ], [ Date.now() / 60_000 ]);
     const cpu = useMetricsFromLast(`microservice:container_cpu_usage_seconds:rate_max{application_id="${applicationId}", environment="${environment}", microservice_id="${microserviceId}"}`, 86_400, 60);
     const memory = useMetricsFromLast(`microservice:container_memory_working_set_bytes:max{application_id="${applicationId}", environment="${environment}", microservice_id="${microserviceId}"}`, 86_400, 60);
 
@@ -127,11 +127,11 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
 
             {cpu.loading
                 ? null
-                : <Graph title='CPU Usage' unit='CPUs' subtitle='Last 24 hours' sx={{ mt: 3 }} data={cpuGraphData} />
+                : <Graph title='CPU Usage' unit='CPUs' subtitle='Last 24 hours' range={[0, 2]} domain={timeRange} sx={{ mt: 3 }} data={cpuGraphData} />
             }
             {memory.loading
                 ? null
-                : <Graph title='Memory Usage' unit='MiB' subtitle='Last 24 hours' sx={{ mt: 3 }} data={memoryGraphData} />
+                : <Graph title='Memory Usage' unit='MiB' subtitle='Last 24 hours' range={[0, 2048]} domain={timeRange} sx={{ mt: 3 }} data={memoryGraphData} />
             }
         </>
     );
