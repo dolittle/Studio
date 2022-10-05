@@ -1,3 +1,15 @@
+# [2.5.2] - 2022-10-5 [PR: #245](https://github.com/dolittle/Studio/pull/245)
+## Summary
+
+The `Vega` graph components use the `window:resize` event to re-calculate their own size. However, it turns out that this event **is not triggered** when a scrollbar is shown or hidden. This lead to some graphs having the wrong size if more content was loaded later and making the scrollbar appear.
+
+This little fix listens to the `window.visualViewport:resize` event, which **is triggered** when a scrollbar is shown or hidden, and re-dispatches a new `window:resize` event. This forces `Vega` graphs to recalculate as normal, and it shouldn't cause issues for other elements.
+
+### Fixed
+
+- The `Vega` graphs did not re-calculate their size when a scrollbar appeared, which meant that for small windows the `CPU Usage` graph would be a little too wide when the `Memory Usage` graph appeared.
+
+
 # [2.5.1] - 2022-10-4 [PR: #244](https://github.com/dolittle/Studio/pull/244)
 ## Summary
 
