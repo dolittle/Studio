@@ -34,7 +34,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const podsData = _props.podsData;
     const [selectedKey, setSelectedKey] = useState('healthStatus');
 
-    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId && ms.environment === environment);
     if (!currentMicroservice) {
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);

@@ -86,7 +86,8 @@ const applications = {
                 dolittle: {
                     applicationId: '11b6cf47-5d9f-438f-8116-0d9828654657',
                     customerId: '453e04a7-4f9d-42f2-b36c-d51fa2c83fa3',
-                    microserviceId: '7e78b802-e246-467b-9946-1deabf8042ef',
+                    // microserviceId: '7e78b802-e246-467b-9946-1deabf8042ef',
+                    microserviceId: 'f2a36f3e-4052-4007-bb22-c6ae56cde1b3',
                 },
                 name: 'Welcome',
                 kind: 'simple',
@@ -148,7 +149,8 @@ const liveApplications = {
                 ingressPaths: [],
             },
             {
-                id: '7e78b802-e246-467b-9946-1deabf8042ef',
+                // id: '7e78b802-e246-467b-9946-1deabf8042ef',
+                id: 'f2a36f3e-4052-4007-bb22-c6ae56cde1b3',
                 name: 'Welcome',
                 kind: 'simple',
                 environment: 'Prod',
@@ -236,11 +238,13 @@ const liveApplicationEnvironmentPodstatuses = {
             },
         },
         prod: {
-            '7e78b802-e246-467b-9946-1deabf8042ef': {
+            'f2a36f3e-4052-4007-bb22-c6ae56cde1b3': {
+            // '7e78b802-e246-467b-9946-1deabf8042ef': {
                 namespace: 'application-11b6cf47-5d9f-438f-8116-0d9828654657',
                 microservice: {
                     name: 'Welcome',
-                    id: '7e78b802-e246-467b-9946-1deabf8042ef',
+                    // id: '7e78b802-e246-467b-9946-1deabf8042ef',
+                    id: 'f2a36f3e-4052-4007-bb22-c6ae56cde1b3',
                 },
                 pods: [
                     {
@@ -266,6 +270,25 @@ const liveApplicationEnvironmentPodstatuses = {
                         ],
                     },
                 ],
+            },
+        },
+    },
+};
+
+const liveMicroservicesConfigFiles = {
+    '11b6cf47-5d9f-438f-8116-0d9828654657': {
+        Dev: {
+            '7e78b802-e246-467b-9946-1deabf8042ef': {
+                data: [],
+            },
+            '16965610-e419-40f1-b550-4841e93553b9': {
+                data: [],
+            },
+        },
+        Prod: {
+            'f2a36f3e-4052-4007-bb22-c6ae56cde1b3': {
+            // '7e78b802-e246-467b-9946-1deabf8042ef': {
+                data: [],
             },
         },
     },
@@ -314,7 +337,17 @@ routes.get('/live/application/:applicationId/environment/:environmentId/microser
         }
     }
 
-    res.status(404).end(`Application ${applicationId}, environment ${environmentId}, microservice ${microserviceId} not found`)
+    // TODO: WÆT!?
+    const notFoundData = {
+        namespace: `application-${applicationId}`,
+        microservice: {
+            name: '',
+            id: microserviceId,
+        },
+        pods: [],
+    }
+
+    res.status(200).json(notFoundData).end();
 });
 
 routes.get('/live/application/:applicationId/pod/:podName/logs', (req, res) => {
@@ -327,4 +360,24 @@ routes.get('/live/application/:applicationId/pod/:podName/logs', (req, res) => {
         podName,
         logs: 'This Kubernetes logs endpoint is not implemented in the mocked backed...',
     }).end();
+});
+
+routes.get('/live/application/:applicationId/environment/:environmentId/microservice/:microserviceId/config-files/list', (req, res) => {
+
+    const {applicationId, environmentId, microserviceId} = req.params;
+
+    console.log('Getting live microservice ConfigFiles', applicationId, environmentId, microserviceId);
+    if (applicationId in liveMicroservicesConfigFiles) {
+        const application = liveMicroservicesConfigFiles[applicationId];
+        if (environmentId in application) {
+            const environment = application[environmentId];
+            if (microserviceId in environment) {
+                const configFiles = { applicationId, microserviceId, environment: environmentId, ...environment[microserviceId]};
+                res.status(200).json(configFiles).end();
+                return;
+            }
+        }
+    }
+
+    res.status(500).json({ message: 'not-found'}).end();
 });
