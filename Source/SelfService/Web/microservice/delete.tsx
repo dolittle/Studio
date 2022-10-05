@@ -53,7 +53,7 @@ export const Delete: React.FunctionComponent<Props> = (props) => {
 
     const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
 
-    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId && ms.environment === environment);
     if (!currentMicroservice) {
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);

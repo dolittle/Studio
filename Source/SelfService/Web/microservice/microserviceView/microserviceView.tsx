@@ -35,7 +35,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
 
     const applicationId = application.id;
 
-    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId && ms.environment === environment);
     if (!currentMicroservice) {
         const href = `/microservices/application/${application.id}/${environment}/overview`;
         history.push(href);

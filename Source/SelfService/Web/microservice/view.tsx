@@ -38,7 +38,7 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         pods: []
     } as HttpResponsePodStatus);
     const [loaded, setLoaded] = useState(false);
-    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId && ms.environment === environment);
     if (!currentMicroservice) {
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);

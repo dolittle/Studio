@@ -66,7 +66,7 @@ export const View: React.FC<Props> = (props) => {
     const environment = _props.environment;
     const podsData = _props.podsData;
 
-    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId && ms.environment === environment);
     if (!currentMicroservice) {
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);
