@@ -1,3 +1,17 @@
+# [2.5.3] - 2022-10-5 [PR: #246](https://github.com/dolittle/Studio/pull/246)
+## Summary
+
+Fixes a bug where switching environments on the `MicroserviceView` (and other) screens causes a blank page to be a shown. Turns out it was not filtering microservices from the `MicroserviceStore` correctly - which caused it to partially load data for the wrong microservice. This is definitely not a good fix - but solves the problem for now.
+
+### Changed
+
+- The Mock-server now behaves more like the actual production APIs
+
+### Fixed
+
+- Getting Microservice-data from the store did not filter on environment, causing redirects to the overview not happening.
+
+
 # [2.5.2] - 2022-10-5 [PR: #245](https://github.com/dolittle/Studio/pull/245)
 ## Summary
 
