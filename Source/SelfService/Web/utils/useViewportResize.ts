@@ -8,6 +8,7 @@ import { useEffect } from 'react';
  * Some components that we use (e.g. Vega graphs) use the `window:resize` event to update their own size.
  * The `window:resize` event is not triggered when a scrollbar is shown or hidden, causing their size to be wrong
  * when DOM elements are added later making a scrollbar appear. This re-dispatching fixes that issue.
+ * If this issue is ever fixed: https://github.com/vega/vega-lite/issues/8447, we can probably remove this workaround.
  */
 export const useViewportResize = (): void => {
     useEffect(() => {
