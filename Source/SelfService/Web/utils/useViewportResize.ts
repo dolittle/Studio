@@ -13,16 +13,26 @@ export const useViewportResize = (): void => {
     useEffect(() => {
         if (window.visualViewport === null) return;
 
-        const listener = (_: Event) => {
-            const event = new Event(
-                'resize',
-                {
-                    bubbles: false,
-                    cancelable: false,
-                    composed: false,
-                });
+        let lastSeenHeight = window.innerHeight;
+        let lastSeenWidth = window.innerWidth;
 
-            window.dispatchEvent(event);
+        const listener = (_: Event) => {
+            const windowResized = lastSeenHeight !== window.innerHeight || lastSeenWidth !== window.innerWidth;
+
+            lastSeenHeight = window.innerHeight;
+            lastSeenWidth = window.innerWidth;
+
+            if (!windowResized) {
+                const event = new Event(
+                    'resize',
+                    {
+                        bubbles: false,
+                        cancelable: false,
+                        composed: false,
+                    });
+
+                window.dispatchEvent(event);
+            }
         };
 
         window.visualViewport.addEventListener('resize', listener);
