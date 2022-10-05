@@ -8,6 +8,7 @@ import { LicenseInfo } from '@mui/x-license-pro';
 
 import { themeDark } from '@dolittle/design-system';
 
+import { useViewportResize } from './utils/useViewportResize';
 import { ApplicationsScreen } from './screens/applicationsScreen/applicationsScreen';
 
 import { uriWithAppPrefix } from './store';
@@ -52,6 +53,8 @@ const snackbarStyles = {
 };
 
 export const App = () => {
+    useViewportResize();
+
     const { pathname } = useLocation();
     // Little hack to force redirect
     if (['', '/', uriWithAppPrefix('/')].includes(pathname)) {
