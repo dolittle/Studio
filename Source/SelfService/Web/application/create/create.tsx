@@ -131,7 +131,7 @@ export const Create = () => {
     };
 
     const handleApplicationCreate = async () => {
-        const isValid = validateTextFields(formError, setFormError, newApplication, contactName, contactEmail);
+        const isValid = validateTextFields(formError, setFormError, newApplication.name, contactName, contactEmail);
 
         if (isValid) {
             const input: HttpApplicationRequest = {
@@ -169,6 +169,7 @@ export const Create = () => {
 
                 <CreateFormTextFields
                     formError={formError}
+                    setError={setFormError}
                     newApplication={newApplication}
                     onAppChange={handleApplicationNameChange}
                     contactName={contactName}
