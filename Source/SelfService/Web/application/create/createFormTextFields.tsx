@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import { Box, TextField } from '@mui/material';
+import { Box, FormControl, FormHelperText, InputLabel, OutlinedInput } from '@mui/material';
 import { themeDark } from '@dolittle/design-system';
 
-import { FormErrorStates } from '../../utils/formTextFieldsValidation';
+import { FormErrorStates, validateAppName, validateContactName, validateEmail } from '../../utils/formTextFieldsValidation';
 import { ShortInfo } from '../../api/api';
 
 const styles = {
@@ -15,7 +15,13 @@ const styles = {
         justifyContent: 'space-between',
         [themeDark.breakpoints.down('sm')]: {
             flexDirection: 'column',
-            m: 0,
+            m: 0
+        }
+    },
+    input: {
+        'maxWidth': 220,
+        '.MuiInputLabel-root[data-shrink="true"]': {
+            top: 0
         }
     },
     formField: {
@@ -32,6 +38,7 @@ const styles = {
 
 export type CreateFormTextFieldsProps = {
     formError: FormErrorStates,
+    setError: React.Dispatch<React.SetStateAction<FormErrorStates>>,
     newApplication: ShortInfo,
     onAppChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
     contactName: string,
@@ -41,56 +48,88 @@ export type CreateFormTextFieldsProps = {
 };
 
 export const CreateFormTextFields = (
-    { formError, newApplication, onAppChange, contactName, onNameChange, contactEmail, onEmailChange }: CreateFormTextFieldsProps) => {
+    { formError, setError, newApplication, onAppChange, contactName, onNameChange, contactEmail, onEmailChange }: CreateFormTextFieldsProps) => {
 
-    const {
-        applicationNameError: { appError, appErrorMessage },
-        contactNameError: { nameError, nameErrorMessage },
-        contactEmailError: { emailError, emailErrorMessage }
-    } = formError;
+    const errors = { ...formError };
 
     const { formFieldsWrapper, formField } = styles;
+
     return (
         <>
             <Box sx={formFieldsWrapper}>
-                <TextField
-                    required
-                    error={appError}
-                    helperText={appErrorMessage}
-                    id='applicationName'
-                    label='Application Name'
-                    value={newApplication.name}
-                    size='small'
-                    onChange={onAppChange}
-                    sx={formField}
-                />
+                <FormControl sx={styles.input}>
+                    <InputLabel
+                        error={formError.applicationNameError.appError}
+                        sx={{ top: '-0.5rem' }}
+                        required
+                        htmlFor='application-name'
+                    >
+                        Application Name
+                    </InputLabel>
+                    <OutlinedInput
+                        id='application-name'
+                        value={newApplication.name}
+                        type='text'
+                        error={formError.applicationNameError.appError}
+                        onChange={onAppChange}
+                        onBlur={() => validateAppName(errors, setError, newApplication.name)}
+                        label='Application Name'
+                        aria-describedby="application-name-helper-text"
+                        size='small'
+                        sx={styles.formField}
+                    />
+                    <FormHelperText sx={{ color: 'error.light' }} id="application-name-helper-text">{formError.applicationNameError.appErrorMessage}</FormHelperText>
+                </FormControl>
             </Box>
 
             <Box mt={3.5} sx={formFieldsWrapper}>
-                <TextField
-                    required
-                    error={nameError}
-                    helperText={nameErrorMessage}
-                    id='contactName'
-                    label='Contact Name'
-                    value={contactName}
-                    size='small'
-                    onChange={onNameChange}
-                    sx={formField}
-                />
+                <FormControl sx={styles.input}>
+                    <InputLabel
+                        error={formError.contactNameError.nameError}
+                        sx={{ top: '-0.5rem' }}
+                        required
+                        htmlFor='contact-name'
+                    >
+                        Contact Name
+                    </InputLabel>
+                    <OutlinedInput
+                        id='contact-name'
+                        value={contactName}
+                        type='text'
+                        error={formError.contactNameError.nameError}
+                        onChange={onNameChange}
+                        onBlur={() => validateContactName(errors, setError, contactName)}
+                        label='Contact Name'
+                        aria-describedby="contact-name-helper-text"
+                        size='small'
+                        sx={styles.formField}
+                    />
+                    <FormHelperText sx={{ color: 'error.light' }} id="contact-name-helper-text">{formError.contactNameError.nameErrorMessage}</FormHelperText>
+                </FormControl>
 
-                <TextField
-                    required
-                    error={emailError}
-                    helperText={emailErrorMessage}
-                    id='contactEmail'
-                    label='Contact Email'
-                    value={contactEmail}
-                    type='email'
-                    size='small'
-                    onChange={onEmailChange}
-                    sx={formField}
-                />
+                <FormControl sx={styles.input}>
+                    <InputLabel
+                        error={formError.contactEmailError.emailError}
+                        sx={{ top: '-0.5rem' }}
+                        required
+                        htmlFor='contact-email'
+                    >
+                        Contact Email
+                    </InputLabel>
+                    <OutlinedInput
+                        id='contact-email'
+                        value={contactEmail}
+                        type='text'
+                        error={formError.contactEmailError.emailError}
+                        onChange={onEmailChange}
+                        onBlur={() => validateEmail(errors, setError, contactEmail)}
+                        label='Contact Email'
+                        aria-describedby="contact-email-helper-text"
+                        size='small'
+                        sx={styles.formField}
+                    />
+                    <FormHelperText sx={{ color: 'error.light' }} id="contact-email-helper-text">{formError.contactEmailError.emailErrorMessage}</FormHelperText>
+                </FormControl>
             </Box>
         </>
     );
