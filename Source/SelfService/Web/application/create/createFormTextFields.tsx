@@ -60,35 +60,33 @@ export const CreateFormTextFields = (
 
     return (
         <>
-            <Box sx={styles.formFieldsWrapper}>
-                <FormControl sx={styles.input}>
-                    <InputLabel
-                        error={appError}
-                        sx={{ top: -8 }}
-                        required
-                        htmlFor='application-name'
-                    >
-                        Application Name
-                    </InputLabel>
+            <FormControl sx={{ ...styles.formFieldsWrapper, ...styles.input }}>
+                <InputLabel
+                    error={appError}
+                    sx={{ top: -8 }}
+                    required
+                    htmlFor='application-name'
+                >
+                    Application Name
+                </InputLabel>
 
-                    <OutlinedInput
-                        id='application-name'
-                        value={newApplication.name}
-                        type='text'
-                        error={appError}
-                        onChange={onAppChange}
-                        onBlur={() => validateAppName(errors, setError, newApplication.name)}
-                        label='Application Name'
-                        aria-describedby="application-name-helper-text"
-                        size='small'
-                        sx={styles.formField}
-                    />
+                <OutlinedInput
+                    id='application-name'
+                    value={newApplication.name}
+                    type='text'
+                    error={appError}
+                    onChange={onAppChange}
+                    onBlur={() => validateAppName(errors, setError, newApplication.name)}
+                    label='Application Name'
+                    aria-describedby="application-name-helper-text"
+                    size='small'
+                    sx={styles.formField}
+                />
 
-                    <FormHelperText error={appError} id="application-name-helper-text">
-                        {appErrorMessage}
-                    </FormHelperText>
-                </FormControl>
-            </Box>
+                <FormHelperText error={appError} id="application-name-helper-text">
+                    {appErrorMessage}
+                </FormHelperText>
+            </FormControl>
 
             <Box sx={{ mt: 3.5, ...styles.formFieldsWrapper }}>
                 <FormControl sx={styles.input}>
