@@ -14,43 +14,40 @@ const styles = {
         justifyContent: 'space-between',
         [themeDark.breakpoints.down('sm')]: {
             flexDirection: 'column',
-            margin: '0',
+            m: 0,
         }
     },
     formGroup: {
         display: 'inline-flex'
     },
     label: {
-        marginInlineEnd: '0'
+        mr: 0
     }
 };
 
 export type CreateFormCheckboxProps = {
     environments: EnvironmentsProps,
-    handleOnChange: (event: React.ChangeEvent<HTMLInputElement>, environmentIndex: number) => void;
+    handleOnChange: (event: React.ChangeEvent<HTMLInputElement>, environmentIndex: number) => void
 };
 
-export const CreateFormCheckbox: React.FC<CreateFormCheckboxProps> = ({ environments, handleOnChange }: CreateFormCheckboxProps) => {
-    const { formFieldsWrapper, formGroup, label } = styles;
+export const CreateFormCheckbox = ({ environments, handleOnChange }: CreateFormCheckboxProps) => (
+    <Box sx={{ ...styles.formFieldsWrapper, mb: 7.5 }}>
+        {environments.map((environment, environmentIndex) => (
+            <FormGroup key={environmentIndex} sx={styles.formGroup}>
+                <FormControlLabel
+                    sx={styles.label}
+                    control={
+                        <Checkbox
+                            checked={environment.checked}
+                            disabled={environment.disabled}
+                            onChange={(event) => handleOnChange(event, environmentIndex)}
+                            name={environment.shortName}
+                        />
+                    }
+                    label={environment.name}
+                />
+            </FormGroup>
+        ))}
+    </Box>
+);
 
-    return (
-        <Box mb={7.5} sx={formFieldsWrapper}>
-            {environments.map((environment, environmentIndex) => (
-                <FormGroup key={environmentIndex} sx={formGroup}>
-                    <FormControlLabel
-                        sx={label}
-                        control={
-                            <Checkbox
-                                checked={environment.checked}
-                                disabled={environment.disabled}
-                                onChange={(event) => handleOnChange(event, environmentIndex)}
-                                name={environment.shortName}
-                            />
-                        }
-                        label={environment.name}
-                    />
-                </FormGroup>
-            ))}
-        </Box>
-    );
-};

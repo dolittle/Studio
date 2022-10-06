@@ -1,6 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { Dispatch, SetStateAction } from 'react';
+
 export type FormErrorStates = {
     applicationNameError: {
         appErrorMessage: string,
@@ -18,7 +20,7 @@ export type FormErrorStates = {
 
 const alphaChars = /^[a-z0-9]+$/i;
 
-export const validateEmail = (error: FormErrorStates, setEmailError: React.Dispatch<React.SetStateAction<FormErrorStates>>, email: string) => {
+export const validateEmail = (error: FormErrorStates, setEmailError: Dispatch<SetStateAction<FormErrorStates>>, email: string) => {
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (!email.trim()) {
@@ -35,7 +37,7 @@ export const validateEmail = (error: FormErrorStates, setEmailError: React.Dispa
     setEmailError(error);
 };
 
-export const validateContactName = (error: FormErrorStates, setContactNameError: React.Dispatch<React.SetStateAction<FormErrorStates>>, contactName: string) => {
+export const validateContactName = (error: FormErrorStates, setContactNameError: Dispatch<SetStateAction<FormErrorStates>>, contactName: string) => {
     if (!contactName.trim()) {
         error.contactNameError.nameErrorMessage = 'Contact name required.';
         error.contactNameError.nameError = true;
@@ -50,7 +52,7 @@ export const validateContactName = (error: FormErrorStates, setContactNameError:
     setContactNameError(error);
 };
 
-export const validateAppName = (error: FormErrorStates, setAppNameError: React.Dispatch<React.SetStateAction<FormErrorStates>>, applicationName: string) => {
+export const validateAppName = (error: FormErrorStates, setAppNameError: Dispatch<SetStateAction<FormErrorStates>>, applicationName: string) => {
     if (!applicationName.trim()) {
         error.applicationNameError.appErrorMessage = 'Application name required.';
         error.applicationNameError.appError = true;
@@ -65,7 +67,7 @@ export const validateAppName = (error: FormErrorStates, setAppNameError: React.D
     setAppNameError(error);
 };
 
-export const validateTextFields = (error: FormErrorStates, setError: React.Dispatch<React.SetStateAction<FormErrorStates>>, appName: string, contactName: string, contactEmail: string) => {
+export const validateTextFields = (error: FormErrorStates, setError: Dispatch<SetStateAction<FormErrorStates>>, appName: string, contactName: string, contactEmail: string) => {
     const errors = { ...error };
 
     validateAppName(errors, setError, appName);

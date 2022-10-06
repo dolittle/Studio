@@ -10,11 +10,11 @@ import { themeDark } from '@dolittle/design-system';
 const styles = {
     actionBtnWrapper: {
         [themeDark.breakpoints.down('sm')]: {
-            marginBlockStart: '3.75rem'
+            mt: 7.5
         },
     },
     actionButtons: {
-        color: themeDark.palette.text.primary,
+        color: 'text.primary',
         fontSize: '0.875rem',
         letterSpacing: '0.06em'
     },
@@ -24,7 +24,7 @@ export type CreateFormActionButtonsProps = {
     handleOnSubmit: () => Promise<void>
 };
 
-export const CreateFormActionButtons: React.FC<CreateFormActionButtonsProps> = ({ handleOnSubmit }: CreateFormActionButtonsProps) => {
+export const CreateFormActionButtons = ({ handleOnSubmit }: CreateFormActionButtonsProps) => {
     const history = useHistory();
 
     const handleCancel = () => {
@@ -32,18 +32,17 @@ export const CreateFormActionButtons: React.FC<CreateFormActionButtonsProps> = (
         history.push(href);
     };
 
-    const { actionBtnWrapper, actionButtons } = styles;
     return (
-        <Box sx={actionBtnWrapper}>
+        <Box sx={styles.actionBtnWrapper}>
             <Button variant='text'
-                sx={{ ...actionButtons, marginInlineEnd: '4rem' }}
+                sx={{ ...styles.actionButtons, mr: 8 }}
                 onClick={handleCancel}
             >
                 Cancel
             </Button>
 
             <Button variant='text'
-                sx={{ ...actionButtons, color: themeDark.palette.primary.main }}
+                sx={{ ...styles.actionButtons, color: 'primary.main' }}
                 onClick={handleOnSubmit}
             >
                 Create
