@@ -7,16 +7,16 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useReadable } from 'use-svelte-store';
 
+import { DataStateIcon } from './dataStateIcon';
+import { Grid, IconButton, Typography, Divider, Box, } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+
+import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
+
 import { microservices, MicroserviceStore, savePurchaseOrderMicroservice } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
 import { HttpResponsePodStatus } from '../../api/api';
 import { ViewConfiguration } from './viewConfiguration';
-
-import { Tab, Tabs } from '../../theme/tabs';
-import { DataStateIcon } from './dataStateIcon';
-import { Grid, IconButton, Typography, Divider, Box, } from '@mui/material';
-import { TabPanel } from '../../utils/materialUi';
-import EditIcon from '@mui/icons-material/Edit';
 
 import { DownloadButtons } from '../components/downloadButtons';
 import { HealthStatus } from '../microserviceView/healthStatus/healthStatus';
@@ -85,7 +85,6 @@ export const View: React.FC<Props> = (props) => {
         }
     }, []);
 
-    const [currentTab, setCurrentTab] = useState(searchParams.get('firstTime') === '1' ? 0 : 1);
     const [editMode, setEditMode] = useState(false);
 
     const getFakeState = (searchParams: URLSearchParams): string => {
@@ -96,10 +95,6 @@ export const View: React.FC<Props> = (props) => {
     };
 
     const fakeState = getFakeState(searchParams);
-
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setCurrentTab(newValue);
-    };
 
     const _onSave = (ms: MicroservicePurchaseOrder): void => {
         enqueueSnackbar('TODO: Update not done', { variant: 'error' });
@@ -132,13 +127,6 @@ export const View: React.FC<Props> = (props) => {
             </Grid>
 
             <Grid container spacing={3}>
-                <Grid item xs={10}>
-                    <Tabs value={currentTab} onChange={handleChange}>
-                        <Tab label='Configuration' />
-                        <Tab label='Health Status' />
-                    </Tabs>
-                </Grid>
-
                 <Grid item xs={2}>
                     <Grid
                         container
@@ -159,28 +147,33 @@ export const View: React.FC<Props> = (props) => {
                 </Grid>
             </Grid>
 
-            <TabPanel value={currentTab} index={0}>
-                <Box ml={2}>
-                    <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} editMode={editMode} onCancel={() => {
-                        setEditMode(false);
-                    }} />
-                </Box>
+            <Tabs
+                tabs={[
+                    {
+                        label: 'Configuration',
+                        render: () => <>
+                            <Box ml={2}>
+                                <ViewConfiguration onSave={_onSave} microservice={currentMicroservice.edit} editMode={editMode} onCancel={() => {
+                                    setEditMode(false);
+                                }} />
+                            </Box>
 
-                <Divider sx={classes.divider} />
+                            <Divider sx={classes.divider} />
 
-                <Box ml={2}>
-                    <DownloadButtons
-                        environment={environment}
-                        microserviceName={currentMicroservice.name}
-                        applicationId={applicationId}
-                    />
-                </Box>
-            </TabPanel>
-
-            <TabPanel value={currentTab} index={1}>
-                <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
-            </TabPanel>
-
-        </Grid >
+                            <Box ml={2}>
+                                <DownloadButtons
+                                    environment={environment}
+                                    microserviceName={currentMicroservice.name}
+                                    applicationId={applicationId}
+                                />
+                            </Box>
+                        </>
+                    },
+                    {
+                        label: 'Health Status',
+                        render: () => <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
+                    }
+                ]} />
+        </Grid>
     );
 };
