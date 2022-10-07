@@ -18,7 +18,6 @@ import { DataTable, DataTableStats } from './dataTable';
 
 const styles = {
     restartBtn: {
-        fontWeight: 500,
         lineHeight: '1.375rem',
         letterSpacing: '0.06em',
         mb: 2.5,
@@ -66,7 +65,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
         window.location.reload();
     };
 
-    const timeRange = useMemo<[number, number]>(() => [ Date.now()-86_400_000, Date.now() ], [ Date.now() / 60_000 ]);
+    const timeRange = useMemo<[number, number]>(() => [Date.now() - 86_400_000, Date.now()], [Date.now() / 60_000]);
     const cpu = useMetricsFromLast(`microservice:container_cpu_usage_seconds:rate_max{application_id="${applicationId}", environment="${environment}", microservice_id="${microserviceId}"}`, 86_400, 60);
     const memory = useMetricsFromLast(`microservice:container_memory_working_set_bytes:max{application_id="${applicationId}", environment="${environment}", microservice_id="${microserviceId}"}`, 86_400, 60);
 
@@ -101,7 +100,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
             name: 'CPU Usage',
             values: metric.values,
         }))
-    , [cpu.metrics]);
+        , [cpu.metrics]);
 
     const memoryGraphData = useMemo(() =>
         memory.metrics.map(metric => ({
@@ -109,7 +108,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
             name: 'Memory Usage',
             values: metric.values.map(({ time, value }) => ({ time, value: value / 1_048_576 })),
         }))
-    , [memory.metrics]);
+        , [memory.metrics]);
 
     return (
         <>
