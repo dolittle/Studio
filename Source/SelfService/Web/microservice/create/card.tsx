@@ -4,28 +4,25 @@
 import React from 'react';
 
 import { Button, Card, CardActions, CardContent, CardHeader, Link, Typography } from '@mui/material';
-import { themeDark } from '@dolittle/design-system';
 
 const styles = {
     card: {
         'display': 'flex',
         'flexDirection': 'column',
         'justifyContent': 'space-between',
-        'blockSize': '100%',
+        'height': 1,
         ':hover': {
             background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.09) 100%), #191A21',
             boxShadow: '0px 2px 4px - 1px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12)'
         }
     },
     button: {
-        color: themeDark.palette.primary.main,
-        fontWeight: 500,
-        fontSize: '0.75rem',
+        color: 'primary.main',
         lineHeight: '1.375rem',
         letterSpacing: '0.06em'
     },
     learnMoreLink: {
-        color: themeDark.palette.text.primary,
+        color: 'text.primary',
         textDecoration: 'none'
     }
 };
