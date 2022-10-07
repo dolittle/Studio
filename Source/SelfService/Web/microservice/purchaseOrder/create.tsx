@@ -15,7 +15,6 @@ import { useSnackbar } from 'notistack';
 import { savePurchaseOrderMicroservice } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';
 import { getLatestRuntimeInfo } from '../../api/api';
-import { useGlobalContext } from '../../stores/notifications';
 import { Configuration } from './configuration';
 import { Tab, Tabs } from '../../theme/tabs';
 import { HttpResponseApplication } from '../../api/application';
@@ -32,9 +31,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
-
-
-    const { setNotification } = useGlobalContext();
 
     const microserviceId = Guid.create().toString();
     const headImage = 'dolittle/integrations-m3-purchaseorders:latest';
@@ -62,12 +58,8 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     };
 
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        // TODO replace with enqueue
-        setNotification(
-            'Health Status only available after microservice created',
-            'error'
-        );
+    const handleChange = () => {
+        enqueueSnackbar('Health Status is only available after microservice is created.', { variant: 'error' });
     };
 
     const _onSave = (ms: MicroservicePurchaseOrder): void => {
