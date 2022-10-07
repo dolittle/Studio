@@ -2,35 +2,29 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import {
-    Grid,
-    Button,
-    Typography
-} from '@mui/material';
-import { TabPanel } from '../../utils/materialUi';
-import { Guid } from '@dolittle/rudiments';
+
 import { useSnackbar } from 'notistack';
 
+import { Grid, Button, Typography } from '@mui/material';
+import { TabPanel } from '../../utils/materialUi';
+
+import { Guid } from '@dolittle/rudiments';
 
 import { savePurchaseOrderMicroservice } from '../../stores/microservice';
+import { HttpResponseApplication } from '../../api/application';
 import { MicroservicePurchaseOrder } from '../../api/index';
 import { getLatestRuntimeInfo } from '../../api/api';
 import { Configuration } from './configuration';
 import { Tab, Tabs } from '../../theme/tabs';
-import { HttpResponseApplication } from '../../api/application';
 
-type Props = {
+type CreateProps = {
     application: HttpResponseApplication;
     environment: string;
 };
 
-export const Create: React.FunctionComponent<Props> = (props) => {
+export const Create = ({ application: { id, customerId }, environment }: CreateProps) => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
-
-    const _props = props!;
-    const application = _props.application;
-    const environment = _props.environment;
 
     const microserviceId = Guid.create().toString();
     const headImage = 'dolittle/integrations-m3-purchaseorders:latest';
@@ -38,13 +32,13 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
     const ms: MicroservicePurchaseOrder = {
         dolittle: {
-            applicationId: application.id,
-            customerId: application.customerId,
+            applicationId: id,
+            customerId,
             microserviceId,
         },
         name: '',
         kind: 'purchase-order-api',
-        environment: _props.environment,
+        environment,
         extra: {
             ingress: {
                 path: '/api/webhooks',
@@ -57,7 +51,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         },
     };
 
-
     const handleChange = () => {
         enqueueSnackbar('Health Status is only available after microservice is created.', { variant: 'error' });
     };
@@ -65,24 +58,16 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const _onSave = (ms: MicroservicePurchaseOrder): void => {
         // TODO handle exception (maybe move to wait)
         savePurchaseOrderMicroservice(ms).then((data) => {
-            const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}?firstTime=1`;
+            const href = `/microservices/application/${id}/${environment}/view/${microserviceId}?firstTime=1`;
             history.push(href);
         }).catch(reason => console.log(reason));
     };
 
     return (
-        <Grid
-            container
-            direction='column'
-            justifyContent='flex-start'
-        >
+        <Grid container direction='column' justifyContent='flex-start'>
             <Typography variant='h1' my={2}>Create purchase order API</Typography>
 
-            <Grid
-                container
-                spacing={3}
-
-            >
+            <Grid container spacing={3}>
                 <Grid item xs={10}>
                     <Tabs
                         value={0}
@@ -104,7 +89,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     >
                         <Button
                             onClick={() => {
-                                const href = `/microservices/application/${application.id}/${environment}/create`;
+                                const href = `/microservices/application/${id}/${environment}/create`;
                                 history.replace(href);
                             }}
                         >
