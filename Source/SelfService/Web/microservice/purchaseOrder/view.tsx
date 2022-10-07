@@ -30,15 +30,15 @@ type Props = {
 
 const classes = {
     editIcon: {
-        'padding': 0,
-        'marginRight': 1,
-        'fill': '#6678F6',
+        'p': 0,
+        'mr': 1,
+        'fill': 'primary.dark',
         '& .MuiSvgIcon-root': {
-            color: '#6678F6',
-            marginRight: 1,
+            color: 'primary.dark',
+            mr: 1,
         },
         '& .MuiTypography-root': {
-            color: '#6678F6',
+            color: 'primary.dark',
             textTransform: 'uppercase'
         }
     },
@@ -46,7 +46,7 @@ const classes = {
         flexGrow: 1,
     },
     paper: {
-        padding: 2,
+        p: 2,
         textAlign: 'center',
     },
     divider: {
@@ -54,7 +54,7 @@ const classes = {
     }
 };
 
-export const View: React.FC<Props> = (props) => {
+export const View = (props: Props) => {
     const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
