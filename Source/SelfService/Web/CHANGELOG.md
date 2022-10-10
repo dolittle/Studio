@@ -1,3 +1,9 @@
+# [2.5.4] - 2022-10-10 [PR: #248](https://github.com/dolittle/Studio/pull/248)
+## Summary
+
+Update the runtime dropdown selection to display the latest version `8.6.0` when creating a microservice.
+
+
 # [2.5.3] - 2022-10-5 [PR: #246](https://github.com/dolittle/Studio/pull/246)
 ## Summary
 
