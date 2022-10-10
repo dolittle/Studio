@@ -75,7 +75,7 @@ export const DataTable = ({ rows }: DataTableProps) => {
         }
     };
 
-    const DetailPanelContent = ({row}: {row: DataTableRow}) => (
+    const DetailPanelContent = ({ row }: { row: DataTableRow }) => (
         <Box component={Paper}>
             <PodLogScreen applicationId={row.application} podName={row.podName} containerName={row.containerName} />
         </Box>
