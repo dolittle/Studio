@@ -12,7 +12,7 @@ import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } 
 import { Box, Paper, Tooltip } from '@mui/material';
 
 const capitalize = (str: string) => {
-    if(str.length < 1){
+    if (str.length < 1) {
         return str;
     }
 
@@ -21,7 +21,7 @@ const capitalize = (str: string) => {
 
 const sortByRuntimeVersion = (params: GridValueGetterParams) => {
     const runtimeVersion = params.row.edit?.extra?.runtimeImage?.replace(/dolittle\/runtime:/gi, '');
-    if(typeof runtimeVersion !== 'string'){
+    if (typeof runtimeVersion !== 'string') {
         return 'N/A';
     }
 
@@ -153,9 +153,9 @@ export const DataTable = ({ application, environment, microservices }: DataTable
                 autoHeight={true}
                 headerHeight={46}
                 getRowHeight={() => 'auto'}
-                loading={!rows}
                 disableSelectionOnClick
                 onRowClick={(params) => onTableRowClick(params.row.id)}
-            /></Box>
+            />
+        </Box>
     );
 };
