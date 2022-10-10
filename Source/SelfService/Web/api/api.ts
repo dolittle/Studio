@@ -122,8 +122,8 @@ export function getServerUrlPrefix(): string {
 
 export function getLatestRuntimeInfo(): LatestRuntimeInfo {
     return {
-        image: 'dolittle/runtime:8.0.0',
-        changelog: 'https://github.com/dolittle/Runtime/releases/tag/v8.0.0',
+        image: 'dolittle/runtime:8.6.0',
+        changelog: 'https://github.com/dolittle/Runtime/releases/tag/v8.6.0',
     };
 }
 
@@ -292,7 +292,7 @@ export async function updateConfigFiles(applicationId: string, environment: stri
 
     const parsedResponse = await response.json();
 
-    return response.status === 200 ? { success: true } : { success: false, error: parsedResponse.message};
+    return response.status === 200 ? { success: true } : { success: false, error: parsedResponse.message };
 }
 
 
@@ -309,7 +309,7 @@ export async function deleteConfigFile(applicationId: string, environment: strin
         {
             method: 'DELETE',
             mode: 'cors',
-            body:  JSON.stringify(data)
+            body: JSON.stringify(data)
         });
 
     return response.status === 200;
