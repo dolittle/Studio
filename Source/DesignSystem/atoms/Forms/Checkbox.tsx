@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { FormControl, FormControlLabel, Checkbox as MuiCheckbox } from '@mui/material';
+import { FormControl, FormControlLabel, Checkbox as MuiCheckbox, SxProps } from '@mui/material';
 
 import { useController, FieldProps } from './helpers';
 import type { Form } from './Form';
@@ -12,6 +12,7 @@ import type { Form } from './Form';
  * The props for a {@link Checkbox} component.
  */
 export type CheckboxProps = {
+    sx?: SxProps;
 } & FieldProps;
 
 /**
@@ -23,12 +24,13 @@ export const Checkbox = (props: CheckboxProps) => {
     const { field } = useController(props);
 
     return (
-        <FormControl sx={{ mr: 0 }}>
+        <FormControl sx={props.sx}>
             <FormControlLabel
                 control={
                     <MuiCheckbox {...field} checked={!!field.value} disabled={props.disabled} />
                 }
                 label={props.label}
+                sx={{ mr: 0 }}
             />
         </FormControl>
     );
