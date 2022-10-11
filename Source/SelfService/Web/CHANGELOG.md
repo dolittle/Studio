@@ -1,3 +1,27 @@
+# [2.6.0] - 2022-10-11 [PR: #247](https://github.com/dolittle/Studio/pull/247)
+## Summary
+
+Show and catch errors in Create New Application page form.
+
+![image](https://user-images.githubusercontent.com/1014990/195088399-95235084-1ca5-43e6-9ed9-9738f2780725.png)
+
+![image](https://user-images.githubusercontent.com/1014990/195088573-6bf5ef18-a0bc-42a4-9aa7-9f74ac9225ab.png)
+
+
+### Added
+
+- Display input field error message when input looses focus.
+- Components for making forms in the DesignSystem, namely `<Form>`, `<Input>` and `<Checkbox>`.
+
+### Changed
+
+- MUI TextField into Outlined Input.
+
+### Fixed
+
+- Minor naming fixes.
+
+
 # [2.5.4] - 2022-10-10 [PR: #248](https://github.com/dolittle/Studio/pull/248)
 ## Summary
 
