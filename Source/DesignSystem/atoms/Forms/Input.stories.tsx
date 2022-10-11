@@ -12,7 +12,10 @@ const { metadata, createStory } = componentStories(Input, {
         onChange: 'changed'
     },
     wrapper: ({ component }) => (
-        <Form initialValues={{}}>
+        <Form initialValues={{
+            name: '',
+            nameWithDefault: 'Default Application Name',
+        }}>
             { component }
         </Form>
     )
@@ -21,19 +24,31 @@ const { metadata, createStory } = componentStories(Input, {
 export default metadata;
 
 export const Default = createStory({
-    id: 'application-name',
+    id: 'name',
     label: 'Application Name',
 });
 
 export const Required = createStory({
-    id: 'application-name',
+    id: 'name',
     label: 'Application Name',
     required: true,
 });
 
-export const CustomErrorMessage = createStory({
-    id: 'application-name',
+export const RequiredWithCustomMessage = createStory({
+    id: 'name',
     label: 'Application Name',
     required: 'You must provide an application name',
+});
+
+export const Disabled = createStory({
+    id: 'name',
+    label: 'Application Name',
+    disabled: true,
+});
+
+export const DisabledWithValue = createStory({
+    id: 'nameWithDefault',
+    label: 'Application Name',
+    disabled: true,
 });
 
