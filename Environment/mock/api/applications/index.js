@@ -287,6 +287,18 @@ routes.get('/application/:id', (req, res) => {
     res.status(404).end(`Application ${applicationId} not found`);
 });
 
+routes.post('/application', (req, res) => {
+    const application = req.body;
+    console.log('Creating application', application);
+
+    if (application.name === 'fail') {
+        res.status(500).json({ message: 'Mock failing intentionally for application name "fail"'}).end();
+        return;
+    }
+
+    res.status(200).json({}).end();
+})
+
 routes.get('/live/application/:id/microservices', (req, res) => {
     const applicationId = req.params.id;
 

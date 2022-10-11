@@ -12,6 +12,7 @@ const metrics = require('./monitoring/metrics');
 
 // SelfService Backend API
 const backend = express();
+backend.use(express.json());
 backend.use(logging);
 backend.use(applications);
 backend.use(notImplemented);
