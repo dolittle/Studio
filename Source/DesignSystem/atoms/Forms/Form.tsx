@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { ReactNode } from 'react';
+import React, { useMemo, ReactNode } from 'react';
 import { useForm, FieldValues, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { Box } from '@mui/material';
 
@@ -39,8 +39,13 @@ export const Form = <T extends FieldValues>(props: FormProps<T>) => {
     });
     const { handleSubmit } = methods;
 
+    const handleFormSubmit = useMemo(() => handleSubmit(
+        (data, event) => props.onSubmit?.(data, event),
+        props.onSubmitInvalid,
+    ), [handleSubmit, props.onSubmit, props.onSubmitInvalid]);
+
     return (
-        <Box component='form' onSubmit={handleSubmit((data, event) => props.onSubmit?.(data, event), props.onSubmitInvalid)}>
+        <Box component='form' onSubmit={handleFormSubmit}>
             <FormProvider {...methods}>
                 {props.children}
             </FormProvider>
