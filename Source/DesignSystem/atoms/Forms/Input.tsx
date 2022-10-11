@@ -4,44 +4,16 @@
 import React from 'react';
 import { Message, ValidationRule } from 'react-hook-form';
 
-import { FormControl, FormHelperText, InputLabel, OutlinedInput } from '@mui/material';
-
-import { themeDark } from '@dolittle/design-system';
+import { FormControl, FormHelperText, InputLabel, OutlinedInput, SxProps } from '@mui/material';
 
 import { useController, FieldProps } from './helpers';
 import type { Form } from './Form';
-
-const styles = {
-    formFieldsWrapper: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        [themeDark.breakpoints.down('sm')]: {
-            flexDirection: 'column',
-            m: 0
-        }
-    },
-    input: {
-        'maxWidth': 220,
-        '.MuiInputLabel-root[data-shrink="true"]': {
-            top: 0
-        },
-        '.MuiFormHelperText-root.Mui-error': {
-            color: 'error.light',
-            letterSpacing: '0.4px'
-        }
-    },
-    formField: {
-        letterSpacing: '0.15px',
-        [themeDark.breakpoints.down('sm')]: {
-            mb: 2.5
-        }
-    },
-};
 
 /**
  * The props for a {@link Input} component.
  */
 export type InputProps = {
+    sx?: SxProps;
 } & FieldProps;
 
 /**
@@ -53,26 +25,42 @@ export const Input = (props: InputProps) => {
     const { field, hasError, errorMessage } = useController(props);
 
     return (
-        <FormControl sx={{ ...styles.formFieldsWrapper, ...styles.input }}>
+        <FormControl sx={{
+            'width': 220,
+            '.MuiInputLabel-root[data-shrink="true"]': {
+                top: 0
+            },
+            '.MuiFormHelperText-root.Mui-error': {
+                color: 'error.light',
+                letterSpacing: '0.4px'
+            },
+            ...props.sx
+        }}>
             <InputLabel
+                htmlFor={props.id}
+                required={isRequired(props.required)}
                 error={hasError}
                 sx={{ top: -8 }}
-                required={isRequired(props.required)}
-                htmlFor={props.id}
             >
                 {props.label}
             </InputLabel>
 
             <OutlinedInput
-                id={props.id}
-                type='text'
                 {...field}
+                type='text'
+                id={props.id}
                 error={hasError}
                 disabled={props.disabled}
                 label={props.label}
                 aria-describedby={`${props.id}-helper-text`}
                 size='small'
-                sx={styles.formField}
+                sx={{
+                    letterSpacing: '0.15px',
+                    mb: {
+                        sm: 0,
+                        xs: 2.5,
+                    },
+                }}
             />
 
             <FormHelperText error={hasError} id={`${props.id}-helper-text`}>
