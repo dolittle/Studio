@@ -23,5 +23,17 @@ export default metadata;
 export const Default = createStory({
     id: 'application-name',
     label: 'Application Name',
+});
+
+export const Required = createStory({
+    id: 'application-name',
+    label: 'Application Name',
     required: true,
 });
+
+export const CustomErrorMessage = createStory({
+    id: 'application-name',
+    label: 'Application Name',
+    required: 'You must provide an application name',
+});
+
