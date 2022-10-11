@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { createElement, ComponentProps, JSXElementConstructor } from 'react';
+import { createElement, ComponentProps, ReactElement, JSXElementConstructor } from 'react';
 
 import { ComponentStory, ComponentMeta, ArgTypes } from '@storybook/react';
 
@@ -13,8 +13,21 @@ type ComponentStoryActions<TComponent extends Component> = Partial<{
     [prop in keyof ComponentProps<TComponent>]: string;
 }>;
 
+type ComponentWrapperProps = { component: ReactElement };
+type ComponentWrapper = JSXElementConstructor<ComponentWrapperProps>;
+
 type ComponentStoryConfig<TComponent extends Component> = {
+    /**
+     * Optional callbacks to capture in Storybook Actions addons.
+     * Set props to event name strings to make them appear in the Actions tab in Storybook.
+     */
     actions?: ComponentStoryActions<TComponent>;
+
+    /**
+     * An optional wrapper component to wrap the story in.
+     * This is useful if the component requires e.g. a React context to work properly.
+     */
+    wrapper?: ComponentWrapper;
 };
 
 /**
@@ -47,7 +60,24 @@ export const componentStories = <TComponent extends Component>(component: TCompo
         argTypes,
     };
 
-    const template: ComponentStory<TComponent> = (props) => createElement(component, props);
+    const template: ComponentStory<TComponent> = (props) => {
+        if (typeof config?.wrapper === 'function') {
+            return createElement(
+                config.wrapper,
+                {
+                    component: createElement(
+                        component,
+                        props,
+                    ),
+                },
+            );
+        }
+
+        return createElement(
+            component,
+            props,
+        );
+    };
 
     const createStory = (args?: StoryArgs<TComponent>) => {
         const story = template.bind({});
