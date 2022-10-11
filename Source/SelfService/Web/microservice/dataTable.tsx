@@ -67,6 +67,7 @@ type DataTableProps = {
 export const DataTable = ({ application, environment, microservices }: DataTableProps) => {
     const history = useHistory();
     const [rows, setRows] = useState<(MicroserviceObject | undefined)[]>([]);
+    const [loadingRows, setLoadingRows] = useState<boolean>(true);
 
     const getMicroserviceStatus = useCallback(async (microserviceId: string) => {
         const status = await getPodStatus(application.id, environment, microserviceId);
@@ -81,8 +82,11 @@ export const DataTable = ({ application, environment, microservices }: DataTable
                 ...microservice,
                 phase: status[0]?.phase
             } as MicroserviceObject;
-        }))
-            .then(setRows);
+        })).then(data => {
+            setRows(data);
+            setLoadingRows(false);
+        });
+
     }, []);
 
     const customUrlFieldSort = (v1, v2, param1, param2) => {
@@ -150,6 +154,7 @@ export const DataTable = ({ application, environment, microservices }: DataTable
                 columns={columns}
                 disableColumnMenu
                 hideFooter
+                loading={loadingRows}
                 autoHeight={true}
                 headerHeight={46}
                 getRowHeight={() => 'auto'}
