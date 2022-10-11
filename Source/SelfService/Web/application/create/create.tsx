@@ -1,24 +1,18 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
+import { Box, Button, Typography } from '@mui/material';
+
 import { Guid } from '@dolittle/rudiments';
 import { themeDark } from '@dolittle/design-system';
+import { Checkbox, Form, Input } from '@dolittle/design-system/atoms/Forms';
 
-import { createApplication, HttpApplicationRequest, HttpApplicationEnvironment } from '../../api/application';
-import { ShortInfo } from '../../api/api';
-import { checkTenantIdValidity } from '../../utils/tenantValidation';
-import { validateTextFields, FormErrorStates } from '../../utils/formTextFieldsValidation';
-
-import { Box, Typography } from '@mui/material';
-
+import { createApplication, HttpApplicationRequest } from '../../api/application';
 import { Notification } from '../../theme/Notification';
-import { CreateFormCheckbox } from './createFormCheckbox';
-import { CreateFormTextFields } from './createFormTextFields';
-import { CreateFormActionButtons } from './createFormActionButtons';
 
 const styles = {
     title: {
@@ -37,154 +31,162 @@ const styles = {
             flexDirection: 'column',
             m: 0
         }
-    }
-};
-
-export type EnvironmentsProps = {
-    name: string;
-    shortName: string;
-    checked: boolean;
-    disabled: boolean;
-    customerTenants: string[];
-}[];
-
-const initialErrorState = {
-    applicationNameError: {
-        appErrorMessage: '',
-        appError: false
     },
-    contactNameError: {
-        nameErrorMessage: '',
-        nameError: false
+    actionBtnWrapper: {
+        [themeDark.breakpoints.down('sm')]: {
+            mt: 7.5
+        },
     },
-    contactEmailError: {
-        emailErrorMessage: '',
-        emailError: false
+    actionButtons: {
+        color: 'text.primary',
+        fontSize: '0.875rem',
+        letterSpacing: '0.06em'
     },
 };
-
-const initialEnvironmentState = [
-    {
-        name: 'Production*',
-        shortName: 'Prod',
-        checked: true,
-        disabled: true,
-        customerTenants: [Guid.create().toString()] as string[]
-    },
-    {
-        name: 'Development',
-        shortName: 'Dev',
-        checked: false,
-        disabled: false,
-        customerTenants: [Guid.create().toString()] as string[]
-    },
-    {
-        name: 'Test',
-        shortName: 'Test',
-        checked: false,
-        disabled: false,
-        customerTenants: [Guid.create().toString()] as string[]
-    },
-];
 
 const errorMessage = 'Oops, something went wrong';
+
+type CreateApplicationParameters = {
+    name: string;
+    contact: {
+        name: string;
+        email: string;
+    };
+    environments: {
+        Dev: boolean;
+        Test: boolean;
+        Prod: boolean;
+    }
+};
 
 export const Create = () => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
-    const newApplicationId = Guid.create().toString();
 
-    const [newApplication, setNewApplication] = useState({
-        id: newApplicationId,
-        name: '',
-    } as ShortInfo);
-    const [environments, setEnvironments] = useState<EnvironmentsProps>(initialEnvironmentState);
-    const [contactName, setContactName] = useState('');
-    const [contactEmail, setContactEmail] = useState('');
-    const [formError, setFormError] = useState<FormErrorStates>(initialErrorState);
     const [serverError, setServerError] = useState<boolean>(false);
 
-    const handleApplicationNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const _application = { ...newApplication };
-        _application.name = event.target.value!;
-        setFormError({ ...formError, applicationNameError: { appErrorMessage: '', appError: false } });
-        setNewApplication(_application);
+    const handleCancel = () => {
+        const href = `/applications`;
+        history.push(href);
     };
 
-    const handleContactNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const _name = event.target.value!;
-        setFormError({ ...formError, contactNameError: { nameErrorMessage: '', nameError: false } });
-        setContactName(_name);
-    };
+    const handleApplicationCreate = async (form: CreateApplicationParameters) => {
+        const request: HttpApplicationRequest = {
+            id: Guid.create().toString(),
+            name: form.name,
+            environments: [],
+        };
 
-    const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const _name = event.target.value!;
-        setFormError({ ...formError, contactEmailError: { emailErrorMessage: '', emailError: false } });
-        setContactEmail(_name);
-    };
+        form.environments.Prod = true;
+        for (const name in form.environments) {
+            if (form.environments[name] !== true) continue;
 
-    const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, index: number): void => {
-        const newEnvironments = [...environments];
-        newEnvironments[index].checked = event.target.checked;
-        setEnvironments(newEnvironments);
-        checkTenantIdValidity(environments);
-    };
-
-    const handleApplicationCreate = async () => {
-        const isValid = validateTextFields(formError, setFormError, newApplication.name, contactName, contactEmail);
-
-        if (isValid) {
-            const input: HttpApplicationRequest = {
-                id: newApplication.id,
-                name: newApplication.name,
-                environments: environments
-                    .filter(e => e.checked)
-                    .map(e => ({
-                        name: e.shortName,
-                        customerTenants: e.customerTenants.map(t => ({ id: t }))
-                    } as HttpApplicationEnvironment)),
-            };
-            try {
-                await createApplication(input);
-                const href = `/application/building/${newApplication.id}`;
-                history.push(href);
-                setServerError(false);
-                enqueueSnackbar('Application created', { variant: 'info' });
-            } catch (error) {
-                setServerError(true);
-            }
-
-            return;
+            request.environments.push({
+                name,
+                customerTenants: [{
+                    id: Guid.create().toString(),
+                }],
+            });
         }
 
-        return;
+        try {
+            await createApplication(request);
+            console.log('Created app', request);
+            const href = `/application/building/${request.id}`;
+            history.push(href);
+            setServerError(false);
+            enqueueSnackbar('Application created', { variant: 'info' });
+        } catch (error) {
+            setServerError(true);
+        }
     };
 
     return (
         <>
             <Typography variant='h2' sx={styles.title}>Create New Application</Typography>
 
-            <Box component="form">
+            <Form<CreateApplicationParameters>
+                initialValues={{
+                    name: '',
+                    contact: {
+                        name: '',
+                        email: '',
+                    },
+                    environments: {
+                        Dev: false,
+                        Test: false,
+                        Prod: true,
+                    }
+                }}
+                onSubmit={handleApplicationCreate}
+            >
                 <Typography variant='body1' sx={styles.secondaryTitle}>Please provide the following information</Typography>
 
-                <CreateFormTextFields
-                    formError={formError}
-                    setError={setFormError}
-                    newApplication={newApplication}
-                    onAppChange={handleApplicationNameChange}
-                    contactName={contactName}
-                    onNameChange={handleContactNameChange}
-                    contactEmail={contactEmail}
-                    onEmailChange={handleEmailChange} />
+                <Input
+                    id='name'
+                    label='Application Name'
+                    required='Application name required.'
+                    pattern={{
+                        value: /^[a-z0-9]+$/,
+                        message: 'Name can only contain alphanumeric characters.'
+                    }}
+                    sx={styles.formFieldsWrapper}
+                />
+
+                <Box sx={{ mt: 3.5, ...styles.formFieldsWrapper }}>
+                    <Input
+                        id='contact.name'
+                        label='Contact Name'
+                        required='Contact name required.'
+                    />
+                    <Input
+                        id='contact.email'
+                        label='Contact Email'
+                        required='Contact email address required.'
+                        pattern={{
+                            value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                            message: 'Please enter a valid email address.'
+                        }}
+                    />
+                </Box>
 
                 <Typography variant='body1' sx={{ mt: 4, ...styles.secondaryTitle }}>Select Environments</Typography>
 
-                <CreateFormCheckbox environments={environments} handleOnChange={handleCheckboxChange} />
+                <Box sx={{ ...styles.formFieldsWrapper, mb: 7.5 }}>
+                    <Checkbox
+                        id='environments.Prod'
+                        label='Production'
+                        disabled
+                    />
+                    <Checkbox
+                        id='environments.Dev'
+                        label='Development'
+                    />
+                    <Checkbox
+                        id='environments.Test'
+                        label='Test'
+                    />
+                </Box>
 
-                <CreateFormActionButtons handleOnSubmit={handleApplicationCreate} />
+
+                <Box sx={styles.actionBtnWrapper}>
+                    <Button variant='text'
+                        sx={{ ...styles.actionButtons, mr: 8 }}
+                        onClick={handleCancel}
+                    >
+                        Cancel
+                    </Button>
+
+                    <Button variant='text'
+                        sx={{ ...styles.actionButtons, color: 'primary.main' }}
+                        type='submit'
+                    >
+                        Create
+                    </Button>
+                </Box>
 
                 {serverError && <Notification title={errorMessage} sx={{ mt: 6 }} />}
-            </Box>
+            </Form>
         </>
     );
 };
