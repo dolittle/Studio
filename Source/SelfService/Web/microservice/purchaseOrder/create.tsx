@@ -8,14 +8,13 @@ import { Grid, Button, Typography } from '@mui/material';
 
 import { Guid } from '@dolittle/rudiments';
 import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
+import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
 
 import { savePurchaseOrderMicroservice } from '../../stores/microservice';
 import { HttpResponseApplication } from '../../api/application';
 import { MicroservicePurchaseOrder } from '../../api/index';
 import { getLatestRuntimeInfo } from '../../api/api';
 import { Configuration } from './configuration';
-
-import { Notification } from '../../theme/Notification';
 
 type CreateProps = {
     application: HttpResponseApplication;
@@ -79,7 +78,11 @@ export const Create = ({ application: { id, customerId }, environment }: CreateP
                     },
                     {
                         label: 'Health Status',
-                        render: () => <Notification title='Health Status is only available after microservice is created.' />,
+                        render: () => <AlertBox
+                            severity='error'
+                            title='Health Status is only available after microservice is created.'
+                            sx={{ maxWidth: 520 }}
+                        />,
                     }
                 ]}
             />

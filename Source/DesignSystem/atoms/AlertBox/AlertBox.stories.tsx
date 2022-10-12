@@ -10,8 +10,8 @@ const { metadata, createStory } = componentStories(AlertBox);
 export default metadata;
 
 export const Error = createStory({
-    title: 'Something went wrong',
     severity: 'error',
+    title: 'Something went wrong',
     message: 'Please try again later. If problem persists, please',
     link: {
         href: 'mailto: support@dolittle.com',
@@ -20,8 +20,8 @@ export const Error = createStory({
 });
 
 export const Warning = createStory({
-    title: 'This is a warning.',
     severity: 'warning',
+    title: 'This is a warning.',
     message: 'Please try again later. If problem persists, please',
     link: {
         href: 'mailto: support@dolittle.com',
@@ -30,8 +30,8 @@ export const Warning = createStory({
 });
 
 export const Info = createStory({
-    title: 'This is an info message.',
     severity: 'info',
+    title: 'This is an info message.',
     message: 'For more information, please',
     link: {
         href: 'https://www.dolittle.com/',
@@ -40,7 +40,7 @@ export const Info = createStory({
 });
 
 export const Success = createStory({
-    title: 'All good!',
     severity: 'success',
+    title: 'All good!',
     message: 'You are all set up and ready to go!',
 });
