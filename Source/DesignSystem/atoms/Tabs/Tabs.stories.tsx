@@ -22,16 +22,3 @@ export const Normal = createStory({
         },
     ]
 });
-
-export const Another = createStory({
-    tabs: [
-        {
-            label: 'First tab with a very very very very long label',
-            render: () => <h1>Hello</h1>
-        },
-        {
-            label: 'Second tab',
-            render: () => <h1>World</h1>
-        },
-    ]
-});
