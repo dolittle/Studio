@@ -21,8 +21,8 @@ type LinkTypes = {
 };
 
 export type AlertBoxProps = {
-    title: string;
     severity: 'error' | 'warning' | 'info' | 'success';
+    title: string;
     message?: any;
     link?: LinkTypes;
     sx?: any;

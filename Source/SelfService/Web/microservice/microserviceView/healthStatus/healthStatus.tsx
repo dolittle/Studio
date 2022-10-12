@@ -7,12 +7,12 @@ import { useSnackbar } from 'notistack';
 import { RestartAlt } from '@mui/icons-material';
 
 import { Graph } from '@dolittle/design-system/molecules/Metrics/Graph';
+import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
 
 import { ContainerStatusInfo, HttpResponsePodStatus, restartMicroservice } from '../../../api/api';
 
 import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 
-import { Notification } from '../../../theme/Notification';
 import { ButtonText } from '../../../theme/buttonText';
 import { DataTable, DataTableStats } from './dataTable';
 
@@ -20,12 +20,9 @@ const styles = {
     restartBtn: {
         lineHeight: '1.375rem',
         letterSpacing: '0.06em',
+        display: 'flex',
         mb: 2.5,
         mt: 3.5
-    },
-    notification: {
-        mt: 2.5,
-        maxWidth: 520
     }
 };
 
@@ -40,8 +37,6 @@ const computeStats = (metric: Metric | undefined, scale: number): DataTableStats
 
     return { average, maximum, current };
 };
-
-const errorMessage = 'Cannot display microservice containers';
 
 type HealthStatusProps = {
     status: string
@@ -121,7 +116,15 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
 
             {containerTables.length > 0
                 ? containerTables
-                : <Notification title={errorMessage} sx={styles.notification} />
+                : <AlertBox
+                    severity='error'
+                    title='Cannot display microservice containers'
+                    message='Please try again later. If problem persists, please'
+                    link={{
+                        href: 'mailto: support@dolittle.com',
+                        text: 'contact support'
+                    }}
+                />
             }
 
             {cpu.loading

@@ -9,9 +9,9 @@ import { Box, Button, CircularProgress, Typography } from '@mui/material';
 
 import { Guid } from '@dolittle/rudiments';
 import { Checkbox, Form, Input } from '@dolittle/design-system/atoms/Forms';
+import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
 
 import { createApplication, HttpApplicationRequest } from '../../api/application';
-import { Notification } from '../../theme/Notification';
 
 const styles = {
     title: {
@@ -40,7 +40,6 @@ const styles = {
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const alphaCharsRegex = /^[a-z0-9]+$/;
-const errorMessage = 'Oops, something went wrong';
 
 type CreateApplicationParameters = {
     name: string;
@@ -102,6 +101,23 @@ export const Create = () => {
             setServerError(true);
         }
     };
+
+    const ActionButtons = () =>
+        <Box>
+            <Button variant='text'
+                sx={{ ...styles.actionButtons, mr: 8 }}
+                onClick={handleCancel}
+            >
+                Cancel
+            </Button>
+
+            <Button variant='text'
+                sx={{ ...styles.actionButtons, color: 'primary.main' }}
+                type='submit'
+            >
+                Create
+            </Button>
+        </Box>;
 
     return (
         <>
@@ -174,25 +190,20 @@ export const Create = () => {
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <CircularProgress />
                     </Box>
-                ) : (
-                    <Box>
-                        <Button variant='text'
-                            sx={{ ...styles.actionButtons, mr: 8 }}
-                            onClick={handleCancel}
-                        >
-                            Cancel
-                        </Button>
+                ) : <ActionButtons />}
 
-                        <Button variant='text'
-                            sx={{ ...styles.actionButtons, color: 'primary.main' }}
-                            type='submit'
-                        >
-                            Create
-                        </Button>
-                    </Box>
-                )}
-
-                {serverError && <Notification title={errorMessage} sx={{ mt: 6 }} />}
+                {serverError &&
+                    <AlertBox
+                        title='Oops, something went wrong'
+                        message='Please try again later. If problem persists, please'
+                        severity='error'
+                        link={{
+                            href: 'mailto: support@dolittle.com',
+                            text: 'contact support'
+                        }}
+                        sx={{ mt: 6 }}
+                    />
+                }
             </Form>
         </>
     );
