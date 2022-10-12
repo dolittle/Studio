@@ -70,9 +70,9 @@ export const useFieldError = (label: string, error?: FieldError): [boolean, stri
  * @returns An object with the render-props for a controlled component, and the error state of the input-field.
  */
 export const useController = (props: FieldProps): { field: ControllerRenderProps, hasError: boolean, errorMessage?: string } => {
-    const [ inputProps, rules ] = useFieldProps(props);
+    const [inputProps, rules] = useFieldProps(props);
     const { field, fieldState } = reactHookFormUseController({ name: inputProps.id, rules });
-    const [ hasError, errorMessage ] = useFieldError(inputProps.label, fieldState.error);
+    const [hasError, errorMessage] = useFieldError(inputProps.label, fieldState.error);
 
     if (field.value === undefined) {
         field.value = '';

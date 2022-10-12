@@ -34,7 +34,7 @@ export type FormProps<T extends FieldValues> = {
  */
 export const Form = <T extends FieldValues>(props: FormProps<T>) => {
     const methods = useForm<T>({
-        mode: 'onBlur',
+        mode: 'onTouched',
         defaultValues: props.initialValues as any,
     });
     const { handleSubmit } = methods;
