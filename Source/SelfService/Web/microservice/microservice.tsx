@@ -5,20 +5,22 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
+import { LoadingSpinner } from '@dolittle/design-system/atoms/LoadingSpinner/LoadingSpinner';
+
 import { HttpResponseApplication } from '../api/application';
 
 import { useReadable } from 'use-svelte-store';
 import { canEditMicroservices, microservices } from '../stores/microservice';
 
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 import { NoMicroservices } from './noMicroservices';
 import { DataTable, MicroserviceObject } from './dataTable';
 import { DeployButton } from './deployButton';
 
 type MicroservicesOverviewScreenProps = {
-    environment: string
-    application: HttpResponseApplication
+    environment: string;
+    application: HttpResponseApplication;
 };
 
 export const MicroservicesOverviewScreen = ({ environment, application }: MicroservicesOverviewScreenProps) => {
@@ -61,12 +63,8 @@ export const MicroservicesOverviewScreen = ({ environment, application }: Micros
     };
 
     if (loading) {
-        return (
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 1 }}>
-                <CircularProgress />
-            </Box>
-        );
-    }
+        return <LoadingSpinner />;
+    };
 
     return (
         <>

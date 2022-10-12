@@ -5,11 +5,12 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 import { Guid } from '@dolittle/rudiments';
 import { Checkbox, Form, Input } from '@dolittle/design-system/atoms/Forms';
 import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
+import { LoadingSpinner } from '@dolittle/design-system/atoms/LoadingSpinner/LoadingSpinner';
 
 import { createApplication, HttpApplicationRequest } from '../../api/application';
 
@@ -186,11 +187,7 @@ export const Create = () => {
                     />
                 </Box>
 
-                {loading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <CircularProgress />
-                    </Box>
-                ) : <ActionButtons />}
+                {loading ? <LoadingSpinner /> : <ActionButtons />}
 
                 {serverError &&
                     <AlertBox
