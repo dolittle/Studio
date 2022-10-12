@@ -11,6 +11,7 @@ export type TerminalProps = {
     stream: TransformStream<string, string>;
 };
 
+
 export const Terminal = (props: TerminalProps) => {
     const { term, ref } = useTerminal();
 
