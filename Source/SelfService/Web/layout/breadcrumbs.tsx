@@ -6,20 +6,19 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import { Link, Breadcrumbs, Stack } from '@mui/material';
 import { ChevronRight } from '@mui/icons-material';
-import { themeDark } from '@dolittle/design-system';
 
 const styles = {
     fontWeight: 400,
-    fontSize: '1rem',
+    fontSize: 16,
     lineHeight: '1.25rem',
-    color: themeDark.palette.text.primary,
+    color: 'text.primary',
     textDecoration: 'none'
 };
 
 export type BreadcrumbsRoute = {
-    path: string
-    to: string
-    name: string
+    path: string;
+    to: string;
+    name: string;
 };
 
 type Props = {

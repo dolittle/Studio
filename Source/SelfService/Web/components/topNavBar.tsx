@@ -3,41 +3,29 @@
 
 import React from 'react';
 
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { ShortInfoWithEnvironment } from '../api/api';
-import { ApplicationsChanger } from '../application/applicationsChanger';
 
-import { useGlobalContext } from '../stores/notifications';
 import { Box, Grid } from '@mui/material';
 import { BreadCrumbContainer, BreadcrumbsRoute } from '../layout/breadcrumbs';
-import { applications } from '../stores/state';
 import { TopRightMenu } from './topRightMenu';
 
-type Props = {
+type TopNavBarProps = {
     routes: BreadcrumbsRoute[];
     applications: ShortInfoWithEnvironment[];
     applicationId: string;
     environment: string;
 };
 
-export const TopNavBar: React.FunctionComponent<Props> = (props) => {
-    const _props = props!;
-    return (
-        <>
-            <Box mb={2} id='topNavBar'>
-                <Grid container direction='row' justifyContent='space-between'>
-                    <BreadCrumbContainer routes={_props.routes} />
-                    <Grid>
-                        <TopRightMenu
-                            applications={_props.applications}
-                            applicationId={_props.applicationId}
-                            environment={_props.environment}
-                        />
-                    </Grid>
-                </Grid>
-            </Box>
-        </>
-    );
-};
+export const TopNavBar = (props: TopNavBarProps) =>
+    <Box sx={{ mb: 2 }} id='topNavBar'>
+        <Grid container direction='row' justifyContent='space-between'>
+            <BreadCrumbContainer routes={props.routes} />
+            <Grid>
+                <TopRightMenu
+                    applications={props.applications}
+                    applicationId={props.applicationId}
+                    environment={props.environment}
+                />
+            </Grid>
+        </Grid>
+    </Box>;
