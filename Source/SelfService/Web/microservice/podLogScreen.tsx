@@ -3,7 +3,9 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { LoadingSpinner } from '@dolittle/design-system/atoms/LoadingSpinner/LoadingSpinner';
+
+import { Typography } from '@mui/material';
 
 import { getPodLogs, HttpResponsePodLog } from '../api/api';
 
@@ -20,12 +22,8 @@ export const PodLogScreen = ({ applicationId, podName, containerName }: any) => 
     }, []);
 
     if (loading) {
-        return (
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 1, p: 2 }}>
-                <CircularProgress />
-            </Box>
-        );
-    }
+        return <LoadingSpinner />;
+    };
 
     return (
         <>
