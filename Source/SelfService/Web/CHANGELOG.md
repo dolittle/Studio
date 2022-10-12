@@ -1,3 +1,20 @@
+# [2.7.0] - 2022-10-12 [PR: #250](https://github.com/dolittle/Studio/pull/250)
+## Summary
+
+Smaller 'Create new appliaction' page fixes.
+
+<img width="587" alt="Screenshot 2022-10-12 at 14 00 53" src="https://user-images.githubusercontent.com/19160439/195326018-fa8654db-a6ab-439d-a826-0abbfee29d5c.png">
+
+### Added
+
+- Loading state while application is created.
+
+### Changed
+
+- Remove form active field error when user starts to typing again previosly errored field.
+- Styling improvements.
+
+
 # [2.6.0] - 2022-10-11 [PR: #247](https://github.com/dolittle/Studio/pull/247)
 ## Summary
 
