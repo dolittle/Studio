@@ -8,7 +8,7 @@ import { createFakeServer } from './fake';
 
 const { metadata, createStory } = componentStories(Terminal, {
     overridePropsWith: () => ({
-        stream: createFakeServer(),
+        streams: createFakeServer(),
     }),
 });
 
