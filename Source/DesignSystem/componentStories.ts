@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { createElement, ComponentProps, ReactElement, JSXElementConstructor } from 'react';
+import { createElement, useRef, ComponentProps, JSXElementConstructor } from 'react';
 
 import { ArgTypes, ComponentMeta, ComponentStory, DecoratorFn } from '@storybook/react';
 
@@ -27,6 +27,13 @@ type ComponentStoryConfig<TComponent extends Component> = {
      * This is useful if the component requires e.g. a React context to work properly.
      */
     decorator?: Decorator;
+
+    /**
+     * An optional factory to create props that will override the args on a component.
+     * This factory will be called once - every time the Story is created.
+     * This is useful if some props require special types that cannot be provided through the Storybook UI.
+     */
+    overridePropsWith?: () => StoryArgs<TComponent>;
 };
 
 /**
@@ -63,9 +70,16 @@ export const componentStories = <TComponent extends Component>(component: TCompo
     };
 
     const template: ComponentStory<TComponent> = (props) => {
+        const overrides = useRef<StoryArgs<TComponent>>();
+        if (overrides.current === undefined) {
+            overrides.current = config?.overridePropsWith?.() || {};
+        }
+
+        const propsWithOverrides = { ...props, ...overrides.current };
+
         return createElement(
             component,
-            props,
+            propsWithOverrides,
         );
     };
 
