@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { useReadable } from 'use-svelte-store';
 
 import { microservices, MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
-import { Configuration } from './configuration';
+import { Configuration } from './configuration/configuration';
 import { HttpResponsePodStatus } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import { HttpResponseApplication } from '../../api/application';

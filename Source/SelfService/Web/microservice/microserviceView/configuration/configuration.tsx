@@ -12,21 +12,21 @@ import {
     IngressURLWithCustomerTenantID,
     SimpleIngressPath,
     updateConfigFiles
-} from '../../api/api';
-import { MicroserviceSimple } from '../../api/index';
+} from '../../../api/api';
+import { MicroserviceSimple } from '../../../api/index';
 
 import { Box, Divider, Grid, Typography } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
-import { ButtonText } from '../../theme/buttonText';
-import { DownloadButton } from '../../theme/downloadButton';
-import { SelectFileConfirmationModal } from '../../theme/selectFileConfirmationModal';
-import { DownloadButtons } from '../components/downloadButtons';
+import { ButtonText } from '../../../theme/buttonText';
+import { DownloadButton } from '../../../theme/downloadButton';
+import { SelectFileConfirmationModal } from '../../../theme/selectFileConfirmationModal';
+import { DownloadButtons } from '../../components/downloadButtons';
 
-import ConfigFilesTable from '../base/components/configFilesTable';
-import { ConfigView } from '../base/configView';
-import { LiveIngressView } from '../base/liveIngressView';
-import { FileUploadForm, FileUploadFormRef } from '../base/components/fileUploadForm';
+import ConfigFilesTable from '../../base/components/configFilesTable';
+import { ConfigView } from '../../base/configView';
+import { LiveIngressView } from '../../base/liveIngressView';
+import { FileUploadForm, FileUploadFormRef } from '../../base/components/fileUploadForm';
 
 export type ConfigurationProps = {
     applicationId: string;
