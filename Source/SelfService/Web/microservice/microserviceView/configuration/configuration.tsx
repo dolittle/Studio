@@ -28,6 +28,8 @@ import { ConfigView } from '../../base/configView';
 import { LiveIngressView } from '../../base/liveIngressView';
 import { FileUploadForm, FileUploadFormRef } from '../../base/components/fileUploadForm';
 
+import { SetupSection } from './setupSection';
+
 export type ConfigurationProps = {
     applicationId: string;
     environment: string;
@@ -133,6 +135,8 @@ export const Configuration = ({
             />
 
             <Box>
+                <SetupSection />
+
                 <ConfigView microservice={microservice} />
             </Box>
 
