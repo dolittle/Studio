@@ -1,3 +1,31 @@
+# [2.8.0] - 2022-10-13 [PR: #251](https://github.com/dolittle/Studio/pull/251)
+## Summary
+
+Updated styles as Theme is updated.
+Added loading states to data tables and its content.
+Added reusable components to Storybook and used them.
+Cleaned some code.
+Added SessionStorage to Tabs component in Storybook so active Tab will remain the same after page refresh.
+
+<img width="538" alt="Screenshot 2022-10-13 at 09 56 33" src="https://user-images.githubusercontent.com/19160439/195527260-e7e7b410-a716-49f6-91d5-9a6c29864dd2.png">
+
+<img width="1501" alt="Screenshot 2022-10-13 at 09 54 05" src="https://user-images.githubusercontent.com/19160439/195527294-653c8988-a457-4cf7-b90c-08ba325e938e.png">
+
+### Added
+
+- Save current active Tab in SessionStorage so Tab will stay the same after page refresh.
+- Loading states to data table and container logs.
+
+### Changed
+
+- Moved reusable components to Storybook and used them.
+- Updated styles according to Theme updates.
+
+### Removed
+
+- Unused components.
+
+
 # [2.7.0] - 2022-10-12 [PR: #250](https://github.com/dolittle/Studio/pull/250)
 ## Summary
 
