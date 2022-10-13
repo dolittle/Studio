@@ -5,28 +5,27 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useReadable } from 'use-svelte-store';
 
-import { getConfigFilesNamesList, getPodStatus, getServerUrlPrefix, HttpResponsePodStatus, InputConfigFile, updateConfigFiles } from '../api/api';
-import { microservices, MicroserviceStore } from '../stores/microservice';
-import { MicroserviceView as BaseView } from './microserviceView/microserviceView';
-
-import { View as PurchaseOrderApiView } from './purchaseOrder/view';
-import { HttpResponseApplication } from '../api/application';
 import { Typography } from '@mui/material';
 
-type Props = {
-    application: HttpResponseApplication
-    environment: string
-    microserviceId: string
+import { getPodStatus, HttpResponsePodStatus } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
+
+import { microservices, MicroserviceStore } from '../stores/microservice';
+
+import { MicroserviceView as BaseView } from './microserviceView/microserviceView';
+import { View as PurchaseOrderApiView } from './purchaseOrder/view';
+
+type OverviewProps = {
+    application: HttpResponseApplication;
+    environment: string;
+    microserviceId: string;
 };
 
-export const Overview: React.FunctionComponent<Props> = (props) => {
+export const Overview = ({ application, microserviceId, environment }: OverviewProps) => {
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
-    const _props = props!;
-    const application = _props.application;
-    const applicationId = application.id;
-    const microserviceId = _props.microserviceId;
-    const environment = _props.environment;
+
+    const [loaded, setLoaded] = useState(false);
 
     // Want microservice name
     const [podsData, setPodsData] = useState({
@@ -37,17 +36,18 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         },
         pods: []
     } as HttpResponsePodStatus);
-    const [loaded, setLoaded] = useState(false);
+
     const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId && ms.environment === environment);
+
     if (!currentMicroservice) {
-        const href = `/microservices/application/${applicationId}/${environment}/overview`;
+        const href = `/microservices/application/${application.id}/${environment}/overview`;
         history.push(href);
         return null;
     }
 
     useEffect(() => {
         Promise.all([
-            getPodStatus(applicationId, environment, microserviceId)
+            getPodStatus(application.id, environment, microserviceId)
         ]).then((values) => {
             setPodsData(values[0]);
             setLoaded(true);
@@ -68,12 +68,12 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
             );
         case 'purchase-order-api':
             return (
-                <PurchaseOrderApiView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
+                <PurchaseOrderApiView applicationId={application.id} environment={environment} microserviceId={microserviceId} podsData={podsData} />
             );
         default:
             return (
                 <>
-                    <Typography variant='h1' my={2}>Not supported</Typography>
+                    <Typography variant='h1' sx={{ my: 2 }}>Not supported</Typography>
                     <p>This is an error or our part</p>
                     <p>Kind is &quot;{currentMicroservice.kind}&quot;.</p>
                     <p>Subview is &quot;{subView}&quot;.</p>
