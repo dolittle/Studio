@@ -1,8 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { useRef, RefCallback } from 'react';
-import { IDisposable, Terminal as XTerminal } from 'xterm';
+import { useEffect, useRef, RefCallback } from 'react';
+import { IDisposable, ITerminalOptions, Terminal as XTerminal } from 'xterm';
 import 'xterm/css/xterm.css';
 import { CanvasAddon } from 'xterm-addon-canvas';
 import { WebglAddon } from 'xterm-addon-webgl';
@@ -14,10 +14,11 @@ export type Terminal = {
     readonly containerRef: RefCallback<HTMLDivElement>;
 };
 
-export const useTerminal = (): Terminal => {
+export const useTerminal = (options: ITerminalOptions): Terminal => {
     const ref = useRef<Terminal>();
     if (ref.current === undefined) {
         const instance = new XTerminal({
+            ...options,
             allowProposedApi: true,
         });
 
@@ -27,6 +28,11 @@ export const useTerminal = (): Terminal => {
 
         ref.current = { instance, readable, writable, containerRef };
     }
+
+    useEffect(() => {
+        if (ref.current === undefined) return;
+        ref.current.instance.options = options;
+    }, [ref.current, options]);
 
     return ref.current;
 };
