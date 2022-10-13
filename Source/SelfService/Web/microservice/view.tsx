@@ -8,7 +8,7 @@ import { useReadable } from 'use-svelte-store';
 import { getConfigFilesNamesList, getPodStatus, getServerUrlPrefix, HttpResponsePodStatus, InputConfigFile, updateConfigFiles } from '../api/api';
 import { microservices, MicroserviceStore } from '../stores/microservice';
 import { MicroserviceView as BaseView } from './microserviceView/microserviceView';
-import { View as RawDataLogView } from './rawDataLog/view';
+
 import { View as PurchaseOrderApiView } from './purchaseOrder/view';
 import { HttpResponseApplication } from '../api/application';
 import { Typography } from '@mui/material';
@@ -66,10 +66,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
             return (
                 <BaseView application={application} environment={environment} microserviceId={microserviceId} podsData={podsData} />
             );
-        case 'raw-data-log-ingestor':
-            return (
-                <RawDataLogView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
-            );
         case 'purchase-order-api':
             return (
                 <PurchaseOrderApiView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
@@ -91,16 +87,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
 function whichSubView(currentMicroservice: any): string {
     // Today we try and map subviews based on kind, its not perfect
     let kind = currentMicroservice.kind;
-    if (
-        currentMicroservice &&
-        currentMicroservice.live &&
-        currentMicroservice.live.images &&
-        currentMicroservice.live.images[0] &&
-        currentMicroservice.live.images[0].image &&
-        currentMicroservice.live.images[0].image === '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/dolittle/platform/platform-api:dev-x'
-    ) {
-        kind = 'raw-data-log-ingestor';
-    }
 
     if (kind === '') {
         kind = 'simple'; // TODO change
