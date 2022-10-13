@@ -110,7 +110,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                             msName={msName}
                             ingressUrls={currentMicroservice.live.ingressUrls}
                             ingressPaths={currentMicroservice.live.ingressPaths}
-                            ms={ms}
+                            microservice={ms}
                             onClick={async () => {
                                 const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
                                 history.push(href);
