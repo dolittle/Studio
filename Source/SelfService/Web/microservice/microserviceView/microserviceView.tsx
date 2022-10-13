@@ -18,6 +18,7 @@ import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
 
 import { HealthStatus } from './healthStatus/healthStatus';
 import { ContainerHealthStatus } from '../microserviceStatus';
+import { Terminal } from './terminal';
 
 type MicroserviceViewProps = {
     application: HttpResponseApplication;
@@ -126,7 +127,15 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                             microserviceId={microserviceId}
                             data={podsData}
                         />
-                    }
+                    },
+                    {
+                        label: 'Terminal',
+                        render: () => <Terminal
+                            applicationId={applicationId}
+                            environment={environment}
+                            microserviceId={microserviceId}
+                        />
+                    },
                 ]}
             />
         </>
