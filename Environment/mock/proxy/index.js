@@ -3,13 +3,14 @@
 
 const { Router } = require('express');
 
-const routes = module.exports = Router();
+const shell = require('./shell');
 
+const ports = Router({ mergeParams: true });
+ports.use('/shell', shell);
 
-routes.get('/proxy/:applicationId/:environment/:microserviceId/:port/', (req, res) => {
+ports.get('/:port/*', (req, res) => {
     const { applicationId, environment, microserviceId, port } = req.params;
-
-    console.log('Getting proxy to', applicationId, environment, microserviceId, port);
+    console.log(`Getting unimplemented proxy port ${port}`);
     res.status(200).end(`
         <!DOCTYPE html>
         <html>
@@ -27,9 +28,13 @@ routes.get('/proxy/:applicationId/:environment/:microserviceId/:port/', (req, re
                     <li>Environment: ${environment}</li>
                     <li>Microservice: ${microserviceId}</li>
                     <li>Port: ${port}</li>
+                    <li>Path: /${req.params[0]}</li>
                 </ul>
                 <img src="https://media.tenor.com/u9XnPveDa9AAAAAC/rick-rickroll.gif" />
             </body>
         </html>
     `);
-});
+})
+
+const routes = module.exports = Router();
+routes.use('/proxy/:applicationId/:environment/:microserviceId/', ports);

@@ -13,6 +13,7 @@ const metrics = require('./monitoring/metrics');
 
 // SelfService Backend API + Router Proxy
 const backend = express();
+require('express-ws')(backend);
 backend.use(express.json());
 backend.use(logging);
 backend.use(applications);
