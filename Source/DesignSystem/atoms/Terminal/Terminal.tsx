@@ -17,8 +17,6 @@ export type TerminalProps = {
 export const Terminal = (props: TerminalProps) => {
     const theme = useTheme();
 
-    console.log(mapTheme(theme));
-
     const options = useMemo<ITerminalOptions>(() => ({
         ...mapTheme(theme),
     }), [theme]);

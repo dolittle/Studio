@@ -51,6 +51,7 @@ export const useStreams = (streams: ReadWriteStream<string>, terminal: Terminal)
 
             return terminal.readable.pipeTo(streams.writable, {
                 signal: controller.signal,
+                preventCancel: true,
             }).catch(err => {
                 if (err === DisposingAbort) return;
                 throw err;
