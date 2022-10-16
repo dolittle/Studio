@@ -14,6 +14,7 @@ import { ContainerStatusInfo, HttpResponsePodStatus, restartMicroservice } from 
 import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 
 import { ButtonText } from '../../../theme/buttonText';
+import { MicroserviceRestart } from '../helpers';
 import { DataTable, DataTableStats } from './dataTable';
 
 const styles = {
@@ -50,14 +51,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
     const { enqueueSnackbar } = useSnackbar();
 
     const handleRestart = async () => {
-        const success = await restartMicroservice(applicationId, environment, microserviceId);
-
-        if (!success) {
-            enqueueSnackbar('Failed to restart microservice', { variant: 'error' });
-            return;
-        }
-
-        window.location.reload();
+        await MicroserviceRestart({ applicationId, environment, microserviceId, enqueueSnackbar });
     };
 
     const timeRange = useMemo<[number, number]>(() => [Date.now() - 86_400_000, Date.now()], [Date.now() / 60_000]);

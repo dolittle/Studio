@@ -31,12 +31,14 @@ import { FileUploadForm, FileUploadFormRef } from '../../base/components/fileUpl
 import { SetupSection } from './setupSection';
 
 export type ConfigurationProps = {
+    application: any;
     applicationId: string;
     environment: string;
     microserviceId: string;
     msName: string;
     ingressUrls: IngressURLWithCustomerTenantID[];
     ingressPaths: SimpleIngressPath[];
+    currentMicroservice: any;
     microservice: MicroserviceSimple;
     onClick: () => void;
 };
@@ -50,7 +52,7 @@ const styles = {
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 export const Configuration = ({
-    applicationId, environment, microserviceId, msName, ingressUrls, ingressPaths, microservice, onClick }: ConfigurationProps) => {
+    application, applicationId, environment, microservice, microserviceId, msName, ingressUrls, ingressPaths, currentMicroservice, onClick }: ConfigurationProps) => {
 
     const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
     const [configFileModalVisibility, setConfigFileModalVisibility] = useState<boolean>(false);
@@ -67,7 +69,6 @@ export const Configuration = ({
     useEffect(() => {
         fetchConfigFilesNamesList()
             .catch(console.error);
-
     }, []);
 
     const fetchConfigFilesNamesList = async () => {
@@ -135,7 +136,7 @@ export const Configuration = ({
             />
 
             <Box>
-                <SetupSection />
+                <SetupSection application={application} applicationId={applicationId} environment={environment} microservice={currentMicroservice} microserviceId={microserviceId} />
 
                 <ConfigView microservice={microservice} />
             </Box>
