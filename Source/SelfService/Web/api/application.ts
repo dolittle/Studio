@@ -125,7 +125,8 @@ export async function getApplications(): Promise<HttpResponseApplications> {
             method: 'GET',
             mode: 'cors'
         });
-    const jsonResult = await result.json();
+    const jsonResult: HttpResponseApplications = await result.json();
+    jsonResult.applications = jsonResult.applications || [];
     return jsonResult;
 }
 
