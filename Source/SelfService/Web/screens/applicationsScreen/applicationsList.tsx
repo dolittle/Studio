@@ -30,18 +30,19 @@ type ApplicationsListProps = {
     onChoose: (application: ShortInfoWithEnvironment) => void;
 };
 
-export const ApplicationsList = ({ data, onChoose }: ApplicationsListProps) => (
+export const ApplicationsList = ({ data, onChoose }: ApplicationsListProps) =>
     <List sx={styles.list}>
-        {data.map(application => (
-            <Button
-                variant='contained'
-                sx={styles.button}
-                key={application.environment}
-                onClick={() => onChoose(application)}
-            >
-                {application.name} - {application.environment}
-            </Button>
-        )
-        )}
-    </List>
-);
+        {
+            data.map(application => (
+                <Button
+                    variant='contained'
+                    sx={styles.button}
+                    key={`${application.id}-${application.environment}`}
+                    onClick={() => onChoose(application)}
+                >
+                    {application.name} - {application.environment}
+                </Button>
+            )
+            )
+        }
+    </List>;
