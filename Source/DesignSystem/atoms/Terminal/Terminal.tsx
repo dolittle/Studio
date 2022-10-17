@@ -1,19 +1,25 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo } from 'react';
-import { ITerminalOptions, ITheme } from 'xterm';
+import React, { useEffect, useMemo } from 'react';
+import { ITerminalOptions } from 'xterm';
 
 import { useTheme, Box, Theme } from '@mui/material';
 
 import { useTerminal } from './useTerminal';
-import { useStreams, ReadWriteStream } from './useStream';
+import { useStreams, TerminalStreams } from './useStreams';
 
+/**
+ * The props for a {@link Terminal} component.
+ */
 export type TerminalProps = {
-    streams: ReadWriteStream<string>;
-};
+} & TerminalStreams;
 
-
+/**
+ * An XTerm terminal component.
+ * @param props The {@link TerminalProps} for the component instance.
+ * @returns The rendered {@link JSX.Element}.
+ */
 export const Terminal = (props: TerminalProps) => {
     const theme = useTheme();
 
@@ -22,7 +28,7 @@ export const Terminal = (props: TerminalProps) => {
     }), [theme]);
 
     const terminal = useTerminal(options);
-    useStreams(props.streams, terminal);
+    useStreams(props, terminal);
 
     return (
         <Box

@@ -23,6 +23,7 @@
         "vega-lite": "5.5.0",
         "xterm": "5.0.0",
         "xterm-addon-canvas": "0.2.0",
+        "xterm-addon-fit": "0.6.0",
         "xterm-addon-webgl": "0.13.0"
     },
     "devDependencies": {
