@@ -1,3 +1,20 @@
+# [2.8.1] - 2022-10-17 [PR: #252](https://github.com/dolittle/Studio/pull/252)
+## Summary
+
+When logging in to studio and there are no applications in the tenant you were logged in for you'd get a black screen. Now instead you will get an empty list and the choice to create a new application or go back to choose another tenant.
+
+### Fixed
+
+- Bug when no applications existed in the tenant
+
+
+Before fix:
+<img width="1590" alt="Screenshot 2022-10-14 at 21 01 37" src="https://user-images.githubusercontent.com/13407188/195926532-81df9186-0f35-4404-bd2b-815ea6b5798c.png">
+
+After Fix:
+<img width="1343" alt="Screenshot 2022-10-14 at 21 27 17" src="https://user-images.githubusercontent.com/13407188/195926642-7a5b148d-f606-4373-aae4-dbf82b6b4b1e.png">
+
+
 # [2.8.0] - 2022-10-13 [PR: #251](https://github.com/dolittle/Studio/pull/251)
 ## Summary
 
