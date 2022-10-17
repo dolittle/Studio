@@ -46,7 +46,7 @@ routes.ws('/ws', (ws, req) => {
                 env: process.env,
             });
 
-            write('\x1b[31mTHIS IS A REAL SHELL ON YOUR MACHINE, DONT MESS ABOUT!!\033[0m\r\n');
+            write('\x1b[31mTHIS IS A REAL SHELL ON YOUR MACHINE, DONT MESS ABOUT!!\033[0m\r\n\n');
 
             shell.on('data', write);
             shell.on('exit', (exitCode, signal) => {

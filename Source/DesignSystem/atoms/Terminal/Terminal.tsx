@@ -13,6 +13,7 @@ import { useStreams, TerminalStreams } from './useStreams';
  * The props for a {@link Terminal} component.
  */
 export type TerminalProps = {
+    onResize?: (columns: number, rows: number) => void;
 } & TerminalStreams;
 
 /**
@@ -29,6 +30,12 @@ export const Terminal = (props: TerminalProps) => {
 
     const terminal = useTerminal(options);
     useStreams(props, terminal);
+
+    useEffect(() => {
+        if (props.onResize === undefined) return;
+        const listener = terminal.instance.onResize(({ cols, rows }) => props.onResize!(cols, rows));
+        return () => listener.dispose();
+    }, [props.onResize]);
 
     return (
         <Box

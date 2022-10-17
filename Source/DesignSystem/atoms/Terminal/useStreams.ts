@@ -31,16 +31,16 @@ export const useStreams = (streams: TerminalStreams, terminal: Terminal) => {
         const writer = streams.input.getWriter();
 
         const dataListener = terminal.instance.onData((data) => {
-            writer.write({ type: 'input', data });
+            writer.write({ type: 'input', data }).catch(() => {});
         });
         const resizeListener = terminal.instance.onResize(({ cols, rows }) => {
-            writer.write({ type: 'resize', columns: cols, rows });
+            writer.write({ type: 'resize', columns: cols, rows }).catch(() => {});
         });
 
         return () => {
             dataListener.dispose();
             resizeListener.dispose();
-            writer.releaseLock();
+            writer.close();
         };
     }, [streams.input]);
 
@@ -69,7 +69,7 @@ export const useStreams = (streams: TerminalStreams, terminal: Terminal) => {
         })();
 
         return () => {
-            reader.releaseLock();
+            reader.cancel();
         };
     }, [streams.output]);
 };

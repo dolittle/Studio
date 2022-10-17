@@ -18,7 +18,7 @@ import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
 
 import { HealthStatus } from './healthStatus/healthStatus';
 import { ContainerHealthStatus } from '../microserviceStatus';
-import { Terminal } from './terminal';
+import { View as Terminal } from './terminal/View';
 
 type MicroserviceViewProps = {
     application: HttpResponseApplication;
