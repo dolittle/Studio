@@ -34,9 +34,9 @@ const styles = {
     },
     actionButtons: {
         color: 'text.primary',
-        fontSize: '0.875rem',
+        fontSize: 14,
         letterSpacing: '0.06em'
-    },
+    }
 };
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -52,7 +52,7 @@ type CreateApplicationParameters = {
         Dev: boolean;
         Test: boolean;
         Prod: boolean;
-    }
+    };
 };
 
 export const Create = () => {

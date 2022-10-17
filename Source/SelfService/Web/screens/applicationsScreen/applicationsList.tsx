@@ -15,9 +15,9 @@ const styles = {
     },
     button: {
         display: 'block',
-        inlineSize: '100%',
-        minInlineSize: '9.6875rem',
-        minBlockSize: '2.25rem',
+        width: 1,
+        minWidth: 19.375,
+        minHeight: 4.5,
         letterSpacing: '0.06em',
         typography: 'body2',
         fontWeight: 500,
@@ -26,7 +26,7 @@ const styles = {
 };
 
 type ApplicationsListProps = {
-    data: ShortInfoWithEnvironment[],
+    data: ShortInfoWithEnvironment[];
     onChoose: (application: ShortInfoWithEnvironment) => void;
 };
 
