@@ -103,11 +103,10 @@ const pipeLoop = async (term: Terminal, streams: TerminalStreams, signal: AbortS
             writer!.write({ type: 'resize', columns: cols, rows })
         );
 
-        while (true) {
-            signal.throwIfAborted();
+        signal.addEventListener('abort', () => reader!.cancel());
 
+        while (true) {
             const { done, value } = await reader.read();
-            signal.throwIfAborted();
 
             if (done) {
                 break;
@@ -128,8 +127,8 @@ const pipeLoop = async (term: Terminal, streams: TerminalStreams, signal: AbortS
         signal.throwIfAborted();
         await promptForEnter(term, signal, 'Connection lost, press enter to reconnect ...');
     } finally {
-        reader?.releaseLock();
-        writer?.releaseLock();
+        reader?.cancel();
+        writer?.close();
         inputListener?.dispose();
         resizeListener?.dispose();
     }
