@@ -90,7 +90,6 @@ export const Create = () => {
 
         try {
             await createApplication(request);
-            console.log('Created app', request);
             const href = `/application/building/${request.id}`;
             history.push(href);
 
