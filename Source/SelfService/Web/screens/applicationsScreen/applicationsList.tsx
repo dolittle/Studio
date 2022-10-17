@@ -5,7 +5,9 @@ import React from 'react';
 
 import { ShortInfoWithEnvironment } from '../../api/api';
 
-import { Button, List } from '@mui/material';
+import { Button } from '@dolittle/design-system/atoms/Button/Button';
+
+import { List } from '@mui/material';
 
 const styles = {
     list: {
@@ -14,14 +16,12 @@ const styles = {
         display: 'inline-block'
     },
     button: {
-        display: 'block',
         width: 1,
-        minWidth: 19.375,
-        minHeight: 4.5,
-        letterSpacing: '0.06em',
-        typography: 'body2',
-        fontWeight: 500,
         mb: 2,
+        minWidth: 155,
+        minHeight: 36,
+        display: 'block',
+        letterSpacing: '0.06em'
     }
 };
 
@@ -35,14 +35,12 @@ export const ApplicationsList = ({ data, onChoose }: ApplicationsListProps) =>
         {
             data.map(application => (
                 <Button
-                    variant='contained'
-                    sx={styles.button}
+                    variant='filled'
                     key={`${application.id}-${application.environment}`}
+                    label={`${application.name}-${application.environment}`}
                     onClick={() => onChoose(application)}
-                >
-                    {application.name} - {application.environment}
-                </Button>
-            )
-            )
+                    sx={styles.button}
+                />
+            ))
         }
     </List>;
