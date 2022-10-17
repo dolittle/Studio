@@ -5,9 +5,7 @@ import { InputMessages, OutputMessages, TerminalStreams } from '@dolittle/design
 
 import { WebSocketConnection, WebSocketCloseInfo, WebSocketStream } from './websocket';
 
-export type ConnectResult = TerminalStreams & { closed: Promise<WebSocketCloseInfo> };
-
-export const connect = async (url: string, columns: number, rows: number): Promise<ConnectResult> => {
+export const connect = async (url: string, columns: number, rows: number): Promise<TerminalStreams> => {
     const token = await fetchToken(url);
 
     const { protocol, host } = window.location;
@@ -19,10 +17,10 @@ export const connect = async (url: string, columns: number, rows: number): Promi
 
     writeInitialMessage(writable, token, columns, rows);
 
-    const input = transformInput(writable);
-    const output = transformOutput(readable);
+    const input = transformInput(writable, ws.close);
+    const output = transformOutput(readable, ws.closed);
 
-    return { input, output, closed: ws.closed };
+    return { input, output };
 };
 
 const fetchToken = async (url: string): Promise<string> => {
@@ -47,7 +45,7 @@ const writeInitialMessage = (stream: WritableStream<string>, token: string, colu
     writer.releaseLock();
 };
 
-const transformInput = (stream: WritableStream<string>): WritableStream<InputMessages> => {
+const transformInput = (stream: WritableStream<string>, close: (info?: WebSocketCloseInfo) => void): WritableStream<InputMessages> => {
     const transformer = new TransformStream<InputMessages, string>({
         transform(message, controller) {
             switch (message.type) {
@@ -70,15 +68,15 @@ const transformInput = (stream: WritableStream<string>): WritableStream<InputMes
         },
     });
 
-    transformer.readable
-        .pipeTo(stream)
-        .catch(_ => console.warn('INPUT DONE', _));
-
+    transformer.readable.pipeTo(stream).catch(_ => {});
     return transformer.writable;
 };
 
-const transformOutput = (stream: ReadableStream<string>): ReadableStream<OutputMessages> => {
+const transformOutput = (stream: ReadableStream<string>, closed: Promise<WebSocketCloseInfo>): ReadableStream<OutputMessages> => {
     const transformer = new TransformStream<string, OutputMessages>({
+        start(controller) {
+            closed.then(_ => controller.terminate());
+        },
         transform(chunk, controller) {
             const cmd = chunk.slice(0,1);
             const data = chunk.slice(1);
@@ -99,19 +97,13 @@ const transformOutput = (stream: ReadableStream<string>): ReadableStream<OutputM
         },
     });
 
-    stream
-        .pipeTo(transformer.writable)
-        .catch(_ => console.warn('OUTPUT DONE', _));
-
+    stream.pipeTo(transformer.writable).catch(_ => {});
     return transformer.readable;
 };
 
 const encodeDecodeStrings = (connection: WebSocketConnection): { readable: ReadableStream<string>, writable: WritableStream<string> } => {
     const encoder = new TextEncoderStream();
-    encoder.readable
-        .pipeTo(connection.writable)
-        .catch(_ => console.warn('ENCODER DONE', _));
-
+    encoder.readable.pipeTo(connection.writable).catch(_ => {});
     const writable = encoder.writable;
 
     const decoder = new TextDecoderStream();
@@ -129,9 +121,7 @@ const encodeDecodeStrings = (connection: WebSocketConnection): { readable: Reada
                 }
             },
         }))
-        .pipeTo(decoder.writable)
-        .catch(_ => console.warn('DECODER DONE', _));
-
+        .pipeTo(decoder.writable).catch(_ => {});
     const readable = decoder.readable;
 
     return { readable, writable };

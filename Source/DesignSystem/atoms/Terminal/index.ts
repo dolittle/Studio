@@ -3,4 +3,4 @@
 
 export { InputMessage, ResizeMessage, PauseMessage, ResumeMessage, InputMessages, OutputMessage, WindowTitleMessage, OutputMessages } from './messages';
 export { Terminal, TerminalProps } from './Terminal';
-export { TerminalStreams } from './useConnect';
+export { ConnectOptions, TerminalConnect, TerminalStreams } from './useConnect';
