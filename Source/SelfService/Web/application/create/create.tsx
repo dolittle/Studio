@@ -5,12 +5,13 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { Guid } from '@dolittle/rudiments';
 import { Checkbox, Form, Input } from '@dolittle/design-system/atoms/Forms';
 import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
 import { LoadingSpinner } from '@dolittle/design-system/atoms/LoadingSpinner/LoadingSpinner';
+import { Button } from '@dolittle/design-system/atoms/Button/Button';
 
 import { createApplication, HttpApplicationRequest } from '../../api/application';
 
@@ -34,7 +35,6 @@ const styles = {
     },
     actionButtons: {
         color: 'text.primary',
-        fontSize: 14,
         letterSpacing: '0.06em'
     }
 };
@@ -104,19 +104,19 @@ export const Create = () => {
 
     const ActionButtons = () =>
         <Box>
-            <Button variant='text'
-                sx={{ ...styles.actionButtons, mr: 8 }}
+            <Button
+                variant='text'
+                label='Cancel'
                 onClick={handleCancel}
-            >
-                Cancel
-            </Button>
+                sx={{ ...styles.actionButtons, mr: 8 }}
+            />
 
-            <Button variant='text'
-                sx={{ ...styles.actionButtons, color: 'primary.main' }}
+            <Button
+                variant='text'
+                label='Create'
                 type='submit'
-            >
-                Create
-            </Button>
+                sx={{ ...styles.actionButtons, color: 'primary.main' }}
+            />
         </Box>;
 
     return (
