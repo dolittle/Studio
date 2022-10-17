@@ -1,20 +1,25 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { ITerminalOptions } from 'xterm';
 
-import { useTheme, Box, Theme } from '@mui/material';
+import { useTheme, Box } from '@mui/material';
 
-import { useTerminal } from './useTerminal';
-import { useStreams, TerminalStreams } from './useStreams';
+import { mapTheme } from './mapTheme';
+import { useConnect, TerminalConnect } from './useConnect';
+import { useResize } from './useResize';
+import { useXTerm } from './useXTerm';
 
 /**
  * The props for a {@link Terminal} component.
  */
 export type TerminalProps = {
-    onResize?: (columns: number, rows: number) => void;
-} & TerminalStreams;
+    /**
+     * The callback that will be called to initiate a new connection to a TTY.
+     */
+    connect: TerminalConnect;
+};
 
 /**
  * An XTerm terminal component.
@@ -28,18 +33,13 @@ export const Terminal = (props: TerminalProps) => {
         ...mapTheme(theme),
     }), [theme]);
 
-    const terminal = useTerminal(options);
-    useStreams(props, terminal);
-
-    useEffect(() => {
-        if (props.onResize === undefined) return;
-        const listener = terminal.instance.onResize(({ cols, rows }) => props.onResize!(cols, rows));
-        return () => listener.dispose();
-    }, [props.onResize]);
+    const { fit, opened, containerRef} = useXTerm(options);
+    useResize(fit);
+    useConnect(opened, props.connect);
 
     return (
         <Box
-            ref={terminal.containerRef}
+            ref={containerRef}
             sx={{
                 'height': '300px',
                 '& .xterm .xterm-viewport': {
@@ -48,34 +48,4 @@ export const Terminal = (props: TerminalProps) => {
             }}
         />
     );
-};
-
-const mapTheme = (theme: Theme): ITerminalOptions => {
-    const font = theme.typography.body1;
-
-    return {
-        // fontFamily: font.fontFamily,
-        // fontSize: fontSizeFrom(font.fontSize, theme.typography.htmlFontSize),
-        // fontWeight: parseFloat(font.fontWeight as any) || parseFloat(theme.typography.fontWeightRegular as any) || undefined,
-        // letterSpacing: 2,
-        theme: {
-            background: theme.palette.background.default,
-        },
-    };
-};
-
-const fontSizeFrom = (size: string | number | undefined, rem: number) => {
-    if (size === undefined) {
-        return rem;
-    }
-
-    if (typeof size === 'number') {
-        return size;
-    }
-
-    if (size.endsWith('em')) {
-        return parseFloat(size) * rem;
-    }
-
-    return parseFloat(size) ?? rem;
 };

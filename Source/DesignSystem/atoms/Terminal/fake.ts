@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { InputMessages, OutputMessages } from './messages';
-import { TerminalStreams } from './useStreams';
+import { TerminalStreams } from './useConnect';
 
 type Controller = TransformStreamDefaultController<OutputMessages>;
 
@@ -47,6 +47,10 @@ export const createFakeServer = (): TerminalStreams => {
                 case '\u0003': // Ctrl+C
                     controller.enqueue({ type: 'output', data: '^C' });
                     reset(controller);
+                    break;
+                case '\u0004': // Ctrl+D
+                    controller.enqueue({ type: 'output', data: '\r\nexit' });
+                    controller.terminate();
                     break;
                 case '\r': // Enter
                     command(controller);
