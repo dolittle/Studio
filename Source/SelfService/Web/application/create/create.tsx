@@ -40,7 +40,7 @@ const styles = {
 };
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const alphaCharsRegex = /^[a-z0-9]+$/;
+const alphaCharsRegex = /[a-z0-9]$/i;
 
 type CreateApplicationParameters = {
     name: string;
