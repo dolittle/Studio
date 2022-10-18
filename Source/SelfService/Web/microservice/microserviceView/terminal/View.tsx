@@ -17,7 +17,7 @@ export type ViewProps = {
 export const View = (props: ViewProps) => {
     const connect = useMemo<TerminalConnect>(() =>
         ({ columns, rows }) =>
-            ttydConnect(`/proxy/${props.applicationId}/${props.environment}/${props.microserviceId}/shell/`, columns, rows)
+            ttydConnect(`/proxy/${props.applicationId}/${props.environment}/${props.microserviceId}/shell`, columns, rows)
     , [props.applicationId, props.environment, props.microserviceId]);
 
     return (
