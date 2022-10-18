@@ -127,8 +127,8 @@ const pipeLoop = async (term: Terminal, streams: TerminalStreams, signal: AbortS
         signal.throwIfAborted();
         await promptForEnter(term, signal, 'Connection lost, press enter to reconnect ...');
     } finally {
-        reader?.cancel();
-        writer?.close();
+        if (!reader?.closed) reader?.cancel();
+        if (!writer?.closed) writer?.close();
         inputListener?.dispose();
         resizeListener?.dispose();
     }
