@@ -16,6 +16,7 @@
     "dependencies": {
         "@fontsource/roboto-mono": "4.5.8",
         "@fontsource/rubik": "4.5.11",
+        "@react-hook/resize-observer": "1.2.6",
         "@shared/styling": "1.0.0",
         "react-hook-form": "7.37.0",
         "react-vega": "7.6.0",

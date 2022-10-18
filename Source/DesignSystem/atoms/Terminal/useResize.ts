@@ -1,23 +1,35 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { useEffect } from 'react';
+import { useMemo, useRef, RefObject } from 'react';
+import useResizeObserver, { UseResizeObserverCallback } from '@react-hook/resize-observer';
 import { FitAddon } from 'xterm-addon-fit';
 
+export type Resize = {
+    /**
+     * The callback-ref that should be used to attach the terminal to a DOM element.
+     */
+    readonly containerRef: RefObject<HTMLDivElement>;
+};
+
 /**
- * Attaches event listeners to the DOM to ensure that the Terminal size is recomputed when the container changes.
+ * Attaches a ResizeObserver to the container DOM element to ensure that the Terminal size is recomputed when the container changes.
  * @param fit The {@link FitAddon} to call when the size needs to be recomputed.
  */
-export const useResize = (fit: FitAddon) => {
-    useEffect(() => {
-        let resizeTimeout: number | undefined;
-        const resizeOnWindowChange = () => {
-            window.clearTimeout(resizeTimeout);
-            window.setTimeout(() => fit.fit(), 500);
-        };
+export const useResize = (fit: FitAddon): Resize => {
+    const containerRef = useRef<HTMLDivElement>(null);
 
-        // TODO: We probably want to do this on the element itself, not only on window resize.
-        window.addEventListener('resize', resizeOnWindowChange);
-        return () => window.removeEventListener('resize', resizeOnWindowChange);
-    }, []);
+    const callback = useMemo<UseResizeObserverCallback>(() => {
+        let timeout: number | undefined;
+        return () => {
+            window.clearTimeout(timeout);
+            timeout = window.setTimeout(() => {
+                fit.fit();
+            }, 200);
+        };
+    }, [fit]);
+
+    useResizeObserver(containerRef, callback);
+
+    return { containerRef };
 };

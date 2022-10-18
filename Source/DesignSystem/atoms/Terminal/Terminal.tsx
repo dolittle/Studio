@@ -4,7 +4,7 @@
 import React, { useMemo } from 'react';
 import { ITerminalOptions } from 'xterm';
 
-import { useTheme, Box } from '@mui/material';
+import { useTheme, Box, SxProps, Theme } from '@mui/material';
 
 import { mapTheme } from './mapTheme';
 import { useConnect, TerminalConnect } from './useConnect';
@@ -19,6 +19,8 @@ export type TerminalProps = {
      * The callback that will be called to initiate a new connection to a TTY.
      */
     connect: TerminalConnect;
+
+    sx?: SxProps<Theme>;
 };
 
 /**
@@ -33,19 +35,25 @@ export const Terminal = (props: TerminalProps) => {
         ...mapTheme(theme),
     }), [theme]);
 
-    const { fit, opened, containerRef} = useXTerm(options);
-    useResize(fit);
+    const { fit, opened, containerRef: xtermRef } = useXTerm(options);
+    const { containerRef: resizeRef } = useResize(fit);
     useConnect(opened, props.connect);
 
     return (
         <Box
-            ref={containerRef}
-            sx={{
-                'height': '300px',
-                '& .xterm .xterm-viewport': {
-                    overscrollBehaviorY: 'none',
-                },
-            }}
-        />
+            ref={resizeRef}
+            sx={props.sx}
+        >
+            <Box
+                ref={xtermRef}
+                sx={{
+                    'width': '100%',
+                    'height': '100%',
+                    '& .xterm .xterm-viewport': {
+                        overscrollBehaviorY: 'none',
+                    },
+                }}
+            />
+        </Box>
     );
 };

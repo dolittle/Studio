@@ -13,11 +13,17 @@ export default metadata;
 export const Default = createStory({
     connect: async () => {
         return createFakeServer();
-    }
+    },
+    sx: {
+        height: '600px',
+    },
 });
 
 export const ConnectFailure = createStory({
     connect: async () => {
         throw new Error('Will never connect');
-    }
+    },
+    sx: {
+        height: '600px',
+    },
 });
