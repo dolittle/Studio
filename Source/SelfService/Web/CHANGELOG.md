@@ -1,3 +1,32 @@
+# [2.9.0] - 2022-10-18 [PR: #253](https://github.com/dolittle/Studio/pull/253)
+## Summary
+
+Fixed error that accoured after Creating New Application - React needs uniq keys for every list item whitch we did not have.
+Also removed console.log that should not be in production.
+Fixed some styling that they would be more uniformed.
+Used Buttons from Storybook instead imports from MUI.
+
+<img width="1123" alt="Screenshot 2022-10-17 at 10 53 31" src="https://user-images.githubusercontent.com/19160439/196437316-2d38f2c9-75ff-4d0d-a601-859019a1299c.png">
+
+<img width="453" alt="Screenshot 2022-10-17 at 10 53 03" src="https://user-images.githubusercontent.com/19160439/196437408-a19e32f1-d97a-4eed-89a9-026a526cc785.png">
+
+### Added
+
+- Each list items in Applications page has now uniq key that React needs
+
+### Changed
+
+- MUI imported Button to Button from Storybook
+
+### Fixed
+
+- Made styles more uniform
+
+### Removed
+
+- console.log after new application was created
+
+
 # [2.8.1] - 2022-10-17 [PR: #252](https://github.com/dolittle/Studio/pull/252)
 ## Summary
 
