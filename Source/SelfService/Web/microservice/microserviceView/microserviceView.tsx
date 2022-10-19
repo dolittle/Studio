@@ -18,6 +18,7 @@ import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
 
 import { HealthStatus } from './healthStatus/healthStatus';
 import { ContainerHealthStatus } from '../microserviceStatus';
+import { useTerminalAvailable } from './terminal/useTerminal';
 import { View as Terminal } from './terminal/View';
 
 type MicroserviceViewProps = {
@@ -93,6 +94,49 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
 
     const msName = currentMicroservice.name;
 
+    const tabs = [
+        {
+            label: 'Configuration',
+            render: () => <Configuration
+                applicationId={applicationId}
+                environment={environment}
+                microserviceId={microserviceId}
+                msName={msName}
+                ingressUrls={currentMicroservice.live.ingressUrls}
+                ingressPaths={currentMicroservice.live.ingressPaths}
+                ms={ms}
+                onClick={async () => {
+                    const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
+                    history.push(href);
+                }}
+            />
+        },
+        {
+            label: 'Health Status',
+            render: () => <HealthStatus
+                applicationId={applicationId}
+                status="TODO"
+                environment={environment}
+                microserviceId={microserviceId}
+                data={podsData}
+            />
+        },
+    ];
+
+    const terminalAvailable = useTerminalAvailable(applicationId, environment, microserviceId);
+    if (terminalAvailable) {
+        tabs.push(
+            {
+                label: 'Terminal',
+                render: () => <Terminal
+                    applicationId={applicationId}
+                    environment={environment}
+                    microserviceId={microserviceId}
+                />
+            },
+        );
+    }
+
     return (
         <>
             <Box sx={{ display: 'flex', mb: 3.25 }}>
@@ -101,42 +145,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
             </Box>
 
             <Tabs
-                tabs={[
-                    {
-                        label: 'Configuration',
-                        render: () => <Configuration
-                            applicationId={applicationId}
-                            environment={environment}
-                            microserviceId={microserviceId}
-                            msName={msName}
-                            ingressUrls={currentMicroservice.live.ingressUrls}
-                            ingressPaths={currentMicroservice.live.ingressPaths}
-                            ms={ms}
-                            onClick={async () => {
-                                const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
-                                history.push(href);
-                            }}
-                        />
-                    },
-                    {
-                        label: 'Health Status',
-                        render: () => <HealthStatus
-                            applicationId={applicationId}
-                            status="TODO"
-                            environment={environment}
-                            microserviceId={microserviceId}
-                            data={podsData}
-                        />
-                    },
-                    {
-                        label: 'Terminal',
-                        render: () => <Terminal
-                            applicationId={applicationId}
-                            environment={environment}
-                            microserviceId={microserviceId}
-                        />
-                    },
-                ]}
+                tabs={tabs}
             />
         </>
     );

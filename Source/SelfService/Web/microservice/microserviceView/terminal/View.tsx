@@ -7,6 +7,7 @@ import { Box } from '@mui/material';
 import { Terminal, TerminalConnect } from '@dolittle/design-system/atoms/Terminal';
 
 import { connect as ttydConnect } from './ttyd';
+import { useTTYdUrl } from './useTerminal';
 
 export type ViewProps = {
     applicationId: string;
@@ -15,10 +16,11 @@ export type ViewProps = {
 };
 
 export const View = (props: ViewProps) => {
+    const url = useTTYdUrl(props.applicationId, props.environment, props.microserviceId);
+
     const connect = useMemo<TerminalConnect>(() =>
-        ({ columns, rows }) =>
-            ttydConnect(`/proxy/${props.applicationId}/${props.environment}/${props.microserviceId}/shell`, columns, rows)
-    , [props.applicationId, props.environment, props.microserviceId]);
+        ({ columns, rows }) => ttydConnect(url, columns, rows)
+    , [url]);
 
     return (
         <Terminal

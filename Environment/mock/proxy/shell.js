@@ -4,10 +4,17 @@
 const { Router } = require('express');
 const { spawn } = require('node-pty');
 
-const routes = module.exports = Router();
+const routes = module.exports = Router({ mergeParams: true });
 require('express-ws')(routes);
 
 routes.get('/token', (req, res) => {
+    const { microserviceId } = req.params;
+    if (microserviceId === '16965610-e419-40f1-b550-4841e93553b9') {
+        console.warn('Simulating not-available shell for Goodbye microservice');
+        res.status(404).end();
+        return;
+    }
+
     console.log('Getting Shell Proxy /token');
     res.status(200).json({ token: '' }).end();
 })

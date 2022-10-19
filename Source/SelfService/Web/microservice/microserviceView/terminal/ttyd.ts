@@ -5,6 +5,15 @@ import { InputMessages, OutputMessages, TerminalStreams } from '@dolittle/design
 
 import { WebSocketConnection, WebSocketCloseInfo, WebSocketStream } from './websocket';
 
+export const isAvailable = async (url: string): Promise<boolean> => {
+    try {
+        await fetchToken(url);
+        return true;
+    } catch {
+        return false;
+    }
+};
+
 export const connect = async (url: string, columns: number, rows: number): Promise<TerminalStreams> => {
     const token = await fetchToken(url);
 
