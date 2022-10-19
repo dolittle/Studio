@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
@@ -9,6 +9,7 @@ import { useSnackbar } from 'notistack';
 import { canDeleteMicroservice, deleteMicroservice } from '../../../stores/microservice';
 
 import { Button } from '@dolittle/design-system/atoms/Button/Button';
+import { Form, Input, Select } from '@dolittle/design-system/atoms/Forms';
 
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import { DeleteRounded, EditRounded, ExpandCircleDownRounded, SaveRounded, RestartAltRounded } from '@mui/icons-material';
@@ -20,14 +21,14 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
 
-    const [open, setOpen] = React.useState(false);
+    const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleDialogOpen = () => {
+        setDialogIsOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleDialogClose = () => {
+        setDialogIsOpen(false);
     };
 
     const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
@@ -64,7 +65,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
     return (
         <>
-            <AlertDialog open={open} onClose={handleClose} handleDeletionConfirm={handleDelete} />
+            <AlertDialog open={dialogIsOpen} onClose={handleDialogClose} handleDeletionConfirm={handleDelete} />
 
             <Accordion expanded sx={{
                 'backgroundColor': 'transparent',
@@ -96,21 +97,35 @@ export const SetupSection = ({ application, applicationId, environment, microser
                     <Box sx={{ mb: 3 }}>
                         <Button variant='text' disabled label='edit' startWithIcon={<EditRounded fontSize='small' />} sx={{ fontSize: 12, mr: 2.5 }} />
                         <Button variant='text' disabled label='save' startWithIcon={<SaveRounded fontSize='small' />} sx={{ fontSize: 12, mr: 2.5 }} />
-                        <Button variant='text'
+                        <Button
+                            variant='text'
                             label='Restart Microservice'
                             startWithIcon={<RestartAltRounded fontSize='small' />}
                             onClick={handleRestart}
                             sx={{ fontSize: 12, mr: 2.5 }}
                         />
-                        <Button variant='text'
+                        <Button
+                            variant='text'
                             label='Delete Microservice'
                             startWithIcon={<DeleteRounded fontSize='small' />}
-                            onClick={handleClickOpen}
+                            onClick={handleDialogOpen}
                             sx={{ fontSize: 12 }}
                         />
                     </Box>
 
-                    {/* <Typography>Configuration Setup</Typography> */}
+                    <Typography>Configuration Setup</Typography>
+
+                    <Form
+                        initialValues={{
+                            MicroserviceName: '',
+                        }}
+                        sx={{ mt: 3, display: 'flex', flexDirection: 'column' }}
+                    >
+                        <Input id='microservice-name' label='Microservice Name' required disabled />
+                        <Input id='development-environment' label='Development Environment' required disabled />
+
+                        <Select id='runtime-version' label='Runtime Version*' />
+                    </Form>
                 </AccordionDetails>
             </Accordion>
         </>

@@ -4,3 +4,4 @@
 export { Checkbox, CheckboxProps } from './Checkbox';
 export { Form, FormProps } from './Form';
 export { Input, InputProps } from './Input';
+export { Select } from './Select';
