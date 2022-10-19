@@ -169,7 +169,7 @@ export const Create = () => {
                     />
                 </Box>
 
-                <Typography variant='body1' sx={{ mt: 4, ...styles.secondaryTitle }}>Select Environments</Typography>
+                <Typography variant='body1' sx={{ ...styles.secondaryTitle, mt: 4 }}>Select Environments</Typography>
 
                 <Box sx={{ ...styles.formFieldsWrapper, mb: 7.5 }}>
                     <Checkbox
