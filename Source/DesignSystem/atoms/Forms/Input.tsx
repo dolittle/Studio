@@ -2,11 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
-import { Message, ValidationRule } from 'react-hook-form';
 
 import { FormControl, FormHelperText, InputLabel, OutlinedInput, SxProps } from '@mui/material';
 
-import { useController, FieldProps } from './helpers';
+import { FieldProps, isRequired, useController } from './helpers';
 import type { Form } from './Form';
 
 /**
@@ -75,20 +74,4 @@ export const Input = (props: InputProps) => {
             </FormHelperText>
         </FormControl>
     );
-};
-
-const isRequired = (required?: Message | ValidationRule<boolean>): boolean => {
-    if (required === undefined) {
-        return false;
-    }
-
-    if (typeof required === 'boolean') {
-        return required;
-    }
-
-    if (typeof required === 'string') {
-        return true;
-    }
-
-    return required.value;
 };
