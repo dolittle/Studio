@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Message, ValidationRule } from 'react-hook-form';
 
 import { FormControl, FormHelperText, InputLabel, OutlinedInput, SxProps } from '@mui/material';
@@ -14,6 +14,7 @@ import type { Form } from './Form';
  */
 export type InputProps = {
     sx?: SxProps;
+    value?: string;
 } & FieldProps;
 
 /**
@@ -22,6 +23,8 @@ export type InputProps = {
  * @returns A new {@link Input} component.
  */
 export const Input = (props: InputProps) => {
+    const [fieldValue, setFieldValue] = useState(props.value ?? '');
+
     const { field, hasError, errorMessage } = useController(props);
 
     return (
@@ -30,6 +33,11 @@ export const Input = (props: InputProps) => {
             'mb': {
                 sm: 0,
                 xs: 2.5,
+            },
+            'label': {
+                letterSpacing: '0.15px',
+                fontSize: 14,
+                lineHeight: '24px'
             },
             '.MuiInputLabel-root[data-shrink="true"]': {
                 top: 0
@@ -56,11 +64,10 @@ export const Input = (props: InputProps) => {
                 error={hasError}
                 disabled={props.disabled}
                 label={props.label}
+                value={fieldValue}
+                onChange={(event) => { setFieldValue(event.target.value); field.onChange(event); }}
                 aria-describedby={`${props.id}-helper-text`}
                 size='small'
-                sx={{
-                    letterSpacing: '0.15px'
-                }}
             />
 
             <FormHelperText error={hasError} id={`${props.id}-helper-text`}>
