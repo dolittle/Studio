@@ -6,16 +6,40 @@ import { useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { canDeleteMicroservice, deleteMicroservice } from '../../../stores/microservice';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import {
+    DeleteRounded,
+    EditRounded,
+    ExpandCircleDownRounded,
+    SaveRounded,
+    RestartAltRounded,
+    AddCircleRounded
+} from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system/atoms/Button/Button';
-import { Form, Input, Select } from '@dolittle/design-system/atoms/Forms';
+import { Form, Input, Select, SwitchLabels } from '@dolittle/design-system/atoms/Forms';
 
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
-import { DeleteRounded, EditRounded, ExpandCircleDownRounded, SaveRounded, RestartAltRounded } from '@mui/icons-material';
+import { canDeleteMicroservice, deleteMicroservice } from '../../../stores/microservice';
 
 import { MicroserviceRestart } from '../helpers';
 import { AlertDialog } from './AlertDialog';
+
+const styles = {
+    form: {
+        'mt': 3,
+        '& .MuiFormControl-root': {
+            'my': 1,
+            '& fieldset': {
+                borderStyle: 'dashed'
+            }
+        }
+    },
+    formSections: {
+        mb: 4,
+        display: 'flex',
+        flexDirection: 'column'
+    }
+};
 
 export const SetupSection = ({ application, applicationId, environment, microservice, microserviceId }: any) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -94,8 +118,8 @@ export const SetupSection = ({ application, applicationId, environment, microser
                 </AccordionSummary>
 
                 <AccordionDetails>
-                    <Box sx={{ mb: 3 }}>
-                        <Button variant='text' disabled label='edit' startWithIcon={<EditRounded fontSize='small' />} sx={{ fontSize: 12, mr: 2.5 }} />
+                    <Box>
+                        <Button variant='text' label='edit' startWithIcon={<EditRounded fontSize='small' />} sx={{ fontSize: 12, mr: 2.5 }} />
                         <Button variant='text' disabled label='save' startWithIcon={<SaveRounded fontSize='small' />} sx={{ fontSize: 12, mr: 2.5 }} />
                         <Button
                             variant='text'
@@ -113,18 +137,42 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         />
                     </Box>
 
-                    <Typography>Configuration Setup</Typography>
-
                     <Form
                         initialValues={{
                             MicroserviceName: '',
+                            DevelopmentEnvironment: ''
                         }}
-                        sx={{ mt: 3, display: 'flex', flexDirection: 'column' }}
+                        sx={styles.form}
                     >
-                        <Input id='microservice-name' label='Microservice Name' required disabled />
-                        <Input id='development-environment' label='Development Environment' required disabled />
+                        <Box sx={styles.formSections}>
+                            <Typography variant='subtitle1' sx={{ mb: 2 }}>Configuration Setup</Typography>
 
-                        <Select id='runtime-version' label='Runtime Version*' />
+                            <Input id='microserviceName' label='Microservice Name' required disabled />
+                            <Input id='DevelopmentEnvironment' label='Development Environment' disabled />
+
+                            <Select id='runtimeVersion' label='Runtime Version*' required disabled sx={{ width: 220 }} />
+                        </Box>
+
+                        <Box sx={styles.formSections}>
+                            <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
+
+                            <Input id='imageName' label='Image Name' required disabled sx={{ width: 500 }} />
+                            <Input id='port' label='Port' required value='80' />
+                            <Input id='entrypoint' label='Entrypoint' disabled />
+
+                            <Button
+                                variant='text'
+                                label='Add CMD argument'
+                                startWithIcon={<AddCircleRounded />}
+                                disabled
+                                sx={{ justifyContent: 'start' }}
+                            />
+                        </Box>
+
+                        <Typography variant='subtitle2'>Public Microservice</Typography>
+                        <SwitchLabels title='Expose to a public URL' />
+
+                        <Typography variant='subtitle2'>Connect to M3</Typography>
                     </Form>
                 </AccordionDetails>
             </Accordion>
