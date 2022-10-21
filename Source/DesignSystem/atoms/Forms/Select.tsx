@@ -29,7 +29,10 @@ export const Select = (props: TextFieldProps) => {
             select
             label={props.label}
             value={selectedValue}
+            size='small'
             onChange={handleChange}
+            sx={props.sx}
+            disabled={props.disabled}
         >
             {runtimeVersions.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
