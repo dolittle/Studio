@@ -1,3 +1,94 @@
+# [2.9.0] - 2022-10-18 [PR: #253](https://github.com/dolittle/Studio/pull/253)
+## Summary
+
+Fixed error that accoured after Creating New Application - React needs uniq keys for every list item whitch we did not have.
+Also removed console.log that should not be in production.
+Fixed some styling that they would be more uniformed.
+Used Buttons from Storybook instead imports from MUI.
+
+<img width="1123" alt="Screenshot 2022-10-17 at 10 53 31" src="https://user-images.githubusercontent.com/19160439/196437316-2d38f2c9-75ff-4d0d-a601-859019a1299c.png">
+
+<img width="453" alt="Screenshot 2022-10-17 at 10 53 03" src="https://user-images.githubusercontent.com/19160439/196437408-a19e32f1-d97a-4eed-89a9-026a526cc785.png">
+
+### Added
+
+- Each list items in Applications page has now uniq key that React needs
+
+### Changed
+
+- MUI imported Button to Button from Storybook
+
+### Fixed
+
+- Made styles more uniform
+
+### Removed
+
+- console.log after new application was created
+
+
+# [2.8.1] - 2022-10-17 [PR: #252](https://github.com/dolittle/Studio/pull/252)
+## Summary
+
+When logging in to studio and there are no applications in the tenant you were logged in for you'd get a black screen. Now instead you will get an empty list and the choice to create a new application or go back to choose another tenant.
+
+### Fixed
+
+- Bug when no applications existed in the tenant
+
+
+Before fix:
+<img width="1590" alt="Screenshot 2022-10-14 at 21 01 37" src="https://user-images.githubusercontent.com/13407188/195926532-81df9186-0f35-4404-bd2b-815ea6b5798c.png">
+
+After Fix:
+<img width="1343" alt="Screenshot 2022-10-14 at 21 27 17" src="https://user-images.githubusercontent.com/13407188/195926642-7a5b148d-f606-4373-aae4-dbf82b6b4b1e.png">
+
+
+# [2.8.0] - 2022-10-13 [PR: #251](https://github.com/dolittle/Studio/pull/251)
+## Summary
+
+Updated styles as Theme is updated.
+Added loading states to data tables and its content.
+Added reusable components to Storybook and used them.
+Cleaned some code.
+Added SessionStorage to Tabs component in Storybook so active Tab will remain the same after page refresh.
+
+<img width="538" alt="Screenshot 2022-10-13 at 09 56 33" src="https://user-images.githubusercontent.com/19160439/195527260-e7e7b410-a716-49f6-91d5-9a6c29864dd2.png">
+
+<img width="1501" alt="Screenshot 2022-10-13 at 09 54 05" src="https://user-images.githubusercontent.com/19160439/195527294-653c8988-a457-4cf7-b90c-08ba325e938e.png">
+
+### Added
+
+- Save current active Tab in SessionStorage so Tab will stay the same after page refresh.
+- Loading states to data table and container logs.
+
+### Changed
+
+- Moved reusable components to Storybook and used them.
+- Updated styles according to Theme updates.
+
+### Removed
+
+- Unused components.
+
+
+# [2.7.0] - 2022-10-12 [PR: #250](https://github.com/dolittle/Studio/pull/250)
+## Summary
+
+Smaller 'Create new appliaction' page fixes.
+
+<img width="587" alt="Screenshot 2022-10-12 at 14 00 53" src="https://user-images.githubusercontent.com/19160439/195326018-fa8654db-a6ab-439d-a826-0abbfee29d5c.png">
+
+### Added
+
+- Loading state while application is created.
+
+### Changed
+
+- Remove form active field error when user starts to typing again previosly errored field.
+- Styling improvements.
+
+
 # [2.6.0] - 2022-10-11 [PR: #247](https://github.com/dolittle/Studio/pull/247)
 ## Summary
 

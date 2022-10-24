@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Tab as MuiTab, Tabs as MuiTabs } from '@mui/material';
 
@@ -13,8 +13,8 @@ const styles = {
             backgroundColor: 'transparent'
         },
         '& .MuiTabs-indicatorSpan': {
-            maxWidth: '40px',
-            width: '100%',
+            maxWidth: 40,
+            width: 1,
             backgroundColor: 'primary.main'
         }
     },
@@ -39,15 +39,21 @@ export type Tab = {
 };
 
 export type TabsProps = {
-    tabs: Tab[]
-    sx?: any
+    tabs: Tab[];
+    sx?: any;
 };
 
 export const Tabs = (props: TabsProps) => {
     const [currentTab, setCurrentTab] = useState(0);
 
+    useEffect(() => {
+        const storedSelectedOption = parseInt(sessionStorage.getItem('selectedTab') || '0');
+        setCurrentTab(storedSelectedOption);
+    }, []);
+
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setCurrentTab(newValue);
+        sessionStorage.setItem('selectedTab', newValue.toString());
     };
 
     return (

@@ -7,26 +7,22 @@ import { useSnackbar } from 'notistack';
 import { RestartAlt } from '@mui/icons-material';
 
 import { Graph } from '@dolittle/design-system/molecules/Metrics/Graph';
+import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
 
 import { ContainerStatusInfo, HttpResponsePodStatus, restartMicroservice } from '../../../api/api';
 
 import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 
-import { Notification } from '../../../theme/Notification';
 import { ButtonText } from '../../../theme/buttonText';
 import { DataTable, DataTableStats } from './dataTable';
 
 const styles = {
     restartBtn: {
-        fontWeight: 500,
         lineHeight: '1.375rem',
         letterSpacing: '0.06em',
+        display: 'flex',
         mb: 2.5,
         mt: 3.5
-    },
-    notification: {
-        mt: 2.5,
-        maxWidth: 520
     }
 };
 
@@ -41,8 +37,6 @@ const computeStats = (metric: Metric | undefined, scale: number): DataTableStats
 
     return { average, maximum, current };
 };
-
-const errorMessage = 'Cannot display microservice containers';
 
 type HealthStatusProps = {
     status: string
@@ -66,7 +60,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
         window.location.reload();
     };
 
-    const timeRange = useMemo<[number, number]>(() => [ Date.now()-86_400_000, Date.now() ], [ Date.now() / 60_000 ]);
+    const timeRange = useMemo<[number, number]>(() => [Date.now() - 86_400_000, Date.now()], [Date.now() / 60_000]);
     const cpu = useMetricsFromLast(`microservice:container_cpu_usage_seconds:rate_max{application_id="${applicationId}", environment="${environment}", microservice_id="${microserviceId}"}`, 86_400, 60);
     const memory = useMetricsFromLast(`microservice:container_memory_working_set_bytes:max{application_id="${applicationId}", environment="${environment}", microservice_id="${microserviceId}"}`, 86_400, 60);
 
@@ -101,7 +95,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
             name: 'CPU Usage',
             values: metric.values,
         }))
-    , [cpu.metrics]);
+        , [cpu.metrics]);
 
     const memoryGraphData = useMemo(() =>
         memory.metrics.map(metric => ({
@@ -109,7 +103,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
             name: 'Memory Usage',
             values: metric.values.map(({ time, value }) => ({ time, value: value / 1_048_576 })),
         }))
-    , [memory.metrics]);
+        , [memory.metrics]);
 
     return (
         <>
@@ -122,7 +116,15 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
 
             {containerTables.length > 0
                 ? containerTables
-                : <Notification title={errorMessage} sx={styles.notification} />
+                : <AlertBox
+                    severity='error'
+                    title='Cannot display microservice containers'
+                    message='Please try again later. If problem persists, please'
+                    link={{
+                        href: 'mailto: support@dolittle.com',
+                        text: 'contact support'
+                    }}
+                />
             }
 
             {cpu.loading

@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
+import { LoadingSpinner } from '@dolittle/design-system/atoms/LoadingSpinner/LoadingSpinner';
+
 import { HttpResponseApplication } from '../api/application';
 
 import { useReadable } from 'use-svelte-store';
@@ -17,15 +19,17 @@ import { DataTable, MicroserviceObject } from './dataTable';
 import { DeployButton } from './deployButton';
 
 type MicroservicesOverviewScreenProps = {
-    environment: string
-    application: HttpResponseApplication
+    environment: string;
+    application: HttpResponseApplication;
 };
 
 export const MicroservicesOverviewScreen = ({ environment, application }: MicroservicesOverviewScreenProps) => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as MicroserviceObject[];
+
     const [hasMicroservices, setHasMicroservices] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     let tempEnvironments = application.environments.map(e => e.name);
     tempEnvironments = [...tempEnvironments, ...$microservices.map(item => item.environment)];
@@ -39,6 +43,7 @@ export const MicroservicesOverviewScreen = ({ environment, application }: Micros
 
     useEffect(() => {
         setHasMicroservices(filteredMicroservices.length > 0);
+        setLoading(false);
     }, []);
 
     const handleCreateMicroservice = () => {
@@ -57,17 +62,22 @@ export const MicroservicesOverviewScreen = ({ environment, application }: Micros
         history.push(href);
     };
 
+    if (loading) {
+        return <LoadingSpinner />;
+    };
+
     return (
         <>
             {!hasEnvironments && <Button onClick={handleCreateEnvironment}>Create New Environment</Button>}
 
-            <Typography variant='h1' my={2}>Microservices</Typography>
+            <Typography variant='h1' sx={{ my: 2 }}>Microservices</Typography>
 
-            {hasMicroservices && <DataTable application={application} environment={environment} microservices={filteredMicroservices} />}
+            {hasMicroservices ?
+                <DataTable application={application} environment={environment} microservices={filteredMicroservices} /> :
+                <NoMicroservices onCreate={handleCreateMicroservice} />
+            }
 
             {hasEnvironments && hasMicroservices && <DeployButton handleClick={handleCreateMicroservice} />}
-
-            {!hasMicroservices && <NoMicroservices onCreate={handleCreateMicroservice} />}
         </>
     );
 };

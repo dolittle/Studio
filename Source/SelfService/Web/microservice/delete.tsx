@@ -7,7 +7,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useSnackbar } from 'notistack';
 import { useReadable } from 'use-svelte-store';
 import { microservices, deleteMicroservice, canDeleteMicroservice, MicroserviceStore } from '../stores/microservice';
-import { TabPanel } from '../utils/materialUi';
 
 import { HttpResponseApplication } from '../api/application';
 import {
@@ -80,7 +79,7 @@ export const Delete: React.FunctionComponent<Props> = (props) => {
         history.push(href);
     };
 
-    return <>
+    return (
         <Grid
             container
             direction='column'
@@ -97,7 +96,7 @@ export const Delete: React.FunctionComponent<Props> = (props) => {
                 </Grid>
             </Grid>
 
-            <TabPanel value={0} index={0}>
+            <div>
                 <Typography variant='h2'>Delete Microservice</Typography>
                 <p>Currently this is not possible to undo</p>
                 <p>Clicking on the button will delete the microservice</p>
@@ -109,7 +108,7 @@ export const Delete: React.FunctionComponent<Props> = (props) => {
                     <DeleteIcon />
                     <Typography>delete</Typography>
                 </IconButton>
-            </TabPanel>
-        </Grid >
-    </>;
+            </div>
+        </Grid>
+    );
 };

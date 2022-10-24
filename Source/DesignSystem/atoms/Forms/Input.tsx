@@ -27,6 +27,10 @@ export const Input = (props: InputProps) => {
     return (
         <FormControl sx={{
             'width': 220,
+            'mb': {
+                sm: 0,
+                xs: 2.5,
+            },
             '.MuiInputLabel-root[data-shrink="true"]': {
                 top: 0
             },
@@ -55,11 +59,7 @@ export const Input = (props: InputProps) => {
                 aria-describedby={`${props.id}-helper-text`}
                 size='small'
                 sx={{
-                    letterSpacing: '0.15px',
-                    mb: {
-                        sm: 0,
-                        xs: 2.5,
-                    },
+                    letterSpacing: '0.15px'
                 }}
             />
 

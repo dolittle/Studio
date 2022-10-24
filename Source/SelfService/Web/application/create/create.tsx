@@ -5,14 +5,15 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { Guid } from '@dolittle/rudiments';
-import { themeDark } from '@dolittle/design-system';
 import { Checkbox, Form, Input } from '@dolittle/design-system/atoms/Forms';
+import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
+import { LoadingSpinner } from '@dolittle/design-system/atoms/LoadingSpinner/LoadingSpinner';
+import { Button } from '@dolittle/design-system/atoms/Button/Button';
 
 import { createApplication, HttpApplicationRequest } from '../../api/application';
-import { Notification } from '../../theme/Notification';
 
 const styles = {
     title: {
@@ -27,24 +28,19 @@ const styles = {
     formFieldsWrapper: {
         display: 'flex',
         justifyContent: 'space-between',
-        [themeDark.breakpoints.down('sm')]: {
-            flexDirection: 'column',
-            m: 0
+        flexDirection: {
+            xs: 'column',
+            sm: 'row'
         }
-    },
-    actionBtnWrapper: {
-        [themeDark.breakpoints.down('sm')]: {
-            mt: 7.5
-        },
     },
     actionButtons: {
         color: 'text.primary',
-        fontSize: '0.875rem',
         letterSpacing: '0.06em'
-    },
+    }
 };
 
-const errorMessage = 'Oops, something went wrong';
+const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const alphaCharsRegex = /^[a-z0-9]+$/;
 
 type CreateApplicationParameters = {
     name: string;
@@ -56,7 +52,7 @@ type CreateApplicationParameters = {
         Dev: boolean;
         Test: boolean;
         Prod: boolean;
-    }
+    };
 };
 
 export const Create = () => {
@@ -64,6 +60,7 @@ export const Create = () => {
     const { enqueueSnackbar } = useSnackbar();
 
     const [serverError, setServerError] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleCancel = () => {
         const href = `/applications`;
@@ -71,6 +68,8 @@ export const Create = () => {
     };
 
     const handleApplicationCreate = async (form: CreateApplicationParameters) => {
+        setLoading(true);
+
         const request: HttpApplicationRequest = {
             id: Guid.create().toString(),
             name: form.name,
@@ -91,15 +90,34 @@ export const Create = () => {
 
         try {
             await createApplication(request);
-            console.log('Created app', request);
             const href = `/application/building/${request.id}`;
             history.push(href);
+
+            setLoading(false);
             setServerError(false);
             enqueueSnackbar('Application created', { variant: 'info' });
         } catch (error) {
+            setLoading(false);
             setServerError(true);
         }
     };
+
+    const ActionButtons = () =>
+        <Box>
+            <Button
+                variant='text'
+                label='Cancel'
+                onClick={handleCancel}
+                sx={{ ...styles.actionButtons, mr: 8 }}
+            />
+
+            <Button
+                variant='text'
+                label='Create'
+                type='submit'
+                sx={{ ...styles.actionButtons, color: 'primary.main' }}
+            />
+        </Box>;
 
     return (
         <>
@@ -127,13 +145,13 @@ export const Create = () => {
                     label='Application Name'
                     required='Application name required.'
                     pattern={{
-                        value: /^[a-z0-9]+$/,
+                        value: alphaCharsRegex,
                         message: 'Name can only contain alphanumeric characters.'
                     }}
-                    sx={styles.formFieldsWrapper}
+                    sx={{ display: 'flex' }}
                 />
 
-                <Box sx={{ mt: 3.5, ...styles.formFieldsWrapper }}>
+                <Box sx={{ ...styles.formFieldsWrapper, mt: { sm: 3.5 } }}>
                     <Input
                         id='contact.name'
                         label='Contact Name'
@@ -144,7 +162,7 @@ export const Create = () => {
                         label='Contact Email'
                         required='Contact email address required.'
                         pattern={{
-                            value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                            value: emailRegex,
                             message: 'Please enter a valid email address.'
                         }}
                     />
@@ -155,7 +173,7 @@ export const Create = () => {
                 <Box sx={{ ...styles.formFieldsWrapper, mb: 7.5 }}>
                     <Checkbox
                         id='environments.Prod'
-                        label='Production'
+                        label='Production *'
                         disabled
                     />
                     <Checkbox
@@ -168,24 +186,20 @@ export const Create = () => {
                     />
                 </Box>
 
+                {loading ? <LoadingSpinner /> : <ActionButtons />}
 
-                <Box sx={styles.actionBtnWrapper}>
-                    <Button variant='text'
-                        sx={{ ...styles.actionButtons, mr: 8 }}
-                        onClick={handleCancel}
-                    >
-                        Cancel
-                    </Button>
-
-                    <Button variant='text'
-                        sx={{ ...styles.actionButtons, color: 'primary.main' }}
-                        type='submit'
-                    >
-                        Create
-                    </Button>
-                </Box>
-
-                {serverError && <Notification title={errorMessage} sx={{ mt: 6 }} />}
+                {serverError &&
+                    <AlertBox
+                        title='Oops, something went wrong'
+                        message='Please try again later. If problem persists, please'
+                        severity='error'
+                        link={{
+                            href: 'mailto: support@dolittle.com',
+                            text: 'contact support'
+                        }}
+                        sx={{ mt: 6 }}
+                    />
+                }
             </Form>
         </>
     );
