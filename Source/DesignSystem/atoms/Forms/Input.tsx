@@ -50,6 +50,7 @@ export const Input = (props: InputProps) => {
             <InputLabel
                 htmlFor={props.id}
                 required={isRequired(props.required)}
+                disabled={props.disabled}
                 error={hasError}
                 sx={{ top: -8 }}
             >
