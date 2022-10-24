@@ -136,7 +136,14 @@ export const Configuration = ({
             />
 
             <Box>
-                <SetupSection application={application} applicationId={applicationId} environment={environment} microservice={currentMicroservice} microserviceId={microserviceId} />
+                <SetupSection
+                    application={application}
+                    applicationId={applicationId}
+                    environment={environment}
+                    microservice={microservice}
+                    currentMicroservice={currentMicroservice}
+                    microserviceId={microserviceId}
+                />
 
                 <ConfigView microservice={microservice} />
             </Box>

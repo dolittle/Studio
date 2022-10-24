@@ -53,24 +53,27 @@ const runtimeVersions = [
     }
 ];
 
-export const SetupSection = ({ application, applicationId, environment, microservice, microserviceId }: any) => {
+export const SetupSection = ({ application, applicationId, environment, microservice, currentMicroservice, microserviceId }: any) => {
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
 
-    const [dialogIsOpen, setDialogIsOpen] = useState(false);
+    const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
+    const [isNotEditable, setIsNotEditable] = useState(true);
+
+    console.log(microservice);
 
     const handleDialogOpen = () => {
-        setDialogIsOpen(true);
+        setDeleteDialogIsOpen(true);
     };
 
     const handleDialogClose = () => {
-        setDialogIsOpen(false);
+        setDeleteDialogIsOpen(false);
     };
 
     const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
-    const msName = microservice.name;
+    const msName = currentMicroservice.name;
 
-    if (!microservice) {
+    if (!currentMicroservice) {
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);
         return null;
@@ -101,7 +104,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
     return (
         <>
-            <AlertDialog open={dialogIsOpen} onClose={handleDialogClose} handleDeletionConfirm={handleDelete} />
+            <AlertDialog open={deleteDialogIsOpen} onClose={handleDialogClose} handleDeletionConfirm={handleDelete} />
 
             <Accordion expanded sx={{
                 'backgroundColor': 'transparent',
@@ -131,8 +134,22 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
                 <AccordionDetails>
                     <Box>
-                        <Button variant='text' label='edit' startWithIcon={<EditRounded fontSize='small' />} sx={{ fontSize: 12, mr: 2.5 }} />
-                        <Button variant='text' disabled label='save' startWithIcon={<SaveRounded fontSize='small' />} sx={{ fontSize: 12, mr: 2.5 }} />
+                        <Button
+                            variant='text'
+                            label='edit'
+                            disabled={!isNotEditable}
+                            startWithIcon={<EditRounded fontSize='small' />}
+                            onClick={() => setIsNotEditable(false)}
+                            sx={{ fontSize: 12, mr: 2.5 }}
+                        />
+                        <Button
+                            variant='text'
+                            disabled={isNotEditable}
+                            label='save'
+                            startWithIcon={<SaveRounded fontSize='small' />}
+                            onClick={() => setIsNotEditable(true)}
+                            sx={{ fontSize: 12, mr: 2.5 }}
+                        />
                         <Button
                             variant='text'
                             label='Restart Microservice'
@@ -151,16 +168,20 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
                     <Form
                         initialValues={{
-                            MicroserviceName: '',
-                            DevelopmentEnvironment: ''
+                            microserviceName: '',
+                            developmentEnvironment: '',
+                            runtimeVersion: '',
+                            imageName: '',
+                            port: '',
+                            entrypoint: '',
                         }}
                         sx={styles.form}
                     >
                         <Box sx={styles.formSections}>
                             <Typography variant='subtitle1' sx={{ mb: 2 }}>Configuration Setup</Typography>
 
-                            <Input id='microserviceName' label='Microservice Name' required disabled />
-                            <Input id='DevelopmentEnvironment' label='Development Environment' disabled />
+                            <Input id='microserviceName' label='Microservice Name' value={msName} required disabled={isNotEditable} />
+                            <Input id='developmentEnvironment' label='Development Environment' value={environment} disabled />
 
                             <Select
                                 id='runtimeVersion'
@@ -168,7 +189,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                                 options={runtimeVersions}
                                 value='8.6.0'
                                 required
-                                disabled
+                                disabled={isNotEditable}
                                 sx={{ width: 220 }}
                             />
                         </Box>
@@ -176,23 +197,22 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         <Box sx={styles.formSections}>
                             <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
 
-                            <Input id='imageName' label='Image Name' required disabled sx={{ width: 500 }} />
-                            <Input id='port' label='Port' value='80' required disabled />
-                            <Input id='entrypoint' label='Entrypoint' disabled />
+                            <Input id='imageName' label='Image Name' value={microservice?.extra?.headImage || ''} required disabled={isNotEditable} sx={{ width: 500 }} />
+                            <Input id='port' label='Port' value='80' required disabled={isNotEditable} />
+                            <Input id='entrypoint' label='Entrypoint' disabled={isNotEditable} />
 
                             <Button
                                 variant='text'
                                 label='Add CMD argument'
                                 startWithIcon={<AddCircleRounded />}
-                                disabled
+                                disabled={isNotEditable}
                                 sx={{ justifyContent: 'start', mt: 2.5 }}
                             />
                         </Box>
 
                         <Box sx={styles.formSections}>
                             <Typography variant='subtitle2'>Public Microservice</Typography>
-
-                            <SwitchLabels title='Expose to a public URL' disabled />
+                            <SwitchLabels title='Expose to a public URL' disabled={isNotEditable} defaultChecked={microservice?.extra?.isPublic} />
                         </Box>
 
                         <Box sx={styles.formSections}>
@@ -200,8 +220,8 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
                             <SwitchLabels
                                 title='Make M3 configuration available to microservice'
-                                defaultChecked={true}
-                                disabled
+                                defaultChecked={microservice?.extra?.connections?.m3Connector}
+                                disabled={isNotEditable}
                             />
 
                             <Typography variant='body2' sx={{ ml: 6, mt: 1 }}>
