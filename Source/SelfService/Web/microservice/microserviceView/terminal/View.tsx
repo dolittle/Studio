@@ -3,7 +3,6 @@
 
 import React, { useMemo } from 'react';
 
-import { Box } from '@mui/material';
 import { Terminal, TerminalConnect } from '@dolittle/design-system/atoms/Terminal';
 
 import { connect as ttydConnect } from './ttyd';
