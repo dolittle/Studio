@@ -4,20 +4,15 @@
 import React, { useState } from 'react';
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 
-const runtimeVersions = [
-    {
-        value: '8.6.0'
-    },
-    {
-        value: '6.1.0'
-    },
-    {
-        value: 'None'
-    }
-];
+/**
+ * The props for a {@link Select} component.
+ */
+export type SelectProps = {
+    options: any;
+} & TextFieldProps;
 
-export const Select = (props: TextFieldProps) => {
-    const [selectedValue, setSelectedValue] = useState('8.6.0');
+export const Select = (props: SelectProps) => {
+    const [selectedValue, setSelectedValue] = useState(props.value ?? '');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedValue(event.target.value);
@@ -34,7 +29,7 @@ export const Select = (props: TextFieldProps) => {
             sx={props.sx}
             disabled={props.disabled}
         >
-            {runtimeVersions.map((option) => (
+            {props.options.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                     {option.value}
                 </MenuItem>
