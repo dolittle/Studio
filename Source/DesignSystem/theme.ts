@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { createTheme, Components, PaletteOptions } from '@mui/material/styles';
-import { TypographyOptions } from '@mui/material/styles/createTypography';
+import type { DataGridProComponents } from '@mui/x-data-grid-pro/themeAugmentation';
 
-import type {} from '@mui/x-data-grid-pro/themeAugmentation';
+import { Components, createTheme, PaletteOptions } from '@mui/material/styles';
+import { TypographyOptions } from '@mui/material/styles/createTypography';
 
 import '@fontsource/rubik/300.css';
 import '@fontsource/rubik/400.css';
@@ -28,13 +28,13 @@ declare module '@mui/material/styles' {
     interface PaletteOptions {
         outlineborder?: PaletteOptions['divider'];
     }
-}
+};
 
 declare module '@mui/material/Typography' {
     interface TypographyPropsVariantOverrides {
         monospace: true;
     }
-}
+};
 
 const typography: TypographyOptions = {
     fontFamily: '"Rubik", "Open sans", "Arial", sans-serif',
@@ -111,7 +111,7 @@ const typography: TypographyOptions = {
         fontSize: '0.8125rem', //13px
         fontWeight: 400,
         fontFamily: 'Roboto Mono',
-    },
+    }
 };
 
 const palette: PaletteOptions = {
@@ -162,10 +162,24 @@ const palette: PaletteOptions = {
         paper: '#191A21',
     },
     divider: '#2C2B33E6',
-    outlineborder: '#504D4D',
+    outlineborder: '#504D4D'
 };
 
-const components: Components = {
+const components: Components & DataGridProComponents = {
+    MuiSwitch: {
+        styleOverrides: {
+            colorPrimary: {
+                '&.Mui-checked.Mui-disabled': {
+                    color: '#757575'
+                }
+            },
+            track: {
+                '.Mui-checked.Mui-disabled + &': {
+                    backgroundColor: '#FFFFFF'
+                }
+            }
+        },
+    },
     MuiDataGrid: {
         styleOverrides: {
             root: {
