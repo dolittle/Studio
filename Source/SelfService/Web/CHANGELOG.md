@@ -1,3 +1,17 @@
+# [2.10.1] - 2022-10-24 [PR: #254](https://github.com/dolittle/Studio/pull/254)
+## Summary
+
+Fixes a bug that caused the page to go blank when navigating away from the Terminal-tab. Also make it a bit larger (depending on viewport height) so we get more room to play.
+
+### Changed
+
+- The Terminal view is now `70vh` tall.
+
+### Fixed
+
+- A bug in the `xterm.js` library causes it to `throw` whenever it is disposed (at least using the `WebglAddon`. For now we are just catching this.
+
+
 # [2.10.0] - 2022-10-24 [PR: #249](https://github.com/dolittle/Studio/pull/249)
 ## Summary
 
