@@ -24,6 +24,9 @@ export const View = (props: ViewProps) => {
     return (
         <Terminal
             connect={connect}
+            sx={{
+                height: '70vh',
+            }}
         />
     );
 };
