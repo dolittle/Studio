@@ -11,14 +11,14 @@ const { metadata, createStory } = componentStories(Checkbox, {
     actions: {
         onChange: 'changed'
     },
-    wrapper: ({ component }) => (
+    decorator: (Story) => (
         <Form initialValues={{
             production: false,
             productionWithDefault: true,
         }}>
-            { component }
+            <Story />
         </Form>
-    )
+    ),
 });
 
 export default metadata;

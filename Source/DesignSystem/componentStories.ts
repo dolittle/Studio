@@ -1,9 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { createElement, ComponentProps, ReactElement, JSXElementConstructor } from 'react';
+import { createElement, useRef, ComponentProps, JSXElementConstructor } from 'react';
 
-import { ComponentStory, ComponentMeta, ArgTypes } from '@storybook/react';
+import { ArgTypes, ComponentMeta, ComponentStory, DecoratorFn } from '@storybook/react';
 
 type Component = JSXElementConstructor<any>;
 
@@ -13,8 +13,7 @@ type ComponentStoryActions<TComponent extends Component> = Partial<{
     [prop in keyof ComponentProps<TComponent>]: string;
 }>;
 
-type ComponentWrapperProps = { component: ReactElement };
-type ComponentWrapper = JSXElementConstructor<ComponentWrapperProps>;
+type Decorator = DecoratorFn;
 
 type ComponentStoryConfig<TComponent extends Component> = {
     /**
@@ -24,10 +23,17 @@ type ComponentStoryConfig<TComponent extends Component> = {
     actions?: ComponentStoryActions<TComponent>;
 
     /**
-     * An optional wrapper component to wrap the story in.
+     * An optional decorator to wrap the story in.
      * This is useful if the component requires e.g. a React context to work properly.
      */
-    wrapper?: ComponentWrapper;
+    decorator?: Decorator;
+
+    /**
+     * An optional factory to create props that will override the args on a component.
+     * This factory will be called once - every time the Story is created.
+     * This is useful if some props require special types that cannot be provided through the Storybook UI.
+     */
+    overridePropsWith?: () => StoryArgs<TComponent>;
 };
 
 /**
@@ -55,27 +61,25 @@ export const componentStories = <TComponent extends Component>(component: TCompo
 
     addActionsToArgTypes(argTypes, config?.actions);
 
+    const decorators = config?.decorator !== undefined ? [ config.decorator ] : [];
+
     const metadata: ComponentMeta<TComponent> = {
         component,
         argTypes,
+        decorators,
     };
 
     const template: ComponentStory<TComponent> = (props) => {
-        if (typeof config?.wrapper === 'function') {
-            return createElement(
-                config.wrapper,
-                {
-                    component: createElement(
-                        component,
-                        props,
-                    ),
-                },
-            );
+        const overrides = useRef<StoryArgs<TComponent>>();
+        if (overrides.current === undefined) {
+            overrides.current = config?.overridePropsWith?.() || {};
         }
+
+        const propsWithOverrides = { ...props, ...overrides.current };
 
         return createElement(
             component,
-            props,
+            propsWithOverrides,
         );
     };
 
