@@ -69,7 +69,13 @@ export const useXTerm = (options: ITerminalOptions): Terminal => {
 const createRefCallback = (xterm: XTerminal, fit: FitAddon, resolve: (value: XTerminal) => void): RefCallback<HTMLDivElement> =>
     (container) => {
         if (container === null) {
-            xterm.dispose();
+            try {
+                xterm.dispose();
+            } catch (error) {
+                // There doesn't seem to be a way to unload the WebglAddon - and disposing of it throws an exception.
+                // For now, we can't really don anythin but catch the error, and allow any resources that are still kept to leak :(
+                console.warn('Could not dispose of XTerm', error);
+            }
             return;
         };
 
