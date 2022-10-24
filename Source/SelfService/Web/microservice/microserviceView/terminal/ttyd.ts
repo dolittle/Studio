@@ -14,15 +14,17 @@ export const isAvailable = async (url: string): Promise<boolean> => {
     }
 };
 
-export const connect = async (url: string, columns: number, rows: number): Promise<TerminalStreams> => {
+export const connect = async (url: string, columns: number, rows: number, signal: AbortSignal): Promise<TerminalStreams> => {
     const token = await fetchToken(url);
 
     const { protocol, host } = window.location;
     const base = `${protocol === 'http:' ? 'ws:' : 'wss:'}//${host}`;
 
-    const ws = new WebSocketStream(`${base}${url}/ws`, { protocols: ['tty'] });
+    const ws = new WebSocketStream(`${base}${url}/ws`, { protocols: ['tty'], signal });
     const connection = await ws.connection;
-    const { readable, writable } = encodeDecodeStrings(connection);
+    signal.throwIfAborted();
+
+    const { readable, writable } = encodeDecodeStrings(connection, signal);
 
     writeInitialMessage(writable, token, columns, rows);
 
@@ -110,9 +112,9 @@ const transformOutput = (stream: ReadableStream<string>, closed: Promise<WebSock
     return transformer.readable;
 };
 
-const encodeDecodeStrings = (connection: WebSocketConnection): { readable: ReadableStream<string>, writable: WritableStream<string> } => {
+const encodeDecodeStrings = (connection: WebSocketConnection, signal: AbortSignal): { readable: ReadableStream<string>, writable: WritableStream<string> } => {
     const encoder = new TextEncoderStream();
-    encoder.readable.pipeTo(connection.writable).catch(_ => {});
+    encoder.readable.pipeTo(connection.writable, { signal }).catch(_ => {});
     const writable = encoder.writable;
 
     const decoder = new TextDecoderStream();
@@ -130,7 +132,7 @@ const encodeDecodeStrings = (connection: WebSocketConnection): { readable: Reada
                 }
             },
         }))
-        .pipeTo(decoder.writable).catch(_ => {});
+        .pipeTo(decoder.writable, { signal }).catch(_ => {});
     const readable = decoder.readable;
 
     return { readable, writable };

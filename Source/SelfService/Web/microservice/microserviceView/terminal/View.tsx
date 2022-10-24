@@ -18,7 +18,7 @@ export const View = (props: ViewProps) => {
     const url = useTTYdUrl(props.applicationId, props.environment, props.microserviceId);
 
     const connect = useMemo<TerminalConnect>(() =>
-        ({ columns, rows }) => ttydConnect(url, columns, rows)
+        ({ columns, rows, signal }) => ttydConnect(url, columns, rows, signal)
     , [url]);
 
     return (
