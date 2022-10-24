@@ -41,6 +41,18 @@ const styles = {
     }
 };
 
+const runtimeVersions = [
+    {
+        value: '8.6.0'
+    },
+    {
+        value: '6.1.0'
+    },
+    {
+        value: 'None'
+    }
+];
+
 export const SetupSection = ({ application, applicationId, environment, microservice, microserviceId }: any) => {
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
@@ -150,14 +162,22 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             <Input id='microserviceName' label='Microservice Name' required disabled />
                             <Input id='DevelopmentEnvironment' label='Development Environment' disabled />
 
-                            <Select id='runtimeVersion' label='Runtime Version*' required disabled sx={{ width: 220 }} />
+                            <Select
+                                id='runtimeVersion'
+                                label='Runtime Version*'
+                                options={runtimeVersions}
+                                value='8.6.0'
+                                required
+                                disabled
+                                sx={{ width: 220 }}
+                            />
                         </Box>
 
                         <Box sx={styles.formSections}>
                             <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
 
                             <Input id='imageName' label='Image Name' required disabled sx={{ width: 500 }} />
-                            <Input id='port' label='Port' required value='80' />
+                            <Input id='port' label='Port' value='80' required disabled />
                             <Input id='entrypoint' label='Entrypoint' disabled />
 
                             <Button
@@ -165,14 +185,29 @@ export const SetupSection = ({ application, applicationId, environment, microser
                                 label='Add CMD argument'
                                 startWithIcon={<AddCircleRounded />}
                                 disabled
-                                sx={{ justifyContent: 'start' }}
+                                sx={{ justifyContent: 'start', mt: 2.5 }}
                             />
                         </Box>
 
-                        <Typography variant='subtitle2'>Public Microservice</Typography>
-                        <SwitchLabels title='Expose to a public URL' />
+                        <Box sx={styles.formSections}>
+                            <Typography variant='subtitle2'>Public Microservice</Typography>
 
-                        <Typography variant='subtitle2'>Connect to M3</Typography>
+                            <SwitchLabels title='Expose to a public URL' disabled />
+                        </Box>
+
+                        <Box sx={styles.formSections}>
+                            <Typography variant='subtitle2'>Connect to M3</Typography>
+
+                            <SwitchLabels
+                                title='Make M3 configuration available to microservice'
+                                defaultChecked={true}
+                                disabled
+                            />
+
+                            <Typography variant='body2' sx={{ ml: 6, mt: 1 }}>
+                                Enabling this will mount these files to the deployed microservice:
+                            </Typography>
+                        </Box>
                     </Form>
                 </AccordionDetails>
             </Accordion>
