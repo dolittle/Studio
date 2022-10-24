@@ -1,3 +1,22 @@
+# [2.10.0] - 2022-10-24 [PR: #249](https://github.com/dolittle/Studio/pull/249)
+## Summary
+
+Adds a Terminal to connect to a shell running _inside_ a Microservice.
+
+<img width="659" alt="image" src="https://user-images.githubusercontent.com/1014990/197510632-39688ecc-d045-41fc-9113-749d450e303f.png">
+
+
+### Added
+
+- A new Terminal component in the DesignSystem that can be connected to any TTY-like interface. A browser-local sample is implemented in the `fake.ts` file - and a similar thing could be used to do something with a terminal-like UI if we want to.
+- A new tab on the `MicroserviceView` page - only visible if a shell is available for the current microservice. This opens a new view with a Terminal.
+- A mock TTYd server for local development when running with mocks. It starts a new TTY on your local machine in your home folder (I don't know how well this works on Windows).
+
+### Changed
+
+- The custom `wrapper` setup in the `componentStories.ts` was changed to use the Storybook-builtin `decorator` setup.
+
+
 # [2.9.0] - 2022-10-18 [PR: #253](https://github.com/dolittle/Studio/pull/253)
 ## Summary
 
