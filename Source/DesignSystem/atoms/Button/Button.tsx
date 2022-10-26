@@ -16,6 +16,7 @@ type ButtonProps = {
     onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
+// Somehow button font size is not taking effect from theme!
 export const Button = (props: ButtonProps) =>
     <MuiButton
         variant={props.variant === 'filled' ? 'contained' : props.variant}
@@ -24,7 +25,7 @@ export const Button = (props: ButtonProps) =>
         size={props.size ?? 'small'}
         startIcon={props.startWithIcon}
         endIcon={props.endWithIcon}
-        sx={props.sx}
+        sx={{ fontSize: 12, ...props.sx }}
         onClick={props.onClick}
         disableElevation
     >
