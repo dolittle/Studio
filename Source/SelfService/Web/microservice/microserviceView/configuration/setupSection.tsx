@@ -141,15 +141,9 @@ export const SetupSection = ({ application, applicationId, environment, microser
             <AlertDialog open={deleteDialogIsOpen} onClose={handleDialogClose} handleDeletionConfirm={handleDelete} />
 
             <Accordion expanded sx={{
-                'backgroundColor': 'transparent',
-                'backgroundImage': 'none',
-                'pt': 1.875,
-                '& .MuiAccordionSummary-content': {
-                    ml: 1.25
-                },
-                '& .MuiAccordionSummary-content.Mui-expanded': {
-                    ml: 1.25
-                }
+                backgroundColor: 'transparent',
+                backgroundImage: 'none',
+                pt: 1.875
             }}>
                 <AccordionSummary
                     expandIcon={<ExpandCircleDownRounded />}
@@ -163,7 +157,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         },
                     }}
                 >
-                    <Typography variant='subtitle1'>Configuration Setup</Typography>
+                    <Typography variant='subtitle1' sx={{ ml: 1.25 }}>Configuration Setup</Typography>
                 </AccordionSummary>
 
                 <AccordionDetails>
