@@ -1,24 +1,26 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Box } from '@mui/material';
 import React from 'react';
-import { ButtonText } from '../../theme/buttonText';
 
-import { TextField } from '../../theme/textField';
-import RemoveIcon from '@mui/icons-material/HighlightOff';
+import { Box } from '@mui/material';
+import { AddCircleRounded, DeleteRounded } from '@mui/icons-material/';
+
+import { Input } from '@dolittle/design-system/atoms/Forms';
+import { Button } from '@dolittle/design-system/atoms/Button/Button';
 
 
-type Props = {
+type HeadArgumentsProps = {
     args: string[];
-    setArgs: (args: string[]) => void;
+    setArgs: any; //(args: string[]) => void
+    disabled?: any;
 };
 
-export const HeadArguments: React.FunctionComponent<Props> = (props) => {
-
+export const HeadArguments = (props: HeadArgumentsProps) => {
     const _props = props!;
     const args = _props.args;
     const setArgs = _props.setArgs;
+    const disabled = _props.disabled;
 
     const handleArg = (event: React.ChangeEvent<HTMLInputElement>, argIndex: number) => {
         const newArgs = [...args];
@@ -38,36 +40,37 @@ export const HeadArguments: React.FunctionComponent<Props> = (props) => {
         setArgs(newArgs);
     };
 
-    return (<>
-        <Box flexDirection='column' display='flex' justifyContent='flex-start' style={{ gap: '1rem' }}>
-            {args.map((arg, argIndex) => (
-                <Box display='flex' justifyContent='flex-start' style={{ gap: '1rem' }} key={argIndex}>
-                    <TextField
-                        id={'headArg' + argIndex.toString()}
-                        label='Argument'
-                        required={false}
-                        value={arg}
-                        onChange={(event) => handleArg(event, argIndex)}
-                        size='small'
-                    />
-                    <ButtonText
-                        onClick={(event) => handleRemoveArg(event, argIndex)}
-                        buttonType='secondary'
-                        size='small'
-                        startIcon={<RemoveIcon />}
-                    >
-                        Remove argument
-                    </ButtonText>
-                </Box>
-            ))}
-        </Box>
-        <ButtonText
-            onClick={(event) => handleAddArg(event)}
-            buttonType='secondary'
-            size='small'
-            withIcon
-        >
-            Add argument
-        </ButtonText>
-    </>);
+    return (
+        <>
+            <Box flexDirection='column' display='flex' justifyContent='flex-start' style={{ gap: '1rem' }}>
+                {args.map((arg, argIndex) => (
+                    <Box display='flex' justifyContent='flex-start' style={{ gap: '1rem' }} key={argIndex}>
+                        <Input
+                            id={'headArg' + argIndex.toString()}
+                            label='CMD Argument'
+                            value={arg}
+                            onChange={(event) => handleArg(event, argIndex)}
+                        />
+                        <Button
+                            variant='text'
+                            label='Remove'
+                            startWithIcon={<DeleteRounded />}
+                            size='small'
+                            onClick={(event) => handleRemoveArg(event, argIndex)}
+                            sx={{ color: 'text.primary' }}
+                        />
+                    </Box>
+                ))}
+            </Box>
+
+            <Button
+                variant='text'
+                label='Add CMD argument'
+                startWithIcon={<AddCircleRounded />}
+                disabled={disabled}
+                onClick={(event) => handleAddArg(event)}
+                sx={{ justifyContent: 'start', mt: 2.5 }}
+            />
+        </>
+    );
 };
