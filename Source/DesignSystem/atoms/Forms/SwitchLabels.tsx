@@ -11,5 +11,6 @@ export const SwitchLabels = (props: SwitchProps) =>
             control={<Switch defaultChecked={props.defaultChecked} size='small' />}
             label={props.title}
             disabled={props.disabled}
+            sx={props.sx}
         />
     </FormGroup>;

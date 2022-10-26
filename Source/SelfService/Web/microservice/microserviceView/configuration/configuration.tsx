@@ -144,8 +144,6 @@ export const Configuration = ({
                     currentMicroservice={currentMicroservice}
                     microserviceId={microserviceId}
                 />
-
-                <ConfigView microservice={microservice} />
             </Box>
 
             <Divider sx={styles.divider} />
