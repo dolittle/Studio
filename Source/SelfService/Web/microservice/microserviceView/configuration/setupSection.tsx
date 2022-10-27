@@ -12,14 +12,15 @@ import {
     EditRounded,
     ExpandCircleDownRounded,
     SaveRounded,
-    RestartAltRounded,
-    AddCircleRounded
+    RestartAltRounded
 } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system/atoms/Button/Button';
 import { Form, Input, Select, SwitchLabels } from '@dolittle/design-system/atoms/Forms';
 
 import { canDeleteMicroservice, deleteMicroservice } from '../../../stores/microservice';
+
+import { MicroserviceSimple } from '../../../api/index';
 
 import { MicroserviceRestart } from '../helpers';
 import { AlertDialog } from './AlertDialog';
@@ -62,7 +63,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const history = useHistory();
 
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
-    const [isNotEditable, setIsNotEditable] = useState(true);
+    const [isNotEditable, setIsNotEditable] = useState(false);
 
     const currentMicroserviceData = {
         dolittle: {
@@ -79,7 +80,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
             runtimeImage: 'image',
             isPublic: false,
             ingress: {
-                path: '/',
+                path: '',
                 pathType: 'Prefix',
             },
             headCommand: {
@@ -90,28 +91,19 @@ export const SetupSection = ({ application, applicationId, environment, microser
                 m3Connector: false
             }
         }
-    }; // as MicroserviceSimple;
+    } as MicroserviceSimple;
 
     const [args, setArgs] = useState(currentMicroserviceData.extra.headCommand.args);
-
-    console.log(microservice, 'microservice');
-
-    const handleDialogOpen = () => {
-        setDeleteDialogIsOpen(true);
-    };
-
-    const handleDialogClose = () => {
-        setDeleteDialogIsOpen(false);
-    };
+    const [exposedToPublic, setExposedToPublic] = useState(false);
 
     const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
     const microserviceName = microservice.name;
 
-    if (!microservice) {
+    /* if (!microservice) {
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);
         return null;
-    };
+    }; */
 
     const handleRestart = async () => {
         await MicroserviceRestart({ applicationId, environment, microserviceId, enqueueSnackbar });
@@ -134,6 +126,14 @@ export const SetupSection = ({ application, applicationId, environment, microser
         enqueueSnackbar('Microservice deleted', { variant: 'info' });
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);
+    };
+
+    const handleDialogOpen = () => {
+        setDeleteDialogIsOpen(true);
+    };
+
+    const handleDialogClose = () => {
+        setDeleteDialogIsOpen(false);
     };
 
     return (
@@ -168,7 +168,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             disabled={!isNotEditable}
                             startWithIcon={<EditRounded fontSize='small' />}
                             onClick={() => setIsNotEditable(false)}
-                            sx={{ fontSize: 12, mr: 2.5 }}
+                            sx={{ mr: 2.5 }}
                         />
                         <Button
                             variant='text'
@@ -176,21 +176,20 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             label='save'
                             startWithIcon={<SaveRounded fontSize='small' />}
                             onClick={() => setIsNotEditable(true)}
-                            sx={{ fontSize: 12, mr: 2.5 }}
+                            sx={{ mr: 2.5 }}
                         />
                         <Button
                             variant='text'
                             label='Restart Microservice'
                             startWithIcon={<RestartAltRounded fontSize='small' />}
                             onClick={handleRestart}
-                            sx={{ fontSize: 12, mr: 2.5 }}
+                            sx={{ mr: 2.5 }}
                         />
                         <Button
                             variant='text'
                             label='Delete Microservice'
                             startWithIcon={<DeleteRounded fontSize='small' />}
                             onClick={handleDialogOpen}
-                            sx={{ fontSize: 12 }}
                         />
                     </Box>
 
@@ -202,14 +201,15 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             imageName: microservice?.extra?.headImage || '',
                             port: '80',
                             entrypoint: '',
+                            ingressPath: microservice?.extra?.ingressPath || ''
                         }}
                         sx={styles.form}
                     >
                         <Box sx={styles.formSections}>
                             <Typography variant='subtitle1' sx={{ mb: 2 }}>Configuration Setup</Typography>
 
-                            <Input id='microserviceName' label='Microservice Name' value={microserviceName} required disabled={isNotEditable} />
-                            <Input id='developmentEnvironment' label='Development Environment' value={environment} disabled />
+                            <Input id='microserviceName' label='Microservice Name' required disabled={isNotEditable} />
+                            <Input id='developmentEnvironment' label='Development Environment' disabled />
 
                             <Select
                                 id='runtimeVersion'
@@ -225,28 +225,32 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         <Box sx={styles.formSections}>
                             <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
 
-                            <Input id='imageName' label='Image Name' value={microservice?.extra?.headImage || ''} required disabled={isNotEditable} sx={{ width: 500 }} />
-                            <Input id='port' label='Port' value='80' required disabled={isNotEditable} />
+                            <Input id='imageName' label='Image Name' sx={{ width: 500 }} />
+                            <Input id='port' label='Port' required disabled={isNotEditable} />
                             <Input id='entrypoint' label='Entrypoint' disabled={isNotEditable} />
 
-                            {/* <Button
-                                variant='text'
-                                label='Add CMD argument'
-                                startWithIcon={<AddCircleRounded />}
-                                disabled={isNotEditable}
-                                sx={{ justifyContent: 'start', mt: 2.5 }}
-                            /> */}
-                            <HeadArguments args={args} setArgs={setArgs} disabled={isNotEditable} />
+                            <HeadArguments args={args} setArgs={setArgs} />
                         </Box>
 
                         <Box sx={styles.formSections}>
                             <Typography variant='subtitle2'>Public Microservice</Typography>
+
                             <SwitchLabels
                                 title='Expose to a public URL'
                                 disabled={isNotEditable}
-                                defaultChecked={microservice?.extra?.isPublic}
-                                sx={{ mt: 2.5 }}
+                                checked={exposedToPublic}
+                                onChange={(event) => setExposedToPublic(event.target.checked)}
+                                sx={{ my: 2.5 }}
                             />
+
+                            {exposedToPublic &&
+                                <Input
+                                    id="ingressPath"
+                                    label='Path'
+                                    startAdornment='/'
+                                    placeholder='leave blank for default path'
+                                />
+                            }
                         </Box>
 
                         <Box sx={styles.formSections}>

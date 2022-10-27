@@ -15,7 +15,7 @@ export type InputProps = {
     sx?: SxProps;
     startAdornment?: React.ReactNode;
     placeholder?: string;
-    onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
+    //value?: string;
 } & FieldProps;
 
 /**
@@ -28,15 +28,14 @@ export const Input = (props: InputProps) => {
 
     return (
         <FormControl
-            variant='outlined'
             sx={{
                 'width': 220,
+                'letterSpacing': '0.15px',
                 'mb': {
                     sm: 0,
                     xs: 2.5
                 },
                 'label': {
-                    letterSpacing: '0.15px',
                     fontSize: 14,
                     lineHeight: '24px'
                 },
@@ -69,12 +68,14 @@ export const Input = (props: InputProps) => {
                 id={props.id}
                 error={hasError}
                 disabled={props.disabled}
+                label={props.label}
                 startAdornment={props.startAdornment ?
                     <InputAdornment position='start' sx={{ color: 'action.active' }}>
                         <Typography variant='body2'>{props.startAdornment}</Typography>
                     </InputAdornment> : null
                 }
                 placeholder={props.placeholder}
+                //value={field.value ?? ''}
                 aria-describedby={`${props.id}-helper-text`}
                 size='small'
             />

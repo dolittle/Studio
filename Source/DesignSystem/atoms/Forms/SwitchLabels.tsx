@@ -8,7 +8,7 @@ import { FormGroup, FormControlLabel, Switch, SwitchProps } from '@mui/material'
 export const SwitchLabels = (props: SwitchProps) =>
     <FormGroup sx={{ width: 1 }}>
         <FormControlLabel
-            control={<Switch defaultChecked={props.defaultChecked} size='small' />}
+            control={<Switch size='small' checked={props.checked} onChange={props.onChange} />}
             label={props.title}
             disabled={props.disabled}
             sx={props.sx}
