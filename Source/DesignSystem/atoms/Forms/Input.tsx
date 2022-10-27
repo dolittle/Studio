@@ -1,9 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { FormControl, FormHelperText, InputLabel, OutlinedInput, SxProps } from '@mui/material';
+import { FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput, SxProps, Typography } from '@mui/material';
 
 import { FieldProps, isRequired, useController } from './helpers';
 import type { Form } from './Form';
@@ -13,7 +13,9 @@ import type { Form } from './Form';
  */
 export type InputProps = {
     sx?: SxProps;
-    value?: string;
+    startAdornment?: React.ReactNode;
+    placeholder?: string;
+    onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
 } & FieldProps;
 
 /**
@@ -22,31 +24,35 @@ export type InputProps = {
  * @returns A new {@link Input} component.
  */
 export const Input = (props: InputProps) => {
-    const [fieldValue, setFieldValue] = useState(props.value ?? '');
-
     const { field, hasError, errorMessage } = useController(props);
 
     return (
-        <FormControl sx={{
-            'width': 220,
-            'mb': {
-                sm: 0,
-                xs: 2.5,
-            },
-            'label': {
-                letterSpacing: '0.15px',
-                fontSize: 14,
-                lineHeight: '24px'
-            },
-            '.MuiInputLabel-root[data-shrink="true"]': {
-                top: 0
-            },
-            '.MuiFormHelperText-root.Mui-error': {
-                color: 'error.light',
-                letterSpacing: '0.4px'
-            },
-            ...props.sx
-        }}>
+        <FormControl
+            variant='outlined'
+            sx={{
+                'width': 220,
+                'mb': {
+                    sm: 0,
+                    xs: 2.5
+                },
+                'label': {
+                    letterSpacing: '0.15px',
+                    fontSize: 14,
+                    lineHeight: '24px'
+                },
+                '.MuiInputLabel-root[data-shrink="true"]': {
+                    top: 0
+                },
+                '.MuiFormHelperText-root.Mui-error': {
+                    color: 'error.light',
+                    letterSpacing: '0.4px'
+                },
+                '& ::placeholder': {
+                    color: 'text.secondary',
+                    fontSize: 14
+                },
+                ...props.sx
+            }}>
             <InputLabel
                 htmlFor={props.id}
                 required={isRequired(props.required)}
@@ -63,9 +69,12 @@ export const Input = (props: InputProps) => {
                 id={props.id}
                 error={hasError}
                 disabled={props.disabled}
-                label={props.label}
-                value={fieldValue}
-                onChange={(event) => { setFieldValue(event.target.value); field.onChange(event); }}
+                startAdornment={props.startAdornment ?
+                    <InputAdornment position='start' sx={{ color: 'action.active' }}>
+                        <Typography variant='body2'>{props.startAdornment}</Typography>
+                    </InputAdornment> : null
+                }
+                placeholder={props.placeholder}
                 aria-describedby={`${props.id}-helper-text`}
                 size='small'
             />
