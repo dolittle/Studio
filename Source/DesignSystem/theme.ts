@@ -161,6 +161,9 @@ const palette: PaletteOptions = {
         default: '#0F1014',
         paper: '#191A21',
     },
+    action: {
+        active: '#ffffff61',
+    },
     divider: '#2C2B33E6',
     outlineborder: '#504D4D'
 };
