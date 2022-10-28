@@ -1,31 +1,29 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { MouseEventHandler } from 'react';
-import { Button as MuiButton, SxProps } from '@mui/material';
+import React, { MouseEventHandler, ReactElement } from 'react';
+
+import { Button as MuiButton, SvgIconProps, SxProps } from '@mui/material';
 
 type ButtonProps = {
     variant: 'filled' | 'text' | 'outlined';
     disabled?: boolean;
     label: string;
     color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
-    size?: 'small' | 'medium' | 'large';
-    startWithIcon?: any;
-    endWithIcon?: any;
+    startWithIcon?: ReactElement<SvgIconProps>;
+    endWithIcon?: ReactElement<SvgIconProps>;
     sx?: SxProps;
     onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
-// Somehow button font size is not taking effect from theme!
 export const Button = (props: ButtonProps) =>
     <MuiButton
         variant={props.variant === 'filled' ? 'contained' : props.variant}
         disabled={props.disabled}
         color={props.color}
-        size={props.size ?? 'small'}
         startIcon={props.startWithIcon}
         endIcon={props.endWithIcon}
-        sx={{ fontSize: 12, ...props.sx }}
+        sx={props.sx}
         onClick={props.onClick}
         disableElevation
     >
