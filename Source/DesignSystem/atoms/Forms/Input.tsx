@@ -15,7 +15,6 @@ export type InputProps = {
     sx?: SxProps;
     startAdornment?: React.ReactNode;
     placeholder?: string;
-    //value?: string;
 } & FieldProps;
 
 /**
@@ -75,7 +74,6 @@ export const Input = (props: InputProps) => {
                     </InputAdornment> : null
                 }
                 placeholder={props.placeholder}
-                //value={field.value ?? ''}
                 aria-describedby={`${props.id}-helper-text`}
                 size='small'
             />
