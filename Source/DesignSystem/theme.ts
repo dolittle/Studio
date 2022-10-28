@@ -106,6 +106,9 @@ const typography: TypographyOptions = {
     button: {
         fontSize: '0.75rem', //12px
         fontWeight: 500,
+        small: {
+            fontSize: '0.75rem', //12px
+        }
     },
     monospace: {
         fontSize: '0.8125rem', //13px
