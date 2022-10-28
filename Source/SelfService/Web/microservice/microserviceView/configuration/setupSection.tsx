@@ -15,12 +15,12 @@ import {
     RestartAltRounded
 } from '@mui/icons-material';
 
-import { Button } from '@dolittle/design-system/atoms/Button/Button';
+import { Button } from '@dolittle/design-system/atoms/Button';
 import { Form, Input, Select, SwitchLabels } from '@dolittle/design-system/atoms/Forms';
 
 import { canDeleteMicroservice, deleteMicroservice } from '../../../stores/microservice';
 
-import { MicroserviceSimple } from '../../../api/index';
+import { MicroserviceSimple } from '../../../api';
 
 import { MicroserviceRestart } from '../helpers';
 import { AlertDialog } from './AlertDialog';
@@ -58,9 +58,20 @@ const runtimeVersions = [
     }
 ];
 
+export type SetupSectionParameters = {
+    developmentEnvironment: boolean;
+    runtimeVersion: string;
+    imageName: string;
+    port: number;
+    entrypoint: string;
+    ingressPath: string;
+};
+
 export const SetupSection = ({ application, applicationId, environment, microservice, microserviceId }: any) => {
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
+
+    console.log('microservice', microservice);
 
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
     const [isNotEditable, setIsNotEditable] = useState(false);
@@ -93,11 +104,13 @@ export const SetupSection = ({ application, applicationId, environment, microser
         }
     } as MicroserviceSimple;
 
-    const [args, setArgs] = useState(currentMicroserviceData.extra.headCommand.args);
-    const [exposedToPublic, setExposedToPublic] = useState(false);
-
+    const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
     const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
     const microserviceName = microservice.name;
+
+    const [args, setArgs] = useState(currentMicroserviceData.extra.headCommand.args);
+    const [exposedToPublic, setExposedToPublic] = useState(false);
+    const [showConnectionM3ConnectorOption, setShowConnectionM3ConnectorOption] = useState<boolean>(environmentInfo.connections.m3Connector);
 
     /* if (!microservice) {
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
@@ -166,40 +179,40 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             variant='text'
                             label='edit'
                             disabled={!isNotEditable}
-                            startWithIcon={<EditRounded fontSize='small' />}
+                            startWithIcon={<EditRounded />}
                             onClick={() => setIsNotEditable(false)}
                             sx={{ mr: 2.5 }}
                         />
                         <Button
                             variant='text'
-                            disabled={isNotEditable}
                             label='save'
-                            startWithIcon={<SaveRounded fontSize='small' />}
+                            disabled={isNotEditable}
+                            startWithIcon={<SaveRounded />}
                             onClick={() => setIsNotEditable(true)}
                             sx={{ mr: 2.5 }}
                         />
                         <Button
                             variant='text'
                             label='Restart Microservice'
-                            startWithIcon={<RestartAltRounded fontSize='small' />}
+                            startWithIcon={<RestartAltRounded />}
                             onClick={handleRestart}
                             sx={{ mr: 2.5 }}
                         />
                         <Button
                             variant='text'
                             label='Delete Microservice'
-                            startWithIcon={<DeleteRounded fontSize='small' />}
+                            startWithIcon={<DeleteRounded />}
                             onClick={handleDialogOpen}
                         />
                     </Box>
 
-                    <Form
+                    <Form<SetupSectionParameters>
                         initialValues={{
-                            microserviceName,
+                            //microserviceName,
                             developmentEnvironment: environment,
                             runtimeVersion: microservice.extra?.runtimeImage?.replace(/dolittle\/runtime:/gi, '') || 'None',
                             imageName: microservice?.extra?.headImage || '',
-                            port: '80',
+                            port: 80,
                             entrypoint: '',
                             ingressPath: microservice?.extra?.ingressPath || ''
                         }}
@@ -239,7 +252,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                                 title='Expose to a public URL'
                                 disabled={isNotEditable}
                                 checked={exposedToPublic}
-                                onChange={(event) => setExposedToPublic(event.target.checked)}
+                                onChange={(event) => setExposedToPublic(event.target.checked ?? false)}
                                 sx={{ my: 2.5 }}
                             />
 
@@ -249,24 +262,28 @@ export const SetupSection = ({ application, applicationId, environment, microser
                                     label='Path'
                                     startAdornment='/'
                                     placeholder='leave blank for default path'
+                                    sx={{ width: 226 }}
                                 />
                             }
                         </Box>
 
-                        <Box sx={styles.formSections}>
-                            <Typography variant='subtitle2'>Connect to M3</Typography>
+                        {!showConnectionM3ConnectorOption &&
+                            <Box sx={styles.formSections}>
+                                <Typography variant='subtitle2'>Connect to M3</Typography>
 
-                            <SwitchLabels
-                                title='Make M3 configuration available to microservice'
-                                defaultChecked={microservice?.extra?.connections?.m3Connector}
-                                disabled={isNotEditable}
-                                sx={{ mt: 2.5 }}
-                            />
+                                <SwitchLabels
+                                    title='Make M3 configuration available to microservice'
+                                    disabled={isNotEditable}
+                                    checked={showConnectionM3ConnectorOption}
+                                    onChange={(event) => setShowConnectionM3ConnectorOption(event.target.checked ?? false)}
+                                    sx={{ mt: 2.5 }}
+                                />
 
-                            <Typography variant='body2' sx={{ ml: 6, mt: 1 }}>
-                                Enabling this will mount these files to the deployed microservice:
-                            </Typography>
-                        </Box>
+                                <Typography variant='body2' sx={{ ml: 6, mt: 1 }}>
+                                    Enabling this will mount these files to the deployed microservice:
+                                </Typography>
+                            </Box>
+                        }
                     </Form>
                 </AccordionDetails>
             </Accordion>
