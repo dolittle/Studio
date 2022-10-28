@@ -3,12 +3,10 @@
 
 import React, { ChangeEvent, MouseEvent } from 'react';
 
-import { Box } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import { AddCircleRounded, DeleteRounded } from '@mui/icons-material/';
 
-import { Input } from '@dolittle/design-system/atoms/Forms';
-import { Button } from '@dolittle/design-system/atoms/Button/Button';
-
+import { Button } from '@dolittle/design-system/atoms/Button';
 
 type HeadArgumentsProps = {
     args: string[];
@@ -18,7 +16,7 @@ type HeadArgumentsProps = {
 
 export const HeadArguments = ({ args, setArgs, disabled }: HeadArgumentsProps) => {
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>, argIndex: number) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, argIndex: number) => {
         const newArgs = [...args];
         newArgs[argIndex] = event.target.value;
         setArgs(newArgs);
@@ -30,7 +28,7 @@ export const HeadArguments = ({ args, setArgs, disabled }: HeadArgumentsProps) =
         setArgs(newArgs);
     };
 
-    const handleRemoveArg = (event: React.MouseEvent<HTMLElement>, argIndex: number) => {
+    const handleRemoveArg = (event: MouseEvent<HTMLElement>, argIndex: number) => {
         const newArgs = [...args];
         newArgs.splice(argIndex, 1);
         setArgs(newArgs);
@@ -40,17 +38,17 @@ export const HeadArguments = ({ args, setArgs, disabled }: HeadArgumentsProps) =
         <Box>
             {args.map((arg, argIndex) => (
                 <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: 2 }} key={argIndex}>
-                    <Input
+                    <TextField
                         id={'headArg' + argIndex.toString()}
                         label='CMD Argument'
-                        //value={arg}
+                        value={arg}
                         onChange={(event) => handleChange(event, argIndex)}
+                        size='small'
                     />
                     <Button
                         variant='text'
                         label='Remove'
                         startWithIcon={<DeleteRounded />}
-                        size='small'
                         onClick={(event) => handleRemoveArg(event, argIndex)}
                         sx={{ color: 'text.primary' }}
                     />
@@ -63,7 +61,7 @@ export const HeadArguments = ({ args, setArgs, disabled }: HeadArgumentsProps) =
                 startWithIcon={<AddCircleRounded />}
                 disabled={disabled}
                 onClick={(event) => handleAddArg(event)}
-                sx={{ justifyContent: 'start', mt: 2.5 }}
+                sx={{ justifyContent: 'start', mt: 2.5, color: 'text.primary' }}
             />
         </Box>
     );
