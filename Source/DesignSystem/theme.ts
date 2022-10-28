@@ -172,6 +172,48 @@ const palette: PaletteOptions = {
 };
 
 const components: Components & DataGridProComponents = {
+    MuiFormControl: {
+        styleOverrides: {
+            root: {
+                letterSpacing: '0.15px',
+            },
+        }
+    },
+    MuiFormLabel: {
+        styleOverrides: {
+            root: {
+                fontSize: 14,
+                lineHeight: '24px',
+            },
+        }
+    },
+    MuiOutlinedInput: {
+        styleOverrides: {
+            input: {
+                '::placeholder': {
+                    fontSize: 14,
+                    color: palette?.text?.secondary,
+                },
+            },
+        }
+    },
+    MuiFormHelperText: {
+        styleOverrides: {
+            root: {
+                '&.Mui-error': {
+                    color: '#FBB3B3',
+                    letterSpacing: '0.4px'
+                },
+            },
+        }
+    },
+    MuiInputAdornment: {
+        styleOverrides: {
+            root: {
+                color: palette?.action?.active,
+            }
+        }
+    },
     MuiSwitch: {
         styleOverrides: {
             colorPrimary: {
@@ -183,6 +225,7 @@ const components: Components & DataGridProComponents = {
                 '.Mui-checked.Mui-disabled + &': {
                     backgroundColor: '#FFFFFF'
                 }
+
             }
         },
     },

@@ -27,27 +27,15 @@ export const Input = (props: InputProps) => {
 
     return (
         <FormControl
+            variant='outlined'
             sx={{
                 'width': 220,
-                'letterSpacing': '0.15px',
                 'mb': {
                     sm: 0,
                     xs: 2.5
                 },
-                'label': {
-                    fontSize: 14,
-                    lineHeight: '24px'
-                },
                 '.MuiInputLabel-root[data-shrink="true"]': {
                     top: 0
-                },
-                '.MuiFormHelperText-root.Mui-error': {
-                    color: 'error.light',
-                    letterSpacing: '0.4px'
-                },
-                '& ::placeholder': {
-                    color: 'text.secondary',
-                    fontSize: 14
                 },
                 ...props.sx
             }}>
@@ -69,7 +57,7 @@ export const Input = (props: InputProps) => {
                 disabled={props.disabled}
                 label={props.label}
                 startAdornment={props.startAdornment ?
-                    <InputAdornment position='start' sx={{ color: 'action.active' }}>
+                    <InputAdornment position='start'>
                         <Typography variant='body2'>{props.startAdornment}</Typography>
                     </InputAdornment> : null
                 }
