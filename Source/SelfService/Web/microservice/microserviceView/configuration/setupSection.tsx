@@ -82,11 +82,11 @@ export const SetupSection = ({ application, applicationId, environment, microser
     } = currentMicroservice;
 
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
-    const [isNotEditable, setIsNotEditable] = useState(false);
-    const [exposedToPublic, setExposedToPublic] = useState(false);
-    const [selectedValue, setSelectedValue] = useState('');
-    const [showConnectionM3ConnectorOption, setShowConnectionM3ConnectorOption] = useState(environmentInfo.connections.m3Connector || false);
-    const [args, setArgs] = useState(headCommand?.args || []);
+    const [isFormEditable, setIsFormEditable] = useState(false);
+    const [hasPublicURL, setHasPublicURL] = useState(false);
+    const [selectedRuntimeImage, setSelectedRuntimeImage] = useState('');
+    const [hasM3Connector, setHasM3Connetcor] = useState(environmentInfo.connections.m3Connector || false);
+    const [headCommandArgs, setHeadCommandArgs] = useState<string[]>(headCommand?.args || []);
 
     useEffect(() => {
         getRuntimes().forEach(runtime => {
@@ -94,7 +94,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
         });
         runtimeVersions.push({ value: 'None' });
 
-        setSelectedValue(runtimeImage?.replace(/dolittle\/runtime:/gi, '') || 'None');
+        setSelectedRuntimeImage(runtimeImage?.replace(/dolittle\/runtime:/gi, '') || 'None');
     }, []);
 
     const handleRestart = async () => {
@@ -120,21 +120,13 @@ export const SetupSection = ({ application, applicationId, environment, microser
         history.push(href);
     };
 
-    const handleDialogOpen = () => {
-        setDeleteDialogIsOpen(true);
-    };
-
-    const handleDialogClose = () => {
-        setDeleteDialogIsOpen(false);
-    };
-
-    const handleRuntimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedValue(event.target.value);
-    };
-
     return (
         <Box>
-            <AlertDialog open={deleteDialogIsOpen} onClose={handleDialogClose} handleDeletionConfirm={handleDelete} />
+            <AlertDialog
+                open={deleteDialogIsOpen}
+                onClose={() => setDeleteDialogIsOpen(false)}
+                handleDeletionConfirm={handleDelete}
+            />
 
             <Accordion expanded sx={{
                 backgroundColor: 'transparent',
@@ -161,17 +153,17 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         <Button
                             variant='text'
                             label='edit'
-                            disabled={!isNotEditable}
+                            disabled={!isFormEditable}
                             startWithIcon={<EditRounded fontSize='small' />}
-                            onClick={() => setIsNotEditable(false)}
+                            onClick={() => setIsFormEditable(false)}
                             sx={{ mr: 2.5 }}
                         />
                         <Button
                             variant='text'
                             label='save'
-                            disabled={isNotEditable}
+                            disabled={isFormEditable}
                             startWithIcon={<SaveRounded fontSize='small' />}
-                            onClick={() => setIsNotEditable(true)}
+                            onClick={() => setIsFormEditable(true)}
                             sx={{ mr: 2.5 }}
                         />
                         <Button
@@ -185,7 +177,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             variant='text'
                             label='Delete Microservice'
                             startWithIcon={<DeleteRounded fontSize='small' />}
-                            onClick={handleDialogOpen}
+                            onClick={() => setDeleteDialogIsOpen(true)}
                         />
                     </Box>
 
@@ -209,10 +201,10 @@ export const SetupSection = ({ application, applicationId, environment, microser
                                 id='runtimeVersion'
                                 label='Runtime Version*'
                                 options={runtimeVersions}
-                                value={selectedValue}
+                                value={selectedRuntimeImage}
                                 required
-                                disabled={isNotEditable}
-                                onChange={handleRuntimeChange}
+                                disabled={isFormEditable}
+                                onChange={(event) => setSelectedRuntimeImage(event.target.value)}
                                 sx={{ width: 220 }}
                             />
                         </Box>
@@ -221,10 +213,10 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
 
                             <Input id='imageName' label='Image Name' sx={{ width: 500 }} />
-                            <Input id='port' label='Port' required disabled={isNotEditable} />
-                            <Input id='entrypoint' label='Entrypoint' disabled={isNotEditable} />
+                            <Input id='port' label='Port' required disabled={isFormEditable} />
+                            <Input id='entrypoint' label='Entrypoint' disabled={isFormEditable} />
 
-                            <HeadArguments args={args} setArgs={setArgs} />
+                            <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} disabled={isFormEditable} />
                         </Box>
 
                         <Box sx={styles.formSections}>
@@ -232,13 +224,13 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
                             <SwitchLabels
                                 title='Expose to a public URL'
-                                disabled={isNotEditable}
-                                checked={exposedToPublic}
-                                onChange={(event) => setExposedToPublic(event.target.checked)}
+                                disabled={isFormEditable}
+                                checked={hasPublicURL}
+                                onChange={(event) => setHasPublicURL(event.target.checked)}
                                 sx={{ my: 2.5 }}
                             />
 
-                            {exposedToPublic &&
+                            {hasPublicURL &&
                                 <Input
                                     id="ingressPath"
                                     label='Path'
@@ -249,15 +241,15 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             }
                         </Box>
 
-                        {showConnectionM3ConnectorOption &&
+                        {hasM3Connector &&
                             <Box sx={styles.formSections}>
                                 <Typography variant='subtitle2'>Connect to M3</Typography>
 
                                 <SwitchLabels
                                     title='Make M3 configuration available to microservice'
-                                    disabled={isNotEditable}
-                                    checked={showConnectionM3ConnectorOption}
-                                    onChange={(event) => setShowConnectionM3ConnectorOption(event.target.checked)}
+                                    disabled={isFormEditable}
+                                    checked={hasM3Connector}
+                                    onChange={(event) => setHasM3Connetcor(event.target.checked)}
                                     sx={{ mt: 2.5 }}
                                 />
 

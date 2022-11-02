@@ -9,34 +9,34 @@ import { AddCircleRounded, DeleteRounded } from '@mui/icons-material/';
 import { Button } from '@dolittle/design-system/atoms/Button';
 
 type HeadArgumentsProps = {
-    args: string[];
-    setArgs: (args: string[]) => void;
+    cmdArgs: string[];
+    setCmdArgs: (args: string[]) => void;
     disabled?: boolean;
 };
 
-export const HeadArguments = ({ args, setArgs, disabled }: HeadArgumentsProps) => {
+export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsProps) => {
 
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, argIndex: number) => {
-        const newArgs = [...args];
+        const newArgs = [...cmdArgs];
         newArgs[argIndex] = event.target.value;
-        setArgs(newArgs);
+        setCmdArgs(newArgs);
     };
 
     const handleAddArg = (event: MouseEvent<HTMLElement>) => {
-        const newArgs = [...args];
+        const newArgs = [...cmdArgs];
         newArgs.push('');
-        setArgs(newArgs);
+        setCmdArgs(newArgs);
     };
 
     const handleRemoveArg = (event: MouseEvent<HTMLElement>, argIndex: number) => {
-        const newArgs = [...args];
+        const newArgs = [...cmdArgs];
         newArgs.splice(argIndex, 1);
-        setArgs(newArgs);
+        setCmdArgs(newArgs);
     };
 
     return (
         <Box>
-            {args.map((arg, argIndex) => (
+            {cmdArgs.map((arg, argIndex) => (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }} key={argIndex}>
                     <TextField
                         id={'headArg' + argIndex.toString()}
