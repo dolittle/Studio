@@ -165,7 +165,7 @@ const palette: PaletteOptions = {
         active: '#ffffff61',
     },
     divider: '#2C2B33E6',
-    outlineborder: '#504D4D'
+    outlineborder: '#504D4D',
 };
 
 const components: Components & DataGridProComponents = {
@@ -180,7 +180,6 @@ const components: Components & DataGridProComponents = {
         styleOverrides: {
             root: {
                 fontSize: 14,
-                lineHeight: '24px',
             },
         }
     },
@@ -201,7 +200,7 @@ const components: Components & DataGridProComponents = {
             root: {
                 '&.Mui-error': {
                     color: '#FBB3B3',
-                    letterSpacing: '0.4px'
+                    letterSpacing: '0.4px',
                 },
             },
         }
@@ -210,7 +209,7 @@ const components: Components & DataGridProComponents = {
         styleOverrides: {
             root: {
                 color: palette?.action?.active,
-            }
+            },
         }
     },
     MuiSwitch: {
@@ -223,16 +222,15 @@ const components: Components & DataGridProComponents = {
             track: {
                 '.Mui-checked.Mui-disabled + &': {
                     backgroundColor: '#FFFFFF'
-                }
-
-            }
-        },
+                },
+            },
+        }
     },
     MuiButton: {
         styleOverrides: {
             sizeSmall: {
                 fontSize: '0.75rem',
-            }
+            },
         }
     },
     MuiDataGrid: {
