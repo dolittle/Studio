@@ -28,14 +28,12 @@ export const Input = (props: InputProps) => {
     return (
         <FormControl
             variant='outlined'
+            size='small'
             sx={{
-                'width': 220,
-                'mb': {
+                width: 220,
+                mb: {
                     sm: 0,
                     xs: 2.5
-                },
-                '.MuiInputLabel-root[data-shrink="true"]': {
-                    top: 0
                 },
                 ...props.sx
             }}>
@@ -44,7 +42,6 @@ export const Input = (props: InputProps) => {
                 required={isRequired(props.required)}
                 disabled={props.disabled}
                 error={hasError}
-                sx={{ top: -8 }}
             >
                 {props.label}
             </InputLabel>
@@ -63,7 +60,6 @@ export const Input = (props: InputProps) => {
                 }
                 placeholder={props.placeholder}
                 aria-describedby={`${props.id}-helper-text`}
-                size='small'
             />
 
             <FormHelperText error={hasError} id={`${props.id}-helper-text`}>
