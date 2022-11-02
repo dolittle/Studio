@@ -14,13 +14,13 @@ export type SelectProps = {
 
 export const Select = (props: SelectProps) =>
     <TextField
-        id={props.id}
         select
+        id={props.id}
         value={props.value}
         label={props.label}
         disabled={props.disabled}
         onChange={props.onChange}
-        variant="outlined"
+        variant='outlined'
         size='small'
         sx={props.sx}
     >
