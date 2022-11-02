@@ -7,18 +7,12 @@ import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
-import {
-    DeleteRounded,
-    EditRounded,
-    ExpandCircleDownRounded,
-    SaveRounded,
-    RestartAltRounded
-} from '@mui/icons-material';
+import { DeleteRounded, EditRounded, ExpandCircleDownRounded, SaveRounded, RestartAltRounded } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system/atoms/Button';
 import { Form, Input, Select, SwitchLabels } from '@dolittle/design-system/atoms/Forms';
 
-import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore, microservices } from '../../../stores/microservice';
+import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../api/application';
 import { getRuntimes } from '../../../api/api';
@@ -72,14 +66,14 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
     const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
 
-    const { edit: {
-        extra: {
-            headCommand,
-            runtimeImage,
-            headImage,
-            ingress
-        } }
-    } = currentMicroservice;
+    console.log('currentMicroservice', currentMicroservice);
+
+    const { edit: { extra: {
+        headCommand,
+        runtimeImage,
+        headImage,
+        ingress
+    } } } = currentMicroservice;
 
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
     const [isFormEditable, setIsFormEditable] = useState(false);
@@ -253,7 +247,8 @@ export const SetupSection = ({ application, applicationId, environment, microser
                                     sx={{ mt: 2.5 }}
                                 />
 
-                                {/* <Typography variant='body2' sx={{ ml: 6, mt: 1 }}>
+                                {/* TODO: Needs some list?
+                                <Typography variant='body2' sx={{ ml: 6, mt: 1 }}>
                                     Enabling this will mount these files to the deployed microservice:
                                 </Typography> */}
                             </Box>

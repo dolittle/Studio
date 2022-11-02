@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { ChangeEvent, MouseEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 
 import { Box, TextField } from '@mui/material';
 import { AddCircleRounded, DeleteRounded } from '@mui/icons-material/';
@@ -22,13 +22,13 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
         setCmdArgs(newArgs);
     };
 
-    const handleAddArg = (event: MouseEvent<HTMLElement>) => {
+    const handleAddArg = () => {
         const newArgs = [...cmdArgs];
         newArgs.push('');
         setCmdArgs(newArgs);
     };
 
-    const handleRemoveArg = (event: MouseEvent<HTMLElement>, argIndex: number) => {
+    const handleRemoveArg = (argIndex: number) => {
         const newArgs = [...cmdArgs];
         newArgs.splice(argIndex, 1);
         setCmdArgs(newArgs);
@@ -37,7 +37,7 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
     return (
         <Box>
             {cmdArgs.map((arg, argIndex) => (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }} key={argIndex}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }} key={argIndex}>
                     <TextField
                         id={'headArg' + argIndex.toString()}
                         label='CMD Argument'
@@ -53,8 +53,8 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
                         label='Remove'
                         disabled={disabled}
                         startWithIcon={<DeleteRounded />}
-                        onClick={(event) => handleRemoveArg(event, argIndex)}
-                        sx={{ color: 'text.primary', height: 29 }}
+                        onClick={() => handleRemoveArg(argIndex)}
+                        sx={{ color: 'text.primary', height: 29, ml: 2 }}
                     />
                 </Box>
             ))}
@@ -64,7 +64,7 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
                 label='Add CMD argument'
                 startWithIcon={<AddCircleRounded />}
                 disabled={disabled}
-                onClick={(event) => handleAddArg(event)}
+                onClick={handleAddArg}
                 sx={{ justifyContent: 'start', mt: 2.5, color: 'text.primary' }}
             />
         </Box>
