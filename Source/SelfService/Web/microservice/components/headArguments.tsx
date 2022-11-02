@@ -37,20 +37,24 @@ export const HeadArguments = ({ args, setArgs, disabled }: HeadArgumentsProps) =
     return (
         <Box>
             {args.map((arg, argIndex) => (
-                <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: 2 }} key={argIndex}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }} key={argIndex}>
                     <TextField
                         id={'headArg' + argIndex.toString()}
                         label='CMD Argument'
                         value={arg}
+                        disabled={disabled}
                         onChange={(event) => handleChange(event, argIndex)}
                         size='small'
+                        variant='outlined'
+                        sx={{ width: 220 }}
                     />
                     <Button
                         variant='text'
                         label='Remove'
+                        disabled={disabled}
                         startWithIcon={<DeleteRounded />}
                         onClick={(event) => handleRemoveArg(event, argIndex)}
-                        sx={{ color: 'text.primary' }}
+                        sx={{ color: 'text.primary', height: 29 }}
                     />
                 </Box>
             ))}
