@@ -12,7 +12,7 @@ import { DeleteRounded, EditRounded, ExpandCircleDownRounded, SaveRounded, Resta
 import { Button } from '@dolittle/design-system/atoms/Button';
 import { Form, Input, Select, SwitchLabels } from '@dolittle/design-system/atoms/Forms';
 
-import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../stores/microservice';
+import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore, microservices } from '../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../api/application';
 import { getRuntimes } from '../../../api/api';
@@ -52,6 +52,7 @@ type SetupSectionProps = {
 };
 
 export type SetupSectionParameters = {
+    microserviceName: string;
     developmentEnvironment: string;
     imageName: string;
     port: number;
@@ -65,8 +66,6 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
     const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
     const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
-
-    console.log('currentMicroservice', currentMicroservice);
 
     const { edit: { extra: {
         headCommand,
@@ -122,11 +121,13 @@ export const SetupSection = ({ application, applicationId, environment, microser
                 handleDeletionConfirm={handleDelete}
             />
 
-            <Accordion expanded sx={{
-                backgroundColor: 'transparent',
-                backgroundImage: 'none',
-                pt: 1.875
-            }}>
+            <Accordion
+                expanded
+                sx={{
+                    backgroundColor: 'transparent',
+                    backgroundImage: 'none',
+                    pt: 1.875
+                }}>
                 <AccordionSummary
                     expandIcon={<ExpandCircleDownRounded />}
                     aria-controls='setup-content'
@@ -177,6 +178,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
                     <Form<SetupSectionParameters>
                         initialValues={{
+                            microserviceName: currentMicroservice.name,
                             developmentEnvironment: environment,
                             imageName: headImage || '',
                             port: 80,
@@ -188,7 +190,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         <Box sx={styles.formSections}>
                             <Typography variant='subtitle1' sx={{ mb: 2 }}>Configuration Setup</Typography>
 
-                            <Input id='microserviceName' label='Microservice Name' value={currentMicroservice.name} required disabled />
+                            <Input id='microserviceName' label='Microservice Name' required disabled />
                             <Input id='developmentEnvironment' label='Development Environment' disabled />
 
                             <Select
