@@ -10,6 +10,7 @@ type ButtonProps = {
     disabled?: boolean;
     label: string;
     color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
+    size?: 'small' | 'medium' | 'large';
     startWithIcon?: ReactElement<SvgIconProps>;
     endWithIcon?: ReactElement<SvgIconProps>;
     sx?: SxProps;
@@ -21,6 +22,7 @@ export const Button = (props: ButtonProps) =>
         variant={props.variant === 'filled' ? 'contained' : props.variant}
         disabled={props.disabled}
         color={props.color}
+        size={props.size ?? 'small'}
         startIcon={props.startWithIcon}
         endIcon={props.endWithIcon}
         sx={props.sx}
@@ -28,4 +30,4 @@ export const Button = (props: ButtonProps) =>
         disableElevation
     >
         {props.label}
-    </MuiButton>;
+    </MuiButton >;
