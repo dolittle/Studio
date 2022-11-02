@@ -106,15 +106,12 @@ const typography: TypographyOptions = {
     button: {
         fontSize: '0.75rem', //12px
         fontWeight: 500,
-        small: {
-            fontSize: '0.75rem', //12px
-        }
     },
     monospace: {
         fontSize: '0.8125rem', //13px
         fontWeight: 400,
         fontFamily: 'Roboto Mono',
-    }
+    },
 };
 
 const palette: PaletteOptions = {
@@ -189,9 +186,11 @@ const components: Components & DataGridProComponents = {
     },
     MuiOutlinedInput: {
         styleOverrides: {
+            root: {
+                fontSize: 14,
+            },
             input: {
                 '::placeholder': {
-                    fontSize: 14,
                     color: palette?.text?.secondary,
                 },
             },
@@ -228,6 +227,13 @@ const components: Components & DataGridProComponents = {
 
             }
         },
+    },
+    MuiButton: {
+        styleOverrides: {
+            sizeSmall: {
+                fontSize: '0.75rem',
+            }
+        }
     },
     MuiDataGrid: {
         styleOverrides: {
