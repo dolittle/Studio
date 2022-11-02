@@ -74,6 +74,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
         ingress
     } } } = currentMicroservice;
 
+    const [setupPanelExpanded, setSetupPanelExpanded] = useState(true);
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
     const [hasPublicURL, setHasPublicURL] = useState(false);
@@ -113,6 +114,8 @@ export const SetupSection = ({ application, applicationId, environment, microser
         history.push(href);
     };
 
+    //const handleClose
+
     return (
         <Box>
             <AlertDialog
@@ -122,19 +125,23 @@ export const SetupSection = ({ application, applicationId, environment, microser
             />
 
             <Accordion
-                expanded
+                expanded={setupPanelExpanded}
+                onChange={() => setSetupPanelExpanded(!setupPanelExpanded)}
                 sx={{
                     backgroundColor: 'transparent',
                     backgroundImage: 'none',
                     pt: 1.875
                 }}>
                 <AccordionSummary
-                    expandIcon={<ExpandCircleDownRounded />}
+                    expandIcon={<ExpandCircleDownRounded sx={{ color: 'text.secondary' }} />}
                     aria-controls='setup-content'
                     id='setup-content'
                     sx={{
                         'flexDirection': 'row-reverse',
                         'p': 0,
+                        '& .MuiAccordionSummary-expandIconWrapper': {
+                            transform: 'rotate(180deg)',
+                        },
                         '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
                             transform: 'rotate(0deg)',
                         },
