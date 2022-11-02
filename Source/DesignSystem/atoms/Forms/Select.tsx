@@ -9,10 +9,10 @@ import { MenuItem, TextField, TextFieldProps } from '@mui/material';
  * The props for a {@link Select} component.
  */
 export type SelectProps = {
-    options: any;
+    options: { value: string }[];
 } & TextFieldProps;
 
-export const Select = (props: SelectProps) => (
+export const Select = (props: SelectProps) =>
     <TextField
         id={props.id}
         select
@@ -29,5 +29,4 @@ export const Select = (props: SelectProps) => (
                 {option.value}
             </MenuItem>
         ))}
-    </TextField>
-);
+    </TextField>;
