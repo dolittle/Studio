@@ -13,7 +13,9 @@ import {
     SimpleIngressPath,
     updateConfigFiles
 } from '../../../api/api';
-import { MicroserviceSimple } from '../../../api/index';
+import { HttpResponseApplication } from '../../../api/application';
+
+import { MicroserviceStore } from '../../../stores/microservice';
 
 import { Box, Divider, Grid, Typography } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -31,15 +33,11 @@ import { FileUploadForm, FileUploadFormRef } from '../../base/components/fileUpl
 import { SetupSection } from './setupSection';
 
 export type ConfigurationProps = {
-    application: any;
+    application: HttpResponseApplication;
     applicationId: string;
     environment: string;
     microserviceId: string;
-    msName: string;
-    ingressUrls: IngressURLWithCustomerTenantID[];
-    ingressPaths: SimpleIngressPath[];
-    currentMicroservice: any;
-    microservice: MicroserviceSimple;
+    currentMicroservice: MicroserviceStore;
     onClick: () => void;
 };
 
@@ -52,7 +50,7 @@ const styles = {
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 export const Configuration = ({
-    application, applicationId, environment, microservice, microserviceId, msName, ingressUrls, ingressPaths, currentMicroservice, onClick }: ConfigurationProps) => {
+    application, applicationId, environment, microserviceId, currentMicroservice, onClick }: ConfigurationProps) => {
 
     const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
     const [configFileModalVisibility, setConfigFileModalVisibility] = useState<boolean>(false);
@@ -62,7 +60,7 @@ export const Configuration = ({
     const { enqueueSnackbar } = useSnackbar();
 
     // This is reused. consider moving
-    const configMapPrefix = `${environment.toLowerCase()}-${msName.toLowerCase()}`;
+    const configMapPrefix = `${environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
 
     const fileUploadRef = useRef<FileUploadFormRef>(null);
 
@@ -135,21 +133,18 @@ export const Configuration = ({
                 onAdd={() => fileUploadRef.current?.confirmSelectedFile()}
             />
 
-            <Box>
-                <SetupSection
-                    application={application}
-                    applicationId={applicationId}
-                    environment={environment}
-                    microservice={microservice}
-                    currentMicroservice={currentMicroservice}
-                    microserviceId={microserviceId}
-                />
-            </Box>
+            <SetupSection
+                application={application}
+                applicationId={applicationId}
+                environment={environment}
+                currentMicroservice={currentMicroservice}
+                microserviceId={microserviceId}
+            />
 
             <Divider sx={styles.divider} />
 
             <Box ml={2}>
-                <LiveIngressView urls={ingressUrls} paths={ingressPaths} />
+                <LiveIngressView urls={currentMicroservice.live.ingressUrls} paths={currentMicroservice.live.ingressPaths} />
             </Box>
 
             <Box ml={2}>
@@ -159,7 +154,7 @@ export const Configuration = ({
 
                 <DownloadButtons
                     environment={environment}
-                    microserviceName={msName}
+                    microserviceName={currentMicroservice.name}
                     applicationId={applicationId}
                 />
             </Box>

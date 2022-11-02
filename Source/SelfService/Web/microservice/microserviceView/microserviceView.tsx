@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom';
 import { useReadable } from 'use-svelte-store';
 
 import { microservices, MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
-import { Configuration } from './configuration/configuration';
 import { HttpResponsePodStatus } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import { HttpResponseApplication } from '../../api/application';
@@ -16,6 +15,7 @@ import { Box, Typography } from '@mui/material';
 
 import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
 
+import { Configuration } from './configuration/configuration';
 import { HealthStatus } from './healthStatus/healthStatus';
 import { ContainerHealthStatus } from '../microserviceStatus';
 
@@ -34,8 +34,8 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         pod.containers.map(container => container.state));
 
     const applicationId = application.id;
-
     const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId && ms.environment === environment);
+
     if (!currentMicroservice) {
         const href = `/microservices/application/${application.id}/${environment}/overview`;
         history.push(href);
@@ -44,6 +44,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
 
     const canEdit = canEditMicroservice(application.environments, environment, currentMicroservice.id);
 
+    // What is the purpose of this??
     let ms = {} as MicroserviceSimple;
     let hasEditData = false;
     if (canEdit) {
@@ -51,6 +52,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         ms = currentMicroservice.edit;
     }
 
+    // Does this ever run??
     if (!hasEditData) {
         // Can I not move this to the store?
         const headImage = currentMicroservice.live.images.find(img => img.name === 'head')?.image
@@ -64,6 +66,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         };
 
         const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
+
         // TODO currently we don't use the ms.extra.ingress in the view
         // Look to "liveIngressView" for how we "set" the data to uniq paths
         ms = {
@@ -90,12 +93,15 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         };
     }
 
-    const msName = currentMicroservice.name;
+    const handleEnvironmentClick = async () => {
+        const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
+        history.push(href);
+    };
 
     return (
         <>
             <Box sx={{ display: 'flex', mb: 3.25 }}>
-                <Typography variant="h1">{msName}</Typography>
+                <Typography variant="h1">{currentMicroservice.name}</Typography>
                 <ContainerHealthStatus status={getContainerStatuses()} />
             </Box>
 
@@ -107,16 +113,9 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                             application={application}
                             applicationId={applicationId}
                             environment={environment}
-                            microservice={ms}
                             microserviceId={microserviceId}
-                            msName={msName}
-                            ingressUrls={currentMicroservice.live.ingressUrls}
-                            ingressPaths={currentMicroservice.live.ingressPaths}
                             currentMicroservice={currentMicroservice}
-                            onClick={async () => {
-                                const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
-                                history.push(href);
-                            }}
+                            onClick={handleEnvironmentClick}
                         />
                     },
                     {
