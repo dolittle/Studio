@@ -75,7 +75,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
     } } } = currentMicroservice;
 
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
-    const [isFormEditable, setIsFormEditable] = useState(false);
+    const [formIsNotEditable, setFormIsNotEditable] = useState(true);
     const [hasPublicURL, setHasPublicURL] = useState(false);
     const [selectedRuntimeImage, setSelectedRuntimeImage] = useState('');
     const [hasM3Connector, setHasM3Connetcor] = useState(environmentInfo.connections.m3Connector || false);
@@ -148,17 +148,17 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         <Button
                             variant='text'
                             label='edit'
-                            disabled={!isFormEditable}
+                            disabled={formIsNotEditable}
                             startWithIcon={<EditRounded fontSize='small' />}
-                            onClick={() => setIsFormEditable(false)}
+                            //onClick={() => setFormIsNotEditable(false)}
                             sx={{ mr: 2.5 }}
                         />
                         <Button
                             variant='text'
                             label='save'
-                            disabled={isFormEditable}
+                            disabled={formIsNotEditable}
                             startWithIcon={<SaveRounded fontSize='small' />}
-                            onClick={() => setIsFormEditable(true)}
+                            //onClick={() => setFormIsNotEditable(true)}
                             sx={{ mr: 2.5 }}
                         />
                         <Button
@@ -199,7 +199,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                                 options={runtimeVersions}
                                 value={selectedRuntimeImage}
                                 required
-                                disabled={isFormEditable}
+                                disabled={formIsNotEditable}
                                 onChange={(event) => setSelectedRuntimeImage(event.target.value)}
                                 sx={{ width: 220 }}
                             />
@@ -208,11 +208,11 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         <Box sx={styles.formSections}>
                             <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
 
-                            <Input id='imageName' label='Image Name' sx={{ width: 500 }} />
-                            <Input id='port' label='Port' required disabled={isFormEditable} />
-                            <Input id='entrypoint' label='Entrypoint' disabled={isFormEditable} />
+                            <Input id='imageName' label='Image Name' required disabled={formIsNotEditable} sx={{ width: 500 }} />
+                            <Input id='port' label='Port' required disabled={formIsNotEditable} />
+                            <Input id='entrypoint' label='Entrypoint' disabled={formIsNotEditable} />
 
-                            <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} disabled={isFormEditable} />
+                            <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} disabled={formIsNotEditable} />
                         </Box>
 
                         <Box sx={styles.formSections}>
@@ -220,7 +220,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
                             <SwitchLabels
                                 title='Expose to a public URL'
-                                disabled={isFormEditable}
+                                disabled={formIsNotEditable}
                                 checked={hasPublicURL}
                                 onChange={(event) => setHasPublicURL(event.target.checked)}
                                 sx={{ my: 2.5 }}
@@ -243,7 +243,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
                                 <SwitchLabels
                                     title='Make M3 configuration available to microservice'
-                                    disabled={isFormEditable}
+                                    disabled={formIsNotEditable}
                                     checked={hasM3Connector}
                                     onChange={(event) => setHasM3Connetcor(event.target.checked)}
                                     sx={{ mt: 2.5 }}
