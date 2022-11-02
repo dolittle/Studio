@@ -15,6 +15,7 @@ export type InputProps = {
     sx?: SxProps;
     startAdornment?: React.ReactNode;
     placeholder?: string;
+    value?: string;
 } & FieldProps;
 
 /**
@@ -56,6 +57,7 @@ export const Input = (props: InputProps) => {
                 error={hasError}
                 disabled={props.disabled}
                 label={props.label}
+                value={field.value || props.value}
                 startAdornment={props.startAdornment ?
                     <InputAdornment position='start'>
                         <Typography variant='body2'>{props.startAdornment}</Typography>
