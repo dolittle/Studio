@@ -10,9 +10,9 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '
 import { DeleteRounded, EditRounded, ExpandCircleDownRounded, SaveRounded, RestartAltRounded } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system/atoms/Button';
-import { Form, Input, Select, SwitchLabels } from '@dolittle/design-system/atoms/Forms';
+import { Form, Input, Select, SwitchToggle } from '@dolittle/design-system/atoms/Forms';
 
-import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore, microservices } from '../../../stores/microservice';
+import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../api/application';
 import { getRuntimes } from '../../../api/api';
@@ -223,7 +223,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         <Box sx={styles.formSections}>
                             <Typography variant='subtitle2'>Public Microservice</Typography>
 
-                            <SwitchLabels
+                            <SwitchToggle
                                 title='Expose to a public URL'
                                 disabled={formIsNotEditable}
                                 checked={hasPublicURL}
@@ -246,7 +246,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             <Box sx={styles.formSections}>
                                 <Typography variant='subtitle2'>Connect to M3</Typography>
 
-                                <SwitchLabels
+                                <SwitchToggle
                                     title='Make M3 configuration available to microservice'
                                     disabled={formIsNotEditable}
                                     checked={hasM3Connector}
