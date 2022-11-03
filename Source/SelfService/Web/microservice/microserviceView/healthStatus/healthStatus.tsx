@@ -2,19 +2,17 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useMemo } from 'react';
-import { useSnackbar } from 'notistack';
 
 import { RestartAlt } from '@mui/icons-material';
 
 import { Graph } from '@dolittle/design-system/molecules/Metrics/Graph';
 import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
 
-import { ContainerStatusInfo, HttpResponsePodStatus, restartMicroservice } from '../../../api/api';
+import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../api/api';
 
 import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 
 import { ButtonText } from '../../../theme/buttonText';
-import { microserviceRestart } from '../helpers';
 import { DataTable, DataTableStats } from './dataTable';
 
 const styles = {
@@ -40,19 +38,15 @@ const computeStats = (metric: Metric | undefined, scale: number): DataTableStats
 };
 
 type HealthStatusProps = {
-    status: string
-    data: HttpResponsePodStatus
-    environment: string
-    applicationId: string
-    microserviceId: string
+    status: string;
+    data: HttpResponsePodStatus;
+    environment: string;
+    applicationId: string;
+    microserviceId: string;
+    resetDialogOpen?: (open: boolean) => void;
 };
 
-export const HealthStatus = ({ applicationId, microserviceId, data, environment }: HealthStatusProps) => {
-    const { enqueueSnackbar } = useSnackbar();
-
-    const handleRestart = async () => {
-        await microserviceRestart({ applicationId, environment, microserviceId, enqueueSnackbar });
-    };
+export const HealthStatus = ({ applicationId, microserviceId, data, environment, resetDialogOpen }: HealthStatusProps) => {
 
     const timeRange = useMemo<[number, number]>(() => [Date.now() - 86_400_000, Date.now()], [Date.now() / 60_000]);
     const cpu = useMetricsFromLast(`microservice:container_cpu_usage_seconds:rate_max{application_id="${applicationId}", environment="${environment}", microservice_id="${microserviceId}"}`, 86_400, 60);
@@ -104,7 +98,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
             <ButtonText
                 sx={styles.restartBtn}
                 startIcon={<RestartAlt />}
-                onClick={handleRestart}>
+                onClick={() => resetDialogOpen!(true)}>
                 Restart microservice
             </ButtonText>
 

@@ -39,6 +39,7 @@ export type ConfigurationProps = {
     microserviceId: string;
     currentMicroservice: MicroserviceStore;
     onClick: () => void;
+    resetDialogOpen?: (open: boolean) => void;
 };
 
 const styles = {
@@ -50,7 +51,7 @@ const styles = {
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 export const Configuration = ({
-    application, applicationId, environment, microserviceId, currentMicroservice, onClick }: ConfigurationProps) => {
+    application, applicationId, environment, microserviceId, currentMicroservice, onClick, resetDialogOpen }: ConfigurationProps) => {
 
     const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
     const [configFileModalVisibility, setConfigFileModalVisibility] = useState<boolean>(false);
@@ -139,6 +140,7 @@ export const Configuration = ({
                 environment={environment}
                 currentMicroservice={currentMicroservice}
                 microserviceId={microserviceId}
+                setOpenResetDialog={resetDialogOpen}
             />
 
             <Divider sx={styles.divider} />
