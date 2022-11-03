@@ -3,7 +3,14 @@
 
 import { restartMicroservice } from '../../api/api';
 
-export const MicroserviceRestart = async ({ applicationId, environment, microserviceId, enqueueSnackbar }: any) => {
+type MicroserviceRestartProps = {
+    applicationId: string;
+    environment: string;
+    microserviceId: string;
+    enqueueSnackbar: (message: string, options: any) => void;
+};
+
+export const microserviceRestart = async ({ applicationId, environment, microserviceId, enqueueSnackbar }: MicroserviceRestartProps) => {
     const success = await restartMicroservice(applicationId, environment, microserviceId);
 
     if (!success) {

@@ -17,7 +17,7 @@ import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore, microserv
 import { HttpResponseApplication } from '../../../api/application';
 import { getRuntimes } from '../../../api/api';
 
-import { MicroserviceRestart } from '../helpers';
+import { microserviceRestart } from '../helpers';
 import { AlertDialog } from './AlertDialog';
 import { HeadArguments } from '../../components/headArguments';
 
@@ -92,7 +92,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
     }, []);
 
     const handleRestart = async () => {
-        await MicroserviceRestart({ applicationId, environment, microserviceId, enqueueSnackbar });
+        await microserviceRestart({ applicationId, environment, microserviceId, enqueueSnackbar });
     };
 
     const handleDelete = async () => {
