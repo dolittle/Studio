@@ -13,6 +13,7 @@ const { metadata, createStory } = componentStories(Select, {
 
 export default metadata;
 
+// Needs useState for input value changes.
 const selectOptions = [
     { value: 'Value 1' },
     { value: 'Value 2' },
