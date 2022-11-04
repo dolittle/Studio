@@ -120,7 +120,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                 id='restart-microservice-dialog'
                 open={restartDialogIsOpen}
                 title='Restart microservice?'
-                description='This action cannot be undone. Click "Restart" if you would like to restart the mircroservice.'
+                description='This action cannot be undone. Click restart if you would like to restart the mircroservice.'
                 cancelText='Cancel'
                 confirmText='Restart'
                 onClose={() => setRestartDialogIsOpen(false)}
