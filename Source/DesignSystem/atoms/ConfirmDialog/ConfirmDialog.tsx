@@ -10,7 +10,7 @@ import { CloseRounded } from '@mui/icons-material';
 
 type ConfirmDialogProps = {
     id: string;
-    open?: boolean | false;
+    open?: boolean;
     title: string;
     description: React.ReactNode;
     cancelText: string;
