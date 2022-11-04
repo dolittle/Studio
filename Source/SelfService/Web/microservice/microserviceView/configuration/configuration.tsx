@@ -31,6 +31,7 @@ import { LiveIngressView } from '../../base/liveIngressView';
 import { FileUploadForm, FileUploadFormRef } from '../../base/components/fileUploadForm';
 
 import { SetupSection } from './setupSection';
+import { FilesSection } from './filesSection';
 
 export type ConfigurationProps = {
     application: HttpResponseApplication;
@@ -138,6 +139,12 @@ export const Configuration = ({
                 applicationId={applicationId}
                 environment={environment}
                 currentMicroservice={currentMicroservice}
+                microserviceId={microserviceId}
+            />
+
+            <FilesSection
+                applicationId={applicationId}
+                environment={environment}
                 microserviceId={microserviceId}
             />
 
