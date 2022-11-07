@@ -38,7 +38,6 @@ export type ConfigurationProps = {
     environment: string;
     microserviceId: string;
     currentMicroservice: MicroserviceStore;
-    onClick: () => void;
 };
 
 const styles = {
@@ -50,7 +49,7 @@ const styles = {
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 export const Configuration = ({
-    application, applicationId, environment, microserviceId, currentMicroservice, onClick }: ConfigurationProps) => {
+    application, applicationId, environment, microserviceId, currentMicroservice }: ConfigurationProps) => {
 
     const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
     const [configFileModalVisibility, setConfigFileModalVisibility] = useState<boolean>(false);
@@ -148,9 +147,11 @@ export const Configuration = ({
             </Box>
 
             <Box ml={2}>
-                <ButtonText
+                {/* <ButtonText
                     onClick={onClick}
-                >Manage environment variables</ButtonText>
+                >
+                    Manage environment variables
+                </ButtonText> */}
 
                 <DownloadButtons
                     environment={environment}

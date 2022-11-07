@@ -93,10 +93,10 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         };
     }
 
-    const handleEnvironmentClick = async () => {
-        const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
-        history.push(href);
-    };
+    // const handleEnvironmentClick = async () => {
+    //     const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
+    //     history.push(href);
+    // };
 
     return (
         <>
@@ -115,7 +115,6 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                             environment={environment}
                             microserviceId={microserviceId}
                             currentMicroservice={currentMicroservice}
-                            onClick={handleEnvironmentClick}
                         />
                     },
                     {
