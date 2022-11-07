@@ -64,11 +64,22 @@ export const Overview = ({ application, microserviceId, environment }: OverviewP
     switch (subView) {
         case 'simple':
             return (
-                <BaseView application={application} environment={environment} microserviceId={microserviceId} podsData={podsData} />
+                <BaseView
+                    application={application}
+                    environment={environment}
+                    microserviceId={microserviceId}
+                    podsData={podsData}
+                    currentMicroservice={currentMicroservice}
+                />
             );
         case 'purchase-order-api':
             return (
-                <PurchaseOrderApiView applicationId={application.id} environment={environment} microserviceId={microserviceId} podsData={podsData} />
+                <PurchaseOrderApiView
+                    applicationId={application.id}
+                    environment={environment}
+                    microserviceId={microserviceId}
+                    podsData={podsData}
+                />
             );
         default:
             return (

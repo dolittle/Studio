@@ -2,11 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 
-import { useReadable } from 'use-svelte-store';
-
-import { microservices, MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
+import { MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
 import { HttpResponsePodStatus } from '../../api/api';
 import { MicroserviceSimple } from '../../api/index';
 import { HttpResponseApplication } from '../../api/application';
@@ -26,23 +23,14 @@ type MicroserviceViewProps = {
     environment: string;
     microserviceId: string;
     podsData: HttpResponsePodStatus;
+    currentMicroservice: MicroserviceStore;
 };
 
-export const MicroserviceView = ({ application, microserviceId, environment, podsData }: MicroserviceViewProps) => {
-    const $microservices = useReadable(microservices) as any;
-    const history = useHistory();
-
+export const MicroserviceView = ({ application, microserviceId, environment, podsData, currentMicroservice }: MicroserviceViewProps) => {
     const getContainerStatuses = () => podsData.pods.flatMap(pod =>
         pod.containers.map(container => container.state));
 
     const applicationId = application.id;
-    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId && ms.environment === environment);
-
-    if (!currentMicroservice) {
-        const href = `/microservices/application/${application.id}/${environment}/overview`;
-        history.push(href);
-        return null;
-    }
 
     const canEdit = canEditMicroservice(application.environments, environment, currentMicroservice.id);
 
@@ -144,9 +132,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                 <ContainerHealthStatus status={getContainerStatuses()} />
             </Box>
 
-            <Tabs
-                tabs={tabs}
-            />
+            <Tabs tabs={tabs} />
         </>
     );
 };
