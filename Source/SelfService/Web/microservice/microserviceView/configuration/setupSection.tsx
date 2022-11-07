@@ -79,7 +79,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
     const [hasPublicURL, setHasPublicURL] = useState(currentMicroservice.edit?.extra?.isPublic || false);
     const [selectedRuntimeImage, setSelectedRuntimeImage] = useState('');
-    const [hasM3Connector, setHasM3Connetcor] = useState(environmentInfo.connections?.m3Connector || false);
+    const [useM3Connector, setHasM3Connetcor] = useState(environmentInfo.connections?.m3Connector || false);
     const [headCommandArgs, setHeadCommandArgs] = useState<string[]>(headCommand?.args || []);
 
     useEffect(() => {
@@ -188,7 +188,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             imageName: headImage || '',
                             port: 80,
                             entrypoint: '',
-                            ingressPath: ingress.path.replace(/\//, '') || ''
+                            ingressPath: ingress.path?.replace(/\//, '') || ''
                         }}
                         sx={styles.form}
                     >
@@ -242,14 +242,14 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             }
                         </Box>
 
-                        {hasM3Connector &&
+                        {useM3Connector &&
                             <Box sx={styles.formSections}>
                                 <Typography variant='subtitle2'>Connect to M3</Typography>
 
                                 <SwitchToggle
                                     title='Make M3 configuration available to microservice'
                                     disabled={formIsNotEditable}
-                                    checked={hasM3Connector}
+                                    checked={useM3Connector}
                                     onChange={(event) => setHasM3Connetcor(event.target.checked)}
                                     sx={{ mt: 2.5 }}
                                 />
