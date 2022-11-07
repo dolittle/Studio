@@ -255,10 +255,14 @@ export const SetupSection = ({ application, applicationId, environment, microser
                                     sx={{ mt: 2.5 }}
                                 />
 
-                                {/* TODO: Needs some list?
                                 <Typography variant='body2' sx={{ ml: 6, mt: 1 }}>
                                     Enabling this will mount these files to the deployed microservice:
-                                </Typography> */}
+                                </Typography>
+                                <Box sx={{ ml: 6, mt: 2, lineHeight: '20px' }}>
+                                    <Typography variant='body2'>/app/connection/kafka/ca.pem</Typography>
+                                    <Typography variant='body2'>/app/connection/kafka/certificate.pem</Typography>
+                                    <Typography variant='body2'>/app/connection/kafka/accessKey.pem</Typography>
+                                </Box>
                             </Box>
                         }
                     </Form>
