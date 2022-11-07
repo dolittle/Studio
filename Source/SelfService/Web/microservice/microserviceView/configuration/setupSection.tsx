@@ -77,9 +77,9 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const [setupPanelExpanded, setSetupPanelExpanded] = useState(true);
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
-    const [hasPublicURL, setHasPublicURL] = useState(false);
+    const [hasPublicURL, setHasPublicURL] = useState(currentMicroservice.edit?.extra?.isPublic || false);
     const [selectedRuntimeImage, setSelectedRuntimeImage] = useState('');
-    const [hasM3Connector, setHasM3Connetcor] = useState(environmentInfo.connections.m3Connector || false);
+    const [hasM3Connector, setHasM3Connetcor] = useState(environmentInfo.connections?.m3Connector || false);
     const [headCommandArgs, setHeadCommandArgs] = useState<string[]>(headCommand?.args || []);
 
     useEffect(() => {
