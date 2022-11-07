@@ -235,6 +235,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                                 <Input
                                     id="ingressPath"
                                     label='Path'
+                                    disabled={formIsNotEditable}
                                     startAdornment='/'
                                     placeholder='leave blank for default path'
                                     sx={{ width: 226 }}
