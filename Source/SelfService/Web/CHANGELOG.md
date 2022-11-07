@@ -1,3 +1,82 @@
+# [2.10.1] - 2022-10-24 [PR: #254](https://github.com/dolittle/Studio/pull/254)
+## Summary
+
+Fixes a bug that caused the page to go blank when navigating away from the Terminal-tab. Also make it a bit larger (depending on viewport height) so we get more room to play.
+
+### Changed
+
+- The Terminal view is now `70vh` tall.
+
+### Fixed
+
+- A bug in the `xterm.js` library causes it to `throw` whenever it is disposed (at least using the `WebglAddon`. For now we are just catching this.
+
+
+# [2.10.0] - 2022-10-24 [PR: #249](https://github.com/dolittle/Studio/pull/249)
+## Summary
+
+Adds a Terminal to connect to a shell running _inside_ a Microservice.
+
+<img width="659" alt="image" src="https://user-images.githubusercontent.com/1014990/197510632-39688ecc-d045-41fc-9113-749d450e303f.png">
+
+
+### Added
+
+- A new Terminal component in the DesignSystem that can be connected to any TTY-like interface. A browser-local sample is implemented in the `fake.ts` file - and a similar thing could be used to do something with a terminal-like UI if we want to.
+- A new tab on the `MicroserviceView` page - only visible if a shell is available for the current microservice. This opens a new view with a Terminal.
+- A mock TTYd server for local development when running with mocks. It starts a new TTY on your local machine in your home folder (I don't know how well this works on Windows).
+
+### Changed
+
+- The custom `wrapper` setup in the `componentStories.ts` was changed to use the Storybook-builtin `decorator` setup.
+
+
+# [2.9.0] - 2022-10-18 [PR: #253](https://github.com/dolittle/Studio/pull/253)
+## Summary
+
+Fixed error that accoured after Creating New Application - React needs uniq keys for every list item whitch we did not have.
+Also removed console.log that should not be in production.
+Fixed some styling that they would be more uniformed.
+Used Buttons from Storybook instead imports from MUI.
+
+<img width="1123" alt="Screenshot 2022-10-17 at 10 53 31" src="https://user-images.githubusercontent.com/19160439/196437316-2d38f2c9-75ff-4d0d-a601-859019a1299c.png">
+
+<img width="453" alt="Screenshot 2022-10-17 at 10 53 03" src="https://user-images.githubusercontent.com/19160439/196437408-a19e32f1-d97a-4eed-89a9-026a526cc785.png">
+
+### Added
+
+- Each list items in Applications page has now uniq key that React needs
+
+### Changed
+
+- MUI imported Button to Button from Storybook
+
+### Fixed
+
+- Made styles more uniform
+
+### Removed
+
+- console.log after new application was created
+
+
+# [2.8.1] - 2022-10-17 [PR: #252](https://github.com/dolittle/Studio/pull/252)
+## Summary
+
+When logging in to studio and there are no applications in the tenant you were logged in for you'd get a black screen. Now instead you will get an empty list and the choice to create a new application or go back to choose another tenant.
+
+### Fixed
+
+- Bug when no applications existed in the tenant
+
+
+Before fix:
+<img width="1590" alt="Screenshot 2022-10-14 at 21 01 37" src="https://user-images.githubusercontent.com/13407188/195926532-81df9186-0f35-4404-bd2b-815ea6b5798c.png">
+
+After Fix:
+<img width="1343" alt="Screenshot 2022-10-14 at 21 27 17" src="https://user-images.githubusercontent.com/13407188/195926642-7a5b148d-f606-4373-aae4-dbf82b6b4b1e.png">
+
+
 # [2.8.0] - 2022-10-13 [PR: #251](https://github.com/dolittle/Studio/pull/251)
 ## Summary
 

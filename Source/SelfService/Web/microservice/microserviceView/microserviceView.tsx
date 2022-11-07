@@ -18,6 +18,8 @@ import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
 import { Configuration } from './configuration/configuration';
 import { HealthStatus } from './healthStatus/healthStatus';
 import { ContainerHealthStatus } from '../microserviceStatus';
+import { useTerminalAvailable } from './terminal/useTerminal';
+import { View as Terminal } from './terminal/View';
 
 type MicroserviceViewProps = {
     application: HttpResponseApplication;
@@ -98,6 +100,43 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
     //     history.push(href);
     // };
 
+    const tabs = [
+        {
+            label: 'Configuration',
+            render: () => <Configuration
+                application={application}
+                applicationId={applicationId}
+                environment={environment}
+                microserviceId={microserviceId}
+                currentMicroservice={currentMicroservice}
+            />
+        },
+        {
+            label: 'Health Status',
+            render: () => <HealthStatus
+                applicationId={applicationId}
+                status="TODO"
+                environment={environment}
+                microserviceId={microserviceId}
+                data={podsData}
+            />
+        }
+    ];
+
+    const terminalAvailable = useTerminalAvailable(applicationId, environment, microserviceId);
+    if (terminalAvailable) {
+        tabs.push(
+            {
+                label: 'Terminal',
+                render: () => <Terminal
+                    applicationId={applicationId}
+                    environment={environment}
+                    microserviceId={microserviceId}
+                />
+            },
+        );
+    }
+
     return (
         <>
             <Box sx={{ display: 'flex', mb: 3.25 }}>
@@ -106,28 +145,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
             </Box>
 
             <Tabs
-                tabs={[
-                    {
-                        label: 'Configuration',
-                        render: () => <Configuration
-                            application={application}
-                            applicationId={applicationId}
-                            environment={environment}
-                            microserviceId={microserviceId}
-                            currentMicroservice={currentMicroservice}
-                        />
-                    },
-                    {
-                        label: 'Health Status',
-                        render: () => <HealthStatus
-                            applicationId={applicationId}
-                            status="TODO"
-                            environment={environment}
-                            microserviceId={microserviceId}
-                            data={podsData}
-                        />
-                    }
-                ]}
+                tabs={tabs}
             />
         </>
     );

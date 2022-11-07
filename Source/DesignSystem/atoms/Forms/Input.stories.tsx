@@ -11,12 +11,12 @@ const { metadata, createStory } = componentStories(Input, {
     actions: {
         onChange: 'changed'
     },
-    wrapper: ({ component }) => (
+    decorator: (Story) => (
         <Form initialValues={{
             name: '',
             nameWithDefault: 'Default Application Name',
         }}>
-            { component }
+            <Story />
         </Form>
     )
 });

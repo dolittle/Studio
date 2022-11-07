@@ -16,11 +16,16 @@
     "dependencies": {
         "@fontsource/roboto-mono": "4.5.8",
         "@fontsource/rubik": "4.5.11",
+        "@react-hook/resize-observer": "1.2.6",
         "@shared/styling": "1.0.0",
         "react-hook-form": "7.37.0",
         "react-vega": "7.6.0",
         "vega": "5.22.1",
-        "vega-lite": "5.5.0"
+        "vega-lite": "5.5.0",
+        "xterm": "5.0.0",
+        "xterm-addon-canvas": "0.2.0",
+        "xterm-addon-fit": "0.6.0",
+        "xterm-addon-webgl": "0.13.0"
     },
     "devDependencies": {
         "@shared/web": "1.0.0",

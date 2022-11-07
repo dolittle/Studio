@@ -13,6 +13,7 @@ type ButtonProps = {
     size?: 'small' | 'medium' | 'large';
     startWithIcon?: ReactElement<SvgIconProps>;
     endWithIcon?: ReactElement<SvgIconProps>;
+    type?: 'button' | 'submit' | 'reset';
     sx?: SxProps;
     onClick?: MouseEventHandler<HTMLButtonElement>;
 };
@@ -25,6 +26,7 @@ export const Button = (props: ButtonProps) =>
         size={props.size ?? 'small'}
         startIcon={props.startWithIcon}
         endIcon={props.endWithIcon}
+        type={props.type ?? 'button'}
         sx={props.sx}
         onClick={props.onClick}
         disableElevation
