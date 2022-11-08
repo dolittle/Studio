@@ -3,33 +3,33 @@
 
 import React from 'react';
 
-import { Button } from '@dolittle/design-system/atoms/Button/Button';
+import { Button } from '@dolittle/design-system/atoms/Button';
 
-import { IconButton, Dialog as MuiDialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { CloseRounded } from '@mui/icons-material';
 
-type DialogProps = {
+type ConfirmDialogProps = {
     id: string;
     open?: boolean | false;
     title: string;
-    description: string;
+    description: React.ReactNode;
     cancelText: string;
     confirmText: string;
-    onClose: () => void;
+    handleCancel: () => void;
     handleConfirm: () => void;
 };
 
-export const Dialog = (props: DialogProps) =>
-    <MuiDialog
+export const ConfirmDialog = (props: ConfirmDialogProps) =>
+    <Dialog
         open={props.open || false}
-        onClose={props.onClose}
+        onClose={props.handleCancel}
         aria-labelledby={`${props.id}-title`}
         aria-describedby={`${props.id}-description`}
     >
         <DialogTitle id={`${props.id}-title`} variant='h6'>
             {props.title}
             <IconButton
-                onClick={props.onClose}
+                onClick={props.handleCancel}
                 sx={{
                     position: 'absolute',
                     right: 8,
@@ -44,7 +44,7 @@ export const Dialog = (props: DialogProps) =>
             </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ mr: 1 }}>
-            <Button onClick={props.onClose} label={props.cancelText} variant='text' sx={{ color: 'text.primary' }} />
+            <Button onClick={props.handleCancel} label={props.cancelText} variant='text' sx={{ color: 'text.primary' }} />
             <Button onClick={props.handleConfirm} label={props.confirmText} variant='text' />
         </DialogActions>
-    </MuiDialog>;
+    </Dialog>;

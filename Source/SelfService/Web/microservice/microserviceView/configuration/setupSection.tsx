@@ -11,7 +11,7 @@ import { DeleteRounded, EditRounded, ExpandCircleDownRounded, SaveRounded, Resta
 
 import { Button } from '@dolittle/design-system/atoms/Button';
 import { Form, Input, Select, SwitchToggle } from '@dolittle/design-system/atoms/Forms';
-import { Dialog } from '@dolittle/design-system/atoms/Dialog/Dialog';
+import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/ConfirmDialog';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../stores/microservice';
 
@@ -112,14 +112,14 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
     return (
         <Box>
-            <Dialog
+            <ConfirmDialog
                 id='delete-microservice-dialog'
                 open={deleteDialogIsOpen}
                 title='Delete microservice?'
                 description='This action cannot be undone. Click delete if you would like to delete the mircroservice.'
                 cancelText='Cancel'
                 confirmText='Delete'
-                onClose={() => setDeleteDialogIsOpen(false)}
+                handleCancel={() => setDeleteDialogIsOpen(false)}
                 handleConfirm={handleMicroserviceDelete}
             />
 

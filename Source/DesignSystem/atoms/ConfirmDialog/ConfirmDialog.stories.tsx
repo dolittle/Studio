@@ -3,9 +3,9 @@
 
 import { componentStories } from '@dolittle/design-system';
 
-import { Dialog } from './Dialog';
+import { ConfirmDialog } from './ConfirmDialog';
 
-const { metadata, createStory } = componentStories(Dialog, {});
+const { metadata, createStory } = componentStories(ConfirmDialog, {});
 
 export default metadata;
 

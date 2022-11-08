@@ -15,7 +15,7 @@ import { HttpResponseApplication } from '../../api/application';
 import { Box, Typography } from '@mui/material';
 
 import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
-import { Dialog } from '@dolittle/design-system/atoms/Dialog/Dialog';
+import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/ConfirmDialog';
 
 import { Configuration } from './configuration/configuration';
 import { HealthStatus } from './healthStatus/healthStatus';
@@ -153,24 +153,23 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
 
     return (
         <>
-            <Dialog
+            <ConfirmDialog
                 id='restart-microservice-dialog'
                 open={restartDialogIsOpen}
                 title='Restart microservice?'
                 description='This action cannot be undone. Click restart if you would like to restart the mircroservice.'
                 cancelText='Cancel'
                 confirmText='Restart'
-                onClose={() => setRestartDialogIsOpen(false)}
+                handleCancel={() => setRestartDialogIsOpen(false)}
                 handleConfirm={handleMicroserviceRestart}
             />
 
             <Box sx={{ display: 'flex', mb: 3.25 }}>
-                <Typography variant="h1">{c}</Typography>
+                <Typography variant="h1">{currentMicroservice.name}</Typography>
                 <ContainerHealthStatus status={getContainerStatuses()} />
             </Box>
 
-            <Tabs
-                tabs={tabs} />
+            <Tabs tabs={tabs} />
         </>
     );
 };
