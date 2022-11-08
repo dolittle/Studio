@@ -11,15 +11,15 @@ import { DeleteRounded, EditRounded, ExpandCircleDownRounded, SaveRounded, Resta
 
 import { Button } from '@dolittle/design-system/atoms/Button';
 import { Form, Input, Select, SwitchToggle } from '@dolittle/design-system/atoms/Forms';
+import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/ConfirmDialog';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../api/application';
 import { getRuntimes } from '../../../api/api';
 
-import { microserviceRestart } from '../helpers';
-import { AlertDialog } from './AlertDialog';
 import { HeadArguments } from '../../components/headArguments';
+import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
 
 const styles = {
     form: {
@@ -76,6 +76,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
     const [setupPanelExpanded, setSetupPanelExpanded] = useState(true);
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
+    const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
     const [hasPublicURL, setHasPublicURL] = useState(currentMicroservice.edit?.extra?.isPublic || false);
     const [selectedRuntimeImage, setSelectedRuntimeImage] = useState('');
@@ -91,11 +92,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
         setSelectedRuntimeImage(runtimeImage?.replace(/dolittle\/runtime:/gi, '') || 'None');
     }, []);
 
-    const handleRestart = async () => {
-        await microserviceRestart({ applicationId, environment, microserviceId, enqueueSnackbar });
-    };
-
-    const handleDelete = async () => {
+    const handleMicroserviceDelete = async () => {
         // Add loading state?
         if (!canDelete) {
             enqueueSnackbar('Deleting microservice is disabled', { variant: 'error' });
@@ -116,10 +113,24 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
     return (
         <Box>
-            <AlertDialog
+            <ConfirmDialog
+                id='delete-microservice-dialog'
                 open={deleteDialogIsOpen}
-                onClose={() => setDeleteDialogIsOpen(false)}
-                handleDeletionConfirm={handleDelete}
+                title='Delete microservice?'
+                description='This action cannot be undone. Click delete if you would like to delete the mircroservice.'
+                cancelText='Cancel'
+                confirmText='Delete'
+                handleCancel={() => setDeleteDialogIsOpen(false)}
+                handleConfirm={handleMicroserviceDelete}
+            />
+
+            <RestartMicroserviceDialog
+                applicationId={applicationId}
+                environment={environment}
+                microserviceId={microserviceId}
+                open={restartDialogIsOpen}
+                setOpen={setRestartDialogIsOpen}
+                handleSuccess={() => window.location.reload()}
             />
 
             <Accordion
@@ -154,7 +165,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             variant='text'
                             label='edit'
                             disabled={formIsNotEditable}
-                            startWithIcon={<EditRounded fontSize='small' />}
+                            startWithIcon={<EditRounded />}
                             //onClick={() => setFormIsNotEditable(false)}
                             sx={{ mr: 2.5 }}
                         />
@@ -162,21 +173,21 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             variant='text'
                             label='save'
                             disabled={formIsNotEditable}
-                            startWithIcon={<SaveRounded fontSize='small' />}
+                            startWithIcon={<SaveRounded />}
                             //onClick={() => setFormIsNotEditable(true)}
                             sx={{ mr: 2.5 }}
                         />
                         <Button
                             variant='text'
                             label='Restart Microservice'
-                            startWithIcon={<RestartAltRounded fontSize='small' />}
-                            onClick={handleRestart}
+                            startWithIcon={<RestartAltRounded />}
+                            onClick={() => setRestartDialogIsOpen(true)}
                             sx={{ mr: 2.5 }}
                         />
                         <Button
                             variant='text'
                             label='Delete Microservice'
-                            startWithIcon={<DeleteRounded fontSize='small' />}
+                            startWithIcon={<DeleteRounded />}
                             onClick={() => setDeleteDialogIsOpen(true)}
                         />
                     </Box>

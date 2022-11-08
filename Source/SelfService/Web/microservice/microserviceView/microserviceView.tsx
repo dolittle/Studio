@@ -125,6 +125,44 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         );
     }
 
+    const tabs = [
+        {
+            label: 'Configuration',
+            render: () => <Configuration
+                application={application}
+                applicationId={applicationId}
+                environment={environment}
+                microserviceId={microserviceId}
+                currentMicroservice={currentMicroservice}
+                onClick={handleEnvironmentClick}
+            />
+        },
+        {
+            label: 'Health Status',
+            render: () => <HealthStatus
+                applicationId={applicationId}
+                status="TODO"
+                environment={environment}
+                microserviceId={microserviceId}
+                data={podsData}
+            />
+        }
+    ];
+
+    const terminalAvailable = useTerminalAvailable(applicationId, environment, microserviceId);
+    if (terminalAvailable) {
+        tabs.push(
+            {
+                label: 'Terminal',
+                render: () => <Terminal
+                    applicationId={applicationId}
+                    environment={environment}
+                    microserviceId={microserviceId}
+                />
+            },
+        );
+    }
+
     return (
         <>
             <Box sx={{ display: 'flex', mb: 3.25 }}>
