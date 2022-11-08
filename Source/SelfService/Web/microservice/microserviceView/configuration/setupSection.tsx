@@ -19,6 +19,7 @@ import { HttpResponseApplication } from '../../../api/application';
 import { getRuntimes } from '../../../api/api';
 
 import { HeadArguments } from '../../components/headArguments';
+import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
 
 const styles = {
     form: {
@@ -48,7 +49,6 @@ type SetupSectionProps = {
     environment: string;
     microserviceId: string;
     currentMicroservice: MicroserviceStore;
-    setOpenResetDialog?: (open: boolean) => void;
 };
 
 export type SetupSectionParameters = {
@@ -60,7 +60,7 @@ export type SetupSectionParameters = {
     ingressPath: string;
 };
 
-export const SetupSection = ({ application, applicationId, environment, microserviceId, currentMicroservice, setOpenResetDialog }: SetupSectionProps) => {
+export const SetupSection = ({ application, applicationId, environment, microserviceId, currentMicroservice }: SetupSectionProps) => {
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
 
@@ -76,6 +76,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
     const [setupPanelExpanded, setSetupPanelExpanded] = useState(true);
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
+    const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
     const [hasPublicURL, setHasPublicURL] = useState(false);
     const [selectedRuntimeImage, setSelectedRuntimeImage] = useState('');
@@ -121,6 +122,15 @@ export const SetupSection = ({ application, applicationId, environment, microser
                 confirmText='Delete'
                 handleCancel={() => setDeleteDialogIsOpen(false)}
                 handleConfirm={handleMicroserviceDelete}
+            />
+
+            <RestartMicroserviceDialog
+                applicationId={applicationId}
+                environment={environment}
+                microserviceId={microserviceId}
+                open={restartDialogIsOpen}
+                setOpen={setRestartDialogIsOpen}
+                handleSuccess={() => window.location.reload()}
             />
 
             <Accordion
@@ -171,7 +181,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             variant='text'
                             label='Restart Microservice'
                             startWithIcon={<RestartAltRounded fontSize='small' />}
-                            onClick={() => setOpenResetDialog!(true)}
+                            onClick={() => setRestartDialogIsOpen(true)}
                             sx={{ mr: 2.5 }}
                         />
                         <Button

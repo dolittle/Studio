@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { RestartAlt } from '@mui/icons-material';
 
@@ -14,6 +14,7 @@ import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 
 import { ButtonText } from '../../../theme/buttonText';
 import { DataTable, DataTableStats } from './dataTable';
+import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
 
 const styles = {
     restartBtn: {
@@ -43,10 +44,11 @@ type HealthStatusProps = {
     environment: string;
     applicationId: string;
     microserviceId: string;
-    resetDialogOpen?: (open: boolean) => void;
 };
 
-export const HealthStatus = ({ applicationId, microserviceId, data, environment, resetDialogOpen }: HealthStatusProps) => {
+export const HealthStatus = ({ applicationId, microserviceId, data, environment }: HealthStatusProps) => {
+
+    const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
 
     const timeRange = useMemo<[number, number]>(() => [Date.now() - 86_400_000, Date.now()], [Date.now() / 60_000]);
     const cpu = useMetricsFromLast(`microservice:container_cpu_usage_seconds:rate_max{application_id="${applicationId}", environment="${environment}", microservice_id="${microserviceId}"}`, 86_400, 60);
@@ -95,10 +97,19 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment,
 
     return (
         <>
+            <RestartMicroserviceDialog
+                applicationId={applicationId}
+                environment={environment}
+                microserviceId={microserviceId}
+                open={restartDialogIsOpen}
+                setOpen={setRestartDialogIsOpen}
+                handleSuccess={() => window.location.reload()}
+            />
+
             <ButtonText
                 sx={styles.restartBtn}
                 startIcon={<RestartAlt />}
-                onClick={() => resetDialogOpen!(true)}>
+                onClick={() => setRestartDialogIsOpen(true)}>
                 Restart microservice
             </ButtonText>
 

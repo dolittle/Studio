@@ -1,11 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useReadable } from 'use-svelte-store';
-import { useSnackbar } from 'notistack';
 
 import { microservices, MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
 import { HttpResponsePodStatus } from '../../api/api';
@@ -15,15 +14,12 @@ import { HttpResponseApplication } from '../../api/application';
 import { Box, Typography } from '@mui/material';
 
 import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
-import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/ConfirmDialog';
 
 import { Configuration } from './configuration/configuration';
 import { HealthStatus } from './healthStatus/healthStatus';
 import { ContainerHealthStatus } from '../microserviceStatus';
 import { useTerminalAvailable } from './terminal/useTerminal';
 import { View as Terminal } from './terminal/View';
-
-import { microserviceRestart } from './helpers';
 
 type MicroserviceViewProps = {
     application: HttpResponseApplication;
@@ -34,10 +30,7 @@ type MicroserviceViewProps = {
 
 export const MicroserviceView = ({ application, microserviceId, environment, podsData }: MicroserviceViewProps) => {
     const $microservices = useReadable(microservices) as any;
-    const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
-
-    const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
 
     const getContainerStatuses = () => podsData.pods.flatMap(pod =>
         pod.containers.map(container => container.state));
@@ -107,10 +100,6 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         history.push(href);
     };
 
-    const handleMicroserviceRestart = async () => {
-        await microserviceRestart({ applicationId, environment, microserviceId, enqueueSnackbar });
-    };
-
     const tabs = [
         {
             label: 'Configuration',
@@ -121,7 +110,6 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                 microserviceId={microserviceId}
                 currentMicroservice={currentMicroservice}
                 onClick={handleEnvironmentClick}
-                resetDialogOpen={() => setRestartDialogIsOpen(true)}
             />
         },
         {
@@ -132,7 +120,6 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                 environment={environment}
                 microserviceId={microserviceId}
                 data={podsData}
-                resetDialogOpen={() => setRestartDialogIsOpen(true)}
             />
         }
     ];
@@ -153,17 +140,6 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
 
     return (
         <>
-            <ConfirmDialog
-                id='restart-microservice-dialog'
-                open={restartDialogIsOpen}
-                title='Restart microservice?'
-                description='This action cannot be undone. Click restart if you would like to restart the mircroservice.'
-                cancelText='Cancel'
-                confirmText='Restart'
-                handleCancel={() => setRestartDialogIsOpen(false)}
-                handleConfirm={handleMicroserviceRestart}
-            />
-
             <Box sx={{ display: 'flex', mb: 3.25 }}>
                 <Typography variant="h1">{currentMicroservice.name}</Typography>
                 <ContainerHealthStatus status={getContainerStatuses()} />
