@@ -1,3 +1,15 @@
+# [2.12.0] - 2022-11-8 [PR: #257](https://github.com/dolittle/Studio/pull/257)
+## Summary
+
+Fix for errors that appeared after merge and wrongly solved conflicts in MicroserviceView.tsx.
+
+<img width="621" alt="Screenshot 2022-11-08 at 16 08 47" src="https://user-images.githubusercontent.com/19160439/200586305-a40787f9-b86b-4f8b-9699-014bf4259346.png">
+
+### Fixed
+
+- Removed double code
+
+
 # [2.11.0] - 2022-11-8 [PR: #256](https://github.com/dolittle/Studio/pull/256)
 ## Summary
 
