@@ -20,6 +20,8 @@ import { Dialog } from '@dolittle/design-system/atoms/Dialog/Dialog';
 import { Configuration } from './configuration/configuration';
 import { HealthStatus } from './healthStatus/healthStatus';
 import { ContainerHealthStatus } from '../microserviceStatus';
+import { useTerminalAvailable } from './terminal/useTerminal';
+import { View as Terminal } from './terminal/View';
 
 import { microserviceRestart } from './helpers';
 
@@ -109,13 +111,48 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         await microserviceRestart({ applicationId, environment, microserviceId, enqueueSnackbar });
     };
 
+    const tabs = [
+        {
+            label: 'Configuration',
+            render: () => <Configuration
+                application={application}
+                applicationId={applicationId}
+                environment={environment}
+                microserviceId={microserviceId}
+                currentMicroservice={currentMicroservice}
+                onClick={handleEnvironmentClick}
+                resetDialogOpen={() => setRestartDialogIsOpen(true)}
+            />
+        },
+        {
+            label: 'Health Status',
+            render: () => <HealthStatus
+                applicationId={applicationId}
+                status="TODO"
+                environment={environment}
+                microserviceId={microserviceId}
+                data={podsData}
+                resetDialogOpen={() => setRestartDialogIsOpen(true)}
+            />
+        }
+    ];
+
+    const terminalAvailable = useTerminalAvailable(applicationId, environment, microserviceId);
+    if (terminalAvailable) {
+        tabs.push(
+            {
+                label: 'Terminal',
+                render: () => <Terminal
+                    applicationId={applicationId}
+                    environment={environment}
+                    microserviceId={microserviceId}
+                />
+            },
+        );
+    }
+
     return (
         <>
-            <Box sx={{ display: 'flex', mb: 3.25 }}>
-                <Typography variant="h1">{currentMicroservice.name}</Typography>
-                <ContainerHealthStatus status={getContainerStatuses()} />
-            </Box>
-
             <Dialog
                 id='restart-microservice-dialog'
                 open={restartDialogIsOpen}
@@ -127,33 +164,13 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                 handleConfirm={handleMicroserviceRestart}
             />
 
+            <Box sx={{ display: 'flex', mb: 3.25 }}>
+                <Typography variant="h1">{c}</Typography>
+                <ContainerHealthStatus status={getContainerStatuses()} />
+            </Box>
+
             <Tabs
-                tabs={[
-                    {
-                        label: 'Configuration',
-                        render: () => <Configuration
-                            application={application}
-                            applicationId={applicationId}
-                            environment={environment}
-                            microserviceId={microserviceId}
-                            currentMicroservice={currentMicroservice}
-                            onClick={handleEnvironmentClick}
-                            resetDialogOpen={() => setRestartDialogIsOpen(true)}
-                        />
-                    },
-                    {
-                        label: 'Health Status',
-                        render: () => <HealthStatus
-                            applicationId={applicationId}
-                            status="TODO"
-                            environment={environment}
-                            microserviceId={microserviceId}
-                            data={podsData}
-                            resetDialogOpen={() => setRestartDialogIsOpen(true)}
-                        />
-                    }
-                ]}
-            />
+                tabs={tabs} />
         </>
     );
 };

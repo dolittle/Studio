@@ -6,15 +6,18 @@ const express = require('express');
 const { logging, notImplemented } = require('./middlewares');
 
 const applications = require('./api/applications');
+const proxy = require('./proxy');
 const logs = require('./monitoring/logs');
 const metrics = require('./monitoring/metrics');
 
 
-// SelfService Backend API
+// SelfService Backend API + Router Proxy
 const backend = express();
+require('express-ws')(backend);
 backend.use(express.json());
 backend.use(logging);
 backend.use(applications);
+backend.use(proxy);
 backend.use(notImplemented);
 
 // Prometheus API

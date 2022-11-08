@@ -29,7 +29,7 @@ export const ApplicationsScreen = () => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
 
-    const [data, setData] = useState([] as ShortInfoWithEnvironment[]);
+    const [applicationInfos, setApplicationInfos] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
     const { setCurrentEnvironment } = useGlobalContext();
@@ -41,7 +41,7 @@ export const ApplicationsScreen = () => {
         ]).then(values => {
             const response = values[0] as HttpResponseApplications;
             setCanCreateApplication(response.canCreateApplication);
-            setData(response.applications);
+            setApplicationInfos(response.applications);
             setLoaded(true);
         }).catch((error) => {
             console.log(error);
@@ -71,7 +71,7 @@ export const ApplicationsScreen = () => {
     return (
         <LoginWrapper>
             <Typography variant='h2' sx={styles}>
-                Select Your Application & Environment
+                { applicationInfos.length > 0 ? 'Select Your Application & Environment' : 'There are no Applications' }
             </Typography>
 
             <Box sx={{ width: 1 }}>
@@ -83,7 +83,7 @@ export const ApplicationsScreen = () => {
                 />
             </Box>
 
-            <ApplicationsList data={data} onChoose={onEnvironmentChoose} />
+            <ApplicationsList data={applicationInfos} onChoose={onEnvironmentChoose} />
 
             <ActionButtons />
 

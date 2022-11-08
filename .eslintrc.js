@@ -1,6 +1,18 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+const allowTsxPascalParameters =
+    require('@dolittle/eslint-config')
+    .rules['@typescript-eslint/naming-convention']
+    .map(option => {
+        if (option.selector !== 'parameter') return option;
+        const { format, ...rest } = option;
+        return {
+            format: [...format, 'PascalCase'],
+            ...rest,
+        };
+    });
+
 module.exports = {
     extends: [
         '@dolittle',
@@ -64,8 +76,8 @@ module.exports = {
         //         'ExportNamedDeclaration>ClassDeclaration',
         //         'ExportNamedDeclaration[declaration.type="TSDeclareFunction"]:not(ExportNamedDeclaration[declaration.type="TSDeclareFunction"] + ExportNamedDeclaration[declaration.type="TSDeclareFunction"])',
         //         'ExportNamedDeclaration[declaration.type="FunctionDeclaration"]:not(ExportNamedDeclaration[declaration.type="TSDeclareFunction"] + ExportNamedDeclaration[declaration.type="FunctionDeclaration"])',
-		//         'MethodDefinition[accessibility!="private"][value.type="TSEmptyBodyFunctionExpression"]:not(MethodDefinition[value.type="TSEmptyBodyFunctionExpression"] + MethodDefinition[value.type="TSEmptyBodyFunctionExpression"])',
-		//         'MethodDefinition[accessibility!="private"][value.type="FunctionExpression"]:not(MethodDefinition[value.type="TSEmptyBodyFunctionExpression"] + MethodDefinition[value.type="FunctionExpression"])',
+        //         'MethodDefinition[accessibility!="private"][value.type="TSEmptyBodyFunctionExpression"]:not(MethodDefinition[value.type="TSEmptyBodyFunctionExpression"] + MethodDefinition[value.type="TSEmptyBodyFunctionExpression"])',
+        //         'MethodDefinition[accessibility!="private"][value.type="FunctionExpression"]:not(MethodDefinition[value.type="TSEmptyBodyFunctionExpression"] + MethodDefinition[value.type="FunctionExpression"])',
         //     ]
         // }],
         // 'jsdoc/require-returns': ['error', {
@@ -92,6 +104,12 @@ module.exports = {
         // }],
     },
     overrides: [
+        {
+            files: ['**.tsx'],
+            rules: {
+                '@typescript-eslint/naming-convention': allowTsxPascalParameters,
+            },
+        },
         {
             files: ['**/for_*/**'],
             rules: {
