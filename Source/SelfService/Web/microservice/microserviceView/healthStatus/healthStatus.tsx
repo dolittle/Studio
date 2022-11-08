@@ -3,7 +3,7 @@
 
 import React, { useMemo, useState } from 'react';
 
-import { RestartAlt } from '@mui/icons-material';
+import { RestartAltRounded } from '@mui/icons-material';
 
 import { Graph } from '@dolittle/design-system/molecules/Metrics/Graph';
 import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
@@ -108,8 +108,8 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
 
             <Button
                 variant='text'
-                label='Restart microservice'
-                startWithIcon={<RestartAlt />}
+                label='Restart Microservice'
+                startWithIcon={<RestartAltRounded />}
                 onClick={() => setRestartDialogIsOpen(true)}
                 sx={styles.restartBtn}
             />

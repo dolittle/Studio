@@ -165,7 +165,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             variant='text'
                             label='edit'
                             disabled={formIsNotEditable}
-                            startWithIcon={<EditRounded fontSize='small' />}
+                            startWithIcon={<EditRounded />}
                             //onClick={() => setFormIsNotEditable(false)}
                             sx={{ mr: 2.5 }}
                         />
@@ -173,21 +173,21 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             variant='text'
                             label='save'
                             disabled={formIsNotEditable}
-                            startWithIcon={<SaveRounded fontSize='small' />}
+                            startWithIcon={<SaveRounded />}
                             //onClick={() => setFormIsNotEditable(true)}
                             sx={{ mr: 2.5 }}
                         />
                         <Button
                             variant='text'
                             label='Restart Microservice'
-                            startWithIcon={<RestartAltRounded fontSize='small' />}
+                            startWithIcon={<RestartAltRounded />}
                             onClick={() => setRestartDialogIsOpen(true)}
                             sx={{ mr: 2.5 }}
                         />
                         <Button
                             variant='text'
                             label='Delete Microservice'
-                            startWithIcon={<DeleteRounded fontSize='small' />}
+                            startWithIcon={<DeleteRounded />}
                             onClick={() => setDeleteDialogIsOpen(true)}
                         />
                     </Box>
