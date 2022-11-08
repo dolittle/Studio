@@ -1,3 +1,15 @@
+# [2.11.0] - 2022-11-8 [PR: #256](https://github.com/dolittle/Studio/pull/256)
+## Summary
+
+Moved AlertDialog into Storybook and used it to ask confirmation before microservice is restarted and before microservice is deleted.
+
+<img width="899" alt="Screenshot 2022-11-04 at 10 57 24" src="https://user-images.githubusercontent.com/19160439/199933881-fe1a6571-b286-465d-a55f-1fa07eeb7934.png">
+
+### Added
+
+- Confirmation dialog for restarting microservice.
+
+
 # [2.10.1] - 2022-10-24 [PR: #254](https://github.com/dolittle/Studio/pull/254)
 ## Summary
 
