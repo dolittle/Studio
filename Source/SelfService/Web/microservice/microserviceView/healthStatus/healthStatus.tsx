@@ -7,12 +7,12 @@ import { RestartAlt } from '@mui/icons-material';
 
 import { Graph } from '@dolittle/design-system/molecules/Metrics/Graph';
 import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
+import { Button } from '@dolittle/design-system/atoms/Button';
 
 import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../api/api';
 
 import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 
-import { ButtonText } from '../../../theme/buttonText';
 import { DataTable, DataTableStats } from './dataTable';
 import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
 
@@ -106,12 +106,13 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                 handleSuccess={() => window.location.reload()}
             />
 
-            <ButtonText
+            <Button
+                variant='text'
+                label='Restart microservice'
+                startWithIcon={<RestartAlt />}
+                onClick={() => setRestartDialogIsOpen(true)}
                 sx={styles.restartBtn}
-                startIcon={<RestartAlt />}
-                onClick={() => setRestartDialogIsOpen(true)}>
-                Restart microservice
-            </ButtonText>
+            />
 
             {containerTables.length > 0
                 ? containerTables
