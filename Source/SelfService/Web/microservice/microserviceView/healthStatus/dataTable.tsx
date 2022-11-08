@@ -45,21 +45,21 @@ export type DataTableStats = {
 };
 
 export type DataTableRow = {
-    id: string
-    podName: string
-    containerName: string
-    application: string
-    state: string
-    age: string
-    image: string
-    started: string
-    restarts: number
-    cpu?: DataTableStats
-    memory?: DataTableStats
+    id: string;
+    podName: string;
+    containerName: string;
+    application: string;
+    state: string;
+    age: string;
+    image: string;
+    started: string;
+    restarts: number;
+    cpu?: DataTableStats;
+    memory?: DataTableStats;
 };
 
 export type DataTableProps = {
-    rows: DataTableRow[]
+    rows: DataTableRow[];
 };
 
 export const DataTable = ({ rows }: DataTableProps) => {

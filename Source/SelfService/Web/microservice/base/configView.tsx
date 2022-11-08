@@ -42,6 +42,6 @@ export const ConfigView: React.FunctionComponent<Props> = (props) => {
                 head='Runtime image'
                 data={ms.extra.runtimeImage}
             />
-        </Grid >
+        </Grid>
     );
 };

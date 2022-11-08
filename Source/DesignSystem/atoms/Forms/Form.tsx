@@ -3,7 +3,7 @@
 
 import React, { useMemo, ReactNode } from 'react';
 import { useForm, FieldValues, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
-import { Box } from '@mui/material';
+import { Box, SxProps } from '@mui/material';
 
 /**
  * The props for a {@link Form} component.
@@ -25,6 +25,8 @@ export type FormProps<T extends FieldValues> = {
     onSubmitInvalid?: SubmitErrorHandler<T>;
 
     children?: ReactNode;
+
+    sx?: SxProps;
 };
 
 /**
@@ -45,7 +47,7 @@ export const Form = <T extends FieldValues>(props: FormProps<T>) => {
     ), [handleSubmit, props.onSubmit, props.onSubmitInvalid]);
 
     return (
-        <Box component='form' onSubmit={handleFormSubmit}>
+        <Box component='form' onSubmit={handleFormSubmit} sx={props.sx}>
             <FormProvider {...methods}>
                 {props.children}
             </FormProvider>

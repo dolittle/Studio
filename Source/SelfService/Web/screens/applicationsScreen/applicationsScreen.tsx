@@ -5,14 +5,16 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
+import { Button } from '@dolittle/design-system/atoms/Button/Button';
+
+import { Box, Typography } from '@mui/material';
+import { AddCircle } from '@mui/icons-material';
+
 import { ShortInfoWithEnvironment } from '../../api/api';
 import { LoginWrapper } from '../../layout/loginWrapper';
 import { useGlobalContext } from '../../stores/notifications';
 import { HttpResponseApplications, getApplications } from '../../api/application';
 
-import { Typography } from '@mui/material';
-
-import { CreateButton } from './createButton';
 import { ApplicationsList } from './applicationsList';
 import { ActionButtons } from './actionButtons';
 
@@ -72,7 +74,14 @@ export const ApplicationsScreen = () => {
                 { applicationInfos.length > 0 ? 'Select Your Application & Environment' : 'There are no Applications' }
             </Typography>
 
-            <CreateButton onCreate={handleCreate} />
+            <Box sx={{ width: 1 }}>
+                <Button
+                    variant='text'
+                    label='Create new Application'
+                    startWithIcon={<AddCircle />}
+                    onClick={handleCreate}
+                />
+            </Box>
 
             <ApplicationsList data={applicationInfos} onChoose={onEnvironmentChoose} />
 

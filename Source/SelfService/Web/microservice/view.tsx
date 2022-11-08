@@ -5,28 +5,27 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useReadable } from 'use-svelte-store';
 
-import { getConfigFilesNamesList, getPodStatus, getServerUrlPrefix, HttpResponsePodStatus, InputConfigFile, updateConfigFiles } from '../api/api';
-import { microservices, MicroserviceStore } from '../stores/microservice';
-import { MicroserviceView as BaseView } from './microserviceView/microserviceView';
-import { View as RawDataLogView } from './rawDataLog/view';
-import { View as PurchaseOrderApiView } from './purchaseOrder/view';
-import { HttpResponseApplication } from '../api/application';
 import { Typography } from '@mui/material';
 
-type Props = {
-    application: HttpResponseApplication
-    environment: string
-    microserviceId: string
+import { getPodStatus, HttpResponsePodStatus } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
+
+import { microservices, MicroserviceStore } from '../stores/microservice';
+
+import { MicroserviceView as BaseView } from './microserviceView/microserviceView';
+import { View as PurchaseOrderApiView } from './purchaseOrder/view';
+
+type OverviewProps = {
+    application: HttpResponseApplication;
+    environment: string;
+    microserviceId: string;
 };
 
-export const Overview: React.FunctionComponent<Props> = (props) => {
+export const Overview = ({ application, microserviceId, environment }: OverviewProps) => {
     const $microservices = useReadable(microservices) as any;
     const history = useHistory();
-    const _props = props!;
-    const application = _props.application;
-    const applicationId = application.id;
-    const microserviceId = _props.microserviceId;
-    const environment = _props.environment;
+
+    const [loaded, setLoaded] = useState(false);
 
     // Want microservice name
     const [podsData, setPodsData] = useState({
@@ -37,17 +36,18 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
         },
         pods: []
     } as HttpResponsePodStatus);
-    const [loaded, setLoaded] = useState(false);
+
     const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId && ms.environment === environment);
+
     if (!currentMicroservice) {
-        const href = `/microservices/application/${applicationId}/${environment}/overview`;
+        const href = `/microservices/application/${application.id}/${environment}/overview`;
         history.push(href);
         return null;
     }
 
     useEffect(() => {
         Promise.all([
-            getPodStatus(applicationId, environment, microserviceId)
+            getPodStatus(application.id, environment, microserviceId)
         ]).then((values) => {
             setPodsData(values[0]);
             setLoaded(true);
@@ -64,20 +64,27 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
     switch (subView) {
         case 'simple':
             return (
-                <BaseView application={application} environment={environment} microserviceId={microserviceId} podsData={podsData} />
-            );
-        case 'raw-data-log-ingestor':
-            return (
-                <RawDataLogView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
+                <BaseView
+                    application={application}
+                    environment={environment}
+                    microserviceId={microserviceId}
+                    podsData={podsData}
+                    currentMicroservice={currentMicroservice}
+                />
             );
         case 'purchase-order-api':
             return (
-                <PurchaseOrderApiView applicationId={applicationId} environment={environment} microserviceId={microserviceId} podsData={podsData} />
+                <PurchaseOrderApiView
+                    applicationId={application.id}
+                    environment={environment}
+                    microserviceId={microserviceId}
+                    podsData={podsData}
+                />
             );
         default:
             return (
                 <>
-                    <Typography variant='h1' my={2}>Not supported</Typography>
+                    <Typography variant='h1' sx={{ my: 2 }}>Not supported</Typography>
                     <p>This is an error or our part</p>
                     <p>Kind is &quot;{currentMicroservice.kind}&quot;.</p>
                     <p>Subview is &quot;{subView}&quot;.</p>
@@ -91,16 +98,6 @@ export const Overview: React.FunctionComponent<Props> = (props) => {
 function whichSubView(currentMicroservice: any): string {
     // Today we try and map subviews based on kind, its not perfect
     let kind = currentMicroservice.kind;
-    if (
-        currentMicroservice &&
-        currentMicroservice.live &&
-        currentMicroservice.live.images &&
-        currentMicroservice.live.images[0] &&
-        currentMicroservice.live.images[0].image &&
-        currentMicroservice.live.images[0].image === '453e04a74f9d42f2b36cd51fa2c83fa3.azurecr.io/dolittle/platform/platform-api:dev-x'
-    ) {
-        kind = 'raw-data-log-ingestor';
-    }
 
     if (kind === '') {
         kind = 'simple'; // TODO change

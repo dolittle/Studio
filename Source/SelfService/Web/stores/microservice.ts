@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { get, writable } from 'use-svelte-store';
-import { Exception } from '@dolittle/rudiments';
 
 import {
     deleteMicroservice as apiDeleteMicroservice,
@@ -15,8 +15,7 @@ import {
     MicroserviceSimple,
     MicroserviceDolittle,
     MicroserviceRawDataLogIngestor,
-    MicroservicePurchaseOrder,
-    MicroserviceIngressPath,
+    MicroservicePurchaseOrder
 } from '../api/index';
 
 import { getApplication, HttpInputApplicationEnvironment } from '../api/application';
@@ -145,9 +144,6 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
         case 'simple':
             response = await apiSaveMicroservice(input);
             break;
-        case 'raw-data-log-ingestor':
-            response = await apiSaveMicroservice(input);
-            break;
         case 'purchase-order-api':
             response = await apiSaveMicroservice(input);
             break;
@@ -246,10 +242,6 @@ export const canDeleteMicroservice = (
         (ms) => ms.id === microserviceId
     );
     if (!currentMicroservice) {
-        return false;
-    }
-
-    if (currentMicroservice.kind === 'raw-data-log-ingestor') {
         return false;
     }
 

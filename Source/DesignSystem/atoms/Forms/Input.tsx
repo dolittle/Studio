@@ -2,11 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Message, ValidationRule } from 'react-hook-form';
 
-import { FormControl, FormHelperText, InputLabel, OutlinedInput, SxProps } from '@mui/material';
+import { FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput, SxProps, Typography } from '@mui/material';
 
-import { useController, FieldProps } from './helpers';
+import { FieldProps, isRequired, useController } from './helpers';
 import type { Form } from './Form';
 
 /**
@@ -14,6 +13,8 @@ import type { Form } from './Form';
  */
 export type InputProps = {
     sx?: SxProps;
+    startAdornment?: React.ReactNode;
+    placeholder?: string;
 } & FieldProps;
 
 /**
@@ -25,26 +26,22 @@ export const Input = (props: InputProps) => {
     const { field, hasError, errorMessage } = useController(props);
 
     return (
-        <FormControl sx={{
-            'width': 220,
-            'mb': {
-                sm: 0,
-                xs: 2.5,
-            },
-            '.MuiInputLabel-root[data-shrink="true"]': {
-                top: 0
-            },
-            '.MuiFormHelperText-root.Mui-error': {
-                color: 'error.light',
-                letterSpacing: '0.4px'
-            },
-            ...props.sx
-        }}>
+        <FormControl
+            variant='outlined'
+            size='small'
+            sx={{
+                width: 220,
+                mb: {
+                    sm: 0,
+                    xs: 2.5
+                },
+                ...props.sx
+            }}>
             <InputLabel
                 htmlFor={props.id}
                 required={isRequired(props.required)}
+                disabled={props.disabled}
                 error={hasError}
-                sx={{ top: -8 }}
             >
                 {props.label}
             </InputLabel>
@@ -56,11 +53,13 @@ export const Input = (props: InputProps) => {
                 error={hasError}
                 disabled={props.disabled}
                 label={props.label}
+                startAdornment={props.startAdornment ?
+                    <InputAdornment position='start'>
+                        <Typography variant='body2'>{props.startAdornment}</Typography>
+                    </InputAdornment> : null
+                }
+                placeholder={props.placeholder}
                 aria-describedby={`${props.id}-helper-text`}
-                size='small'
-                sx={{
-                    letterSpacing: '0.15px'
-                }}
             />
 
             <FormHelperText error={hasError} id={`${props.id}-helper-text`}>
@@ -68,20 +67,4 @@ export const Input = (props: InputProps) => {
             </FormHelperText>
         </FormControl>
     );
-};
-
-const isRequired = (required?: Message | ValidationRule<boolean>): boolean => {
-    if (required === undefined) {
-        return false;
-    }
-
-    if (typeof required === 'boolean') {
-        return required;
-    }
-
-    if (typeof required === 'string') {
-        return true;
-    }
-
-    return required.value;
 };

@@ -4,18 +4,17 @@
 import React, { useState, useCallback } from 'react';
 import { InView } from 'react-intersection-observer';
 import {
-    Alert,
-    AlertTitle,
     Box,
     Divider,
     FormControlLabel,
     FormGroup,
     Grid,
-    Link,
     Paper,
     Switch,
     Typography,
 } from '@mui/material';
+
+import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
 
 import { ObservableLogLines, ObservablePartialLogLines } from './loki/logLines';
 import { DataLabels } from './loki/types';
@@ -103,41 +102,39 @@ export const LogPanel = (props: LogPanelProps) => {
 
     if (props.logs.failed) {
         return (
-            <Grid container spacing={2} sx={{ pt: 2 }}>
-                <Grid item xs={12} md={6}>
-                    <Alert severity='error' variant='outlined'>
-                        <AlertTitle>Something went wrong</AlertTitle>
-                        Please try again later. If the problem persists, please{' '}
-                        <Link href='mailto:support@dolittle.com'>contact support</Link>.
-                    </Alert>
-                </Grid>
-            </Grid>
+            <AlertBox
+                severity="error"
+                title='Something went wrong'
+                message='Please try again later. If the problem persists, please'
+                link={{
+                    href: 'mailto:support@dolittle.com',
+                    text: 'contact support',
+                }}
+                sx={{ mt: 2 }}
+            />
         );
     }
 
     if (!props.logs.loading && props.logs.lines.length === 0) {
         return (
-            <Grid container spacing={2} sx={{ pt: 2 }}>
-                <Grid item xs={12} md={6}>
-                    <Alert severity='info' variant='outlined'>
-                        <AlertTitle>No logs found</AlertTitle>
-                        Try adjusting the filters, or verify that your microservices are
-                        running.
-                    </Alert>
-                </Grid>
-            </Grid>
+            <AlertBox
+                severity='info'
+                title='No logs found'
+                message='Try adjusting the filters, or verify that your microservices are running.'
+                sx={{ mt: 2 }}
+            />
         );
     }
 
     const microservices =
         props.filters.microservice === undefined ||
-        props.filters.microservice?.length === 0
+            props.filters.microservice?.length === 0
             ? 'all Microservices'
             : props.filters.microservice?.length === 1
-            ? `${props.filters.microservice?.[0].name} Microservice`
-            : `${props.filters.microservice
-                  ?.map((_) => _.name)
-                  .join(', ')} Microservices`;
+                ? `${props.filters.microservice?.[0].name} Microservice`
+                : `${props.filters.microservice
+                    ?.map((_) => _.name)
+                    .join(', ')} Microservices`;
 
     const title = (
         <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>

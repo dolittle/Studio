@@ -220,7 +220,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                     <Typography sx={styles.data}>
                         Override the default CMD in Docker
                     </Typography>
-                    <HeadArguments args={args} setArgs={setArgs} />
+                    <HeadArguments cmdArgs={args} setCmdArgs={setArgs} />
                 </Grid>
 
                 <Grid item>

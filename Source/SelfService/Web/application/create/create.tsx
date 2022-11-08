@@ -40,7 +40,7 @@ const styles = {
 };
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const alphaCharsRegex = /^[a-z0-9]+$/;
+const alphaCharsRegex = /[a-z0-9]$/i;
 
 type CreateApplicationParameters = {
     name: string;
@@ -168,7 +168,7 @@ export const Create = () => {
                     />
                 </Box>
 
-                <Typography variant='body1' sx={{ mt: 4, ...styles.secondaryTitle }}>Select Environments</Typography>
+                <Typography variant='body1' sx={{ ...styles.secondaryTitle, mt: 4 }}>Select Environments</Typography>
 
                 <Box sx={{ ...styles.formFieldsWrapper, mb: 7.5 }}>
                     <Checkbox
