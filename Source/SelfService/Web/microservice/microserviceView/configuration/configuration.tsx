@@ -73,6 +73,7 @@ export const Configuration = ({
 
         if (!result.data) {
             enqueueSnackbar(`Could not fetch config files`, { variant: 'error', persist: false });
+            return;
         }
 
         setFilesNamesList(result.data);
