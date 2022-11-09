@@ -1,3 +1,24 @@
+# [2.13.0] - 2022-11-9 [PR: #258](https://github.com/dolittle/Studio/pull/258)
+## Summary
+
+This PR will fix error that occurred when Microservice object is not containing 'extra' object and when configuration files fetch failes.
+
+Also added few helper functions that capitalize string and removes unwanted part from string.
+
+<img width="494" alt="Screenshot 2022-11-09 at 19 23 56" src="https://user-images.githubusercontent.com/19160439/200902920-416786cd-4db1-4e6b-9871-7554d81e0548.png">
+
+<img width="486" alt="Screenshot 2022-11-08 at 18 28 07" src="https://user-images.githubusercontent.com/19160439/200902944-95281173-11cc-4a14-a80a-c2207113379a.png">
+
+### Added
+
+- Helper functions for capitalization and cleaning string.
+
+### Fixed
+
+- Error on 'Configuration Files' failed fetch
+- Error if Microservice object does not contain 'extra' object.
+
+
 # [2.12.0] - 2022-11-8 [PR: #257](https://github.com/dolittle/Studio/pull/257)
 ## Summary
 
