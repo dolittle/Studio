@@ -74,7 +74,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
     const [hasPublicURL, setHasPublicURL] = useState(microserviceInfo?.isPublic || false);
-    const [selectedRuntimeImage, setSelectedRuntimeImage] = useState('');
+    const [currentRuntimeVersion, setCurrentRuntimeVersion] = useState('');
     const [useM3Connector, setHasM3Connetcor] = useState(environmentInfo.connections?.m3Connector || false);
     const [headCommandArgs, setHeadCommandArgs] = useState<string[]>(microserviceInfo?.headCommand?.args || []);
 
@@ -84,7 +84,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
         });
         runtimeVersions.push({ value: 'None' });
 
-        setSelectedRuntimeImage(microserviceInfo?.runtimeImage?.replace(/dolittle\/runtime:/gi, '') || 'None');
+        setCurrentRuntimeVersion(microserviceInfo?.runtimeImage?.replace(/dolittle\/runtime:/gi, '') || 'None');
     }, []);
 
     const handleMicroserviceDelete = async () => {
@@ -208,10 +208,10 @@ export const SetupSection = ({ application, applicationId, environment, microser
                                 id='runtimeVersion'
                                 label='Runtime Version*'
                                 options={runtimeVersions}
-                                value={selectedRuntimeImage}
+                                value={currentRuntimeVersion}
                                 required
                                 disabled={formIsNotEditable}
-                                onChange={(event) => setSelectedRuntimeImage(event.target.value)}
+                                onChange={(event) => setCurrentRuntimeVersion(event.target.value)}
                                 sx={{ width: 220 }}
                             />
                         </Box>
