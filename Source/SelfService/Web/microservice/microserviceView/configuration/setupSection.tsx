@@ -20,6 +20,7 @@ import { getRuntimes } from '../../../api/api';
 
 import { HeadArguments } from '../../components/headArguments';
 import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
+import { capitalize, removeFromString } from '../helpers';
 
 const styles = {
     form: {
@@ -68,6 +69,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
 
     const microserviceInfo = currentMicroservice.edit?.extra;
+    const runtimeVersionNumber = capitalize(removeFromString(microserviceInfo?.runtimeImage, /dolittle\/runtime:/gi));
 
     const [setupPanelExpanded, setSetupPanelExpanded] = useState(true);
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
@@ -80,11 +82,11 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
     useEffect(() => {
         getRuntimes().forEach(runtime => {
-            runtimeVersions.push({ value: runtime.image.replace(/dolittle\/runtime:/gi, '') });
+            runtimeVersions.push({ value: removeFromString(runtime.image, /dolittle\/runtime:/gi) });
         });
         runtimeVersions.push({ value: 'None' });
 
-        setCurrentRuntimeVersion(microserviceInfo?.runtimeImage?.replace(/dolittle\/runtime:/gi, '') || 'None');
+        setCurrentRuntimeVersion(runtimeVersionNumber);
     }, []);
 
     const handleMicroserviceDelete = async () => {
