@@ -67,21 +67,16 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
     const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
 
-    const { edit: { extra: {
-        headCommand,
-        runtimeImage,
-        headImage,
-        ingress
-    } } } = currentMicroservice;
+    const microserviceInfo = currentMicroservice.edit?.extra;
 
     const [setupPanelExpanded, setSetupPanelExpanded] = useState(true);
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
-    const [hasPublicURL, setHasPublicURL] = useState(currentMicroservice.edit?.extra?.isPublic || false);
+    const [hasPublicURL, setHasPublicURL] = useState(microserviceInfo?.isPublic || false);
     const [selectedRuntimeImage, setSelectedRuntimeImage] = useState('');
     const [useM3Connector, setHasM3Connetcor] = useState(environmentInfo.connections?.m3Connector || false);
-    const [headCommandArgs, setHeadCommandArgs] = useState<string[]>(headCommand?.args || []);
+    const [headCommandArgs, setHeadCommandArgs] = useState<string[]>(microserviceInfo?.headCommand?.args || []);
 
     useEffect(() => {
         getRuntimes().forEach(runtime => {
@@ -89,7 +84,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
         });
         runtimeVersions.push({ value: 'None' });
 
-        setSelectedRuntimeImage(runtimeImage?.replace(/dolittle\/runtime:/gi, '') || 'None');
+        setSelectedRuntimeImage(microserviceInfo?.runtimeImage?.replace(/dolittle\/runtime:/gi, '') || 'None');
     }, []);
 
     const handleMicroserviceDelete = async () => {
@@ -196,10 +191,10 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         initialValues={{
                             microserviceName: currentMicroservice.name,
                             developmentEnvironment: environment,
-                            imageName: headImage || '',
+                            imageName: microserviceInfo?.headImage,
                             port: 80,
                             entrypoint: '',
-                            ingressPath: ingress.path?.replace(/\//, '') || ''
+                            ingressPath: microserviceInfo?.ingress?.path?.replace(/\//, '')
                         }}
                         sx={styles.form}
                     >
