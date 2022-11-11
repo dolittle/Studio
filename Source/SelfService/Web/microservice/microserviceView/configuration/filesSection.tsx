@@ -5,7 +5,9 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { Box, Typography } from '@mui/material';
+import { DataGridPro } from '@mui/x-data-grid-pro';
+
+import { Box, Paper, Typography } from '@mui/material';
 import { AddCircle, DeleteRounded, DownloadRounded } from '@mui/icons-material';
 
 import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
@@ -17,6 +19,14 @@ import { getConfigFilesNamesList, updateConfigFiles } from '../../../api/api';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
+type ConfigFilesTableRow = {
+    id: string;
+    fileName: string,
+    path?: string,
+    dateAdded?: string,
+    addedBy?: string
+};
+
 type FilesSectionProps = {
     applicationId: string;
     environment: string;
@@ -24,43 +34,41 @@ type FilesSectionProps = {
 };
 
 export const FilesSection = ({ applicationId, environment, microserviceId }: FilesSectionProps) => {
-    const [filesPanelExpanded, setFilesPanelExpanded] = useState(true);
-    const [validFile, setValidFile] = useState(false);
-    const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
-    const [file, setFile] = useState<File>(new File([], ''));
-
     const fileUploadRef = useRef<FileUploadFormRef>(null);
     const { enqueueSnackbar } = useSnackbar();
 
+    const [filesPanelExpanded, setFilesPanelExpanded] = useState(true);
+    const [validFile, setValidFile] = useState(false);
+    const [dataTableRows, setDataTableRows] = useState<ConfigFilesTableRow[]>([]);
+    const [file, setFile] = useState<File>(new File([], ''));
+    const [dataRowSelected, setDataRowSelected] = useState(true);
+
     useEffect(() => {
-        fetchConfigFilesNamesList()
-            .catch(console.error);
+        fetchConfigFilesNamesList();
     }, []);
 
-    const saveConfigFile = async (formData: FormData) => {
-        const upsert = await updateConfigFiles(applicationId, environment, microserviceId, formData);
-        const addedFile = formData.get('file');
+    const fetchConfigFilesNamesList = async (): Promise<void> => {
+        const result = await getConfigFilesNamesList(applicationId, environment, microserviceId)
+            .then(res => res.data)
+            .catch((error) => {
+                enqueueSnackbar(`Could not fetch config files ${error.message}`, { variant: 'error' });
+            });
 
-        console.log();
-
-        if (upsert.success === false) {
-            enqueueSnackbar(upsert.error, { variant: 'error', persist: false });
-            setValidFile(false);
-        } else {
-            fetchConfigFilesNamesList();
-            // eslint-disable-next-line dot-notation
-            enqueueSnackbar(`${addedFile!['name'] || ''} successfully added.`, { variant: 'info' });
-        }
+        assignDataTableRows(result ?? []);
     };
 
-    const fetchConfigFilesNamesList = async () => {
-        const result = await getConfigFilesNamesList(applicationId, environment, microserviceId);
+    const assignDataTableRows = (file: string[]): void => {
+        const rows = file.map(name => {
+            return {
+                id: name,
+                fileName: name,
+                path: '/app/data/',
+                dateAdded: 'N/A',
+                addedBy: 'N/A'
+            } as ConfigFilesTableRow;
+        });
 
-        if (!result.data) {
-            enqueueSnackbar(`Could not fetch config files`, { variant: 'error', persist: false });
-        }
-
-        setFilesNamesList(result.data);
+        setDataTableRows(rows);
     };
 
     const validateFile = (file: File) => {
@@ -78,6 +86,19 @@ export const FilesSection = ({ applicationId, environment, microserviceId }: Fil
 
         setValidFile(true);
         return true;
+    };
+
+    const saveConfigFile = async (formData: FormData) => {
+        const upsert = await updateConfigFiles(applicationId, environment, microserviceId, formData);
+
+        if (upsert.success === false) {
+            enqueueSnackbar(upsert.error, { variant: 'error', persist: false });
+            setValidFile(false);
+        } else {
+            // @ts-ignore
+            enqueueSnackbar(`'${formData.get('file')?.name || ''}' successfully added.`, { variant: 'info' });
+            fetchConfigFilesNamesList();
+        }
     };
 
     return (
@@ -109,6 +130,23 @@ export const FilesSection = ({ applicationId, environment, microserviceId }: Fil
             </Box>
 
             <FileUploadForm ref={fileUploadRef} onFileAdded={saveConfigFile} onFileSelected={validateFile} />
+
+            <Box component={Paper} sx={{ width: 1, height: 1 }}>
+                <DataGridPro
+                    rows={dataTableRows}
+                    columns={[
+                        { field: 'path', headerName: 'Path', width: 200 },
+                        { field: 'fileName', headerName: 'Name', width: 130 },
+                        { field: 'dateAdded', headerName: 'Date Added', width: 200 },
+                        { field: 'addedBy', headerName: 'Added By', width: 200 },
+                    ]}
+                    checkboxSelection={dataRowSelected}
+                    autoHeight={true}
+                    headerHeight={46}
+                    disableColumnMenu
+                    hideFooter
+                />
+            </Box>
         </Accordion>
     );
 };
