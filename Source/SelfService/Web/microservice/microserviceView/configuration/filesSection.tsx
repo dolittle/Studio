@@ -19,12 +19,19 @@ import { getConfigFilesNamesList, updateConfigFiles } from '../../../api/api';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
+const columns = [
+    { field: 'path', headerName: 'Path', width: 200 },
+    { field: 'fileName', headerName: 'Name', width: 130 },
+    { field: 'dateAdded', headerName: 'Date Added', width: 200 },
+    { field: 'addedBy', headerName: 'Added By', width: 200 },
+];
+
 type ConfigFilesTableRow = {
     id: string;
-    fileName: string,
-    path?: string,
-    dateAdded?: string,
-    addedBy?: string
+    fileName: string;
+    path: string;
+    dateAdded: string;
+    addedBy: string;
 };
 
 type FilesSectionProps = {
@@ -134,12 +141,7 @@ export const FilesSection = ({ applicationId, environment, microserviceId }: Fil
             <Box component={Paper} sx={{ width: 1, height: 1 }}>
                 <DataGridPro
                     rows={dataTableRows}
-                    columns={[
-                        { field: 'path', headerName: 'Path', width: 200 },
-                        { field: 'fileName', headerName: 'Name', width: 130 },
-                        { field: 'dateAdded', headerName: 'Date Added', width: 200 },
-                        { field: 'addedBy', headerName: 'Added By', width: 200 },
-                    ]}
+                    columns={columns}
                     checkboxSelection={dataRowSelected}
                     autoHeight={true}
                     headerHeight={46}
