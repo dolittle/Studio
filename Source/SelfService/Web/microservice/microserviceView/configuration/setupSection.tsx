@@ -36,9 +36,12 @@ const styles = {
         }
     },
     formSections: {
-        mb: 4,
-        display: 'flex',
-        flexDirection: 'column'
+        'mb': 4,
+        'display': 'flex',
+        'flexDirection': 'column',
+        '&:last-child': {
+            mb: 0
+        }
     }
 };
 
