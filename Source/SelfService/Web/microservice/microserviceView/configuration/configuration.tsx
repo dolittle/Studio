@@ -154,6 +154,7 @@ export const Configuration = ({
             <FilesSection
                 applicationId={applicationId}
                 environment={environment}
+                currentMicroservice={currentMicroservice}
                 microserviceId={microserviceId}
             />
 

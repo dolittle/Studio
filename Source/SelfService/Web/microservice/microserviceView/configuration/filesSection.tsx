@@ -17,6 +17,7 @@ import { Button } from '@dolittle/design-system/atoms/Button';
 import { FileUploadForm, FileUploadFormRef } from '../../base/components/fileUploadForm';
 
 import { getConfigFilesNamesList, updateConfigFiles } from '../../../api/api';
+import { MicroserviceStore } from '../../../stores/microservice';
 
 import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
 
@@ -40,10 +41,11 @@ type ConfigFilesTableRow = {
 type FilesSectionProps = {
     applicationId: string;
     environment: string;
+    currentMicroservice: MicroserviceStore;
     microserviceId: string;
 };
 
-export const FilesSection = ({ applicationId, environment, microserviceId }: FilesSectionProps) => {
+export const FilesSection = ({ applicationId, environment, currentMicroservice, microserviceId }: FilesSectionProps) => {
     const fileUploadRef = useRef<FileUploadFormRef>(null);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -103,7 +105,9 @@ export const FilesSection = ({ applicationId, environment, microserviceId }: Fil
     const saveConfigFile = async (formData: FormData) => {
         await updateConfigFiles(applicationId, environment, microserviceId, formData)
             .then(res => {
-                enqueueSnackbar(`${'filename'} successfully added.`, { variant: 'info' });
+                // @ts-ignore
+                const fileName = formData.get('file')?.name || 'File';
+                enqueueSnackbar(`${fileName} successfully added.`, { variant: 'info' });
                 fetchConfigFilesNamesList();
                 setRestartMicroserviceInfoBoxOpen(true);
             })
@@ -160,8 +164,8 @@ export const FilesSection = ({ applicationId, environment, microserviceId }: Fil
                 <AlertBox
                     severity='info'
                     title='Restart Microservice'
-                    message='New uploads will be added as soon as ExampleMicroservice restarts.
-                              It will restart automatically in a few minutes or you can manually restart it now.'
+                    message={`New uploads will be added as soon as ${currentMicroservice.name} restarts.
+                              It will restart automatically in a few minutes or you can manually restart it now.`}
                     actionText='Restart Microservice'
                     isOpen={restartMicroserviceInfoBoxOpen}
                     closeAction={handleMicroserviceInfoBoxClose}
