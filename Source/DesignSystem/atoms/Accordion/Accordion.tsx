@@ -21,8 +21,7 @@ export const Accordion = (props: AccordionProps) => {
             onChange={props.onChange}
             sx={{
                 backgroundColor: 'transparent',
-                backgroundImage: 'none',
-                pt: 1.875
+                backgroundImage: 'none'
             }}>
             <AccordionSummary
                 expandIcon={<ExpandCircleDownRounded sx={{ color: 'text.secondary' }} />}
@@ -36,7 +35,7 @@ export const Accordion = (props: AccordionProps) => {
                     },
                     '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
                         transform: 'rotate(0deg)',
-                    },
+                    }
                 }}
             >
                 <Typography variant='subtitle1' sx={{ ml: 1.25 }}>{props.title}</Typography>
