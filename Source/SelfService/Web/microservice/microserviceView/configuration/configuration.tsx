@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
@@ -51,6 +52,8 @@ const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 export const Configuration = ({
     application, applicationId, environment, microserviceId, currentMicroservice }: ConfigurationProps) => {
+
+    const history = useHistory();
 
     const [filesNamesList, setFilesNamesList] = useState<string[]>([]);
     const [configFileModalVisibility, setConfigFileModalVisibility] = useState<boolean>(false);
@@ -120,7 +123,13 @@ export const Configuration = ({
         } else {
             fetchConfigFilesNamesList();
         }
+
         setConfigFileModalVisibility(false);
+    };
+
+    const handleEnvironmentClick = async () => {
+        const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
+        history.push(href);
     };
 
     return (
@@ -155,11 +164,10 @@ export const Configuration = ({
             </Box>
 
             <Box ml={2}>
-                {/* <ButtonText
-                    onClick={onClick}
-                >
+                <ButtonText
+                    onClick={handleEnvironmentClick}>
                     Manage environment variables
-                </ButtonText> */}
+                </ButtonText>
 
                 <DownloadButtons
                     environment={environment}
