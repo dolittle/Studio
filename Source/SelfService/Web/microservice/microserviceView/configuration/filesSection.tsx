@@ -47,8 +47,10 @@ export const FilesSection = ({ applicationId, environment, microserviceId }: Fil
     const [filesPanelExpanded, setFilesPanelExpanded] = useState(true);
     const [validFile, setValidFile] = useState(false);
     const [dataTableRows, setDataTableRows] = useState<ConfigFilesTableRow[]>([]);
-    const [file, setFile] = useState<File>(new File([], ''));
+    const [file2, setFile2] = useState<File>(new File([], ''));
     const [dataRowSelected, setDataRowSelected] = useState(true);
+
+    console.log(file2);
 
     useEffect(() => {
         fetchConfigFilesNamesList();
@@ -57,14 +59,14 @@ export const FilesSection = ({ applicationId, environment, microserviceId }: Fil
     const fetchConfigFilesNamesList = async (): Promise<void> => {
         const result = await getConfigFilesNamesList(applicationId, environment, microserviceId)
             .then(res => res.data)
-            .catch((error) => {
+            .catch(error => {
                 enqueueSnackbar(`Could not fetch config files ${error.message}`, { variant: 'error' });
             });
 
-        assignDataTableRows(result ?? []);
+        createDataTableObj(result ?? []);
     };
 
-    const assignDataTableRows = (file: string[]): void => {
+    const createDataTableObj = (file: string[]): void => {
         const rows = file.map(name => {
             return {
                 id: name,
@@ -78,16 +80,22 @@ export const FilesSection = ({ applicationId, environment, microserviceId }: Fil
         setDataTableRows(rows);
     };
 
-    const validateFile = (file: File) => {
+    // Does not work
+    const handleFileSelect = (file: File): void => {
         sizeValidation(file);
-        setFile(file);
+        setFile2(file);
+
         fileUploadRef.current?.confirmSelectedFile();
     };
 
     const sizeValidation = (file: File): boolean => {
         if (file.size > MAX_CONFIGMAP_ENTRY_SIZE) {
+            // Replace with design system Dialog
+            enqueueSnackbar(
+                `file cannot be larger than ${MAX_CONFIGMAP_ENTRY_SIZE} bytes. Please select another file`,
+                { variant: 'error', persist: false }
+            );
             setValidFile(false);
-            enqueueSnackbar(`file cannot be larger than ${MAX_CONFIGMAP_ENTRY_SIZE} bytes. Please select another file`, { variant: 'error', persist: false });
             return false;
         }
 
@@ -96,15 +104,15 @@ export const FilesSection = ({ applicationId, environment, microserviceId }: Fil
     };
 
     const saveConfigFile = async (formData: FormData) => {
-        const upsert = await updateConfigFiles(applicationId, environment, microserviceId, formData);
-
-        if (upsert.success === false) {
-            enqueueSnackbar(upsert.error, { variant: 'error', persist: false });
-            setValidFile(false);
-        } else {
-            // @ts-ignore
-            enqueueSnackbar(`'${formData.get('file')?.name || ''}' successfully added.`, { variant: 'info' });
-            fetchConfigFilesNamesList();
+        if (validFile) {
+            await updateConfigFiles(applicationId, environment, microserviceId, formData)
+                .then(res => {
+                    enqueueSnackbar(`${'filename'} successfully added.`, { variant: 'info' });
+                    fetchConfigFilesNamesList();
+                })
+                .catch(error => {
+                    enqueueSnackbar(`Could not save config file. ${error.message}`, { variant: 'error' });
+                });
         }
     };
 
@@ -136,7 +144,7 @@ export const FilesSection = ({ applicationId, environment, microserviceId }: Fil
                 />
             </Box>
 
-            <FileUploadForm ref={fileUploadRef} onFileAdded={saveConfigFile} onFileSelected={validateFile} />
+            <FileUploadForm ref={fileUploadRef} onFileAdded={saveConfigFile} onFileSelected={handleFileSelect} />
 
             <Box component={Paper} sx={{ width: 1, height: 1 }}>
                 <DataGridPro
