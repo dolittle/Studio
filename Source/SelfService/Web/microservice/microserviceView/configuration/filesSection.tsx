@@ -10,6 +10,8 @@ import { DataGridPro } from '@mui/x-data-grid-pro';
 import { Box, Paper, Typography } from '@mui/material';
 import { AddCircle, DeleteRounded, DownloadRounded } from '@mui/icons-material';
 
+import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
+
 import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
 import { Button } from '@dolittle/design-system/atoms/Button';
 
@@ -45,12 +47,8 @@ export const FilesSection = ({ applicationId, environment, microserviceId }: Fil
     const { enqueueSnackbar } = useSnackbar();
 
     const [filesPanelExpanded, setFilesPanelExpanded] = useState(true);
-    const [validFile, setValidFile] = useState(false);
     const [dataTableRows, setDataTableRows] = useState<ConfigFilesTableRow[]>([]);
-    const [file2, setFile2] = useState<File>(new File([], ''));
     const [dataRowSelected, setDataRowSelected] = useState(true);
-
-    console.log(file2);
 
     useEffect(() => {
         fetchConfigFilesNamesList();
@@ -80,40 +78,35 @@ export const FilesSection = ({ applicationId, environment, microserviceId }: Fil
         setDataTableRows(rows);
     };
 
-    // Does not work
     const handleFileSelect = (file: File): void => {
-        sizeValidation(file);
-        setFile2(file);
-
-        fileUploadRef.current?.confirmSelectedFile();
+        if (validateFileSize(file)) {
+            fileUploadRef.current?.confirmSelectedFile();
+        }
     };
 
-    const sizeValidation = (file: File): boolean => {
+    // Needs more validate logic, like file type
+    const validateFileSize = (file: File): boolean => {
         if (file.size > MAX_CONFIGMAP_ENTRY_SIZE) {
             // Replace with design system Dialog
             enqueueSnackbar(
                 `file cannot be larger than ${MAX_CONFIGMAP_ENTRY_SIZE} bytes. Please select another file`,
                 { variant: 'error', persist: false }
             );
-            setValidFile(false);
             return false;
         }
 
-        setValidFile(true);
         return true;
     };
 
     const saveConfigFile = async (formData: FormData) => {
-        if (validFile) {
-            await updateConfigFiles(applicationId, environment, microserviceId, formData)
-                .then(res => {
-                    enqueueSnackbar(`${'filename'} successfully added.`, { variant: 'info' });
-                    fetchConfigFilesNamesList();
-                })
-                .catch(error => {
-                    enqueueSnackbar(`Could not save config file. ${error.message}`, { variant: 'error' });
-                });
-        }
+        await updateConfigFiles(applicationId, environment, microserviceId, formData)
+            .then(res => {
+                enqueueSnackbar(`${'filename'} successfully added.`, { variant: 'info' });
+                fetchConfigFilesNamesList();
+            })
+            .catch(error => {
+                enqueueSnackbar(`Could not save config file. ${error.message}`, { variant: 'error' });
+            });
     };
 
     return (
@@ -145,6 +138,15 @@ export const FilesSection = ({ applicationId, environment, microserviceId }: Fil
             </Box>
 
             <FileUploadForm ref={fileUploadRef} onFileAdded={saveConfigFile} onFileSelected={handleFileSelect} />
+
+            <AlertBox
+                severity='info'
+                title='Restart Microservice'
+                message={`New uploads will be added as soon as ExampleMicroservice restarts.
+                 It will restart automatically in a few minutes or you can manually restart it now.`}
+                action={!true}
+                sx={{ width: 1 }}
+            />
 
             <Box component={Paper} sx={{ width: 1, height: 1 }}>
                 <DataGridPro
