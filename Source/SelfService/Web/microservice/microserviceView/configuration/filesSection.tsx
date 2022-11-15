@@ -132,13 +132,9 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         setDeleteConfigFileDialogIsOpen(false);
     };
 
-    const configFileDeleteConfirmationTitle = dataRowSelected.length > 1 ?
-        `Delete configuration files` :
-        `Delete configuration file`;
-
-    const configFileDeleteConfirmationMessage = dataRowSelected.length > 1 ?
-        `Are you sure you want to delete these files?` :
-        `Are you sure you want to delete this file?`;
+    const hasManySelectedRows = dataRowSelected.length > 1;
+    const hasNoSelectedRows = dataRowSelected.length === 0;
+    const isPlural = hasManySelectedRows ? 'files' : 'file';
 
     return (
         <>
@@ -156,8 +152,8 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
             <ConfirmDialog
                 id='delete-config-file-dialog'
-                title={configFileDeleteConfirmationTitle}
-                description={configFileDeleteConfirmationMessage}
+                title={`Delete configuration ${isPlural}`}
+                description={`Are you sure you want to delete ${hasManySelectedRows ? 'these' : 'this'} ${isPlural}?`}
                 cancelText='Cancel'
                 confirmText='Delete'
                 open={deleteConfigFileDialogIsOpen}
@@ -185,14 +181,14 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                     <Button
                         variant='text'
                         label='Delete File(s)'
-                        disabled={dataRowSelected.length === 0}
+                        disabled={hasNoSelectedRows}
                         startWithIcon={<DeleteRounded />}
                         onClick={() => setDeleteConfigFileDialogIsOpen(true)}
                     />
                     <Button
                         variant='text'
                         label='Download File(s)'
-                        disabled={dataRowSelected.length === 0}
+                        disabled={hasNoSelectedRows}
                         startWithIcon={<DownloadRounded />}
                     //onClick={() => fileUploadRef.current?.promptForFile()}
                     />
