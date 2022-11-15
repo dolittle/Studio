@@ -76,7 +76,6 @@ export const App = () => {
                     <GlobalContextProvider>
                         <Box sx={snackbarStyles}>
                             <SnackbarProvider
-                                maxSnack={1}
                                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                                 TransitionComponent={
                                     Grow as React.ComponentType<TransitionProps>
