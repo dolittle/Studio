@@ -12,7 +12,8 @@ type ConfirmDialogProps = {
     id: string;
     open?: boolean;
     title: string;
-    description: React.ReactNode;
+    description?: string;
+    children?: React.ReactNode;
     cancelText: string;
     confirmText: string;
     handleCancel: () => void;
@@ -38,11 +39,15 @@ export const ConfirmDialog = (props: ConfirmDialogProps) =>
                 {<CloseRounded />}
             </IconButton>
         </DialogTitle>
+
         <DialogContent>
             <DialogContentText id={`${props.id}-description`} variant='body1'>
                 {props.description}
             </DialogContentText>
+
+            {props.children}
         </DialogContent>
+
         <DialogActions sx={{ mr: 1 }}>
             <Button onClick={props.handleCancel} label={props.cancelText} variant='text' sx={{ color: 'text.primary' }} />
             <Button onClick={props.handleConfirm} label={props.confirmText} variant='text' />
