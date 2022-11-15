@@ -5,19 +5,19 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { DataGridPro } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridSelectionModel } from '@mui/x-data-grid-pro';
 
-import { Box, Paper } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 import { AddCircle, DeleteRounded, DownloadRounded } from '@mui/icons-material';
 
 import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
 import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
 import { Button } from '@dolittle/design-system/atoms/Button';
+import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/ConfirmDialog';
 
 import { FileUploadForm, FileUploadFormRef } from '../../base/components/fileUploadForm';
 
-import { getConfigFilesNamesList, updateConfigFiles } from '../../../api/api';
-import { MicroserviceStore } from '../../../stores/microservice';
+import { getConfigFilesNamesList, updateConfigFiles, deleteConfigFile } from '../../../api/api';
 
 import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
 
@@ -41,19 +41,20 @@ type ConfigFilesTableRow = {
 type FilesSectionProps = {
     applicationId: string;
     environment: string;
-    currentMicroservice: MicroserviceStore;
+    microserviceName: string;
     microserviceId: string;
 };
 
-export const FilesSection = ({ applicationId, environment, currentMicroservice, microserviceId }: FilesSectionProps) => {
+export const FilesSection = ({ applicationId, environment, microserviceName, microserviceId }: FilesSectionProps) => {
     const fileUploadRef = useRef<FileUploadFormRef>(null);
     const { enqueueSnackbar } = useSnackbar();
 
     const [filesPanelExpanded, setFilesPanelExpanded] = useState(true);
     const [dataTableRows, setDataTableRows] = useState<ConfigFilesTableRow[]>([]);
-    const [dataRowSelected, setDataRowSelected] = useState(true);
+    const [dataRowSelected, setDataRowSelected] = useState<GridSelectionModel>([]);
     const [restartMicroserviceInfoBoxOpen, setRestartMicroserviceInfoBoxOpen] = useState(false);
-    const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
+    const [restartMicroserviceDialogIsOpen, setRestartMicroserviceDialogIsOpen] = useState(false);
+    const [deleteConfigFileDialogIsOpen, setDeleteConfigFileDialogIsOpen] = useState(false);
 
     useEffect(() => {
         fetchConfigFilesNamesList();
@@ -104,7 +105,7 @@ export const FilesSection = ({ applicationId, environment, currentMicroservice, 
 
     const saveConfigFile = async (formData: FormData) => {
         await updateConfigFiles(applicationId, environment, microserviceId, formData)
-            .then(res => {
+            .then(() => {
                 // @ts-ignore
                 const fileName = formData.get('file')?.name || 'File';
                 enqueueSnackbar(`${fileName} successfully added.`, { variant: 'info' });
@@ -116,10 +117,28 @@ export const FilesSection = ({ applicationId, environment, currentMicroservice, 
             });
     };
 
-    const handleMicroserviceInfoBoxClose = () => {
-        setRestartDialogIsOpen(true);
-        setRestartMicroserviceInfoBoxOpen(false);
+    const handleConfigFileDelete = async () => {
+        for (const filename of dataRowSelected) {
+            await deleteConfigFile(applicationId, environment, microserviceId, filename.toString())
+                .then(() => {
+                    enqueueSnackbar(`${filename} successfully deleted.`, { variant: 'info' });
+                    fetchConfigFilesNamesList();
+                })
+                .catch(error => {
+                    enqueueSnackbar(`Could not delete config file. ${error.message}`, { variant: 'error' });
+                });
+        }
+
+        setDeleteConfigFileDialogIsOpen(false);
     };
+
+    const configFileDeleteConfirmationTitle = dataRowSelected.length > 1 ?
+        `Delete configuration files` :
+        `Delete configuration file`;
+
+    const configFileDeleteConfirmationMessage = dataRowSelected.length > 1 ?
+        `Are you sure you want to delete these files?` :
+        `Are you sure you want to delete this file?`;
 
     return (
         <>
@@ -127,10 +146,28 @@ export const FilesSection = ({ applicationId, environment, currentMicroservice, 
                 applicationId={applicationId}
                 environment={environment}
                 microserviceId={microserviceId}
-                open={restartDialogIsOpen}
-                setOpen={setRestartDialogIsOpen}
-                handleSuccess={() => window.location.reload()}
+                open={restartMicroserviceDialogIsOpen}
+                setOpen={() => setRestartMicroserviceDialogIsOpen(true)}
+                handleSuccess={() => {
+                    setRestartMicroserviceInfoBoxOpen(false);
+                    window.location.reload();
+                }}
             />
+
+            <ConfirmDialog
+                id='delete-config-file-dialog'
+                title={configFileDeleteConfirmationTitle}
+                description={configFileDeleteConfirmationMessage}
+                cancelText='Cancel'
+                confirmText='Delete'
+                open={deleteConfigFileDialogIsOpen}
+                handleCancel={() => setDeleteConfigFileDialogIsOpen(false)}
+                handleConfirm={handleConfigFileDelete}
+            >
+                {dataRowSelected.map(file =>
+                    <Typography key={file} variant='body2' sx={{ mt: 1.25 }}>{file}</Typography>
+                )}
+            </ConfirmDialog>
 
             <Accordion
                 id='configuration-files'
@@ -148,12 +185,14 @@ export const FilesSection = ({ applicationId, environment, currentMicroservice, 
                     <Button
                         variant='text'
                         label='Delete File(s)'
+                        disabled={dataRowSelected.length === 0}
                         startWithIcon={<DeleteRounded />}
-                    //onClick={() => fileUploadRef.current?.promptForFile()}
+                        onClick={() => setDeleteConfigFileDialogIsOpen(true)}
                     />
                     <Button
                         variant='text'
                         label='Download File(s)'
+                        disabled={dataRowSelected.length === 0}
                         startWithIcon={<DownloadRounded />}
                     //onClick={() => fileUploadRef.current?.promptForFile()}
                     />
@@ -164,11 +203,11 @@ export const FilesSection = ({ applicationId, environment, currentMicroservice, 
                 <AlertBox
                     severity='info'
                     title='Restart Microservice'
-                    message={`New uploads will be added as soon as ${currentMicroservice.name} restarts.
+                    message={`New uploads will be added as soon as ${microserviceName} restarts.
                               It will restart automatically in a few minutes or you can manually restart it now.`}
                     actionText='Restart Microservice'
                     isOpen={restartMicroserviceInfoBoxOpen}
-                    closeAction={handleMicroserviceInfoBoxClose}
+                    closeAction={() => setRestartMicroserviceDialogIsOpen(true)}
                     sx={{ width: 1, mb: 2 }}
                 />
 
@@ -176,7 +215,12 @@ export const FilesSection = ({ applicationId, environment, currentMicroservice, 
                     <DataGridPro
                         rows={dataTableRows}
                         columns={columns}
-                        checkboxSelection={dataRowSelected}
+                        checkboxSelection
+                        onSelectionModelChange={newSelectionModal => {
+                            setDataRowSelected(newSelectionModal);
+                        }}
+                        selectionModel={dataRowSelected}
+                        getRowHeight={() => 'auto'}
                         autoHeight={true}
                         headerHeight={46}
                         disableColumnMenu
