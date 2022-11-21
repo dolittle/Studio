@@ -6,6 +6,7 @@ import { Route, BrowserRouter, useLocation, Switch } from 'react-router-dom';
 import { QueryParamProvider } from 'use-query-params';
 import { LicenseInfo } from '@mui/x-license-pro';
 
+import '@dolittle/design-system/theming/fonts';
 import { themeDark } from '@dolittle/design-system';
 
 import { useViewportResize } from './utils/useViewportResize';

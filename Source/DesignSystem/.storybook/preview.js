@@ -1,5 +1,6 @@
 import React from "react"
-import { themeDark } from '../theme';
+import '../theming/fonts';
+import { themeDark } from '../theming/theme';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material'
 
