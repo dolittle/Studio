@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { useController as reactHookFormUseController, ControllerRenderProps, UseControllerProps, FieldError } from 'react-hook-form';
+import { useController as reactHookFormUseController, ControllerRenderProps, UseControllerProps, FieldError, Message, ValidationRule } from 'react-hook-form';
 
 type ControllerRules = NonNullable<UseControllerProps<any>['rules']>;
 type ValidationProps = Omit<ControllerRules, 'deps' | 'shouldUnregister' | 'value' | 'disabled'>;
@@ -79,4 +79,20 @@ export const useController = (props: FieldProps): { field: ControllerRenderProps
     }
 
     return { field, hasError, errorMessage };
+};
+
+export const isRequired = (required?: Message | ValidationRule<boolean>): boolean => {
+    if (required === undefined) {
+        return false;
+    }
+
+    if (typeof required === 'boolean') {
+        return required;
+    }
+
+    if (typeof required === 'string') {
+        return true;
+    }
+
+    return required.value;
 };

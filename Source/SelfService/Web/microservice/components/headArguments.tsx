@@ -1,73 +1,72 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Box } from '@mui/material';
-import React from 'react';
-import { ButtonText } from '../../theme/buttonText';
+import React, { ChangeEvent } from 'react';
 
-import { TextField } from '../../theme/textField';
-import RemoveIcon from '@mui/icons-material/HighlightOff';
+import { Box, TextField } from '@mui/material';
+import { AddCircleRounded, DeleteRounded } from '@mui/icons-material/';
 
+import { Button } from '@dolittle/design-system/atoms/Button';
 
-type Props = {
-    args: string[];
-    setArgs: (args: string[]) => void;
+type HeadArgumentsProps = {
+    cmdArgs: string[];
+    setCmdArgs: (args: string[]) => void;
+    disabled?: boolean;
 };
 
-export const HeadArguments: React.FunctionComponent<Props> = (props) => {
+export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsProps) => {
 
-    const _props = props!;
-    const args = _props.args;
-    const setArgs = _props.setArgs;
-
-    const handleArg = (event: React.ChangeEvent<HTMLInputElement>, argIndex: number) => {
-        const newArgs = [...args];
+    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, argIndex: number) => {
+        const newArgs = [...cmdArgs];
         newArgs[argIndex] = event.target.value;
-        setArgs(newArgs);
+        setCmdArgs(newArgs);
     };
 
-    const handleAddArg = (event: React.MouseEvent<HTMLElement>) => {
-        const newArgs = [...args];
+    const handleAddArg = () => {
+        const newArgs = [...cmdArgs];
         newArgs.push('');
-        setArgs(newArgs);
+        setCmdArgs(newArgs);
     };
 
-    const handleRemoveArg = (event: React.MouseEvent<HTMLElement>, argIndex: number) => {
-        const newArgs = [...args];
+    const handleRemoveArg = (argIndex: number) => {
+        const newArgs = [...cmdArgs];
         newArgs.splice(argIndex, 1);
-        setArgs(newArgs);
+        setCmdArgs(newArgs);
     };
 
-    return (<>
-        <Box flexDirection='column' display='flex' justifyContent='flex-start' style={{ gap: '1rem' }}>
-            {args.map((arg, argIndex) => (
-                <Box display='flex' justifyContent='flex-start' style={{ gap: '1rem' }} key={argIndex}>
+    return (
+        <Box>
+            {cmdArgs.map((arg, argIndex) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }} key={argIndex}>
                     <TextField
                         id={'headArg' + argIndex.toString()}
-                        label='Argument'
-                        required={false}
+                        label='CMD Argument'
                         value={arg}
-                        onChange={(event) => handleArg(event, argIndex)}
+                        disabled={disabled}
+                        onChange={(event) => handleChange(event, argIndex)}
                         size='small'
+                        variant='outlined'
+                        sx={{ width: 220 }}
                     />
-                    <ButtonText
-                        onClick={(event) => handleRemoveArg(event, argIndex)}
-                        buttonType='secondary'
-                        size='small'
-                        startIcon={<RemoveIcon />}
-                    >
-                        Remove argument
-                    </ButtonText>
+                    <Button
+                        variant='text'
+                        label='Remove'
+                        disabled={disabled}
+                        startWithIcon={<DeleteRounded />}
+                        onClick={() => handleRemoveArg(argIndex)}
+                        sx={{ color: 'text.primary', height: 29, ml: 2 }}
+                    />
                 </Box>
             ))}
+
+            <Button
+                variant='text'
+                label='Add CMD argument'
+                startWithIcon={<AddCircleRounded />}
+                disabled={disabled}
+                onClick={handleAddArg}
+                sx={{ justifyContent: 'start', mt: 2.5, color: 'text.primary' }}
+            />
         </Box>
-        <ButtonText
-            onClick={(event) => handleAddArg(event)}
-            buttonType='secondary'
-            size='small'
-            withIcon
-        >
-            Add argument
-        </ButtonText>
-    </>);
+    );
 };

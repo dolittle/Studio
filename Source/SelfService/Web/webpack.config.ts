@@ -101,6 +101,10 @@ function webpack(env: Args, argv: Args) {
                     },
                     ws: true,
                 },
+                '/proxy': {
+                    target: 'http://localhost:3007',
+                    ws: true,
+                }
             },
             before: (app, server, compiler) => {}
         },

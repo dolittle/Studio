@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { createTheme, Components, PaletteOptions } from '@mui/material/styles';
-import { TypographyOptions } from '@mui/material/styles/createTypography';
+import type { DataGridProComponents } from '@mui/x-data-grid-pro/themeAugmentation';
 
-import type {} from '@mui/x-data-grid-pro/themeAugmentation';
+import { Components, createTheme, PaletteOptions } from '@mui/material/styles';
+import { TypographyOptions } from '@mui/material/styles/createTypography';
 
 import '@fontsource/rubik/300.css';
 import '@fontsource/rubik/400.css';
@@ -28,13 +28,13 @@ declare module '@mui/material/styles' {
     interface PaletteOptions {
         outlineborder?: PaletteOptions['divider'];
     }
-}
+};
 
 declare module '@mui/material/Typography' {
     interface TypographyPropsVariantOverrides {
         monospace: true;
     }
-}
+};
 
 const typography: TypographyOptions = {
     fontFamily: '"Rubik", "Open sans", "Arial", sans-serif',
@@ -161,11 +161,78 @@ const palette: PaletteOptions = {
         default: '#0F1014',
         paper: '#191A21',
     },
+    action: {
+        active: '#ffffff61',
+    },
     divider: '#2C2B33E6',
     outlineborder: '#504D4D',
 };
 
-const components: Components = {
+const components: Components & DataGridProComponents = {
+    MuiFormControl: {
+        styleOverrides: {
+            root: {
+                letterSpacing: '0.15px',
+            },
+        }
+    },
+    MuiFormLabel: {
+        styleOverrides: {
+            root: {
+                fontSize: 14,
+            },
+        }
+    },
+    MuiOutlinedInput: {
+        styleOverrides: {
+            root: {
+                fontSize: 14,
+            },
+            input: {
+                '::placeholder': {
+                    color: palette?.text?.secondary,
+                },
+            },
+        }
+    },
+    MuiFormHelperText: {
+        styleOverrides: {
+            root: {
+                '&.Mui-error': {
+                    color: '#FBB3B3',
+                    letterSpacing: '0.4px',
+                },
+            },
+        }
+    },
+    MuiInputAdornment: {
+        styleOverrides: {
+            root: {
+                color: palette?.action?.active,
+            },
+        }
+    },
+    MuiSwitch: {
+        styleOverrides: {
+            colorPrimary: {
+                '&.Mui-checked.Mui-disabled': {
+                    color: '#757575'
+                }
+            },
+            track: {
+                '.Mui-checked.Mui-disabled + &': {
+                    backgroundColor: '#FFFFFF'
+                },
+            },
+        }
+    },
+    MuiButton: {
+        styleOverrides: {
+            sizeSmall: {
+                fontSize: '0.75rem',
+            },
+        }
+    },
     MuiDataGrid: {
         styleOverrides: {
             root: {

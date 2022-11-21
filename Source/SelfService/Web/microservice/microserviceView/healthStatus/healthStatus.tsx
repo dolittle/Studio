@@ -1,20 +1,20 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo } from 'react';
-import { useSnackbar } from 'notistack';
+import React, { useMemo, useState } from 'react';
 
-import { RestartAlt } from '@mui/icons-material';
+import { RestartAltRounded } from '@mui/icons-material';
 
 import { Graph } from '@dolittle/design-system/molecules/Metrics/Graph';
 import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
+import { Button } from '@dolittle/design-system/atoms/Button';
 
-import { ContainerStatusInfo, HttpResponsePodStatus, restartMicroservice } from '../../../api/api';
+import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../api/api';
 
 import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 
-import { ButtonText } from '../../../theme/buttonText';
 import { DataTable, DataTableStats } from './dataTable';
+import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
 
 const styles = {
     restartBtn: {
@@ -39,26 +39,16 @@ const computeStats = (metric: Metric | undefined, scale: number): DataTableStats
 };
 
 type HealthStatusProps = {
-    status: string
-    data: HttpResponsePodStatus
-    environment: string
-    applicationId: string
-    microserviceId: string
+    status: string;
+    data: HttpResponsePodStatus;
+    environment: string;
+    applicationId: string;
+    microserviceId: string;
 };
 
 export const HealthStatus = ({ applicationId, microserviceId, data, environment }: HealthStatusProps) => {
-    const { enqueueSnackbar } = useSnackbar();
 
-    const handleRestart = async () => {
-        const success = await restartMicroservice(applicationId, environment, microserviceId);
-
-        if (!success) {
-            enqueueSnackbar('Failed to restart microservice', { variant: 'error' });
-            return;
-        }
-
-        window.location.reload();
-    };
+    const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
 
     const timeRange = useMemo<[number, number]>(() => [Date.now() - 86_400_000, Date.now()], [Date.now() / 60_000]);
     const cpu = useMetricsFromLast(`microservice:container_cpu_usage_seconds:rate_max{application_id="${applicationId}", environment="${environment}", microservice_id="${microserviceId}"}`, 86_400, 60);
@@ -107,12 +97,22 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
 
     return (
         <>
-            <ButtonText
+            <RestartMicroserviceDialog
+                applicationId={applicationId}
+                environment={environment}
+                microserviceId={microserviceId}
+                open={restartDialogIsOpen}
+                setOpen={setRestartDialogIsOpen}
+                handleSuccess={() => window.location.reload()}
+            />
+
+            <Button
+                variant='text'
+                label='Restart Microservice'
+                startWithIcon={<RestartAltRounded />}
+                onClick={() => setRestartDialogIsOpen(true)}
                 sx={styles.restartBtn}
-                startIcon={<RestartAlt />}
-                onClick={handleRestart}>
-                Restart microservice
-            </ButtonText>
+            />
 
             {containerTables.length > 0
                 ? containerTables

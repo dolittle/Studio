@@ -1,3 +1,110 @@
+# [2.13.0] - 2022-11-9 [PR: #258](https://github.com/dolittle/Studio/pull/258)
+## Summary
+
+This PR will fix error that occurred when Microservice object is not containing 'extra' object and when configuration files fetch failes.
+
+Also added few helper functions that capitalize string and removes unwanted part from string.
+
+<img width="494" alt="Screenshot 2022-11-09 at 19 23 56" src="https://user-images.githubusercontent.com/19160439/200902920-416786cd-4db1-4e6b-9871-7554d81e0548.png">
+
+<img width="486" alt="Screenshot 2022-11-08 at 18 28 07" src="https://user-images.githubusercontent.com/19160439/200902944-95281173-11cc-4a14-a80a-c2207113379a.png">
+
+### Added
+
+- Helper functions for capitalization and cleaning string.
+
+### Fixed
+
+- Error on 'Configuration Files' failed fetch
+- Error if Microservice object does not contain 'extra' object.
+
+
+# [2.12.0] - 2022-11-8 [PR: #257](https://github.com/dolittle/Studio/pull/257)
+## Summary
+
+Fix for errors that appeared after merge and wrongly solved conflicts in MicroserviceView.tsx.
+
+<img width="621" alt="Screenshot 2022-11-08 at 16 08 47" src="https://user-images.githubusercontent.com/19160439/200586305-a40787f9-b86b-4f8b-9699-014bf4259346.png">
+
+### Fixed
+
+- Removed double code
+
+
+# [2.11.0] - 2022-11-8 [PR: #256](https://github.com/dolittle/Studio/pull/256)
+## Summary
+
+Moved AlertDialog into Storybook and used it to ask confirmation before microservice is restarted and before microservice is deleted.
+
+<img width="899" alt="Screenshot 2022-11-04 at 10 57 24" src="https://user-images.githubusercontent.com/19160439/199933881-fe1a6571-b286-465d-a55f-1fa07eeb7934.png">
+
+### Added
+
+- Confirmation dialog for restarting microservice.
+
+
+# [2.10.1] - 2022-10-24 [PR: #254](https://github.com/dolittle/Studio/pull/254)
+## Summary
+
+Fixes a bug that caused the page to go blank when navigating away from the Terminal-tab. Also make it a bit larger (depending on viewport height) so we get more room to play.
+
+### Changed
+
+- The Terminal view is now `70vh` tall.
+
+### Fixed
+
+- A bug in the `xterm.js` library causes it to `throw` whenever it is disposed (at least using the `WebglAddon`. For now we are just catching this.
+
+
+# [2.10.0] - 2022-10-24 [PR: #249](https://github.com/dolittle/Studio/pull/249)
+## Summary
+
+Adds a Terminal to connect to a shell running _inside_ a Microservice.
+
+<img width="659" alt="image" src="https://user-images.githubusercontent.com/1014990/197510632-39688ecc-d045-41fc-9113-749d450e303f.png">
+
+
+### Added
+
+- A new Terminal component in the DesignSystem that can be connected to any TTY-like interface. A browser-local sample is implemented in the `fake.ts` file - and a similar thing could be used to do something with a terminal-like UI if we want to.
+- A new tab on the `MicroserviceView` page - only visible if a shell is available for the current microservice. This opens a new view with a Terminal.
+- A mock TTYd server for local development when running with mocks. It starts a new TTY on your local machine in your home folder (I don't know how well this works on Windows).
+
+### Changed
+
+- The custom `wrapper` setup in the `componentStories.ts` was changed to use the Storybook-builtin `decorator` setup.
+
+
+# [2.9.0] - 2022-10-18 [PR: #253](https://github.com/dolittle/Studio/pull/253)
+## Summary
+
+Fixed error that accoured after Creating New Application - React needs uniq keys for every list item whitch we did not have.
+Also removed console.log that should not be in production.
+Fixed some styling that they would be more uniformed.
+Used Buttons from Storybook instead imports from MUI.
+
+<img width="1123" alt="Screenshot 2022-10-17 at 10 53 31" src="https://user-images.githubusercontent.com/19160439/196437316-2d38f2c9-75ff-4d0d-a601-859019a1299c.png">
+
+<img width="453" alt="Screenshot 2022-10-17 at 10 53 03" src="https://user-images.githubusercontent.com/19160439/196437408-a19e32f1-d97a-4eed-89a9-026a526cc785.png">
+
+### Added
+
+- Each list items in Applications page has now uniq key that React needs
+
+### Changed
+
+- MUI imported Button to Button from Storybook
+
+### Fixed
+
+- Made styles more uniform
+
+### Removed
+
+- console.log after new application was created
+
+
 # [2.8.1] - 2022-10-17 [PR: #252](https://github.com/dolittle/Studio/pull/252)
 ## Summary
 

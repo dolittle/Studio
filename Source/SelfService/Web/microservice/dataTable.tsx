@@ -11,16 +11,10 @@ import { statusCell, customStatusFieldSort } from './microserviceStatus';
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Box, Paper, Tooltip } from '@mui/material';
 
-const capitalize = (str: string) => {
-    if (str.length < 1) {
-        return str;
-    }
-
-    return str?.length > 0 ? str.charAt(0).toUpperCase() + str.slice(1) : str;
-};
+import { capitalize, removeFromString } from './microserviceView/helpers';
 
 const sortByRuntimeVersion = (params: GridValueGetterParams) => {
-    const runtimeVersion = params.row.edit?.extra?.runtimeImage?.replace(/dolittle\/runtime:/gi, '');
+    const runtimeVersion = removeFromString(params.row.edit?.extra?.runtimeImage, /dolittle\/runtime:/gi);
     if (typeof runtimeVersion !== 'string') {
         return 'N/A';
     }
