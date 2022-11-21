@@ -17,7 +17,7 @@ import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/Confi
 
 import { FileUploadForm, FileUploadFormRef } from '../../base/components/fileUploadForm';
 
-import { getConfigFilesNamesList, updateConfigFiles, deleteConfigFile } from '../../../api/api';
+import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFiles, deleteConfigFile } from '../../../api/api';
 
 import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
 
@@ -103,7 +103,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         return true;
     };
 
-    const saveConfigFile = async (formData: FormData) => {
+    const saveConfigFile = async (formData: FormData): Promise<void> => {
         await updateConfigFiles(applicationId, environment, microserviceId, formData)
             .then(() => {
                 // @ts-ignore
@@ -117,7 +117,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             });
     };
 
-    const handleConfigFileDelete = async () => {
+    const handleConfigFileDelete = async (): Promise<void> => {
         for (const filename of dataRowSelected) {
             await deleteConfigFile(applicationId, environment, microserviceId, filename.toString())
                 .then(() => {
@@ -130,6 +130,16 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         }
 
         setDeleteConfigFileDialogIsOpen(false);
+    };
+
+    // This is reused. consider moving
+    const configMapPrefix = `${environment.toLowerCase()}-${microserviceName.toLowerCase()}`;
+
+    // TODO: Should be able to download multiple selected files
+    const handleConfigFileDownload = (): void => {
+        const configMapName = `${configMapPrefix}-config-files`;
+        const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
+        window.open(href, '_blank');
     };
 
     const hasManySelectedRows = dataRowSelected.length > 1;
@@ -185,12 +195,12 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                         startWithIcon={<DeleteRounded />}
                         onClick={() => setDeleteConfigFileDialogIsOpen(true)}
                     />
+
                     <Button
                         variant='text'
-                        label='Download File(s)'
-                        disabled={hasNoSelectedRows}
+                        label={`Download File(s)`}
                         startWithIcon={<DownloadRounded />}
-                    //onClick={() => fileUploadRef.current?.promptForFile()}
+                        onClick={handleConfigFileDownload}
                     />
                 </Box>
 
