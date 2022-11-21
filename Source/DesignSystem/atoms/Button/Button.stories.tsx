@@ -8,7 +8,7 @@ import { componentStories } from '@dolittle/design-system';
 import { Button } from './Button';
 
 // Would like to get all of them into one Story.
-import { AddCircle, DeleteRounded,DownloadRounded, EditRounded, SaveRounded, RestartAltRounded } from '@mui/icons-material';
+import { AddCircle, DeleteRounded, DownloadRounded, EditRounded, SaveRounded, RestartAltRounded } from '@mui/icons-material';
 
 const { metadata, createStory } = componentStories(Button, {
     actions: {
@@ -36,12 +36,12 @@ export const Outlined = createStory({
 export const WithIcon = createStory({
     variant: 'text',
     label: 'With Icon',
-    startWithIcon: <EditRounded fontSize='small' />,
+    startWithIcon: <EditRounded />,
 });
 
 export const DisabledWithIcon = createStory({
     variant: 'text',
     label: 'Disabled Button with icon',
     disabled: true,
-    startWithIcon: <EditRounded fontSize='small' />,
+    startWithIcon: <EditRounded />,
 });
