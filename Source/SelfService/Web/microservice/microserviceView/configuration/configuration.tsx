@@ -4,12 +4,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { getServerUrlPrefix } from '../../../api/api';
 import { HttpResponseApplication } from '../../../api/application';
 
 import { MicroserviceStore } from '../../../stores/microservice';
 
-import { Box, Divider, Grid, Typography } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 
 import { ButtonText } from '../../../theme/buttonText';
 import { DownloadButton } from '../../../theme/downloadButton';
@@ -38,9 +37,6 @@ export const Configuration = ({
     application, applicationId, environment, microserviceId, currentMicroservice }: ConfigurationProps) => {
 
     const history = useHistory();
-
-    // This is reused. consider moving
-    const configMapPrefix = `${environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
 
     const handleEnvironmentClick = async () => {
         const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
@@ -81,26 +77,6 @@ export const Configuration = ({
                     microserviceName={currentMicroservice.name}
                     applicationId={applicationId}
                 />
-            </Box>
-
-            <Divider sx={styles.divider} />
-
-            <Box ml={2}>
-                <Typography variant='h2' my={2}>Configuration files</Typography>
-
-                <Grid container spacing={3}>
-                    <Grid item>
-                        <DownloadButton
-                            onClick={(event: React.MouseEvent<HTMLElement>) => {
-                                const configMapName = `${configMapPrefix}-config-files`;
-                                const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
-                                window.open(href, '_blank');
-                            }}
-                        >
-                            Download config files yaml
-                        </DownloadButton>
-                    </Grid>
-                </Grid>
             </Box>
         </>
     );
