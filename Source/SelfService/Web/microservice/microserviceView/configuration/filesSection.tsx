@@ -17,7 +17,7 @@ import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/Confi
 
 import { FileUploadForm, FileUploadFormRef } from '../../base/components/fileUploadForm';
 
-import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFiles, deleteConfigFile } from '../../../api/api';
+import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../api/api';
 
 import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
 
@@ -104,7 +104,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     };
 
     const saveConfigFile = async (formData: FormData): Promise<void> => {
-        await updateConfigFiles(applicationId, environment, microserviceId, formData)
+        await updateConfigFile(applicationId, environment, microserviceId, formData)
             .then(() => {
                 // @ts-ignore
                 const fileName = formData.get('file')?.name || 'File';

@@ -294,7 +294,7 @@ export async function getConfigFilesNamesList(applicationId: string, environment
     return data;
 };
 
-export async function updateConfigFiles(applicationId: string, environment: string, microserviceId: string, form: FormData): Promise<UpdateConfigFiles> {
+export async function updateConfigFile(applicationId: string, environment: string, microserviceId: string, form: FormData): Promise<UpdateConfigFiles> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files`;
 
     const response = await fetch(
