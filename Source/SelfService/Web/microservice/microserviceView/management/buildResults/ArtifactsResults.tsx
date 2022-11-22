@@ -33,7 +33,7 @@ function toGroupedResults(results: ArtifactResults) {
     return result;
 }
 
-const ExpandableRow = ({children, expandComponent}: {children: JSX.Element[], expandComponent: JSX.Element}) => {
+const ExpandableRow = ({children, buildMessages: buildResults}: {children: JSX.Element[], buildMessages: BuildResult[]}) => {
     const [isExpanded, setIsExpanded] = React.useState(false);
 
   return (
@@ -46,12 +46,12 @@ const ExpandableRow = ({children, expandComponent}: {children: JSX.Element[], ex
         </TableCell>
         {children}
       </TableRow>
-      {isExpanded && (
-        <TableRow>
-          <TableCell padding="checkbox" />
-          {expandComponent}
-        </TableRow>
-      )}
+      {isExpanded && buildResults.map((result, i) => (
+        <TableRow key={i}>
+            <TableCell padding="checkbox" />
+            <TableCell colSpan={4}>{`${result.type}: ${result.message}`}</TableCell>
+      </TableRow>
+      ))}
     </>
   );
 };
@@ -79,12 +79,7 @@ export const ArtifactsResultsView = (props: ArtifactsResultsProps) => {
                         {Array.from(results, ([id, {alias, generation, buildResults}]) => (
                             <ExpandableRow
                             key={id}
-                            expandComponent={
-                            <>
-                                {buildResults.map((result, i) => (
-                                    <TableCell key={id + i} colSpan={3}>{`${result.type}: ${result.message}`}</TableCell>
-                                ))}
-                            </>}
+                            buildMessages={buildResults}
                           >
                             <TableCell sx={{color: buildResults.findIndex(_ => _.isFailed) === -1 ? undefined : 'red'}} align="left">{alias ?? 'No Alias'}</TableCell>
                             <TableCell align="left">{id}</TableCell>
