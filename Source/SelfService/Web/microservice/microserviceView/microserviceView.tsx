@@ -17,6 +17,8 @@ import { HealthStatus } from './healthStatus/healthStatus';
 import { ContainerHealthStatus } from '../microserviceStatus';
 import { useTerminalAvailable } from './terminal/useTerminal';
 import { View as Terminal } from './terminal/View';
+import { View as Management } from './management/View';
+import { useRuntimeManagementAvailable } from './management/useRuntimeManagement';
 
 type MicroserviceViewProps = {
     application: HttpResponseApplication;
@@ -122,6 +124,21 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                     microserviceId={microserviceId}
                 />
             },
+        );
+    }
+
+    // const managementAvailable = useRuntimeManagementAvailable(applicationId, environment, microserviceId);
+    // console.log('management available', managementAvailable);
+    if (true) {
+        tabs.push(
+            {
+                label: 'Management',
+                render: () => <Management
+                    applicationId={applicationId}
+                    environment={environment}
+                    microserviceId={microserviceId}
+                />
+            }
         );
     }
 

@@ -18,6 +18,7 @@
         "@date-io/date-fns": "2.15.0",
         "@dolittle/design-system": "1.0.0",
         "@dolittle/rudiments": "5.0.1",
+        "@dolittle/contracts.web": "7.5.0-boromir.0",
         "@monaco-editor/react": "4.4.5",
         "@shared/styling": "1.0.0",
         "@shared/web": "1.0.0",
