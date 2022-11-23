@@ -86,21 +86,17 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     };
 
     async function handleFileSelect(selected: File | FileList): Promise<void> {
+        let files: File[] = [];
+
         if (selected instanceof FileList) {
-            const fileList = selected as FileList;
-
-            if (Array.from(fileList).every(file => validateFileSize(file) && validateFileChars(file))) {
-                for (const file of Array.from(fileList)) {
-                    const formData = new FormData();
-                    formData.set('file', file);
-
-                    await saveConfigFile(formData);
-                }
-            }
+            files = Array.from(selected as FileList);
         } else {
-            const file = selected as File;
+            files.push(selected as File);
+        }
+
+        for (const file of files) {
             if (validateFileSize(file) && validateFileChars(file)) {
-                fileUploadRef.current?.confirmSelected();
+                await saveConfigFile(file);
             }
         }
     };
@@ -130,9 +126,11 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         return true;
     };
 
-    const saveConfigFile = async (formData: FormData): Promise<void> => {
+    const saveConfigFile = async (file: File): Promise<void> => {
+        const formData = new FormData();
+        formData.set('file', file);
+
         const result = await updateConfigFile(applicationId, environment, microserviceId, formData);
-        console.log('result: ', result);
 
         if (result.success) {
             const fileName = formData.get('file')
@@ -261,7 +259,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                     />
                 </Box>
 
-                <FileUploadForm ref={fileUploadRef} onConfirmed={saveConfigFile} onSelected={handleFileSelect} allowMultipleFiles />
+                <FileUploadForm ref={fileUploadRef} onSelected={handleFileSelect} allowMultipleFiles />
 
                 <AlertBox
                     severity='info'
