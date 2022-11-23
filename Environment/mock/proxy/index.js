@@ -4,9 +4,11 @@
 const { Router } = require('express');
 
 const shell = require('./shell');
+const runtimeManagement = require('./runtimeManagement');
 
 const ports = Router({ mergeParams: true });
 ports.use('/shell', shell);
+ports.use('/runtime-management', runtimeManagement);
 
 ports.get('/:port/*', (req, res) => {
     const { applicationId, environment, microserviceId, port } = req.params;
