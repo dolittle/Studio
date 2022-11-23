@@ -4,16 +4,17 @@
 import React, { useRef, useImperativeHandle } from 'react';
 
 export type OnFileAdd = (form: FormData, event?) => void;
-export type OnFileSelect = (file: File, event?) => void;
+export type OnFileSelect = (file: File | FileList, event?) => void;
 
 export interface FileUploadFormProps {
-    onFileAdded: OnFileAdd,
-    onFileSelected: OnFileSelect
+    onFileAdded: OnFileAdd;
+    onFileSelected: OnFileSelect;
+    allowMultipleFiles: boolean;
 };
 
 export type FileUploadFormRef = {
-    promptForFile: () => void,
-    confirmSelectedFile: () => void
+    promptForFile: () => void;
+    confirmSelectedFile: () => void;
 };
 
 /**
@@ -23,7 +24,7 @@ export type FileUploadFormRef = {
  * @returns
  */
 export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadFormProps>(
-    function FileUploadForm(props: FileUploadFormProps, ref: React.ForwardedRef<FileUploadFormRef>) {
+    function FileUploadForm({ onFileAdded, onFileSelected, allowMultipleFiles = false }: FileUploadFormProps, ref: React.ForwardedRef<FileUploadFormRef>) {
         const formRef = useRef<HTMLFormElement>(null);
         const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -45,23 +46,28 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
         const onFileSubmitted = (event) => {
             event.preventDefault();
             const form = new FormData(event.target as HTMLFormElement);
-            props.onFileAdded(form, event);
+            onFileAdded(form, event);
         };
-
 
         /**
          * Serves change event and file from target
          * @param event
          */
-        const onFileSelect = (event) => {
-            const file = event?.target?.files[0];
-            props.onFileSelected(file, event);
+        const onFileSelect = (event: React.FormEvent<HTMLInputElement>) => {
+            const files = (event?.target as HTMLInputElement)?.files;
+
+            if (!files || files.length === 0) return;
+
+            //console.log(files);
+
+            onFileSelected(allowMultipleFiles ? files : files[0], event);
         };
 
         return (
             <form ref={formRef} method="put" id="file-selector-form" hidden onSubmit={onFileSubmitted}>
                 <input
                     type="file"
+                    multiple={allowMultipleFiles}
                     id="file-selector"
                     name='file'
                     onChange={onFileSelect}

@@ -85,11 +85,26 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         setDataTableRows(rows);
     };
 
-    const handleFileSelect = (file: File): void => {
-        if (validateFileSize(file) && validateFileChars(file)) {
-            fileUploadRef.current?.confirmSelectedFile();
+    async function handleFileSelect(selected: File | FileList): Promise<void> {
+        if (selected instanceof FileList) {
+            const fileList = selected as FileList;
+
+            // Validate each file in the list
+            if (Array.from(fileList).every(file => validateFileSize(file) && validateFileChars(file))) {
+                for (const file of Array.from(fileList)) {
+                    const formData = new FormData();
+                    formData.set('file', file);
+
+                    await saveConfigFile(formData);
+                }
+            }
+        } else {
+            const file = selected as File;
+            if (validateFileSize(file) && validateFileChars(file)) {
+                fileUploadRef.current?.confirmSelectedFile();
+            }
         }
-    };
+    }
 
     const validateFileSize = (file: File): boolean => {
         if (file.size > MAX_CONFIGMAP_ENTRY_SIZE) {
@@ -118,6 +133,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
     const saveConfigFile = async (formData: FormData): Promise<void> => {
         const result = await updateConfigFile(applicationId, environment, microserviceId, formData);
+        console.log('result: ', result);
 
         if (result.success) {
             const fileName = formData.get('file')
@@ -140,7 +156,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             fetchConfigFileNamesList();
             setRestartMicroserviceInfoBoxOpen(true);
         } else {
-            enqueueSnackbar(`File not added. Please try again.`, { variant: 'error' });
+            enqueueSnackbar(`File not added. Please try again. ${result.error}`, { variant: 'error' });
         }
     };
 
@@ -246,7 +262,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                     />
                 </Box>
 
-                <FileUploadForm ref={fileUploadRef} onFileAdded={saveConfigFile} onFileSelected={handleFileSelect} />
+                <FileUploadForm ref={fileUploadRef} onFileAdded={saveConfigFile} onFileSelected={handleFileSelect} allowMultipleFiles />
 
                 <AlertBox
                     severity='info'
