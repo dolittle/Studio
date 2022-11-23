@@ -3,7 +3,15 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   experimental: {
-    externalDir: true
+    externalDir: true,
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/cats",
+        destination: "https://meowfacts.herokuapp.com"
+      },
+    ];
   }
 }
 
