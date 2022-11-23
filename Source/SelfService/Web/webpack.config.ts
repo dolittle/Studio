@@ -101,10 +101,10 @@ function webpack(env: Args, argv: Args) {
                     },
                     ws: true,
                 },
-                '/proxy/11b6cf47-5d9f-438f-8116-0d9828654657/Dev/7e78b802-e246-467b-9946-1deabf8042ef/runtime-management': {
-                    target: 'http://localhost:51152',
-                    pathRewrite: { '^/proxy/11b6cf47-5d9f-438f-8116-0d9828654657/Dev/7e78b802-e246-467b-9946-1deabf8042ef/runtime-management': '' },
-                },
+                // '/proxy/11b6cf47-5d9f-438f-8116-0d9828654657/Dev/7e78b802-e246-467b-9946-1deabf8042ef/runtime-management': {
+                //     target: 'http://localhost:51152',
+                //     pathRewrite: { '^/proxy/11b6cf47-5d9f-438f-8116-0d9828654657/Dev/7e78b802-e246-467b-9946-1deabf8042ef/runtime-management': '' },
+                // },
                 '/proxy': {
                     target: 'http://localhost:3007',
                     ws: true,
