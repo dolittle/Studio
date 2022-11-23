@@ -3,18 +3,18 @@
 
 import React, { useRef, useImperativeHandle } from 'react';
 
-export type OnFileAdd = (form: FormData, event?) => void;
-export type OnFileSelect = (file: File | FileList, event?) => void;
+export type OnFileConfirmCallback = (form: FormData, event?) => void;
+export type OnFileSelectCallback = (file: File | FileList, event?) => void;
 
-export interface FileUploadFormProps {
-    onFileAdded: OnFileAdd;
-    onFileSelected: OnFileSelect;
+export type FileUploadFormProps = {
+    onSelected: OnFileSelectCallback;
+    onConfirmed?: OnFileConfirmCallback;
     allowMultipleFiles: boolean;
 };
 
 export type FileUploadFormRef = {
-    promptForFile: () => void;
-    confirmSelectedFile: () => void;
+    showPrompt: () => void;
+    confirmSelected: () => void;
 };
 
 /**
@@ -24,15 +24,15 @@ export type FileUploadFormRef = {
  * @returns
  */
 export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadFormProps>(
-    function FileUploadForm({ onFileAdded, onFileSelected, allowMultipleFiles = false }: FileUploadFormProps, ref: React.ForwardedRef<FileUploadFormRef>) {
+    function FileUploadForm({ onSelected, onConfirmed, allowMultipleFiles = false }: FileUploadFormProps, ref: React.ForwardedRef<FileUploadFormRef>) {
         const formRef = useRef<HTMLFormElement>(null);
         const fileInputRef = useRef<HTMLInputElement>(null);
 
         useImperativeHandle(
             ref,
             (): FileUploadFormRef => ({
-                promptForFile: () => fileInputRef?.current?.click(),
-                confirmSelectedFile: () => {
+                showPrompt: () => fileInputRef?.current?.click(),
+                confirmSelected: () => {
                     const event = new Event('submit', { bubbles: true, cancelable: true });
                     formRef?.current?.dispatchEvent(event);
                 }
@@ -46,7 +46,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
         const onFileSubmitted = (event) => {
             event.preventDefault();
             const form = new FormData(event.target as HTMLFormElement);
-            onFileAdded(form, event);
+            onConfirmed?.(form, event);
         };
 
         /**
@@ -55,12 +55,8 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
          */
         const onFileSelect = (event: React.FormEvent<HTMLInputElement>) => {
             const files = (event?.target as HTMLInputElement)?.files;
-
             if (!files || files.length === 0) return;
-
-            //console.log(files);
-
-            onFileSelected(allowMultipleFiles ? files : files[0], event);
+            onSelected(allowMultipleFiles ? files : files[0], event);
         };
 
         return (
