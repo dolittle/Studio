@@ -18,17 +18,21 @@ export type ArtifactsResultsProps = {
     type: string
 };
 
+function toCombinedKey(id: string, alias: string, generation: number) {
+    return `${id}/${alias}/${generation}`;
+}
 
 function toGroupedResults(results: ArtifactResults) {
     // TODO: The generation should be a part of the key here.
-    const result = new Map<string, {alias: string, generation: number, buildResults: BuildResult[]}>();
+    const result = new Map<string, {id: string, alias: string, generation: number, buildResults: BuildResult[]}>();
     results.forEach(_ => {
-        let item = result.get(_.artifact.id);
+        const combinedKey = toCombinedKey(_.artifact.id, _.alias, _.artifact.generation);
+        let item = result.get(combinedKey);
         if (item === undefined) {
-            item = {alias: _.alias, generation: _.artifact.generation, buildResults: []};
+            item = {id: _.artifact.id, alias: _.alias, generation: _.artifact.generation, buildResults: []};
         }
         item.buildResults.push(_.buildResult);
-        result.set(_.artifact.id, item);
+        result.set(combinedKey, item);
     });
     return result;
 }
@@ -76,9 +80,9 @@ export const ArtifactsResultsView = (props: ArtifactsResultsProps) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {Array.from(results, ([id, {alias, generation, buildResults}]) => (
+                        {Array.from(results, ([combinedKey, {id, alias, generation, buildResults}]) => (
                             <ExpandableRow
-                            key={id}
+                            key={combinedKey}
                             buildMessages={buildResults}
                           >
                             <TableCell sx={{color: buildResults.findIndex(_ => _.isFailed) === -1 ? undefined : 'red'}} align="left">{alias ?? 'No Alias'}</TableCell>
