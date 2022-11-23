@@ -47,7 +47,7 @@ type FilesSectionProps = {
 
 export const FilesSection = ({ applicationId, environment, microserviceName, microserviceId }: FilesSectionProps) => {
     const fileUploadRef = useRef<FileUploadFormRef>(null);
-    const { enqueueSnackbar } = useSnackbar();
+    const { closeSnackbar, enqueueSnackbar } = useSnackbar();
 
     const [filesPanelExpanded, setFilesPanelExpanded] = useState(true);
     const [dataTableRows, setDataTableRows] = useState<ConfigFilesTableRow[]>([]);
@@ -55,12 +55,13 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     const [restartMicroserviceInfoBoxOpen, setRestartMicroserviceInfoBoxOpen] = useState(false);
     const [restartMicroserviceDialogIsOpen, setRestartMicroserviceDialogIsOpen] = useState(false);
     const [deleteConfigFileDialogIsOpen, setDeleteConfigFileDialogIsOpen] = useState(false);
+    const [fileSizeDialog, setFileSizeDialog] = useState({ isOpen: false, fileName: '' });
 
     useEffect(() => {
-        fetchConfigFilesNamesList();
+        fetchConfigFileNamesList();
     }, []);
 
-    const fetchConfigFilesNamesList = async (): Promise<void> => {
+    const fetchConfigFileNamesList = async (): Promise<void> => {
         const result = await getConfigFilesNamesList(applicationId, environment, microserviceId)
             .then(res => res.data)
             .catch(error => {
@@ -85,7 +86,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     };
 
     const handleFileSelect = (file: File): void => {
-        if (validateFileSize(file)) {
+        if (validateFileSize(file) && validateFileChars(file)) {
             fileUploadRef.current?.confirmSelectedFile();
         }
     };
@@ -97,6 +98,18 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 `file cannot be larger than ${MAX_CONFIGMAP_ENTRY_SIZE} bytes. Please select another file`,
                 { variant: 'error', persist: false }
             );
+
+            setFileSizeDialog({ isOpen: true, fileName: file.name });
+            return false;
+        }
+
+        return true;
+    };
+
+    const validateFileChars = (file: File): boolean => {
+        if ((/[^-._a-zA-Z0-9]+/).test(file.name)) {
+            enqueueSnackbar(`A valid config file name must consist of alphanumeric characters or '_  . -  ' .
+                Regex used for validation is (/[^-._a-zA-Z0-9]+/) .`, { variant: 'error', persist: false });
             return false;
         }
 
@@ -104,17 +117,31 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     };
 
     const saveConfigFile = async (formData: FormData): Promise<void> => {
-        await updateConfigFile(applicationId, environment, microserviceId, formData)
-            .then(() => {
-                // @ts-ignore
-                const fileName = formData.get('file')?.name || 'File';
-                enqueueSnackbar(`${fileName} successfully added.`, { variant: 'info' });
-                fetchConfigFilesNamesList();
-                setRestartMicroserviceInfoBoxOpen(true);
-            })
-            .catch(error => {
-                enqueueSnackbar(`Could not save config file. ${error.message}`, { variant: 'error' });
-            });
+        const result = await updateConfigFile(applicationId, environment, microserviceId, formData);
+
+        if (result.success) {
+            const fileName = formData.get('file')
+                ? (formData.get('file') as File).name
+                : (formData.get('fileName') as string);
+
+            enqueueSnackbar(`'${fileName}' successfully added.`,
+                {
+                    variant: 'success',
+                    action: () =>
+                        <Button variant='text' label='Undo' onClick={async () => {
+                            await deleteConfigFile(applicationId, environment, microserviceId, fileName);
+
+                            fetchConfigFileNamesList();
+                            setRestartMicroserviceInfoBoxOpen(false);
+                            closeSnackbar();
+                        }} />
+                });
+
+            fetchConfigFileNamesList();
+            setRestartMicroserviceInfoBoxOpen(true);
+        } else {
+            enqueueSnackbar(`File not added. Please try again.`, { variant: 'error' });
+        }
     };
 
     const handleConfigFileDelete = async (): Promise<void> => {
@@ -122,7 +149,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             await deleteConfigFile(applicationId, environment, microserviceId, filename.toString())
                 .then(() => {
                     enqueueSnackbar(`${filename} successfully deleted.`, { variant: 'info' });
-                    fetchConfigFilesNamesList();
+                    fetchConfigFileNamesList();
                 })
                 .catch(error => {
                     enqueueSnackbar(`Could not delete config file. ${error.message}`, { variant: 'error' });
@@ -175,6 +202,21 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 )}
             </ConfirmDialog>
 
+            <ConfirmDialog
+                id='config-file-size-dialog'
+                title={'File can’t be added'}
+                description='Please cancel or select a new file.'
+                cancelText='Cancel'
+                confirmText='Delete'
+                open={fileSizeDialog.isOpen}
+                handleCancel={() => setFileSizeDialog({ isOpen: false, fileName: '' })}
+                handleConfirm={() => fileUploadRef.current?.promptForFile()}
+            >
+                {dataRowSelected.map(file =>
+                    <Typography key={file} variant='body2' sx={{ mt: 1.25 }}>{file}</Typography>
+                )}
+            </ConfirmDialog>
+
             <Accordion
                 id='configuration-files'
                 expanded={filesPanelExpanded}
@@ -184,7 +226,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 <Box sx={{ mb: 2.875, button: { 'mr': 6.25, '&:last-of-type': { mr: 0 } } }}>
                     <Button
                         variant='text'
-                        label='Add File(s)'
+                        label='Add File'
                         startWithIcon={<AddCircle />}
                         onClick={() => fileUploadRef.current?.promptForFile()}
                     />
