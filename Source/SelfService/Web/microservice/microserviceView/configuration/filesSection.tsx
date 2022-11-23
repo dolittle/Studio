@@ -89,7 +89,6 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         if (selected instanceof FileList) {
             const fileList = selected as FileList;
 
-            // Validate each file in the list
             if (Array.from(fileList).every(file => validateFileSize(file) && validateFileChars(file))) {
                 for (const file of Array.from(fileList)) {
                     const formData = new FormData();
@@ -101,10 +100,10 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         } else {
             const file = selected as File;
             if (validateFileSize(file) && validateFileChars(file)) {
-                fileUploadRef.current?.confirmSelectedFile();
+                fileUploadRef.current?.confirmSelected();
             }
         }
-    }
+    };
 
     const validateFileSize = (file: File): boolean => {
         if (file.size > MAX_CONFIGMAP_ENTRY_SIZE) {
@@ -226,7 +225,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 confirmText='Delete'
                 open={fileSizeDialog.isOpen}
                 handleCancel={() => setFileSizeDialog({ isOpen: false, fileName: '' })}
-                handleConfirm={() => fileUploadRef.current?.promptForFile()}
+                handleConfirm={() => fileUploadRef.current?.showPrompt()}
             >
                 {dataRowSelected.map(file =>
                     <Typography key={file} variant='body2' sx={{ mt: 1.25 }}>{file}</Typography>
@@ -244,7 +243,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                         variant='text'
                         label='Add File'
                         startWithIcon={<AddCircle />}
-                        onClick={() => fileUploadRef.current?.promptForFile()}
+                        onClick={() => fileUploadRef.current?.showPrompt()}
                     />
                     <Button
                         variant='text'
@@ -262,7 +261,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                     />
                 </Box>
 
-                <FileUploadForm ref={fileUploadRef} onFileAdded={saveConfigFile} onFileSelected={handleFileSelect} allowMultipleFiles />
+                <FileUploadForm ref={fileUploadRef} onConfirmed={saveConfigFile} onSelected={handleFileSelect} allowMultipleFiles />
 
                 <AlertBox
                     severity='info'
