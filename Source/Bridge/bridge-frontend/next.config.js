@@ -8,7 +8,7 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/cats",
+        source: "/api/cats",
         destination: "https://meowfacts.herokuapp.com"
       },
     ];
