@@ -17,7 +17,7 @@ import { DownloadButtons } from '../../components/downloadButtons';
 import { LiveIngressView } from '../../base/liveIngressView';
 
 import { SetupSection } from './setupSection';
-import { FilesSection } from './filesSection';
+import { FilesSection } from './filesSection/filesSection';
 
 export type ConfigurationProps = {
     application: HttpResponseApplication;
