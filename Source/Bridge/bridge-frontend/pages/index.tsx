@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import Head from 'next/head';
 import Image from 'next/image';
-import { Test } from '../layout/test';
+import { Test } from '../components/layout/test';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
