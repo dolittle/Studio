@@ -70,17 +70,18 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     const [fileSizeDialog, setFileSizeDialog] = useState({ isOpen: false, file: [] as File[] });
 
     useEffect(() => {
-        fetchConfigFileNamesList();
+        fetchConfigFileNamesList()
+            .catch(console.error);
     }, []);
 
     const fetchConfigFileNamesList = async (): Promise<void> => {
-        const result = await getConfigFilesNamesList(applicationId, environment, microserviceId)
-            .then(res => res.data)
-            .catch(error => {
-                enqueueSnackbar(`Could not fetch config files ${error.message}`, { variant: 'error' });
-            });
+        const result = await getConfigFilesNamesList(applicationId, environment, microserviceId);
 
-        createDataTableObj(result ?? []);
+        if (result.data) {
+            createDataTableObj(result.data);
+        } else {
+            enqueueSnackbar('Could not fetch config files.', { variant: 'error' });
+        };
     };
 
     const createDataTableObj = (file: string[]): void => {
@@ -150,23 +151,26 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             fetchConfigFileNamesList();
             setRestartMicroserviceInfoBoxOpen(true);
         } else {
-            enqueueSnackbar(`File not added. Please try again. ${result.error}`, { variant: 'error' });
+            enqueueSnackbar('File not added. Please try again.', { variant: 'error' });
         };
     };
 
     const handleConfigFileDelete = async (): Promise<void> => {
         for (const filename of dataRowSelected) {
-            await deleteConfigFile(applicationId, environment, microserviceId, filename.toString())
-                .then(() => {
-                    enqueueSnackbar(`${filename} successfully deleted.`, { variant: 'info' });
-                    fetchConfigFileNamesList();
-                })
-                .catch(error => {
-                    enqueueSnackbar(`Could not delete config file. ${error.message}`, { variant: 'error' });
-                });
+            const fileName = filename.toString();
+            const response = await deleteConfigFile(applicationId, environment, microserviceId, fileName);
+
+            if (response) {
+                enqueueSnackbar(`${fileName} successfully deleted.`, { variant: 'info' });
+            } else {
+                enqueueSnackbar(`${fileName} deletion failed.`, { variant: 'error' });
+                setDeleteConfigFileDialogIsOpen(false);
+                return;
+            };
         };
 
         setDeleteConfigFileDialogIsOpen(false);
+        fetchConfigFileNamesList();
     };
 
     // This is reused. consider moving
@@ -251,14 +255,14 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 <Box sx={{ mb: 2.875, button: { 'mr': 6.25, '&:last-of-type': { mr: 0 } } }}>
                     <Button
                         variant='text'
-                        label='Add File'
+                        label='Add File(s)'
                         startWithIcon={<AddCircle />}
                         onClick={() => fileUploadRef.current?.showPrompt()}
                     />
                     <Button
                         variant='text'
                         label='Delete File(s)'
-                        disabled={hasNoSelectedRows}
+                        disabled={hasNoSelectedRows || dataTableRows.length === 0}
                         startWithIcon={<DeleteRounded />}
                         onClick={() => setDeleteConfigFileDialogIsOpen(true)}
                     />
@@ -266,6 +270,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                     <Button
                         variant='text'
                         label={`Download File(s)`}
+                        disabled={dataTableRows.length === 0}
                         startWithIcon={<DownloadRounded />}
                         onClick={handleConfigFileDownload}
                     />
