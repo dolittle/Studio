@@ -1,5 +1,5 @@
-import { Explorer } from '../../components/explorer/explorer';
-import { Page } from '../../components/layout/page';
+import { Explorer } from '../../components/explorer/Explorer';
+import { Page } from '../../components/layout/Page';
 
 export default function DesignerPage() {
     return (

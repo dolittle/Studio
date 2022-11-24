@@ -1,3 +1,4 @@
+import { NavigationMenu } from '../common/NavigationMenu';
 
 export type PageProps = {
     children: React.ReactNode
