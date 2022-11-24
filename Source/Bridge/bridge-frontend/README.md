@@ -18,6 +18,16 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+## Folder Structure
+
+`pages/` - All the pages are in the pages folder. The hierarchy here defines routes in the app, and is exposed through Next.js' [File System Routing](https://nextjs.org/docs/routing/introduction).
+
+`pages/api` - This feature is not intended to be used.
+
+`components/` - A hierarchical folder structure for components. The components are grouped by their purpose, and are not tied to a specific page.
+
+`api` - This folder contains all relevant API components that the client application uses to communicate with the backend. This is for queries, and mutations. Along with the actual api calls, there are also hooks that wrap the api calls, and provide a more convenient interface for the components to use. For the future, this folder can also contain generated types for the API. Perhaps even the hooks can be generated.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
