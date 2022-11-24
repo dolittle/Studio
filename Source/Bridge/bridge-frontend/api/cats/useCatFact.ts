@@ -4,12 +4,12 @@ export type CatsQueryResponse ={
     data: string[]
 }
 
-async function getCats() {
+async function getCatFact() {
     const response = await fetch('/api/cats');
     return response.json() as Promise<CatsQueryResponse>;
 }
 
-export const useGetCats = ()  => {
-    return useQuery(['cats'], getCats);
+export const useCatFact = ()  => {
+    return useQuery(['cats'], getCatFact);
 }
 
