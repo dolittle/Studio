@@ -55,7 +55,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     const [restartMicroserviceInfoBoxOpen, setRestartMicroserviceInfoBoxOpen] = useState(false);
     const [restartMicroserviceDialogIsOpen, setRestartMicroserviceDialogIsOpen] = useState(false);
     const [deleteConfigFileDialogIsOpen, setDeleteConfigFileDialogIsOpen] = useState(false);
-    const [fileSizeDialog, setFileSizeDialog] = useState({ isOpen: false, fileName: '' });
+    const [fileSizeDialog, setFileSizeDialog] = useState({ isOpen: false, file: [] as File[] });
 
     useEffect(() => {
         fetchConfigFileNamesList();
@@ -86,19 +86,13 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     };
 
     async function handleFileSelect(selected: File | FileList): Promise<void> {
-        let files: File[] = [];
-
-        if (selected instanceof FileList) {
-            files = Array.from(selected as FileList);
-        } else {
-            files.push(selected as File);
-        }
+        const files = selected instanceof FileList ? Array.from(selected) : [selected];
 
         for (const file of files) {
             if (validateFileSize(file) && validateFileChars(file)) {
                 await saveConfigFile(file);
             }
-        }
+        };
     };
 
     const validateFileSize = (file: File): boolean => {
@@ -109,7 +103,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 { variant: 'error', persist: false }
             );
 
-            setFileSizeDialog({ isOpen: true, fileName: file.name });
+            setFileSizeDialog({ isOpen: true, file: [file] });
             return false;
         }
 
@@ -133,16 +127,12 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         const result = await updateConfigFile(applicationId, environment, microserviceId, formData);
 
         if (result.success) {
-            const fileName = formData.get('file')
-                ? (formData.get('file') as File).name
-                : (formData.get('fileName') as string);
-
-            enqueueSnackbar(`'${fileName}' successfully added.`,
+            enqueueSnackbar(`'${file.name}' successfully added.`,
                 {
                     variant: 'success',
                     action: () =>
                         <Button variant='text' label='Undo' onClick={async () => {
-                            await deleteConfigFile(applicationId, environment, microserviceId, fileName);
+                            await deleteConfigFile(applicationId, environment, microserviceId, file.name);
 
                             fetchConfigFileNamesList();
                             setRestartMicroserviceInfoBoxOpen(false);
@@ -222,7 +212,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 cancelText='Cancel'
                 confirmText='Delete'
                 open={fileSizeDialog.isOpen}
-                handleCancel={() => setFileSizeDialog({ isOpen: false, fileName: '' })}
+                handleCancel={() => setFileSizeDialog({ isOpen: false, file: [] })}
                 handleConfirm={() => fileUploadRef.current?.showPrompt()}
             >
                 {dataRowSelected.map(file =>
