@@ -91,7 +91,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         for (const file of files) {
             if (validateFileSize(file) && validateFileChars(file)) {
                 await saveConfigFile(file);
-            }
+            };
         };
     };
 
@@ -105,7 +105,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
             setFileSizeDialog({ isOpen: true, file: [file] });
             return false;
-        }
+        };
 
         return true;
     };
@@ -115,7 +115,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             enqueueSnackbar(`A valid config file name must consist of alphanumeric characters or '_  . -  ' .
                 Regex used for validation is (/[^-._a-zA-Z0-9]+/) .`, { variant: 'error', persist: false });
             return false;
-        }
+        };
 
         return true;
     };
@@ -144,7 +144,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             setRestartMicroserviceInfoBoxOpen(true);
         } else {
             enqueueSnackbar(`File not added. Please try again. ${result.error}`, { variant: 'error' });
-        }
+        };
     };
 
     const handleConfigFileDelete = async (): Promise<void> => {
@@ -157,7 +157,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 .catch(error => {
                     enqueueSnackbar(`Could not delete config file. ${error.message}`, { variant: 'error' });
                 });
-        }
+        };
 
         setDeleteConfigFileDialogIsOpen(false);
     };
