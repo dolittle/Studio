@@ -22,15 +22,14 @@ export const RestartMicroserviceDialog = ({ applicationId, environment, microser
     const { enqueueSnackbar } = useSnackbar();
 
     const restart = async () => {
-        await restartMicroservice(applicationId, environment, microserviceId)
-            .then(() => {
-                enqueueSnackbar('Microservice restarted successfully', { variant: 'success' });
-                handleSuccess?.(true);
-            })
-            .catch(() => {
-                enqueueSnackbar('Failed to restart microservice', { variant: 'error' });
-                handleSuccess?.(false);
-            });
+        const response = await restartMicroservice(applicationId, environment, microserviceId);
+
+        if (response) {
+            enqueueSnackbar('Microservice restarted successfully', { variant: 'success' });
+            handleSuccess?.(true);
+        } else {
+            enqueueSnackbar('Failed to restart microservice', { variant: 'error' });
+        }
 
         setOpen(false);
     };
