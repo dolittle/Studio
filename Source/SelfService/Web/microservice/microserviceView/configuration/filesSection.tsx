@@ -36,10 +36,10 @@ function formatBytes(bytes, decimals = 2) {
 }
 
 const columns = [
-    { field: 'path', headerName: 'Path', width: 200 },
-    { field: 'fileName', headerName: 'Name', width: 130 },
-    { field: 'dateAdded', headerName: 'Date Added', width: 200 },
-    { field: 'addedBy', headerName: 'Added By', width: 200 },
+    { field: 'path', headerName: 'Path', minWidth: 247, flex: 1 },
+    { field: 'fileName', headerName: 'Name', minWidth: 247, flex: 1 },
+    { field: 'dateAdded', headerName: 'Date Added', minWidth: 247, flex: 1 },
+    { field: 'addedBy', headerName: 'Added By', minWidth: 247, flex: 1 },
 ];
 
 type ConfigFilesTableRow = {
@@ -161,7 +161,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             const response = await deleteConfigFile(applicationId, environment, microserviceId, fileName);
 
             if (response) {
-                enqueueSnackbar(`${fileName} successfully deleted.`, { variant: 'info' });
+                enqueueSnackbar(`${fileName} deleted from configuration files.`, { variant: 'info' });
             } else {
                 enqueueSnackbar(`${fileName} deletion failed.`, { variant: 'error' });
                 setDeleteConfigFileDialogIsOpen(false);
@@ -181,6 +181,8 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         const configMapName = `${configMapPrefix}-config-files`;
         const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
         window.open(href, '_blank');
+
+        enqueueSnackbar(`${configMapName} downloaded.`, { variant: 'info' });
     };
 
     const handleConfigFileSizeDialogClose = (): void => {
