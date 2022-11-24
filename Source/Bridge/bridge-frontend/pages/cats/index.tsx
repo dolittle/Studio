@@ -1,6 +1,6 @@
 import { Button } from '@dolittle/design-system/atoms/Button/Button';
 import { useCatFact } from '../../api/cats/useCatFact';
-import { Page } from '../../components/layout/page';
+import { Page } from '../../components/layout/Page';
 import { Refresh } from '@mui/icons-material';
 
 
