@@ -14,6 +14,7 @@ type ButtonProps = {
     startWithIcon?: ReactElement<SvgIconProps>;
     endWithIcon?: ReactElement<SvgIconProps>;
     type?: 'button' | 'submit' | 'reset';
+    fullWidth?: boolean;
     sx?: SxProps;
     onClick?: MouseEventHandler<HTMLButtonElement>;
 };
@@ -29,6 +30,7 @@ export const Button = (props: ButtonProps) =>
         type={props.type ?? 'button'}
         sx={props.sx}
         onClick={props.onClick}
+        fullWidth={props.fullWidth}
         disableElevation
     >
         {props.label}

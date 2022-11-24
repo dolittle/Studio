@@ -285,20 +285,46 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 />
 
                 <Box component={Paper} sx={{ width: 1, height: 1 }}>
-                    <DataGridPro
-                        rows={dataTableRows}
-                        columns={columns}
-                        checkboxSelection
-                        onSelectionModelChange={newSelectionModal => {
-                            setDataRowSelected(newSelectionModal);
-                        }}
-                        selectionModel={dataRowSelected}
-                        getRowHeight={() => 'auto'}
-                        autoHeight={true}
-                        headerHeight={46}
-                        disableColumnMenu
-                        hideFooter
-                    />
+                    {dataTableRows.length > 0 ?
+                        <DataGridPro
+                            rows={dataTableRows}
+                            columns={columns}
+                            checkboxSelection
+                            onSelectionModelChange={newSelectionModal => {
+                                setDataRowSelected(newSelectionModal);
+                            }}
+                            selectionModel={dataRowSelected}
+                            getRowHeight={() => 'auto'}
+                            autoHeight={true}
+                            headerHeight={46}
+                            disableColumnMenu
+                            hideFooter
+                        /> :
+                        <Paper sx={{ p: 2 }}>
+                            <Typography variant='h2'>No configuration files yet...</Typography>
+
+                            <Typography variant='body1' sx={{ my: 2 }}>
+                                {`To add your first configuration file, select 'add file'. You may select more than one at a time. Each file must be less than 3.145MB.`}
+                            </Typography>
+
+                            <Button
+                                variant='filled'
+                                label='Add File(s)'
+                                startWithIcon={<AddCircle />}
+                                fullWidth
+                                color='secondary'
+                                sx={{
+                                    'backgroundColor': 'rgba(140, 154, 248, 0.08)',
+                                    'color': 'primary.main',
+                                    'minHeight': 30,
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(140, 154, 248, 0.15)'
+                                    }
+                                }}
+                                onClick={() => fileUploadRef.current?.showPrompt()}
+                            />
+                        </Paper>
+                    }
                 </Box>
             </Accordion>
         </>
