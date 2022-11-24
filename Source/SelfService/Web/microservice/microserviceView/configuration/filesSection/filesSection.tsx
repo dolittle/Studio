@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { DataGridPro, GridSelectionModel } from '@mui/x-data-grid-pro';
+import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { Box, Paper, Typography } from '@mui/material';
 import { AddCircle, DeleteRounded, DownloadRounded } from '@mui/icons-material';
@@ -15,11 +15,12 @@ import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
 import { Button } from '@dolittle/design-system/atoms/Button';
 import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/ConfirmDialog';
 
-import { FileUploadForm, FileUploadFormRef } from '../../base/components/fileUploadForm';
+import { FileUploadForm, FileUploadFormRef } from './fileUploadForm';
 
-import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../api/api';
+import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../api/api';
 
-import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
+import { RestartMicroserviceDialog } from '../../RestartMicroserviceDialog';
+import { DataTable, ConfigFilesTableRow } from './dataTable';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
@@ -34,21 +35,6 @@ function formatBytes(bytes, decimals = 2) {
 
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 }
-
-const columns = [
-    { field: 'path', headerName: 'Path', minWidth: 247, flex: 1 },
-    { field: 'fileName', headerName: 'Name', minWidth: 247, flex: 1 },
-    { field: 'dateAdded', headerName: 'Date Added', minWidth: 247, flex: 1 },
-    { field: 'addedBy', headerName: 'Added By', minWidth: 247, flex: 1 },
-];
-
-type ConfigFilesTableRow = {
-    id: string;
-    fileName: string;
-    path: string;
-    dateAdded: string;
-    addedBy: string;
-};
 
 type FilesSectionProps = {
     applicationId: string;
@@ -293,20 +279,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
                 <Box component={Paper} sx={{ width: 1, height: 1 }}>
                     {dataTableRows.length > 0 ?
-                        <DataGridPro
-                            rows={dataTableRows}
-                            columns={columns}
-                            checkboxSelection
-                            onSelectionModelChange={newSelectionModal => {
-                                setDataRowSelected(newSelectionModal);
-                            }}
-                            selectionModel={dataRowSelected}
-                            getRowHeight={() => 'auto'}
-                            autoHeight={true}
-                            headerHeight={46}
-                            disableColumnMenu
-                            hideFooter
-                        /> :
+                        <DataTable rows={dataTableRows} handleSelectionModelChange={setDataRowSelected} selectionModel={dataRowSelected} /> :
                         <Paper sx={{ p: 2 }}>
                             <Typography variant='h2'>No configuration files yet...</Typography>
 
