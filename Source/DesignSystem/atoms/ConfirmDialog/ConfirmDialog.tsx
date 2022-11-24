@@ -35,13 +35,14 @@ export const ConfirmDialog = (props: ConfirmDialogProps) =>
                     position: 'absolute',
                     right: 8,
                     top: 8,
+                    color: 'text.primary'
                 }}>
                 {<CloseRounded />}
             </IconButton>
         </DialogTitle>
 
         <DialogContent>
-            <DialogContentText id={`${props.id}-description`} variant='body1'>
+            <DialogContentText id={`${props.id}-description`} variant='body1' sx={{ color: 'text.primary', mb: 2.25 }}>
                 {props.description}
             </DialogContentText>
 

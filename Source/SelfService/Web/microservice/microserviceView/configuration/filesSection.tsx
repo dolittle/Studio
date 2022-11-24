@@ -23,6 +23,18 @@ import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
+function formatBytes(bytes, decimals = 2) {
+    if (!+bytes) return '0 Bytes';
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+}
+
 const columns = [
     { field: 'path', headerName: 'Path', width: 200 },
     { field: 'fileName', headerName: 'Name', width: 130 },
@@ -97,13 +109,8 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
     const validateFileSize = (file: File): boolean => {
         if (file.size > MAX_CONFIGMAP_ENTRY_SIZE) {
-            // Replace with design system Dialog
-            enqueueSnackbar(
-                `file cannot be larger than ${MAX_CONFIGMAP_ENTRY_SIZE} bytes. Please select another file`,
-                { variant: 'error', persist: false }
-            );
+            setFileSizeDialog(prev => ({ isOpen: true, file: [...prev.file, file] }));
 
-            setFileSizeDialog({ isOpen: true, file: [file] });
             return false;
         };
 
@@ -172,6 +179,10 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         window.open(href, '_blank');
     };
 
+    const handleConfigFileSizeDialogClose = (): void => {
+        setFileSizeDialog({ isOpen: false, file: [] });
+    };
+
     const hasManySelectedRows = dataRowSelected.length > 1;
     const hasNoSelectedRows = dataRowSelected.length === 0;
     const isPlural = hasManySelectedRows ? 'files' : 'file';
@@ -210,13 +221,19 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 title={'File can’t be added'}
                 description='Please cancel or select a new file.'
                 cancelText='Cancel'
-                confirmText='Delete'
+                confirmText='Select new'
                 open={fileSizeDialog.isOpen}
-                handleCancel={() => setFileSizeDialog({ isOpen: false, file: [] })}
-                handleConfirm={() => fileUploadRef.current?.showPrompt()}
+                handleCancel={handleConfigFileSizeDialogClose}
+                handleConfirm={() => {
+                    fileUploadRef.current?.showPrompt();
+                    handleConfigFileSizeDialogClose();
+                }}
             >
-                {dataRowSelected.map(file =>
-                    <Typography key={file} variant='body2' sx={{ mt: 1.25 }}>{file}</Typography>
+                {fileSizeDialog.file.map(file =>
+                    <Box key={file.name} >
+                        <Typography variant='body1' sx={{ mt: 1.25 }}>{`${file.name} ${formatBytes(file.size)}`}</Typography>
+                        <Typography variant='caption' sx={{ color: 'error.light' }}>File size must be less than 3.145MB.</Typography>
+                    </Box>
                 )}
             </ConfirmDialog>
 
