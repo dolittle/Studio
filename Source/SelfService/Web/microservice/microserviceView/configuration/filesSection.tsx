@@ -119,8 +119,8 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
     const validateFileChars = (file: File): boolean => {
         if ((/[^-._a-zA-Z0-9]+/).test(file.name)) {
-            enqueueSnackbar(`A valid config file name must consist of alphanumeric characters or '_  . -  ' .
-                Regex used for validation is (/[^-._a-zA-Z0-9]+/) .`, { variant: 'error', persist: false });
+            setFileSizeDialog(prev => ({ isOpen: true, file: [...prev.file, file] }));
+
             return false;
         };
 
@@ -186,6 +186,9 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     const hasManySelectedRows = dataRowSelected.length > 1;
     const hasNoSelectedRows = dataRowSelected.length === 0;
     const isPlural = hasManySelectedRows ? 'files' : 'file';
+    const isManyInvalidFiles = fileSizeDialog.file.length > 1 ? 'files' : 'file';
+    const fileErrorMessage = 'File size must be less than 3.145MB.';
+    const charErrorMessage = 'File name contains invalid characters. Only letters, numbers, dashes, underscores and periods are allowed.';
 
     return (
         <>
@@ -218,8 +221,8 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
             <ConfirmDialog
                 id='config-file-size-dialog'
-                title={'File can’t be added'}
-                description='Please cancel or select a new file.'
+                title={`${isManyInvalidFiles} can't be added`}
+                description={`Please cancel or select a new ${isManyInvalidFiles}.`}
                 cancelText='Cancel'
                 confirmText='Select new'
                 open={fileSizeDialog.isOpen}
@@ -232,7 +235,9 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 {fileSizeDialog.file.map(file =>
                     <Box key={file.name} >
                         <Typography variant='body1' sx={{ mt: 1.25 }}>{`${file.name} ${formatBytes(file.size)}`}</Typography>
-                        <Typography variant='caption' sx={{ color: 'error.light' }}>File size must be less than 3.145MB.</Typography>
+                        <Typography variant='caption' sx={{ color: 'error.light' }}>
+                            {file.size > MAX_CONFIGMAP_ENTRY_SIZE ? fileErrorMessage : charErrorMessage}
+                        </Typography>
                     </Box>
                 )}
             </ConfirmDialog>
