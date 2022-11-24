@@ -3,26 +3,24 @@
     "license": "MIT",
     "private": true,
     "workspaces": [
-        "Source/Bridge/bridge-designer",
+        "Source/Bridge/*",
         "Source/SelfService/Web",
         "Source/DesignSystem",
         "Source/Shared/*"
     ],
     "dependencies": {},
     "devDependencies": {
-        "@dolittle/typescript.build": "6.0.2",
-        "@dolittle/eslint-config": "6.0.2",
         "@types/node": "16.7.13",
-        "@typescript-eslint/eslint-plugin": "5.33.0",
-        "@typescript-eslint/parser": "5.33.0",
+        "@typescript-eslint/eslint-plugin": "5.44.0",
+        "@typescript-eslint/parser": "5.44.0",
         "atob": "2.1.2",
         "eslint-plugin-header": "3.1.1",
         "eslint-plugin-import": "2.26.0",
         "eslint-plugin-jsdoc": "39.3.6",
         "eslint-plugin-no-null": "1.0.2",
-        "eslint-plugin-react": "7.30.1",
-        "eslint": "8.21.0",
+        "eslint-plugin-react": "7.31.11",
+        "eslint": "8.28.0",
         "ts-node": "10.9.1",
-        "typescript": "4.7.4"
+        "typescript": "4.9.3"
     }
 }
