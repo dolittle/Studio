@@ -12,3 +12,7 @@ develop-backend:
 	DEVELOPMENT_CUSTOMER_ID="${DEVELOPMENT_CUSTOMER_ID}" \
 	DEVELOPMENT_USER_ID="${DEVELOPMENT_USER_ID}" \
 	go run main.go
+
+develop-bridge-frontend:
+	cd Source/Bridge/bridge-frontend && \
+	yarn dev
