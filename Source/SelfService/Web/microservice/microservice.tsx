@@ -6,17 +6,18 @@ import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import { LoadingSpinner } from '@dolittle/design-system/atoms/LoadingSpinner/LoadingSpinner';
+import { Button } from '@dolittle/design-system/atoms/Button';
 
 import { HttpResponseApplication } from '../api/application';
 
 import { useReadable } from 'use-svelte-store';
 import { canEditMicroservices, microservices } from '../stores/microservice';
 
-import { Button, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
+import { RocketLaunch } from '@mui/icons-material';
 
 import { NoMicroservices } from './noMicroservices';
 import { DataTable, MicroserviceObject } from './dataTable';
-import { DeployButton } from './deployButton';
 
 type MicroservicesOverviewScreenProps = {
     environment: string;
@@ -68,7 +69,13 @@ export const MicroservicesOverviewScreen = ({ environment, application }: Micros
 
     return (
         <>
-            {!hasEnvironments && <Button onClick={handleCreateEnvironment}>Create New Environment</Button>}
+            {!hasEnvironments &&
+                <Button
+                    variant='text'
+                    label='Create New Environment'
+                    onClick={handleCreateEnvironment}
+                />
+            }
 
             <Typography variant='h1' sx={{ my: 2 }}>Microservices</Typography>
 
@@ -77,7 +84,17 @@ export const MicroservicesOverviewScreen = ({ environment, application }: Micros
                 <NoMicroservices onCreate={handleCreateMicroservice} />
             }
 
-            {hasEnvironments && hasMicroservices && <DeployButton handleClick={handleCreateMicroservice} />}
+            {hasEnvironments && hasMicroservices &&
+                <Paper sx={{ mt: 2.125 }}>
+                    <Button
+                        variant='text'
+                        label='Deploy New Microservice'
+                        startWithIcon={<RocketLaunch />}
+                        fullWidth
+                        onClick={() => handleCreateMicroservice()}
+                    />
+                </Paper>
+            }
         </>
     );
 };
