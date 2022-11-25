@@ -8,7 +8,6 @@ import { useSnackbar } from 'notistack';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { Box, Paper } from '@mui/material';
-import { AddCircle, DeleteRounded, DownloadRounded } from '@mui/icons-material';
 
 import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
 import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
@@ -22,7 +21,7 @@ import { RestartMicroserviceDialog } from '../../RestartMicroserviceDialog';
 import { DataTable, ConfigFilesTableRow } from './dataTable';
 import { NoConfigFiles } from './NoConfigFiles';
 import { DeleteConfigFileDialog, ValidateFileDialog } from './ConfirmDialogs';
-
+import { ButtonGroup } from './ButtonGroup';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
@@ -204,29 +203,13 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 title='Configuration Files'
                 onChange={() => setFilesPanelExpanded(!filesPanelExpanded)}
             >
-                <Box sx={{ mb: 2.875, button: { 'mr': 6.25, '&:last-of-type': { mr: 0 } } }}>
-                    <Button
-                        variant='text'
-                        label='Add File(s)'
-                        startWithIcon={<AddCircle />}
-                        onClick={() => fileUploadRef.current?.showPrompt()}
-                    />
-                    <Button
-                        variant='text'
-                        label='Delete File(s)'
-                        disabled={hasNoSelectedRows || dataTableRows.length === 0}
-                        startWithIcon={<DeleteRounded />}
-                        onClick={() => setDeleteConfigFileDialogIsOpen(true)}
-                    />
-
-                    <Button
-                        variant='text'
-                        label={`Download File(s)`}
-                        disabled={dataTableRows.length === 0}
-                        startWithIcon={<DownloadRounded />}
-                        onClick={handleConfigFileDownload}
-                    />
-                </Box>
+                <ButtonGroup
+                    filePrompt={() => fileUploadRef.current?.showPrompt()}
+                    deleteDisabled={hasNoSelectedRows || dataTableRows.length === 0}
+                    downloadDisabled={dataTableRows.length === 0}
+                    handleDelete={() => setDeleteConfigFileDialogIsOpen(true)}
+                    handleDownload={handleConfigFileDownload}
+                />
 
                 <FileUploadForm ref={fileUploadRef} onSelected={handleFileSelect} allowMultipleFiles />
 
