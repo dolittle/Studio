@@ -9,7 +9,6 @@ import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { Box, Paper } from '@mui/material';
 
-import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
 import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
 import { Button } from '@dolittle/design-system/atoms/Button';
 
@@ -22,6 +21,7 @@ import { DataTable, ConfigFilesTableRow } from './dataTable';
 import { NoConfigFiles } from './NoConfigFiles';
 import { DeleteConfigFileDialog, ValidateFileDialog } from './ConfirmDialogs';
 import { ButtonGroup } from './ButtonGroup';
+import { RestartInfoBox } from './msRestartInfoBox';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
@@ -38,7 +38,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
     const [filesPanelExpanded, setFilesPanelExpanded] = useState(true);
     const [dataTableRows, setDataTableRows] = useState<ConfigFilesTableRow[]>([]);
-    const [dataRowSelected, setDataRowSelected] = useState<GridSelectionModel>([]);
+    const [dataTableRowsSelected, setDataTableRowsSelected] = useState<GridSelectionModel>([]);
     const [restartMicroserviceInfoBoxOpen, setRestartMicroserviceInfoBoxOpen] = useState(false);
     const [restartMicroserviceDialogIsOpen, setRestartMicroserviceDialogIsOpen] = useState(false);
     const [deleteConfigFileDialogIsOpen, setDeleteConfigFileDialogIsOpen] = useState(false);
@@ -131,7 +131,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     };
 
     const handleConfigFileDelete = async (): Promise<void> => {
-        for (const filename of dataRowSelected) {
+        for (const filename of dataTableRowsSelected) {
             const fileName = filename.toString();
             const response = await deleteConfigFile(applicationId, environment, microserviceId, fileName);
 
@@ -164,8 +164,6 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         setValidateFileDialogIsOpen({ isOpen: false, file: [] });
     };
 
-    const hasNoSelectedRows = dataRowSelected.length === 0;
-
     return (
         <>
             <RestartMicroserviceDialog
@@ -181,7 +179,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             />
 
             <DeleteConfigFileDialog
-                selectedDataRows={dataRowSelected}
+                selectedDataRows={dataTableRowsSelected}
                 open={deleteConfigFileDialogIsOpen}
                 setOpen={() => setDeleteConfigFileDialogIsOpen(false)}
                 handleDelete={handleConfigFileDelete}
@@ -205,7 +203,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             >
                 <ButtonGroup
                     filePrompt={() => fileUploadRef.current?.showPrompt()}
-                    deleteDisabled={hasNoSelectedRows || dataTableRows.length === 0}
+                    deleteDisabled={dataTableRowsSelected.length === 0 || dataTableRows.length === 0}
                     downloadDisabled={dataTableRows.length === 0}
                     handleDelete={() => setDeleteConfigFileDialogIsOpen(true)}
                     handleDownload={handleConfigFileDownload}
@@ -213,20 +211,11 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
                 <FileUploadForm ref={fileUploadRef} onSelected={handleFileSelect} allowMultipleFiles />
 
-                <AlertBox
-                    severity='info'
-                    title='Restart Microservice'
-                    message={`New uploads will be added as soon as ${microserviceName} restarts.
-                              It will restart automatically in a few minutes or you can manually restart it now.`}
-                    actionText='Restart Microservice'
-                    isOpen={restartMicroserviceInfoBoxOpen}
-                    closeAction={() => setRestartMicroserviceDialogIsOpen(true)}
-                    sx={{ width: 1, mb: 2 }}
-                />
+                <RestartInfoBox name={microserviceName} open={restartMicroserviceInfoBoxOpen} setOpen={() => setRestartMicroserviceDialogIsOpen(true)} />
 
                 <Box component={Paper} sx={{ width: 1, height: 1 }}>
                     {dataTableRows.length > 0 ?
-                        <DataTable rows={dataTableRows} handleSelectionModelChange={setDataRowSelected} selectionModel={dataRowSelected} /> :
+                        <DataTable rows={dataTableRows} handleSelectionModelChange={setDataTableRowsSelected} selectionModel={dataTableRowsSelected} /> :
                         <NoConfigFiles handleOnClick={() => fileUploadRef.current?.showPrompt()} />
                     }
                 </Box>
