@@ -9,7 +9,7 @@ import { AddCircle } from '@mui/icons-material';
 import { Button } from '@dolittle/design-system/atoms/Button';
 
 type NoConfigFilesProps = {
-    handleOnClick: any;
+    handleOnClick: () => void;
 };
 
 export const NoConfigFiles = ({ handleOnClick }: NoConfigFilesProps) => {
@@ -26,7 +26,6 @@ export const NoConfigFiles = ({ handleOnClick }: NoConfigFilesProps) => {
                 label='Add File(s)'
                 startWithIcon={<AddCircle />}
                 fullWidth
-                color='secondary'
                 sx={{
                     'backgroundColor': 'rgba(140, 154, 248, 0.08)',
                     'color': 'primary.main',
