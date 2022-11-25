@@ -7,13 +7,12 @@ import { useSnackbar } from 'notistack';
 
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { AddCircle, DeleteRounded, DownloadRounded } from '@mui/icons-material';
 
 import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
 import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
 import { Button } from '@dolittle/design-system/atoms/Button';
-import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/ConfirmDialog';
 
 import { FileUploadForm, FileUploadFormRef } from './fileUploadForm';
 
@@ -22,20 +21,10 @@ import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteCo
 import { RestartMicroserviceDialog } from '../../RestartMicroserviceDialog';
 import { DataTable, ConfigFilesTableRow } from './dataTable';
 import { NoConfigFiles } from './NoConfigFiles';
+import { DeleteConfigFileDialog, ValidateFileDialog } from './ConfirmDialogs';
+
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
-
-function formatBytes(bytes, decimals = 2) {
-    if (!+bytes) return '0 Bytes';
-
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
-}
 
 type FilesSectionProps = {
     applicationId: string;
@@ -54,7 +43,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     const [restartMicroserviceInfoBoxOpen, setRestartMicroserviceInfoBoxOpen] = useState(false);
     const [restartMicroserviceDialogIsOpen, setRestartMicroserviceDialogIsOpen] = useState(false);
     const [deleteConfigFileDialogIsOpen, setDeleteConfigFileDialogIsOpen] = useState(false);
-    const [fileSizeDialog, setFileSizeDialog] = useState({ isOpen: false, file: [] as File[] });
+    const [validateFileDialogIsOpen, setValidateFileDialogIsOpen] = useState({ isOpen: false, file: [] as File[] });
 
     useEffect(() => {
         fetchConfigFileNamesList()
@@ -97,7 +86,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
     const validateFileSize = (file: File): boolean => {
         if (file.size > MAX_CONFIGMAP_ENTRY_SIZE) {
-            setFileSizeDialog(prev => ({ isOpen: true, file: [...prev.file, file] }));
+            setValidateFileDialogIsOpen(prev => ({ isOpen: true, file: [...prev.file, file] }));
 
             return false;
         };
@@ -107,7 +96,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
     const validateFileChars = (file: File): boolean => {
         if ((/[^-._a-zA-Z0-9]+/).test(file.name)) {
-            setFileSizeDialog(prev => ({ isOpen: true, file: [...prev.file, file] }));
+            setValidateFileDialogIsOpen(prev => ({ isOpen: true, file: [...prev.file, file] }));
 
             return false;
         };
@@ -172,16 +161,11 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         enqueueSnackbar(`${configMapName} downloaded.`, { variant: 'info' });
     };
 
-    const handleConfigFileSizeDialogClose = (): void => {
-        setFileSizeDialog({ isOpen: false, file: [] });
+    const handleValidateFileDialogClose = (): void => {
+        setValidateFileDialogIsOpen({ isOpen: false, file: [] });
     };
 
-    const hasManySelectedRows = dataRowSelected.length > 1;
     const hasNoSelectedRows = dataRowSelected.length === 0;
-    const isPlural = hasManySelectedRows ? 'files' : 'file';
-    const isManyInvalidFiles = fileSizeDialog.file.length > 1 ? 'files' : 'file';
-    const fileErrorMessage = 'File size must be less than 3.145MB.';
-    const charErrorMessage = 'File name contains invalid characters. Only letters, numbers, dashes, underscores and periods are allowed.';
 
     return (
         <>
@@ -197,43 +181,22 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 }}
             />
 
-            <ConfirmDialog
-                id='delete-config-file-dialog'
-                title={`Delete configuration ${isPlural}`}
-                description={`Are you sure you want to delete ${hasManySelectedRows ? 'these' : 'this'} ${isPlural}?`}
-                cancelText='Cancel'
-                confirmText='Delete'
+            <DeleteConfigFileDialog
+                selectedDataRows={dataRowSelected}
                 open={deleteConfigFileDialogIsOpen}
-                handleCancel={() => setDeleteConfigFileDialogIsOpen(false)}
-                handleConfirm={handleConfigFileDelete}
-            >
-                {dataRowSelected.map(file =>
-                    <Typography key={file} variant='body2' sx={{ mt: 1.25 }}>{file}</Typography>
-                )}
-            </ConfirmDialog>
+                setOpen={() => setDeleteConfigFileDialogIsOpen(false)}
+                handleDelete={handleConfigFileDelete}
+            />
 
-            <ConfirmDialog
-                id='config-file-size-dialog'
-                title={`${isManyInvalidFiles} can't be added`}
-                description={`Please cancel or select a new ${isManyInvalidFiles}.`}
-                cancelText='Cancel'
-                confirmText='Select new'
-                open={fileSizeDialog.isOpen}
-                handleCancel={handleConfigFileSizeDialogClose}
-                handleConfirm={() => {
+            <ValidateFileDialog
+                invalid={validateFileDialogIsOpen}
+                open={validateFileDialogIsOpen.isOpen}
+                setOpen={handleValidateFileDialogClose}
+                handleValidate={() => {
                     fileUploadRef.current?.showPrompt();
-                    handleConfigFileSizeDialogClose();
+                    handleValidateFileDialogClose();
                 }}
-            >
-                {fileSizeDialog.file.map(file =>
-                    <Box key={file.name} >
-                        <Typography variant='body1' sx={{ mt: 1.25 }}>{`${file.name} ${formatBytes(file.size)}`}</Typography>
-                        <Typography variant='caption' sx={{ color: 'error.light' }}>
-                            {file.size > MAX_CONFIGMAP_ENTRY_SIZE ? fileErrorMessage : charErrorMessage}
-                        </Typography>
-                    </Box>
-                )}
-            </ConfirmDialog>
+            />
 
             <Accordion
                 id='configuration-files'

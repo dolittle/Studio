@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Paper, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { AddCircle } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system/atoms/Button';
@@ -14,7 +14,7 @@ type NoConfigFilesProps = {
 
 export const NoConfigFiles = ({ handleOnClick }: NoConfigFilesProps) => {
     return (
-        <Paper sx={{ p: 2 }}>
+        <Box sx={{ p: 2 }}>
             <Typography variant='h2'>No configuration files yet...</Typography>
 
             <Typography variant='body1' sx={{ my: 2 }}>
@@ -36,6 +36,6 @@ export const NoConfigFiles = ({ handleOnClick }: NoConfigFilesProps) => {
                 }}
                 onClick={() => handleOnClick()}
             />
-        </Paper>
+        </Box>
     );
 };
