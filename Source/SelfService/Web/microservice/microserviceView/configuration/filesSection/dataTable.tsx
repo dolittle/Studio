@@ -4,6 +4,9 @@
 import React from 'react';
 
 import { DataGridPro, GridSelectionModel } from '@mui/x-data-grid-pro';
+import { Box, Paper } from '@mui/material';
+
+import { NoConfigFiles } from './NoConfigFiles';
 
 const columns = [
     { field: 'path', headerName: 'Path', minWidth: 247, flex: 1 },
@@ -26,8 +29,8 @@ type DataTableProps = {
     handleSelectionModelChange: (selectionModel: GridSelectionModel) => void;
 };
 
-export const DataTable = ({ rows, handleSelectionModelChange, selectionModel }: DataTableProps) => {
-    return (
+export const DataTable = ({ rows, handleSelectionModelChange, selectionModel }: DataTableProps) =>
+    <Paper sx={{ width: 1, height: 1 }}>
         <DataGridPro
             rows={rows}
             columns={columns}
@@ -42,5 +45,4 @@ export const DataTable = ({ rows, handleSelectionModelChange, selectionModel }: 
             disableColumnMenu
             hideFooter
         />
-    );
-};
+    </Paper>;

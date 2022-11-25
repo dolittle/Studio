@@ -213,12 +213,11 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
                 <RestartInfoBox name={microserviceName} open={restartMicroserviceInfoBoxOpen} setOpen={() => setRestartMicroserviceDialogIsOpen(true)} />
 
-                <Box component={Paper} sx={{ width: 1, height: 1 }}>
-                    {dataTableRows.length > 0 ?
-                        <DataTable rows={dataTableRows} handleSelectionModelChange={setDataTableRowsSelected} selectionModel={dataTableRowsSelected} /> :
-                        <NoConfigFiles handleOnClick={() => fileUploadRef.current?.showPrompt()} />
-                    }
-                </Box>
+
+                {dataTableRows.length > 0 ?
+                    <DataTable rows={dataTableRows} handleSelectionModelChange={setDataTableRowsSelected} selectionModel={dataTableRowsSelected} /> :
+                    <NoConfigFiles handleOnClick={() => fileUploadRef.current?.showPrompt()} />
+                }
             </Accordion>
         </>
     );
