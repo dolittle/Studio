@@ -45,10 +45,6 @@ LicenseInfo.setLicenseKey('4a83cf3032e8518adfbe8694d092262dTz00ODUxMyxFPTE2OTEyM
 const snackbarStyles = {
     '& .notistack-SnackbarContainer>*': {
         width: '100%'
-    },
-    '& .notistack-SnackbarContainer [role="alert"]': {
-        color: 'text.primary',
-        backgroundColor: 'error.dark'
     }
 };
 
