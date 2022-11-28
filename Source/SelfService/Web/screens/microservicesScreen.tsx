@@ -22,7 +22,6 @@ import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
 import { MicroserviceEditScreen } from '../microservice/microserviceEditScreen';
 import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';
 import { View as MicroserviceEnvironmentVariablesView } from '../microservice/environmentVariables/view';
-import { Delete as DeleteView } from '../microservice/delete';
 import { PodLogScreen } from '../microservice/podLogScreen';
 import {
     LayoutWithSidebar,
@@ -184,10 +183,6 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
 
                 <Route exact path="/microservices/application/:applicationId/:environment/edit/:microserviceId">
                     <MicroserviceEditScreen application={application} environment={currentEnvironment} />
-                </Route>
-
-                <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId/delete">
-                    <DeleteView application={application} environment={currentEnvironment} />
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId">
