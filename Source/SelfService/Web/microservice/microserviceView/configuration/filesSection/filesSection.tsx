@@ -6,8 +6,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
 
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
-
-import { Box, Paper } from '@mui/material';
+import { IconButton, Slide } from '@mui/material';
+import { CloseRounded } from '@mui/icons-material';
 
 import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
 import { Button } from '@dolittle/design-system/atoms/Button';
@@ -55,7 +55,12 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         if (result.data) {
             createDataTableObj(result.data);
         } else {
-            enqueueSnackbar('Could not fetch config files.', { variant: 'error' });
+            enqueueSnackbar('Could not fetch config files.', {
+                variant: 'error',
+                TransitionComponent(props) {
+                    return <Slide {...props} direction='up' />;
+                }
+            });
         };
     };
 
@@ -110,23 +115,35 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         const result = await updateConfigFile(applicationId, environment, microserviceId, formData);
 
         if (result.success) {
-            enqueueSnackbar(`'${file.name}' successfully added.`,
-                {
-                    variant: 'success',
-                    action: () =>
-                        <Button variant='text' label='Undo' onClick={async () => {
+            enqueueSnackbar(`'${file.name}' successfully added.`, {
+                TransitionComponent(props) {
+                    return <Slide {...props} direction='up' />;
+                },
+                action: (key) => (
+                    <>
+                        <Button variant='text' label='Undo' color='secondary' onClick={async () => {
                             await deleteConfigFile(applicationId, environment, microserviceId, file.name);
 
                             fetchConfigFileNamesList();
                             setRestartMicroserviceInfoBoxOpen(false);
-                            closeSnackbar();
+                            closeSnackbar(key);
                         }} />
-                });
+                        <IconButton onClick={() => closeSnackbar(key)}>
+                            <CloseRounded fontSize='small' sx={{ color: '#ffffff' }} />
+                        </IconButton>
+                    </>
+                )
+            });
 
             fetchConfigFileNamesList();
             setRestartMicroserviceInfoBoxOpen(true);
         } else {
-            enqueueSnackbar('File not added. Please try again.', { variant: 'error' });
+            enqueueSnackbar('File not added. Please try again.', {
+                variant: 'error',
+                TransitionComponent(props) {
+                    return <Slide {...props} direction='up' />;
+                }
+            });
         };
     };
 
@@ -136,9 +153,18 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             const response = await deleteConfigFile(applicationId, environment, microserviceId, fileName);
 
             if (response) {
-                enqueueSnackbar(`${fileName} deleted from configuration files.`, { variant: 'info' });
+                enqueueSnackbar(`'${fileName}' deleted from configuration files.`, {
+                    TransitionComponent(props) {
+                        return <Slide {...props} direction='up' />;
+                    }
+                });
             } else {
-                enqueueSnackbar(`${fileName} deletion failed.`, { variant: 'error' });
+                enqueueSnackbar(`'${fileName}' deletion failed.`, {
+                    variant: 'error',
+                    TransitionComponent(props) {
+                        return <Slide {...props} direction='up' />;
+                    }
+                });
                 setDeleteConfigFileDialogIsOpen(false);
                 return;
             };
@@ -157,7 +183,11 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
         window.open(href, '_blank');
 
-        enqueueSnackbar(`${configMapName} downloaded.`, { variant: 'info' });
+        enqueueSnackbar(`'${configMapName}' downloaded.`, {
+            TransitionComponent(props) {
+                return <Slide {...props} direction='up' />;
+            }
+        });
     };
 
     const handleValidateFileDialogClose = (): void => {
@@ -212,7 +242,6 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 <FileUploadForm ref={fileUploadRef} onSelected={handleFileSelect} allowMultipleFiles />
 
                 <RestartInfoBox name={microserviceName} open={restartMicroserviceInfoBoxOpen} setOpen={() => setRestartMicroserviceDialogIsOpen(true)} />
-
 
                 {dataTableRows.length > 0 ?
                     <DataTable rows={dataTableRows} handleSelectionModelChange={setDataTableRowsSelected} selectionModel={dataTableRowsSelected} /> :
