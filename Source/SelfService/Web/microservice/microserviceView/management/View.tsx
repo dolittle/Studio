@@ -26,7 +26,7 @@ export const View = (props: ViewProps) => {
     return (
         <>
             {tabs.length > 0
-                ? <Tabs tabs={tabs} />
+                ? <Tabs id={'MicroserviceManagement'} tabs={tabs} />
                 : <h2>There are not any management endpoints on your microservice.</h2>
             }
         </>

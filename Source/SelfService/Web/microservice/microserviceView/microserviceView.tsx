@@ -141,7 +141,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                 <ContainerHealthStatus status={getContainerStatuses()} />
             </Box>
 
-            <Tabs tabs={tabs} />
+            <Tabs id={'Microservice'} tabs={tabs} />
         </>
     );
 };
