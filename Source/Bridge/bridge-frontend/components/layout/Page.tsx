@@ -1,7 +1,7 @@
-import { NavigationMenu } from '../common/NavigationMenu';
+// import { NavigationMenu } from '../common/NavigationMenu';
 
 export type PageProps = {
-    children: React.ReactNode
+    children?: React.ReactNode
 }
 
 export const Page = ({ children }: PageProps) => {
