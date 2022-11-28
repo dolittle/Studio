@@ -4,39 +4,41 @@
 import React from 'react';
 import { Route, BrowserRouter, useLocation, Switch } from 'react-router-dom';
 import { QueryParamProvider } from 'use-query-params';
+
+import { SnackbarProvider } from 'notistack';
+
 import { LicenseInfo } from '@mui/x-license-pro';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+
+import { Box } from '@mui/material';
+import { ErrorRounded } from '@mui/icons-material';
 
 import '@dolittle/design-system/theming/fonts';
 import { themeDark } from '@dolittle/design-system';
 
 import { useViewportResize } from './utils/useViewportResize';
-import { ApplicationsScreen } from './screens/applicationsScreen/applicationsScreen';
 
 import { uriWithAppPrefix } from './store';
+import { GlobalContextProvider } from './stores/notifications';
+
+import { RouteNotFound } from './components/notfound';
+import { DieAndRestart } from './components/dieAndRestart';
+
+import { LayoutWithSidebar } from './layout/layoutWithSidebar';
+
+import { ThemeScreen } from './screens/themeScreen';
 import { LoginScreen } from './screens/loginScreen';
 import { BackupsScreen } from './screens/backupsScreen';
 import { DocumentationScreen } from './screens/documentationScreen';
 //import { InsightsScreen } from './screens/insightsScreen';
 import { MicroservicesScreen } from './screens/microservicesScreen';
-import { GlobalContextProvider } from './stores/notifications';
-import CssBaseline from '@mui/material/CssBaseline';
-import { RouteNotFound } from './components/notfound';
 import { Screen as AdminScreen } from './screens/adminScreen';
-
-import { Box } from '@mui/material';
-
-import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
-import { DieAndRestart } from './components/dieAndRestart';
-import { LayoutWithSidebar } from './layout/layoutWithSidebar';
-
-import { SnackbarProvider } from 'notistack';
-import { ThemeScreen } from './screens/themeScreen';
+import { ApplicationsScreen } from './screens/applicationsScreen/applicationsScreen';
 import { ApplicationScreen } from './screens/applicationScreen';
-
 import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
 import { M3ConnectorScreen } from './screens/m3connectorScreen';
 import { LogsScreen } from './screens/logsScreen';
-import { ErrorRounded } from '@mui/icons-material';
 
 LicenseInfo.setLicenseKey('4a83cf3032e8518adfbe8694d092262dTz00ODUxMyxFPTE2OTEyMjE0ODgxODUsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=');
 
