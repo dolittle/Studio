@@ -3,8 +3,8 @@
 
 import React, {} from 'react';
 
-import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
-import { useBuildResults } from './buildResults/useBuildResults';
+import { Tab, Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
+import { useBuildResultsAvailable } from './buildResults/useBuildResults';
 import { View as BuildResults} from './buildResults/View';
 
 export type ViewProps = {
@@ -14,15 +14,21 @@ export type ViewProps = {
 };
 
 export const View = (props: ViewProps) => {
-    const tabs = [
-        {
+    const tabs: Tab[] = [];
+    const buildResultsAvailable = useBuildResultsAvailable(props.applicationId, props.environment, props.microserviceId);
+    if (buildResultsAvailable) {
+        tabs.push({
             label: 'Build Results',
             render: () => <BuildResults applicationId={props.applicationId} environment={props.environment} microserviceId={props.microserviceId}/>
-        }
-    ];
+        });
+    }
+
     return (
         <>
-            <Tabs tabs={tabs} />
+            {tabs.length > 0
+                ? <Tabs tabs={tabs} />
+                : <h2>There are not any management endpoints on your microservice.</h2>
+            }
         </>
     );
 };

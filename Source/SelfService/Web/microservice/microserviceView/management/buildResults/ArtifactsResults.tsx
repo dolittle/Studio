@@ -23,7 +23,6 @@ function toCombinedKey(id: string, alias: string, generation: number) {
 }
 
 function toGroupedResults(results: ArtifactResults) {
-    // TODO: The generation should be a part of the key here.
     const result = new Map<string, {id: string, alias: string, generation: number, buildResults: BuildResult[]}>();
     results.forEach(_ => {
         const combinedKey = toCombinedKey(_.artifact.id, _.alias, _.artifact.generation);
@@ -39,7 +38,6 @@ function toGroupedResults(results: ArtifactResults) {
 
 const ExpandableRow = ({children, buildMessages: buildResults}: {children: JSX.Element[], buildMessages: BuildResult[]}) => {
     const [isExpanded, setIsExpanded] = React.useState(false);
-
   return (
     <>
       <TableRow>
@@ -59,6 +57,7 @@ const ExpandableRow = ({children, buildMessages: buildResults}: {children: JSX.E
     </>
   );
 };
+
 export const ArtifactsResultsView = (props: ArtifactsResultsProps) => {
     if (!props.results?.length) {
         return <></>;
@@ -76,7 +75,6 @@ export const ArtifactsResultsView = (props: ArtifactsResultsProps) => {
                             <TableCell align="left">Alias</TableCell>
                             <TableCell align="left">Id</TableCell>
                             <TableCell align="left">Generation</TableCell>
-                            <TableCell align="left">Build Messages</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -88,7 +86,6 @@ export const ArtifactsResultsView = (props: ArtifactsResultsProps) => {
                             <TableCell sx={{color: buildResults.findIndex(_ => _.isFailed) === -1 ? undefined : 'red'}} align="left">{alias ?? 'No Alias'}</TableCell>
                             <TableCell align="left">{id}</TableCell>
                             <TableCell align="left">{generation}</TableCell>
-                            <TableCell align="left">{buildResults.length}</TableCell>
                           </ExpandableRow>
                         ))}
                     </TableBody>

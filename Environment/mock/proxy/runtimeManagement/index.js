@@ -8,8 +8,6 @@ const client = require('./client');
 
 routes.get('/*', (req, res) => {
     console.log('Getting RUntime Management Proxy');
-    console.log(req.path);
-    console.log(req.params);
     res.status(200).end();
 })
 

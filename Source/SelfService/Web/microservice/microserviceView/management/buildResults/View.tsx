@@ -13,20 +13,8 @@ export type ViewProps = {
     microserviceId: string;
 };
 
-const tabs = [
-    {
-        label: 'Build Results',
-        render: () => <h1>HEllo</h1>
-    }
-];
-
 export const View = (props: ViewProps) => {
     const buildResults = useBuildResults(props.applicationId, props.environment, props.microserviceId);
-    console.log(buildResults);
-
-    if (buildResults === undefined) {
-        return <></>;
-    }
     return (
         <>
             <ArtifactsResultsView type='Event Types' results={buildResults.eventTypes}/>
@@ -39,4 +27,3 @@ export const View = (props: ViewProps) => {
         </>
     );
 };
-

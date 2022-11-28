@@ -13,7 +13,6 @@ export type OtherResultsProps = {
     results: BuildResult[]
 };
 
-
 export const OtherResultsView = (props: OtherResultsProps) => {
     if (!props.results?.length) {
         return <></>;
@@ -24,11 +23,6 @@ export const OtherResultsView = (props: OtherResultsProps) => {
             <Typography variant='h3' sx={{ my: 2 }}>Other</Typography>
             <TableContainer>
                 <Table size="small" aria-label="simple table">
-                    {/* <TableHead>
-                        <TableRow>
-                            <TableCell/>
-                        </TableRow>
-                    </TableHead> */}
                     <TableBody>
                         {results.map((result, i) => (
                             <TableRow key={i} >
