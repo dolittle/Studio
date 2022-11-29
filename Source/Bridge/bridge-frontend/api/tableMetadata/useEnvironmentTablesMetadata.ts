@@ -9,6 +9,12 @@ async function getEnvironmentTablesMetadata(request: MetadataEnvironmentsEnviron
 }
 
 export const useEnvironmentTablesMetadata = (requestVariables: MetadataEnvironmentsEnvironmentTablesGetRequest) => {
-    return useQuery(['getEnvironments', { requestVariables }], () => getEnvironmentTablesMetadata(requestVariables));
+    return useQuery(
+        ['getEnvironments', { requestVariables }],
+        () => getEnvironmentTablesMetadata(requestVariables),
+        {
+            enabled: !!requestVariables.environment,
+        }
+    );
 }
 
