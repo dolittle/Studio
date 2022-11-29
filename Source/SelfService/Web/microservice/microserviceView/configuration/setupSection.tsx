@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
@@ -16,7 +16,6 @@ import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/Confi
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../api/application';
-import { getRuntimes } from '../../../api/api';
 
 import { HeadArguments } from '../../components/headArguments';
 import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
@@ -72,25 +71,17 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
 
     const microserviceInfo = currentMicroservice.edit?.extra;
+
     const runtimeVersionNumber = capitalize(removeFromString(microserviceInfo?.runtimeImage, /dolittle\/runtime:/gi));
+    runtimeVersions.push({ value: runtimeVersionNumber });
 
     const [setupPanelExpanded, setSetupPanelExpanded] = useState(true);
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
     const [hasPublicURL, setHasPublicURL] = useState(microserviceInfo?.isPublic || false);
-    const [currentRuntimeVersion, setCurrentRuntimeVersion] = useState('');
     const [useM3Connector, setHasM3Connetcor] = useState(environmentInfo.connections?.m3Connector || false);
     const [headCommandArgs, setHeadCommandArgs] = useState<string[]>(microserviceInfo?.headCommand?.args || []);
-
-    useEffect(() => {
-        getRuntimes().forEach(runtime => {
-            runtimeVersions.push({ value: removeFromString(runtime.image, /dolittle\/runtime:/gi) });
-        });
-        runtimeVersions.push({ value: 'None' });
-
-        setCurrentRuntimeVersion(runtimeVersionNumber);
-    }, []);
 
     const handleMicroserviceDelete = async () => {
         setDeleteDialogIsOpen(false);
@@ -216,10 +207,10 @@ export const SetupSection = ({ application, applicationId, environment, microser
                                 id='runtimeVersion'
                                 label='Runtime Version*'
                                 options={runtimeVersions}
-                                value={currentRuntimeVersion}
+                                value={runtimeVersionNumber}
                                 required
                                 disabled={formIsNotEditable}
-                                onChange={(event) => setCurrentRuntimeVersion(event.target.value)}
+                                //onChange={(event) => setCurrentRuntimeVersion(event.target.value)}
                                 sx={{ width: 220 }}
                             />
                         </Box>
