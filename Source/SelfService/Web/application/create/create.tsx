@@ -3,7 +3,6 @@
 
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 
 import { Box, Typography } from '@mui/material';
 
@@ -57,7 +56,6 @@ type CreateApplicationParameters = {
 
 export const Create = () => {
     const history = useHistory();
-    const { enqueueSnackbar } = useSnackbar();
 
     const [serverError, setServerError] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -95,7 +93,6 @@ export const Create = () => {
 
             setLoading(false);
             setServerError(false);
-            enqueueSnackbar('Application created', { variant: 'info' });
         } catch (error) {
             setLoading(false);
             setServerError(true);
