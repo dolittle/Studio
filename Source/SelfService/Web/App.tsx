@@ -11,11 +11,12 @@ import { LicenseInfo } from '@mui/x-license-pro';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 
-import { Box } from '@mui/material';
+import { Box, Slide, SlideProps } from '@mui/material';
 import { ErrorRounded } from '@mui/icons-material';
 
 import '@dolittle/design-system/theming/fonts';
 import { themeDark } from '@dolittle/design-system';
+import { Snackbar } from '@dolittle/design-system/atoms/Snackbar/Snackbar';
 
 import { useViewportResize } from './utils/useViewportResize';
 
@@ -48,6 +49,10 @@ const snackbarStyles = {
     }
 };
 
+function SlideTransition(props: SlideProps) {
+    return <Slide {...props} direction="up" />;
+};
+
 export const App = () => {
     useViewportResize();
 
@@ -61,7 +66,7 @@ export const App = () => {
         // Referer https://dolittle.studio/.auth/select-tenant?login_challenge=c84329905dd7402bb45377dc8e1006c9
         window.location.href = uriWithAppPrefix('/applications');
         return null;
-    }
+    };
 
     return (
         <>
@@ -72,8 +77,15 @@ export const App = () => {
                         <Box sx={snackbarStyles}>
                             <SnackbarProvider
                                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                                TransitionComponent={SlideTransition}
                                 autoHideDuration={4000}
-                                maxSnack={10}
+                                maxSnack={6}
+                                Components={{
+                                    //   default: Snackbar,
+                                    //  success: Snackbar,
+                                    error: Snackbar,
+                                    // warning: Snackbar
+                                }}
                                 iconVariant={{
                                     error: <ErrorRounded fontSize="small" sx={{ mr: 1 }} />
                                 }}
