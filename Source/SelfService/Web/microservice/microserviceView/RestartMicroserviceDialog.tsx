@@ -36,7 +36,7 @@ export const RestartMicroserviceDialog = ({ applicationId, environment, microser
             handleSuccess?.(true);
             sessionStorage.setItem('microserviceRestart', 'true');
         } else {
-            enqueueSnackbar('Failed to restart microservice');
+            enqueueSnackbar('Failed to restart microservice.');
         }
 
         setOpen(false);
@@ -47,7 +47,7 @@ export const RestartMicroserviceDialog = ({ applicationId, environment, microser
             id='restart-microservice-dialog'
             open={open}
             title='Restart microservice?'
-            description='This action cannot be undone. Click restart if you would like to restart the mircroservice.'
+            description='Restarting will temporarily stop the microservice and restart it again. Your app will be unavailable during restart.'
             cancelText='Cancel'
             confirmText='Restart'
             handleCancel={() => setOpen(false)}
