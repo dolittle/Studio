@@ -111,14 +111,14 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             enqueueSnackbar(`'${file.name}' successfully added.`, {
                 action: (key) => (
                     <>
-                        <Button variant='text' label='Undo' color='secondary' onClick={async () => {
+                        <Button variant='text' label='Undo' color='secondary' aria-label='undo' onClick={async () => {
                             await deleteConfigFile(applicationId, environment, microserviceId, file.name);
 
                             fetchConfigFileNamesList();
                             setRestartMicroserviceInfoBoxOpen(false);
                             closeSnackbar(key);
                         }} />
-                        <IconButton onClick={() => closeSnackbar(key)}>
+                        <IconButton aria-label='close' onClick={() => closeSnackbar(key)}>
                             <CloseRounded fontSize='small' sx={{ color: '#FFFFFF' }} />
                         </IconButton>
                     </>
