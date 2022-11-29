@@ -1,3 +1,5 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import { Button } from '@dolittle/design-system/atoms/Button/Button';
 import { useCatFact } from '../../api/cats/useCatFact';
 import { Page } from '../../components/layout/Page';
@@ -21,9 +23,9 @@ export default function CatsPage() {
             />
             <br />
             <br />
-            {catFactQuery.isLoading && "Loading..."}
-            {catFactQuery.isError && "Something went wrong!"}
-            {catFactQuery.data?.data.map(cat => <div>{cat}</div>)}
+            {catFactQuery.isLoading && 'Loading...'}
+            {catFactQuery.isError && 'Something went wrong!'}
+            {catFactQuery.data?.data.map((cat,i) => <div key={i}>{cat}</div>)}
         </Page>
     );
 };
