@@ -19,7 +19,7 @@ import { HttpResponseApplication } from '../../../api/application';
 
 import { HeadArguments } from '../../components/headArguments';
 import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
-import { capitalize, removeFromString } from '../helpers';
+import { capitalize, removeFromString } from '../../helpers/stringHelpers';
 
 const styles = {
     form: {

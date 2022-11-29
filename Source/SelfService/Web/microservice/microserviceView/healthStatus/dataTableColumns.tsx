@@ -8,7 +8,9 @@ import { GridColDef, GridColumnHeaderParams, GridValueGetterParams, GridRenderCe
 
 import { Summary } from '@dolittle/design-system/atoms/Metrics/Summary';
 
-import { formatTime, formatStartingDate, DownloadLogs } from './helpers';
+import { formatTime, formatStartingDate } from '../../helpers/dateHelpers';
+import { DownloadLogs } from '../../helpers/downloadHelpers';
+
 import { statusCell } from '../../microserviceStatus';
 import { DataTableRow } from './dataTable';
 
@@ -61,7 +63,7 @@ export const columns: GridColDef[] = [
         align: 'left',
         renderHeader: (params: GridColumnHeaderParams) =>
             <Box className='MuiDataGrid-columnHeaderTitle'>
-                CPU <Box component='span' sx={{fontSize: '0.75rem', fontWeight: '400'}}>Avg | Max | Now</Box>
+                CPU <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
             </Box>,
         renderCell: (params: GridRenderCellParams<any, DataTableRow>) =>
             <Summary now={params.row.cpu?.current} avg={params.row.cpu?.average} max={params.row.cpu?.maximum} unit='%' description='CPU usage' period='last 24h' digits={0} />,
@@ -76,7 +78,7 @@ export const columns: GridColDef[] = [
         align: 'left',
         renderHeader: (params: GridColumnHeaderParams) =>
             <Box className='MuiDataGrid-columnHeaderTitle'>
-                Memory <Box component='span' sx={{fontSize: '0.75rem', fontWeight: '400'}}>Avg | Max | Now</Box>
+                Memory <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
             </Box>,
         renderCell: (params: GridRenderCellParams<any, DataTableRow>) =>
             <Summary now={params.row.memory?.current} avg={params.row.memory?.average} max={params.row.memory?.maximum} unit='MiB' description='Memory usage' period='last 24h' digits={0} />,
