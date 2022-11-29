@@ -1,7 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import { useSnackbar } from 'notistack';
 
 import { MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
 import { HttpResponsePodStatus } from '../../api/api';
@@ -27,6 +29,15 @@ type MicroserviceViewProps = {
 };
 
 export const MicroserviceView = ({ application, microserviceId, environment, podsData, currentMicroservice }: MicroserviceViewProps) => {
+    const { enqueueSnackbar } = useSnackbar();
+
+    useEffect(() => {
+        if (sessionStorage.getItem('microserviceCreate') === 'true') {
+            enqueueSnackbar(`${currentMicroservice.name} has been deployed.`);
+            sessionStorage.setItem('microserviceCreate', 'false');
+        }
+    }, []);
+
     const getContainerStatuses = () => podsData.pods.flatMap(pod =>
         pod.containers.map(container => container.state));
 
@@ -83,11 +94,6 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         };
     }
 
-    // const handleEnvironmentClick = async () => {
-    //     const href = `/microservices/application/${applicationId}/${environment}/view/${microserviceId}/environment-variables`;
-    //     history.push(href);
-    // };
-
     const tabs = [
         {
             label: 'Configuration',
@@ -106,6 +112,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                 status="TODO"
                 environment={environment}
                 microserviceId={microserviceId}
+                currentMicroservice={currentMicroservice}
                 data={podsData}
             />
         }

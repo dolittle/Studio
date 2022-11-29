@@ -53,6 +53,7 @@ export const MicroservicesOverviewScreen = ({ environment, application }: Micros
             return;
         }
 
+        sessionStorage.setItem('microserviceCreate', 'true');
         const href = `/microservices/application/${application.id}/${environment}/create`;
         history.push(href);
     };
