@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button as MuiButton, Tooltip, Typography } from '@mui/material';
 import { DeleteRounded, EditRounded, ExpandCircleDownRounded, SaveRounded, RestartAltRounded } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system/atoms/Button';
@@ -155,22 +155,32 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
                 <AccordionDetails>
                     <Box>
-                        <Button
-                            variant='text'
-                            label='edit'
-                            disabled={formIsNotEditable}
-                            startWithIcon={<EditRounded />}
-                            //onClick={() => setFormIsNotEditable(false)}
-                            sx={{ mr: 2.5 }}
-                        />
-                        <Button
-                            variant='text'
-                            label='save'
-                            disabled={formIsNotEditable}
-                            startWithIcon={<SaveRounded />}
-                            //onClick={() => setFormIsNotEditable(true)}
-                            sx={{ mr: 2.5 }}
-                        />
+                        <Tooltip title='Coming soon!' placement='top' arrow>
+                            {/* <Button
+                                variant='text'
+                                label='edit'
+                                disabled={formIsNotEditable}
+                                startWithIcon={<EditRounded />}
+                                //onClick={() => setFormIsNotEditable(false)}
+                                sx={{ mr: 2.5 }}
+                            /> */}
+                            <span>
+                                <MuiButton disabled startIcon={<EditRounded />} sx={{ mr: 2.5 }}>edit</MuiButton>
+                            </span>
+                        </Tooltip>
+                        <Tooltip title='Coming soon!' placement='top' arrow>
+                            {/* <Button
+                                variant='text'
+                                label='save'
+                                disabled={formIsNotEditable}
+                                startWithIcon={<SaveRounded />}
+                                //onClick={() => setFormIsNotEditable(true)}
+                                sx={{ mr: 2.5 }}
+                            /> */}
+                            <span>
+                                <MuiButton disabled startIcon={<SaveRounded />} sx={{ mr: 2.5 }}>save</MuiButton>
+                            </span>
+                        </Tooltip>
                         <Button
                             variant='text'
                             label='Restart Microservice'
