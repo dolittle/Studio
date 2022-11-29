@@ -93,6 +93,8 @@ export const SetupSection = ({ application, applicationId, environment, microser
     }, []);
 
     const handleMicroserviceDelete = async () => {
+        setDeleteDialogIsOpen(false);
+
         // Add loading state?
         if (!canDelete) {
             enqueueSnackbar('Deleting microservice is disabled', { variant: 'error' });
@@ -102,7 +104,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
         const success = await deleteMicroservice(applicationId, environment, microserviceId);
 
         if (!success) {
-            enqueueSnackbar('Failed to delete microservice', { variant: 'error' });
+            enqueueSnackbar(`Failed to delete microservice '${currentMicroservice.name}'`, { variant: 'error' });
             return;
         }
 
@@ -128,6 +130,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                 applicationId={applicationId}
                 environment={environment}
                 microserviceId={microserviceId}
+                msName={currentMicroservice.name}
                 open={restartDialogIsOpen}
                 setOpen={setRestartDialogIsOpen}
                 handleSuccess={() => window.location.reload()}
