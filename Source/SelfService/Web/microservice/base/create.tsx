@@ -1,5 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -17,7 +18,6 @@ import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
 
 import { HttpResponseApplication } from '../../api/application';
 import { HeadArguments } from '../components/headArguments';
-
 
 const styles = {
     data: {
@@ -105,9 +105,10 @@ export const Create: React.FunctionComponent<Props> = (props) => {
         };
 
         setIsLoading(true);
+
         try {
             await saveSimpleMicroservice(ms);
-            const href = `/microservices/application/${application.id}/${environment}/overview`;
+            const href = `/microservices/application/${application.id}/${environment}/view/${ms.dolittle.microserviceId}`;
             history.push(href);
         } catch (e: unknown) {
             const message = (e instanceof Error) ? e.message : 'Something went wrong when saving microservice';
