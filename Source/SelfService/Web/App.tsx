@@ -81,10 +81,7 @@ export const App = () => {
                                 autoHideDuration={4000}
                                 maxSnack={6}
                                 Components={{
-                                    //   default: Snackbar,
-                                    //  success: Snackbar,
-                                    error: Snackbar,
-                                    // warning: Snackbar
+                                    error: Snackbar
                                 }}
                                 iconVariant={{
                                     error: <ErrorRounded fontSize="small" sx={{ mr: 1 }} />
