@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
 
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
-import { IconButton, Slide } from '@mui/material';
+import { IconButton } from '@mui/material';
 import { CloseRounded } from '@mui/icons-material';
 
 import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
@@ -52,16 +52,9 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     const fetchConfigFileNamesList = async (): Promise<void> => {
         const result = await getConfigFilesNamesList(applicationId, environment, microserviceId);
 
-        if (result.data) {
-            createDataTableObj(result.data);
-        } else {
-            enqueueSnackbar('Could not fetch config files.', {
-                variant: 'error',
-                TransitionComponent(props) {
-                    return <Slide {...props} direction='up' />;
-                }
-            });
-        };
+        result.data ?
+            createDataTableObj(result.data) :
+            enqueueSnackbar('Could not fetch config files.', { variant: 'error' });
     };
 
     const createDataTableObj = (file: string[]): void => {
@@ -116,9 +109,6 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
         if (result.success) {
             enqueueSnackbar(`'${file.name}' successfully added.`, {
-                TransitionComponent(props) {
-                    return <Slide {...props} direction='up' />;
-                },
                 action: (key) => (
                     <>
                         <Button variant='text' label='Undo' color='secondary' onClick={async () => {
@@ -129,7 +119,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                             closeSnackbar(key);
                         }} />
                         <IconButton onClick={() => closeSnackbar(key)}>
-                            <CloseRounded fontSize='small' sx={{ color: '#ffffff' }} />
+                            <CloseRounded fontSize='small' sx={{ color: '#FFFFFF' }} />
                         </IconButton>
                     </>
                 )
@@ -138,12 +128,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             fetchConfigFileNamesList();
             setRestartMicroserviceInfoBoxOpen(true);
         } else {
-            enqueueSnackbar('File not added. Please try again.', {
-                variant: 'error',
-                TransitionComponent(props) {
-                    return <Slide {...props} direction='up' />;
-                }
-            });
+            enqueueSnackbar('File not added. Please try again.', { variant: 'error' });
         };
     };
 
@@ -153,19 +138,11 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             const response = await deleteConfigFile(applicationId, environment, microserviceId, fileName);
 
             if (response) {
-                enqueueSnackbar(`'${fileName}' deleted from configuration files.`, {
-                    TransitionComponent(props) {
-                        return <Slide {...props} direction='up' />;
-                    }
-                });
+                enqueueSnackbar(`'${fileName}' deleted from configuration files.`);
             } else {
-                enqueueSnackbar(`'${fileName}' deletion failed.`, {
-                    variant: 'error',
-                    TransitionComponent(props) {
-                        return <Slide {...props} direction='up' />;
-                    }
-                });
+                enqueueSnackbar(`'${fileName}' deletion failed.`, { variant: 'error' });
                 setDeleteConfigFileDialogIsOpen(false);
+
                 return;
             };
         };
@@ -183,11 +160,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
         window.open(href, '_blank');
 
-        enqueueSnackbar(`'${configMapName}' downloaded.`, {
-            TransitionComponent(props) {
-                return <Slide {...props} direction='up' />;
-            }
-        });
+        enqueueSnackbar(`'${configMapName}' downloaded.`);
     };
 
     const handleValidateFileDialogClose = (): void => {
