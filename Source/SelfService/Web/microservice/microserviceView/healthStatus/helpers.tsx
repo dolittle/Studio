@@ -10,9 +10,8 @@ import { enUS } from 'date-fns/locale';
 import { getPodLogs } from '../../../api/api';
 
 import { GridRenderCellParams } from '@mui/x-data-grid-pro';
-import { IconButton, Link } from '@mui/material';
-import { Close, DownloadRounded } from '@mui/icons-material';
-import Slide from '@mui/material/Slide';
+import { Link } from '@mui/material';
+import { DownloadRounded } from '@mui/icons-material';
 
 const shortDurationLocale: Locale = {
     formatDistance(token, count) {
@@ -34,7 +33,7 @@ const shortDurationLocale: Locale = {
             default:
                 return enUS.formatDistance!(token, count);
         }
-    },
+    }
 };
 
 export const formatTime = (time: string) => {
@@ -52,7 +51,7 @@ export const formatTime = (time: string) => {
     const duration = {
         hours: parseFloat(hours) || 0,
         minutes: parseFloat(minutes) || 0,
-        seconds: (parseFloat(seconds) || 0) + (parseFloat(milliseconds) || 0)*1e3 + (parseFloat(microseconds) || 0)*1e6 + (parseFloat(nanoseconds) || 0)*1e9,
+        seconds: (parseFloat(seconds) || 0) + (parseFloat(milliseconds) || 0) * 1e3 + (parseFloat(microseconds) || 0) * 1e6 + (parseFloat(nanoseconds) || 0) * 1e9,
     };
 
     const normalisedDuration = intervalToDuration({
@@ -60,7 +59,7 @@ export const formatTime = (time: string) => {
         end: Date.now(),
     });
 
-    return formatDuration(normalisedDuration, { format: [ 'days', 'hours', 'minutes', 'seconds' ], locale: shortDurationLocale });
+    return formatDuration(normalisedDuration, { format: ['days', 'hours', 'minutes', 'seconds'], locale: shortDurationLocale });
 };
 
 export const formatStartingDate = (initialDate: string) => {
@@ -79,7 +78,7 @@ export const formatStartingDate = (initialDate: string) => {
 export const DownloadLogs = (params: GridRenderCellParams) => {
     const [data, setData] = useState({ logs: '' });
 
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
         getPodLogs(params.row.application, params.row.podName, params.row.containerName).then(setData);
@@ -89,17 +88,7 @@ export const DownloadLogs = (params: GridRenderCellParams) => {
     const containerImage = params.row.image.replace(':', '/');
 
     const handleNotification = () => {
-        enqueueSnackbar(`'${containerImage}' logs have been downloaded.`, {
-            variant: 'default',
-            autoHideDuration: 4000,
-            anchorOrigin: { horizontal: 'left', vertical: 'bottom' },
-            TransitionComponent: Slide,
-            action: (key) => (
-                <IconButton onClick={() => closeSnackbar(key)}>
-                    <Close fontSize='small' />
-                </IconButton>
-            )
-        });
+        enqueueSnackbar(`'${containerImage}' logs have been downloaded.`);
     };
 
     return (

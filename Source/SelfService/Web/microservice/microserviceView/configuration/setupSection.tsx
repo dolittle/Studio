@@ -106,7 +106,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
             return;
         }
 
-        enqueueSnackbar(`${currentMicroservice.name} has been deleted.`, { variant: 'info' });
+        enqueueSnackbar(`Microservice ${currentMicroservice.name} has been deleted.`);
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);
     };
