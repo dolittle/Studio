@@ -1,3 +1,41 @@
+# [2.14.0] - 2022-11-29 [PR: #261](https://github.com/dolittle/Studio/pull/261)
+## Summary
+
+Create the scaffolding of a frontend for the Bridge. It is based on Nextjs, and is set up to work against the bridge-api for localdev. It also lives in the Studio monorepo, and this has access to and is using the design system. 
+
+Made some changes to the yarn workspace dependencies and configuration to maake this possible.
+Changed how fonts are loaded in the DesignSystem and SelfService/Web to allow a different approach in the Bridge-Frontend
+
+Some key aspects:
+**Scaffolded using create next app with typescript template**
+- Some basic routes
+  - /
+  - /designer
+  - /explorer - this is where there is some data-fetching
+- Expected data-layer on `/api`
+
+**Leveraging @tanstack/react-query as a wrapper around queries / server-side state**
+Decision to use react-query as a wrapper around data-fetching allows us to change the underlying query mechanism as needed. Current implementation relies on using the `fetch`-api directly. Also set query `staleTime` to 1 minute, since most of the data shouldn't be updated very often, unless explicitly requested (ex after a mutation).
+
+**Local development mode when running the bridge-api on port 5000**
+Set up rewrites in `next.config.js` to allow a good local dev experience
+- Generated api-layer from Open-API schema in bridge-api (not scripted/automated yet) available 
+
+### Added
+
+- bridge-frontend as part of the Studio monorepo
+
+### Changed
+
+- No longer include fonts as part of the design system `theme.ts`. In stead exposed as a separate export that can be imported. This will allow the consuming project to decide how it wants to load fonts. SelfService/Web explicitly loads fonts separately from `fonts.ts`.
+- Consolidated versions of `eslint` across package-json to allow adding the bridge-frontend with dependencies
+- Enforce yarn version used across workspace to 1.22.19 to easier manage dependencies
+
+### Removed
+
+- Dependency to `@dolittle/typescript-build`- removed.
+
+
 # [2.13.0] - 2022-11-9 [PR: #258](https://github.com/dolittle/Studio/pull/258)
 ## Summary
 
