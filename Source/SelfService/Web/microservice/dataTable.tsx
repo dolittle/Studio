@@ -11,7 +11,7 @@ import { statusCell, customStatusFieldSort } from './microserviceStatus';
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Box, Paper, Tooltip } from '@mui/material';
 
-import { capitalize, removeFromString } from './microserviceView/helpers';
+import { capitalize, removeFromString } from './helpers/stringHelpers';
 
 const sortByRuntimeVersion = (params: GridValueGetterParams) => {
     const runtimeVersion = removeFromString(params.row.edit?.extra?.runtimeImage, /dolittle\/runtime:/gi);
