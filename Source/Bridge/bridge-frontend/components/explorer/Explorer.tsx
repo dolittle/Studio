@@ -1,3 +1,4 @@
+import { Button } from '@dolittle/design-system/atoms/Button/Button';
 import { useState } from 'react';
 import { useEnvironments } from '../../api/environments/useEnvironments';
 import { useEnvironmentTablesMetadata } from '../../api/tableMetadata/useEnvironmentTablesMetadata';
@@ -10,10 +11,24 @@ export const Explorer = () => {
         <div>
             <h2>Environments</h2>
             {environments && environments.map((env) =>
-                <div key={env.name} onClick={() => setSelectedEnvironment(env.name)}>{env.name}</div>
+                <div key={env.name}>
+                    {env.name}
+                    <Button
+                        label={selectedEnvironment === env.name ? "Deselect" : "Select"}
+                        variant={selectedEnvironment === env.name ? 'outlined' : 'text'} onClick={
+                            () => {
+                                if (selectedEnvironment && selectedEnvironment == env.name) {
+                                    setSelectedEnvironment(undefined);
+                                } else {
+                                    setSelectedEnvironment(env.name || "");
+                                }
+                            }
+                        }
+                    />
+                </div>
             )}
 
-            <h3>Table Metadata</h3>
+            <h3>Table Metadata{selectedEnvironment ? ` for ${selectedEnvironment}` : ""}</h3>
             {tablesMetadata && tablesMetadata.map((metadata) => <div key={metadata.name}>{metadata.name}</div>)}
         </div>
     );
