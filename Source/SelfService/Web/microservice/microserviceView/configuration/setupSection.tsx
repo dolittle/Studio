@@ -97,18 +97,18 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
         // Add loading state?
         if (!canDelete) {
-            enqueueSnackbar('Deleting microservice is disabled', { variant: 'error' });
+            enqueueSnackbar('Deleting microservice is disabled.', { variant: 'error' });
             return;
         }
 
         const success = await deleteMicroservice(applicationId, environment, microserviceId);
 
         if (!success) {
-            enqueueSnackbar(`Failed to delete microservice '${currentMicroservice.name}'`, { variant: 'error' });
+            enqueueSnackbar(`Failed to delete microservice '${currentMicroservice.name}'.`, { variant: 'error' });
             return;
         }
 
-        enqueueSnackbar(`Microservice ${currentMicroservice.name} has been deleted.`);
+        enqueueSnackbar(`Microservice '${currentMicroservice.name}' has been deleted.`);
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
         history.push(href);
     };
