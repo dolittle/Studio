@@ -76,7 +76,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     <PivotItem
                         itemKey="healthStatus"
                         headerText="Health Status">
-                        <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
+                        <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} msName={currentMicroservice.name} data={podsData} />
                     </PivotItem>
                 </Pivot>
 

@@ -173,6 +173,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 applicationId={applicationId}
                 environment={environment}
                 microserviceId={microserviceId}
+                msName={microserviceName}
                 open={restartMicroserviceDialogIsOpen}
                 setOpen={() => setRestartMicroserviceDialogIsOpen(true)}
                 handleSuccess={() => {

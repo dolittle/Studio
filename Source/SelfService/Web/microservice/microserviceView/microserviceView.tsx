@@ -112,7 +112,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                 status="TODO"
                 environment={environment}
                 microserviceId={microserviceId}
-                currentMicroservice={currentMicroservice}
+                msName={currentMicroservice.name}
                 data={podsData}
             />
         }

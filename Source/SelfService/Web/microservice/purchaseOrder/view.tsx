@@ -171,7 +171,7 @@ export const View = (props: Props) => {
                     },
                     {
                         label: 'Health Status',
-                        render: () => <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} data={podsData} />
+                        render: () => <HealthStatus applicationId={applicationId} status="TODO" environment={environment} microserviceId={microserviceId} msName={currentMicroservice.name} data={podsData} />
                     }
                 ]} />
         </Grid>
