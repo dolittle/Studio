@@ -39,15 +39,15 @@ const computeStats = (metric: Metric | undefined, scale: number): DataTableStats
 };
 
 type HealthStatusProps = {
-    status: string;
-    data: HttpResponsePodStatus;
-    environment: string;
     applicationId: string;
+    status: string;
+    environment: string;
     microserviceId: string;
+    msName: string;
+    data: HttpResponsePodStatus;
 };
 
-export const HealthStatus = ({ applicationId, microserviceId, data, environment }: HealthStatusProps) => {
-
+export const HealthStatus = ({ applicationId, environment, microserviceId, msName, data }: HealthStatusProps) => {
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
 
     const timeRange = useMemo<[number, number]>(() => [Date.now() - 86_400_000, Date.now()], [Date.now() / 60_000]);
@@ -101,6 +101,7 @@ export const HealthStatus = ({ applicationId, microserviceId, data, environment 
                 applicationId={applicationId}
                 environment={environment}
                 microserviceId={microserviceId}
+                msName={msName}
                 open={restartDialogIsOpen}
                 setOpen={setRestartDialogIsOpen}
                 handleSuccess={() => window.location.reload()}
