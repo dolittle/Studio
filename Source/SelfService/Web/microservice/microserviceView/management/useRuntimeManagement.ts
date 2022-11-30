@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { useMemo } from 'react';
+import { useBuildResultsAvailable } from './buildResults/useBuildResults';
 
 export const useRuntimeManagementUrl = (applicationId: string, environment: string, microserviceId: string): string => {
     const url = useMemo(
@@ -9,4 +10,8 @@ export const useRuntimeManagementUrl = (applicationId: string, environment: stri
         [applicationId, environment, microserviceId]);
 
     return url;
+};
+
+export const useRuntimeManagementAvailable = (applicationId: string, environment: string, microserviceId: string): boolean => {
+   return useBuildResultsAvailable(applicationId, environment, microserviceId);
 };

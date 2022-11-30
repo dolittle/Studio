@@ -3,9 +3,8 @@
 
 import React, {} from 'react';
 
-import { Tab, Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
-import { useBuildResultsAvailable } from './buildResults/useBuildResults';
 import { View as BuildResults} from './buildResults/View';
+import { useRuntimeManagementAvailable } from './useRuntimeManagement';
 
 export type ViewProps = {
     applicationId: string;
@@ -14,8 +13,7 @@ export type ViewProps = {
 };
 
 export const View = (props: ViewProps) => {
-    const tabs: Tab[] = [];
-    const buildResultsAvailable = useBuildResultsAvailable(props.applicationId, props.environment, props.microserviceId);
+    const buildResultsAvailable = useRuntimeManagementAvailable(props.applicationId, props.environment, props.microserviceId);
     return (
         <>
             {buildResultsAvailable

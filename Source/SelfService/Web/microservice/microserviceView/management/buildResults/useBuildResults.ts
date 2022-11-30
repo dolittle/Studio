@@ -32,11 +32,9 @@ export const useBuildResultsAvailable = (applicationId: string, environment: str
         pbGetBuildResults(url)
             .then(response => {
                 if (aborted) return;
-                console.log(response);
                 setAvailable(!!response.getBuildresults() && true);
             })
-            .catch((err) => {
-                console.log('err', err);
+            .catch(() => {
                 if (aborted) return;
                 setAvailable(false);
             });
