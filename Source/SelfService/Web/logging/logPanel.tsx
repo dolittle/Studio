@@ -106,9 +106,9 @@ export const LogPanel = (props: LogPanelProps) => {
                 severity="error"
                 title='Something went wrong'
                 message='Please try again later. If the problem persists, please'
-                link={{
-                    href: 'mailto:support@dolittle.com',
-                    text: 'contact support',
+                endWithLink={{
+                    linkText: 'contact support',
+                    linkHref: 'mailto:support@dolittle.com'
                 }}
                 sx={{ mt: 2 }}
             />
