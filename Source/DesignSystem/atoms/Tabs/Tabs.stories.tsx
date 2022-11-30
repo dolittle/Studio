@@ -11,6 +11,7 @@ const { metadata, createStory } = componentStories(Tabs);
 export default metadata;
 
 export const Normal = createStory({
+    id: 'Tabs',
     tabs: [
         {
             label: 'First tab',

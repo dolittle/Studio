@@ -40,20 +40,26 @@ export type Tab = {
 
 export type TabsProps = {
     tabs: Tab[];
+    id?: string,
     sx?: any;
 };
 
 export const Tabs = (props: TabsProps) => {
+    const getCacheKey = () => `selectedTab#${props.id}`;
     const [currentTab, setCurrentTab] = useState(0);
 
-    useEffect(() => {
-        const storedSelectedOption = parseInt(sessionStorage.getItem('selectedTab') || '0');
-        setCurrentTab(storedSelectedOption);
-    }, []);
+    if (!!props.id) {
+        useEffect(() => {
+            const storedSelectedOption = parseInt(sessionStorage.getItem(getCacheKey()) || '0');
+            setCurrentTab(storedSelectedOption);
+        }, []);
+    }
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setCurrentTab(newValue);
-        sessionStorage.setItem('selectedTab', newValue.toString());
+        if (!!props.id) {
+            sessionStorage.setItem(getCacheKey(), newValue.toString());
+        }
     };
 
     return (

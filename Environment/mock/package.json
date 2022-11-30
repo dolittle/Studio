@@ -8,13 +8,18 @@
         "start": "node index.js"
     },
     "devDependencies": {
-        "express": "4.18.1",
+        "@botchris/grpc-web-mock": "0.0.7",
+        "@dolittle/contracts.web": "7.5.0-boromir.0",
+        "@dolittle/rudiments": "6.0.0",
         "@grafana/lezer-logql": "0.1.0",
-        "@prometheus-io/lezer-promql": "0.37.1",
-        "@lezer/lr": "1.2.3",
         "@lezer/highlight": "1.1.0",
+        "@lezer/lr": "1.2.3",
+        "@prometheus-io/lezer-promql": "0.37.1",
+        "express": "4.18.1",
         "express-ws": "5.0.2",
-        "node-pty": "0.10.1",
-        "jabber": "1.4.0"
+        "jabber": "1.4.0",
+        "node-pty": "0.10.1"
+    },
+    "dependencies": {
     }
 }
