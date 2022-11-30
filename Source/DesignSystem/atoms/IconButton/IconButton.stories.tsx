@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Box, Fade, Slide, Typography } from '@mui/material';
 import { DownloadRounded, CloseRounded } from '@mui/icons-material';
@@ -14,14 +14,13 @@ export default {
 };
 
 export const IconButtons = () => {
-    const [onClose, setOnClose] = React.useState(true);
-    const [onDownload, setOnDownload] = React.useState(true);
+    const [onClose, setOnClose] = useState(true);
+    const [onDownload, setOnDownload] = useState(true);
 
     return (
         <Box sx={{ display: 'flex', alignContent: 'center', textAlign: 'center' }}>
             <Box sx={{ mr: 8 }}>
                 <Typography variant='body1' color='secondary'>Default Icon</Typography>
-
                 <IconButton
                     icon={
                         <Fade
@@ -32,14 +31,13 @@ export const IconButtons = () => {
                             {<CloseRounded />}
                         </Fade>
                     }
-                    onClick={() => setOnClose(false)}
                     sx={{ mt: 2 }}
+                    onClick={() => setOnClose(false)}
                 />
             </Box>
 
             <Box>
                 <Typography variant='body1' color='secondary'>Download Icon</Typography>
-
                 <IconButton
                     icon={
                         <Slide
