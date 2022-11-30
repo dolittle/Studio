@@ -3,23 +3,21 @@
 
 import React from 'react';
 
-import { Alert, AlertTitle, Collapse, Link, SxProps, Typography } from '@mui/material';
-import { CloseOutlined } from '@mui/icons-material';
+import { Alert, AlertTitle, Box, Link, SxProps, Typography } from '@mui/material';
 
-import { Button } from '../Button/Button';
+import { IconButton } from '@dolittle/design-system/atoms/IconButton/IconButton';
 
-type LinkTypes = {
-    href: string;
-    text: string;
+type LinkContent = {
+    linkText: string;
+    linkHref: string;
 };
 
 export type AlertBoxProps = {
     severity: 'error' | 'warning' | 'info' | 'success';
     title: string;
     message?: string;
-    link?: LinkTypes;
+    endWithLink?: LinkContent;
     action?: React.ReactNode;
-    actionText?: string;
     isOpen?: boolean;
     closeAction?: () => void;
     sx?: SxProps;
@@ -28,46 +26,34 @@ export type AlertBoxProps = {
 const spaceChar = '\u2002';
 const periodChar = '.';
 
+const MessageEndLink = ({ linkText, linkHref }: LinkContent) =>
+    <Typography variant='body2'>
+        {spaceChar}
+        <Link href={linkHref}>{linkText}</Link>
+        {periodChar}
+    </Typography>
+
 export const AlertBox = (props: AlertBoxProps) =>
-    <Collapse in={props.isOpen}>
-        <Alert
-            variant='outlined'
-            severity={props.severity}
-            action={
-                <Button
-                    onClick={props.closeAction}
-                    variant='text'
-                    label={props.actionText || ''}
-                    endWithIcon={<CloseOutlined />}
-                    sx={{ color: 'inherit' }}
-                />
-            }
-            sx={{
-                'display': 'inline-flex',
-                'textAlign': 'left',
-                'position': 'relative',
-                '& .MuiAlert-action': {
-                    minWidth: 'fit-content',
-                    justifyContent: 'flex-end'
-                },
-                'borderColor': props.severity === 'error' ? 'error.dark' : null,
-                ...props.sx
-            }}
-        >
 
-            <AlertTitle>{props.title}</AlertTitle>
+    <Alert
+        variant='outlined'
+        severity={props.severity}
+        action={props.action && <IconButton onClick={props.closeAction} />}
+        sx={{
+            'display': 'inline-flex',
+            'textAlign': 'left',
+            'position': 'relative',
+            'borderColor': props.severity === 'error' ? 'error.dark' : null,
+            '& .MuiAlert-action': {
+                pt: 0
+            },
+            ...props.sx
+        }}
+    >
+        <AlertTitle>{props.title}</AlertTitle>
 
-            <Typography sx={{ display: 'inline-flex' }} variant='body2'>
-                {props.message}
-            </Typography>
-
-            {props.link ?
-                <Typography sx={{ display: 'inline-flex' }} variant='body2'>
-                    {spaceChar}
-                    <Link href={props.link.href}>{props.link.text}</Link>
-                    {periodChar}
-                </Typography> :
-                null
-            }
-        </Alert>
-    </Collapse>;
+        <Box sx={{ display: 'inline-flex' }}>
+            <Typography variant='body2'>{props.message}</Typography>
+            {props.endWithLink && <MessageEndLink {...props.endWithLink} />}
+        </Box>
+    </Alert>
