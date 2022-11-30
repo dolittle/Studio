@@ -27,8 +27,6 @@ export const Overview = ({ application, microserviceId, environment }: OverviewP
 
     const [loaded, setLoaded] = useState(false);
 
-    console.log('Overview', microserviceId)
-
     // Want microservice name
     const [podsData, setPodsData] = useState({
         namespace: '',
