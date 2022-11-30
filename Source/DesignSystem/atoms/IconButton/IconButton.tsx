@@ -25,5 +25,5 @@ export const IconButton = (props: IconButtonProps) =>
         sx={props.sx}
         onClick={props.onClick}
     >
-        {props.icon || <CloseRounded aria-label='close' />}
+        {props.icon || <CloseRounded aria-label='close' fontSize={props.size || 'small'} />}
     </MuiIconButton>;

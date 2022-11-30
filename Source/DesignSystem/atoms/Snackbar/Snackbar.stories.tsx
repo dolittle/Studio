@@ -7,10 +7,11 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { SnackbarProvider, useSnackbar } from 'notistack';
 
-import { IconButton, Slide, SlideProps } from '@mui/material';
-import { CloseRounded, ErrorRounded } from '@mui/icons-material';
+import { Slide, SlideProps } from '@mui/material';
+import { ErrorRounded } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system/atoms/Button';
+import { IconButton } from '../IconButton/IconButton';
 
 import { Snackbar as CustomSnackbar } from './Snackbar';
 
@@ -21,11 +22,24 @@ function SlideTransition(props: SlideProps) {
 export default {
     title: 'Snackbar',
     component: SnackbarProvider,
+    argTypes: {
+        children: {
+            table: {
+                disable: true
+            }
+        },
+        variant: {
+            control: {
+                type: 'select',
+                options: ['success', 'error', 'warning', 'info']
+            }
+        }
+    }
 } as ComponentMeta<typeof SnackbarProvider>;
 
 const Template: ComponentStory<typeof SnackbarProvider> = (args) =>
     <SnackbarProvider
-        {...args}
+        //{...args}
         anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
         TransitionComponent={SlideTransition}
         autoHideDuration={4000}
@@ -33,10 +47,12 @@ const Template: ComponentStory<typeof SnackbarProvider> = (args) =>
         Components={{
             error: CustomSnackbar
         }}
+        variant={args.variant}
         iconVariant={{
             error: <ErrorRounded fontSize='small' sx={{ mr: 1 }} />
         }}
     >
+        {args.children}
     </SnackbarProvider>;
 
 
@@ -56,7 +72,8 @@ const DefaultSnackbar = () => {
 };
 
 Default.args = {
-    children: <DefaultSnackbar />
+    children: <DefaultSnackbar />,
+    variant: 'default'
 };
 
 
@@ -76,12 +93,10 @@ const WithActionButtonsSnackbar = () => {
                         enqueueSnackbar(`Snackbar with action buttons -  ${count} - Undone.`)
                     } />
 
-                    <IconButton size='small' aria-label='close' color='inherit' onClick={() => {
+                    <IconButton onClick={() => {
                         enqueueSnackbar(`Snackbar with action buttons -  ${count} - Dismissed.`)
                         closeSnackbar(key)
-                    }}>
-                        <CloseRounded fontSize='small' />
-                    </IconButton>
+                    }} />
                 </>
             )
         });
@@ -91,7 +106,8 @@ const WithActionButtonsSnackbar = () => {
 };
 
 WithActionButtons.args = {
-    children: <WithActionButtonsSnackbar />
+    children: <WithActionButtonsSnackbar />,
+    variant: 'default'
 };
 
 
@@ -104,14 +120,13 @@ const WithCustomSnackbar = () => {
     const handleOpen = useCallback(() => {
         setCount((count) => count + 1);
 
-        enqueueSnackbar(`Snackbar with custom error -  ${count}.`, {
-            variant: 'error'
-        });
+        enqueueSnackbar(`Snackbar with custom error -  ${count}.`);
     }, [count]);
 
     return <Button variant='text' label='Open Snackbar with custom error styles' onClick={handleOpen} />
 };
 
 WithCustomError.args = {
-    children: <WithCustomSnackbar />
+    children: <WithCustomSnackbar />,
+    variant: 'error'
 };
