@@ -18,7 +18,7 @@ import { Configuration } from './configuration/configuration';
 import { HealthStatus } from './healthStatus/healthStatus';
 import { ContainerHealthStatus } from '../microserviceStatus';
 import { useTerminalAvailable } from './terminal/useTerminal';
-import { View as Terminal } from './terminal/View';
+import { TerminalView } from './terminal/terminalView';
 
 type MicroserviceViewProps = {
     application: HttpResponseApplication;
@@ -123,7 +123,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         tabs.push(
             {
                 label: 'Terminal',
-                render: () => <Terminal
+                render: () => <TerminalView
                     applicationId={applicationId}
                     environment={environment}
                     microserviceId={microserviceId}

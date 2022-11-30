@@ -4,7 +4,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { HttpResponseApplication } from '../api/application';
-import { Overview } from './view';
+import { Overview } from './overview';
 
 type Props = {
     environment: string

@@ -16,7 +16,7 @@ import { DownloadButtons } from '../../components/downloadButtons';
 
 import { LiveIngressView } from '../../base/liveIngressView';
 
-import { SetupSection } from './setupSection';
+import { SetupSection } from './editSection';
 import { FilesSection } from './filesSection/filesSection';
 
 export type ConfigurationProps = {

@@ -62,7 +62,7 @@ export type DataTableProps = {
     rows: DataTableRow[];
 };
 
-export const DataTable = ({ rows }: DataTableProps) => {
+export const HealthStatusDataTable = ({ rows }: DataTableProps) => {
     const [detailPanelExpandedRowIds, setDetailPanelExpandedRowIds] = useState<GridRowId[]>([]);
 
     const handleDetailPanelExpandedRowIdsChange = (newIds: GridRowId[]) => {
