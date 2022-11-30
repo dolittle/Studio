@@ -12,7 +12,7 @@ import { formatTime, formatStartingDate } from '../../helpers/dateHelpers';
 import { DownloadLogs } from '../../helpers/downloadHelpers';
 
 import { statusCell } from '../../microserviceStatus';
-import { DataTableRow } from './dataTable';
+import { DataTableRow } from './healthStatusDataTable';
 
 export const columns: GridColDef[] = [
     {

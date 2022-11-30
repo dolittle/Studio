@@ -16,11 +16,11 @@ import { FileUploadForm, FileUploadFormRef } from './fileUploadForm';
 
 import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../api/api';
 
-import { RestartMicroserviceDialog } from '../../RestartMicroserviceDialog';
-import { DataTable, ConfigFilesTableRow } from './dataTable';
-import { NoConfigFiles } from './NoConfigFiles';
-import { DeleteConfigFileDialog, ValidateFileDialog } from './ConfirmDialogs';
-import { ButtonGroup } from './ButtonGroup';
+import { RestartMicroserviceDialog } from '../../restartMicroserviceDialog';
+import { DataTable, ConfigFilesTableRow } from './configFilesDataTable';
+import { NoConfigFiles } from './noConfigFiles';
+import { DeleteConfigFileDialog, ValidateFileDialog } from './confirmDialogs';
+import { ButtonGroup } from './buttonGroup';
 import { RestartInfoBox } from './msRestartInfoBox';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;

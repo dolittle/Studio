@@ -14,12 +14,12 @@ export type ViewProps = {
     microserviceId: string;
 };
 
-export const View = (props: ViewProps) => {
+export const TerminalView = (props: ViewProps) => {
     const url = useTTYdUrl(props.applicationId, props.environment, props.microserviceId);
 
     const connect = useMemo<TerminalConnect>(() =>
         ({ columns, rows, signal }) => ttydConnect(url, columns, rows, signal)
-    , [url]);
+        , [url]);
 
     return (
         <Terminal

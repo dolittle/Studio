@@ -21,7 +21,7 @@ type Props = {
     application: HttpResponseApplication
 };
 
-export const View: React.FunctionComponent<Props> = (props) => {
+export const EnvironmentVariablesView: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const { microserviceId } = useParams() as any;
     const { enqueueSnackbar } = useSnackbar();

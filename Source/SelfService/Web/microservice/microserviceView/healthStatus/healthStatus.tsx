@@ -13,8 +13,8 @@ import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../api/api';
 
 import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 
-import { DataTable, DataTableStats } from './dataTable';
-import { RestartMicroserviceDialog } from '../RestartMicroserviceDialog';
+import { HealthStatusDataTable, DataTableStats } from './healthStatusDataTable';
+import { RestartMicroserviceDialog } from '../restartMicroserviceDialog';
 
 const styles = {
     restartBtn: {
@@ -76,7 +76,7 @@ export const HealthStatus = ({ applicationId, environment, microserviceId, msNam
             return row;
         });
 
-        return <DataTable key={pod.name} rows={rows} />;
+        return <HealthStatusDataTable key={pod.name} rows={rows} />;
     });
 
     const cpuGraphData = useMemo(() =>

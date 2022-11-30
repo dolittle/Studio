@@ -4,9 +4,7 @@
 import React from 'react';
 
 import { DataGridPro, GridSelectionModel } from '@mui/x-data-grid-pro';
-import { Box, Paper } from '@mui/material';
-
-import { NoConfigFiles } from './NoConfigFiles';
+import { Paper } from '@mui/material';
 
 const columns = [
     { field: 'path', headerName: 'Path', minWidth: 247, flex: 1 },

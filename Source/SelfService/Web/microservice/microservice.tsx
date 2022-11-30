@@ -17,7 +17,7 @@ import { Paper, Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 import { NoMicroservices } from './noMicroservices';
-import { DataTable, MicroserviceObject } from './dataTable';
+import { DataTable, MicroserviceObject } from './overviewDataTable';
 
 type MicroservicesOverviewScreenProps = {
     environment: string;
