@@ -6,8 +6,6 @@ import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 import { CustomContentProps, SnackbarContent } from 'notistack';
 
-import { Box } from '@mui/material';
-
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles(() => ({
@@ -19,7 +17,7 @@ const useStyles = makeStyles(() => ({
         letterSpacing: '0.01071em',
         color: '#FFFFFF',
         alignItems: 'center',
-        padding: '6px 16px',
+        padding: '14px 16px',
         borderRadius: '4px',
         boxShadow:
             '0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)'
@@ -36,10 +34,12 @@ export const Snackbar = forwardRef<HTMLDivElement, CustomContentProps>((props, f
         <SnackbarContent
             ref={forwardedRef}
             className={clsx(classes.root, classes[props.variant])}
-        >
-            {props.iconVariant[props.variant]}
-
-            <Box sx={{ py: 1 }}>{props.message}</Box>
-        </SnackbarContent>
+            children={
+                <>
+                    {props.iconVariant[props.variant]}
+                    {props.message}
+                </>
+            }
+        />
     );
 });
