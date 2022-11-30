@@ -30,7 +30,7 @@ COPY Source/Shared/Styling/tsconfig.json ./Source/Shared/Styling/tsconfig.json
 COPY Source/DesignSystem/tsconfig.json ./Source/DesignSystem/tsconfig.json
 COPY Source/Bridge/bridge-frontend/tsconfig.json ./Source/Bridge/bridge-frontend/tsconfig.json
 
-COPY Source ./Source
+COPY . .
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
@@ -54,17 +54,17 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/Source/Bridge/bridge-frontend/public ./public
+COPY --from=builder /app/Source/Bridge/bridge-frontend/public ./Source/Bridge/bridge-frontend/public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/Source/Bridge/bridge-frontend/.next/standalone* ./
-COPY --from=builder --chown=nextjs:nodejs /app/Source/Bridge/bridge-frontend/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/Source/Bridge/bridge-frontend/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/Source/Bridge/bridge-frontend/.next/static ./Source/Bridge/bridge-frontend/.next/static
 
 USER nextjs
 
-EXPOSE 80
+EXPOSE 3000
 
-ENV PORT 80
+ENV PORT 3000
 
-CMD ["node", "server.js"]
+CMD ["node", "Source/Bridge/bridge-frontend/server.js"]

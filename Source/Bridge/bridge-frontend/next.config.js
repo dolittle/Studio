@@ -1,10 +1,14 @@
 /** @type {import('next').NextConfig} */
+const path = require("path");
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   experimental: {
     externalDir: true,
+    // this includes files from the monorepo base two directories up
+    outputFileTracingRoot: path.join(__dirname, '../../../'),
   },
+  output: 'standalone',
   async rewrites() {
     return [
       {
