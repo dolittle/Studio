@@ -49,7 +49,7 @@ const DefaultSnackbar = () => {
     const handleOpen = useCallback(() => {
         setCount((count) => count + 1);
 
-        enqueueSnackbar(`Default snackbar message -  ${count}`);
+        enqueueSnackbar(`Default snackbar message -  ${count}.`);
     }, [count]);
 
     return <Button variant='text' label='Open default Snackbars' onClick={handleOpen} />
@@ -69,15 +69,15 @@ const WithActionButtonsSnackbar = () => {
     const handleOpen = useCallback(() => {
         setCount((count) => count + 1);
 
-        enqueueSnackbar(`Snackbar with action buttons -  ${count}`, {
+        enqueueSnackbar(`Snackbar with action buttons -  ${count}.`, {
             action: (key) => (
                 <>
                     <Button variant='text' label='Undo' color='secondary' onClick={() =>
-                        enqueueSnackbar(`Snackbar with action buttons -  ${count} - Undone`)
+                        enqueueSnackbar(`Snackbar with action buttons -  ${count} - Undone.`)
                     } />
 
                     <IconButton size='small' aria-label='close' color='inherit' onClick={() => {
-                        enqueueSnackbar(`Snackbar with action buttons -  ${count} - Dismissed`)
+                        enqueueSnackbar(`Snackbar with action buttons -  ${count} - Dismissed.`)
                         closeSnackbar(key)
                     }}>
                         <CloseRounded fontSize='small' />
@@ -97,14 +97,14 @@ WithActionButtons.args = {
 
 export const WithCustomError = Template.bind({});
 
-const WithCustomSnackbarSnackbar = () => {
+const WithCustomSnackbar = () => {
     const { enqueueSnackbar } = useSnackbar();
     const [count, setCount] = useState(0);
 
     const handleOpen = useCallback(() => {
         setCount((count) => count + 1);
 
-        enqueueSnackbar(`Snackbar with custom error -  ${count}`, {
+        enqueueSnackbar(`Snackbar with custom error -  ${count}.`, {
             variant: 'error'
         });
     }, [count]);
@@ -113,5 +113,5 @@ const WithCustomSnackbarSnackbar = () => {
 };
 
 WithCustomError.args = {
-    children: <WithCustomSnackbarSnackbar />
+    children: <WithCustomSnackbar />
 };
