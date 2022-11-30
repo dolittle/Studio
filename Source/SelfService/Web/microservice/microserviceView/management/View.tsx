@@ -16,17 +16,10 @@ export type ViewProps = {
 export const View = (props: ViewProps) => {
     const tabs: Tab[] = [];
     const buildResultsAvailable = useBuildResultsAvailable(props.applicationId, props.environment, props.microserviceId);
-    if (buildResultsAvailable) {
-        tabs.push({
-            label: 'Build Results',
-            render: () => <BuildResults applicationId={props.applicationId} environment={props.environment} microserviceId={props.microserviceId}/>
-        });
-    }
-
     return (
         <>
-            {tabs.length > 0
-                ? <Tabs id={'MicroserviceManagement'} tabs={tabs} />
+            {buildResultsAvailable
+                ? <BuildResults applicationId={props.applicationId} environment={props.environment} microserviceId={props.microserviceId}/>
                 : <h2>There are not any management endpoints on your microservice.</h2>
             }
         </>
