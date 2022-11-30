@@ -21,7 +21,7 @@ import { DataTable, ConfigFilesTableRow } from './configFilesDataTable';
 import { NoConfigFiles } from './noConfigFiles';
 import { DeleteConfigFileDialog, ValidateFileDialog } from './confirmDialogs';
 import { ButtonGroup } from './buttonGroup';
-import { RestartInfoBox } from './msRestartInfoBox';
+import { RestartInfoBox } from './restartInfoBox';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
@@ -118,8 +118,8 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                             setRestartMicroserviceInfoBoxOpen(false);
                             closeSnackbar(key);
                         }} />
-                        <IconButton aria-label='close' onClick={() => closeSnackbar(key)}>
-                            <CloseRounded fontSize='small' sx={{ color: '#FFFFFF' }} />
+                        <IconButton onClick={() => closeSnackbar(key)}>
+                            <CloseRounded aria-label='close' fontSize='small' sx={{ color: '#FFFFFF' }} />
                         </IconButton>
                     </>
                 )
@@ -215,7 +215,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
                 <FileUploadForm ref={fileUploadRef} onSelected={handleFileSelect} allowMultipleFiles />
 
-                <RestartInfoBox name={microserviceName} open={restartMicroserviceInfoBoxOpen} setOpen={() => setRestartMicroserviceDialogIsOpen(true)} />
+                <RestartInfoBox name={microserviceName} open={restartMicroserviceInfoBoxOpen} setOpen={() => setRestartMicroserviceInfoBoxOpen(false)} />
 
                 {dataTableRows.length > 0 ?
                     <DataTable rows={dataTableRows} handleSelectionModelChange={setDataTableRowsSelected} selectionModel={dataTableRowsSelected} /> :
