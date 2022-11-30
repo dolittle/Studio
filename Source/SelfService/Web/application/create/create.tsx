@@ -190,9 +190,9 @@ export const Create = () => {
                         title='Oops, something went wrong'
                         message='Please try again later. If problem persists, please'
                         severity='error'
-                        link={{
-                            href: 'mailto: support@dolittle.com',
-                            text: 'contact support'
+                        endWithLink={{
+                            linkText: 'contact support',
+                            linkHref: 'mailto: support@dolittle.com'
                         }}
                         sx={{ mt: 6 }}
                     />

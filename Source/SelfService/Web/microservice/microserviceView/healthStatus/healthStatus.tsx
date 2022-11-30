@@ -121,9 +121,9 @@ export const HealthStatus = ({ applicationId, environment, microserviceId, msNam
                     severity='error'
                     title='Cannot display microservice containers'
                     message='Please try again later. If problem persists, please'
-                    link={{
-                        href: 'mailto: support@dolittle.com',
-                        text: 'contact support'
+                    endWithLink={{
+                        linkText: 'contact support',
+                        linkHref: 'mailto: support@dolittle.com'
                     }}
                 />
             }
