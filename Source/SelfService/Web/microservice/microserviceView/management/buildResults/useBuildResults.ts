@@ -3,8 +3,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRuntimeManagementUrl } from '../useRuntimeManagement';
-import { BuildResults, emptyBuildResults,  } from './BuildResults';
-import { getBuildResults, toArtifactResult, toBuildResult } from './protobuf';
+import { BuildResults, emptyBuildResults, getBuildResults  } from './BuildResults';
+import { getBuildResults as pbGetBuildResults } from './Protobuf';
 
 export const useBuildResults = (applicationId: string, environment: string, microserviceId: string): BuildResults => {
     const url = useRuntimeManagementUrl(applicationId, environment, microserviceId);
@@ -12,16 +12,7 @@ export const useBuildResults = (applicationId: string, environment: string, micr
     useEffect(() => {
         getBuildResults(url)
             .then(resp => {
-                const results = resp.getBuildresults()!;
-                setBuildResults({
-                    other: results.getOtherList().map(toBuildResult),
-                    aggregateRoots: results.getAggregaterootsList().map(toArtifactResult),
-                    embeddings: results.getEmbeddingsList().map(toArtifactResult),
-                    eventHandlers: results.getEventhandlersList().map(toArtifactResult),
-                    eventTypes: results.getEventtypesList().map(toArtifactResult),
-                    filters: results.getFiltersList().map(toArtifactResult),
-                    projections: results.getProjectionsList().map(toArtifactResult),
-                });
+                setBuildResults(resp);
             })
             .catch(err => {
                 console.error(err);
@@ -38,12 +29,14 @@ export const useBuildResultsAvailable = (applicationId: string, environment: str
     const [available, setAvailable] = useState(false);
     useEffect(() => {
         let aborted = false;
-        getBuildResults(url)
+        pbGetBuildResults(url)
             .then(response => {
                 if (aborted) return;
+                console.log(response);
                 setAvailable(!!response.getBuildresults() && true);
             })
-            .catch(() => {
+            .catch((err) => {
+                console.log('err', err);
                 if (aborted) return;
                 setAvailable(false);
             });

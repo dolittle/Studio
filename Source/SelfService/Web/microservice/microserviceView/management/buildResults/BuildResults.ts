@@ -1,6 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { Artifact } from '../Types';
+import { getBuildResults as pbGetBuildResults, toArtifactResult, toBuildResult } from './Protobuf';
+
 export type BuildResults = {
     other: OtherResults;
     eventTypes: ArtifactResults;
@@ -15,11 +18,6 @@ export type BuildResult = {
     type: string,
     message: string,
     isFailed: boolean
-};
-
-export type Artifact = {
-    id: string,
-    generation: number
 };
 
 export type OtherResults = BuildResult[];
@@ -41,3 +39,20 @@ export const emptyBuildResults: BuildResults = {
     filters: [],
     projections: []
 };
+
+export async function getBuildResults(url: string): Promise<BuildResults> {
+    const response = await pbGetBuildResults(url);
+    const results = response.getBuildresults();
+    if (results === undefined) {
+        throw new Error('Build results is empty');
+    }
+    return {
+        other: results.getOtherList().map(toBuildResult),
+        aggregateRoots: results.getAggregaterootsList().map(toArtifactResult),
+        embeddings: results.getEmbeddingsList().map(toArtifactResult),
+        eventHandlers: results.getEventhandlersList().map(toArtifactResult),
+        eventTypes: results.getEventtypesList().map(toArtifactResult),
+        filters: results.getFiltersList().map(toArtifactResult),
+        projections: results.getProjectionsList().map(toArtifactResult),
+    };
+}

@@ -4,18 +4,19 @@
 import { BuildResult as PbBuildResult, ArtifactBuildResult as PbArtifactBuildResult,  } from '@dolittle/contracts.web/Runtime/Client/BuildResult_pb';
 import { ClientPromiseClient } from '@dolittle/contracts.web/Runtime/Management/Client/Client_grpc_web_pb';
 import { GetBuildResultsRequest, GetBuildResultsResponse } from '@dolittle/contracts.web/Runtime/Management/Client/Client_pb';
-import { Guid } from '@dolittle/rudiments';
+import { toArtifact } from '../Protobuf';
 import { ArtifactResult, BuildResult } from './BuildResults';
 
-let buildResultsResponse: GetBuildResultsResponse;
+const buildResultsResponseCache: Map<string, GetBuildResultsResponse> = new Map<string, GetBuildResultsResponse>();
 
 export async function getBuildResults(url: string): Promise<GetBuildResultsResponse> {
-    if (buildResultsResponse !== undefined) {
-        return buildResultsResponse;
+    if (buildResultsResponseCache.has(url)) {
+        return buildResultsResponseCache.get(url)!;
     }
+
     const response = await new ClientPromiseClient(url).getBuildResults(new GetBuildResultsRequest());
-    buildResultsResponse = response;
-    return buildResultsResponse;
+    buildResultsResponseCache.set(url, response);
+    return response;
 }
 
 export function toBuildResult(pb: PbBuildResult): BuildResult {
@@ -31,6 +32,6 @@ export function toArtifactResult(pb: PbArtifactBuildResult): ArtifactResult {
     return {
         buildResult: toBuildResult(pb.getBuildresult()!),
         alias: pb.getAlias(),
-        artifact: {generation: pb.getAritfact()!.getGeneration(), id: new Guid(pb.getAritfact()!.getId()!.getValue_asU8()).toString()},
+        artifact: toArtifact(pb.getAritfact()!)
     };
 }
