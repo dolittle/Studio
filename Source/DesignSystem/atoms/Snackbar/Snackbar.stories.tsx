@@ -60,7 +60,7 @@ const Template: ComponentStory<typeof SnackbarProvider> = (args) => {
     return <SnackbarProvider {...args}></SnackbarProvider>;
 };
 
-export const DefaultSnackbar = Template.bind({});
+export const Snackbars = Template.bind({});
 
 const Snackbar = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -88,13 +88,12 @@ const Snackbar = () => {
     return <Button variant='text' label='Open snackbars' onClick={buttonClicked} />;
 };
 
-DefaultSnackbar.args = {
+Snackbars.args = {
     children: <Snackbar />,
     variant: 'default',
     anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
     TransitionComponent: SlideTransition,
     Components: {
-        default: CustomSnackbar,
         error: CustomSnackbar,
         warning: CustomSnackbar,
         info: CustomSnackbar,
@@ -105,10 +104,4 @@ DefaultSnackbar.args = {
     },
     maxSnack: 6,
     autoHideDuration: 4000
-};
-
-export const SnackbarWithButtons = Template.bind({});
-
-SnackbarWithButtons.args = {
-    ...DefaultSnackbar.args
 };
