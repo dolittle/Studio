@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useCallback, useState } from 'react';
-
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { SnackbarProvider, useSnackbar } from 'notistack';
@@ -11,7 +10,7 @@ import { Slide, SlideProps } from '@mui/material';
 import { ErrorRounded } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system/atoms/Button';
-import { IconButton } from '../IconButton/IconButton';
+import { IconButton } from '@dolittle/design-system/atoms/IconButton/IconButton';
 
 import { Snackbar as CustomSnackbar } from './Snackbar';
 
@@ -31,62 +30,46 @@ export default {
         variant: {
             control: {
                 type: 'select',
-                options: ['success', 'error', 'warning', 'info']
+                options: ['default', 'success', 'error', 'warning', 'info']
+            }
+        },
+        anchorOrigin: {
+            table: {
+                disable: true
+            }
+        },
+        TransitionComponent: {
+            table: {
+                disable: true
+            }
+        },
+        Components: {
+            table: {
+                disable: true
+            }
+        },
+        iconVariant: {
+            table: {
+                disable: true
             }
         }
     }
 } as ComponentMeta<typeof SnackbarProvider>;
 
-const Template: ComponentStory<typeof SnackbarProvider> = (args) =>
-    <SnackbarProvider
-        //{...args}
-        anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-        TransitionComponent={SlideTransition}
-        autoHideDuration={4000}
-        maxSnack={6}
-        Components={{
-            error: CustomSnackbar
-        }}
-        variant={args.variant}
-        iconVariant={{
-            error: <ErrorRounded fontSize='small' sx={{ mr: 1 }} />
-        }}
-    >
-        {args.children}
-    </SnackbarProvider>;
-
-
-export const Default = Template.bind({});
-
-const DefaultSnackbar = () => {
-    const { enqueueSnackbar } = useSnackbar();
-    const [count, setCount] = useState(0);
-
-    const handleOpen = useCallback(() => {
-        setCount((count) => count + 1);
-
-        enqueueSnackbar(`Default snackbar message -  ${count}.`);
-    }, [count]);
-
-    return <Button variant='text' label='Open default Snackbars' onClick={handleOpen} />
+const Template: ComponentStory<typeof SnackbarProvider> = (args) => {
+    return <SnackbarProvider {...args}></SnackbarProvider>;
 };
 
-Default.args = {
-    children: <DefaultSnackbar />,
-    variant: 'default'
-};
+export const DefaultSnackbar = Template.bind({});
 
-
-export const WithActionButtons = Template.bind({});
-
-const WithActionButtonsSnackbar = () => {
+const Snackbar = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const [count, setCount] = useState(0);
 
-    const handleOpen = useCallback(() => {
-        setCount((count) => count + 1);
+    const buttonClicked = useCallback(() => {
+        setCount(state => state + 1);
 
-        enqueueSnackbar(`Snackbar with action buttons -  ${count}.`, {
+        enqueueSnackbar(`Snackbar ${count}`, {
             action: (key) => (
                 <>
                     <Button variant='text' label='Undo' color='secondary' onClick={() =>
@@ -102,31 +85,30 @@ const WithActionButtonsSnackbar = () => {
         });
     }, [count]);
 
-    return <Button variant='text' label='Open Snackbar with action buttons' onClick={handleOpen} />
+    return <Button variant='text' label='Open snackbars' onClick={buttonClicked} />;
 };
 
-WithActionButtons.args = {
-    children: <WithActionButtonsSnackbar />,
-    variant: 'default'
+DefaultSnackbar.args = {
+    children: <Snackbar />,
+    variant: 'default',
+    anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
+    TransitionComponent: SlideTransition,
+    Components: {
+        default: CustomSnackbar,
+        error: CustomSnackbar,
+        warning: CustomSnackbar,
+        info: CustomSnackbar,
+        success: CustomSnackbar
+    },
+    iconVariant: {
+        error: <ErrorRounded fontSize='small' sx={{ mr: 1 }} />
+    },
+    maxSnack: 6,
+    autoHideDuration: 4000
 };
 
+export const SnackbarWithButtons = Template.bind({});
 
-export const WithCustomError = Template.bind({});
-
-const WithCustomSnackbar = () => {
-    const { enqueueSnackbar } = useSnackbar();
-    const [count, setCount] = useState(0);
-
-    const handleOpen = useCallback(() => {
-        setCount((count) => count + 1);
-
-        enqueueSnackbar(`Snackbar with custom error -  ${count}.`);
-    }, [count]);
-
-    return <Button variant='text' label='Open Snackbar with custom error styles' onClick={handleOpen} />
-};
-
-WithCustomError.args = {
-    children: <WithCustomSnackbar />,
-    variant: 'error'
+SnackbarWithButtons.args = {
+    ...DefaultSnackbar.args
 };
