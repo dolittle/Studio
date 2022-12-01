@@ -100,7 +100,11 @@ Snackbars.args = {
         success: CustomSnackbar
     },
     iconVariant: {
-        error: <ErrorRounded fontSize='small' sx={{ mr: 1 }} />
+        error: <ErrorRounded fontSize='small' sx={{ mr: 1 }} />,
+        warning: null,
+        info: null,
+        success: null,
+        default: null
     },
     maxSnack: 6,
     autoHideDuration: 4000

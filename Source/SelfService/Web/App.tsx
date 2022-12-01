@@ -87,7 +87,11 @@ export const App = () => {
                                     success: Snackbar
                                 }}
                                 iconVariant={{
-                                    error: <ErrorRounded fontSize="small" sx={{ mr: 1 }} />
+                                    error: <ErrorRounded fontSize="small" sx={{ mr: 1 }} />,
+                                    warning: null,
+                                    info: null,
+                                    success: null,
+                                    default: null
                                 }}
                             >
                                 <BrowserRouter basename={uriWithAppPrefix('')}>
