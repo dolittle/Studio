@@ -17,14 +17,14 @@ import { Paper, Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 import { NoMicroservices } from './noMicroservices';
-import { DataTable, MicroserviceObject } from './microserviceDataTable';
+import { MicroserviceOverviewTable, MicroserviceObject } from './microservicesOverviewTable';
 
-type MicroservicesOverviewScreenProps = {
+type MicroserviceOverviewScreenProps = {
     environment: string;
     application: HttpResponseApplication;
 };
 
-export const MicroservicesOverviewScreen = ({ environment, application }: MicroservicesOverviewScreenProps) => {
+export const MicroserviceOverviewScreen = ({ environment, application }: MicroserviceOverviewScreenProps) => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as MicroserviceObject[];
@@ -64,9 +64,7 @@ export const MicroservicesOverviewScreen = ({ environment, application }: Micros
         history.push(href);
     };
 
-    if (loading) {
-        return <LoadingSpinner />;
-    };
+    if (loading) return <LoadingSpinner />;
 
     return (
         <>
@@ -81,7 +79,7 @@ export const MicroservicesOverviewScreen = ({ environment, application }: Micros
             <Typography variant='h1' sx={{ my: 2 }}>Microservices</Typography>
 
             {hasMicroservices ?
-                <DataTable application={application} environment={environment} microservices={filteredMicroservices} /> :
+                <MicroserviceOverviewTable application={application} environment={environment} microservices={filteredMicroservices} /> :
                 <NoMicroservices onCreate={handleCreateMicroservice} />
             }
 
@@ -91,7 +89,7 @@ export const MicroservicesOverviewScreen = ({ environment, application }: Micros
                         variant='text'
                         label='Deploy New Microservice'
                         startWithIcon={<RocketLaunch />}
-                        fullWidth
+                        isFullWidth
                         onClick={() => handleCreateMicroservice()}
                     />
                 </Paper>

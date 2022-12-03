@@ -53,6 +53,6 @@ export const WithAction = createStory({
         linkHref: 'https://www.dolittle.com/',
         linkText: 'look our website'
     },
-    action: 'Close',
-    closeAction: () => alert('Close action was clicked.')
+    isDismissable: true,
+    onDismiss: () => alert('Close action was clicked.')
 });

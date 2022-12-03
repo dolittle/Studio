@@ -11,7 +11,7 @@ export default metadata;
 
 export const DialogBox = createStory({
     id: 'alert-dialog-title',
-    open: true,
+    isOpen: true,
     title: 'This is a dialog box.',
     description: 'This is a description of the dialog box.',
     cancelText: 'Cancel',

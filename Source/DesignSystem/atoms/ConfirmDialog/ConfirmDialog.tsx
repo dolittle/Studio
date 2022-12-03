@@ -10,7 +10,7 @@ import { CloseRounded } from '@mui/icons-material';
 
 type ConfirmDialogProps = {
     id: string;
-    open?: boolean;
+    isOpen?: boolean;
     title: string;
     description?: string;
     children?: React.ReactNode;
@@ -22,7 +22,7 @@ type ConfirmDialogProps = {
 
 export const ConfirmDialog = (props: ConfirmDialogProps) =>
     <Dialog
-        open={props.open || false}
+        open={props.isOpen || false}
         onClose={props.handleCancel}
         aria-labelledby={`${props.id}-title`}
         aria-describedby={`${props.id}-description`}

@@ -43,7 +43,7 @@ export const ValidateFileDialog = ({ invalid, open, setOpen, handleValidate }: V
             description={`Please cancel or select a new ${isManyInvalidFiles}.`}
             cancelText='Cancel'
             confirmText='Select new'
-            open={open}
+            isOpen={open}
             handleCancel={setOpen}
             handleConfirm={handleValidate}
         >

@@ -25,7 +25,7 @@ export const NoConfigFiles = ({ handleOnClick }: NoConfigFilesProps) => {
                 variant='filled'
                 label='Add File(s)'
                 startWithIcon={<AddCircle />}
-                fullWidth
+                isFullWidth
                 sx={{
                     'backgroundColor': 'rgba(140, 154, 248, 0.08)',
                     'color': 'primary.main',

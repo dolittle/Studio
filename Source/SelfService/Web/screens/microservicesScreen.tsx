@@ -17,7 +17,7 @@ import {
     getMicroservices
 } from '../api/api';
 
-import { MicroservicesOverviewScreen } from '../microservice/microservice';
+import { MicroserviceOverviewScreen } from '../microservice/microserviceOverviewScreen';
 import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
 import { MicroserviceEditScreen } from '../microservice/microserviceEditScreen';
 import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';
@@ -174,7 +174,7 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
             <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
             <Switch>
                 <Route exact path="/microservices/application/:applicationId/:environment/overview">
-                    <MicroservicesOverviewScreen application={application} environment={currentEnvironment} />
+                    <MicroserviceOverviewScreen application={application} environment={currentEnvironment} />
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/create">
@@ -199,6 +199,6 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
 
                 <RouteNotFound redirectUrl={redirectUrl} />
             </Switch>
-        </LayoutWithSidebar >
+        </LayoutWithSidebar>
     );
 });

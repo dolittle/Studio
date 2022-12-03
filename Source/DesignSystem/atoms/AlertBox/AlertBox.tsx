@@ -17,9 +17,8 @@ export type AlertBoxProps = {
     title: string;
     message?: string;
     endWithLink?: LinkContent;
-    action?: React.ReactNode;
-    isOpen?: boolean;
-    closeAction?: () => void;
+    isDismissable?: boolean;
+    onDismiss?: () => void;
     sx?: SxProps;
 };
 
@@ -31,14 +30,13 @@ const MessageEndLink = ({ linkText, linkHref }: LinkContent) =>
         {spaceChar}
         <Link href={linkHref}>{linkText}</Link>
         {periodChar}
-    </Typography>
+    </Typography>;
 
 export const AlertBox = (props: AlertBoxProps) =>
-
     <Alert
         variant='outlined'
         severity={props.severity}
-        action={props.action && <IconButton onClick={props.closeAction} />}
+        action={props.isDismissable && <IconButton onClick={props.onDismiss} />}
         sx={{
             'display': 'inline-flex',
             'textAlign': 'left',
@@ -56,4 +54,4 @@ export const AlertBox = (props: AlertBoxProps) =>
             <Typography variant='body2'>{props.message}</Typography>
             {props.endWithLink && <MessageEndLink {...props.endWithLink} />}
         </Box>
-    </Alert>
+    </Alert>;

@@ -13,7 +13,7 @@ import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../api/api';
 
 import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 
-import { HealthStatusDataTable, DataTableStats } from './healthStatusDataTable';
+import { HealthStatusTable, HealthStatusTableStats } from './healthStatusTable';
 import { RestartMicroserviceDialog } from '../restartMicroserviceDialog';
 
 const styles = {
@@ -26,7 +26,7 @@ const styles = {
     }
 };
 
-const computeStats = (metric: Metric | undefined, scale: number): DataTableStats | undefined => {
+const computeStats = (metric: Metric | undefined, scale: number): HealthStatusTableStats | undefined => {
     if (metric === undefined) {
         return undefined;
     }
@@ -76,7 +76,7 @@ export const HealthStatus = ({ applicationId, environment, microserviceId, msNam
             return row;
         });
 
-        return <HealthStatusDataTable key={pod.name} rows={rows} />;
+        return <HealthStatusTable key={pod.name} rows={rows} />;
     });
 
     const cpuGraphData = useMemo(() =>
