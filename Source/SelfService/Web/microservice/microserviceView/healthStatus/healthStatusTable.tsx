@@ -35,16 +35,16 @@ const styles = {
 
 const DetailPanelExpandIcon = () => <ExpandMore fontSize='medium' />;
 const DetailPanelCollapseIcon = () => <ExpandLess fontSize='medium' />;
-const CustomToolbar = (rows: DataTableRow[]) =>
+const CustomToolbar = (rows: HealthStatusTableRow[]) =>
     <Typography variant='body2' sx={styles.podTitle}>{`Pod: ${rows[0]?.podName || 'N/A'}`}</Typography>;
 
-export type DataTableStats = {
+export type HealthStatusTableStats = {
     average: number;
     maximum: number;
     current: number;
 };
 
-export type DataTableRow = {
+export type HealthStatusTableRow = {
     id: string;
     podName: string;
     containerName: string;
@@ -54,15 +54,15 @@ export type DataTableRow = {
     image: string;
     started: string;
     restarts: number;
-    cpu?: DataTableStats;
-    memory?: DataTableStats;
+    cpu?: HealthStatusTableStats;
+    memory?: HealthStatusTableStats;
 };
 
-export type DataTableProps = {
-    rows: DataTableRow[];
+export type HealthStatusTableProps = {
+    rows: HealthStatusTableRow[];
 };
 
-export const HealthStatusDataTable = ({ rows }: DataTableProps) => {
+export const HealthStatusTable = ({ rows }: HealthStatusTableProps) => {
     const [detailPanelExpandedRowIds, setDetailPanelExpandedRowIds] = useState<GridRowId[]>([]);
 
     const handleDetailPanelExpandedRowIdsChange = (newIds: GridRowId[]) => {
@@ -75,7 +75,7 @@ export const HealthStatusDataTable = ({ rows }: DataTableProps) => {
         }
     };
 
-    const DetailPanelContent = ({ row }: { row: DataTableRow }) => (
+    const DetailPanelContent = ({ row }: { row: HealthStatusTableRow }) => (
         <Box component={Paper}>
             <PodLogScreen applicationId={row.application} podName={row.podName} containerName={row.containerName} />
         </Box>
@@ -94,7 +94,7 @@ export const HealthStatusDataTable = ({ rows }: DataTableProps) => {
                 getRowHeight={() => 'auto'}
                 autoHeight={true}
                 disableSelectionOnClick
-                getDetailPanelContent={({ row }: GridRowParams<DataTableRow>) => <DetailPanelContent row={row} />}
+                getDetailPanelContent={({ row }: GridRowParams<HealthStatusTableRow>) => <DetailPanelContent row={row} />}
                 getDetailPanelHeight={getDetailPanelHeight}
                 detailPanelExpandedRowIds={detailPanelExpandedRowIds}
                 onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}

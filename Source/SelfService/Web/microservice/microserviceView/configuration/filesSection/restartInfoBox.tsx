@@ -22,9 +22,8 @@ export const RestartInfoBox = ({ name, open, setOpen }: RestartInfoBoxProps) =>
                 `New uploads will be added as soon as microservice '${name}' restarts.
                 It will restart automatically in a few minutes or you can manually restart it now.`
             }
-            action
-            isOpen={open}
-            closeAction={setOpen}
+            isDismissable
+            onDismiss={setOpen}
             sx={{ width: 1, mb: 2 }}
         />
     </Collapse>;

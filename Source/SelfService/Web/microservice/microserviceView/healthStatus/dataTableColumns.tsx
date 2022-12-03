@@ -12,7 +12,7 @@ import { formatTime, formatStartingDate } from '../../helpers/dateHelpers';
 import { DownloadLogs } from '../../helpers/downloadHelpers';
 
 import { statusCell } from '../../microserviceStatus';
-import { DataTableRow } from './healthStatusDataTable';
+import { HealthStatusTableRow } from './healthStatusTable';
 
 export const columns: GridColDef[] = [
     {
@@ -40,7 +40,7 @@ export const columns: GridColDef[] = [
         flex: 1,
         headerAlign: 'right',
         align: 'right',
-        valueGetter: (params: GridValueGetterParams<any, DataTableRow>) =>
+        valueGetter: (params: GridValueGetterParams<any, HealthStatusTableRow>) =>
             formatTime(params.row?.age)
     },
     {
@@ -51,7 +51,7 @@ export const columns: GridColDef[] = [
         flex: 1,
         headerAlign: 'right',
         align: 'right',
-        valueGetter: (params: GridValueGetterParams<any, DataTableRow>) =>
+        valueGetter: (params: GridValueGetterParams<any, HealthStatusTableRow>) =>
             formatStartingDate(params.row?.started)
     },
     {
@@ -65,7 +65,7 @@ export const columns: GridColDef[] = [
             <Box className='MuiDataGrid-columnHeaderTitle'>
                 CPU <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
             </Box>,
-        renderCell: (params: GridRenderCellParams<any, DataTableRow>) =>
+        renderCell: (params: GridRenderCellParams<any, HealthStatusTableRow>) =>
             <Summary now={params.row.cpu?.current} avg={params.row.cpu?.average} max={params.row.cpu?.maximum} unit='%' description='CPU usage' period='last 24h' digits={0} />,
     },
     {
@@ -80,7 +80,7 @@ export const columns: GridColDef[] = [
             <Box className='MuiDataGrid-columnHeaderTitle'>
                 Memory <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
             </Box>,
-        renderCell: (params: GridRenderCellParams<any, DataTableRow>) =>
+        renderCell: (params: GridRenderCellParams<any, HealthStatusTableRow>) =>
             <Summary now={params.row.memory?.current} avg={params.row.memory?.average} max={params.row.memory?.maximum} unit='MiB' description='Memory usage' period='last 24h' digits={0} />,
     },
     {

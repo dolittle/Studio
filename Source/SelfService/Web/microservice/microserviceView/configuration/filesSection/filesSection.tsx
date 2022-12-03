@@ -17,7 +17,7 @@ import { FileUploadForm, FileUploadFormRef } from './fileUploadForm';
 import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../api/api';
 
 import { RestartMicroserviceDialog } from '../../restartMicroserviceDialog';
-import { DataTable, ConfigFilesTableRow } from './configFilesDataTable';
+import { ConfigFilesTable, ConfigFilesTableRow } from './configFilesTable';
 import { NoConfigFiles } from './noConfigFiles';
 import { ValidateFileDialog } from './validateFileDialog';
 import { DeleteConfigFileDialog } from './deleteConfigFileDialog';
@@ -202,7 +202,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
             <Accordion
                 id='configuration-files'
-                expanded={filesPanelExpanded}
+                isExpanded={filesPanelExpanded}
                 title='Configuration Files'
                 onChange={() => setFilesPanelExpanded(!filesPanelExpanded)}
             >
@@ -219,7 +219,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 <RestartInfoBox name={microserviceName} open={restartMicroserviceInfoBoxOpen} setOpen={() => setRestartMicroserviceInfoBoxOpen(false)} />
 
                 {dataTableRows.length > 0 ?
-                    <DataTable rows={dataTableRows} handleSelectionModelChange={setDataTableRowsSelected} selectionModel={dataTableRowsSelected} /> :
+                    <ConfigFilesTable rows={dataTableRows} handleSelectionModelChange={setDataTableRowsSelected} selectionModel={dataTableRowsSelected} /> :
                     <NoConfigFiles handleOnClick={() => fileUploadRef.current?.showPrompt()} />
                 }
             </Accordion>

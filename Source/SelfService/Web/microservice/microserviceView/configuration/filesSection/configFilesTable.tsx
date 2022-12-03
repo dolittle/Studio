@@ -27,7 +27,7 @@ type DataTableProps = {
     handleSelectionModelChange: (selectionModel: GridSelectionModel) => void;
 };
 
-export const DataTable = ({ rows, handleSelectionModelChange, selectionModel }: DataTableProps) =>
+export const ConfigFilesTable = ({ rows, handleSelectionModelChange, selectionModel }: DataTableProps) =>
     <Paper sx={{ width: 1, height: 1 }}>
         <DataGridPro
             rows={rows}
