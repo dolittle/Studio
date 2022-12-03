@@ -19,7 +19,8 @@ import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteCo
 import { RestartMicroserviceDialog } from '../../restartMicroserviceDialog';
 import { DataTable, ConfigFilesTableRow } from './configFilesDataTable';
 import { NoConfigFiles } from './noConfigFiles';
-import { DeleteConfigFileDialog, ValidateFileDialog } from './confirmDialogs';
+import { ValidateFileDialog } from './validateFileDialog';
+import { DeleteConfigFileDialog } from './deleteConfigFileDialog';
 import { ButtonGroup } from './buttonGroup';
 import { RestartInfoBox } from './restartInfoBox';
 
