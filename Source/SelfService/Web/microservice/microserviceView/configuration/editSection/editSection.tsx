@@ -13,13 +13,13 @@ import { Button } from '@dolittle/design-system/atoms/Button';
 import { Form, Input, Select, SwitchToggle } from '@dolittle/design-system/atoms/Forms';
 import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/ConfirmDialog';
 
-import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../stores/microservice';
+import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
 
-import { HttpResponseApplication } from '../../../api/application';
+import { HttpResponseApplication } from '../../../../api/application';
 
-import { HeadArguments } from '../../components/headArguments';
-import { RestartMicroserviceDialog } from '../restartMicroserviceDialog';
-import { capitalize, removeFromString } from '../../helpers/stringHelpers';
+import { HeadArguments } from '../../../components/headArguments';
+import { RestartMicroserviceDialog } from '../../restartMicroserviceDialog';
+import { capitalize, removeFromString } from '../../../helpers/stringHelpers';
 
 const styles = {
     form: {
