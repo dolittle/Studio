@@ -34,7 +34,7 @@ export const ButtonGroup = ({ filePrompt, deleteDisabled, downloadDisabled, hand
 
         <Button
             variant='text'
-            label={`Download File(s)`}
+            label={`Download Configuration Maps`}
             disabled={downloadDisabled}
             startWithIcon={<DownloadRounded />}
             onClick={handleDownload}
