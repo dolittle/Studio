@@ -17,14 +17,14 @@ import { Paper, Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 import { NoMicroservices } from './noMicroservices';
-import { MicroserviceOverviewTable, MicroserviceObject } from './microservicesOverviewTable';
+import { MicroserviceTable, MicroserviceObject } from './microserviceTable';
 
-type MicroserviceOverviewScreenProps = {
+type MicroserviceProps = {
     environment: string;
     application: HttpResponseApplication;
 };
 
-export const MicroserviceOverviewScreen = ({ environment, application }: MicroserviceOverviewScreenProps) => {
+export const Microservice = ({ environment, application }: MicroserviceProps) => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as MicroserviceObject[];
@@ -79,7 +79,7 @@ export const MicroserviceOverviewScreen = ({ environment, application }: Microse
             <Typography variant='h1' sx={{ my: 2 }}>Microservices</Typography>
 
             {hasMicroservices ?
-                <MicroserviceOverviewTable application={application} environment={environment} microservices={filteredMicroservices} /> :
+                <MicroserviceTable application={application} environment={environment} microservices={filteredMicroservices} /> :
                 <NoMicroservices onCreate={handleCreateMicroservice} />
             }
 
