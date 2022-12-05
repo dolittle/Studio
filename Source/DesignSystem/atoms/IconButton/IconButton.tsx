@@ -11,7 +11,6 @@ type IconButtonProps = {
     disabled?: boolean;
     color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'inherit';
     size?: 'small' | 'medium' | 'large';
-    link?: React.ElementType;
     sx?: SxProps;
     onClick?: MouseEventHandler<HTMLButtonElement>;
 };
@@ -21,7 +20,6 @@ export const IconButton = (props: IconButtonProps) =>
         disabled={props.disabled}
         color={props.color || 'inherit'}
         size={props.size || 'small'}
-        LinkComponent={props.link}
         sx={props.sx}
         onClick={props.onClick}
     >
