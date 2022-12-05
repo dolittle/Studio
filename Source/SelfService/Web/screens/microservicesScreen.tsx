@@ -1,46 +1,25 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, {
-    useEffect,
-    useState
-} from 'react';
-import {
-    Route,
-    useHistory,
-    Switch,
-    generatePath
-} from 'react-router-dom';
-import {
-    ShortInfoWithEnvironment,
-    HttpResponseMicroservices,
-    getMicroservices
-} from '../api/api';
+import React, { useEffect, useState } from 'react';
+import { Route, useHistory, Switch, generatePath } from 'react-router-dom';
+import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../api/api';
 
 import { Microservice } from '../microservice/microservice';
 import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
 import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';
 import { EnvironmentVariablesView } from '../microservice/environmentVariables/environmentVariablesView';
 import { PodLogScreen } from '../microservice/podLogScreen';
-import {
-    LayoutWithSidebar,
-    getMenuWithApplication
-} from '../layout/layoutWithSidebar';
+import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithSidebar';
 
 // I wonder if scss is scoped like svelte. I hope so!
 // Not scoped like svelte
 import '../application/applicationScreen.scss';
 
-import {
-    mergeMicroservicesFromGit,
-    mergeMicroservicesFromK8s
-} from '../stores/microservice';
+import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 
 import { useGlobalContext } from '../stores/notifications';
-import {
-    isEnvironmentValidFromUri,
-    PickEnvironment
-} from '../components/pickEnvironment';
+import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
 import { TopNavBar } from '../components/topNavBar';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
