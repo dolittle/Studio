@@ -37,10 +37,10 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     const fileUploadRef = useRef<FileUploadFormRef>(null);
     const { closeSnackbar, enqueueSnackbar } = useSnackbar();
 
-    const [filesPanelExpanded, setFilesPanelExpanded] = useState(true);
-    const [dataTableRows, setDataTableRows] = useState<ConfigFilesTableRow[]>([]);
-    const [dataTableRowsSelected, setDataTableRowsSelected] = useState<GridSelectionModel>([]);
-    const [restartMicroserviceInfoBoxOpen, setRestartMicroserviceInfoBoxOpen] = useState(false);
+    const [filesPanelIsExpanded, setFilesPanelIsExpanded] = useState(true);
+    const [configFileTableRows, setConfigFileTableRows] = useState<ConfigFilesTableRow[]>([]);
+    const [configFileTableRowsSelected, setConfigFileTableRowsSelected] = useState<GridSelectionModel>([]);
+    const [restartInfoBoxIsOpen, setRestartInfoBoxIsOpen] = useState(false);
     const [restartMicroserviceDialogIsOpen, setRestartMicroserviceDialogIsOpen] = useState(false);
     const [deleteConfigFileDialogIsOpen, setDeleteConfigFileDialogIsOpen] = useState(false);
     const [validateFileDialogIsOpen, setValidateFileDialogIsOpen] = useState({ isOpen: false, file: [] as File[] });
@@ -69,7 +69,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             } as ConfigFilesTableRow;
         });
 
-        setDataTableRows(rows);
+        setConfigFileTableRows(rows);
     };
 
     async function handleFileSelect(selected: File | FileList): Promise<void> {
@@ -116,7 +116,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                             await deleteConfigFile(applicationId, environment, microserviceId, file.name);
 
                             fetchConfigFileNamesList();
-                            setRestartMicroserviceInfoBoxOpen(false);
+                            setRestartInfoBoxIsOpen(false);
                             closeSnackbar(key);
                         }} />
                         <IconButton onClick={() => closeSnackbar(key)}>
@@ -127,14 +127,14 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             });
 
             fetchConfigFileNamesList();
-            setRestartMicroserviceInfoBoxOpen(true);
+            setRestartInfoBoxIsOpen(true);
         } else {
             enqueueSnackbar('File not added. Please try again.', { variant: 'error' });
         };
     };
 
     const handleConfigFileDelete = async (): Promise<void> => {
-        for (const filename of dataTableRowsSelected) {
+        for (const filename of configFileTableRowsSelected) {
             const fileName = filename.toString();
             const response = await deleteConfigFile(applicationId, environment, microserviceId, fileName);
 
@@ -178,13 +178,13 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 open={restartMicroserviceDialogIsOpen}
                 setOpen={() => setRestartMicroserviceDialogIsOpen(true)}
                 handleSuccess={() => {
-                    setRestartMicroserviceInfoBoxOpen(false);
+                    setRestartInfoBoxIsOpen(false);
                     window.location.reload();
                 }}
             />
 
             <DeleteConfigFileDialog
-                selectedDataRows={dataTableRowsSelected}
+                selectedDataRows={configFileTableRowsSelected}
                 open={deleteConfigFileDialogIsOpen}
                 setOpen={() => setDeleteConfigFileDialogIsOpen(false)}
                 handleDelete={handleConfigFileDelete}
@@ -202,24 +202,24 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
             <Accordion
                 id='configuration-files'
-                isExpanded={filesPanelExpanded}
+                isExpanded={filesPanelIsExpanded}
                 title='Configuration Files'
-                onChange={() => setFilesPanelExpanded(!filesPanelExpanded)}
+                onChange={() => setFilesPanelIsExpanded(!filesPanelIsExpanded)}
             >
                 <ButtonGroup
                     filePrompt={() => fileUploadRef.current?.showPrompt()}
-                    deleteDisabled={dataTableRowsSelected.length === 0 || dataTableRows.length === 0}
-                    downloadDisabled={dataTableRows.length === 0}
+                    deleteDisabled={configFileTableRowsSelected.length === 0 || configFileTableRows.length === 0}
+                    downloadDisabled={configFileTableRows.length === 0}
                     handleDelete={() => setDeleteConfigFileDialogIsOpen(true)}
                     handleDownload={handleConfigFileDownload}
                 />
 
                 <FileUploadForm ref={fileUploadRef} onSelected={handleFileSelect} allowMultipleFiles />
 
-                <RestartInfoBox name={microserviceName} open={restartMicroserviceInfoBoxOpen} setOpen={() => setRestartMicroserviceInfoBoxOpen(false)} />
+                <RestartInfoBox name={microserviceName} open={restartInfoBoxIsOpen} setOpen={() => setRestartInfoBoxIsOpen(false)} />
 
-                {dataTableRows.length > 0 ?
-                    <ConfigFilesTable rows={dataTableRows} handleSelectionModelChange={setDataTableRowsSelected} selectionModel={dataTableRowsSelected} /> :
+                {configFileTableRows.length > 0 ?
+                    <ConfigFilesTable rows={configFileTableRows} handleSelectionModelChange={setConfigFileTableRowsSelected} selectionModel={configFileTableRowsSelected} /> :
                     <NoConfigFiles handleOnClick={() => fileUploadRef.current?.showPrompt()} />
                 }
             </Accordion>
