@@ -19,7 +19,6 @@ import {
 
 import { Microservice } from '../microservice/microservice';
 import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
-import { MicroserviceEditScreen } from '../microservice/microserviceEditScreen';
 import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';
 import { EnvironmentVariablesView } from '../microservice/environmentVariables/environmentVariablesView';
 import { PodLogScreen } from '../microservice/podLogScreen';
@@ -179,10 +178,6 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
 
                 <Route exact path="/microservices/application/:applicationId/:environment/create">
                     <MicroserviceNewScreen application={application} environment={currentEnvironment} />
-                </Route>
-
-                <Route exact path="/microservices/application/:applicationId/:environment/edit/:microserviceId">
-                    <MicroserviceEditScreen application={application} environment={currentEnvironment} />
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId">
