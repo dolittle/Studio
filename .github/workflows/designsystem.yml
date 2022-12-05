@@ -9,6 +9,8 @@ env:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    outputs:
+      src: ${{ steps.filter.outputs.src }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -23,14 +25,17 @@ jobs:
 
       - name: Setup node
         uses: actions/setup-node@v1
+        if: steps.filter.outputs.src == 'true'
         with:
           node-version: 14.x
           registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
+        if: steps.filter.outputs.src == 'true'
         working-directory: ${{ env.SOURCE_PATH}}
         run: yarn
 
       - name: CI
+        if: steps.filter.outputs.src == 'true'
         working-directory: ${{ env.SOURCE_PATH}}
         run: yarn ci

@@ -11,6 +11,8 @@ env:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    outputs:
+      src: ${{ steps.filter.outputs.src }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -29,16 +31,19 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
+        if: steps.filter.outputs.src == 'true'
         working-directory: ${{ env.SOURCE_PATH}}
         run: yarn
 
       - name: CI
+        if: steps.filter.outputs.src == 'true'
         working-directory: ${{ env.SOURCE_PATH}}
         run: yarn build
 
   docker:
+    needs: ci
     runs-on: ubuntu-latest
-    if: ${{ github.ref != 'refs/heads/main' }}
+    if: ${{ github.ref != 'refs/heads/main' }} && needs.ci.outputs.src == 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
