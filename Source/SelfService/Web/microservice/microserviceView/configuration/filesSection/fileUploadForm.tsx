@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useRef, useImperativeHandle } from 'react';
+import React, { FormEvent, useRef, useImperativeHandle } from 'react';
 
 export type OnFileConfirmCallback = (form: FormData, event?) => void;
 export type OnFileSelectCallback = (file: File | FileList, event?) => void;
@@ -43,7 +43,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
          *
          * @param event Serves submit event and formdata to client
          */
-        const onFileSubmitted = (event) => {
+        const onFileSubmitted = (event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
             const form = new FormData(event.target as HTMLFormElement);
             onConfirmed?.(form, event);
@@ -53,7 +53,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
          * Serves change event and file from target
          * @param event
          */
-        const onFileSelect = (event: React.FormEvent<HTMLInputElement>) => {
+        const onFileSelect = (event: FormEvent<HTMLInputElement>) => {
             const files = (event?.target as HTMLInputElement)?.files;
             if (!files || files.length === 0) return;
             onSelected(allowMultipleFiles ? files : files[0], event);
