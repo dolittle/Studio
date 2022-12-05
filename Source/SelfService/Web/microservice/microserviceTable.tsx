@@ -52,13 +52,13 @@ export type MicroserviceObject = {
     phase?: string;
 };
 
-type MicroserviceOverviewTableProps = {
+type MicroserviceTableProps = {
     environment: string;
     application: HttpResponseApplication;
     microservices: MicroserviceObject[];
 };
 
-export const MicroserviceOverviewTable = ({ application, environment, microservices }: MicroserviceOverviewTableProps) => {
+export const MicroserviceTable = ({ application, environment, microservices }: MicroserviceTableProps) => {
     const history = useHistory();
     const [rows, setRows] = useState<(MicroserviceObject | undefined)[]>([]);
     const [loadingRows, setLoadingRows] = useState<boolean>(true);
