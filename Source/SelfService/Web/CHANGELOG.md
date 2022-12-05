@@ -1,3 +1,25 @@
+# [2.15.0] - 2022-12-5 [PR: #260](https://github.com/dolittle/Studio/pull/260)
+## Summary
+
+This is Configuration Files section from Configuration page. User can upload, delete and download configuraion files. Files are displayed in data table. With every action, Snackbar also appears to show status of the action.
+
+<img width="1319" alt="Screenshot 2022-11-28 at 18 56 25" src="https://user-images.githubusercontent.com/19160439/204336703-dbd803a8-e477-4de3-91f5-24754a5b5e39.png">
+
+<img width="531" alt="Screenshot 2022-11-28 at 18 56 47" src="https://user-images.githubusercontent.com/19160439/204336715-cf27e199-08f3-4955-9c81-688918c722b0.png">
+
+### Changed
+
+- Updated Notistack to Alpha version.
+
+### Fixed
+
+- 'ENV variable' button was commented out - added it back.
+
+### Removed
+
+- delete.tsx as it was not needed anymore.
+
+
 # [2.14.0] - 2022-11-29 [PR: #261](https://github.com/dolittle/Studio/pull/261)
 ## Summary
 
