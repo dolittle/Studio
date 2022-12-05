@@ -11,6 +11,8 @@ env:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    outputs:
+      src: ${{ steps.filter.outputs.src }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -30,12 +32,12 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
-        if: steps.changes.outputs.src == 'true'
+        if: steps.filter.outputs.src == 'true'
         working-directory: ${{ env.SOURCE_PATH}}
         run: yarn
 
       - name: CI
-        if: steps.changes.outputs.src == 'true'
+        if: steps.filter.outputs.src == 'true'
         working-directory: ${{ env.SOURCE_PATH}}
         run: yarn ci
 
