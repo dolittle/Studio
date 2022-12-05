@@ -1,0 +1,165 @@
+name: Deploy - Bridge - Frontend
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+env:
+  PRERELEASE_BRANCHES: "" # Comma separated list of prerelease branch names. 'alpha,rc, ...'
+  SOURCE_PATH: "Source/Bridge/bridge-frontend"
+  DOCKER_FILE: "Source/Bridge/bridge-frontend/Dockerfile"
+  DOCKER_IMAGE_TAG: "${{ secrets.BRIDGE_CONTAINER_REGISTRY_ENDPOINT }}/bridge-frontend"
+
+jobs:
+  changes:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    outputs:
+      has-changes: ${{ steps.filter.outputs.src }}
+      should-publish: ${{ steps.context.outputs.should-publish }}
+      release-type: ${{ steps.context.outputs.release-type }}
+      current-version: ${{ steps.context.outputs.current-version }}
+      pr-body: ${{ steps.context.outputs.pr-body }}
+      pr-url: ${{ steps.context.outputs.pr-url }}
+      next-version: ${{ steps.increment-version.outputs.next-version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            src:
+              - '${{ env.SOURCE_PATH }}/**'
+              - 'Source/DesignSystem/**'
+
+      - name: Establish context
+        id: context
+        uses: dolittle/establish-context-action@v2
+        with:
+          prerelease-branches: ${{ env.PRERELEASE_BRANCHES }}
+          version-file: ${{ env.SOURCE_PATH }}/version.json
+
+      - name: Increment version
+        id: increment-version
+        if: ${{ steps.context.outputs.should-publish == 'true' }}
+        uses: dolittle/increment-version-action@v2
+        with:
+          version: ${{ steps.context.outputs.current-version }}
+          release-type: ${{ steps.context.outputs.release-type }}
+
+  release:
+    needs: changes
+    if: needs.changes.outputs.has-changes == 'true' && needs.changes.outputs.should-publish == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Azure Container Registry Login
+        uses: Azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.BRIDGE_CONTAINER_REGISTRY_ENDPOINT }}
+          username: ${{ secrets.BRIDGE_REGISTRY_USERNAME }}
+          password: ${{ secrets.BRIDGE_REGISTRY_PASSWORD }}
+
+      - name: Establish context
+        id: context
+        uses: dolittle/establish-context-action@v2
+        with:
+          prerelease-branches: ${{ env.PRERELEASE_BRANCHES }}
+          version-file: ${{ env.SOURCE_PATH }}/version.json
+
+      - name: Write version info
+        uses: dolittle/write-version-to-file-action@v2
+        with:
+          path: ${{ env.SOURCE_PATH }}/version.json
+          version: ${{ needs.changes.outputs.next-version }}
+          merge-strategy: rebase
+
+      - name: Prepend to Changelog
+        if: needs.changes.outputs.release-type != 'prerelease'
+        uses: dolittle/add-to-changelog-action@v2
+        with:
+          version: ${{ needs.changes.outputs.next-version }}
+          body: ${{ needs.changes.outputs.pr-body }}
+          pr-url: ${{ needs.changes.outputs.pr-url }}
+          changelog-path: ${{ env.SOURCE_PATH }}/CHANGELOG.md
+          user-email: build@dolittle.com
+          user-name: dolittle-build
+
+      - name: Create GitHub Release
+        uses: dolittle/github-release-action@v2
+        with:
+          token: ${{  secrets.BUILD_PAT  }}
+          version: ${{ needs.changes.outputs.next-version }}
+          body: ${{ needs.changes.outputs.pr-body }}
+          microservice: bridge-frontend
+
+      - name: Push Semantic Image to Azure Container Registry
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: .
+          file: ./${{ env.DOCKER_FILE }}
+          tags: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
+
+      - name: Push latest tag to Azure Container Registry
+        uses: docker/build-push-action@v2
+        if: needs.changes.outputs.release-type != 'prerelease'
+        with:
+          push: true
+          context: .
+          file: ./${{ env.DOCKER_FILE }}
+          tags: ${{ env.DOCKER_IMAGE_TAG }}:latest
+
+  deploy-dev:
+    needs:
+      - changes
+      - release
+    name: Deploy Bridge Frontend to development
+    uses: ./.github/workflows/update-container-image.yml
+    secrets: inherit
+    with:
+      namespace: application-57642814-3d64-ee41-a94f-794daa4200f6
+      deployment: dev-frontend
+      image: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
+      environment: dev
+      environment-url: https://dev.dolittle.studio/bridge
+
+#  Enable when Test / Prod are set up
+#  deploy-test:
+#    needs:
+#      - changes
+#      - release
+#    name: Deploy Bridge Frontend to test
+#    uses: ./.github/workflows/update-container-image.yml
+#    secrets: inherit
+#    with:
+#      namespace: application-57642814-3d64-ee41-a94f-794daa4200f6
+#      deployment: test-frontend
+#      image: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
+#      environment: test
+#      environment-url: https://test.dolittle.studio/bridge
+
+#
+#  deploy-prod:
+#    needs:
+#      - changes
+#      - release
+#    name: Deploy Bridge Frontend to production
+#    uses: ./.github/workflows/update-container-image.yml
+#    secrets: inherit
+#    with:
+#      namespace: application-57642814-3d64-ee41-a94f-794daa4200f6
+#      deployment: prod-frontend
+#      image: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
+#      environment: prod
+#      environment-url: https://dolittle.studio/bridge
