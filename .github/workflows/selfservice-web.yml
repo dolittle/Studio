@@ -15,6 +15,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            src:
+              - '${{ env.SOURCE_PATH }}/**'
+              - 'Source/Shared/**'
+
       - name: Setup node
         uses: actions/setup-node@v1
         with:

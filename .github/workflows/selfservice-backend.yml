@@ -15,6 +15,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            src:
+              - '${{ env.SOURCE_PATH }}/**'
+
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
