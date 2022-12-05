@@ -46,11 +46,11 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     const [validateFileDialogIsOpen, setValidateFileDialogIsOpen] = useState({ isOpen: false, file: [] as File[] });
 
     useEffect(() => {
-        fetchConfigFileNamesList()
+        fetchAndUpdateConfigFileNamesList()
             .catch(console.error);
     }, []);
 
-    const fetchConfigFileNamesList = async (): Promise<void> => {
+    const fetchAndUpdateConfigFileNamesList = async (): Promise<void> => {
         const result = await getConfigFilesNamesList(applicationId, environment, microserviceId);
 
         result.data ?
@@ -115,7 +115,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                         <Button variant='text' label='Undo' color='secondary' aria-label='undo' onClick={async () => {
                             await deleteConfigFile(applicationId, environment, microserviceId, file.name);
 
-                            fetchConfigFileNamesList();
+                            fetchAndUpdateConfigFileNamesList();
                             setRestartInfoBoxIsOpen(false);
                             closeSnackbar(key);
                         }} />
@@ -126,7 +126,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 )
             });
 
-            fetchConfigFileNamesList();
+            fetchAndUpdateConfigFileNamesList();
             setRestartInfoBoxIsOpen(true);
         } else {
             enqueueSnackbar('File not added. Please try again.', { variant: 'error' });
@@ -149,7 +149,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         };
 
         setDeleteConfigFileDialogIsOpen(false);
-        fetchConfigFileNamesList();
+        fetchAndUpdateConfigFileNamesList();
     };
 
     // This is reused. consider moving
