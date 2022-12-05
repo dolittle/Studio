@@ -34,12 +34,11 @@ export const Snackbar = forwardRef<HTMLDivElement, CustomContentProps>((props, f
         <SnackbarContent
             ref={forwardedRef}
             className={clsx(classes.root, classes[props.variant])}
-            children={
-                <>
-                    {props.iconVariant[props.variant]}
-                    {props.message}
-                </>
-            }
-        />
+        >
+            {props.iconVariant[props.variant]}
+            {props.message}
+        </SnackbarContent>
     );
 });
+
+Snackbar.displayName = 'Snackbar';
