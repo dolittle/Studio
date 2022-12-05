@@ -42,7 +42,7 @@ jobs:
   docker:
     needs: ci
     runs-on: ubuntu-latest
-    if: ${{ github.ref != 'refs/heads/main' }} && needs.ci.steps.changes.outputs.src == 'true'
+    if: ${{ github.ref != 'refs/heads/main' }} && needs.ci.outputs.src == 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
