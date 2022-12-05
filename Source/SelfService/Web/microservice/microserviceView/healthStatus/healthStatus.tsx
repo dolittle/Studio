@@ -40,7 +40,6 @@ const computeStats = (metric: Metric | undefined, scale: number): HealthStatusTa
 
 type HealthStatusProps = {
     applicationId: string;
-    status: string;
     environment: string;
     microserviceId: string;
     msName: string;

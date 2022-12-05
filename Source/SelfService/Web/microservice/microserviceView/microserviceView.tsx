@@ -109,7 +109,6 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
             label: 'Health Status',
             render: () => <HealthStatus
                 applicationId={applicationId}
-                status="TODO"
                 environment={environment}
                 microserviceId={microserviceId}
                 msName={currentMicroservice.name}
