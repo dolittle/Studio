@@ -12,10 +12,9 @@ import { CloseRounded } from '@mui/icons-material';
 import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
 import { Button } from '@dolittle/design-system/atoms/Button';
 
-import { FileUploadForm, FileUploadFormRef } from './fileUploadForm';
-
 import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../api/api';
 
+import { FileUploadForm, FileUploadFormRef } from './fileUploadForm';
 import { RestartMicroserviceDialog } from '../../restartMicroserviceDialog';
 import { ConfigFilesTable, ConfigFilesTableRow } from './configFilesTable';
 import { NoConfigFiles } from './noConfigFiles';
