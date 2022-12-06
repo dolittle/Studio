@@ -131,7 +131,7 @@ jobs:
         run: |
           echo "inputs_namespace=application-57642814-3d64-ee41-a94f-794daa4200f6" >> $GITHUB_ENV
           echo "inputs_deployment=dev-frontend" >> $GITHUB_ENV
-          echo "inputs_container=" >> $GITHUB_ENV
+          echo "inputs_container=head" >> $GITHUB_ENV
           echo "inputs_image=${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}" >> $GITHUB_ENV
       - uses: azure/k8s-set-context@v2
         with:
