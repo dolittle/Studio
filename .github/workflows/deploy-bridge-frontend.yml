@@ -128,7 +128,9 @@ jobs:
 
   update-container-dev:
     name: Deploy container image to
-    needs: changes
+    needs:
+        - changes
+        - release
     runs-on: ubuntu-latest
     steps:
       - name: Set inputs
