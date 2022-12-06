@@ -1,3 +1,9 @@
+# [0.0.12] - 2022-12-6 [PR: #278](https://github.com/dolittle/Studio/pull/278)
+## Summary
+
+Fix the build. Really. I mean it! Added the head container as the one to be patched
+
+
 # [0.0.11] - 2022-12-6 [PR: #277](https://github.com/dolittle/Studio/pull/277)
 ## Summary
 
