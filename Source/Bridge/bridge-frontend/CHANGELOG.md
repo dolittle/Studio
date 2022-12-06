@@ -1,3 +1,9 @@
+# [0.0.7] - 2022-12-6 [PR: #273](https://github.com/dolittle/Studio/pull/273)
+## Summary
+
+Rename job that exposes env_vars to be used in deployment workflow + small change to trigger deployment for Bridge
+
+
 # [0.0.6] - 2022-12-6 [PR: #272](https://github.com/dolittle/Studio/pull/272)
 ## Summary
 
