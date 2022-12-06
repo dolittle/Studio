@@ -32,7 +32,7 @@ on:
       BRIDGE_CLUSTER_ENDPOINT:
         description: "URL for the kubernetes cluster"
         required: true
-      BRIDGE_CONTAINER_REGISTRY_CREDENTIALS:
+      BRIDGE_DEPLOYMENT_CREDENTIALS:
         description: |
           The complete kubernetes secret object (YAML or JSON) for a serviceaccounts token.
           The serviceaccount needs permissions to patch deployments in the given namespace'
@@ -50,7 +50,7 @@ jobs:
         with:
           method: service-account
           k8s-url: ${{ secrets.BRIDGE_CLUSTER_ENDPOINT }}
-          k8s-secret: ${{ secrets.BRIDGE_CONTAINER_REGISTRY_CREDENTIALS }}
+          k8s-secret: ${{ secrets.BRIDGE_DEPLOYMENT_CREDENTIALS }}
 
       - name: Update deployment's image
         run: |
@@ -67,7 +67,7 @@ jobs:
         with:
           method: service-account
           k8s-url: ${{ secrets.BRIDGE_CLUSTER_ENDPOINT }}
-          k8s-secret: ${{ secrets.BRIDGE_CONTAINER_REGISTRY_CREDENTIALS }}
+          k8s-secret: ${{ secrets.BRIDGE_DEPLOYMENT_CREDENTIALS }}
 
       - name: Update deployment's image
         run: |
