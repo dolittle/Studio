@@ -129,7 +129,7 @@ jobs:
     with:
       namespace: application-57642814-3d64-ee41-a94f-794daa4200f6
       deployment: dev-frontend
-      image: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
+      image: ${{ github.env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
       environment: dev
       environment-url: https://dev.dolittle.studio/bridge
 
