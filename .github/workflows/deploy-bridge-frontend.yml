@@ -14,13 +14,6 @@ env:
   DOCKER_IMAGE_TAG: "${{ secrets.BRIDGE_CONTAINER_REGISTRY_ENDPOINT }}/bridge-frontend"
 
 jobs:
-  vars:
-    runs-on: ubuntu-latest
-    outputs:
-      DOCKER_IMAGE_TAG: ${{ env.DOCKER_IMAGE_TAG }}
-    steps:
-      - run: echo "Exposing env vars"
-
   changes:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
