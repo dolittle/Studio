@@ -1,3 +1,9 @@
+# [0.0.8] - 2022-12-6 [PR: #274](https://github.com/dolittle/Studio/pull/274)
+## Summary
+
+Small iterations and more testing
+
+
 # [0.0.7] - 2022-12-6 [PR: #273](https://github.com/dolittle/Studio/pull/273)
 ## Summary
 
