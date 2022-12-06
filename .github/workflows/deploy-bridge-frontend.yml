@@ -124,7 +124,7 @@ jobs:
       - changes
       - release
     name: Deploy Bridge Frontend to development
-    uses: ./.github/workflows/update-container-image.yml
+    uses: ./.github/workflows/update-bridge-container-image.yml
     secrets: inherit
     with:
       namespace: application-57642814-3d64-ee41-a94f-794daa4200f6
@@ -132,6 +132,7 @@ jobs:
       image: ${{ github.env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
       environment: dev
       environment-url: https://dev.dolittle.studio/bridge
+
 
 #  Enable when Test / Prod are set up
 #  deploy-test:
