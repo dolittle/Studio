@@ -11,6 +11,7 @@ type AccordionProps = {
     title: string;
     children: React.ReactNode;
     isExpanded?: boolean;
+    defaultExpanded?: boolean;
     onChange?: (event: React.SyntheticEvent<Element, Event>, expanded: boolean) => void;
 };
 
@@ -18,6 +19,7 @@ export const Accordion = (props: AccordionProps) => {
     return (
         <MuiAccordion
             expanded={props.isExpanded}
+            defaultExpanded={props.defaultExpanded}
             onChange={props.onChange}
             TransitionProps={{ unmountOnExit: true }}
             sx={{
