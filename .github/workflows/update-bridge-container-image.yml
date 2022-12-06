@@ -1,0 +1,74 @@
+name: Update Bridge Container Image
+
+on:
+  workflow_call:
+    inputs:
+      namespace:
+        description: "Namespace of the deployment"
+        required: true
+        type: string
+      deployment:
+        description: "Name of the deployment in k8s"
+        required: true
+        type: string
+      image:
+        required: true
+        type: string
+      container:
+        description: "Name of the container within the deployment, defaults to head"
+        required: false
+        default: head
+        type: string
+      environment:
+        description: "GitHub environment to run the job on, optional"
+        required: false
+        type: string
+      environment-url:
+        description: "GitHub environments URL, can only be defined if environment is also defined, optional"
+        required: false
+        type: string
+        default: ""
+    secrets:
+      BRIDGE_CLUSTER_ENDPOINT:
+        description: "URL for the kubernetes cluster"
+        required: true
+      BRIDGE_CONTAINER_REGISTRY_CREDENTIALS:
+        description: |
+          The complete kubernetes secret object (YAML or JSON) for a serviceaccounts token.
+          The serviceaccount needs permissions to patch deployments in the given namespace'
+        required: true
+
+jobs:
+  update-container-with-environment-url:
+    if: inputs.environment-url != ''
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.environment-url }}
+    steps:
+      - uses: azure/k8s-set-context@v2
+        with:
+          method: service-account
+          k8s-url: ${{ secrets.BRIDGE_CLUSTER_ENDPOINT }}
+          k8s-secret: ${{ secrets.BRIDGE_CONTAINER_REGISTRY_CREDENTIALS }}
+
+      - name: Update deployment's image
+        run: |
+          kubectl -n ${{ inputs.namespace }} set image deployment/${{ inputs.deployment }} ${{ inputs.container }}=${{ inputs.image }}
+
+  # If the environment-url would be an empty string, GitHub prints a warning annotation for it.
+  # By using a separate action that omits the url from the environment property we can avoid that warning.
+  update-container-without-environment-url:
+    if: inputs.environment-url == ''
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: azure/k8s-set-context@v2
+        with:
+          method: service-account
+          k8s-url: ${{ secrets.BRIDGE_CLUSTER_ENDPOINT }}
+          k8s-secret: ${{ secrets.BRIDGE_CONTAINER_REGISTRY_CREDENTIALS }}
+
+      - name: Update deployment's image
+        run: |
+          kubectl -n ${{ inputs.namespace }} set image deployment/${{ inputs.deployment }} ${{ inputs.container }}=${{ inputs.image }}
