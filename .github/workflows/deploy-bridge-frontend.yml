@@ -14,6 +14,12 @@ env:
   DOCKER_IMAGE_TAG: "${{ secrets.BRIDGE_CONTAINER_REGISTRY_ENDPOINT }}/bridge-frontend"
 
 jobs:
+  env-vars:
+    runs-on: ubuntu-latest
+    outputs:
+      DOCKER_IMAGE_TAG: ${{ env.DOCKER_IMAGE_TAG }}
+    steps:
+      - run: echo "Exposing env vars"
   changes:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
@@ -123,13 +129,14 @@ jobs:
     needs:
       - changes
       - release
+      - env-vars
     name: Deploy Bridge Frontend to development
     uses: ./.github/workflows/update-bridge-container-image.yml
     secrets: inherit
     with:
       namespace: application-57642814-3d64-ee41-a94f-794daa4200f6
       deployment: dev-frontend
-      image: ${{ github.env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
+      image: ${{ needs.env-vars.outputs.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
       environment: dev
       environment-url: https://dev.dolittle.studio/bridge
 
