@@ -126,6 +126,14 @@ jobs:
           file: ./${{ env.DOCKER_FILE }}
           tags: ${{ env.DOCKER_IMAGE_TAG }}:latest
 
+  debug-vars:
+    needs:
+      - vars
+    runs-on: ubuntu-latest
+    steps:
+      - run: "echo ${{ needs.vars.outputs.DOCKER_IMAGE_TAG }}"
+
+
   deploy-dev:
     needs:
       - changes
