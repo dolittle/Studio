@@ -126,54 +126,28 @@ jobs:
           file: ./${{ env.DOCKER_FILE }}
           tags: ${{ env.DOCKER_IMAGE_TAG }}:latest
 
-  debug-vars:
-    needs:
-      - vars
+  update-container-dev:
+    name: Deploy container image to
     runs-on: ubuntu-latest
     steps:
-      - run: "echo ${{ needs.vars.outputs.DOCKER_IMAGE_TAG }}"
+      - name: Set inputs
+        id: set_inputs
+        run: |
+          echo "inputs_namespace=application-57642814-3d64-ee41-a94f-794daa4200f6" >> $GITHUB_ENV
+          echo "inputs_deployment=dev-frontend" >> $GITHUB_ENV
+          echo "inputs_container=" >> $GITHUB_ENV
+          echo "inputs_image=${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}" >> $GITHUB_ENV
+      - uses: azure/k8s-set-context@v2
+        with:
+          method: service-account
+          k8s-url: ${{ secrets.K8S_CLUSTER_URL }}
+          k8s-secret: ${{ secrets.K8S_DEVOPS_SECRET }}
 
-
-  deploy-dev:
-    needs:
-      - changes
-      - release
-      - vars
-    name: Deploy Bridge Frontend to development
-    uses: ./.github/workflows/update-bridge-container-image.yml
-    secrets: inherit
-    with:
-      namespace: application-57642814-3d64-ee41-a94f-794daa4200f6
-      deployment: dev-frontend
-      image: ${{ needs.vars.outputs.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
+      - name: Update deployment's image
+        run: |
+          kubectl -n ${{ env.inputs_namespace }} set image deployment/${{ env.inputs_deployment }} ${{ env.inputs_container }}=${{ env.inputs_image }}
 
 
 #  Enable when Test / Prod are set up
 #  deploy-test:
-#    needs:
-#      - changes
-#      - release
-#    name: Deploy Bridge Frontend to test
-#    uses: ./.github/workflows/update-container-image.yml
-#    secrets: inherit
-#    with:
-#      namespace: application-57642814-3d64-ee41-a94f-794daa4200f6
-#      deployment: test-frontend
-#      image: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
-#      environment: test
-#      environment-url: https://test.dolittle.studio/bridge
-
-#
 #  deploy-prod:
-#    needs:
-#      - changes
-#      - release
-#    name: Deploy Bridge Frontend to production
-#    uses: ./.github/workflows/update-container-image.yml
-#    secrets: inherit
-#    with:
-#      namespace: application-57642814-3d64-ee41-a94f-794daa4200f6
-#      deployment: prod-frontend
-#      image: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.changes.outputs.next-version }}
-#      environment: prod
-#      environment-url: https://dolittle.studio/bridge
