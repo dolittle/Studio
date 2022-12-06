@@ -1,3 +1,9 @@
+# [0.0.10] - 2022-12-6 [PR: #276](https://github.com/dolittle/Studio/pull/276)
+## Summary
+
+Update credentials, and included the correct `needs` to be able to tag correctly
+
+
 # [0.0.9] - 2022-12-6 [PR: #275](https://github.com/dolittle/Studio/pull/275)
 ## Summary
 
