@@ -1,3 +1,9 @@
+# [0.0.6] - 2022-12-6 [PR: #272](https://github.com/dolittle/Studio/pull/272)
+## Summary
+
+Make env var available for reusable workflow + small change to trigger deploy
+
+
 # [0.0.5] - 2022-12-6 [PR: #271](https://github.com/dolittle/Studio/pull/271)
 ## Summary
 
