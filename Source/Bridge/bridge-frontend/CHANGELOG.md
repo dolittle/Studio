@@ -1,3 +1,9 @@
+# [0.0.11] - 2022-12-6 [PR: #277](https://github.com/dolittle/Studio/pull/277)
+## Summary
+
+Fix the deployment was fired before the release was complete
+
+
 # [0.0.10] - 2022-12-6 [PR: #276](https://github.com/dolittle/Studio/pull/276)
 ## Summary
 
