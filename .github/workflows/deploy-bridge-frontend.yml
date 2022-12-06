@@ -141,8 +141,8 @@ jobs:
       - uses: azure/k8s-set-context@v2
         with:
           method: service-account
-          k8s-url: ${{ secrets.K8S_CLUSTER_URL }}
-          k8s-secret: ${{ secrets.K8S_DEVOPS_SECRET }}
+          k8s-url: ${{ secrets.BRIDGE_CLUSTER_ENDPOINT }}
+          k8s-secret: ${{ secrets.BRIDGE_DEPLOYMENT_CREDENTIALS }}
 
       - name: Update deployment's image
         run: |
