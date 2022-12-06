@@ -8,10 +8,10 @@ import { ExpandCircleDownRounded } from '@mui/icons-material';
 
 type AccordionProps = {
     id: string;
-    isExpanded: boolean;
     title: string;
     children: React.ReactNode;
-    onChange: (event: React.SyntheticEvent<Element, Event>, expanded: boolean) => void;
+    isExpanded?: boolean;
+    onChange?: (event: React.SyntheticEvent<Element, Event>, expanded: boolean) => void;
 };
 
 export const Accordion = (props: AccordionProps) => {
@@ -19,6 +19,7 @@ export const Accordion = (props: AccordionProps) => {
         <MuiAccordion
             expanded={props.isExpanded}
             onChange={props.onChange}
+            TransitionProps={{ unmountOnExit: true }}
             sx={{
                 backgroundColor: 'transparent',
                 backgroundImage: 'none'
