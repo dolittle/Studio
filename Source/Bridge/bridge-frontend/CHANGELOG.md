@@ -1,3 +1,9 @@
+# [0.0.9] - 2022-12-6 [PR: #275](https://github.com/dolittle/Studio/pull/275)
+## Summary
+
+Move the deployment job out of the reusable workflow and straight into bridge deploy workflow
+
+
 # [0.0.8] - 2022-12-6 [PR: #274](https://github.com/dolittle/Studio/pull/274)
 ## Summary
 
