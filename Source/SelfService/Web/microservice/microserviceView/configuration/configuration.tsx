@@ -18,6 +18,7 @@ import { LiveIngressView } from '../../base/liveIngressView';
 
 import { SetupSection } from './editSection/editSection';
 import { FilesSection } from './filesSection/filesSection';
+import { EnvironmentVariablesSection } from './environmentVariablesSection/environmentVariableSection';
 
 export type ConfigurationProps = {
     application: HttpResponseApplication;
@@ -57,6 +58,12 @@ export const Configuration = ({
                 applicationId={applicationId}
                 environment={environment}
                 microserviceName={currentMicroservice.name}
+                microserviceId={microserviceId}
+            />
+
+            <EnvironmentVariablesSection
+                applicationId={applicationId}
+                environment={environment}
                 microserviceId={microserviceId}
             />
 
