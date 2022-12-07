@@ -63,18 +63,24 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     console.log(envVariableTableRows)
 
     useEffect(() => {
-        Promise.all([
-            getEnvironmentVariables(applicationId, environment, microserviceId)
-        ]).then(values => {
-            // Order by name to avoid random sort order
-            //const data = values[0].data.sort((env1, env2) => env1.name > env2.name ? 1 : -1);
-            // Spreading does not work
-            // setCurrentData(JSON.parse(JSON.stringify(data)));
-            // setOriginalData(JSON.parse(JSON.stringify(data)));
+        Promise.all([getEnvironmentVariables(applicationId, environment, microserviceId)])
+            .then(values => {
+                // Order by name to avoid random sort order
+                //const data = values[0].data.sort((env1, env2) => env1.name > env2.name ? 1 : -1);
+                // Spreading does not work
+                // setCurrentData(JSON.parse(JSON.stringify(data)));
+                // setOriginalData(JSON.parse(JSON.stringify(data)))
 
-            setEnvVariableTableRows(values[0].data);
-            setLoaded(true);
-        });
+                const valuesWithId = values[0].data.map(env => {
+                    return {
+                        ...env,
+                        id: env.name
+                    };
+                });
+
+                setEnvVariableTableRows(valuesWithId);
+                setLoaded(true);
+            });
     }, []);
 
     const processRowUpdate = (newRow) => {
@@ -114,7 +120,6 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     rows={envVariableTableRows}
                     columns={columns}
                     isRowSelectable
-                    getRowId={(row: GridRowModel) => row.name}
                     processRowUpdate={processRowUpdate}
                     experimentalFeatures={{ newEditingApi: true }}
                 />
