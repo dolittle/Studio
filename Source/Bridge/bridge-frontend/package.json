@@ -12,17 +12,17 @@
         "@dolittle/design-system": "1.0.0",
         "@mui/icons-material": "5.10.15",
         "@tanstack/react-query": "^4.16.1",
-        "@types/node": "18.11.9",
-        "@types/react": "18.0.25",
-        "@types/react-dom": "18.0.8",
-        "eslint-config-next": "13.0.2",
         "next": "13.0.2",
         "react": "18.2.0",
         "react-dom": "18.2.0"
     },
     "devDependencies": {
         "@testing-library/react": "13.4.0",
+        "@types/node": "18.11.9",
+        "@types/react": "18.0.25",
+        "@types/react-dom": "18.0.8",
         "@vitejs/plugin-react": "2.2.0",
+        "eslint-config-next": "13.0.2",
         "jsdom": "20.0.3",
         "vitest": "0.25.5"
     }

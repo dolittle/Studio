@@ -4026,7 +4026,7 @@
     lz-string "^1.4.4"
     pretty-format "^27.0.2"
 
-"@testing-library/react@^13.4.0":
+"@testing-library/react@13.4.0":
   version "13.4.0"
   resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-13.4.0.tgz#6a31e3bf5951615593ad984e96b9e5e2d9380966"
   integrity sha512-sXOGON+WNTh3MLE9rve97ftaZukN3oNf2KjDy7YTx6hcTO2uuLHuCGynMDhFwGw/jYf4OJ2Qk0i4i79qMNNkyw==
@@ -4964,7 +4964,7 @@
   resolved "https://registry.yarnpkg.com/@ungap/promise-all-settled/-/promise-all-settled-1.1.2.tgz#aa58042711d6e3275dd37dc597e5d31e8c290a44"
   integrity sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==
 
-"@vitejs/plugin-react@^2.2.0":
+"@vitejs/plugin-react@2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-react/-/plugin-react-2.2.0.tgz#1b9f63b8b6bc3f56258d20cd19b33f5cc761ce6e"
   integrity sha512-FFpefhvExd1toVRlokZgxgy2JtnBOdp4ZDsq7ldCWaqGSGn9UhWMAVm/1lxPL14JfNS5yGz+s9yFrQY6shoStA==
@@ -11693,6 +11693,38 @@ jsdoc-type-pratt-parser@~3.1.0:
   resolved "https://registry.yarnpkg.com/jsdoc-type-pratt-parser/-/jsdoc-type-pratt-parser-3.1.0.tgz#a4a56bdc6e82e5865ffd9febc5b1a227ff28e67e"
   integrity sha512-MgtD0ZiCDk9B+eI73BextfRrVQl0oyzRG8B2BjORts6jbunj4ScKPcyXGTbB6eXL4y9TzxCm6hyeLq/2ASzNdw==
 
+jsdom@20.0.3:
+  version "20.0.3"
+  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-20.0.3.tgz#886a41ba1d4726f67a8858028c99489fed6ad4db"
+  integrity sha512-SYhBvTh89tTfCD/CRdSOm13mOBa42iTaTyfyEWBdKcGdPxPtLFBXuHR8XHb33YNYaP+lLbmSvBTsnoesCNJEsQ==
+  dependencies:
+    abab "^2.0.6"
+    acorn "^8.8.1"
+    acorn-globals "^7.0.0"
+    cssom "^0.5.0"
+    cssstyle "^2.3.0"
+    data-urls "^3.0.2"
+    decimal.js "^10.4.2"
+    domexception "^4.0.0"
+    escodegen "^2.0.0"
+    form-data "^4.0.0"
+    html-encoding-sniffer "^3.0.0"
+    http-proxy-agent "^5.0.0"
+    https-proxy-agent "^5.0.1"
+    is-potential-custom-element-name "^1.0.1"
+    nwsapi "^2.2.2"
+    parse5 "^7.1.1"
+    saxes "^6.0.0"
+    symbol-tree "^3.2.4"
+    tough-cookie "^4.1.2"
+    w3c-xmlserializer "^4.0.0"
+    webidl-conversions "^7.0.0"
+    whatwg-encoding "^2.0.0"
+    whatwg-mimetype "^3.0.0"
+    whatwg-url "^11.0.0"
+    ws "^8.11.0"
+    xml-name-validator "^4.0.0"
+
 jsdom@^16.6.0:
   version "16.7.0"
   resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-16.7.0.tgz#918ae71965424b197c819f8183a754e18977b710"
@@ -11725,38 +11757,6 @@ jsdom@^16.6.0:
     whatwg-url "^8.5.0"
     ws "^7.4.6"
     xml-name-validator "^3.0.0"
-
-jsdom@^20.0.3:
-  version "20.0.3"
-  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-20.0.3.tgz#886a41ba1d4726f67a8858028c99489fed6ad4db"
-  integrity sha512-SYhBvTh89tTfCD/CRdSOm13mOBa42iTaTyfyEWBdKcGdPxPtLFBXuHR8XHb33YNYaP+lLbmSvBTsnoesCNJEsQ==
-  dependencies:
-    abab "^2.0.6"
-    acorn "^8.8.1"
-    acorn-globals "^7.0.0"
-    cssom "^0.5.0"
-    cssstyle "^2.3.0"
-    data-urls "^3.0.2"
-    decimal.js "^10.4.2"
-    domexception "^4.0.0"
-    escodegen "^2.0.0"
-    form-data "^4.0.0"
-    html-encoding-sniffer "^3.0.0"
-    http-proxy-agent "^5.0.0"
-    https-proxy-agent "^5.0.1"
-    is-potential-custom-element-name "^1.0.1"
-    nwsapi "^2.2.2"
-    parse5 "^7.1.1"
-    saxes "^6.0.0"
-    symbol-tree "^3.2.4"
-    tough-cookie "^4.1.2"
-    w3c-xmlserializer "^4.0.0"
-    webidl-conversions "^7.0.0"
-    whatwg-encoding "^2.0.0"
-    whatwg-mimetype "^3.0.0"
-    whatwg-url "^11.0.0"
-    ws "^8.11.0"
-    xml-name-validator "^4.0.0"
 
 jsesc@^2.5.1:
   version "2.5.2"
@@ -18209,7 +18209,7 @@ vite@^3.0.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vitest@^0.25.5:
+vitest@0.25.5:
   version "0.25.5"
   resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.25.5.tgz#efb8bf0dc0438af11346cb8ecde47cd5ad830934"
   integrity sha512-lFKSTZV+AjuL44/yNC0aDPKTiasYSqOQ97Gg2G4P2LnjyzQ21ZUs4rQOscHK3lrSnVuir3+1QavHzbDgH4tWQA==
