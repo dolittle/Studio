@@ -3,6 +3,8 @@
 
 import React, { useEffect, useState } from 'react';
 
+import { useSnackbar } from 'notistack';
+
 import { GridRowModel, GridColDef, GridRenderCellParams, GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid-pro';
 
 import { Box } from '@mui/material';
@@ -22,10 +24,14 @@ type EnvironmentVariablesProps = {
 };
 
 export const EnvironmentVariablesSection = ({ applicationId, environment, microserviceId }: EnvironmentVariablesProps) => {
+    const { enqueueSnackbar } = useSnackbar();
+
     const [loaded, setLoaded] = useState(false);
     const [currentData, setCurrentData] = useState([] as InputEnvironmentVariable[]);
     const [originalData, setOriginalData] = useState([] as InputEnvironmentVariable[]);
-    const [envVariableTableRows, setEnvVariableTableRows] = useState<InputEnvironmentVariable[]>([]);
+    const [envVariableTableRows, setEnvVariableTableRows] = useState<any[]>([]);
+
+    // console.log(envVariableTableRows)
 
     const columns: GridColDef[] = [
         {
@@ -47,20 +53,25 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             headerName: 'Secret',
             width: 330,
             flex: 1,
-            editable: true,
             renderCell: (params: GridRenderCellParams) =>
                 <Select
                     options={[{ value: 'Yes' }, { value: 'No' }]}
                     value={params.value ? 'Yes' : 'No'}
                     onChange={event => {
-                        params.row.isSecret = event.target.value === 'Yes';
-                        setEnvVariableTableRows([...envVariableTableRows]);
+                        const updateChangedRows = envVariableTableRows.map(item => {
+                            const currentEnvVariables = { ...item };
+
+                            if (currentEnvVariables.id === params.row.id) {
+                                currentEnvVariables.isSecret = event.target.value === 'Yes';
+                            }
+                            return currentEnvVariables;
+                        });
+
+                        setEnvVariableTableRows(updateChangedRows);
                     }}
                 />
         }
     ];
-
-    console.log(envVariableTableRows)
 
     useEffect(() => {
         Promise.all([getEnvironmentVariables(applicationId, environment, microserviceId)])
@@ -74,7 +85,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                 const valuesWithId = values[0].data.map(env => {
                     return {
                         ...env,
-                        id: env.name
+                        id: `${env.name}-${env.value}`
                     };
                 });
 
@@ -83,10 +94,23 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             });
     }, []);
 
+    // Do we really run this after every change? I thing that we need 'edit' and 'save' buttons.
     const processRowUpdate = (newRow) => {
-        const updatedRow = { ...newRow, isNew: false };
+        const updatedRow = { ...newRow };
 
-        //console.log(updatedRow)
+        const updateChangedRows = envVariableTableRows.map(item => {
+            const currentEnvVariables = { ...item };
+
+            if (currentEnvVariables.id === updatedRow.id) {
+                currentEnvVariables.id = `${updatedRow.name}-${updatedRow.value}`;
+                currentEnvVariables.name = updatedRow.name;
+                currentEnvVariables.value = updatedRow.value;
+            }
+
+            return currentEnvVariables;
+        });
+
+        setEnvVariableTableRows(updateChangedRows);
         return updatedRow;
     };
 
@@ -121,6 +145,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     columns={columns}
                     isRowSelectable
                     processRowUpdate={processRowUpdate}
+                    onProcessRowUpdateError={error => enqueueSnackbar(error, { variant: 'error' })}
                     experimentalFeatures={{ newEditingApi: true }}
                 />
             </Accordion>
