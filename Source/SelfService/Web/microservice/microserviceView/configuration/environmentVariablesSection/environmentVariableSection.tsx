@@ -114,6 +114,19 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         return updatedRow;
     };
 
+    const handleRowAdd = async () => {
+        const tableRowNumber = envVariableTableRows.length + 1;
+
+        const newEnvVariable = {
+            id: `HEADER_SECRET-${tableRowNumber}-Variable_value-${tableRowNumber}`,
+            name: `HEADER_SECRET-${tableRowNumber}`,
+            value: `Variable_value-${tableRowNumber}`,
+            isSecret: false
+        };
+
+        setEnvVariableTableRows([...envVariableTableRows, newEnvVariable]);
+    };
+
     return (
         <>
             <Accordion
@@ -126,14 +139,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         variant='text'
                         label='Add Variable'
                         startWithIcon={<AddCircle />}
-                        onClick={() => {
-                            const newEnvVariable = {
-                                name: '',
-                                value: '',
-                                isSecret: false
-                            };
-                            setEnvVariableTableRows([newEnvVariable, ...envVariableTableRows]);
-                        }}
+                        onClick={handleRowAdd}
                     />
                     <Button variant='text' label='Delete Variable' startWithIcon={<DeleteRounded />} />
                     <Button variant='text' label='Download secret env-variables yaml' startWithIcon={<DownloadRounded />} />
