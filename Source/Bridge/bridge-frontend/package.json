@@ -2,11 +2,17 @@
     "name": "bridge-frontend",
     "version": "0.1.0",
     "private": true,
+    "workspaces": {
+        "nohoist": [
+            "@vitejs/plugin-react"
+        ]
+    },
     "scripts": {
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint",
+        "test": "vitest"
     },
     "dependencies": {
         "@dolittle/design-system": "1.0.0",
@@ -24,6 +30,7 @@
         "@vitejs/plugin-react": "2.2.0",
         "eslint-config-next": "13.0.2",
         "jsdom": "20.0.3",
+        "vite": "3.2.5",
         "vitest": "0.25.5"
     }
 }
