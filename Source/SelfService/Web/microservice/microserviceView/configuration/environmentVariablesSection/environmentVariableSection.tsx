@@ -31,12 +31,14 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     const { enqueueSnackbar } = useSnackbar();
 
     const [loaded, setLoaded] = useState(false);
-    const [currentData, setCurrentData] = useState([] as InputEnvironmentVariable[]);
-    const [originalData, setOriginalData] = useState([] as InputEnvironmentVariable[]);
+    //const [currentData, setCurrentData] = useState([] as InputEnvironmentVariable[]);
+    //const [originalData, setOriginalData] = useState([] as InputEnvironmentVariable[]);
     const [envVariableTableRows, setEnvVariableTableRows] = useState<EnvironmentVariableTableRow[]>([]);
+    const [handleSelectionModelChange, setHandleSelectionModelChange] = useState<GridRowModel[]>([]);
 
     console.log(envVariableTableRows)
 
+    // 4. How to use the api context to get the gridApi?
     const SelectCell = (params: GridRenderCellParams) => {
         //: React.ChangeEvent<HTMLSelectElement>
         const handleChange = (event) => {
@@ -130,9 +132,12 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             return currentEnvVariables;
         });
 
+        // Check that changed rows are not the same as original rows
+
         setEnvVariableTableRows(updateChangedRows);
-        // Do we really run this after every change? I thing that we need 'edit' and 'save' buttons.
-        saveEnvVariables(updateChangedRows);
+        // 1. Do we really run this after every change? I thing that we need 'edit' and 'save' buttons.
+        // Sample: https://codesandbox.io/s/0kvl7d?file=/demo.tsx
+        updateEnvVariables(updateChangedRows);
         return updatedRow;
     };
 
@@ -148,26 +153,36 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
 
         setEnvVariableTableRows([...envVariableTableRows, newEnvVariable]);
 
-        // Add active 'edit' cell
+        const apiRef = useGridApiContext();
+
+        // 2. Add active 'edit' cell
+        apiRef.current.startCellEditMode({ id: newEnvVariable.id, field: 'name' });
+
         // After edit is done (editMode = false), we need to save the changes.
     };
 
-    const saveEnvVariables = async (updateChangedRows) => {
+    const updateEnvVariables = async (updateChangedRows) => {
         const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, updateChangedRows);
 
         if (result) {
             // Naming - update or save?
             enqueueSnackbar('Environment variables successfully added.');
 
-            // We need to save the changes to the backend.
+            // 5. We need to save the changes to the backend.
             // Open info box that the microservice needs to be restarted.
-            // When to refetch the data?
+            // 3. When to refetch the data?
 
             //fetchAndUpdateEnvVariableList();
             //setRestartInfoBoxIsOpen(true);
         } else {
             enqueueSnackbar('File not added. Please try again.', { variant: 'error' });
         }
+    };
+
+    const handleEnvVariableDelete = async (): Promise<void> => {
+        for (const variable of handleSelectionModelChange) {
+            //updateEnvVariables((envVariableTableRows.filter(item => item.id !== variable)));
+        };
     };
 
     return (
@@ -184,7 +199,12 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         startWithIcon={<AddCircle />}
                         onClick={handleRowAdd}
                     />
-                    <Button variant='text' label='Delete Variable' startWithIcon={<DeleteRounded />} />
+                    <Button
+                        variant='text'
+                        label='Delete Variable'
+                        startWithIcon={<DeleteRounded />}
+                        onClick={handleEnvVariableDelete}
+                    />
                     <Button variant='text' label='Download secret env-variables yaml' startWithIcon={<DownloadRounded />} />
                     <Button variant='text' label='Download env-variables yaml' startWithIcon={<DownloadRounded />} />
                 </Box>
@@ -193,6 +213,10 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     rows={envVariableTableRows}
                     columns={columns}
                     isRowSelectable
+                    handleSelectionModelChange={newSelectionModal => {
+                        setHandleSelectionModelChange(newSelectionModal);
+                    }}
+                    selectionModel={handleSelectionModelChange}
                     processRowUpdate={processRowUpdate}
                     onProcessRowUpdateError={error => enqueueSnackbar(error, { variant: 'error' })}
                     experimentalFeatures={{ newEditingApi: true }}
