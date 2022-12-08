@@ -17,6 +17,10 @@ import { Select } from '@dolittle/design-system/atoms/Forms/Select';
 
 import { getEnvironmentVariables, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/api';
 
+interface EnvironmentVariableTableRow extends InputEnvironmentVariable {
+    id: string;
+};
+
 type EnvironmentVariablesProps = {
     applicationId: string;
     environment: string;
@@ -29,9 +33,34 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     const [loaded, setLoaded] = useState(false);
     const [currentData, setCurrentData] = useState([] as InputEnvironmentVariable[]);
     const [originalData, setOriginalData] = useState([] as InputEnvironmentVariable[]);
-    const [envVariableTableRows, setEnvVariableTableRows] = useState<any[]>([]);
+    const [envVariableTableRows, setEnvVariableTableRows] = useState<EnvironmentVariableTableRow[]>([]);
 
-    // console.log(envVariableTableRows)
+    console.log(envVariableTableRows)
+
+    const SelectCell = (params: GridRenderCellParams) => {
+        //: React.ChangeEvent<HTMLSelectElement>
+        const handleChange = (event) => {
+            const updateRowIsSecret = envVariableTableRows.map(item => {
+                const currentEnvVariables = { ...item };
+
+                currentEnvVariables.id === params.id ?
+                    currentEnvVariables.isSecret = event.target.value === 'Yes' :
+                    currentEnvVariables.isSecret = currentEnvVariables.isSecret;
+
+                return currentEnvVariables;
+            });
+
+            setEnvVariableTableRows(updateRowIsSecret);
+        };
+
+        return (
+            <Select
+                options={[{ value: 'Yes' }, { value: 'No' }]}
+                value={params.value ? 'Yes' : 'No'}
+                onChange={handleChange}
+            />
+        );
+    };
 
     const columns: GridColDef[] = [
         {
@@ -53,48 +82,36 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             headerName: 'Secret',
             width: 330,
             flex: 1,
-            renderCell: (params: GridRenderCellParams) =>
-                <Select
-                    options={[{ value: 'Yes' }, { value: 'No' }]}
-                    value={params.value ? 'Yes' : 'No'}
-                    onChange={event => {
-                        const updateChangedRows = envVariableTableRows.map(item => {
-                            const currentEnvVariables = { ...item };
-
-                            if (currentEnvVariables.id === params.row.id) {
-                                currentEnvVariables.isSecret = event.target.value === 'Yes';
-                            }
-                            return currentEnvVariables;
-                        });
-
-                        setEnvVariableTableRows(updateChangedRows);
-                    }}
-                />
+            renderCell: (params) => SelectCell(params)
         }
     ];
 
     useEffect(() => {
-        Promise.all([getEnvironmentVariables(applicationId, environment, microserviceId)])
-            .then(values => {
-                // Order by name to avoid random sort order
-                //const data = values[0].data.sort((env1, env2) => env1.name > env2.name ? 1 : -1);
-                // Spreading does not work
-                // setCurrentData(JSON.parse(JSON.stringify(data)));
-                // setOriginalData(JSON.parse(JSON.stringify(data)))
-
-                const valuesWithId = values[0].data.map(env => {
-                    return {
-                        ...env,
-                        id: `${env.name}-${env.value}`
-                    };
-                });
-
-                setEnvVariableTableRows(valuesWithId);
-                setLoaded(true);
-            });
+        fetchAndUpdateEnvVariableList()
+            .catch(console.error);
     }, []);
 
-    // Do we really run this after every change? I thing that we need 'edit' and 'save' buttons.
+    const fetchAndUpdateEnvVariableList = async () => {
+        const result = await getEnvironmentVariables(applicationId, environment, microserviceId);
+
+        result.data ?
+            createDataTableObj(result.data) :
+            enqueueSnackbar('Could not fetch environment variables.', { variant: 'error' });
+    };
+
+    const createDataTableObj = (envVariables: InputEnvironmentVariable[]): void => {
+        const rows = envVariables.map(envVariable => {
+            return {
+                id: `${envVariable.name}-${envVariable.value}`,
+                name: envVariable.name,
+                value: envVariable.value,
+                isSecret: envVariable.isSecret
+            } as EnvironmentVariableTableRow;
+        });
+
+        setEnvVariableTableRows(rows);
+    };
+
     const processRowUpdate = (newRow) => {
         const updatedRow = { ...newRow };
 
@@ -105,12 +122,17 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                 currentEnvVariables.id = `${updatedRow.name}-${updatedRow.value}`;
                 currentEnvVariables.name = updatedRow.name;
                 currentEnvVariables.value = updatedRow.value;
+
+                // Can we do this in here?
+                //currentEnvVariables.isSecret = updatedRow.isSecret;
             }
 
             return currentEnvVariables;
         });
 
         setEnvVariableTableRows(updateChangedRows);
+        // Do we really run this after every change? I thing that we need 'edit' and 'save' buttons.
+        saveEnvVariables(updateChangedRows);
         return updatedRow;
     };
 
@@ -125,6 +147,27 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         };
 
         setEnvVariableTableRows([...envVariableTableRows, newEnvVariable]);
+
+        // Add active 'edit' cell
+        // After edit is done (editMode = false), we need to save the changes.
+    };
+
+    const saveEnvVariables = async (updateChangedRows) => {
+        const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, updateChangedRows);
+
+        if (result) {
+            // Naming - update or save?
+            enqueueSnackbar('Environment variables successfully added.');
+
+            // We need to save the changes to the backend.
+            // Open info box that the microservice needs to be restarted.
+            // When to refetch the data?
+
+            //fetchAndUpdateEnvVariableList();
+            //setRestartInfoBoxIsOpen(true);
+        } else {
+            enqueueSnackbar('File not added. Please try again.', { variant: 'error' });
+        }
     };
 
     return (
