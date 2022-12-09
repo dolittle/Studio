@@ -36,7 +36,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
 
     const [activeCellAfterNewRowAdded, setActiveCellAfterNewRowAdded] = useState('');
     const [envVariableTableRows, setEnvVariableTableRows] = useState<EnvironmentVariableTableRow[]>([]);
-    const [handleSelectionModelChange, setHandleSelectionModelChange] = useState<GridRowModel[]>([]);
+    const [selectedRowIds, setSelectedRowIds] = useState<GridRowModel[]>([]);
 
     console.log(envVariableTableRows)
 
@@ -112,7 +112,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     const createDataTableObj = (envVariables: InputEnvironmentVariable[]): void => {
         const rows = envVariables.map(envVariable => {
             return {
-                id: `${envVariable.name}-${envVariable.value}`,
+                id: envVariable.name,
                 name: envVariable.name,
                 value: envVariable.value,
                 isSecret: envVariable.isSecret
@@ -125,13 +125,11 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     const processRowUpdate = (newRow) => {
         const updatedRow = { ...newRow };
 
-        //apiRef.current.startCellEditMode({ id: newRow.id, field: 'name' });
-
         const updateChangedRows = envVariableTableRows.map(item => {
             const currentEnvVariables = { ...item };
 
             if (currentEnvVariables.id === updatedRow.id) {
-                currentEnvVariables.id = `${updatedRow.name}-${updatedRow.value}`;
+                currentEnvVariables.id = `${updatedRow.name}`;
                 currentEnvVariables.name = updatedRow.name;
                 currentEnvVariables.value = updatedRow.value;
 
@@ -155,12 +153,8 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, updateChangedRows);
 
         if (result) {
-            // Naming - update or save?
             enqueueSnackbar('Environment variables successfully added.');
-
-            // 5. We need to save the changes to the backend.
             // Open info box that the microservice needs to be restarted.
-            // 3. When to refetch the data?
 
             //fetchAndUpdateEnvVariableList();
             //setRestartInfoBoxIsOpen(true);
@@ -169,27 +163,35 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         }
     };
 
-
-    const handleRowAdd = async () => {
-        const tableRowNumber = envVariableTableRows.length + 1;
+    const handleRowAdd = () => {
+        const randomId = crypto.randomUUID();
 
         const newEnvVariable = {
-            id: `HEADER_SECRET-${tableRowNumber}-Variable_value-${tableRowNumber}`,
-            name: `HEADER_SECRET-${tableRowNumber}`,
-            value: `Variable_value-${tableRowNumber}`,
+            id: `HEADER_SECRET_${randomId}`,
+            name: `HEADER_SECRET_${randomId}`,
+            value: 'Variable_value',
             isSecret: false
         };
 
         setEnvVariableTableRows([...envVariableTableRows, newEnvVariable]);
         setActiveCellAfterNewRowAdded(newEnvVariable.id);
-
-        // After edit is done (editMode = false), we need to save the changes.
     };
 
-    const handleEnvVariableDelete = async (): Promise<void> => {
-        for (const variable of handleSelectionModelChange) {
-            //updateEnvVariables((envVariableTableRows.filter(item => item.id !== variable)));
-        };
+    const handleEnvVariableDelete = async () => {
+        const remainingEnvVariableRows = envVariableTableRows.filter(envVariable => {
+            return !selectedRowIds.includes(envVariable.id);
+        });
+
+        const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, remainingEnvVariableRows);
+
+        if (result) {
+            enqueueSnackbar('Environment variables successfully deleted.');
+            setEnvVariableTableRows(remainingEnvVariableRows);
+
+            // Open info box that the microservice needs to be restarted.
+        } else {
+            enqueueSnackbar('File not deleted. Please try again.', { variant: 'error' });
+        }
     };
 
     return (
@@ -220,8 +222,8 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     rows={envVariableTableRows}
                     columns={columns}
                     isRowSelectable
-                    handleSelectionModelChange={setHandleSelectionModelChange}
-                    selectionModel={handleSelectionModelChange}
+                    selectionModel={selectedRowIds}
+                    handleSelectionModelChange={setSelectedRowIds}
                     processRowUpdate={processRowUpdate}
                     onProcessRowUpdateError={error => enqueueSnackbar(error, { variant: 'error' })}
                     experimentalFeatures={{ newEditingApi: true }}
