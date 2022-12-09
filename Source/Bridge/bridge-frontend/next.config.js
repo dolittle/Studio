@@ -9,6 +9,7 @@ const nextConfig = {
     outputFileTracingRoot: path.join(__dirname, '../../../'),
   },
   output: 'standalone',
+  pageExtensions: ['page.tsx'],
   async rewrites() {
     return [
       {
