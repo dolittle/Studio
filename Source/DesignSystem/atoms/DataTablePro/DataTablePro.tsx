@@ -16,13 +16,14 @@ type DataTableProProps = {
     isRowSelectable?: boolean;
     isRowCheckable?: boolean;
     selectionModel?: GridSelectionModel;
-    getRowId?: (row: GridRowModel) => string;
     handleSelectionModelChange?: React.Dispatch<React.SetStateAction<GridSelectionModel>>;
+    getRowId?: (row: GridRowModel) => string;
     sx?: SxProps
 
     processRowUpdate?: any;
     experimentalFeatures?: any;
     onProcessRowUpdateError?: any;
+    apiRef?: any;
 };
 
 export const DataTablePro = (props: DataTableProProps) =>
@@ -44,5 +45,6 @@ export const DataTablePro = (props: DataTableProProps) =>
             processRowUpdate={props.processRowUpdate}
             experimentalFeatures={props.experimentalFeatures}
             onProcessRowUpdateError={props.onProcessRowUpdateError}
+            apiRef={props.apiRef}
         />
     </Paper>;

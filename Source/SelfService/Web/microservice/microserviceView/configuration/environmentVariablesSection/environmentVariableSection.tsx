@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { GridRowModel, GridColDef, GridRenderCellParams, GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid-pro';
+import { GridRowModel, GridColDef, GridRenderCellParams, GridApi, GridRenderEditCellParams, useGridApiContext, useGridApiRef } from '@mui/x-data-grid-pro';
 
 import { Box } from '@mui/material';
 import { AddCircle, DeleteRounded, DownloadRounded } from '@mui/icons-material';
@@ -29,10 +29,12 @@ type EnvironmentVariablesProps = {
 
 export const EnvironmentVariablesSection = ({ applicationId, environment, microserviceId }: EnvironmentVariablesProps) => {
     const { enqueueSnackbar } = useSnackbar();
+    const apiRef = useGridApiRef();
 
     const [loaded, setLoaded] = useState(false);
-    //const [currentData, setCurrentData] = useState([] as InputEnvironmentVariable[]);
     //const [originalData, setOriginalData] = useState([] as InputEnvironmentVariable[]);
+
+    const [activeCellAfterNewRowAdded, setActiveCellAfterNewRowAdded] = useState('');
     const [envVariableTableRows, setEnvVariableTableRows] = useState<EnvironmentVariableTableRow[]>([]);
     const [handleSelectionModelChange, setHandleSelectionModelChange] = useState<GridRowModel[]>([]);
 
@@ -64,7 +66,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         );
     };
 
-    const columns: GridColDef[] = [
+    const columns: GridColDef<EnvironmentVariableTableRow>[] = [
         {
             field: 'name',
             headerName: 'Name',
@@ -93,6 +95,12 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             .catch(console.error);
     }, []);
 
+    useEffect(() => {
+        if (activeCellAfterNewRowAdded) {
+            apiRef.current.startCellEditMode({ id: activeCellAfterNewRowAdded, field: 'name' });
+        }
+    }, [activeCellAfterNewRowAdded]);
+
     const fetchAndUpdateEnvVariableList = async () => {
         const result = await getEnvironmentVariables(applicationId, environment, microserviceId);
 
@@ -116,6 +124,8 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
 
     const processRowUpdate = (newRow) => {
         const updatedRow = { ...newRow };
+
+        //apiRef.current.startCellEditMode({ id: newRow.id, field: 'name' });
 
         const updateChangedRows = envVariableTableRows.map(item => {
             const currentEnvVariables = { ...item };
@@ -141,26 +151,6 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         return updatedRow;
     };
 
-    const handleRowAdd = async () => {
-        const tableRowNumber = envVariableTableRows.length + 1;
-
-        const newEnvVariable = {
-            id: `HEADER_SECRET-${tableRowNumber}-Variable_value-${tableRowNumber}`,
-            name: `HEADER_SECRET-${tableRowNumber}`,
-            value: `Variable_value-${tableRowNumber}`,
-            isSecret: false
-        };
-
-        setEnvVariableTableRows([...envVariableTableRows, newEnvVariable]);
-
-        const apiRef = useGridApiContext();
-
-        // 2. Add active 'edit' cell
-        apiRef.current.startCellEditMode({ id: newEnvVariable.id, field: 'name' });
-
-        // After edit is done (editMode = false), we need to save the changes.
-    };
-
     const updateEnvVariables = async (updateChangedRows) => {
         const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, updateChangedRows);
 
@@ -177,6 +167,23 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         } else {
             enqueueSnackbar('File not added. Please try again.', { variant: 'error' });
         }
+    };
+
+
+    const handleRowAdd = async () => {
+        const tableRowNumber = envVariableTableRows.length + 1;
+
+        const newEnvVariable = {
+            id: `HEADER_SECRET-${tableRowNumber}-Variable_value-${tableRowNumber}`,
+            name: `HEADER_SECRET-${tableRowNumber}`,
+            value: `Variable_value-${tableRowNumber}`,
+            isSecret: false
+        };
+
+        setEnvVariableTableRows([...envVariableTableRows, newEnvVariable]);
+        setActiveCellAfterNewRowAdded(newEnvVariable.id);
+
+        // After edit is done (editMode = false), we need to save the changes.
     };
 
     const handleEnvVariableDelete = async (): Promise<void> => {
@@ -213,13 +220,12 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     rows={envVariableTableRows}
                     columns={columns}
                     isRowSelectable
-                    handleSelectionModelChange={newSelectionModal => {
-                        setHandleSelectionModelChange(newSelectionModal);
-                    }}
+                    handleSelectionModelChange={setHandleSelectionModelChange}
                     selectionModel={handleSelectionModelChange}
                     processRowUpdate={processRowUpdate}
                     onProcessRowUpdateError={error => enqueueSnackbar(error, { variant: 'error' })}
                     experimentalFeatures={{ newEditingApi: true }}
+                    apiRef={apiRef}
                 />
             </Accordion>
         </>
