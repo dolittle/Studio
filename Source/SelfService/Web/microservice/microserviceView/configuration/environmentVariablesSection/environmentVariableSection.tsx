@@ -178,16 +178,21 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     };
 
     const handleEnvVariableDelete = async () => {
-        const remainingEnvVariableRows = envVariableTableRows.filter(envVariable => {
+        const remainingEnvVariables = envVariableTableRows.filter(envVariable => {
             return !selectedRowIds.includes(envVariable.id);
         });
 
-        const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, remainingEnvVariableRows);
+        const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, remainingEnvVariables);
 
         if (result) {
-            enqueueSnackbar('Environment variables successfully deleted.');
-            setEnvVariableTableRows(remainingEnvVariableRows);
+            // Show snackbar for every deleted row if 'result' is true.
+            envVariableTableRows.filter(envVariable => {
+                if (selectedRowIds.includes(envVariable.id)) {
+                    enqueueSnackbar(`'${envVariable.name}' variable has been deleted.`);
+                }
+            });
 
+            setEnvVariableTableRows(remainingEnvVariables);
             // Open info box that the microservice needs to be restarted.
         } else {
             enqueueSnackbar('File not deleted. Please try again.', { variant: 'error' });
@@ -210,7 +215,8 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     />
                     <Button
                         variant='text'
-                        label='Delete Variable'
+                        label='Delete Variable(s)'
+                        disabled={!selectedRowIds.length}
                         startWithIcon={<DeleteRounded />}
                         onClick={handleEnvVariableDelete}
                     />
