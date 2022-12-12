@@ -5,20 +5,19 @@ import React, { useEffect, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { GridRowModel, GridColDef, GridRenderCellParams, GridApi, GridRenderEditCellParams, useGridApiContext, useGridApiRef } from '@mui/x-data-grid-pro';
+import { GridRowModel, GridColDef, GridRowModesModel, GridRowModes } from '@mui/x-data-grid-pro';
 
-import { Box } from '@mui/material';
-import { AddCircle, DeleteRounded, DownloadRounded } from '@mui/icons-material';
+import { Box, Typography } from '@mui/material';
+import { AddCircle, DeleteRounded, DownloadRounded, ArrowDropDown } from '@mui/icons-material';
 
 import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
 import { Button } from '@dolittle/design-system/atoms/Button';
 import { DataTablePro } from '@dolittle/design-system/atoms/DataTablePro/DataTablePro';
-import { Select } from '@dolittle/design-system/atoms/Forms/Select';
 
 import { getEnvironmentVariables, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/api';
 
 interface EnvironmentVariableTableRow extends InputEnvironmentVariable {
-    id: string;
+    id?: string;
 };
 
 type EnvironmentVariablesProps = {
@@ -29,64 +28,47 @@ type EnvironmentVariablesProps = {
 
 export const EnvironmentVariablesSection = ({ applicationId, environment, microserviceId }: EnvironmentVariablesProps) => {
     const { enqueueSnackbar } = useSnackbar();
-    const apiRef = useGridApiRef();
 
-    const [loaded, setLoaded] = useState(false);
-    //const [originalData, setOriginalData] = useState([] as InputEnvironmentVariable[]);
-
-    const [activeCellAfterNewRowAdded, setActiveCellAfterNewRowAdded] = useState('');
     const [envVariableTableRows, setEnvVariableTableRows] = useState<EnvironmentVariableTableRow[]>([]);
     const [selectedRowIds, setSelectedRowIds] = useState<GridRowModel[]>([]);
 
-    console.log(envVariableTableRows)
+    const [rowMode, setRowMode] = useState<GridRowModesModel>({});
 
-    // 4. How to use the api context to get the gridApi?
-    const SelectCell = (params: GridRenderCellParams) => {
-        //: React.ChangeEvent<HTMLSelectElement>
-        const handleChange = (event) => {
-            const updateRowIsSecret = envVariableTableRows.map(item => {
-                const currentEnvVariables = { ...item };
-
-                currentEnvVariables.id === params.id ?
-                    currentEnvVariables.isSecret = event.target.value === 'Yes' :
-                    currentEnvVariables.isSecret = currentEnvVariables.isSecret;
-
-                return currentEnvVariables;
-            });
-
-            setEnvVariableTableRows(updateRowIsSecret);
-        };
-
-        return (
-            <Select
-                options={[{ value: 'Yes' }, { value: 'No' }]}
-                value={params.value ? 'Yes' : 'No'}
-                onChange={handleChange}
-            />
-        );
-    };
+    //  console.log(envVariableTableRows)
 
     const columns: GridColDef<EnvironmentVariableTableRow>[] = [
         {
             field: 'name',
             headerName: 'Name',
             width: 330,
-            flex: 1,
             editable: true
         },
         {
             field: 'value',
             headerName: 'Value',
             width: 330,
-            flex: 1,
             editable: true
         },
         {
             field: 'isSecret',
             headerName: 'Secret',
-            width: 330,
-            flex: 1,
-            renderCell: (params) => SelectCell(params)
+            type: 'singleSelect',
+            valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
+            editable: true,
+            renderCell: ({ value }) => (
+                <Box
+                    sx={{
+                        display: 'flex',
+                        width: 1,
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Typography variant='button'>{value ? 'Yes' : 'No'}</Typography>
+                    <ArrowDropDown />
+                </Box>
+            ),
+            width: 80
         }
     ];
 
@@ -94,12 +76,6 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         fetchAndUpdateEnvVariableList()
             .catch(console.error);
     }, []);
-
-    useEffect(() => {
-        if (activeCellAfterNewRowAdded) {
-            apiRef.current.startCellEditMode({ id: activeCellAfterNewRowAdded, field: 'name' });
-        }
-    }, [activeCellAfterNewRowAdded]);
 
     const fetchAndUpdateEnvVariableList = async () => {
         const result = await getEnvironmentVariables(applicationId, environment, microserviceId);
@@ -122,59 +98,58 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         setEnvVariableTableRows(rows);
     };
 
-    const processRowUpdate = (newRow) => {
-        const updatedRow = { ...newRow };
+    const processRowUpdate = async (newRow: GridRowModel) => {
+        const updatedRow = { ...newRow, isNew: false };
 
-        const updateChangedRows = envVariableTableRows.map(item => {
-            const currentEnvVariables = { ...item };
+        // TODO: Add row remove if some value is empty - change edit state?
+        if (updatedRow.name === '' || updatedRow.value === '') {
+            enqueueSnackbar('You cant have an empty name or value', { variant: 'error' });
+            return;
+        }
 
-            if (currentEnvVariables.id === updatedRow.id) {
-                currentEnvVariables.id = `${updatedRow.name}`;
-                currentEnvVariables.name = updatedRow.name;
-                currentEnvVariables.value = updatedRow.value;
+        if (envVariableTableRows.some(row => row.name === updatedRow.name && row.id !== updatedRow.id)) {
+            enqueueSnackbar('You cant have duplicate names.', { variant: 'error' });
+            return;
+        }
 
-                // Can we do this in here?
-                //currentEnvVariables.isSecret = updatedRow.isSecret;
-            }
+        // TODO: Check if there are any changes before updating
+        // if (JSON.stringify(envVariableTableRows) === JSON.stringify(updatedRow)) {
+        //     enqueueSnackbar('No changes detected', { variant: 'info' });
+        //     return;
+        // }
 
-            return currentEnvVariables;
-        });
+        const updatedEnvVariable = envVariableTableRows.map(row => (row.id === newRow.id ? updatedRow : row));
 
-        // Check that changed rows are not the same as original rows
+        const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, updatedEnvVariable);
 
-        setEnvVariableTableRows(updateChangedRows);
-        // 1. Do we really run this after every change? I thing that we need 'edit' and 'save' buttons.
-        // Sample: https://codesandbox.io/s/0kvl7d?file=/demo.tsx
-        updateEnvVariables(updateChangedRows);
+        if (result) {
+            setEnvVariableTableRows(updatedEnvVariable);
+            enqueueSnackbar('Environment variable updated.');
+        } else {
+            enqueueSnackbar('Could not update environment variable.', { variant: 'error' });
+        }
+
         return updatedRow;
     };
 
-    const updateEnvVariables = async (updateChangedRows) => {
-        const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, updateChangedRows);
-
-        if (result) {
-            enqueueSnackbar('Environment variables successfully added.');
-            // Open info box that the microservice needs to be restarted.
-
-            //fetchAndUpdateEnvVariableList();
-            //setRestartInfoBoxIsOpen(true);
-        } else {
-            enqueueSnackbar('File not added. Please try again.', { variant: 'error' });
-        }
-    };
-
-    const handleRowAdd = () => {
+    const handleEnvVariableAdd = async () => {
         const randomId = crypto.randomUUID();
 
         const newEnvVariable = {
-            id: `HEADER_SECRET_${randomId}`,
-            name: `HEADER_SECRET_${randomId}`,
-            value: 'Variable_value',
-            isSecret: false
+            id: randomId,
+            name: '',
+            value: '',
+            isSecret: false,
+            isNew: true
         };
 
-        setEnvVariableTableRows([...envVariableTableRows, newEnvVariable]);
-        setActiveCellAfterNewRowAdded(newEnvVariable.id);
+        const updateChangedRows = [...envVariableTableRows, newEnvVariable];
+        setEnvVariableTableRows(updateChangedRows);
+
+        setRowMode(prevRowMode => ({
+            ...prevRowMode,
+            [randomId]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+        }));
     };
 
     const handleEnvVariableDelete = async () => {
@@ -185,7 +160,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, remainingEnvVariables);
 
         if (result) {
-            // Show snackbar for every deleted row if 'result' is true.
+            // Show snackbar for every deleted env variable if 'result' is true.
             envVariableTableRows.filter(envVariable => {
                 if (selectedRowIds.includes(envVariable.id)) {
                     enqueueSnackbar(`'${envVariable.name}' variable has been deleted.`);
@@ -193,7 +168,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             });
 
             setEnvVariableTableRows(remainingEnvVariables);
-            // Open info box that the microservice needs to be restarted.
+            // TODO: Open info box that the microservice needs to be restarted.
         } else {
             enqueueSnackbar('File not deleted. Please try again.', { variant: 'error' });
         }
@@ -211,7 +186,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         variant='text'
                         label='Add Variable'
                         startWithIcon={<AddCircle />}
-                        onClick={handleRowAdd}
+                        onClick={handleEnvVariableAdd}
                     />
                     <Button
                         variant='text'
@@ -227,13 +202,15 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                 <DataTablePro
                     rows={envVariableTableRows}
                     columns={columns}
-                    isRowSelectable
-                    selectionModel={selectedRowIds}
-                    handleSelectionModelChange={setSelectedRowIds}
+                    editMode='row'
+                    isRowSelectCheckbox
+                    selectedRows={selectedRowIds}
+                    handleSelectedRows={setSelectedRowIds}
+                    rowModeStatus={rowMode}
+                    handleRowModeState={newModel => setRowMode(newModel)}
                     processRowUpdate={processRowUpdate}
-                    onProcessRowUpdateError={error => enqueueSnackbar(error, { variant: 'error' })}
+                    onProcessRowUpdateError={error => console.log(error)}
                     experimentalFeatures={{ newEditingApi: true }}
-                    apiRef={apiRef}
                 />
             </Accordion>
         </>
