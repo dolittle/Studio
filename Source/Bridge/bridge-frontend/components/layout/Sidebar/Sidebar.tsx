@@ -1,9 +1,13 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Drawer } from '@mui/material';
+import { Box, Drawer } from '@mui/material';
+import { ReactNode } from 'react';
 import { Logo } from './Logo';
-import { DolittleLogoMedium } from './logos';
+import { DolittleLogoMedium } from './Logos';
+import { SidebarContent } from './SidebarContent';
+import { SidebarFooter } from './SidebarFooter';
+import { SidebarHeader } from './SidebarHeader';
 
 
 const drawerWidth = 200;
@@ -23,14 +27,21 @@ export const Sidebar = (props: SidebarProps) => {
                     width: drawerWidth,
                     boxSizing: 'border-box',
                 },
+                'display': 'flex',
             }}
             variant='permanent'
             anchor='left'
         >
-            <Logo logo={<DolittleLogoMedium/>} />
-            {props.children}
+            <SidebarHeader>
+                <Logo logo={<DolittleLogoMedium />} />
+            </SidebarHeader>
+
+            <SidebarContent>
+                {props.children}
+            </SidebarContent>
+
+            <SidebarFooter>
+            </SidebarFooter>
         </Drawer>
     );
 };
-
-
