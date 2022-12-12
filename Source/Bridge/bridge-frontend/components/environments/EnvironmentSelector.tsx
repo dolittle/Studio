@@ -6,6 +6,8 @@ import { SelectProps, Select } from 'Source/DesignSystem/atoms/Forms/Select';
 import { M3EnvironmentListDto } from '../../api/generated';
 import { OnEnvironmentSelected } from '../layout/Layout';
 
+//TODO: Move loading and selecting of environments into a store that can be used across components
+
 export type EnvironmentSelectorProps = {
     environments: M3EnvironmentListDto[];
     selectedEnvironment?: string | null | undefined;
@@ -13,6 +15,7 @@ export type EnvironmentSelectorProps = {
 };
 
 export const EnvironmentSelector = ({environments, onEnvironmentSelected, selectedEnvironment}: EnvironmentSelectorProps) =>{
+
     const environmentsForSelect = environments.map((env) => ({ value: env.name ?? '' }));
     const selectProps: SelectProps = {
         label: 'Select environment' ,
