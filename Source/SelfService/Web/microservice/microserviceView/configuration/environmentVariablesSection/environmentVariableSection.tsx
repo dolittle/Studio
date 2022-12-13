@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { GridRowModel, GridColDef, GridRowModesModel, GridRowModes } from '@mui/x-data-grid-pro';
+import { GridRowModel, GridColDef, GridRowId, GridRowModesModel, GridRowModes } from '@mui/x-data-grid-pro';
 
 import { Box, Typography } from '@mui/material';
 import { AddCircle, DeleteRounded, DownloadRounded, ArrowDropDown } from '@mui/icons-material';
@@ -17,7 +17,8 @@ import { DataTablePro } from '@dolittle/design-system/atoms/DataTablePro/DataTab
 import { getEnvironmentVariables, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/api';
 
 interface EnvironmentVariableTableRow extends InputEnvironmentVariable {
-    id?: string;
+    id: GridRowId;
+    isNew: boolean;
 };
 
 type EnvironmentVariablesProps = {
@@ -31,10 +32,8 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
 
     const [envVariableTableRows, setEnvVariableTableRows] = useState<EnvironmentVariableTableRow[]>([]);
     const [selectedRowIds, setSelectedRowIds] = useState<GridRowModel[]>([]);
-
     const [rowMode, setRowMode] = useState<GridRowModesModel>({});
-
-    //  console.log(envVariableTableRows)
+    const [disableAddButton, setDisableAddButton] = useState(false);
 
     const columns: GridColDef<EnvironmentVariableTableRow>[] = [
         {
@@ -61,14 +60,14 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         display: 'flex',
                         width: 1,
                         justifyContent: 'space-between',
-                        alignItems: 'center',
+                        alignItems: 'center'
                     }}
                 >
                     <Typography variant='button'>{value ? 'Yes' : 'No'}</Typography>
                     <ArrowDropDown />
                 </Box>
             ),
-            width: 80
+            width: 90
         }
     ];
 
@@ -98,17 +97,40 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         setEnvVariableTableRows(rows);
     };
 
-    const processRowUpdate = async (newRow: GridRowModel) => {
-        const updatedRow = { ...newRow, isNew: false };
-
-        // TODO: Add row remove if some value is empty - change edit state?
-        if (updatedRow.name === '' || updatedRow.value === '') {
-            enqueueSnackbar('You cant have an empty name or value', { variant: 'error' });
-            return;
+    const validateEnvVariable = (envVariable: EnvironmentVariableTableRow): boolean => {
+        if (envVariable.name === '' || envVariable.value === '') {
+            enqueueSnackbar('You cant have an empty name or value.', { variant: 'error' });
+            return false;
         }
 
-        if (envVariableTableRows.some(row => row.name === updatedRow.name && row.id !== updatedRow.id)) {
+        if (envVariableTableRows.some(row => row.name === envVariable.name && row.id !== envVariable.id)) {
             enqueueSnackbar('You cant have duplicate names.', { variant: 'error' });
+            return false;
+        }
+
+        return true;
+    };
+
+    const handleInvalidValues = (id: GridRowId) => {
+        setRowMode({
+            ...rowMode,
+            [id]: { mode: GridRowModes.View, ignoreModifications: true },
+        });
+
+        const editedRow = envVariableTableRows.find(row => row.id === id);
+
+        if (editedRow!.isNew) {
+            setEnvVariableTableRows(envVariableTableRows.filter(row => row.id !== id));
+        }
+    };
+
+    const processRowUpdate = async (newRow: GridRowModel) => {
+        setDisableAddButton(false);
+
+        const updatedRow = { ...newRow, isNew: false };
+
+        if (!validateEnvVariable(updatedRow)) {
+            handleInvalidValues(updatedRow.id);
             return;
         }
 
@@ -132,7 +154,9 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         return updatedRow;
     };
 
-    const handleEnvVariableAdd = async () => {
+    const handleEnvVariableAdd = () => {
+        setDisableAddButton(true);
+
         const randomId = crypto.randomUUID();
 
         const newEnvVariable = {
@@ -186,6 +210,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         variant='text'
                         label='Add Variable'
                         startWithIcon={<AddCircle />}
+                        disabled={disableAddButton}
                         onClick={handleEnvVariableAdd}
                     />
                     <Button
@@ -195,7 +220,11 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         startWithIcon={<DeleteRounded />}
                         onClick={handleEnvVariableDelete}
                     />
-                    <Button variant='text' label='Download secret env-variables yaml' startWithIcon={<DownloadRounded />} />
+                    <Button
+                        variant='text'
+                        label='Download secret env-variables yaml'
+                        startWithIcon={<DownloadRounded />}
+                    />
                     <Button variant='text' label='Download env-variables yaml' startWithIcon={<DownloadRounded />} />
                 </Box>
 
@@ -203,9 +232,9 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     rows={envVariableTableRows}
                     columns={columns}
                     editMode='row'
-                    isRowSelectCheckbox
+                    isRowCheckbox
                     selectedRows={selectedRowIds}
-                    handleSelectedRows={setSelectedRowIds}
+                    onSelectedRowsChange={setSelectedRowIds}
                     rowModeStatus={rowMode}
                     handleRowModeState={newModel => setRowMode(newModel)}
                     processRowUpdate={processRowUpdate}

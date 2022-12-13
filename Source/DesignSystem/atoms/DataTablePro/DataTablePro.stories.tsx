@@ -14,7 +14,7 @@ export default {
     title: 'DataTablePro',
     component: DataTablePro,
     argTypes: {
-        handleSelectedRows: {
+        onSelectedRowsChange: {
             table: {
                 disable: true
             }
@@ -70,8 +70,8 @@ const Template: ComponentStory<typeof DataTablePro> = (args) => {
             <DataTablePro
                 rows={rows}
                 columns={columns}
-                isRowSelectCheckbox={args.isRowSelectCheckbox}
-                handleSelectedRows={handleSelectionModelChange}
+                isRowCheckbox={args.isRowCheckbox}
+                onSelectedRowsChange={handleSelectionModelChange}
                 selectedRows={selectionModel}
                 sx={{ mt: 4 }}
             />
@@ -88,5 +88,5 @@ Default.args = {
         { id: 3, col1: 'Row 3', col2: 'Row 3', col3: 'Row 3' }
     ],
     columns,
-    isRowSelectCheckbox: true
+    isRowCheckbox: true
 };
