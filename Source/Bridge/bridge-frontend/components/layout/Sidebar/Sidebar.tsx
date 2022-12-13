@@ -35,7 +35,7 @@ export const Sidebar = (props: SidebarProps) => {
             anchor='left'
         >
             <SidebarHeader>
-                <Logo logo={<DolittleLogoMedium />} />
+                <Logo href='/' logo={<DolittleLogoMedium />} />
             </SidebarHeader>
 
             <SidebarContent>
