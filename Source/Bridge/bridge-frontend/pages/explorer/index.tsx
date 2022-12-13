@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import { useState } from 'react';
+import { Divider } from '@mui/material';
 import { useEnvironments } from '../../api/environments/useEnvironments';
 import { M3EnvironmentListDto } from '../../api/generated';
 import { EnvironmentSelector, EnvironmentSelectorProps } from '../../components/environments/EnvironmentSelector';
@@ -21,7 +22,10 @@ export default function ExplorerPage() {
     return (
         <Layout
             sidebarSlot={
-                <EnvironmentSelector {...environmentSelectorProps} />
+                <>
+                    <EnvironmentSelector {...environmentSelectorProps} />
+                    <Divider variant='middle' sx={{my: 1, display: 'block'}}/>
+                </>
             }
         >
             <Page>

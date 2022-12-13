@@ -6,6 +6,7 @@ import { ReactNode } from 'react';
 import { FooterNavigationMenu } from './FooterNavigationMenu';
 import { Logo } from './Logo';
 import { DolittleLogoMedium } from './Logos';
+import { MainNavigationMenu } from './MainNavigationMenu';
 import { SidebarContent } from './SidebarContent';
 import { SidebarFooter } from './SidebarFooter';
 import { SidebarHeader } from './SidebarHeader';
@@ -39,6 +40,7 @@ export const Sidebar = (props: SidebarProps) => {
 
             <SidebarContent>
                 {props.children}
+                <MainNavigationMenu />
             </SidebarContent>
 
             <SidebarFooter>

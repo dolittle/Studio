@@ -26,6 +26,7 @@ export const NavigationListItem = ({
         >
             <ListItemButton
                 disabled={navigationMenuItem.disabled}
+                href={navigationMenuItem.href}
                 selected={selected}
                 onClick={onClick ? (event) => {
                     event?.preventDefault();
