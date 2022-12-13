@@ -5,6 +5,7 @@ export type NavigationMenuItem = {
     href: string;
     name: string;
     icon?: React.ReactNode;
+    disabled?: boolean
     /**
      * Callback to handle click action on the {@link NavigationMenuItem}
      * Adding an onClickHandler will disable the default href behaviour
