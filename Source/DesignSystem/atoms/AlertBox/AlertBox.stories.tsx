@@ -7,6 +7,14 @@ import { AlertBox } from './AlertBox';
 
 const { metadata, createStory } = componentStories(AlertBox);
 
+metadata.parameters = {
+    docs: {
+        description: {
+            component: 'This is a description text for the AlertBox component',
+        }
+    }
+};
+
 export default metadata;
 
 export const Error = createStory({
