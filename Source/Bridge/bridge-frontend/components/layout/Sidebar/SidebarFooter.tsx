@@ -13,7 +13,8 @@ export const SidebarFooter = (props: SidebarFooterProps) => {
         <Box
             sx={{
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                pb: 2,
             }}
         >
             {props.children}
