@@ -3,6 +3,7 @@
 
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, SxProps, Theme } from '@mui/material';
 import { NavigationMenuItem } from './NavigationMenuItem';
+import Link from '../../../navigation/Link';
 
 
 export type NavigationListItemProps = {
@@ -25,6 +26,7 @@ export const NavigationListItem = ({
             disablePadding
         >
             <ListItemButton
+                component={Link}
                 disabled={navigationMenuItem.disabled}
                 href={navigationMenuItem.href}
                 selected={selected}
