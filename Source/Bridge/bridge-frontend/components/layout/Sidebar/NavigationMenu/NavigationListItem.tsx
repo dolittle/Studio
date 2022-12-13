@@ -25,6 +25,7 @@ export const NavigationListItem = ({
             disablePadding
         >
             <ListItemButton
+                disabled={navigationMenuItem.disabled}
                 selected={selected}
                 onClick={onClick ? (event) => {
                     event?.preventDefault();

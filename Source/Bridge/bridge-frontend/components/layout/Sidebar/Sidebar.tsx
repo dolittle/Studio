@@ -3,6 +3,7 @@
 
 import { Box, Drawer } from '@mui/material';
 import { ReactNode } from 'react';
+import { FooterNavigationMenu } from './FooterNavigationMenu';
 import { Logo } from './Logo';
 import { DolittleLogoMedium } from './Logos';
 import { SidebarContent } from './SidebarContent';
@@ -41,6 +42,7 @@ export const Sidebar = (props: SidebarProps) => {
             </SidebarContent>
 
             <SidebarFooter>
+                <FooterNavigationMenu />
             </SidebarFooter>
         </Drawer>
     );
