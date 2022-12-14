@@ -14,6 +14,7 @@ type DataTableProProps = {
     rows: GridRowModel[];
     columns: GridColDef[];
     editMode?: GridEditMode | undefined;
+    disableRowSelectionOnClick?: boolean;
     isRowCheckbox?: boolean;
     selectedRows?: GridSelectionModel;
     onSelectedRowsChange?: React.Dispatch<React.SetStateAction<GridSelectionModel>>;
@@ -35,7 +36,7 @@ export const DataTablePro = (props: DataTableProProps) =>
             autoHeight={true}
             headerHeight={46}
             disableColumnMenu
-            disableSelectionOnClick
+            disableSelectionOnClick={props.disableRowSelectionOnClick || false}
             hideFooter
             checkboxSelection={props.isRowCheckbox || false}
             selectionModel={props.selectedRows}
