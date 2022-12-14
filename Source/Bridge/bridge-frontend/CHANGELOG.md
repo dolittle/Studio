@@ -1,3 +1,20 @@
+# [0.0.13] - 2022-12-14 [PR: #281](https://github.com/dolittle/Studio/pull/281)
+## Summary
+
+Added a layout with Sidebar that can be adapted based on the page using it. It now shows the environment selector for  the Explorer page
+
+### Added
+
+- Layout component to be used by any page
+- Sidebar reusable components that can be pulled into the Design System
+- Nextjs/MUI aware `<Link>` component that can be used across for easier client side navigation
+
+
+### Changed
+
+- query client now functions across client side navigations and preserves cache
+
+
 # [0.0.12] - 2022-12-6 [PR: #278](https://github.com/dolittle/Studio/pull/278)
 ## Summary
 
