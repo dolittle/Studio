@@ -16,6 +16,8 @@ import { DataTablePro } from '@dolittle/design-system/atoms/DataTablePro/DataTab
 
 import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/api';
 
+import { RestartInfoBox } from '../filesSection/restartInfoBox';
+import { RestartMicroserviceDialog } from '../../restartMicroserviceDialog';
 import { EmptyDataTable } from '../emptyDataTable';
 
 interface EnvironmentVariableTableRow extends InputEnvironmentVariable {
@@ -37,6 +39,8 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     const [selectedRowIds, setSelectedRowIds] = useState<GridRowModel[]>([]);
     const [rowMode, setRowMode] = useState<GridRowModesModel>({});
     const [disableAddButton, setDisableAddButton] = useState(false);
+    const [restartInfoBoxIsOpen, setRestartInfoBoxIsOpen] = useState(false);
+    const [restartMicroserviceDialogIsOpen, setRestartMicroserviceDialogIsOpen] = useState(false);
 
     const columns: GridColDef<EnvironmentVariableTableRow>[] = [
         {
@@ -145,6 +149,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
 
         if (result) {
             setEnvVariableTableRows(updatedEnvVariable);
+            setRestartInfoBoxIsOpen(true);
             enqueueSnackbar(`Environment variable ${newRow.isNew ? 'added' : 'updated'}.`);
         } else {
             enqueueSnackbar('Could not update environment variable.', { variant: 'error' });
@@ -218,6 +223,18 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
 
     return (
         <>
+            <RestartMicroserviceDialog
+                applicationId={applicationId}
+                environment={environment}
+                microserviceId={microserviceId}
+                msName={microserviceName}
+                open={restartMicroserviceDialogIsOpen}
+                setOpen={() => setRestartMicroserviceDialogIsOpen(true)}
+                handleSuccess={() => {
+                    setRestartInfoBoxIsOpen(false);
+                    window.location.reload();
+                }}
+            />
             <Accordion
                 id='environment-variables'
                 title='Environment variables'
@@ -253,6 +270,8 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         onClick={handleEnvVariableDownload}
                     />
                 </Box>
+
+                <RestartInfoBox name={microserviceName} open={restartInfoBoxIsOpen} setOpen={() => setRestartInfoBoxIsOpen(false)} />
 
                 {noEnvVariables ?
                     <EmptyDataTable
