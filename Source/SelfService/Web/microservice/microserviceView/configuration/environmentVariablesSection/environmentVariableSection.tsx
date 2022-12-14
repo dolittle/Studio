@@ -237,7 +237,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             />
             <Accordion
                 id='environment-variables'
-                title='Environment variables'
+                title='Environment Variables'
                 defaultExpanded
             >
                 <Box sx={{ mb: 2.875, button: { 'mr': 6.25, '&:last-of-type': { mr: 0 } } }}>
