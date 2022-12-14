@@ -17,7 +17,7 @@ import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteCo
 import { FileUploadForm, FileUploadFormRef } from './fileUploadForm';
 import { RestartMicroserviceDialog } from '../../restartMicroserviceDialog';
 import { ConfigFilesTable, ConfigFilesTableRow } from './configFilesTable';
-import { NoConfigFiles } from './noConfigFiles';
+import { EmptyDataTable } from '../emptyDataTable';
 import { ValidateFileDialog } from './validateFileDialog';
 import { DeleteConfigFileDialog } from './deleteConfigFileDialog';
 import { ButtonGroup } from './buttonGroup';
@@ -219,7 +219,12 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
                 {configFileTableRows.length > 0 ?
                     <ConfigFilesTable rows={configFileTableRows} handleSelectionModelChange={setConfigFileTableRowsSelected} selectionModel={configFileTableRowsSelected} /> :
-                    <NoConfigFiles handleOnClick={() => fileUploadRef.current?.showPrompt()} />
+                    <EmptyDataTable
+                        title='No configuration files yet...'
+                        description={`To add your first configuration file, select 'add file'. You may select more than one at a time. Each file must be less than 3.145MB.`}
+                        buttonText='Add file(s)'
+                        handleOnClick={() => fileUploadRef.current?.showPrompt()}
+                    />
                 }
             </Accordion>
         </>

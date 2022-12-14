@@ -3,27 +3,28 @@
 
 import React from 'react';
 
-import { Paper, Typography } from '@mui/material';
+import { Paper, SxProps, Typography } from '@mui/material';
 import { AddCircle } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system/atoms/Button';
 
-type NoConfigFilesProps = {
+type EmptyDataTableProps = {
+    title: string;
+    description: string;
+    buttonText: string;
+    sx?: SxProps
     handleOnClick: () => void;
 };
 
-export const NoConfigFiles = ({ handleOnClick }: NoConfigFilesProps) => {
+export const EmptyDataTable = ({ title, description, buttonText, sx, handleOnClick }: EmptyDataTableProps) => {
     return (
-        <Paper sx={{ p: 2 }}>
-            <Typography variant='h2'>No configuration files yet...</Typography>
-
-            <Typography variant='body1' sx={{ my: 2 }}>
-                {`To add your first configuration file, select 'add file'. You may select more than one at a time. Each file must be less than 3.145MB.`}
-            </Typography>
+        <Paper sx={{ p: 2, ...sx }}>
+            <Typography variant='h2'>{title}</Typography>
+            <Typography variant='body1' sx={{ my: 2 }}>{description}</Typography>
 
             <Button
                 variant='filled'
-                label='Add File(s)'
+                label={buttonText}
                 startWithIcon={<AddCircle />}
                 isFullWidth
                 sx={{
