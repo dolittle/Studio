@@ -16,7 +16,7 @@ import { DataTablePro } from '@dolittle/design-system/atoms/DataTablePro/DataTab
 
 import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/api';
 
-import { RestartInfoBox } from '../filesSection/restartInfoBox';
+import { RestartInfoBox } from '../restartInfoBox';
 import { RestartMicroserviceDialog } from '../../restartMicroserviceDialog';
 import { EmptyDataTable } from '../emptyDataTable';
 
