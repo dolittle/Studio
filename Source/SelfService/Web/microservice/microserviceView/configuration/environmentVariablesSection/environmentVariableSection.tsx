@@ -62,7 +62,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                 <Button
                     variant='text'
                     label={value ? 'Yes' : 'No'}
-                    sx={{ width: 1, color: 'text.primary' }}
+                    sx={{ color: 'text.primary' }}
                     endWithIcon={<ArrowDropDown />}
                 />
             ),
@@ -214,6 +214,8 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         window.open(href, '_blank');
     };
 
+    const noEnvVariables = envVariableTableRows.length === 0;
+
     return (
         <>
             <Accordion
@@ -232,25 +234,34 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     <Button
                         variant='text'
                         label='Delete Variable(s)'
-                        disabled={!selectedRowIds.length}
+                        disabled={!selectedRowIds.length || noEnvVariables}
                         startWithIcon={<DeleteRounded />}
                         onClick={handleEnvVariableDelete}
                     />
                     <Button
                         variant='text'
                         label='Download secret env-variables yaml'
+                        disabled={noEnvVariables}
                         startWithIcon={<DownloadRounded />}
                         onClick={handleSecretEnvVariableDownload}
                     />
                     <Button
                         variant='text'
                         label='Download env-variables yaml'
+                        disabled={noEnvVariables}
                         startWithIcon={<DownloadRounded />}
                         onClick={handleEnvVariableDownload}
                     />
                 </Box>
 
-                {envVariableTableRows.length > 0 ?
+                {noEnvVariables ?
+                    <EmptyDataTable
+                        title='No environment variables yet...'
+                        description={`To add your first environment variable, select 'add variable'. Provide a name, value and set its secrecy.`}
+                        buttonText='Add Variable'
+                        handleOnClick={handleEnvVariableAdd} // TODO: Throws error when clicked
+                        sx={{ mb: 6 }}
+                    /> :
                     <DataTablePro
                         rows={envVariableTableRows}
                         columns={columns}
@@ -263,13 +274,6 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         processRowUpdate={processRowUpdate}
                         onProcessRowUpdateError={error => console.log(error)}
                         experimentalFeatures={{ newEditingApi: true }}
-                        sx={{ mb: 6 }}
-                    /> :
-                    <EmptyDataTable
-                        title='No environment variables yet...'
-                        description={`To add your first environment variable, select 'add variable'. Provide a name, value and set its secrecy.`}
-                        buttonText='Add Variable'
-                        handleOnClick={handleEnvVariableAdd} // TODO: Throws error when clicked
                         sx={{ mb: 6 }}
                     />
                 }
