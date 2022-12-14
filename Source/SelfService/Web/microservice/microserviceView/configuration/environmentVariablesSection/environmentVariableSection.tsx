@@ -16,6 +16,8 @@ import { DataTablePro } from '@dolittle/design-system/atoms/DataTablePro/DataTab
 
 import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/api';
 
+import { EmptyDataTable } from '../emptyDataTable';
+
 interface EnvironmentVariableTableRow extends InputEnvironmentVariable {
     id: GridRowId;
     isNew: boolean;
@@ -247,19 +249,29 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     />
                 </Box>
 
-                <DataTablePro
-                    rows={envVariableTableRows}
-                    columns={columns}
-                    editMode='row'
-                    isRowCheckbox
-                    selectedRows={selectedRowIds}
-                    onSelectedRowsChange={setSelectedRowIds}
-                    rowModeStatus={rowMode}
-                    handleRowModeState={newModel => setRowMode(newModel)}
-                    processRowUpdate={processRowUpdate}
-                    onProcessRowUpdateError={error => console.log(error)}
-                    experimentalFeatures={{ newEditingApi: true }}
-                />
+                {envVariableTableRows.length > 0 ?
+                    <DataTablePro
+                        rows={envVariableTableRows}
+                        columns={columns}
+                        editMode='row'
+                        isRowCheckbox
+                        selectedRows={selectedRowIds}
+                        onSelectedRowsChange={setSelectedRowIds}
+                        rowModeStatus={rowMode}
+                        handleRowModeState={newModel => setRowMode(newModel)}
+                        processRowUpdate={processRowUpdate}
+                        onProcessRowUpdateError={error => console.log(error)}
+                        experimentalFeatures={{ newEditingApi: true }}
+                        sx={{ mb: 6 }}
+                    /> :
+                    <EmptyDataTable
+                        title='No environment variables yet...'
+                        description={`To add your first environment variable, select 'add variable'. Provide a name, value and set its secrecy.`}
+                        buttonText='Add Variable'
+                        handleOnClick={handleEnvVariableAdd} // TODO: Throws error when clicked
+                        sx={{ mb: 6 }}
+                    />
+                }
             </Accordion>
         </>
     );
