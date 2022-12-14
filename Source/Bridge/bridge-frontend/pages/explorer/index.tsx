@@ -21,6 +21,7 @@ export default function ExplorerPage() {
 
     return (
         <Layout
+            head={{title: 'Bridge Explorer', description: 'Bridging the gap by exploring the connector'}}
             sidebarSlot={
                 <>
                     <EnvironmentSelector {...environmentSelectorProps} />
