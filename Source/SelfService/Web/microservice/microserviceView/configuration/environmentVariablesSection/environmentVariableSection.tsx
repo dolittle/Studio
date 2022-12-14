@@ -58,6 +58,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
             editable: true,
             renderCell: ({ value }) => (
+                // TODO: Needs improvement
                 <Button
                     variant='text'
                     label={value ? 'Yes' : 'No'}
@@ -144,7 +145,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
 
         if (result) {
             setEnvVariableTableRows(updatedEnvVariable);
-            enqueueSnackbar('Environment variable updated.');
+            enqueueSnackbar(`Environment variable ${newRow.isNew ? 'added' : 'updated'}.`);
         } else {
             enqueueSnackbar('Could not update environment variable.', { variant: 'error' });
         }
