@@ -21,7 +21,7 @@ import { EmptyDataTable } from '../emptyDataTable';
 import { ValidateFileDialog } from './validateFileDialog';
 import { DeleteConfigFileDialog } from './deleteConfigFileDialog';
 import { ButtonGroup } from './buttonGroup';
-import { RestartInfoBox } from './restartInfoBox';
+import { RestartInfoBox } from '../restartInfoBox';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
