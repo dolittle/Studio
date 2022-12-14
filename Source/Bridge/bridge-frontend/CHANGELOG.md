@@ -1,3 +1,11 @@
+# [0.0.15] - 2022-12-14 [PR: #283](https://github.com/dolittle/Studio/pull/283)
+## Summary
+
+- Add static Dolittle icon files
+- Move `<Head>` section within the Layout, and provided mechanism to override per page.
+- Add some semantic HTML elements to main and nav sections
+
+
 # [0.0.14] - 2022-12-14 [PR: #282](https://github.com/dolittle/Studio/pull/282)
 ## Summary
 
