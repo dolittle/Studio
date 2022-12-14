@@ -21,6 +21,7 @@ export const NavigationList = ({ navigationItems, highlightActive }: NavigationL
 
     return (
         <List
+            component='nav'
             sx={{
                 padding: '0',
                 margin: '0'

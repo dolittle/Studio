@@ -32,7 +32,7 @@ export const Layout = ({
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             {withSidebar && <Sidebar>{ sidebarSlot}</Sidebar>}
-            <Box component='section' sx={{ flexGrow: 1, mx: 3 }}>
+            <Box component='main' sx={{ flexGrow: 1, mx: 3 }}>
                 {children}
             </Box>
         </Box>
