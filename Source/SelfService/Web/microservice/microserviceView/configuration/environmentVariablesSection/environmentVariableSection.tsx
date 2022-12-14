@@ -17,7 +17,6 @@ import { DataTablePro } from '@dolittle/design-system/atoms/DataTablePro/DataTab
 import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/api';
 
 import { RestartInfoBox } from '../restartInfoBox';
-import { RestartMicroserviceDialog } from '../../restartMicroserviceDialog';
 import { EmptyDataTable } from '../emptyDataTable';
 
 interface EnvironmentVariableTableRow extends InputEnvironmentVariable {
@@ -40,7 +39,6 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     const [rowMode, setRowMode] = useState<GridRowModesModel>({});
     const [disableAddButton, setDisableAddButton] = useState(false);
     const [restartInfoBoxIsOpen, setRestartInfoBoxIsOpen] = useState(false);
-    const [restartMicroserviceDialogIsOpen, setRestartMicroserviceDialogIsOpen] = useState(false);
 
     const columns: GridColDef<EnvironmentVariableTableRow>[] = [
         {
@@ -186,7 +184,6 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, remainingEnvVariables);
 
         if (result) {
-            // Show snackbar for every deleted env variable if 'result' is true.
             envVariableTableRows.filter(envVariable => {
                 if (selectedRowIds.includes(envVariable.id)) {
                     enqueueSnackbar(`'${envVariable.name}' variable has been deleted.`);
@@ -223,18 +220,6 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
 
     return (
         <>
-            <RestartMicroserviceDialog
-                applicationId={applicationId}
-                environment={environment}
-                microserviceId={microserviceId}
-                msName={microserviceName}
-                open={restartMicroserviceDialogIsOpen}
-                setOpen={() => setRestartMicroserviceDialogIsOpen(true)}
-                handleSuccess={() => {
-                    setRestartInfoBoxIsOpen(false);
-                    window.location.reload();
-                }}
-            />
             <Accordion
                 id='environment-variables'
                 title='Environment Variables'
