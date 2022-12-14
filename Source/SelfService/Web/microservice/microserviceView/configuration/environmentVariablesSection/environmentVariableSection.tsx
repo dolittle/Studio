@@ -14,7 +14,7 @@ import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
 import { Button } from '@dolittle/design-system/atoms/Button';
 import { DataTablePro } from '@dolittle/design-system/atoms/DataTablePro/DataTablePro';
 
-import { getEnvironmentVariables, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/api';
+import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/api';
 
 interface EnvironmentVariableTableRow extends InputEnvironmentVariable {
     id: GridRowId;
@@ -24,10 +24,11 @@ interface EnvironmentVariableTableRow extends InputEnvironmentVariable {
 type EnvironmentVariablesProps = {
     applicationId: string;
     environment: string;
+    microserviceName: string;
     microserviceId: string;
 };
 
-export const EnvironmentVariablesSection = ({ applicationId, environment, microserviceId }: EnvironmentVariablesProps) => {
+export const EnvironmentVariablesSection = ({ applicationId, environment, microserviceName, microserviceId }: EnvironmentVariablesProps) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const [envVariableTableRows, setEnvVariableTableRows] = useState<EnvironmentVariableTableRow[]>([]);
@@ -55,7 +56,12 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
             editable: true,
             renderCell: ({ value }) => (
-                <Button variant='text' label={value ? 'Yes' : 'No'} sx={{ width: 1, color: 'text.primary' }} endWithIcon={<ArrowDropDown />} />
+                <Button
+                    variant='text'
+                    label={value ? 'Yes' : 'No'}
+                    sx={{ width: 1, color: 'text.primary' }}
+                    endWithIcon={<ArrowDropDown />}
+                />
             ),
             width: 90
         }
@@ -112,6 +118,12 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         if (editedRow!.isNew) {
             setEnvVariableTableRows(envVariableTableRows.filter(row => row.id !== id));
         }
+
+        // TODO: Check if there are any changes before updating
+        // if (JSON.stringify(envVariableTableRows) === JSON.stringify(updatedRow)) {
+        //     enqueueSnackbar('No changes detected', { variant: 'info' });
+        //     return;
+        // }
     };
 
     const processRowUpdate = async (newRow: GridRowModel) => {
@@ -123,12 +135,6 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             handleInvalidValues(updatedRow.id);
             return;
         }
-
-        // TODO: Check if there are any changes before updating
-        // if (JSON.stringify(envVariableTableRows) === JSON.stringify(updatedRow)) {
-        //     enqueueSnackbar('No changes detected', { variant: 'info' });
-        //     return;
-        // }
 
         const updatedEnvVariable = envVariableTableRows.map(row => (row.id === newRow.id ? updatedRow : row));
 
@@ -188,6 +194,23 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         }
     };
 
+    // TODO: This is reused. consider moving
+    const configMapPrefix = `${environment.toLowerCase()}-${microserviceName.toLowerCase()}`;
+
+    const handleSecretEnvVariableDownload = () => {
+        const secretName = `${configMapPrefix}-secret-env-variables`;
+        const href = `${getServerUrlPrefix()}/live/application/${applicationId}/secret/${secretName}?download=1&fileType=yaml`;
+        enqueueSnackbar(`'${secretName}.yaml' has been downloaded.`);
+        window.open(href, '_blank');
+    };
+
+    const handleEnvVariableDownload = () => {
+        const configMapName = `${configMapPrefix}-env-variables`;
+        const href = `${getServerUrlPrefix()}/live/application/${applicationId}/configmap/${configMapName}?download=1&fileType=yaml`;
+        enqueueSnackbar(`'${configMapName}.yaml' has been downloaded.`);
+        window.open(href, '_blank');
+    };
+
     return (
         <>
             <Accordion
@@ -214,8 +237,14 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         variant='text'
                         label='Download secret env-variables yaml'
                         startWithIcon={<DownloadRounded />}
+                        onClick={handleSecretEnvVariableDownload}
                     />
-                    <Button variant='text' label='Download env-variables yaml' startWithIcon={<DownloadRounded />} />
+                    <Button
+                        variant='text'
+                        label='Download env-variables yaml'
+                        startWithIcon={<DownloadRounded />}
+                        onClick={handleEnvVariableDownload}
+                    />
                 </Box>
 
                 <DataTablePro
