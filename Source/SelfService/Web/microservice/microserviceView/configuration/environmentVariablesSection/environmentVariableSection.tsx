@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 
 import { GridRowModel, GridColDef, GridRowId, GridRowModesModel, GridRowModes } from '@mui/x-data-grid-pro';
 
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { AddCircle, DeleteRounded, DownloadRounded, ArrowDropDown } from '@mui/icons-material';
 
 import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
@@ -55,17 +55,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
             editable: true,
             renderCell: ({ value }) => (
-                <Box
-                    sx={{
-                        display: 'flex',
-                        width: 1,
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                    }}
-                >
-                    <Typography variant='button'>{value ? 'Yes' : 'No'}</Typography>
-                    <ArrowDropDown />
-                </Box>
+                <Button variant='text' label={value ? 'Yes' : 'No'} sx={{ width: 1, color: 'text.primary' }} endWithIcon={<ArrowDropDown />} />
             ),
             width: 90
         }
