@@ -215,7 +215,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
                 <FileUploadForm ref={fileUploadRef} onSelected={handleFileSelect} allowMultipleFiles />
 
-                <RestartInfoBox name={microserviceName} open={restartInfoBoxIsOpen} setOpen={() => setRestartInfoBoxIsOpen(false)} />
+                <RestartInfoBox name={microserviceName} isAlertBoxOpen={restartInfoBoxIsOpen} handleDismiss={() => setRestartInfoBoxIsOpen(false)} />
 
                 {configFileTableRows.length > 0 ?
                     <ConfigFilesTable rows={configFileTableRows} handleSelectionModelChange={setConfigFileTableRowsSelected} selectionModel={configFileTableRowsSelected} /> :
