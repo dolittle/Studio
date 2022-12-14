@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { GridRowModel, GridColDef, GridRowId, GridRowModesModel, GridRowModes } from '@mui/x-data-grid-pro';
+import { GridColDef, GridRowId, GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
 
 import { Box } from '@mui/material';
 import { AddCircle, DeleteRounded, DownloadRounded, ArrowDropDown } from '@mui/icons-material';
@@ -220,6 +220,8 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     };
 
     const noEnvVariables = envVariableTableRows.length === 0;
+    const noSecretEnvVariables = envVariableTableRows.filter(envVariable => envVariable.isSecret).length === 0;
+    const noPublicEnvVariables = envVariableTableRows.filter(envVariable => !envVariable.isSecret).length === 0;
 
     return (
         <>
@@ -258,14 +260,14 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     <Button
                         variant='text'
                         label='Download secret env-variables yaml'
-                        disabled={noEnvVariables}
+                        disabled={noSecretEnvVariables}
                         startWithIcon={<DownloadRounded />}
                         onClick={handleSecretEnvVariableDownload}
                     />
                     <Button
                         variant='text'
                         label='Download env-variables yaml'
-                        disabled={noEnvVariables}
+                        disabled={noPublicEnvVariables}
                         startWithIcon={<DownloadRounded />}
                         onClick={handleEnvVariableDownload}
                     />
@@ -278,13 +280,14 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         title='No environment variables yet...'
                         description={`To add your first environment variable, select 'add variable'. Provide a name, value and set its secrecy.`}
                         buttonText='Add Variable'
-                        handleOnClick={handleEnvVariableAdd} // TODO: Throws error when clicked
-                        sx={{ mb: 6 }}
+                        handleOnClick={handleEnvVariableAdd} // TODO: Sometimes throws error when clicked
+                        sx={{ mb: 8 }}
                     /> :
                     <DataTablePro
                         rows={envVariableTableRows}
                         columns={columns}
                         editMode='row'
+                        disableRowSelectionOnClick
                         isRowCheckbox
                         selectedRows={selectedRowIds}
                         onSelectedRowsChange={setSelectedRowIds}
@@ -293,7 +296,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         processRowUpdate={processRowUpdate}
                         onProcessRowUpdateError={error => console.log(error)}
                         experimentalFeatures={{ newEditingApi: true }}
-                        sx={{ mb: 6 }}
+                        sx={{ mb: 8 }}
                     />
                 }
             </Accordion>
