@@ -10,16 +10,21 @@ const nextConfig = {
   },
   output: 'standalone',
   async rewrites() {
-    return [
+    const rewrites = [
       {
         source: "/api/cats",
         destination: "https://meowfacts.herokuapp.com"
-      },
-      {
-        source: "/api/:path*",
-        destination: "http://localhost:5000/:path*" // Proxy to Backend
-      },
+      }
     ];
+
+    if(process.env.NODE_ENV === 'development') {
+      rewrites.push(
+        {
+          source: "/api/:path*",
+          destination: "http://localhost:5000/:path*" // Proxy to Backend on localhost
+        });
+    }
+    return rewrites;
   }
 }
 
