@@ -8,7 +8,6 @@ import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices }
 import { Microservice } from '../microservice/microservice';
 import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
 import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';
-import { EnvironmentVariablesView } from '../microservice/environmentVariables/environmentVariablesView';
 import { PodLogScreen } from '../microservice/podLogScreen';
 import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithSidebar';
 
@@ -26,7 +25,7 @@ import { HttpResponseApplication, getApplications, getApplication, HttpResponseA
 import { withRouteApplicationState } from './withRouteApplicationState';
 import { Typography } from '@mui/material';
 
-export const MicroservicesScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
+export const MicroservicesScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const history = useHistory();
     const { setNotification } = useGlobalContext();
     const currentEnvironment = routeApplicationParams.environment;
@@ -161,10 +160,6 @@ export const MicroservicesScreen: React.FunctionComponent = withRouteApplication
 
                 <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId">
                     <MicroserviceViewScreen application={application} environment={currentEnvironment} />
-                </Route>
-
-                <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId/environment-variables">
-                    <EnvironmentVariablesView application={application} environment={currentEnvironment} />
                 </Route>
 
                 <Route exact path="/microservices/application/:applicationId/:environment/pod/view/:podName/logs">
