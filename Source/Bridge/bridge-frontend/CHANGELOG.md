@@ -1,3 +1,9 @@
+# [0.0.14] - 2022-12-14 [PR: #282](https://github.com/dolittle/Studio/pull/282)
+## Summary
+
+No longer proxy requests to `/api` in production, and trust the ingress will kick in when it is set up
+
+
 # [0.0.13] - 2022-12-14 [PR: #281](https://github.com/dolittle/Studio/pull/281)
 ## Summary
 
