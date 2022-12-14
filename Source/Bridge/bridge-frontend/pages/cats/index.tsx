@@ -11,7 +11,9 @@ export default function CatsPage() {
     const catFactQuery = useCatFact();
 
     return (
-        <Layout>
+        <Layout
+            head={{title: 'Dolittle Cat Facts', description: 'Random cat facts that any Dolittler can get behind!'}}
+        >
             <Page>
                 <h1>Cats</h1>
                 <br />
