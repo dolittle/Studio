@@ -181,9 +181,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     };
 
     const handleEnvVariableDelete = async () => {
-        const remainingEnvVariables = envVariableTableRows.filter(envVariable => {
-            return !selectedRowIds.includes(envVariable.id);
-        });
+        const remainingEnvVariables = envVariableTableRows.filter(envVariable => !selectedRowIds.includes(envVariable.id));
 
         const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, remainingEnvVariables);
 
@@ -273,7 +271,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     />
                 </Box>
 
-                <RestartInfoBox name={microserviceName} open={restartInfoBoxIsOpen} setOpen={() => setRestartInfoBoxIsOpen(false)} />
+                <RestartInfoBox name={microserviceName} isAlertBoxOpen={restartInfoBoxIsOpen} handleDismiss={() => setRestartInfoBoxIsOpen(false)} />
 
                 {noEnvVariables ?
                     <EmptyDataTable

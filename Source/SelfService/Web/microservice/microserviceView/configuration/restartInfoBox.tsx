@@ -9,12 +9,12 @@ import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
 
 type RestartInfoBoxProps = {
     name: string;
-    open: boolean;
-    setOpen: () => void;
+    isAlertBoxOpen: boolean;
+    handleDismiss: () => void;
 };
 
-export const RestartInfoBox = ({ name, open, setOpen }: RestartInfoBoxProps) =>
-    <Collapse in={open}>
+export const RestartInfoBox = ({ name, isAlertBoxOpen, handleDismiss }: RestartInfoBoxProps) =>
+    <Collapse in={isAlertBoxOpen}>
         <AlertBox
             severity='info'
             title='Restart Microservice'
@@ -23,7 +23,7 @@ export const RestartInfoBox = ({ name, open, setOpen }: RestartInfoBoxProps) =>
                 It will restart automatically in a few minutes or you can manually restart it now.`
             }
             isDismissable
-            onDismiss={setOpen}
+            onDismiss={handleDismiss}
             sx={{ width: 1, mb: 2 }}
         />
     </Collapse>;
