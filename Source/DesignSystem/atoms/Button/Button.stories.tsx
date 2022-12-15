@@ -16,6 +16,14 @@ const { metadata, createStory } = componentStories(Button, {
     },
 });
 
+metadata.parameters = {
+    docs: {
+        description: {
+            component: 'This is the **Button** _component_',
+        }
+    }
+};
+
 export default metadata;
 
 export const Filled = createStory({
