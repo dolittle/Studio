@@ -5,35 +5,21 @@ import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/material';
+import { DeleteRounded, RefreshRounded } from '@mui/icons-material';
 
-import { DataTablePro } from './DataTablePro';
+import { DataTablePro, DataTableProProps } from './DataTablePro';
 
 import { Button } from '@dolittle/design-system/atoms/Button';
 
 export default {
-    title: 'DataTablePro',
-    component: DataTablePro,
-    argTypes: {
-        onSelectedRowsChange: {
-            table: {
-                disable: true
-            }
+    parameters: {
+        controls: {
+            include: [
+                'isRowCheckbox',
+                'disableRowSelectionOnClick',
+                'editMode'
+            ]
         },
-        selectionModel: {
-            table: {
-                disable: true
-            }
-        },
-        disableSelectionOnClick: {
-            table: {
-                disable: true
-            }
-        },
-        sx: {
-            table: {
-                disable: true
-            }
-        }
     }
 } as ComponentMeta<typeof DataTablePro>;
 
@@ -46,33 +32,37 @@ const initialRows = [
 const columns = [
     { field: 'col1', headerName: 'Column 1', flex: 1, width: 150 },
     { field: 'col2', headerName: 'Column 2', flex: 1, width: 150 },
-    { field: 'col3', headerName: 'Column 3', flex: 1, width: 150 },
+    { field: 'col3', headerName: 'Column 3', flex: 1, width: 150 }
 ];
 
-const Template: ComponentStory<typeof DataTablePro> = (args) => {
-    const [selectionModel, setSelectionModel] = useState<any>([]);
+const Template: ComponentStory<typeof DataTablePro> = ({ isRowCheckbox, disableRowSelectionOnClick }: DataTableProProps) => {
+    const [selectedRowIds, setSelectedRowIds] = useState<any[]>([]);
     const [rows, setRows] = useState(initialRows);
 
-    const handleSelectionModelChange = (newSelectionModel) => {
-        setSelectionModel(newSelectionModel);
-    };
-
-    const handleDelete = () => {
-        setRows(rows.filter(row => !selectionModel.includes(row.id)));
-        setSelectionModel([]);
-    };
-
     return (
-        <Box sx={{ width: 'auto' }}>
-            <Button variant='text' label='Reset' onClick={() => setRows(initialRows)} />
-            <Button variant='text' label='Delete selected' disabled={selectionModel.length === 0} onClick={handleDelete} />
+        <Box>
+            <Button
+                variant='text'
+                label='Reset'
+                startWithIcon={<RefreshRounded />}
+                disabled={rows.length === 3}
+                onClick={() => setRows(initialRows)} />
+            <Button
+                variant='text'
+                label='Delete selected'
+                startWithIcon={<DeleteRounded />}
+                disabled={selectedRowIds.length === 0}
+                onClick={() => setRows(rows.filter(row => !selectedRowIds.includes(row.id)))}
+            />
 
             <DataTablePro
                 rows={rows}
                 columns={columns}
-                isRowCheckbox={args.isRowCheckbox}
-                onSelectedRowsChange={handleSelectionModelChange}
-                selectedRows={selectionModel}
+                isRowCheckbox={isRowCheckbox}
+                selectedRows={selectedRowIds}
+                onSelectedRowsChange={setSelectedRowIds}
+                disableRowSelectionOnClick={isRowCheckbox ? disableRowSelectionOnClick : true}
+                experimentalFeatures={{ newEditingApi: true }}
                 sx={{ mt: 4 }}
             />
         </Box>
@@ -82,11 +72,6 @@ const Template: ComponentStory<typeof DataTablePro> = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
-    rows: [
-        { id: 1, col1: 'Row 1', col2: 'Row 1', col3: 'Row 1' },
-        { id: 2, col1: 'Row 2', col2: 'Row 2', col3: 'Row 2' },
-        { id: 3, col1: 'Row 3', col2: 'Row 3', col3: 'Row 3' }
-    ],
-    columns,
-    isRowCheckbox: true
+    isRowCheckbox: true,
+    disableRowSelectionOnClick: true
 };
