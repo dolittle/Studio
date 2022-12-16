@@ -6,6 +6,31 @@ import React from 'react';
 import { Accordion as MuiAccordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import { ExpandCircleDownRounded } from '@mui/icons-material';
 
+const styles = {
+    accordion: {
+        backgroundColor: 'transparent',
+        backgroundImage: 'none'
+    },
+    accordionSummary: {
+        // Move expand arrow to the left side
+        'flexDirection': 'row-reverse',
+        // Disable 'expand' for the whole line
+        'pointerEvents': 'none',
+        'p': 0,
+        '& .MuiAccordionSummary-expandIconWrapper': {
+            transform: 'rotate(180deg)',
+        },
+        '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+            transform: 'rotate(0deg)',
+        }
+    },
+    expandIcon: {
+        color: 'text.secondary',
+        // Allow 'expand' for the icon only
+        pointerEvents: 'auto'
+    }
+};
+
 type AccordionProps = {
     id: string;
     title: string;
@@ -15,38 +40,22 @@ type AccordionProps = {
     onChange?: (event: React.SyntheticEvent<Element, Event>, expanded: boolean) => void;
 };
 
-export const Accordion = (props: AccordionProps) => {
-    return (
-        <MuiAccordion
-            expanded={props.isExpanded}
-            defaultExpanded={props.defaultExpanded}
-            onChange={props.onChange}
-            TransitionProps={{ unmountOnExit: true }}
-            sx={{
-                backgroundColor: 'transparent',
-                backgroundImage: 'none'
-            }}>
-            <AccordionSummary
-                expandIcon={<ExpandCircleDownRounded sx={{ color: 'text.secondary' }} />}
-                aria-controls={props.id}
-                id={props.id}
-                sx={{
-                    'flexDirection': 'row-reverse',
-                    'p': 0,
-                    '& .MuiAccordionSummary-expandIconWrapper': {
-                        transform: 'rotate(180deg)',
-                    },
-                    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-                        transform: 'rotate(0deg)',
-                    }
-                }}
-            >
-                <Typography variant='subtitle1' sx={{ ml: 1.25 }}>{props.title}</Typography>
-            </AccordionSummary>
+export const Accordion = (props: AccordionProps) =>
+    <MuiAccordion
+        expanded={props.isExpanded}
+        defaultExpanded={props.defaultExpanded}
+        onChange={props.onChange}
+        TransitionProps={{ unmountOnExit: true }}
+        sx={styles.accordion}
+    >
+        <AccordionSummary
+            expandIcon={<ExpandCircleDownRounded sx={styles.expandIcon} />}
+            aria-controls={props.id}
+            id={props.id}
+            sx={styles.accordionSummary}
+        >
+            <Typography variant='subtitle1' sx={{ ml: 1.25 }}>{props.title}</Typography>
+        </AccordionSummary>
 
-            <AccordionDetails>
-                {props.children}
-            </AccordionDetails>
-        </MuiAccordion>
-    );
-};
+        <AccordionDetails>{props.children}</AccordionDetails>
+    </MuiAccordion>;
