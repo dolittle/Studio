@@ -60,11 +60,10 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
             editable: true,
             renderCell: ({ value }) => (
-                // TODO: Needs improvement
                 <Button
                     variant='text'
                     label={value ? 'Yes' : 'No'}
-                    sx={{ color: 'text.primary' }}
+                    sx={{ color: 'text.primary', width: 1, height: 1 }}
                     endWithIcon={<ArrowDropDown />}
                 />
             ),
@@ -279,7 +278,17 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         processRowUpdate={processRowUpdate}
                         onProcessRowUpdateError={error => console.log(error)}
                         experimentalFeatures={{ newEditingApi: true }}
-                        sx={{ mb: 8 }}
+                        sx={{
+                            'mb': 8,
+                            '& .MuiOutlinedInput-root': {
+                                '& .MuiSelect-select': {
+                                    p: '10px 15px'
+                                },
+                                '& fieldset': {
+                                    border: 'none'
+                                }
+                            }
+                        }}
                     />
                 }
             </Accordion>
