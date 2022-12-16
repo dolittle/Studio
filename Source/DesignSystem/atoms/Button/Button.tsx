@@ -17,6 +17,7 @@ type ButtonProps = {
     isFullWidth?: boolean;
     sx?: SxProps;
     onClick?: MouseEventHandler<HTMLButtonElement>;
+    disableRipple?: boolean;
 };
 
 export const Button = (props: ButtonProps) =>
@@ -32,6 +33,7 @@ export const Button = (props: ButtonProps) =>
         onClick={props.onClick}
         fullWidth={props.isFullWidth}
         disableElevation
+        disableRipple
     >
         {props.label}
     </MuiButton>;
