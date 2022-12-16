@@ -19,6 +19,37 @@ import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, 
 import { RestartInfoBox } from '../restartInfoBox';
 import { EmptyDataTable } from '../emptyDataTable';
 
+const columns: GridColDef<EnvironmentVariableTableRow>[] = [
+    {
+        field: 'name',
+        headerName: 'Name',
+        width: 330,
+        editable: true
+    },
+    {
+        field: 'value',
+        headerName: 'Value',
+        width: 330,
+        editable: true
+    },
+    {
+        field: 'isSecret',
+        headerName: 'Secret',
+        type: 'singleSelect',
+        valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
+        editable: true,
+        renderCell: ({ value }) => (
+            <Button
+                variant='text'
+                label={value ? 'Yes' : 'No'}
+                sx={{ color: 'text.primary', width: 1, height: 1 }}
+                endWithIcon={<ArrowDropDown />}
+            />
+        ),
+        width: 90
+    }
+];
+
 type EnvironmentVariableTableRow = InputEnvironmentVariable & {
     id: GridRowId;
     isNew: boolean;
@@ -39,37 +70,6 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     const [rowMode, setRowMode] = useState<GridRowModesModel>({});
     const [disableAddButton, setDisableAddButton] = useState(false);
     const [restartInfoBoxIsOpen, setRestartInfoBoxIsOpen] = useState(false);
-
-    const columns: GridColDef<EnvironmentVariableTableRow>[] = [
-        {
-            field: 'name',
-            headerName: 'Name',
-            width: 330,
-            editable: true
-        },
-        {
-            field: 'value',
-            headerName: 'Value',
-            width: 330,
-            editable: true
-        },
-        {
-            field: 'isSecret',
-            headerName: 'Secret',
-            type: 'singleSelect',
-            valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
-            editable: true,
-            renderCell: ({ value }) => (
-                <Button
-                    variant='text'
-                    label={value ? 'Yes' : 'No'}
-                    sx={{ color: 'text.primary', width: 1, height: 1 }}
-                    endWithIcon={<ArrowDropDown />}
-                />
-            ),
-            width: 90
-        }
-    ];
 
     useEffect(() => {
         fetchAndUpdateEnvVariableList()
@@ -98,7 +98,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     };
 
     const validateEnvVariable = (envVariable: EnvironmentVariableTableRow): boolean => {
-        if (envVariable.name === '' || envVariable.value === '') {
+        if (envVariable.name.trim() === '' || envVariable.value.trim() === '') {
             enqueueSnackbar('You cant have an empty name or value.', { variant: 'error' });
             return false;
         }
@@ -111,7 +111,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         return true;
     };
 
-    const handleInvalidValues = (id: GridRowId) => {
+    const ignoreRowModifications = (id: GridRowId) => {
         setRowMode({
             ...rowMode,
             [id]: { mode: GridRowModes.View, ignoreModifications: true },
@@ -122,21 +122,21 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         if (editedRow!.isNew) {
             setEnvVariableTableRows(envVariableTableRows.filter(row => row.id !== id));
         }
-
-        // TODO: Check if there are any changes before updating
-        // if (JSON.stringify(envVariableTableRows) === JSON.stringify(updatedRow)) {
-        //     enqueueSnackbar('No changes detected', { variant: 'info' });
-        //     return;
-        // }
     };
 
     const processRowUpdate = async (newRow: GridRowModel) => {
         setDisableAddButton(false);
 
         const updatedRow = { ...newRow, isNew: false };
+        const oldRow = envVariableTableRows.find(row => row.id === updatedRow.id);
+
+        if (oldRow?.name === updatedRow.name && oldRow!.value === updatedRow.value && oldRow!.isSecret === updatedRow.isSecret) {
+            ignoreRowModifications(updatedRow.id);
+            return;
+        }
 
         if (!validateEnvVariable(updatedRow)) {
-            handleInvalidValues(updatedRow.id);
+            ignoreRowModifications(updatedRow.id);
             return;
         }
 
@@ -190,7 +190,6 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             });
 
             setEnvVariableTableRows(remainingEnvVariables);
-            // TODO: Open info box that the microservice needs to be restarted.
         } else {
             enqueueSnackbar('File not deleted. Please try again.', { variant: 'error' });
         }
