@@ -6,9 +6,6 @@ import React from 'react';
 import { Paper, SxProps } from '@mui/material';
 
 import { DataGridPro, GridCallbackDetails, GridColDef, GridExperimentalProFeatures, GridRowModel, GridEditMode, GridRowModesModel, GridSelectionModel } from '@mui/x-data-grid-pro';
-import { LicenseInfo } from '@mui/x-license-pro';
-
-LicenseInfo.setLicenseKey('4a83cf3032e8518adfbe8694d092262dTz00ODUxMyxFPTE2OTEyMjE0ODgxODUsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=');
 
 export type DataTableProProps = {
     rows: GridRowModel[];

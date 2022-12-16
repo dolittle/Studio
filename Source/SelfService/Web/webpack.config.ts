@@ -8,8 +8,9 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
+import Dotenv from 'dotenv-webpack';
 
-type Args = {[key: string]: string};
+type Args = { [key: string]: string };
 
 const basePath = '/selfservice/';
 const title = 'Dolittle Studio';
@@ -31,8 +32,8 @@ function webpack(env: Args, argv: Args) {
                 ? '[name].[chunkhash].bundle.map'
                 : '[name].[contenthash].bundle.map',
             chunkFilename: isProduction
-                    ? '[name].[chunkhash].chunk.js'
-                    : '[name].[contenthash].chunk.js',
+                ? '[name].[chunkhash].chunk.js'
+                : '[name].[contenthash].chunk.js',
             path: path.resolve(process.cwd(), 'wwwroot'),
             publicPath: basePath
         },
@@ -106,7 +107,7 @@ function webpack(env: Args, argv: Args) {
                     ws: true,
                 }
             },
-            before: (app, server, compiler) => {}
+            before: (app, server, compiler) => { }
         },
         plugins: [
             new CleanWebpackPlugin({
@@ -148,6 +149,7 @@ function webpack(env: Args, argv: Args) {
             new MiniCssExtractPlugin({
                 filename: './styles.css',
             }),
+            new Dotenv(),
         ],
         optimization: {
             minimizer: [
