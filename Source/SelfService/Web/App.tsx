@@ -41,7 +41,7 @@ import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
 import { M3ConnectorScreen } from './screens/m3connectorScreen';
 import { LogsScreen } from './screens/logsScreen';
 
-LicenseInfo.setLicenseKey('4a83cf3032e8518adfbe8694d092262dTz00ODUxMyxFPTE2OTEyMjE0ODgxODUsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=');
+LicenseInfo.setLicenseKey(process.env.REACT_APP_DATA_GRID_PRO_KEY!);
 
 const snackbarStyles = {
     '& .notistack-SnackbarContainer>*': {
