@@ -7,7 +7,7 @@ import { HttpResponseApplication } from '../../../api/application';
 
 import { MicroserviceStore } from '../../../stores/microservice';
 
-import { SetupSection } from './editSection/editSection';
+import { SetupSection } from './setupSection/setupSection';
 import { FilesSection } from './filesSection/filesSection';
 import { EnvironmentVariablesSection } from './environmentVariablesSection/environmentVariableSection';
 
