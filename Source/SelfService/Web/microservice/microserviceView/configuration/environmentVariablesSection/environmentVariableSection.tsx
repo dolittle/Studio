@@ -19,7 +19,7 @@ import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, 
 import { RestartInfoBox } from '../restartInfoBox';
 import { EmptyDataTable } from '../emptyDataTable';
 
-interface EnvironmentVariableTableRow extends InputEnvironmentVariable {
+type EnvironmentVariableTableRow = InputEnvironmentVariable & {
     id: GridRowId;
     isNew: boolean;
 };
