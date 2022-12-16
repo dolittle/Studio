@@ -11,7 +11,7 @@ import { SetupSection } from './setupSection/setupSection';
 import { FilesSection } from './filesSection/filesSection';
 import { EnvironmentVariablesSection } from './environmentVariablesSection/environmentVariableSection';
 
-export type ConfigurationProps = {
+type ConfigurationFilesSectionProps = {
     application: HttpResponseApplication;
     applicationId: string;
     environment: string;
@@ -19,7 +19,8 @@ export type ConfigurationProps = {
     currentMicroservice: MicroserviceStore;
 };
 
-export const Configuration = ({ application, applicationId, environment, microserviceId, currentMicroservice }: ConfigurationProps) => (
+export const ConfigurationFilesSection = (
+    { application, applicationId, environment, microserviceId, currentMicroservice }: ConfigurationFilesSectionProps) => (
     <>
         <SetupSection
             application={application}
