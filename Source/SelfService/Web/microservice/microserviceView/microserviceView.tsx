@@ -14,7 +14,7 @@ import { Box, Typography } from '@mui/material';
 
 import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
 
-import { Configuration } from './configuration/configuration';
+import { ConfigurationFilesSection } from './configurationFilesSection/configurationFilesSection';
 import { HealthStatus } from './healthStatus/healthStatus';
 import { ContainerHealthStatus } from '../microserviceStatus';
 import { useTerminalAvailable } from './terminal/useTerminal';
@@ -97,7 +97,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
     const tabs = [
         {
             label: 'Configuration',
-            render: () => <Configuration
+            render: () => <ConfigurationFilesSection
                 application={application}
                 applicationId={applicationId}
                 environment={environment}
