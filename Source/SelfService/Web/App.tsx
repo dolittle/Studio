@@ -43,14 +43,11 @@ import { LogsScreen } from './screens/logsScreen';
 
 LicenseInfo.setLicenseKey(process.env.REACT_APP_DATA_GRID_PRO_KEY!);
 
+// Make all stacked snackbars with same width
 const snackbarStyles = {
     '& .notistack-SnackbarContainer>*': {
         width: '100%'
     }
-};
-
-function SlideTransition(props: SlideProps) {
-    return <Slide {...props} direction="up" />;
 };
 
 export const App = () => {
@@ -77,7 +74,7 @@ export const App = () => {
                         <Box sx={snackbarStyles}>
                             <SnackbarProvider
                                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                                TransitionComponent={SlideTransition}
+                                TransitionComponent={props => <Slide {...props} direction='up' />}
                                 autoHideDuration={4000}
                                 maxSnack={6}
                                 Components={{
