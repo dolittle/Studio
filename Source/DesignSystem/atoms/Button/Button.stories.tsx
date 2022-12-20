@@ -19,7 +19,7 @@ const { metadata, createStory } = componentStories(Button, {
 metadata.parameters = {
     docs: {
         description: {
-            component: 'This is the **Button** _component_',
+            component: 'A button triggers an event or action. Its label should let the user know what will happen next.',
         }
     }
 };
