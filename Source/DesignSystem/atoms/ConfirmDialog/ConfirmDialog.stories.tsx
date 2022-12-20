@@ -7,6 +7,14 @@ import { ConfirmDialog } from './ConfirmDialog';
 
 const { metadata, createStory } = componentStories(ConfirmDialog, {});
 
+metadata.parameters = {
+    docs: {
+        description: {
+            component: 'This is a description for the dialog.',
+        }
+    }
+};
+
 export default metadata;
 
 export const DialogBox = createStory({
