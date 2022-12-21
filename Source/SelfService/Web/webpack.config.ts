@@ -2,13 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import path from 'path';
-import TerserPlugin from 'terser-webpack-plugin';
+import webpackImported from 'webpack';
 
+import TerserPlugin from 'terser-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
-import Dotenv from 'dotenv-webpack';
 
 type Args = { [key: string]: string };
 
@@ -149,7 +149,10 @@ function webpack(env: Args, argv: Args) {
             new MiniCssExtractPlugin({
                 filename: './styles.css',
             }),
-            new Dotenv(),
+            new webpackImported.DefinePlugin({
+                'process.env.MUI_LICENSE_KEY': JSON.stringify(process.env.MUI_LICENSE_KEY)
+            }),
+            // new Dotenv(),
         ],
         optimization: {
             minimizer: [

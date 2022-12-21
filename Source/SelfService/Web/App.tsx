@@ -41,7 +41,7 @@ import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
 import { M3ConnectorScreen } from './screens/m3connectorScreen';
 import { LogsScreen } from './screens/logsScreen';
 
-LicenseInfo.setLicenseKey(process.env.REACT_APP_MUI_LICENSE_KEY!);
+LicenseInfo.setLicenseKey(process.env.MUI_LICENSE_KEY!);
 
 // Make all stacked snackbars with same width
 const snackbarStyles = {

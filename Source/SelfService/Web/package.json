@@ -22,7 +22,6 @@
         "@shared/styling": "1.0.0",
         "@shared/web": "1.0.0",
         "date-fns": "2.29.1",
-        "dotenv-webpack": "8.0.1",
         "generate-password-browser": "1.1.0",
         "notistack": "3.0.0-alpha.11",
         "query-string": "7.1.1",
