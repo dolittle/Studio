@@ -1,4 +1,5 @@
 FROM node:16.16.0 AS build
+ARG MUI_LICENSE_KEY_ARG
 
 # Install dependencies
 WORKDIR /build
@@ -9,6 +10,7 @@ COPY Source/Shared/Styling/package.json ./Source/Shared/Styling/package.json
 COPY Source/Shared/Web/package.json ./Source/Shared/Web/package.json
 COPY Source/SelfService/Web/package.json ./Source/SelfService/Web/package.json
 
+
 WORKDIR /build/Source/SelfService/Web
 RUN yarn
 
@@ -18,6 +20,7 @@ COPY tsconfig.json ./tsconfig.json
 COPY Source ./Source
 
 WORKDIR /build/Source/SelfService/Web
+ENV MUI_LICENSE_KEY=${MUI_LICENSE_KEY_ARG}
 RUN yarn build
 
 # Copy bundled artifacts
