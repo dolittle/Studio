@@ -73,8 +73,8 @@ export const App = () => {
                     <GlobalContextProvider>
                         <Box sx={snackbarStyles}>
                             <SnackbarProvider
-                                anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                                TransitionComponent={props => <Slide {...props} direction='up' />}
+                                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                TransitionComponent={(props: SlideProps) => <Slide {...props} direction='up' />}
                                 autoHideDuration={4000}
                                 maxSnack={6}
                                 Components={{
