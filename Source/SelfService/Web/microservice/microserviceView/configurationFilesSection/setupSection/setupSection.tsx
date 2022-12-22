@@ -208,7 +208,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         sx={styles.form}
                     >
                         <Box sx={styles.formSections}>
-                            <Typography variant='subtitle1' sx={{ mb: 2 }}>Configuration Setup</Typography>
+                            <Typography variant='subtitle2' sx={{ mb: 2 }}>Configuration Setup</Typography>
 
                             <Input id='microserviceName' label='Microservice Name' required disabled />
                             <Input id='developmentEnvironment' label='Development Environment' disabled />
