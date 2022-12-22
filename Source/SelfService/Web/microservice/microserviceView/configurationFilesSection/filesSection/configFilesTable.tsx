@@ -32,15 +32,13 @@ export const ConfigFilesTable = ({ rows, handleSelectionModelChange, selectionMo
         <DataGridPro
             rows={rows}
             columns={columns}
-            checkboxSelection
-            onSelectionModelChange={newSelectionModal => {
-                handleSelectionModelChange(newSelectionModal);
-            }}
-            selectionModel={selectionModel}
             getRowHeight={() => 'auto'}
             autoHeight={true}
             headerHeight={46}
             disableColumnMenu
             hideFooter
+            checkboxSelection
+            selectionModel={selectionModel}
+            onSelectionModelChange={handleSelectionModelChange}
         />
     </Paper>;

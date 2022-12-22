@@ -122,7 +122,7 @@ export const customStatusFieldSort = (_, __, left, right) => {
     return leftStatus - rightStatus;
 };
 
-export const statusCell = (params: GridRenderCellParams) => {
+export const StatusFieldCell = (params: GridRenderCellParams) => {
     const { color, iconWithColor, label } = statusInfo(params.value);
 
     return (

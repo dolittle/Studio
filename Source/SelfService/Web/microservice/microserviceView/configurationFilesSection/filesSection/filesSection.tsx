@@ -38,7 +38,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
     const [filesPanelIsExpanded, setFilesPanelIsExpanded] = useState(true);
     const [configFileTableRows, setConfigFileTableRows] = useState<ConfigFilesTableRow[]>([]);
-    const [configFileTableRowsSelected, setConfigFileTableRowsSelected] = useState<GridSelectionModel>([]);
+    const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>([]);
     const [restartInfoBoxIsOpen, setRestartInfoBoxIsOpen] = useState(false);
     const [restartMicroserviceDialogIsOpen, setRestartMicroserviceDialogIsOpen] = useState(false);
     const [deleteConfigFileDialogIsOpen, setDeleteConfigFileDialogIsOpen] = useState(false);
@@ -133,7 +133,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     };
 
     const handleConfigFileDelete = async (): Promise<void> => {
-        for (const filename of configFileTableRowsSelected) {
+        for (const filename of selectedRowIds) {
             const fileName = filename.toString();
             const response = await deleteConfigFile(applicationId, environment, microserviceId, fileName);
 
@@ -183,7 +183,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             />
 
             <DeleteConfigFileDialog
-                selectedDataRows={configFileTableRowsSelected}
+                selectedDataRows={selectedRowIds}
                 open={deleteConfigFileDialogIsOpen}
                 setOpen={() => setDeleteConfigFileDialogIsOpen(false)}
                 handleDelete={handleConfigFileDelete}
@@ -207,7 +207,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             >
                 <ButtonGroup
                     filePrompt={() => fileUploadRef.current?.showPrompt()}
-                    deleteDisabled={configFileTableRowsSelected.length === 0 || configFileTableRows.length === 0}
+                    deleteDisabled={selectedRowIds.length === 0 || configFileTableRows.length === 0}
                     downloadDisabled={configFileTableRows.length === 0}
                     handleDelete={() => setDeleteConfigFileDialogIsOpen(true)}
                     handleDownload={handleConfigFileDownload}
@@ -218,7 +218,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 <RestartInfoBox name={microserviceName} isAlertBoxOpen={restartInfoBoxIsOpen} handleDismiss={() => setRestartInfoBoxIsOpen(false)} />
 
                 {configFileTableRows.length > 0 ?
-                    <ConfigFilesTable rows={configFileTableRows} handleSelectionModelChange={setConfigFileTableRowsSelected} selectionModel={configFileTableRowsSelected} /> :
+                    <ConfigFilesTable rows={configFileTableRows} selectionModel={selectedRowIds} handleSelectionModelChange={setSelectedRowIds} /> :
                     <EmptyDataTable
                         title='No configuration files yet...'
                         description={`To add your first configuration file, select 'add file'. You may select more than one at a time. Each file must be less than 3.145MB.`}

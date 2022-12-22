@@ -8,7 +8,7 @@ import { ExpandMore, ExpandLess } from '@mui/icons-material';
 import { DataGridPro, GridRowId, GridRowParams } from '@mui/x-data-grid-pro';
 
 import { PodLogScreen } from '../../podLogScreen';
-import { columns } from './dataTableColumns';
+import { columns } from './healthStatusTableColumns';
 
 const styles = {
     podTitle: {
@@ -76,23 +76,25 @@ export const HealthStatusTable = ({ rows }: HealthStatusTableProps) => {
     };
 
     const DetailPanelContent = ({ row }: { row: HealthStatusTableRow }) => (
-        <Box component={Paper}>
+        //<Box component={Paper}>
+        <Paper>
             <PodLogScreen applicationId={row.application} podName={row.podName} containerName={row.containerName} />
-        </Box>
+        </Paper>
+        //    </Box>
     );
 
     const getDetailPanelHeight = useCallback(() => 'auto', []);
 
     return (
-        <Box component={Paper} sx={styles.dataTableWrapper}>
+        <Paper sx={{ width: 1, ...styles.dataTableWrapper }}>
             <DataGridPro
                 rows={rows}
                 columns={columns}
-                disableColumnMenu
-                hideFooter
-                headerHeight={46}
                 getRowHeight={() => 'auto'}
                 autoHeight={true}
+                headerHeight={46}
+                disableColumnMenu
+                hideFooter
                 disableSelectionOnClick
                 getDetailPanelContent={({ row }: GridRowParams<HealthStatusTableRow>) => <DetailPanelContent row={row} />}
                 getDetailPanelHeight={getDetailPanelHeight}
@@ -105,6 +107,6 @@ export const HealthStatusTable = ({ rows }: HealthStatusTableProps) => {
                     Toolbar: () => CustomToolbar(rows)
                 }}
             />
-        </Box>
+        </Paper>
     );
 };
