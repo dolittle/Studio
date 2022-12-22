@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState } from 'react';
 
-import { Box, Paper, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
 import { DataGridPro, GridRowId, GridRowParams } from '@mui/x-data-grid-pro';
 
@@ -75,13 +75,10 @@ export const HealthStatusTable = ({ rows }: HealthStatusTableProps) => {
         }
     };
 
-    const DetailPanelContent = ({ row }: { row: HealthStatusTableRow }) => (
-        //<Box component={Paper}>
+    const DetailPanelContent = ({ row }: { row: HealthStatusTableRow }) =>
         <Paper>
             <PodLogScreen applicationId={row.application} podName={row.podName} containerName={row.containerName} />
-        </Paper>
-        //    </Box>
-    );
+        </Paper>;
 
     const getDetailPanelHeight = useCallback(() => 'auto', []);
 
