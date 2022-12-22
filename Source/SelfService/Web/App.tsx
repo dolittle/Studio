@@ -44,11 +44,7 @@ import { LogsScreen } from './screens/logsScreen';
 LicenseInfo.setLicenseKey(process.env.MUI_LICENSE_KEY!);
 
 // Make all stacked snackbars with same width
-const snackbarStyles = {
-    '& .notistack-SnackbarContainer>*': {
-        width: '100%'
-    }
-};
+const snackbarStyles = { '& .notistack-SnackbarContainer>*': { width: 1 } };
 
 export const App = () => {
     useViewportResize();
