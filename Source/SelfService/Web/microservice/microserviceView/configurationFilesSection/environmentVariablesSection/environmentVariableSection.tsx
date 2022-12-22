@@ -159,10 +159,11 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     const handleEnvVariableAdd = () => {
         setDisableAddButton(true);
 
-        const randomId = crypto.randomUUID();
+        // Generate a random id just for the new row.
+        const temporaryId = Math.random().toString(16).slice(2)
 
         const newEnvVariable = {
-            id: '',
+            id: 'temporaryId',
             name: '',
             value: '',
             isSecret: false,
@@ -174,7 +175,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
 
         setRowMode(prevRowMode => ({
             ...prevRowMode,
-            ['']: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+            [temporaryId]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
         }));
     };
 
@@ -271,7 +272,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                             columns={columns} // naming
                             editMode='row'
                             getRowHeight={() => 'auto'}
-                            autoHeight={true}
+                            autoHeight
                             headerHeight={46}
                             disableColumnMenu
                             hideFooter
