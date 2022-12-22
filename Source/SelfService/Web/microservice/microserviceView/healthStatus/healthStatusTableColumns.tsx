@@ -4,14 +4,14 @@
 import React from 'react';
 
 import { Box } from '@mui/material';
-import { GridColDef, GridColumnHeaderParams, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
+import { GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 
 import { Summary } from '@dolittle/design-system/atoms/Metrics/Summary';
 
 import { formatTime, formatStartingDate } from '../../helpers/dateHelpers';
 import { DownloadLogs } from '../../helpers/downloadHelpers';
 
-import { statusCell } from '../../microserviceStatus';
+import { StatusFieldCell } from '../../microserviceStatus';
 import { HealthStatusTableRow } from './healthStatusTable';
 
 export const columns: GridColDef[] = [
@@ -61,7 +61,7 @@ export const columns: GridColDef[] = [
         flex: 1,
         headerAlign: 'left',
         align: 'left',
-        renderHeader: (params: GridColumnHeaderParams) =>
+        renderHeader: () =>
             <Box className='MuiDataGrid-columnHeaderTitle'>
                 CPU <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
             </Box>,
@@ -76,7 +76,7 @@ export const columns: GridColDef[] = [
         flex: 1,
         headerAlign: 'left',
         align: 'left',
-        renderHeader: (params: GridColumnHeaderParams) =>
+        renderHeader: () =>
             <Box className='MuiDataGrid-columnHeaderTitle'>
                 Memory <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
             </Box>,
@@ -91,7 +91,7 @@ export const columns: GridColDef[] = [
         headerAlign: 'left',
         align: 'left',
         flex: 1,
-        renderCell: statusCell
+        renderCell: StatusFieldCell
     },
     {
         field: 'download',

@@ -12,14 +12,13 @@ import { AddCircle, DeleteRounded, DownloadRounded, ArrowDropDown } from '@mui/i
 
 import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
 import { Button } from '@dolittle/design-system/atoms/Button';
-//import { DataTablePro } from '@dolittle/design-system/atoms/DataTablePro/DataTablePro';
 
 import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/api';
 
 import { RestartInfoBox } from '../restartInfoBox';
 import { EmptyDataTable } from '../emptyDataTable';
 
-const columns: GridColDef<EnvironmentVariableTableRow>[] = [
+const envVariableColumns: GridColDef<EnvironmentVariableTableRow>[] = [
     {
         field: 'name',
         headerName: 'Name',
@@ -49,6 +48,20 @@ const columns: GridColDef<EnvironmentVariableTableRow>[] = [
         width: 90
     }
 ];
+
+const styles = {
+    isSecretCell: {
+        'mb': 8,
+        '& .MuiOutlinedInput-root': {
+            '& .MuiSelect-select': {
+                p: '10px 15px'
+            },
+            '& fieldset': {
+                border: 'none'
+            }
+        }
+    }
+};
 
 type EnvironmentVariableTableRow = InputEnvironmentVariable & {
     id: GridRowId;
@@ -114,7 +127,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     const ignoreRowModifications = (id: GridRowId) => {
         setRowMode({
             ...rowMode,
-            [id]: { mode: GridRowModes.View, ignoreModifications: true },
+            [id]: { mode: GridRowModes.View, ignoreModifications: true }
         });
 
         const editedRow = envVariableTableRows.find(row => row.id === id);
@@ -163,7 +176,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         const temporaryId = Math.random().toString(16).slice(2)
 
         const newEnvVariable = {
-            id: 'temporaryId',
+            id: temporaryId,
             name: '',
             value: '',
             isSecret: false,
@@ -266,10 +279,10 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         handleOnClick={handleEnvVariableAdd} // TODO: Sometimes throws error when clicked
                         sx={{ mb: 8 }}
                     /> :
-                    <Paper sx={{ width: 1, height: 1 }}>
+                    <Paper sx={{ width: 1 }}>
                         <DataGridPro
                             rows={envVariableTableRows}
-                            columns={columns} // naming
+                            columns={envVariableColumns}
                             editMode='row'
                             getRowHeight={() => 'auto'}
                             autoHeight
@@ -281,21 +294,11 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                             selectionModel={selectedRowIds}
                             onSelectionModelChange={setSelectedRowIds}
                             rowModesModel={rowMode}
-                            onRowModesModelChange={newModel => setRowMode(newModel)}
+                            onRowModesModelChange={setRowMode}
                             processRowUpdate={processRowUpdate}
                             onProcessRowUpdateError={error => console.log(error)}
                             experimentalFeatures={{ newEditingApi: true }}
-                            sx={{
-                                'mb': 8,
-                                '& .MuiOutlinedInput-root': {
-                                    '& .MuiSelect-select': {
-                                        p: '10px 15px'
-                                    },
-                                    '& fieldset': {
-                                        border: 'none'
-                                    }
-                                }
-                            }}
+                            sx={styles.isSecretCell}
                         />
                     </Paper>
                 }

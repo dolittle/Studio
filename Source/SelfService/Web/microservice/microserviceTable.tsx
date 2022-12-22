@@ -6,10 +6,10 @@ import { useHistory } from 'react-router-dom';
 
 import { getPodStatus, MicroserviceInfo } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
-import { statusCell, customStatusFieldSort } from './microserviceStatus';
+import { StatusFieldCell, customStatusFieldSort } from './microserviceStatus';
 
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
-import { Box, Paper, Tooltip } from '@mui/material';
+import { Paper, Tooltip } from '@mui/material';
 
 import { capitalize, removeFromString } from './helpers/stringHelpers';
 
@@ -22,7 +22,7 @@ const sortByRuntimeVersion = (params: GridValueGetterParams) => {
     return capitalize(runtimeVersion);
 };
 
-const publicUrlCell = (params: GridRenderCellParams) => {
+const PublicUrlCell = (params: GridRenderCellParams) => {
     const hasPublicUrl = params.row.edit?.extra?.isPublic;
 
     return (
@@ -60,8 +60,8 @@ type MicroserviceTableProps = {
 
 export const MicroserviceTable = ({ application, environment, microservices }: MicroserviceTableProps) => {
     const history = useHistory();
-    const [rows, setRows] = useState<(MicroserviceObject | undefined)[]>([]);
-    const [loadingRows, setLoadingRows] = useState<boolean>(true);
+    const [microserviceRows, setMicroserviceRows] = useState<(MicroserviceObject | undefined)[]>([]);
+    const [loadingRows, setLoadingRows] = useState(true);
 
     const getMicroserviceStatus = useCallback(async (microserviceId: string) => {
         const status = await getPodStatus(application.id, environment, microserviceId);
@@ -77,15 +77,15 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
                 phase: status[0]?.phase
             } as MicroserviceObject;
         })).then(data => {
-            setRows(data);
+            setMicroserviceRows(data);
             setLoadingRows(false);
         });
 
     }, []);
 
     const customUrlFieldSort = (v1, v2, param1, param2) => {
-        const firstObject = rows.filter((row: any) => row.id === param1.id);
-        const secondObject = rows.filter((row: any) => row.id === param2.id);
+        const firstObject = microserviceRows.filter(row => row?.id === param1.id);
+        const secondObject = microserviceRows.filter(row => row?.id === param2.id);
 
         const isFirstPublic = firstObject[0]?.edit?.extra?.isPublic;
         const isSecondPublic = secondObject[0]?.edit?.extra?.isPublic;
@@ -96,7 +96,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
         return compareFirst.localeCompare(compareSecond);
     };
 
-    const columns: GridColDef[] = [
+    const microserviceColumns: GridColDef[] = [
         {
             field: 'name',
             headerName: 'Name',
@@ -123,7 +123,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             headerName: 'Public URL',
             minWidth: 270,
             flex: 1,
-            renderCell: publicUrlCell,
+            renderCell: PublicUrlCell,
             sortComparator: customUrlFieldSort
         },
         {
@@ -131,7 +131,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             headerName: 'Status',
             minWidth: 270,
             flex: 1,
-            renderCell: statusCell,
+            renderCell: StatusFieldCell,
             sortComparator: customStatusFieldSort
         }
     ];
@@ -142,19 +142,19 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
     };
 
     return (
-        <Box component={Paper} sx={{ inlineSize: '100%' }}>
+        <Paper sx={{ width: 1 }}>
             <DataGridPro
-                rows={rows}
-                columns={columns}
-                disableColumnMenu
-                hideFooter
-                loading={loadingRows}
+                rows={microserviceRows}
+                columns={microserviceColumns}
+                getRowHeight={() => 'auto'}
                 autoHeight={true}
                 headerHeight={46}
-                getRowHeight={() => 'auto'}
+                disableColumnMenu
+                hideFooter
                 disableSelectionOnClick
-                onRowClick={(params) => onTableRowClick(params.row.id)}
+                loading={loadingRows}
+                onRowClick={params => onTableRowClick(params.row.id)}
             />
-        </Box>
+        </Paper>
     );
 };
