@@ -5,14 +5,14 @@ import React, { useEffect, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { GridColDef, GridRowId, GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridRowId, GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
 
-import { Box } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { AddCircle, DeleteRounded, DownloadRounded, ArrowDropDown } from '@mui/icons-material';
 
 import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
 import { Button } from '@dolittle/design-system/atoms/Button';
-import { DataTablePro } from '@dolittle/design-system/atoms/DataTablePro/DataTablePro';
+//import { DataTablePro } from '@dolittle/design-system/atoms/DataTablePro/DataTablePro';
 
 import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/api';
 
@@ -155,13 +155,14 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         return updatedRow;
     };
 
+    // Naming
     const handleEnvVariableAdd = () => {
         setDisableAddButton(true);
 
         const randomId = crypto.randomUUID();
 
         const newEnvVariable = {
-            id: randomId,
+            id: '',
             name: '',
             value: '',
             isSecret: false,
@@ -173,7 +174,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
 
         setRowMode(prevRowMode => ({
             ...prevRowMode,
-            [randomId]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+            ['']: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
         }));
     };
 
@@ -264,31 +265,38 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                         handleOnClick={handleEnvVariableAdd} // TODO: Sometimes throws error when clicked
                         sx={{ mb: 8 }}
                     /> :
-                    <DataTablePro
-                        rows={envVariableTableRows}
-                        columns={columns}
-                        editMode='row'
-                        disableRowSelectionOnClick
-                        isRowCheckbox
-                        selectedRows={selectedRowIds}
-                        onSelectedRowsChange={setSelectedRowIds}
-                        rowModeStatus={rowMode}
-                        handleRowModeState={newModel => setRowMode(newModel)}
-                        processRowUpdate={processRowUpdate}
-                        onProcessRowUpdateError={error => console.log(error)}
-                        experimentalFeatures={{ newEditingApi: true }}
-                        sx={{
-                            'mb': 8,
-                            '& .MuiOutlinedInput-root': {
-                                '& .MuiSelect-select': {
-                                    p: '10px 15px'
-                                },
-                                '& fieldset': {
-                                    border: 'none'
+                    <Paper sx={{ width: 1, height: 1 }}>
+                        <DataGridPro
+                            rows={envVariableTableRows}
+                            columns={columns} // naming
+                            editMode='row'
+                            getRowHeight={() => 'auto'}
+                            autoHeight={true}
+                            headerHeight={46}
+                            disableColumnMenu
+                            hideFooter
+                            disableSelectionOnClick
+                            checkboxSelection
+                            selectionModel={selectedRowIds}
+                            onSelectionModelChange={setSelectedRowIds}
+                            rowModesModel={rowMode}
+                            onRowModesModelChange={newModel => setRowMode(newModel)}
+                            processRowUpdate={processRowUpdate}
+                            onProcessRowUpdateError={error => console.log(error)}
+                            experimentalFeatures={{ newEditingApi: true }}
+                            sx={{
+                                'mb': 8,
+                                '& .MuiOutlinedInput-root': {
+                                    '& .MuiSelect-select': {
+                                        p: '10px 15px'
+                                    },
+                                    '& fieldset': {
+                                        border: 'none'
+                                    }
                                 }
-                            }
-                        }}
-                    />
+                            }}
+                        />
+                    </Paper>
                 }
             </Accordion>
         </>
