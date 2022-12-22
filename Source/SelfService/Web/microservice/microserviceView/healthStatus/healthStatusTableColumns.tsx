@@ -59,8 +59,8 @@ export const columns: GridColDef[] = [
         sortable: false,
         // minWidth: 170,
         flex: 1,
-        headerAlign: 'left',
-        align: 'left',
+        headerAlign: 'right',
+        align: 'right',
         renderHeader: () =>
             <Box className='MuiDataGrid-columnHeaderTitle'>
                 CPU <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
@@ -74,8 +74,8 @@ export const columns: GridColDef[] = [
         sortable: false,
         // minWidth: 170,
         flex: 1,
-        headerAlign: 'left',
-        align: 'left',
+        headerAlign: 'right',
+        align: 'right',
         renderHeader: () =>
             <Box className='MuiDataGrid-columnHeaderTitle'>
                 Memory <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
