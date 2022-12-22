@@ -88,8 +88,6 @@ export const columns: GridColDef[] = [
         headerName: 'Status',
         sortable: false,
         minWidth: 200,
-        headerAlign: 'center',
-        align: 'center',
         flex: 1,
         renderCell: StatusFieldCell
     },
