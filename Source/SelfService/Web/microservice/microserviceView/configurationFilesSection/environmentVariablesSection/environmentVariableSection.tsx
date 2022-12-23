@@ -173,7 +173,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         setDisableAddButton(true);
 
         // Generate a random id just for the new row.
-        const temporaryId = Math.random().toString(16).slice(2)
+        const temporaryId = Math.random().toString(16).slice(2);
 
         const newEnvVariable = {
             id: temporaryId,
