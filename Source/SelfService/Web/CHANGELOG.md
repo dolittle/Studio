@@ -1,3 +1,13 @@
+# [2.15.1] - 2022-12-23 [PR: #280](https://github.com/dolittle/Studio/pull/280)
+## Summary
+
+Added Configuration page Environment Variables section. User can add, delete, download and edit Environment Variables.
+
+<img width="1295" alt="Screenshot 2022-12-14 at 07 29 27" src="https://user-images.githubusercontent.com/19160439/207514033-e1be27aa-8e42-437d-99c5-be11ed741a15.png">
+
+<img width="1288" alt="Screenshot 2022-12-14 at 07 30 52" src="https://user-images.githubusercontent.com/19160439/207514041-64acedd4-9af5-4325-af77-1abdf2446251.png">
+
+
 # [2.15.0] - 2022-12-5 [PR: #260](https://github.com/dolittle/Studio/pull/260)
 ## Summary
 
