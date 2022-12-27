@@ -20,17 +20,17 @@ type ConfirmDialogProps = {
     handleConfirm: () => void;
 };
 
-export const ConfirmDialog = (props: ConfirmDialogProps) =>
+export const ConfirmDialog = ({ isOpen, id, title, description, children, handleCancel, cancelText, handleConfirm, confirmText }: ConfirmDialogProps) =>
     <Dialog
-        open={props.isOpen || false}
-        onClose={props.handleCancel}
-        aria-labelledby={`${props.id}-title`}
-        aria-describedby={`${props.id}-description`}
+        open={isOpen || false}
+        onClose={handleCancel}
+        aria-labelledby={`${id}-title`}
+        aria-describedby={`${id}-description`}
     >
-        <DialogTitle id={`${props.id}-title`} variant='h6'>
-            {props.title}
+        <DialogTitle id={`${id}-title`} variant='h6'>
+            {title}
             <IconButton
-                onClick={props.handleCancel}
+                onClick={handleCancel}
                 sx={{
                     position: 'absolute',
                     right: 8,
@@ -42,15 +42,15 @@ export const ConfirmDialog = (props: ConfirmDialogProps) =>
         </DialogTitle>
 
         <DialogContent>
-            <DialogContentText id={`${props.id}-description`} variant='body1' sx={{ color: 'text.primary', mb: 2.25 }}>
-                {props.description}
+            <DialogContentText id={`${id}-description`} variant='body1' sx={{ color: 'text.primary', mb: 2.25 }}>
+                {description}
             </DialogContentText>
 
-            {props.children}
+            {children}
         </DialogContent>
 
         <DialogActions sx={{ mr: 1 }}>
-            <Button onClick={props.handleCancel} label={props.cancelText} variant='text' sx={{ color: 'text.primary' }} />
-            <Button onClick={props.handleConfirm} label={props.confirmText} variant='text' />
+            <Button onClick={handleCancel} label={cancelText} variant='text' sx={{ color: 'text.primary' }} />
+            <Button onClick={handleConfirm} label={confirmText} variant='text' />
         </DialogActions>
     </Dialog>;

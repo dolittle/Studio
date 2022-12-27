@@ -32,26 +32,26 @@ const MessageEndLink = ({ linkText, linkHref }: LinkContent) =>
         {periodChar}
     </Typography>;
 
-export const AlertBox = (props: AlertBoxProps) =>
+export const AlertBox = ({ severity, isDismissable, onDismiss, sx, title, message, endWithLink }: AlertBoxProps) =>
     <Alert
         variant='outlined'
-        severity={props.severity}
-        action={props.isDismissable && <IconButton onClick={props.onDismiss} />}
+        severity={severity}
+        action={isDismissable && <IconButton onClick={onDismiss} />}
         sx={{
             'display': 'inline-flex',
             'textAlign': 'left',
             'position': 'relative',
-            'borderColor': props.severity === 'error' ? 'error.dark' : null,
+            'borderColor': severity === 'error' ? 'error.dark' : null,
             '& .MuiAlert-action': {
                 pt: 0
             },
-            ...props.sx
+            ...sx
         }}
     >
-        <AlertTitle>{props.title}</AlertTitle>
+        <AlertTitle>{title}</AlertTitle>
 
         <Box sx={{ display: 'inline-flex' }}>
-            <Typography variant='body2'>{props.message}</Typography>
-            {props.endWithLink && <MessageEndLink {...props.endWithLink} />}
+            <Typography variant='body2'>{message}</Typography>
+            {endWithLink && <MessageEndLink {...endWithLink} />}
         </Box>
     </Alert>;

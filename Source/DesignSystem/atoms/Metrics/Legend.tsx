@@ -22,13 +22,13 @@ export type LegendProps = {
  * @param props The {@link LegendProps} for the component instance.
  * @returns The rendered {@link JSX.Element}.
  */
-export const Legend = (props: LegendProps) => {
+export const Legend = ({ sx, data }: LegendProps) => {
     const colorScheme = useThemeColorScheme();
 
     return (
-        <Box component='table' sx={props.sx}>
+        <Box component='table' sx={sx}>
             <tbody>
-                { props.data.map((dataset, index) => (
+                {data.map((dataset, index) => (
                     <tr key={index}>
                         <Box component='td' sx={{ textAlign: 'right' }}>
                             <Typography variant='body2' sx={{ textTransform: 'uppercase' }}>{dataset.group}</Typography>

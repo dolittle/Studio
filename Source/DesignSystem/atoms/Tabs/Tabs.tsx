@@ -43,7 +43,7 @@ export type TabsProps = {
     sx?: any;
 };
 
-export const Tabs = (props: TabsProps) => {
+export const Tabs = ({ sx, tabs }: TabsProps) => {
     const [currentTab, setCurrentTab] = useState(0);
 
     useEffect(() => {
@@ -64,9 +64,9 @@ export const Tabs = (props: TabsProps) => {
                 }
                 value={currentTab}
                 onChange={handleChange}
-                sx={{ ...styles.tabs, ...props.sx }}
+                sx={{ ...styles.tabs, ...sx }}
             >
-                {props.tabs.map((tab, key) =>
+                {tabs.map((tab, key) =>
                     <MuiTab
                         key={key}
                         id={`tabpanel-${key}`}
@@ -77,7 +77,7 @@ export const Tabs = (props: TabsProps) => {
                     />
                 )}
             </MuiTabs>
-            {props.tabs[currentTab]?.render()}
+            {tabs[currentTab]?.render()}
         </>
     );
 };

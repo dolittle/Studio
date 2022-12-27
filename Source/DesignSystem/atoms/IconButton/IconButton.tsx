@@ -15,13 +15,13 @@ type IconButtonProps = {
     onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
-export const IconButton = (props: IconButtonProps) =>
+export const IconButton = ({ disabled, color, size, sx, onClick, icon }: IconButtonProps) =>
     <MuiIconButton
-        disabled={props.disabled}
-        color={props.color || 'inherit'}
-        size={props.size || 'small'}
-        sx={props.sx}
-        onClick={props.onClick}
+        disabled={disabled}
+        color={color || 'inherit'}
+        size={size || 'small'}
+        sx={sx}
+        onClick={onClick}
     >
-        {props.icon || <CloseRounded aria-label='close' fontSize={props.size || 'small'} />}
+        {icon || <CloseRounded aria-label='close' fontSize={size || 'small'} />}
     </MuiIconButton>;

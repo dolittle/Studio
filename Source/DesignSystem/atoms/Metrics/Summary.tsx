@@ -27,23 +27,23 @@ export type SummaryProps = {
     unit?: string;
 };
 
-export const Summary = (props: SummaryProps) => {
-    const description = props.description ?? '';
+export const Summary = ({ description, period, avg, digits, max, now, unit }: SummaryProps) => {
+    const columnMetric = description ?? '';
 
     return (
-        <Box sx={{whiteSpace: 'pre'}}>
-            <Tooltip title={`Average ${description} ${props.period}`}>
-                <span>{fmt(props.avg, props.digits)}</span>
+        <Box sx={{ whiteSpace: 'pre' }}>
+            <Tooltip title={`Average ${columnMetric} ${period}`}>
+                <span>{fmt(avg, digits)}</span>
             </Tooltip>
             {' | '}
-            <Tooltip title={`Maximum ${description} ${props.period}`}>
-                <span>{fmt(props.max, props.digits)}</span>
+            <Tooltip title={`Maximum ${columnMetric} ${period}`}>
+                <span>{fmt(max, digits)}</span>
             </Tooltip>
             {' | '}
-            <Tooltip title={`Current ${description}`}>
-                <span>{fmt(props.now, props.digits)}</span>
+            <Tooltip title={`Current ${columnMetric}`}>
+                <span>{fmt(now, digits)}</span>
             </Tooltip>
-            { props.unit && ' ' + props.unit }
+            {unit && ' ' + unit}
         </Box>
     );
 };

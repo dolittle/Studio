@@ -34,22 +34,22 @@ export type FormProps<T extends FieldValues> = {
  * @param props The {@link FormProps} for the form.
  * @returns A new {@link Form} component.
  */
-export const Form = <T extends FieldValues>(props: FormProps<T>) => {
+export const Form = <T extends FieldValues>({ initialValues, onSubmit, onSubmitInvalid, sx, children }: FormProps<T>) => {
     const methods = useForm<T>({
         mode: 'onTouched',
-        defaultValues: props.initialValues as any,
+        defaultValues: initialValues as any,
     });
     const { handleSubmit } = methods;
 
     const handleFormSubmit = useMemo(() => handleSubmit(
-        (data, event) => props.onSubmit?.(data, event),
-        props.onSubmitInvalid,
-    ), [handleSubmit, props.onSubmit, props.onSubmitInvalid]);
+        (data, event) => onSubmit?.(data, event),
+        onSubmitInvalid,
+    ), [handleSubmit, onSubmit, onSubmitInvalid]);
 
     return (
-        <Box component='form' onSubmit={handleFormSubmit} sx={props.sx}>
+        <Box component='form' onSubmit={handleFormSubmit} sx={sx}>
             <FormProvider {...methods}>
-                {props.children}
+                {children}
             </FormProvider>
         </Box>
     );
