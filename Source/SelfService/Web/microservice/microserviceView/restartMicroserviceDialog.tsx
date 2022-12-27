@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/ConfirmDialog';
+import { ConfirmDialog } from '@dolittle/design-system';
 
 import { restartMicroservice } from '../../api/api';
 

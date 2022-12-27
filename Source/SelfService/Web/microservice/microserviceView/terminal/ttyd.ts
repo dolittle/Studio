@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { InputMessages, OutputMessages, TerminalStreams } from '@dolittle/design-system/atoms/Terminal';
+import { InputMessages, OutputMessages, TerminalStreams } from '@dolittle/design-system';
 
 import { WebSocketConnection, WebSocketCloseInfo, WebSocketStream } from './websocket';
 
@@ -79,7 +79,7 @@ const transformInput = (stream: WritableStream<string>, close: (info?: WebSocket
         },
     });
 
-    transformer.readable.pipeTo(stream).catch(_ => {});
+    transformer.readable.pipeTo(stream).catch(_ => { });
     return transformer.writable;
 };
 
@@ -89,7 +89,7 @@ const transformOutput = (stream: ReadableStream<string>, closed: Promise<WebSock
             closed.then(_ => controller.terminate());
         },
         transform(chunk, controller) {
-            const cmd = chunk.slice(0,1);
+            const cmd = chunk.slice(0, 1);
             const data = chunk.slice(1);
 
             switch (cmd) {
@@ -108,13 +108,13 @@ const transformOutput = (stream: ReadableStream<string>, closed: Promise<WebSock
         },
     });
 
-    stream.pipeTo(transformer.writable).catch(_ => {});
+    stream.pipeTo(transformer.writable).catch(_ => { });
     return transformer.readable;
 };
 
 const encodeDecodeStrings = (connection: WebSocketConnection, signal: AbortSignal): { readable: ReadableStream<string>, writable: WritableStream<string> } => {
     const encoder = new TextEncoderStream();
-    encoder.readable.pipeTo(connection.writable, { signal }).catch(_ => {});
+    encoder.readable.pipeTo(connection.writable, { signal }).catch(_ => { });
     const writable = encoder.writable;
 
     const decoder = new TextDecoderStream();
@@ -132,7 +132,7 @@ const encodeDecodeStrings = (connection: WebSocketConnection, signal: AbortSigna
                 }
             },
         }))
-        .pipeTo(decoder.writable, { signal }).catch(_ => {});
+        .pipeTo(decoder.writable, { signal }).catch(_ => { });
     const readable = decoder.readable;
 
     return { readable, writable };

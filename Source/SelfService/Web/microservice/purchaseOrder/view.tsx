@@ -7,11 +7,11 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useReadable } from 'use-svelte-store';
 
-import { DataStateIcon } from './dataStateIcon';
 import { Grid, IconButton, Typography, Divider, Box, } from '@mui/material';
+import { DataStateIcon } from './dataStateIcon';
 import EditIcon from '@mui/icons-material/Edit';
 
-import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
+import { Tabs } from '@dolittle/design-system';
 
 import { microservices, MicroserviceStore, savePurchaseOrderMicroservice } from '../../stores/microservice';
 import { MicroservicePurchaseOrder } from '../../api/index';

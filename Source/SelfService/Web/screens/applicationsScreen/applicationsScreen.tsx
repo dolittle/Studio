@@ -3,12 +3,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 
-import { Button } from '@dolittle/design-system/atoms/Button/Button';
+import { useSnackbar } from 'notistack';
 
 import { Box, Typography } from '@mui/material';
 import { AddCircle } from '@mui/icons-material';
+
+import { Button } from '@dolittle/design-system';
 
 import { ShortInfoWithEnvironment } from '../../api/api';
 import { LoginWrapper } from '../../layout/loginWrapper';
@@ -71,7 +72,7 @@ export const ApplicationsScreen = () => {
     return (
         <LoginWrapper>
             <Typography variant='h2' sx={styles}>
-                { applicationInfos.length > 0 ? 'Select Your Application & Environment' : 'There are no Applications' }
+                {applicationInfos.length > 0 ? 'Select Your Application & Environment' : 'There are no Applications'}
             </Typography>
 
             <Box sx={{ width: 1 }}>

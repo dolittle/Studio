@@ -5,14 +5,11 @@ import React, { useMemo, useState } from 'react';
 
 import { RestartAltRounded } from '@mui/icons-material';
 
-import { Graph } from '@dolittle/design-system/molecules/Metrics/Graph';
-import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
-import { Button } from '@dolittle/design-system/atoms/Button';
+import { AlertBox, Button, Graph } from '@dolittle/design-system';
 
 import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../api/api';
 
 import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
-
 import { HealthStatusTable, HealthStatusTableStats } from './healthStatusTable';
 import { RestartMicroserviceDialog } from '../restartMicroserviceDialog';
 

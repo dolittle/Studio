@@ -32,7 +32,7 @@ const styles = {
     }
 };
 
-export type Tab = {
+type Tab = {
     label: string
     render: () => React.ReactNode
     sx?: any

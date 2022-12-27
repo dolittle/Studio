@@ -7,8 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { Grid, Button, Typography } from '@mui/material';
 
 import { Guid } from '@dolittle/rudiments';
-import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
-import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
+import { AlertBox, Tabs } from '@dolittle/design-system';
 
 import { savePurchaseOrderMicroservice } from '../../stores/microservice';
 import { HttpResponseApplication } from '../../api/application';

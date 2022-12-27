@@ -14,7 +14,7 @@ import {
     Typography,
 } from '@mui/material';
 
-import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
+import { AlertBox } from '@dolittle/design-system';
 
 import { ObservableLogLines, ObservablePartialLogLines } from './loki/logLines';
 import { DataLabels } from './loki/types';

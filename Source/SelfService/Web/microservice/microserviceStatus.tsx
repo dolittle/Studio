@@ -7,7 +7,7 @@ import { GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Box, Typography } from '@mui/material';
 import { CheckCircleRounded, ErrorRounded, WarningRounded, QuestionMark } from '@mui/icons-material';
 
-import { Button } from '@dolittle/design-system/atoms/Button/Button';
+import { Button } from '@dolittle/design-system';
 
 const styles = {
     status: {

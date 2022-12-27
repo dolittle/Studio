@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import { Button } from '@dolittle/design-system/atoms/Button';
-
 import { Box } from '@mui/material';
 import { AddCircle, DeleteRounded, DownloadRounded } from '@mui/icons-material';
+
+import { Button } from '@dolittle/design-system';
 
 type ButtonGroupProps = {
     filePrompt: () => void;

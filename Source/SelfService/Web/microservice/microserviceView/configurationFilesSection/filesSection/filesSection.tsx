@@ -9,8 +9,7 @@ import { GridSelectionModel } from '@mui/x-data-grid-pro';
 import { IconButton } from '@mui/material';
 import { CloseRounded } from '@mui/icons-material';
 
-import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
-import { Button } from '@dolittle/design-system/atoms/Button';
+import { Accordion, Button } from '@dolittle/design-system';
 
 import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../api/api';
 

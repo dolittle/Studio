@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Collapse } from '@mui/material';
 
-import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
+import { AlertBox } from '@dolittle/design-system';
 
 type RestartInfoBoxProps = {
     name: string;

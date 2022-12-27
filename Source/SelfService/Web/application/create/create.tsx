@@ -7,10 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 
 import { Guid } from '@dolittle/rudiments';
-import { Checkbox, Form, Input } from '@dolittle/design-system/atoms/Forms';
-import { AlertBox } from '@dolittle/design-system/atoms/AlertBox/AlertBox';
-import { LoadingSpinner } from '@dolittle/design-system/atoms/LoadingSpinner/LoadingSpinner';
-import { Button } from '@dolittle/design-system/atoms/Button/Button';
+import { AlertBox, Button, Checkbox, Form, Input, LoadingSpinner } from '@dolittle/design-system';
 
 import { createApplication, HttpApplicationRequest } from '../../api/application';
 

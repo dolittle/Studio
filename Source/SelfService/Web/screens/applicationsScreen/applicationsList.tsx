@@ -5,9 +5,9 @@ import React from 'react';
 
 import { ShortInfoWithEnvironment } from '../../api/api';
 
-import { Button } from '@dolittle/design-system/atoms/Button/Button';
-
 import { List } from '@mui/material';
+
+import { Button } from '@dolittle/design-system';
 
 const styles = {
     list: {

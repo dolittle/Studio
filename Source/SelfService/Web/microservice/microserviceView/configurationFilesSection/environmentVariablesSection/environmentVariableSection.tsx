@@ -10,8 +10,7 @@ import { DataGridPro, GridColDef, GridRowId, GridRowModesModel, GridRowModes, Gr
 import { Box, Paper } from '@mui/material';
 import { AddCircle, DeleteRounded, DownloadRounded, ArrowDropDown } from '@mui/icons-material';
 
-import { Accordion } from '@dolittle/design-system/atoms/Accordion/Accordion';
-import { Button } from '@dolittle/design-system/atoms/Button';
+import { Accordion, Button } from '@dolittle/design-system';
 
 import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/api';
 

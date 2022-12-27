@@ -6,9 +6,9 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 
-import { Summary } from '@dolittle/design-system/atoms/Metrics/Summary';
+import { Summary } from '@dolittle/design-system';
 
-import { formatTime, formatStartingDate } from '../../helpers/dateHelpers';
+import { formatTime, formatStartingDate } from '../../helpers';
 import { DownloadLogs } from '../../helpers/downloadHelpers';
 
 import { StatusFieldCell } from '../../microserviceStatus';
