@@ -5,35 +5,34 @@ import React, { MouseEventHandler, ReactElement } from 'react';
 
 import { Button as MuiButton, SvgIconProps, SxProps } from '@mui/material';
 
-type ButtonProps = {
+export type ButtonProps = {
     variant: 'filled' | 'text' | 'outlined';
-    disabled?: boolean;
     label: string;
+    disabled?: boolean;
     color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
     size?: 'small' | 'medium' | 'large';
+    isFullWidth?: boolean;
     startWithIcon?: ReactElement<SvgIconProps>;
     endWithIcon?: ReactElement<SvgIconProps>;
     type?: 'button' | 'submit' | 'reset';
-    isFullWidth?: boolean;
-    sx?: SxProps;
     onClick?: MouseEventHandler<HTMLButtonElement>;
-    disableRipple?: boolean;
+    sx?: SxProps;
 };
 
-export const Button = (props: ButtonProps) =>
+export const Button = ({ variant, label, disabled, color, size, isFullWidth, startWithIcon, endWithIcon, type, onClick, sx }: ButtonProps) =>
     <MuiButton
-        variant={props.variant === 'filled' ? 'contained' : props.variant}
-        disabled={props.disabled}
-        color={props.color}
-        size={props.size ?? 'small'}
-        startIcon={props.startWithIcon}
-        endIcon={props.endWithIcon}
-        type={props.type ?? 'button'}
-        sx={props.sx}
-        onClick={props.onClick}
-        fullWidth={props.isFullWidth}
+        variant={variant === 'filled' ? 'contained' : variant}
+        disabled={disabled}
+        color={color}
+        size={size ?? 'small'}
+        fullWidth={isFullWidth}
+        startIcon={startWithIcon}
+        endIcon={endWithIcon}
+        type={type ?? 'button'}
+        onClick={onClick}
+        sx={sx}
         disableElevation
         disableRipple
     >
-        {props.label}
+        {label}
     </MuiButton>;
