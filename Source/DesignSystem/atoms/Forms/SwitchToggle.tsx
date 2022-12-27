@@ -5,12 +5,12 @@ import React from 'react';
 
 import { FormGroup, FormControlLabel, Switch, SwitchProps } from '@mui/material';
 
-export const SwitchToggle = (props: SwitchProps) =>
+export const SwitchToggle = ({ checked, onChange, title, disabled, sx }: SwitchProps) =>
     <FormGroup sx={{ width: 1 }}>
         <FormControlLabel
-            control={<Switch size='small' checked={props.checked} onChange={props.onChange} />}
-            label={props.title}
-            disabled={props.disabled}
-            sx={props.sx}
+            control={<Switch size='small' checked={checked} onChange={onChange} />}
+            label={title}
+            disabled={disabled}
+            sx={sx}
         />
     </FormGroup>;

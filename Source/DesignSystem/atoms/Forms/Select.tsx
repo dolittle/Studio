@@ -12,19 +12,19 @@ export type SelectProps = {
     options: { value: string }[];
 } & TextFieldProps;
 
-export const Select = (props: SelectProps) =>
+export const Select = ({ options, id, value, label, disabled, onChange, sx }: SelectProps) =>
     <TextField
         select
-        id={props.id}
-        value={props.value}
-        label={props.label}
-        disabled={props.disabled}
-        onChange={props.onChange}
+        id={id}
+        value={value}
+        label={label}
+        disabled={disabled}
+        onChange={onChange}
         variant='outlined'
         size='small'
-        sx={props.sx}
+        sx={sx}
     >
-        {props.options.map((option) => (
+        {options.map(option => (
             <MenuItem key={option.value} value={option.value}>
                 {option.value}
             </MenuItem>

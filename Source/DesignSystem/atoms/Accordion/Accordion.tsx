@@ -40,22 +40,22 @@ type AccordionProps = {
     onChange?: (event: React.SyntheticEvent<Element, Event>, expanded: boolean) => void;
 };
 
-export const Accordion = (props: AccordionProps) =>
+export const Accordion = ({ isExpanded, defaultExpanded, onChange, id, title, children }: AccordionProps) =>
     <MuiAccordion
-        expanded={props.isExpanded}
-        defaultExpanded={props.defaultExpanded}
-        onChange={props.onChange}
+        expanded={isExpanded}
+        defaultExpanded={defaultExpanded}
+        onChange={onChange}
         TransitionProps={{ unmountOnExit: true }}
         sx={styles.accordion}
     >
         <AccordionSummary
             expandIcon={<ExpandCircleDownRounded sx={styles.expandIcon} />}
-            aria-controls={props.id}
-            id={props.id}
+            aria-controls={id}
+            id={id}
             sx={styles.accordionSummary}
         >
-            <Typography variant='subtitle1' sx={{ ml: 1.25 }}>{props.title}</Typography>
+            <Typography variant='subtitle1' sx={{ ml: 1.25 }}>{title}</Typography>
         </AccordionSummary>
 
-        <AccordionDetails>{props.children}</AccordionDetails>
+        <AccordionDetails>{children}</AccordionDetails>
     </MuiAccordion>;
