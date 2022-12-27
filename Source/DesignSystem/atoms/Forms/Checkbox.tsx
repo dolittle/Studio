@@ -3,28 +3,21 @@
 
 import React from 'react';
 
-import { FormControl, FormControlLabel, Checkbox as MuiCheckbox, SxProps } from '@mui/material';
+import { FormControl, FormControlLabel, Checkbox as MuiCheckbox } from '@mui/material';
 
 import { useController, FieldProps } from './helpers';
 import type { Form } from './Form';
 
 /**
- * The props for a {@link Checkbox} component.
- */
-export type CheckboxProps = {
-    sx?: SxProps;
-} & FieldProps;
-
-/**
  * Creates a checkbox field to be used in a {@link Form}.
- * @param props The {@link CheckboxProps} for the checkbox.
+ * @param props The {@link FieldProps} for the checkbox.
  * @returns A new {@link Checkbox} component.
  */
-export const Checkbox = (props: CheckboxProps) => {
+export const Checkbox = (props: FieldProps) => {
     const { field } = useController(props);
 
     return (
-        <FormControl sx={props.sx}>
+        <FormControl>
             <FormControlLabel
                 control={
                     <MuiCheckbox {...field} checked={!!field.value} disabled={props.disabled} />
