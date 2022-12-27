@@ -1,3 +1,15 @@
+# [2.17.0] - 2022-12-27 [PR: #289](https://github.com/dolittle/Studio/pull/289)
+## Summary
+
+Created multible index.ts export files so it would be easier to import reusable code into components.
+
+<img width="1060" alt="Screenshot 2022-12-27 at 18 13 02" src="https://user-images.githubusercontent.com/19160439/209693537-1759336b-e0ad-4707-9202-3f9f80cc7c04.png">
+
+### Changed
+
+- Combined component imports more together using the new export method.
+
+
 # [2.16.0] - 2022-12-27 [PR: #288](https://github.com/dolittle/Studio/pull/288)
 ## Summary
 
