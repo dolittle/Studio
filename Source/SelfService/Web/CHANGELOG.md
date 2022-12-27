@@ -1,3 +1,16 @@
+# [2.16.0] - 2022-12-27 [PR: #288](https://github.com/dolittle/Studio/pull/288)
+## Summary
+
+Destructured Storybook props to keep code consistent and easier to read.
+
+<img width="1579" alt="Screenshot 2022-12-27 at 09 10 34" src="https://user-images.githubusercontent.com/19160439/209626733-d2398747-fe8c-4e3a-853a-bf03e537fadf.png">
+
+
+### Changed
+
+- Code cleanup.
+
+
 # [2.15.1] - 2022-12-23 [PR: #280](https://github.com/dolittle/Studio/pull/280)
 ## Summary
 
