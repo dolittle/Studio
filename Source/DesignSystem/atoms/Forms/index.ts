@@ -3,6 +3,6 @@
 
 export { Checkbox } from './Checkbox';
 export { Form, FormProps } from './Form';
-export { Input } from './Input';
+export { Input, InputProps } from './Input';
 export { Select, SelectProps } from './Select';
 export { SwitchToggle, SwitchToggleProps } from './SwitchToggle';
