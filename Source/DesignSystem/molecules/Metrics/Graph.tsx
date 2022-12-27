@@ -52,7 +52,7 @@ export type GraphProps = {
  * @param props The {@link GraphProps} for the component instance.
  * @returns The rendered {@link JSX.Element}.
  */
-export const Graph = ({ title, subtitle, unit, data, domain, range, height, sx }: GraphProps) => {
+export const Graph = (props: GraphProps) => {
     const [spec, vegaRef, setParams] = useThemedSpec(
         {
             width: 'container',
@@ -165,11 +165,11 @@ export const Graph = ({ title, subtitle, unit, data, domain, range, height, sx }
         [
             {
                 name: 'domain',
-                value: domain ?? null,
+                value: props.domain ?? null,
             },
             {
                 name: 'range',
-                value: range ?? null,
+                value: props.range ?? null,
             },
             {
                 name: 'filter_domain',
@@ -189,33 +189,33 @@ export const Graph = ({ title, subtitle, unit, data, domain, range, height, sx }
         setParams([
             {
                 name: 'domain',
-                value: domain ?? null,
+                value: props.domain ?? null,
             },
             {
                 name: 'range',
-                value: range ?? null,
+                value: props.range ?? null,
             },
         ]);
-    }, [setParams, domain, range]);
+    }, [setParams, props.domain, props.range]);
 
     const table = useMemo(() =>
-        data.flatMap((dataset, index) => dataset.values.map(datapoint => ({ ...datapoint, index })))
-        , [data]);
+        props.data.flatMap((dataset, index) => dataset.values.map(datapoint => ({ ...datapoint, index })))
+        , [props.data]);
 
     return (
-        <Paper elevation={1} sx={{ pt: 2, pr: 6, pb: 3, pl: 8, ...sx }}>
+        <Paper elevation={1} sx={{ pt: 2, pr: 6, pb: 3, pl: 8, ...props.sx }}>
             <Stack direction='row' justifyContent='space-between' sx={{ mb: 3 }}>
                 <Box>
-                    <Typography variant='subtitle1'>{title}{unit !== undefined && ` - ${unit}`}</Typography>
-                    {subtitle && <Typography variant='subtitle2' color='text.disabled'>{subtitle}</Typography>}
+                    <Typography variant='subtitle1'>{props.title}{props.unit !== undefined && ` - ${props.unit}`}</Typography>
+                    {props.subtitle && <Typography variant='subtitle2' color='text.disabled'>{props.subtitle}</Typography>}
                 </Box>
-                <Legend data={data} />
+                <Legend data={props.data} />
             </Stack>
             <Vega
                 mode='vega-lite'
                 spec={spec}
                 actions={false}
-                height={height ?? 200}
+                height={props.height ?? 200}
                 style={{ width: '100%', direction: 'rtl' }}
                 ref={vegaRef}
                 data={{ table }}

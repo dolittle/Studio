@@ -28,7 +28,7 @@ export type TerminalProps = {
  * @param props The {@link TerminalProps} for the component instance.
  * @returns The rendered {@link JSX.Element}.
  */
-export const Terminal = ({ connect, sx }: TerminalProps) => {
+export const Terminal = (props: TerminalProps) => {
     const theme = useTheme();
 
     const options = useMemo<ITerminalOptions>(() => ({
@@ -37,12 +37,12 @@ export const Terminal = ({ connect, sx }: TerminalProps) => {
 
     const { fit, opened, containerRef: xtermRef } = useXTerm(options);
     const { containerRef: resizeRef } = useResize(fit);
-    useConnect(opened, connect);
+    useConnect(opened, props.connect);
 
     return (
         <Box
             ref={resizeRef}
-            sx={sx}
+            sx={props.sx}
         >
             <Box
                 ref={xtermRef}
