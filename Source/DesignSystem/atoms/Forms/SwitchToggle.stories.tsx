@@ -20,10 +20,10 @@ export const Default = createStory({
 // Needs useState for value changes.
 export const DefaultActive = createStory({
     title: 'Default active switch with label',
-    checked: true,
+    isChecked: true,
 });
 
 export const DisabledSwitch = createStory({
     title: 'Disabled switch with label',
-    disabled: true,
+    isDisabled: true,
 });

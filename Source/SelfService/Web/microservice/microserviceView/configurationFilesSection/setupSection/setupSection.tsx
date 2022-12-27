@@ -6,12 +6,10 @@ import { useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button as MuiButton, Tooltip, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Tooltip, Typography } from '@mui/material';
 import { DeleteRounded, EditRounded, ExpandCircleDownRounded, SaveRounded, RestartAltRounded } from '@mui/icons-material';
 
-import { Button } from '@dolittle/design-system/atoms/Button';
-import { Form, Input, Select, SwitchToggle } from '@dolittle/design-system/atoms/Forms';
-import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/ConfirmDialog';
+import { Button, ConfirmDialog, Form, Input, Select, SwitchToggle } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
 
@@ -19,7 +17,7 @@ import { HttpResponseApplication } from '../../../../api/application';
 
 import { HeadArguments } from '../../../components/headArguments';
 import { RestartMicroserviceDialog } from '../../restartMicroserviceDialog';
-import { capitalize, removeFromString } from '../../../helpers/stringHelpers';
+import { capitalize, removeFromString } from '../../../helpers';
 
 const styles = {
     form: {
@@ -156,29 +154,27 @@ export const SetupSection = ({ application, applicationId, environment, microser
                 <AccordionDetails>
                     <Box>
                         <Tooltip title='Coming soon!' placement='top' arrow>
-                            {/* <Button
-                                variant='text'
-                                label='edit'
-                                disabled={formIsNotEditable}
-                                startWithIcon={<EditRounded />}
-                                //onClick={() => setFormIsNotEditable(false)}
-                                sx={{ mr: 2.5 }}
-                            /> */}
                             <span>
-                                <MuiButton disabled startIcon={<EditRounded />} sx={{ mr: 2.5 }}>edit</MuiButton>
+                                <Button
+                                    variant='text'
+                                    label='edit'
+                                    disabled={formIsNotEditable}
+                                    startWithIcon={<EditRounded />}
+                                    //onClick={() => setFormIsNotEditable(false)}
+                                    sx={{ mr: 2.5 }}
+                                />
                             </span>
                         </Tooltip>
                         <Tooltip title='Coming soon!' placement='top' arrow>
-                            {/* <Button
-                                variant='text'
-                                label='save'
-                                disabled={formIsNotEditable}
-                                startWithIcon={<SaveRounded />}
-                                //onClick={() => setFormIsNotEditable(true)}
-                                sx={{ mr: 2.5 }}
-                            /> */}
                             <span>
-                                <MuiButton disabled startIcon={<SaveRounded />} sx={{ mr: 2.5 }}>save</MuiButton>
+                                <Button
+                                    variant='text'
+                                    label='save'
+                                    disabled={formIsNotEditable}
+                                    startWithIcon={<SaveRounded />}
+                                    //onClick={() => setFormIsNotEditable(true)}
+                                    sx={{ mr: 2.5 }}
+                                />
                             </span>
                         </Tooltip>
                         <Button
@@ -240,8 +236,8 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
                             <SwitchToggle
                                 title='Expose to a public URL'
-                                disabled={formIsNotEditable}
-                                checked={hasPublicURL}
+                                isChecked={hasPublicURL}
+                                isDisabled={formIsNotEditable}
                                 onChange={(event) => setHasPublicURL(event.target.checked)}
                                 sx={{ my: 2.5 }}
                             />
@@ -264,8 +260,8 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
                                 <SwitchToggle
                                     title='Make M3 configuration available to microservice'
-                                    disabled={formIsNotEditable}
-                                    checked={useM3Connector}
+                                    isChecked={useM3Connector}
+                                    isDisabled={formIsNotEditable}
                                     onChange={(event) => setHasM3Connetcor(event.target.checked)}
                                     sx={{ mt: 2.5 }}
                                 />

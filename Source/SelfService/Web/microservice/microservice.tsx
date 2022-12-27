@@ -3,10 +3,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 
-import { LoadingSpinner } from '@dolittle/design-system/atoms/LoadingSpinner/LoadingSpinner';
-import { Button } from '@dolittle/design-system/atoms/Button';
+import { useSnackbar } from 'notistack';
 
 import { HttpResponseApplication } from '../api/application';
 
@@ -15,6 +13,8 @@ import { canEditMicroservices, microservices } from '../stores/microservice';
 
 import { Paper, Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
+
+import { Button, LoadingSpinner } from '@dolittle/design-system';
 
 import { NoMicroservices } from './noMicroservices';
 import { MicroserviceTable, MicroserviceObject } from './microserviceTable';

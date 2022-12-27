@@ -9,9 +9,8 @@ import { SnackbarProvider, useSnackbar } from 'notistack';
 import { Slide, SlideProps } from '@mui/material';
 import { ErrorRounded } from '@mui/icons-material';
 
-import { Button } from '@dolittle/design-system/atoms/Button';
+import { Button } from '../Button';
 import { IconButton } from '@dolittle/design-system/atoms/IconButton/IconButton';
-
 import { Snackbar as CustomSnackbar } from './Snackbar';
 
 function SlideTransition(props: SlideProps) {

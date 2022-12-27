@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/ConfirmDialog';
+import { ConfirmDialog } from '@dolittle/design-system';
 
 import { Box, Typography } from '@mui/material';
 

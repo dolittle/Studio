@@ -6,11 +6,12 @@ import React from 'react';
 import { SxProps } from '@mui/material/styles';
 import { Button as MuiButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+
 import { themeDark } from '@dolittle/design-system';
 
 type Props = {
     onClick?: (event: React.MouseEvent<HTMLElement>) => void;
-    disabled?: boolean
+    disabled?: boolean;
     children: React.ReactNode;
     withIcon?: boolean;
 };

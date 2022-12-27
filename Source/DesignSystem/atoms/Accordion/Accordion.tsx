@@ -31,7 +31,7 @@ const styles = {
     }
 };
 
-type AccordionProps = {
+export type AccordionProps = {
     id: string;
     title: string;
     children: React.ReactNode;

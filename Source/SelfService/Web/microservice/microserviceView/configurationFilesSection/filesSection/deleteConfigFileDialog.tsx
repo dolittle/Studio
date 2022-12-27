@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import { ConfirmDialog } from '@dolittle/design-system/atoms/ConfirmDialog/ConfirmDialog';
-
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 import { Typography } from '@mui/material';
+
+import { ConfirmDialog } from '@dolittle/design-system';
 
 type DeleteConfigFileDialogProps = {
     selectedDataRows: GridSelectionModel;

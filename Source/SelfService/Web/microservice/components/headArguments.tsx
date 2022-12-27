@@ -6,7 +6,7 @@ import React, { ChangeEvent } from 'react';
 import { Box, TextField } from '@mui/material';
 import { AddCircleRounded, DeleteRounded } from '@mui/icons-material/';
 
-import { Button } from '@dolittle/design-system/atoms/Button';
+import { Button } from '@dolittle/design-system';
 
 type HeadArgumentsProps = {
     cmdArgs: string[];

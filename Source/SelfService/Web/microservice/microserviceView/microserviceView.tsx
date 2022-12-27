@@ -12,7 +12,7 @@ import { HttpResponseApplication } from '../../api/application';
 
 import { Box, Typography } from '@mui/material';
 
-import { Tabs } from '@dolittle/design-system/atoms/Tabs/Tabs';
+import { Tabs } from '@dolittle/design-system';
 
 import { ConfigurationFilesSection } from './configurationFilesSection/configurationFilesSection';
 import { HealthStatus } from './healthStatus/healthStatus';

@@ -3,12 +3,12 @@
 
 import React from 'react';
 
-import { Button } from '@dolittle/design-system/atoms/Button';
+import { Button } from '../Button';
 
 import { IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { CloseRounded } from '@mui/icons-material';
 
-type ConfirmDialogProps = {
+export type ConfirmDialogProps = {
     id: string;
     isOpen?: boolean;
     title: string;

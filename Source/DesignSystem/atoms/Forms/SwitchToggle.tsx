@@ -3,14 +3,22 @@
 
 import React from 'react';
 
-import { FormGroup, FormControlLabel, Switch, SwitchProps } from '@mui/material';
+import { FormGroup, FormControlLabel, Switch, SxProps } from '@mui/material';
 
-export const SwitchToggle = ({ checked, onChange, title, disabled, sx }: SwitchProps) =>
+export type SwitchToggleProps = {
+    title: string;
+    isChecked: boolean;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    isDisabled?: boolean;
+    sx?: SxProps;
+};
+
+export const SwitchToggle = ({ title, isChecked, onChange, isDisabled, sx }: SwitchToggleProps) =>
     <FormGroup sx={{ width: 1 }}>
         <FormControlLabel
-            control={<Switch size='small' checked={checked} onChange={onChange} />}
             label={title}
-            disabled={disabled}
+            control={<Switch size='small' checked={isChecked} onChange={onChange} />}
+            disabled={isDisabled}
             sx={sx}
         />
     </FormGroup>;

@@ -3,9 +3,9 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { LoadingSpinner } from '@dolittle/design-system/atoms/LoadingSpinner/LoadingSpinner';
-
 import { Typography } from '@mui/material';
+
+import { LoadingSpinner } from '@dolittle/design-system';
 
 import { getPodLogs, HttpResponsePodLog } from '../api/api';
 

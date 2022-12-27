@@ -3,7 +3,7 @@
 
 import React, { useMemo } from 'react';
 
-import { Terminal, TerminalConnect } from '@dolittle/design-system/atoms/Terminal';
+import { Terminal, TerminalConnect } from '@dolittle/design-system';
 
 import { connect as ttydConnect } from './ttyd';
 import { useTTYdUrl } from './useTerminal';
@@ -17,14 +17,10 @@ export type ViewProps = {
 export const TerminalView = ({ applicationId, environment, microserviceId }: ViewProps) => {
     const url = useTTYdUrl(applicationId, environment, microserviceId);
 
-    const connect = useMemo<TerminalConnect>(() =>
-        ({ columns, rows, signal }) => ttydConnect(url, columns, rows, signal)
-        , [url]);
+    const connect = useMemo<TerminalConnect>(() => ({ columns, rows, signal }) =>
+        ttydConnect(url, columns, rows, signal), [url]);
 
     return (
-        <Terminal
-            connect={connect}
-            sx={{ height: '70vh', }}
-        />
+        <Terminal connect={connect} sx={{ height: '70vh', }} />
     );
 };
