@@ -19,8 +19,12 @@ export type LegendProps = {
 
 /**
  * A legend that displays a preview and description of datasets in a graph.
- * @param props The {@link LegendProps} for the component instance.
+ * @param {...LegendProps} {@link LegendProps} for the component instance.
  * @returns The rendered {@link JSX.Element}.
+ * @example
+ * <Legend data={[{ group: 'Group 1', name: 'Dataset 1' }, { group: 'Group 2', name: 'Dataset 2' }]} />
+ * @example
+ * <Legend data={[{ group: 'Group 1', name: 'Dataset 1' }, { group: 'Group 2', name: 'Dataset 2' }]} sx={{ fontSize: '0.8em' }}
  */
 export const Legend = ({ sx, data }: LegendProps) => {
     const colorScheme = useThemeColorScheme();
