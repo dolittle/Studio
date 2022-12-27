@@ -7,9 +7,9 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useReadable } from 'use-svelte-store';
 
-import { Grid, IconButton, Typography, Divider, Box, } from '@mui/material';
-import { DataStateIcon } from './dataStateIcon';
+import { Box, Divider, Grid, IconButton, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { DataStateIcon } from './dataStateIcon';
 
 import { Tabs } from '@dolittle/design-system';
 
@@ -22,10 +22,10 @@ import { DownloadButtons } from '../components/downloadButtons';
 import { HealthStatus } from '../microserviceView/healthStatus/healthStatus';
 
 type Props = {
-    applicationId: string
-    environment: string
-    microserviceId: string
-    podsData: HttpResponsePodStatus
+    applicationId: string;
+    environment: string;
+    microserviceId: string;
+    podsData: HttpResponsePodStatus;
 };
 
 const classes = {
