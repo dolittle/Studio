@@ -14,8 +14,8 @@ export type ViewProps = {
     microserviceId: string;
 };
 
-export const TerminalView = (props: ViewProps) => {
-    const url = useTTYdUrl(props.applicationId, props.environment, props.microserviceId);
+export const TerminalView = ({ applicationId, environment, microserviceId }: ViewProps) => {
+    const url = useTTYdUrl(applicationId, environment, microserviceId);
 
     const connect = useMemo<TerminalConnect>(() =>
         ({ columns, rows, signal }) => ttydConnect(url, columns, rows, signal)
@@ -24,9 +24,7 @@ export const TerminalView = (props: ViewProps) => {
     return (
         <Terminal
             connect={connect}
-            sx={{
-                height: '70vh',
-            }}
+            sx={{ height: '70vh', }}
         />
     );
 };
