@@ -7,6 +7,10 @@ import { LoadingSpinner } from './LoadingSpinner';
 
 const { metadata, createStory } = componentStories(LoadingSpinner);
 
+metadata.parameters = {
+    layout: 'centered',
+};
+
 export default metadata;
 
 export const Loading = createStory({});
