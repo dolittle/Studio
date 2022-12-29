@@ -239,7 +239,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             >
                 <Box sx={{ mb: 2.875, button: { 'mr': 6.25, '&:last-of-type': { mr: 0 } } }}>
                     <Button
-                        label='Add Variable'
+                        label='Add new variable row'
                         startWithIcon={<AddCircle />}
                         disabled={disableAddButton}
                         onClick={handleEnvVariableAdd}
