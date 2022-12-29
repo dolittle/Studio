@@ -71,7 +71,7 @@ const Snackbar = () => {
         enqueueSnackbar(`Snackbar ${count}`, {
             action: (key) => (
                 <>
-                    <Button variant='text' label='Undo' color='secondary' onClick={() =>
+                    <Button label='Undo' color='secondary' onClick={() =>
                         enqueueSnackbar(`Snackbar with action buttons -  ${count} - Undone.`)
                     } />
 
@@ -84,7 +84,7 @@ const Snackbar = () => {
         });
     }, [count]);
 
-    return <Button variant='text' label='Open snackbars' onClick={buttonClicked} />;
+    return <Button label='Open snackbars' onClick={buttonClicked} />;
 };
 
 Snackbars.args = {

@@ -19,13 +19,11 @@ type ButtonGroupProps = {
 export const ButtonGroup = ({ filePrompt, deleteDisabled, downloadDisabled, handleDelete, handleDownload }: ButtonGroupProps) =>
     <Box sx={{ mb: 2.875, button: { 'mr': 6.25, '&:last-of-type': { mr: 0 } } }}>
         <Button
-            variant='text'
             label='Add File(s)'
             startWithIcon={<AddCircle />}
             onClick={filePrompt}
         />
         <Button
-            variant='text'
             label='Delete File(s)'
             disabled={deleteDisabled}
             startWithIcon={<DeleteRounded />}
@@ -33,7 +31,6 @@ export const ButtonGroup = ({ filePrompt, deleteDisabled, downloadDisabled, hand
         />
 
         <Button
-            variant='text'
             label={`Download Configuration Files Yaml`}
             disabled={downloadDisabled}
             startWithIcon={<DownloadRounded />}

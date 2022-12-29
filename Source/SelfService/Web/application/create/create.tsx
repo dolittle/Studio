@@ -99,14 +99,12 @@ export const Create = () => {
     const ActionButtons = () =>
         <Box>
             <Button
-                variant='text'
                 label='Cancel'
                 onClick={handleCancel}
                 sx={{ ...styles.actionButtons, mr: 8 }}
             />
 
             <Button
-                variant='text'
                 label='Create'
                 type='submit'
                 sx={{ ...styles.actionButtons, color: 'primary.main' }}

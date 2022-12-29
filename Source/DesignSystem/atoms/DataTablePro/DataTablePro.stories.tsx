@@ -9,7 +9,7 @@ import { DeleteRounded, RefreshRounded } from '@mui/icons-material';
 
 import { DataTablePro, DataTableProProps } from './DataTablePro';
 
-import { Button } from '@dolittle/design-system/atoms/Button';
+import { Button } from '@dolittle/design-system';
 
 export default {
     parameters: {
@@ -42,13 +42,11 @@ const Template: ComponentStory<typeof DataTablePro> = ({ isRowCheckbox, disableR
     return (
         <Box>
             <Button
-                variant='text'
                 label='Reset'
                 startWithIcon={<RefreshRounded />}
                 disabled={rows.length === 3}
                 onClick={() => setRows(initialRows)} />
             <Button
-                variant='text'
                 label='Delete selected'
                 startWithIcon={<DeleteRounded />}
                 disabled={selectedRowIds.length === 0}

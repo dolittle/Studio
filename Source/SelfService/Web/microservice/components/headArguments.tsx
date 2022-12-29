@@ -49,7 +49,6 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
                         sx={{ width: 220 }}
                     />
                     <Button
-                        variant='text'
                         label='Remove'
                         disabled={disabled}
                         startWithIcon={<DeleteRounded />}
@@ -60,7 +59,6 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
             ))}
 
             <Button
-                variant='text'
                 label='Add CMD argument'
                 startWithIcon={<AddCircleRounded />}
                 disabled={disabled}

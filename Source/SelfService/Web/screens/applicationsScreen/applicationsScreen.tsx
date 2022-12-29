@@ -44,7 +44,7 @@ export const ApplicationsScreen = () => {
             setCanCreateApplication(response.canCreateApplication);
             setApplicationInfos(response.applications);
             setLoaded(true);
-        }).catch((error) => {
+        }).catch(error => {
             console.log(error);
             enqueueSnackbar('Failed getting data from the server', { variant: 'error' });
         });
@@ -77,7 +77,6 @@ export const ApplicationsScreen = () => {
 
             <Box sx={{ width: 1 }}>
                 <Button
-                    variant='text'
                     label='Create new Application'
                     startWithIcon={<AddCircle />}
                     onClick={handleCreate}

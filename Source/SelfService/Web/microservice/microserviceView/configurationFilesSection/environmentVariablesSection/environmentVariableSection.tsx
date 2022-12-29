@@ -239,28 +239,24 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             >
                 <Box sx={{ mb: 2.875, button: { 'mr': 6.25, '&:last-of-type': { mr: 0 } } }}>
                     <Button
-                        variant='text'
                         label='Add Variable'
                         startWithIcon={<AddCircle />}
                         disabled={disableAddButton}
                         onClick={handleEnvVariableAdd}
                     />
                     <Button
-                        variant='text'
                         label='Delete Variable(s)'
                         disabled={!selectedRowIds.length || noEnvVariables}
                         startWithIcon={<DeleteRounded />}
                         onClick={handleEnvVariableDelete}
                     />
                     <Button
-                        variant='text'
                         label='Download secret env-variables yaml'
                         disabled={noSecretEnvVariables}
                         startWithIcon={<DownloadRounded />}
                         onClick={handleSecretEnvVariableDownload}
                     />
                     <Button
-                        variant='text'
                         label='Download env-variables yaml'
                         disabled={noPublicEnvVariables}
                         startWithIcon={<DownloadRounded />}
