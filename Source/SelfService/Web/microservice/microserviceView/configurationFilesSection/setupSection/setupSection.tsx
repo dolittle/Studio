@@ -156,7 +156,6 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         <Tooltip title='Coming soon!' placement='top' arrow>
                             <span>
                                 <Button
-                                    variant='text'
                                     label='edit'
                                     disabled={formIsNotEditable}
                                     startWithIcon={<EditRounded />}
@@ -168,7 +167,6 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         <Tooltip title='Coming soon!' placement='top' arrow>
                             <span>
                                 <Button
-                                    variant='text'
                                     label='save'
                                     disabled={formIsNotEditable}
                                     startWithIcon={<SaveRounded />}
@@ -178,14 +176,12 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             </span>
                         </Tooltip>
                         <Button
-                            variant='text'
                             label='Restart Microservice'
                             startWithIcon={<RestartAltRounded />}
                             onClick={() => setRestartDialogIsOpen(true)}
                             sx={{ mr: 2.5 }}
                         />
                         <Button
-                            variant='text'
                             label='Delete Microservice'
                             startWithIcon={<DeleteRounded />}
                             onClick={() => setDeleteDialogIsOpen(true)}

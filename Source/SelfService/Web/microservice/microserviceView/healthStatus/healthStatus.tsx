@@ -104,7 +104,6 @@ export const HealthStatus = ({ applicationId, environment, microserviceId, msNam
             />
 
             <Button
-                variant='text'
                 label='Restart Microservice'
                 startWithIcon={<RestartAltRounded />}
                 onClick={() => setRestartDialogIsOpen(true)}

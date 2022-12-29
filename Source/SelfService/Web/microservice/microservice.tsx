@@ -68,13 +68,7 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
 
     return (
         <>
-            {!hasEnvironments &&
-                <Button
-                    variant='text'
-                    label='Create New Environment'
-                    onClick={handleCreateEnvironment}
-                />
-            }
+            {!hasEnvironments && <Button label='Create New Environment' onClick={handleCreateEnvironment} />}
 
             <Typography variant='h1' sx={{ my: 2 }}>Microservices</Typography>
 
@@ -86,7 +80,6 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
             {hasEnvironments && hasMicroservices &&
                 <Paper sx={{ mt: 2.125 }}>
                     <Button
-                        variant='text'
                         label='Deploy New Microservice'
                         startWithIcon={<RocketLaunch />}
                         isFullWidth
