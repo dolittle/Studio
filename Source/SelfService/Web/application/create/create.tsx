@@ -14,7 +14,6 @@ import { createApplication, HttpApplicationRequest } from '../../api/application
 const styles = {
     title: {
         letterSpacing: '-0.5px',
-        lineHeight: '26px',
         mb: 11
     },
     secondaryTitle: {
@@ -28,10 +27,6 @@ const styles = {
             xs: 'column',
             sm: 'row'
         }
-    },
-    actionButtons: {
-        color: 'text.primary',
-        letterSpacing: '0.06em'
     }
 };
 
@@ -97,19 +92,10 @@ export const Create = () => {
     };
 
     const ActionButtons = () =>
-        <Box>
-            <Button
-                label='Cancel'
-                onClick={handleCancel}
-                sx={{ ...styles.actionButtons, mr: 8 }}
-            />
-
-            <Button
-                label='Create'
-                type='submit'
-                sx={{ ...styles.actionButtons, color: 'primary.main' }}
-            />
-        </Box>;
+        <>
+            <Button label='Cancel' onClick={handleCancel} sx={{ mr: 8, color: 'text.primary' }} />
+            <Button label='Create' type='submit' />
+        </>;
 
     return (
         <>

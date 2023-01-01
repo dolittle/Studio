@@ -22,18 +22,9 @@ export const EmptyDataTable = ({ title, description, buttonText, sx, handleOnCli
         <Typography variant='body1' sx={{ my: 2 }}>{description}</Typography>
 
         <Button
-            variant='filled'
+            variant='fullwidth'
             label={buttonText}
             startWithIcon={<AddCircle />}
-            isFullWidth
-            sx={{
-                'backgroundColor': 'rgba(140, 154, 248, 0.08)',
-                'color': 'primary.main',
-                'minHeight': 30,
-                '&:hover': {
-                    backgroundColor: 'rgba(140, 154, 248, 0.15)'
-                }
-            }}
             onClick={() => handleOnClick()}
         />
     </Paper>;
