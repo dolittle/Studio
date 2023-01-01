@@ -6,8 +6,9 @@ import { Box, Skeleton } from '@mui/material';
 import { format } from 'date-fns';
 
 import { ColoredLine, ColoredLineSection, TerminalColor } from './lineParsing';
-import { ButtonText } from '../theme/buttonText';
 import { DataLabels } from './loki/types';
+
+import { Button } from '@dolittle/design-system';
 
 const coloredLineSectionCss = (section: ColoredLineSection): React.CSSProperties => {
     let color = 'inherit',
@@ -83,78 +84,65 @@ export type LogLineProps = {
     ) => void;
 };
 
+type SkeletonWhenLoadingProps = {
+    loading?: boolean;
+    children: React.ReactNode
+};
+
 export const formatTimestamp = (timestamp: bigint): string => {
     const date = new Date(Number(timestamp / 1_000_000n));
     return format(date, 'yyyy-MM-dd HH:mm:ss');
 };
 
-const SkeletonWhenLoading = (props: { loading?: boolean; children: React.ReactNode }) =>
-    props.loading === true ? (
-        <Skeleton>{props.children}</Skeleton>
-    ) : (
-        <>{props.children}</>
-    );
+const SkeletonWhenLoading = ({ loading, children }: SkeletonWhenLoadingProps) =>
+    loading === true ? <Skeleton>{children}</Skeleton> : <>{children}</>;
 
-export const LogLine = (props: LogLineProps) => {
+export const LogLine = ({ line, showContextButton, loading, onClickShowLineContext, timestamp, labels }: LogLineProps) => {
     // TODO: The tab-width is dependent on styling. How do we make sure we don't change this?
-    const leadingWhitespace = props.line.leading.spaces + props.line.leading.tabs * 8;
+    const leadingWhitespace = line.leading.spaces + line.leading.tabs * 8;
     const leadingEmSpace = `${leadingWhitespace * 0.6}em`;
 
     return (
         <Box sx={{ display: 'flex' }}>
-            {props.showContextButton === true && (
+            {showContextButton === true && (
                 <Box sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
-                    <SkeletonWhenLoading loading={props.loading}>
-                        <ButtonText
-                            size='small'
-                            buttonType='secondary'
-                            sx={{ p: 0 }}
-                            onClick={(event) =>
-                                props.onClickShowLineContext?.(
-                                    props.timestamp,
-                                    props.labels,
-                                    event
-                                )
-                            }
-                        >
-                            Show
-                        </ButtonText>
+                    <SkeletonWhenLoading loading={loading}>
+                        <Button label='Show' sx={{ p: 0, color: 'text.secondary' }} onClick={event => onClickShowLineContext?.(timestamp, labels, event)} />
                     </SkeletonWhenLoading>
                 </Box>
             )}
             <Box className='log-line-timestamp' sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
-                <SkeletonWhenLoading loading={props.loading}>
-                    <span>[{formatTimestamp(props.timestamp)}]</span>
+                <SkeletonWhenLoading loading={loading}>
+                    <span>[{formatTimestamp(timestamp)}]</span>
                 </SkeletonWhenLoading>
             </Box>
             <Box
                 className='log-line-microservice'
                 sx={{ whiteSpace: 'nowrap', pr: 2, width: '7em', flexShrink: 0, textOverflow: 'ellipsis', overflow: 'hidden' }}
-                title={props.labels.microservice}
+                title={labels.microservice}
             >
-                <SkeletonWhenLoading loading={props.loading}>
-                    <span>{props.labels.microservice}</span>
+                <SkeletonWhenLoading loading={loading}>
+                    <span>{labels.microservice}</span>
                 </SkeletonWhenLoading>
             </Box>
             <Box
                 sx={{ flexGrow: 1 }}
                 style={
-                    leadingWhitespace > 0
-                        ? {
-                            paddingLeft: leadingEmSpace,
-                            textIndent: `-${leadingEmSpace}`,
-                        }
-                        : undefined
+                    leadingWhitespace > 0 ? {
+                        paddingLeft: leadingEmSpace,
+                        textIndent: `-${leadingEmSpace}`
+                    } :
+                        undefined
                 }
             >
-                {props.loading === true ? (
+                {loading === true ? (
                     <>
                         <Skeleton />
                         <Skeleton />
                         <Skeleton />
                     </>
                 ) : (
-                    props.line.sections.map((section, i) => (
+                    line.sections.map((section, i) => (
                         <span key={i} /*style={coloredLineSectionCss(section)}*/>
                             {section.text}
                         </span>
