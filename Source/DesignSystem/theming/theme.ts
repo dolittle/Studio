@@ -30,6 +30,13 @@ declare module '@mui/material/Typography' {
     }
 };
 
+declare module '@mui/material/Button' {
+    interface ButtonPropsVariantOverrides {
+        danger: true;
+        fullwidth: true;
+    }
+};
+
 export const typography: TypographyOptions = {
     fontFamily: '"Rubik", "Open sans", "Arial", sans-serif',
     fontWeightMedium: 400,
@@ -99,6 +106,7 @@ export const typography: TypographyOptions = {
     },
     button: {
         fontSize: '0.75rem', //12px
+        letterSpacing: '0.06em',
         fontWeight: 500,
     },
     monospace: {
@@ -225,7 +233,41 @@ const components: Components & DataGridProComponents = {
             sizeSmall: {
                 fontSize: '0.75rem',
             },
-        }
+        },
+        variants: [
+            {
+                props: { variant: 'danger' },
+                style: {
+                    color: '#202229',
+                    // TODO: How to use the theme's palette here?
+                    backgroundColor: '#F66666',
+                    '&:hover': {
+                        backgroundColor: '#C55252',
+                    },
+                    '&:disabled': {
+                        backgroundColor: palette?.text?.disabled,
+                        color: palette?.text?.secondary,
+                    },
+                },
+            },
+            {
+                props: { variant: 'fullwidth' },
+                style: {
+                    backgroundColor: 'rgba(140, 154, 248, 0.08)',
+                    color: '#8C9AF8',
+                    minHeight: 30,
+                    '&:hover': {
+                        backgroundColor: 'rgba(140, 154, 248, 0.15)'
+                    }
+                },
+            },
+            {
+                props: { color: 'secondary' },
+                style: {
+                    color: palette?.text?.secondary,
+                }
+            },
+        ],
     },
     MuiDataGrid: {
         styleOverrides: {
