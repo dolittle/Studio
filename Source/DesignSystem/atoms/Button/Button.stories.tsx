@@ -30,6 +30,36 @@ metadata.parameters = {
     },
 };
 
+metadata.argTypes = {
+    startWithIcon: {
+        description: 'The icon to show before the label.',
+        control: false
+    },
+    endWithIcon: {
+        description: 'The icon to show after the label.',
+        control: false
+    },
+    isFullWidth: {
+        control: {
+            type: 'boolean',
+            default: false
+        }
+    },
+    onClick: {
+        description: 'The event handler for when the button is clicked.',
+        control: false
+    },
+    href: {
+        control: false
+    },
+    sx: {
+        control: false
+    },
+    children: {
+        control: false
+    }
+};
+
 export default metadata;
 
 export const Filled = createStory({
@@ -46,13 +76,41 @@ export const Outlined = createStory({
     label: 'Outlined Button',
 });
 
-export const WithIcon = createStory({
-    label: 'With Icon',
+export const Secondary = createStory({
+    label: 'Secondary Button',
+    color: 'secondary',
+    startWithIcon: <AddCircle />,
+});
+
+export const StartIcon = createStory({
+    label: 'With Start Icon',
     startWithIcon: <EditRounded />,
 });
 
-export const DisabledWithIcon = createStory({
-    label: 'Disabled Button with icon',
-    disabled: true,
-    startWithIcon: <EditRounded />,
+export const EndIcon = createStory({
+    label: 'With End Icon',
+    endWithIcon: <EditRounded />,
+});
+
+export const fullwidth = createStory({
+    variant: 'fullwidth',
+    label: 'Full Width Button',
+    startWithIcon: <AddCircle />,
+});
+
+// export const DisabledWithIcon = createStory({
+//     label: 'Disabled Button with icon',
+//     disabled: true,
+//     startWithIcon: <EditRounded />,
+// });
+
+export const WithLink = createStory({
+    label: 'With Link',
+    href: 'https://dolittle.io',
+    target: true,
+});
+
+export const Danger = createStory({
+    label: 'Danger Button',
+    variant: 'danger',
 });
