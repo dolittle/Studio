@@ -4,93 +4,130 @@
 import React, { MouseEventHandler, ReactElement } from 'react';
 
 import { Button as MuiButton, SvgIconProps, SxProps } from '@mui/material';
+import { ErrorRounded } from '@mui/icons-material';
+
+import { Link } from '../Link/Link';
 
 export type ButtonProps = {
     /**
-     * Required - button must contain text.
+     * Required. The text to display on the button.
      */
     label: string;
 
     /**
-     * Optional. The variant of the button.
-     * @default 'text'
+     * Button variants.
+     * 
+     * - fullwidth: Button with extra styling and take up the full width of its container.
+     * - danger: Danger buttons are seldom used and reserved for cases where the primary action is destructive such as deleting content.
+     * @default text
      */
-    variant?: 'filled' | 'text' | 'outlined';
+    variant?: 'filled' | 'text' | 'outlined' | 'fullwidth' | 'danger';
 
     /**
-     * Optional. Whether the button is disabled or not.
+     * Button can be disabled.
      * @default false
      */
     disabled?: boolean;
 
     /**
-     * Optional. The color of the button.
-     * @default 'primary'
+     * Set button color.
+     * @default primary
      */
-    color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
+    color?: 'primary' | 'secondary';
 
     /**
-     * Optional. The size of the button.
-     * Small is same size as medium as it is overridden in the Theme.
-     * @default 'small'
+     * Set button size.
+     * @default small
      */
-    size?: 'small' | 'medium' | 'large';
+    size?: 'small' | 'large';
 
     /**
-     * Optional. Whether the button should take up the full width of its container.
+     * Button that takes up the full width of its container.
      * @default false
      */
     isFullWidth?: boolean;
 
     /**
-     * An optional icon to start with. Supports only React svg icons.
+     * Add an icon to the start of the button. Support only React SVG icons.
      * @default undefined
+     * @type ReactElement<SvgIconProps>
      */
     startWithIcon?: ReactElement<SvgIconProps>;
 
     /**
-     * An optional icon to end with. Supports only React svg icons.
+     * Add an icon to the end of the button. Support only React SVG icons.
      * @default undefined
+     * @type ReactElement<SvgIconProps>
      */
     endWithIcon?: ReactElement<SvgIconProps>;
 
     /**
-     * Optional. The type of the button.
-     * @default 'button'
+     * Button type. Default is button but for example if you want to use the button as a submit button you can set it to submit.
+     * @default button
      */
     type?: 'button' | 'submit' | 'reset';
+
+    /**
+     * Add event handler for when the button is clicked.
+     * @default undefined
+     */
     onClick?: MouseEventHandler<HTMLButtonElement>;
 
     /**
-     * Optional. The sx prop for the button.
+     * Add a href to the button. If this is set the button will be rendered as an anchor tag.
+     * 
+     * Use it only if a link doesn't have a meaningful href.
+     * 
+     * Use Link {@link Link} component intead if href has a meaningful value for better accessibility.
+     */
+    href?: string;
+
+    /**
+     * Use with external links.
+     * 
+     * Set target to 'true' if you want the link to open in a new tab.
+     * @default false
+     * @type {boolean}
+     */
+    target?: boolean;
+
+    /**
+     * Add custom styling to the button.
      * @default undefined
+     * @type {{}}
      */
     sx?: SxProps;
+
+    /**
+     * Children is not a valid prop.
+     * @type - never
+     */
+    children?: never;
 };
 
 /**
- * A button component. Children is not a valid prop.
+ * A button component.
  * @param {...ButtonProps} props - The {@link ButtonProps}.
  * @returns {ReactElement} A new {@link Button} component.
  * @example
- * <Button label='Click me' disabled />
  * <Button label='Click me' variant='filled' isFullWidth startWithIcon={<AddCircle />} />
- * <Button label='Click me' type='submit' />
  */
-export const Button = ({ variant, label, disabled, color, size, isFullWidth, startWithIcon, endWithIcon, type, onClick, sx }: ButtonProps): ReactElement =>
+export const Button = ({ variant, label, disabled, color, size, isFullWidth, startWithIcon, endWithIcon, target, type, onClick, href, sx }: ButtonProps): ReactElement =>
     <MuiButton
         variant={variant === 'filled' ? 'contained' : variant || 'text'}
         disabled={disabled}
         color={color}
-        size={size ?? 'small'}
-        fullWidth={isFullWidth}
-        startIcon={startWithIcon}
+        size={size || 'small'}
+        fullWidth={variant === 'fullwidth' || isFullWidth}
+        startIcon={variant === 'danger' ? <ErrorRounded /> : startWithIcon}
         endIcon={endWithIcon}
-        type={type ?? 'button'}
+        type={type || 'button'}
         onClick={onClick}
+        href={href}
+        //@ts-ignore
+        target={target ? '_blank' : undefined}
         sx={sx}
         disableElevation
-        disableRipple
     >
         {label}
     </MuiButton>;
