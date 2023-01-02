@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Card, CardActions, CardContent, CardHeader, Typography } from '@mui/material';
 
-import { Button } from '@dolittle/design-system'
+import { Button } from '@dolittle/design-system';
 
 const styles = {
     card: {

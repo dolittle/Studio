@@ -238,9 +238,9 @@ const components: Components & DataGridProComponents = {
             {
                 props: { variant: 'danger' },
                 style: {
-                    color: '#202229',
+                    'color': '#202229',
                     // TODO: How to use the theme's palette here?
-                    backgroundColor: '#F66666',
+                    'backgroundColor': '#F66666',
                     '&:hover': {
                         backgroundColor: '#C55252',
                     },
@@ -253,9 +253,9 @@ const components: Components & DataGridProComponents = {
             {
                 props: { variant: 'fullwidth' },
                 style: {
-                    backgroundColor: 'rgba(140, 154, 248, 0.08)',
-                    color: '#8C9AF8',
-                    minHeight: 30,
+                    'backgroundColor': 'rgba(140, 154, 248, 0.08)',
+                    'color': '#8C9AF8',
+                    'minHeight': '30px',
                     '&:hover': {
                         backgroundColor: 'rgba(140, 154, 248, 0.15)'
                     }
