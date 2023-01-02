@@ -22,7 +22,7 @@ const styles = {
 };
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const alphaCharsRegex = /[a-z0-9]$/i;
+const alphaCharsRegex = /^([a-z0-9]+)$/;
 
 export const InputFields = ({ nameId, contactId, emailId }) =>
     <>
@@ -32,7 +32,7 @@ export const InputFields = ({ nameId, contactId, emailId }) =>
             required='Application name required.'
             pattern={{
                 value: alphaCharsRegex,
-                message: 'Name can only contain alphanumeric characters.'
+                message: 'Name can only contain lowercase alphanumeric characters.'
             }}
             sx={{ display: 'flex' }}
         />
