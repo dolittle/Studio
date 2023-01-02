@@ -10,6 +10,6 @@ import { Button } from '@dolittle/design-system'
 
 export const ActionButtons = () =>
     <Box sx={{ mt: 12.5 }}>
-        <Button label='Select new customer' secondary startWithIcon={<ArrowBack />} href='/.auth/cookies/initiate' sx={{ mr: 8 }} />
+        <Button label='Back to tenant' secondary startWithIcon={<ArrowBack />} href='/.auth/cookies/initiate' sx={{ mr: 8 }} />
         <Button label='Log out' secondary href='/.auth/cookies/logout' />
     </Box>;
