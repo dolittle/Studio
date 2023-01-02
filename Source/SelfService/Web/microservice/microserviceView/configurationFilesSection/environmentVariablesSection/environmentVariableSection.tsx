@@ -265,7 +265,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     <EmptyDataTable
                         title='No environment variables yet...'
                         description={`To add your first environment variable, select 'add variable'. Provide a name, value and set its secrecy.`}
-                        buttonText='Add Variable'
+                        label='Add Variable'
                         handleOnClick={handleEnvVariableAdd} // TODO: Sometimes throws error when clicked
                         sx={{ mb: 8 }}
                     /> :

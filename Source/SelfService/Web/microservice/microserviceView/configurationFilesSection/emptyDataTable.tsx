@@ -11,20 +11,15 @@ import { Button } from '@dolittle/design-system';
 type EmptyDataTableProps = {
     title: string;
     description: string;
-    buttonText: string;
+    label: string;
     sx?: SxProps;
     handleOnClick: () => void;
 };
 
-export const EmptyDataTable = ({ title, description, buttonText, sx, handleOnClick }: EmptyDataTableProps) =>
+export const EmptyDataTable = ({ title, description, label, sx, handleOnClick }: EmptyDataTableProps) =>
     <Paper sx={{ p: 2, ...sx }}>
         <Typography variant='h2'>{title}</Typography>
         <Typography variant='body1' sx={{ my: 2 }}>{description}</Typography>
 
-        <Button
-            variant='fullwidth'
-            label={buttonText}
-            startWithIcon={<AddCircle />}
-            onClick={() => handleOnClick()}
-        />
+        <Button label={label} variant='fullwidth' startWithIcon={<AddCircle />} onClick={() => handleOnClick()} />
     </Paper>;
