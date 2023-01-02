@@ -11,7 +11,7 @@ import { HttpResponseApplication } from '../api/application';
 import { useReadable } from 'use-svelte-store';
 import { canEditMicroservices, microservices } from '../stores/microservice';
 
-import { Paper, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 import { Button, LoadingSpinner } from '@dolittle/design-system';

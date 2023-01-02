@@ -13,16 +13,6 @@ import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 import { HealthStatusTable, HealthStatusTableStats } from './healthStatusTable';
 import { RestartMicroserviceDialog } from '../restartMicroserviceDialog';
 
-const styles = {
-    restartBtn: {
-        lineHeight: '1.375rem',
-        letterSpacing: '0.06em',
-        display: 'flex',
-        mb: 2.5,
-        mt: 3.5
-    }
-};
-
 const computeStats = (metric: Metric | undefined, scale: number): HealthStatusTableStats | undefined => {
     if (metric === undefined) {
         return undefined;
@@ -107,7 +97,7 @@ export const HealthStatus = ({ applicationId, environment, microserviceId, msNam
                 label='Restart Microservice'
                 startWithIcon={<RestartAltRounded />}
                 onClick={() => setRestartDialogIsOpen(true)}
-                sx={styles.restartBtn}
+                sx={{ mb: 2.5, mt: 3.5 }}
             />
 
             {containerTables.length > 0
