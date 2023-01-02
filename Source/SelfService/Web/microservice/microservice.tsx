@@ -78,14 +78,13 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
             }
 
             {hasEnvironments && hasMicroservices &&
-                <Paper sx={{ mt: 2.125 }}>
-                    <Button
-                        label='Deploy New Microservice'
-                        startWithIcon={<RocketLaunch />}
-                        isFullWidth
-                        onClick={() => handleCreateMicroservice()}
-                    />
-                </Paper>
+                <Button
+                    label='Deploy New Microservice'
+                    variant='fullwidth'
+                    startWithIcon={<RocketLaunch />}
+                    onClick={() => handleCreateMicroservice()}
+                    sx={{ mt: 2.125 }}
+                />
             }
         </>
     );

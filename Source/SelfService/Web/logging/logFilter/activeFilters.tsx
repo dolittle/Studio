@@ -1,53 +1,50 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Chip, Typography } from '@mui/material';
 import React from 'react';
-import { ButtonText } from '../../theme/buttonText';
+
+import { Chip, Typography } from '@mui/material';
+
 import { LogFilterMicroservice, LogFilterObject } from './logFilterPanel';
+
+import { Button } from '@dolittle/design-system';
 
 export type ActiveFiltersProps = {
     filters: LogFilterObject;
-    updateFilters: (filters: LogFilterObject) => void
+    updateFilters: (filters: LogFilterObject) => void;
 };
 
-export const ActiveFilters = (props: ActiveFiltersProps) => {
+export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) => {
 
     const clearFilters = () => {
-        props.updateFilters({ ...props.filters, searchTerms: [] });
+        updateFilters({ ...filters, searchTerms: [] });
     };
 
     const removeTerm = (term: string, index: number) => {
-        const terms = [...props.filters.searchTerms];
+        const terms = [...filters.searchTerms];
         terms.splice(index, 1);
-        props.updateFilters({
-            ...props.filters,
+        updateFilters({
+            ...filters,
             searchTerms: terms
         });
     };
 
     const removeMicroservice = (microservice: LogFilterMicroservice, index: number) => {
-        if (props.filters.microservice === undefined) return;
+        if (filters.microservice === undefined) return;
 
-        const microservices = [...props.filters.microservice];
+        const microservices = [...filters.microservice];
         microservices.splice(index, 1);
-        props.updateFilters({
-            ...props.filters,
+        updateFilters({
+            ...filters,
             microservice: microservices
         });
     };
 
     return (
         <>
-            <ButtonText
-                size='small'
-                disabled={props.filters.searchTerms.length === 0}
-                onClick={clearFilters}
-                buttonType='secondary'
-            >
-                Clear Filters
-            </ButtonText>
-            {props.filters.searchTerms.map((s, index) =>
+            <Button label='Clear Filters' disabled={filters.searchTerms.length === 0} secondary onClick={clearFilters} />
+
+            {filters.searchTerms.map((s, index) =>
                 <Chip
                     key={index}
                     label={`"${s}"`}
@@ -57,8 +54,10 @@ export const ActiveFilters = (props: ActiveFiltersProps) => {
                     sx={{ ml: 1 }}
                 />
             )}
+
             <Typography variant='body1' component='span' sx={{ mx: 2 }}>|</Typography>
-            {props.filters.microservice?.map((microservice, index) =>
+
+            {filters.microservice?.map((microservice, index) =>
                 <Chip
                     key={index}
                     label={microservice.name}
@@ -68,8 +67,9 @@ export const ActiveFilters = (props: ActiveFiltersProps) => {
                     sx={{ mr: 1 }}
                 />
             )}
+
             <Chip
-                label={props.filters.dateRange === 'live' ? 'Live logs' : 'Date range'}
+                label={filters.dateRange === 'live' ? 'Live logs' : 'Date range'}
                 color='primary'
                 size='small'
             />
