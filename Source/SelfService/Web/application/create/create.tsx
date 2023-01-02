@@ -4,34 +4,16 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 import { Guid } from '@dolittle/rudiments';
-import { AlertBox, Button, Checkbox, Form, Input, LoadingSpinner } from '@dolittle/design-system';
+import { AlertBox, Form, LoadingSpinner } from '@dolittle/design-system';
 
 import { createApplication, HttpApplicationRequest } from '../../api/application';
 
-const styles = {
-    title: {
-        letterSpacing: '-0.5px',
-        mb: 11
-    },
-    secondaryTitle: {
-        textAlign: 'start',
-        mb: 4
-    },
-    formFieldsWrapper: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexDirection: {
-            xs: 'column',
-            sm: 'row'
-        }
-    }
-};
-
-const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const alphaCharsRegex = /[a-z0-9]$/i;
+import { InputFields } from './inputField';
+import { CheckBoxesField } from './checkBoxField';
+import { ActionButtons } from './actionButtons';
 
 type CreateApplicationParameters = {
     name: string;
@@ -49,13 +31,8 @@ type CreateApplicationParameters = {
 export const Create = () => {
     const history = useHistory();
 
-    const [serverError, setServerError] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
-
-    const handleCancel = () => {
-        const href = `/applications`;
-        history.push(href);
-    };
+    const [errorOnCreatingApp, setErrorOnCreatingApp] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleApplicationCreate = async (form: CreateApplicationParameters) => {
         setLoading(true);
@@ -84,22 +61,16 @@ export const Create = () => {
             history.push(href);
 
             setLoading(false);
-            setServerError(false);
+            setErrorOnCreatingApp(false);
         } catch (error) {
             setLoading(false);
-            setServerError(true);
+            setErrorOnCreatingApp(true);
         }
     };
 
-    const ActionButtons = () =>
-        <>
-            <Button label='Cancel' secondary onClick={handleCancel} sx={{ mr: 8 }} />
-            <Button label='Create' type='submit' />
-        </>;
-
     return (
         <>
-            <Typography variant='h2' sx={styles.title}>Create New Application</Typography>
+            <Typography variant='h2' sx={{ mb: 11 }}>Create New Application</Typography>
 
             <Form<CreateApplicationParameters>
                 initialValues={{
@@ -116,57 +87,15 @@ export const Create = () => {
                 }}
                 onSubmit={handleApplicationCreate}
             >
-                <Typography variant='body1' sx={styles.secondaryTitle}>Please provide the following information</Typography>
+                <Typography variant='body1' sx={{ textAlign: 'start', mb: 4 }}>Please provide the following information</Typography>
+                <InputFields nameId='name' contactId='contact.name' emailId='contact.email' />
 
-                <Input
-                    id='name'
-                    label='Application Name'
-                    required='Application name required.'
-                    pattern={{
-                        value: alphaCharsRegex,
-                        message: 'Name can only contain alphanumeric characters.'
-                    }}
-                    sx={{ display: 'flex' }}
-                />
-
-                <Box sx={{ ...styles.formFieldsWrapper, mt: { sm: 3.5 } }}>
-                    <Input
-                        id='contact.name'
-                        label='Contact Name'
-                        required='Contact name required.'
-                    />
-                    <Input
-                        id='contact.email'
-                        label='Contact Email'
-                        required='Contact email address required.'
-                        pattern={{
-                            value: emailRegex,
-                            message: 'Please enter a valid email address.'
-                        }}
-                    />
-                </Box>
-
-                <Typography variant='body1' sx={{ ...styles.secondaryTitle, mt: 4 }}>Select Environments</Typography>
-
-                <Box sx={{ ...styles.formFieldsWrapper, mb: 7.5 }}>
-                    <Checkbox
-                        id='environments.Prod'
-                        label='Production *'
-                        disabled
-                    />
-                    <Checkbox
-                        id='environments.Dev'
-                        label='Development'
-                    />
-                    <Checkbox
-                        id='environments.Test'
-                        label='Test'
-                    />
-                </Box>
+                <Typography variant='body1' sx={{ textAlign: 'start', mt: 4 }}>Select Environments</Typography>
+                <CheckBoxesField devId='environments.Dev' testId='environments.Test' prodId='environments.Prod' />
 
                 {loading ? <LoadingSpinner /> : <ActionButtons />}
 
-                {serverError &&
+                {errorOnCreatingApp &&
                     <AlertBox
                         title='Oops, something went wrong'
                         message='Please try again later. If problem persists, please'

@@ -7,24 +7,17 @@ import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import { Box, Typography } from '@mui/material';
-import { AddCircle } from '@mui/icons-material';
+import { AddCircle, ArrowBack } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system';
 
-import { ShortInfoWithEnvironment } from '../../api/api';
 import { LoginWrapper } from '../../layout/loginWrapper';
 import { useGlobalContext } from '../../stores/notifications';
+
+import { ShortInfoWithEnvironment } from '../../api/api';
 import { HttpResponseApplications, getApplications } from '../../api/application';
 
 import { ApplicationsList } from './applicationsList';
-import { ActionButtons } from './actionButtons';
-
-const styles = {
-    my: 2,
-    mb: 5,
-    letterSpacing: '-0.5px',
-    lineHeight: '1.625rem'
-};
 
 export const ApplicationsScreen = () => {
     const history = useHistory();
@@ -52,14 +45,14 @@ export const ApplicationsScreen = () => {
 
     if (!loaded) return null;
 
-    const onEnvironmentChoose = (application) => {
+    const onEnvironmentChoose = (application: ShortInfoWithEnvironment) => {
         const { environment, id } = application;
         setCurrentEnvironment(environment);
         const href = `/microservices/application/${id}/${environment}/overview`;
         history.push(href);
     };
 
-    const handleCreate = () => {
+    const handleApplicationCreate = () => {
         if (!canCreateApplication) {
             enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
             return;
@@ -71,17 +64,20 @@ export const ApplicationsScreen = () => {
 
     return (
         <LoginWrapper>
-            <Typography variant='h2' sx={styles}>
+            <Typography variant='h2' sx={{ my: 2, mb: 5 }}>
                 {applicationInfos.length > 0 ? 'Select Your Application & Environment' : 'There are no Applications'}
             </Typography>
 
             <Box sx={{ width: 1 }}>
-                <Button label='Create new Application' startWithIcon={<AddCircle />} onClick={handleCreate} />
+                <Button label='Create new Application' startWithIcon={<AddCircle />} onClick={handleApplicationCreate} />
             </Box>
 
             <ApplicationsList data={applicationInfos} onChoose={onEnvironmentChoose} />
 
-            <ActionButtons />
+            <Box sx={{ mt: 12.5, display: 'flex', justifyContent: 'space-around' }}>
+                <Button label='Back to tenant' secondary startWithIcon={<ArrowBack />} href='/.auth/cookies/initiate' />
+                <Button label='Log out' secondary href='/.auth/cookies/logout' />
+            </Box>;
         </LoginWrapper>
     );
 };

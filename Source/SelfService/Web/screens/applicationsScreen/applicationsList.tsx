@@ -9,6 +9,7 @@ import { List } from '@mui/material';
 
 import { Button } from '@dolittle/design-system';
 
+// Make buttons as wide as the longest one
 const styles = {
     list: {
         p: 0,
@@ -16,12 +17,10 @@ const styles = {
         display: 'inline-block'
     },
     button: {
-        width: 1,
         mb: 2,
         minWidth: 155,
         minHeight: 36,
-        display: 'block',
-        letterSpacing: '0.06em'
+        display: 'block'
     }
 };
 
@@ -38,6 +37,7 @@ export const ApplicationsList = ({ data, onChoose }: ApplicationsListProps) =>
                     variant='filled'
                     key={`${application.id}-${application.environment}`}
                     label={`${application.name}-${application.environment}`}
+                    isFullWidth
                     onClick={() => onChoose(application)}
                     sx={styles.button}
                 />
