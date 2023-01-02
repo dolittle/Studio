@@ -107,22 +107,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         const result = await updateConfigFile(applicationId, environment, microserviceId, formData);
 
         if (result.success) {
-            enqueueSnackbar(`'${file.name}' successfully added.`, {
-                action: (key) => (
-                    <>
-                        <Button label='Undo' color='secondary' aria-label='undo' onClick={async () => {
-                            await deleteConfigFile(applicationId, environment, microserviceId, file.name);
-
-                            fetchAndUpdateConfigFileNamesList();
-                            setRestartInfoBoxIsOpen(false);
-                            closeSnackbar(key);
-                        }} />
-                        <IconButton onClick={() => closeSnackbar(key)}>
-                            <CloseRounded aria-label='close' fontSize='small' sx={{ color: '#FFFFFF' }} />
-                        </IconButton>
-                    </>
-                )
-            });
+            enqueueSnackbar(`'${file.name}' successfully added.`);
 
             fetchAndUpdateConfigFileNamesList();
             setRestartInfoBoxIsOpen(true);
@@ -221,7 +206,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                     <EmptyDataTable
                         title='No configuration files yet...'
                         description={`To add your first configuration file, select 'add file'. You may select more than one at a time. Each file must be less than 3.145MB.`}
-                        buttonText='Add file(s)'
+                        label='Add file(s)'
                         handleOnClick={() => fileUploadRef.current?.showPrompt()}
                     />
                 }
