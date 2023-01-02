@@ -128,7 +128,7 @@ export const Button = ({ variant, label, disabled, secondary, size, isFullWidth,
         onClick={onClick}
         href={href}
         //@ts-ignore
-        target={target ? '_blank' : false}
+        target={target ? '_blank' : undefined}
         sx={sx}
         disableElevation
     >
