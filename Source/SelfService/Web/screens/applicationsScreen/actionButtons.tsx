@@ -3,27 +3,13 @@
 
 import React from 'react';
 
-import { Box, Button, Link, Theme } from '@mui/material';
+import { Box } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 
-const styles = {
-    letterSpacing: '0.059rem',
-    typography: 'body2',
-    fontWeight: 500,
-    mr: 8,
-    color: (theme: Theme) => theme.palette.text.primary
-};
+import { Button } from '@dolittle/design-system'
 
-export const ActionButtons = () => (
+export const ActionButtons = () =>
     <Box sx={{ mt: 12.5 }}>
-        <Link href='/.auth/cookies/initiate' sx={{ textDecoration: 'none' }}>
-            <Button startIcon={<ArrowBack />} sx={styles}>
-                Select new customer
-            </Button>
-        </Link>
-
-        <Link href={'/.auth/cookies/logout'} sx={{ textDecoration: 'none' }}>
-            <Button sx={styles}>Log Out</Button>
-        </Link>
-    </Box>
-);
+        <Button label='Select new customer' secondary startWithIcon={<ArrowBack />} href='/.auth/cookies/initiate' sx={{ mr: 8 }} />
+        <Button label='Log out' secondary href='/.auth/cookies/logout' />
+    </Box>;

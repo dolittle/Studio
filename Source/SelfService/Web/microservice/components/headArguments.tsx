@@ -43,27 +43,29 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
                         label='CMD Argument'
                         value={arg}
                         disabled={disabled}
-                        onChange={(event) => handleChange(event, argIndex)}
+                        onChange={event => handleChange(event, argIndex)}
                         size='small'
                         variant='outlined'
                         sx={{ width: 220 }}
                     />
                     <Button
                         label='Remove'
+                        secondary
                         disabled={disabled}
                         startWithIcon={<DeleteRounded />}
                         onClick={() => handleRemoveArg(argIndex)}
-                        sx={{ color: 'text.primary', height: 29, ml: 2 }}
+                        sx={{ height: 29, ml: 2 }}
                     />
                 </Box>
             ))}
 
             <Button
                 label='Add CMD argument'
+                secondary
                 startWithIcon={<AddCircleRounded />}
                 disabled={disabled}
                 onClick={handleAddArg}
-                sx={{ justifyContent: 'start', mt: 2.5, color: 'text.primary' }}
+                sx={{ justifyContent: 'start', mt: 2.5 }}
             />
         </Box>
     );

@@ -93,7 +93,7 @@ export const Create = () => {
 
     const ActionButtons = () =>
         <>
-            <Button label='Cancel' onClick={handleCancel} sx={{ mr: 8, color: 'text.primary' }} />
+            <Button label='Cancel' secondary onClick={handleCancel} sx={{ mr: 8 }} />
             <Button label='Create' type='submit' />
         </>;
 

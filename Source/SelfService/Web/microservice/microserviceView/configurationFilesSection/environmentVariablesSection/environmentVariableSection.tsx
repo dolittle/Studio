@@ -37,12 +37,7 @@ const envVariableColumns: GridColDef<EnvironmentVariableTableRow>[] = [
         valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
         editable: true,
         renderCell: ({ value }) => (
-            <Button
-                variant='text'
-                label={value ? 'Yes' : 'No'}
-                sx={{ color: 'text.primary', width: 1, height: 1 }}
-                endWithIcon={<ArrowDropDown />}
-            />
+            <Button label={value ? 'Yes' : 'No'} secondary endWithIcon={<ArrowDropDown />} sx={{ width: 1, height: 1 }} />
         ),
         width: 90
     }
@@ -240,8 +235,8 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                 <Box sx={{ mb: 2.875, button: { 'mr': 6.25, '&:last-of-type': { mr: 0 } } }}>
                     <Button
                         label='Add new variable row'
-                        startWithIcon={<AddCircle />}
                         disabled={disableAddButton}
+                        startWithIcon={<AddCircle />}
                         onClick={handleEnvVariableAdd}
                     />
                     <Button

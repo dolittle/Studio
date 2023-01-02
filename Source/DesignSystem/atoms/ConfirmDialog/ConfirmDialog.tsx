@@ -50,7 +50,7 @@ export const ConfirmDialog = ({ isOpen, id, title, description, children, handle
         </DialogContent>
 
         <DialogActions sx={{ mr: 1 }}>
-            <Button onClick={handleCancel} label={cancelText} sx={{ color: 'text.primary' }} />
+            <Button onClick={handleCancel} label={cancelText} secondary />
             <Button onClick={handleConfirm} label={confirmText} />
         </DialogActions>
     </Dialog>;

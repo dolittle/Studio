@@ -6,8 +6,6 @@ import React, { MouseEventHandler, ReactElement } from 'react';
 import { Button as MuiButton, SvgIconProps, SxProps } from '@mui/material';
 import { ErrorRounded } from '@mui/icons-material';
 
-import { Link } from '../Link/Link';
-
 export type ButtonProps = {
     /**
      * Required. The text to display on the button.
@@ -30,10 +28,15 @@ export type ButtonProps = {
     disabled?: boolean;
 
     /**
-     * Set button color.
-     * @default primary
+     * Set secondary button color.
+     * 
+     * Secondary button are reserved for less-pronounced actions, including those found in dialogs, cards, 
+     * and data charts and can include action items such as ‘learn more’ or ‘cancel’.
+     * 
+     * Default primary button are for high emphasis and primary actions, such as a save button or a next button in a form.
+     * @default false
      */
-    color?: 'primary' | 'secondary';
+    secondary?: boolean;
 
     /**
      * Set button size.
@@ -78,7 +81,7 @@ export type ButtonProps = {
      * 
      * Use it only if a link doesn't have a meaningful href.
      * 
-     * Use Link {@link Link} component intead if href has a meaningful value for better accessibility.
+     * Use Link component intead if href has a meaningful value for better accessibility.
      */
     href?: string;
 
@@ -87,7 +90,7 @@ export type ButtonProps = {
      * 
      * Set target to 'true' if you want the link to open in a new tab.
      * @default false
-     * @type {boolean}
+     * @type boolean
      */
     target?: boolean;
 
@@ -112,11 +115,11 @@ export type ButtonProps = {
  * @example
  * <Button label='Click me' variant='filled' isFullWidth startWithIcon={<AddCircle />} />
  */
-export const Button = ({ variant, label, disabled, color, size, isFullWidth, startWithIcon, endWithIcon, target, type, onClick, href, sx }: ButtonProps): ReactElement =>
+export const Button = ({ variant, label, disabled, secondary, size, isFullWidth, startWithIcon, endWithIcon, target, type, onClick, href, sx }: ButtonProps): ReactElement =>
     <MuiButton
         variant={variant === 'filled' ? 'contained' : variant || 'text'}
         disabled={disabled}
-        color={color}
+        color={secondary ? 'secondary' : 'primary'}
         size={size || 'small'}
         fullWidth={variant === 'fullwidth' || isFullWidth}
         startIcon={variant === 'danger' ? <ErrorRounded /> : startWithIcon}
@@ -125,7 +128,7 @@ export const Button = ({ variant, label, disabled, color, size, isFullWidth, sta
         onClick={onClick}
         href={href}
         //@ts-ignore
-        target={target ? '_blank' : undefined}
+        target={target ? '_blank' : false}
         sx={sx}
         disableElevation
     >

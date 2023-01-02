@@ -264,7 +264,7 @@ const components: Components & DataGridProComponents = {
             {
                 props: { color: 'secondary' },
                 style: {
-                    color: palette?.text?.secondary,
+                    color: palette?.text?.primary,
                 }
             },
         ],
