@@ -64,6 +64,6 @@ export const NoMicroservices = ({ onCreate }: NoMicroservicesProps) =>
         </Typography>
 
         <Typography variant='body1'>
-            To deploy a new mircoservice click on the 'deploy new microservice' button or 'deploy new' tab at the top.
+            To deploy a new mircoservice click on the ‘deploy a microservice’ button or ‘deploy new’ tab at the top.
         </Typography>
     </Grid>;

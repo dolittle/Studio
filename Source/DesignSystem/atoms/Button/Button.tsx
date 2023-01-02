@@ -14,7 +14,7 @@ export type ButtonProps = {
 
     /**
      * Button variants.
-     * 
+     *
      * - fullwidth: Button with extra styling and take up the full width of its container.
      * - danger: Danger buttons are seldom used and reserved for cases where the primary action is destructive such as deleting content.
      * @default text
@@ -29,10 +29,10 @@ export type ButtonProps = {
 
     /**
      * Set secondary button color.
-     * 
-     * Secondary button are reserved for less-pronounced actions, including those found in dialogs, cards, 
+     *
+     * Secondary button are reserved for less-pronounced actions, including those found in dialogs, cards,
      * and data charts and can include action items such as ‘learn more’ or ‘cancel’.
-     * 
+     *
      * Default primary button are for high emphasis and primary actions, such as a save button or a next button in a form.
      * @default false
      */
@@ -53,14 +53,14 @@ export type ButtonProps = {
     /**
      * Add an icon to the start of the button. Support only React SVG icons.
      * @default undefined
-     * @type ReactElement<SvgIconProps>
+     * @type {ReactElement<SvgIconProps>}
      */
     startWithIcon?: ReactElement<SvgIconProps>;
 
     /**
      * Add an icon to the end of the button. Support only React SVG icons.
      * @default undefined
-     * @type ReactElement<SvgIconProps>
+     * @type {ReactElement<SvgIconProps>}
      */
     endWithIcon?: ReactElement<SvgIconProps>;
 
@@ -78,19 +78,19 @@ export type ButtonProps = {
 
     /**
      * Add a href to the button. If this is set the button will be rendered as an anchor tag.
-     * 
+     *
      * Use it only if a link doesn't have a meaningful href.
-     * 
+     *
      * Use Link component intead if href has a meaningful value for better accessibility.
      */
     href?: string;
 
     /**
      * Use with external links.
-     * 
+     *
      * Set target to 'true' if you want the link to open in a new tab.
      * @default false
-     * @type boolean
+     * @type {boolean}
      */
     target?: boolean;
 
@@ -103,7 +103,7 @@ export type ButtonProps = {
 
     /**
      * Children is not a valid prop.
-     * @type - never
+     * @type {never}
      */
     children?: never;
 };
