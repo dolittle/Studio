@@ -3,7 +3,9 @@
 
 import React from 'react';
 
-import { Button, Card, CardActions, CardContent, CardHeader, Link, Typography } from '@mui/material';
+import { Card, CardActions, CardContent, CardHeader, Typography } from '@mui/material';
+
+import { Button } from '@dolittle/design-system'
 
 const styles = {
     card: {
@@ -15,28 +17,19 @@ const styles = {
             background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.09) 100%), #191A21',
             boxShadow: '0px 2px 4px - 1px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12)'
         }
-    },
-    button: {
-        color: 'primary.main',
-        lineHeight: '1.375rem',
-        letterSpacing: '0.06em'
-    },
-    learnMoreLink: {
-        color: 'text.primary',
-        textDecoration: 'none'
     }
 };
 
 type SimpleCardProps = {
-    kind: string
-    name: string
-    description: string
-    onCreate: (kind: string) => void
+    kind: string;
+    name: string;
+    description: string;
+    onCreate: (kind: string) => void;
 };
 
 export const SimpleCard = ({ kind, name, description, onCreate }: SimpleCardProps) => {
 
-    const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleDeploySelect = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         event.preventDefault();
         onCreate(kind);
@@ -51,17 +44,8 @@ export const SimpleCard = ({ kind, name, description, onCreate }: SimpleCardProp
             </CardContent>
 
             <CardActions>
-                <Button sx={styles.button}>
-                    <Link
-                        sx={{ ...styles.button, ...styles.learnMoreLink }}
-                        href='https://dolittle.io/docs/platform/requirements/'
-                        target='_blank'
-                    >
-                        Learn more
-                    </Link>
-                </Button>
-
-                <Button sx={styles.button} size="small" onClick={onClick}>Deploy</Button>
+                <Button label='Learn more' secondary href='https://dolittle.io/docs/platform/requirements/' target sx={{ mr: 2.25 }} />
+                <Button label='Deploy' onClick={handleDeploySelect} />
             </CardActions>
         </Card>
     );
