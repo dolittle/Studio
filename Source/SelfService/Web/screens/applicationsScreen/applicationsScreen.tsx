@@ -76,17 +76,12 @@ export const ApplicationsScreen = () => {
             </Typography>
 
             <Box sx={{ width: 1 }}>
-                <Button
-                    label='Create new Application'
-                    startWithIcon={<AddCircle />}
-                    onClick={handleCreate}
-                />
+                <Button label='Create new Application' startWithIcon={<AddCircle />} onClick={handleCreate} />
             </Box>
 
             <ApplicationsList data={applicationInfos} onChoose={onEnvironmentChoose} />
 
             <ActionButtons />
-
         </LoginWrapper>
     );
 };

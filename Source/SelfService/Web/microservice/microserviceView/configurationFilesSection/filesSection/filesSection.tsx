@@ -6,10 +6,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
 
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
-import { IconButton } from '@mui/material';
-import { CloseRounded } from '@mui/icons-material';
 
-import { Accordion, Button } from '@dolittle/design-system';
+import { Accordion } from '@dolittle/design-system';
 
 import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../api/api';
 
@@ -33,7 +31,7 @@ type FilesSectionProps = {
 
 export const FilesSection = ({ applicationId, environment, microserviceName, microserviceId }: FilesSectionProps) => {
     const fileUploadRef = useRef<FileUploadFormRef>(null);
-    const { closeSnackbar, enqueueSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
 
     const [filesPanelIsExpanded, setFilesPanelIsExpanded] = useState(true);
     const [configFileTableRows, setConfigFileTableRows] = useState<ConfigFilesTableRow[]>([]);

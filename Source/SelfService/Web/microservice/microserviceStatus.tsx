@@ -26,8 +26,7 @@ const styles = {
     },
     containerStatus: {
         ml: 3,
-        pointerEvents: 'none',
-        letterSpacing: '0.06em'
+        pointerEvents: 'none'
     }
 };
 
@@ -109,10 +108,11 @@ export const ContainerHealthStatus = ({ status }: ContainerHealthStatusProps) =>
 
     return (
         <Button
+            label={label}
             variant='filled'
             startWithIcon={icon}
             sx={{ ...styles.containerStatus, ...styles.text, backgroundColor }}
-            label={label} />
+        />
     );
 };
 
