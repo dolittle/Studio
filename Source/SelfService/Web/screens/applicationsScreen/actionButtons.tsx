@@ -6,7 +6,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 
-import { Button } from '@dolittle/design-system'
+import { Button } from '@dolittle/design-system';
 
 export const ActionButtons = () =>
     <Box sx={{ mt: 12.5 }}>
