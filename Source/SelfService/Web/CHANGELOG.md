@@ -1,3 +1,30 @@
+# [2.17.1] - 2023-1-2 [PR: #290](https://github.com/dolittle/Studio/pull/290)
+## Summary
+
+Add Dark theme to the Storybook as it fits better with Studio.
+Added jsDocs for Button component.
+Created custom button variant 'danger' for cases where the primary action is destructive such as deleting content.
+Created cutom button variant 'fullwidth' that makes button as wide, as its container. Used mostly in Data Table Grids when there is no rows yet.
+
+<img width="1096" alt="Screenshot 2023-01-02 at 12 11 10" src="https://user-images.githubusercontent.com/19160439/210259819-f41b25e9-77c5-4dba-8942-fe54f2872afc.png">
+
+### Added
+
+- Dark theme to Storybook. Components didn't had good contrast with white background.
+- Custom button variants: 'danger' and 'fullwith'.
+- Secondary color variant to button.
+
+### Changed
+
+- Button default variant to 'text'.
+- Renamed button that adds new environment variable file.
+- Renamed button that takes back to tenant.
+
+### Removed
+
+- Actions on the Storybook Canvas. This is still to be discussed but removed for a better user experience.
+
+
 # [2.17.0] - 2022-12-27 [PR: #289](https://github.com/dolittle/Studio/pull/289)
 ## Summary
 
