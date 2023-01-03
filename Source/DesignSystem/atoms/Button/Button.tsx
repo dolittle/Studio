@@ -65,6 +65,16 @@ export type ButtonProps = {
     endWithIcon?: ReactElement<SvgIconProps>;
 
     /**
+     * Role of the button. Default is button but for example if you want to use the button as a link you can set it to link.
+     *
+     * Role 'none' combined with component='span' is a hack for Dashlane browser extension to not interfere with the button
+     * and slow down the page.
+     * @default button
+     */
+    role?: 'button' | 'none';
+    component?: 'button' | 'span';
+
+    /**
      * Button type. Default is button but for example if you want to use the button as a submit button you can set it to submit.
      * @default button
      */
@@ -115,7 +125,9 @@ export type ButtonProps = {
  * @example
  * <Button label='Click me' variant='filled' isFullWidth startWithIcon={<AddCircle />} />
  */
-export const Button = ({ variant, label, disabled, secondary, size, isFullWidth, startWithIcon, endWithIcon, target, type, onClick, href, sx }: ButtonProps): ReactElement =>
+export const Button = (
+    { variant, label, disabled, secondary, size, isFullWidth, startWithIcon, endWithIcon, role, component, type, href, target, onClick, sx }: ButtonProps): ReactElement =>
+
     <MuiButton
         variant={variant === 'filled' ? 'contained' : variant || 'text'}
         disabled={disabled}
@@ -124,11 +136,14 @@ export const Button = ({ variant, label, disabled, secondary, size, isFullWidth,
         fullWidth={variant === 'fullwidth' || isFullWidth}
         startIcon={variant === 'danger' ? <ErrorRounded /> : startWithIcon}
         endIcon={endWithIcon}
-        type={type || 'button'}
-        onClick={onClick}
+        role={role}
+        //@ts-ignore
+        component={component}
+        type={type}
         href={href}
         //@ts-ignore
         target={target ? '_blank' : undefined}
+        onClick={onClick}
         sx={sx}
         disableElevation
     >
