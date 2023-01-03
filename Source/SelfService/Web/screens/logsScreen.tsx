@@ -23,8 +23,6 @@ import { LogPanel } from '../logging/logPanel';
 
 import { withRouteApplicationState } from './withRouteApplicationState';
 
-import '../application/applicationScreen.scss';
-
 /**
  * A day in Loki (log backend) time. Nanoseconds.
  */
@@ -145,7 +143,6 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
                         />
                 }
             </Box>
-        </LayoutWithSidebar >
+        </LayoutWithSidebar>
     );
 });
-
