@@ -8,7 +8,6 @@ import { useSnackbar } from 'notistack';
 import { CircularProgress, Grid, SelectChangeEvent, Typography } from '@mui/material';
 import { DropDownMenu } from '../../theme/dropDownMenu';
 import { TextField as ThemedTextField } from '../../theme/textField';
-import { Switch as ThemedSwitch } from '../../theme/switch';
 import { Button as ThemedButton } from '../../theme/button';
 
 import { Guid } from '@dolittle/rudiments';
@@ -18,6 +17,8 @@ import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
 
 import { HttpResponseApplication } from '../../api/application';
 import { HeadArguments } from '../components/headArguments';
+
+import { SwitchToggle } from '@dolittle/design-system';
 
 const styles = {
     data: {
@@ -230,7 +231,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
 
                 <Grid item>
                     <Typography variant='h2'>Ingress</Typography>
-                    <ThemedSwitch label={isPublic ? 'Public' : 'Private'} checked={isPublic} onChange={handleIsPublicChanged} />
+                    <SwitchToggle title={isPublic ? 'Public' : 'Private'} isChecked={isPublic} onChange={handleIsPublicChanged} />
                 </Grid>
                 {isPublic &&
                     <>
@@ -260,11 +261,11 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 }
 
 
-                {showConnectionM3ConnectorOption &&
+                {!showConnectionM3ConnectorOption &&
                     <>
                         <Grid item>
                             <Typography variant='h2'>Connect to m3 Connector</Typography>
-                            <ThemedSwitch label={connectionM3Connector ? 'yes' : 'no'} checked={connectionM3Connector} onChange={handleConnectionM3ConnectorChanged} />
+                            <SwitchToggle title={connectionM3Connector ? 'yes' : 'no'} isChecked={connectionM3Connector} onChange={handleConnectionM3ConnectorChanged} />
                         </Grid>
                     </>
                 }
