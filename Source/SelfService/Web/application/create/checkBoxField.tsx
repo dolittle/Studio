@@ -20,7 +20,13 @@ const styles = {
     }
 };
 
-export const CheckBoxesField = ({ prodId, devId, testId }) =>
+type CheckBoxesFieldProps = {
+    prodId: string;
+    devId: string;
+    testId: string;
+};
+
+export const CheckBoxesField = ({ prodId, devId, testId }: CheckBoxesFieldProps) =>
     <Box sx={styles.formFieldsWrapper}>
         <Checkbox
             id={prodId}
