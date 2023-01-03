@@ -29,10 +29,10 @@ metadata.parameters = {
             
             **Types of Dialogs**
             - *Alert dialogs* are urgent interruptions, requiring acknowledgement or action, that inform the user about a situation. Most alerts do not need titles. They summarize a decision in a sentence or two by either asking a question or making a statement related to the action buttons. If a title is required use a clear question or statement with an explanation in the content area. Avoid apologies, ambiguity or questions such as "warning!" or "are you sure?" Alert dialogs must always contain an action item such as "agree", "accept", or "continue" and a dismissive action such as "cancel", "disagree" or "deny". Never provide a third action that leads the user away, leaving the task unfinished. 
-            - *Form dialogs* allow users to fill out form fields within a dialog. This might include a textfield input, a checkbox, a radio selection, or a selection from a dropdown menu. Allowing tabbing so the user can jump from one input to the next.`
-         
-        }
-    }
+            - *Form dialogs* allow users to fill out form fields within a dialog. This might include a textfield input, a checkbox, a radio selection, or a selection from a dropdown menu. Allowing tabbing so the user can jump from one input to the next.
+`,
+        },
+    },
 };
 
 export default metadata;
