@@ -261,7 +261,7 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                 }
 
 
-                {!showConnectionM3ConnectorOption &&
+                {showConnectionM3ConnectorOption &&
                     <>
                         <Grid item>
                             <Typography variant='h2'>Connect to m3 Connector</Typography>
