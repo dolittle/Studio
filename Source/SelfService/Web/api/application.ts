@@ -100,7 +100,7 @@ export async function isApplicationOnline(applicationID: string): Promise<Applic
             mode: 'cors',
         });
 
-    return response
+    return response;
 };
 
 export async function getLiveApplications(): Promise<any> {

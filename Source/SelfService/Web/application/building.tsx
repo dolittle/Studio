@@ -36,7 +36,7 @@ export const Building = () => {
                 <AlertBox title='Could not create application.' message='Please try again later. If problem persists, please contact support.' severity='error' />
                 <Button label='Go back to applications page' secondary startWithIcon={<ArrowBack />} href='/applications/' sx={{ mt: 4 }} />
             </Box>
-        )
+        );
     };
 
     return (
