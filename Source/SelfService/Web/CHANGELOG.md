@@ -1,3 +1,20 @@
+# [2.19.0] - 2023-1-3 [PR: #296](https://github.com/dolittle/Studio/pull/296)
+## Summary
+
+To fix the problem with the Dashlane browser extension, I added component='span' and role='none' to the Button component.
+
+<img width="521" alt="Screenshot 2023-01-03 at 15 16 51" src="https://user-images.githubusercontent.com/19160439/210365774-7dc02984-fc76-444a-b8f3-a0f512006e01.png">
+
+Otherwise, Dashlane wanted to interact with the regular button component and significantly slowed down the 'live logs' page.
+
+<img width="283" alt="Screenshot 2023-01-03 at 14 11 04" src="https://user-images.githubusercontent.com/19160439/210365748-8795db92-dca5-4654-988f-660da49502b7.png">
+
+### Added
+
+- Component props to Button.
+- Role props to Button.
+
+
 # [2.18.0] - 2023-1-3 [PR: #292](https://github.com/dolittle/Studio/pull/292)
 ## Summary
 
