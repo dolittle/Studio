@@ -50,7 +50,6 @@ export type HttpResponseApplication = {
     microservices: any[] // Not great
 };
 
-
 export type HttpResponseApplicationAccess = {
     id: string;
     name: string;
@@ -72,7 +71,7 @@ export async function getPersonalisedInfo(applicationId: string): Promise<any> {
         });
     const jsonResult = await result.json() as any;
     return jsonResult;
-}
+};
 
 
 export async function createApplication(input: HttpApplicationRequest): Promise<JobInfo | any> {
@@ -90,7 +89,7 @@ export async function createApplication(input: HttpApplicationRequest): Promise<
 
     const data = await parseJSONResponse(response);
     return data;
-}
+};
 
 export async function isApplicationOnline(applicationID: string): Promise<ApplicationBuildState | any> {
     const url = `${getServerUrlPrefix()}/application/${applicationID}/check/isonline`;
@@ -101,9 +100,8 @@ export async function isApplicationOnline(applicationID: string): Promise<Applic
             mode: 'cors',
         });
 
-    const data = await parseJSONResponse(response);
-    return data;
-}
+    return response
+};
 
 export async function getLiveApplications(): Promise<any> {
     const url = `${getServerUrlPrefix()}/live/applications`;
@@ -115,7 +113,7 @@ export async function getLiveApplications(): Promise<any> {
         });
     const jsonResult = await result.json();
     return jsonResult;
-}
+};
 
 export async function getApplications(): Promise<HttpResponseApplications> {
     const url = `${getServerUrlPrefix()}/applications`;
@@ -128,7 +126,7 @@ export async function getApplications(): Promise<HttpResponseApplications> {
     const jsonResult: HttpResponseApplications = await result.json();
     jsonResult.applications = jsonResult.applications || [];
     return jsonResult;
-}
+};
 
 export async function getApplication(applicationId: string): Promise<HttpResponseApplication> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}`;
@@ -151,7 +149,7 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
         return environment;
     });
     return jsonResult;
-}
+};
 
 
 export async function getAdminApplicationAccess(customerId: string, applicationId: string): Promise<HttpResponseApplicationAccess> {
@@ -166,7 +164,7 @@ export async function getAdminApplicationAccess(customerId: string, applicationI
 
     const data = await parseJSONResponse(response);
     return data;
-}
+};
 
 export async function adminApplicationAccessAddUser(customerId: string, applicationId: string, input: HttpInputApplicationAccess): Promise<HttpResponseMessage> {
     const url = `${getServerUrlPrefix()}/admin/customer/${customerId}/application/${applicationId}/access/user`;
@@ -184,7 +182,7 @@ export async function adminApplicationAccessAddUser(customerId: string, applicat
 
     const data = await parseJSONResponse(response);
     return data;
-}
+};
 
 export async function adminApplicationAccessRemoveUser(customerId: string, applicationId: string, input: HttpInputApplicationAccess): Promise<HttpResponseMessage> {
     const url = `${getServerUrlPrefix()}/admin/customer/${customerId}/application/${applicationId}/access/user`;
@@ -202,4 +200,4 @@ export async function adminApplicationAccessRemoveUser(customerId: string, appli
 
     const data = await parseJSONResponse(response);
     return data;
-}
+};
