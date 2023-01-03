@@ -107,7 +107,7 @@ export const LogLine = ({ line, showContextButton, loading, onClickShowLineConte
             {showContextButton === true && (
                 <Box sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
                     <SkeletonWhenLoading loading={loading}>
-                        <Button label='Show' secondary sx={{ p: 0 }} onClick={event => onClickShowLineContext?.(timestamp, labels, event)} />
+                        <Button label='Show' secondary component='span' role='none' sx={{ p: 0 }} onClick={event => onClickShowLineContext?.(timestamp, labels, event)} />
                     </SkeletonWhenLoading>
                 </Box>
             )}
