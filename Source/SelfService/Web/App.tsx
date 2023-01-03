@@ -10,7 +10,6 @@ import { SnackbarProvider } from 'notistack';
 import { LicenseInfo } from '@mui/x-license-pro';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
-
 import { Box, Slide, SlideProps } from '@mui/material';
 import { ErrorRounded } from '@mui/icons-material';
 
@@ -31,7 +30,6 @@ import { LayoutWithSidebar } from './layout/layoutWithSidebar';
 import { LoginScreen } from './screens/loginScreen';
 import { BackupsScreen } from './screens/backupsScreen';
 import { DocumentationScreen } from './screens/documentationScreen';
-//import { InsightsScreen } from './screens/insightsScreen';
 import { MicroservicesScreen } from './screens/microservicesScreen';
 import { Screen as AdminScreen } from './screens/adminScreen';
 import { ApplicationsScreen } from './screens/applicationsScreen/applicationsScreen';
@@ -112,10 +110,6 @@ export const App = () => {
                                             <Route path='/documentation/application/:applicationId/:environment'>
                                                 <DocumentationScreen />
                                             </Route>
-
-                                            {/* <Route path='/insights/application/:applicationId/:environment'>
-                                                <InsightsScreen />
-                                            </Route> */}
 
                                             <Route path='/containerregistry/application/:applicationId/:environment'>
                                                 <ContainerRegistryScreen />

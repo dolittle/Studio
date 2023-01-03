@@ -1,16 +1,13 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { getServerUrlPrefix, ShortInfo } from './api';
 
-// HACK for getting testdata
-//const testData = require('./testdata/insights-runtime-v1.json');
-
 export type BackupsForApplication = {
-    application: ShortInfo
-    environment: string
-    files: string[]
+    application: ShortInfo;
+    environment: string;
+    files: string[];
 };
-
 
 export type BackupLink = {
     applicationId: string;
@@ -31,17 +28,15 @@ export async function getLatestBackupLinkByApplication(applicationID: string, en
         return '';
     }
 
-
     const input: BackupLinkShareInput = {
         environment,
         applicationId: applicationID,
-        file_path: backups.files[0],
+        file_path: backups.files[0]
     };
 
     const shareLink = await getLink(input);
     return shareLink.url;
-}
-
+};
 
 export async function getBackupsByApplication(applicationID: string, environment: string): Promise<BackupsForApplication> {
     const url = `${getServerUrlPrefix()}/backups/logs/latest/by/app/${applicationID}/${environment}`;
@@ -55,10 +50,11 @@ export async function getBackupsByApplication(applicationID: string, environment
 
     const body: any = await response.json() as BackupsForApplication;
     return body;
-}
+};
 
 export async function getLink(input: BackupLinkShareInput): Promise<BackupLink> {
     const url = `${getServerUrlPrefix()}/backups/logs/link`;
+
     const response = await fetch(
         url,
         {
@@ -67,7 +63,7 @@ export async function getLink(input: BackupLinkShareInput): Promise<BackupLink> 
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(input),
+            body: JSON.stringify(input)
         });
 
     if (!response.ok) {
@@ -78,4 +74,4 @@ export async function getLink(input: BackupLinkShareInput): Promise<BackupLink> 
 
     const body = await response.json() as BackupLink;
     return body;
-}
+};
