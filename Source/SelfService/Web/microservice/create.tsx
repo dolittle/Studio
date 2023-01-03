@@ -8,21 +8,22 @@ import { useHistory, useLocation } from 'react-router';
 import { Grid, Typography } from '@mui/material';
 
 import { Create as Base } from './base/create';
-import { Create as PurchaseOrder } from './purchaseOrder/create';
 
 import { HttpResponseApplication } from '../api/application';
 
 import { SimpleCard } from './create/card';
 
-const styles = {
-    gridContainer: {
-        maxInlineSize: '920px',
+const items = [
+    {
+        kind: 'dolittle-microservice',
+        name: 'Base (default)',
+        description: 'Setup a container with the Dolittle runtime ready to consume your events.'
     }
-};
+];
 
 type CreateProps = {
-    environment: string
-    application: HttpResponseApplication
+    environment: string;
+    application: HttpResponseApplication;
 };
 
 export const Create = ({ environment, application }: CreateProps) => {
@@ -30,19 +31,6 @@ export const Create = ({ environment, application }: CreateProps) => {
     const location = useLocation();
 
     const searchParams = new URLSearchParams(location.search);
-
-    const items = [
-        {
-            kind: 'dolittle-microservice',
-            name: 'Base (default)',
-            description: 'Setup a container with the Dolittle runtime ready to consume your events.'
-        },
-        {
-            kind: 'purchase-order-api',
-            name: 'Purchase Order',
-            description: 'Integrate your purchase orders from M3.'
-        }
-    ];
 
     const kindViaParams = (): string => {
         if (!searchParams.has('kind')) {
@@ -74,7 +62,7 @@ export const Create = ({ environment, application }: CreateProps) => {
             <>
                 <Typography variant='h1' my={3}>Microservices</Typography>
 
-                <Grid container rowSpacing={4} columnSpacing={4} sx={styles.gridContainer}>
+                <Grid container rowSpacing={4} columnSpacing={4} sx={{ maxWidth: 920 }}>
                     {items.map(data => (
                         <Grid key={`pick-microservice-kind-${data.kind}`} item xs={12} md={6}>
                             <SimpleCard {...data} onCreate={onCreate} />
@@ -94,10 +82,6 @@ export const Create = ({ environment, application }: CreateProps) => {
         >
             {microserviceTypeState === 'dolittle-microservice' && (
                 <Base application={application} environment={environment} />
-            )}
-
-            {microserviceTypeState === 'purchase-order-api' && (
-                <PurchaseOrder application={application} environment={environment} />
             )}
         </Grid>
     );
