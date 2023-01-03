@@ -87,21 +87,6 @@ export type MicroserviceRawDataLogIngestorWebhookConfig = {
     // TODO should we add the microservice that created it?
     // It could be optional
 };
-export type MicroservicePurchaseOrder = {
-    dolittle: MicroserviceDolittle;
-    name: string;
-    kind: string;
-    environment: string;
-    extra: MicroservicePurchaseOrderExtra;
-};
-
-export type MicroservicePurchaseOrderExtra = {
-    ingress: MicroserviceIngressPath;
-    headImage: string;
-    runtimeImage: string;
-    webhooks: MicroserviceRawDataLogIngestorWebhookConfig[]; // TODO We either need to store the webhooks to rebuild
-    rawDataLogName: string;
-};
 
 // We want to know the state when in this microservice.
 // When in rawdatlog we want to know the webhooks.

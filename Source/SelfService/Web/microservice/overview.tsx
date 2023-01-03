@@ -13,7 +13,6 @@ import { HttpResponseApplication } from '../api/application';
 import { microservices, MicroserviceStore } from '../stores/microservice';
 
 import { MicroserviceView as BaseView } from './microserviceView/microserviceView';
-import { View as PurchaseOrderApiView } from './purchaseOrder/view';
 
 type OverviewProps = {
     application: HttpResponseApplication;
@@ -48,7 +47,7 @@ export const Overview = ({ application, microserviceId, environment }: OverviewP
     useEffect(() => {
         Promise.all([
             getPodStatus(application.id, environment, microserviceId)
-        ]).then((values) => {
+        ]).then(values => {
             setPodsData(values[0]);
             setLoaded(true);
         });
@@ -72,15 +71,6 @@ export const Overview = ({ application, microserviceId, environment }: OverviewP
                     currentMicroservice={currentMicroservice}
                 />
             );
-        case 'purchase-order-api':
-            return (
-                <PurchaseOrderApiView
-                    applicationId={application.id}
-                    environment={environment}
-                    microserviceId={microserviceId}
-                    podsData={podsData}
-                />
-            );
         default:
             return (
                 <>
@@ -95,12 +85,13 @@ export const Overview = ({ application, microserviceId, environment }: OverviewP
 };
 
 
-function whichSubView(currentMicroservice: any): string {
+function whichSubView(currentMicroservice: MicroserviceStore): string {
     // Today we try and map subviews based on kind, its not perfect
     let kind = currentMicroservice.kind;
 
     if (kind === '') {
         kind = 'simple'; // TODO change
     }
+
     return kind;
-}
+};
