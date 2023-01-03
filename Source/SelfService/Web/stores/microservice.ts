@@ -91,7 +91,7 @@ export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
             kind: '', // TODO life would be so much simpler if we knew what this was, maybe adding the label for it
             environment: element.environment,
             edit: {} as any,
-            live: element,
+            live: element
         };
 
         const index = data.findIndex(item => item.id === storeItem.id && item.environment === storeItem.environment);
@@ -152,29 +152,25 @@ export const saveRawDataLogIngestorMicroservice = (input: MicroserviceRawDataLog
 export const canEditMicroservices = (environments: HttpInputApplicationEnvironment[], environment: string): boolean =>
     environments.some(info => info.name === environment && info.automationEnabled);
 
-export const canEditMicroservice = (environments: HttpInputApplicationEnvironment[], environment: string, microserviceId: string): boolean => {
+export const findCurrentMicroservice = (microserviceId: string): MicroserviceStore => {
     const data = get(microservices);
+    return data.find(ms => ms.id === microserviceId);
+};
 
-    const currentMicroservice: MicroserviceStore = data.find(ms => ms.id === microserviceId);
-
-    if (!currentMicroservice) return false;
-
+export const canEditMicroservice = (environments: HttpInputApplicationEnvironment[], environment: string, microserviceId: string): boolean => {
     if (!canDeleteMicroservice(environments, environment, microserviceId)) return false;
 
-    if (currentMicroservice.id === '') return false;
+    const currentMicroservice: MicroserviceStore = findCurrentMicroservice(microserviceId);
+    if (!currentMicroservice || !currentMicroservice?.edit?.dolittle) return false;
 
-    if (currentMicroservice.kind === '') return false;
-
-    if (currentMicroservice.kind === 'unknown') return false;
-
-    if (!currentMicroservice?.edit?.dolittle) return false;
+    const { id, kind } = currentMicroservice;
+    if (id === '' || kind === '' || kind === 'unknown') return false;
 
     return true;
 };
 
 export const canDeleteMicroservice = (environments: HttpInputApplicationEnvironment[], environment: string, microserviceId: string): boolean => {
-    const data = get(microservices);
-    const currentMicroservice: MicroserviceStore = data.find(ms => ms.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = findCurrentMicroservice(microserviceId);
     if (!currentMicroservice) return false;
 
     return canEditMicroservices(environments, environment);
