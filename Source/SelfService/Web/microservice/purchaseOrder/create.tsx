@@ -80,6 +80,7 @@ export const Create = ({ application: { id, customerId }, environment }: CreateP
                         render: () => <AlertBox
                             severity='error'
                             title='Health Status is only available after microservice is created.'
+                            message='Please create the microservice first.'
                             sx={{ maxWidth: 520 }}
                         />,
                     }
