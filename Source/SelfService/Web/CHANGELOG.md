@@ -1,3 +1,23 @@
+# [2.18.0] - 2023-1-3 [PR: #292](https://github.com/dolittle/Studio/pull/292)
+## Summary
+
+Made cleanup - deleted unused code.
+
+### Changed
+
+- Refactored layoutWithSidebar.tsx
+- Refactored m3connector/container.tsx
+
+### Removed
+
+- podStatus.tsx and route to that page
+- PurchaseOrder
+- switch.tsx
+- themeScreen.tsx
+- todoScreen.tsx
+- insightScreen and related content
+
+
 # [2.17.2] - 2023-1-3 [PR: #291](https://github.com/dolittle/Studio/pull/291)
 ## Summary
 
