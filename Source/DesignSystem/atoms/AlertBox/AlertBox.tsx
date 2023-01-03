@@ -15,7 +15,7 @@ type LinkContent = {
 export type AlertBoxProps = {
     severity: 'error' | 'warning' | 'info' | 'success';
     title: string;
-    message?: string;
+    message: string;
     endWithLink?: LinkContent;
     isDismissable?: boolean;
     onDismiss?: () => void;
