@@ -1,29 +1,24 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { History, LocationState } from 'history';
 
 import './layout.scss';
-import { AlertBox } from '../components/alertBox';
+
 import { HttpResponseApplication } from '../api/application';
-import {
-    BackupRounded,
-    HexagonRounded,
-    InsightsRounded,
-    FindInPageRounded,
-    TextSnippetRounded,
-    PolylineRounded,
-    SettingsRounded
-} from '@mui/icons-material';
-import { List, ListItemButton, ListItemButtonBaseProps, ListItemButtonProps, ListItemIcon, ListItemText, Paper, Theme } from '@mui/material';
+
+import { BackupRounded, HexagonRounded, FindInPageRounded, TextSnippetRounded, PolylineRounded, SettingsRounded } from '@mui/icons-material';
+import { List, ListItemButton, ListItemButtonBaseProps, ListItemIcon, ListItemText, Paper } from '@mui/material';
+
 import { ContainerRegistryRounded } from '../assets/icons';
 import { DolittleLogoMedium } from '../assets/logos';
 
+import { AlertBox } from '../components/alertBox';
 
-type Props = {
-    navigation: React.ReactNode;
-    children: React.ReactNode;
+type LayoutWithSidebarProps = {
+    navigation: ReactNode;
+    children: ReactNode;
 };
 
 export type NavigationMenuItem = {
@@ -37,100 +32,51 @@ export type NavigationListItemButtonProps = ListItemButtonBaseProps & {
     navigationMenuItem: NavigationMenuItem, history: History<LocationState>
 };
 
-export const LayoutWithSidebar: React.FunctionComponent<Props> = (props) => {
-    const navigationPanel = props!.navigation;
-    const children = props!.children;
-
-    return (
-        <>
-            <div className='with-sidebar'>
-                <div>
-                    <Paper elevation={4} className='sidebar'>
-                        <div className="logo">
-                            <DolittleLogoMedium />
-                        </div>
-                        {navigationPanel}
-                    </Paper>
-                    <div className='not-sidebar'>
-                        <AlertBox />
-                        {children}
-                    </div>
-                </div>
+export const LayoutWithSidebar = ({ navigation, children }: LayoutWithSidebarProps) =>
+    <div className='with-sidebar'>
+        <div>
+            <Paper elevation={4} className='sidebar'>
+                <div className="logo"><DolittleLogoMedium /></div>
+                {navigation}
+            </Paper>
+            <div className='not-sidebar'>
+                <AlertBox />
+                {children}
             </div>
-        </>
-    );
-};
+        </div>
+    </div>;
 
-export const getDefaultMenuWithItems = (
-    history: History<LocationState>,
-    mainNavigationItems: any[],
-    secondaryNavigationItems: any[]
-): React.ReactNode => {
-    return (
-        <>
-            <List
-                sx={{
-                    padding: '0',
-                    margin: '0'
-                }}
-            >
-                {mainNavigationItems.map((navigationItem) => {
-                    return (
-                        <NavigationListItemButton
-                            key={navigationItem.name}
-                            navigationMenuItem={navigationItem}
-                            history={history}
-                        >
-                            <ListItemIcon
-                                sx={{
-                                    marginRight: '1rem',
-                                    minWidth: '0',
-                                    color: (theme: Theme) => theme.palette.text.secondary
-                                }}
-                            >
-                                {navigationItem.icon}
-                            </ListItemIcon>
-                            <ListItemText>
-                                {navigationItem.name}
-                            </ListItemText>
-                        </NavigationListItemButton>
-                    );
-                })}
-            </List>
-            <List
-                sx={{
-                    padding: '0',
-                    margin: '0',
-                    position: 'fixed',
-                    bottom: '0'
-                }}
-            >
-                {secondaryNavigationItems.map((link) => {
-                    return (
-                        <NavigationListItemButton
-                            key={link.name}
-                            navigationMenuItem={link}
-                            history={history}
-                        >
-                            <ListItemIcon
-                                sx={{
-                                    marginRight: '1rem',
-                                    minWidth: '0',
-                                    color: (theme: Theme) => theme.palette.text.secondary
-                                }}
-                            >
-                                {link.icon}
-                            </ListItemIcon>
-                            <ListItemText>
-                                {link.name}
-                            </ListItemText>
-                        </NavigationListItemButton>
-                    );
-                })}
-            </List>
-        </>
-    );
-};
+export const getDefaultMenuWithItems = (history: History<LocationState>, mainNavigationItems: any[], secondaryNavigationItems: any[]): ReactNode =>
+    <>
+        <List sx={{ p: 0, m: 0 }}>
+            {mainNavigationItems.map(navigationItem => (
+                <NavigationListItemButton
+                    key={navigationItem.name}
+                    navigationMenuItem={navigationItem}
+                    history={history}
+                >
+                    <ListItemIcon sx={{ mr: '1rem', minWidth: 0, color: 'text.secondary' }}>
+                        {navigationItem.icon}
+                    </ListItemIcon>
+                    <ListItemText>
+                        {navigationItem.name}
+                    </ListItemText>
+                </NavigationListItemButton>
+            ))};
+        </List>
+        <List sx={{ p: 0, m: 0, position: 'fixed', bottom: 0 }}>
+            {secondaryNavigationItems.map(link => (
+                <NavigationListItemButton key={link.name} navigationMenuItem={link} history={history}>
+                    <ListItemIcon sx={{ mr: '1rem', minWidth: 0, color: 'text.secondary' }}>
+                        {link.icon}
+                    </ListItemIcon>
+                    <ListItemText>
+                        {link.name}
+                    </ListItemText>
+                </NavigationListItemButton>
+            ))}
+        </List>
+    </>;
 
 export const NavigationListItemButton = ({ navigationMenuItem, history, ...props }: NavigationListItemButtonProps) => {
     const defaultProps: ListItemButtonBaseProps = {
@@ -148,29 +94,19 @@ export const NavigationListItemButton = ({ navigationMenuItem, history, ...props
     return (
         <ListItemButton
             {...defaultProps}
-            onClick={(event) => {
+            onClick={event => {
                 event.preventDefault();
                 const href = navigationMenuItem.href;
-                navigationMenuItem.forceReload ?
-                    window.location.href = href
-                    :
-                    history.push(href);
+                navigationMenuItem.forceReload ? window.location.href = href : history.push(href);
             }}
             {...props}
         />);
-
 };
 
-export const getMenuWithApplication = (
-    history: History<LocationState>,
-    application: HttpResponseApplication,
-    environment: string
-): React.ReactNode => {
+export const getMenuWithApplication = (history: History<LocationState>, application: HttpResponseApplication, environment: string): ReactNode => {
     const applicationId = application.id;
 
-    const hasConnector = application.environments.find(
-        (_environment) => _environment.connections.m3Connector
-    );
+    const hasConnector = application.environments.find(_environment => _environment.connections.m3Connector);
 
     const mainNavigationItems: NavigationMenuItem[] = [
         {
@@ -183,11 +119,6 @@ export const getMenuWithApplication = (
             name: 'Microservices',
             icon: <HexagonRounded />
         },
-        // {
-        //     href: `/insights/application/${applicationId}/${environment}/overview`,
-        //     name: 'Insights',
-        //     icon: <InsightsRounded />
-        // },
         {
             href: `/containerregistry/application/${applicationId}/${environment}/overview`,
             name: 'Container Registry',
@@ -212,7 +143,6 @@ export const getMenuWithApplication = (
             icon: <SettingsRounded />,
             forceReload: true
         }
-
     ];
 
     if (hasConnector) {
