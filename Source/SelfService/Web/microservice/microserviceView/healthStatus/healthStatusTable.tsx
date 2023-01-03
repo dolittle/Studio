@@ -12,8 +12,6 @@ import { columns } from './healthStatusTableColumns';
 
 const styles = {
     podTitle: {
-        fontWeight: 500,
-        lineHeight: '1.5rem',
         letterSpacing: '0.17px',
         minHeight: 5.75,
         p: 1.25,
