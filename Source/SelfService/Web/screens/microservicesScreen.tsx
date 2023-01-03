@@ -3,12 +3,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { Route, useHistory, Switch, generatePath } from 'react-router-dom';
+
 import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../api/api';
+import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
 import { Microservice } from '../microservice/microservice';
 import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
 import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';
-import { PodLogScreen } from '../microservice/podLogScreen';
 import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithSidebar';
 
 // I wonder if scss is scoped like svelte. I hope so!
@@ -16,13 +17,14 @@ import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithS
 import '../application/applicationScreen.scss';
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
-
 import { useGlobalContext } from '../stores/notifications';
+
 import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
 import { TopNavBar } from '../components/topNavBar';
-import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
+
 import { withRouteApplicationState } from './withRouteApplicationState';
+
 import { Typography } from '@mui/material';
 
 export const MicroservicesScreen = withRouteApplicationState(({ routeApplicationParams }) => {
@@ -62,7 +64,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
             const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
             mergeMicroservicesFromK8s(microservices);
             setLoaded(true);
-        }).catch((error) => {
+        }).catch(error => {
             console.log(error);
             setNotification('Failed getting data from the server', 'error');
         });
@@ -160,10 +162,6 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
 
                 <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId">
                     <MicroserviceViewScreen application={application} environment={currentEnvironment} />
-                </Route>
-
-                <Route exact path="/microservices/application/:applicationId/:environment/pod/view/:podName/logs">
-                    <PodLogScreen />
                 </Route>
 
                 <RouteNotFound redirectUrl={redirectUrl} />
