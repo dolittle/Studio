@@ -3,70 +3,61 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 
+import { isApplicationOnline } from '../api/application';
 
-import { isApplicationOnline, ApplicationBuildState } from '../api/application';
-import { Typography } from '@mui/material';
+import { Box, List, ListItem, Typography } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 
-type Props = {
+import { AlertBox, Button, LoadingSpinner } from '@dolittle/design-system';
 
-};
-
-export const Building: React.FunctionComponent<Props> = (props) => {
-    const { enqueueSnackbar } = useSnackbar();
+export const Building = () => {
     const { applicationId } = useParams() as any;
 
-    const [loaded, setLoaded] = useState(false);
-    const [applicationBuildState, setApplicationBuildState] = useState({
-        status: '',
-        startedAt: '',
-        finishedAt: '',
-    } as ApplicationBuildState);
+    const [isLoading, setIsLoadig] = useState(false);
 
     useEffect(() => {
-        Promise.all([
-            isApplicationOnline(applicationId),
-        ]).then(values => {
-            const state = values[0];
-
-            setApplicationBuildState(values[0]);
-            setLoaded(true);
-        }).catch((error) => {
-
-            setLoaded(true);
-            enqueueSnackbar(error.message, { variant: 'error' });
-        });
+        checkApplicationStatus()
+            .catch(console.error);
     }, []);
 
-    if (!loaded) {
-        return null;
-    }
+    const checkApplicationStatus = async () => {
+        const result = await isApplicationOnline(applicationId);
+
+        if (result.status === 200) {
+            window.location.href = `/applications/`;
+            setIsLoadig(true);
+        }
+    };
+
+    if (!isLoading) {
+        return (
+            <Box sx={{ width: 1 }}>
+                <AlertBox title='Could not create application.' message='Please try again later. If problem persists, please contact support.' severity='error' />
+                <Button label='Go back to applications page' secondary startWithIcon={<ArrowBack />} href='/applications/' sx={{ mt: 4 }} />
+            </Box>
+        )
+    };
 
     return (
         <>
-            <Typography variant='h1' my={2}>Building {applicationId}</Typography>
+            <>
+                <Typography variant='h1' sx={{ my: 2 }}>Building application:</Typography>
+                <Typography variant='h3' sx={{ my: 2 }}>{applicationId}</Typography>
+            </>
 
-            <Typography variant='h2' my={2}>Please refresh to see if it has finished</Typography>
+            <>
+                <Typography variant='h6' sx={{ my: 4 }}>This might take a few moments.</Typography>
+                <LoadingSpinner />
+            </>
 
-
-            <Typography variant='h2' my={2}>Status</Typography>
-            <p>This might take a few moments</p>
-            <p>Current State is {applicationBuildState.status}</p>
-            <p>Started building at {applicationBuildState.startedAt}</p>
-            <p>Finished building at {applicationBuildState.finishedAt}</p>
-
-
-
-
-            <Typography variant='h2' my={2}>What is happening?</Typography>
-
-            <ul>
-                <li>Setting up your application in the platform</li>
-                <li>Setting up your backups</li>
-                <li>Setting up your environments</li>
-                <li>Setting up your welcome microservice</li>
-            </ul>
+            <Typography variant='h6' sx={{ textAlign: 'left', my: 2 }}>What is happening?</Typography>
+            <List>
+                <ListItem>Setting up your application in the platform...</ListItem>
+                <ListItem>Setting up your backups...</ListItem>
+                <ListItem>Setting up your environments...</ListItem>
+                <ListItem>Setting up your welcome microservice...</ListItem>
+            </List>
         </>
     );
 };
