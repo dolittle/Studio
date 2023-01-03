@@ -1,0 +1,53 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+	"name": "Studio Website",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:0-16",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/eitsupi/devcontainer-features/jq-likes:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"EditorConfig.EditorConfig",
+				"dbaeumer.vscode-eslint",
+				"GraphQL.vscode-graphql",
+				"GabrielNordeborn.vscode-graphiql-explorer",
+				"heaths.vscode-guid",
+				"pmneo.tsimporter",
+				"nsoult.typescript-imports-sort",
+				"DSKWRK.vscode-generate-getter-setter",
+				"aeschli.vscode-css-formatter",
+				"GitHub.vscode-pull-request-github",
+				"waderyan.gitblame",
+				"mhutchie.git-graph",
+				"hoovercj.vscode-power-mode",
+				"Gruntfuggly.todo-tree",
+				"GitHub.copilot",
+				"GitHub.copilot-nightly",
+				"cweijan.vscode-redis-client",
+				"kahole.magit",
+				"streetsidesoftware.code-spell-checker"
+			]
+		}
+	}
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "yarn install",
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
