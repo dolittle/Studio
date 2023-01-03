@@ -28,7 +28,6 @@ import { DieAndRestart } from './components/dieAndRestart';
 
 import { LayoutWithSidebar } from './layout/layoutWithSidebar';
 
-import { ThemeScreen } from './screens/themeScreen';
 import { LoginScreen } from './screens/loginScreen';
 import { BackupsScreen } from './screens/backupsScreen';
 import { DocumentationScreen } from './screens/documentationScreen';
@@ -132,10 +131,6 @@ export const App = () => {
 
                                             <Route path='/admin/'>
                                                 <AdminScreen />
-                                            </Route>
-
-                                            <Route path='/debug/theme'>
-                                                <ThemeScreen />
                                             </Route>
 
                                             <Route exact path='/problem'>
