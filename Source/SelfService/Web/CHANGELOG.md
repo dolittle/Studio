@@ -1,3 +1,25 @@
+# [2.17.2] - 2023-1-3 [PR: #291](https://github.com/dolittle/Studio/pull/291)
+## Summary
+
+This deals with Creating New Application. Added better validation error message for application name field.
+After application is created successfully, it redirects to overall 'applications' page. Otherwise it shows AlertBox and Button to navigate back to 'applications' page.
+
+<img width="548" alt="Screenshot 2023-01-03 at 03 26 08" src="https://user-images.githubusercontent.com/19160439/210289657-7bcc3807-4004-4e74-a26b-1eccc84ac56d.png">
+
+<img width="672" alt="Screenshot 2023-01-03 at 03 26 46" src="https://user-images.githubusercontent.com/19160439/210289663-b99e0695-13a7-4520-90f5-55c96e35c859.png">
+
+<img width="569" alt="Screenshot 2023-01-03 at 03 27 41" src="https://user-images.githubusercontent.com/19160439/210289667-c221764c-7069-495e-b15f-ee89a6fde1ad.png">
+
+### Changed
+
+- After creating application page successfully, redirect to '/applications/' page. Otherwise display error.
+- Refactored 'Create application' component.
+
+### Fixed
+
+- 'Create new application' application name field validation bug. Still need improvement from backend to support uppercase letters.
+
+
 # [2.17.1] - 2023-1-2 [PR: #290](https://github.com/dolittle/Studio/pull/290)
 ## Summary
 
