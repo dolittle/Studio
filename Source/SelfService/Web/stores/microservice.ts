@@ -11,13 +11,7 @@ import {
     HttpResponseMicroservices,
 } from '../api/api';
 
-import {
-    MicroserviceSimple,
-    MicroserviceDolittle,
-    MicroserviceRawDataLogIngestor,
-    MicroservicePurchaseOrder
-} from '../api/index';
-
+import { MicroserviceSimple, MicroserviceDolittle, MicroserviceRawDataLogIngestor } from '../api/index';
 import { getApplication, HttpInputApplicationEnvironment } from '../api/application';
 
 export type MicroserviceStore = {
@@ -31,28 +25,31 @@ export type MicroserviceStore = {
 
 const data = {
     microservices: [] as MicroserviceInfo[],
-    isLoaded: false,
+    isLoaded: false
 };
 
 // We do not use the same information from view to edit
 
 export const microservices = writable(data.microservices);
 export const isLoaded = writable(data.isLoaded);
+
 export const loadMicroservices = (applicationId: string) => {
-    Promise.all([getApplication(applicationId), getMicroservices(applicationId)]).then(
-        (values) => {
+    Promise.all([getApplication(applicationId), getMicroservices(applicationId)])
+        .then(values => {
             const applicationData = values[0];
             mergeMicroservicesFromGit(applicationData.microservices);
+
             const microservicesData = values[1] as HttpResponseMicroservices;
             mergeMicroservicesFromK8s(microservicesData.microservices);
+
             isLoaded.set(true);
-        }
-    );
+        });
 };
 
-export const mergeMicroservicesFromGit = (items) => {
+export const mergeMicroservicesFromGit = items => {
     let data = get(microservices);
-    items.forEach((element) => {
+
+    items.forEach(element => {
         const storeItem = {
             id: (element.dolittle as MicroserviceDolittle).microserviceId,
             name: element.name,
@@ -70,9 +67,7 @@ export const mergeMicroservicesFromGit = (items) => {
             } as MicroserviceInfo,
         };
 
-        const index = data.findIndex((item) => {
-            return item.id === storeItem.id && item.environment === storeItem.environment;
-        });
+        const index = data.findIndex(item => item.id === storeItem.id && item.environment === storeItem.environment);
 
         if (-1 === index) {
             data = [...data, storeItem];
@@ -88,7 +83,8 @@ export const mergeMicroservicesFromGit = (items) => {
 
 export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
     let data = get(microservices);
-    items.forEach((element) => {
+
+    items.forEach(element => {
         const storeItem = {
             id: element.id,
             name: element.name,
@@ -98,9 +94,7 @@ export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
             live: element,
         };
 
-        const index = data.findIndex((item) => {
-            return item.id === storeItem.id && item.environment === storeItem.environment;
-        });
+        const index = data.findIndex(item => item.id === storeItem.id && item.environment === storeItem.environment);
 
         if (-1 === index) {
             data = [...data, storeItem];
@@ -115,42 +109,30 @@ export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
     microservices.set(data);
 };
 
-export async function deleteMicroservice(
-    applicationId: string,
-    environment: string,
-    microserviceId: string
-): Promise<boolean> {
-    const response = await apiDeleteMicroservice(
-        applicationId,
-        environment,
-        microserviceId
-    );
+export async function deleteMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
+    const response = await apiDeleteMicroservice(applicationId, environment, microserviceId);
 
-    if (!response) {
-        return response;
-    }
+    if (!response) return response;
 
     let data = get(microservices);
     // I dont think we need to care about environment etc, if we trigger reload between
-    data = data.filter((ms) => ms.id !== microserviceId);
+    data = data.filter(ms => ms.id !== microserviceId);
     microservices.set(data);
+
     return response;
-}
+};
 
 const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
-    let response;
+    let response: Promise<any>;
 
     switch (kind) {
         case 'simple':
             response = await apiSaveMicroservice(input);
             break;
-        case 'purchase-order-api':
-            response = await apiSaveMicroservice(input);
-            break;
         default:
             alert(`saving via store failed, kind: ${kind} not supported`);
             return false;
-    }
+    };
 
     // Add to store
     // Hairy stuff trying to keep track of the edit and the live
@@ -164,86 +146,36 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
     return true;
 };
 
-export const saveSimpleMicroservice = async (
-    input: MicroserviceSimple
-): Promise<boolean> => {
-    return saveMicroservice(input.kind, input);
-};
+export const saveSimpleMicroservice = (input: MicroserviceSimple) => saveMicroservice(input.kind, input);
+export const saveRawDataLogIngestorMicroservice = (input: MicroserviceRawDataLogIngestor) => saveMicroservice(input.kind, input);
 
-export const saveRawDataLogIngestorMicroservice = async (
-    input: MicroserviceRawDataLogIngestor
-): Promise<boolean> => {
-    return saveMicroservice(input.kind, input);
-};
+export const canEditMicroservices = (environments: HttpInputApplicationEnvironment[], environment: string): boolean =>
+    environments.some(info => info.name === environment && info.automationEnabled);
 
-export const savePurchaseOrderMicroservice = async (
-    input: MicroservicePurchaseOrder
-): Promise<boolean> => {
-    // TODO maybe we put the logic to handle does raw data log exist in here
-    // This contains all the microservices, so we can lookup the rawdatalog in here.
-    // Check kind, get id etc
-    // make sure webhook is unique etc
-    return saveMicroservice(input.kind, input);
-};
-
-export const canEditMicroservices = (
-    environments: HttpInputApplicationEnvironment[],
-    environment: string
-): boolean => {
-    return environments.some(
-        (info) => info.name === environment && info.automationEnabled
-    );
-};
-
-export const canEditMicroservice = (
-    environments: HttpInputApplicationEnvironment[],
-    environment: string,
-    microserviceId: string
-): boolean => {
+export const canEditMicroservice = (environments: HttpInputApplicationEnvironment[], environment: string, microserviceId: string): boolean => {
     const data = get(microservices);
 
-    const currentMicroservice: MicroserviceStore = data.find(
-        (ms) => ms.id === microserviceId
-    );
-    if (!currentMicroservice) {
-        return false;
-    }
+    const currentMicroservice: MicroserviceStore = data.find(ms => ms.id === microserviceId);
 
-    if (!canDeleteMicroservice(environments, environment, microserviceId)) {
-        return false;
-    }
+    if (!currentMicroservice) return false;
 
-    if (currentMicroservice.id === '') {
-        return false;
-    }
+    if (!canDeleteMicroservice(environments, environment, microserviceId)) return false;
 
-    if (currentMicroservice.kind === '') {
-        return false;
-    }
+    if (currentMicroservice.id === '') return false;
 
-    if (currentMicroservice.kind === 'unknown') {
-        return false;
-    }
+    if (currentMicroservice.kind === '') return false;
 
-    if (!currentMicroservice?.edit?.dolittle) {
-        return false;
-    }
+    if (currentMicroservice.kind === 'unknown') return false;
+
+    if (!currentMicroservice?.edit?.dolittle) return false;
+
     return true;
 };
 
-export const canDeleteMicroservice = (
-    environments: HttpInputApplicationEnvironment[],
-    environment: string,
-    microserviceId: string
-): boolean => {
+export const canDeleteMicroservice = (environments: HttpInputApplicationEnvironment[], environment: string, microserviceId: string): boolean => {
     const data = get(microservices);
-
-    const currentMicroservice: MicroserviceStore = data.find(
-        (ms) => ms.id === microserviceId
-    );
-    if (!currentMicroservice) {
-        return false;
-    }
+    const currentMicroservice: MicroserviceStore = data.find(ms => ms.id === microserviceId);
+    if (!currentMicroservice) return false;
 
     return canEditMicroservices(environments, environment);
 };
