@@ -30,24 +30,24 @@ export type ApplicationBuildState = {
 };
 
 export type HttpResponseApplications = {
-    canCreateApplication: boolean
-    applications: ShortInfoWithEnvironment[]
+    canCreateApplication: boolean;
+    applications: ShortInfoWithEnvironment[];
 };
 
 export type HttpInputApplicationEnvironment = {
-    applicationId: string
-    name: string
-    automationEnabled: boolean
-    connections: HttpEnvironmentConnections
+    applicationId: string;
+    name: string;
+    automationEnabled: boolean;
+    connections: HttpEnvironmentConnections;
 };
 
 export type HttpResponseApplication = {
-    id: string
-    name: string
-    customerId: string
-    customerName: string
-    environments: HttpInputApplicationEnvironment[]
-    microservices: any[] // Not great
+    id: string;
+    name: string;
+    customerId: string;
+    customerName: string;
+    environments: HttpInputApplicationEnvironment[];
+    microservices: any[]; // Not great
 };
 
 export type HttpResponseApplicationAccess = {
