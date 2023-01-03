@@ -62,7 +62,7 @@ export const getDefaultMenuWithItems = (history: History<LocationState>, mainNav
                         {navigationItem.name}
                     </ListItemText>
                 </NavigationListItemButton>
-            ))};
+            ))}
         </List>
         <List sx={{ p: 0, m: 0, position: 'fixed', bottom: 0 }}>
             {secondaryNavigationItems.map(link => (
