@@ -4,14 +4,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { getPodStatus, MicroserviceInfo } from '../api/api';
-import { HttpResponseApplication } from '../api/application';
-import { StatusFieldCell, customStatusFieldSort } from './microserviceStatus';
+import { getPodStatus, MicroserviceInfo } from '../../api/api';
+import { HttpResponseApplication } from '../../api/application';
+import { StatusFieldCell, customStatusFieldSort } from '../microserviceStatus';
 
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Paper, Tooltip } from '@mui/material';
 
-import { capitalize, removeFromString } from './helpers';
+import { capitalize, removeFromString } from '../helpers';
 
 const sortByRuntimeVersion = (params: GridValueGetterParams) => {
     const runtimeVersion = removeFromString(params.row.edit?.extra?.runtimeImage, /dolittle\/runtime:/gi);

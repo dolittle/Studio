@@ -8,7 +8,7 @@ import { useReadable } from 'use-svelte-store';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Pivot, PivotItem } from '@fluentui/react';
 
-import { HealthStatus } from '../microserviceView/healthStatus/healthStatus';
+import { HealthStatus } from '../microserviceDetails/healthStatus/healthStatus';
 import { HttpResponsePodStatus } from '../../api/api';
 
 import { microservices, MicroserviceStore } from '../../stores/microservice';
