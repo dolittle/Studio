@@ -7,7 +7,7 @@ import { useHistory, useLocation } from 'react-router';
 
 import { Grid, Typography } from '@mui/material';
 
-import { Create as Base } from './base/create';
+import { CreateMicroservice } from './createMicroservice/createMicroservice';
 
 import { HttpResponseApplication } from '../api/application';
 
@@ -26,7 +26,7 @@ type CreateProps = {
     application: HttpResponseApplication;
 };
 
-export const Create = ({ environment, application }: CreateProps) => {
+export const DeployableMicroservicesList = ({ environment, application }: CreateProps) => {
     const history = useHistory();
     const location = useLocation();
 
@@ -81,7 +81,7 @@ export const Create = ({ environment, application }: CreateProps) => {
             alignItems="stretch"
         >
             {microserviceTypeState === 'dolittle-microservice' && (
-                <Base application={application} environment={environment} />
+                <CreateMicroservice application={application} environment={environment} />
             )}
         </Grid>
     );

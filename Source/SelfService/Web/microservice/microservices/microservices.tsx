@@ -6,10 +6,10 @@ import { useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { HttpResponseApplication } from '../api/application';
+import { HttpResponseApplication } from '../../api/application';
 
 import { useReadable } from 'use-svelte-store';
-import { canEditMicroservices, microservices } from '../stores/microservice';
+import { canEditMicroservices, microservices } from '../../stores/microservice';
 
 import { Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
@@ -17,7 +17,7 @@ import { RocketLaunch } from '@mui/icons-material';
 import { Button, LoadingSpinner } from '@dolittle/design-system';
 
 import { NoMicroservices } from './noMicroservices';
-import { MicroserviceTable, MicroserviceObject } from './microserviceTable';
+import { MicroserviceTable, MicroserviceObject } from './microservicesTable';
 
 type MicroserviceProps = {
     environment: string;

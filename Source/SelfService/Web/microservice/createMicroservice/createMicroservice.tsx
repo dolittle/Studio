@@ -32,7 +32,7 @@ type Props = {
     environment: string
 };
 
-export const Create: React.FunctionComponent<Props> = (props) => {
+export const CreateMicroservice: React.FunctionComponent<Props> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
     const _props = props!;

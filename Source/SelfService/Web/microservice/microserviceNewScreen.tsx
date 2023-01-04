@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Create } from './create';
+import { DeployableMicroservicesList } from './deployableMicroservicesList';
 
 import { HttpResponseApplication } from '../api/application';
 
@@ -13,4 +13,4 @@ type MicroserviceNewScreenProps = {
 };
 
 export const MicroserviceNewScreen = ({ application, environment }: MicroserviceNewScreenProps) =>
-    <Create application={application} environment={environment} />;
+    <DeployableMicroservicesList application={application} environment={environment} />;

@@ -7,7 +7,7 @@ import { Route, useHistory, Switch, generatePath } from 'react-router-dom';
 import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../api/api';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
-import { Microservice } from '../microservice/microservice';
+import { Microservice } from '../microservice/microservices/microservices';
 import { MicroserviceNewScreen } from '../microservice/microserviceNewScreen';
 import { MicroserviceViewScreen } from '../microservice/microserviceViewScreen';
 import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithSidebar';

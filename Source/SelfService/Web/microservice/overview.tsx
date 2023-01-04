@@ -12,7 +12,7 @@ import { HttpResponseApplication } from '../api/application';
 
 import { microservices, MicroserviceStore } from '../stores/microservice';
 
-import { MicroserviceView as BaseView } from './microserviceView/microserviceView';
+import { MicroserviceView as BaseView } from './microserviceDetails/microserviceDetails';
 
 type OverviewProps = {
     application: HttpResponseApplication;
