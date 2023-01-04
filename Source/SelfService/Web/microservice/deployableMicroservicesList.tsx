@@ -11,7 +11,7 @@ import { CreateMicroservice } from './createMicroservice/createMicroservice';
 
 import { HttpResponseApplication } from '../api/application';
 
-import { SimpleCard } from './create/card';
+import { SimpleCard } from './components/card';
 
 const items = [
     {
