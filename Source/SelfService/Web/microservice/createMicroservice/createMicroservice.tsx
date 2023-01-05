@@ -1,282 +1,183 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+
 import { useSnackbar } from 'notistack';
 
-import { CircularProgress, Grid, SelectChangeEvent, Typography } from '@mui/material';
+import { CircularProgress, Box, Grid, SelectChangeEvent, Typography } from '@mui/material';
+import { RocketLaunch } from '@mui/icons-material';
+
+import { Guid } from '@dolittle/rudiments';
+import { Button, ConfirmDialog, Form, Input, Select, SwitchToggle } from '@dolittle/design-system';
+
 import { DropDownMenu } from '../../theme/dropDownMenu';
 import { TextField as ThemedTextField } from '../../theme/textField';
 import { Button as ThemedButton } from '../../theme/button';
 
-import { Guid } from '@dolittle/rudiments';
 import { saveSimpleMicroservice } from '../../stores/microservice';
+
 import { MicroserviceSimple } from '../../api/index';
 import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
-
 import { HttpResponseApplication } from '../../api/application';
+
 import { HeadArguments } from '../components/headArguments';
 
-import { SwitchToggle } from '@dolittle/design-system';
+import { getRuntimeNumberFromString } from '../helpers';
 
 const styles = {
-    data: {
-        paddingBottom: 1,
-        color: (theme) => theme.palette.text.secondary
+    form: {
+        'mt': 4.5,
+        'ml': 3,
+        '& .MuiFormControl-root': {
+            'my': 1
+        },
+        '.MuiFormControlLabel-root': {
+            ml: 0
+        }
     },
+    formSections: {
+        'mb': 4,
+        'display': 'flex',
+        'flexDirection': 'column',
+        '&:last-child': {
+            mb: 0
+        }
+    }
 };
 
-type Props = {
-    application: HttpResponseApplication
-    environment: string
+const runtimeVersionNumbers: { value: string; }[] = [];
+
+type CreateMicroserviceParameters = {
+    microserviceName: string;
+    developmentEnvironment: string;
+    imageName: string;
+    port: number;
+    entrypoint: string;
+    ingressPath: string;
 };
 
-export const CreateMicroservice: React.FunctionComponent<Props> = (props) => {
+type CreateMicroserviceProps = {
+    application: HttpResponseApplication;
+    environment: string;
+};
+
+export const CreateMicroservice = ({ application, environment }: CreateMicroserviceProps) => {
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
-    const _props = props!;
-    const application = _props.application;
-    const environment = _props.environment;
 
-    const microserviceId = Guid.create().toString();
+    const environmentInfo = application.environments.find(env => env.name === environment)!;
+    const latestRuntimeVersion = getRuntimeNumberFromString(getLatestRuntimeInfo().image);
 
-    const latestRuntimeInfo = getLatestRuntimeInfo();
+    const [currentRuntimeVersion, setCurrentRuntimeVersion] = useState('');
+    const [headCommandArgs, setHeadCommandArgs] = useState<string[]>([]);
+    const [hasPublicURL, setHasPublicURL] = useState(false);
+    const [hasM3ConnectorOption, setHasM3ConnectorOption] = useState<boolean>(environmentInfo.connections.m3Connector);
+    const [hasM3Connector, setHasM3Connector] = useState<boolean>(environmentInfo.connections.m3Connector);
 
-    const ms = {
-        dolittle: {
-            applicationId: application.id,
-            customerId: application.customerId,
-            microserviceId,
-        },
-        name: 'Order',
-        kind: 'simple',
-        environment: _props.environment,
-        extra: {
-            // nginxdemos/hello:latest
-            headImage: 'nginxdemos/hello:latest', //'dolittle/spinner:0.0.0', // Doesnt work
-            headPort: 80,
-            runtimeImage: latestRuntimeInfo.image,
-            isPublic: false,
-            ingress: {
-                path: '/',
-                pathType: 'Prefix',
-            },
-            headCommand: {
-                command: [],
-                args: []
-            },
-            connections: {
-                m3Connector: false
-            }
-        }
-    } as MicroserviceSimple;
+    useEffect(() => {
+        getRuntimes().map(version => runtimeVersionNumbers.push({
+            value: getRuntimeNumberFromString(version.image)
+        }));
+        // Push 'None' as the last option in list.
+        runtimeVersionNumbers.push({ value: 'None' });
 
-    const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
-
-    const [msId] = React.useState(ms.dolittle.microserviceId);
-    const [msName, setMsName] = React.useState(ms.name);
-    const [headImage, setHeadImage] = React.useState(ms.extra.headImage);
-    const [headPort, setHeadPort] = React.useState(ms.extra.headPort);
-    const [command, setCommand] = React.useState(ms.extra.headCommand.command);
-    const [args, setArgs] = React.useState(ms.extra.headCommand.args);
-    const [runtimeImage, setRuntimeImage] = React.useState(ms.extra.runtimeImage);
-    const [isPublic, setIsPublic] = React.useState<boolean>(ms.extra.isPublic);
-    const [showConnectionM3ConnectorOption, setShowConnectionM3ConnectorOption] = React.useState<boolean>(environmentInfo.connections.m3Connector);
-    const [connectionM3Connector, setConnectionM3Connector] = React.useState(environmentInfo.connections.m3Connector);
-    const [ingressPath, setIngressPath] = React.useState(ms.extra.ingress.path);
-    const [isLoading, setIsLoading] = React.useState(false);
-
-    const _onSave = async (ms: MicroserviceSimple): Promise<void> => {
-        if (isNaN(headPort)) {
-            enqueueSnackbar('HeadPort is not a valid port', { variant: 'error' });
-            return;
-        }
-
-        ms.name = msName;
-        ms.extra.headImage = headImage;
-        ms.extra.headPort = headPort;
-        ms.extra.runtimeImage = runtimeImage;
-        ms.extra.isPublic = isPublic;
-        ms.extra.ingress.path = ingressPath;
-        ms.extra.headCommand.command = command;
-        ms.extra.headCommand.args = args;
-        ms.extra.connections = {
-            m3Connector: connectionM3Connector
-        };
-
-        setIsLoading(true);
-
-        try {
-            await saveSimpleMicroservice(ms);
-            const href = `/microservices/application/${application.id}/${environment}/view/${ms.dolittle.microserviceId}`;
-            history.push(href);
-        } catch (e: unknown) {
-            const message = (e instanceof Error) ? e.message : 'Something went wrong when saving microservice';
-            enqueueSnackbar(message, { variant: 'error' });
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const runtimeImageSelections = [
-        ...getRuntimes().map(runtimeInfo => ({ value: runtimeInfo.image, displayValue: runtimeInfo.image })),
-        {
-            value: 'none',
-            displayValue: 'None'
-        }
-    ];
-
-    const handleRuntimeChange = (event: SelectChangeEvent<string>) => {
-        const _runtimeImage = event.target.value;
-        setRuntimeImage(_runtimeImage);
-    };
-
-    const handleIsPublicChanged = (ev: React.ChangeEvent<{}>, checked?: boolean) => {
-        setIsPublic(checked ?? false);
-    };
-
-    const handleConnectionM3ConnectorChanged = (ev: React.ChangeEvent<{}>, checked?: boolean) => {
-        setConnectionM3Connector(checked ?? false);
-    };
+        setCurrentRuntimeVersion(latestRuntimeVersion);
+    }, [])
 
     return (
         <>
-            <Typography variant='h1' style={{ marginTop: '1rem' }}>Create base microservice</Typography>
-            <Grid container direction='column' alignContent='stretch' spacing={4} style={{ marginTop: '1rem', padding: '1rem' }}>
-                <Grid item>
-                    <ThemedTextField
-                        id='name'
-                        label='Name'
-                        value={msName}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            const newValue = event.target.value!;
-                            setMsName(newValue);
-                        }}
-                    />
-                </Grid>
+            <Typography variant='h1'>Deploy Base Microservice</Typography>
 
-                <Grid item>
-                    <ThemedTextField
-                        id='uuid'
-                        label='UUID'
-                        value={msId}
-                        readOnly
-                    />
-                </Grid>
+            <Form<CreateMicroserviceParameters>
+                initialValues={{
+                    microserviceName: '',
+                    developmentEnvironment: environment,
+                    imageName: '',
+                    port: 80,
+                    entrypoint: '',
+                    ingressPath: ''
+                }}
+                sx={styles.form}
+            >
+                <Box sx={styles.formSections}>
+                    <Typography variant='subtitle1' sx={{ mb: 2 }}>Configuration Setup</Typography>
 
-                <Grid item>
-                    <ThemedTextField
-                        id='environment'
-                        label='Environment'
-                        placeholder="Dev"
-                        value={ms.environment}
-                        readOnly
-                    />
-                </Grid>
+                    <Input id='microserviceName' label='Microservice Name' required />
+                    <Input id='developmentEnvironment' label='Development Environment' disabled />
 
-                <Grid item>
-                    <ThemedTextField
-                        id='headImage'
-                        label='Head Image'
-                        value={headImage}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            const newValue = event.target.value!;
-                            setHeadImage(newValue);
-                        }}
-                    />
-                </Grid>
-
-                <Grid item>
-                    <ThemedTextField
+                    <Select
+                        id='runtimeVersion'
+                        label='Runtime Version*'
+                        options={runtimeVersionNumbers}
+                        value={currentRuntimeVersion}
                         required
-                        id='headPort'
-                        label='Head Port'
-                        type='number'
-                        value={headPort.toString()}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            const newValue = parseInt(event.target.value!, 10);
-                            setHeadPort(newValue);
-                        }}
+                        onChange={event => setCurrentRuntimeVersion(event.target.value)}
+                        sx={{ width: 220 }}
                     />
-                </Grid>
+                </Box>
 
-                <Grid item>
-                    <Typography sx={styles.data}>
-                        Override the default ENTRYPOINT in Docker
-                    </Typography>
-                    <ThemedTextField
-                        id='headCommand'
-                        label='Head Command'
-                        required={false}
-                        value={command[0]}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            // currently we want to only support specifying one command/ENTRYPOINT
-                            const newValue = event.target.value!;
-                            setCommand([newValue]);
-                        }}
+                <Box sx={styles.formSections}>
+                    <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
+
+                    <Input id='imageName' label='Image Name' required sx={{ width: 500 }} />
+                    <Input id='port' label='Port' required />
+                    <Input id='entrypoint' label='Entrypoint' />
+
+                    <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} />
+                </Box>
+
+                <Box sx={styles.formSections}>
+                    <Typography variant='subtitle2'>Public Microservice</Typography>
+
+                    <SwitchToggle
+                        title='Expose to a public URL'
+                        isChecked={hasPublicURL}
+                        onChange={event => setHasPublicURL(event.target.checked)}
+                        sx={{ my: 2.5 }}
                     />
-                </Grid>
 
-                <Grid item>
-                    <Typography sx={styles.data}>
-                        Override the default CMD in Docker
-                    </Typography>
-                    <HeadArguments cmdArgs={args} setCmdArgs={setArgs} />
-                </Grid>
+                    {hasPublicURL &&
+                        <Input
+                            id='ingressPath'
+                            label='Path'
+                            startAdornment='/'
+                            placeholder='leave blank for default path'
+                            sx={{ width: 226 }}
+                        />
+                    }
+                </Box>
 
-                <Grid item>
-                    <DropDownMenu label='Runtime Image' items={runtimeImageSelections} value={runtimeImage} onChange={handleRuntimeChange}></DropDownMenu>
-                </Grid>
+                {!hasM3ConnectorOption &&
+                    <Box sx={styles.formSections}>
+                        <Typography variant='subtitle2'>Connect to M3</Typography>
 
-                <Grid item>
-                    <Typography variant='h2'>Ingress</Typography>
-                    <SwitchToggle title={isPublic ? 'Public' : 'Private'} isChecked={isPublic} onChange={handleIsPublicChanged} />
-                </Grid>
-                {isPublic &&
-                    <>
-                        <Grid item>
-                            <ThemedTextField
-                                id="ingressPath"
-                                label='Path'
-                                placeholder="/"
-                                value={ingressPath}
-                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                    const newValue = event.target.value!;
-                                    setIngressPath(newValue);
-                                }}
-                            />
-                        </Grid>
+                        <SwitchToggle
+                            title='Make M3 configuration available to microservice'
+                            isChecked={hasM3Connector}
+                            onChange={event => setHasM3Connector(event.target.checked)}
+                            sx={{ mt: 2.5 }}
+                        />
 
-                        <Grid item>
-                            <ThemedTextField
-                                id="pathType"
-                                label='PathType'
-                                placeholder="Prefix"
-                                value={ms.extra.ingress.pathType}
-                                readOnly
-                            />
-                        </Grid>
-                    </>
+                        {hasM3Connector &&
+                            <>
+                                <Typography variant='body2' sx={{ ml: 6, mt: 1 }}>
+                                    Enabling this will mount these files to the deployed microservice:
+                                </Typography>
+
+                                <Box sx={{ ml: 6, mt: 2, lineHeight: '20px' }}>
+                                    <Typography variant='body2'>/app/connection/kafka/ca.pem</Typography>
+                                    <Typography variant='body2'>/app/connection/kafka/certificate.pem</Typography>
+                                    <Typography variant='body2'>/app/connection/kafka/accessKey.pem</Typography>
+                                </Box>
+                            </>
+                        }
+                    </Box>
                 }
 
-
-                {showConnectionM3ConnectorOption &&
-                    <>
-                        <Grid item>
-                            <Typography variant='h2'>Connect to m3 Connector</Typography>
-                            <SwitchToggle title={connectionM3Connector ? 'yes' : 'no'} isChecked={connectionM3Connector} onChange={handleConnectionM3ConnectorChanged} />
-                        </Grid>
-                    </>
-                }
-            </Grid>
-
-            <Grid container direction='row' justifyContent='flex-end'>
-                {isLoading
-                    ? <ThemedButton disabled>Creating<CircularProgress size='1.5rem' style={{ marginLeft: '0.5rem' }} /></ThemedButton>
-                    : <ThemedButton onClick={() => _onSave(ms)}>Create</ThemedButton>
-                }
-            </Grid>
+                <Button variant='filled' label='Deploy microservice' size='medium' type='submit' startWithIcon={<RocketLaunch />} sx={{ mt: 1 }} />
+            </Form>
         </>
     );
 };
