@@ -3,6 +3,7 @@
 
 import React, { useMemo, ReactNode } from 'react';
 import { useForm, FieldValues, FormProvider, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+
 import { Box, SxProps } from '@mui/material';
 
 /**
@@ -31,25 +32,25 @@ export type FormProps<T extends FieldValues> = {
 
 /**
  * Creates a form that deals with input-validation using `react-hook-form`.
- * @param props The {@link FormProps} for the form.
+ * @param {...FormProps} props The {@link FormProps} for the form.
  * @returns A new {@link Form} component.
  */
-export const Form = <T extends FieldValues>(props: FormProps<T>) => {
+export const Form = <T extends FieldValues>({ initialValues, onSubmit, onSubmitInvalid, children, sx }: FormProps<T>) => {
     const methods = useForm<T>({
         mode: 'onTouched',
-        defaultValues: props.initialValues as any,
+        defaultValues: initialValues as any,
     });
     const { handleSubmit } = methods;
 
     const handleFormSubmit = useMemo(() => handleSubmit(
-        (data, event) => props.onSubmit?.(data, event),
-        props.onSubmitInvalid,
-    ), [handleSubmit, props.onSubmit, props.onSubmitInvalid]);
+        (data, event) => onSubmit?.(data, event),
+        onSubmitInvalid,
+    ), [handleSubmit, onSubmit, onSubmitInvalid]);
 
     return (
-        <Box component='form' onSubmit={handleFormSubmit} sx={props.sx}>
+        <Box component='form' onSubmit={handleFormSubmit} sx={sx}>
             <FormProvider {...methods}>
-                {props.children}
+                {children}
             </FormProvider>
         </Box>
     );
