@@ -11,16 +11,7 @@ import { StatusFieldCell, customStatusFieldSort } from '../microserviceStatus';
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Paper, Tooltip } from '@mui/material';
 
-import { capitalize, removeFromString } from '../helpers';
-
-const sortByRuntimeVersion = (params: GridValueGetterParams) => {
-    const runtimeVersion = removeFromString(params.row.edit?.extra?.runtimeImage, /dolittle\/runtime:/gi);
-    if (typeof runtimeVersion !== 'string') {
-        return 'N/A';
-    }
-
-    return capitalize(runtimeVersion);
-};
+import { getRuntimeNumberFromString } from '../helpers';
 
 const PublicUrlCell = (params: GridRenderCellParams) => {
     const hasPublicUrl = params.row.edit?.extra?.isPublic;
@@ -80,9 +71,9 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             setMicroserviceRows(data);
             setLoadingRows(false);
         });
-
     }, []);
 
+    // TODO: This is a hack to get the sorting to work. We need to fix this.
     const customUrlFieldSort = (v1, v2, param1, param2) => {
         const firstObject = microserviceRows.filter(row => row?.id === param1.id);
         const secondObject = microserviceRows.filter(row => row?.id === param2.id);
@@ -108,15 +99,16 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             headerName: 'Container Image',
             minWidth: 270,
             flex: 1,
-            valueGetter: (params: GridValueGetterParams) =>
-                `${params.row.edit?.extra?.headImage || 'N/A'}`
+            valueGetter: ({ row }: GridValueGetterParams) =>
+                `${row.edit?.extra?.headImage || 'N/A'}`
         },
         {
             field: 'runtime',
             headerName: 'Runtime',
             minWidth: 270,
             flex: 1,
-            valueGetter: sortByRuntimeVersion
+            valueGetter: ({ row }: GridValueGetterParams) =>
+                getRuntimeNumberFromString(row.edit?.extra?.runtimeImage)
         },
         {
             field: 'isPublic',
@@ -147,13 +139,13 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
                 rows={microserviceRows}
                 columns={microserviceColumns}
                 getRowHeight={() => 'auto'}
-                autoHeight={true}
+                autoHeight
                 headerHeight={46}
                 disableColumnMenu
                 hideFooter
                 disableSelectionOnClick
                 loading={loadingRows}
-                onRowClick={params => onTableRowClick(params.row.id)}
+                onRowClick={({ row }) => onTableRowClick(row.id)}
             />
         </Paper>
     );
