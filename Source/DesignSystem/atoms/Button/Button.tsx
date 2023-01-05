@@ -42,7 +42,7 @@ export type ButtonProps = {
      * Set button size.
      * @default small
      */
-    size?: 'small' | 'large';
+    size?: 'small' | 'medium' | 'large';
 
     /**
      * Button that takes up the full width of its container.
