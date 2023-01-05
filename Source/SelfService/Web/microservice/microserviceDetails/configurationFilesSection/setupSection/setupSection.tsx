@@ -17,7 +17,7 @@ import { HttpResponseApplication } from '../../../../api/application';
 
 import { HeadArguments } from '../../../components/headArguments';
 import { RestartMicroserviceDialog } from '../../restartMicroserviceDialog';
-import { capitalize, removeFromString } from '../../../helpers';
+import { getRuntimeNumberFromString } from '../../../helpers';
 
 const styles = {
     form: {
@@ -65,12 +65,12 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
 
-    const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
-    const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
-
     const microserviceInfo = currentMicroservice.edit?.extra;
 
-    const runtimeVersionNumber = capitalize(removeFromString(microserviceInfo?.runtimeImage, /dolittle\/runtime:/gi));
+    const environmentInfo = application.environments.find(env => env.name === environment)!;
+    const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
+
+    const runtimeVersionNumber = getRuntimeNumberFromString(microserviceInfo?.runtimeImage);
     runtimeVersions.push({ value: runtimeVersionNumber });
 
     const [setupPanelExpanded, setSetupPanelExpanded] = useState(true);
@@ -78,7 +78,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
     const [hasPublicURL, setHasPublicURL] = useState(microserviceInfo?.isPublic || false);
-    const [useM3Connector, setHasM3Connetcor] = useState(environmentInfo.connections?.m3Connector || false);
+    const [useM3Connector, setUseM3Connetcor] = useState(environmentInfo.connections?.m3Connector || false);
     const [headCommandArgs, setHeadCommandArgs] = useState<string[]>(microserviceInfo?.headCommand?.args || []);
 
     const handleMicroserviceDelete = async () => {
@@ -258,7 +258,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                                     title='Make M3 configuration available to microservice'
                                     isChecked={useM3Connector}
                                     isDisabled={formIsNotEditable}
-                                    onChange={(event) => setHasM3Connetcor(event.target.checked)}
+                                    onChange={(event) => setUseM3Connetcor(event.target.checked)}
                                     sx={{ mt: 2.5 }}
                                 />
 
