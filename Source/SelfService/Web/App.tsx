@@ -38,6 +38,7 @@ import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
 import { M3ConnectorScreen } from './screens/m3connectorScreen';
 import { LogsScreen } from './screens/logsScreen';
 
+// Set license info for MUI
 LicenseInfo.setLicenseKey(process.env.MUI_LICENSE_KEY!);
 
 // Make all stacked snackbars with same width
