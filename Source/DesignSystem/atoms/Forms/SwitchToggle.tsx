@@ -3,22 +3,27 @@
 
 import React from 'react';
 
-import { FormGroup, FormControlLabel, Switch, SxProps } from '@mui/material';
+import { FormControl, FormControlLabel, Switch } from '@mui/material';
 
-export type SwitchToggleProps = {
-    title: string;
-    isChecked: boolean;
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    isDisabled?: boolean;
-    sx?: SxProps;
+import { useController, FieldProps } from './helpers';
+import type { Form } from './Form';
+
+/**
+ * Creates a switch field to be used in a {@link Form}.
+ * @param props The {@link FieldProps} for the checkbox.
+ * @returns A new {@link SwitchToggle} component.
+ */
+export const SwitchToggle = (props: FieldProps) => {
+    const { field } = useController(props);
+
+    return (
+        <FormControl>
+            <FormControlLabel
+                control={
+                    <Switch {...field} size='small' checked={!!field.value} disabled={props.disabled} />
+                }
+                label={props.label}
+            />
+        </FormControl>
+    );
 };
-
-export const SwitchToggle = ({ title, isChecked, onChange, isDisabled, sx }: SwitchToggleProps) =>
-    <FormGroup sx={{ width: 1 }}>
-        <FormControlLabel
-            label={title}
-            control={<Switch size='small' checked={isChecked} onChange={onChange} />}
-            disabled={isDisabled}
-            sx={sx}
-        />
-    </FormGroup>;

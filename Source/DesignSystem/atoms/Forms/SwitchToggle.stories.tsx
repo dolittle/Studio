@@ -1,7 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { componentStories } from '@dolittle/design-system';
+import React from 'react';
+
+import { componentStories, Form } from '@dolittle/design-system';
 
 import { SwitchToggle } from './SwitchToggle';
 
@@ -9,21 +11,36 @@ const { metadata, createStory } = componentStories(SwitchToggle, {
     actions: {
         onChange: 'Changed',
     },
+    decorator: (Story) => (
+        <Form initialValues={{
+            default: '',
+            active: true,
+            disabled: '',
+            withoutLabel: ''
+        }}>
+            <Story />
+        </Form>
+    )
 });
 
 export default metadata;
 
 export const Default = createStory({
-    title: 'Default switch with label',
+    id: 'default',
+    label: 'Default switch with label'
 });
 
-// Needs useState for value changes.
-export const DefaultActive = createStory({
-    title: 'Default active switch with label',
-    isChecked: true,
+export const Active = createStory({
+    id: 'active',
+    label: 'Active'
 });
 
-export const DisabledSwitch = createStory({
-    title: 'Disabled switch with label',
-    isDisabled: true,
+export const Disabled = createStory({
+    id: 'disabled',
+    label: 'Disabled switch',
+    disabled: true
+});
+
+export const WithoutLabel = createStory({
+    id: 'withoutLabel'
 });
