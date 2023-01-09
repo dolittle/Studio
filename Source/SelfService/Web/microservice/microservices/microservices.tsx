@@ -74,7 +74,7 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
 
             {hasMicroservices ?
                 <MicroserviceTable application={application} environment={environment} microservices={filteredMicroservices} /> :
-                <NoMicroservices onCreate={handleCreateMicroservice} />
+                <NoMicroservices onCreate={() => handleCreateMicroservice()} />
             }
 
             {hasEnvironments && hasMicroservices &&
