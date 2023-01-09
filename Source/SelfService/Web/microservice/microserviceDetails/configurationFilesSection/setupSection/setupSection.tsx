@@ -42,8 +42,6 @@ const styles = {
     }
 };
 
-const runtimeVersions: { value: string }[] = [];
-
 type SetupSectionProps = {
     application: HttpResponseApplication;
     applicationId: string;
@@ -55,9 +53,12 @@ type SetupSectionProps = {
 export type SetupSectionParameters = {
     microserviceName: string;
     developmentEnvironment: string;
+    runtimeVersion: string;
     imageName: string;
     port: number;
     entrypoint: string;
+    hasPublicURL: boolean;
+    hasM3Connector: boolean;
     ingressPath: string;
 };
 
@@ -66,25 +67,24 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const history = useHistory();
 
     const microserviceInfo = currentMicroservice.edit?.extra;
-
     const environmentInfo = application.environments.find(env => env.name === environment)!;
-    const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
 
-    const runtimeVersionNumber = getRuntimeNumberFromString(microserviceInfo?.runtimeImage);
-    runtimeVersions.push({ value: runtimeVersionNumber });
+    const hasM3connectorOption = environmentInfo.connections?.m3Connector || false;
+    const hasPublicURLOption = microserviceInfo?.isPublic || false;
+
+    const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
+    const currentRuntimeImageNumber = { value: getRuntimeNumberFromString(microserviceInfo?.runtimeImage) };
 
     const [setupPanelExpanded, setSetupPanelExpanded] = useState(true);
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
-    const [hasPublicURL, setHasPublicURL] = useState(microserviceInfo?.isPublic || false);
-    const [useM3Connector, setUseM3Connetcor] = useState(environmentInfo.connections?.m3Connector || false);
     const [headCommandArgs, setHeadCommandArgs] = useState<string[]>(microserviceInfo?.headCommand?.args || []);
 
     const handleMicroserviceDelete = async () => {
         setDeleteDialogIsOpen(false);
 
-        // Add loading state?
+        // TODO: Add loading spinner.
         if (!canDelete) {
             enqueueSnackbar('Deleting microservice is disabled.', { variant: 'error' });
             return;
@@ -192,9 +192,12 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         initialValues={{
                             microserviceName: currentMicroservice.name,
                             developmentEnvironment: environment,
+                            runtimeVersion: currentRuntimeImageNumber.value,
                             imageName: microserviceInfo?.headImage,
                             port: 80,
                             entrypoint: '',
+                            hasPublicURL: hasPublicURLOption,
+                            hasM3Connector: hasM3connectorOption,
                             ingressPath: microserviceInfo?.ingress?.path?.replace(/\//, '')
                         }}
                         sx={styles.form}
@@ -208,12 +211,9 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             <Select
                                 id='runtimeVersion'
                                 label='Runtime Version*'
-                                options={runtimeVersions}
-                                value={runtimeVersionNumber}
+                                options={[currentRuntimeImageNumber]}
                                 required
                                 disabled={formIsNotEditable}
-                                //onChange={(event) => setCurrentRuntimeVersion(event.target.value)}
-                                sx={{ width: 220 }}
                             />
                         </Box>
 
@@ -230,15 +230,9 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         <Box sx={styles.formSections}>
                             <Typography variant='subtitle2'>Public Microservice</Typography>
 
-                            <SwitchToggle
-                                title='Expose to a public URL'
-                                isChecked={hasPublicURL}
-                                isDisabled={formIsNotEditable}
-                                onChange={(event) => setHasPublicURL(event.target.checked)}
-                                sx={{ my: 2.5 }}
-                            />
+                            <SwitchToggle id='hasPublicURL' label='Expose to a public URL' disabled={formIsNotEditable} />
 
-                            {hasPublicURL &&
+                            {hasPublicURLOption &&
                                 <Input
                                     id="ingressPath"
                                     label='Path'
@@ -250,22 +244,20 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             }
                         </Box>
 
-                        {useM3Connector &&
+                        {hasM3connectorOption &&
                             <Box sx={styles.formSections}>
                                 <Typography variant='subtitle2'>Connect to M3</Typography>
 
                                 <SwitchToggle
-                                    title='Make M3 configuration available to microservice'
-                                    isChecked={useM3Connector}
-                                    isDisabled={formIsNotEditable}
-                                    onChange={(event) => setUseM3Connetcor(event.target.checked)}
-                                    sx={{ mt: 2.5 }}
+                                    id='hasM3Connector'
+                                    label='Make M3 configuration available to microservice'
+                                    disabled={formIsNotEditable}
                                 />
 
                                 <Typography variant='body2' sx={{ ml: 6, mt: 1 }}>
                                     Enabling this will mount these files to the deployed microservice:
                                 </Typography>
-                                <Box sx={{ ml: 6, mt: 2, lineHeight: '20px' }}>
+                                <Box sx={{ ml: 6, mt: 2 }}>
                                     <Typography variant='body2'>/app/connection/kafka/ca.pem</Typography>
                                     <Typography variant='body2'>/app/connection/kafka/certificate.pem</Typography>
                                     <Typography variant='body2'>/app/connection/kafka/accessKey.pem</Typography>

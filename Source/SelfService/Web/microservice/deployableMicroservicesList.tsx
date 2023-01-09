@@ -7,11 +7,13 @@ import { useHistory, useLocation } from 'react-router';
 
 import { Grid, Typography } from '@mui/material';
 
-import { CreateMicroservice } from './createMicroservice/createMicroservice';
+import { CreateMicroservice2 } from './createMicroservice/createMicroservice2';
 
 import { HttpResponseApplication } from '../api/application';
 
 import { SimpleCard } from './components/card';
+
+import { CreateMicroservice as NewMs } from './createMicroservice/createMicroservice';
 
 const items = [
     {
@@ -47,6 +49,7 @@ export const DeployableMicroservicesList = ({ environment, application }: Create
     };
 
     const [microserviceTypeState, setMicroserviceTypeState] = useState(kindViaParams());
+
     useEffect(() => {
         setMicroserviceTypeState(kindViaParams());
     }, [kindViaParams()]);
@@ -74,15 +77,14 @@ export const DeployableMicroservicesList = ({ environment, application }: Create
     }
 
     return (
-        <Grid
-            container
-            direction="column"
-            justifyContent="flex-start"
-            alignItems="stretch"
-        >
+
+        <>
             {microserviceTypeState === 'dolittle-microservice' && (
-                <CreateMicroservice application={application} environment={environment} />
+                <>
+                    <NewMs application={application} environment={environment} />
+                    <CreateMicroservice2 application={application} environment={environment} />
+                </>
             )}
-        </Grid>
+        </>
     );
 };
