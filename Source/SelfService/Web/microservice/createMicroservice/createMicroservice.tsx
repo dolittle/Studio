@@ -31,7 +31,7 @@ const styles = {
         'mt': 4.5,
         'ml': 3,
         '& .MuiFormControl-root': {
-            'my': 1
+            my: 1
         },
         '.MuiFormControlLabel-root': {
             ml: 0
@@ -47,15 +47,16 @@ const styles = {
     }
 };
 
-const runtimeVersionNumbers: { value: string; }[] = [];
-
 type CreateMicroserviceParameters = {
     microserviceName: string;
     developmentEnvironment: string;
+    runtimeVersion: string;
     imageName: string;
     port: number;
     entrypoint: string;
+    publicURL: boolean;
     ingressPath: string;
+    M3Connector: boolean;
 };
 
 type CreateMicroserviceProps = {
@@ -69,22 +70,34 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
 
     const environmentInfo = application.environments.find(env => env.name === environment)!;
     const latestRuntimeVersion = getRuntimeNumberFromString(getLatestRuntimeInfo().image);
+    const runtimeImageSelections = [
+        ...getRuntimes().map(runtimeInfo => ({ value: getRuntimeNumberFromString(runtimeInfo.image) })), { value: 'None' }
+    ];
 
-    const [currentRuntimeVersion, setCurrentRuntimeVersion] = useState('');
     const [headCommandArgs, setHeadCommandArgs] = useState<string[]>([]);
     const [hasPublicURL, setHasPublicURL] = useState(false);
     const [hasM3ConnectorOption, setHasM3ConnectorOption] = useState<boolean>(environmentInfo.connections.m3Connector);
     const [hasM3Connector, setHasM3Connector] = useState<boolean>(environmentInfo.connections.m3Connector);
 
-    useEffect(() => {
-        getRuntimes().map(version => runtimeVersionNumbers.push({
-            value: getRuntimeNumberFromString(version.image)
-        }));
-        // Push 'None' as the last option in list.
-        runtimeVersionNumbers.push({ value: 'None' });
+    const handleCreateMicroservice = async (values: CreateMicroserviceParameters) => {
+        //const microservice: MicroserviceSimple = {
+        //id: Guid.create().toString(),
+        //    name: values.microserviceName,
+        //developmentEnvironment: values.developmentEnvironment,
+        //runtimeVersion: values.runtimeVersion,
+        //imageName: values.imageName,
+        //port: values.port,
+        //entrypoint: values.entrypoint,
+        //publicURL: values.publicURL,
+        //ingressPath: values.ingressPath,
+        //M3Connector: values.M3Connector
+        //};
 
-        setCurrentRuntimeVersion(latestRuntimeVersion);
-    }, [])
+        //await saveSimpleMicroservice(microservice);
+        //enqueueSnackbar('Microservice created', { variant: 'success' });
+        //history.push(`/applications/${application.id}/environments/${environment}/microservices`);
+        console.log(values);
+    };
 
     return (
         <>
@@ -94,12 +107,16 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 initialValues={{
                     microserviceName: '',
                     developmentEnvironment: environment,
+                    runtimeVersion: latestRuntimeVersion,
                     imageName: '',
                     port: 80,
                     entrypoint: '',
-                    ingressPath: ''
+                    publicURL: true,
+                    ingressPath: '',
+                    M3Connector: false
                 }}
                 sx={styles.form}
+                onSubmit={handleCreateMicroservice}
             >
                 <Box sx={styles.formSections}>
                     <Typography variant='subtitle1' sx={{ mb: 2 }}>Configuration Setup</Typography>
@@ -109,12 +126,9 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
 
                     <Select
                         id='runtimeVersion'
-                        label='Runtime Version*'
-                        options={runtimeVersionNumbers}
-                        value={currentRuntimeVersion}
+                        label='Runtime Version'
+                        options={runtimeImageSelections}
                         required
-                        onChange={event => setCurrentRuntimeVersion(event.target.value)}
-                        sx={{ width: 220 }}
                     />
                 </Box>
 
@@ -130,13 +144,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
 
                 <Box sx={styles.formSections}>
                     <Typography variant='subtitle2'>Public Microservice</Typography>
-
-                    <SwitchToggle
-                        title='Expose to a public URL'
-                        isChecked={hasPublicURL}
-                        onChange={event => setHasPublicURL(event.target.checked)}
-                        sx={{ my: 2.5 }}
-                    />
+                    <SwitchToggle id='publicURL' label='Expose to a public URL' />
 
                     {hasPublicURL &&
                         <Input
@@ -152,13 +160,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 {!hasM3ConnectorOption &&
                     <Box sx={styles.formSections}>
                         <Typography variant='subtitle2'>Connect to M3</Typography>
-
-                        <SwitchToggle
-                            title='Make M3 configuration available to microservice'
-                            isChecked={hasM3Connector}
-                            onChange={event => setHasM3Connector(event.target.checked)}
-                            sx={{ mt: 2.5 }}
-                        />
+                        <SwitchToggle id='M3Connector' label='Make M3 configuration available to microservice' />
 
                         {hasM3Connector &&
                             <>
