@@ -1,53 +1,58 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { componentStories } from '@dolittle/design-system';
+import React from 'react';
+
+import { componentStories, Form } from '@dolittle/design-system';
 
 import { Select } from './Select';
 
 const { metadata, createStory } = componentStories(Select, {
     actions: {
-        onChange: 'Value changed',
-    }
+        onChange: 'Value changed'
+    },
+    decorator: (Story) => (
+        <Form initialValues={{
+            default: '',
+            dashedBorder: '',
+            withDefaultValue: 'Value 2',
+            disabled: ''
+        }}>
+            <Story />
+        </Form>
+    )
 });
 
 export default metadata;
 
-// Needs useState for input value changes.
 const selectOptions = [
     { value: 'Value 1' },
     { value: 'Value 2' },
-    { value: 'Value 3' },
+    { value: 'Value 3' }
 ];
 
 export const Default = createStory({
+    id: 'default',
     label: 'Default select',
-    options: selectOptions,
-    sx: { width: 220 }
+    options: selectOptions
 });
 
-export const WithDashedBorder = createStory({
+export const DashedBorder = createStory({
+    id: 'dashedBorder',
     label: 'Dashed border',
     options: selectOptions,
-    sx: {
-        'width': 220,
-        '& fieldset': {
-            borderStyle: 'dashed'
-        }
-    }
+    sx: { '& fieldset': { borderStyle: 'dashed' } }
 });
 
-export const WithSelectedValue = createStory({
+export const WithDefaultValue = createStory({
+    id: 'withDefaultValue',
     label: 'Default value selected',
-    value: 'Value 1',
-    disabled: true,
-    options: selectOptions,
-    sx: { width: 220 }
+    options: selectOptions
 });
 
-export const DisabledSelect = createStory({
+export const Disabled = createStory({
+    id: 'disabled',
     label: 'Disabled',
     disabled: true,
-    options: selectOptions,
-    sx: { width: 220 }
+    options: selectOptions
 });
