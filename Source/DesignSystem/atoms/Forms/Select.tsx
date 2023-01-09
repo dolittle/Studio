@@ -3,30 +3,39 @@
 
 import React from 'react';
 
-import { MenuItem, TextField, TextFieldProps } from '@mui/material';
+import { FormControl, MenuItem, TextField, SxProps } from '@mui/material';
+
+import { useController, FieldProps } from './helpers';
 
 /**
  * The props for a {@link Select} component.
  */
 export type SelectProps = {
     options: { value: string }[];
-} & TextFieldProps;
+    sx?: SxProps;
+} & FieldProps;
 
-export const Select = ({ options, id, value, label, disabled, onChange, sx }: SelectProps) =>
-    <TextField
-        select
-        id={id}
-        value={value}
-        label={label}
-        disabled={disabled}
-        onChange={onChange}
-        variant='outlined'
-        size='small'
-        sx={sx}
-    >
-        {options.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-                {option.value}
-            </MenuItem>
-        ))}
-    </TextField>;
+export const Select = (props: SelectProps) => {
+    const { field } = useController(props);
+
+    return (
+        <FormControl sx={{ width: 1 }}>
+            <TextField
+                {...field}
+                select
+                label={props.label}
+                value={field.value}
+                disabled={props.disabled}
+                size='small'
+                fullWidth
+                sx={{ width: 220, ...props.sx }}
+            >
+                {props.options.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                        {option.value}
+                    </MenuItem>
+                ))}
+            </TextField>
+        </FormControl>
+    );
+};
