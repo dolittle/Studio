@@ -107,6 +107,8 @@ jobs:
           context: .
           file: ./${{ env.DOCKER_FILE }}
           tags: dolittle/self-service-web:${{ needs.changes.outputs.next-version }}
+          build-args: |
+            MUI_LICENSE_KEY_ARG=${{ secrets.MUI_LICENSE_KEY_STUDIO }}
 
 
       - name: Push latest tag to Docker Hub
