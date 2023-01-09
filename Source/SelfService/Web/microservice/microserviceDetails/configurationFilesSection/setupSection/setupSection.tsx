@@ -234,7 +234,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
                             {hasPublicURLOption &&
                                 <Input
-                                    id="ingressPath"
+                                    id='ingressPath'
                                     label='Path'
                                     disabled={formIsNotEditable}
                                     startAdornment='/'

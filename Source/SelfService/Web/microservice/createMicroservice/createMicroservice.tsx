@@ -49,7 +49,6 @@ const styles = {
 
 type CreateMicroserviceParameters = {
     microserviceName: string;
-    developmentEnvironment: string;
     runtimeVersion: string;
     imageName: string;
     port: number;
@@ -69,14 +68,16 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
     const history = useHistory();
 
     const environmentInfo = application.environments.find(env => env.name === environment)!;
-    const latestRuntimeVersion = getRuntimeNumberFromString(getLatestRuntimeInfo().image);
-    const runtimeImageSelections = [
+
+    const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
+    const latestRuntimeNumber = getRuntimeNumberFromString(getLatestRuntimeInfo().image);
+    const runtimeNumberSelections = [
         ...getRuntimes().map(runtimeInfo => ({ value: getRuntimeNumberFromString(runtimeInfo.image) })), { value: 'None' }
     ];
 
     const [headCommandArgs, setHeadCommandArgs] = useState<string[]>([]);
-    const [hasPublicURL, setHasPublicURL] = useState(false);
-    const [hasM3ConnectorOption, setHasM3ConnectorOption] = useState<boolean>(environmentInfo.connections.m3Connector);
+    const [hasPublicUrl, setHasPublicUrl] = useState(false);
+    //const [hasM3ConnectorOption, setHasM3ConnectorOption] = useState<boolean>(environmentInfo.connections.m3Connector);
     const [hasM3Connector, setHasM3Connector] = useState<boolean>(environmentInfo.connections.m3Connector);
 
     const handleCreateMicroservice = async (values: CreateMicroserviceParameters) => {
@@ -106,12 +107,11 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
             <Form<CreateMicroserviceParameters>
                 initialValues={{
                     microserviceName: '',
-                    developmentEnvironment: environment,
-                    runtimeVersion: latestRuntimeVersion,
+                    runtimeVersion: latestRuntimeNumber,
                     imageName: '',
                     port: 80,
                     entrypoint: '',
-                    publicURL: true,
+                    publicURL: false,
                     ingressPath: '',
                     M3Connector: false
                 }}
@@ -122,12 +122,12 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     <Typography variant='subtitle1' sx={{ mb: 2 }}>Configuration Setup</Typography>
 
                     <Input id='microserviceName' label='Microservice Name' required />
-                    <Input id='developmentEnvironment' label='Development Environment' disabled />
+                    <Input id='developmentEnvironment' label={environment} disabled />
 
                     <Select
                         id='runtimeVersion'
                         label='Runtime Version'
-                        options={runtimeImageSelections}
+                        options={runtimeNumberSelections}
                         required
                     />
                 </Box>
@@ -144,9 +144,9 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
 
                 <Box sx={styles.formSections}>
                     <Typography variant='subtitle2'>Public Microservice</Typography>
-                    <SwitchToggle id='publicURL' label='Expose to a public URL' />
+                    <SwitchToggle id='publicURL' label='Expose to a public URL' onChange={() => setHasPublicUrl(!hasPublicUrl)} />
 
-                    {hasPublicURL &&
+                    {hasPublicUrl &&
                         <Input
                             id='ingressPath'
                             label='Path'
@@ -160,7 +160,11 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 {!hasM3ConnectorOption &&
                     <Box sx={styles.formSections}>
                         <Typography variant='subtitle2'>Connect to M3</Typography>
-                        <SwitchToggle id='M3Connector' label='Make M3 configuration available to microservice' />
+                        <SwitchToggle
+                            id='M3Connector'
+                            label='Make M3 configuration available to microservice'
+                            onChange={() => setHasM3Connector(!hasM3Connector)}
+                        />
 
                         {hasM3Connector &&
                             <>
