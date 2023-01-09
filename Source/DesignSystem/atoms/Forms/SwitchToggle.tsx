@@ -3,17 +3,21 @@
 
 import React from 'react';
 
-import { FormControl, FormControlLabel, Switch } from '@mui/material';
+import { FormControl, FormControlLabel, Switch, SxProps } from '@mui/material';
 
 import { useController, FieldProps } from './helpers';
 import type { Form } from './Form';
+
+export type SwitchToggleProps = {
+    sx?: SxProps;
+} & FieldProps;
 
 /**
  * Creates a switch field to be used in a {@link Form}.
  * @param props The {@link FieldProps} for the checkbox.
  * @returns A new {@link SwitchToggle} component.
  */
-export const SwitchToggle = (props: FieldProps) => {
+export const SwitchToggle = (props: SwitchToggleProps) => {
     const { field } = useController(props);
 
     return (
@@ -23,6 +27,7 @@ export const SwitchToggle = (props: FieldProps) => {
                     <Switch {...field} size='small' checked={!!field.value} disabled={props.disabled} />
                 }
                 label={props.label}
+                sx={{ mt: 1.5, ...props.sx }}
             />
         </FormControl>
     );
