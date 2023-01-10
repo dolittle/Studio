@@ -63,6 +63,18 @@ export type MicroserviceHeadCommand = {
     args: string[];
 };
 
+export type MicroserviceFormParameters = {
+    microserviceName: string;
+    developmentEnvironment: string;
+    runtimeVersion: string;
+    headImage: string;
+    headPort: number;
+    entrypoint: string;
+    isPublic: boolean;
+    ingressPath: string;
+    hasM3Connector: boolean;
+};
+
 export type MicroserviceRawDataLogIngestor = {
     dolittle: MicroserviceDolittle;
     name: string;

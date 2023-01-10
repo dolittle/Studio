@@ -6,19 +6,19 @@ import { useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 import { Guid } from '@dolittle/rudiments';
-import { Button, Form, Input, LoadingSpinner, Select, SwitchToggle } from '@dolittle/design-system';
+import { Button, Form, LoadingSpinner } from '@dolittle/design-system';
 
 import { saveSimpleMicroservice } from '../../stores/microservice';
 
-import { MicroserviceSimple } from '../../api/index';
+import { MicroserviceSimple, MicroserviceFormParameters } from '../../api/index';
 import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
 import { HttpResponseApplication } from '../../api/application';
 
-import { HeadArguments } from '../components/headArguments';
+import { ConfigurationSetupField, ContainerImageField, PublicUrlField, HasM3ConnectorField } from '../components/form';
 import { getRuntimeNumberFromString } from '../helpers';
 
 const styles = {
@@ -42,18 +42,6 @@ const styles = {
     }
 };
 
-type CreateMicroserviceParameters = {
-    microserviceName: string;
-    developmentEnvironment: string;
-    runtimeVersion: string;
-    headImage: string;
-    headPort: number;
-    entrypoint: string;
-    isPublic: boolean;
-    ingressPath: string;
-    hasM3Connector: boolean;
-};
-
 type CreateMicroserviceProps = {
     application: HttpResponseApplication;
     environment: string;
@@ -63,20 +51,19 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
 
-    const environmentInfo = application.environments.find(env => env.name === environment)!;
-
-    const [headCommandArgs, setHeadCommandArgs] = useState<string[]>([]);
-    const [hasPublicUrl, setHasPublicUrl] = useState(false);
-    const [hasM3Connector, setHasM3Connector] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [headCommandArgs, setHeadCommandArgs] = useState<string[]>([]);
+    const [showPublicUrlInfo, setShowPublicUrlInfo] = useState(false);
+    const [showM3ConnectorInfo, setShowM3ConnectorInfo] = useState(false);
 
+    const environmentInfo = application.environments.find(env => env.name === environment)!;
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
     const latestRuntimeNumber = getRuntimeNumberFromString(getLatestRuntimeInfo().image);
     const runtimeNumberSelections = [
         ...getRuntimes().map(runtimeInfo => ({ value: getRuntimeNumberFromString(runtimeInfo.image) })), { value: 'None' }
     ];
 
-    const handleCreateMicroservice = async (values: CreateMicroserviceParameters) => {
+    const handleCreateMicroservice = async (values: MicroserviceFormParameters) => {
         setIsLoading(true);
 
         const microserviceId = Guid.create().toString();
@@ -128,12 +115,12 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
         <>
             <Typography variant='h1'>Deploy Base Microservice</Typography>
 
-            <Form<CreateMicroserviceParameters>
+            <Form<MicroserviceFormParameters>
                 initialValues={{
                     microserviceName: '',
                     developmentEnvironment: environment,
                     runtimeVersion: latestRuntimeNumber,
-                    headImage: 'nginxdemos/hello:latest',
+                    headImage: '', //nginxdemos/hello:latest
                     headPort: 80,
                     entrypoint: '',
                     isPublic: false,
@@ -143,83 +130,22 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 sx={styles.form}
                 onSubmit={handleCreateMicroservice}
             >
-                <Box sx={styles.formSections}>
-                    <Typography variant='subtitle1' sx={{ mb: 2 }}>Configuration Setup</Typography>
+                <ConfigurationSetupField options={runtimeNumberSelections} sx={styles.formSections} />
 
-                    <Input id='microserviceName' label='Microservice Name' required />
-                    <Input id='developmentEnvironment' label='Development Environment' disabled />
+                <ContainerImageField cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} sx={styles.formSections} />
 
-                    <Select
-                        id='runtimeVersion'
-                        label='Runtime Version'
-                        options={runtimeNumberSelections}
-                        required
-                    />
-                </Box>
-
-                <Box sx={styles.formSections}>
-                    <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
-
-                    <Input
-                        id='headImage'
-                        label='Image Name'
-                        required
-                        sx={{ width: 500 }}
-                    />
-
-                    <Input
-                        id='headPort'
-                        label='Port'
-                        pattern={{
-                            value: /^[0-9]+$/,
-                            message: 'Please enter a valid port number.'
-                        }}
-                        required
-                    />
-
-                    <Input id='entrypoint' label='Entrypoint' />
-
-                    <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} />
-                </Box>
-
-                <Box sx={styles.formSections}>
-                    <Typography variant='subtitle2'>Public Microservice</Typography>
-                    <SwitchToggle id='isPublic' label='Expose to a public URL' onChange={() => setHasPublicUrl(!hasPublicUrl)} />
-
-                    {hasPublicUrl &&
-                        <Input
-                            id='ingressPath'
-                            label='Path'
-                            startAdornment='/'
-                            placeholder='leave blank for default path'
-                            sx={{ width: 226 }}
-                        />
-                    }
-                </Box>
+                <PublicUrlField
+                    hasPublicUrl={showPublicUrlInfo}
+                    setHasPublicUrl={() => setShowPublicUrlInfo(!showPublicUrlInfo)}
+                    sx={styles.formSections}
+                />
 
                 {hasM3ConnectorOption &&
-                    <Box sx={styles.formSections}>
-                        <Typography variant='subtitle2'>Connect to M3</Typography>
-                        <SwitchToggle
-                            id='hasM3Connector'
-                            label='Make M3 configuration available to microservice'
-                            onChange={() => setHasM3Connector(!hasM3Connector)}
-                        />
-
-                        {hasM3Connector &&
-                            <>
-                                <Typography variant='body2' sx={{ ml: 6, mt: 1 }}>
-                                    Enabling this will mount these files to the deployed microservice:
-                                </Typography>
-
-                                <Box sx={{ ml: 6, mt: 2 }}>
-                                    <Typography variant='body2'>/app/connection/kafka/ca.pem</Typography>
-                                    <Typography variant='body2'>/app/connection/kafka/certificate.pem</Typography>
-                                    <Typography variant='body2'>/app/connection/kafka/accessKey.pem</Typography>
-                                </Box>
-                            </>
-                        }
-                    </Box>
+                    <HasM3ConnectorField
+                        hasM3Connector={showM3ConnectorInfo}
+                        setHasM3Connector={() => setShowM3ConnectorInfo(!showM3ConnectorInfo)}
+                        sx={styles.formSections}
+                    />
                 }
 
                 <Button variant='filled' label='Deploy microservice' size='medium' type='submit' startWithIcon={<RocketLaunch />} sx={{ mt: 1 }} />

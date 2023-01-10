@@ -9,7 +9,7 @@ import { MicroserviceStore } from '../../../stores/microservice';
 
 import { SetupSection } from './setupSection/setupSection';
 import { FilesSection } from './filesSection/filesSection';
-import { EnvironmentVariablesSection } from './environmentVariablesSection/environmentVariableSection';
+import { EnvironmentVariablesSection } from './environmentVariableSection';
 
 type ConfigurationFilesSectionProps = {
     application: HttpResponseApplication;
