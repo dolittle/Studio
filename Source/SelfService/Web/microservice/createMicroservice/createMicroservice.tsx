@@ -1,16 +1,16 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { CircularProgress, Box, Grid, SelectChangeEvent, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 import { Guid } from '@dolittle/rudiments';
-import { Button, ConfirmDialog, Form, Input, Select, SwitchToggle } from '@dolittle/design-system';
+import { Button, ConfirmDialog, Form, Input, LoadingSpinner, Select, SwitchToggle } from '@dolittle/design-system';
 
 import { DropDownMenu } from '../../theme/dropDownMenu';
 import { TextField as ThemedTextField } from '../../theme/textField';
@@ -23,7 +23,6 @@ import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
 import { HttpResponseApplication } from '../../api/application';
 
 import { HeadArguments } from '../components/headArguments';
-
 import { getRuntimeNumberFromString } from '../helpers';
 
 const styles = {
@@ -51,12 +50,12 @@ type CreateMicroserviceParameters = {
     microserviceName: string;
     developmentEnvironment: string;
     runtimeVersion: string;
-    imageName: string;
-    port: number;
+    headImage: string;
+    headPort: number;
     entrypoint: string;
-    publicURL: boolean;
+    isPublic: boolean;
     ingressPath: string;
-    M3Connector: boolean;
+    hasM3Connector: boolean;
 };
 
 type CreateMicroserviceProps = {
@@ -79,10 +78,11 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
     const runtimeNumberSelections = [
         ...getRuntimes().map(runtimeInfo => ({ value: getRuntimeNumberFromString(runtimeInfo.image) })), { value: 'None' }
     ];
-    const microserviceId = Guid.create().toString();
 
     const handleCreateMicroservice = async (values: CreateMicroserviceParameters) => {
         // setIsLoading(true);
+        const microserviceId = Guid.create().toString();
+        const { microserviceName, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
 
         const newMicroservice: MicroserviceSimple = {
             dolittle: {
@@ -90,24 +90,24 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 customerId: application.customerId,
                 microserviceId
             },
-            name: values.microserviceName,
+            name: microserviceName,
             kind: 'simple',
             environment,
             extra: {
-                headImage: values.imageName,
-                headPort: values.port,
-                runtimeImage: values.runtimeVersion.toLowerCase(),
-                isPublic: values.publicURL,
+                headImage,
+                headPort,
+                runtimeImage: runtimeVersion.toLowerCase(),
+                isPublic,
                 ingress: {
-                    path: '/' + values.ingressPath,
+                    path: '/' + ingressPath,
                     pathType: 'Prefix'
                 },
                 headCommand: {
-                    command: values.entrypoint.split(' '),
+                    command: entrypoint.split(' '),
                     args: headCommandArgs
                 },
                 connections: {
-                    m3Connector: values.M3Connector
+                    m3Connector: hasM3Connector
                 }
             }
         };
@@ -134,12 +134,12 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     microserviceName: '',
                     developmentEnvironment: environment,
                     runtimeVersion: latestRuntimeNumber,
-                    imageName: 'nginxdemos/hello:latest',
-                    port: 80,
+                    headImage: 'nginxdemos/hello:latest',
+                    headPort: 80,
                     entrypoint: '',
-                    publicURL: false,
+                    isPublic: false,
                     ingressPath: '',
-                    M3Connector: false
+                    hasM3Connector: false
                 }}
                 sx={styles.form}
                 onSubmit={handleCreateMicroservice}
@@ -161,9 +161,15 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 <Box sx={styles.formSections}>
                     <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
 
-                    <Input id='imageName' label='Image Name' required sx={{ width: 500 }} />
                     <Input
-                        id='port'
+                        id='headImage'
+                        label='Image Name'
+                        required
+                        sx={{ width: 500 }}
+                    />
+
+                    <Input
+                        id='headPort'
                         label='Port'
                         pattern={{
                             value: /^[0-9]+$/,
@@ -171,6 +177,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                         }}
                         required
                     />
+
                     <Input id='entrypoint' label='Entrypoint' />
 
                     <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} />
@@ -178,7 +185,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
 
                 <Box sx={styles.formSections}>
                     <Typography variant='subtitle2'>Public Microservice</Typography>
-                    <SwitchToggle id='publicURL' label='Expose to a public URL' onChange={() => setHasPublicUrl(!hasPublicUrl)} />
+                    <SwitchToggle id='isPublic' label='Expose to a public URL' onChange={() => setHasPublicUrl(!hasPublicUrl)} />
 
                     {hasPublicUrl &&
                         <Input
@@ -191,11 +198,11 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     }
                 </Box>
 
-                {!hasM3ConnectorOption &&
+                {hasM3ConnectorOption &&
                     <Box sx={styles.formSections}>
                         <Typography variant='subtitle2'>Connect to M3</Typography>
                         <SwitchToggle
-                            id='M3Connector'
+                            id='hasM3Connector'
                             label='Make M3 configuration available to microservice'
                             onChange={() => setHasM3Connector(!hasM3Connector)}
                         />
