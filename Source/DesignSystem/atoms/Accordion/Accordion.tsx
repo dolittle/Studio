@@ -14,7 +14,7 @@ const styles = {
     accordionSummary: {
         // Move expand arrow to the left side
         'flexDirection': 'row-reverse',
-        // Disable 'expand' for the whole line
+        // Disable 'expand' click for the whole line
         'pointerEvents': 'none',
         'p': 0,
         '& .MuiAccordionSummary-expandIconWrapper': {
@@ -26,7 +26,7 @@ const styles = {
     },
     expandIcon: {
         color: 'text.secondary',
-        // Allow 'expand' for the icon only
+        // Allow 'expand' click for the icon only
         pointerEvents: 'auto'
     }
 };
@@ -35,16 +35,12 @@ export type AccordionProps = {
     id: string;
     title: string;
     children: React.ReactNode;
-    isExpanded?: boolean;
     defaultExpanded?: boolean;
-    onChange?: (event: React.SyntheticEvent<Element, Event>, expanded: boolean) => void;
 };
 
-export const Accordion = ({ isExpanded, defaultExpanded, onChange, id, title, children }: AccordionProps) =>
+export const Accordion = ({ defaultExpanded, id, title, children }: AccordionProps) =>
     <MuiAccordion
-        expanded={isExpanded}
         defaultExpanded={defaultExpanded}
-        onChange={onChange}
         TransitionProps={{ unmountOnExit: true }}
         sx={styles.accordion}
     >

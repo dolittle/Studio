@@ -8,7 +8,7 @@ import { AddCircle, DeleteRounded, DownloadRounded } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system';
 
-type ButtonGroupProps = {
+type HeaderButtonsProps = {
     filePrompt: () => void;
     deleteDisabled: boolean;
     downloadDisabled: boolean;
@@ -16,7 +16,7 @@ type ButtonGroupProps = {
     handleDownload: () => void;
 };
 
-export const ButtonGroup = ({ filePrompt, deleteDisabled, downloadDisabled, handleDelete, handleDownload }: ButtonGroupProps) =>
+export const HeaderButtons = ({ filePrompt, deleteDisabled, downloadDisabled, handleDelete, handleDownload }: HeaderButtonsProps) =>
     <Box sx={{ mb: 2.875, button: { 'mr': 6.25, '&:last-of-type': { mr: 0 } } }}>
         <Button
             label='Add File(s)'

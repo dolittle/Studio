@@ -11,14 +11,15 @@ import { Accordion } from '@dolittle/design-system';
 
 import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../api/api';
 
-import { FileUploadForm, FileUploadFormRef } from './fileUploadForm';
 import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
-import { ConfigFilesTable, ConfigFilesTableRow } from './configFilesTable';
 import { EmptyDataTable } from '../../../components/emptyDataTable';
+import { RestartInfoBox } from '../../../components/restartInfoBox';
+
+import { FileUploadForm, FileUploadFormRef } from './fileUploadForm';
+import { ConfigFilesTable, ConfigFilesTableRow } from './configFilesTable';
 import { ValidateFileDialog } from './validateFileDialog';
 import { DeleteConfigFileDialog } from './deleteConfigFileDialog';
-import { ButtonGroup } from './buttonGroup';
-import { RestartInfoBox } from '../../../components/restartInfoBox';
+import { HeaderButtons } from './headerButtons';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
@@ -33,7 +34,6 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     const fileUploadRef = useRef<FileUploadFormRef>(null);
     const { enqueueSnackbar } = useSnackbar();
 
-    const [filesPanelIsExpanded, setFilesPanelIsExpanded] = useState(true);
     const [configFileTableRows, setConfigFileTableRows] = useState<ConfigFilesTableRow[]>([]);
     const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>([]);
     const [restartInfoBoxIsOpen, setRestartInfoBoxIsOpen] = useState(false);
@@ -149,6 +149,8 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         setValidateFileDialogIsOpen({ isOpen: false, file: [] });
     };
 
+    const noConfigTableRows = configFileTableRows.length === 0;
+
     return (
         <>
             <RestartMicroserviceDialog
@@ -183,14 +185,13 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
             <Accordion
                 id='configuration-files'
-                isExpanded={filesPanelIsExpanded}
                 title='Configuration Files'
-                onChange={() => setFilesPanelIsExpanded(!filesPanelIsExpanded)}
+                defaultExpanded
             >
-                <ButtonGroup
+                <HeaderButtons
                     filePrompt={() => fileUploadRef.current?.showPrompt()}
-                    deleteDisabled={selectedRowIds.length === 0 || configFileTableRows.length === 0}
-                    downloadDisabled={configFileTableRows.length === 0}
+                    deleteDisabled={selectedRowIds.length === 0 || noConfigTableRows}
+                    downloadDisabled={noConfigTableRows}
                     handleDelete={() => setDeleteConfigFileDialogIsOpen(true)}
                     handleDownload={handleConfigFileDownload}
                 />
