@@ -79,50 +79,50 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
     const runtimeNumberSelections = [
         ...getRuntimes().map(runtimeInfo => ({ value: getRuntimeNumberFromString(runtimeInfo.image) })), { value: 'None' }
     ];
+    const microserviceId = Guid.create().toString();
 
     const handleCreateMicroservice = async (values: CreateMicroserviceParameters) => {
-        // const microservice: MicroserviceSimple = {
-        //     id: Guid.create().toString(),
-        //     name: values.microserviceName,
-        //     developmentEnvironment: values.developmentEnvironment,
-        //     runtimeVersion: values.runtimeVersion,
-        //     imageName: values.imageName,
-        //     port: values.port,
-        //     entrypoint: values.entrypoint,
-        //     publicURL: values.publicURL,
-        //     ingressPath: values.ingressPath,
-        //     M3Connector: values.M3Connector
-        // };
-
-        // ms.name = msName;
-        // ms.extra.headImage = headImage;
-        // ms.extra.headPort = headPort;
-        // ms.extra.runtimeImage = runtimeImage;
-        // ms.extra.isPublic = isPublic;
-        // ms.extra.ingress.path = ingressPath;
-        // ms.extra.headCommand.command = command;
-        // ms.extra.headCommand.args = args;
-        // ms.extra.connections = {
-        //     m3Connector: connectionM3Connector
-        // };
-
         // setIsLoading(true);
 
-        // try {
-        //     await saveSimpleMicroservice(ms);
-        //     const href = `/microservices/application/${application.id}/${environment}/view/${ms.dolittle.microserviceId}`;
-        //     history.push(href);
-        // } catch (e: unknown) {
-        //     const message = (e instanceof Error) ? e.message : 'Something went wrong when saving microservice';
-        //     enqueueSnackbar(message, { variant: 'error' });
-        // } finally {
-        //     setIsLoading(false);
-        // }
+        const newMicroservice: MicroserviceSimple = {
+            dolittle: {
+                applicationId: application.id,
+                customerId: application.customerId,
+                microserviceId
+            },
+            name: values.microserviceName,
+            kind: 'simple',
+            environment,
+            extra: {
+                headImage: values.imageName,
+                headPort: values.port,
+                runtimeImage: values.runtimeVersion.toLowerCase(),
+                isPublic: values.publicURL,
+                ingress: {
+                    path: '/' + values.ingressPath,
+                    pathType: 'Prefix'
+                },
+                headCommand: {
+                    command: values.entrypoint.split(' '),
+                    args: headCommandArgs
+                },
+                connections: {
+                    m3Connector: values.M3Connector
+                }
+            }
+        };
 
-        //await saveSimpleMicroservice(microservice);
-        //enqueueSnackbar('Microservice created', { variant: 'success' });
-        //history.push(`/applications/${application.id}/environments/${environment}/microservices`);
-        console.log(values);
+        try {
+            await saveSimpleMicroservice(newMicroservice);
+            const href = `/microservices/application/${application.id}/${environment}/view/${newMicroservice.dolittle.microserviceId}`;
+            history.push(href);
+        } catch (e: unknown) {
+            const message = (e instanceof Error) ? e.message : 'Something went wrong when saving microservice.';
+            enqueueSnackbar(message, { variant: 'error' });
+        } finally {
+            //setIsLoading(false);
+        }
+        console.log(newMicroservice);
     };
 
     return (
@@ -134,7 +134,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     microserviceName: '',
                     developmentEnvironment: environment,
                     runtimeVersion: latestRuntimeNumber,
-                    imageName: '',
+                    imageName: 'nginxdemos/hello:latest',
                     port: 80,
                     entrypoint: '',
                     publicURL: false,
