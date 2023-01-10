@@ -17,7 +17,7 @@ type HeaderButtonsProps = {
 };
 
 export const HeaderButtons = ({ filePrompt, deleteDisabled, downloadDisabled, handleDelete, handleDownload }: HeaderButtonsProps) =>
-    <Box sx={{ mb: 2.875, button: { 'mr': 6.25, '&:last-of-type': { mr: 0 } } }}>
+    <Box sx={{ mb: 2.875, button: { 'mr': 2.5, '&:last-of-type': { mr: 0 } } }}>
         <Button
             label='Add File(s)'
             startWithIcon={<AddCircle />}
