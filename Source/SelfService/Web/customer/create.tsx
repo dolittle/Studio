@@ -4,25 +4,14 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import StepContent from '@mui/material/StepContent';
-
-import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 
-import { Box, Grid } from '@mui/material';
-import { Button } from '../theme/button';
+import { Box, Grid, Step, Stepper, StepContent, StepLabel, Typography } from '@mui/material';
+
 import { TextField as ThemedTextField } from '../theme/textField';
+import { Button } from '@dolittle/design-system';
+
 import { createCustomer, HttpCustomerRequest } from '../api/customer';
-
-
-type Props = {
-
-};
-
 
 const styles = {
     root: {
@@ -63,7 +52,7 @@ const styles = {
 
 
 
-export const Create: React.FunctionComponent<Props> = (props) => {
+export const Create = () => {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -75,9 +64,6 @@ export const Create: React.FunctionComponent<Props> = (props) => {
     const [customerName, setCustomerName] = React.useState('');
 
     const [activeNextButton, setActiveNextButton] = React.useState(false);
-    const todoOnClick = () => {
-        enqueueSnackbar('TODO');
-    };
 
     const stepsContent = [
         <>
@@ -141,22 +127,18 @@ export const Create: React.FunctionComponent<Props> = (props) => {
                                 <Box sx={styles.actionsContainer}>
                                     <div>
                                         <Button
+                                            label='Back'
                                             onClick={() => {
                                                 const href = `/admin/customers`;
                                                 history.push(href);
                                             }}
-                                        >
-                                            Back
-                                        </Button>
+                                        />
 
                                         <Button
+                                            label={activeStep === steps.length - 1 ? 'Click to create' : 'Next'}
                                             onClick={handleNext}
                                             disabled={!activeNextButton}
-                                        >
-                                            {activeStep === steps.length - 1
-                                                ? 'Click to create'
-                                                : 'Next'}
-                                        </Button>
+                                        />
                                     </div>
                                 </Box>
                             </StepContent>
