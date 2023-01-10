@@ -49,6 +49,7 @@ const styles = {
 
 type CreateMicroserviceParameters = {
     microserviceName: string;
+    developmentEnvironment: string;
     runtimeVersion: string;
     imageName: string;
     port: number;
@@ -69,30 +70,54 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
 
     const environmentInfo = application.environments.find(env => env.name === environment)!;
 
+    const [headCommandArgs, setHeadCommandArgs] = useState<string[]>([]);
+    const [hasPublicUrl, setHasPublicUrl] = useState(false);
+    const [hasM3Connector, setHasM3Connector] = useState(false);
+
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
     const latestRuntimeNumber = getRuntimeNumberFromString(getLatestRuntimeInfo().image);
     const runtimeNumberSelections = [
         ...getRuntimes().map(runtimeInfo => ({ value: getRuntimeNumberFromString(runtimeInfo.image) })), { value: 'None' }
     ];
 
-    const [headCommandArgs, setHeadCommandArgs] = useState<string[]>([]);
-    const [hasPublicUrl, setHasPublicUrl] = useState(false);
-    //const [hasM3ConnectorOption, setHasM3ConnectorOption] = useState<boolean>(environmentInfo.connections.m3Connector);
-    const [hasM3Connector, setHasM3Connector] = useState<boolean>(environmentInfo.connections.m3Connector);
-
     const handleCreateMicroservice = async (values: CreateMicroserviceParameters) => {
-        //const microservice: MicroserviceSimple = {
-        //id: Guid.create().toString(),
-        //    name: values.microserviceName,
-        //developmentEnvironment: values.developmentEnvironment,
-        //runtimeVersion: values.runtimeVersion,
-        //imageName: values.imageName,
-        //port: values.port,
-        //entrypoint: values.entrypoint,
-        //publicURL: values.publicURL,
-        //ingressPath: values.ingressPath,
-        //M3Connector: values.M3Connector
-        //};
+        // const microservice: MicroserviceSimple = {
+        //     id: Guid.create().toString(),
+        //     name: values.microserviceName,
+        //     developmentEnvironment: values.developmentEnvironment,
+        //     runtimeVersion: values.runtimeVersion,
+        //     imageName: values.imageName,
+        //     port: values.port,
+        //     entrypoint: values.entrypoint,
+        //     publicURL: values.publicURL,
+        //     ingressPath: values.ingressPath,
+        //     M3Connector: values.M3Connector
+        // };
+
+        // ms.name = msName;
+        // ms.extra.headImage = headImage;
+        // ms.extra.headPort = headPort;
+        // ms.extra.runtimeImage = runtimeImage;
+        // ms.extra.isPublic = isPublic;
+        // ms.extra.ingress.path = ingressPath;
+        // ms.extra.headCommand.command = command;
+        // ms.extra.headCommand.args = args;
+        // ms.extra.connections = {
+        //     m3Connector: connectionM3Connector
+        // };
+
+        // setIsLoading(true);
+
+        // try {
+        //     await saveSimpleMicroservice(ms);
+        //     const href = `/microservices/application/${application.id}/${environment}/view/${ms.dolittle.microserviceId}`;
+        //     history.push(href);
+        // } catch (e: unknown) {
+        //     const message = (e instanceof Error) ? e.message : 'Something went wrong when saving microservice';
+        //     enqueueSnackbar(message, { variant: 'error' });
+        // } finally {
+        //     setIsLoading(false);
+        // }
 
         //await saveSimpleMicroservice(microservice);
         //enqueueSnackbar('Microservice created', { variant: 'success' });
@@ -107,6 +132,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
             <Form<CreateMicroserviceParameters>
                 initialValues={{
                     microserviceName: '',
+                    developmentEnvironment: environment,
                     runtimeVersion: latestRuntimeNumber,
                     imageName: '',
                     port: 80,
@@ -122,7 +148,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     <Typography variant='subtitle1' sx={{ mb: 2 }}>Configuration Setup</Typography>
 
                     <Input id='microserviceName' label='Microservice Name' required />
-                    <Input id='developmentEnvironment' label={environment} disabled />
+                    <Input id='developmentEnvironment' label='Development Environment' disabled />
 
                     <Select
                         id='runtimeVersion'
@@ -136,7 +162,15 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
 
                     <Input id='imageName' label='Image Name' required sx={{ width: 500 }} />
-                    <Input id='port' label='Port' required />
+                    <Input
+                        id='port'
+                        label='Port'
+                        pattern={{
+                            value: /^[0-9]+$/,
+                            message: 'Please enter a valid port number.'
+                        }}
+                        required
+                    />
                     <Input id='entrypoint' label='Entrypoint' />
 
                     <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} />
@@ -172,7 +206,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                                     Enabling this will mount these files to the deployed microservice:
                                 </Typography>
 
-                                <Box sx={{ ml: 6, mt: 2, lineHeight: '20px' }}>
+                                <Box sx={{ ml: 6, mt: 2 }}>
                                     <Typography variant='body2'>/app/connection/kafka/ca.pem</Typography>
                                     <Typography variant='body2'>/app/connection/kafka/certificate.pem</Typography>
                                     <Typography variant='body2'>/app/connection/kafka/accessKey.pem</Typography>
