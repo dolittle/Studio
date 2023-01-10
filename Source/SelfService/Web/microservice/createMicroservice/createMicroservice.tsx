@@ -72,6 +72,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
     const [headCommandArgs, setHeadCommandArgs] = useState<string[]>([]);
     const [hasPublicUrl, setHasPublicUrl] = useState(false);
     const [hasM3Connector, setHasM3Connector] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
     const latestRuntimeNumber = getRuntimeNumberFromString(getLatestRuntimeInfo().image);
@@ -80,7 +81,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
     ];
 
     const handleCreateMicroservice = async (values: CreateMicroserviceParameters) => {
-        // setIsLoading(true);
+        setIsLoading(true);
         const microserviceId = Guid.create().toString();
         const { microserviceName, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
 
@@ -120,10 +121,11 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
             const message = (e instanceof Error) ? e.message : 'Something went wrong when saving microservice.';
             enqueueSnackbar(message, { variant: 'error' });
         } finally {
-            //setIsLoading(false);
+            setIsLoading(false);
         }
-        console.log(newMicroservice);
     };
+
+    if (isLoading) return <LoadingSpinner />;
 
     return (
         <>
