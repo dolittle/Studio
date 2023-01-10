@@ -1,3 +1,9 @@
+# [2.19.2] - 2023-1-10 [PR: #299](https://github.com/dolittle/Studio/pull/299)
+## Summary
+
+Small change to force build to be re-run
+
+
 # [2.19.1] - 2023-1-10 [PR: #297](https://github.com/dolittle/Studio/pull/297)
 ## Summary
 
