@@ -4,8 +4,9 @@
 import React from 'react';
 
 import { Box } from '@mui/material';
-import Symbol from '../theme/assets/logos/symbol.svg?url';
-import Logo from '../theme/assets/logos/logo.svg';
+
+import Symbol from '../assets/logos/symbol.svg?url';
+import Logo from '../assets/logos/logo.svg';
 
 const styles = {
     backgroundSymbol: {
@@ -38,11 +39,10 @@ export type LoginWrapperProps = {
     children: React.ReactNode;
 };
 
-export const LoginWrapper = ({ children }: LoginWrapperProps) => (
+export const LoginWrapper = ({ children }: LoginWrapperProps) =>
     <Box sx={styles.backgroundSymbol}>
         <Box sx={styles.mainContent}>
             {children}
             <Logo sx={styles.logo} />
         </Box>
-    </Box>
-);
+    </Box>;

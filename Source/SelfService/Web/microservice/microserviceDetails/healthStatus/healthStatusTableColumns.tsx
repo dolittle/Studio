@@ -10,7 +10,7 @@ import { Summary } from '@dolittle/design-system';
 
 import { DownloadLogs, formatTime, formatStartingDate } from '../../helpers';
 
-import { StatusFieldCell } from '../../microserviceStatus';
+import { StatusFieldCell } from '../../components/microserviceStatus';
 import { HealthStatusTableRow } from './healthStatusTable';
 
 export const columns: GridColDef[] = [

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import { getPodStatus, MicroserviceInfo } from '../../api/api';
 import { HttpResponseApplication } from '../../api/application';
-import { StatusFieldCell, customStatusFieldSort } from '../microserviceStatus';
+import { StatusFieldCell, customStatusFieldSort } from '../components/microserviceStatus';
 
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Paper, Tooltip } from '@mui/material';

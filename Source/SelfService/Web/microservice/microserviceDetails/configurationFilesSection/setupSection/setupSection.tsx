@@ -16,7 +16,7 @@ import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '..
 import { HttpResponseApplication } from '../../../../api/application';
 
 import { HeadArguments } from '../../../components/headArguments';
-import { RestartMicroserviceDialog } from '../../restartMicroserviceDialog';
+import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
 import { getRuntimeNumberFromString } from '../../../helpers';
 
 const styles = {
