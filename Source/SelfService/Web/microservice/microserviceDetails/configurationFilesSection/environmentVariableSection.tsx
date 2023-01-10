@@ -231,7 +231,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                 title='Environment Variables'
                 defaultExpanded
             >
-                <Box sx={{ mb: 2.875, button: { 'mr': 6.25, '&:last-of-type': { mr: 0 } } }}>
+                <Box sx={{ mb: 2.875, button: { 'mr': 2.5, '&:last-of-type': { mr: 0 } } }}>
                     <Button
                         label='Add new variable row'
                         disabled={disableAddButton}
