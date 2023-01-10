@@ -10,11 +10,7 @@ import { Box, Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 import { Guid } from '@dolittle/rudiments';
-import { Button, ConfirmDialog, Form, Input, LoadingSpinner, Select, SwitchToggle } from '@dolittle/design-system';
-
-import { DropDownMenu } from '../../theme/dropDownMenu';
-import { TextField as ThemedTextField } from '../../theme/textField';
-import { Button as ThemedButton } from '../../theme/button';
+import { Button, Form, Input, LoadingSpinner, Select, SwitchToggle } from '@dolittle/design-system';
 
 import { saveSimpleMicroservice } from '../../stores/microservice';
 
@@ -82,6 +78,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
 
     const handleCreateMicroservice = async (values: CreateMicroserviceParameters) => {
         setIsLoading(true);
+
         const microserviceId = Guid.create().toString();
         const { microserviceName, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
 

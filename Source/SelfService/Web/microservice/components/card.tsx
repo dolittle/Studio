@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Card, CardActions, CardContent, CardHeader, Typography } from '@mui/material';
+import { Card, CardActions, CardContent, CardHeader, Paper, Typography } from '@mui/material';
 
 import { Button } from '@dolittle/design-system';
 
@@ -28,16 +28,15 @@ type SimpleCardProps = {
 };
 
 export const SimpleCard = ({ kind, name, description, onCreate }: SimpleCardProps) => {
-
-    const handleDeploySelect = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleDeploy = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         event.preventDefault();
         onCreate(kind);
     };
 
     return (
-        <Card key={`microservice-${kind}`} sx={styles.card} elevation={1}>
-            <CardHeader title={<Typography variant="h5">{name}</Typography>} />
+        <Card component={Paper} sx={styles.card}>
+            <CardHeader title={<Typography variant='h5'>{name}</Typography>} />
 
             <CardContent>
                 <Typography variant='body2'>{description}</Typography>
@@ -45,7 +44,7 @@ export const SimpleCard = ({ kind, name, description, onCreate }: SimpleCardProp
 
             <CardActions>
                 <Button label='Learn more' secondary href='https://dolittle.io/docs/platform/requirements/' target sx={{ mr: 2.25 }} />
-                <Button label='Deploy' onClick={handleDeploySelect} />
+                <Button label='Deploy' onClick={handleDeploy} />
             </CardActions>
         </Card>
     );

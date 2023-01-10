@@ -7,13 +7,10 @@ import { useHistory, useLocation } from 'react-router';
 
 import { Grid, Typography } from '@mui/material';
 
-import { CreateMicroservice2 } from './createMicroservice/createMicroservice2';
-
 import { HttpResponseApplication } from '../api/application';
 
 import { SimpleCard } from './components/card';
-
-import { CreateMicroservice as NewMs } from './createMicroservice/createMicroservice';
+import { CreateMicroservice } from './createMicroservice/createMicroservice';
 
 const items = [
     {
@@ -23,27 +20,21 @@ const items = [
     }
 ];
 
-type CreateProps = {
+type DeployableMicroservicesListProps = {
     environment: string;
     application: HttpResponseApplication;
 };
 
-export const DeployableMicroservicesList = ({ environment, application }: CreateProps) => {
+export const DeployableMicroservicesList = ({ environment, application }: DeployableMicroservicesListProps) => {
     const history = useHistory();
     const location = useLocation();
 
     const searchParams = new URLSearchParams(location.search);
 
     const kindViaParams = (): string => {
-        if (!searchParams.has('kind')) {
-            return '';
-        }
-
+        if (!searchParams.has('kind')) return '';
         const kind = searchParams.get('kind') as string;
-
-        if (!kind || !items.map(e => e.kind).includes(kind)) {
-            return '';
-        }
+        if (!kind || !items.map(e => e.kind).includes(kind)) return '';
 
         return kind;
     };
@@ -77,14 +68,8 @@ export const DeployableMicroservicesList = ({ environment, application }: Create
     }
 
     return (
-
         <>
-            {microserviceTypeState === 'dolittle-microservice' && (
-                <>
-                    <NewMs application={application} environment={environment} />
-                    <CreateMicroservice2 application={application} environment={environment} />
-                </>
-            )}
+            {microserviceTypeState === 'dolittle-microservice' && <CreateMicroservice application={application} environment={environment} />}
         </>
     );
 };
