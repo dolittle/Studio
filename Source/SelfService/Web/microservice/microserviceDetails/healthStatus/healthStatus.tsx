@@ -11,7 +11,7 @@ import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../api/api';
 
 import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 import { HealthStatusTable, HealthStatusTableStats } from './healthStatusTable';
-import { RestartMicroserviceDialog } from '../restartMicroserviceDialog';
+import { RestartMicroserviceDialog } from '../../components/restartMicroserviceDialog';
 
 const computeStats = (metric: Metric | undefined, scale: number): HealthStatusTableStats | undefined => {
     if (metric === undefined) {

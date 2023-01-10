@@ -4,7 +4,7 @@ import React from 'react';
 
 import { Grid, Typography } from '@mui/material';
 
-import { HeaderDataRow } from '../components/headDataRow';
+import { HeaderDataRow } from './headDataRow';
 import { IngressURLWithCustomerTenantID, SimpleIngressPath } from '../../api/api';
 
 type Props = {

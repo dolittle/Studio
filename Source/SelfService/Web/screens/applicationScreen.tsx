@@ -53,6 +53,6 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                     <Building />
                 </Route>
             </Switch>
-        </LoginWrapper >
+        </LoginWrapper>
     );
 };

@@ -16,7 +16,7 @@ import { Tabs } from '@dolittle/design-system';
 
 import { ConfigurationFilesSection } from './configurationFilesSection/configurationFilesSection';
 import { HealthStatus } from './healthStatus/healthStatus';
-import { ContainerHealthStatus } from '../microserviceStatus';
+import { ContainerHealthStatus } from '../components/microserviceStatus';
 import { useTerminalAvailable } from './terminal/useTerminal';
 import { TerminalView } from './terminal/terminalView';
 
@@ -33,7 +33,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
 
     useEffect(() => {
         if (sessionStorage.getItem('microserviceCreate') === 'true') {
-            enqueueSnackbar(`${currentMicroservice.name} has been deployed.`);
+            enqueueSnackbar(`Microservice '${currentMicroservice.name}' has been deployed.`);
             sessionStorage.setItem('microserviceCreate', 'false');
         }
     }, []);

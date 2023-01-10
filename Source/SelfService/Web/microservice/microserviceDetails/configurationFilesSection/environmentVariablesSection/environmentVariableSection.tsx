@@ -14,8 +14,8 @@ import { Accordion, Button } from '@dolittle/design-system';
 
 import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/api';
 
-import { RestartInfoBox } from '../restartInfoBox';
-import { EmptyDataTable } from '../emptyDataTable';
+import { RestartInfoBox } from '../../../components/restartInfoBox';
+import { EmptyDataTable } from '../../../components/emptyDataTable';
 
 const envVariableColumns: GridColDef<EnvironmentVariableTableRow>[] = [
     {

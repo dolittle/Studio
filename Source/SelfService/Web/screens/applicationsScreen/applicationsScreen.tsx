@@ -77,7 +77,7 @@ export const ApplicationsScreen = () => {
             <Box sx={{ mt: 12.5, display: 'flex', justifyContent: 'space-around' }}>
                 <Button label='Back to tenant' secondary startWithIcon={<ArrowBack />} href='/.auth/cookies/initiate' />
                 <Button label='Log out' secondary href='/.auth/cookies/logout' />
-            </Box>;
+            </Box>
         </LoginWrapper>
     );
 };

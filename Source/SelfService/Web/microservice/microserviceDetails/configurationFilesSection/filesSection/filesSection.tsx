@@ -12,13 +12,13 @@ import { Accordion } from '@dolittle/design-system';
 import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../api/api';
 
 import { FileUploadForm, FileUploadFormRef } from './fileUploadForm';
-import { RestartMicroserviceDialog } from '../../restartMicroserviceDialog';
+import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
 import { ConfigFilesTable, ConfigFilesTableRow } from './configFilesTable';
-import { EmptyDataTable } from '../emptyDataTable';
+import { EmptyDataTable } from '../../../components/emptyDataTable';
 import { ValidateFileDialog } from './validateFileDialog';
 import { DeleteConfigFileDialog } from './deleteConfigFileDialog';
 import { ButtonGroup } from './buttonGroup';
-import { RestartInfoBox } from '../restartInfoBox';
+import { RestartInfoBox } from '../../../components/restartInfoBox';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
