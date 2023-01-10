@@ -54,11 +54,11 @@ export const useFieldError = (label: string, error?: FieldError): [boolean, stri
     }
 
     if (error.type === 'required') {
-        return [true, `${label} required`];
+        return [true, `${label} required.`];
     }
 
     if (error.type === 'pattern') {
-        return [true, `Please enter a valid ${label}`];
+        return [true, `Please enter a valid ${label}.`];
     }
 
     return [true];
