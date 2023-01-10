@@ -1,3 +1,15 @@
+# [2.19.1] - 2023-1-10 [PR: #297](https://github.com/dolittle/Studio/pull/297)
+## Summary
+
+The build step "Push Semantic Image to Docker Hub" was missing the build-args attribute so this was never passed into the dockerisation, and thus the license key was never set.
+
+### Fixed
+  - deployment step for semantic version to include build-args
+
+### Changed
+ - made small change to self-service to force deployment
+
+
 # [2.19.0] - 2023-1-3 [PR: #296](https://github.com/dolittle/Studio/pull/296)
 ## Summary
 
