@@ -7,7 +7,7 @@ import { Box, SxProps, Typography } from '@mui/material';
 
 import { Input } from '@dolittle/design-system';
 
-import { HeadArguments } from '../headArguments';
+import { HeadArguments } from './headArguments';
 
 type ContainerImageFieldProps = {
     cmdArgs: string[];
