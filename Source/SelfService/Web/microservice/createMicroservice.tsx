@@ -12,14 +12,14 @@ import { RocketLaunch } from '@mui/icons-material';
 import { Guid } from '@dolittle/rudiments';
 import { Button, Form, LoadingSpinner } from '@dolittle/design-system';
 
-import { saveSimpleMicroservice } from '../../stores/microservice';
+import { saveSimpleMicroservice } from '../stores/microservice';
 
-import { MicroserviceSimple, MicroserviceFormParameters } from '../../api/index';
-import { getLatestRuntimeInfo, getRuntimes } from '../../api/api';
-import { HttpResponseApplication } from '../../api/application';
+import { MicroserviceSimple, MicroserviceFormParameters } from '../api/index';
+import { getLatestRuntimeInfo, getRuntimes } from '../api/api';
+import { HttpResponseApplication } from '../api/application';
 
-import { ConfigurationSetupField, ContainerImageField, PublicUrlField, HasM3ConnectorField } from '../components/form';
-import { getRuntimeNumberFromString } from '../helpers';
+import { ConfigurationSetupField, ContainerImageField, PublicUrlField, HasM3ConnectorField } from './components/form';
+import { getRuntimeNumberFromString } from './helpers';
 
 const styles = {
     form: {
@@ -120,7 +120,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     microserviceName: '',
                     developmentEnvironment: environment,
                     runtimeVersion: latestRuntimeNumber,
-                    headImage: '', //nginxdemos/hello:latest
+                    headImage: '',
                     headPort: 80,
                     entrypoint: '',
                     isPublic: false,

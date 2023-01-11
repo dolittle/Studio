@@ -10,7 +10,7 @@ import { Grid, Typography } from '@mui/material';
 import { HttpResponseApplication } from '../api/application';
 
 import { SimpleCard } from './components/card';
-import { CreateMicroservice } from './createMicroservice/createMicroservice';
+import { CreateMicroservice } from './createMicroservice';
 
 const items = [
     {
