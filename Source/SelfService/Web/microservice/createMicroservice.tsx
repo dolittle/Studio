@@ -89,7 +89,8 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 },
                 headCommand: {
                     command: entrypoint.split(' '),
-                    args: headCommandArgs
+                    // Remove empty strings/values from array
+                    args: headCommandArgs.filter(entry => entry.trim() !== '')
                 },
                 connections: {
                     m3Connector: hasM3Connector
