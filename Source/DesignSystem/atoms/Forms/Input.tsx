@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput, SxProps, Typography } from '@mui/material';
+import { FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput, Paper, SxProps, Tooltip, Typography } from '@mui/material';
 
 import { FieldProps, isRequired, useController } from './helpers';
 import type { Form } from './Form';
@@ -15,6 +15,8 @@ export type InputProps = {
     sx?: SxProps;
     startAdornment?: React.ReactNode;
     placeholder?: string;
+    tooltipTitle?: string;
+    tooltipText?: string;
 } & FieldProps;
 
 /**
@@ -46,21 +48,33 @@ export const Input = (props: InputProps) => {
                 {props.label}
             </InputLabel>
 
-            <OutlinedInput
-                {...field}
-                type='text'
-                id={props.id}
-                error={hasError}
-                disabled={props.disabled}
-                label={props.label}
-                startAdornment={props.startAdornment ?
-                    <InputAdornment position='start'>
-                        <Typography variant='body2'>{props.startAdornment}</Typography>
-                    </InputAdornment> : null
+            <Tooltip
+                id={`${props.id}-tooltip`}
+                disableHoverListener
+                placement='right'
+                title={
+                    <Paper sx={{ py: 1, px: 2 }}>
+                        <Typography variant='body2' sx={{ fontWeight: 700 }}>{props.tooltipTitle}</Typography>
+                        <Typography variant='body2'>{props.tooltipText}</Typography>
+                    </Paper>
                 }
-                placeholder={props.placeholder}
-                aria-describedby={`${props.id}-helper-text`}
-            />
+            >
+                <OutlinedInput
+                    {...field}
+                    type='text'
+                    id={props.id}
+                    error={hasError}
+                    disabled={props.disabled}
+                    label={props.label}
+                    startAdornment={props.startAdornment ?
+                        <InputAdornment position='start'>
+                            <Typography variant='body2'>{props.startAdornment}</Typography>
+                        </InputAdornment> : null
+                    }
+                    placeholder={props.placeholder}
+                    aria-describedby={`${props.id}-helper-text`}
+                />
+            </Tooltip>
 
             <FormHelperText error={hasError} id={`${props.id}-helper-text`}>
                 {errorMessage}
