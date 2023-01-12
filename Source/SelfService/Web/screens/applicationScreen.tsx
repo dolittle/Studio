@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import { ShortInfoWithEnvironment } from '../api/api';
@@ -44,7 +44,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
 
     return (
         <LoginWrapper>
-            <Switch>
+            <Routes>
                 <Route exact path="/application/create">
                     <Create />
                 </Route>
@@ -52,7 +52,7 @@ export const ApplicationScreen: React.FunctionComponent = () => {
                 <Route exact path="/application/building/:applicationId">
                     <Building />
                 </Route>
-            </Switch>
-        </LoginWrapper>
+            </Routes>
+        </LoginWrapper >
     );
 };

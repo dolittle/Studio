@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Route, Switch, useHistory, } from 'react-router-dom';
+import { Route, Routes, useHistory, } from 'react-router-dom';
 
 import { Create as CreateCustomer } from '../customer/create';
 import { ViewAll as ViewAllCustomers } from '../customer/viewAll';
@@ -32,7 +32,7 @@ export const Screen: React.FunctionComponent = () => {
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <Switch>
+            <Routes>
                 <Route exact path="/admin/customer/create">
                     <CreateCustomer />
                 </Route>
@@ -52,7 +52,7 @@ export const Screen: React.FunctionComponent = () => {
                 <Route exact path="/admin/">
                     {welcome}
                 </Route>
-            </Switch>
+            </Routes>
         </LayoutWithSidebar>
     );
 };

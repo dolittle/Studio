@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, Switch } from 'react-router-dom';
+import { Route, useHistory, Routes } from 'react-router-dom';
 import { Link } from '@fluentui/react';
 import { HttpResponseApplication } from '../api/application';
 
@@ -57,7 +57,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
             <div className="documentation">
 
 
-                <Switch>
+                <Routes>
                     <Route exact path="/documentation/application/:applicationId/:environment/overview" >
                         <ul >
                             <li>
@@ -126,7 +126,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                     <Route>
                         <Typography variant='h1' my={2}>Something has gone wrong: documentation</Typography>
                     </Route>
-                </Switch>
+                </Routes>
             </div>
         </>
     );

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import {
     Route,
     useHistory,
-    Switch,
+    Routes,
     generatePath
 } from 'react-router-dom';
 
@@ -99,12 +99,12 @@ export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplica
         <LayoutWithSidebar navigation={nav}>
             <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
 
-            <Switch>
+            <Routes>
                 <Route path="/containerregistry/application/:applicationId/:environment/overview">
                     <ContainerRegistryContainer application={application} environment={currentEnvironment} />
                 </Route>
                 <RouteNotFound redirectUrl={redirectUrl} />
-            </Switch>
+            </Routes>
         </LayoutWithSidebar >
     );
 });

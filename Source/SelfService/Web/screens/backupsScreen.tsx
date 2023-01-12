@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import {
     Route,
-    Switch,
+    Routes,
     useHistory,
     generatePath
 } from 'react-router-dom';
@@ -93,7 +93,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
                         <BreadCrumbContainer routes={routes} />
                     </div>
                 </div>
-                <Switch>
+                <Routes>
                     <Route exact path="/backups/application/:applicationId/overview">
                         <div className="serv">
                             <ul>
@@ -111,7 +111,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
                     <Route>
                         <Typography variant='h1' my={2}>Something has gone wrong: backups</Typography>
                     </Route>
-                </Switch>
+                </Routes>
             </LayoutWithSidebar>
         </>
     );

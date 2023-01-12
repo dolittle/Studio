@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Route, BrowserRouter, useLocation, Switch } from 'react-router-dom';
+import { Route, BrowserRouter, useLocation, Routes } from 'react-router-dom';
 import { QueryParamProvider } from 'use-query-params';
 
 import { SnackbarProvider } from 'notistack';
@@ -87,7 +87,7 @@ export const App = () => {
                             >
                                 <BrowserRouter basename={uriWithAppPrefix('')}>
                                     <QueryParamProvider ReactRouterRoute={Route}>
-                                        <Switch>
+                                        <Routes>
                                             <Route exact path='/login'>
                                                 <LoginScreen />
                                             </Route>
@@ -138,7 +138,7 @@ export const App = () => {
                                                 redirectUrl='/applications'
                                                 auto={true}
                                             />
-                                        </Switch>
+                                        </Routes>
                                     </QueryParamProvider>
                                 </BrowserRouter>
                             </SnackbarProvider>

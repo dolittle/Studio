@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, Switch, generatePath } from 'react-router-dom';
+import { Route, useHistory, Routes, generatePath } from 'react-router-dom';
 
 import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../api/api';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
@@ -151,7 +151,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
     return (
         <LayoutWithSidebar navigation={nav}>
             <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
-            <Switch>
+            <Routes>
                 <Route exact path="/microservices/application/:applicationId/:environment/overview">
                     <Microservice application={application} environment={currentEnvironment} />
                 </Route>
@@ -165,7 +165,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
                 </Route>
 
                 <RouteNotFound redirectUrl={redirectUrl} />
-            </Switch>
+            </Routes>
         </LayoutWithSidebar>
     );
 });

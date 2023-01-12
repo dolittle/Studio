@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { HttpResponseApplication } from '../api/application';
 
 import { View as Overview } from './overview';
@@ -19,7 +19,7 @@ type ContainerProps = {
 export const Container = ({ application }: ContainerProps) =>
     <>
         <Typography variant='h1' my={2}>M3 Connector</Typography>
-        <Switch>
+        <Routes>
             <Route exact path="/m3connector/application/:applicationId/overview">
                 <Overview application={application} />
             </Route>
@@ -30,5 +30,5 @@ export const Container = ({ application }: ContainerProps) =>
             <Route exact path="/m3connector/application/:applicationId/:environment/details">
                 <Details applicationId={application.id} />
             </Route>
-        </Switch>
+        </Routes>
     </>;
