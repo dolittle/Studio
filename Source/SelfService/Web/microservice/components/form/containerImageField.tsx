@@ -9,6 +9,10 @@ import { Input } from '@dolittle/design-system';
 
 import { HeadArguments } from './headArguments';
 
+const entrypointDescription = `If you would like to override your container image ENTRYPOINT, 
+you can do so in this field.You can find more information on ENTRYPOINTS and CMD ARGUMENETS here.`;
+
+
 type ContainerImageFieldProps = {
     cmdArgs: string[];
     setCmdArgs: (args: string[]) => void;
@@ -43,6 +47,8 @@ export const ContainerImageField = ({ cmdArgs, setCmdArgs, disabled, sx }: Conta
             id='entrypoint'
             label='Entrypoint'
             disabled={disabled}
+            tooltipTitle='ENTRYPOINT'
+            tooltipText={entrypointDescription}
         />
 
         <HeadArguments cmdArgs={cmdArgs} setCmdArgs={setCmdArgs} disabled={disabled} />

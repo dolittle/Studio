@@ -231,7 +231,7 @@ const components: Components & DataGridProComponents = {
     MuiButton: {
         styleOverrides: {
             sizeSmall: {
-                fontSize: '0.75rem',
+                fontSize: 12,
             },
         },
         variants: [
@@ -255,7 +255,7 @@ const components: Components & DataGridProComponents = {
                 style: {
                     'backgroundColor': 'rgba(140, 154, 248, 0.08)',
                     'color': '#8C9AF8',
-                    'minHeight': '30px',
+                    'minHeight': 30,
                     '&:hover': {
                         backgroundColor: 'rgba(140, 154, 248, 0.15)'
                     }
@@ -264,10 +264,19 @@ const components: Components & DataGridProComponents = {
             {
                 props: { color: 'secondary' },
                 style: {
-                    color: palette?.text?.primary,
+                    color: palette?.text?.primary
                 }
             },
         ],
+    },
+    MuiTooltip: {
+        styleOverrides: {
+            tooltip: {
+                padding: 0,
+                maxWidth: 550,
+                backgroundColor: 'transparent'
+            }
+        },
     },
     MuiDataGrid: {
         styleOverrides: {
