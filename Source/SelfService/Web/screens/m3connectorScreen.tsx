@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import {
     Route,
-    Switch,
+    Routes,
     useHistory,
 } from 'react-router-dom';
 
@@ -70,11 +70,11 @@ export const M3ConnectorScreen: React.FunctionComponent<Props> = (props) => {
                         <BreadCrumbContainer routes={routes} />
                     </div>
                 </div>
-                <Switch>
+                <Routes>
                     <Route path="/m3connector/application/:applicationId">
                         <Container application={application} />
                     </Route>
-                </Switch>
+                </Routes>
             </LayoutWithSidebar>
         </>
     );

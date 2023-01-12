@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useHistory, Switch, Route } from 'react-router-dom';
+import { useHistory, Routes, Route } from 'react-router-dom';
 import { HttpResponseApplication } from '../api/application';
 
 import { View as Tags } from './tags';
@@ -62,7 +62,7 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
             </div>
 
             <div>
-                <Switch>
+                <Routes>
                     <Route exact path="/containerregistry/application/:applicationId/:environment/overview/welcome" >
                         <Welcome applicationId={applicationId} />
                     </Route>
@@ -73,7 +73,7 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
                     <Route path="/containerregistry/application/:applicationId/:environment/overview/tags/:image+">
                         <Tags url={containerRegistryImages.url} applicationId={applicationId} />
                     </Route>
-                </Switch>
+                </Routes>
             </div>
         </>
     );
