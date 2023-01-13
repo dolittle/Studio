@@ -103,7 +103,7 @@ export const NavigationListItemButton = ({ navigationMenuItem, navigate, ...prop
         />);
 };
 
-export const getMenuWithApplication = (history: NavigateFunction, application: HttpResponseApplication, environment: string): ReactNode => {
+export const getMenuWithApplication = (navigate: NavigateFunction, application: HttpResponseApplication, environment: string): ReactNode => {
     const applicationId = application.id;
 
     const hasConnector = application.environments.find(_environment => _environment.connections.m3Connector);
@@ -154,5 +154,5 @@ export const getMenuWithApplication = (history: NavigateFunction, application: H
         });
     }
 
-    return getDefaultMenuWithItems(history, mainNavigationItems, secondaryNavigationItems);
+    return getDefaultMenuWithItems(navigate, mainNavigationItems, secondaryNavigationItems);
 };
