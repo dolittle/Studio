@@ -24,6 +24,10 @@ export const View: React.FunctionComponent<any> = (props) => {
 
     const { customerId, applicationId } = useParams<ViewParams>();
 
+    if(!customerId || !applicationId) {
+        return null;
+    }
+
     const [loaded, setLoaded] = useState(false);
     const [fetchDataError, setFetchDataError] = useState(false);
     const [accessInfo, setAccessInfo] = useState({} as HttpResponseApplicationAccess);
