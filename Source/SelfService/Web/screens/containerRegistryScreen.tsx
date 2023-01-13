@@ -100,9 +100,10 @@ export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplica
             <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
 
             <Routes>
-                <Route path="/containerregistry/application/:applicationId/:environment/overview">
-                    <ContainerRegistryContainer application={application} environment={currentEnvironment} />
-                </Route>
+                <Route
+                    path="/overview/*"
+                    element={<ContainerRegistryContainer application={application} environment={currentEnvironment} />} />
+                {/* TODO PAV: Remove RouteNotFound */}
                 <RouteNotFound redirectUrl={redirectUrl} />
             </Routes>
         </LayoutWithSidebar >

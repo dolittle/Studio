@@ -45,13 +45,9 @@ export const ApplicationScreen: React.FunctionComponent = () => {
     return (
         <LoginWrapper>
             <Routes>
-                <Route exact path="/application/create">
-                    <Create />
-                </Route>
+                <Route path="/create" element={<Create />} />
 
-                <Route exact path="/application/building/:applicationId">
-                    <Building />
-                </Route>
+                <Route path="/building/:applicationId" element={<Building />} />
             </Routes>
         </LoginWrapper >
     );

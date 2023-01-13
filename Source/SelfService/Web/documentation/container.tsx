@@ -58,13 +58,13 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
 
 
                 <Routes>
-                    <Route exact path="/documentation/application/:applicationId/:environment/overview" >
+                    <Route path="/overview" element={
                         <ul >
                             <li>
                                 <a href="#" onClick={(event) => {
                                     event.preventDefault();
                                     const href = `/documentation/application/${applicationId}/${environment}/container-registry-info`;
-                                    history.push(href);
+                                    navigate(href);
                                 }}>
                                     Container Registry Info
                                 </a>
@@ -73,7 +73,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                                 <a href="#" onClick={(event) => {
                                     event.preventDefault();
                                     const href = `/documentation/application/${applicationId}/${environment}/verify-kubernetes-access`;
-                                    history.push(href);
+                                    navigate(href);
                                 }}>
                                     Verify access to kubernetes
                                 </a>
@@ -82,50 +82,48 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                                 <a href="#" onClick={(event) => {
                                     event.preventDefault();
                                     const href = `/documentation/application/${applicationId}/${environment}/ci-cd/azure-pipelines`;
-                                    history.push(href);
+                                    navigate(href);
                                 }}>
                                     Setup Azure Pipelines
                                 </a>
                             </li>
                         </ul>
-                    </Route>
+                    } />
 
-                    <Route exact path="/documentation/application/:applicationId/:environment/container-registry-info">
-                        <Link onClick={() => {
-                            const href = `/documentation/application/${applicationId}/${environment}/overview`;
-                            history.push(href);
-                        }}>
-                            Back
-                        </Link>
-                        <Typography variant='h1' my={2}>Container Registry Info</Typography>
-                        <AccessContainerRegistry info={$info} />
-                    </Route>
+                    <Route path="/container-registry-info" element={
+                        <>
+                            <Link onClick={() => {
+                                const href = `/documentation/application/${applicationId}/${environment}/overview`;
+                                navigate(href);
+                            }}>
+                                Back
+                            </Link><Typography variant='h1' my={2}>Container Registry Info</Typography><AccessContainerRegistry info={$info} />
+                        </>
+                    } />
 
-                    <Route exact path="/documentation/application/:applicationId/:environment/verify-kubernetes-access">
-                        <Link onClick={() => {
-                            const href = `/documentation/application/${applicationId}/${environment}/overview`;
-                            history.push(href);
-                        }}>
-                            Back
-                        </Link>
-                        <Typography variant='h1' my={2}>Verify access to kubernetes</Typography>
-                        <VerifyKubernetesAccess info={$info} environment={environment} />
-                    </Route>
+                    <Route path="/verify-kubernetes-access" element={
+                        <>
+                            <Link onClick={() => {
+                                const href = `/documentation/application/${applicationId}/${environment}/overview`;
+                                navigate(href);
+                            }}>
+                                Back
+                            </Link><Typography variant='h1' my={2}>Verify access to kubernetes</Typography><VerifyKubernetesAccess info={$info} environment={environment} />
+                        </>
+                    } />
 
-                    <Route exact path="/documentation/application/:applicationId/:environment/ci-cd/azure-pipelines">
-                        <Link onClick={() => {
-                            const href = `/documentation/application/${applicationId}/${environment}/overview`;
-                            history.push(href);
-                        }}>
-                            Back
-                        </Link>
-                        <Typography variant='h1' my={2}>Setup Azure Pipelines</Typography>
-                        <SetupAzurePipelines info={$info} />
-                    </Route>
+                    <Route path="/ci-cd/azure-pipelines" element={
+                        <>
+                            <Link onClick={() => {
+                                const href = `/documentation/application/${applicationId}/${environment}/overview`;
+                                navigate(href);
+                            }}>
+                                Back
+                            </Link><Typography variant='h1' my={2}>Setup Azure Pipelines</Typography><SetupAzurePipelines info={$info} />
+                        </>
+                    } />
 
-                    <Route>
-                        <Typography variant='h1' my={2}>Something has gone wrong: documentation</Typography>
-                    </Route>
+                    <Route element={<Typography variant='h1' my={2}>Something has gone wrong: documentation</Typography>} />
                 </Routes>
             </div>
         </>

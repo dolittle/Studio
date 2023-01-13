@@ -152,18 +152,19 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
         <LayoutWithSidebar navigation={nav}>
             <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
             <Routes>
-                <Route exact path="/microservices/application/:applicationId/:environment/overview">
-                    <Microservice application={application} environment={currentEnvironment} />
-                </Route>
+                <Route
+                    path="/overview"
+                    element={<Microservice application={application} environment={currentEnvironment} />} />
 
-                <Route exact path="/microservices/application/:applicationId/:environment/create">
-                    <MicroserviceNewScreen application={application} environment={currentEnvironment} />
-                </Route>
+                <Route
+                    path="/create"
+                    element={<MicroserviceNewScreen application={application} environment={currentEnvironment} />} />
 
-                <Route exact path="/microservices/application/:applicationId/:environment/view/:microserviceId">
-                    <MicroserviceViewScreen application={application} environment={currentEnvironment} />
-                </Route>
+                <Route
+                    path="/view/:microserviceId"
+                    element={<MicroserviceViewScreen application={application} environment={currentEnvironment} />} />
 
+                {/* TODO PAV: Remove RouteNotFound */}
                 <RouteNotFound redirectUrl={redirectUrl} />
             </Routes>
         </LayoutWithSidebar>

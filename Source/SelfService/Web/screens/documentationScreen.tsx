@@ -140,9 +140,9 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
             <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
 
             <Routes>
-                <Route path="/documentation/application/:applicationId/:environment">
-                    <DocumentationContainerScreen application={application} environment={currentEnvironment} />
-                </Route>
+                <Route path="*" element={<DocumentationContainerScreen application={application} environment={currentEnvironment} />} />
+
+                {/* TODO PAV: Remove RouteNotFound */}
                 <RouteNotFound redirectUrl={redirectUrl} />
             </Routes>
         </LayoutWithSidebar >
