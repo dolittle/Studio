@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useNavigate, useRouteMatch } from 'react-router-dom';
+import { useNavigate, useMatch } from 'react-router-dom';
 
 import { Link, Breadcrumbs, Stack } from '@mui/material';
 import { ChevronRight } from '@mui/icons-material';
@@ -28,7 +28,7 @@ type Props = {
 export const BreadCrumbContainer = (props: Props) => {
     const navigate = useNavigate();
 
-    const crumbs = props!.routes.filter((route) => useRouteMatch(route.path) ? route : false);
+    const crumbs = props!.routes.filter((route) => useMatch(route.path) ? route : false);
 
     const breadcrumbs = crumbs.map((item, index) => {
         const links = [
