@@ -2,8 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Route, BrowserRouter, useLocation, Routes } from 'react-router-dom';
-import { QueryParamProvider } from 'use-query-params';
+import { Route, useLocation, Routes } from 'react-router-dom';
 
 import { SnackbarProvider } from 'notistack';
 
@@ -85,43 +84,39 @@ export const App = () => {
                                     default: null
                                 }}
                             >
-                                <BrowserRouter basename={uriWithAppPrefix('')}>
-                                    <QueryParamProvider ReactRouterRoute={Route}>
-                                        <Routes>
-                                            <Route path='/login' element={<LoginScreen />} />
+                                <Routes>
+                                    <Route path='/login' element={<LoginScreen />} />
 
-                                            <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
+                                    <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
 
-                                            <Route path='/applications' element={<ApplicationsScreen />} />
+                                    <Route path='/applications' element={<ApplicationsScreen />} />
 
-                                            <Route path='/application/*' element={<ApplicationScreen />} />
+                                    <Route path='/application/*' element={<ApplicationScreen />} />
 
-                                            <Route path='/microservices/application/:applicationId/:environment/*' element={<MicroservicesScreen />} />
+                                    <Route path='/microservices/application/:applicationId/:environment/*' element={<MicroservicesScreen />} />
 
-                                            <Route path='/documentation/application/:applicationId/:environment/*' element={<DocumentationScreen />} />
+                                    <Route path='/documentation/application/:applicationId/:environment/*' element={<DocumentationScreen />} />
 
-                                            <Route path='/containerregistry/application/:applicationId/:environment/*' element={<ContainerRegistryScreen />} />
+                                    <Route path='/containerregistry/application/:applicationId/:environment/*' element={<ContainerRegistryScreen />} />
 
-                                            <Route path='/m3connector/application/:applicationId/*' element={<M3ConnectorScreen />} />
+                                    <Route path='/m3connector/application/:applicationId/*' element={<M3ConnectorScreen />} />
 
-                                            <Route path='/logs/application/:applicationId/:environment' element={<LogsScreen />} />
+                                    <Route path='/logs/application/:applicationId/:environment' element={<LogsScreen />} />
 
-                                            <Route path='/admin/*' element={<AdminScreen />} />
+                                    <Route path='/admin/*' element={<AdminScreen />} />
 
-                                            <Route path='/problem' element={
-                                                <LayoutWithSidebar navigation={[]}>
-                                                    <DieAndRestart />
-                                                </LayoutWithSidebar>
-                                            } />
+                                    <Route path='/problem' element={
+                                        <LayoutWithSidebar navigation={[]}>
+                                            <DieAndRestart />
+                                        </LayoutWithSidebar>
+                                    } />
 
-                                            {/* TODO Pav: remove custom RouteNotFound https://reactrouter.com/en/main/upgrading/v5#upgrade-to-react-router-v6 */}
-                                            <RouteNotFound
-                                                redirectUrl='/applications'
-                                                auto={true}
-                                            />
-                                        </Routes>
-                                    </QueryParamProvider>
-                                </BrowserRouter>
+                                    {/* TODO Pav: remove custom RouteNotFound https://reactrouter.com/en/main/upgrading/v5#upgrade-to-react-router-v6 */}
+                                    <RouteNotFound
+                                        redirectUrl='/applications'
+                                        auto={true}
+                                    />
+                                </Routes>
                             </SnackbarProvider>
                         </Box>
                     </GlobalContextProvider>
