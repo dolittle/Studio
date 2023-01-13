@@ -19,6 +19,9 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const applicationId = _props.applicationId;
     const { environment } = useParams<ViewParams>();
+    if(!environment){
+        return null;
+    }
 
     const [loaded, setLoaded] = useState(false);
     const [data, setData] = useState({} as M3ConnectorData);

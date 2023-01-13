@@ -56,6 +56,10 @@ export const View: React.FunctionComponent<any> = (props) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const { customerId } = useParams<ViewParams>();
+    if (!customerId) {
+        return null;
+    }
+
     //const [configLoaded, setConfigLoaded] = useState(false);
     const [customerLoaded, setCustomerLoaded] = useState(false);
     const [config, setConfig] = useState({} as Studio);

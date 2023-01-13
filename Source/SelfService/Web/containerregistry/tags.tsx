@@ -23,6 +23,11 @@ type ViewParams = {
 export const View: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const { image } = useParams<ViewParams>();
+
+    if(!image) {
+        return null;
+    }
+
     const applicationId = _props.applicationId;
 
     const [loaded, setLoaded] = useState(false);
