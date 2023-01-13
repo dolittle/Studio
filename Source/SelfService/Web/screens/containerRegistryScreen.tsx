@@ -104,7 +104,7 @@ export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplica
                     path="/overview/*"
                     element={<ContainerRegistryContainer application={application} environment={currentEnvironment} />} />
                 {/* TODO PAV: Remove RouteNotFound */}
-                <RouteNotFound redirectUrl={redirectUrl} />
+                {/* <RouteNotFound redirectUrl={redirectUrl} /> */}
             </Routes>
         </LayoutWithSidebar >
     );

@@ -112,10 +112,10 @@ export const App = () => {
                                     } />
 
                                     {/* TODO Pav: remove custom RouteNotFound https://reactrouter.com/en/main/upgrading/v5#upgrade-to-react-router-v6 */}
-                                    <RouteNotFound
+                                    {/* <RouteNotFound
                                         redirectUrl='/applications'
                                         auto={true}
-                                    />
+                                    /> */}
                                 </Routes>
                             </SnackbarProvider>
                         </Box>
