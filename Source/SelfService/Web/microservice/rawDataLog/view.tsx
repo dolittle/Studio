@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useReadable } from 'use-svelte-store';
 
 import { Stack } from '@fluentui/react/lib/Stack';
@@ -27,7 +27,7 @@ type Props = {
 
 export const View: React.FunctionComponent<Props> = (props) => {
     const $microservices = useReadable(microservices) as any;
-    const history = useHistory();
+    const navigate = useNavigate();
     const _props = props!;
     const applicationId = _props.applicationId;
     const microserviceId = _props.microserviceId;
@@ -38,7 +38,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId && ms.environment === environment);
     if (!currentMicroservice) {
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
-        history.push(href);
+        navigate(href);
         return null;
     }
 

@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import {
     Table, TableContainer, TableHead,
@@ -19,7 +19,7 @@ type Props = {
 };
 
 export const View: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const _props = props!;
     const containerRegistryImages = _props.data;
     const applicationId = _props.applicationId;
@@ -44,7 +44,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                                     onClick={(event) => {
                                         event.preventDefault();
                                         const href = `/containerregistry/application/${applicationId}/${environment}/overview/tags/${row.name}`;
-                                        history.push(href);
+                                        navigate(href);
                                     }}
                                     sx={{
                                         '&:hover': {

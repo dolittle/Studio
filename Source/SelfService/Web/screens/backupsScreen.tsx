@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import {
     Route,
     Routes,
-    useHistory,
+    useNavigate,
     generatePath
 } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ type Props = {
 };
 
 export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { currentEnvironment } = useGlobalContext();
 
     const routeApplicationProps = useRouteApplicationParams();
@@ -38,7 +38,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
             const applicationData = values[0];
             if (!applicationData?.id) {
                 const href = `/problem`;
-                history.push(href);
+                navigate(href);
                 return;
             }
 
@@ -59,7 +59,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
         );
     }
     const environments = application.environments;
-    const nav = getMenuWithApplication(history, application, currentEnvironment);
+    const nav = getMenuWithApplication(navigate, application, currentEnvironment);
 
     const routes = [
         {

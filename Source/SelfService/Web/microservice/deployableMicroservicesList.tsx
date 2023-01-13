@@ -3,7 +3,7 @@
 
 // TODO validate the data
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 
 import { Grid, Typography } from '@mui/material';
 
@@ -26,7 +26,7 @@ type DeployableMicroservicesListProps = {
 };
 
 export const DeployableMicroservicesList = ({ environment, application }: DeployableMicroservicesListProps) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const location = useLocation();
 
     const searchParams = new URLSearchParams(location.search);
@@ -47,7 +47,7 @@ export const DeployableMicroservicesList = ({ environment, application }: Deploy
 
     const onCreate = (kind: string) => {
         searchParams.set('kind', kind);
-        history.replace({ pathname: location.pathname, search: searchParams.toString() });
+        navigate({ pathname: location.pathname, search: searchParams.toString() }, { replace: true });
         setMicroserviceTypeState(kind);
     };
 

@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { DetailsList, DetailsListLayoutMode, IColumn, CheckboxVisibility } from '@fluentui/react/lib/DetailsList';
@@ -35,7 +35,7 @@ const defaultWebhook = {
 export const Webhooks: React.FunctionComponent<Props> = (props) => {
     // TODO update microservice
     // TODO bubble up changes here
-    const history = useHistory();
+    const navigate = useNavigate();
     const _props = props!;
     const microservice = _props.microservice;
     const [showWebhookEditor, setShowWebhookEditor] = useState(false);

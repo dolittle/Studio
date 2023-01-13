@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
 
@@ -29,7 +29,7 @@ type CreateApplicationParameters = {
 };
 
 export const Create = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [errorOnCreatingApp, setErrorOnCreatingApp] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -58,7 +58,7 @@ export const Create = () => {
         try {
             await createApplication(request);
             const href = `/application/building/${request.id}`;
-            history.push(href);
+            navigate(href);
 
             setLoading(false);
             setErrorOnCreatingApp(false);

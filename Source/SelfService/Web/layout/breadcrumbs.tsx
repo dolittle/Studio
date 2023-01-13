@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useNavigate, useRouteMatch } from 'react-router-dom';
 
 import { Link, Breadcrumbs, Stack } from '@mui/material';
 import { ChevronRight } from '@mui/icons-material';
@@ -26,7 +26,7 @@ type Props = {
 };
 
 export const BreadCrumbContainer = (props: Props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const crumbs = props!.routes.filter((route) => useRouteMatch(route.path) ? route : false);
 
@@ -38,7 +38,7 @@ export const BreadCrumbContainer = (props: Props) => {
                 sx={styles}
                 onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
                     event.preventDefault();
-                    history.push(item.to);
+                    navigate(item.to);
                 }}>
                 {item.name}
             </Link >

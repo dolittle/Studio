@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
@@ -20,7 +20,7 @@ import { HttpResponseApplications, getApplications } from '../../api/application
 import { ApplicationsList } from './applicationsList';
 
 export const ApplicationsScreen = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
     const [applicationInfos, setApplicationInfos] = useState([] as ShortInfoWithEnvironment[]);
@@ -49,7 +49,7 @@ export const ApplicationsScreen = () => {
         const { environment, id } = application;
         setCurrentEnvironment(environment);
         const href = `/microservices/application/${id}/${environment}/overview`;
-        history.push(href);
+        navigate(href);
     };
 
     const handleApplicationCreate = () => {
@@ -59,7 +59,7 @@ export const ApplicationsScreen = () => {
         }
 
         const href = '/application/create';
-        history.push(href);
+        navigate(href);
     };
 
     return (

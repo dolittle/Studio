@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
@@ -25,7 +25,7 @@ type MicroserviceProps = {
 };
 
 export const Microservice = ({ environment, application }: MicroserviceProps) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as MicroserviceObject[];
 
@@ -55,13 +55,13 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
 
         sessionStorage.setItem('microserviceCreate', 'true');
         const href = `/microservices/application/${application.id}/${environment}/create`;
-        history.push(href);
+        navigate(href);
     };
 
     const handleCreateEnvironment = () => {
         // TODO How to stop this if automation disabled, currently on the environment level
         const href = `/environment/application/${application.id}/create`;
-        history.push(href);
+        navigate(href);
     };
 
     if (loading) return <LoadingSpinner />;

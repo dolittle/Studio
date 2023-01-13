@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Route, useHistory, Link as RouterLink } from 'react-router-dom';
+import { Route, useNavigate, Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { Typography } from '@mui/material';
 
@@ -13,9 +13,9 @@ type Props = {
 };
 
 export const RouteNotFound: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     if (props!.auto) {
-        history.push(props!.redirectUrl);
+        navigate(props!.redirectUrl);
         return null;
     }
 

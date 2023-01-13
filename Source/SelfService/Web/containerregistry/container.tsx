@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useHistory, Routes, Route } from 'react-router-dom';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 import { HttpResponseApplication } from '../api/application';
 
 import { View as Tags } from './tags';
@@ -18,7 +18,7 @@ type Props = {
 };
 
 export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const _props = props!;
     const application = _props.application;
     const applicationId = application.id;
@@ -51,7 +51,7 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
     // Force redirect if no images to the welcome screen
     if (!hasImages && !window.location.pathname.endsWith('/overview/welcome')) {
         const href = `/containerregistry/application/${applicationId}/${environment}/overview/welcome`;
-        history.push(href);
+        navigate(href);
         return null;
     }
 

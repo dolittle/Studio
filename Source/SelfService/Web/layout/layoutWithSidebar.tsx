@@ -2,9 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { ReactNode } from 'react';
-import { History, LocationState } from 'history';
-
 import './layout.scss';
+import { NavigateFunction } from 'react-router-dom';
 
 import { HttpResponseApplication } from '../api/application';
 
@@ -29,7 +28,8 @@ export type NavigationMenuItem = {
 };
 
 export type NavigationListItemButtonProps = ListItemButtonBaseProps & {
-    navigationMenuItem: NavigationMenuItem, history: History<LocationState>
+    navigationMenuItem: NavigationMenuItem,
+    navigate: NavigateFunction //TODO PAV: Does this still need to be passed in, or can it use a hook to resolve?
 };
 
 export const LayoutWithSidebar = ({ navigation, children }: LayoutWithSidebarProps) =>
@@ -46,14 +46,14 @@ export const LayoutWithSidebar = ({ navigation, children }: LayoutWithSidebarPro
         </div>
     </div>;
 
-export const getDefaultMenuWithItems = (history: History<LocationState>, mainNavigationItems: any[], secondaryNavigationItems: any[]): ReactNode =>
+export const getDefaultMenuWithItems = (navigate: NavigateFunction, mainNavigationItems: any[], secondaryNavigationItems: any[]): ReactNode =>
     <>
         <List sx={{ p: 0, m: 0 }}>
             {mainNavigationItems.map(navigationItem => (
                 <NavigationListItemButton
                     key={navigationItem.name}
                     navigationMenuItem={navigationItem}
-                    history={history}
+                    navigate={navigate}
                 >
                     <ListItemIcon sx={{ mr: '1rem', minWidth: 0, color: 'text.secondary' }}>
                         {navigationItem.icon}
@@ -66,7 +66,7 @@ export const getDefaultMenuWithItems = (history: History<LocationState>, mainNav
         </List>
         <List sx={{ p: 0, m: 0, position: 'fixed', bottom: 0 }}>
             {secondaryNavigationItems.map(link => (
-                <NavigationListItemButton key={link.name} navigationMenuItem={link} history={history}>
+                <NavigationListItemButton key={link.name} navigationMenuItem={link} navigate={navigate}>
                     <ListItemIcon sx={{ mr: '1rem', minWidth: 0, color: 'text.secondary' }}>
                         {link.icon}
                     </ListItemIcon>
@@ -78,7 +78,7 @@ export const getDefaultMenuWithItems = (history: History<LocationState>, mainNav
         </List>
     </>;
 
-export const NavigationListItemButton = ({ navigationMenuItem, history, ...props }: NavigationListItemButtonProps) => {
+export const NavigationListItemButton = ({ navigationMenuItem, navigate, ...props }: NavigationListItemButtonProps) => {
     const defaultProps: ListItemButtonBaseProps = {
         disableGutters: true,
         selected: window.location.href.includes(navigationMenuItem.href),
@@ -97,13 +97,13 @@ export const NavigationListItemButton = ({ navigationMenuItem, history, ...props
             onClick={event => {
                 event.preventDefault();
                 const href = navigationMenuItem.href;
-                navigationMenuItem.forceReload ? window.location.href = href : history.push(href);
+                navigationMenuItem.forceReload ? window.location.href = href : navigate(href);
             }}
             {...props}
         />);
 };
 
-export const getMenuWithApplication = (history: History<LocationState>, application: HttpResponseApplication, environment: string): ReactNode => {
+export const getMenuWithApplication = (history: NavigateFunction, application: HttpResponseApplication, environment: string): ReactNode => {
     const applicationId = application.id;
 
     const hasConnector = application.environments.find(_environment => _environment.connections.m3Connector);
