@@ -19,7 +19,7 @@ export const Select = (props: SelectProps) => {
     const { field } = useController(props);
 
     return (
-        <FormControl sx={{ width: 1 }}>
+        <FormControl sx={{ width: 220, ...props.sx }}>
             <TextField
                 {...field}
                 select
@@ -28,7 +28,6 @@ export const Select = (props: SelectProps) => {
                 disabled={props.disabled}
                 size='small'
                 fullWidth
-                sx={{ width: 220, ...props.sx }}
             >
                 {props.options.map(option => (
                     <MenuItem key={option.value} value={option.value}>
