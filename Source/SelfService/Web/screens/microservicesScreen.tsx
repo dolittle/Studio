@@ -165,7 +165,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
                     element={<MicroserviceViewScreen application={application} environment={currentEnvironment} />} />
 
                 {/* TODO PAV: Remove RouteNotFound */}
-                <RouteNotFound redirectUrl={redirectUrl} />
+                {/* <RouteNotFound redirectUrl={redirectUrl} /> */}
             </Routes>
         </LayoutWithSidebar>
     );

@@ -21,12 +21,13 @@ export const RouteNotFound: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <Route>
-                <Typography variant='h1' my={2}>We are unable to find this link</Typography>
-                <Link component={RouterLink} to={props!.redirectUrl}>
-                    Link
-                </Link>
-            </Route>
+            <Route element={
+                <>
+                    <Typography variant='h1' my={2}>We are unable to find this link</Typography><Link component={RouterLink} to={props!.redirectUrl}>
+                        Link
+                    </Link>
+                </>
+            } />
         </>
     );
 };
