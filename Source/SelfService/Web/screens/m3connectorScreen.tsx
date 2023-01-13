@@ -71,9 +71,9 @@ export const M3ConnectorScreen: React.FunctionComponent<Props> = (props) => {
                     </div>
                 </div>
                 <Routes>
-                    <Route path="/m3connector/application/:applicationId">
-                        <Container application={application} />
-                    </Route>
+                    <Route
+                        path="*"
+                        element={<Container application={application} />} />
                 </Routes>
             </LayoutWithSidebar>
         </>

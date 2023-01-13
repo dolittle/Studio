@@ -94,7 +94,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
                     </div>
                 </div>
                 <Routes>
-                    <Route exact path="/backups/application/:applicationId/overview">
+                    <Route path="/overview" element={
                         <div className="serv">
                             <ul>
                                 {environments.map((environment) => {
@@ -104,13 +104,11 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
                                 })}
                             </ul>
                         </div>
-                    </Route>
-                    <Route exact path="/backups/application/:applicationId/:environment/list">
+                    } />
+                    <Route path="/:environment/list" element={
                         <ListView application={application} environment={currentEnvironment} />
-                    </Route>
-                    <Route>
-                        <Typography variant='h1' my={2}>Something has gone wrong: backups</Typography>
-                    </Route>
+                    } />
+                    <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups</Typography>} />
                 </Routes>
             </LayoutWithSidebar>
         </>

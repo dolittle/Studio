@@ -88,52 +88,33 @@ export const App = () => {
                                 <BrowserRouter basename={uriWithAppPrefix('')}>
                                     <QueryParamProvider ReactRouterRoute={Route}>
                                         <Routes>
-                                            <Route exact path='/login'>
-                                                <LoginScreen />
-                                            </Route>
+                                            <Route path='/login' element={<LoginScreen />} />
 
-                                            <Route path='/backups/application/:applicationId'>
-                                                <BackupsScreen />
-                                            </Route>
+                                            <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
 
-                                            <Route exact path='/applications'>
-                                                <ApplicationsScreen />
-                                            </Route>
+                                            <Route path='/applications' element={<ApplicationsScreen />} />
 
-                                            <Route path='/application/'>
-                                                <ApplicationScreen />
-                                            </Route>
+                                            <Route path='/application/*' element={<ApplicationScreen />} />
 
-                                            <Route path='/microservices/application/:applicationId/:environment'>
-                                                <MicroservicesScreen />
-                                            </Route>
+                                            <Route path='/microservices/application/:applicationId/:environment/*' element={<MicroservicesScreen />} />
 
-                                            <Route path='/documentation/application/:applicationId/:environment'>
-                                                <DocumentationScreen />
-                                            </Route>
+                                            <Route path='/documentation/application/:applicationId/:environment/*' element={<DocumentationScreen />} />
 
-                                            <Route path='/containerregistry/application/:applicationId/:environment'>
-                                                <ContainerRegistryScreen />
-                                            </Route>
+                                            <Route path='/containerregistry/application/:applicationId/:environment/*' element={<ContainerRegistryScreen />} />
 
-                                            <Route path='/m3connector/application/:applicationId'>
-                                                <M3ConnectorScreen />
-                                            </Route>
+                                            <Route path='/m3connector/application/:applicationId/*' element={<M3ConnectorScreen />} />
 
-                                            <Route path='/logs/application/:applicationId/:environment'>
-                                                <LogsScreen />
-                                            </Route>
+                                            <Route path='/logs/application/:applicationId/:environment' element={<LogsScreen />} />
 
-                                            <Route path='/admin/'>
-                                                <AdminScreen />
-                                            </Route>
+                                            <Route path='/admin/*' element={<AdminScreen />} />
 
-                                            <Route exact path='/problem'>
+                                            <Route path='/problem' element={
                                                 <LayoutWithSidebar navigation={[]}>
                                                     <DieAndRestart />
                                                 </LayoutWithSidebar>
-                                            </Route>
+                                            } />
 
+                                            {/* TODO Pav: remove custom RouteNotFound https://reactrouter.com/en/main/upgrading/v5#upgrade-to-react-router-v6 */}
                                             <RouteNotFound
                                                 redirectUrl='/applications'
                                                 auto={true}

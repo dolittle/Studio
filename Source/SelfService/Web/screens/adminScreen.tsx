@@ -33,25 +33,16 @@ export const Screen: React.FunctionComponent = () => {
     return (
         <LayoutWithSidebar navigation={nav}>
             <Routes>
-                <Route exact path="/admin/customer/create">
-                    <CreateCustomer />
-                </Route>
+                <Route path="/" element={welcome} />
 
-                <Route exact path="/admin/customers">
-                    <ViewAllCustomers />
-                </Route>
+                <Route path="/customers" element={<ViewAllCustomers />} />
 
-                <Route exact path="/admin/customer/:customerId">
-                    <ViewCustomer />
-                </Route>
+                <Route path="/customer/create" element={<CreateCustomer />} />
 
-                <Route exact path="/admin/customer/:customerId/application/:applicationId/user/access">
-                    <ViewApplicationAccess />
-                </Route>
+                <Route path="/customer/:customerId" element={<ViewCustomer />} />
 
-                <Route exact path="/admin/">
-                    {welcome}
-                </Route>
+                <Route path="/customer/:customerId/application/:applicationId/user/access" element={<ViewApplicationAccess />} />
+
             </Routes>
         </LayoutWithSidebar>
     );

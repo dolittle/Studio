@@ -16,19 +16,15 @@ type ContainerProps = {
     application: HttpResponseApplication;
 };
 
+// TODO PAV: Is this component even needed? Can this be moved to the parent component directly?
 export const Container = ({ application }: ContainerProps) =>
     <>
         <Typography variant='h1' my={2}>M3 Connector</Typography>
         <Routes>
-            <Route exact path="/m3connector/application/:applicationId/overview">
-                <Overview application={application} />
-            </Route>
-            <Route exact path="/m3connector/application/:applicationId/:environment/setup">
-                <Setup application={application} />
-            </Route>
+            <Route path="/overview" element={<Overview application={application} />} />
 
-            <Route exact path="/m3connector/application/:applicationId/:environment/details">
-                <Details applicationId={application.id} />
-            </Route>
+            <Route path="/setup" element={<Setup application={application} />} />
+
+            <Route path="/details" element={<Details applicationId={application.id} />} />
         </Routes>
     </>;
