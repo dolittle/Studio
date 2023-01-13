@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
@@ -19,7 +19,7 @@ type ViewParams = {
 };
 
 export const View: React.FunctionComponent<any> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
     const { customerId, applicationId } = useParams<ViewParams>();
@@ -56,7 +56,7 @@ export const View: React.FunctionComponent<any> = (props) => {
                 <p>Failed to fetch data</p>
                 <ButtonText onClick={async () => {
                     const href = `/admin/customers`;
-                    history.push(href);
+                    navigate(href);
                 }}>Back to customers</ButtonText>
             </>
         );
@@ -109,7 +109,7 @@ export const View: React.FunctionComponent<any> = (props) => {
             <Typography variant='h1' my={2}>Customer {customer.name}</Typography>
             <ButtonText onClick={async () => {
                 const href = `/admin/customer/${customerId}`;
-                history.push(href);
+                navigate(href);
             }}>Back to customer</ButtonText>
 
 

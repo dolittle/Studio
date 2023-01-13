@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
@@ -53,7 +53,7 @@ const styles = {
 
 
 export const Create = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
     const steps = [
@@ -130,7 +130,7 @@ export const Create = () => {
                                             label='Back'
                                             onClick={() => {
                                                 const href = `/admin/customers`;
-                                                history.push(href);
+                                                navigate(href);
                                             }}
                                         />
 

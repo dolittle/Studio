@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { HttpResponseApplication } from '../api/application';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ButtonText } from '../theme/buttonText';
 import { Typography } from '@mui/material';
 
@@ -17,7 +17,7 @@ type EnvironmentInfo = {
 };
 
 export const View: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const _props = props!;
     const application = _props.application;
     const applicationId = application.id;
@@ -41,7 +41,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         const href = row.connected ?
                             `/m3connector/application/${applicationId}/${environment}/details` :
                             `/m3connector/application/${applicationId}/${environment}/setup`;
-                        history.push(href);
+                        navigate(href);
                     }}>{row.connected ? 'View Details' : 'Setup'}</ButtonText>
                 </>
             ))

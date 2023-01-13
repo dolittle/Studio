@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -38,7 +38,8 @@ const styles = {
     } as SxProps,
 };
 export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
+    const location = useLocation();
     const { setCurrentApplicationId, setCurrentEnvironment } =
         useGlobalContext();
     const applications = props!.applications;
@@ -73,7 +74,7 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
 
         if (newApplication === 'createNew') {
             const href = '/application/create';
-            history.push(href);
+            navigate(href);
             return;
         }
 
@@ -89,7 +90,7 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
         // TODO: We just slap on any search querystring here, so it will be reused after the environment switch. We might want to do this more properly later?
         // Like sending in extra params to this changer perhaps?
         // This was done mainly to support keeping the filters in the LogsScreen.tsx.
-        const href = `${parts[0]}/${newApplication}${parts[1]}${history.location.search}`;
+        const href = `${parts[0]}/${newApplication}${parts[1]}${location.search}`;
 
         // We use window here, as its a hack to get around the selfservice being duplicated
         window.location.href = href;

@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect } from 'react';
-import { useHistory, Link as RouterLink } from 'react-router-dom';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { Link, Box, Typography } from '@mui/material';
 import { useGlobalContext } from '../stores/notifications';
 

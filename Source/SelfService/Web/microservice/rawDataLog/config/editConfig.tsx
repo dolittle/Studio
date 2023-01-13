@@ -7,7 +7,7 @@
 // TODO change action button from create to save
 
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Config } from './config';
@@ -25,7 +25,7 @@ type Props = {
 };
 
 export const EditConfig: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const _props = props!;
     const application = _props.application;
     const environment = _props.environment;
@@ -34,7 +34,7 @@ export const EditConfig: React.FunctionComponent<Props> = (props) => {
     const onSave = async (ms: MicroserviceRawDataLogIngestor): Promise<void> => {
         const data = await saveRawDataLogIngestorMicroservice(ms);
         const href = `/microservices/application/${application.id}/${environment}/overview`;
-        history.push(href);
+        navigate(href);
     };
 
     return (

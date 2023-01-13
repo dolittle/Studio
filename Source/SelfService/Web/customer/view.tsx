@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 import { getCustomer, CustomerDetailed } from '../api/customer';
@@ -52,7 +52,7 @@ type ViewParams = {
 };
 
 export const View: React.FunctionComponent<any> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
     const { customerId } = useParams<ViewParams>();
@@ -155,7 +155,7 @@ export const View: React.FunctionComponent<any> = (props) => {
                             <ButtonText
                                 onClick={() => {
                                     const href = `/admin/customer/${customerId}/application/${application.id}/user/access`;
-                                    history.push(href);
+                                    navigate(href);
                                 }}
                             >
                                 View Access

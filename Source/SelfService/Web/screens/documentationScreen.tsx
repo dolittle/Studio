@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import {
     Route,
-    useHistory,
+    useNavigate,
     Routes,
     generatePath
 } from 'react-router-dom';
@@ -34,7 +34,7 @@ import { Typography } from '@mui/material';
 
 
 export const DocumentationScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { setNotification } = useGlobalContext();
     const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
@@ -56,7 +56,7 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
             const applicationData = values[1];
             if (!applicationData?.id) {
                 const href = `/problem`;
-                history.push(href);
+                navigate(href);
                 return;
             }
 
@@ -93,7 +93,7 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
         );
     }
 
-    const nav = getMenuWithApplication(history, application, currentEnvironment);
+    const nav = getMenuWithApplication(navigate, application, currentEnvironment);
 
     const routes = [
         {

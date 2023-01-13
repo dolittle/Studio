@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Route, Routes, useHistory, } from 'react-router-dom';
+import { Route, Routes, useNavigate, } from 'react-router-dom';
 
 import { Create as CreateCustomer } from '../customer/create';
 import { ViewAll as ViewAllCustomers } from '../customer/viewAll';
@@ -16,7 +16,7 @@ import { Typography } from '@mui/material';
 import { Button } from '@dolittle/design-system';
 
 export const Screen: React.FunctionComponent = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const nav = [];
 
     const welcome = (
@@ -24,7 +24,7 @@ export const Screen: React.FunctionComponent = () => {
             <Typography variant='h1' my={2}>Hello Admin</Typography>
             <Button label='Take me to the Customers' onClick={() => {
                 const href = `/admin/customers`;
-                history.push(href);
+                navigate(href);
             }}
             />
         </>

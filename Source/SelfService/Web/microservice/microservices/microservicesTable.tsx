@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { getPodStatus, MicroserviceInfo } from '../../api/api';
 import { HttpResponseApplication } from '../../api/application';
@@ -50,7 +50,7 @@ type MicroserviceTableProps = {
 };
 
 export const MicroserviceTable = ({ application, environment, microservices }: MicroserviceTableProps) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const [microserviceRows, setMicroserviceRows] = useState<(MicroserviceObject | undefined)[]>([]);
     const [loadingRows, setLoadingRows] = useState(true);
 
@@ -130,7 +130,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
 
     const onTableRowClick = (microserviceId: string) => {
         const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}`;
-        history.push(href);
+        navigate(href);
     };
 
     return (

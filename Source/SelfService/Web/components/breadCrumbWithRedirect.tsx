@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export type BreadcrumbWithRedirectProps = {
     url: string;
@@ -11,12 +11,12 @@ export type BreadcrumbWithRedirectProps = {
 };
 
 export const BreadcrumbWithRedirect: React.FunctionComponent<BreadcrumbWithRedirectProps> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     return (
         <span onClick={(event: React.MouseEvent<HTMLElement>) => {
             event.stopPropagation();
             console.log('Redirect', props!.url);
-            history.push(props!.url);
+            navigate(props!.url);
         }}> {props!.name}</span >
     );
 };

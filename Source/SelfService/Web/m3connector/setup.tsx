@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { HttpResponseApplication } from '../api/application';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ButtonText } from '../theme/buttonText';
 
 type Props = {
@@ -15,7 +15,7 @@ type ViewParams = {
 };
 
 export const View: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { environment } = useParams<ViewParams>();
     const _props = props!;
     const application = _props.application;
@@ -36,7 +36,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                 <p>Already setup</p>
                 <ButtonText onClick={async () => {
                     const href = `/m3connector/application/${applicationId}/${environment}/details`;
-                    history.push(href);
+                    navigate(href);
                 }}>View Details</ButtonText>
             </>
         );

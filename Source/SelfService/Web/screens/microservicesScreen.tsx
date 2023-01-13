@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, Routes, generatePath } from 'react-router-dom';
+import { Route, useNavigate, Routes, generatePath } from 'react-router-dom';
 
 import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../api/api';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
@@ -28,7 +28,7 @@ import { withRouteApplicationState } from './withRouteApplicationState';
 import { Typography } from '@mui/material';
 
 export const MicroservicesScreen = withRouteApplicationState(({ routeApplicationParams }) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { setNotification } = useGlobalContext();
     const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
@@ -52,7 +52,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
 
             if (!applicationData?.id) {
                 const href = `/problem`;
-                history.push(href);
+                navigate(href);
                 return;
             }
 
@@ -92,7 +92,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
         );
     }
 
-    const nav = getMenuWithApplication(history, application, currentEnvironment);
+    const nav = getMenuWithApplication(navigate, application, currentEnvironment);
 
     const routes = [
         {

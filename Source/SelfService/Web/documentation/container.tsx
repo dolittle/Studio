@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory, Routes } from 'react-router-dom';
+import { Route, useNavigate, Routes } from 'react-router-dom';
 import { Link } from '@fluentui/react';
 import { HttpResponseApplication } from '../api/application';
 
@@ -21,7 +21,7 @@ type Props = {
 };
 
 export const DocumentationContainerScreen: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const _props = props!;
     const application = _props.application;
     const applicationId = application.id;

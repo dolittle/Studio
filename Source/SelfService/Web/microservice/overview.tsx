@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useReadable } from 'use-svelte-store';
 
 import { Typography } from '@mui/material';
@@ -22,7 +22,7 @@ type OverviewProps = {
 
 export const Overview = ({ application, microserviceId, environment }: OverviewProps) => {
     const $microservices = useReadable(microservices) as any;
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [loaded, setLoaded] = useState(false);
 
@@ -40,7 +40,7 @@ export const Overview = ({ application, microserviceId, environment }: OverviewP
 
     if (!currentMicroservice) {
         const href = `/microservices/application/${application.id}/${environment}/overview`;
-        history.push(href);
+        navigate(href);
         return null;
     }
 

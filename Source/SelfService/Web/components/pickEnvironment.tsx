@@ -3,7 +3,7 @@
 import React from 'react';
 import Modal from '@mui/material/Modal';
 import { Box, Typography } from '@mui/material';
-import { useHistory, generatePath } from 'react-router-dom';
+import { useNavigate, generatePath } from 'react-router-dom';
 import { ShortInfoWithEnvironment } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
 import { List } from '@fluentui/react/lib/List';
@@ -55,7 +55,7 @@ export const isEnvironmentValidFromUri = (applications: ShortInfoWithEnvironment
 
 export const PickEnvironment: React.FunctionComponent<Props> = (props) => {
     const { setCurrentEnvironment, setCurrentApplicationId } = useGlobalContext();
-    const history = useHistory();
+    const navigate = useNavigate();
     const _props = props!;
     const application = _props.application;
 
@@ -86,7 +86,7 @@ export const PickEnvironment: React.FunctionComponent<Props> = (props) => {
                 setCurrentEnvironment(application.environment);
                 setCurrentApplicationId(application.id);
                 handleClose();
-                history.push(href);
+                navigate(href);
             }}
                 underline>
                 {application.name} {application.environment}

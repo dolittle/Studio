@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Box, Typography } from '@mui/material';
 
@@ -29,7 +29,7 @@ import { withRouteApplicationState } from './withRouteApplicationState';
 const DAY = 86_400_000_000_000n;
 
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { setNotification } = useGlobalContext();
     const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
@@ -64,7 +64,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
 
             if (!applicationData?.id) {
                 const href = `/problem`;
-                history.push(href);
+                navigate(href);
                 return;
             }
 
@@ -100,7 +100,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
         );
     }
 
-    const nav = getMenuWithApplication(history, application, currentEnvironment);
+    const nav = getMenuWithApplication(navigate, application, currentEnvironment);
 
     return (
         <LayoutWithSidebar navigation={nav}>

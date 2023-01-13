@@ -5,7 +5,7 @@ import React, {
     useEffect,
     useState
 } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { getCustomers, Customers } from '../api/customer';
 import { ButtonText } from '../theme/buttonText';
@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const ViewAll: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
     const [loaded, setLoaded] = useState(false);
@@ -44,7 +44,7 @@ export const ViewAll: React.FunctionComponent<Props> = (props) => {
             <ButtonText
                 onClick={() => {
                     const href = `/admin/customer/create`;
-                    history.push(href);
+                    navigate(href);
                 }}>
                 Create new Customer
             </ButtonText>
@@ -58,7 +58,7 @@ export const ViewAll: React.FunctionComponent<Props> = (props) => {
                         <ButtonText
                             onClick={() => {
                                 const href = `/admin/customer/${customer.id}`;
-                                history.push(href);
+                                navigate(href);
                             }}
                         >
                             {customer.name} ({customer.id})

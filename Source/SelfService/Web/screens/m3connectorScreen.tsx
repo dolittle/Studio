@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import {
     Route,
     Routes,
-    useHistory,
+    useNavigate,
 } from 'react-router-dom';
 
 import { getApplication, HttpResponseApplication } from '../api/application';
@@ -22,7 +22,7 @@ type Props = {
 };
 
 export const M3ConnectorScreen: React.FunctionComponent<Props> = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { currentEnvironment } = useGlobalContext();
 
     const routeApplicationProps = useRouteApplicationParams();
@@ -37,7 +37,7 @@ export const M3ConnectorScreen: React.FunctionComponent<Props> = (props) => {
             const applicationData = values[0];
             if (!applicationData?.id) {
                 const href = `/problem`;
-                history.push(href);
+                navigate(href);
                 return;
             }
 
@@ -58,7 +58,7 @@ export const M3ConnectorScreen: React.FunctionComponent<Props> = (props) => {
         );
     }
 
-    const nav = getMenuWithApplication(history, application, currentEnvironment);
+    const nav = getMenuWithApplication(navigate, application, currentEnvironment);
 
     const routes = [];
 
