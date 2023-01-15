@@ -6,16 +6,39 @@ import React, { ReactElement } from 'react';
 import { Tooltip as MuiTooltip, Paper, Typography } from '@mui/material';
 
 type TooltipProps = {
+    /**
+     * Required. Unique id to add every tooltip.
+     */
     id: string;
-    disableHoverListener?: boolean;
-    placement?: 'top' | 'right' | 'bottom' | 'left';
-    title: React.ReactNode;
+
+    /**
+     * Required. The content title.
+     */
     tooltipTitle: string;
+
+    /**
+     * Required. The content text.
+     */
     tooltipText: string;
+
+    /**
+     * Don't activate the tooltip on hover.
+     * @default false
+     */
+    disableHoverListener?: boolean;
+
+    /**
+     * Required. The content to wrap with the tooltip.
+     */
     children: ReactElement<any, any>;
 };
 
-export const Tooltip = ({ id, tooltipTitle, tooltipText, children }: TooltipProps) =>
+/**
+ * A Tooltip component.
+ * @param {...TooltipProps} props - The {@link TooltipProps}.
+ * @returns {ReactElement} A new {@link Tooltip} component.
+ */
+export const Tooltip = ({ id, tooltipTitle, tooltipText, children }: TooltipProps): ReactElement =>
     <MuiTooltip
         id={`${id}-tooltip`}
         disableHoverListener

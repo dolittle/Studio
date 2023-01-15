@@ -14,8 +14,7 @@ const { metadata, createStory } = componentStories(Input, {
     decorator: (Story) => (
         <Form
             initialValues={{
-                default: '',
-                withLink: ''
+                default: ''
             }}
             sx={{ mt: 2 }}
         >
@@ -31,13 +30,4 @@ export const Default = createStory({
     label: 'Click to focus...',
     tooltipTitle: 'Default tooltip',
     tooltipText: 'This is example text for the right aligned focused Input field tooltip.'
-});
-
-export const withLink = createStory({
-    id: 'withLink',
-    label: 'Click to focus...',
-    tooltipTitle: 'Tooltip with link',
-    tooltipText: 'This is example text for the right aligned focused Input field tooltip, that has link.',
-    //link: '#',
-    //tooltipLink: '#'
 });
