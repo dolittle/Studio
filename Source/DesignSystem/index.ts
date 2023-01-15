@@ -11,9 +11,11 @@ export { Button } from './atoms/Button';
 export { ConfirmDialog } from './atoms/ConfirmDialog';
 export { Checkbox, Form, Input, Select, SwitchToggle } from './atoms/Forms';
 export { IconButton, IconButtonProps } from './atoms/IconButton';
+export { Link } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
 export { Summary } from './atoms/Metrics';
 export { Tabs } from './atoms/Tabs';
+export { Tooltip } from './atoms/Tooltip';
 export { InputMessages, OutputMessages, Terminal, TerminalConnect, TerminalStreams } from './atoms/Terminal';
 
 // Molecules
