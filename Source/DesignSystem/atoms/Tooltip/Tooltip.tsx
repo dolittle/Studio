@@ -14,12 +14,12 @@ type TooltipProps = {
     /**
      * Required. The content title.
      */
-    tooltipTitle: string;
+    tooltipTitle: string | undefined;
 
     /**
      * Required. The content text.
      */
-    tooltipText: string;
+    tooltipText: string | undefined;
 
     /**
      * Don't activate the tooltip on hover.
