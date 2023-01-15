@@ -3,7 +3,9 @@
 
 import React from 'react';
 
-import { FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput, Paper, SxProps, Tooltip, Typography } from '@mui/material';
+import { FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput, SxProps, Typography } from '@mui/material';
+
+import { Tooltip } from '@dolittle/design-system';
 
 import { FieldProps, isRequired, useController } from './helpers';
 import type { Form } from './Form';
@@ -50,14 +52,8 @@ export const Input = (props: InputProps) => {
 
             <Tooltip
                 id={`${props.id}-tooltip`}
-                disableHoverListener
-                placement='right'
-                title={
-                    <Paper sx={{ py: 1, px: 2 }}>
-                        <Typography variant='body2' sx={{ fontWeight: 700 }}>{props.tooltipTitle}</Typography>
-                        <Typography variant='body2'>{props.tooltipText}</Typography>
-                    </Paper>
-                }
+                tooltipTitle={props.tooltipTitle}
+                tooltipText={props.tooltipText}
             >
                 <OutlinedInput
                     {...field}
