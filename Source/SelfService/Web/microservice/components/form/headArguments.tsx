@@ -20,7 +20,7 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
     const emptyFieldList: string[] = [];
 
     const handleChangeArg = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, argIndex: number) => {
-        // Remove error if field is no longer empty
+        // Remove error if field is no longer empty.
         if (event.target.value) {
             const newError = [...emptyFieldError];
             const id = 'headArg' + argIndex.toString();
@@ -29,7 +29,7 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
             setEmptyFieldError(newError);
         }
 
-        // Prevents user from entering a multible spaces
+        // Prevents user from entering a multible spaces.
         if (event.target.value.includes(`  `)) return;
 
         const newArgs = [...cmdArgs];
@@ -54,6 +54,7 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
             {cmdArgs.map((arg, argIndex) => {
                 const id = 'headArg' + argIndex.toString();
 
+                // Handle empty fields. If there is an empty field, add it to the list of empty fields.
                 if (!arg) emptyFieldList.push(id);
                 const hasEmptyField = emptyFieldError.includes(id);
 
