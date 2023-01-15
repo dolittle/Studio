@@ -98,12 +98,6 @@ export const fullwidth = createStory({
     startWithIcon: <AddCircle />,
 });
 
-// export const DisabledWithIcon = createStory({
-//     label: 'Disabled Button with icon',
-//     disabled: true,
-//     startWithIcon: <EditRounded />,
-// });
-
 export const WithLink = createStory({
     label: 'With Link',
     href: 'https://dolittle.io',
