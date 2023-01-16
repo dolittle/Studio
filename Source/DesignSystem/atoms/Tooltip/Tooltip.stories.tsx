@@ -3,31 +3,38 @@
 
 import React from 'react';
 
-import { componentStories, Form } from '@dolittle/design-system';
+import { componentStories, Form, Tooltip } from '@dolittle/design-system';
 
 import { Input } from '../Forms';
 
-const { metadata, createStory } = componentStories(Input, {
-    actions: {
-        onChange: 'Value changed'
-    },
-    decorator: (Story) => (
+const { metadata, createStory } = componentStories(Tooltip, {
+    decorator: () => (
         <Form
             initialValues={{
                 default: ''
             }}
             sx={{ mt: 2 }}
         >
-            <Story />
+            <Input
+                id='default'
+                label='Click to focus...'
+                tooltipTitle='Default tooltip'
+                tooltipText='This is example text for the right aligned focused Input field tooltip.'
+            />
         </Form>
     )
 });
+
+metadata.parameters = {
+    controls: {
+        include: []
+    }
+};
 
 export default metadata;
 
 export const Default = createStory({
     id: 'default',
-    label: 'Click to focus...',
     tooltipTitle: 'Default tooltip',
     tooltipText: 'This is example text for the right aligned focused Input field tooltip.'
 });

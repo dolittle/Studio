@@ -5,6 +5,9 @@ import React, { ReactElement } from 'react';
 
 import { Link as MuiLink } from '@mui/material';
 
+/**
+ * The props for a {@link Link} component.
+ */
 type LinkProps = {
     /**
      * Required. The URL to link to.
