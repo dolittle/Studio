@@ -9,47 +9,53 @@ import { Input } from '@dolittle/design-system';
 
 import { HeadArguments } from './headArguments';
 
-const entrypointDescription = `If you would like to override your container image ENTRYPOINT, 
-you can do so in this field.You can find more information on ENTRYPOINTS and CMD ARGUMENETS here.`;
-
-
 type ContainerImageFieldProps = {
     cmdArgs: string[];
     setCmdArgs: (args: string[]) => void;
     disabled?: boolean;
+    tooltipImageTitle?: string;
+    tooltipImageText?: string;
+    tooltipPortTitle?: string;
+    tooltipPortText?: string;
+    tooltipEntryTitle?: string;
+    tooltipEntryText?: string;
     sx: SxProps;
 };
 
-export const ContainerImageField = ({ cmdArgs, setCmdArgs, disabled, sx }: ContainerImageFieldProps) =>
-    <Box sx={sx}>
+export const ContainerImageField = (props: ContainerImageFieldProps) =>
+    <Box sx={props.sx}>
         <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
 
         <Input
             id='headImage'
             label='Image Name'
             required
-            disabled={disabled}
+            disabled={props.disabled}
+            tooltipTitle={props.tooltipImageTitle}
+            tooltipText={props.tooltipImageText}
             sx={{ width: 500 }}
         />
 
         <Input
             id='headPort'
             label='Port'
-            disabled={disabled}
+            disabled={props.disabled}
             required
             pattern={{
                 value: /^[0-9]+$/,
                 message: 'Please enter a valid port number.'
             }}
+            tooltipTitle={props.tooltipPortTitle}
+            tooltipText={props.tooltipPortText}
         />
 
         <Input
             id='entrypoint'
             label='Entrypoint'
-            disabled={disabled}
-            tooltipTitle='ENTRYPOINT'
-            tooltipText={entrypointDescription}
+            disabled={props.disabled}
+            tooltipTitle={props.tooltipEntryTitle}
+            tooltipText={props.tooltipEntryText}
         />
 
-        <HeadArguments cmdArgs={cmdArgs} setCmdArgs={setCmdArgs} disabled={disabled} />
+        <HeadArguments cmdArgs={props.cmdArgs} setCmdArgs={props.setCmdArgs} disabled={props.disabled} />
     </Box>;

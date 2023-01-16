@@ -11,10 +11,12 @@ type PublicUrlFieldProps = {
     hasPublicUrl: boolean;
     setHasPublicUrl?: (hasPublicUrl: boolean) => void;
     disabled?: boolean;
+    tooltipTitle?: string;
+    tooltipText?: string;
     sx?: SxProps;
 };
 
-export const PublicUrlField = ({ hasPublicUrl, setHasPublicUrl, disabled, sx }: PublicUrlFieldProps) =>
+export const PublicUrlField = ({ hasPublicUrl, setHasPublicUrl, disabled, tooltipTitle, tooltipText, sx }: PublicUrlFieldProps) =>
     <Box sx={sx}>
         <Typography variant='subtitle2'>Public Microservice</Typography>
 
@@ -27,6 +29,8 @@ export const PublicUrlField = ({ hasPublicUrl, setHasPublicUrl, disabled, sx }: 
                 startAdornment='/'
                 placeholder='leave blank for default path'
                 disabled={disabled}
+                tooltipTitle={tooltipTitle}
+                tooltipText={tooltipText}
                 sx={{ width: 226 }}
             />
         }
