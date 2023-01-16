@@ -18,7 +18,7 @@ type ContainerImageFieldProps = {
     tooltipPortTitle?: string;
     tooltipPortText?: string;
     tooltipEntryTitle?: string;
-    tooltipEntryText?: string;
+    tooltipEntryText?: string | React.ReactNode;
     sx: SxProps;
 };
 

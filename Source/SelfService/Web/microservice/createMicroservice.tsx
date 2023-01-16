@@ -10,7 +10,7 @@ import { Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 import { Guid } from '@dolittle/rudiments';
-import { Button, Form, LoadingSpinner } from '@dolittle/design-system';
+import { Button, Form, Link, LoadingSpinner, Tooltip, Input } from '@dolittle/design-system';
 
 import { saveSimpleMicroservice } from '../stores/microservice';
 
@@ -45,14 +45,30 @@ const styles = {
 const runtimeDescription = `By using the Dolittle runtime you'll have access to storage through event sourcing and be able to 
 communicate with other microservices through the event horizon with the Dolittle SDK.`;
 
-const entrypointDescription = `If you would like to override your container image ENTRYPOINT, 
-you can do so in this field. You can find more information on ENTRYPOINTS and CMD ARGUMENETS here.`;
-
 const portDescription = `By default, your mircroservice will be hosted on port 80 within the secure Dolittle cluster, 
 but this can be overridden if your image requires it.`;
 
-const publicUrlDescription = `Dolittle will generate a public URL for you. If you would like to specify a subpath, please enter one here. If you would 
-like custom handling of the path and subpaths, please reach out to Dolittle support after you’ve deployed the service.`;
+const EntrypointDescription = () =>
+    <>
+        If you would like to override your container image ENTRYPOINT,
+        you can do so in this field. You can find more information on ENTRYPOINTS and CMD ARGUMENETS <Link
+            href='https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact'
+            target
+            ariaLabel='Understand how CMD and ENTRYPOINT interact which opens in a new window.'
+            message='here'
+        />.
+    </>;
+
+const PublicUrlFieldDescription = () =>
+    <>
+        {`Dolittle will generate a public URL for you. If you would like to specify a subpath, please enter one here. If you would
+        like custom handling of the path and subpaths, please reach out to `}
+        <Link
+            href='#'
+            message='Dolittle support'
+        />
+        {` after you've deployed the service.`}
+    </>;
 
 type CreateMicroserviceProps = {
     application: HttpResponseApplication;
@@ -158,7 +174,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     tooltipPortTitle='Port'
                     tooltipPortText={portDescription}
                     tooltipEntryTitle='Entrypoint'
-                    tooltipEntryText={entrypointDescription}
+                    tooltipEntryText={<EntrypointDescription />}
                     sx={styles.formSections}
                 />
 
@@ -166,7 +182,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     hasPublicUrl={showPublicUrlInfo}
                     setHasPublicUrl={() => setShowPublicUrlInfo(!showPublicUrlInfo)}
                     tooltipTitle='PATH'
-                    tooltipText={publicUrlDescription}
+                    tooltipText={<PublicUrlFieldDescription />}
                     sx={styles.formSections}
                 />
 
