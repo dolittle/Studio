@@ -42,6 +42,18 @@ const styles = {
     }
 };
 
+const runtimeDescription = `By using the Dolittle runtime you'll have access to storage through event sourcing and be able to 
+communicate with other microservices through the event horizon with the Dolittle SDK.`;
+
+const entrypointDescription = `If you would like to override your container image ENTRYPOINT, 
+you can do so in this field. You can find more information on ENTRYPOINTS and CMD ARGUMENETS here.`;
+
+const portDescription = `By default, your mircroservice will be hosted on port 80 within the secure Dolittle cluster, 
+but this can be overridden if your image requires it.`;
+
+const publicUrlDescription = `Dolittle will generate a public URL for you. If you would like to specify a subpath, please enter one here. If you would 
+like custom handling of the path and subpaths, please reach out to Dolittle support after you’ve deployed the service.`;
+
 type CreateMicroserviceProps = {
     application: HttpResponseApplication;
     environment: string;
@@ -131,13 +143,30 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 sx={styles.form}
                 onSubmit={handleCreateMicroservice}
             >
-                <ConfigurationSetupField options={runtimeNumberSelections} sx={styles.formSections} />
+                <ConfigurationSetupField
+                    options={runtimeNumberSelections}
+                    tooltipTitle='Runtime'
+                    tooltipText={runtimeDescription}
+                    sx={styles.formSections}
+                />
 
-                <ContainerImageField cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} sx={styles.formSections} />
+                <ContainerImageField
+                    cmdArgs={headCommandArgs}
+                    setCmdArgs={setHeadCommandArgs}
+                    tooltipImageTitle='Image Name'
+                    tooltipImageText='Please provide the container image name for your microservice.'
+                    tooltipPortTitle='Port'
+                    tooltipPortText={portDescription}
+                    tooltipEntryTitle='Entrypoint'
+                    tooltipEntryText={entrypointDescription}
+                    sx={styles.formSections}
+                />
 
                 <PublicUrlField
                     hasPublicUrl={showPublicUrlInfo}
                     setHasPublicUrl={() => setShowPublicUrlInfo(!showPublicUrlInfo)}
+                    tooltipTitle='PATH'
+                    tooltipText={publicUrlDescription}
                     sx={styles.formSections}
                 />
 
@@ -149,7 +178,14 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     />
                 }
 
-                <Button variant='filled' label='Deploy microservice' size='medium' type='submit' startWithIcon={<RocketLaunch />} sx={{ mt: 1 }} />
+                <Button
+                    variant='filled'
+                    label='Deploy microservice'
+                    size='medium'
+                    type='submit'
+                    startWithIcon={<RocketLaunch />}
+                    sx={{ mt: 1 }}
+                />
             </Form>
         </>
     );
