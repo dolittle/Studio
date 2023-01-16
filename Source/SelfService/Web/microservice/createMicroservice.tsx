@@ -56,13 +56,15 @@ const EntrypointDescription = () =>
             target
             ariaLabel='Understand how CMD and ENTRYPOINT interact which opens in a new window.'
             message='here'
+            color='secondary'
         />.
     </>;
 
 const PublicUrlFieldDescription = () =>
     <>
         Dolittle will generate a public URL for you. If you would like to specify a subpath, please enter one here. If you would
-        like custom handling of the path and subpaths, please reach out to <Link href='#' message='Dolittle support' /> after you&#39;ve deployed the service.
+        like custom handling of the path and subpaths, please reach out to <Link href='mailto: support@dolittle.com' message='Dolittle support' color='secondary' />
+        after you&#39;ve deployed the service.
     </>;
 
 type CreateMicroserviceProps = {
