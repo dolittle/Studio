@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Box, SxProps, Typography } from '@mui/material';
 
-import { Input, Select } from '@dolittle/design-system';
+import { Input, Select, Tooltip } from '@dolittle/design-system';
 
 type ConfigurationSetupFieldProps = {
     options: { value: string }[];
@@ -22,13 +22,23 @@ export const ConfigurationSetupField = ({ options, disabled, tooltipTitle, toolt
         <Input id='microserviceName' label='Microservice Name' required disabled={disabled} />
         <Input id='developmentEnvironment' label='Development Environment' disabled />
 
-        <Select
-            id='runtimeVersion'
-            label='Runtime Version*'
-            options={options}
-            required
-            disabled={disabled}
-            tooltipTitle={tooltipTitle}
-            tooltipText={tooltipText}
-        />
+        {/* TODO: Tooltip appears until select value has not changed. */}
+        {tooltipTitle && tooltipText ?
+            <Tooltip id='runtime-version-tooltip' tooltipTitle={tooltipTitle} tooltipText={tooltipText}>
+                <Select
+                    id='runtimeVersion'
+                    label='Runtime Version'
+                    options={options}
+                    required
+                    disabled={disabled}
+                />
+            </Tooltip> :
+            <Select
+                id='runtimeVersion'
+                label='Runtime Version'
+                options={options}
+                required
+                disabled={disabled}
+            />
+        }
     </Box>;
