@@ -61,13 +61,8 @@ const EntrypointDescription = () =>
 
 const PublicUrlFieldDescription = () =>
     <>
-        {`Dolittle will generate a public URL for you. If you would like to specify a subpath, please enter one here. If you would
-        like custom handling of the path and subpaths, please reach out to `}
-        <Link
-            href='#'
-            message='Dolittle support'
-        />
-        {` after you've deployed the service.`}
+        Dolittle will generate a public URL for you. If you would like to specify a subpath, please enter one here. If you would
+        like custom handling of the path and subpaths, please reach out to <Link href='#' message='Dolittle support' /> after you&#39;ve deployed the service.
     </>;
 
 type CreateMicroserviceProps = {
