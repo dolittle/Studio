@@ -1,11 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-import { FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput, SxProps, Typography } from '@mui/material';
-
-import { Tooltip } from '@dolittle/design-system';
+import { FormControl, FormHelperText, InputAdornment, InputLabel, InputProps as MuiInputProps, OutlinedInput, SxProps, Typography } from '@mui/material';
 
 import { FieldProps, isRequired, useController } from './helpers';
 import type { Form } from './Form';
@@ -14,11 +12,9 @@ import type { Form } from './Form';
  * The props for a {@link Input} component.
  */
 export type InputProps = {
-    sx?: SxProps;
     startAdornment?: React.ReactNode;
     placeholder?: string;
-    tooltipTitle?: string;
-    tooltipText?: string | React.ReactNode;
+    sx?: SxProps;
 } & FieldProps;
 
 /**
@@ -26,8 +22,8 @@ export type InputProps = {
  * @param props The {@link InputProps} for the input.
  * @returns A new {@link Input} component.
  */
-export const Input = (props: InputProps) => {
-    const { field, hasError, errorMessage } = useController(props);
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ startAdornment, placeholder, sx, ...fieldProps }, ref) => {
+    const { field, hasError, errorMessage } = useController(fieldProps);
 
     return (
         <FormControl
@@ -39,42 +35,40 @@ export const Input = (props: InputProps) => {
                     sm: 0,
                     xs: 2.5
                 },
-                ...props.sx
+                ...sx
             }}>
             <InputLabel
-                htmlFor={props.id}
-                required={isRequired(props.required)}
-                disabled={props.disabled}
+                htmlFor={fieldProps.id}
+                required={isRequired(fieldProps.required)}
+                disabled={fieldProps.disabled}
                 error={hasError}
             >
-                {props.label}
+                {fieldProps.label}
             </InputLabel>
 
-            <Tooltip
-                id={`${props.id}-tooltip`}
-                tooltipTitle={props.tooltipTitle}
-                tooltipText={props.tooltipText}
-            >
-                <OutlinedInput
-                    {...field}
-                    type='text'
-                    id={props.id}
-                    error={hasError}
-                    disabled={props.disabled}
-                    label={props.label}
-                    startAdornment={props.startAdornment ?
-                        <InputAdornment position='start'>
-                            <Typography variant='body2'>{props.startAdornment}</Typography>
-                        </InputAdornment> : null
-                    }
-                    placeholder={props.placeholder}
-                    aria-describedby={`${props.id}-helper-text`}
-                />
-            </Tooltip>
+            <OutlinedInput
+                {...field}
+                {...fieldProps as MuiInputProps}
+                ref={ref}
+                type='text'
+                id={fieldProps.id}
+                error={hasError}
+                disabled={fieldProps.disabled}
+                label={fieldProps.label}
+                startAdornment={startAdornment ?
+                    <InputAdornment position='start'>
+                        <Typography variant='body2'>{startAdornment}</Typography>
+                    </InputAdornment> : null
+                }
+                placeholder={placeholder}
+                aria-describedby={`${fieldProps.id}-helper-text`}
+            />
 
-            <FormHelperText error={hasError} id={`${props.id}-helper-text`}>
+            <FormHelperText error={hasError} id={`${fieldProps.id}-helper-text`}>
                 {errorMessage}
             </FormHelperText>
         </FormControl>
     );
-};
+});
+
+Input.displayName = 'Input';
