@@ -11,19 +11,19 @@ type PublicUrlFieldProps = {
     hasPublicUrl: boolean;
     setHasPublicUrl?: (hasPublicUrl: boolean) => void;
     disabled?: boolean;
-    tooltipTitle?: string;
-    tooltipText?: string | React.ReactNode;
+    tooltipUrlFieldTitle?: string;
+    tooltipUrlFieldText?: string | React.ReactNode;
     sx?: SxProps;
 };
 
-export const PublicUrlField = ({ hasPublicUrl, setHasPublicUrl, disabled, tooltipTitle, tooltipText, sx }: PublicUrlFieldProps) =>
+export const PublicUrlField = ({ hasPublicUrl, setHasPublicUrl, disabled, tooltipUrlFieldTitle, tooltipUrlFieldText, sx }: PublicUrlFieldProps) =>
     <Box sx={sx}>
         <Typography variant='subtitle2'>Public Microservice</Typography>
 
         <SwitchToggle id='isPublic' label='Expose to a public URL' onChange={setHasPublicUrl} disabled={disabled} />
 
-        {hasPublicUrl ? (tooltipTitle && tooltipText) ?
-            <Tooltip id='public-url-tooltip' tooltipTitle={tooltipTitle} tooltipText={tooltipText}>
+        {hasPublicUrl ? (tooltipUrlFieldTitle && tooltipUrlFieldText) ?
+            <Tooltip id='public-url-tooltip' tooltipTitle={tooltipUrlFieldTitle} tooltipText={tooltipUrlFieldText}>
                 <Input
                     id='ingressPath'
                     label='Path'
