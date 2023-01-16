@@ -14,8 +14,14 @@ export const Primary = createStory({
     message: 'Go to Dolittle website'
 });
 
+export const Secondary = createStory({
+    href: '#',
+    color: 'secondary',
+    message: 'Secondary link'
+});
+
 export const Subtle = createStory({
     href: '#',
-    subtle: true,
+    color: 'text.primary',
     message: 'Subtle link'
 });

@@ -29,14 +29,10 @@ type LinkProps = {
     ariaLabel?: string;
 
     /**
-     * Mark this as 'true' if the link should be displayed in a subtle way.
-     *
-     * This is useful for links that are not the main focus of the page.
-     *
-     * The link will be displayed in secondary text color.
-     * @default false
+     * The color of the link.
+     * @default primary
      */
-    subtle?: boolean;
+    color?: 'primary' | 'secondary' | 'text.primary' | 'text.secondary' | 'error';
 
     /**
      * Required. The text to display in the component.
@@ -49,9 +45,9 @@ type LinkProps = {
  * @param {...LinkProps} props - The {@link LinkProps}.
  * @returns {ReactElement} A new {@link Link} component.
  */
-export const Link = ({ href, ariaLabel, target, subtle, message }: LinkProps): ReactElement =>
+export const Link = ({ href, ariaLabel, target, color, message }: LinkProps): ReactElement =>
     <MuiLink
-        color={subtle ? 'text.secondary' : 'primary'}
+        color={color}
         href={href}
         aria-label={ariaLabel}
         target={target ? '_blank' : undefined}
