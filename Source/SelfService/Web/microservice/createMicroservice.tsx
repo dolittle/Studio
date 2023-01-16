@@ -176,8 +176,8 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 <PublicUrlField
                     hasPublicUrl={showPublicUrlInfo}
                     setHasPublicUrl={() => setShowPublicUrlInfo(!showPublicUrlInfo)}
-                    tooltipTitle='PATH'
-                    tooltipText={<PublicUrlFieldDescription />}
+                    tooltipUrlFieldTitle='PATH'
+                    tooltipUrlFieldText={<PublicUrlFieldDescription />}
                     sx={styles.formSections}
                 />
 
