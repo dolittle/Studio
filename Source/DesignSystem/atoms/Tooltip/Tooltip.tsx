@@ -22,7 +22,7 @@ type TooltipProps = {
     /**
      * Required. The content text.
      */
-    tooltipText: string | undefined;
+    tooltipText: string | React.ReactNode | undefined;
 
     /**
      * Don't activate the tooltip on hover. This is used to activate the tooltip on focus.
@@ -57,10 +57,14 @@ export const Tooltip = ({ id, tooltipTitle, tooltipText, children }: TooltipProp
         id={`${id}-tooltip`}
         disableHoverListener
         placement='right'
+        open={true}
+        PopperProps={{
+            disablePortal: true,
+        }}
         title={
-            <Paper sx={{ py: 1, px: 2 }}>
-                <Typography variant='body2' sx={{ fontWeight: 700 }}>{tooltipTitle}</Typography>
-                <Typography variant='body2'>{tooltipText}</Typography>
+            <Paper sx={{ py: 1, px: 2, typography: 'body2' }}>
+                <Typography sx={{ fontWeight: 700 }}>{tooltipTitle}</Typography>
+                {tooltipText}
             </Paper>
         }
     >

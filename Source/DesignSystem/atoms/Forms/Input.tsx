@@ -18,7 +18,7 @@ export type InputProps = {
     startAdornment?: React.ReactNode;
     placeholder?: string;
     tooltipTitle?: string;
-    tooltipText?: string;
+    tooltipText?: string | React.ReactNode;
 } & FieldProps;
 
 /**

@@ -5,14 +5,14 @@ import React from 'react';
 
 import { Box, SxProps, Typography } from '@mui/material';
 
-import { SwitchToggle, Input } from '@dolittle/design-system';
+import { SwitchToggle, Input, Tooltip } from '@dolittle/design-system';
 
 type PublicUrlFieldProps = {
     hasPublicUrl: boolean;
     setHasPublicUrl?: (hasPublicUrl: boolean) => void;
     disabled?: boolean;
     tooltipTitle?: string;
-    tooltipText?: string;
+    tooltipText?: string | React.ReactNode;
     sx?: SxProps;
 };
 
@@ -23,15 +23,21 @@ export const PublicUrlField = ({ hasPublicUrl, setHasPublicUrl, disabled, toolti
         <SwitchToggle id='isPublic' label='Expose to a public URL' onChange={setHasPublicUrl} disabled={disabled} />
 
         {hasPublicUrl &&
-            <Input
+            <Tooltip
                 id='ingressPath'
-                label='Path'
-                startAdornment='/'
-                placeholder='leave blank for default path'
-                disabled={disabled}
                 tooltipTitle={tooltipTitle}
                 tooltipText={tooltipText}
-                sx={{ width: 226 }}
-            />
+            >
+                <Input
+                    id='ingressPath'
+                    label='Path'
+                    startAdornment='/'
+                    placeholder='leave blank for default path'
+                    disabled={disabled}
+                    tooltipTitle={tooltipTitle}
+                    tooltipText={tooltipText}
+                    sx={{ width: 226 }}
+                />
+            </Tooltip>
         }
     </Box>;
