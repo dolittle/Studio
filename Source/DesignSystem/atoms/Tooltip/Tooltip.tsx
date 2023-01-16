@@ -27,7 +27,7 @@ type TooltipProps = {
     /**
      * Don't activate the tooltip on hover. This is used to activate the tooltip on focus.
      *
-     * Allways set to true.
+     * Set to true.
      * @default true
      * @type {never}
      */
@@ -36,8 +36,9 @@ type TooltipProps = {
     /**
      * The placement of the tooltip.
      *
-     * Allways set to 'right'.
+     * Set to 'right'.
      * @default 'right'
+     * @type {never}
      */
     placement?: never;
 
@@ -57,10 +58,6 @@ export const Tooltip = ({ id, tooltipTitle, tooltipText, children }: TooltipProp
         id={`${id}-tooltip`}
         disableHoverListener
         placement='right'
-        open={true}
-        PopperProps={{
-            disablePortal: true,
-        }}
         title={
             <Paper sx={{ py: 1, px: 2, typography: 'body2' }}>
                 <Typography sx={{ fontWeight: 700 }}>{tooltipTitle}</Typography>

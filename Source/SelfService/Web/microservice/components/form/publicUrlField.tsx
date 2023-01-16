@@ -22,22 +22,25 @@ export const PublicUrlField = ({ hasPublicUrl, setHasPublicUrl, disabled, toolti
 
         <SwitchToggle id='isPublic' label='Expose to a public URL' onChange={setHasPublicUrl} disabled={disabled} />
 
-        {hasPublicUrl &&
-            <Tooltip
-                id='ingressPath'
-                tooltipTitle={tooltipTitle}
-                tooltipText={tooltipText}
-            >
+        {hasPublicUrl ? (tooltipTitle && tooltipText) ?
+            <Tooltip id='public-url-tooltip' tooltipTitle={tooltipTitle} tooltipText={tooltipText}>
                 <Input
                     id='ingressPath'
                     label='Path'
                     startAdornment='/'
                     placeholder='leave blank for default path'
                     disabled={disabled}
-                    tooltipTitle={tooltipTitle}
-                    tooltipText={tooltipText}
                     sx={{ width: 226 }}
                 />
-            </Tooltip>
+            </Tooltip> :
+            <Input
+                id='ingressPath'
+                label='Path'
+                startAdornment='/'
+                placeholder='leave blank for default path'
+                disabled={disabled}
+                sx={{ width: 226 }}
+            />
+            : null
         }
     </Box>;
