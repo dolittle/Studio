@@ -8,26 +8,49 @@ import { componentStories, Form, Tooltip } from '@dolittle/design-system';
 import { Input } from '../Forms';
 
 const { metadata, createStory } = componentStories(Tooltip, {
-    decorator: () => (
+    decorator: (Story) => (
         <Form
             initialValues={{
                 default: ''
             }}
             sx={{ mt: 2 }}
         >
-            <Input
-                id='default'
-                label='Click to focus...'
-                tooltipTitle='Default tooltip'
-                tooltipText='This is example text for the right aligned focused Input field tooltip.'
-            />
+            <Story />
         </Form>
     )
 });
 
+metadata.argTypes = {
+    children: {
+        control: {
+            disable: true
+        }
+    },
+    disableHoverListener: {
+        control: {
+            disable: true
+        }
+    },
+    placement: {
+        control: {
+            disable: true
+        }
+    }
+};
+
 metadata.parameters = {
-    controls: {
-        include: []
+    docs: {
+        source: {
+            code: `
+<Tooltip 
+    id='tooltip' 
+    tooltipTitle='Default tooltip'
+    tooltipText='This is example text for the right aligned focused Input field tooltip.'
+    >
+    <Input id='input' label='Click to focus...' />
+</Tooltip>
+`
+        }
     }
 };
 
@@ -36,5 +59,6 @@ export default metadata;
 export const Default = createStory({
     id: 'default',
     tooltipTitle: 'Default tooltip',
-    tooltipText: 'This is example text for the right aligned focused Input field tooltip.'
+    tooltipText: 'This is example text for the right aligned focused Input field tooltip.',
+    children: <Input id='default' label='Click to focus...' />
 });
