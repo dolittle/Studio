@@ -5,6 +5,9 @@ import React, { ReactElement } from 'react';
 
 import { Tooltip as MuiTooltip, Paper, Typography } from '@mui/material';
 
+/**
+ * The props for a {@link Tooltip} component.
+ */
 type TooltipProps = {
     /**
      * Required. Unique id to add every tooltip.
@@ -22,10 +25,21 @@ type TooltipProps = {
     tooltipText: string | undefined;
 
     /**
-     * Don't activate the tooltip on hover.
-     * @default false
+     * Don't activate the tooltip on hover. This is used to activate the tooltip on focus.
+     *
+     * Allways set to true.
+     * @default true
+     * @type {never}
      */
-    disableHoverListener?: boolean;
+    disableHoverListener?: never;
+
+    /**
+     * The placement of the tooltip.
+     *
+     * Allways set to 'right'.
+     * @default 'right'
+     */
+    placement?: never;
 
     /**
      * Required. The content to wrap with the tooltip.
