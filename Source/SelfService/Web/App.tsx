@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Route, useLocation, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 
 import { SnackbarProvider } from 'notistack';
 
@@ -18,7 +18,6 @@ import { Snackbar } from '@dolittle/design-system/atoms/Snackbar/Snackbar';
 
 import { useViewportResize } from './utils/useViewportResize';
 
-import { uriWithAppPrefix } from './store';
 import { GlobalContextProvider } from './stores/notifications';
 
 import { RouteNotFound } from './components/notfound';
@@ -45,18 +44,6 @@ const snackbarStyles = { '& .notistack-SnackbarContainer>*': { width: 1 } };
 
 export const App = () => {
     useViewportResize();
-
-    const { pathname } = useLocation();
-    // Little hack to force redirect
-    if (['', '/', uriWithAppPrefix('/')].includes(pathname)) {
-        // It is possible to know that the user just picked a customer
-        // We could signal this to the applications page
-        // This could then redirect, if the
-        // We could offer redirect back to last page?
-        // Referer https://dolittle.studio/.auth/select-tenant?login_challenge=c84329905dd7402bb45377dc8e1006c9
-        window.location.href = uriWithAppPrefix('/applications');
-        return null;
-    };
 
     return (
         <>
@@ -85,6 +72,8 @@ export const App = () => {
                                 }}
                             >
                                 <Routes>
+                                    <Route path='/' element={<Navigate to='/applications' />} />
+
                                     <Route path='/login' element={<LoginScreen />} />
 
                                     <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
@@ -110,12 +99,7 @@ export const App = () => {
                                             <DieAndRestart />
                                         </LayoutWithSidebar>
                                     } />
-
-                                    {/* TODO Pav: remove custom RouteNotFound https://reactrouter.com/en/main/upgrading/v5#upgrade-to-react-router-v6 */}
-                                    {/* <RouteNotFound
-                                        redirectUrl='/applications'
-                                        auto={true}
-                                    /> */}
+                                    <Route path='*' element={<RouteNotFound redirectUrl='/applications' auto={true} />} />
                                 </Routes>
                             </SnackbarProvider>
                         </Box>
