@@ -3,28 +3,28 @@
 
 import React from 'react';
 
-import { FormControl, FormControlLabel, Switch, SxProps } from '@mui/material';
+import { FormControl, FormControlLabel, Switch as MuiSwitch, SxProps } from '@mui/material';
 
 import { useController, FieldProps } from './helpers';
 import type { Form } from './Form';
 
-export type SwitchToggleProps = {
+export type SwitchProps = {
     sx?: SxProps;
 } & FieldProps;
 
 /**
  * Creates a switch field to be used in a {@link Form}.
- * @param props The {@link FieldProps} for the checkbox.
- * @returns A new {@link SwitchToggle} component.
+ * @param props The {@link FieldProps} for the switch.
+ * @returns A new {@link Switch} component.
  */
-export const SwitchToggle = (props: SwitchToggleProps) => {
+export const Switch = (props: SwitchProps) => {
     const { field } = useController(props);
 
     return (
         <FormControl>
             <FormControlLabel
                 control={
-                    <Switch {...field} size='small' checked={!!field.value} disabled={props.disabled} sx={{ pointerEvents: 'auto' }} />
+                    <MuiSwitch {...field} size='small' checked={!!field.value} disabled={props.disabled} sx={{ pointerEvents: 'auto' }} />
                 }
                 label={props.label}
                 sx={{ mt: 1.5, ...props.sx, pointerEvents: 'none' }}

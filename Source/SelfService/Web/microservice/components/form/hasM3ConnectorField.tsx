@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Box, SxProps, Typography } from '@mui/material';
 
-import { SwitchToggle } from '@dolittle/design-system';
+import { Switch } from '@dolittle/design-system';
 
 type HasM3ConnectorFieldProps = {
     hasM3Connector: boolean;
@@ -18,7 +18,7 @@ export const HasM3ConnectorField = ({ hasM3Connector, setHasM3Connector, disable
     <Box sx={sx}>
         <Typography variant='subtitle2'>Connect to M3</Typography>
 
-        <SwitchToggle
+        <Switch
             id='hasM3Connector'
             label='Make M3 configuration available to microservice'
             onChange={setHasM3Connector}

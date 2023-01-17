@@ -10,7 +10,7 @@ import { Box, Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 import { Guid } from '@dolittle/rudiments';
-import { Button, Form, Input, Link, LoadingSpinner, Select, SwitchToggle, Tooltip } from '@dolittle/design-system';
+import { Button, Form, Input, Link, LoadingSpinner, Select, Switch, Tooltip } from '@dolittle/design-system';
 
 import { saveSimpleMicroservice } from '../stores/microservice';
 
@@ -216,7 +216,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 <Box sx={styles.formSections}>
                     <Typography variant='subtitle2'>Public Microservice</Typography>
 
-                    <SwitchToggle
+                    <Switch
                         id='isPublic'
                         label='Expose to a public URL'
                         onChange={() => setShowPublicUrlInfo(!showPublicUrlInfo)}
