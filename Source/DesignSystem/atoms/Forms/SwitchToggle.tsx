@@ -24,10 +24,10 @@ export const SwitchToggle = (props: SwitchToggleProps) => {
         <FormControl>
             <FormControlLabel
                 control={
-                    <Switch {...field} size='small' checked={!!field.value} disabled={props.disabled} />
+                    <Switch {...field} size='small' checked={!!field.value} disabled={props.disabled} sx={{ pointerEvents: 'auto' }} />
                 }
                 label={props.label}
-                sx={{ mt: 1.5, ...props.sx }}
+                sx={{ mt: 1.5, ...props.sx, pointerEvents: 'none' }}
             />
         </FormControl>
     );
