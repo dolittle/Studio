@@ -3,7 +3,7 @@
 
 import React, { forwardRef } from 'react';
 
-import { FormControl, FormHelperText, InputAdornment, InputLabel, InputProps as MuiInputProps, OutlinedInput, SxProps, Typography } from '@mui/material';
+import { FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInputProps, OutlinedInput, SxProps, Typography } from '@mui/material';
 
 import { FieldProps, isRequired, useController } from './helpers';
 import type { Form } from './Form';
@@ -31,10 +31,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ startAdornment,
             size='small'
             sx={{
                 width: 220,
-                mb: {
-                    sm: 0,
-                    xs: 2.5
-                },
+                mb: { sm: 0, xs: 2.5 },
                 ...sx
             }}>
             <InputLabel
@@ -47,8 +44,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ startAdornment,
             </InputLabel>
 
             <OutlinedInput
+                {...fieldProps as OutlinedInputProps}
                 {...field}
-                {...fieldProps as MuiInputProps}
                 ref={ref}
                 type='text'
                 id={fieldProps.id}

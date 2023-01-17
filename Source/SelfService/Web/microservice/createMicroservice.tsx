@@ -18,7 +18,8 @@ import { MicroserviceSimple, MicroserviceFormParameters } from '../api/index';
 import { getLatestRuntimeInfo, getRuntimes } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
 
-import { ContainerImageField, PublicUrlField, HasM3ConnectorField } from './components/form';
+import { PublicUrlField, HasM3ConnectorField } from './components/form';
+import { HeadArguments } from './components/form/headArguments';
 import { getRuntimeNumberFromString } from './helpers';
 
 const styles = {
@@ -115,7 +116,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 },
                 headCommand: {
                     command: entrypoint.split(' '),
-                    // Remove empty strings/values from array
+                    // Removes empty values from array.
                     args: headCommandArgs.filter(entry => entry.trim() !== '')
                 },
                 connections: {
@@ -181,17 +182,36 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     </Tooltip>
                 </Box>
 
-                <ContainerImageField
-                    cmdArgs={headCommandArgs}
-                    setCmdArgs={setHeadCommandArgs}
-                    tooltipImageTitle='Image Name'
-                    tooltipImageText='Please provide the container image name for your microservice.'
-                    tooltipPortTitle='Port'
-                    tooltipPortText={portDescription}
-                    tooltipEntryTitle='Entrypoint'
-                    tooltipEntryText={<EntrypointDescription />}
-                    sx={styles.formSections}
-                />
+                <Box sx={styles.formSections}>
+                    <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
+
+                    <Tooltip id='image-tooltip' tooltipTitle='Image Name' tooltipText='Please provide the container image name for your microservice.'>
+                        <Input
+                            id='headImage'
+                            label='Image Name'
+                            required
+                            sx={{ width: 500 }}
+                        />
+                    </Tooltip>
+
+                    <Tooltip id='port-tooltip' tooltipTitle='Port' tooltipText={portDescription}>
+                        <Input
+                            id='headPort'
+                            label='Port'
+                            required
+                            pattern={{
+                                value: /^[0-9]+$/,
+                                message: 'Please enter a valid port number.'
+                            }}
+                        />
+                    </Tooltip>
+
+                    <Tooltip id='entrypoint-tooltip' tooltipTitle='Entrypoint' tooltipText={<EntrypointDescription />}>
+                        <Input id='entrypoint' label='Entrypoint' />
+                    </Tooltip>
+
+                    <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} />
+                </Box>
 
                 <PublicUrlField
                     hasPublicUrl={showPublicUrlInfo}
