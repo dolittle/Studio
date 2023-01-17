@@ -3,7 +3,7 @@
 
 import React, { forwardRef } from 'react';
 
-import { FormControl, MenuItem, TextField, TextFieldProps, SxProps } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select as MuiSelect, SelectProps as MuiSelectProps, SxProps } from '@mui/material';
 
 import { useController, FieldProps } from './helpers';
 
@@ -12,6 +12,7 @@ import { useController, FieldProps } from './helpers';
  */
 export type SelectProps = {
     options: { value: string }[];
+    onOpen?: () => void;
     sx?: SxProps;
 } & FieldProps;
 
@@ -20,28 +21,40 @@ export type SelectProps = {
  * @param props The {@link SelectProps} for the input.
  * @returns A new {@link Select} component.
  */
-export const Select = forwardRef<HTMLInputElement, SelectProps>(({ options, sx, ...selectProps }, ref) => {
+export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onOpen, sx, ...selectProps }, ref) => {
     const { field } = useController(selectProps);
 
     return (
         <FormControl sx={{ width: 220, ...sx }}>
-            <TextField
+            <InputLabel id={`${selectProps.label}-label`}>{selectProps.label}</InputLabel>
+
+            <MuiSelect
                 {...field}
-                {...selectProps as TextFieldProps}
+                {...selectProps as MuiSelectProps}
                 ref={ref}
-                select
-                label={selectProps.label}
+                labelId={`${selectProps.label}-label`}
                 value={field.value}
                 disabled={selectProps.disabled}
+                onOpen={onOpen}
                 size='small'
-                fullWidth
+                autoWidth
+                MenuProps={{
+                    anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'right'
+                    },
+                    transformOrigin: {
+                        vertical: 'top',
+                        horizontal: 'right'
+                    }
+                }}
             >
                 {options.map(option => (
                     <MenuItem key={option.value} value={option.value}>
                         {option.value}
                     </MenuItem>
                 ))}
-            </TextField>
+            </MuiSelect>
         </FormControl>
     );
 });
