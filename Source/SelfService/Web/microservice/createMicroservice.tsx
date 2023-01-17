@@ -6,11 +6,11 @@ import { useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 import { Guid } from '@dolittle/rudiments';
-import { Button, Form, Link, LoadingSpinner, Tooltip, Input } from '@dolittle/design-system';
+import { Button, Form, Input, Link, LoadingSpinner, Select, Tooltip } from '@dolittle/design-system';
 
 import { saveSimpleMicroservice } from '../stores/microservice';
 
@@ -18,7 +18,7 @@ import { MicroserviceSimple, MicroserviceFormParameters } from '../api/index';
 import { getLatestRuntimeInfo, getRuntimes } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
 
-import { ConfigurationSetupField, ContainerImageField, PublicUrlField, HasM3ConnectorField } from './components/form';
+import { ContainerImageField, PublicUrlField, HasM3ConnectorField } from './components/form';
 import { getRuntimeNumberFromString } from './helpers';
 
 const styles = {
@@ -63,8 +63,8 @@ const EntrypointDescription = () =>
 const PublicUrlFieldDescription = () =>
     <>
         Dolittle will generate a public URL for you. If you would like to specify a subpath, please enter one here. If you would
-        like custom handling of the path and subpaths, please reach out to <Link href='mailto: support@dolittle.com' message='Dolittle support' color='secondary' />
-        after you&#39;ve deployed the service.
+        like custom handling of the path and subpaths, please reach
+        out to <Link href='mailto: support@dolittle.com' message='Dolittle support' color='secondary' /> after you&#39;ve deployed the service.
     </>;
 
 type CreateMicroserviceProps = {
@@ -80,6 +80,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
     const [headCommandArgs, setHeadCommandArgs] = useState<string[]>([]);
     const [showPublicUrlInfo, setShowPublicUrlInfo] = useState(false);
     const [showM3ConnectorInfo, setShowM3ConnectorInfo] = useState(false);
+    const [showEntrypointInfo, setShowEntrypointInfo] = useState(false);
 
     const environmentInfo = application.environments.find(env => env.name === environment)!;
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
@@ -156,12 +157,29 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 sx={styles.form}
                 onSubmit={handleCreateMicroservice}
             >
-                <ConfigurationSetupField
-                    options={runtimeNumberSelections}
-                    tooltipTitle='Runtime'
-                    tooltipText={runtimeDescription}
-                    sx={styles.formSections}
-                />
+                <Box sx={styles.formSections}>
+                    <Typography variant='subtitle2' sx={{ mb: 2 }}>Configuration Setup</Typography>
+
+                    <Input id='microserviceName' label='Microservice Name' required />
+                    <Input id='developmentEnvironment' label='Development Environment' disabled />
+
+                    <Tooltip
+                        id='runtime-version-tooltip'
+                        tooltipTitle='Runtime'
+                        tooltipText={runtimeDescription}
+                        open={showEntrypointInfo}
+                        handleOpen={() => setShowEntrypointInfo(true)}
+                        handleClose={() => setShowEntrypointInfo(false)}
+                    >
+                        <Select
+                            id='runtimeVersion'
+                            label='Runtime Version'
+                            options={runtimeNumberSelections}
+                            onOpen={() => setShowEntrypointInfo(true)}
+                            required
+                        />
+                    </Tooltip>
+                </Box>
 
                 <ContainerImageField
                     cmdArgs={headCommandArgs}

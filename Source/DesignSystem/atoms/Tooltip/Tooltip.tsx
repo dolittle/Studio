@@ -15,6 +15,17 @@ type TooltipProps = {
     id: string;
 
     /**
+     * You can use the open, onOpen and onClose props to control the behavior of the tooltip.
+     * This is useful when you want to implement a custom behavior.
+     * You can use the open prop to make the tooltip always visible.
+     * You can use this with components that don't have a hover state, like a button.
+     * @default false
+     */
+    open?: boolean;
+    handleOpen?: () => void;
+    handleClose?: () => void;
+
+    /**
      * Required. The content title.
      */
     tooltipTitle: string | undefined;
@@ -53,9 +64,12 @@ type TooltipProps = {
  * @param {...TooltipProps} props - The {@link TooltipProps}.
  * @returns {ReactElement} A new {@link Tooltip} component.
  */
-export const Tooltip = ({ id, tooltipTitle, tooltipText, children }: TooltipProps): ReactElement =>
+export const Tooltip = ({ id, open, handleOpen, handleClose, tooltipTitle, tooltipText, children }: TooltipProps): ReactElement =>
     <MuiTooltip
         id={`${id}-tooltip`}
+        open={open}
+        onOpen={handleOpen}
+        onClose={handleClose}
         disableHoverListener
         placement='right'
         title={
