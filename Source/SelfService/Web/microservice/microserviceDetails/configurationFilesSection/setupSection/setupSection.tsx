@@ -6,16 +6,17 @@ import { useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-import { Accordion, ConfirmDialog, Form } from '@dolittle/design-system';
+import { Accordion, ConfirmDialog, Form, Input } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../../api/application';
 import { MicroserviceFormParameters } from '../../../../api/index';
 
-import { ConfigurationSetupField, ContainerImageField, PublicUrlField, HasM3ConnectorField } from '../../../components/form';
+import { ConfigurationSetupField, PublicUrlField, HasM3ConnectorField } from '../../../components/form';
+import { HeadArguments } from '../../../components/form/headArguments';
 import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
 import { getRuntimeNumberFromString } from '../../../helpers';
 import { HeaderButtons } from './headerButtons';
@@ -143,12 +144,36 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         sx={styles.formSections}
                     />
 
-                    <ContainerImageField
-                        cmdArgs={headCommandArgs}
-                        setCmdArgs={setHeadCommandArgs}
-                        disabled={formIsNotEditable}
-                        sx={styles.formSections}
-                    />
+                    <Box sx={styles.formSections}>
+                        <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
+
+                        <Input
+                            id='headImage'
+                            label='Image Name'
+                            required
+                            disabled
+                            sx={{ width: 500 }}
+                        />
+
+                        <Input
+                            id='headPort'
+                            label='Port'
+                            disabled
+                            required
+                            pattern={{
+                                value: /^[0-9]+$/,
+                                message: 'Please enter a valid port number.'
+                            }}
+                        />
+
+                        <Input
+                            id='entrypoint'
+                            label='Entrypoint'
+                            disabled
+                        />
+
+                        <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} disabled />
+                    </Box>
 
                     <PublicUrlField
                         hasPublicUrl={showPublicUrlInfo}
