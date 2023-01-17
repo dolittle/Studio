@@ -18,7 +18,7 @@ import { MicroserviceSimple, MicroserviceFormParameters } from '../api/index';
 import { getLatestRuntimeInfo, getRuntimes } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
 
-import { HasM3ConnectorField } from './components/form';
+import { HasM3ConnectorField } from './components/form/hasM3ConnectorField';
 import { HeadArguments } from './components/form/headArguments';
 import { getRuntimeNumberFromString } from './helpers';
 

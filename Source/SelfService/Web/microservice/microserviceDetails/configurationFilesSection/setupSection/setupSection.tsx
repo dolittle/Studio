@@ -15,11 +15,11 @@ import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '..
 import { HttpResponseApplication } from '../../../../api/application';
 import { MicroserviceFormParameters } from '../../../../api/index';
 
-import { HasM3ConnectorField } from '../../../components/form';
+import { HasM3ConnectorField } from '../../../components/form/hasM3ConnectorField';
 import { HeadArguments } from '../../../components/form/headArguments';
 import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
-import { getRuntimeNumberFromString } from '../../../helpers';
 import { HeaderButtons } from './headerButtons';
+import { getRuntimeNumberFromString } from '../../../helpers';
 
 const styles = {
     form: {
