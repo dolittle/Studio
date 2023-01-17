@@ -5,9 +5,9 @@ import React from 'react';
 
 import { componentStories, Form } from '@dolittle/design-system';
 
-import { SwitchToggle } from './SwitchToggle';
+import { Switch } from './Switch';
 
-const { metadata, createStory } = componentStories(SwitchToggle, {
+const { metadata, createStory } = componentStories(Switch, {
     actions: {
         onChange: 'Changed',
     },

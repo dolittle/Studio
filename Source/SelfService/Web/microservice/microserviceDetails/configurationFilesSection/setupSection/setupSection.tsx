@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 
 import { Box, Typography } from '@mui/material';
 
-import { Accordion, ConfirmDialog, Form, Input, Select, SwitchToggle } from '@dolittle/design-system';
+import { Accordion, ConfirmDialog, Form, Input, Select, Switch } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
 
@@ -188,7 +188,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                     <Box sx={styles.formSections}>
                         <Typography variant='subtitle2'>Public Microservice</Typography>
 
-                        <SwitchToggle
+                        <Switch
                             id='isPublic'
                             label='Expose to a public URL'
                             onChange={() => !setShowPublicUrlInfo}
