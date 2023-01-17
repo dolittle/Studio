@@ -62,6 +62,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ startAdornment,
                 }
                 placeholder={placeholder}
                 aria-describedby={`${fieldProps.id}-helper-text`}
+                inputProps={{
+                    'autocomplete': 'off',
+                    'data-lpignore': true,
+                    'data-form-type': 'other'
+                }}
             />
 
             <FormHelperText error={hasError} id={`${fieldProps.id}-helper-text`}>
