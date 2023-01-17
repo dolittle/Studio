@@ -10,7 +10,7 @@ import { Box, Typography } from '@mui/material';
 import { RocketLaunch } from '@mui/icons-material';
 
 import { Guid } from '@dolittle/rudiments';
-import { Button, Form, Input, Link, LoadingSpinner, Select, Tooltip } from '@dolittle/design-system';
+import { Button, Form, Input, Link, LoadingSpinner, Select, SwitchToggle, Tooltip } from '@dolittle/design-system';
 
 import { saveSimpleMicroservice } from '../stores/microservice';
 
@@ -18,7 +18,7 @@ import { MicroserviceSimple, MicroserviceFormParameters } from '../api/index';
 import { getLatestRuntimeInfo, getRuntimes } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
 
-import { PublicUrlField, HasM3ConnectorField } from './components/form';
+import { HasM3ConnectorField } from './components/form';
 import { HeadArguments } from './components/form/headArguments';
 import { getRuntimeNumberFromString } from './helpers';
 
@@ -213,13 +213,27 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} />
                 </Box>
 
-                <PublicUrlField
-                    hasPublicUrl={showPublicUrlInfo}
-                    setHasPublicUrl={() => setShowPublicUrlInfo(!showPublicUrlInfo)}
-                    tooltipUrlFieldTitle='PATH'
-                    tooltipUrlFieldText={<PublicUrlFieldDescription />}
-                    sx={styles.formSections}
-                />
+                <Box sx={styles.formSections}>
+                    <Typography variant='subtitle2'>Public Microservice</Typography>
+
+                    <SwitchToggle
+                        id='isPublic'
+                        label='Expose to a public URL'
+                        onChange={() => setShowPublicUrlInfo(!showPublicUrlInfo)}
+                    />
+
+                    {showPublicUrlInfo &&
+                        <Tooltip id='public-url-tooltip' tooltipTitle='PATH' tooltipText={<PublicUrlFieldDescription />}>
+                            <Input
+                                id='ingressPath'
+                                label='Path'
+                                startAdornment='/'
+                                placeholder='leave blank for default path'
+                                sx={{ width: 226 }}
+                            />
+                        </Tooltip>
+                    }
+                </Box>
 
                 {hasM3ConnectorOption &&
                     <HasM3ConnectorField

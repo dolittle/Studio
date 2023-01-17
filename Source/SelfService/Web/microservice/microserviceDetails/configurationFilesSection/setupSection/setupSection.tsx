@@ -8,14 +8,14 @@ import { useSnackbar } from 'notistack';
 
 import { Box, Typography } from '@mui/material';
 
-import { Accordion, ConfirmDialog, Form, Input, Select } from '@dolittle/design-system';
+import { Accordion, ConfirmDialog, Form, Input, Select, SwitchToggle } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../../api/application';
 import { MicroserviceFormParameters } from '../../../../api/index';
 
-import { PublicUrlField, HasM3ConnectorField } from '../../../components/form';
+import { HasM3ConnectorField } from '../../../components/form';
 import { HeadArguments } from '../../../components/form/headArguments';
 import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
 import { getRuntimeNumberFromString } from '../../../helpers';
@@ -150,7 +150,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             label='Runtime Version'
                             options={[currentRuntimeImageNumber]}
                             required
-                            disabled
+                            disabled={formIsNotEditable}
                         />
                     </Box>
 
@@ -161,14 +161,14 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             id='headImage'
                             label='Image Name'
                             required
-                            disabled
+                            disabled={formIsNotEditable}
                             sx={{ width: 500 }}
                         />
 
                         <Input
                             id='headPort'
                             label='Port'
-                            disabled
+                            disabled={formIsNotEditable}
                             required
                             pattern={{
                                 value: /^[0-9]+$/,
@@ -179,18 +179,33 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         <Input
                             id='entrypoint'
                             label='Entrypoint'
-                            disabled
+                            disabled={formIsNotEditable}
                         />
 
-                        <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} disabled />
+                        <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} disabled={formIsNotEditable} />
                     </Box>
 
-                    <PublicUrlField
-                        hasPublicUrl={showPublicUrlInfo}
-                        setHasPublicUrl={() => !setShowPublicUrlInfo}
-                        disabled={formIsNotEditable}
-                        sx={styles.formSections}
-                    />
+                    <Box sx={styles.formSections}>
+                        <Typography variant='subtitle2'>Public Microservice</Typography>
+
+                        <SwitchToggle
+                            id='isPublic'
+                            label='Expose to a public URL'
+                            onChange={() => !setShowPublicUrlInfo}
+                            disabled={formIsNotEditable}
+                        />
+
+                        {showPublicUrlInfo &&
+                            <Input
+                                id='ingressPath'
+                                label='Path'
+                                startAdornment='/'
+                                placeholder='leave blank for default path'
+                                disabled={formIsNotEditable}
+                                sx={{ width: 226 }}
+                            />
+                        }
+                    </Box>
 
                     {hasM3ConnectorOption &&
                         <HasM3ConnectorField
