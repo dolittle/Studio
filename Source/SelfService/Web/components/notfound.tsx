@@ -2,32 +2,26 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Route, useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, Navigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { Typography } from '@mui/material';
 
 
-type Props = {
+type RouteNotFoundProps = {
     redirectUrl: string
     auto?: boolean
 };
 
-export const RouteNotFound: React.FunctionComponent<Props> = (props) => {
-    const navigate = useNavigate();
-    if (props!.auto) {
-        navigate(props!.redirectUrl);
-        return null;
-    }
-
+export const RouteNotFound: React.FunctionComponent<RouteNotFoundProps> = (props) => {
     return (
         <>
-            <Route element={
-                <>
-                    <Typography variant='h1' my={2}>We are unable to find this link</Typography><Link component={RouterLink} to={props!.redirectUrl}>
-                        Link
-                    </Link>
+            {props.auto
+                ? <Navigate to={props.redirectUrl} replace={true} />
+                : <>
+                    <Typography variant='h1' my={2}>We are unable to find this link</Typography>
+                    <Link component={RouterLink} to={props.redirectUrl}>Link</Link>
                 </>
-            } />
+            }
         </>
     );
 };
