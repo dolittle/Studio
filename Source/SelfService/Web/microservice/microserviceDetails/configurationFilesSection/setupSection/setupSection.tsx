@@ -8,14 +8,14 @@ import { useSnackbar } from 'notistack';
 
 import { Box, Typography } from '@mui/material';
 
-import { Accordion, ConfirmDialog, Form, Input } from '@dolittle/design-system';
+import { Accordion, ConfirmDialog, Form, Input, Select } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../../api/application';
 import { MicroserviceFormParameters } from '../../../../api/index';
 
-import { ConfigurationSetupField, PublicUrlField, HasM3ConnectorField } from '../../../components/form';
+import { PublicUrlField, HasM3ConnectorField } from '../../../components/form';
 import { HeadArguments } from '../../../components/form/headArguments';
 import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
 import { getRuntimeNumberFromString } from '../../../helpers';
@@ -138,11 +138,21 @@ export const SetupSection = ({ application, applicationId, environment, microser
                     }}
                     sx={styles.form}
                 >
-                    <ConfigurationSetupField
-                        options={[currentRuntimeImageNumber]}
-                        disabled={formIsNotEditable}
-                        sx={styles.formSections}
-                    />
+
+                    <Box sx={styles.formSections}>
+                        <Typography variant='subtitle2' sx={{ mb: 2 }}>Configuration Setup</Typography>
+
+                        <Input id='microserviceName' label='Microservice Name' required disabled />
+                        <Input id='developmentEnvironment' label='Development Environment' disabled />
+
+                        <Select
+                            id='runtimeVersion'
+                            label='Runtime Version'
+                            options={[currentRuntimeImageNumber]}
+                            required
+                            disabled
+                        />
+                    </Box>
 
                     <Box sx={styles.formSections}>
                         <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
