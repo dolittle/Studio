@@ -10,8 +10,8 @@ import { useController, FieldProps } from './helpers';
 /**
  * The props for a {@link Select} component.
  */
-export type SelectProps = {
-    options: { value: string }[];
+export type SelectProps<T = string> = {
+    options: { value: T, displayValue: string }[];
     onOpen?: () => void;
     sx?: SxProps;
 } & FieldProps;
@@ -51,7 +51,7 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
             >
                 {options.map(option => (
                     <MenuItem key={option.value} value={option.value}>
-                        {option.value}
+                        {option.displayValue}
                     </MenuItem>
                 ))}
             </MuiSelect>
