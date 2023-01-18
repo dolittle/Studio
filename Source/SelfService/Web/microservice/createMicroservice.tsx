@@ -119,9 +119,9 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     pathType: 'Prefix'
                 },
                 headCommand: {
-                    command: entrypoint.split(' '),
+                    command: entrypoint.length ? [entrypoint] : [],
                     // Removes empty values from array.
-                    args: headCommandArgs.filter(entry => entry.trim() !== '')
+                    args: headCommandArgs //.filter(entry => entry.trim() !== '')
                 },
                 connections: {
                     m3Connector: hasM3Connector
