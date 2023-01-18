@@ -25,34 +25,34 @@ const { metadata, createStory } = componentStories(Select, {
 
 export default metadata;
 
-const selectOptions = [
-    { value: 'Value 1' },
-    { value: 'Value 2' },
-    { value: 'Value 3' }
-];
+// const selectOptions = [
+//     { value: 'Value 1' },
+//     { value: 'Value 2' },
+//     { value: 'Value 3' }
+// ];
 
-export const Default = createStory({
-    id: 'default',
-    label: 'Default select',
-    options: selectOptions
-});
+// export const Default = createStory({
+//     id: 'default',
+//     label: 'Default select',
+//     options: selectOptions
+// });
 
-export const DashedBorder = createStory({
-    id: 'dashedBorder',
-    label: 'Dashed border',
-    options: selectOptions,
-    sx: { '& fieldset': { borderStyle: 'dashed' } }
-});
+// export const DashedBorder = createStory({
+//     id: 'dashedBorder',
+//     label: 'Dashed border',
+//     options: selectOptions,
+//     sx: { '& fieldset': { borderStyle: 'dashed' } }
+// });
 
-export const WithDefaultValue = createStory({
-    id: 'withDefaultValue',
-    label: 'Default value selected',
-    options: selectOptions
-});
+// export const WithDefaultValue = createStory({
+//     id: 'withDefaultValue',
+//     label: 'Default value selected',
+//     options: selectOptions
+// });
 
-export const Disabled = createStory({
-    id: 'disabled',
-    label: 'Disabled',
-    disabled: true,
-    options: selectOptions
-});
+// export const Disabled = createStory({
+//     id: 'disabled',
+//     label: 'Disabled',
+//     disabled: true,
+//     options: selectOptions
+// });
