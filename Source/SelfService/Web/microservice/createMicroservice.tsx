@@ -85,9 +85,13 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
 
     const environmentInfo = application.environments.find(env => env.name === environment)!;
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
-    const latestRuntimeNumber = getRuntimeNumberFromString(getLatestRuntimeInfo().image);
+    const latestRuntimeVersion = getLatestRuntimeInfo().image;
     const runtimeNumberSelections = [
-        ...getRuntimes().map(runtimeInfo => ({ value: getRuntimeNumberFromString(runtimeInfo.image) })), { value: 'None' }
+        ...getRuntimes().map(runtimeInfo => ({
+            value: runtimeInfo.image,
+            displayValue: getRuntimeNumberFromString(runtimeInfo.image)
+        })),
+        { value: 'none', displayValue: 'None' }
     ];
 
     const handleCreateMicroservice = async (values: MicroserviceFormParameters) => {
@@ -108,7 +112,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
             extra: {
                 headImage,
                 headPort,
-                runtimeImage: runtimeVersion.toLowerCase(),
+                runtimeImage: runtimeVersion,
                 isPublic,
                 ingress: {
                     path: '/' + ingressPath,
@@ -147,7 +151,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 initialValues={{
                     microserviceName: '',
                     developmentEnvironment: environment,
-                    runtimeVersion: latestRuntimeNumber,
+                    runtimeVersion: latestRuntimeVersion,
                     headImage: '',
                     headPort: 80,
                     entrypoint: '',
