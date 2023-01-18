@@ -111,7 +111,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
             environment,
             extra: {
                 headImage,
-                headPort,
+                headPort: parseInt(headPort.toString(), 10),
                 runtimeImage: runtimeVersion,
                 isPublic,
                 ingress: {
