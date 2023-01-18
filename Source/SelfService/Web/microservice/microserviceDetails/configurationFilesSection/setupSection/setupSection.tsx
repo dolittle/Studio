@@ -57,7 +57,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const environmentInfo = application.environments.find(env => env.name === environment)!;
     const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
 
-    const currentRuntimeImageNumber = { value: getRuntimeNumberFromString(microserviceInfo?.runtimeImage) };
+    const currentRuntimeImageNumber = { value: microserviceInfo?.runtimeImage, displayValue: getRuntimeNumberFromString(microserviceInfo?.runtimeImage) };
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
 
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
