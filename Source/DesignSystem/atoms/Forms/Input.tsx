@@ -12,6 +12,7 @@ import type { Form } from './Form';
  * The props for a {@link Input} component.
  */
 export type InputProps = {
+    autoFocus?: boolean;
     startAdornment?: React.ReactNode;
     placeholder?: string;
     sx?: SxProps;
@@ -22,7 +23,7 @@ export type InputProps = {
  * @param props The {@link InputProps} for the input.
  * @returns A new {@link Input} component.
  */
-export const Input = forwardRef<HTMLInputElement, InputProps>(({ startAdornment, placeholder, sx, ...fieldProps }, ref) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, startAdornment, placeholder, sx, ...fieldProps }, ref) => {
     const { field, hasError, errorMessage } = useController(fieldProps);
 
     return (
@@ -47,8 +48,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ startAdornment,
                 {...fieldProps as OutlinedInputProps}
                 {...field}
                 ref={ref}
-                type='text'
                 id={fieldProps.id}
+                type='text'
+                autoFocus={autoFocus}
                 error={hasError}
                 disabled={fieldProps.disabled}
                 label={fieldProps.label}
