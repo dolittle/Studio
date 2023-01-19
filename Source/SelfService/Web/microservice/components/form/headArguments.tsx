@@ -30,7 +30,7 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
     return (
         <Box>
             {cmdArgs.map((_, argIndex) => (
-                <Box sx={{ display: 'flex', alignItems: 'center' }} key={argIndex}>
+                <Box key={argIndex}>
                     <Input
                         id={'headArguments.' + argIndex.toString()}
                         label='CMD Argument'
@@ -44,7 +44,7 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
                         disabled={disabled}
                         startWithIcon={<DeleteRounded />}
                         onClick={() => handleRemoveArg(argIndex)}
-                        sx={{ height: 29, ml: 2 }}
+                        sx={{ m: 1.5 }}
                     />
                 </Box>
             ))}
