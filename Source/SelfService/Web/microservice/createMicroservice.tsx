@@ -98,7 +98,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
         setIsLoading(true);
 
         const microserviceId = Guid.create().toString();
-        const { microserviceName, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
+        const { microserviceName, headArguments, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
 
         const newMicroservice: MicroserviceSimple = {
             dolittle: {
@@ -120,14 +120,15 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 },
                 headCommand: {
                     command: entrypoint.length ? [entrypoint] : [],
-                    // Removes empty values from array.
-                    args: headCommandArgs //.filter(entry => entry.trim() !== '')
+                    args: headArguments ?? []
                 },
                 connections: {
                     m3Connector: hasM3Connector
                 }
             }
         };
+
+        console.log(newMicroservice)
 
         try {
             await saveSimpleMicroservice(newMicroservice);
@@ -156,6 +157,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     headPort: 80,
                     entrypoint: '',
                     isPublic: false,
+                    headArguments: [],
                     ingressPath: '',
                     hasM3Connector: false
                 }}

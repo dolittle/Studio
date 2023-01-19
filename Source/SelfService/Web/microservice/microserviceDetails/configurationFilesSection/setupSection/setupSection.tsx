@@ -133,6 +133,8 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         headPort: 80,
                         entrypoint: '',
                         isPublic: showPublicUrlInfo,
+                        headArguments: headCommandArgs || [],
+                        // TODO
                         ingressPath: microserviceInfo?.ingress?.path?.replace(/\//, ''),
                         hasM3Connector: hasM3ConnectorOption
                     }}
