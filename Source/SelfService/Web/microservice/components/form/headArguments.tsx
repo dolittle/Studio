@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Box } from '@mui/material';
 import { AddCircleRounded, DeleteRounded } from '@mui/icons-material';
@@ -15,6 +15,8 @@ type HeadArgumentsProps = {
 };
 
 export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsProps) => {
+    const [hasEmptyFiel, setHasEmptyField] = useState(false);
+
     const handleAddArg = () => {
         const newArgs = [...cmdArgs];
         newArgs.push('');
@@ -27,6 +29,10 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
         setCmdArgs(newArgs);
     };
 
+    const checkForEmptyField = (event: React.FocusEvent<HTMLInputElement, Element>) => {
+        event.target.value ? setHasEmptyField(false) : setHasEmptyField(true);
+    };
+
     return (
         <Box>
             {cmdArgs.map((_, argIndex) => (
@@ -34,8 +40,10 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
                     <Input
                         id={'headArguments.' + argIndex.toString()}
                         label='CMD Argument'
+                        autoFocus
                         disabled={disabled}
                         required
+                        onBlur={checkForEmptyField}
                         sx={{ width: 220 }}
                     />
                     <Button
@@ -53,9 +61,9 @@ export const HeadArguments = ({ cmdArgs, setCmdArgs, disabled }: HeadArgumentsPr
                 label='Add CMD argument'
                 secondary
                 startWithIcon={<AddCircleRounded />}
-                disabled={disabled}// || emptyFieldError.length > 0
+                disabled={hasEmptyFiel}
                 onClick={handleAddArg}
-                sx={{ justifyContent: 'start', mt: 2.5 }}
+                sx={{ mt: 2.5 }}
             />
         </Box>
     );

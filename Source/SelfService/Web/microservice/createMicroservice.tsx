@@ -120,15 +120,13 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 },
                 headCommand: {
                     command: entrypoint.length ? [entrypoint] : [],
-                    args: headArguments ?? []
+                    args: headArguments
                 },
                 connections: {
                     m3Connector: hasM3Connector
                 }
             }
         };
-
-        console.log(newMicroservice)
 
         try {
             await saveSimpleMicroservice(newMicroservice);
