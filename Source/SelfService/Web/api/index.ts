@@ -71,7 +71,7 @@ export type MicroserviceFormParameters = {
     headPort: number;
     entrypoint: string;
     isPublic: boolean;
-    headArguments: string[];
+    headArguments: { value: string }[];
     ingressPath: string;
     hasM3Connector: boolean;
 };

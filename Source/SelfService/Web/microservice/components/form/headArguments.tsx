@@ -21,7 +21,7 @@ export const HeadArguments = ({ disabled }: { disabled?: boolean }) => {
             {fields.map((arg, index) => (
                 <Box key={arg.id}>
                     <Input
-                        id={`headArguments.${index}`}
+                        id={`headArguments.${index}.value` as const}
                         label='CMD Argument'
                         autoFocus
                         disabled={disabled}
@@ -44,7 +44,7 @@ export const HeadArguments = ({ disabled }: { disabled?: boolean }) => {
                 secondary
                 startWithIcon={<AddCircleRounded />}
                 disabled={disabled}
-                onClick={() => append('')}
+                onClick={() => append({ value: '' })}
                 sx={{ mt: 2.5 }}
             />
         </Box>
