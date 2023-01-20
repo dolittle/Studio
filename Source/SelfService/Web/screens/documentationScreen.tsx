@@ -140,7 +140,7 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
             <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
 
             <Routes>
-                <Route path="*" element={<DocumentationContainerScreen application={application} environment={currentEnvironment} />} />
+                <Route path='/*' element={<DocumentationContainerScreen application={application} environment={currentEnvironment} />} />
             </Routes>
         </LayoutWithSidebar >
     );
