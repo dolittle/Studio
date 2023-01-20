@@ -59,6 +59,10 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
     const currentRuntimeImageNumber = { value: microserviceInfo?.runtimeImage, displayValue: getRuntimeNumberFromString(microserviceInfo?.runtimeImage) };
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
+    // Remove extra slash from ingress path as it is there already with startAdornment.
+    const cleanedIngressPath = microserviceInfo?.ingress?.path?.replace(/\//, '') || '';
+    // Convert the head arguments to the format that the form expects.
+    const headArgumentValues = microserviceInfo?.headCommand?.args?.map((arg: string) => ({ value: arg })) || [];
 
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
@@ -132,9 +136,8 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         headPort: 80,
                         entrypoint: '',
                         isPublic: showPublicUrlInfo,
-                        headArguments: microserviceInfo?.headCommand?.args || [],
-                        // Remove extra slash from ingress path as it is there already with startAdornment.
-                        ingressPath: microserviceInfo?.ingress?.path?.replace(/\//, ''),
+                        headArguments: headArgumentValues,
+                        ingressPath: cleanedIngressPath,
                         hasM3Connector: hasM3ConnectorOption
                     }}
                     sx={styles.form}

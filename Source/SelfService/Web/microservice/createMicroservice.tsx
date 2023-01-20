@@ -90,7 +90,10 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
             value: runtimeInfo.image,
             displayValue: getRuntimeNumberFromString(runtimeInfo.image)
         })),
-        { value: 'none', displayValue: 'None' }
+        {
+            value: 'none',
+            displayValue: 'None'
+        }
     ];
 
     const handleCreateMicroservice = async (values: MicroserviceFormParameters) => {
@@ -98,8 +101,8 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
 
         const microserviceId = Guid.create().toString();
         const { microserviceName, headArguments, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
-
-        console.log(headArguments)
+        // Convert the head arguments to the format that the form expects.
+        const headArgumentValues = headArguments.map(arg => arg.value);
 
         const newMicroservice: MicroserviceSimple = {
             dolittle: {
@@ -121,7 +124,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 },
                 headCommand: {
                     command: entrypoint.length ? [entrypoint] : [],
-                    args: headArguments
+                    args: headArgumentValues
                 },
                 connections: {
                     m3Connector: hasM3Connector
