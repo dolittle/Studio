@@ -54,6 +54,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, star
                 error={hasError}
                 disabled={fieldProps.disabled}
                 label={fieldProps.label}
+                required={isRequired(fieldProps.required)}
                 startAdornment={startAdornment ?
                     <InputAdornment position='start'>
                         <Typography variant='body2'>{startAdornment}</Typography>

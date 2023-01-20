@@ -167,7 +167,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                 <Box sx={styles.formSections}>
                     <Typography variant='subtitle2' sx={{ mb: 2 }}>Configuration Setup</Typography>
 
-                    <Input id='microserviceName' label='Microservice Name' required />
+                    <Input id='microserviceName' label='Microservice Name' required='Provide a microservice name.' />
                     <Input id='developmentEnvironment' label='Development Environment' disabled />
 
                     <Tooltip
@@ -195,7 +195,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                         <Input
                             id='headImage'
                             label='Image Name'
-                            required
+                            required='Provide an image name.'
                             sx={{ width: 500 }}
                         />
                     </Tooltip>
@@ -204,7 +204,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                         <Input
                             id='headPort'
                             label='Port'
-                            required
+                            required='Provide a port. Default is 80.'
                             pattern={{
                                 value: /^[0-9]+$/,
                                 message: 'Please enter a valid port number.'

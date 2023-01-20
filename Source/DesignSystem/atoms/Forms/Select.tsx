@@ -5,8 +5,7 @@ import React, { forwardRef } from 'react';
 
 import { FormControl, InputLabel, MenuItem, Select as MuiSelect, SelectProps as MuiSelectProps, SxProps } from '@mui/material';
 
-import { useController, FieldProps } from './helpers';
-
+import { useController, isRequired, FieldProps } from './helpers';
 /**
  * The props for a {@link Select} component.
  */
@@ -26,7 +25,12 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
 
     return (
         <FormControl sx={{ width: 220, ...sx }}>
-            <InputLabel id={`${selectProps.label}-label`}>{selectProps.label}</InputLabel>
+            <InputLabel
+                id={`${selectProps.label}-label`}
+                required={isRequired(selectProps.required)}
+            >
+                {selectProps.label}
+            </InputLabel>
 
             <MuiSelect
                 {...field}
