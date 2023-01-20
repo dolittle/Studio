@@ -200,7 +200,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                         />
                     </Tooltip>
 
-                    <Tooltip id='port-tooltip' tooltipTitle='Port' tooltipText={portDescription}>
+                    <Tooltip id='port-tooltip' tooltipTitle='Port' tooltipText={portDescription} sx={{ top: 6 }}>
                         <Input
                             id='headPort'
                             label='Port'
@@ -248,7 +248,6 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                         sx={styles.formSections}
                     />
                 }
-
 
                 {isLoading ? <LoadingSpinner /> : (
                     <Button

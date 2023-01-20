@@ -3,7 +3,7 @@
 
 import React, { ReactElement } from 'react';
 
-import { Tooltip as MuiTooltip, Paper, Typography } from '@mui/material';
+import { SxProps, Tooltip as MuiTooltip, Paper, Typography } from '@mui/material';
 
 /**
  * The props for a {@link Tooltip} component.
@@ -54,6 +54,11 @@ type TooltipProps = {
     placement?: never;
 
     /**
+     * Add custom styles to the tooltip.
+     */
+    sx?: SxProps;
+
+    /**
      * Required. The content to wrap with the tooltip.
      */
     children: ReactElement<any, any>;
@@ -64,7 +69,7 @@ type TooltipProps = {
  * @param {...TooltipProps} props - The {@link TooltipProps}.
  * @returns {ReactElement} A new {@link Tooltip} component.
  */
-export const Tooltip = ({ id, open, handleOpen, handleClose, tooltipTitle, tooltipText, children }: TooltipProps): ReactElement =>
+export const Tooltip = ({ id, open, handleOpen, handleClose, tooltipTitle, tooltipText, sx, children }: TooltipProps): ReactElement =>
     <MuiTooltip
         id={`${id}-tooltip`}
         open={open}
@@ -72,6 +77,7 @@ export const Tooltip = ({ id, open, handleOpen, handleClose, tooltipTitle, toolt
         onClose={handleClose}
         disableHoverListener
         placement='right'
+        sx={sx}
         title={
             <Paper sx={{ py: 1, px: 2, typography: 'body2' }}>
                 <Typography sx={{ fontWeight: 700 }}>{tooltipTitle}</Typography>
