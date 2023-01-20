@@ -23,8 +23,8 @@ export const Container = ({ application }: ContainerProps) =>
         <Routes>
             <Route path="/overview" element={<Overview application={application} />} />
 
-            <Route path="/setup" element={<Setup application={application} />} />
+            <Route path="/:environment/setup" element={<Setup application={application} />} />
 
-            <Route path="/details" element={<Details applicationId={application.id} />} />
+            <Route path="/:environment/details" element={<Details applicationId={application.id} />} />
         </Routes>
     </>;
