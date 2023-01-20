@@ -141,8 +141,6 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
         }
     };
 
-    if (isLoading) return <LoadingSpinner />;
-
     return (
         <>
             <Typography variant='h1'>Deploy Base Microservice</Typography>
@@ -248,14 +246,17 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                     />
                 }
 
-                <Button
-                    variant='filled'
-                    label='Deploy microservice'
-                    size='medium'
-                    type='submit'
-                    startWithIcon={<RocketLaunch />}
-                    sx={{ mt: 1 }}
-                />
+
+                {isLoading ? <LoadingSpinner /> : (
+                    <Button
+                        variant='filled'
+                        label='Deploy microservice'
+                        size='medium'
+                        type='submit'
+                        startWithIcon={<RocketLaunch />}
+                        sx={{ mt: 1 }}
+                    />
+                )}
             </Form>
         </>
     );
