@@ -141,9 +141,6 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
 
             <Routes>
                 <Route path="*" element={<DocumentationContainerScreen application={application} environment={currentEnvironment} />} />
-
-                {/* TODO PAV: Remove RouteNotFound */}
-                {/* <RouteNotFound redirectUrl={redirectUrl} /> */}
             </Routes>
         </LayoutWithSidebar >
     );
