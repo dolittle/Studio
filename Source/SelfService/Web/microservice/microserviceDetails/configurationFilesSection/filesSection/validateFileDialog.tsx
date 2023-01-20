@@ -9,7 +9,7 @@ import { Box, Typography } from '@mui/material';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
-function formatBytes(bytes, decimals = 2) {
+function formatBytes(bytes: number, decimals = 2) {
     if (!+bytes) return '0 Bytes';
 
     const k = 1024;
