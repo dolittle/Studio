@@ -59,7 +59,10 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const environmentInfo = application.environments.find(env => env.name === environment)!;
     const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
 
-    const currentRuntimeImageNumber = { value: microserviceInfo?.runtimeImage, displayValue: getRuntimeNumberFromString(microserviceInfo?.runtimeImage) };
+    const currentRuntimeImageNumber = {
+        value: microserviceInfo?.runtimeImage,
+        displayValue: getRuntimeNumberFromString(microserviceInfo?.runtimeImage)
+    };
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
     // Remove extra slash from ingress path as it is there already with startAdornment.
     const cleanedIngressPath = microserviceInfo?.ingress?.path?.replace(/\//, '') || '';
@@ -135,7 +138,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         developmentEnvironment: environment,
                         runtimeVersion: currentRuntimeImageNumber.value,
                         headImage: microserviceInfo?.headImage,
-                        headPort: 80,
+                        headPort: microserviceInfo?.headPort,
                         entrypoint: '',
                         isPublic: showPublicUrlInfo,
                         headArguments: headArgumentValues,
@@ -145,6 +148,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                     sx={styles.form}
                 >
                     <SetupFields disabled={formIsNotEditable} options={[currentRuntimeImageNumber]} sx={styles.formSections} />
+
                     <ContainerImageFields disabled={formIsNotEditable} sx={styles.formSections} />
 
                     <PublicUrlFields
