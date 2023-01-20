@@ -42,16 +42,17 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     const [validateFileDialogIsOpen, setValidateFileDialogIsOpen] = useState({ isOpen: false, file: [] as File[] });
 
     useEffect(() => {
-        fetchAndUpdateConfigFileNamesList()
-            .catch(console.error);
+        fetchAndUpdateConfigFileNamesList();
     }, []);
 
     const fetchAndUpdateConfigFileNamesList = async (): Promise<void> => {
-        const result = await getConfigFilesNamesList(applicationId, environment, microserviceId);
+        const result = await getConfigFilesNamesList(applicationId, environment, microserviceId)
+            .then(res => res.data)
+            .catch((error) => {
+                enqueueSnackbar(`Could not fetch config files ${error.message}`, { variant: 'error' });
+            });
 
-        result.data ?
-            createDataTableObj(result.data) :
-            enqueueSnackbar('Could not fetch config files.', { variant: 'error' });
+        createDataTableObj(result ?? []);
     };
 
     const createDataTableObj = (file: string[]): void => {
