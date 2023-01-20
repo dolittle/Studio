@@ -6,9 +6,9 @@ import { useHistory } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
-import { Accordion, ConfirmDialog, Form, Input, Select, Switch } from '@dolittle/design-system';
+import { Accordion, ConfirmDialog, Form } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
 
@@ -16,9 +16,11 @@ import { HttpResponseApplication } from '../../../../api/application';
 import { MicroserviceFormParameters } from '../../../../api/index';
 
 import { HasM3ConnectorField } from '../../../components/form/hasM3ConnectorField';
-import { HeadArguments } from '../../../components/form/headArguments';
 import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
 import { HeaderButtons } from './headerButtons';
+import { SetupFields } from './setupFields';
+import { ContainerImageFields } from './containerImageFields';
+import { PublicUrlFields } from './publicUrlFields';
 import { getRuntimeNumberFromString } from '../../../helpers';
 
 const styles = {
@@ -142,74 +144,15 @@ export const SetupSection = ({ application, applicationId, environment, microser
                     }}
                     sx={styles.form}
                 >
+                    <SetupFields disabled={formIsNotEditable} options={[currentRuntimeImageNumber]} sx={styles.formSections} />
+                    <ContainerImageFields disabled={formIsNotEditable} sx={styles.formSections} />
 
-                    <Box sx={styles.formSections}>
-                        <Typography variant='subtitle2' sx={{ mb: 2 }}>Configuration Setup</Typography>
-
-                        <Input id='microserviceName' label='Microservice Name' required disabled />
-                        <Input id='developmentEnvironment' label='Development Environment' disabled />
-
-                        <Select
-                            id='runtimeVersion'
-                            label='Runtime Version'
-                            options={[currentRuntimeImageNumber]}
-                            required
-                            disabled={formIsNotEditable}
-                        />
-                    </Box>
-
-                    <Box sx={styles.formSections}>
-                        <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
-
-                        <Input
-                            id='headImage'
-                            label='Image Name'
-                            required
-                            disabled={formIsNotEditable}
-                            sx={{ width: 500 }}
-                        />
-
-                        <Input
-                            id='headPort'
-                            label='Port'
-                            disabled={formIsNotEditable}
-                            required
-                            pattern={{
-                                value: /^[0-9]+$/,
-                                message: 'Please enter a valid port number.'
-                            }}
-                        />
-
-                        <Input
-                            id='entrypoint'
-                            label='Entrypoint'
-                            disabled={formIsNotEditable}
-                        />
-
-                        <HeadArguments disabled={formIsNotEditable} />
-                    </Box>
-
-                    <Box sx={styles.formSections}>
-                        <Typography variant='subtitle2'>Public Microservice</Typography>
-
-                        <Switch
-                            id='isPublic'
-                            label='Expose to a public URL'
-                            onChange={() => !setShowPublicUrlInfo}
-                            disabled={formIsNotEditable}
-                        />
-
-                        {showPublicUrlInfo &&
-                            <Input
-                                id='ingressPath'
-                                label='Path'
-                                startAdornment='/'
-                                placeholder='leave blank for default path'
-                                disabled={formIsNotEditable}
-                                sx={{ width: 226 }}
-                            />
-                        }
-                    </Box>
+                    <PublicUrlFields
+                        disabled={formIsNotEditable}
+                        showPublicUrlInfo={showPublicUrlInfo}
+                        onChange={() => !setShowPublicUrlInfo}
+                        sx={styles.formSections}
+                    />
 
                     {hasM3ConnectorOption &&
                         <HasM3ConnectorField
