@@ -143,10 +143,6 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
     ];
 
 
-    const redirectUrl = generatePath('/microservices/application/:applicationId/:environment/overview', {
-        applicationId: currentApplicationId,
-        environment: currentEnvironment,
-    });
 
     return (
         <LayoutWithSidebar navigation={nav}>
@@ -164,8 +160,8 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
                     path="/view/:microserviceId"
                     element={<MicroserviceViewScreen application={application} environment={currentEnvironment} />} />
 
-                {/* TODO PAV: Remove RouteNotFound */}
-                {/* <RouteNotFound redirectUrl={redirectUrl} /> */}
+                <Route path='*' element={<RouteNotFound redirectUrl={'overview'} auto={true} />} />
+
             </Routes>
         </LayoutWithSidebar>
     );

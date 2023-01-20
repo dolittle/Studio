@@ -90,11 +90,6 @@ export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplica
 
     const routes = [];
 
-    const redirectUrl = generatePath('/containerregistry/application/:applicationId/:environment/overview', {
-        applicationId: currentApplicationId,
-        environment: currentEnvironment,
-    });
-
     return (
         <LayoutWithSidebar navigation={nav}>
             <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
@@ -103,8 +98,9 @@ export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplica
                 <Route
                     path="/overview/*"
                     element={<ContainerRegistryContainer application={application} environment={currentEnvironment} />} />
-                {/* TODO PAV: Remove RouteNotFound */}
-                {/* <RouteNotFound redirectUrl={redirectUrl} /> */}
+
+                <Route path='*' element={<RouteNotFound redirectUrl={'overview'} auto={true} />} />
+
             </Routes>
         </LayoutWithSidebar >
     );

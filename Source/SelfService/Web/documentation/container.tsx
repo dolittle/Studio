@@ -14,6 +14,7 @@ import { Doc as VerifyKubernetesAccess } from './verifyKubernetesAccess';
 import { Doc as AccessContainerRegistry } from './accessContainerRegistry';
 import { Doc as SetupAzurePipelines } from './cicd/setupAzurePipelines';
 import { Typography } from '@mui/material';
+import { RouteNotFound } from '../components/notfound';
 
 type Props = {
     environment: string
@@ -124,6 +125,8 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                     } />
 
                     <Route element={<Typography variant='h1' my={2}>Something has gone wrong: documentation</Typography>} />
+
+                    <Route path='*' element={<RouteNotFound redirectUrl='overview' auto={true} />} />
                 </Routes>
             </div>
         </>
