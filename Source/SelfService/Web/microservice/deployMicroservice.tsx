@@ -68,12 +68,12 @@ const PublicUrlFieldDescription = () =>
         out to <Link href='mailto: support@dolittle.com' message='Dolittle support' color='secondary' /> after you&#39;ve deployed the service.
     </>;
 
-type CreateMicroserviceProps = {
+type DeployMicroserviceProps = {
     application: HttpResponseApplication;
     environment: string;
 };
 
-export const CreateMicroservice = ({ application, environment }: CreateMicroserviceProps) => {
+export const DeployMicroservice = ({ application, environment }: DeployMicroserviceProps) => {
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
 

@@ -10,7 +10,7 @@ import { Grid, Typography } from '@mui/material';
 import { HttpResponseApplication } from '../api/application';
 
 import { SimpleCard } from './components/card';
-import { CreateMicroservice } from './createMicroservice';
+import { DeployMicroservice } from './deployMicroservice';
 
 const items = [
     {
@@ -69,7 +69,7 @@ export const DeployableMicroservicesList = ({ environment, application }: Deploy
 
     return (
         <>
-            {microserviceTypeState === 'dolittle-microservice' && <CreateMicroservice application={application} environment={environment} />}
+            {microserviceTypeState === 'dolittle-microservice' && <DeployMicroservice application={application} environment={environment} />}
         </>
     );
 };
