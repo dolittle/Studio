@@ -63,7 +63,6 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
-    const [headCommandArgs, setHeadCommandArgs] = useState<string[]>(microserviceInfo?.headCommand?.args || []);
     const [showPublicUrlInfo, setShowPublicUrlInfo] = useState(microserviceInfo?.isPublic || false);
     const [showM3ConnectorInfo, setShowM3ConnectorInfo] = useState(false);
 
@@ -133,8 +132,8 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         headPort: 80,
                         entrypoint: '',
                         isPublic: showPublicUrlInfo,
-                        headArguments: headCommandArgs || [],
-                        // TODO
+                        headArguments: microserviceInfo?.headCommand?.args || [],
+                        // Remove extra slash from ingress path as it is there already with startAdornment.
                         ingressPath: microserviceInfo?.ingress?.path?.replace(/\//, ''),
                         hasM3Connector: hasM3ConnectorOption
                     }}
@@ -184,7 +183,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                             disabled={formIsNotEditable}
                         />
 
-                        <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} disabled={formIsNotEditable} />
+                        <HeadArguments disabled={formIsNotEditable} />
                     </Box>
 
                     <Box sx={styles.formSections}>

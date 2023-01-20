@@ -78,7 +78,6 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
     const history = useHistory();
 
     const [isLoading, setIsLoading] = useState(false);
-    const [headCommandArgs, setHeadCommandArgs] = useState<string[]>([]);
     const [showPublicUrlInfo, setShowPublicUrlInfo] = useState(false);
     const [showM3ConnectorInfo, setShowM3ConnectorInfo] = useState(false);
     const [showEntrypointInfo, setShowEntrypointInfo] = useState(false);
@@ -99,6 +98,8 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
 
         const microserviceId = Guid.create().toString();
         const { microserviceName, headArguments, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
+
+        console.log(headArguments)
 
         const newMicroservice: MicroserviceSimple = {
             dolittle: {
@@ -214,7 +215,7 @@ export const CreateMicroservice = ({ application, environment }: CreateMicroserv
                         <Input id='entrypoint' label='Entrypoint' />
                     </Tooltip>
 
-                    <HeadArguments cmdArgs={headCommandArgs} setCmdArgs={setHeadCommandArgs} />
+                    <HeadArguments />
                 </Box>
 
                 <Box sx={styles.formSections}>
