@@ -60,16 +60,16 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
         };
 
         return (
-            <form ref={formRef} method="put" id="file-selector-form" hidden onSubmit={onFileSubmitted}>
+            <form ref={formRef} method='put' id='file-selector-form' hidden onSubmit={onFileSubmitted}>
                 <input
-                    type="file"
+                    type='file'
                     multiple={allowMultipleFiles}
-                    id="file-selector"
+                    id='file-selector'
                     name='file'
                     onChange={onFileSelect}
                     ref={fileInputRef}
                 />
-                <input type="submit" id="file-submit" value="Submit" />
+                <input type='submit' id='file-submit' value='Submit' />
             </form>
         );
     });
