@@ -42,32 +42,32 @@ const InfoMessage = () =>
 
 export const Error = createStory({
     severity: 'error',
-    title: 'Something went wrong',
+    title: 'This is a error title',
     message: <ErrorMessage />
 });
 
 export const Warning = createStory({
     severity: 'warning',
-    title: 'This is a warning.',
+    title: 'This is a warning title',
     message: <ErrorMessage />
 });
 
 export const Info = createStory({
     severity: 'info',
-    title: 'This is an info message.',
+    title: 'This is a informational title',
     message: <InfoMessage />
 });
 
 export const Success = createStory({
     severity: 'success',
-    title: 'All good!',
+    title: 'This is a success title',
     message: 'You are all set up and ready to go!'
 });
 
-export const WithAction = createStory({
+export const WithCloseAction = createStory({
     severity: 'info',
-    title: 'This is an info message.',
-    message: 'For more information, please',
+    title: 'This is an alert box with a "close" action',
+    message: 'You can click the close button to dismiss the alert box.',
     isDismissable: true,
     onDismiss: () => alert('Close action was clicked.')
 });
