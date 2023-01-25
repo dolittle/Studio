@@ -3,11 +3,9 @@
 
 import React from 'react';
 
-import { Link } from '@mui/material';
-
 import { componentStories } from '@dolittle/design-system';
 
-import { AlertBox } from './AlertBox';
+import { AlertBox, AlertBoxErrorMessage, AlertBoxInfoMessage } from './AlertBox';
 
 const { metadata, createStory } = componentStories(AlertBox);
 
@@ -58,32 +56,22 @@ metadata.argTypes = {
 
 export default metadata;
 
-const ErrorMessage = () =>
-    <>
-        Please try again later. If problem persists, please contact <Link href='#'>Dolittle support</Link>.
-    </>;
-
-const InfoMessage = () =>
-    <>
-        For more information, please contact <Link href='#'>Dolittle support</Link>.
-    </>;
-
 export const Error = createStory({
     severity: 'error',
     title: 'This is a error title',
-    message: <ErrorMessage />
+    message: <AlertBoxErrorMessage />
 });
 
 export const Warning = createStory({
     severity: 'warning',
     title: 'This is a warning title',
-    message: <ErrorMessage />
+    message: <AlertBoxErrorMessage />
 });
 
 export const Info = createStory({
     severity: 'info',
     title: 'This is a informational title',
-    message: <InfoMessage />
+    message: <AlertBoxInfoMessage />
 });
 
 export const Success = createStory({

@@ -3,9 +3,19 @@
 
 import React, { ReactElement, useState } from 'react';
 
-import { Alert, AlertTitle, Collapse, SxProps, Typography } from '@mui/material';
+import { Alert, AlertTitle, Collapse, Link, SxProps, Typography } from '@mui/material';
 
 import { IconButton } from '@dolittle/design-system/atoms/IconButton/IconButton';
+
+export const AlertBoxErrorMessage = () =>
+    <>
+        Please try again later. If problem persists, please contact <Link href='#'>Dolittle support</Link>.
+    </>;
+
+export const AlertBoxInfoMessage = () =>
+    <>
+        For more information, please contact <Link href='#'>Dolittle support</Link>.
+    </>;
 
 export type AlertBoxProps = {
     /**
@@ -15,6 +25,7 @@ export type AlertBoxProps = {
 
     /**
      * Required. The title of the alert.
+     * Convension is to NOT use a period at the end of the title.
      */
     title: string;
 
@@ -58,6 +69,7 @@ export const AlertBox = ({ severity, isDismissable, sx, title, message }: AlertB
                 sx={{
                     'display': 'inline-flex',
                     'borderColor': severity === 'error' ? 'error.dark' : null,
+                    'textAlign': 'left',
                     '& .MuiAlert-action': { pt: 0 },
                     ...sx
                 }}
