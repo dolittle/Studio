@@ -28,6 +28,39 @@ metadata.parameters = {
     }
 };
 
+metadata.argTypes = {
+    message: {
+        control: {
+            type: 'text'
+        },
+        table: {
+            type: {
+                summary: 'string | ReactElement'
+            }
+        }
+    },
+    isDismissable: {
+        control: {
+            type: 'boolean'
+        }
+    },
+    onDismiss: {
+        control: {
+            disable: true
+        }
+    },
+    sx: {
+        control: {
+            disable: true
+        },
+        table: {
+            type: {
+                summary: 'SxProps'
+            }
+        }
+    }
+};
+
 export default metadata;
 
 const ErrorMessage = () =>
