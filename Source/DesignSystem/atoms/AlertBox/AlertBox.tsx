@@ -15,28 +15,23 @@ export type AlertBoxProps = {
 
     /**
      * Required. The title of the alert.
-     * @type {string}
      */
     title: string;
 
     /**
      * Required. The message of the alert.
-     * @type {string}
-     * @type {ReactElement}
      */
     message: string | ReactElement;
 
     /**
      * Set if the alert is dismissable.
      * @default false
-     * @type {boolean}
      */
     isDismissable?: boolean;
     onDismiss?: () => void;
 
     /**
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
-     * @type {SxProps}
      */
     sx?: SxProps;
 };
