@@ -48,7 +48,7 @@ export type AlertBoxProps = {
 };
 
 /**
- * A AlertBox component.
+ * A alert box component.
  * @param {...AlertBoxProps} props - The {@link AlertBoxProps}.
  * @returns {ReactElement} A new {@link AlertBox} component.
  * @example
@@ -69,7 +69,7 @@ export const AlertBox = ({ severity, isDismissable, sx, title, message }: AlertB
                 action={isDismissable && <IconButton onClick={() => setOpen(false)} />}
                 sx={{
                     'display': 'inline-flex',
-                    'borderColor': severity === 'error' ? 'error.dark' : null,
+                    'borderColor': !severity || severity === 'error' ? 'error.dark' : null,
                     'textAlign': 'left',
                     '& .MuiAlert-action': { pt: 0 },
                     ...sx
