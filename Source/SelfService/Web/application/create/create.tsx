@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { Typography } from '@mui/material';
 
 import { Guid } from '@dolittle/rudiments';
-import { AlertBox, Form, LoadingSpinner } from '@dolittle/design-system';
+import { AlertBox, AlertBoxErrorMessage, Form, LoadingSpinner } from '@dolittle/design-system';
 
 import { createApplication, HttpApplicationRequest } from '../../api/application';
 
@@ -98,12 +98,7 @@ export const Create = () => {
                 {errorOnCreatingApp &&
                     <AlertBox
                         title='Oops, something went wrong'
-                        message='Please try again later. If problem persists, please'
-                        severity='error'
-                        endWithLink={{
-                            linkText: 'contact support',
-                            linkHref: 'mailto: support@dolittle.com'
-                        }}
+                        message={<AlertBoxErrorMessage />}
                         sx={{ mt: 6 }}
                     />
                 }
