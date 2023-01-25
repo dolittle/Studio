@@ -3,18 +3,10 @@
 
 import React, { useState, useCallback } from 'react';
 import { InView } from 'react-intersection-observer';
-import {
-    Box,
-    Divider,
-    FormControlLabel,
-    FormGroup,
-    Grid,
-    Paper,
-    Switch,
-    Typography,
-} from '@mui/material';
 
-import { AlertBox } from '@dolittle/design-system';
+import { Box, Divider, FormControlLabel, FormGroup, Grid, Paper, Switch, Typography, } from '@mui/material';
+
+import { AlertBox, AlertBoxErrorMessage } from '@dolittle/design-system';
 
 import { ObservableLogLines, ObservablePartialLogLines } from './loki/logLines';
 import { DataLabels } from './loki/types';
@@ -103,13 +95,8 @@ export const LogPanel = (props: LogPanelProps) => {
     if (props.logs.failed) {
         return (
             <AlertBox
-                severity="error"
                 title='Something went wrong'
-                message='Please try again later. If the problem persists, please'
-                endWithLink={{
-                    linkText: 'contact support',
-                    linkHref: 'mailto:support@dolittle.com'
-                }}
+                message={<AlertBoxErrorMessage />}
                 sx={{ mt: 2 }}
             />
         );
