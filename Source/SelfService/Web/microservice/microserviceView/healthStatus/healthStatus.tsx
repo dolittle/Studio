@@ -5,7 +5,7 @@ import React, { useMemo, useState } from 'react';
 
 import { RestartAltRounded } from '@mui/icons-material';
 
-import { AlertBox, Button, Graph } from '@dolittle/design-system';
+import { AlertBox, AlertBoxErrorMessage, Button, Graph } from '@dolittle/design-system';
 
 import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../api/api';
 
@@ -103,13 +103,8 @@ export const HealthStatus = ({ applicationId, environment, microserviceId, msNam
             {containerTables.length > 0
                 ? containerTables
                 : <AlertBox
-                    severity='error'
                     title='Cannot display microservice containers'
-                    message='Please try again later. If problem persists, please'
-                    endWithLink={{
-                        linkText: 'contact support',
-                        linkHref: 'mailto: support@dolittle.com'
-                    }}
+                    message={<AlertBoxErrorMessage />}
                 />
             }
 
