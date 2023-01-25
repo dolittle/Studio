@@ -19,9 +19,10 @@ export const AlertBoxInfoMessage = () =>
 
 export type AlertBoxProps = {
     /**
-     * Required. The severity of the alert.
+     * The severity of the alert.
+     * @default 'error'
      */
-    severity: 'error' | 'warning' | 'info' | 'success';
+    severity?: 'error' | 'warning' | 'info' | 'success';
 
     /**
      * Required. The title of the alert.
@@ -64,7 +65,7 @@ export const AlertBox = ({ severity, isDismissable, sx, title, message }: AlertB
         <Collapse in={open}>
             <Alert
                 variant='outlined'
-                severity={severity}
+                severity={severity || 'error'}
                 action={isDismissable && <IconButton onClick={() => setOpen(false)} />}
                 sx={{
                     'display': 'inline-flex',
