@@ -1,9 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 
-import { Alert, AlertTitle, SxProps, Typography } from '@mui/material';
+import { Alert, AlertTitle, Collapse, SxProps, Typography } from '@mui/material';
 
 import { IconButton } from '@dolittle/design-system/atoms/IconButton/IconButton';
 
@@ -28,7 +28,6 @@ export type AlertBoxProps = {
      * @default false
      */
     isDismissable?: boolean;
-    onDismiss?: () => void;
 
     /**
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
@@ -47,18 +46,25 @@ export type AlertBoxProps = {
  *    message='Something went wrong.'
  * />
  */
-export const AlertBox = ({ severity, isDismissable, onDismiss, sx, title, message }: AlertBoxProps): ReactElement =>
-    <Alert
-        variant='outlined'
-        severity={severity}
-        action={isDismissable && <IconButton onClick={onDismiss} />}
-        sx={{
-            'display': 'inline-flex',
-            'borderColor': severity === 'error' ? 'error.dark' : null,
-            '& .MuiAlert-action': { pt: 0 },
-            ...sx
-        }}
-    >
-        <AlertTitle>{title}</AlertTitle>
-        <Typography variant='body2'>{message}</Typography>
-    </Alert>;
+export const AlertBox = ({ severity, isDismissable, sx, title, message }: AlertBoxProps): ReactElement => {
+    const [open, setOpen] = useState(true);
+
+    return (
+        <Collapse in={open}>
+            <Alert
+                variant='outlined'
+                severity={severity}
+                action={isDismissable && <IconButton onClick={() => setOpen(false)} />}
+                sx={{
+                    'display': 'inline-flex',
+                    'borderColor': severity === 'error' ? 'error.dark' : null,
+                    '& .MuiAlert-action': { pt: 0 },
+                    ...sx
+                }}
+            >
+                <AlertTitle>{title}</AlertTitle>
+                <Typography variant='body2'>{message}</Typography>
+            </Alert>
+        </Collapse>
+    );
+};

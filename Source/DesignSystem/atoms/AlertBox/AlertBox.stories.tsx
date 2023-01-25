@@ -44,11 +44,6 @@ metadata.argTypes = {
             type: 'boolean'
         }
     },
-    onDismiss: {
-        control: {
-            disable: true
-        }
-    },
     sx: {
         control: {
             disable: true
@@ -101,6 +96,5 @@ export const WithCloseAction = createStory({
     severity: 'info',
     title: 'This is an alert box with a "close" action',
     message: 'You can click the close button to dismiss the alert box.',
-    isDismissable: true,
-    onDismiss: () => alert('Close action was clicked.')
+    isDismissable: true
 });
