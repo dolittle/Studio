@@ -9,7 +9,7 @@ import { isApplicationOnline } from '../api/application';
 import { Box, List, ListItem, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 
-import { AlertBox, Button, LoadingSpinner } from '@dolittle/design-system';
+import { AlertBox, AlertBoxErrorMessage, Button, LoadingSpinner } from '@dolittle/design-system';
 
 export const Building = () => {
     const { applicationId } = useParams() as any;
@@ -33,7 +33,7 @@ export const Building = () => {
     if (!isLoading) {
         return (
             <Box sx={{ width: 1 }}>
-                <AlertBox title='Could not create application.' message='Please try again later. If problem persists, please contact support.' severity='error' />
+                <AlertBox title='Could not create application' message={<AlertBoxErrorMessage />} severity='error' />
                 <Button label='Go back to applications page' secondary startWithIcon={<ArrowBack />} href='/applications/' sx={{ mt: 4 }} />
             </Box>
         );
