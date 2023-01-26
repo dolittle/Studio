@@ -1,3 +1,23 @@
+# [2.19.3] - 2023-1-26 [PR: #302](https://github.com/dolittle/Studio/pull/302)
+## Summary
+
+Make AlertBox component in Design System reusable and add JsDocs for documentation.
+Display AlertBox in stories and added controls so it would be easier to understand how to use alerts in code.
+
+<img width="985" alt="Screenshot 2023-01-27 at 01 06 05" src="https://user-images.githubusercontent.com/19160439/214970644-d61029d0-edd0-4fca-a76b-71cf6d59f397.png">
+
+### Added
+
+- JsDocs to AlertBox.tsx
+- Controls to AlertBox.stories.tsx
+- Controlled alert 'open' and 'close' state if needed
+
+### Fixed
+
+- Better wording in alertBox.stories.tsx
+- How to use links inside alert message
+
+
 # [2.19.2] - 2023-1-10 [PR: #299](https://github.com/dolittle/Studio/pull/299)
 ## Summary
 
