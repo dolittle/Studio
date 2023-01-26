@@ -162,7 +162,6 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
         return updatedRow;
     };
 
-    // Naming
     const handleEnvVariableAdd = () => {
         setDisableAddButton(true);
 
@@ -259,7 +258,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     />
                 </Box>
 
-                <RestartInfoBox name={microserviceName} isAlertBoxOpen={restartInfoBoxIsOpen} handleDismiss={() => setRestartInfoBoxIsOpen(false)} />
+                <RestartInfoBox microserviceName={microserviceName} isOpen={restartInfoBoxIsOpen} onDismissed={() => setRestartInfoBoxIsOpen(false)} />
 
                 {noEnvVariables ?
                     <EmptyDataTable

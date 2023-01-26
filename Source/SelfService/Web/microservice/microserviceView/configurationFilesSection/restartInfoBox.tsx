@@ -3,27 +3,21 @@
 
 import React from 'react';
 
-import { Collapse } from '@mui/material';
+import { AlertBox, AlertBoxProps } from '@dolittle/design-system';
 
-import { AlertBox } from '@dolittle/design-system';
-
-type RestartInfoBoxProps = {
-    name: string;
-    isAlertBoxOpen: boolean;
-    handleDismiss: () => void;
+type RestartInfoBoxProps = Partial<AlertBoxProps> & {
+    microserviceName: string;
 };
 
-export const RestartInfoBox = ({ name, isAlertBoxOpen, handleDismiss }: RestartInfoBoxProps) =>
-    <Collapse in={isAlertBoxOpen}>
-        <AlertBox
-            severity='info'
-            title='Restart Microservice'
-            message={
-                `New uploads will be added as soon as microservice '${name}' restarts.
+export const RestartInfoBox = ({ microserviceName, ...alertBoxProps }: RestartInfoBoxProps) =>
+    <AlertBox
+        severity='info'
+        title='Restart Microservice'
+        message={
+            `New uploads will be added as soon as microservice '${name}' restarts.
                 It will restart automatically in a few minutes or you can manually restart it now.`
-            }
-            isDismissable
-            onDismiss={handleDismiss}
-            sx={{ width: 1, mb: 2 }}
-        />
-    </Collapse>;
+        }
+        isDismissible
+        sx={{ width: 1, mb: 2 }}
+        {...alertBoxProps}
+    />;

@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 
 import { Alert, AlertTitle, Collapse, Link, SxProps, Typography } from '@mui/material';
 
@@ -20,26 +20,44 @@ export const AlertBoxInfoMessage = () =>
 export type AlertBoxProps = {
     /**
      * The severity of the alert.
-     * @default 'error'
+     * @default error
      */
     severity?: 'error' | 'warning' | 'info' | 'success';
 
     /**
      * Required. The title of the alert.
+     *
      * Convension is to NOT use a period at the end of the title.
      */
     title: string;
 
     /**
      * Required. The message of the alert.
+     *
+     * Link component can be used to add links to the message.
      */
     message: string | ReactElement;
 
     /**
-     * Set if the alert is dismissable.
+     * Set if the alert is dismissible.
+     *
+     * This will put the close, 'x', icon to the top right.
      * @default false
      */
-    isDismissable?: boolean;
+    isDismissible?: boolean;
+
+    /**
+     * Set alert box as closed with 'false' value and open alert conditionally inside the parent component.
+     * @default true
+     */
+    isOpen?: boolean;
+
+    /**
+     * If alert box is set to be closed conditionally (isOpen=false) inside the parent component,
+     * this callback function can be called if the alert should be dismissed.
+     * @default undefined
+     */
+    onDismissed?: () => void;
 
     /**
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
@@ -58,15 +76,23 @@ export type AlertBoxProps = {
  *    message='Something went wrong.'
  * />
  */
-export const AlertBox = ({ severity, isDismissable, sx, title, message }: AlertBoxProps): ReactElement => {
-    const [open, setOpen] = useState(true);
+export const AlertBox = ({ severity, title, message, isDismissible, isOpen = true, onDismissed, sx }: AlertBoxProps): ReactElement => {
+    const [open, setOpen] = useState(isOpen);
+
+    useEffect(() => {
+        setOpen(isOpen);
+    }, [isOpen]);
 
     return (
         <Collapse in={open}>
             <Alert
                 variant='outlined'
                 severity={severity || 'error'}
-                action={isDismissable && <IconButton onClick={() => setOpen(false)} />}
+                role='alert'
+                action={isDismissible && <IconButton onClick={() => {
+                    setOpen(false);
+                    onDismissed?.();
+                }} />}
                 sx={{
                     'display': 'inline-flex',
                     'borderColor': !severity || severity === 'error' ? 'error.dark' : null,
