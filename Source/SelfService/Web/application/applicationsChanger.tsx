@@ -92,8 +92,7 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
         // This was done mainly to support keeping the filters in the LogsScreen.tsx.
         const href = `${parts[0]}/${newApplication}${parts[1]}${location.search}`;
 
-        // We use window here, as its a hack to get around the selfservice being duplicated
-        window.location.href = href;
+        navigate(href);
     };
 
     // TODO How can we fix the popper or the arrow to appear in the first menu item
