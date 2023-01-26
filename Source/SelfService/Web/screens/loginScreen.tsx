@@ -3,11 +3,13 @@
 
 import React from 'react';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
+import {useNavigate} from 'react-router-dom';
 
 export const LoginScreen: React.FunctionComponent = () => {
+    const navigate = useNavigate();
     return (
         <>
-            <PrimaryButton text="Login" onClick={() => window.location.href = '/'} />
+            <PrimaryButton text="Login" onClick={() => navigate('/')} />
             <div className="with-sidebar">
                 <div>
                     <div className="sidebar">

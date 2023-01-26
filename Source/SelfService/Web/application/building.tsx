@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { isApplicationOnline } from '../api/application';
 
@@ -12,9 +12,10 @@ import { ArrowBack } from '@mui/icons-material';
 import { AlertBox, AlertBoxErrorMessage, Button, LoadingSpinner } from '@dolittle/design-system';
 
 export const Building = () => {
+    const navigate = useNavigate();
     const { applicationId } = useParams() as any;
 
-    const [isLoading, setIsLoadig] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         checkApplicationStatus()
@@ -25,8 +26,8 @@ export const Building = () => {
         const result = await isApplicationOnline(applicationId);
 
         if (result.status === 200) {
-            window.location.href = `/applications/`;
-            setIsLoadig(true);
+            navigate(`/applications/`);
+            setIsLoading(true);
         }
     };
 
