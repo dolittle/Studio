@@ -29,17 +29,13 @@ metadata.parameters = {
 metadata.argTypes = {
     message: {
         control: {
-            type: 'text'
+            type: 'text',
+            value: 'This is a message'
         },
         table: {
             type: {
                 summary: 'string | ReactElement'
             }
-        }
-    },
-    isDismissable: {
-        control: {
-            type: 'boolean'
         }
     },
     sx: {
@@ -52,6 +48,11 @@ metadata.argTypes = {
             }
         }
     }
+};
+
+metadata.args = {
+    isDismissible: false,
+    isOpen: true
 };
 
 export default metadata;
@@ -84,5 +85,5 @@ export const WithCloseAction = createStory({
     severity: 'info',
     title: 'This is an alert box with a "close" action',
     message: 'You can click the close button to dismiss the alert box.',
-    isDismissable: true
+    isDismissible: true
 });
