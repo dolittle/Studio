@@ -3,31 +3,25 @@
 
 import React from 'react';
 
-import { Box, Typography } from '@mui/material';
 import { DownloadRounded } from '@mui/icons-material';
+
+import { componentStories } from '@dolittle/design-system';
 
 import { IconButton } from './IconButton';
 
-export default {
-    title: 'IconButton',
-    component: IconButton
-};
+const { metadata, createStory } = componentStories(IconButton);
 
-export const IconButtons = () =>
-    <Box sx={{ display: 'flex', alignContent: 'center', textAlign: 'center' }}>
-        <Box sx={{ mr: 8 }}>
-            <Typography variant='body1' color='primary'>Default Icon</Typography>
-            <IconButton
-                size='medium'
-                sx={{ mt: 2 }}
-            />
-        </Box>
+export default metadata;
 
-        <Box>
-            <Typography variant='body1' color='primary'>Download Icon</Typography>
-            <IconButton
-                icon={<DownloadRounded />}
-                sx={{ mt: 2 }}
-            />
-        </Box>
-    </Box>;
+export const Inherit = createStory({
+    label: 'Download',
+    icon: <DownloadRounded />
+});
+
+export const Secondary = createStory({
+    color: 'primary'
+});
+
+export const Disabled = createStory({
+    disabled: true
+});
