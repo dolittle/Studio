@@ -17,15 +17,15 @@ export type IconButtonProps = {
     /**
      * Choose icon from @mui/icons-material or leave empty to use default 'close' icon.
      * @default <CloseRounded />
-     * @type {ReactElement<SvgIconProps>}
      */
     icon?: ReactElement<SvgIconProps>;
 
     /**
      * Most icons will use the default inherit styling.
      *
-     * Secondary icons use 'primary' color. They are used for the most important actions,
-     * such as Save, Submit, or Continue.
+     * Secondary icons use 'primary' color.
+     *
+     * They are used for the most important actions, such as Save, Submit, or Continue.
      * @default inherit
      */
     color?: 'inherit' | 'primary';
