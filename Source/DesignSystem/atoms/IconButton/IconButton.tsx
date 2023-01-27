@@ -11,6 +11,7 @@ export type IconButtonProps = {
      * The aria-label of the icon button.
      *
      * For accessibility, it is recommended to set this value to a meaningful string rather than an empty string.
+     * @default Close
      */
     label?: string;
 
@@ -23,7 +24,7 @@ export type IconButtonProps = {
     /**
      * Most icons will use the default inherit styling.
      *
-     * Secondary icons use 'primary' color.
+     * Secondary icon button use 'primary' color.
      *
      * They are used for the most important actions, such as Save, Submit, or Continue.
      * @default inherit
@@ -31,22 +32,31 @@ export type IconButtonProps = {
     color?: 'inherit' | 'primary';
 
     /**
-     * Set icon size.
+     * Set icon size to medium.
      * @default small
      */
     size?: 'small' | 'medium';
 
     /**
-     * Add link to internal navigation.
+     * Icon button can be disabled.
+     * @default false
+     */
+    disabled?: boolean;
+
+    /**
+     * Navigate to internal page.
+     *
+     * When this is set, the component will render as an anchor element.
      * @default undefined
      */
     href?: string;
 
     /**
-     * Icon can be disabled.
-     * @default false
+     * Download file.
+     * @default undefined
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-download for more information.
      */
-    disabled?: boolean;
+    download?: string;
 
     /**
      * Callback fired when the component is clicked.
@@ -62,14 +72,15 @@ export type IconButtonProps = {
  * @example
  * <IconButton label="Download" icon={<DownloadRounded />} />
  */
-export const IconButton = ({ label, icon, color, size = 'small', href, disabled, onClick }: IconButtonProps): ReactElement =>
+export const IconButton = ({ label, icon, color, size = 'small', disabled, href, download, onClick }: IconButtonProps): ReactElement =>
     <MuiIconButton
         aria-label={!icon ? 'Close' : label}
         color={color || 'inherit'}
         size={size}
-        // @ts-ignore
-        href={href}
         disabled={disabled}
+        component={href ? 'a' : 'button'}
+        href={href}
+        download={download}
         onClick={onClick}
     >
         {!icon ? <CloseRounded fontSize={size} /> : React.cloneElement(icon, { fontSize: size })}
