@@ -10,6 +10,7 @@ export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } fr
 export { Button } from './atoms/Button';
 export { ConfirmDialog } from './atoms/ConfirmDialog';
 export { Checkbox, Form, Input, Select, SwitchToggle } from './atoms/Forms';
+export { IconButton, IconButtonProps } from './atoms/IconButton';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
 export { Summary } from './atoms/Metrics';
 export { Tabs } from './atoms/Tabs';
