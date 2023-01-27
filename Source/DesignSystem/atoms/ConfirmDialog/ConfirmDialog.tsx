@@ -3,10 +3,9 @@
 
 import React from 'react';
 
-import { IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { CloseRounded } from '@mui/icons-material';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import { Button } from '@dolittle/design-system';
+import { Button, IconButton } from '@dolittle/design-system';
 
 export type ConfirmDialogProps = {
     id: string;
@@ -27,18 +26,9 @@ export const ConfirmDialog = ({ isOpen, id, title, description, children, handle
         aria-labelledby={`${id}-title`}
         aria-describedby={`${id}-description`}
     >
-        <DialogTitle id={`${id}-title`} variant='h6'>
+        <DialogTitle id={`${id}-title`} variant='h6' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             {title}
-            <IconButton
-                onClick={handleCancel}
-                sx={{
-                    position: 'absolute',
-                    right: 8,
-                    top: 8,
-                    color: 'text.primary'
-                }}>
-                {<CloseRounded />}
-            </IconButton>
+            <IconButton onClick={handleCancel} />
         </DialogTitle>
 
         <DialogContent>
