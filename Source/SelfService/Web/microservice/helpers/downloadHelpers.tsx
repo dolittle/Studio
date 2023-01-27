@@ -7,9 +7,10 @@ import { useSnackbar } from 'notistack';
 
 import { getPodLogs } from '../../api/api';
 
-import { Link } from '@mui/material';
 import { DownloadRounded } from '@mui/icons-material';
 import { GridRenderCellParams } from '@mui/x-data-grid-pro';
+
+import { IconButton } from '@dolittle/design-system';
 
 export const DownloadLogs = (params: GridRenderCellParams) => {
     const [data, setData] = useState({ logs: '' });
@@ -17,23 +18,23 @@ export const DownloadLogs = (params: GridRenderCellParams) => {
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
-        getPodLogs(params.row.application, params.row.podName, params.row.containerName).then(setData);
-    }, [params.row.application, params.row.podName, params.row.containerName]);
+        getPodLogs(params?.row.application, params?.row.podName, params?.row.containerName).then(setData);
+    }, [params?.row.application, params?.row.podName, params?.row.containerName]);
 
     const logsBlob = new Blob([data.logs], { type: 'text/plain' });
-    const containerImage = params.row.image.replace(':', '/');
+    const containerImage = params?.row.image.replace(':', '/');
 
     const handleNotification = () => {
         enqueueSnackbar(`'${containerImage}' logs have been downloaded.`);
     };
 
     return (
-        <Link
+        <IconButton
             href={URL.createObjectURL(logsBlob)}
             download={`${containerImage}.log`}
             onClick={handleNotification}
-        >
-            <DownloadRounded fontSize='small' sx={{ color: 'text.primary' }} />
-        </Link>
+            label='Download logs'
+            icon={<DownloadRounded />}
+        />
     );
 };
