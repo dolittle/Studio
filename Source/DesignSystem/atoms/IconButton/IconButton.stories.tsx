@@ -12,7 +12,7 @@ const { metadata, createStory } = componentStories(IconButton);
 metadata.argTypes = {
     label: {
         type: 'string',
-        defaultValue: 'Download',
+        defaultValue: 'Close',
         control: {
             type: 'text'
         }
@@ -34,6 +34,9 @@ metadata.argTypes = {
     href: {
         control: false
     },
+    download: {
+        control: false
+    },
     onClick: {
         control: false
     }
@@ -46,8 +49,7 @@ export const Inherit = createStory({
     icon: <DownloadRounded />
 });
 
-// TODO: Haven't figured out how to display react elements in the docs tab yet
-// so this is a workaround.
+// TODO: Haven't figured out how to display react SVG elements in the docs tab yet, so this is a workaround.
 Inherit.parameters = {
     docs: {
         source: {
