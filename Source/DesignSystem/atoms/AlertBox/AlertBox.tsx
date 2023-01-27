@@ -5,7 +5,7 @@ import React, { ReactElement, useState, useEffect } from 'react';
 
 import { Alert, AlertTitle, Collapse, Link, SxProps, Typography } from '@mui/material';
 
-import { IconButton } from '@dolittle/design-system/atoms/IconButton/IconButton';
+import { IconButton } from '@dolittle/design-system';
 
 export const AlertBoxErrorMessage = () =>
     <>
@@ -89,10 +89,14 @@ export const AlertBox = ({ severity, title, message, isDismissible, isOpen = tru
                 variant='outlined'
                 severity={severity || 'error'}
                 role='alert'
-                action={isDismissible && <IconButton onClick={() => {
-                    setOpen(false);
-                    onDismissed?.();
-                }} />}
+                action={isDismissible &&
+                    <IconButton
+                        label='Dismiss alert'
+                        onClick={() => {
+                            setOpen(false);
+                            onDismissed?.();
+                        }}
+                    />}
                 sx={{
                     'display': 'inline-flex',
                     'borderColor': !severity || severity === 'error' ? 'error.dark' : null,
