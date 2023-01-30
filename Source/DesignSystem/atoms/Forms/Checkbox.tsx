@@ -12,6 +12,10 @@ import type { Form } from './Form';
  * Creates a checkbox field to be used in a {@link Form}.
  * @param props The {@link FieldProps} for the checkbox.
  * @returns A new {@link Checkbox} component.
+ * @example
+ * <Form initialValues={{ checkbox: false }}>
+ *   <Checkbox name='checkbox' label='Checkbox' />
+ * </Form>
  */
 export const Checkbox = (props: FieldProps) => {
     const { field } = useController(props);
