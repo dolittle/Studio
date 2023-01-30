@@ -12,9 +12,27 @@ import type { Form } from './Form';
  * The props for a {@link Input} component.
  */
 export type InputProps = {
+    /**
+     * Whether the input should be focused on mount.
+     * @default false
+     */
     autoFocus?: boolean;
+
+    /**
+     * The start adornment for the input.
+     * @default undefined
+     */
     startAdornment?: React.ReactNode;
+
+    /**
+     * The placeholder for the input.
+     * @default undefined
+     */
     placeholder?: string;
+
+    /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
     sx?: SxProps;
 } & FieldProps;
 
@@ -22,6 +40,10 @@ export type InputProps = {
  * Creates an text input field to be used in a {@link Form}.
  * @param props The {@link InputProps} for the input.
  * @returns A new {@link Input} component.
+ * @example
+ * <Form initialValues={{ input: '' }}>
+ *  <Input name='input' label='Input' />
+ * </Form>
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, startAdornment, placeholder, sx, ...fieldProps }, ref) => {
     const { field, hasError, errorMessage } = useController(fieldProps);
@@ -50,6 +72,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, star
                 ref={ref}
                 id={fieldProps.id}
                 type='text'
+                size='small'
                 autoFocus={autoFocus}
                 error={hasError}
                 disabled={fieldProps.disabled}
