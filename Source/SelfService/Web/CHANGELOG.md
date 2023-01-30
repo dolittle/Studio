@@ -1,3 +1,15 @@
+# [2.19.6] - 2023-1-30 [PR: #304](https://github.com/dolittle/Studio/pull/304)
+## Summary
+
+Trying to fix configuration files fetch error that appear after opening microservice.
+
+<img width="410" alt="Screenshot 2023-01-30 at 19 23 00" src="https://user-images.githubusercontent.com/19160439/215549925-925fb5dc-3b9d-49e2-874c-2d79acf9db28.png">
+
+### Fixed
+
+- Configuration files fetch error
+
+
 # [2.19.5] - 2023-1-30 [PR: #300](https://github.com/dolittle/Studio/pull/300)
 ## Summary
 
