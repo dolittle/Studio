@@ -1,3 +1,23 @@
+# [2.19.5] - 2023-1-30 [PR: #300](https://github.com/dolittle/Studio/pull/300)
+## Summary
+
+This is new style and features for 'Deploy Base Microservice' page.
+
+<img width="1026" alt="Screenshot 2023-01-17 at 13 28 39" src="https://user-images.githubusercontent.com/19160439/212889203-6b537000-97e0-4bcc-96f6-907da2340819.png">
+
+### Added
+
+- Validation for head command fields
+- Link component to Storybook
+- Tooltip component to Storybook
+- Index exports to Storybook
+- JsDocs to Storybook
+
+### Fixed
+
+- Disable password managers on input fields
+
+
 # [2.19.4] - 2023-1-30 [PR: #303](https://github.com/dolittle/Studio/pull/303)
 ## Summary
 
