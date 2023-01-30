@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { useFieldArray } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { Box } from '@mui/material';
 import { AddCircleRounded, DeleteRounded } from '@mui/icons-material';
@@ -11,10 +11,15 @@ import { AddCircleRounded, DeleteRounded } from '@mui/icons-material';
 import { Button, Input } from '@dolittle/design-system';
 
 export const HeadArguments = ({ disabled }: { disabled?: boolean }) => {
+    const { formState: { errors } } = useFormContext();
+
     // Name comes from the Form initial values and the name of the fields array.
     const { fields, append, remove } = useFieldArray({
         name: 'headArguments'
     });
+
+    // Check if there are any errors in the 'headArguments' array.
+    const hasErrors = Object.keys(errors).includes('headArguments');
 
     return (
         <Box>
@@ -43,7 +48,7 @@ export const HeadArguments = ({ disabled }: { disabled?: boolean }) => {
                 label='Add CMD argument'
                 secondary
                 startWithIcon={<AddCircleRounded />}
-                disabled={disabled}
+                disabled={disabled || hasErrors}
                 onClick={() => append({ value: '' })}
                 sx={{ mt: 2.5 }}
             />
