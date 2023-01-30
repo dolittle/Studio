@@ -3,9 +3,7 @@
 
 import React from 'react';
 
-import { componentStories } from '@dolittle/design-system';
-
-import { Button } from './Button';
+import { componentStories, Button } from '@dolittle/design-system';
 
 // Would like to get all of them into one Story.
 import { AddCircle, DeleteRounded, DownloadRounded, EditRounded, SaveRounded, RestartAltRounded } from '@mui/icons-material';

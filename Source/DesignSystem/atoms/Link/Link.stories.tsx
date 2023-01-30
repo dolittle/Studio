@@ -3,7 +3,7 @@
 
 import { componentStories, Link } from '@dolittle/design-system';
 
-const { metadata, createStory } = componentStories(Link, {});
+const { metadata, createStory } = componentStories(Link);
 
 export default metadata;
 

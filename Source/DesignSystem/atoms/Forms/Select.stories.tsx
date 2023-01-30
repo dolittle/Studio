@@ -3,9 +3,7 @@
 
 import React from 'react';
 
-import { componentStories, Form } from '@dolittle/design-system';
-
-import { Select } from './Select';
+import { componentStories, Form, Select } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(Select, {
     actions: {

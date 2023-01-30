@@ -3,9 +3,7 @@
 
 import React from 'react';
 
-import { componentStories } from '@dolittle/design-system';
-
-import { AlertBox, AlertBoxErrorMessage, AlertBoxInfoMessage } from './AlertBox';
+import { componentStories, AlertBox, AlertBoxErrorMessage, AlertBoxInfoMessage } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(AlertBox);
 
