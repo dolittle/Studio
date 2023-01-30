@@ -76,8 +76,8 @@ export type AlertBoxProps = {
  * @returns {ReactElement} A new {@link AlertBox} component.
  * @example
  * <AlertBox
- *    severity='error'
- *    title='Error'
+ *    severity='warning'
+ *    title='Warning'
  *    message='Something went wrong.'
  * />
  */
