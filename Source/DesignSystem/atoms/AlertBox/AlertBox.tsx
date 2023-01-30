@@ -17,6 +17,9 @@ export const AlertBoxInfoMessage = () =>
         For more information, please contact <Link href='#'>Dolittle support</Link>.
     </>;
 
+/**
+ * The props for a {@link AlertBox} component.
+ */
 export type AlertBoxProps = {
     /**
      * The severity of the alert.
