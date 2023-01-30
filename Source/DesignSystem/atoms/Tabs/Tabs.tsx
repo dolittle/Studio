@@ -19,15 +19,10 @@ const styles = {
         }
     },
     tab: {
-        'color': 'text.secondary',
-        'fontWeight': 500,
-        'fontSize': 13,
-        'letterSpacing': '0.06em',
-        '&:first-of-type': {
-            mr: 8
-        },
-        '&.Mui-selected': {
-            color: 'primary.main'
+        'fontSize': 14,
+        'mr': 8,
+        '&:last-child': {
+            mr: 0
         }
     }
 };
