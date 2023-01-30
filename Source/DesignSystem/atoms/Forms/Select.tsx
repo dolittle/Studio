@@ -6,12 +6,24 @@ import React, { forwardRef } from 'react';
 import { FormControl, InputLabel, MenuItem, Select as MuiSelect, SelectProps as MuiSelectProps, SxProps } from '@mui/material';
 
 import { useController, isRequired, FieldProps } from './helpers';
+
 /**
  * The props for a {@link Select} component.
  */
 export type SelectProps<T = string> = {
+    /**
+     * Required. The options to display in the select.
+     */
     options: { value: T, displayValue: string }[];
+
+    /**
+     * An optional callback to call when the select is opened.
+     */
     onOpen?: () => void;
+
+    /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
     sx?: SxProps;
 } & FieldProps;
 
@@ -19,16 +31,17 @@ export type SelectProps<T = string> = {
  * Creates an select input field to be used in a {@link Form}.
  * @param props The {@link SelectProps} for the input.
  * @returns A new {@link Select} component.
+ * @example
+ * <Form initialValues={{ select: '' }}>
+ *    <Select name='select' label='Select' options={[{ value: '1', displayValue: 'One' }, { value: '2', displayValue: 'Two' }]} />
+ * </Form>
  */
 export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onOpen, sx, ...selectProps }, ref) => {
     const { field } = useController(selectProps);
 
     return (
-        <FormControl sx={{ width: 220, ...sx }}>
-            <InputLabel
-                id={`${selectProps.label}-label`}
-                required={isRequired(selectProps.required)}
-            >
+        <FormControl size='small' sx={{ width: 220, ...sx }}>
+            <InputLabel id={`${selectProps.label}-label`} required={isRequired(selectProps.required)}>
                 {selectProps.label}
             </InputLabel>
 
