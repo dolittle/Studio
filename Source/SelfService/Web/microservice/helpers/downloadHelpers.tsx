@@ -12,17 +12,21 @@ import { GridRenderCellParams } from '@mui/x-data-grid-pro';
 
 import { IconButton } from '@dolittle/design-system';
 
-export const DownloadLogs = (params: GridRenderCellParams) => {
+type DownloadHelperProps = {
+    row: GridRenderCellParams['row'];
+};
+
+export const DownloadLogs = ({ row: { application, podName, containerName, image } }: DownloadHelperProps) => {
     const [data, setData] = useState({ logs: '' });
 
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
-        getPodLogs(params?.row.application, params?.row.podName, params?.row.containerName).then(setData);
-    }, [params?.row.application, params?.row.podName, params?.row.containerName]);
+        getPodLogs(application, podName, containerName).then(setData);
+    }, [application, podName, containerName]);
 
     const logsBlob = new Blob([data.logs], { type: 'text/plain' });
-    const containerImage = params?.row.image.replace(':', '/');
+    const containerImage = image.replace(':', '/');
 
     const handleNotification = () => {
         enqueueSnackbar(`'${containerImage}' logs have been downloaded.`);
