@@ -21,7 +21,7 @@ export const HeadArguments = ({ disabled }: { disabled?: boolean }) => {
             {fields.map((arg, index) => (
                 <Box key={arg.id}>
                     <Input
-                        id={`headArguments.${index}.value` as const}
+                        id={`headArguments.${index}.value`}
                         label='CMD Argument'
                         autoFocus
                         disabled={disabled}
