@@ -40,7 +40,6 @@ type TooltipProps = {
      *
      * Set to true.
      * @default true
-     * @type {never}
      */
     disableHoverListener?: never;
 
@@ -49,7 +48,6 @@ type TooltipProps = {
      *
      * Set to 'right'.
      * @default 'right'
-     * @type {never}
      */
     placement?: never;
 
@@ -68,6 +66,10 @@ type TooltipProps = {
  * A Tooltip component.
  * @param {...TooltipProps} props - The {@link TooltipProps}.
  * @returns {ReactElement} A new {@link Tooltip} component.
+ * @example
+ * <Tooltip id='tooltip' tooltipTitle='Tooltip title' tooltipText='Tooltip text'>
+ *    <Button>Hover me</Button>
+ * </Tooltip>
  */
 export const Tooltip = ({ id, open, handleOpen, handleClose, tooltipTitle, tooltipText, sx, children }: TooltipProps): ReactElement =>
     <MuiTooltip

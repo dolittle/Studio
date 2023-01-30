@@ -6,6 +6,9 @@ import React, { MouseEventHandler, ReactElement } from 'react';
 import { IconButton as MuiIconButton, SvgIconProps } from '@mui/material';
 import { CloseRounded } from '@mui/icons-material';
 
+/**
+ * The props for a {@link IconButton} component.
+ */
 export type IconButtonProps = {
     /**
      * Required. The aria-label of the icon button.
@@ -51,7 +54,7 @@ export type IconButtonProps = {
     href?: string;
 
     /**
-     * Download file.
+     * Use for downloading a file as a attr-download.
      * @default undefined
      * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-download for more information.
      */

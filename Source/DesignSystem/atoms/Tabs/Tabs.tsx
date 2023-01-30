@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 import { Tab as MuiTab, Tabs as MuiTabs } from '@mui/material';
 
@@ -33,17 +33,28 @@ const styles = {
 };
 
 type Tab = {
-    label: string
-    render: () => React.ReactNode
-    sx?: any
+    label: string;
+    render: () => React.ReactNode;
 };
 
+/**
+ * The props for a {@link Tabs} component.
+ */
 export type TabsProps = {
+    /**
+     * Required. The tabs to display.
+     * @type {Tab[]}
+     */
     tabs: Tab[];
-    sx?: any;
 };
 
-export const Tabs = ({ sx, tabs }: TabsProps) => {
+/**
+ * @param {...TabsProps} props - The {@link TabsProps}.
+ * @returns {ReactElement} A new {@link Tabs} component.
+ * @example
+ * <Tabs tabs={[{ label: 'First tab', render: () => <h1>Hello</h1> }, { label: 'Second tab', render: () => <h1>World</h1> }]} />
+ */
+export const Tabs = ({ tabs }: TabsProps): ReactElement => {
     const [currentTab, setCurrentTab] = useState(0);
 
     useEffect(() => {
@@ -60,11 +71,11 @@ export const Tabs = ({ sx, tabs }: TabsProps) => {
         <>
             <MuiTabs
                 TabIndicatorProps={
-                    { children: <span className="MuiTabs-indicatorSpan" /> }
+                    { children: <span className='MuiTabs-indicatorSpan' /> }
                 }
                 value={currentTab}
                 onChange={handleChange}
-                sx={{ ...styles.tabs, ...sx }}
+                sx={{ ...styles.tabs }}
             >
                 {tabs.map((tab, key) =>
                     <MuiTab
@@ -73,7 +84,7 @@ export const Tabs = ({ sx, tabs }: TabsProps) => {
                         aria-labelledby={`tab-${key}`}
                         disableRipple
                         label={tab.label}
-                        sx={{ ...styles.tab, ...tab.sx }}
+                        sx={{ ...styles.tab }}
                     />
                 )}
             </MuiTabs>

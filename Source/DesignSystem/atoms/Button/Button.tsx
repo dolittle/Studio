@@ -6,6 +6,9 @@ import React, { MouseEventHandler, ReactElement } from 'react';
 import { Button as MuiButton, SvgIconProps, SxProps } from '@mui/material';
 import { ErrorRounded } from '@mui/icons-material';
 
+/**
+ * The props for a {@link Button} component.
+ */
 export type ButtonProps = {
     /**
      * Required. The text to display on the button.
@@ -100,20 +103,17 @@ export type ButtonProps = {
      *
      * Set target to 'true' if you want the link to open in a new tab.
      * @default false
-     * @type {boolean}
      */
     target?: boolean;
 
     /**
      * Add custom styling to the button.
      * @default undefined
-     * @type {{}}
      */
     sx?: SxProps;
 
     /**
      * Children is not a valid prop.
-     * @type {never}
      */
     children?: never;
 };
