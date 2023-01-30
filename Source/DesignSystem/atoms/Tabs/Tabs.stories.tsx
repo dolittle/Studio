@@ -18,5 +18,9 @@ export const Normal = createStory({
             label: 'Second tab',
             render: () => <h1>World</h1>
         },
+        {
+            label: 'Third tab',
+            render: () => <h1>!</h1>
+        }
     ]
 });
