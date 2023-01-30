@@ -16,6 +16,11 @@ export type FormProps<T extends FieldValues> = {
     initialValues: T;
 
     /**
+     * The children of the form.
+     */
+    children: ReactNode;
+
+    /**
      * An optional callback to call when the form is submitted with valid data.
      */
     onSubmit?: SubmitHandler<T>;
@@ -25,8 +30,9 @@ export type FormProps<T extends FieldValues> = {
      */
     onSubmitInvalid?: SubmitErrorHandler<T>;
 
-    children?: ReactNode;
-
+    /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
     sx?: SxProps;
 };
 
@@ -34,6 +40,10 @@ export type FormProps<T extends FieldValues> = {
  * Creates a form that deals with input-validation using `react-hook-form`.
  * @param {...FormProps} props The {@link FormProps} for the form.
  * @returns A new {@link Form} component.
+ * @example
+ * <Form initialValues={{ input: '' }} onSubmit={data => console.log(data)}>
+ *   <Input name='input' label='Input' />
+ * </Form>
  */
 export const Form = <T extends FieldValues>({ initialValues, onSubmit, onSubmitInvalid, children, sx }: FormProps<T>) => {
     const methods = useForm<T>({
