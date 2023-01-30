@@ -79,16 +79,16 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     const [restartInfoBoxIsOpen, setRestartInfoBoxIsOpen] = useState(false);
 
     useEffect(() => {
-        fetchAndUpdateEnvVariableList()
-            .catch(console.error);
+        fetchAndUpdateEnvVariableList();
     }, []);
 
     const fetchAndUpdateEnvVariableList = async () => {
-        const result = await getEnvironmentVariables(applicationId, environment, microserviceId);
-
-        result.data ?
-            createDataTableObj(result.data) :
-            enqueueSnackbar('Could not fetch environment variables.', { variant: 'error' });
+        try {
+            const result = await getEnvironmentVariables(applicationId, environment, microserviceId);
+            createDataTableObj(result.data);
+        } catch (error) {
+            enqueueSnackbar(`Could not fetch environment variables. ${error}`, { variant: 'error' });
+        }
     };
 
     const createDataTableObj = (envVariables: InputEnvironmentVariable[]): void => {
