@@ -8,12 +8,11 @@ import { CloseRounded } from '@mui/icons-material';
 
 export type IconButtonProps = {
     /**
-     * The aria-label of the icon button.
+     * Required. The aria-label of the icon button.
      *
      * For accessibility, it is recommended to set this value to a meaningful string rather than an empty string.
-     * @default Close
      */
-    label?: string;
+    label: string;
 
     /**
      * Choose icon from @mui/icons-material or leave empty to use default 'close' icon.
@@ -74,7 +73,7 @@ export type IconButtonProps = {
  */
 export const IconButton = ({ label, icon, color, size = 'small', disabled, href, download, onClick }: IconButtonProps): ReactElement =>
     <MuiIconButton
-        aria-label={!icon ? 'Close' : label}
+        aria-label={label}
         color={color || 'inherit'}
         size={size}
         disabled={disabled}

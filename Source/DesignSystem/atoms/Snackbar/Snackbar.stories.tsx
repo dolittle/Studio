@@ -75,7 +75,7 @@ const Snackbar = () => {
                         enqueueSnackbar(`Snackbar with action buttons -  ${count} - Undone.`)
                     } />
 
-                    <IconButton onClick={() => {
+                    <IconButton label='Dismiss snackbar' onClick={() => {
                         enqueueSnackbar(`Snackbar with action buttons -  ${count} - Dismissed.`);
                         closeSnackbar(key);
                     }} />

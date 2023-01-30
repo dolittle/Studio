@@ -59,9 +59,11 @@ Inherit.parameters = {
 };
 
 export const Secondary = createStory({
+    label: 'Secondary Icon Button',
     color: 'primary'
 });
 
 export const Disabled = createStory({
+    label: 'Disabled Icon Button',
     disabled: true
 });
