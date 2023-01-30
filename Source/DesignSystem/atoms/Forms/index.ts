@@ -5,4 +5,4 @@ export { Checkbox } from './Checkbox';
 export { Form, FormProps } from './Form';
 export { Input, InputProps } from './Input';
 export { Select } from './Select';
-export { Switch, SwitchProps } from './Switch';
+export { Switch } from './Switch';
