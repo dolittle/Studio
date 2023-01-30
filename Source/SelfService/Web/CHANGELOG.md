@@ -1,3 +1,26 @@
+# [2.19.4] - 2023-1-30 [PR: #303](https://github.com/dolittle/Studio/pull/303)
+## Summary
+
+Made Storybook Icon Buttons component reusable.
+Added JsDocs to Icon Buttons so it would be easier to understand how to use Icons.
+
+<img width="1051" alt="Screenshot 2023-01-30 at 10 18 07" src="https://user-images.githubusercontent.com/19160439/215424537-d18ef437-0210-4448-9c81-08ff0eee7d8d.png">
+
+### Added
+
+- Link functionality to Icon Button
+- JsDocs to Icon Button 
+- Controls to IconButton.stories
+
+### Fixed
+
+- Wording on IconButton.stories
+
+### Changed
+
+- Refactor downloadHelpers.tsx props
+
+
 # [2.19.3] - 2023-1-26 [PR: #302](https://github.com/dolittle/Studio/pull/302)
 ## Summary
 
