@@ -3,9 +3,7 @@
 
 import React from 'react';
 
-import { componentStories, Form, Tooltip } from '@dolittle/design-system';
-
-import { Input } from '../Forms';
+import { componentStories, Form, Input, Tooltip } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(Tooltip, {
     decorator: (Story) => (

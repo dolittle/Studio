@@ -3,9 +3,7 @@
 
 import React from 'react';
 
-import { componentStories, Form } from '@dolittle/design-system';
-
-import { Switch } from './Switch';
+import { componentStories, Form, Switch } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(Switch, {
     actions: {
