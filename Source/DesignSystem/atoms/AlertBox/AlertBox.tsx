@@ -3,18 +3,20 @@
 
 import React, { ReactElement, useState, useEffect } from 'react';
 
-import { Alert, AlertTitle, Collapse, Link, SxProps, Typography } from '@mui/material';
+import { Alert, AlertTitle, Collapse, SxProps, Typography } from '@mui/material';
 
-import { IconButton } from '@dolittle/design-system';
+import { IconButton, Link } from '@dolittle/design-system';
 
 export const AlertBoxErrorMessage = () =>
     <>
-        Please try again later. If problem persists, please contact <Link href='#'>Dolittle support</Link>.
+        Please try again later. If problem persists, please contact <Link href='#' message='Dolittle support'
+            ariaLabel='To learn more, visit our website which opens in a new window.' />.
     </>;
 
 export const AlertBoxInfoMessage = () =>
     <>
-        For more information, please contact <Link href='#'>Dolittle support</Link>.
+        For more information, please contact <Link href='#' message='Dolittle support'
+            ariaLabel='To learn more, visit our website which opens in a new window.' />.
     </>;
 
 /**
