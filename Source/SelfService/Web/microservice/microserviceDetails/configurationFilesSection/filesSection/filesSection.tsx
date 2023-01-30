@@ -46,12 +46,8 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     }, []);
 
     const fetchAndUpdateConfigFileNamesList = async (): Promise<void> => {
-        try {
-            const result = await getConfigFilesNamesList(applicationId, environment, microserviceId);
-            createDataTableObj(result.data);
-        } catch (error) {
-            enqueueSnackbar(`Could not fetch config files. ${error}`, { variant: 'error' });
-        }
+        const result = await getConfigFilesNamesList(applicationId, environment, microserviceId);
+        createDataTableObj(result.data ?? []);
     };
 
     const createDataTableObj = (file: string[]): void => {
