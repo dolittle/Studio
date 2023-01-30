@@ -45,7 +45,7 @@ type LinkProps = {
  * @param {...LinkProps} props - The {@link LinkProps}.
  * @returns {ReactElement} A new {@link Link} component.
  * @example
- * <Link href='https://dolittle.io' ariaLabel='To learn more, visit our website which opens in a new window.' message='Dolittle' />
+ * <Link href='https://dolittle.io' message='Dolittle' ariaLabel='To learn more, visit our website which opens in a new window.' />
  */
 export const Link = ({ href, ariaLabel, target, color, message }: LinkProps): ReactElement =>
     <MuiLink
