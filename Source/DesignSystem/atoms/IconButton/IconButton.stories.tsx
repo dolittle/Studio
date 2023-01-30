@@ -12,7 +12,6 @@ const { metadata, createStory } = componentStories(IconButton);
 metadata.argTypes = {
     label: {
         type: 'string',
-        defaultValue: 'Close',
         control: {
             type: 'text'
         }
