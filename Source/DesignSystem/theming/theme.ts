@@ -32,7 +32,6 @@ declare module '@mui/material/Typography' {
 
 declare module '@mui/material/Button' {
     interface ButtonPropsVariantOverrides {
-        danger: true;
         fullwidth: true;
     }
 };
@@ -229,45 +228,26 @@ const components: Components & DataGridProComponents = {
         }
     },
     MuiButton: {
-        styleOverrides: {
-            sizeSmall: {
-                fontSize: 12,
-            },
-        },
         variants: [
-            {
-                props: { variant: 'danger' },
-                style: {
-                    'color': '#202229',
-                    // TODO: How to use the theme's palette here?
-                    'backgroundColor': '#F66666',
-                    '&:hover': {
-                        backgroundColor: '#C55252',
-                    },
-                    '&:disabled': {
-                        backgroundColor: palette?.text?.disabled,
-                        color: palette?.text?.secondary,
-                    },
-                },
-            },
             {
                 props: { variant: 'fullwidth' },
                 style: {
                     'backgroundColor': 'rgba(140, 154, 248, 0.08)',
                     'color': '#8C9AF8',
+                    'width': '100%',
                     'minHeight': 30,
                     '&:hover': {
                         backgroundColor: 'rgba(140, 154, 248, 0.15)'
                     }
-                },
+                }
             },
             {
                 props: { color: 'secondary' },
                 style: {
                     color: palette?.text?.primary
                 }
-            },
-        ],
+            }
+        ]
     },
     MuiTooltip: {
         styleOverrides: {
@@ -276,7 +256,7 @@ const components: Components & DataGridProComponents = {
                 maxWidth: 550,
                 backgroundColor: 'transparent'
             }
-        },
+        }
     },
     MuiDataGrid: {
         styleOverrides: {

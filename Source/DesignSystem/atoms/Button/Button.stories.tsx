@@ -37,12 +37,6 @@ metadata.argTypes = {
         description: 'The icon to show after the label.',
         control: false
     },
-    isFullWidth: {
-        control: {
-            type: 'boolean',
-            default: false
-        }
-    },
     onClick: {
         description: 'The event handler for when the button is clicked.',
         control: false
@@ -51,9 +45,6 @@ metadata.argTypes = {
         control: false
     },
     sx: {
-        control: false
-    },
-    children: {
         control: false
     }
 };
@@ -100,9 +91,4 @@ export const WithLink = createStory({
     label: 'With Link',
     href: 'https://dolittle.io',
     target: true,
-});
-
-export const Danger = createStory({
-    label: 'Danger Button',
-    variant: 'danger',
 });
