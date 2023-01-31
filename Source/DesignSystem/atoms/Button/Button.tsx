@@ -31,17 +31,6 @@ export type ButtonProps = {
     disabled?: boolean;
 
     /**
-     * Set secondary button color.
-     *
-     * Secondary button are reserved for less-pronounced actions, including those found in dialogs, cards,
-     * and data charts and can include action items such as ‘learn more’ or ‘cancel’.
-     *
-     * Default primary button are for high emphasis and primary actions, such as a save button or a next button in a form.
-     * @default false
-     */
-    secondary?: boolean;
-
-    /**
      * Set button size.
      * @default small
      */
