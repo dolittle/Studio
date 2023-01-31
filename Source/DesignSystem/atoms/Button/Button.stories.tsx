@@ -67,7 +67,7 @@ export const Outlined = createStory({
 
 export const Secondary = createStory({
     label: 'Secondary Button',
-    secondary: true,
+    color: 'secondary',
     startWithIcon: <AddCircle />,
 });
 
