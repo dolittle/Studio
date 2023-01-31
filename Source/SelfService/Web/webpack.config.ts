@@ -107,7 +107,11 @@ function webpack(env: Args, argv: Args) {
                     ws: true,
                 }
             },
-            before: (app, server, compiler) => { }
+            before: (app, server, compiler) => {
+                app.get(['/', '/.auth/*'], function (req, res) {
+                    res.redirect(basePath);
+                });
+            }
         },
         plugins: [
             new CleanWebpackPlugin({
