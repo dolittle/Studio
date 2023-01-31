@@ -1,3 +1,24 @@
+# [2.19.7] - 2023-1-31 [PR: #305](https://github.com/dolittle/Studio/pull/305)
+## Summary
+
+Added and improved JsDocs in Design System.
+Cleaned a code little bit.
+
+<img width="1026" alt="Screenshot 2023-01-31 at 16 51 49" src="https://user-images.githubusercontent.com/19160439/215793843-689bb382-d7f0-4fe6-8089-8c471906b94d.png">
+
+### Added
+
+- JsDocs to Storybook components
+
+### Changed
+
+- Combined imports from same place into one line
+
+### Fixed
+
+- Tabs styling as it was outdated
+
+
 # [2.19.6] - 2023-1-30 [PR: #304](https://github.com/dolittle/Studio/pull/304)
 ## Summary
 
