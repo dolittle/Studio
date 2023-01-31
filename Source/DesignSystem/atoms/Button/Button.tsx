@@ -36,6 +36,8 @@ export type ButtonProps = {
      */
     size?: 'small' | 'medium';
 
+    isFullWidth?: boolean;
+
     /**
      * Add an icon to the start of the button. Support only React SVG icons.
      * @default undefined
@@ -100,12 +102,13 @@ export type ButtonProps = {
  * <Button label='Click me' variant='filled' isFullWidth startWithIcon={<AddCircle />} />
  */
 export const Button = (
-    { label, variant, disabled, color, size, startWithIcon, endWithIcon, role, type, component, href, target, onClick, sx }: ButtonProps): ReactElement =>
+    { label, variant, disabled, color, size, isFullWidth, startWithIcon, endWithIcon, role, type, component, href, target, onClick, sx }: ButtonProps): ReactElement =>
 
     <MuiButton
         variant={variant === 'filled' ? 'contained' : variant}
         color={color}
         size={size}
+        fullWidth={isFullWidth}
         startIcon={startWithIcon}
         endIcon={endWithIcon}
         type={type}
