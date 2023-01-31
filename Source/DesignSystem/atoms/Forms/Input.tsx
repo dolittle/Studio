@@ -71,20 +71,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, star
                 {...field}
                 ref={ref}
                 id={fieldProps.id}
-                type='text'
-                size='small'
                 autoFocus={autoFocus}
                 error={hasError}
                 disabled={fieldProps.disabled}
                 label={fieldProps.label}
                 required={isRequired(fieldProps.required)}
+                placeholder={placeholder}
+                aria-describedby={`${fieldProps.id}-helper-text`}
+                type='text'
+                size='small'
                 startAdornment={startAdornment ?
                     <InputAdornment position='start'>
                         <Typography variant='body2'>{startAdornment}</Typography>
                     </InputAdornment> : null
                 }
-                placeholder={placeholder}
-                aria-describedby={`${fieldProps.id}-helper-text`}
                 inputProps={{
                     'autoComplete': 'off',
                     'data-lpignore': true,
