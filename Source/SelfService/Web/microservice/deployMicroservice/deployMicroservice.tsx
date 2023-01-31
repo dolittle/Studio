@@ -128,7 +128,7 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
                     microserviceName: '',
                     developmentEnvironment: environment,
                     runtimeVersion: latestRuntimeVersion,
-                    headImage: '',
+                    headImage: '', //nginxdemos/hello:latest
                     headPort: 80,
                     entrypoint: '',
                     isPublic: false,

@@ -4,7 +4,6 @@
 import React, { MouseEventHandler, ReactElement } from 'react';
 
 import { Button as MuiButton, SvgIconProps, SxProps } from '@mui/material';
-import { ErrorRounded } from '@mui/icons-material';
 
 /**
  * The props for a {@link Button} component.
@@ -19,10 +18,11 @@ export type ButtonProps = {
      * Button variants.
      *
      * - fullwidth: Button with extra styling and take up the full width of its container.
-     * - danger: Danger buttons are seldom used and reserved for cases where the primary action is destructive such as deleting content.
      * @default text
      */
-    variant?: 'filled' | 'text' | 'outlined' | 'fullwidth' | 'danger';
+    variant?: 'filled' | 'text' | 'outlined' | 'fullwidth';
+
+    color?: 'primary' | 'secondary' | undefined;
 
     /**
      * Button can be disabled.
@@ -45,13 +45,7 @@ export type ButtonProps = {
      * Set button size.
      * @default small
      */
-    size?: 'small' | 'medium' | 'large';
-
-    /**
-     * Button that takes up the full width of its container.
-     * @default false
-     */
-    isFullWidth?: boolean;
+    size?: 'small' | 'medium';
 
     /**
      * Add an icon to the start of the button. Support only React SVG icons.
@@ -68,16 +62,6 @@ export type ButtonProps = {
     endWithIcon?: ReactElement<SvgIconProps>;
 
     /**
-     * Role of the button. Default is button but for example if you want to use the button as a link you can set it to link.
-     *
-     * Role 'none' combined with component='span' is a hack for Dashlane browser extension to not interfere with the button
-     * and slow down the page.
-     * @default button
-     */
-    role?: 'button' | 'none';
-    component?: 'button' | 'span';
-
-    /**
      * Button type. Default is button but for example if you want to use the button as a submit button you can set it to submit.
      * @default button
      */
@@ -91,10 +75,6 @@ export type ButtonProps = {
 
     /**
      * Add a href to the button. If this is set the button will be rendered as an anchor tag.
-     *
-     * Use it only if a link doesn't have a meaningful href.
-     *
-     * Use Link component intead if href has a meaningful value for better accessibility.
      */
     href?: string;
 
@@ -107,15 +87,20 @@ export type ButtonProps = {
     target?: boolean;
 
     /**
+     * Role of the button. Default is button but for example if you want to use the button as a link you can set it to link.
+     *
+     * Role 'none' combined with component='span' is a hack for Dashlane browser extension to not interfere with the button
+     * and slow down the page.
+     * @default button
+     */
+    role?: 'button' | 'none';
+    component?: 'button' | 'span' | 'a';
+
+    /**
      * Add custom styling to the button.
      * @default undefined
      */
     sx?: SxProps;
-
-    /**
-     * Children is not a valid prop.
-     */
-    children?: never;
 };
 
 /**
@@ -126,24 +111,21 @@ export type ButtonProps = {
  * <Button label='Click me' variant='filled' isFullWidth startWithIcon={<AddCircle />} />
  */
 export const Button = (
-    { variant, label, disabled, secondary, size, isFullWidth, startWithIcon, endWithIcon, role, component, type, href, target, onClick, sx }: ButtonProps): ReactElement =>
+    { label, variant, disabled, color, size, startWithIcon, endWithIcon, role, type, component, href, target, onClick, sx }: ButtonProps): ReactElement =>
 
     <MuiButton
-        variant={variant === 'filled' ? 'contained' : variant || 'text'}
-        disabled={disabled}
-        color={secondary ? 'secondary' : 'primary'}
-        size={size || 'small'}
-        fullWidth={variant === 'fullwidth' || isFullWidth}
-        startIcon={variant === 'danger' ? <ErrorRounded /> : startWithIcon}
+        variant={variant === 'filled' ? 'contained' : variant}
+        color={color}
+        size={size}
+        startIcon={startWithIcon}
         endIcon={endWithIcon}
-        role={role}
-        //@ts-ignore
-        component={component}
         type={type}
         href={href}
-        //@ts-ignore
         target={target ? '_blank' : undefined}
+        component={component === 'span' ? 'span' : href ? 'a' : 'button'}
+        role={role}
         onClick={onClick}
+        disabled={disabled}
         sx={sx}
         disableElevation
     >
