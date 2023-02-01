@@ -17,7 +17,7 @@ export type ButtonProps = {
     /**
      * Button variants.
      *
-     * The full-width variant comes with custom style and it takes up the entire width of its container.
+     * The fullwidth variant comes with custom style and it takes up the entire width of its container.
      * @default text
      */
     variant?: 'text' | 'filled' | 'outlined' | 'fullwidth';
@@ -26,19 +26,17 @@ export type ButtonProps = {
      * Button color.
      * @default primary
      */
-    color?: 'primary' | 'subtle' | 'error' | 'info' | 'success' | 'warning';
+    color?: 'primary' | 'subtle' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
 
     /**
      * Add an icon to the start of the button.
      * @default undefined
-     * @type {ReactElement<SvgIconProps>}
      */
     startWithIcon?: ReactElement<SvgIconProps>;
 
     /**
      * Add an icon to the end of the button.
      * @default undefined
-     * @type {ReactElement<SvgIconProps>}
      */
     endWithIcon?: ReactElement<SvgIconProps>;
 
@@ -134,8 +132,6 @@ export const Button = (
         onClick={onClick}
         sx={sx}
         rel={target ? 'noopener noreferrer' : undefined}
-        disableElevation
-        disableRipple
     >
         {label}
     </MuiButton>;
