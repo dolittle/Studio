@@ -17,7 +17,7 @@ export type ButtonProps = {
     /**
      * Button variants.
      *
-     * The full-width variant comes with additional styling. It takes up the entire width of its container.
+     * The full-width variant comes with custom style and it takes up the entire width of its container.
      * @default text
      */
     variant?: 'text' | 'filled' | 'outlined' | 'fullwidth';
@@ -26,7 +26,7 @@ export type ButtonProps = {
      * Button color.
      * @default primary
      */
-    color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'inherit';
+    color?: 'primary' | 'subtle' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
 
     /**
      * Add an icon to the start of the button.
@@ -120,7 +120,7 @@ export const Button = (
 
     <MuiButton
         variant={variant === 'filled' ? 'contained' : variant}
-        color={color}
+        color={color === 'subtle' ? 'inherit' : color}
         startIcon={startWithIcon}
         endIcon={endWithIcon}
         fullWidth={isFullWidth}
