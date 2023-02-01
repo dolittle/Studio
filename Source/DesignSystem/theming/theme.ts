@@ -242,9 +242,12 @@ const components: Components & DataGridProComponents = {
                 }
             },
             {
-                props: { color: 'secondary' },
+                props: { color: 'inherit', variant: 'contained' },
                 style: {
-                    color: palette?.text?.primary
+                    'backgroundColor': '#616161',
+                    '&:hover': {
+                        backgroundColor: '#757575'
+                    }
                 }
             }
         ]
