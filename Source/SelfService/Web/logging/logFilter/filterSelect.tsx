@@ -3,37 +3,15 @@
 
 import React from 'react';
 
-import { Button, Select, SelectProps, Theme } from '@mui/material';
-
-const styles = {
-    'height': '2.5rem',
-    '.MuiSelect-select:focus': {
-        backgroundColor: 'transparent'
-    },
-    '.MuiSelect-iconOpen': {
-        color: (theme: Theme) => theme.palette.primary.main
-    },
-    '& svg': {
-        right: '-0.3125rem'
-    },
-    '&:before, &:hover:not(.Mui-disabled):before, &:after': {
-        border: 'none',
-    },
-    ':hover': {
-        '& svg': {
-            color: (theme: Theme) => theme.palette.primary.main
-        }
-    }
-};
+import { FormControl, Select, SelectProps } from '@mui/material';
 
 export type FilterSelectProps<T> = SelectProps<T>;
 
 export const FilterSelect = <T,>(props: FilterSelectProps<T>) =>
-    <Button variant='text' disableRipple sx={styles}>
+    <FormControl variant='standard' sx={{ ml: 2 }}>
         <Select
             {...props}
-            variant='standard'
             disableUnderline
-            sx={{ typography: 'button', ...props.sx }}
+            sx={{ typography: 'button' }}
         />
-    </Button>;
+    </FormControl>;
