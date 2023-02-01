@@ -104,7 +104,8 @@ export const typography: TypographyOptions = {
         textTransform: 'uppercase',
     },
     button: {
-        fontSize: '0.75rem', //12px
+        fontSize: '0.8125rem', //13px
+        lineHeight: '1.5rem', //24px
         letterSpacing: '0.06em',
         fontWeight: 500,
     },
