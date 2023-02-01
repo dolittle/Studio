@@ -109,7 +109,7 @@ export const LogLine = ({ line, showContextButton, loading, onClickShowLineConte
                     <SkeletonWhenLoading loading={loading}>
                         <Button
                             label='Show'
-                            color='secondary'
+                            color='subtle'
                             component='span'
                             role='none'
                             sx={{ p: 0 }}

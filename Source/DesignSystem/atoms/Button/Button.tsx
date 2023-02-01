@@ -26,7 +26,7 @@ export type ButtonProps = {
      * Button color.
      * @default primary
      */
-    color?: 'primary' | 'subtle' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
+    color?: 'primary' | 'subtle' | 'error' | 'info' | 'success' | 'warning';
 
     /**
      * Add an icon to the start of the button.
