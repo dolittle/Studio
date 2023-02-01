@@ -35,7 +35,7 @@ export const HeadArguments = ({ disabled }: { disabled?: boolean }) => {
                     />
                     <Button
                         label='Remove'
-                        color='secondary'
+                        color='subtle'
                         disabled={disabled}
                         startWithIcon={<DeleteRounded />}
                         onClick={() => remove(index)}
@@ -46,7 +46,7 @@ export const HeadArguments = ({ disabled }: { disabled?: boolean }) => {
 
             <Button
                 label='Add CMD argument'
-                color='secondary'
+                color='subtle'
                 startWithIcon={<AddCircleRounded />}
                 disabled={disabled || hasErrors}
                 onClick={() => append({ value: '' })}

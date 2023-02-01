@@ -37,7 +37,7 @@ const envVariableColumns: GridColDef<EnvironmentVariableTableRow>[] = [
         valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
         editable: true,
         renderCell: ({ value }) => (
-            <Button label={value ? 'Yes' : 'No'} color='secondary' endWithIcon={<ArrowDropDown />} sx={{ width: 1, height: 1 }} />
+            <Button label={value ? 'Yes' : 'No'} color='subtle' endWithIcon={<ArrowDropDown />} sx={{ width: 1, height: 1 }} />
         ),
         width: 90
     }

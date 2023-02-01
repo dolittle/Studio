@@ -43,7 +43,7 @@ export const SimpleCard = ({ kind, name, description, onCreate }: SimpleCardProp
             </CardContent>
 
             <CardActions>
-                <Button label='Learn more' color='secondary' href='https://dolittle.io/docs/platform/requirements/' target sx={{ mr: 2.25 }} />
+                <Button label='Learn more' color='subtle' href='https://dolittle.io/docs/platform/requirements/' target sx={{ mr: 2.25 }} />
                 <Button label='Deploy' onClick={handleDeploy} />
             </CardActions>
         </Card>

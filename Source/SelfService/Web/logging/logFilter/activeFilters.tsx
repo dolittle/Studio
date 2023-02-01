@@ -42,7 +42,7 @@ export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) =>
 
     return (
         <>
-            <Button label='Clear Filters' disabled={filters.searchTerms.length === 0} color='secondary' onClick={clearFilters} />
+            <Button label='Clear Filters' disabled={filters.searchTerms.length === 0} color='subtle' onClick={clearFilters} />
 
             {filters.searchTerms.map((s, index) =>
                 <Chip

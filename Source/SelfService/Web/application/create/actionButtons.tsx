@@ -7,6 +7,6 @@ import { Button } from '@dolittle/design-system';
 
 export const ActionButtons = () =>
     <>
-        <Button label='Cancel' color='secondary' href='/applications' sx={{ mr: 8 }} />
+        <Button label='Cancel' color='subtle' href='/applications' sx={{ mr: 8 }} />
         <Button label='Create' type='submit' />
     </>;

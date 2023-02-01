@@ -75,8 +75,8 @@ export const ApplicationsScreen = () => {
             <ApplicationsList data={applicationInfos} onChoose={onEnvironmentChoose} />
 
             <Box sx={{ mt: 12.5, display: 'flex', justifyContent: 'space-around' }}>
-                <Button label='Back to tenant' color='secondary' startWithIcon={<ArrowBack />} href='/.auth/cookies/initiate' />
-                <Button label='Log out' color='secondary' href='/.auth/cookies/logout' />
+                <Button label='Back to tenant' color='subtle' startWithIcon={<ArrowBack />} href='/.auth/cookies/initiate' />
+                <Button label='Log out' color='subtle' href='/.auth/cookies/logout' />
             </Box>
         </LoginWrapper>
     );
