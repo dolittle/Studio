@@ -157,7 +157,6 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
                     <Button
                         variant='filled'
                         label='Deploy microservice'
-                        size='medium'
                         type='submit'
                         startWithIcon={<RocketLaunch />}
                         sx={{ mt: 1 }}

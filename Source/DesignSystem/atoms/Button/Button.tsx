@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { MouseEventHandler, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
 import { Button as MuiButton, SvgIconProps, SxProps } from '@mui/material';
 
@@ -17,12 +17,36 @@ export type ButtonProps = {
     /**
      * Button variants.
      *
-     * - fullwidth: Button with extra styling and take up the full width of its container.
+     * The full-width variant comes with additional styling. It takes up the entire width of its container.
      * @default text
      */
-    variant?: 'filled' | 'text' | 'outlined' | 'fullwidth';
+    variant?: 'text' | 'filled' | 'outlined' | 'fullwidth';
 
-    color?: 'primary' | 'secondary' | undefined;
+    /**
+     * Button color.
+     * @default primary
+     */
+    color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'inherit';
+
+    /**
+     * Add an icon to the start of the button.
+     * @default undefined
+     * @type {ReactElement<SvgIconProps>}
+     */
+    startWithIcon?: ReactElement<SvgIconProps>;
+
+    /**
+     * Add an icon to the end of the button.
+     * @default undefined
+     * @type {ReactElement<SvgIconProps>}
+     */
+    endWithIcon?: ReactElement<SvgIconProps>;
+
+    /**
+     * Button can be full width.
+     * @default false
+     */
+    isFullWidth?: boolean;
 
     /**
      * Button can be disabled.
@@ -31,64 +55,54 @@ export type ButtonProps = {
     disabled?: boolean;
 
     /**
-     * Set button size.
-     * @default small
-     */
-    size?: 'small' | 'medium';
-
-    isFullWidth?: boolean;
-
-    /**
-     * Add an icon to the start of the button. Support only React SVG icons.
-     * @default undefined
-     * @type {ReactElement<SvgIconProps>}
-     */
-    startWithIcon?: ReactElement<SvgIconProps>;
-
-    /**
-     * Add an icon to the end of the button. Support only React SVG icons.
-     * @default undefined
-     * @type {ReactElement<SvgIconProps>}
-     */
-    endWithIcon?: ReactElement<SvgIconProps>;
-
-    /**
-     * Button type. Default is button but for example if you want to use the button as a submit button you can set it to submit.
+     * Button type. For submit buttons, use 'submit'. For reset buttons, use 'reset'.
      * @default button
      */
     type?: 'button' | 'submit' | 'reset';
 
     /**
-     * Add event handler for when the button is clicked.
+     * Add a href to the button. If this is set, the button will be rendered as an anchor tag.
      * @default undefined
-     */
-    onClick?: MouseEventHandler<HTMLButtonElement>;
-
-    /**
-     * Add a href to the button. If this is set the button will be rendered as an anchor tag.
      */
     href?: string;
 
     /**
-     * Use with external links.
+     * Use a target when linking to an external page.
      *
-     * Set target to 'true' if you want the link to open in a new tab.
+     * Please also add meaningful text to the ariaLabel prop.
      * @default false
      */
     target?: boolean;
 
     /**
-     * Role of the button. Default is button but for example if you want to use the button as a link you can set it to link.
+     * For accessibility, it is recommended to set this value to a meaningful string rather than an empty string.
+     * @default undefined
+     */
+    ariaLabel?: string;
+
+    /**
+     * The component to render as.
      *
-     * Role 'none' combined with component='span' is a hack for Dashlane browser extension to not interfere with the button
-     * and slow down the page.
+     * If you used the href prop, the component will automatically render as an anchor tag.
      * @default button
      */
-    role?: 'button' | 'none';
     component?: 'button' | 'span' | 'a';
 
     /**
-     * Add custom styling to the button.
+     * The role='none' combined with the component='span' is a password managers browser extension hack that doesn't mess with the
+     * button and slow down the page.
+     * @default button
+     */
+    role?: 'button' | 'none';
+
+    /**
+     * Add event handler for button click.
+     * @default undefined
+     */
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+
+    /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      * @default undefined
      */
     sx?: SxProps;
@@ -102,24 +116,26 @@ export type ButtonProps = {
  * <Button label='Click me' variant='filled' isFullWidth startWithIcon={<AddCircle />} />
  */
 export const Button = (
-    { label, variant, disabled, color, size, isFullWidth, startWithIcon, endWithIcon, role, type, component, href, target, onClick, sx }: ButtonProps): ReactElement =>
+    { label, variant, color, startWithIcon, endWithIcon, isFullWidth, disabled, type, href, target, ariaLabel, component, role, onClick, sx }: ButtonProps): ReactElement =>
 
     <MuiButton
         variant={variant === 'filled' ? 'contained' : variant}
         color={color}
-        size={size}
-        fullWidth={isFullWidth}
         startIcon={startWithIcon}
         endIcon={endWithIcon}
+        fullWidth={isFullWidth}
+        disabled={disabled}
         type={type}
         href={href}
         target={target ? '_blank' : undefined}
+        aria-label={ariaLabel}
         component={component === 'span' ? 'span' : href ? 'a' : 'button'}
         role={role}
         onClick={onClick}
-        disabled={disabled}
         sx={sx}
+        rel={target ? 'noopener noreferrer' : undefined}
         disableElevation
+        disableRipple
     >
         {label}
     </MuiButton>;
