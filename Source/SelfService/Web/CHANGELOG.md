@@ -1,3 +1,9 @@
+# [2.21.0] - 2023-2-2 [PR: #309](https://github.com/dolittle/Studio/pull/309)
+## Summary
+
+update latest runtime version to 8.9.0
+
+
 # [2.20.1] - 2023-2-2 [PR: #307](https://github.com/dolittle/Studio/pull/307)
 ## Summary
 
