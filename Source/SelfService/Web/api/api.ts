@@ -122,7 +122,7 @@ export function getServerUrlPrefix(): string {
 
 export function getLatestRuntimeInfo(): LatestRuntimeInfo {
     return {
-        image: 'dolittle/runtime:8.8.2',
+        image: 'dolittle/runtime:8.9.0',
         changelog: 'https://github.com/dolittle/Runtime/releases/tag/v8.8.2',
     };
 };
