@@ -1,3 +1,13 @@
+# [2.20.0] - 2023-2-2 [PR: #306](https://github.com/dolittle/Studio/pull/306)
+this puts new services on the at-this-time latest runtime version
+
+## Summary
+
+change the "8" version of the runtime to 8.8.2, which is currently the latest
+
+not 100% sure that nothing else needs to change - so a review would be nice :)
+
+
 # [2.19.7] - 2023-1-31 [PR: #305](https://github.com/dolittle/Studio/pull/305)
 ## Summary
 
