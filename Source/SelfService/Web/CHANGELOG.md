@@ -1,3 +1,22 @@
+# [2.20.1] - 2023-2-2 [PR: #307](https://github.com/dolittle/Studio/pull/307)
+## Summary
+
+Improved Button component. Added documentation and controls to Storybook so it would be clear how to use them.
+
+<img width="1039" alt="Screenshot 2023-02-02 at 10 47 45" src="https://user-images.githubusercontent.com/19160439/216277212-67896887-e889-4f6b-a61e-a1d134987d4a.png">
+
+### Added
+
+- 'subtle' color for cases where button does not need attention.
+- Controls for Button.stories
+- Link functionality
+
+### Removed
+
+- 'danger' variant from Button
+- Unnecessary Button from filterSelect.tsx
+
+
 # [2.20.0] - 2023-2-2 [PR: #306](https://github.com/dolittle/Studio/pull/306)
 this puts new services on the at-this-time latest runtime version
 
