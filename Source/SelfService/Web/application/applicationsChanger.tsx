@@ -12,6 +12,7 @@ import { SxProps } from '@mui/material';
 
 import { ShortInfoWithEnvironment } from '../api/api';
 import { useGlobalContext } from '../stores/notifications';
+import { uriWithoutBasePathPrefix } from '../store';
 
 type Props = {
     applications: ShortInfoWithEnvironment[];
@@ -90,8 +91,7 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
         // TODO: We just slap on any search querystring here, so it will be reused after the environment switch. We might want to do this more properly later?
         // Like sending in extra params to this changer perhaps?
         // This was done mainly to support keeping the filters in the LogsScreen.tsx.
-        const href = `${parts[0]}/${newApplication}${parts[1]}${location.search}`;
-
+        const href = uriWithoutBasePathPrefix(`${parts[0]}/${newApplication}${parts[1]}${location.search}`);
         navigate(href);
     };
 
