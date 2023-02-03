@@ -60,6 +60,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
     }, [application.id, environment]);
 
     useEffect(() => {
+        setLoadingRows(true);
         Promise.all(microservices.map(async microservice => {
             const status = await getMicroserviceStatus(microservice.id);
 
@@ -71,7 +72,8 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             setMicroserviceRows(data);
             setLoadingRows(false);
         });
-    }, []);
+
+    }, [microservices]);
 
     // TODO: This is a hack to get the sorting to work. We need to fix this.
     const customUrlFieldSort = (v1, v2, param1, param2) => {
