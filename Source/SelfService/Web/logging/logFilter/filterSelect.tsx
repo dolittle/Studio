@@ -3,15 +3,24 @@
 
 import React from 'react';
 
-import { FormControl, Select, SelectProps } from '@mui/material';
+import { Select, SelectProps } from '@mui/material';
 
 export type FilterSelectProps<T> = SelectProps<T>;
 
 export const FilterSelect = <T,>(props: FilterSelectProps<T>) =>
-    <FormControl variant='standard' sx={{ ml: 2 }}>
-        <Select
-            {...props}
-            disableUnderline
-            sx={{ typography: 'button' }}
-        />
-    </FormControl>;
+    <Select
+        {...props}
+        variant='filled'
+        disableUnderline
+        sx={{
+            'p': 0,
+            'ml': 0,
+            'mr': 1,
+            'typography': 'button',
+            'backgroundColor': 'transparent',
+            '&:hover': { backgroundColor: 'background.paper' },
+            '& .MuiSelect-icon': { color: 'inherit' },
+            '& .MuiInputBase-input.MuiSelect-select': { py: 0.80 },
+            '& .MuiInputBase-input.MuiSelect-select:focus': { backgroundColor: 'background.paper' },
+        }}
+    />;

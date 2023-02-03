@@ -132,6 +132,7 @@ export const Button = (
         onClick={onClick}
         sx={sx}
         rel={target ? 'noopener noreferrer' : undefined}
+        disableFocusRipple
     >
         {label}
     </MuiButton>;

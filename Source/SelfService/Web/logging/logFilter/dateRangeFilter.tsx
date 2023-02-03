@@ -113,6 +113,7 @@ export const DateRangeFilter = (props: DateRangeFilterProps) => {
             {
                 props.range !== 'live' &&
                 <Box sx={{
+                    mt: 1.5,
                     display: {
                         lg: 'block',
                         xl: 'inline',
