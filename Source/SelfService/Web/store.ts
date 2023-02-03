@@ -1,7 +1,12 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+const basePath = '/selfservice';
+
 export function uriWithBasePathPrefix(uri: string): string {
-    const basePath = '/selfservice';
     return `${basePath}${uri}`;
+}
+
+export function uriWithoutBasePathPrefix(uri: string): string {
+    return uri.replace(basePath, '');
 }
