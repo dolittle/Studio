@@ -83,6 +83,47 @@ If faced with
 kubectl -n ${namespace} get pods
 ~~~
 
+# Missing Azure Auth Plugin
+
+If faced with something like
+> error: The azure auth plugin has been removed.
+> Please use the https://github.com/Azure/kubelogin kubectl/client-go
+> See https://kubernetes.io/docs/reference/access-authn-authz/authentication/#client-go-credential-plugins for more details.
+
+This means that you have a kubectl version newer than December 2022 (congratulations!).
+You need to install kubelogin to be able to login to kubernetes.
+
+Install kubelogin following the instructions in the
+[readme](https://github.com/Azure/kubelogin/blob/master/README.md).
+
+Copying the latest releases to the shall's search path, assumes a working
+knowledge of your shell. In bash you can do this by downloading the correct
+release-file from github and adding the binary to your path by adding this line
+to your .bashrc or .bash_profile
+
+~~~sh
+export PATH=$PATH:~/Downloads/kubelogin/bin/linux_amd64/kubelogin
+~~~
+
+Verify that kubelogin is installed and working by running
+~~~sh
+kubelogin --help
+~~~
+
+If you get the kubelogin help text, you are good to go, and can let kubelogin
+handle access to the cluster by running
+
+~~~sh
+kubelogin convert-kubeconfig -l azurecli
+~~~
+
+You can now verify that you have access to the cluster by running the get pods
+command again.
+
+~~~sh
+kubectl -n ${namespace} get pods
+~~~
+
 # Resources you have access too
 ${configMaps.join('\n')}
 ${secrets.join('\n')}
