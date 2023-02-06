@@ -1,3 +1,16 @@
+# [2.22.1] - 2023-2-6 [PR: #312](https://github.com/dolittle/Studio/pull/312)
+## Summary
+
+Used new Design System Button component to display correct styles on Microservice statuses.
+
+<img width="141" alt="Screenshot 2023-02-06 at 16 31 22" src="https://user-images.githubusercontent.com/19160439/217015599-6cee049b-5f0e-47c7-9043-6175cc521a0d.png">
+
+### Fixed
+
+- FilterSelect.tsx style
+- MicroserviceStatus.tsx style
+
+
 # [2.22.0] - 2023-2-3 [PR: #311](https://github.com/dolittle/Studio/pull/311)
 ## Summary
 
