@@ -133,8 +133,8 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
 
     return (
         <>
-            <Box sx={{ display: 'flex', mb: 3.25 }}>
-                <Typography variant="h1">{currentMicroservice.name}</Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 3.25 }}>
+                <Typography variant='h1' sx={{ mr: 3 }}>{currentMicroservice.name}</Typography>
                 <ContainerHealthStatus status={getContainerStatuses()} />
             </Box>
 

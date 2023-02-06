@@ -24,6 +24,8 @@ export type ButtonProps = {
 
     /**
      * Button color.
+     *
+     * 'subtle' inherits its color.
      * @default primary
      */
     color?: 'primary' | 'subtle' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
@@ -80,6 +82,8 @@ export type ButtonProps = {
 
     /**
      * The component to render as.
+     *
+     * 'span' is used inside data tables and other places where you don't want the button to be focusable.
      *
      * If you used the href prop, the component will automatically render as an anchor tag.
      * @default button
