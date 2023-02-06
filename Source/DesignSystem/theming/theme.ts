@@ -243,6 +243,7 @@ const components: Components & DataGridProComponents = {
                 }
             },
             {
+                // Add custom background color to the button with inherit color
                 props: { color: 'inherit', variant: 'contained' },
                 style: {
                     'backgroundColor': '#616161',
