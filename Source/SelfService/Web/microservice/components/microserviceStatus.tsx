@@ -3,32 +3,9 @@
 
 import React from 'react';
 
-import { GridRenderCellParams } from '@mui/x-data-grid-pro';
-import { Box, Typography } from '@mui/material';
 import { CheckCircleRounded, ErrorRounded, WarningRounded, QuestionMark } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system';
-
-const styles = {
-    status: {
-        display: 'flex',
-        justifyContent: 'center'
-    },
-    text: {
-        fontWeight: 500,
-        fontSize: 12,
-        lineHeight: '1.375rem',
-    },
-    statusTitle: {
-        letterSpacing: '0.06rem',
-        textTransform: 'uppercase',
-        ml: 1.25
-    },
-    containerStatus: {
-        ml: 3,
-        pointerEvents: 'none'
-    }
-};
 
 enum MicroserviceStatus {
     Running = 0,
@@ -54,64 +31,51 @@ const getMicroserviceState = (phase?: string): MicroserviceStatus => {
     return MicroserviceStatus.Unknown;
 };
 
+type StatusInfo = {
+    color: 'subtle' | 'error' | 'info' | 'success' | 'warning';
+    icon: JSX.Element;
+    label: string
+};
+
 const statusInfo = (status: string) => {
-    let backgroundColor = 'info.main';
-    let color = 'text.primary';
+    let color = 'subtle';
     let icon = <QuestionMark />;
-    let iconWithColor = <QuestionMark sx={{ color }} />;
-    let label = 'N/A';
+    let label = 'n/a';
 
     switch (getMicroserviceState(status)) {
         case MicroserviceStatus.Running:
-            backgroundColor = 'success.main';
             icon = <CheckCircleRounded />;
-            iconWithColor = <CheckCircleRounded sx={{ color }} />;
-            label = 'Running';
+            label = 'running';
             break;
         case MicroserviceStatus.Pending:
-            backgroundColor = 'warning.main';
-            color = 'warning.main';
+            color = 'warning';
             icon = <WarningRounded />;
-            iconWithColor = <WarningRounded sx={{ color }} />;
-            label = 'Pending';
+            label = 'pending';
             break;
         case MicroserviceStatus.Failing:
-            backgroundColor = 'error.dark';
-            color = 'error.dark';
+            color = 'error';
             icon = <ErrorRounded />;
-            iconWithColor = <ErrorRounded sx={{ color }} />;
-            label = 'Failed';
+            label = 'failed';
             break;
         case MicroserviceStatus.Unknown:
-            backgroundColor = 'info.main';
-            color = 'text.primary';
-            icon = <QuestionMark />;
-            iconWithColor = <QuestionMark sx={{ color }} />;
-            label = 'N/A';
+            color = 'info';
     }
 
-    return {
-        backgroundColor,
-        color,
-        icon,
-        iconWithColor,
-        label
-    };
+    return { color, icon, label } as StatusInfo;
 };
 
-export type ContainerHealthStatusProps = {
-    status: string[]
-};
-
-export const ContainerHealthStatus = ({ status }: ContainerHealthStatusProps) => {
-    const { backgroundColor, icon, label } = statusInfo(status.join(' '));
+export const ContainerHealthStatus = ({ status }: { status: string[] }) => {
+    const { color, icon, label } = statusInfo(status.join(' '));
 
     return (
         <Button
             label={label}
             variant='filled'
+            color={label === 'running' ? 'success' : color}
             startWithIcon={icon}
-            sx={{ ...styles.containerStatus, ...styles.text, backgroundColor }}
+            component='span'
+            role='none'
+            sx={{ pointerEvents: 'none' }}
         />
     );
 };
@@ -122,13 +86,17 @@ export const customStatusFieldSort = (_, __, left, right) => {
     return leftStatus - rightStatus;
 };
 
-export const StatusFieldCell = (params: GridRenderCellParams) => {
-    const { color, iconWithColor, label } = statusInfo(params.value);
+export const StatusFieldCell = ({ value }: any) => {
+    const { color, icon, label } = statusInfo(value);
 
     return (
-        <Box sx={styles.status}>
-            {iconWithColor}
-            <Typography sx={{ ...styles.statusTitle, ...styles.text, color }}>{label}</Typography>
-        </Box>
+        <Button
+            label={label}
+            startWithIcon={icon}
+            color={color}
+            component='span'
+            role='none'
+            sx={{ pointerEvents: 'none' }}
+        />
     );
 };
