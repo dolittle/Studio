@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
@@ -52,7 +52,7 @@ type DeployMicroserviceProps = {
 
 export const DeployMicroservice = ({ application, environment }: DeployMicroserviceProps) => {
     const { enqueueSnackbar } = useSnackbar();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
     const [showM3ConnectorInfo, setShowM3ConnectorInfo] = useState(false);
@@ -110,7 +110,7 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
         try {
             await saveSimpleMicroservice(newMicroservice);
             const href = `/microservices/application/${application.id}/${environment}/view/${newMicroservice.dolittle.microserviceId}`;
-            history.push(href);
+            navigate(href);
         } catch (e: unknown) {
             const message = (e instanceof Error) ? e.message : 'Something went wrong when saving microservice.';
             enqueueSnackbar(message, { variant: 'error' });

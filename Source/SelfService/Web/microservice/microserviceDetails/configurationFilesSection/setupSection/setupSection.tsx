@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
@@ -56,7 +56,7 @@ type SetupSectionProps = {
 
 export const SetupSection = ({ application, applicationId, environment, microserviceId, currentMicroservice }: SetupSectionProps) => {
     const { enqueueSnackbar } = useSnackbar();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const microserviceInfo = currentMicroservice.edit?.extra;
     const environmentInfo = application.environments.find(env => env.name === environment)!;
@@ -97,7 +97,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
         enqueueSnackbar(`Microservice '${currentMicroservice.name}' has been deleted.`);
         const href = `/microservices/application/${applicationId}/${environment}/overview`;
-        history.push(href);
+        navigate(href);
     };
 
     return (
