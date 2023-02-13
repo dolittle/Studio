@@ -91,8 +91,13 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
         // TODO: We just slap on any search querystring here, so it will be reused after the environment switch. We might want to do this more properly later?
         // Like sending in extra params to this changer perhaps?
         // This was done mainly to support keeping the filters in the LogsScreen.tsx.
-        const href = uriWithoutBasePathPrefix(`${parts[0]}/${newApplication}${parts[1]}${location.search}`);
-        navigate(href);
+        const href = `${parts[0]}/${newApplication}${parts[1]}${location.search}`;
+
+        // TODO: We need to force a page reload here because the store does not differentiate microservices across environments.
+        // This means that all "dev" microservices will be shown as the user browses across applications.
+        // const href = uriWithoutBasePathPrefix(`${parts[0]}/${newApplication}${parts[1]}${location.search}`);
+        // navigate(href); // TODO: Make the app support this instead of a page reload.
+        window.location.href = href;
     };
 
     // TODO How can we fix the popper or the arrow to appear in the first menu item
