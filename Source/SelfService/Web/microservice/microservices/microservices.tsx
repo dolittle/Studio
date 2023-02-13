@@ -45,7 +45,7 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
     useEffect(() => {
         setHasMicroservices(filteredMicroservices.length > 0);
         setLoading(false);
-    }, []);
+    }, [filteredMicroservices]);
 
     const handleCreateMicroservice = () => {
         if (!canEdit) {
