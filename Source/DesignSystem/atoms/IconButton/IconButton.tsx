@@ -18,7 +18,7 @@ export type IconButtonProps = {
     label: string;
 
     /**
-     * Choose icon from @mui/icons-material or leave empty to use default 'close' icon.
+     * Choose icon from @mui/icons-material or leave it empty to use default 'close' icon.
      * @default <CloseRounded />
      */
     icon?: ReactElement<SvgIconProps>;

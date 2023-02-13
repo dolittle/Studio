@@ -14,7 +14,7 @@ export const RestartInfoBox = ({ microserviceName, ...alertBoxProps }: RestartIn
         severity='info'
         title='Restart Microservice'
         message={
-            `New uploads will be added as soon as microservice '${name}' restarts.
+            `New uploads will be added as soon as microservice '${microserviceName}' restarts.
                 It will restart automatically in a few minutes or you can manually restart it now.`
         }
         isDismissible
