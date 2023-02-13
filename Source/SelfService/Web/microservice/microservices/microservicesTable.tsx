@@ -70,6 +70,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             } as MicroserviceObject;
         })).then(data => {
             setMicroserviceRows(data);
+        }).finally(() => {
             setLoadingRows(false);
         });
 
