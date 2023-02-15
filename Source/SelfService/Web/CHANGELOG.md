@@ -1,3 +1,39 @@
+# [3.0.0] - 2023-2-15 [PR: #301](https://github.com/dolittle/Studio/pull/301)
+## Summary
+
+This PR upgrades the react router to the latest version, and does cleans up a few things along the way. There are a few motivations for the upgrade at this time.
+ - Prepare for introducing several `modules` with their own navigation
+ - Ensure that Studio doesn't lag behind on versions, making upgrading even harder in the future
+ - Clean up some of the routes / Nested routes along the way
+
+The guide at https://reactrouter.com/en/6.7.0/upgrading/v5 was the main reference for helping along the way.
+
+What is **not done** in this PR:
+ - Fixing click-jacking of navigation url's (no more onClick) for simple navigation
+ - removing `selfservice` as base-url
+ - Change ApplicationChanger behaviour to updated pattern. The reason for this is the store does not reset microservices across applications, and thus merges them across application environments. This needs to be fixed as a separate PR.
+
+### Added
+
+- For local dev, added handling in webpack devserver for known urls not using /selfservice basename
+- Added a `ButtonLink` component in Studio that extends the design system button with react-router`Link`-component
+
+### Changed
+
+- Upgraded react router to v6.6.2
+- Now leaning on relative url's. from within a Nested route, simplifying navigation and the need to build up full urls for router-navigation
+- `Button` has a new optional `overrides` property to allow overriding from external usage. Used by `ButtonLink`
+
+
+### Fixed
+
+- microserviceTable now re-renders when microservices change, and sets the isLoading flag before and after.
+
+---
+- To see the specific tasks where the Asana app for GitHub is being used, see below:
+  - https://app.asana.com/0/0/1203789530758097
+
+
 # [2.22.1] - 2023-2-6 [PR: #312](https://github.com/dolittle/Studio/pull/312)
 ## Summary
 
