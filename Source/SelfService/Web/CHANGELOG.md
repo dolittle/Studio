@@ -1,3 +1,11 @@
+# [3.1.0] - 2023-2-15 [PR: #310](https://github.com/dolittle/Studio/pull/310)
+- add kubelogin to documentation
+
+## Summary
+
+Add a section on kubelogin to the verify kubernetes access -documentation
+
+
 # [3.0.0] - 2023-2-15 [PR: #301](https://github.com/dolittle/Studio/pull/301)
 ## Summary
 
