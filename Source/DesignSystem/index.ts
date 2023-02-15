@@ -8,7 +8,7 @@ export { themeDark } from './theming/theme';
 export { Accordion } from './atoms/Accordion';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
 export { Button, ButtonProps } from './atoms/Button';
-export { ConfirmDialog } from './atoms/ConfirmDialog';
+export { ConfirmDialog, ConfirmDialogProps } from './atoms/ConfirmDialog';
 export { Checkbox, Form, Input, Select, Switch } from './atoms/Forms';
 export { IconButton } from './atoms/IconButton';
 export { Link } from './atoms/Link';
