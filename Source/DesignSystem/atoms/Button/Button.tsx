@@ -3,7 +3,7 @@
 
 import React, { ReactElement } from 'react';
 
-import { Button as MuiButton, SvgIconProps, SxProps } from '@mui/material';
+import { Button as MuiButton, ExtendButtonBase, ButtonTypeMap, SvgIconProps, SxProps } from '@mui/material';
 
 /**
  * The props for a {@link Button} component.
@@ -108,6 +108,13 @@ export type ButtonProps = {
      * @default undefined
      */
     sx?: SxProps;
+
+    /**
+     * The overrides prop gives you access to the underlying MuiButtonProps object, overriding the styles defined by the component and Material-UI.
+     * @default undefined
+     */
+    overrides?: Partial<ExtendButtonBase<ButtonTypeMap>>;
+
 };
 
 /**
@@ -118,7 +125,7 @@ export type ButtonProps = {
  * <Button label='Click me' variant='filled' isFullWidth startWithIcon={<AddCircle />} />
  */
 export const Button = (
-    { label, variant, color, startWithIcon, endWithIcon, isFullWidth, disabled, type, href, target, ariaLabel, component, role, onClick, sx }: ButtonProps): ReactElement =>
+    { label, variant, color, startWithIcon, endWithIcon, isFullWidth, disabled, type, href, target, ariaLabel, component, role, onClick, sx, overrides }: ButtonProps): ReactElement =>
 
     <MuiButton
         variant={variant === 'filled' ? 'contained' : variant}
@@ -137,6 +144,7 @@ export const Button = (
         sx={sx}
         rel={target ? 'noopener noreferrer' : undefined}
         disableFocusRipple
+        {...overrides}
     >
         {label}
     </MuiButton>;
