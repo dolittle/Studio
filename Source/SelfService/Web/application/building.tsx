@@ -9,7 +9,8 @@ import { isApplicationOnline } from '../api/application';
 import { Box, List, ListItem, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 
-import { AlertBox, AlertBoxErrorMessage, Button, LoadingSpinner } from '@dolittle/design-system';
+import { AlertBox, AlertBoxErrorMessage, LoadingSpinner } from '@dolittle/design-system';
+import { ButtonLink } from '../components/buttonLink';
 
 export const Building = () => {
     const navigate = useNavigate();
@@ -35,7 +36,13 @@ export const Building = () => {
         return (
             <Box sx={{ width: 1 }}>
                 <AlertBox title='Could not create application' message={<AlertBoxErrorMessage />} severity='error' />
-                <Button label='Go back to applications page' color='subtle' startWithIcon={<ArrowBack />} href='/applications/' sx={{ mt: 4 }} />
+                <ButtonLink
+                    label='Go back to applications page'
+                    color='subtle'
+                    startWithIcon={<ArrowBack />}
+                    sx={{ mt: 4 }}
+                    href='/applications'
+                />
             </Box>
         );
     };
