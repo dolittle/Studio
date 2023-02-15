@@ -27,8 +27,8 @@ export const DeleteConfigFileDialog = ({ selectedDataRows, open, setOpen, handle
             cancelText='Cancel'
             confirmText='Delete'
             isOpen={open}
-            handleCancel={() => setOpen(false)}
-            handleConfirm={handleDelete}
+            onCancel={() => setOpen(false)}
+            onConfirm={handleDelete}
         >
             {selectedDataRows.map(file =>
                 <Typography key={file} variant='body2' sx={{ mt: 1.25 }}>{file}</Typography>

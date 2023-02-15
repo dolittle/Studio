@@ -44,8 +44,8 @@ export const ValidateFileDialog = ({ invalid, open, setOpen, handleValidate }: V
             cancelText='Cancel'
             confirmText='Select new'
             isOpen={open}
-            handleCancel={setOpen}
-            handleConfirm={handleValidate}
+            onCancel={setOpen}
+            onConfirm={handleValidate}
         >
             {invalid.file.map(file =>
                 <Box key={file.name} >

@@ -9,26 +9,26 @@ import { Button, IconButton } from '@dolittle/design-system';
 
 export type ConfirmDialogProps = {
     id: string;
-    isOpen?: boolean;
     title: string;
     description?: string;
     children?: React.ReactNode;
     cancelText: string;
     confirmText: string;
-    handleCancel: () => void;
-    handleConfirm: () => void;
+    isOpen?: boolean;
+    onCancel: () => void;
+    onConfirm: () => void;
 };
 
-export const ConfirmDialog = ({ isOpen, id, title, description, children, handleCancel, cancelText, handleConfirm, confirmText }: ConfirmDialogProps) =>
+export const ConfirmDialog = ({ id, title, description, children, cancelText, confirmText, isOpen, onCancel, onConfirm }: ConfirmDialogProps) =>
     <Dialog
-        open={isOpen || false}
-        onClose={handleCancel}
+        open={isOpen ?? false}
+        onClose={onCancel}
         aria-labelledby={`${id}-title`}
         aria-describedby={`${id}-description`}
     >
         <DialogTitle id={`${id}-title`} variant='h6' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             {title}
-            <IconButton label='Close dialog' onClick={handleCancel} />
+            <IconButton ariaLabel='Close dialog' onClick={onCancel} />
         </DialogTitle>
 
         <DialogContent>
@@ -40,7 +40,7 @@ export const ConfirmDialog = ({ isOpen, id, title, description, children, handle
         </DialogContent>
 
         <DialogActions sx={{ mr: 1 }}>
-            <Button onClick={handleCancel} label={cancelText} color='subtle' />
-            <Button onClick={handleConfirm} label={confirmText} />
+            <Button onClick={onCancel} label={cancelText} color='subtle' />
+            <Button onClick={onConfirm} label={confirmText} />
         </DialogActions>
     </Dialog>;
