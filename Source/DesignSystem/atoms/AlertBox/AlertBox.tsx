@@ -96,7 +96,7 @@ export const AlertBox = ({ severity, title, message, isDismissible, isOpen = tru
                 role='alert'
                 action={isDismissible &&
                     <IconButton
-                        label='Dismiss alert'
+                        ariaLabel='Dismiss alert'
                         onClick={() => {
                             setOpen(false);
                             onDismissed?.();
