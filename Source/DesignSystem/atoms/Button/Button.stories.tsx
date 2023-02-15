@@ -18,17 +18,17 @@ export default {
             description: {
                 component: `A button triggers an event or action. Its label should let the user know what will happen next.
 
-**Styling:** Buttons come in three style variations. All variations can be used with or without icons to help lift the UI and 
+**Styling:** Buttons come in three style variations. All variations can be used with or without icons to help lift the UI and
 quickly visually communicate to the user what the button will do.
 
-- *Filled buttons* are reserved for primary actions. They should be used to call attention to an action on a form or to 
-highlight the strongest call to action on the page. Filled buttons should appear only once per container (not including the 
-application header or in a modal dialog). Not every screen requires a primary action, or filled button. Filled buttons use our primary main color. 
-- *Outlined buttons* are reserved for login screens. The empty fill allows third-party icons to be used in their original styling. 
-- *Text buttons* are used for secondary actions, such as 'cancel' or to carry out an optional action within the page. 
-They are commonly found in dialogs, cards or sometimes toolbars. Text buttons may use our primary main color or the inherit color 
-of the page depending on whether or not the user's attention should be drawn to the button or if the button needs to be distinguished 
-from other content on the page. 
+- *Filled buttons* are reserved for primary actions. They should be used to call attention to an action on a form or to
+highlight the strongest call to action on the page. Filled buttons should appear only once per container (not including the
+application header or in a modal dialog). Not every screen requires a primary action, or filled button. Filled buttons use our primary main color.
+- *Outlined buttons* are reserved for login screens. The empty fill allows third-party icons to be used in their original styling.
+- *Text buttons* are used for secondary actions, such as 'cancel' or to carry out an optional action within the page.
+They are commonly found in dialogs, cards or sometimes toolbars. Text buttons may use our primary main color or the inherit color
+of the page depending on whether or not the user's attention should be drawn to the button or if the button needs to be distinguished
+from other content on the page.
 `,
             },
         },
@@ -157,6 +157,19 @@ export const UseAsLink = () => (
     </>
 );
 UseAsLink.decorators = [Story => <Box sx={{ '& a': { mr: 3 } }}>{Story()}</Box>];
+UseAsLink.parameters = {
+    docs: {
+        description: {
+            story: `To use this with an external library like react router, you need to override the component and any additional props needed
+            ${'```'}
+import { Link } from 'react-router-dom'
+<Button {...props} overrides={{ component:Link, to:'/some/path'}} />
+            ${'```'}
+            `
+        },
+    }
+};
+
 
 export const Fullwidth = () => (
     <Button label='full width button with custom style' variant='fullwidth' startWithIcon={<AddCircle />} />
