@@ -13,6 +13,7 @@ import (
 
 type AppConfig struct {
 	PlatformApiHost       string
+	BridgeApiHost         string
 	ListenOn              string
 	SharedSecret          string
 	DevelopmentEnabled    bool
@@ -42,19 +43,28 @@ func initConfig() AppConfig {
 	appConfig.DevelopmentUserID = os.Getenv("DEVELOPMENT_USER_ID")
 	appConfig.DevelopmentEnabled = (appConfig.DevelopmentCustomerID != "" && appConfig.DevelopmentUserID != "")
 
+	appConfig.BridgeApiHost = os.Getenv("BRIDGE_API")
 	return appConfig
 }
 
 type backend struct {
+	mux        *http.ServeMux
 	logContext logrus.FieldLogger
 	appConfig  AppConfig
 }
 
 func NewBackend(logContext logrus.FieldLogger, appConfig AppConfig) backend {
-	return backend{
+	s := backend{
+		mux:        http.NewServeMux(),
 		logContext: logContext,
 		appConfig:  appConfig,
 	}
+
+	if s.appConfig.BridgeApiHost != "" {
+		s.mux.HandleFunc("/bridge/", s.Proxy(s.appConfig.BridgeApiHost))
+	}
+	s.mux.HandleFunc("/", s.Proxy(s.appConfig.PlatformApiHost))
+	return s
 }
 
 func main() {
@@ -70,14 +80,44 @@ func main() {
 		"config": appConfig,
 	}).Info("Server starting")
 
-	http.HandleFunc("/", service.ProxyPlatformApiServer())
+	// http.HandleFunc("/", service.ProxyPlatformApiServer())
 	srv := &http.Server{
 		Addr:         appConfig.ListenOn,
+		Handler:      service,
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
 
 	log.Fatal(srv.ListenAndServe())
+}
+
+func (s backend) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	s.mux.ServeHTTP(w, r)
+}
+
+// Proxy replicates the old behaviour found in ProxyPlatformApiServer, but for
+// any host. Used when setting up the handlers in NewBackend.
+func (s backend) Proxy(host string) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		s.AddSharedSecret(r)
+		if s.appConfig.DevelopmentEnabled {
+			s.AddDolittleHeaders(r)
+		}
+
+		proxyURL, _ := url.Parse("/")
+		proxyURL.Host = host
+		proxyURL.Scheme = "http"
+
+		proxy := httputil.NewSingleHostReverseProxy(proxyURL)
+
+		r.Host = host
+		r.URL.Host = host
+		r.URL.Scheme = proxyURL.Scheme
+
+		r.Header.Set("X-Forwarded-Host", r.Header.Get("Host"))
+
+		proxy.ServeHTTP(w, r)
+	}
 }
 
 func (s backend) ProxyPlatformApiServer() func(w http.ResponseWriter, r *http.Request) {
