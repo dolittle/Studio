@@ -15,7 +15,7 @@ export type IconButtonProps = {
      *
      * For accessibility, it is recommended to set this value to a meaningful string rather than an empty string.
      */
-    label: string;
+    ariaLabel: string;
 
     /**
      * Choose icon from @mui/icons-material or leave it empty to use default 'close' icon.
@@ -72,12 +72,12 @@ export type IconButtonProps = {
  * @param {...IconButtonProps} props - The {@link IconButtonProps}.
  * @returns {ReactElement} A new {@link IconButton} component.
  * @example
- * <IconButton label="Download" icon={<DownloadRounded />} />
+ * <IconButton ariaLabel='Download logs' icon={<DownloadRounded />} />
  */
-export const IconButton = ({ label, icon, color, size = 'small', disabled, href, download, onClick }: IconButtonProps): ReactElement =>
+export const IconButton = ({ ariaLabel, icon, color, size = 'small', disabled, href, download, onClick }: IconButtonProps): ReactElement =>
     <MuiIconButton
-        aria-label={label}
-        color={color || 'inherit'}
+        aria-label={ariaLabel}
+        color={color ?? 'inherit'}
         size={size}
         disabled={disabled}
         component={href ? 'a' : 'button'}
