@@ -52,7 +52,7 @@ from other content on the page.
         color: {
             control: {
                 type: 'radio',
-                options: ['primary', 'subtle', 'secondary', 'error', 'info', 'success'],
+                options: ['primary', 'subtle', 'secondary', 'error', 'info', 'success', 'warning'],
             },
         },
         startWithIcon: {
