@@ -11,26 +11,26 @@ import {
 
 import { Typography } from '@mui/material';
 
-import { ShortInfoWithEnvironment } from '../../api/api';
-import { getMenuWithApplication, LayoutWithSidebar } from '../../layout/layoutWithSidebar';
+import { ShortInfoWithEnvironment } from '../api/api';
+import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
 
 // I wonder if scss is scoped like svelte. I hope so!
 // Not scoped like svelte
-import '../../spaces/applications/applicationScreen.scss';
+import '../spaces/applications/applicationScreen.scss';
 
-import { DocumentationContainerScreen } from '../../solutions/documentation/container';
-import { RouteNotFound } from '../../components/notfound';
-import { PickEnvironment, isEnvironmentValidFromUri } from '../../components/pickEnvironment';
-import { useGlobalContext } from '../../solutions/stores/notifications';
-import { TopNavBar } from '../../layout/topNavBar';
+import { DocumentationContainerScreen } from './documentation/container';
+import { RouteNotFound } from '../components/notfound';
+import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
+import { useGlobalContext } from '../stores/notifications';
+import { TopNavBar } from '../layout/topNavBar';
 import {
     HttpResponseApplication,
     getApplications,
     getApplication,
     HttpResponseApplications,
-} from '../../api/application';
-import { withRouteApplicationState } from '../withRouteApplicationState';
+} from '../api/application';
+import { withRouteApplicationState } from '../screens/withRouteApplicationState';
 
 
 

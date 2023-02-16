@@ -5,12 +5,12 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { ShortInfoWithEnvironment } from '../api/api';
-import { getApplications, HttpResponseApplications } from '../api/application';
-import { Building } from '../spaces/applications/building';
+import { ShortInfoWithEnvironment } from '../../api/api';
+import { getApplications, HttpResponseApplications } from '../../api/application';
+import { Building } from './building';
 
-import { Create } from '../spaces/applications/create/create';
-import { LoginWrapper } from '../layout/loginWrapper';
+import { Create } from './create/create';
+import { LoginWrapper } from '../../layout/loginWrapper';
 
 export const ApplicationScreen: React.FunctionComponent = () => {
     const { enqueueSnackbar } = useSnackbar();

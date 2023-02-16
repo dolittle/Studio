@@ -4,12 +4,12 @@
 import React from 'react';
 import { Route, Routes, useNavigate, } from 'react-router-dom';
 
-import { Create as CreateCustomer } from '../../admin/customer/create';
-import { ViewAll as ViewAllCustomers } from '../../admin/customer/viewAll';
-import { View as ViewCustomer } from '../../admin/customer/view';
-import { View as ViewApplicationAccess } from '../../admin/application/view';
+import { Create as CreateCustomer } from './customer/create';
+import { ViewAll as ViewAllCustomers } from './customer/viewAll';
+import { View as ViewCustomer } from './customer/view';
+import { View as ViewApplicationAccess } from './application/view';
 
-import { LayoutWithSidebar } from '../../layout/layoutWithSidebar';
+import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
 import { Typography } from '@mui/material';
 

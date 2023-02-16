@@ -4,26 +4,26 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useNavigate, Routes, generatePath } from 'react-router-dom';
 
-import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../../api/api';
-import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../../api/application';
+import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../api/api';
+import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
-import { Microservice } from '../../solutions/microservice/microservices/microservices';
-import { MicroserviceNewScreen } from '../../solutions/microservice/microserviceNewScreen';
-import { MicroserviceViewScreen } from '../../solutions/microservice/microserviceViewScreen';
-import { LayoutWithSidebar, getMenuWithApplication } from '../../layout/layoutWithSidebar';
+import { Microservice } from './microservice/microservices/microservices';
+import { MicroserviceNewScreen } from './microservice/microserviceNewScreen';
+import { MicroserviceViewScreen } from './microservice/microserviceViewScreen';
+import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithSidebar';
 
 // I wonder if scss is scoped like svelte. I hope so!
 // Not scoped like svelte
-import '../../spaces/applications/applicationScreen.scss';
+import '../spaces/applications/applicationScreen.scss';
 
-import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../../solutions/stores/microservice';
-import { useGlobalContext } from '../../solutions/stores/notifications';
+import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
+import { useGlobalContext } from '../stores/notifications';
 
-import { isEnvironmentValidFromUri, PickEnvironment } from '../../components/pickEnvironment';
-import { RouteNotFound } from '../../components/notfound';
-import { TopNavBar } from '../../layout/topNavBar';
+import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
+import { RouteNotFound } from '../components/notfound';
+import { TopNavBar } from '../layout/topNavBar';
 
-import { withRouteApplicationState } from '../withRouteApplicationState';
+import { withRouteApplicationState } from '../screens/withRouteApplicationState';
 
 import { Typography } from '@mui/material';
 

@@ -8,13 +8,13 @@ import {
     useNavigate,
 } from 'react-router-dom';
 
-import { getApplication, HttpResponseApplication } from '../../api/application';
-import { getMenuWithApplication, LayoutWithSidebar } from '../../layout/layoutWithSidebar';
-import { BreadCrumbContainer } from '../../layout/breadcrumbs';
-import { useRouteApplicationParams } from '../../utils/route';
-import { useGlobalContext } from '../../solutions/stores/notifications';
+import { getApplication, HttpResponseApplication } from '../api/application';
+import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { BreadCrumbContainer } from '../layout/breadcrumbs';
+import { useRouteApplicationParams } from '../utils/route';
+import { useGlobalContext } from '../stores/notifications';
 
-import { Container } from '../../solutions/m3connector/container';
+import { Container } from './m3connector/container';
 import { Typography } from '@mui/material';
 
 type Props = {

@@ -6,22 +6,22 @@ import { useNavigate } from 'react-router-dom';
 
 import { Box, Typography } from '@mui/material';
 
-import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../../api/api';
-import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../../api/application';
+import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../api/api';
+import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
-import { useGlobalContext } from '../../solutions/stores/notifications';
-import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../../solutions/stores/microservice';
-import { LayoutWithSidebar, getMenuWithApplication } from '../../layout/layoutWithSidebar';
-import { isEnvironmentValidFromUri, PickEnvironment } from '../../components/pickEnvironment';
-import { TopNavBar } from '../../layout/topNavBar';
+import { useGlobalContext } from '../stores/notifications';
+import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
+import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithSidebar';
+import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
+import { TopNavBar } from '../layout/topNavBar';
 
-import { LogFilterMicroservice, LogFilterPanel } from '../../solutions/logging/logFilter/logFilterPanel';
-import { useLogFilters } from '../../solutions/logging/logFilter/useLogFilters';
-import { LogsInRange } from '../../solutions/logging/logsInRange';
-import { LogsFromLast } from '../../solutions/logging/logsFromLast';
-import { LogPanel } from '../../solutions/logging/logPanel';
+import { LogFilterMicroservice, LogFilterPanel } from './logging/logFilter/logFilterPanel';
+import { useLogFilters } from './logging/logFilter/useLogFilters';
+import { LogsInRange } from './logging/logsInRange';
+import { LogsFromLast } from './logging/logsFromLast';
+import { LogPanel } from './logging/logPanel';
 
-import { withRouteApplicationState } from '../withRouteApplicationState';
+import { withRouteApplicationState } from '../screens/withRouteApplicationState';
 
 /**
  * A day in Loki (log backend) time. Nanoseconds.

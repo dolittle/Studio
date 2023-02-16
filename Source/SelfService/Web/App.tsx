@@ -18,22 +18,22 @@ import { Snackbar } from '@dolittle/design-system/atoms/Snackbar/Snackbar';
 
 import { useViewportResize } from './utils/useViewportResize';
 
-import { GlobalContextProvider } from './solutions/stores/notifications';
+import { GlobalContextProvider } from './stores/notifications';
 
 import { RouteNotFound } from './components/notfound';
 import { DieAndRestart } from './components/dieAndRestart';
 
 import { LayoutWithSidebar } from './layout/layoutWithSidebar';
 
-import { BackupsScreen } from './screens/solutions/backupsScreen';
-import { DocumentationScreen } from './screens/solutions/documentationScreen';
-import { MicroservicesScreen } from './screens/solutions/microservicesScreen';
-import { Screen as AdminScreen } from './screens/admin/adminScreen';
-import { ApplicationsScreen } from './screens/applicationsScreen';
-import { ApplicationScreen } from './screens/applicationScreen';
-import { ContainerRegistryScreen } from './screens/solutions/containerRegistryScreen';
-import { M3ConnectorScreen } from './screens/solutions/m3connectorScreen';
-import { LogsScreen } from './screens/solutions/logsScreen';
+import { BackupsScreen } from './solutions/backupsScreen';
+import { DocumentationScreen } from './solutions/documentationScreen';
+import { MicroservicesScreen } from './solutions/microservicesScreen';
+import { Screen as AdminScreen } from './admin/adminScreen';
+import { ApplicationsScreen } from './spaces/applications/applicationsScreen';
+import { ApplicationScreen } from './spaces/applications/applicationScreen';
+import { ContainerRegistryScreen } from './solutions/containerRegistryScreen';
+import { M3ConnectorScreen } from './solutions/m3connectorScreen';
+import { LogsScreen } from './solutions/logsScreen';
 import { IntegrationsIndex } from './integrations';
 
 // Set license info for MUI components

@@ -9,13 +9,13 @@ import {
     generatePath
 } from 'react-router-dom';
 
-import { getApplication, HttpResponseApplication } from '../../api/application';
-import { ViewCard } from '../../solutions/backup/viewCard';
-import { getMenuWithApplication, LayoutWithSidebar } from '../../layout/layoutWithSidebar';
-import { BreadCrumbContainer } from '../../layout/breadcrumbs';
-import { useRouteApplicationParams } from '../../utils/route';
-import { ListView } from '../../solutions/backup/listView';
-import { useGlobalContext } from '../../solutions/stores/notifications';
+import { getApplication, HttpResponseApplication } from '../api/application';
+import { ViewCard } from '../solutions/backup/viewCard';
+import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { BreadCrumbContainer } from '../layout/breadcrumbs';
+import { useRouteApplicationParams } from '../utils/route';
+import { ListView } from './backup/listView';
+import { useGlobalContext } from '../stores/notifications';
 import { Typography } from '@mui/material';
 
 type Props = {

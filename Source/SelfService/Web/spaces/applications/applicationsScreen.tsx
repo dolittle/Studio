@@ -11,13 +11,13 @@ import { AddCircle, ArrowBack } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system';
 
-import { LoginWrapper } from '../layout/loginWrapper';
-import { useGlobalContext } from '../solutions/stores/notifications';
+import { LoginWrapper } from '../../layout/loginWrapper';
+import { useGlobalContext } from '../../stores/notifications';
 
-import { ShortInfoWithEnvironment } from '../api/api';
-import { HttpResponseApplications, getApplications } from '../api/application';
+import { ShortInfoWithEnvironment } from '../../api/api';
+import { HttpResponseApplications, getApplications } from '../../api/application';
 
-import { ApplicationsList } from '../spaces/applications/applicationsList';
+import { ApplicationsList } from './applicationsList';
 
 export const ApplicationsScreen = () => {
     const navigate = useNavigate();

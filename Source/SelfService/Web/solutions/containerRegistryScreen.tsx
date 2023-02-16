@@ -9,21 +9,21 @@ import {
     generatePath
 } from 'react-router-dom';
 
-import { ShortInfoWithEnvironment } from '../../api/api';
-import { getMenuWithApplication, LayoutWithSidebar } from '../../layout/layoutWithSidebar';
+import { ShortInfoWithEnvironment } from '../api/api';
+import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
 
-import { RouteNotFound } from '../../components/notfound';
-import { PickEnvironment, isEnvironmentValidFromUri } from '../../components/pickEnvironment';
-import { TopNavBar } from '../../layout/topNavBar';
+import { RouteNotFound } from '../components/notfound';
+import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
+import { TopNavBar } from '../layout/topNavBar';
 import {
     HttpResponseApplication,
     getApplications,
     getApplication,
     HttpResponseApplications,
-} from '../../api/application';
-import { withRouteApplicationState } from '../withRouteApplicationState';
-import { ContainerRegistryContainer } from '../../solutions/containerregistry/container';
+} from '../api/application';
+import { withRouteApplicationState } from '../screens/withRouteApplicationState';
+import { ContainerRegistryContainer } from './containerregistry/container';
 import { Typography } from '@mui/material';
 
 
