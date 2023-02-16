@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
-import { getCustomer, CustomerDetailed } from '../api/customer';
-import { saveStudioConfig, Studio } from '../api/studio';
-import { ButtonText } from '../theme/buttonText';
+import { getCustomer, CustomerDetailed } from '../../api/customer';
+import { saveStudioConfig, Studio } from '../../api/studio';
+import { ButtonText } from '../../theme/buttonText';
 import { Box, Typography } from '@mui/material';
 
 const styles = {
