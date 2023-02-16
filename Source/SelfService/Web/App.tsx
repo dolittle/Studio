@@ -25,7 +25,6 @@ import { DieAndRestart } from './components/dieAndRestart';
 
 import { LayoutWithSidebar } from './layout/layoutWithSidebar';
 
-import { LoginScreen } from './screens/loginScreen';
 import { BackupsScreen } from './screens/solutions/backupsScreen';
 import { DocumentationScreen } from './screens/solutions/documentationScreen';
 import { MicroservicesScreen } from './screens/solutions/microservicesScreen';
@@ -74,8 +73,6 @@ export const App = () => {
                             >
                                 <Routes>
                                     <Route path='/' element={<Navigate to='/applications' />} />
-
-                                    <Route path='/login' element={<LoginScreen />} />
 
                                     <Route path='/applications' element={<ApplicationsScreen />} />
 
