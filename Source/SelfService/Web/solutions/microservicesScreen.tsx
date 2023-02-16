@@ -17,7 +17,7 @@ import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithS
 import '../spaces/applications/applicationScreen.scss';
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
-import { useGlobalContext } from '../stores/notifications';
+import { useGlobalContext } from '../context/globalContext';
 
 import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';

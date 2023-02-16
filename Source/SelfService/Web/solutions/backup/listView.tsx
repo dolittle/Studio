@@ -18,7 +18,7 @@ import { HttpResponseApplication } from '../../api/application';
 
 
 import { BackupLink, getLink, BackupsForApplication, getBackupsByApplication, BackupLinkShareInput } from '../../api/backups';
-import { useGlobalContext } from '../stores/notifications';
+import { useGlobalContext } from '../../context/globalContext';
 
 type BackupsDetailsList = {
     environment: string;

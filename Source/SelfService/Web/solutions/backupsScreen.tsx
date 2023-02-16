@@ -15,7 +15,7 @@ import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithS
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { useRouteApplicationParams } from '../utils/route';
 import { ListView } from './backup/listView';
-import { useGlobalContext } from '../stores/notifications';
+import { useGlobalContext } from '../context/globalContext';
 import { Typography } from '@mui/material';
 
 type Props = {

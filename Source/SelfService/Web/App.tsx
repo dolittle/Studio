@@ -18,7 +18,7 @@ import { Snackbar } from '@dolittle/design-system/atoms/Snackbar/Snackbar';
 
 import { useViewportResize } from './utils/useViewportResize';
 
-import { GlobalContextProvider } from './stores/notifications';
+import { GlobalContextProvider } from './context/globalContext';
 
 import { RouteNotFound } from './components/notfound';
 import { DieAndRestart } from './components/dieAndRestart';

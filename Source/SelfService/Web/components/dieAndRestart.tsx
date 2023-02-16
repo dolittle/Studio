@@ -4,7 +4,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { Link, Box, Typography } from '@mui/material';
-import { useGlobalContext } from '../solutions/stores/notifications';
+import { useGlobalContext } from '../context/globalContext';
 
 
 export const DieAndRestart: React.FunctionComponent = () => {

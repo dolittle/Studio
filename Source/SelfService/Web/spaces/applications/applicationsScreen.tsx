@@ -12,7 +12,7 @@ import { AddCircle, ArrowBack } from '@mui/icons-material';
 import { Button } from '@dolittle/design-system';
 
 import { LoginWrapper } from '../../layout/loginWrapper';
-import { useGlobalContext } from '../../stores/notifications';
+import { useGlobalContext } from '../../context/globalContext';
 
 import { ShortInfoWithEnvironment } from '../../api/api';
 import { HttpResponseApplications, getApplications } from '../../api/application';

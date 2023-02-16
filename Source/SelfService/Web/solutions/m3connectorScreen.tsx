@@ -12,7 +12,7 @@ import { getApplication, HttpResponseApplication } from '../api/application';
 import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 import { BreadCrumbContainer } from '../layout/breadcrumbs';
 import { useRouteApplicationParams } from '../utils/route';
-import { useGlobalContext } from '../stores/notifications';
+import { useGlobalContext } from '../context/globalContext';
 
 import { Container } from './m3connector/container';
 import { Typography } from '@mui/material';

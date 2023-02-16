@@ -9,7 +9,7 @@ import { Box, Typography } from '@mui/material';
 import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../api/api';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/application';
 
-import { useGlobalContext } from '../stores/notifications';
+import { useGlobalContext } from '../context/globalContext';
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
 import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithSidebar';
 import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';

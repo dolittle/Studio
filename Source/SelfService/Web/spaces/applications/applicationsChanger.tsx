@@ -11,7 +11,7 @@ import { SxProps } from '@mui/material';
 
 
 import { ShortInfoWithEnvironment } from '../../api/api';
-import { useGlobalContext } from '../../solutions/stores/notifications';
+import { useGlobalContext } from '../../context/globalContext';
 import { uriWithoutBasePathPrefix } from '../../store';
 
 type Props = {

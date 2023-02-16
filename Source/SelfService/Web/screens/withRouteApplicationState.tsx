@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, ComponentType } from 'react';
-import { useGlobalContext } from '../solutions/stores/notifications';
+import { useGlobalContext } from '../context/globalContext';
 import { RouteApplicationParams, useRouteApplicationParams } from '../utils/route';
 
 export type WithRouteApplicationProps = {

@@ -22,7 +22,7 @@ import '../spaces/applications/applicationScreen.scss';
 import { DocumentationContainerScreen } from './documentation/container';
 import { RouteNotFound } from '../components/notfound';
 import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
-import { useGlobalContext } from '../stores/notifications';
+import { useGlobalContext } from '../context/globalContext';
 import { TopNavBar } from '../layout/topNavBar';
 import {
     HttpResponseApplication,
