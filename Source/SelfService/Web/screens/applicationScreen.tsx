@@ -7,9 +7,9 @@ import { useSnackbar } from 'notistack';
 
 import { ShortInfoWithEnvironment } from '../api/api';
 import { getApplications, HttpResponseApplications } from '../api/application';
-import { Building } from '../applications/building';
+import { Building } from '../spaces/applications/building';
 
-import { Create } from '../applications/create/create';
+import { Create } from '../spaces/applications/create/create';
 import { LoginWrapper } from '../layout/loginWrapper';
 
 export const ApplicationScreen: React.FunctionComponent = () => {

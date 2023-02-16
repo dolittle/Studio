@@ -7,7 +7,7 @@ import { useNavigate, generatePath } from 'react-router-dom';
 import { ShortInfoWithEnvironment } from '../api/api';
 import { HttpResponseApplication } from '../api/application';
 import { List } from '@fluentui/react/lib/List';
-import { useGlobalContext } from '../stores/notifications';
+import { useGlobalContext } from '../solutions/stores/notifications';
 
 import {
     Link,
