@@ -5,7 +5,7 @@ import React from 'react';
 
 import { ShortInfoWithEnvironment } from '../api/api';
 
-import { ApplicationsChanger } from '../application/applicationsChanger';
+import { ApplicationsChanger } from '../applications/applicationsChanger';
 
 type TopRightMenuProps = {
     applications: ShortInfoWithEnvironment[];

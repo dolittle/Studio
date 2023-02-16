@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { ShortInfoWithEnvironment } from '../../api/api';
+import { ShortInfoWithEnvironment } from '../api/api';
 
 import { List } from '@mui/material';
 

@@ -30,7 +30,7 @@ import { BackupsScreen } from './screens/backupsScreen';
 import { DocumentationScreen } from './screens/documentationScreen';
 import { MicroservicesScreen } from './screens/microservicesScreen';
 import { Screen as AdminScreen } from './screens/adminScreen';
-import { ApplicationsScreen } from './screens/applicationsScreen/applicationsScreen';
+import { ApplicationsScreen } from './screens/applicationsScreen';
 import { ApplicationScreen } from './screens/applicationScreen';
 import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
 import { M3ConnectorScreen } from './screens/m3connectorScreen';

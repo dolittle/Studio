@@ -15,7 +15,7 @@ import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithS
 
 // I wonder if scss is scoped like svelte. I hope so!
 // Not scoped like svelte
-import '../application/applicationScreen.scss';
+import '../applications/applicationScreen.scss';
 
 import { DocumentationContainerScreen } from '../documentation/container';
 import { RouteNotFound } from '../components/notfound';
