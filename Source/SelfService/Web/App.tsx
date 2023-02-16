@@ -35,6 +35,7 @@ import { ApplicationScreen } from './screens/applicationScreen';
 import { ContainerRegistryScreen } from './screens/solutions/containerRegistryScreen';
 import { M3ConnectorScreen } from './screens/solutions/m3connectorScreen';
 import { LogsScreen } from './screens/solutions/logsScreen';
+import { IntegrationsIndex } from './integrations';
 
 // Set license info for MUI components
 LicenseInfo.setLicenseKey(process.env.MUI_LICENSE_KEY!);
@@ -76,11 +77,11 @@ export const App = () => {
 
                                     <Route path='/login' element={<LoginScreen />} />
 
-                                    <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
-
                                     <Route path='/applications' element={<ApplicationsScreen />} />
 
                                     <Route path='/application/*' element={<ApplicationScreen />} />
+
+                                    <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
 
                                     <Route path='/microservices/application/:applicationId/:environment/*' element={<MicroservicesScreen />} />
 
@@ -99,6 +100,7 @@ export const App = () => {
                                             <DieAndRestart />
                                         </LayoutWithSidebar>
                                     } />
+                                    <Route path="/:applicationId/integrations/*" element={<IntegrationsIndex />} />
                                     <Route path='*' element={<RouteNotFound redirectUrl='/applications' auto={true} />} />
                                 </Routes>
                             </SnackbarProvider>
