@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, generatePath } from 'react-router-dom';
 
 import {
     Table, TableContainer, TableHead,
@@ -43,7 +43,11 @@ export const View: React.FunctionComponent<Props> = (props) => {
                                     scope="row"
                                     onClick={(event) => {
                                         event.preventDefault();
-                                        const href = `/containerregistry/application/${applicationId}/${environment}/overview/tags/${row.name}`;
+                                        const href = generatePath(
+                                            '/containerregistry/application/:applicationId/:environment/overview/tags/:image',
+                                            { applicationId, environment, image: row.name }
+                                        );
+                                        // const href = `/containerregistry/application/${applicationId}/${environment}/overview/tags/${row.name}`;
                                         navigate(href);
                                     }}
                                     sx={{
