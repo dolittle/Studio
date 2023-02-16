@@ -45,9 +45,8 @@ export const View: React.FunctionComponent<Props> = (props) => {
                                         event.preventDefault();
                                         const href = generatePath(
                                             '/containerregistry/application/:applicationId/:environment/overview/tags/:image',
-                                            { applicationId, environment, image: row.name }
+                                            { applicationId, environment, image: encodeURIComponent(row.name) }
                                         );
-                                        // const href = `/containerregistry/application/${applicationId}/${environment}/overview/tags/${row.name}`;
                                         navigate(href);
                                     }}
                                     sx={{
