@@ -1,3 +1,14 @@
+# [3.1.1] - 2023-2-16 [PR: #313](https://github.com/dolittle/Studio/pull/313)
+## Summary
+
+As part of the upgrade to latest react router (#301) the image/tags route was changed and no longer supported using `/` as part of the URL. This fix encodes the :image parameter so that it should work
+
+
+### Fixed
+
+- Fix broken links to images tags in container registry view for images containing '/'
+
+
 # [3.1.0] - 2023-2-15 [PR: #310](https://github.com/dolittle/Studio/pull/310)
 - add kubelogin to documentation
 
