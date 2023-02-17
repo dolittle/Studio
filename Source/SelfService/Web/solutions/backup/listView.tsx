@@ -13,11 +13,11 @@ import Box from '@mui/material/Box';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import ShareIcon from '@mui/icons-material/Share';
 
-import { ShortInfo } from '../../api/api';
-import { HttpResponseApplication } from '../../api/application';
+import { ShortInfo } from '../../api/solutions/api';
+import { HttpResponseApplication } from '../../api/solutions/application';
 
 
-import { BackupLink, getLink, BackupsForApplication, getBackupsByApplication, BackupLinkShareInput } from '../../api/backups';
+import { BackupLink, getLink, BackupsForApplication, getBackupsByApplication, BackupLinkShareInput } from '../../api/solutions/backups';
 import { useGlobalContext } from '../../context/globalContext';
 
 type BackupsDetailsList = {

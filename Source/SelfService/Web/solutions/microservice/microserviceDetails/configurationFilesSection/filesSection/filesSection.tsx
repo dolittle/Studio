@@ -9,7 +9,7 @@ import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { Accordion } from '@dolittle/design-system';
 
-import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../../api/api';
+import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../../api/solutions/api';
 
 import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
 import { EmptyDataTable } from '../../../components/emptyDataTable';

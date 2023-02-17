@@ -3,13 +3,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
-import { HttpResponseApplication } from '../../api/application';
+import { HttpResponseApplication } from '../../api/solutions/application';
 
 import { View as Tags } from './tags';
 import { View as Images } from './images';
 import { View as Welcome } from './welcome';
 
-import { getReposInContainerRegistry, ContainerRegistryImages } from '../../api/containerregistry';
+import { getReposInContainerRegistry, ContainerRegistryImages } from '../../api/solutions/containerregistry';
 import { Typography } from '@mui/material';
 
 type Props = {

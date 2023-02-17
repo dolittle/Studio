@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { HttpResponseApplication } from '../../api/application';
+import { HttpResponseApplication } from '../../api/solutions/application';
 import { Overview } from './overview';
 
 type Props = {

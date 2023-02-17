@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { getCustomers, Customers } from '../../api/customer';
+import { getCustomers, Customers } from '../../api/solutions/customer';
 import { ButtonText } from '../../theme/buttonText';
 import { Typography } from '@mui/material';
 

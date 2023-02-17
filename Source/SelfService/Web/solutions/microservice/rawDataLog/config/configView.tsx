@@ -6,7 +6,7 @@ import { Label } from '@fluentui/react/lib/Label';
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Stack } from '@fluentui/react/lib/Stack';
 
-import { MicroserviceRawDataLogIngestor } from '../../../../api/index';
+import { MicroserviceRawDataLogIngestor } from '../../../../api/solutions/index';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };

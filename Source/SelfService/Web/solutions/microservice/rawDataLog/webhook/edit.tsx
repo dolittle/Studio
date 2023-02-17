@@ -6,7 +6,7 @@ import { Label } from '@fluentui/react/lib/Label';
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { MicroserviceRawDataLogIngestorWebhookConfig, ConnectorWebhookConfigBasic } from '../../../../api/index';
+import { MicroserviceRawDataLogIngestorWebhookConfig, ConnectorWebhookConfigBasic } from '../../../../api/solutions/index';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
 import { BasicAuthComponent } from '../../../../components/basicAuthComponent';

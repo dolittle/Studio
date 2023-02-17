@@ -5,7 +5,7 @@ import { Typography } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getData, M3ConnectorData } from '../../api/m3connector';
+import { getData, M3ConnectorData } from '../../api/solutions/m3connector';
 
 type Props = {
     applicationId: string

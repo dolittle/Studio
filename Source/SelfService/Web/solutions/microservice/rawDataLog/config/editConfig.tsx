@@ -12,9 +12,9 @@ import { useNavigate } from 'react-router-dom';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Config } from './config';
 import { saveRawDataLogIngestorMicroservice } from '../../../stores/microservice';
-import { MicroserviceRawDataLogIngestor } from '../../../../api/index';
+import { MicroserviceRawDataLogIngestor } from '../../../../api/solutions/index';
 
-import { HttpResponseApplication } from '../../../../api/application';
+import { HttpResponseApplication } from '../../../../api/solutions/application';
 
 const stackTokens = { childrenGap: 15 };
 

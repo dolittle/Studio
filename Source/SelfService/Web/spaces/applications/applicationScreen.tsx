@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { ShortInfoWithEnvironment } from '../../api/api';
-import { getApplications, HttpResponseApplications } from '../../api/application';
+import { ShortInfoWithEnvironment } from '../../api/solutions/api';
+import { getApplications, HttpResponseApplications } from '../../api/solutions/application';
 import { Building } from './building';
 
 import { Create } from './create/create';

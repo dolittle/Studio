@@ -5,7 +5,7 @@ import React from 'react';
 import { Grid, Typography } from '@mui/material';
 
 import { HeaderDataRow } from './headDataRow';
-import { IngressURLWithCustomerTenantID, SimpleIngressPath } from '../../../api/api';
+import { IngressURLWithCustomerTenantID, SimpleIngressPath } from '../../../api/solutions/api';
 
 type Props = {
     urls: IngressURLWithCustomerTenantID[];

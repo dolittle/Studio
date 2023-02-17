@@ -6,9 +6,9 @@ import React, { useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 
 import { MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
-import { HttpResponsePodStatus } from '../../../api/api';
-import { MicroserviceSimple } from '../../../api/index';
-import { HttpResponseApplication } from '../../../api/application';
+import { HttpResponsePodStatus } from '../../../api/solutions/api';
+import { MicroserviceSimple } from '../../../api/solutions/index';
+import { HttpResponseApplication } from '../../../api/solutions/application';
 
 import { Box, Typography } from '@mui/material';
 

@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 
 import { ConfirmDialog } from '@dolittle/design-system';
 
-import { restartMicroservice } from '../../../api/api';
+import { restartMicroservice } from '../../../api/solutions/api';
 
 type MicroserviceRestartProps = {
     applicationId: string;

@@ -7,8 +7,8 @@ import { useReadable } from 'use-svelte-store';
 
 import { Typography } from '@mui/material';
 
-import { getPodStatus, HttpResponsePodStatus } from '../../api/api';
-import { HttpResponseApplication } from '../../api/application';
+import { getPodStatus, HttpResponsePodStatus } from '../../api/solutions/api';
+import { HttpResponseApplication } from '../../api/solutions/application';
 
 import { microservices, MicroserviceStore } from '../stores/microservice';
 

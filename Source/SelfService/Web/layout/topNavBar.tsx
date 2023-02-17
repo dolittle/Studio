@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { ShortInfoWithEnvironment } from '../api/api';
+import { ShortInfoWithEnvironment } from '../api/solutions/api';
 
 import { Box, Grid } from '@mui/material';
 import { BreadCrumbContainer, BreadcrumbsRoute } from './breadcrumbs';

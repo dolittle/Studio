@@ -7,7 +7,7 @@ import { Typography } from '@mui/material';
 
 import { LoadingSpinner } from '@dolittle/design-system';
 
-import { getPodLogs, HttpResponsePodLog } from '../../api/api';
+import { getPodLogs, HttpResponsePodLog } from '../../api/solutions/api';
 
 export const PodLogScreen = ({ applicationId, podName, containerName }: any) => {
     const [data, setData] = useState({ logs: '' } as HttpResponsePodLog);

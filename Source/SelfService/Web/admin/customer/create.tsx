@@ -11,7 +11,7 @@ import { Box, Grid, Step, Stepper, StepContent, StepLabel, Typography } from '@m
 import { TextField as ThemedTextField } from '../../theme/textField';
 import { Button } from '@dolittle/design-system';
 
-import { createCustomer, HttpCustomerRequest } from '../../api/customer';
+import { createCustomer, HttpCustomerRequest } from '../../api/solutions/customer';
 
 const styles = {
     root: {

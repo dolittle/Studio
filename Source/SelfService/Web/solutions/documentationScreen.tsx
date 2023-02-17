@@ -11,7 +11,7 @@ import {
 
 import { Typography } from '@mui/material';
 
-import { ShortInfoWithEnvironment } from '../api/api';
+import { ShortInfoWithEnvironment } from '../api/solutions/api';
 import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
 
 
@@ -29,7 +29,7 @@ import {
     getApplications,
     getApplication,
     HttpResponseApplications,
-} from '../api/application';
+} from '../api/solutions/application';
 import { withRouteApplicationState } from '../screens/withRouteApplicationState';
 
 

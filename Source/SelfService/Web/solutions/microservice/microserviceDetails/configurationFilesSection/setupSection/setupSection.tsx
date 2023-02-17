@@ -12,8 +12,8 @@ import { Accordion, ConfirmDialog, Form } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
 
-import { HttpResponseApplication } from '../../../../../api/application';
-import { MicroserviceFormParameters } from '../../../../../api/index';
+import { HttpResponseApplication } from '../../../../../api/solutions/application';
+import { MicroserviceFormParameters } from '../../../../../api/solutions/index';
 
 import { HasM3ConnectorField } from '../../../components/form/hasM3ConnectorField';
 import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';

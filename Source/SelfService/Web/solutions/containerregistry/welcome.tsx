@@ -3,7 +3,7 @@
 
 import { Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { getPersonalisedInfo } from '../../api/application';
+import { getPersonalisedInfo } from '../../api/solutions/application';
 
 import { Doc as AccessContainerRegistry } from '../documentation/accessContainerRegistry';
 

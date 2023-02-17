@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { HttpResponseApplication } from '../../../api/application';
+import { HttpResponseApplication } from '../../../api/solutions/application';
 
 import { useReadable } from 'use-svelte-store';
 import { canEditMicroservices, microservices } from '../../stores/microservice';

@@ -3,7 +3,7 @@
 import { writable } from 'use-svelte-store';
 import {
     getPersonalisedInfo,
-} from '../../api/application';
+} from '../../api/solutions/application';
 
 export interface Info {
     containerRegistryName: string;

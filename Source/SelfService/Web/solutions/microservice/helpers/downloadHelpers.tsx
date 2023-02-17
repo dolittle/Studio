@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { getPodLogs } from '../../../api/api';
+import { getPodLogs } from '../../../api/solutions/api';
 
 import { DownloadRounded } from '@mui/icons-material';
 import { GridRenderCellParams } from '@mui/x-data-grid-pro';

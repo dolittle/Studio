@@ -14,9 +14,9 @@ import { Button, Form, LoadingSpinner } from '@dolittle/design-system';
 
 import { saveSimpleMicroservice } from '../../stores/microservice';
 
-import { MicroserviceSimple, MicroserviceFormParameters } from '../../../api/index';
-import { getLatestRuntimeInfo, getRuntimes } from '../../../api/api';
-import { HttpResponseApplication } from '../../../api/application';
+import { MicroserviceSimple, MicroserviceFormParameters } from '../../../api/solutions/index';
+import { getLatestRuntimeInfo, getRuntimes } from '../../../api/solutions/api';
+import { HttpResponseApplication } from '../../../api/solutions/application';
 
 import { HasM3ConnectorField } from '../components/form/hasM3ConnectorField';
 import { SetupFields } from './setupFields';

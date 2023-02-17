@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 
 import Paper from '@mui/material/Paper';
-import { ContainerRegistryImages } from '../../api/containerregistry';
+import { ContainerRegistryImages } from '../../api/solutions/containerregistry';
 
 type Props = {
     applicationId: string

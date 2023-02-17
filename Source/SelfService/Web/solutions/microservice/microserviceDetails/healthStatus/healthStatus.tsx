@@ -7,7 +7,7 @@ import { RestartAltRounded } from '@mui/icons-material';
 
 import { AlertBox, AlertBoxErrorMessage, Button, Graph } from '@dolittle/design-system';
 
-import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../../api/api';
+import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../../api/solutions/api';
 
 import { Metric, useMetricsFromLast } from '../../../metrics/useMetrics';
 import { HealthStatusTable, HealthStatusTableStats } from './healthStatusTable';
