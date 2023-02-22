@@ -179,11 +179,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 }}
             />
 
-            <Accordion
-                id='configuration-files'
-                title='Configuration Files'
-                defaultExpanded
-            >
+            <Accordion id='configuration-files' title='Configuration Files' defaultExpanded>
                 <HeaderButtons
                     filePrompt={() => fileUploadRef.current?.showPrompt()}
                     deleteDisabled={selectedRowIds.length === 0 || noConfigTableRows}
