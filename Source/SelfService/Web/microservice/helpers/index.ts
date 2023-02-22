@@ -5,3 +5,4 @@ export { capitalize, removeStringPattern, removeStringPatternAndCapitalize, getR
 export { formatTime, formatStartingDate } from './dates';
 export { DownloadLogs } from './downloads';
 export { formatBytes } from './numbers';
+export { isAlphaNumeric } from './regex';
