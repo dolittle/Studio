@@ -10,7 +10,7 @@ import { Typography } from '@mui/material';
 import { Button, ConfirmDialog } from '@dolittle/design-system';
 
 export default {
-    title: 'ConfirmDialog',
+    title: 'Confirm Dialog',
     component: ConfirmDialog,
     parameters: {
         docs: {
@@ -51,7 +51,12 @@ export default {
     args: {
         id: 'confirm-dialog',
         title: 'Confirm dialog',
-        description: 'This is a description of the dialog.',
+        description: `
+        This is a description of the dialog.
+
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        `,
         cancelText: 'Cancel',
         confirmText: 'Confirm',
     },
@@ -60,8 +65,8 @@ export default {
     },
 } as ComponentMeta<typeof ConfirmDialog>;
 
-const Template: ComponentStory<typeof ConfirmDialog> = (args) => {
-    const [isOpen, setIsOpen] = useState(args.isOpen ?? false);
+const Template: ComponentStory<typeof ConfirmDialog> = args => {
+    const [isOpen, setIsOpen] = useState(args.isOpen || false);
 
     return (
         <>
