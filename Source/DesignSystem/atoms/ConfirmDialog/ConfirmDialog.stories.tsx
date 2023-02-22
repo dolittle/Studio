@@ -1,11 +1,11 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { Typography } from '@mui/material';
+import { List, ListItem, Divider } from '@mui/material';
 
 import { Button, ConfirmDialog } from '@dolittle/design-system';
 
@@ -33,7 +33,8 @@ export default {
     - Dialogs should use a fade transition when appearing and disappearing
 **Draggable & Scrollable**
     - Dialogs should be draggable to allow the user to see what's behind it. However, if there is critical information on the 
-      screen that the user needs access to in order to make a decision on the dialog then that information should be included in the dialog.
+      screen that the user needs access to in order to make a decision on the dialog then that information should be 
+      included in the dialog.
     - While it's best to avoid scrolling dialogs, this option should be used to avoid the dialog extending beyond the viewport
 **Types of Dialogs**
     - *Alert dialogs* are urgent interruptions, requiring acknowledgement or action, that inform the user about a situation. 
@@ -74,13 +75,22 @@ const Template: ComponentStory<typeof ConfirmDialog> = args => {
 
 export const Default = Template.bind({});
 
+const listArray = [
+    'List item 1', 'List item 2', 'List item 3', 'List item 4', 'List item 5', 'List item 6', 'List item 7',
+    'List item 8', 'List item 9', 'List item 10', 'List item 11', 'List item 12', 'List item 13', 'List item 14',
+    'List item 15', 'List item 16', 'List item 17', 'List item 18', 'List item 19', 'List item 20', 'List item 21',
+    'List item 22', 'List item 23', 'List item 24', 'List item 25', 'List item 26', 'List item 27', 'List item 28',
+];
 export const WithChildrenContent = Template.bind({});
 WithChildrenContent.args = {
     children: (
-        <div>
-            <Typography variant='body2'>List item 1</Typography>
-            <Typography variant='body2'>List item 2</Typography>
-            <Typography variant='body2'>List item 3</Typography>
-        </div>
+        <List>
+            {listArray.map((item, index) =>
+                <Fragment key={index}>
+                    <ListItem>{item}</ListItem>
+                    {listArray.length - 1 !== index && <Divider />}
+                </Fragment>
+            )}
+        </List>
     ),
 };

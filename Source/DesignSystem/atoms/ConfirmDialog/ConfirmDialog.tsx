@@ -38,8 +38,8 @@ export const ConfirmDialog = ({ id, title, description, children, cancelText, co
             <IconButton ariaLabel='Close dialog' edge='end' onClick={onCancel} />
         </DialogTitle>
 
-        <DialogContent>
-            <DialogContentText id={`${id}-description`} variant='body1' sx={{ color: 'text.primary', mb: 2.25 }}>
+        <DialogContent sx={{ typography: 'body1' }}>
+            <DialogContentText id={`${id}-description`} sx={{ color: 'text.primary', mb: 2.25 }}>
                 {description}
             </DialogContentText>
 

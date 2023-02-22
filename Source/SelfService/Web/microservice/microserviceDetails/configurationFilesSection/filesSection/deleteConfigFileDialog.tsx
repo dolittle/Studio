@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
-import { Typography } from '@mui/material';
+import { Divider, List, ListItem } from '@mui/material';
 
 import { ConfirmDialog } from '@dolittle/design-system';
 
@@ -30,9 +30,14 @@ export const DeleteConfigFileDialog = ({ selectedDataRows, open, setOpen, handle
             onCancel={() => setOpen(false)}
             onConfirm={handleDelete}
         >
-            {selectedDataRows.map(file =>
-                <Typography key={file} variant='body2' sx={{ mt: 1.25 }}>{file}</Typography>
-            )}
+            <List>
+                {selectedDataRows.map((file, index) =>
+                    <Fragment key={file}>
+                        <ListItem>{file}</ListItem>
+                        {selectedDataRows.length - 1 !== index && <Divider />}
+                    </Fragment>
+                )}
+            </List>
         </ConfirmDialog>
     );
 };

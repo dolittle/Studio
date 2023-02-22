@@ -1,11 +1,11 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { ConfirmDialog } from '@dolittle/design-system';
 
-import { Box, Typography } from '@mui/material';
+import { Divider, List, ListItem, Typography } from '@mui/material';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
@@ -47,14 +47,19 @@ export const ValidateFileDialog = ({ invalid, open, setOpen, handleValidate }: V
             onCancel={setOpen}
             onConfirm={handleValidate}
         >
-            {invalid.file.map(file =>
-                <Box key={file.name} >
-                    <Typography variant='body1' sx={{ mt: 1.25 }}>{`${file.name} ${formatBytes(file.size)}`}</Typography>
-                    <Typography variant='caption' sx={{ color: 'error.light' }}>
-                        {file.size > MAX_CONFIGMAP_ENTRY_SIZE ? fileErrorMessage : charErrorMessage}
-                    </Typography>
-                </Box>
-            )}
+            <List>
+                {invalid.file.map((file, index) =>
+                    <Fragment key={index}>
+                        <ListItem>{`${file.name} ${formatBytes(file.size)}`}</ListItem>
+                        <ListItem sx={{ pt: 0 }}>
+                            <Typography variant='caption' sx={{ color: 'error.light' }}>
+                                {file.size > MAX_CONFIGMAP_ENTRY_SIZE ? fileErrorMessage : charErrorMessage}
+                            </Typography>
+                        </ListItem>
+                        {invalid.file.length - 1 !== index && <Divider />}
+                    </Fragment>
+                )}
+            </List>
         </ConfirmDialog>
     );
 };
