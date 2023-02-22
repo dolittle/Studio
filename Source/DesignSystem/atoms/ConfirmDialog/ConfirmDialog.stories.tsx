@@ -19,32 +19,21 @@ export default {
                 to ask the user for a decision. Dialogs disable all other functionality until a user engages with it by either confirming,
                 dismissing, or taking the required action. Dialogs are purposefully interruptive so they should be used sparingly.
 
-**Styling**
-    - When using a dialog always use a skrim behind to help draw focus to the dialog.
-    - Use direct and concise communication. The title should capture the essence of the message. 
-      In some cases the body text may be enough information for the user to make a decision and a title is not needed. 
-      Do not repeat the body information in the title of the dialog.
-    - Always provide a cancel or exit option if a change will be caused by the user interacting with the dialog.
-    - Use secondary button styling for both actions and use color to call attention to the required or suggested action if necessary.
-    - Dialogs use the highest elevation, 24dp.
-    - If the action or output is irreversible or will cause significant changes, consider using a Danger Button or another method 
-      for alerting the user of the impact
-**Transitions**
-    - Dialogs should use a fade transition when appearing and disappearing
-**Draggable & Scrollable**
-    - Dialogs should be draggable to allow the user to see what's behind it. However, if there is critical information on the 
-      screen that the user needs access to in order to make a decision on the dialog then that information should be 
-      included in the dialog.
-    - While it's best to avoid scrolling dialogs, this option should be used to avoid the dialog extending beyond the viewport
+**Title**
+- Use direct and concise communication.
+- If a title is required use a clear question or statement with an explanation in the content area. Avoid apologies, 
+ambiguity or questions such as "warning!" or "are you sure?"
+- In some cases the body text may be enough information for the user to make a decision and a title is not needed.
+
+**Action Buttons**
+- The confirm button should be the primary action in the dialog. It should be the action that the user is most likely to take.
+
 **Types of Dialogs**
-    - *Alert dialogs* are urgent interruptions, requiring acknowledgement or action, that inform the user about a situation. 
-      Most alerts do not need titles. They summarize a decision in a sentence or two by either asking a question or making a 
-      statement related to the action buttons. If a title is required use a clear question or statement with an explanation 
-      in the content area. Avoid apologies, ambiguity or questions such as "warning!" or "are you sure?" Alert dialogs must 
-      always contain an action item such as "agree", "accept", or "continue" and a dismissive action such as "cancel", "disagree" or "deny". 
-      Never provide a third action that leads the user away, leaving the task unfinished.
-    - *Form dialogs* allow users to fill out form fields within a dialog. This might include a textfield input, a checkbox, a radio selection, 
-      or a selection from a dropdown menu. Allowing tabbing so the user can jump from one input to the next.
+- *Alert dialogs* are urgent interruptions, requiring acknowledgement or action, that inform the user about a situation. 
+    Most alerts do not need titles. They summarize a decision in a sentence or two by either asking a question or making a 
+    statement related to the action buttons.
+    Alert dialogs must always contain an action item such as "agree", "accept", or "continue" and a dismissive action such as "cancel", 
+    "disagree" or "deny".
 `,
             },
         },
@@ -52,12 +41,19 @@ export default {
     args: {
         id: 'confirm',
         title: 'Confirm dialog',
-        description: `This is a description of the dialog. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
+        description: 'This is a description of the dialog. It can be used to provide more information about the dialog and what it does.',
+        confirmTextColor: 'primary',
         cancelText: 'Cancel',
         confirmText: 'Confirm',
     },
     argTypes: {
+        children: { control: false },
+        confirmTextColor: {
+            control: {
+                type: 'radio',
+                options: ['primary', 'subtle', 'error', 'success', 'warning'],
+            },
+        },
         isOpen: { control: false },
     },
 } as ComponentMeta<typeof ConfirmDialog>;
@@ -93,4 +89,12 @@ WithChildrenContent.args = {
             )}
         </List>
     ),
+};
+
+export const DeleteDialog = Template.bind({});
+DeleteDialog.args = {
+    title: 'Delete this item?',
+    description: 'Are you sure you want to delete this item? This action cannot be undone.',
+    confirmTextColor: 'error',
+    confirmText: 'Delete',
 };
