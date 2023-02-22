@@ -25,21 +25,21 @@ export const ConfirmDialog = ({ id, title, description, children, cancelText, co
     <Dialog
         open={isOpen ?? false}
         onClose={onCancel}
-        aria-labelledby={`${id}-title`}
-        aria-describedby={`${id}-description`}
+        aria-labelledby={`${id}-dialog-title`}
+        aria-describedby={`${id}-dialog-description`}
         PaperComponent={(props: PaperProps) =>
-            <Draggable handle={`#${id}-title`} cancel={'[class*="MuiDialogContent-root"]'}>
+            <Draggable handle={`#${id}-dialog-title`} cancel={'[class*="MuiDialogContent-root"]'}>
                 <Paper {...props} />
             </Draggable>
         }
     >
-        <DialogTitle id={`${id}-title`} variant='h6' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'move' }}>
+        <DialogTitle id={`${id}-dialog-title`} variant='h6' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'move' }}>
             {title}
             <IconButton ariaLabel='Close dialog' edge='end' onClick={onCancel} />
         </DialogTitle>
 
         <DialogContent sx={{ typography: 'body1' }}>
-            <DialogContentText id={`${id}-description`} sx={{ color: 'text.primary', mb: 2.25 }}>
+            <DialogContentText id={`${id}-dialog-description`} sx={{ color: 'text.primary', mb: 2.25 }}>
                 {description}
             </DialogContentText>
 
