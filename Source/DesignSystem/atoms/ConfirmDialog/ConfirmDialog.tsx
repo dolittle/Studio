@@ -3,7 +3,9 @@
 
 import React from 'react';
 
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import Draggable from 'react-draggable';
+
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, PaperProps } from '@mui/material';
 
 import { Button, IconButton } from '@dolittle/design-system';
 
@@ -25,8 +27,13 @@ export const ConfirmDialog = ({ id, title, description, children, cancelText, co
         onClose={onCancel}
         aria-labelledby={`${id}-title`}
         aria-describedby={`${id}-description`}
+        PaperComponent={(props: PaperProps) =>
+            <Draggable handle={`#${id}-title`} cancel={'[class*="MuiDialogContent-root"]'}>
+                <Paper {...props} />
+            </Draggable>
+        }
     >
-        <DialogTitle id={`${id}-title`} variant='h6' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <DialogTitle id={`${id}-title`} variant='h6' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'move' }}>
             {title}
             <IconButton ariaLabel='Close dialog' edge='end' onClick={onCancel} />
         </DialogTitle>
