@@ -40,6 +40,12 @@ export type IconButtonProps = {
     size?: 'small' | 'medium';
 
     /**
+     * Set icon button to start or end edge.
+     * @default false
+     */
+    edge?: 'start' | 'end' | false;
+
+    /**
      * Icon button can be disabled.
      * @default false
      */
@@ -74,11 +80,12 @@ export type IconButtonProps = {
  * @example
  * <IconButton ariaLabel='Download logs' icon={<DownloadRounded />} />
  */
-export const IconButton = ({ ariaLabel, icon, color, size = 'small', disabled, href, download, onClick }: IconButtonProps): ReactElement =>
+export const IconButton = ({ ariaLabel, icon, color, size = 'small', edge, disabled, href, download, onClick }: IconButtonProps): ReactElement =>
     <MuiIconButton
         aria-label={ariaLabel}
         color={color ?? 'inherit'}
         size={size}
+        edge={edge ?? false}
         disabled={disabled}
         component={href ? 'a' : 'button'}
         href={href}

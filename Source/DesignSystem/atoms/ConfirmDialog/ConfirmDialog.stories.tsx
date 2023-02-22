@@ -51,12 +51,8 @@ export default {
     args: {
         id: 'confirm-dialog',
         title: 'Confirm dialog',
-        description: `
-        This is a description of the dialog.
-
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        `,
+        description: `This is a description of the dialog. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
         cancelText: 'Cancel',
         confirmText: 'Confirm',
     },
@@ -71,7 +67,6 @@ const Template: ComponentStory<typeof ConfirmDialog> = args => {
     return (
         <>
             <Button label='Open dialog' onClick={() => setIsOpen(true)} />
-
             <ConfirmDialog {...args} isOpen={isOpen} onCancel={() => setIsOpen(false)} onConfirm={() => setIsOpen(false)} />
         </>
     );

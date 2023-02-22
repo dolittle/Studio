@@ -28,7 +28,7 @@ export const ConfirmDialog = ({ id, title, description, children, cancelText, co
     >
         <DialogTitle id={`${id}-title`} variant='h6' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             {title}
-            <IconButton ariaLabel='Close dialog' onClick={onCancel} />
+            <IconButton ariaLabel='Close dialog' edge='end' onClick={onCancel} />
         </DialogTitle>
 
         <DialogContent>
