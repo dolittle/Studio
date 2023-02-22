@@ -122,11 +122,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                 handleSuccess={() => window.location.reload()}
             />
 
-            <Accordion
-                id='setup-accordion'
-                title='Configuration Setup'
-                defaultExpanded
-            >
+            <Accordion id='setup-accordion' title='Configuration Setup' defaultExpanded>
                 <HeaderButtons
                     handleRestartDialog={() => setRestartDialogIsOpen(true)}
                     handleDeleteDialog={() => setDeleteDialogIsOpen(true)}
