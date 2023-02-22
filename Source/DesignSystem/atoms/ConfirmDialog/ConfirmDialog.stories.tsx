@@ -3,9 +3,11 @@
 
 import React, { useState } from 'react';
 
-import { ComponentMeta } from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { Button, ConfirmDialog, ConfirmDialogProps } from '@dolittle/design-system';
+import { Typography } from '@mui/material';
+
+import { Button, ConfirmDialog } from '@dolittle/design-system';
 
 export default {
     title: 'ConfirmDialog',
@@ -52,31 +54,33 @@ export default {
         description: 'This is a description of the dialog.',
         cancelText: 'Cancel',
         confirmText: 'Confirm',
-        onCancel: () => console.log('cancel'),
-        onConfirm: () => console.log('confirm'),
     },
     argTypes: {
-        isOpen: { control: false }
-    }
+        isOpen: { control: false },
+    },
 } as ComponentMeta<typeof ConfirmDialog>;
 
-export const Default = ({ id, title, description, cancelText, confirmText }: ConfirmDialogProps) => {
-    const [isOpen, setIsOpen] = useState(false);
+const Template: ComponentStory<typeof ConfirmDialog> = (args) => {
+    const [isOpen, setIsOpen] = useState(args.isOpen ?? false);
 
     return (
         <>
             <Button label='Open dialog' onClick={() => setIsOpen(true)} />
 
-            <ConfirmDialog
-                id={id}
-                title={title}
-                description={description}
-                cancelText={cancelText}
-                confirmText={confirmText}
-                isOpen={isOpen}
-                onCancel={() => setIsOpen(false)}
-                onConfirm={() => setIsOpen(false)}
-            />
+            <ConfirmDialog {...args} isOpen={isOpen} onCancel={() => setIsOpen(false)} onConfirm={() => setIsOpen(false)} />
         </>
     );
+};
+
+export const Default = Template.bind({});
+
+export const WithChildrenContent = Template.bind({});
+WithChildrenContent.args = {
+    children: (
+        <div>
+            <Typography variant='body2'>List item 1</Typography>
+            <Typography variant='body2'>List item 2</Typography>
+            <Typography variant='body2'>List item 3</Typography>
+        </div>
+    ),
 };
