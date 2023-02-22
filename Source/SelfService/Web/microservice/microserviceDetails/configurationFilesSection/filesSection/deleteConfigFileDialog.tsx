@@ -24,7 +24,6 @@ export const DeleteConfigFileDialog = ({ selectedDataRows, open, setOpen, handle
             id='delete-config-file-dialog'
             title={`Delete configuration ${isPlural}`}
             description={`Are you sure you want to delete ${hasManySelectedRows ? 'these' : 'this'} ${isPlural}?`}
-            cancelText='Cancel'
             confirmText='Delete'
             isOpen={open}
             onCancel={() => setOpen(false)}
