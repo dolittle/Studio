@@ -4,3 +4,4 @@
 export { capitalize, removeStringPattern, removeStringPatternAndCapitalize, getRuntimeNumberFromString } from './stringHelpers';
 export { formatTime, formatStartingDate } from './dateHelpers';
 export { DownloadLogs } from './downloadHelpers';
+export { formatBytes } from './numbers';
