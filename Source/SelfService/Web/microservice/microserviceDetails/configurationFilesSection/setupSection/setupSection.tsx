@@ -103,7 +103,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
     return (
         <Box>
             <ConfirmDialog
-                id='delete-microservice-dialog'
+                id='delete-microservice'
                 title='Delete microservice?'
                 description='This action cannot be undone. Click delete if you would like to delete the mircroservice.'
                 confirmText='Delete'

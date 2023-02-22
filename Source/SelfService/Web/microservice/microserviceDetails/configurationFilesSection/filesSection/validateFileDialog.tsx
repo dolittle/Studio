@@ -28,7 +28,7 @@ export const ValidateFileDialog = ({ invalid, open, setOpen, handleValidate }: V
 
     return (
         <ConfirmDialog
-            id='config-file-size-dialog'
+            id='config-file-size'
             title={`${isPlural} can't be added`}
             description={`Please cancel or select a new ${isPlural}.`}
             confirmText='Select new'
