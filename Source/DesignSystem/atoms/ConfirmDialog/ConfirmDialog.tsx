@@ -9,6 +9,21 @@ import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, P
 
 import { Button, IconButton } from '@dolittle/design-system';
 
+const styles = {
+    title: {
+        typography: 'h6',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        cursor: 'move',
+    },
+    description: {
+        typography: 'body1',
+        color: 'text.primary',
+        mb: 2.25,
+    },
+};
+
 export type ConfirmDialogProps = {
     id: string;
     title: string;
@@ -33,16 +48,13 @@ export const ConfirmDialog = ({ id, title, description, children, cancelText, co
             </Draggable>
         }
     >
-        <DialogTitle id={`${id}-dialog-title`} variant='h6' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'move' }}>
+        <DialogTitle id={`${id}-dialog-title`} sx={styles.title}>
             {title}
             <IconButton ariaLabel='Close dialog' edge='end' onClick={onCancel} />
         </DialogTitle>
 
-        <DialogContent sx={{ typography: 'body1' }}>
-            <DialogContentText id={`${id}-dialog-description`} sx={{ color: 'text.primary', mb: 2.25 }}>
-                {description}
-            </DialogContentText>
-
+        <DialogContent sx={{ typography: 'body2' }}>
+            <DialogContentText id={`${id}-dialog-description`} sx={styles.description}>{description}</DialogContentText>
             {children}
         </DialogContent>
 
