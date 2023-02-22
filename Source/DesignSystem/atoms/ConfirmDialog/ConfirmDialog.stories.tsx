@@ -60,7 +60,7 @@ export default {
     }
 } as ComponentMeta<typeof ConfirmDialog>;
 
-export const Default = (args: ConfirmDialogProps) => {
+export const Default = ({ id, title, description, cancelText, confirmText }: ConfirmDialogProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -68,11 +68,11 @@ export const Default = (args: ConfirmDialogProps) => {
             <Button label='Open dialog' onClick={() => setIsOpen(true)} />
 
             <ConfirmDialog
-                id={args.id}
-                title={args.title}
-                description={args.description}
-                cancelText={args.cancelText}
-                confirmText={args.confirmText}
+                id={id}
+                title={title}
+                description={description}
+                cancelText={cancelText}
+                confirmText={confirmText}
                 isOpen={isOpen}
                 onCancel={() => setIsOpen(false)}
                 onConfirm={() => setIsOpen(false)}
