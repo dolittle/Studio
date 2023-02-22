@@ -47,7 +47,6 @@ export const RestartMicroserviceDialog = ({ applicationId, environment, microser
             id='restart-microservice-dialog'
             title='Restart microservice?'
             description='Restarting will temporarily stop the microservice and restart it again. Your app will be unavailable during restart.'
-            cancelText='Cancel'
             confirmText='Restart'
             isOpen={open}
             onCancel={() => setOpen(false)}

@@ -22,16 +22,15 @@ type ValidateFileDialogProps = {
 };
 
 export const ValidateFileDialog = ({ invalid, open, setOpen, handleValidate }: ValidateFileDialogProps) => {
-    const isManyInvalidFiles = invalid.file.length > 1 ? 'files' : 'file';
+    const isPlural = invalid.file.length > 1 ? 'files' : 'file';
     const fileErrorMessage = 'File size must be less than 3.145MB.';
     const charErrorMessage = 'File name contains invalid characters. Only letters, numbers, dashes, underscores and periods are allowed.';
 
     return (
         <ConfirmDialog
             id='config-file-size-dialog'
-            title={`${isManyInvalidFiles} can't be added`}
-            description={`Please cancel or select a new ${isManyInvalidFiles}.`}
-            cancelText='Cancel'
+            title={`${isPlural} can't be added`}
+            description={`Please cancel or select a new ${isPlural}.`}
             confirmText='Select new'
             isOpen={open}
             onCancel={setOpen}

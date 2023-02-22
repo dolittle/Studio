@@ -14,7 +14,7 @@ export type ConfirmDialogProps = {
     title: string;
     description?: string;
     children?: React.ReactNode;
-    cancelText: string;
+    cancelText?: string;
     confirmText: string;
     isOpen?: boolean;
     onCancel: () => void;
@@ -47,7 +47,7 @@ export const ConfirmDialog = ({ id, title, description, children, cancelText, co
         </DialogContent>
 
         <DialogActions sx={{ mr: 1 }}>
-            <Button onClick={onCancel} label={cancelText} color='subtle' />
+            <Button onClick={onCancel} label={cancelText ?? 'Cancel'} color='subtle' />
             <Button onClick={onConfirm} label={confirmText} />
         </DialogActions>
     </Dialog>;
