@@ -5,7 +5,7 @@ import React, { Fragment, useState } from 'react';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { List, ListItem, Divider } from '@mui/material';
+import { Divider, List, ListItem } from '@mui/material';
 
 import { Button, ConfirmDialog } from '@dolittle/design-system';
 
@@ -20,13 +20,9 @@ export default {
                 dismissing, or taking the required action. Dialogs are purposefully interruptive so they should be used sparingly.
 
 **Title**
-- Use direct and concise communication.
+- In some cases the description may be enough information for the user to make a decision and a title is not needed.
 - If a title is required use a clear question or statement with an explanation in the content area. Avoid apologies, 
-ambiguity or questions such as "warning!" or "are you sure?"
-- In some cases the body text may be enough information for the user to make a decision and a title is not needed.
-
-**Action Buttons**
-- The confirm button should be the primary action in the dialog. It should be the action that the user is most likely to take.
+ambiguity or questions such as "warning!" or "are you sure?".
 
 **Types of Dialogs**
 - *Alert dialogs* are urgent interruptions, requiring acknowledgement or action, that inform the user about a situation. 
@@ -40,21 +36,21 @@ ambiguity or questions such as "warning!" or "are you sure?"
     },
     args: {
         id: 'confirm',
-        title: 'Confirm dialog',
+        title: 'Confirm Dialog',
         description: 'This is a description of the dialog. It can be used to provide more information about the dialog and what it does.',
-        confirmTextColor: 'primary',
-        cancelText: 'Cancel',
-        confirmText: 'Confirm',
+        confirmBtnColor: 'primary',
+        cancelBtnText: 'Cancel',
+        confirmBtnText: 'Confirm',
     },
     argTypes: {
         children: { control: false },
-        confirmTextColor: {
+        isOpen: { control: false },
+        confirmBtnColor: {
             control: {
                 type: 'radio',
-                options: ['primary', 'subtle', 'error', 'success', 'warning'],
+                options: ['primary', 'subtle', 'secondary', 'error', 'warning'],
             },
         },
-        isOpen: { control: false },
     },
 } as ComponentMeta<typeof ConfirmDialog>;
 
@@ -91,10 +87,10 @@ WithChildrenContent.args = {
     ),
 };
 
-export const DeleteDialog = Template.bind({});
-DeleteDialog.args = {
+export const DeleteConfirmation = Template.bind({});
+DeleteConfirmation.args = {
     title: 'Delete this item?',
     description: 'Are you sure you want to delete this item? This action cannot be undone.',
-    confirmTextColor: 'error',
-    confirmText: 'Delete',
+    confirmBtnColor: 'error',
+    confirmBtnText: 'Delete',
 };

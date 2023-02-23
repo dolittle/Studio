@@ -29,13 +29,19 @@ export type ConfirmDialogProps = {
      * Required. The id is used to identify the dialog and its children. It is used for accessibility and testing.
      *
      * It should be unique for each dialog.
+     *
+     * The id is prefixed to the following elements:
+     *
+     * {id}-dialog-title
+     *
+     * {id}-dialog-description
      */
     id: string;
 
     /**
-     *  The title should capture the essence of the message. It should be short and to the point.
+     *  The title should capture the essence of the description. It should be short and to the point.
      *
-     *  Do not repeat the body information in the title of the dialog.
+     *  Do not repeat description information in the title of the dialog.
      */
     title?: string;
 
@@ -45,43 +51,52 @@ export type ConfirmDialogProps = {
     description: string;
 
     /**
-     * It can be used to provide a list of items that will be affected by the action.
+     * The children can be used to provide a list of items that will be affected by the action.
+     *
+     * The children can also be a form or any other React component.
      */
     children?: React.ReactNode;
 
     /**
-     * The cancel text that dismisses the dialog.
+     * The cancel button text that dismisses the dialog.
      * @default Cancel
      */
-    cancelText?: string;
+    cancelBtnText?: string;
 
     /**
-     * If the action or output is irreversible or will cause significant changes, consider using a Danger color.
+     * The confirm button should be the primary action in the dialog. It should be the action that the user is most likely to take.
+     *
+     * If the action or output is irreversible or will cause significant changes, consider using color to call attention 
+     * to the required or suggested action if necessary.
      * @default primary
      */
-    confirmTextColor?: 'primary' | 'subtle' | 'error' | 'success' | 'warning';
-
-
-    confirmText: string;
+    confirmBtnColor?: 'primary' | 'subtle' | 'secondary' | 'error' | 'warning';
 
     /**
-     * The dialog will be open if this is true.
+     * Required. The confirm button text that confirms the dialog.
+     */
+    confirmBtnText: string;
+
+    /**
+     * The dialog will be open if this is set to true.
+     * 
+     * Manage this state from the parent component.
      * @default false
      */
     isOpen?: boolean;
 
     /**
-     * The callback that is called when the dialog is closed.
+     * Required. The callback that is called when the dialog is dismissed.
      */
     onCancel: () => void;
 
     /**
-     * The callback that is called when the dialog is confirmed.
+     * Required. The callback that is called when the dialog is confirmed.
      */
     onConfirm: () => void;
 };
 
-export const ConfirmDialog = ({ id, title, description, children, confirmTextColor, cancelText, confirmText, isOpen, onCancel, onConfirm }: ConfirmDialogProps) =>
+export const ConfirmDialog = ({ id, title, description, children, confirmBtnColor, cancelBtnText, confirmBtnText, isOpen, onCancel, onConfirm }: ConfirmDialogProps) =>
     <Dialog
         open={isOpen ?? false}
         onClose={onCancel}
@@ -104,7 +119,7 @@ export const ConfirmDialog = ({ id, title, description, children, confirmTextCol
         </DialogContent>
 
         <DialogActions sx={{ mr: 1 }}>
-            <Button onClick={onCancel} label={cancelText ?? 'Cancel'} color='subtle' />
-            <Button onClick={onConfirm} label={confirmText} color={confirmTextColor ?? 'primary'} />
+            <Button onClick={onCancel} label={cancelBtnText ?? 'Cancel'} color='subtle' />
+            <Button onClick={onConfirm} label={confirmBtnText} color={confirmBtnColor ?? 'primary'} />
         </DialogActions>
     </Dialog>;

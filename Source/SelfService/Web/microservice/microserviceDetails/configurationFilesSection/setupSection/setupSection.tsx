@@ -106,7 +106,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                 id='delete-microservice'
                 title='Delete microservice?'
                 description='This action cannot be undone. Click delete if you would like to delete the mircroservice.'
-                confirmText='Delete'
+                confirmBtnText='Delete'
                 isOpen={deleteDialogIsOpen}
                 onCancel={() => setDeleteDialogIsOpen(false)}
                 onConfirm={handleMicroserviceDelete}
