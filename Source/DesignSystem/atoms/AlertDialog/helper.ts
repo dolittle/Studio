@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-export const confirmDialogDescription = `
+export const dialogDescription = `
 Dialogs are windows that appear in front of all content to provide immediate and critical information or 
 to ask the user for a decision. Dialogs disable all other functionality until a user engages with it by either confirming,
 dismissing, or taking the required action. Dialogs are purposefully interruptive so they should be used sparingly.
