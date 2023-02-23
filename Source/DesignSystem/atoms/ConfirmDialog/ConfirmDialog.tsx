@@ -60,7 +60,7 @@ export type ConfirmDialogProps = {
     children?: React.ReactNode;
 
     /**
-     * The cancel button text that dismisses the dialog.
+     * Cancel button text that dismisses the dialog.
      * @default Cancel
      */
     cancelBtnText?: string;
@@ -75,7 +75,7 @@ export type ConfirmDialogProps = {
     confirmBtnColor?: 'primary' | 'subtle' | 'secondary' | 'error' | 'warning';
 
     /**
-     * The confirm button text that confirms the dialog.
+     * Confirm button text.
      */
     confirmBtnText: string;
 
