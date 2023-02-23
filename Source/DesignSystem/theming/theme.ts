@@ -171,6 +171,11 @@ const palette: PaletteOptions = {
 };
 
 const components: Components & DataGridProComponents = {
+    MuiAlert: {
+        styleOverrides: {
+            outlinedError: { borderColor: '#F66666' },
+        },
+    },
     MuiFormControl: {
         styleOverrides: {
             root: {
