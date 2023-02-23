@@ -7,21 +7,21 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { Divider, List, ListItem } from '@mui/material';
 
-import { Button, ConfirmDialog } from '@dolittle/design-system';
+import { Button, AlertDialog } from '@dolittle/design-system';
 
-import { confirmDialogDescription, listArray } from './helper';
+import { dialogDescription, listArray } from './helper';
 
 export default {
-    title: 'Confirm Dialog',
-    component: ConfirmDialog,
+    title: 'Alert Dialog',
+    component: AlertDialog,
     parameters: {
         docs: {
-            description: { component: confirmDialogDescription },
+            description: { component: dialogDescription },
         },
     },
     args: {
-        id: 'confirm',
-        title: 'Confirm Dialog',
+        id: 'alert',
+        title: 'Alert Dialog',
         description: 'This is a description of the dialog. It can be used to provide more information about the dialog and what it does.',
         confirmBtnColor: 'primary',
         cancelBtnText: 'Cancel',
@@ -37,15 +37,15 @@ export default {
             },
         },
     },
-} as ComponentMeta<typeof ConfirmDialog>;
+} as ComponentMeta<typeof AlertDialog>;
 
-const Template: ComponentStory<typeof ConfirmDialog> = args => {
+const Template: ComponentStory<typeof AlertDialog> = args => {
     const [isOpen, setIsOpen] = useState(args.isOpen || false);
 
     return (
         <>
             <Button label='Open dialog' onClick={() => setIsOpen(true)} />
-            <ConfirmDialog {...args} isOpen={isOpen} onCancel={() => setIsOpen(false)} onConfirm={() => setIsOpen(false)} />
+            <AlertDialog {...args} isOpen={isOpen} onCancel={() => setIsOpen(false)} onConfirm={() => setIsOpen(false)} />
         </>
     );
 };

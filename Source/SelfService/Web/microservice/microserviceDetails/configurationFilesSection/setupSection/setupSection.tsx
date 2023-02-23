@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 
 import { Box } from '@mui/material';
 
-import { Accordion, ConfirmDialog, Form } from '@dolittle/design-system';
+import { Accordion, AlertDialog, Form } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
 
@@ -102,7 +102,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
     return (
         <Box>
-            <ConfirmDialog
+            <AlertDialog
                 id='delete-microservice'
                 title='Delete microservice?'
                 description='This action cannot be undone. Click delete if you would like to delete the mircroservice.'

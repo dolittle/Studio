@@ -24,9 +24,9 @@ const styles = {
 };
 
 /**
- * The props for the {@link ConfirmDialog} component.
+ * The props for the {@link AlertDialog} component.
  */
-export type ConfirmDialogProps = {
+export type AlertDialogProps = {
     /**
      * The id is used to identify the dialog and its children. It is used for accessibility and testing.
      *
@@ -99,11 +99,11 @@ export type ConfirmDialogProps = {
 };
 
 /**
- * The confirm dialog is used to confirm an action or output.
- * @param {ConfirmDialogProps} props - The {@link ConfirmDialogProps} that contains the properties for the confirm dialog.
- * @returns A {@link ConfirmDialog} component.
+ * The alert dialog is used to confirm an action or output.
+ * @param {AlertDialogProps} props - The {@link AlertDialogProps} that contains the properties for the alert dialog.
+ * @returns A {@link AlertDialog} component.
  */
-export const ConfirmDialog = ({ id, title, description, children, confirmBtnColor, cancelBtnText, confirmBtnText, isOpen, onCancel, onConfirm }: ConfirmDialogProps) =>
+export const AlertDialog = ({ id, title, description, children, confirmBtnColor, cancelBtnText, confirmBtnText, isOpen, onCancel, onConfirm }: AlertDialogProps) =>
     <Dialog
         open={isOpen ?? false}
         onClose={onCancel}
