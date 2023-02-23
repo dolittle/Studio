@@ -9,7 +9,7 @@ import { Divider, List, ListItem } from '@mui/material';
 
 import { Button, AlertDialog } from '@dolittle/design-system';
 
-import { dialogDescription, listArray } from './helper';
+import { dialogDescription, listArray } from './helpers';
 
 export default {
     title: 'Alert Dialog',
