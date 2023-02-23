@@ -26,27 +26,27 @@ const styles = {
 
 export type ConfirmDialogProps = {
     /**
-     * Required. The id is used to identify the dialog and its children. It is used for accessibility and testing.
+     * The id is used to identify the dialog and its children. It is used for accessibility and testing.
      *
      * It should be unique for each dialog.
      *
      * The id is prefixed to the following elements:
      *
-     * {id}-dialog-title
+     * {`id`}-dialog-title
      *
-     * {id}-dialog-description
+     * {`id`}-dialog-description
      */
     id: string;
 
     /**
-     *  The title should capture the essence of the description. It should be short and to the point.
-     *
-     *  Do not repeat description information in the title of the dialog.
+     * The title should capture the essence of the description. It should be short and to the point.
+     * 
+     * Do not repeat description information in the title of the dialog.
      */
     title?: string;
 
     /**
-     * Required. The description should provide more information about the action that is going to be made.
+     * The description should provide more information about the action that is going to be made.
      */
     description: string;
 
@@ -73,7 +73,7 @@ export type ConfirmDialogProps = {
     confirmBtnColor?: 'primary' | 'subtle' | 'secondary' | 'error' | 'warning';
 
     /**
-     * Required. The confirm button text that confirms the dialog.
+     * The confirm button text that confirms the dialog.
      */
     confirmBtnText: string;
 
@@ -86,12 +86,12 @@ export type ConfirmDialogProps = {
     isOpen?: boolean;
 
     /**
-     * Required. The callback that is called when the dialog is dismissed.
+     * The callback that is called when the dialog is dismissed.
      */
     onCancel: () => void;
 
     /**
-     * Required. The callback that is called when the dialog is confirmed.
+     * The callback that is called when the dialog is confirmed.
      */
     onConfirm: () => void;
 };
