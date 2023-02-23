@@ -99,7 +99,7 @@ export const Create = () => {
                     <AlertBox
                         title='Oops, something went wrong'
                         message={<AlertBoxErrorMessage />}
-                        sx={{ mt: 6 }}
+                        sx={{ mt: 6, textAlign: 'start' }}
                     />
                 }
             </Form>
