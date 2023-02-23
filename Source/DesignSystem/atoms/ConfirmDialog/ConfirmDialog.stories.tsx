@@ -65,11 +65,3 @@ WithChildrenContent.args = {
         </List>
     ),
 };
-
-export const DeleteConfirmation = Template.bind({});
-DeleteConfirmation.args = {
-    title: 'Delete this item?',
-    description: 'Are you sure you want to delete this item? This action cannot be undone.',
-    confirmBtnColor: 'error',
-    confirmBtnText: 'Delete',
-};
