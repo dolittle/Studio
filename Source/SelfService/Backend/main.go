@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -11,9 +13,34 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+type Route struct {
+	Pattern string
+	Host    string
+}
+
+type Routes []Route
+
+// parseRoutes takes raw json string and parses to a list of routes.
+func parseRoutes(raw string) (*Routes, error) {
+	var doc map[string]string
+	routes := &Routes{}
+	err := json.Unmarshal([]byte(raw), &doc)
+	if err != nil {
+		return routes, err
+	}
+	for pattern, host := range doc {
+		routes = append(*routes, Route{pattern, host})
+	}
+	fmt.Println(doc)
+	return routes, nil
+}
+
 type AppConfig struct {
-	PlatformApiHost       string
-	BridgeApiHost         string
+	PlatformApiHost string
+	BridgeApiHost   string
+	// Routing is json document with the keys being a http.ServeMux pattern
+	// and the vals being the host to reverse proxy to.
+	Routing               string
 	ListenOn              string
 	SharedSecret          string
 	DevelopmentEnabled    bool
