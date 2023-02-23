@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -29,18 +28,17 @@ func parseRoutes(raw string) (*Routes, error) {
 		return routes, err
 	}
 	for pattern, host := range doc {
-		routes = append(*routes, Route{pattern, host})
+		*routes = append(*routes, Route{pattern, host})
 	}
-	fmt.Println(doc)
+
 	return routes, nil
 }
 
 type AppConfig struct {
 	PlatformApiHost string
-	BridgeApiHost   string
-	// Routing is json document with the keys being a http.ServeMux pattern
+	// Proxy is parsed from a json document with the keys being a http.ServeMux pattern
 	// and the vals being the host to reverse proxy to.
-	Routing               string
+	Proxy                 *Routes
 	ListenOn              string
 	SharedSecret          string
 	DevelopmentEnabled    bool
@@ -70,7 +68,14 @@ func initConfig() AppConfig {
 	appConfig.DevelopmentUserID = os.Getenv("DEVELOPMENT_USER_ID")
 	appConfig.DevelopmentEnabled = (appConfig.DevelopmentCustomerID != "" && appConfig.DevelopmentUserID != "")
 
-	appConfig.BridgeApiHost = os.Getenv("BRIDGE_API")
+	proxy := os.Getenv("PROXY")
+	if proxy != "" {
+		routes, err := parseRoutes(proxy)
+		if err != nil {
+			panic(err)
+		}
+		appConfig.Proxy = routes
+	}
 	return appConfig
 }
 
@@ -87,10 +92,15 @@ func NewBackend(logContext logrus.FieldLogger, appConfig AppConfig) backend {
 		appConfig:  appConfig,
 	}
 
-	if s.appConfig.BridgeApiHost != "" {
-		s.mux.HandleFunc("/bridge/", s.Proxy(s.appConfig.BridgeApiHost))
-	}
 	s.mux.HandleFunc("/", s.Proxy(s.appConfig.PlatformApiHost))
+
+	if s.appConfig.Proxy != nil {
+		for _, route := range *s.appConfig.Proxy {
+			s.mux.HandleFunc(route.Pattern, s.Proxy(route.Host))
+		}
+
+	}
+
 	return s
 }
 
