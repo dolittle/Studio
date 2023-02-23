@@ -42,7 +42,7 @@ export type AlertDialogProps = {
 
     /**
      * The title should capture the essence of the description. It should be short and to the point.
-     * 
+     *
      * Do not repeat description information in the title of the dialog.
      */
     title?: string;
@@ -68,7 +68,7 @@ export type AlertDialogProps = {
     /**
      * The confirm button should be the primary action in the dialog. It should be the action that the user is most likely to take.
      *
-     * If the action or output is irreversible or will cause significant changes, consider using color to call attention 
+     * If the action or output is irreversible or will cause significant changes, consider using color to call attention
      * to the required or suggested action if necessary.
      * @default primary
      */
@@ -81,7 +81,7 @@ export type AlertDialogProps = {
 
     /**
      * The dialog will be open if this is set to true.
-     * 
+     *
      * Manage this state from the parent component.
      * @default false
      */

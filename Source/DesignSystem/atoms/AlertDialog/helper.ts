@@ -17,7 +17,7 @@ ambiguity or questions such as "warning!" or "are you sure?".
     statement related to the action buttons.
     Alert dialogs must always contain an action item such as "agree", "accept", or "continue" and a dismissive action such as "cancel", 
     "disagree" or "deny".
-`
+`;
 
 export const listArray = [
     'List item 1', 'List item 2', 'List item 3', 'List item 4', 'List item 5', 'List item 6', 'List item 7',
