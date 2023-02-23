@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -82,4 +83,8 @@ func TestProxyWithBridge(t *testing.T) {
 	if res.StatusCode != 200 {
 		t.Errorf("Expected Status OK, got %v", res.Status)
 	}
+}
+
+func TestParseRoutes(t *testing.T) {
+	fmt.Println(parseRoutes(`{"hello": "world"}`))
 }
