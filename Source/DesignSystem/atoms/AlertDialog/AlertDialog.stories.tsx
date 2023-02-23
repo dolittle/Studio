@@ -54,6 +54,8 @@ export const Default = Template.bind({});
 
 export const WithChildrenContent = Template.bind({});
 WithChildrenContent.args = {
+    title: 'Alert Dialog with children',
+    description: 'This dialog displays list items as children. It can be used to display a list of items that the user can cancel or confirm.',
     children: (
         <List>
             {listArray.map((item, index) =>
