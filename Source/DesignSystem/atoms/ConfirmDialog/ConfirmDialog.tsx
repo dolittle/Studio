@@ -20,7 +20,6 @@ const styles = {
     description: {
         typography: 'body1',
         color: 'text.primary',
-        mb: 2.25,
     },
 };
 
