@@ -10,12 +10,8 @@ import type { Form } from './Form';
 
 /**
  * Creates a checkbox field to be used in a {@link Form}.
- * @param props The {@link FieldProps} for the checkbox.
- * @returns A new {@link Checkbox} component.
- * @example
- * <Form initialValues={{ checkbox: false }}>
- *   <Checkbox name='checkbox' label='Checkbox' />
- * </Form>
+ * @param props - The {@link FieldProps} for the checkbox.
+ * @returns A {@link Checkbox} component.
  */
 export const Checkbox = (props: FieldProps) => {
     const { field } = useController(props);
@@ -24,7 +20,7 @@ export const Checkbox = (props: FieldProps) => {
         <FormControl>
             <FormControlLabel
                 control={
-                    <MuiCheckbox {...field} checked={!!field.value} disabled={props.disabled} />
+                    <MuiCheckbox {...field} checked={!!field.value} disabled={props.disabled} sx={{ mr: 0.5 }} />
                 }
                 label={props.label}
                 sx={{ mr: 0 }}
