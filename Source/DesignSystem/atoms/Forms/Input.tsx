@@ -31,6 +31,12 @@ export type InputProps = {
     placeholder?: string;
 
     /**
+     * Whether the input should have a dashed border.
+     * @default false
+     */
+    dashedBorder?: boolean;
+
+    /**
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
@@ -38,14 +44,10 @@ export type InputProps = {
 
 /**
  * Creates an text input field to be used in a {@link Form}.
- * @param props The {@link InputProps} for the input.
- * @returns A new {@link Input} component.
- * @example
- * <Form initialValues={{ input: '' }}>
- *  <Input name='input' label='Input' />
- * </Form>
+ * @param props - The {@link InputProps} for the input.
+ * @returns A {@link Input} component.
  */
-export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, startAdornment, placeholder, sx, ...fieldProps }, ref) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, startAdornment, placeholder, dashedBorder, sx, ...fieldProps }, ref) => {
     const { field, hasError, errorMessage } = useController(fieldProps);
 
     return (
@@ -53,17 +55,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, star
             variant='outlined'
             size='small'
             sx={{
-                width: 220,
-                mb: { sm: 0, xs: 2.5 },
-                ...sx
+                'width': 220,
+                'mb': { sm: 0, xs: 2.5 },
+                '& fieldset': { borderStyle: dashedBorder ? 'dashed' : 'solid' },
+                ...sx,
             }}>
             <InputLabel
                 htmlFor={fieldProps.id}
                 required={isRequired(fieldProps.required)}
                 disabled={fieldProps.disabled}
                 error={hasError}
+                sx={{ display: 'flex' }}
             >
-                {fieldProps.label}
+                <Typography variant='body2'>{fieldProps.label}</Typography>
             </InputLabel>
 
             <OutlinedInput
@@ -80,9 +84,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, star
                 aria-describedby={`${fieldProps.id}-helper-text`}
                 type='text'
                 size='small'
+                sx={{ typography: 'body2' }}
                 startAdornment={startAdornment ?
                     <InputAdornment position='start'>
-                        <Typography variant='body2'>{startAdornment}</Typography>
+                        <Typography variant='body2' sx={{ display: 'flex', color: 'action.active' }}>{startAdornment}</Typography>
                     </InputAdornment> : null
                 }
                 inputProps={{
@@ -91,9 +96,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, star
                     'data-form-type': 'other'
                 }}
             />
-
             <FormHelperText error={hasError} id={`${fieldProps.id}-helper-text`}>
-                {errorMessage}
+                <Typography variant='caption' sx={{ color: 'error.light' }}>{errorMessage}</Typography>
             </FormHelperText>
         </FormControl>
     );
