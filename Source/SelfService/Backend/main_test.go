@@ -22,7 +22,7 @@ func TestParseRoutes(t *testing.T) {
 	if err != nil {
 		t.Errorf("Couldn't parse the routes, %v", err)
 	}
-	testEqualRoutes(t, routes, &Routes{Route{"/hello", "localhost:1234"}})
+	testEqualRoutes(t, routes, &Routes{"/hello": "localhost:1234"})
 
 }
 
@@ -33,11 +33,11 @@ func TestProxyEnvVar(t *testing.T) {
 	}
 	os.Setenv("PROXY", `{"/hello": "localhost:2222"}`)
 	conf = initConfig()
-	testEqualRoutes(t, conf.Proxy, &Routes{Route{"/hello", "localhost:2222"}})
+	testEqualRoutes(t, conf.Proxy, &Routes{"/hello": "localhost:2222"})
 
 	os.Setenv("PROXY", `{"/hello": "localhost:2222", "/foo": "somewhere"}`)
 	conf = initConfig()
-	testEqualRoutes(t, conf.Proxy, &Routes{Route{"/hello", "localhost:2222"}, Route{"/foo", "somewhere"}})
+	testEqualRoutes(t, conf.Proxy, &Routes{"/hello": "localhost:2222", "/foo": "somewhere"})
 }
 
 func TestProxyWithoutProxy(t *testing.T) {
@@ -85,8 +85,7 @@ func TestProxyWithProxy(t *testing.T) {
 	bURL, _ := url.Parse(bridgeAPI.URL)
 
 	service := NewBackend(logrus.StandardLogger(), AppConfig{
-		PlatformApiHost: pURL.Host,
-		Proxy:           &Routes{Route{"/bridge/", bURL.Host}},
+		Proxy: &Routes{"/bridge/": bURL.Host, "/": pURL.Host},
 	})
 
 	ts := httptest.NewServer(service.mux)
@@ -101,6 +100,43 @@ func TestProxyWithProxy(t *testing.T) {
 	}
 
 	res, err = http.Get(ts.URL + bPath)
+	if err != nil {
+		t.Errorf("Could not get %s", ts.URL)
+	}
+	if res.StatusCode != 200 {
+		t.Errorf("Expected Status OK, got %v", res.Status)
+	}
+}
+
+func TestProxyOverwritingPlatforAPI(t *testing.T) {
+	platformAPI1 := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		t.Errorf("Didn't expect anything to be routed to platformAPI1")
+	}))
+	defer platformAPI1.Close()
+
+	platformAPI2 := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {}))
+	defer platformAPI2.Close()
+
+	url1, _ := url.Parse(platformAPI1.URL)
+	url2, _ := url.Parse(platformAPI2.URL)
+
+	service := NewBackend(logrus.StandardLogger(), AppConfig{
+		PlatformApiHost: url1.Host,
+		Proxy:           &Routes{"/": url2.Host},
+	})
+
+	ts := httptest.NewServer(service.mux)
+	defer ts.Close()
+
+	res, err := http.Get(ts.URL + "/")
+	if err != nil {
+		t.Errorf("Could not get %s", ts.URL)
+	}
+	if res.StatusCode != 200 {
+		t.Errorf("Expected Status OK, got %v", res.Status)
+	}
+
+	res, err = http.Get(ts.URL + "/hello")
 	if err != nil {
 		t.Errorf("Could not get %s", ts.URL)
 	}
