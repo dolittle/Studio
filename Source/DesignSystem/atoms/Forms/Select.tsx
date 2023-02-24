@@ -12,7 +12,7 @@ import { useController, isRequired, FieldProps } from './helpers';
  */
 export type SelectProps<T = string> = {
     /**
-     * Required. The options to display in the select.
+     * The options to display in the select.
      */
     options: { value: T, displayValue: string }[];
 
@@ -29,12 +29,8 @@ export type SelectProps<T = string> = {
 
 /**
  * Creates an select input field to be used in a {@link Form}.
- * @param props The {@link SelectProps} for the input.
- * @returns A new {@link Select} component.
- * @example
- * <Form initialValues={{ select: '' }}>
- *    <Select name='select' label='Select' options={[{ value: '1', displayValue: 'One' }, { value: '2', displayValue: 'Two' }]} />
- * </Form>
+ * @param {SelectProps} props - The {@link SelectProps} that contains the properties for the select.
+ * @returns A {@link Select} component.
  */
 export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onOpen, sx, ...selectProps }, ref) => {
     const { field } = useController(selectProps);
