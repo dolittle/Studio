@@ -8,12 +8,12 @@ type ValidationProps = Omit<ControllerRules, 'deps' | 'shouldUnregister' | 'valu
 
 type InputProps = {
     /**
-     * Required. The id of the input-field.
+     * The id of the field.
      */
     id: string;
 
     /**
-     * Required. The human readable name of the input field.
+     * The human readable label for the field.
      */
     label: string;
 
