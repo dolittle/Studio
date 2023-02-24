@@ -23,6 +23,8 @@ If an action is required from the user, clearly state what is needed and tell th
 - ***Info alerts*** provide the user with additional helpful information that doesn't require action.
 `;
 
+export const AlertBoxErrorTitle = 'Oops, something went wrong';
+
 export const AlertBoxErrorMessage = () =>
     <>
         Please try again later. If problem persists, please contact <Link href='#' message='Dolittle support'

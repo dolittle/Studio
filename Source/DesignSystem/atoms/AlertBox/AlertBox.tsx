@@ -5,7 +5,9 @@ import React, { ReactElement, useState, useEffect } from 'react';
 
 import { Alert, AlertTitle, Collapse, SxProps, Typography } from '@mui/material';
 
-import { IconButton, Link } from '@dolittle/design-system';
+import { IconButton } from '@dolittle/design-system';
+
+import { AlertBoxErrorMessage, AlertBoxErrorTitle } from './helpers';
 
 /**
  * The props for the {@link AlertBox} component.
@@ -13,6 +15,9 @@ import { IconButton, Link } from '@dolittle/design-system';
 export type AlertBoxProps = {
     /**
      * The severity of the alert.
+     *
+     * Leave empty to use the default `error` severity.
+     *
      * @default error
      */
     severity?: 'error' | 'warning' | 'info' | 'success';
@@ -20,18 +25,21 @@ export type AlertBoxProps = {
     /**
      * The title of the alert.
      *
+     * Leave empty to use the default {@link AlertBoxErrorTitle}.
+     *
      * Convension is to NOT use a period at the end of the title.
+     * @default <AlertBoxErrorTitle />
      */
-    title: string;
+    title?: string;
 
     /**
      * The message of the alert.
      *
-     * {@link AlertBoxErrorMessage} and {@link AlertBoxInfoMessage} can be used as examples.
+     * Message can be a string or a React element. Leave empty to use the default {@link AlertBoxErrorMessage}.
      *
-     * {@link Link} component can also be used to add links to the message.
+     * @default <AlertBoxErrorMessage />
      */
-    message: string | ReactElement;
+    message?: string | ReactElement;
 
     /**
      * Set this to be `true` if the alert should be dismissible.
@@ -42,7 +50,7 @@ export type AlertBoxProps = {
     isDismissible?: boolean;
 
     /**
-     * Set alert box as closed with `false` value and open alert conditionally inside the parent component.
+     * Set alert box as closed with `false` value and manage state in parent component.
      * @default true
      */
     isOpen?: boolean;
@@ -82,13 +90,11 @@ export const AlertBox = ({ severity, title, message, isDismissible, isOpen = tru
             <Alert
                 variant='outlined'
                 severity={severity ?? 'error'}
-                action={isDismissible &&
-                    <IconButton ariaLabel='Dismiss alert' onClick={handleClose} />
-                }
+                action={isDismissible ? <IconButton ariaLabel='Dismiss alert' onClick={handleClose} /> : undefined}
                 sx={{ display: 'inline-flex', ...sx }}
             >
-                <AlertTitle>{title}</AlertTitle>
-                <Typography variant='body2'>{message}</Typography>
+                <AlertTitle>{title ?? AlertBoxErrorTitle}</AlertTitle>
+                <Typography variant='body2'>{message ?? <AlertBoxErrorMessage />}</Typography>
             </Alert>
         </Collapse>
     );
