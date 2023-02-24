@@ -60,7 +60,8 @@ export type AlertDialogProps = {
     children?: React.ReactNode;
 
     /**
-     * Cancel button text that dismisses the dialog.
+     * Button text that dismisses the dialog.
+     *
      * @default Cancel
      */
     cancelBtnText?: string;
