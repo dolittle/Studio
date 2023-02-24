@@ -12,26 +12,17 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type Route struct {
-	Pattern string
-	Host    string
-}
-
-type Routes []Route
+type Routes map[string]string
 
 // parseRoutes takes raw json string and parses to a list of routes.
 func parseRoutes(raw string) (*Routes, error) {
-	var doc map[string]string
-	routes := &Routes{}
-	err := json.Unmarshal([]byte(raw), &doc)
+	var routes Routes
+	err := json.Unmarshal([]byte(raw), &routes)
 	if err != nil {
-		return routes, err
-	}
-	for pattern, host := range doc {
-		*routes = append(*routes, Route{pattern, host})
+		return &routes, err
 	}
 
-	return routes, nil
+	return &routes, nil
 }
 
 type AppConfig struct {
@@ -92,13 +83,12 @@ func NewBackend(logContext logrus.FieldLogger, appConfig AppConfig) backend {
 		appConfig:  appConfig,
 	}
 
-	s.mux.HandleFunc("/", s.Proxy(s.appConfig.PlatformApiHost))
-
 	if s.appConfig.Proxy != nil {
-		for _, route := range *s.appConfig.Proxy {
-			s.mux.HandleFunc(route.Pattern, s.Proxy(route.Host))
+		for pattern, host := range *s.appConfig.Proxy {
+			s.mux.HandleFunc(pattern, s.Proxy(host))
 		}
-
+	} else {
+		s.mux.HandleFunc("/", s.Proxy(s.appConfig.PlatformApiHost))
 	}
 
 	return s
