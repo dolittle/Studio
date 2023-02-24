@@ -10,22 +10,26 @@ import { Button as MuiButton, ExtendButtonBase, ButtonTypeMap, SvgIconProps, SxP
  */
 export type ButtonProps = {
     /**
-     * Required. The text to display on the button.
+     * The text to display on the button.
      */
     label: string;
 
     /**
-     * Button variants.
+     * Buttons has four different variants.
      *
-     * The fullwidth variant comes with custom style and it takes up the entire width of its container.
+     * The `text` variant is the default variant.
+     *
+     * The `fullwidth` variant comes with custom styles and it takes up the entire width of its container.
      * @default text
      */
     variant?: 'text' | 'filled' | 'outlined' | 'fullwidth';
 
     /**
-     * Button color.
+     * Buttons has seven different colors.
      *
-     * 'subtle' inherits its color.
+     * The `primary` color is the default color.
+     *
+     * `subtle` color inherits the color of the parent element.
      * @default primary
      */
     color?: 'primary' | 'subtle' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
@@ -43,19 +47,19 @@ export type ButtonProps = {
     endWithIcon?: ReactElement<SvgIconProps>;
 
     /**
-     * Button can be full width.
+     * Set to `true` if button should take up the entire width of its container.
      * @default false
      */
     isFullWidth?: boolean;
 
     /**
-     * Button can be disabled.
+     * Set to `true` if button should be disabled.
      * @default false
      */
     disabled?: boolean;
 
     /**
-     * Button type. For submit buttons, use 'submit'. For reset buttons, use 'reset'.
+     * The type of the button.
      * @default button
      */
     type?: 'button' | 'submit' | 'reset';
@@ -67,23 +71,23 @@ export type ButtonProps = {
     href?: string;
 
     /**
-     * Use a target when linking to an external page.
+     * Set to `true` if button link should open in a new tab.
      *
-     * Please also add meaningful text to the ariaLabel prop.
+     * Please also add meaningful text to the ariaLabel prop if you use target prop.
      * @default false
      */
     target?: boolean;
 
     /**
-     * For accessibility, it is recommended to set this value to a meaningful string rather than an empty string.
+     * For accessibility, it is recommended to set aria-label to a meaningful string.
      * @default undefined
      */
     ariaLabel?: string;
 
     /**
-     * The component to render as.
+     * The component to render button as.
      *
-     * 'span' is used inside data tables and other places where you don't want the button to be focusable.
+     * Use `span` if you want button styles, but element isn't really a button - like inside data tables.
      *
      * If you used the href prop, the component will automatically render as an anchor tag.
      * @default button
@@ -91,8 +95,7 @@ export type ButtonProps = {
     component?: 'button' | 'span' | 'a';
 
     /**
-     * The role='none' combined with the component='span' is a password managers browser extension hack that doesn't mess with the
-     * button and slow down the page.
+     * The `role='none'` combined with the `component='span'` is used currently to avoid password managers from detecting the button.
      * @default button
      */
     role?: 'button' | 'none';
@@ -114,18 +117,15 @@ export type ButtonProps = {
      * @default undefined
      */
     overrides?: Partial<ExtendButtonBase<ButtonTypeMap>>;
-
 };
 
 /**
- * A button component.
- * @param {...ButtonProps} props - The {@link ButtonProps}.
- * @returns {ReactElement} A new {@link Button} component.
- * @example
- * <Button label='Click me' variant='filled' isFullWidth startWithIcon={<AddCircle />} />
+ * The button component is used to trigger an action or event, such as submitting a form, opening a dialog, canceling an action, or performing a delete operation.
+ * @param {ButtonProps} props - The {@link ButtonProps} that contains the properties for the button component.
+ * @returns A {@link Button} component.
  */
 export const Button = (
-    { label, variant, color, startWithIcon, endWithIcon, isFullWidth, disabled, type, href, target, ariaLabel, component, role, onClick, sx, overrides }: ButtonProps): ReactElement =>
+    { label, variant, color, startWithIcon, endWithIcon, isFullWidth, disabled, type, href, target, ariaLabel, component, role, onClick, sx, overrides }: ButtonProps) =>
 
     <MuiButton
         variant={variant === 'filled' ? 'contained' : variant}
