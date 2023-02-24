@@ -11,7 +11,7 @@ export { Button, ButtonProps } from './atoms/Button';
 export { AlertDialog, AlertDialogProps } from './atoms/AlertDialog';
 export { Checkbox, Form, Input, Select, Switch } from './atoms/Forms';
 export { IconButton } from './atoms/IconButton';
-export { Link } from './atoms/Link';
+export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
 export { Summary } from './atoms/Metrics';
 export { Tabs } from './atoms/Tabs';
