@@ -55,12 +55,12 @@ metadata.argTypes = {
         table: { defaultValue: { summary: 'false' } },
     },
     required: {
-        description: 'Can be a boolean or a string with a custom message.',
+        description: 'Can be a `boolean` or a `string` with a custom message.',
         control: { type: 'boolean' },
         table: { defaultValue: { summary: 'false' } },
     },
     pattern: {
-        description: 'Add custom regex validation.',
+        description: `Add custom regex validation. <br/> The value can be a \`string\` or an \`object\` with a value and a custom error message.`,
         options: ['Email', 'Password'],
         mapping: {
             Email: emailRegex,
@@ -99,8 +99,11 @@ export const RequiredWithCustomMessage = createStory({
 export const RequiredWithCustomRegexPattern = createStory({
     id: 'requiredWithCustomRegexPattern',
     label: 'Custom regex pattern',
-    pattern: /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-    required: 'Only lowercase letters and numbers are allowed.',
+    pattern: {
+        value: emailRegex,
+        message: 'Only lowercase letters and numbers are allowed.',
+    },
+    required: true,
 });
 
 export const WithDashedBorder = createStory({
