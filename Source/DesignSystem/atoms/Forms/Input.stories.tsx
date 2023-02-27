@@ -7,21 +7,34 @@ import { Search } from '@mui/icons-material';
 
 import { componentStories, Form, Input, Tooltip } from '@dolittle/design-system';
 
+const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+type StoriesValuesProps = {
+    defaultInput: string;
+    requiredInput: string;
+    requiredInputWithCustomMessage: string;
+    requiredWithCustomRegexPattern: string;
+    dashedInput: string;
+    withSideTooltip: string;
+};
+
 const { metadata, createStory } = componentStories(Input, {
-    actions: {
-        onChange: 'changed',
-    },
+    actions: { onChange: 'changed' },
     decorator: (Story) => (
-        <Form initialValues={{
-            withSideTooltip: 'Click to see tooltip...',
-        }}>
+        <Form<StoriesValuesProps>
+            initialValues={{
+                defaultInput: '',
+                requiredInput: '',
+                requiredInputWithCustomMessage: '',
+                requiredWithCustomRegexPattern: '',
+                dashedInput: '',
+                withSideTooltip: 'Click to see tooltip...',
+            }}>
             {Story()}
         </Form>
     ),
 });
-
-const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
 metadata.parameters = {
     controls: { include: ['id', 'label', 'autoFocus', 'startAdornment', 'placeholder', 'disabled', 'required', 'pattern', 'onChange'] },

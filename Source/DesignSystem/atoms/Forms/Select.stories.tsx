@@ -26,7 +26,7 @@ const { metadata, createStory } = componentStories(Select, {
                 defaultSelect: 'Value 1',
                 withDashedBorder: 'Value 2',
             }}>
-            <Story />
+            {Story()}
         </Form>
     ),
 });
@@ -36,6 +36,7 @@ metadata.parameters = {
 };
 
 metadata.argTypes = {
+    options: { control: false },
     required: {
         control: { type: 'boolean' },
     },
