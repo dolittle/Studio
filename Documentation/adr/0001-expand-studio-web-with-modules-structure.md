@@ -1,4 +1,4 @@
-# 1. expand studio web with modules structure
+# Expand studio web with modules structure
 
 Date: 2023-02-17
 
@@ -35,36 +35,53 @@ How this will look in Studio/Web as of right now:
 
 ```
 SelfService/Web
-|--admin (studio area)
+|--admin
+|  └-- Admin module that contains components and logic related to the admin area
 |--profiles (studio area)
-|--api (studio related api's ex: access control and feature flags)
-|--components (any shared components that are reused across areas/modules and modules that don't fit in the Design System)
-|--integrations (The Bridge module area)
-|--layouts (shared layouts)
-|--solutions (The current SelfService module area)
-|--module3 (Another module area)
-└--spaces (Area related to "spaces" in Studio)
+|--apis
+|  └-- **A well-known folder that contains the integration layer between the frontend and the backend.**
+|--components
+|  |-- **Any shared visual components that are reused across areas/modules and modules that don't fit in the Design System.**
+|  |-- **Group components by areas where necessary. Move to Design System when it makes sense.**
+|  └--layouts (shared layouts is an example of a grouping that may make sense to keep within Studio at first)
+|--integrations
+|  └-- The Bridge module area
+|--solutions
+|  └-- The current SelfService module area
+|--module3
+|  └-- Another module area
+└--spaces
+   └-- Area related to "spaces" as a core module in Studio
 
 ```
-Except for `components` in the structure above, notice how the different areas are grouped to their own specific responsibility and are often pluralized (ends in `s`).
+Except for `components` and `apis` folders in the structure above, notice how the different areas are grouped to their own specific responsibility and are often pluralized (ends in `s`).
 
 **High Cohesion**
 
 Another aspect to consider is utilizing high cohesion across files and components as you expand the different areas / modules. This means that we try to group things together based on the area they are connected to, not what they are.
 
-There may be some aspects that make sense to separate out of areas, and this could be for practical reasons, like the `api` folder. Where it should be easy to go to one place to see all the related API's. The Api's SHOULD still lean on area/module separation where this makes sense.
+There may be some aspects that make sense to separate out of areas, and this could be for practical reasons, like the `apis` folder. Where it should be easy to go to one place to see all the related API's. The Api's SHOULD still lean on area/module separation where this makes sense. For practical reasons though this may not be as clean-cut as the module definitions, and may even be auto-generated into another structure.
 
 Example:
 ```
 SelfService/Web
-|--api
+|--apis
 |   |--integrations
 |   |   |--integrations.api.ts
 |   |--solutions
 |       |--solutions.api.ts
 |--...
 |--integrations (The Bridge module area)
+|  |--index.tsx (Index usually indicates the main entry screen / page for the module and will typically contain composition, data loading and routing)
+|  |--store.tsx (The specific store or state needed for this module)
+|  |--component.tsx (components here may have specific data-loading and composition logic)
+|  |--component2-folder (component folder for practical grouping of components or a specific component's files)
+|     └--component2.tsx
+|  |--sub-route-folder (sub route folder to indicate hierarchy and further grouping of components)
+|  |  |--index.tsx
+|  |  └--sub-route-component.tsx
 |--solutions (The current SelfService module area)
+|  |--... (as described above)
 └--...
 
 ```
