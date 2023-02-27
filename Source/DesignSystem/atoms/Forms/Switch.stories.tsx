@@ -6,39 +6,31 @@ import React from 'react';
 import { componentStories, Form, Switch } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(Switch, {
-    actions: {
-        onChange: 'Changed',
-    },
+    actions: { onChange: 'Changed' },
     decorator: (Story) => (
-        <Form initialValues={{
-            default: '',
-            active: true,
-            disabled: '',
-            withoutLabel: ''
-        }}>
-            <Story />
+        <Form<{ default: string }>
+            initialValues={{ default: '' }}>
+            {Story()}
         </Form>
-    )
+    ),
 });
+
+metadata.parameters = {
+    controls: { include: ['id', 'label', 'defaultValue', 'disabled'] },
+};
+
+metadata.argTypes = {
+    disabled: {
+        table: { defaultValue: { summary: false } },
+    },
+};
+
+metadata.args = {
+    id: 'default',
+    label: 'Default switch',
+    disabled: false,
+};
 
 export default metadata;
 
-export const Default = createStory({
-    id: 'default',
-    label: 'Default switch with label'
-});
-
-export const Active = createStory({
-    id: 'active',
-    label: 'Active'
-});
-
-export const Disabled = createStory({
-    id: 'disabled',
-    label: 'Disabled switch',
-    disabled: true
-});
-
-export const WithoutLabel = createStory({
-    id: 'withoutLabel'
-});
+export const Default = createStory();
