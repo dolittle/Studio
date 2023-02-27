@@ -176,20 +176,6 @@ const components: Components & DataGridProComponents = {
             outlinedError: { borderColor: '#F66666' },
         },
     },
-    MuiSwitch: {
-        styleOverrides: {
-            colorPrimary: {
-                '&.Mui-checked.Mui-disabled': {
-                    color: '#757575'
-                }
-            },
-            track: {
-                '.Mui-checked.Mui-disabled + &': {
-                    backgroundColor: '#FFFFFF'
-                },
-            },
-        },
-    },
     MuiButton: {
         variants: [
             {
@@ -203,7 +189,7 @@ const components: Components & DataGridProComponents = {
                 },
             },
             {
-                // Add custom background color to the button with inherit color
+                // Add custom background color to the contained button variant with inherit color
                 props: { color: 'inherit', variant: 'contained' },
                 style: {
                     'backgroundColor': '#616161',
@@ -211,15 +197,6 @@ const components: Components & DataGridProComponents = {
                 },
             },
         ],
-    },
-    MuiTooltip: {
-        styleOverrides: {
-            tooltip: {
-                padding: 0,
-                maxWidth: 550,
-                backgroundColor: 'transparent'
-            }
-        }
     },
     MuiDataGrid: {
         styleOverrides: {
