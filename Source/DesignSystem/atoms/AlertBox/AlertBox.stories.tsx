@@ -3,85 +3,54 @@
 
 import React from 'react';
 
-import { componentStories, AlertBox, AlertBoxErrorMessage, AlertBoxInfoMessage } from '@dolittle/design-system';
+import { componentStories, AlertBox } from '@dolittle/design-system';
+
+import { alertBoxDescription, AlertBoxErrorTitle, AlertBoxErrorMessage, AlertBoxInfoMessage } from './helpers';
 
 const { metadata, createStory } = componentStories(AlertBox);
 
+metadata.title = 'Alert Box';
 metadata.parameters = {
     docs: {
-        description: {
-            component: `An alert displays a short, important message in a way that attracts the user's attention without interrupting the user's tasks. These should not be confused with snackbars, which are used to signal feedback around specific system tasks that a user has just completed or attempted to complete. Alerts are used to indicate system status and feedback as a whole.
-            
-**Styling:** The default style for alerts is outlined with an icon to indicate what severity level the alert is. Alerts can contain a title that provides additional information about the severity level. An alert can have an action such as a close button.
-
-**Severity levels:** We have four severity levels: error alerts, warning alerts, info alerts, and success alerts. 
-- *Error alerts* let the user know something is wrong. Explain the problem and provide the user with a next step, an alternative solution or contact information to our help services. Keep the message simple and direct. Don't use technical details or blame the user. 
-- *Warning alerts* anticipate a change that will impact the system and therefore user's experience. Inform but don't alarm. If an action is required from the user, clearly state what is needed and tell them what to expect after. Provide a cancel option if possible. 
-- *Success alerts* indicate the system is functioning as it should.  
-- *Info alerts* provide the user with additional helpful information that doesn't require action.
-`,
-        }
-    }
+        description: { component: alertBoxDescription },
+    },
 };
 
 metadata.argTypes = {
     message: {
-        control: {
-            type: 'text',
-            value: 'This is a message'
+        options: ['string', 'AlertBoxErrorMessage', 'AlertBoxInfoMessage'],
+        mapping: {
+            string: 'This can be your custom alert message.',
+            AlertBoxErrorMessage: <AlertBoxErrorMessage />,
+            AlertBoxInfoMessage: <AlertBoxInfoMessage />,
         },
         table: {
-            type: {
-                summary: 'string | ReactElement'
-            }
-        }
+            type: { summary: 'string | ReactElement' },
+        },
     },
     sx: {
-        control: {
-            disable: true
-        },
+        control: false,
         table: {
-            type: {
-                summary: 'SxProps'
-            }
-        }
-    }
+            type: { summary: 'SxProps' },
+        },
+    },
 };
 
 metadata.args = {
+    severity: 'error',
+    title: AlertBoxErrorTitle,
+    message: 'AlertBoxErrorMessage',
     isDismissible: false,
-    isOpen: true
+    isOpen: true,
 };
 
 export default metadata;
 
-export const Error = createStory({
-    severity: 'error',
-    title: 'This is a error title',
-    message: <AlertBoxErrorMessage />
-});
+export const Default = createStory();
 
-export const Warning = createStory({
-    severity: 'warning',
-    title: 'This is a warning title',
-    message: <AlertBoxErrorMessage />
-});
-
-export const Info = createStory({
+export const DismissableAlert = createStory({
     severity: 'info',
-    title: 'This is a informational title',
-    message: <AlertBoxInfoMessage />
-});
-
-export const Success = createStory({
-    severity: 'success',
-    title: 'This is a success title',
-    message: 'You are all set up and ready to go!'
-});
-
-export const WithCloseAction = createStory({
-    severity: 'info',
-    title: 'This is an alert box with a "close" action',
-    message: 'You can click the close button to dismiss the alert box.',
-    isDismissible: true
+    title: 'This is an alert box that can be dismissed',
+    message: 'Click the `X` icon to dismiss the alert.',
+    isDismissible: true,
 });

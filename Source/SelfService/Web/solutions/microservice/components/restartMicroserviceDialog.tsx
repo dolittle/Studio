@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { ConfirmDialog } from '@dolittle/design-system';
+import { AlertDialog } from '@dolittle/design-system';
 
 import { restartMicroservice } from '../../../api/solutions/api';
 
@@ -43,15 +43,14 @@ export const RestartMicroserviceDialog = ({ applicationId, environment, microser
     };
 
     return (
-        <ConfirmDialog
-            id='restart-microservice-dialog'
-            isOpen={open}
+        <AlertDialog
+            id='restart-microservice'
             title='Restart microservice?'
             description='Restarting will temporarily stop the microservice and restart it again. Your app will be unavailable during restart.'
-            cancelText='Cancel'
-            confirmText='Restart'
-            handleCancel={() => setOpen(false)}
-            handleConfirm={() => restart()}
+            confirmBtnText='Restart'
+            isOpen={open}
+            onCancel={() => setOpen(false)}
+            onConfirm={() => restart()}
         />
     );
 };

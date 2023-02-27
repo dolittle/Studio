@@ -34,11 +34,11 @@ export const DownloadLogs = ({ row: { application, podName, containerName, image
 
     return (
         <IconButton
+            ariaLabel='Download logs'
+            icon={<DownloadRounded />}
             href={URL.createObjectURL(logsBlob)}
             download={`${containerImage}.log`}
             onClick={handleNotification}
-            label='Download logs'
-            icon={<DownloadRounded />}
         />
     );
 };

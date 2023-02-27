@@ -11,6 +11,8 @@ import { Accordion } from '@dolittle/design-system';
 
 import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../../api/solutions/api';
 
+import { isAlphaNumeric } from '../../../helpers';
+
 import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
 import { EmptyDataTable } from '../../../components/emptyDataTable';
 import { RestartInfoBox } from '../../../components/restartInfoBox';
@@ -85,7 +87,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     };
 
     const validateFileChars = (file: File): boolean => {
-        if ((/[^-._a-zA-Z0-9]+/).test(file.name)) {
+        if ((isAlphaNumeric).test(file.name)) {
             setValidateFileDialogIsOpen(prev => ({ isOpen: true, file: [...prev.file, file] }));
 
             return false;
@@ -179,11 +181,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 }}
             />
 
-            <Accordion
-                id='configuration-files'
-                title='Configuration Files'
-                defaultExpanded
-            >
+            <Accordion id='configuration-files' title='Configuration Files' defaultExpanded>
                 <HeaderButtons
                     filePrompt={() => fileUploadRef.current?.showPrompt()}
                     deleteDisabled={selectedRowIds.length === 0 || noConfigTableRows}

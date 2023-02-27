@@ -171,62 +171,10 @@ const palette: PaletteOptions = {
 };
 
 const components: Components & DataGridProComponents = {
-    MuiFormControl: {
+    MuiAlert: {
         styleOverrides: {
-            root: {
-                letterSpacing: '0.15px',
-            },
-        }
-    },
-    MuiFormLabel: {
-        styleOverrides: {
-            root: {
-                fontSize: 14,
-            },
-        }
-    },
-    MuiOutlinedInput: {
-        styleOverrides: {
-            root: {
-                fontSize: 14,
-            },
-            input: {
-                '::placeholder': {
-                    color: palette?.text?.secondary,
-                },
-            },
-        }
-    },
-    MuiFormHelperText: {
-        styleOverrides: {
-            root: {
-                '&.Mui-error': {
-                    color: '#FBB3B3',
-                    letterSpacing: '0.4px',
-                },
-            },
-        }
-    },
-    MuiInputAdornment: {
-        styleOverrides: {
-            root: {
-                color: palette?.action?.active,
-            },
-        }
-    },
-    MuiSwitch: {
-        styleOverrides: {
-            colorPrimary: {
-                '&.Mui-checked.Mui-disabled': {
-                    color: '#757575'
-                }
-            },
-            track: {
-                '.Mui-checked.Mui-disabled + &': {
-                    backgroundColor: '#FFFFFF'
-                },
-            },
-        }
+            outlinedError: { borderColor: '#F66666' },
+        },
     },
     MuiButton: {
         variants: [
@@ -237,31 +185,18 @@ const components: Components & DataGridProComponents = {
                     'color': '#8C9AF8',
                     'width': '100%',
                     'minHeight': 30,
-                    '&:hover': {
-                        backgroundColor: 'rgba(140, 154, 248, 0.15)'
-                    }
-                }
+                    '&:hover': { backgroundColor: 'rgba(140, 154, 248, 0.15)' },
+                },
             },
             {
-                // Add custom background color to the button with inherit color
+                // Add custom background color to the contained button variant with inherit color
                 props: { color: 'inherit', variant: 'contained' },
                 style: {
                     'backgroundColor': '#616161',
-                    '&:hover': {
-                        backgroundColor: '#757575'
-                    }
-                }
-            }
-        ]
-    },
-    MuiTooltip: {
-        styleOverrides: {
-            tooltip: {
-                padding: 0,
-                maxWidth: 550,
-                backgroundColor: 'transparent'
-            }
-        }
+                    '&:hover': { backgroundColor: '#757575' }
+                },
+            },
+        ],
     },
     MuiDataGrid: {
         styleOverrides: {

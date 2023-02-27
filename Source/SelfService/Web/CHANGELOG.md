@@ -1,3 +1,40 @@
+# [3.1.3] - 2023-2-27 [PR: #317](https://github.com/dolittle/Studio/pull/317)
+## Summary
+
+Overall Design System component improvements. Added documentation with controls to Storybook.
+Display The default version of this component, which can also be changed using the controls.
+
+<img width="1076" alt="Screenshot 2023-02-27 at 17 02 19" src="https://user-images.githubusercontent.com/19160439/221599363-480d07c8-b0b2-43e4-9a1d-1bee95842dd1.png">
+
+### Added
+
+- Missing Stories - Dialog, Select, Switch
+- Documentation to Design System
+
+### Changed
+
+- Design System improvements
+
+### Removed
+
+- Wrongly used style overrides from Theme
+
+
+# [3.1.2] - 2023-2-23 [PR: #315](https://github.com/dolittle/Studio/pull/315)
+## Summary
+
+Add reusable 'Alert Dialog' component to Design System and to stories with JsDocs.
+
+<img width="643" alt="Screenshot 2023-02-23 at 20 35 02" src="https://user-images.githubusercontent.com/19160439/220999326-867bdb9a-fd4f-4555-84bc-b28cbb40f652.png">
+
+### Added
+
+- 'error' color to dialogs confirm buttons whose action or output is irreversible
+- JsDocs for documentation
+- Helper function that holds regex patterns
+- Helper function that converts bytes
+
+
 # [3.1.1] - 2023-2-16 [PR: #313](https://github.com/dolittle/Studio/pull/313)
 ## Summary
 

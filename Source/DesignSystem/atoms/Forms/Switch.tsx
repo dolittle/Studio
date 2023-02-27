@@ -10,12 +10,8 @@ import type { Form } from './Form';
 
 /**
  * Creates a switch field to be used in a {@link Form}.
- * @param props The {@link FieldProps} for the switch.
- * @returns A new {@link Switch} component.
- * @example
- * <Form initialValues={{ switch: false }}>
- *  <Switch name='switch' label='Switch' />
- * </Form>
+ * @param props - The {@link FieldProps} for the switch.
+ * @returns A {@link Switch} component.
  */
 export const Switch = (props: FieldProps) => {
     const { field } = useController(props);
@@ -26,9 +22,10 @@ export const Switch = (props: FieldProps) => {
                 control={
                     <MuiSwitch
                         {...field}
-                        size='small'
+                        id={`${props.id}-switch`}
                         checked={!!field.value}
                         disabled={props.disabled}
+                        size='small'
                         sx={{ pointerEvents: 'auto' }}
                     />
                 }

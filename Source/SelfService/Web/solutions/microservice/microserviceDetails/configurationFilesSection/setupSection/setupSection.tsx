@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 
 import { Box } from '@mui/material';
 
-import { Accordion, ConfirmDialog, Form } from '@dolittle/design-system';
+import { Accordion, AlertDialog, Form } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
 
@@ -102,15 +102,15 @@ export const SetupSection = ({ application, applicationId, environment, microser
 
     return (
         <Box>
-            <ConfirmDialog
-                id='delete-microservice-dialog'
-                isOpen={deleteDialogIsOpen}
+            <AlertDialog
+                id='delete-microservice'
                 title='Delete microservice?'
                 description='This action cannot be undone. Click delete if you would like to delete the mircroservice.'
-                cancelText='Cancel'
-                confirmText='Delete'
-                handleCancel={() => setDeleteDialogIsOpen(false)}
-                handleConfirm={handleMicroserviceDelete}
+                confirmBtnColor='error'
+                confirmBtnText='Delete'
+                isOpen={deleteDialogIsOpen}
+                onCancel={() => setDeleteDialogIsOpen(false)}
+                onConfirm={handleMicroserviceDelete}
             />
 
             <RestartMicroserviceDialog
@@ -123,11 +123,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                 handleSuccess={() => window.location.reload()}
             />
 
-            <Accordion
-                id='setup-accordion'
-                title='Configuration Setup'
-                defaultExpanded
-            >
+            <Accordion id='setup-accordion' title='Configuration Setup' defaultExpanded>
                 <HeaderButtons
                     handleRestartDialog={() => setRestartDialogIsOpen(true)}
                     handleDeleteDialog={() => setDeleteDialogIsOpen(true)}

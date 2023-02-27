@@ -5,61 +5,59 @@ import React, { ReactElement, useState, useEffect } from 'react';
 
 import { Alert, AlertTitle, Collapse, SxProps, Typography } from '@mui/material';
 
-import { IconButton, Link } from '@dolittle/design-system';
+import { IconButton } from '@dolittle/design-system';
 
-export const AlertBoxErrorMessage = () =>
-    <>
-        Please try again later. If problem persists, please contact <Link href='#' message='Dolittle support'
-            ariaLabel='To learn more, visit our website which opens in a new window.' />.
-    </>;
-
-export const AlertBoxInfoMessage = () =>
-    <>
-        For more information, please contact <Link href='#' message='Dolittle support'
-            ariaLabel='To learn more, visit our website which opens in a new window.' />.
-    </>;
+import { AlertBoxErrorMessage, AlertBoxErrorTitle } from './helpers';
 
 /**
- * The props for a {@link AlertBox} component.
+ * The props for the {@link AlertBox} component.
  */
 export type AlertBoxProps = {
     /**
      * The severity of the alert.
+     *
+     * Leave empty to use the default `error` severity.
+     *
      * @default error
      */
     severity?: 'error' | 'warning' | 'info' | 'success';
 
     /**
-     * Required. The title of the alert.
+     * The title of the alert.
+     *
+     * Leave empty to use the default {@link AlertBoxErrorTitle}.
      *
      * Convension is to NOT use a period at the end of the title.
+     * @default <AlertBoxErrorTitle />
      */
-    title: string;
+    title?: string;
 
     /**
-     * Required. The message of the alert.
+     * The message of the alert.
      *
-     * Link component can be used to add links to the message.
+     * Message can be a string or a React element. Leave empty to use the default {@link AlertBoxErrorMessage}.
+     *
+     * @default <AlertBoxErrorMessage />
      */
-    message: string | ReactElement;
+    message?: string | ReactElement;
 
     /**
-     * Set if the alert is dismissible.
+     * Set this to be `true` if the alert should be dismissible.
      *
-     * This will put the close, 'x', icon to the top right.
+     * This places the close icon in the upper right corner.
      * @default false
      */
     isDismissible?: boolean;
 
     /**
-     * Set alert box as closed with 'false' value and open alert conditionally inside the parent component.
+     * Set alert box as closed with `false` value and manage state in parent component.
      * @default true
      */
     isOpen?: boolean;
 
     /**
-     * If alert box is set to be closed conditionally (isOpen=false) inside the parent component,
-     * this callback function can be called if the alert should be dismissed.
+     * Callback function that is called when the alert is dismissed.
+     *
      * @default undefined
      */
     onDismissed?: () => void;
@@ -71,47 +69,32 @@ export type AlertBoxProps = {
 };
 
 /**
- * A alert box component.
- * @param {...AlertBoxProps} props - The {@link AlertBoxProps}.
- * @returns {ReactElement} A new {@link AlertBox} component.
- * @example
- * <AlertBox
- *    severity='warning'
- *    title='Warning'
- *    message='Something went wrong.'
- * />
+ * Alert box component is used to display an alert message.
+ * @param {AlertBoxProps} props - The {@link AlertBoxProps} that contains the properties for the alert box.
+ * @returns A {@link AlertBox} component.
  */
-export const AlertBox = ({ severity, title, message, isDismissible, isOpen = true, onDismissed, sx }: AlertBoxProps): ReactElement => {
+export const AlertBox = ({ severity, title, message, isDismissible, isOpen = true, onDismissed, sx }: AlertBoxProps) => {
     const [open, setOpen] = useState(isOpen);
 
     useEffect(() => {
         setOpen(isOpen);
     }, [isOpen]);
 
+    const handleClose = () => {
+        setOpen(false);
+        onDismissed?.();
+    };
+
     return (
         <Collapse in={open}>
             <Alert
                 variant='outlined'
-                severity={severity || 'error'}
-                role='alert'
-                action={isDismissible &&
-                    <IconButton
-                        label='Dismiss alert'
-                        onClick={() => {
-                            setOpen(false);
-                            onDismissed?.();
-                        }}
-                    />}
-                sx={{
-                    'display': 'inline-flex',
-                    'borderColor': !severity || severity === 'error' ? 'error.dark' : null,
-                    'textAlign': 'left',
-                    '& .MuiAlert-action': { pt: 0 },
-                    ...sx
-                }}
+                severity={severity ?? 'error'}
+                action={isDismissible ? <IconButton ariaLabel='Dismiss alert' onClick={handleClose} /> : undefined}
+                sx={{ display: 'inline-flex', ...sx }}
             >
-                <AlertTitle>{title}</AlertTitle>
-                <Typography variant='body2'>{message}</Typography>
+                <AlertTitle>{title ?? AlertBoxErrorTitle}</AlertTitle>
+                <Typography variant='body2'>{message ?? <AlertBoxErrorMessage />}</Typography>
             </Alert>
         </Collapse>
     );

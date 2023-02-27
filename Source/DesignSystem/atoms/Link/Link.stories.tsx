@@ -5,23 +5,33 @@ import { componentStories, Link } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(Link);
 
+metadata.args = {
+    href: '#',
+    target: false,
+    ariaLabel: undefined,
+    color: 'primary',
+    message: 'Default internal link',
+};
+
 export default metadata;
 
-export const Primary = createStory({
+export const Default = createStory();
+
+export const ExternalLink = createStory({
     href: 'https://dolittle.io',
     target: true,
     ariaLabel: 'To learn more, visit our website which opens in a new window.',
-    message: 'Go to Dolittle website'
+    message: 'Go to Dolittle website',
 });
 
-export const Secondary = createStory({
+export const SecondaryLink = createStory({
     href: '#',
     color: 'secondary',
-    message: 'Secondary link'
+    message: 'Informative link',
 });
 
-export const Subtle = createStory({
+export const SubtleLink = createStory({
     href: '#',
-    color: 'text.primary',
-    message: 'Subtle link'
+    color: 'subtle',
+    message: 'Link, that is not so important',
 });

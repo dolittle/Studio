@@ -21,12 +21,12 @@ export type FormProps<T extends FieldValues> = {
     children: ReactNode;
 
     /**
-     * An optional callback to call when the form is submitted with valid data.
+     * Callback to call when the form is submitted with valid data.
      */
     onSubmit?: SubmitHandler<T>;
 
     /**
-     * An optional callback to call when the form is submitted with invalid data.
+     * Callback to call when the form is submitted with invalid data.
      */
     onSubmitInvalid?: SubmitErrorHandler<T>;
 
@@ -38,12 +38,8 @@ export type FormProps<T extends FieldValues> = {
 
 /**
  * Creates a form that deals with input-validation using `react-hook-form`.
- * @param {...FormProps} props The {@link FormProps} for the form.
- * @returns A new {@link Form} component.
- * @example
- * <Form initialValues={{ input: '' }} onSubmit={data => console.log(data)}>
- *   <Input name='input' label='Input' />
- * </Form>
+ * @param {FormProps} props The {@link FormProps} for the form.
+ * @returns A {@link Form} component.
  */
 export const Form = <T extends FieldValues>({ initialValues, onSubmit, onSubmitInvalid, children, sx }: FormProps<T>) => {
     const methods = useForm<T>({

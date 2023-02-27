@@ -10,59 +10,59 @@ import { componentStories, IconButton } from '@dolittle/design-system';
 const { metadata, createStory } = componentStories(IconButton);
 
 metadata.argTypes = {
-    label: {
+    ariaLabel: {
         type: 'string',
         control: {
             type: 'text'
-        }
+        },
     },
     icon: {
         control: false,
         table: {
             type: {
-                summary: 'ReactElement<SvgIconProps>'
-            }
-        }
+                summary: 'ReactElement<SvgIconProps>',
+            },
+        },
     },
     color: {
-        defaultValue: 'inherit'
+        defaultValue: 'inherit',
     },
     size: {
-        defaultValue: 'small'
+        defaultValue: 'small',
     },
     href: {
-        control: false
+        control: false,
     },
     download: {
-        control: false
+        control: false,
     },
     onClick: {
-        control: false
-    }
+        control: false,
+    },
 };
 
 export default metadata;
 
 export const Inherit = createStory({
-    label: 'Download',
-    icon: <DownloadRounded />
+    ariaLabel: 'Download',
+    icon: <DownloadRounded />,
 });
 
 // TODO: Haven't figured out how to display react SVG elements in the docs tab yet, so this is a workaround.
 Inherit.parameters = {
     docs: {
         source: {
-            code: `<IconButton label='Download' icon={<DownloadRounded />} />`
-        }
-    }
+            code: `<IconButton ariaLabel='Download' icon={<DownloadRounded />} />`
+        },
+    },
 };
 
 export const Secondary = createStory({
-    label: 'Secondary Icon Button',
-    color: 'primary'
+    ariaLabel: 'Secondary Icon Button',
+    color: 'primary',
 });
 
 export const Disabled = createStory({
-    label: 'Disabled Icon Button',
-    disabled: true
+    ariaLabel: 'Disabled Icon Button',
+    disabled: true,
 });
