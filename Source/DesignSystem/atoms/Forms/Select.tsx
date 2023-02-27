@@ -37,7 +37,7 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
 
     return (
         <FormControl size='small' sx={{ width: 220, ...sx }}>
-            <InputLabel id={`${selectProps.label}-label`} required={isRequired(selectProps.required)}>
+            <InputLabel id={`${selectProps.id}-select`} required={isRequired(selectProps.required)}>
                 {selectProps.label}
             </InputLabel>
 
@@ -45,7 +45,7 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
                 {...field}
                 {...selectProps as MuiSelectProps}
                 ref={ref}
-                labelId={`${selectProps.label}-label`}
+                labelId={`${selectProps.id}-select`}
                 value={field.value}
                 disabled={selectProps.disabled}
                 onOpen={onOpen}

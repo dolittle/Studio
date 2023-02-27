@@ -19,11 +19,11 @@ export const Checkbox = (props: FieldProps) => {
     return (
         <FormControl error={hasError} required={isRequired(props.required)}>
             <FormControlLabel
-                control={<MuiCheckbox {...field} id={props.id} checked={!!field.value} disabled={props.disabled} sx={{ mr: 0.5 }} />}
+                control={<MuiCheckbox {...field} id={`${props.id}-checkbox`} checked={!!field.value} disabled={props.disabled} sx={{ mr: 0.5 }} />}
                 label={props.label}
                 sx={{ mr: 0 }}
             />
-            <FormHelperText error={hasError} id={`${props.id}-helper-text`}>
+            <FormHelperText error={hasError} id={`${props.id}-checkbox-helper-text`}>
                 <Typography variant='caption' sx={{ color: 'error.light' }}>{errorMessage}</Typography>
             </FormHelperText>
         </FormControl>
