@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import { FormControl, FormControlLabel, Checkbox as MuiCheckbox } from '@mui/material';
+import { FormControl, FormControlLabel, FormHelperText, Checkbox as MuiCheckbox, Typography } from '@mui/material';
 
-import { useController, FieldProps } from './helpers';
+import { isRequired, useController, FieldProps } from './helpers';
 import type { Form } from './Form';
 
 /**
@@ -14,17 +14,18 @@ import type { Form } from './Form';
  * @returns A {@link Checkbox} component.
  */
 export const Checkbox = (props: FieldProps) => {
-    const { field } = useController(props);
+    const { field, hasError, errorMessage } = useController(props);
 
     return (
-        <FormControl>
+        <FormControl error={hasError} required={isRequired(props.required)}>
             <FormControlLabel
-                control={
-                    <MuiCheckbox {...field} checked={!!field.value} disabled={props.disabled} sx={{ mr: 0.5 }} />
-                }
+                control={<MuiCheckbox {...field} id={props.id} checked={!!field.value} disabled={props.disabled} sx={{ mr: 0.5 }} />}
                 label={props.label}
                 sx={{ mr: 0 }}
             />
+            <FormHelperText error={hasError} id={`${props.id}-helper-text`}>
+                <Typography variant='caption' sx={{ color: 'error.light' }}>{errorMessage}</Typography>
+            </FormHelperText>
         </FormControl>
     );
 };
