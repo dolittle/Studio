@@ -1,3 +1,25 @@
+# [3.1.3] - 2023-2-27 [PR: #317](https://github.com/dolittle/Studio/pull/317)
+## Summary
+
+Overall Design System component improvements. Added documentation with controls to Storybook.
+Display The default version of this component, which can also be changed using the controls.
+
+<img width="1076" alt="Screenshot 2023-02-27 at 17 02 19" src="https://user-images.githubusercontent.com/19160439/221599363-480d07c8-b0b2-43e4-9a1d-1bee95842dd1.png">
+
+### Added
+
+- Missing Stories - Dialog, Select, Switch
+- Documentation to Design System
+
+### Changed
+
+- Design System improvements
+
+### Removed
+
+- Wrongly used style overrides from Theme
+
+
 # [3.1.2] - 2023-2-23 [PR: #315](https://github.com/dolittle/Studio/pull/315)
 ## Summary
 
