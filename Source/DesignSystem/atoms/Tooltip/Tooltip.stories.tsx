@@ -7,56 +7,29 @@ import { componentStories, Form, Input, Tooltip } from '@dolittle/design-system'
 
 const { metadata, createStory } = componentStories(Tooltip, {
     decorator: (Story) => (
-        <Form
-            initialValues={{
-                default: ''
-            }}
-            sx={{ mt: 2 }}
-        >
-            <Story />
+        <Form<{ default: string }>
+            initialValues={{ default: '' }}
+            sx={{ mt: 2 }}>
+            {Story()}
         </Form>
-    )
+    ),
 });
 
-metadata.argTypes = {
-    children: {
-        control: {
-            disable: true
-        }
-    },
-    disableHoverListener: {
-        control: {
-            disable: true
-        }
-    },
-    placement: {
-        control: {
-            disable: true
-        }
-    }
+metadata.parameters = {
+    controls: { include: ['id', 'tooltipTitle', 'tooltipText'] }
 };
 
-metadata.parameters = {
-    docs: {
-        source: {
-            code: `
-<Tooltip 
-    id='tooltip' 
-    tooltipTitle='Default tooltip'
-    tooltipText='This is example text for the right aligned focused Input field tooltip.'
-    >
-    <Input id='input' label='Click to focus...' />
-</Tooltip>
-`
-        }
-    }
+metadata.argTypes = {
+    tooltipText: { control: { type: 'text' } },
+};
+
+metadata.args = {
+    id: 'default',
+    tooltipTitle: 'Default tooltip',
+    tooltipText: 'This is example text for the right aligned focused Input field.',
+    children: <Input id='default' label='Click to focus...' />
 };
 
 export default metadata;
 
-export const Default = createStory({
-    id: 'default',
-    tooltipTitle: 'Default tooltip',
-    tooltipText: 'This is example text for the right aligned focused Input field tooltip.',
-    children: <Input id='default' label='Click to focus...' />
-});
+export const Default = createStory();
