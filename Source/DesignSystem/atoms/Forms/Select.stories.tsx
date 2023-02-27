@@ -17,9 +17,7 @@ const selectOptions = [
 ];
 
 const { metadata, createStory } = componentStories(Select, {
-    actions: {
-        onChange: 'Value changed',
-    },
+    actions: { onChange: 'Value changed' },
     decorator: (Story) => (
         <Form<SelectFormParameters>
             initialValues={{
@@ -32,7 +30,7 @@ const { metadata, createStory } = componentStories(Select, {
 });
 
 metadata.parameters = {
-    controls: { include: ['id', 'label', 'options', 'defaultValue', 'disabled', 'required', 'onChange'] },
+    controls: { include: ['id', 'label', 'options', 'defaultValue', 'disabled', 'required'] },
 };
 
 metadata.argTypes = {
