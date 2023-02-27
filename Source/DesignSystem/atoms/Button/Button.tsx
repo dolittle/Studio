@@ -73,13 +73,13 @@ export type ButtonProps = {
     /**
      * Set to `true` if button link should open in a new tab.
      *
-     * Please also add meaningful text to the ariaLabel prop if you use target prop.
+     * Please also add meaningful text to the `ariaLabel` prop if you use target prop.
      * @default false
      */
     target?: boolean;
 
     /**
-     * For accessibility, it is recommended to set aria-label to a meaningful string.
+     * For accessibility, it is recommended to set `ariaLabel` to a meaningful string.
      * @default undefined
      */
     ariaLabel?: string;
@@ -89,7 +89,7 @@ export type ButtonProps = {
      *
      * Use `span` if you want button styles, but element isn't really a button - like inside data tables.
      *
-     * If you used the href prop, the component will automatically render as an anchor tag.
+     * If you used the href prop, the component will automatically render as an `a` tag.
      * @default button
      */
     component?: 'button' | 'span' | 'a';
