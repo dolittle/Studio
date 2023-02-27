@@ -6,20 +6,17 @@ import React from 'react';
 import { componentStories, Checkbox, Form } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(Checkbox, {
-    actions: {
-        onChange: 'changed',
-    },
+    actions: { onChange: 'changed' },
     decorator: (Story) => (
-        <Form initialValues={{
-            defaultCheckbox: false,
-        }}>
+        <Form<{ defaultCheckbox: boolean }>
+            initialValues={{ defaultCheckbox: true }}>
             {Story()}
         </Form>
     ),
 });
 
 metadata.parameters = {
-    controls: { include: ['id', 'label', 'disabled', 'required', 'onChange'] },
+    controls: { include: ['id', 'label', 'disabled', 'required'] },
 };
 
 metadata.argTypes = {
@@ -27,6 +24,7 @@ metadata.argTypes = {
         table: { defaultValue: { summary: 'false' } },
     },
     required: {
+        description: 'Mart as `true` if the checkbox is required.',
         control: { type: 'boolean' },
         table: { defaultValue: { summary: 'false' } },
     },
@@ -36,7 +34,7 @@ metadata.args = {
     id: 'defaultCheckbox',
     label: 'Default checkbox with label',
     disabled: false,
-    required: true,
+    required: false,
 };
 
 export default metadata;

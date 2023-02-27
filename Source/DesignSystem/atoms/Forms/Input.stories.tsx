@@ -37,7 +37,7 @@ const { metadata, createStory } = componentStories(Input, {
 });
 
 metadata.parameters = {
-    controls: { include: ['id', 'label', 'autoFocus', 'startAdornment', 'placeholder', 'disabled', 'required', 'pattern', 'onChange'] },
+    controls: { include: ['id', 'label', 'autoFocus', 'startAdornment', 'placeholder', 'disabled', 'required', 'pattern'] },
 };
 
 metadata.argTypes = {
@@ -55,10 +55,12 @@ metadata.argTypes = {
         table: { defaultValue: { summary: 'false' } },
     },
     required: {
+        description: 'Can be a boolean or a string with a custom message.',
         control: { type: 'boolean' },
         table: { defaultValue: { summary: 'false' } },
     },
     pattern: {
+        description: 'Add custom regex validation.',
         options: ['Email', 'Password'],
         mapping: {
             Email: emailRegex,
