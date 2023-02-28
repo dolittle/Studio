@@ -7,7 +7,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { getCustomer, CustomerDetailed } from '../../api/solutions/customer';
 import { saveStudioConfig, Studio } from '../../api/solutions/studio';
-import { ButtonText } from '../../theme/buttonText';
+import { ButtonText } from '../../components/theme-legacy/buttonText';
 import { Box, Typography } from '@mui/material';
 
 const styles = {

@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
-import { ButtonText } from '../../theme/buttonText';
+import { ButtonText } from '../../components/theme-legacy/buttonText';
 
 import { LogsInRange } from './logsInRange';
 import { LogLines } from './logLines';

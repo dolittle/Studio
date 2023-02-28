@@ -4,7 +4,7 @@
 import React from 'react';
 import { HttpResponseApplication } from '../../api/solutions/application';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ButtonText } from '../../theme/buttonText';
+import { ButtonText } from '../../components/theme-legacy/buttonText';
 
 type Props = {
     application: HttpResponseApplication

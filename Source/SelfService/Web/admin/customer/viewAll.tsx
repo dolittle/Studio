@@ -8,7 +8,7 @@ import React, {
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { getCustomers, Customers } from '../../api/solutions/customer';
-import { ButtonText } from '../../theme/buttonText';
+import { ButtonText } from '../../components/theme-legacy/buttonText';
 import { Typography } from '@mui/material';
 
 
