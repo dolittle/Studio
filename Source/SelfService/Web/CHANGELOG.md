@@ -1,3 +1,29 @@
+# [3.2.0] - 2023-2-28 [PR: #314](https://github.com/dolittle/Studio/pull/314)
+## Summary
+
+Studio Web project is currently set up to only know about the platform hosting part. The project needs to be restructured to take a more modular approach and be able to scale. Perhaps this is also a good opportunity to remove some old / stale components and code
+
+- [x] Update structure
+- [x] Anchor with team
+- [x] Update onboarding docs (README)
+- [x] Add ADR with description
+
+
+### Added
+
+- ADR's to Studio. Use the vscode plugin and read the documentation in ADR 0000 for information.
+- ADR-0001:  Expand studio web with modules structure
+
+### Changed
+
+- Updated the Studio Web structure to give more space for areas and modules based on the ADR-0001. Important to notice that some shared folders are left outside the modules. Nameley shared `components`, `apis`, `utils` and `spaces`. And the usual folders needed for hosting the static app. 
+
+
+---
+- To see the specific tasks where the Asana app for GitHub is being used, see below:
+  - https://app.asana.com/0/0/1203983959681225
+
+
 # [3.1.3] - 2023-2-27 [PR: #317](https://github.com/dolittle/Studio/pull/317)
 ## Summary
 
