@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import { ShortInfoWithEnvironment } from '../api/solutions/api';
+import { ShortInfoWithEnvironment } from '../../api/solutions/api';
 
-import { ApplicationsChanger } from '../spaces/applications/applicationsChanger';
+import { ApplicationsChanger } from '../../spaces/applications/applicationsChanger';
 
 type TopRightMenuProps = {
     applications: ShortInfoWithEnvironment[];

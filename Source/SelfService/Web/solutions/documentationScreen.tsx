@@ -12,7 +12,7 @@ import {
 import { Typography } from '@mui/material';
 
 import { ShortInfoWithEnvironment } from '../api/solutions/api';
-import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 
 
 // I wonder if scss is scoped like svelte. I hope so!
@@ -23,7 +23,7 @@ import { DocumentationContainerScreen } from './documentation/container';
 import { RouteNotFound } from '../components/notfound';
 import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
 import { useGlobalContext } from '../context/globalContext';
-import { TopNavBar } from '../layout/topNavBar';
+import { TopNavBar } from '../components/layout/topNavBar';
 import {
     HttpResponseApplication,
     getApplications,

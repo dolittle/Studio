@@ -11,9 +11,9 @@ import { HttpResponseApplication, getApplications, getApplication, HttpResponseA
 
 import { useGlobalContext } from '../context/globalContext';
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
-import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithSidebar';
+import { LayoutWithSidebar, getMenuWithApplication } from '../components/layout/layoutWithSidebar';
 import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
-import { TopNavBar } from '../layout/topNavBar';
+import { TopNavBar } from '../components/layout/topNavBar';
 
 import { LogFilterMicroservice, LogFilterPanel } from './logging/logFilter/logFilterPanel';
 import { useLogFilters } from './logging/logFilter/useLogFilters';

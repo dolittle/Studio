@@ -9,8 +9,8 @@ import {
 } from 'react-router-dom';
 
 import { getApplication, HttpResponseApplication } from '../api/solutions/application';
-import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
-import { BreadCrumbContainer } from '../layout/breadcrumbs';
+import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
+import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { useRouteApplicationParams } from '../utils/route';
 import { useGlobalContext } from '../context/globalContext';
 

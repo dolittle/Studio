@@ -11,7 +11,7 @@ import { AddCircle, ArrowBack } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system';
 
-import { LoginWrapper } from '../../layout/loginWrapper';
+import { LoginWrapper } from '../../components/layout/loginWrapper';
 import { useGlobalContext } from '../../context/globalContext';
 
 import { ShortInfoWithEnvironment } from '../../api/solutions/api';

@@ -10,7 +10,7 @@ import { getApplications, HttpResponseApplications } from '../../api/solutions/a
 import { Building } from './building';
 
 import { Create } from './create/create';
-import { LoginWrapper } from '../../layout/loginWrapper';
+import { LoginWrapper } from '../../components/layout/loginWrapper';
 
 export const ApplicationScreen: React.FunctionComponent = () => {
     const { enqueueSnackbar } = useSnackbar();

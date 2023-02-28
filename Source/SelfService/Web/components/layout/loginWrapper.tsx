@@ -5,8 +5,8 @@ import React from 'react';
 
 import { Box } from '@mui/material';
 
-import Symbol from '../assets/logos/symbol.svg?url';
-import Logo from '../assets/logos/logo.svg';
+import Symbol from '../../assets/logos/symbol.svg?url';
+import Logo from '../../assets/logos/logo.svg';
 
 const styles = {
     backgroundSymbol: {

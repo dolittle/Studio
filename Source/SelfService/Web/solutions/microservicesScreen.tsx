@@ -10,7 +10,7 @@ import { HttpResponseApplication, getApplications, getApplication, HttpResponseA
 import { Microservice } from './microservice/microservices/microservices';
 import { MicroserviceNewScreen } from './microservice/microserviceNewScreen';
 import { MicroserviceViewScreen } from './microservice/microserviceViewScreen';
-import { LayoutWithSidebar, getMenuWithApplication } from '../layout/layoutWithSidebar';
+import { LayoutWithSidebar, getMenuWithApplication } from '../components/layout/layoutWithSidebar';
 
 // I wonder if scss is scoped like svelte. I hope so!
 // Not scoped like svelte
@@ -21,7 +21,7 @@ import { useGlobalContext } from '../context/globalContext';
 
 import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
-import { TopNavBar } from '../layout/topNavBar';
+import { TopNavBar } from '../components/layout/topNavBar';
 
 import { withRouteApplicationState } from '../screens/withRouteApplicationState';
 

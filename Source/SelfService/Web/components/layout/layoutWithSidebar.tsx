@@ -5,15 +5,15 @@ import React, { ReactNode } from 'react';
 import './layout.scss';
 import { NavigateFunction } from 'react-router-dom';
 
-import { HttpResponseApplication } from '../api/solutions/application';
+import { HttpResponseApplication } from '../../api/solutions/application';
 
 import { BackupRounded, HexagonRounded, FindInPageRounded, TextSnippetRounded, PolylineRounded, SettingsRounded } from '@mui/icons-material';
 import { List, ListItemButton, ListItemButtonBaseProps, ListItemIcon, ListItemText, Paper } from '@mui/material';
 
-import { ContainerRegistryRounded } from '../assets/icons';
-import { DolittleLogoMedium } from '../assets/logos';
+import { ContainerRegistryRounded } from '../../assets/icons';
+import { DolittleLogoMedium } from '../../assets/logos';
 
-import { AlertBox } from '../components/alertBox';
+import { AlertBox } from '../alertBox';
 
 type LayoutWithSidebarProps = {
     navigation: ReactNode;

@@ -9,7 +9,7 @@ import { ViewAll as ViewAllCustomers } from './customer/viewAll';
 import { View as ViewCustomer } from './customer/view';
 import { View as ViewApplicationAccess } from './application/view';
 
-import { LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 
 import { Typography } from '@mui/material';
 

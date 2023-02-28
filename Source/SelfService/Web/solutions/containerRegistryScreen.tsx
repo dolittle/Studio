@@ -10,12 +10,12 @@ import {
 } from 'react-router-dom';
 
 import { ShortInfoWithEnvironment } from '../api/solutions/api';
-import { getMenuWithApplication, LayoutWithSidebar } from '../layout/layoutWithSidebar';
+import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 
 
 import { RouteNotFound } from '../components/notfound';
 import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
-import { TopNavBar } from '../layout/topNavBar';
+import { TopNavBar } from '../components/layout/topNavBar';
 import {
     HttpResponseApplication,
     getApplications,

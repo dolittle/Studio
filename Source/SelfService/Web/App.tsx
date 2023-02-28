@@ -23,7 +23,7 @@ import { GlobalContextProvider } from './context/globalContext';
 import { RouteNotFound } from './components/notfound';
 import { DieAndRestart } from './components/dieAndRestart';
 
-import { LayoutWithSidebar } from './layout/layoutWithSidebar';
+import { LayoutWithSidebar } from './components/layout/layoutWithSidebar';
 
 import { BackupsScreen } from './solutions/backupsScreen';
 import { DocumentationScreen } from './solutions/documentationScreen';
