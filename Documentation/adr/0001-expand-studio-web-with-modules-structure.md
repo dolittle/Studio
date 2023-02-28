@@ -1,4 +1,4 @@
-# Expand studio web with modules structure
+# 1. Expand studio web with modules structure
 
 Date: 2023-02-17
 
@@ -86,15 +86,18 @@ SelfService/Web
 
 ```
 
-## Decision #2 Use module-name as a routing sub-path
+## Decision #2 Make repository private
+As part of the decision to include module-specfic code in Studio Web - the decision is to make the repository private.
+
+## Decision #3 Use module-name as a routing sub-path
 
 There are many things that decide the routing structure of Studio, but a module SHOULD have its own sub-routes. ie: `https://dolittle.studio/selfservice/{moduleName}/{...subroutes}`. This will further reenforce the independence of the modules.
 
-## Decision #3 Remove the `selfservice/` prefix from the URL
+## Decision #4 Remove the `selfservice/` prefix from the URL
 
 The `selfservice/` prefix is not needed anymore, and will be removed from the URL. The priority of this should be determined by the needs of the organization and team.
 
-## Decision #4 Change the SelfService name to a more Studio focused name
+## Decision #5 Change the SelfService name to a more Studio focused name
 
 The name "SelfService" is not a good fit for the Studio experience. The name "Studio" is more fitting and will be used as the name for the application.
 
