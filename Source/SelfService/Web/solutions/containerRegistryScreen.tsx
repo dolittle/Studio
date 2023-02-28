@@ -22,7 +22,7 @@ import {
     getApplication,
     HttpResponseApplications,
 } from '../api/solutions/application';
-import { withRouteApplicationState } from '../screens/withRouteApplicationState';
+import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 import { ContainerRegistryContainer } from './containerregistry/container';
 import { Typography } from '@mui/material';
 

@@ -21,7 +21,7 @@ import { LogsInRange } from './logging/logsInRange';
 import { LogsFromLast } from './logging/logsFromLast';
 import { LogPanel } from './logging/logPanel';
 
-import { withRouteApplicationState } from '../screens/withRouteApplicationState';
+import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
 /**
  * A day in Loki (log backend) time. Nanoseconds.

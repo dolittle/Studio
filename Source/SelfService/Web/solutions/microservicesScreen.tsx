@@ -23,7 +23,7 @@ import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEn
 import { RouteNotFound } from '../components/notfound';
 import { TopNavBar } from '../components/layout/topNavBar';
 
-import { withRouteApplicationState } from '../screens/withRouteApplicationState';
+import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
 import { Typography } from '@mui/material';
 

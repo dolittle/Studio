@@ -30,7 +30,7 @@ import {
     getApplication,
     HttpResponseApplications,
 } from '../api/solutions/application';
-import { withRouteApplicationState } from '../screens/withRouteApplicationState';
+import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
 
 
