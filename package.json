@@ -3,7 +3,6 @@
     "license": "MIT",
     "private": true,
     "workspaces": [
-        "Source/Bridge/*",
         "Source/SelfService/Web",
         "Source/DesignSystem",
         "Source/Shared/*"

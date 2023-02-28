@@ -1,6 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { ConnectorWebhookConfigBasic, ConnectorWebhookConfigBearer } from '../api/index';
+import { ConnectorWebhookConfigBasic, ConnectorWebhookConfigBearer } from '../api/solutions/index';
 
 export const makeBasicAuth = (data: ConnectorWebhookConfigBasic): string => {
     const suffix = btoa(`${data.username}:${data.password}`);

@@ -18,23 +18,23 @@ import { Snackbar } from '@dolittle/design-system/atoms/Snackbar/Snackbar';
 
 import { useViewportResize } from './utils/useViewportResize';
 
-import { GlobalContextProvider } from './stores/notifications';
+import { GlobalContextProvider } from './context/globalContext';
 
 import { RouteNotFound } from './components/notfound';
 import { DieAndRestart } from './components/dieAndRestart';
 
-import { LayoutWithSidebar } from './layout/layoutWithSidebar';
+import { LayoutWithSidebar } from './components/layout/layoutWithSidebar';
 
-import { LoginScreen } from './screens/loginScreen';
-import { BackupsScreen } from './screens/backupsScreen';
-import { DocumentationScreen } from './screens/documentationScreen';
-import { MicroservicesScreen } from './screens/microservicesScreen';
-import { Screen as AdminScreen } from './screens/adminScreen';
-import { ApplicationsScreen } from './screens/applicationsScreen/applicationsScreen';
-import { ApplicationScreen } from './screens/applicationScreen';
-import { ContainerRegistryScreen } from './screens/containerRegistryScreen';
-import { M3ConnectorScreen } from './screens/m3connectorScreen';
-import { LogsScreen } from './screens/logsScreen';
+import { BackupsScreen } from './solutions/backupsScreen';
+import { DocumentationScreen } from './solutions/documentationScreen';
+import { MicroservicesScreen } from './solutions/microservicesScreen';
+import { Screen as AdminScreen } from './admin/adminScreen';
+import { ApplicationsScreen } from './spaces/applications/applicationsScreen';
+import { ApplicationScreen } from './spaces/applications/applicationScreen';
+import { ContainerRegistryScreen } from './solutions/containerRegistryScreen';
+import { M3ConnectorScreen } from './solutions/m3connectorScreen';
+import { LogsScreen } from './solutions/logsScreen';
+import { IntegrationsIndex } from './integrations';
 
 // Set license info for MUI components
 LicenseInfo.setLicenseKey(process.env.MUI_LICENSE_KEY!);
@@ -74,13 +74,11 @@ export const App = () => {
                                 <Routes>
                                     <Route path='/' element={<Navigate to='/applications' />} />
 
-                                    <Route path='/login' element={<LoginScreen />} />
-
-                                    <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
-
                                     <Route path='/applications' element={<ApplicationsScreen />} />
 
                                     <Route path='/application/*' element={<ApplicationScreen />} />
+
+                                    <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
 
                                     <Route path='/microservices/application/:applicationId/:environment/*' element={<MicroservicesScreen />} />
 
@@ -99,6 +97,7 @@ export const App = () => {
                                             <DieAndRestart />
                                         </LayoutWithSidebar>
                                     } />
+                                    <Route path="/:applicationId/integrations/*" element={<IntegrationsIndex />} />
                                     <Route path='*' element={<RouteNotFound redirectUrl='/applications' auto={true} />} />
                                 </Routes>
                             </SnackbarProvider>

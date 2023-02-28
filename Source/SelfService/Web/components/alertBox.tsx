@@ -4,7 +4,7 @@
 import React from 'react';
 import { Alert, AlertColor } from '@mui/material';
 
-import { useGlobalContext } from '../stores/notifications';
+import { useGlobalContext } from '../context/globalContext';
 
 export const AlertBox: React.FunctionComponent = () => {
     const { lastMessage, clearNotification } = useGlobalContext();

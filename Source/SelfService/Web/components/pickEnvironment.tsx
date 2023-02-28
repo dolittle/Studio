@@ -4,10 +4,10 @@ import React from 'react';
 import Modal from '@mui/material/Modal';
 import { Box, Typography } from '@mui/material';
 import { useNavigate, generatePath } from 'react-router-dom';
-import { ShortInfoWithEnvironment } from '../api/api';
-import { HttpResponseApplication } from '../api/application';
+import { ShortInfoWithEnvironment } from '../api/solutions/api';
+import { HttpResponseApplication } from '../api/solutions/application';
 import { List } from '@fluentui/react/lib/List';
-import { useGlobalContext } from '../stores/notifications';
+import { useGlobalContext } from '../context/globalContext';
 
 import {
     Link,

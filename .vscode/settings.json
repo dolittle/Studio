@@ -18,5 +18,8 @@
 		"titleBar.inactiveBackground": "#0f101499",
 		"titleBar.inactiveForeground": "#e7e7e799"
 	},
-	"peacock.remoteColor": "#0f1014"
+	"peacock.remoteColor": "#0f1014",
+	"adr.project.directory": "Documentation/adr",
+	"adr.templates.directory": ".adr-templates",
+	"adr.templates.repo": "https://github.com/vincent-ledu/adr-template.git"
 }

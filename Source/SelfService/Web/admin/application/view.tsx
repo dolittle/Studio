@@ -7,10 +7,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { adminApplicationAccessAddUser, getAdminApplicationAccess, HttpInputApplicationAccess, adminApplicationAccessRemoveUser, HttpResponseApplicationAccess } from '../../api/application';
-import { ButtonText } from '../../theme/buttonText';
-import { TextField } from '../../theme/textField';
-import { Customer, getCustomer } from '../../api/customer';
+import { adminApplicationAccessAddUser, getAdminApplicationAccess, HttpInputApplicationAccess, adminApplicationAccessRemoveUser, HttpResponseApplicationAccess } from '../../api/solutions/application';
+import { ButtonText } from '../../components/theme-legacy/buttonText';
+import { TextField } from '../../components/theme-legacy/textField';
+import { Customer, getCustomer } from '../../api/solutions/customer';
 import { Typography } from '@mui/material';
 
 type ViewParams = {
