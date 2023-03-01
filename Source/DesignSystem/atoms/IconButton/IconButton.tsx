@@ -65,7 +65,7 @@ export type IconButtonProps = {
     href?: string;
 
     /**
-     * Downloadable file name. Use it for downloading a file as a `attr-download`.
+     * Use it for downloading a file as a `attr-download`.
      * @default undefined
      * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-download for more information.
      */
