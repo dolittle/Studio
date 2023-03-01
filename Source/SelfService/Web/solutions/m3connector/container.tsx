@@ -4,7 +4,7 @@
 import React from 'react';
 
 import { Routes, Route } from 'react-router-dom';
-import { HttpResponseApplication } from '../../api/solutions/application';
+import { HttpResponseApplication } from '../../apis/solutions/application';
 
 import { View as Overview } from './overview';
 import { View as Details } from './details';

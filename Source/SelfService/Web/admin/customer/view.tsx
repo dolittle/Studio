@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
-import { getCustomer, CustomerDetailed } from '../../api/solutions/customer';
-import { saveStudioConfig, Studio } from '../../api/solutions/studio';
+import { getCustomer, CustomerDetailed } from '../../apis/solutions/customer';
+import { saveStudioConfig, Studio } from '../../apis/solutions/studio';
 import { ButtonText } from '../../components/theme-legacy/buttonText';
 import { Box, Typography } from '@mui/material';
 

@@ -12,7 +12,7 @@ import { AddCircle, DeleteRounded, DownloadRounded, ArrowDropDown } from '@mui/i
 
 import { Accordion, Button } from '@dolittle/design-system';
 
-import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../api/solutions/api';
+import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../apis/solutions/api';
 
 import { RestartInfoBox } from '../../components/restartInfoBox';
 import { EmptyDataTable } from '../../components/emptyDataTable';

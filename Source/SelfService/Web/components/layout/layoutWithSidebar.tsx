@@ -5,7 +5,7 @@ import React, { ReactNode } from 'react';
 import './layout.scss';
 import { NavigateFunction } from 'react-router-dom';
 
-import { HttpResponseApplication } from '../../api/solutions/application';
+import { HttpResponseApplication } from '../../apis/solutions/application';
 
 import { BackupRounded, HexagonRounded, FindInPageRounded, TextSnippetRounded, PolylineRounded, SettingsRounded } from '@mui/icons-material';
 import { List, ListItemButton, ListItemButtonBaseProps, ListItemIcon, ListItemText, Paper } from '@mui/material';

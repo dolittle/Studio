@@ -7,7 +7,7 @@ import Input from '@mui/material/Input';
 
 
 import { ButtonText } from '../../../components/theme-legacy/buttonText';
-import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../../api/solutions/cicd';
+import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../../apis/solutions/cicd';
 import { Info } from '../../stores/documentationInfo';
 import { Typography } from '@mui/material';
 

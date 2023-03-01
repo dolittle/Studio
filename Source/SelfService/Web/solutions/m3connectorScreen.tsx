@@ -8,7 +8,7 @@ import {
     useNavigate,
 } from 'react-router-dom';
 
-import { getApplication, HttpResponseApplication } from '../api/solutions/application';
+import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { useRouteApplicationParams } from '../utils/route';

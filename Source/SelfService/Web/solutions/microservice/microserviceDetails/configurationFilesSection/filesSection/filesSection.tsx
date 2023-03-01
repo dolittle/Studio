@@ -9,7 +9,7 @@ import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { Accordion } from '@dolittle/design-system';
 
-import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../../api/solutions/api';
+import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../../apis/solutions/api';
 
 import { isAlphaNumeric } from '../../../helpers';
 

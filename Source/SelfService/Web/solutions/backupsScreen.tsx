@@ -9,7 +9,7 @@ import {
     generatePath
 } from 'react-router-dom';
 
-import { getApplication, HttpResponseApplication } from '../api/solutions/application';
+import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
 import { ViewCard } from '../solutions/backup/viewCard';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 import { BreadCrumbContainer } from '../components/layout/breadcrumbs';

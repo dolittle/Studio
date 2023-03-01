@@ -9,7 +9,7 @@ import { Typography } from '@mui/material';
 import { Guid } from '@dolittle/rudiments';
 import { AlertBox, AlertBoxErrorMessage, Form, LoadingSpinner } from '@dolittle/design-system';
 
-import { createApplication, HttpApplicationRequest } from '../../../api/solutions/application';
+import { createApplication, HttpApplicationRequest } from '../../../apis/solutions/application';
 
 import { InputFields } from './inputField';
 import { CheckBoxesField } from './checkBoxField';

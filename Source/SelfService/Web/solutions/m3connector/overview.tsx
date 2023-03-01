@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { HttpResponseApplication } from '../../api/solutions/application';
+import { HttpResponseApplication } from '../../apis/solutions/application';
 import { useNavigate } from 'react-router-dom';
 import { ButtonText } from '../../components/theme-legacy/buttonText';
 import { Typography } from '@mui/material';

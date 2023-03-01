@@ -14,8 +14,8 @@ import { Button } from '@dolittle/design-system';
 import { LoginWrapper } from '../../components/layout/loginWrapper';
 import { useGlobalContext } from '../../context/globalContext';
 
-import { ShortInfoWithEnvironment } from '../../api/solutions/api';
-import { HttpResponseApplications, getApplications } from '../../api/solutions/application';
+import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
+import { HttpResponseApplications, getApplications } from '../../apis/solutions/application';
 
 import { ApplicationsList } from './applicationsList';
 

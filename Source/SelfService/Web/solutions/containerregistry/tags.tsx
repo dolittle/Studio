@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 
 import Paper from '@mui/material/Paper';
-import { ContainerRegistryTags, getTagsInContainerRegistry } from '../../api/solutions/containerregistry';
+import { ContainerRegistryTags, getTagsInContainerRegistry } from '../../apis/solutions/containerregistry';
 
 type Props = {
     url: string

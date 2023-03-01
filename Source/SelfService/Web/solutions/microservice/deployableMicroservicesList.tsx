@@ -7,7 +7,7 @@ import { useNavigate, useLocation } from 'react-router';
 
 import { Grid, Typography } from '@mui/material';
 
-import { HttpResponseApplication } from '../../api/solutions/application';
+import { HttpResponseApplication } from '../../apis/solutions/application';
 
 import { SimpleCard } from './components/card';
 import { DeployMicroservice } from './deployMicroservice/deployMicroservice';

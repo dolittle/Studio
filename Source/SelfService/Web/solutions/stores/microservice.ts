@@ -9,10 +9,10 @@ import {
     MicroserviceInfo,
     getMicroservices,
     HttpResponseMicroservices,
-} from '../../api/solutions/api';
+} from '../../apis/solutions/api';
 
-import { MicroserviceSimple, MicroserviceDolittle, MicroserviceRawDataLogIngestor } from '../../api/solutions/index';
-import { getApplication, HttpInputApplicationEnvironment } from '../../api/solutions/application';
+import { MicroserviceSimple, MicroserviceDolittle, MicroserviceRawDataLogIngestor } from '../../apis/solutions/index';
+import { getApplication, HttpInputApplicationEnvironment } from '../../apis/solutions/application';
 
 export type MicroserviceStore = {
     edit: any;

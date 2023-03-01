@@ -5,7 +5,7 @@ import React from 'react';
 
 import { DeployableMicroservicesList } from './deployableMicroservicesList';
 
-import { HttpResponseApplication } from '../../api/solutions/application';
+import { HttpResponseApplication } from '../../apis/solutions/application';
 
 type MicroserviceNewScreenProps = {
     environment: string;

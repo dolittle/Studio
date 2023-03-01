@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { HttpResponseApplication } from '../../../../api/solutions/application';
+import { HttpResponseApplication } from '../../../../apis/solutions/application';
 
 import { MicroserviceStore } from '../../../stores/microservice';
 

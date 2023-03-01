@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { isApplicationOnline } from '../../api/solutions/application';
+import { isApplicationOnline } from '../../apis/solutions/application';
 
 import { Box, List, ListItem, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
