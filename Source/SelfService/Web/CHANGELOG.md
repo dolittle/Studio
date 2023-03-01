@@ -1,3 +1,17 @@
+# [3.2.1] - 2023-3-1 [PR: #320](https://github.com/dolittle/Studio/pull/320)
+## Summary
+
+Improved IconButton in Design System. Now we can choose icon from the list and not import them from '@mui/icons'.
+
+<img width="1021" alt="Screenshot 2023-03-02 at 00 48 29" src="https://user-images.githubusercontent.com/19160439/222283220-fb51589d-01c5-4421-b5fe-6203c21d671d.png">
+
+### Added
+
+- Icon folder and files to hold all our icons that we use
+- Tooltip to IconButton
+- JsDocs and controls to IconButton.stories
+
+
 # [3.2.0] - 2023-2-28 [PR: #314](https://github.com/dolittle/Studio/pull/314)
 ## Summary
 
