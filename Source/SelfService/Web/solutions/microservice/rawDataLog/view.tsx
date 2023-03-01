@@ -9,7 +9,7 @@ import { Stack } from '@fluentui/react/lib/Stack';
 import { Pivot, PivotItem } from '@fluentui/react';
 
 import { HealthStatus } from '../microserviceDetails/healthStatus/healthStatus';
-import { HttpResponsePodStatus } from '../../../api/solutions/api';
+import { HttpResponsePodStatus } from '../../../apis/solutions/api';
 
 import { microservices, MicroserviceStore } from '../../stores/microservice';
 import { Webhooks } from './webhooks';

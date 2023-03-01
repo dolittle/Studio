@@ -10,7 +10,7 @@ import { SxProps } from '@mui/material';
 
 
 
-import { ShortInfoWithEnvironment } from '../../api/solutions/api';
+import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
 import { useGlobalContext } from '../../context/globalContext';
 import { uriWithoutBasePathPrefix } from '../../store';
 

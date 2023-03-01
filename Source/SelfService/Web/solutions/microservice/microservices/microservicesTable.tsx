@@ -4,8 +4,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getPodStatus, MicroserviceInfo } from '../../../api/solutions/api';
-import { HttpResponseApplication } from '../../../api/solutions/application';
+import { getPodStatus, MicroserviceInfo } from '../../../apis/solutions/api';
+import { HttpResponseApplication } from '../../../apis/solutions/application';
 import { StatusFieldCell, customStatusFieldSort } from '../components/microserviceStatus';
 
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';

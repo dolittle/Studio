@@ -4,8 +4,8 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useNavigate, Routes, generatePath } from 'react-router-dom';
 
-import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../api/solutions/api';
-import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/solutions/application';
+import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../apis/solutions/api';
+import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../apis/solutions/application';
 
 import { Microservice } from './microservice/microservices/microservices';
 import { MicroserviceNewScreen } from './microservice/microserviceNewScreen';

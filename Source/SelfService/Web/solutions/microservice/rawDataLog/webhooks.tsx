@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { DetailsList, DetailsListLayoutMode, IColumn, CheckboxVisibility } from '@fluentui/react/lib/DetailsList';
-import { MicroserviceRawDataLogIngestor, MicroserviceRawDataLogIngestorWebhookConfig } from '../../../api/solutions/index';
+import { MicroserviceRawDataLogIngestor, MicroserviceRawDataLogIngestorWebhookConfig } from '../../../apis/solutions/index';
 import { Edit } from './webhook/edit';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { saveRawDataLogIngestorMicroservice } from '../../stores/microservice';

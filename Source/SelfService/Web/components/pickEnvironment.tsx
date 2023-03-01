@@ -4,8 +4,8 @@ import React from 'react';
 import Modal from '@mui/material/Modal';
 import { Box, Typography } from '@mui/material';
 import { useNavigate, generatePath } from 'react-router-dom';
-import { ShortInfoWithEnvironment } from '../api/solutions/api';
-import { HttpResponseApplication } from '../api/solutions/application';
+import { ShortInfoWithEnvironment } from '../apis/solutions/api';
+import { HttpResponseApplication } from '../apis/solutions/application';
 import { List } from '@fluentui/react/lib/List';
 import { useGlobalContext } from '../context/globalContext';
 

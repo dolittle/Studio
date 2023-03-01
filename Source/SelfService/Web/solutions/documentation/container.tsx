@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useNavigate, Routes } from 'react-router-dom';
 import { Link } from '@fluentui/react';
-import { HttpResponseApplication } from '../../api/solutions/application';
+import { HttpResponseApplication } from '../../apis/solutions/application';
 
 import './documentation.scss';
 

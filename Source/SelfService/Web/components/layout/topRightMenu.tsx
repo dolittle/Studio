@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { ShortInfoWithEnvironment } from '../../api/solutions/api';
+import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
 
 import { ApplicationsChanger } from '../../spaces/applications/applicationsChanger';
 

@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { Box, Typography } from '@mui/material';
 
-import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../api/solutions/api';
-import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../api/solutions/application';
+import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../apis/solutions/api';
+import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../apis/solutions/application';
 
 import { useGlobalContext } from '../context/globalContext';
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
