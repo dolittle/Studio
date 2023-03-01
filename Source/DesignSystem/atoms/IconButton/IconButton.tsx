@@ -19,13 +19,15 @@ export type IconButtonProps = {
     ariaLabel: string;
 
     /**
-     * The icon to show. Usual MUI icon, but write it as a string. Must be a valid `SvgIconsDefinition`.
+     * Usual MUI icon writen as a `string`. Must be a valid `SvgIconsDefinition`.
      *
-     * @param type {@link SvgIconsDefinition}.
+     * Leave empty to use the default `'CloseRounded'` icon.
+     *
+     * List of available icons can be found in {@link SvgIcons}.
      *
      * @default CloseRounded
      */
-    icon: SvgIconsDefinition['icon'];
+    icon?: SvgIconsDefinition['icon'];
 
     /**
      * Most icons will use the default `inherit` color.
@@ -42,7 +44,7 @@ export type IconButtonProps = {
     size?: 'small' | 'medium';
 
     /**
-     * Set icon button to be start or end edge.
+     * Set icon to be in the start edge or in the end edge.
      * @default false
      */
     edge?: 'start' | 'end' | false;
@@ -54,7 +56,7 @@ export type IconButtonProps = {
     disabled?: boolean;
 
     /**
-     * Use it for navigate to internal page.
+     * Use it to navigate to internal page.
      *
      * When `href` is set, the component will render as an `a` element.
      * @default undefined
@@ -62,7 +64,7 @@ export type IconButtonProps = {
     href?: string;
 
     /**
-     * Use for downloading a file as a attr-download.
+     * Downloadable file name. Use it for downloading a file as a `attr-download`.
      * @default undefined
      * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-download for more information.
      */
