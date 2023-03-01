@@ -17,6 +17,7 @@ export { LoadingSpinner } from './atoms/LoadingSpinner';
 export { Summary } from './atoms/Metrics';
 export { Tabs } from './atoms/Tabs';
 export { Tooltip } from './atoms/Tooltip';
+export { TopNavBar } from './molecules/TopNavBar';
 export { InputMessages, OutputMessages, Terminal, TerminalConnect, TerminalStreams } from './atoms/Terminal';
 
 // Molecules
