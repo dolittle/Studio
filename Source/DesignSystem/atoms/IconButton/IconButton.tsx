@@ -3,7 +3,7 @@
 
 import React, { MouseEventHandler } from 'react';
 
-import { IconButton as MuiIconButton } from '@mui/material';
+import { IconButton as MuiIconButton, Tooltip } from '@mui/material';
 
 import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
 
@@ -12,11 +12,12 @@ import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
  */
 export type IconButtonProps = {
     /**
-     * The aria-label of the icon button.
+     * The text that will be displayed as a tooltip when the user hovers over the icon button.
      *
-     * For accessibility, it is recommended to set this value to a meaningful string.
+     * It is also used as the `aria-label` for the icon button.
+     * @default undefined
      */
-    ariaLabel: string;
+    tooltipText: string;
 
     /**
      * Usual MUI icon writen as a `string`. Must be a valid `SvgIconsDefinition`.
@@ -82,24 +83,24 @@ export type IconButtonProps = {
  * @param {IconButtonProps} props - The {@link IconButtonProps} that contains the properties for the confirm dialog.
  * @returns A {@link IconButton} component.
  */
-export const IconButton = ({ ariaLabel, icon, color, size = 'small', edge, disabled, href, download, onClick }: IconButtonProps) => {
-    const clonedIcon = React.cloneElement(
-        icon ? SvgIcons[icon] : SvgIcons.CloseRounded, { fontSize: size }
-    );
+export const IconButton = ({ tooltipText, icon = 'CloseRounded', color, size = 'small', edge, disabled, href, download, onClick }: IconButtonProps) => {
+    const clonedIcon = React.cloneElement(SvgIcons[icon], { fontSize: size });
 
     return (
-        <MuiIconButton
-            aria-label={ariaLabel}
-            color={color ?? 'inherit'}
-            size={size}
-            edge={edge ?? false}
-            disabled={disabled}
-            component={href ? 'a' : 'button'}
-            href={href}
-            download={download}
-            onClick={onClick}
-        >
-            {clonedIcon}
-        </MuiIconButton>
+        <Tooltip title={tooltipText} arrow placement='top'>
+            <MuiIconButton
+                color={color ?? 'inherit'}
+                size={size}
+                edge={edge ?? false}
+                disabled={disabled}
+                component={href ? 'a' : 'button'}
+                href={href}
+                download={download}
+                onClick={onClick}
+                aria-label={tooltipText}
+            >
+                {clonedIcon}
+            </MuiIconButton>
+        </Tooltip>
     );
 };

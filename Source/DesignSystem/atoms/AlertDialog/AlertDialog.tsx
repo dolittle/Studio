@@ -118,7 +118,7 @@ export const AlertDialog = ({ id, title, description, children, confirmBtnColor,
     >
         <DialogTitle id={`${id}-dialog-title`} sx={styles.title}>
             {title}
-            <IconButton ariaLabel='Close dialog' edge='end' onClick={onCancel} />
+            <IconButton tooltipText='Close dialog' edge='end' onClick={onCancel} />
         </DialogTitle>
 
         <DialogContent sx={{ typography: 'body2' }}>

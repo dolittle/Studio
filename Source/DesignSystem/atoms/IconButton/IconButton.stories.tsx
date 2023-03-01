@@ -18,7 +18,7 @@ metadata.argTypes = {
 };
 
 metadata.args = {
-    ariaLabel: 'Example icon button',
+    tooltipText: 'Add icon purpose here',
     icon: 'CloseRounded',
     color: 'inherit',
     size: 'small',
@@ -33,6 +33,6 @@ export const Default = createStory();
 export const IconsWeUse = () =>
     <Box sx={{ '& button': { m: 1 } }}>
         {availableIcons.map(key => (
-            <IconButton key={key} ariaLabel={key} icon={key as SvgIconsDefinition['icon']} />
+            <IconButton key={key} tooltipText={key} icon={key as SvgIconsDefinition['icon']} />
         ))}
     </Box>;

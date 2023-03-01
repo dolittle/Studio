@@ -90,7 +90,7 @@ export const AlertBox = ({ severity, title, message, isDismissible, isOpen = tru
             <Alert
                 variant='outlined'
                 severity={severity ?? 'error'}
-                action={isDismissible ? <IconButton ariaLabel='Dismiss alert' onClick={handleClose} /> : undefined}
+                action={isDismissible ? <IconButton tooltipText='Dismiss alert' onClick={handleClose} /> : undefined}
                 sx={{ display: 'inline-flex', ...sx }}
             >
                 <AlertTitle>{title ?? AlertBoxErrorTitle}</AlertTitle>

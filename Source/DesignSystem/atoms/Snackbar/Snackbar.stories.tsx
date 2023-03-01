@@ -9,8 +9,7 @@ import { SnackbarProvider, useSnackbar } from 'notistack';
 import { Slide, SlideProps } from '@mui/material';
 import { ErrorRounded } from '@mui/icons-material';
 
-import { Button } from '../Button';
-import { IconButton } from '@dolittle/design-system/atoms/IconButton/IconButton';
+import { Button, IconButton } from '@dolittle/design-system';
 import { Snackbar as CustomSnackbar } from './Snackbar';
 
 function SlideTransition(props: SlideProps) {
@@ -75,7 +74,7 @@ const Snackbar = () => {
                         enqueueSnackbar(`Snackbar with action buttons -  ${count} - Undone.`)
                     } />
 
-                    <IconButton ariaLabel='Dismiss snackbar' onClick={() => {
+                    <IconButton tooltipText='Dismiss snackbar' onClick={() => {
                         enqueueSnackbar(`Snackbar with action buttons -  ${count} - Dismissed.`);
                         closeSnackbar(key);
                     }} />
