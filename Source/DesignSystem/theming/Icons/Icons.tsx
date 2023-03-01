@@ -58,7 +58,7 @@ export interface SvgIconsDefinition {
     'Search' |
     'SettingsRounded' |
     'TextSnippetRounded' |
-    'WarningRounded';
+    'WarningRounded'
 };
 
 export const SvgIcons = {
