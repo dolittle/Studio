@@ -4,22 +4,31 @@
 import React from 'react';
 
 import {
+    AddBoxRounded,
     AddCircle,
+    AppsRounded,
     ArrowBack,
     BackupRounded,
+    CheckRounded,
     CheckCircleRounded,
     ChevronRight,
     CloseRounded,
     DeleteRounded,
+    DescriptionRounded,
     DownloadRounded,
+    EditRounded,
     ErrorRounded,
     Explore,
     ExpandCircleDownRounded,
     ExpandMore,
     ExpandLess,
     FindInPageRounded,
+    HexagonRounded,
+    InsightsRounded,
     KeyboardDoubleArrowLeft,
+    KeyboardDoubleArrowRight,
     LogoutRounded,
+    MoreVertRounded,
     PolylineRounded,
     QuestionMark,
     RefreshRounded,
@@ -27,29 +36,45 @@ import {
     RocketLaunch,
     Search,
     SettingsRounded,
+    SupervisedUserCircleRounded,
     TextSnippetRounded,
+    UploadRounded,
     WarningRounded,
 } from '@mui/icons-material';
+
+import { Bridge, Dolittle, ContainerRegistry } from './CustomIcons';
 
 // TODO: This is a temporary solution to get the icons type working.
 export interface SvgIconsDefinition {
     icon:
+    'AddBoxRounded' |
     'AddCircle' |
+    'AppsRounded' |
     'ArrowBack' |
     'BackupRounded' |
+    'Bridge' |
+    'ContainerRegistryRounded' |
     'CheckCircleRounded' |
+    'CheckRounded' |
     'ChevronRight' |
     'CloseRounded' |
     'DeleteRounded' |
+    'DescriptionRounded' |
+    'Dolittle' |
     'DownloadRounded' |
+    'EditRounded' |
     'ErrorRounded' |
     'Explore' |
     'ExpandCircleDownRounded' |
     'ExpandMore' |
     'ExpandLess' |
     'FindInPageRounded' |
+    'HexagonRounded' |
+    'InsightsRounded' |
     'KeyboardDoubleArrowLeft' |
+    'KeyboardDoubleArrowRight' |
     'LogoutRounded' |
+    'MoreVertRounded' |
     'PolylineRounded' |
     'QuestionMark' |
     'RefreshRounded' |
@@ -57,27 +82,41 @@ export interface SvgIconsDefinition {
     'RocketLaunch' |
     'Search' |
     'SettingsRounded' |
+    'SupervisedUserCircleRounded' |
     'TextSnippetRounded' |
+    'UploadRounded' |
     'WarningRounded'
 };
 
 export const SvgIcons = {
+    AddBoxRounded: <AddBoxRounded />,
     AddCircle: <AddCircle />,
+    AppsRounded: <AppsRounded />,
     ArrowBack: <ArrowBack />,
     BackupRounded: <BackupRounded />,
+    Bridge: <Bridge />,
+    ContainerRegistry: <ContainerRegistry />,
     CheckCircleRounded: <CheckCircleRounded />,
+    CheckRounded: <CheckRounded />,
     ChevronRight: <ChevronRight />,
     CloseRounded: <CloseRounded />,
     DeleteRounded: <DeleteRounded />,
+    DescriptionRounded: <DescriptionRounded />,
+    Dolittle: <Dolittle />,
     DownloadRounded: <DownloadRounded />,
+    EditRounded: <EditRounded />,
     ErrorRounded: <ErrorRounded />,
     Explore: <Explore />,
     ExpandCircleDownRounded: <ExpandCircleDownRounded />,
     ExpandMore: <ExpandMore />,
     ExpandLess: <ExpandLess />,
     FindInPageRounded: <FindInPageRounded />,
+    HexagonRounded: <HexagonRounded />,
+    InsightsRounded: <InsightsRounded />,
     KeyboardDoubleArrowLeft: <KeyboardDoubleArrowLeft />,
+    KeyboardDoubleArrowRight: <KeyboardDoubleArrowRight />,
     LogoutRounded: <LogoutRounded />,
+    MoreVertRounded: <MoreVertRounded />,
     PolylineRounded: <PolylineRounded />,
     QuestionMark: <QuestionMark />,
     RefreshRounded: <RefreshRounded />,
@@ -85,7 +124,9 @@ export const SvgIcons = {
     RocketLaunch: <RocketLaunch />,
     Search: <Search />,
     SettingsRounded: <SettingsRounded />,
+    SupervisedUserCircleRounded: <SupervisedUserCircleRounded />,
     TextSnippetRounded: <TextSnippetRounded />,
+    UploadRounded: <UploadRounded />,
     WarningRounded: <WarningRounded />,
 };
 
