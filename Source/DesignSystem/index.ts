@@ -6,11 +6,12 @@ export { themeDark } from './theming/theme';
 
 // Atoms
 export { Accordion } from './atoms/Accordion';
+export { AlertDialog, AlertDialogProps } from './atoms/AlertDialog';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
 export { Button, ButtonProps } from './atoms/Button';
-export { AlertDialog, AlertDialogProps } from './atoms/AlertDialog';
 export { Checkbox, Form, Input, Select, Switch } from './atoms/Forms';
 export { IconButton } from './atoms/IconButton';
+export { availableIcons, SvgIcons, SvgIconsDefinition } from './theming/Icons/Icons';
 export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
 export { Summary } from './atoms/Metrics';

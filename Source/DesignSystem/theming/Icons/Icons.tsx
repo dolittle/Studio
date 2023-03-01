@@ -31,7 +31,37 @@ import {
     WarningRounded,
 } from '@mui/icons-material';
 
-export const iconMapping = {
+// TODO: This is a temporary solution to get the icons type working.
+export interface SvgIconsDefinition {
+    icon:
+    'AddCircle' |
+    'ArrowBack' |
+    'BackupRounded' |
+    'CheckCircleRounded' |
+    'ChevronRight' |
+    'CloseRounded' |
+    'DeleteRounded' |
+    'DownloadRounded' |
+    'ErrorRounded' |
+    'Explore' |
+    'ExpandCircleDownRounded' |
+    'ExpandMore' |
+    'ExpandLess' |
+    'FindInPageRounded' |
+    'KeyboardDoubleArrowLeft' |
+    'LogoutRounded' |
+    'PolylineRounded' |
+    'QuestionMark' |
+    'RefreshRounded' |
+    'RestartAltRounded' |
+    'RocketLaunch' |
+    'Search' |
+    'SettingsRounded' |
+    'TextSnippetRounded' |
+    'WarningRounded';
+};
+
+export const SvgIcons = {
     AddCircle: <AddCircle />,
     ArrowBack: <ArrowBack />,
     BackupRounded: <BackupRounded />,
@@ -59,4 +89,4 @@ export const iconMapping = {
     WarningRounded: <WarningRounded />,
 };
 
-export const availableIcons = Object.keys(iconMapping);
+export const availableIcons = Object.keys(SvgIcons);

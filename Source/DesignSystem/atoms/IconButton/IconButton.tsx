@@ -1,60 +1,62 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { MouseEventHandler, ReactElement } from 'react';
+import React, { MouseEventHandler } from 'react';
 
-import { IconButton as MuiIconButton, SvgIconProps } from '@mui/material';
-import { CloseRounded } from '@mui/icons-material';
+import { IconButton as MuiIconButton } from '@mui/material';
+
+import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
 
 /**
  * The props for a {@link IconButton} component.
  */
 export type IconButtonProps = {
     /**
-     * Required. The aria-label of the icon button.
+     * The aria-label of the icon button.
      *
-     * For accessibility, it is recommended to set this value to a meaningful string rather than an empty string.
+     * For accessibility, it is recommended to set this value to a meaningful string.
      */
     ariaLabel: string;
 
     /**
-     * Choose icon from @mui/icons-material or leave it empty to use default 'close' icon.
-     * @default <CloseRounded />
+     * The icon to show. Usual MUI icon, but write it as a string. Must be a valid `SvgIconsDefinition`.
+     *
+     * @param type {@link SvgIconsDefinition}.
+     *
+     * @default CloseRounded
      */
-    icon?: ReactElement<SvgIconProps>;
+    icon: SvgIconsDefinition['icon'];
 
     /**
-     * Most icons will use the default inherit styling.
+     * Most icons will use the default `inherit` color.
      *
-     * Secondary icon button use 'primary' color.
-     *
-     * They are used for the most important actions, such as Save, Submit, or Continue.
+     * `primary` color can be used for the important actions, such as Save, Submit, or Continue.
      * @default inherit
      */
     color?: 'inherit' | 'primary';
 
     /**
-     * Set icon size to medium.
+     * You can change icon size to be `medium`.
      * @default small
      */
     size?: 'small' | 'medium';
 
     /**
-     * Set icon button to start or end edge.
+     * Set icon button to be start or end edge.
      * @default false
      */
     edge?: 'start' | 'end' | false;
 
     /**
-     * Icon button can be disabled.
+     * Set to `true` if button should be disabled.
      * @default false
      */
     disabled?: boolean;
 
     /**
-     * Navigate to internal page.
+     * Use it for navigate to internal page.
      *
-     * When this is set, the component will render as an anchor element.
+     * When `href` is set, the component will render as an `a` element.
      * @default undefined
      */
     href?: string;
@@ -74,23 +76,28 @@ export type IconButtonProps = {
 };
 
 /**
- * A icon button component.
- * @param {...IconButtonProps} props - The {@link IconButtonProps}.
- * @returns {ReactElement} A new {@link IconButton} component.
- * @example
- * <IconButton ariaLabel='Download logs' icon={<DownloadRounded />} />
+ * The icon button component is used to perform an action.
+ * @param {IconButtonProps} props - The {@link IconButtonProps} that contains the properties for the confirm dialog.
+ * @returns A {@link IconButton} component.
  */
-export const IconButton = ({ ariaLabel, icon, color, size = 'small', edge, disabled, href, download, onClick }: IconButtonProps): ReactElement =>
-    <MuiIconButton
-        aria-label={ariaLabel}
-        color={color ?? 'inherit'}
-        size={size}
-        edge={edge ?? false}
-        disabled={disabled}
-        component={href ? 'a' : 'button'}
-        href={href}
-        download={download}
-        onClick={onClick}
-    >
-        {!icon ? <CloseRounded fontSize={size} /> : React.cloneElement(icon, { fontSize: size })}
-    </MuiIconButton>;
+export const IconButton = ({ ariaLabel, icon, color, size = 'small', edge, disabled, href, download, onClick }: IconButtonProps) => {
+    const clonedIcon = React.cloneElement(
+        icon ? SvgIcons[icon] : SvgIcons.CloseRounded, { fontSize: size }
+    );
+
+    return (
+        <MuiIconButton
+            aria-label={ariaLabel}
+            color={color ?? 'inherit'}
+            size={size}
+            edge={edge ?? false}
+            disabled={disabled}
+            component={href ? 'a' : 'button'}
+            href={href}
+            download={download}
+            onClick={onClick}
+        >
+            {clonedIcon}
+        </MuiIconButton>
+    );
+};
