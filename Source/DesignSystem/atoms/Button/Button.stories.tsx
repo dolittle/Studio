@@ -11,9 +11,7 @@ import { action } from '@storybook/addon-actions';
 import { Box } from '@mui/material';
 import { AddCircle } from '@mui/icons-material';
 
-import { Button, ButtonProps } from '@dolittle/design-system';
-
-import { availableIcons, iconMapping } from '../IconButton/Icons';
+import { Button, ButtonProps, availableIcons, SvgIcons } from '@dolittle/design-system';
 
 import { buttonDescription, spacing } from './helpers';
 
@@ -40,14 +38,14 @@ export default {
         },
         startWithIcon: {
             options: availableIcons,
-            mapping: iconMapping,
+            mapping: SvgIcons,
             table: {
                 type: { summary: 'ReactElement<SvgIconProps>' },
             },
         },
         endWithIcon: {
             options: availableIcons,
-            mapping: iconMapping,
+            mapping: SvgIcons,
             table: {
                 type: { summary: 'ReactElement<SvgIconProps>' },
             },

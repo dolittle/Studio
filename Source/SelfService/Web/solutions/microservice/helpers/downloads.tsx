@@ -7,7 +7,6 @@ import { useSnackbar } from 'notistack';
 
 import { getPodLogs } from '../../../api/solutions/api';
 
-import { DownloadRounded } from '@mui/icons-material';
 import { GridRenderCellParams } from '@mui/x-data-grid-pro';
 
 import { IconButton } from '@dolittle/design-system';
@@ -35,7 +34,7 @@ export const DownloadLogs = ({ row: { application, podName, containerName, image
     return (
         <IconButton
             ariaLabel='Download logs'
-            icon={<DownloadRounded />}
+            icon='DownloadRounded'
             href={URL.createObjectURL(logsBlob)}
             download={`${containerImage}.log`}
             onClick={handleNotification}
