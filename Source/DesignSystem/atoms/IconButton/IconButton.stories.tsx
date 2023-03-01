@@ -9,6 +9,23 @@ import { componentStories, IconButton, availableIcons, SvgIconsDefinition } from
 
 const { metadata, createStory } = componentStories(IconButton);
 
+metadata.title = 'Icon Button';
+
+metadata.argTypes = {
+    download: { control: false },
+    href: { control: false },
+    onClick: { control: false },
+};
+
+metadata.args = {
+    ariaLabel: 'Example icon button',
+    icon: 'CloseRounded',
+    color: 'inherit',
+    size: 'small',
+    edge: false,
+    disabled: false,
+};
+
 export default metadata;
 
 export const Default = createStory();
