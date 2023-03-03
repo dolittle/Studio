@@ -8,7 +8,7 @@ develop-frontend:
 develop-backend:
 	cd Source/SelfService/Backend && \
 	HEADER_SECRET="FAKE" \
-	PLATFORM_API="localhost:8081" \
+	PROXY='{"/": "localhost:8081", "/bridge/": "127.0.0.1:5000"}' \
 	DEVELOPMENT_CUSTOMER_ID="${DEVELOPMENT_CUSTOMER_ID}" \
 	DEVELOPMENT_USER_ID="${DEVELOPMENT_USER_ID}" \
 	go run main.go
