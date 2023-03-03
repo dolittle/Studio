@@ -18,7 +18,7 @@ metadata.argTypes = {
 };
 
 metadata.args = {
-    tooltipText: 'Add icon purpose here',
+    tooltipText: 'Add the purpose of the icon here',
     icon: 'CloseRounded',
     color: 'inherit',
     size: 'small',
