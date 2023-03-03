@@ -28,6 +28,7 @@ import {
     KeyboardDoubleArrowLeft,
     KeyboardDoubleArrowRight,
     LogoutRounded,
+    MenuRounded,
     MoreVertRounded,
     PolylineRounded,
     QuestionMark,
@@ -74,6 +75,7 @@ export interface SvgIconsDefinition {
     'KeyboardDoubleArrowLeft' |
     'KeyboardDoubleArrowRight' |
     'LogoutRounded' |
+    'MenuRounded' |
     'MoreVertRounded' |
     'PolylineRounded' |
     'QuestionMark' |
@@ -116,6 +118,7 @@ export const SvgIcons = {
     KeyboardDoubleArrowLeft: <KeyboardDoubleArrowLeft />,
     KeyboardDoubleArrowRight: <KeyboardDoubleArrowRight />,
     LogoutRounded: <LogoutRounded />,
+    MenuRounded: <MenuRounded />,
     MoreVertRounded: <MoreVertRounded />,
     PolylineRounded: <PolylineRounded />,
     QuestionMark: <QuestionMark />,

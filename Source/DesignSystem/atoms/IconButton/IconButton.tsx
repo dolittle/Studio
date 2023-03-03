@@ -3,7 +3,7 @@
 
 import React, { MouseEventHandler } from 'react';
 
-import { IconButton as MuiIconButton, Tooltip } from '@mui/material';
+import { IconButton as MuiIconButton, SxProps, Tooltip } from '@mui/material';
 
 import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
 
@@ -17,7 +17,7 @@ export type IconButtonProps = {
      * It is also used as the `aria-label` for the icon button.
      * @default undefined
      */
-    tooltipText: string;
+    tooltipText?: string;
 
     /**
      * Usual MUI icon writen as a `string`. Must be a valid `SvgIconsDefinition`.
@@ -76,6 +76,11 @@ export type IconButtonProps = {
      * @default undefined
      */
     onClick?: MouseEventHandler<HTMLButtonElement>;
+
+    /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
+    sx?: SxProps;
 };
 
 /**
@@ -83,11 +88,11 @@ export type IconButtonProps = {
  * @param {IconButtonProps} props - The {@link IconButtonProps} that contains the properties for the confirm dialog.
  * @returns A {@link IconButton} component.
  */
-export const IconButton = ({ tooltipText, icon = 'CloseRounded', color, size = 'small', edge, disabled, href, download, onClick }: IconButtonProps) => {
+export const IconButton = ({ tooltipText, icon = 'CloseRounded', color, size = 'small', edge, disabled, href, download, onClick, sx }: IconButtonProps) => {
     const clonedIcon = React.cloneElement(SvgIcons[icon], { fontSize: size });
 
     return (
-        <Tooltip title={tooltipText} arrow placement='top'>
+        <Tooltip title={tooltipText || ''} arrow placement='top'>
             <MuiIconButton
                 color={color ?? 'inherit'}
                 size={size}
@@ -98,6 +103,7 @@ export const IconButton = ({ tooltipText, icon = 'CloseRounded', color, size = '
                 download={download}
                 onClick={onClick}
                 aria-label={tooltipText}
+                sx={sx}
             >
                 {clonedIcon}
             </MuiIconButton>
