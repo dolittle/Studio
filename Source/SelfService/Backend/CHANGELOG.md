@@ -1,3 +1,27 @@
+# [1.4.0] - 2023-3-3 [PR: #316](https://github.com/dolittle/Studio/pull/316)
+## Summary
+To enable requests to be routed to different backend services, this PR introduces proxy configuration via the `PROXY` environment variable. This is needed for e.g. routing bridge related requests to the bridge-api, and platform related request to the platform-api. Also some rudimentary tests are added.
+
+### Added
+
+Configurable routing via the optional `PROXY` environment variable. The value of this variable, if present, is assumed to be a valid json document where the keys are a [http.ServeMux](https://pkg.go.dev/net/http#ServeMux) pattern and the values are the corresponding host for the backend to setup a reverse proxy to. 
+
+If no `PROXY` environment variable is given, or if it's value is empty, we'll fallback to the old behavior of using the `PLATFORM_API` environment variable.
+
+The `PLATFORM_API` environment variable is kept as a legacy option, but will be ignored completely if the `PROXY` environment variable is set.
+
+### Example
+
+Routing bridge request to `localhost:2222`, and all other to `localhost:1111`:
+```
+PROXY='{"/": "localhost:1111", "/bridge/": "localhost:2222"}'
+```
+
+### Ref
+[RFC-0001](https://github.com/dolittle/rfcs/blob/main/0001_use_rest_in_studio.md)
+[Task](https://app.asana.com/0/0/1203966934671264/f)
+
+
 # [1.3.1] - 2022-5-2 [PR: #179](https://github.com/dolittle/Studio/pull/179)
 ## Summary
 
