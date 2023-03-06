@@ -17,7 +17,7 @@ export const NavigationBar = () => {
     const handleMobileNavIsOpen = () => setIsMobileNavOpen(prevState => !prevState);
 
     return (
-        <AppBar component='nav'>
+        <AppBar component='nav' sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
             {isMobileNavOpen && <NavigationBarMobile isOpen={isMobileNavOpen} setIsOpen={handleMobileNavIsOpen} />}
 
             <Toolbar>
