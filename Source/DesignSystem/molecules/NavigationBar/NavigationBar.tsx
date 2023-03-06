@@ -3,60 +3,52 @@
 
 import React, { useState } from 'react';
 
-import { AppBar, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
+import { AppBar, Box, List, Toolbar } from '@mui/material';
 
-import { IconButton } from '@dolittle/design-system';
-import { Dolittle } from '../../theming/Icons/CustomIcons';
+import { IconButton, Icon } from '@dolittle/design-system';
 
+import { RouterLinkListItem } from './RouterLinkListItem';
 import { SpaceSelectionMenu } from './SpaceSelectionMenu';
 import { MoreOptionsMenu } from './MoreOptionsMenu';
 import { NavigationBarMobile } from './NavigationBarMobile';
 
+const responsiveStyles = {
+    display: {
+        xs: 'none',
+        md: 'flex',
+    },
+};
+
 export const NavigationBar = () => {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-    const handleMobileNavIsOpen = () => setIsMobileNavOpen(prevState => !prevState);
+    const toggleMobileNav = () => setIsMobileNavOpen(prevState => !prevState);
 
     return (
         <AppBar component='nav' sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-            {isMobileNavOpen && <NavigationBarMobile isOpen={isMobileNavOpen} setIsOpen={handleMobileNavIsOpen} />}
+            {isMobileNavOpen && <NavigationBarMobile isOpen={isMobileNavOpen} setIsOpen={toggleMobileNav} />}
 
             <Toolbar>
                 <IconButton
+                    tooltipText='Toggle navigation menu'
                     icon='MenuRounded'
                     edge='start'
-                    onClick={handleMobileNavIsOpen}
-                    sx={{ display: { sm: 'none' } }}
+                    onClick={toggleMobileNav}
+                    sx={{ display: { md: 'none' } }}
                 />
 
-                <Box sx={{ display: { xs: 'none', sm: 'flex' }, flexGrow: 1 }}>
-                    <List sx={{ display: 'inline-flex', gap: 2 }}>
-                        <ListItem disablePadding>
-                            <ListItemIcon sx={{ color: 'text.primary' }}>
-                                <Dolittle />
-                            </ListItemIcon>
-                        </ListItem>
+                <Box sx={{ ...responsiveStyles, flexGrow: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mr: 4 }}>
+                        <Icon icon='Dolittle' />
+                    </Box>
 
-                        <ListItem disablePadding>
-                            <ListItemButton>
-                                <ListItemText primary='home' primaryTypographyProps={{ variant: 'button' }} />
-                            </ListItemButton>
-                        </ListItem>
-
-                        <ListItem disablePadding>
-                            <ListItemButton>
-                                <ListItemText primary='solutions' primaryTypographyProps={{ variant: 'button' }} />
-                            </ListItemButton>
-                        </ListItem>
-
-                        <ListItem disablePadding>
-                            <ListItemButton>
-                                <ListItemText primary='integrations' primaryTypographyProps={{ variant: 'button', color: 'primary' }} />
-                            </ListItemButton>
-                        </ListItem>
+                    <List sx={{ display: 'flex', gap: 2 }}>
+                        <RouterLinkListItem to='/' text='home' variantButton />
+                        <RouterLinkListItem to='/' text='solutions' variantButton />
+                        <RouterLinkListItem to='/' text='integrations' selected variantButton />
                     </List>
                 </Box>
 
-                <List sx={{ gap: 2, display: { xs: 'none', sm: 'flex' } }}>
+                <List sx={{ ...responsiveStyles, gap: 2 }}>
                     <SpaceSelectionMenu />
                     <MoreOptionsMenu />
                 </List>

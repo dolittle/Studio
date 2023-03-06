@@ -35,9 +35,9 @@ export const MoreOptionsMenu = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <RouterLinkListItem to='' linkText='Documentation' icon={<DescriptionRounded fontSize='small' />} />
-                <RouterLinkListItem to='' linkText='Change Organization' icon={<SupervisedUserCircleRounded fontSize='small' />} />
-                <RouterLinkListItem to='' linkText='Log out' icon={<LogoutRounded fontSize='small' />} />
+                <RouterLinkListItem to='/' text='Documentation' icon={<DescriptionRounded fontSize='small' />} />
+                <RouterLinkListItem to='/' text='Change Organization' icon={<SupervisedUserCircleRounded fontSize='small' />} />
+                <RouterLinkListItem to='/' text='Log out' icon={<LogoutRounded fontSize='small' />} />
             </Menu>
         </>
     );
