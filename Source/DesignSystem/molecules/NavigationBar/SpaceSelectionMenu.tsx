@@ -36,9 +36,9 @@ export const SpaceSelectionMenu = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <RouterLinkListItem to='/' linkText='Default space' icon={<Icon icon='CheckRounded' />} />
-                <RouterLinkListItem to='/' linkText='Space 2' />
-                <RouterLinkListItem to='/' linkText='Create New Space' icon={<Icon icon='AddBoxRounded' />} />
+                <RouterLinkListItem to='/' text='Default space' icon={<Icon icon='CheckRounded' />} />
+                <RouterLinkListItem to='/' text='Space 2' inset />
+                <RouterLinkListItem to='/' text='Create New Space' icon={<Icon icon='AddBoxRounded' />} />
             </Menu>
         </>
     );
