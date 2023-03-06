@@ -17,7 +17,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-import { Button, IconButton, Icon, NavigationBar } from '@dolittle/design-system';
+import { Button, IconButton, Icon } from '@dolittle/design-system';
 
 import { RouterLinkListItem } from '../NavigationBar/RouterLinkListItem';
 
@@ -48,6 +48,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
+    // Necessary for content to be below app bar.
     ...theme.mixins.toolbar,
 }));
 
@@ -74,7 +75,6 @@ export const SideBar = () => {
     return (
         <Drawer variant='permanent' open={isSideBarExpanded}>
             <Toolbar />
-            <NavigationBar />
 
             <DrawerHeader>
                 {isSideBarExpanded ?
