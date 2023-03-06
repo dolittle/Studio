@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Drawer, List, Toolbar } from '@mui/material';
 
-import { Dolittle } from '../../theming/Icons/CustomIcons';
+import { RouterLinkListItem } from './RouterLinkListItem';
 
 type NavigationBarMobileProps = {
     isOpen: boolean;
@@ -20,53 +20,14 @@ export const NavigationBarMobile = ({ isOpen, setIsOpen }: NavigationBarMobilePr
                 open={isOpen}
                 onClose={setIsOpen}
                 ModalProps={{ keepMounted: true }}
-                sx={{ display: { xs: 'block', sm: 'none' } }}
+                sx={{ display: { xs: 'block', md: 'none' } }}
             >
+                <Toolbar />
                 <List>
-                    <ListItem sx={{ py: 2 }}>
-                        <ListItemIcon sx={{ color: 'text.primary' }}>
-                            <Dolittle />
-                        </ListItemIcon>
-                    </ListItem>
-
-                    <Divider />
-
-                    <ListItem disablePadding>
-                        <ListItemButton dense>
-                            {/* <ListItemIcon sx={{ color: 'text.primary' }}>
-                                <Dolittle />
-                            </ListItemIcon> */}
-                            <ListItemText primary='TODO' primaryTypographyProps={{ variant: 'body2' }} />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton dense>
-                            {/* <ListItemIcon sx={{ color: 'text.primary' }}>
-                                <Dolittle />
-                            </ListItemIcon> */}
-                            <ListItemText primary='TODO' primaryTypographyProps={{ variant: 'body2' }} />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton dense>
-                            {/* <ListItemIcon sx={{ color: 'text.primary' }}>
-                                <Dolittle />
-                            </ListItemIcon> */}
-                            <ListItemText primary='TODO' primaryTypographyProps={{ variant: 'body2' }} />
-                        </ListItemButton>
-                    </ListItem>
+                    <RouterLinkListItem to='/' text='home' variantButton />
+                    <RouterLinkListItem to='/' text='solutions' variantButton />
+                    <RouterLinkListItem to='/' text='integrations' selected variantButton />
                 </List>
-
-                <Divider />
-
-                <List>
-                    {/*     <DropdownMenu />
-
-                    <LinksList /> */}
-                </List>
-
             </Drawer>
         </Box>
     );
