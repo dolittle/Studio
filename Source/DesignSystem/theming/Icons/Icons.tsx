@@ -54,7 +54,7 @@ export interface SvgIconsDefinition {
     'ArrowBack' |
     'BackupRounded' |
     'Bridge' |
-    'ContainerRegistryRounded' |
+    'ContainerRegistry' |
     'CheckCircleRounded' |
     'CheckRounded' |
     'ChevronRight' |
