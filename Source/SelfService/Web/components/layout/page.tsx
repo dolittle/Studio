@@ -12,7 +12,7 @@ export type PageProps = {
 export const Page = ({title, children}: PageProps) => {
     return (
         <>
-            <Typography variant='h1'>{title}</Typography>
+            <Typography variant='h1' my={2}>{title}</Typography>
             {children}
         </>
     );

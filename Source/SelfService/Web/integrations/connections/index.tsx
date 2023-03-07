@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { Connection, connectionsGet } from '../../apis/integrations/connections';
 import { NoConnections } from './noConnections';
 import { Page } from '../../components/layout/page';
+import { ConnectionsTable } from './connectionsTable';
+import { CreateConnectionButton } from './createConnectionButton';
 
 export const Connections = () => {
     const [connections, setConnections] = useState<Connection[]>([]);
@@ -21,7 +23,10 @@ export const Connections = () => {
         <Page title='Connections'>
             {connections.length
                 ? (
-                    <div>Connection Table ({connections.length})</div>
+                    <>
+                        <ConnectionsTable connections={connections} isLoading={false} />
+                        <CreateConnectionButton onClick={() => {}} />
+                    </>
                 ) : (
                     <NoConnections />
                 )
