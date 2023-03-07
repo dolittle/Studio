@@ -5,16 +5,14 @@ import React from 'react';
 
 import { Box, Divider, Drawer, List, Toolbar } from '@mui/material';
 
-import { Icon } from '@dolittle/design-system';
-
-import { RouterLinkListItem } from './RouterLinkListItem';
-
 type NavigationBarMobileProps = {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
+    mobileMainLinks: JSX.Element;
+    mobileSecondaryLinks: JSX.Element;
 };
 
-export const NavigationBarMobile = ({ isOpen, setIsOpen }: NavigationBarMobileProps) =>
+export const NavigationBarMobile = ({ isOpen, setIsOpen, mobileMainLinks, mobileSecondaryLinks }: NavigationBarMobileProps) =>
     <Box component='nav'>
         <Drawer
             variant='temporary'
@@ -24,19 +22,16 @@ export const NavigationBarMobile = ({ isOpen, setIsOpen }: NavigationBarMobilePr
             sx={{ display: { xs: 'block', md: 'none' } }}
         >
             <Toolbar />
+
             <List sx={{ height: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <Box>
-                    <RouterLinkListItem to='' text='home' variantButton />
-                    <RouterLinkListItem to='' text='solutions' variantButton />
-                    <RouterLinkListItem to='' text='integrations' selected variantButton />
+                    {mobileMainLinks}
                     <Divider />
                 </Box>
 
                 <Box>
                     <Divider />
-                    <RouterLinkListItem to='' text='Documentation' icon={<Icon icon='DescriptionRounded' />} />
-                    <RouterLinkListItem to='' text='Change Organization' icon={<Icon icon='SupervisedUserCircleRounded' />} />
-                    <RouterLinkListItem to='' text='Log out' icon={<Icon icon='LogoutRounded' />} />
+                    {mobileSecondaryLinks}
                 </Box>
             </List>
         </Drawer>

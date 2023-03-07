@@ -7,7 +7,7 @@ import { Divider, List, Toolbar } from '@mui/material';
 
 import { Icon } from '@dolittle/design-system';
 
-import { RouterLinkListItem } from '../NavigationBar/RouterLinkListItem';
+import { RouterLinkListItem } from '../RouterLinkListItem';
 import { CustomListItem, Drawer } from './StyledCompenents';
 
 export const SideBar = () => {
