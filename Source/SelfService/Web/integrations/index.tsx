@@ -5,10 +5,9 @@ import React from 'react';
 
 import { useRoutes, useParams } from 'react-router-dom';
 
-import { Box, Toolbar, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
-import { NavigationBar, SideBar } from '@dolittle/design-system';
-
+import { WorkSpaceLayout } from '../components/layout/workSpaceLayout/workSpaceLayout';
 import { routes } from './routes';
 
 export const IntegrationsIndex = () => {
@@ -16,17 +15,10 @@ export const IntegrationsIndex = () => {
     const { applicationId } = useParams();
 
     return (
-        <Box sx={{ display: 'flex' }}>
-            <NavigationBar />
-            <SideBar />
-
-            <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-                <Toolbar />
-
-                <Typography variant='h1'>Integrations</Typography>
-                <Typography>Space: {applicationId}</Typography>
-                {routesElement}
-            </Box>
-        </Box>
+        <WorkSpaceLayout>
+            <Typography variant='h1'>Integrations</Typography>
+            <Typography>Space: {applicationId}</Typography>
+            {routesElement}
+        </WorkSpaceLayout>
     );
 };
