@@ -10,12 +10,16 @@ import { Layout } from './Layout';
 import { DummyMainContent, Router } from '../../helpers/dummyContent';
 
 const { metadata, createStory } = componentStories(Layout, {
-    decorator: (story) => (
+    decorator: (Story) => (
         <Router>
-            {story()}
+            {Story()}
         </Router>
     ),
 });
+
+metadata.parameters = {
+    controls: { include: [] },
+};
 
 metadata.args = {
     children: <DummyMainContent />,
