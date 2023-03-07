@@ -42,9 +42,9 @@ export const NavigationBar = () => {
                     </Box>
 
                     <List sx={{ display: 'flex', gap: 2 }}>
-                        <RouterLinkListItem to='/' text='home' variantButton />
-                        <RouterLinkListItem to='/' text='solutions' variantButton />
-                        <RouterLinkListItem to='/' text='integrations' selected variantButton />
+                        <RouterLinkListItem to='' text='home' variantButton />
+                        <RouterLinkListItem to='' text='solutions' variantButton />
+                        <RouterLinkListItem to='' text='integrations' selected variantButton />
                     </List>
                 </Box>
 
