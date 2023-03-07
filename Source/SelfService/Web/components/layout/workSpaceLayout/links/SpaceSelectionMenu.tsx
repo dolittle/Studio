@@ -6,9 +6,7 @@ import React, { useState } from 'react';
 import { Menu } from '@mui/material';
 import { ArrowDropDownRounded, ArrowDropUpRounded } from '@mui/icons-material';
 
-import { Button, Icon } from '@dolittle/design-system';
-
-import { RouterLinkListItem } from './RouterLinkListItem';
+import { Button, Icon, RouterLinkListItem } from '@dolittle/design-system';
 
 export const SpaceSelectionMenu = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

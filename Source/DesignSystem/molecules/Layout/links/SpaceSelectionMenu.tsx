@@ -4,40 +4,39 @@
 import React, { useState } from 'react';
 
 import { Menu } from '@mui/material';
-import { DescriptionRounded, LogoutRounded, SupervisedUserCircleRounded } from '@mui/icons-material';
+import { ArrowDropDownRounded, ArrowDropUpRounded } from '@mui/icons-material';
 
-import { IconButton } from '@dolittle/design-system';
+import { Button, Icon, RouterLinkListItem } from '@dolittle/design-system';
 
-import { RouterLinkListItem } from './RouterLinkListItem';
-
-export const MoreOptionsMenu = () => {
+export const SpaceSelectionMenu = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
     return (
         <>
-            <IconButton
-                tooltipText='More options'
-                icon='MoreVertRounded'
-                edge='end'
+            <Button
+                label='Default space'
+                color='subtle'
+                endWithIcon={open ? <ArrowDropUpRounded /> : <ArrowDropDownRounded />}
                 onClick={e => setAnchorEl(e.currentTarget)}
-                aria-controls={open ? 'more-options' : undefined}
                 aria-haspopup='true'
+                aria-controls={open ? 'select-space' : undefined}
                 aria-expanded={open ? 'true' : undefined}
             />
 
             <Menu
-                id='more-options'
+                id='select-space'
                 open={open}
                 anchorEl={anchorEl}
                 onClose={() => setAnchorEl(null)}
                 onClick={() => setAnchorEl(null)}
+                MenuListProps={{ 'aria-labelledby': 'select-space' }}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <RouterLinkListItem to='/' text='Documentation' icon={<DescriptionRounded fontSize='small' />} />
-                <RouterLinkListItem to='/' text='Change Organization' icon={<SupervisedUserCircleRounded fontSize='small' />} />
-                <RouterLinkListItem to='/' text='Log out' icon={<LogoutRounded fontSize='small' />} />
+                <RouterLinkListItem to='/' text='Default space' icon={<Icon icon='CheckRounded' />} />
+                <RouterLinkListItem to='/' text='Space 2' inset />
+                <RouterLinkListItem to='/' text='Create New Space' icon={<Icon icon='AddBoxRounded' />} />
             </Menu>
         </>
     );
