@@ -9,11 +9,23 @@ import { NavigationBar, SideBar } from '@dolittle/design-system';
 
 import { MainLinks, SecondaryLinks, SelectionMenu, MobileSecondaryLinks, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/dummyContent';
 
-type WorkSpaceLayoutProps = {
+/**
+ * The props for a {@link Layout} component.
+ */
+type LayoutProps = {
+    /**
+     * The main content of the layout.
+     * @default undefined
+     */
     children: React.ReactNode;
 };
 
-export const Layout = ({ children }: WorkSpaceLayoutProps) =>
+/**
+ * The layout component is the main component that contains the navigation bar and the side bar.
+ * @param {LayoutProps} props - The {@link LayoutProps} that contains the properties for layout component.
+ * @returns A {@link Layout} component.
+ */
+export const Layout = ({ children }: LayoutProps) =>
     <Box sx={{ display: 'flex' }}>
         <NavigationBar
             mainLinks={<MainLinks />}
@@ -28,7 +40,7 @@ export const Layout = ({ children }: WorkSpaceLayoutProps) =>
         />
 
         <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-            <Toolbar sx={{ minHeight: 100 }} />
+            <Toolbar />
 
             {children}
         </Box>
