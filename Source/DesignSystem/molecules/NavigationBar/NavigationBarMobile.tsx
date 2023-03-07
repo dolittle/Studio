@@ -14,38 +14,30 @@ type NavigationBarMobileProps = {
     setIsOpen: (isOpen: boolean) => void;
 };
 
-export const NavigationBarMobile = ({ isOpen, setIsOpen }: NavigationBarMobileProps) => {
-    return (
-        <Box component='nav'>
-            <Drawer
-                variant='temporary'
-                open={isOpen}
-                onClose={setIsOpen}
-                ModalProps={{ keepMounted: true }}
-                sx={{ display: { xs: 'block', md: 'none' } }}
-            >
-                <Toolbar />
+export const NavigationBarMobile = ({ isOpen, setIsOpen }: NavigationBarMobileProps) =>
+    <Box component='nav'>
+        <Drawer
+            variant='temporary'
+            open={isOpen}
+            onClose={setIsOpen}
+            ModalProps={{ keepMounted: true }}
+            sx={{ display: { xs: 'block', md: 'none' } }}
+        >
+            <Toolbar />
+            <List sx={{ height: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Box>
+                    <RouterLinkListItem to='' text='home' variantButton />
+                    <RouterLinkListItem to='' text='solutions' variantButton />
+                    <RouterLinkListItem to='' text='integrations' selected variantButton />
+                    <Divider />
+                </Box>
 
-                <List sx={{ height: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                    <Box>
-                        <RouterLinkListItem to='' text='home' variantButton />
-                        <RouterLinkListItem to='' text='solutions' variantButton />
-                        <RouterLinkListItem to='' text='integrations' selected variantButton />
-                        <Divider />
-                    </Box>
-
-                    <Box>
-                        <Divider />
-                        <RouterLinkListItem to='' text='Documentation' icon={<Icon icon='DescriptionRounded' />} />
-                        <RouterLinkListItem to='' text='Change Organization' icon={<Icon icon='SupervisedUserCircleRounded' />} />
-                        <RouterLinkListItem to='' text='Log out' icon={<Icon icon='LogoutRounded' />} />
-                    </Box>
-                </List>
-
-                {/* <Box sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, p: 2 }}>
-                    <Icon icon='Dolittle' />
-                </Box> */}
-            </Drawer>
-        </Box>
-    );
-};
+                <Box>
+                    <Divider />
+                    <RouterLinkListItem to='' text='Documentation' icon={<Icon icon='DescriptionRounded' />} />
+                    <RouterLinkListItem to='' text='Change Organization' icon={<Icon icon='SupervisedUserCircleRounded' />} />
+                    <RouterLinkListItem to='' text='Log out' icon={<Icon icon='LogoutRounded' />} />
+                </Box>
+            </List>
+        </Drawer>
+    </Box>;
