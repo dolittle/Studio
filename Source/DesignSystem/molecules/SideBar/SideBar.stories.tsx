@@ -7,7 +7,8 @@ import { Box } from '@mui/material';
 
 import { componentStories, SideBar } from '@dolittle/design-system';
 
-import { Router, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/dummyContent';
+import { SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/dummyContent';
+import { Router } from '../../helpers/ReactRouter';
 
 const { metadata, createStory } = componentStories(SideBar, {
     decorator: (Story) => (
