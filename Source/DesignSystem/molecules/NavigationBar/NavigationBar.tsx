@@ -28,13 +28,17 @@ export const NavigationBar = () => {
             {isMobileNavOpen && <NavigationBarMobile isOpen={isMobileNavOpen} setIsOpen={toggleMobileNav} />}
 
             <Toolbar>
-                <IconButton
-                    tooltipText='Toggle navigation menu'
-                    icon='MenuRounded'
-                    edge='start'
-                    onClick={toggleMobileNav}
-                    sx={{ display: { md: 'none' } }}
-                />
+                <Box sx={{ width: 1, display: 'flex', justifyContent: 'space-between' }}>
+                    <IconButton
+                        tooltipText='Toggle navigation menu'
+                        icon='MenuRounded'
+                        edge='start'
+                        onClick={toggleMobileNav}
+                        sx={{ display: { md: 'none' } }}
+                    />
+
+                    <SpaceSelectionMenu />
+                </Box>
 
                 <Box sx={{ ...responsiveStyles, flexGrow: 1 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', mr: 4 }}>
