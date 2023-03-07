@@ -4,13 +4,7 @@
 import React from 'react';
 
 import { styled, Theme, CSSObject } from '@mui/material/styles';
-
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-
-import MuiDrawer from '@mui/material/Drawer';
+import { Drawer as MuiDrawer, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -38,11 +32,10 @@ const closedMixin = (theme: Theme): CSSObject => ({
 type CustomListItemProps = {
     icon: React.ReactElement;
     text: string;
-    expanded: boolean;
     onClick?: () => void;
 };
 
-export const CustomListItem = ({ icon, text, expanded, onClick }: CustomListItemProps) =>
+export const CustomListItem = ({ icon, text, onClick }: CustomListItemProps) =>
     <ListItem disablePadding sx={{ minHeight: 45 }}>
         <ListItemButton onClick={onClick}>
             <ListItemIcon sx={{ color: 'text.primary' }}>
