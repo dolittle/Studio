@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Box, Drawer, List, Toolbar } from '@mui/material';
+import { Box, Divider, Drawer, List, Toolbar } from '@mui/material';
 
 import { Icon } from '@dolittle/design-system';
 
@@ -26,15 +26,25 @@ export const NavigationBarMobile = ({ isOpen, setIsOpen }: NavigationBarMobilePr
             >
                 <Toolbar />
 
-                <List>
-                    <RouterLinkListItem to='/' text='home' variantButton />
-                    <RouterLinkListItem to='/' text='solutions' variantButton />
-                    <RouterLinkListItem to='/' text='integrations' selected variantButton />
+                <List sx={{ height: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Box>
+                        <RouterLinkListItem to='' text='home' variantButton />
+                        <RouterLinkListItem to='' text='solutions' variantButton />
+                        <RouterLinkListItem to='' text='integrations' selected variantButton />
+                        <Divider />
+                    </Box>
+
+                    <Box>
+                        <Divider />
+                        <RouterLinkListItem to='' text='Documentation' icon={<Icon icon='DescriptionRounded' />} />
+                        <RouterLinkListItem to='' text='Change Organization' icon={<Icon icon='SupervisedUserCircleRounded' />} />
+                        <RouterLinkListItem to='' text='Log out' icon={<Icon icon='LogoutRounded' />} />
+                    </Box>
                 </List>
 
-                <Box sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, p: 2 }}>
+                {/* <Box sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, p: 2 }}>
                     <Icon icon='Dolittle' />
-                </Box>
+                </Box> */}
             </Drawer>
         </Box>
     );
