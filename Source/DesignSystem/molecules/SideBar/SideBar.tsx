@@ -21,7 +21,6 @@ export const SideBar = () => {
                 <CustomListItem
                     icon={<Icon icon={isSideBarExpanded ? 'KeyboardDoubleArrowLeft' : 'KeyboardDoubleArrowRight'} />}
                     text={isSideBarExpanded ? 'Collapse' : 'Expand'}
-                    expanded={isSideBarExpanded}
                     onClick={() => setIsSideBarExpanded(!isSideBarExpanded)}
                 />
 
