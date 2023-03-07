@@ -9,7 +9,7 @@ import { NoEntityView } from '../../components/noEntityView/noEntityView';
 
 export const NoConnections = () => {
 
-    return (
+        return (
         <NoEntityView
             title='No connections established yet...'
             createEntityProps={{
