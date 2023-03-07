@@ -43,13 +43,13 @@ type CustomListItemProps = {
 };
 
 export const CustomListItem = ({ icon, text, expanded, onClick }: CustomListItemProps) =>
-    <ListItem disablePadding>
-        <ListItemButton onClick={onClick} sx={{ justifyContent: expanded ? 'initial' : 'center' }}>
-            <ListItemIcon sx={{ minWidth: 0, mr: expanded ? 3 : 'auto', justifyContent: 'center', color: 'text.primary' }}>
+    <ListItem disablePadding sx={{ minHeight: 45 }}>
+        <ListItemButton onClick={onClick}>
+            <ListItemIcon sx={{ color: 'text.primary' }}>
                 {icon}
             </ListItemIcon>
 
-            <ListItemText primary={text} sx={{ opacity: expanded ? 1 : 0 }} primaryTypographyProps={{ variant: 'body2' }} />
+            <ListItemText primary={text} primaryTypographyProps={{ variant: 'body2' }} />
         </ListItemButton>
     </ListItem>;
 

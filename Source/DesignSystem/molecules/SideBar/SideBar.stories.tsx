@@ -8,7 +8,7 @@ import { StaticRouter } from 'react-router-dom/server';
 
 import { Box, Toolbar, Typography } from '@mui/material';
 
-import { componentStories, SideBar, NavigationBar } from '@dolittle/design-system';
+import { componentStories, SideBar } from '@dolittle/design-system';
 
 const Router = ({ children }: { children?: React.ReactNode }) => {
     if (typeof window === 'undefined') {
@@ -25,6 +25,7 @@ const Router = ({ children }: { children?: React.ReactNode }) => {
 const DummyContent = () =>
     <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
+
         <Typography paragraph>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
             tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non

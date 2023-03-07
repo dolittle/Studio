@@ -17,7 +17,7 @@ export const SideBar = () => {
         <Drawer variant='permanent' open={isSideBarExpanded}>
             <Toolbar />
 
-            <List>
+            <List sx={{ py: 0 }}>
                 <CustomListItem
                     icon={<Icon icon={isSideBarExpanded ? 'KeyboardDoubleArrowLeft' : 'KeyboardDoubleArrowRight'} />}
                     text={isSideBarExpanded ? 'Collapse' : 'Expand'}
