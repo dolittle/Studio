@@ -36,7 +36,7 @@ type CustomListItemProps = {
 };
 
 export const CustomListItem = ({ icon, text, onClick }: CustomListItemProps) =>
-    <ListItem disablePadding sx={{ minHeight: 45 }}>
+    <ListItem disablePadding sx={{ minHeight: 56 }}>
         <ListItemButton onClick={onClick}>
             <ListItemIcon sx={{ color: 'text.primary' }}>
                 {icon}

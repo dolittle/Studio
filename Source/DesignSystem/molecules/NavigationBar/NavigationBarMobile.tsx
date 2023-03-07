@@ -8,8 +8,8 @@ import { Box, Divider, Drawer, List, Toolbar } from '@mui/material';
 type NavigationBarMobileProps = {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
-    mobileMainLinks: JSX.Element;
-    mobileSecondaryLinks: JSX.Element;
+    mobileMainLinks?: JSX.Element;
+    mobileSecondaryLinks?: JSX.Element;
 };
 
 export const NavigationBarMobile = ({ isOpen, setIsOpen, mobileMainLinks, mobileSecondaryLinks }: NavigationBarMobileProps) =>
@@ -18,6 +18,7 @@ export const NavigationBarMobile = ({ isOpen, setIsOpen, mobileMainLinks, mobile
             variant='temporary'
             open={isOpen}
             onClose={setIsOpen}
+            onClick={() => setIsOpen(false)}
             ModalProps={{ keepMounted: true }}
             sx={{ display: { xs: 'block', md: 'none' } }}
         >

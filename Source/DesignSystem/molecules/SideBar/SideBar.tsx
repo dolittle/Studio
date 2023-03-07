@@ -7,10 +7,14 @@ import { Divider, List, Toolbar } from '@mui/material';
 
 import { Icon } from '@dolittle/design-system';
 
-import { RouterLinkListItem } from '../RouterLinkListItem';
 import { CustomListItem, Drawer } from './StyledCompenents';
 
-export const SideBar = () => {
+type SideBarProps = {
+    primaryLinks?: React.ReactNode;
+    secondaryLinks?: React.ReactNode;
+};
+
+export const SideBar = ({ primaryLinks, secondaryLinks }: SideBarProps) => {
     const [isSideBarExpanded, setIsSideBarExpanded] = useState(false);
 
     return (
@@ -25,16 +29,10 @@ export const SideBar = () => {
                 />
 
                 <Divider />
-
-                <RouterLinkListItem to='' text='ERP Connections' icon={<Icon icon='PolylineRounded' />} />
-                <RouterLinkListItem to='' text='Bridge Designer' icon={<Icon icon='Bridge' />} />
+                {primaryLinks}
 
                 <Divider />
-
-                <RouterLinkListItem to='' text='Microservices' icon={<Icon icon='HexagonRounded' />} />
-                <RouterLinkListItem to='' text='Backups' icon={<Icon icon='BackupRounded' />} />
-                <RouterLinkListItem to='' text='Container Registry' icon={<Icon icon='ContainerRegistry' />} />
-                <RouterLinkListItem to='' text='Logs' icon={<Icon icon='TextSnippetRounded' />} />
+                {secondaryLinks}
             </List>
         </Drawer>
     );

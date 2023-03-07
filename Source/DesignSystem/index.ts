@@ -23,4 +23,5 @@ export { InputMessages, OutputMessages, Terminal, TerminalConnect, TerminalStrea
 
 // Molecules
 export { Graph } from './molecules/Metrics/Graph';
-export { SideBar, NavigationBar, RouterLinkListItem } from './molecules/Layout';
+export { NavigationBar } from './molecules/NavigationBar';
+export { SideBar } from './molecules/SideBar';
