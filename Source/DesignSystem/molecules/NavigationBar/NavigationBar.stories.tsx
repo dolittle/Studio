@@ -7,9 +7,7 @@ import { Box, Toolbar } from '@mui/material';
 
 import { componentStories, NavigationBar } from '@dolittle/design-system';
 
-import { DummyMainContent, MainLinks, SecondaryMobileLinks, Router } from '../helpers';
-import { SpaceSelectionMenu } from '../links/SpaceSelectionMenu';
-import { MoreOptionsMenu } from '../links/MoreOptionsMenu';
+import { DummyMainContent, MainLinks, MoreOptions, SelectionMenu, SecondaryLinks, Router } from '../../helpers/dummyContent';
 
 const { metadata, createStory } = componentStories(NavigationBar, {
     decorator: (story) => (
@@ -28,9 +26,9 @@ const { metadata, createStory } = componentStories(NavigationBar, {
 
 metadata.args = {
     mainLinks: <MainLinks />,
-    moreOptionsDropdown: <><SpaceSelectionMenu /> <MoreOptionsMenu /></>,
-    mobileDropdownMenu: <SpaceSelectionMenu />,
-    mobileSecondaryLinks: <SecondaryMobileLinks />,
+    moreOptions: <MoreOptions />,
+    mobileDropdownMenu: <SelectionMenu />,
+    mobileSecondaryLinks: <SecondaryLinks />,
 };
 
 export default metadata;

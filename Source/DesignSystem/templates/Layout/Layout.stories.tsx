@@ -7,7 +7,7 @@ import { componentStories } from '@dolittle/design-system';
 
 import { Layout } from './Layout';
 
-import { DummyMainContent, Router } from './helpers';
+import { DummyMainContent, Router } from '../../helpers/dummyContent';
 
 const { metadata, createStory } = componentStories(Layout, {
     decorator: (story) => (

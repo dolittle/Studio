@@ -14,13 +14,13 @@ const responsiveStyles = {
 };
 
 type NavigationBarProps = {
-    mainLinks: JSX.Element;
-    moreOptionsDropdown: JSX.Element;
-    mobileDropdownMenu: JSX.Element;
-    mobileSecondaryLinks: JSX.Element;
+    mainLinks?: JSX.Element;
+    moreOptions?: JSX.Element;
+    mobileDropdownMenu?: JSX.Element;
+    mobileSecondaryLinks?: JSX.Element;
 };
 
-export const NavigationBar = ({ mainLinks, moreOptionsDropdown, mobileDropdownMenu, mobileSecondaryLinks }: NavigationBarProps) => {
+export const NavigationBar = ({ mainLinks, moreOptions, mobileDropdownMenu, mobileSecondaryLinks }: NavigationBarProps) => {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
     const toggleMobileNav = () => setIsMobileNavOpen(prevState => !prevState);
 
@@ -58,7 +58,7 @@ export const NavigationBar = ({ mainLinks, moreOptionsDropdown, mobileDropdownMe
                 </Box>
 
                 <List sx={{ ...responsiveStyles, gap: 2 }}>
-                    {moreOptionsDropdown}
+                    {moreOptions}
                 </List>
             </Toolbar>
         </AppBar>

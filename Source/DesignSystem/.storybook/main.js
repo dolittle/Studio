@@ -12,6 +12,11 @@ module.exports = {
             files: '**/*.stories.tsx',
             titlePrefix: 'Molecules',
         },
+        {
+            directory: '../templates',
+            files: '**/*.stories.tsx',
+            titlePrefix: 'Templates',
+        },
     ],
 
     addons: [
