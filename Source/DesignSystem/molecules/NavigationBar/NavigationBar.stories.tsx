@@ -3,14 +3,26 @@
 
 import React from 'react';
 
+import { Route, Routes } from 'react-router-dom';
+
+import { Box, Toolbar } from '@mui/material';
+
 import { componentStories, NavigationBar } from '@dolittle/design-system';
 
-import { MainLinks, SecondaryLinks, SelectionMenu, MobileSecondaryLinks, Router } from '../../helpers/dummyContent';
+import { MainLinks, SecondaryLinks, SelectionMenu, MobileSecondaryLinks } from '../../helpers/dummyContent';
+import { Content, Router } from '../../helpers/ReactRouter';
 
 const { metadata, createStory } = componentStories(NavigationBar, {
     decorator: (Story) => (
         <Router>
-            {Story()}
+            <Box>
+                <Toolbar />
+                <Routes>
+                    <Route path='*' element={<Content />} />
+                </Routes>
+
+                {Story()}
+            </Box>
         </Router>
     ),
 });

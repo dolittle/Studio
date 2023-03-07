@@ -3,38 +3,25 @@
 
 import React, { useState } from 'react';
 
-import { MemoryRouter } from 'react-router-dom';
-import { StaticRouter } from 'react-router-dom/server';
-
 import { Menu, Typography } from '@mui/material';
 import { ArrowDropDownRounded, ArrowDropUpRounded } from '@mui/icons-material';
 
 import { Button, IconButton, Icon } from '@dolittle/design-system';
 
-import { RouterLinkListItem } from './RouterLinkListItem';
-
-export const Router = ({ children }: { children?: React.ReactNode }) => {
-    if (typeof window === 'undefined') {
-        return <StaticRouter location='/'>{children}</StaticRouter>;
-    }
-
-    return (
-        <MemoryRouter>{children}</MemoryRouter>
-    );
-};
+import { RouterLinkListItem } from './ReactRouter';
 
 export const MainLinks = () =>
     <>
-        <RouterLinkListItem to='' text='main1' variantButton />
-        <RouterLinkListItem to='' text='main2' variantButton />
-        <RouterLinkListItem to='' text='main3' selected variantButton />
+        <RouterLinkListItem to='/main1' text='main1' variantButton />
+        <RouterLinkListItem to='/main2' text='main2' variantButton />
+        <RouterLinkListItem to='/main3' text='main3' selected variantButton />
     </>;
 
 export const MobileSecondaryLinks = () =>
     <>
-        <RouterLinkListItem to='' text='Secondary link 1' icon={<Icon icon='DescriptionRounded' />} />
-        <RouterLinkListItem to='' text='Secondary link 2' icon={<Icon icon='SupervisedUserCircleRounded' />} />
-        <RouterLinkListItem to='' text='Secondary link 3' icon={<Icon icon='LogoutRounded' />} />
+        <RouterLinkListItem to='Secondary-link-1' text='Secondary link 1' icon={<Icon icon='DescriptionRounded' />} />
+        <RouterLinkListItem to='Secondary-link-2' text='Secondary link 2' icon={<Icon icon='SupervisedUserCircleRounded' />} />
+        <RouterLinkListItem to='Secondary-link-3' text='Secondary link 3' icon={<Icon icon='LogoutRounded' />} />
     </>;
 
 export const MoreOptionsMenu = () => {
@@ -94,9 +81,9 @@ export const SelectionMenu = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <RouterLinkListItem to='' text='Selection menu' icon={<Icon icon='CheckRounded' />} />
-                <RouterLinkListItem to='' text='Select option' inset />
-                <RouterLinkListItem to='' text='Create new' icon={<Icon icon='AddBoxRounded' />} />
+                <RouterLinkListItem to='/selection-menu' text='Selection menu' icon={<Icon icon='CheckRounded' />} />
+                <RouterLinkListItem to='/select-option' text='Select option' inset />
+                <RouterLinkListItem to='/create-new' text='Create new' icon={<Icon icon='AddBoxRounded' />} />
             </Menu>
         </>
     );
@@ -110,16 +97,16 @@ export const SecondaryLinks = () =>
 
 export const SideBarPrimaryLinks = () =>
     <>
-        <RouterLinkListItem to='' text='Primary link 1' icon={<Icon icon='PolylineRounded' />} />
-        <RouterLinkListItem to='' text='promary link 2' icon={<Icon icon='Bridge' />} />
+        <RouterLinkListItem to='primary-link-1' text='Primary link 1' icon={<Icon icon='PolylineRounded' />} />
+        <RouterLinkListItem to='primary-link-2' text='Primary link 2' icon={<Icon icon='Bridge' />} />
     </>;
 
 export const SideBarSecondaryLinks = () =>
     <>
-        <RouterLinkListItem to='' text='Secondary link 1' icon={<Icon icon='HexagonRounded' />} />
-        <RouterLinkListItem to='' text='Secondary link 2' icon={<Icon icon='BackupRounded' />} />
-        <RouterLinkListItem to='' text='Secondary link 3' icon={<Icon icon='ContainerRegistry' />} />
-        <RouterLinkListItem to='' text='Secondary link 4' icon={<Icon icon='TextSnippetRounded' />} />
+        <RouterLinkListItem to='secondary-link-1' text='Secondary link 1' icon={<Icon icon='HexagonRounded' />} />
+        <RouterLinkListItem to='secondary-link-2' text='Secondary link 2' icon={<Icon icon='BackupRounded' />} />
+        <RouterLinkListItem to='secondary-link-3' text='Secondary link 3' icon={<Icon icon='ContainerRegistry' />} />
+        <RouterLinkListItem to='secondary-link-4' text='Secondary link 4' icon={<Icon icon='TextSnippetRounded' />} />
     </>;
 
 export const DummyMainContent = () =>
