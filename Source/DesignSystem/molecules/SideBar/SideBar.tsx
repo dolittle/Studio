@@ -9,11 +9,28 @@ import { Icon } from '@dolittle/design-system';
 
 import { CustomListItem, Drawer } from './StyledCompenents';
 
+/**
+ * The props for a {@link SideBar} component.
+ */
 type SideBarProps = {
+    /**
+     * The main links that will be displayed in the side bar.
+     * @default undefined
+     */
     primaryLinks?: React.ReactNode;
+
+    /**
+     * The secondary links that will be displayed in the side bar.
+     * @default undefined
+     */
     secondaryLinks?: React.ReactNode;
 };
 
+/**
+ * The side bar is the left bar that contains the main navigation links and the secondary links.
+ * @param {SideBarProps} props - The {@link SideBarProps} that contains the properties for the side bar.
+ * @returns A {@link SideBar} component.
+ */
 export const SideBar = ({ primaryLinks, secondaryLinks }: SideBarProps) => {
     const [isSideBarExpanded, setIsSideBarExpanded] = useState(false);
 
