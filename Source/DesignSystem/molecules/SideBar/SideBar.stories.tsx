@@ -3,26 +3,25 @@
 
 import React from 'react';
 
-import { Box, Toolbar } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { componentStories, SideBar } from '@dolittle/design-system';
 
-import { Router, SideBarPrimaryLinks, SideBarSecondaryLinks, DummyMainContent } from '../../helpers/dummyContent';
+import { Router, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/dummyContent';
 
 const { metadata, createStory } = componentStories(SideBar, {
-    decorator: (story) => (
+    decorator: (Story) => (
         <Router>
-            <Box sx={{ display: 'flex' }}>
-                {story()}
-
-                <Box component='main' sx={{ p: 3 }}>
-                    <Toolbar />
-                    <DummyMainContent />
-                </Box>
+            <Box sx={{ minHeight: 300 }}>
+                {Story()}
             </Box>
         </Router>
     ),
 });
+
+metadata.parameters = {
+    controls: { include: [] },
+};
 
 metadata.args = {
     primaryLinks: <SideBarPrimaryLinks />,
