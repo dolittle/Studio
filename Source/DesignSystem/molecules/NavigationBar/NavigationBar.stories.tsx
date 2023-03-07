@@ -3,30 +3,25 @@
 
 import React from 'react';
 
-import { Box, Toolbar } from '@mui/material';
-
 import { componentStories, NavigationBar } from '@dolittle/design-system';
 
-import { DummyMainContent, MainLinks, MoreOptions, SelectionMenu, SecondaryLinks, Router } from '../../helpers/dummyContent';
+import { MainLinks, MoreOptions, SelectionMenu, SecondaryLinks, Router } from '../../helpers/dummyContent';
 
 const { metadata, createStory } = componentStories(NavigationBar, {
     decorator: (story) => (
         <Router>
-            <Box sx={{ display: 'flex' }}>
-                {story()}
-
-                <Box component='main' sx={{ p: 3 }}>
-                    <Toolbar />
-                    <DummyMainContent />
-                </Box>
-            </Box>
+            {story()}
         </Router>
     ),
 });
 
+metadata.parameters = {
+    controls: { include: [] }
+};
+
 metadata.args = {
     mainLinks: <MainLinks />,
-    moreOptions: <MoreOptions />,
+    secondaryLinks: <MoreOptions />,
     mobileDropdownMenu: <SelectionMenu />,
     mobileSecondaryLinks: <SecondaryLinks />,
 };

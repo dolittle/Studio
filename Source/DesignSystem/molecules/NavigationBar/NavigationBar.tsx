@@ -13,14 +13,41 @@ const responsiveStyles = {
     display: { xs: 'none', md: 'flex' }
 };
 
+/**
+ * The props for a {@link NavigationBar} component.
+ */
 type NavigationBarProps = {
+    /**
+     * The main links that will be displayed in the navigation bar.
+     * @default undefined
+     */
     mainLinks?: JSX.Element;
-    moreOptions?: JSX.Element;
+
+    /**
+     * The secondary links that will be displayed in the navigation bar.
+     * @default undefined
+     */
+    secondaryLinks?: JSX.Element;
+
+    /**
+     * A mobile drop-down menu that appears in the bottom navigation bar next to the menu-toggle icon.
+     * @default undefined
+     */
     mobileDropdownMenu?: JSX.Element;
+
+    /**
+     * Secondary links that appear at the bottom of the mobile navigation bar.
+     * @default undefined
+     */
     mobileSecondaryLinks?: JSX.Element;
 };
 
-export const NavigationBar = ({ mainLinks, moreOptions, mobileDropdownMenu, mobileSecondaryLinks }: NavigationBarProps) => {
+/**
+ * The navigation bar is the top bar that contains the main navigation links and the secondary links.
+ * @param {NavigationBarProps} props - The {@link NavigationBarProps} that contains the properties for the main top navigation bar.
+ * @returns A {@link NavigationBar} component.
+ */
+export const NavigationBar = ({ mainLinks, secondaryLinks, mobileDropdownMenu, mobileSecondaryLinks }: NavigationBarProps) => {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
     const toggleMobileNav = () => setIsMobileNavOpen(prevState => !prevState);
 
@@ -58,7 +85,7 @@ export const NavigationBar = ({ mainLinks, moreOptions, mobileDropdownMenu, mobi
                 </Box>
 
                 <List sx={{ ...responsiveStyles, gap: 2 }}>
-                    {moreOptions}
+                    {secondaryLinks}
                 </List>
             </Toolbar>
         </AppBar>
