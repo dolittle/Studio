@@ -5,12 +5,12 @@ import React from 'react';
 
 import { componentStories, NavigationBar } from '@dolittle/design-system';
 
-import { MainLinks, MoreOptions, SelectionMenu, SecondaryLinks, Router } from '../../helpers/dummyContent';
+import { MainLinks, SecondaryLinks, SelectionMenu, MobileSecondaryLinks, Router } from '../../helpers/dummyContent';
 
 const { metadata, createStory } = componentStories(NavigationBar, {
-    decorator: (story) => (
+    decorator: (Story) => (
         <Router>
-            {story()}
+            {Story()}
         </Router>
     ),
 });
@@ -21,9 +21,9 @@ metadata.parameters = {
 
 metadata.args = {
     mainLinks: <MainLinks />,
-    secondaryLinks: <MoreOptions />,
+    secondaryLinks: <SecondaryLinks />,
     mobileDropdownMenu: <SelectionMenu />,
-    mobileSecondaryLinks: <SecondaryLinks />,
+    mobileSecondaryLinks: <MobileSecondaryLinks />,
 };
 
 export default metadata;

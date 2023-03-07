@@ -30,7 +30,7 @@ export const MainLinks = () =>
         <RouterLinkListItem to='' text='main3' selected variantButton />
     </>;
 
-export const SecondaryLinks = () =>
+export const MobileSecondaryLinks = () =>
     <>
         <RouterLinkListItem to='' text='Secondary link 1' icon={<Icon icon='DescriptionRounded' />} />
         <RouterLinkListItem to='' text='Secondary link 2' icon={<Icon icon='SupervisedUserCircleRounded' />} />
@@ -62,7 +62,7 @@ export const MoreOptionsMenu = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <SecondaryLinks />
+                <MobileSecondaryLinks />
             </Menu>
         </>
     );
@@ -102,7 +102,7 @@ export const SelectionMenu = () => {
     );
 };
 
-export const MoreOptions = () =>
+export const SecondaryLinks = () =>
     <>
         <SelectionMenu />
         <MoreOptionsMenu />
