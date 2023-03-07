@@ -7,10 +7,7 @@ import { Box, Toolbar } from '@mui/material';
 
 import { NavigationBar, SideBar } from '@dolittle/design-system';
 
-import { MainLinks } from './links/MainLinks';
-import { SpaceSelectionMenu } from './links/SpaceSelectionMenu';
-import { MoreOptionsMenu } from './links/MoreOptionsMenu';
-import { SecondaryMobileLinks } from './links/SecondaryMobileLinks';
+import { MainLinks, MoreOptionsDropdown, SpaceSelectionMenu, SecondaryLinks, SideBarPrimaryLinks, SideBarSecondaryLinks } from './linksHelper';
 
 type WorkSpaceLayoutProps = {
     children: React.ReactNode;
@@ -20,20 +17,19 @@ export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
     <Box sx={{ display: 'flex' }}>
         <NavigationBar
             mainLinks={<MainLinks />}
-            moreOptionsDropdown={
-                <>
-                    <SpaceSelectionMenu />
-                    <MoreOptionsMenu />
-                </>
-            }
+            moreOptions={<MoreOptionsDropdown />}
             mobileDropdownMenu={<SpaceSelectionMenu />}
-            mobileSecondaryLinks={<SecondaryMobileLinks />}
+            mobileSecondaryLinks={<SecondaryLinks />}
         />
 
-        <SideBar />
+        <SideBar
+            primaryLinks={<SideBarPrimaryLinks />}
+            secondaryLinks={<SideBarSecondaryLinks />}
+        />
 
         <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-            <Toolbar />
+            <Toolbar sx={{ minHeight: 100 }} />
+
             {children}
         </Box>
     </Box>;
