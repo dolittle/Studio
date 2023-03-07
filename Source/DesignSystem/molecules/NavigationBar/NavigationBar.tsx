@@ -9,8 +9,12 @@ import { IconButton, Icon } from '@dolittle/design-system';
 
 import { NavigationBarMobile } from './NavigationBarMobile';
 
-const responsiveStyles = {
-    display: { xs: 'none', md: 'flex' }
+const linkStyles = {
+    'display': { xs: 'none', md: 'flex' },
+    '.MuiListItemButton-root.Mui-selected': {
+        color: 'primary.main',
+        backgroundColor: 'transparent',
+    },
 };
 
 /**
@@ -74,7 +78,7 @@ export const NavigationBar = ({ mainLinks, secondaryLinks, mobileDropdownMenu, m
                     {mobileDropdownMenu}
                 </Box>
 
-                <Box sx={{ ...responsiveStyles, flexGrow: 1 }}>
+                <Box sx={{ ...linkStyles, flexGrow: 1 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', mr: 4 }}>
                         <Icon icon='Dolittle' />
                     </Box>
@@ -84,7 +88,7 @@ export const NavigationBar = ({ mainLinks, secondaryLinks, mobileDropdownMenu, m
                     </List>
                 </Box>
 
-                <List sx={{ ...responsiveStyles, gap: 2 }}>
+                <List sx={{ ...linkStyles, gap: 2 }}>
                     {secondaryLinks}
                 </List>
             </Toolbar>

@@ -34,11 +34,28 @@ type SideBarProps = {
 export const SideBar = ({ primaryLinks, secondaryLinks }: SideBarProps) => {
     const [isSideBarExpanded, setIsSideBarExpanded] = useState(false);
 
+    const styles = {
+        'py': 0,
+        '.MuiListItemButton-root': {
+            minHeight: 48,
+            justifyContent: isSideBarExpanded ? 'initial' : 'center',
+            px: 2.5,
+        },
+        '.MuiListItemIcon-root': {
+            minWidth: 0,
+            mr: isSideBarExpanded ? 3 : 'auto',
+            justifyContent: 'center',
+        },
+        '.MuiListItemText-root': {
+            opacity: isSideBarExpanded ? 1 : 0,
+        },
+    };
+
     return (
         <Drawer variant='permanent' open={isSideBarExpanded}>
             <Toolbar />
 
-            <List sx={{ py: 0 }}>
+            <List sx={styles}>
                 <CustomListItem
                     icon={<Icon icon={isSideBarExpanded ? 'KeyboardDoubleArrowLeft' : 'KeyboardDoubleArrowRight'} />}
                     text={isSideBarExpanded ? 'Collapse' : 'Expand'}
