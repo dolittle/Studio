@@ -14,16 +14,15 @@ export const Connections = () => {
 
     return (
         <Page title='Connections'>
-            {!isInitialLoading && (
-                connections.length
-                    ? (
-                        <>
-                            <ConnectionsTable connections={connections} isLoading={isFetching} />
-                            <CreateConnectionButton onClick={() => { }} />
-                        </>
-                    ) : (
-                        <NoConnections />
-                    ))
+            {isFetching || connections.length
+                ? (
+                    <>
+                        <ConnectionsTable connections={connections} isLoading={isFetching} />
+                        <CreateConnectionButton onClick={() => { }} buttonProps={{ disabled: isFetching }} />
+                    </>
+                ) : (
+                    <NoConnections />
+                )
             }
         </Page>
     );
