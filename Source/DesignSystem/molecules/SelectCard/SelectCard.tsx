@@ -62,6 +62,9 @@ export const SelectCard = ({ icon, title, description, listTitle, listItems, foo
             elevation={0}
             sx={{
                 'maxWidth': 316,
+                //'height': '100%',
+                // 'height': 'fit-content',
+                // 'minHeight': 300,
                 'border': '1px solid',
                 'borderColor': isCardExpanded ? 'primary.main' : 'transparent',
                 'backgroundColor': isCardExpanded ? theme => `${alpha(theme.palette.primary.main, 0.16)}` : 'background.paper',
@@ -71,30 +74,36 @@ export const SelectCard = ({ icon, title, description, listTitle, listItems, foo
                 },
             }}
         >
+            {/* height: 'fit-content', minHeight: 300  */}
+            {/* , height: '100%', minHeight: 300  */}
             <CardActionArea onClick={toggleCardIsExpanded} sx={{ p: 3 }}>
-                <CardHeader avatar={<Icon color='primary' icon={icon} />} sx={{ p: 0, pb: 3.25 }} />
+                <div>
+                    <CardHeader avatar={<Icon color='primary' icon={icon} />} sx={{ p: 0, pb: 3.25 }} />
 
-                <CardContent sx={{ p: 0, pb: 3 }}>
-                    <Typography variant='h4' sx={{ pb: 3.5 }}>{title}</Typography>
-                    <Typography>{description}</Typography>
-                </CardContent>
-
-                <Collapse in={isCardExpanded} timeout='auto' unmountOnExit>
                     <CardContent sx={{ p: 0, pb: 3 }}>
-                        <Typography variant='subtitle2' gutterBottom>{listTitle}</Typography>
-
-                        <List sx={{ listStyle: 'disc', px: 3, pb: 3 }}>
-                            {listItems.map((item, index) => (
-                                <li key={index}>
-                                    <Typography>{item}</Typography>
-                                </li>
-                            ))}
-                        </List>
-
-                        <Typography variant='subtitle2' gutterBottom>{footerTitle}</Typography>
-                        <Typography>{footerText}</Typography>
+                        <Typography variant='h4' sx={{ pb: 3.5 }}>{title}</Typography>
+                        <Typography>{description}</Typography>
                     </CardContent>
-                </Collapse>
+                </div>
+
+                <div>
+                    <Collapse in={isCardExpanded} timeout='auto' unmountOnExit>
+                        <CardContent sx={{ p: 0, pb: 3 }}>
+                            <Typography variant='subtitle2' gutterBottom>{listTitle}</Typography>
+
+                            <List sx={{ listStyle: 'disc', px: 3, pb: 3 }}>
+                                {listItems.map((item, index) => (
+                                    <li key={index}>
+                                        <Typography>{item}</Typography>
+                                    </li>
+                                ))}
+                            </List>
+
+                            <Typography variant='subtitle2' gutterBottom>{footerTitle}</Typography>
+                            <Typography>{footerText}</Typography>
+                        </CardContent>
+                    </Collapse>
+                </div>
 
                 <CardActions sx={{ p: 0 }}>
                     <Button
