@@ -57,8 +57,9 @@ export const Card = () => {
 
                 <CardActions sx={{ p: 0 }}>
                     <Button
-                        label='select'
+                        label={isCardexpanded ? 'selected' : 'select'}
                         variant='outlined'
+                        startWithIcon={isCardexpanded ? <Icon color='primary' icon='CheckRounded' /> : undefined}
                         isFullWidth
                         onClick={() => setCardIsExpanded(!isCardexpanded)}
                     />
