@@ -9,20 +9,22 @@ import { useConnectionsGet } from '../../apis/integrations/connections.hooks';
 import { CreateConnectionButton } from './createConnectionButton';
 
 export const Connections = () => {
-    const { data, isInitialLoading, isFetching, isError } = useConnectionsGet();
+    const { data, isLoading, isFetching, isError, error } = useConnectionsGet();
     const connections = data || [];
 
     return (
         <Page title='Connections'>
-            {isFetching || connections.length
-                ? (
-                    <>
-                        <ConnectionsTable connections={connections} isLoading={isFetching} />
-                        <CreateConnectionButton onClick={() => { }} buttonProps={{ disabled: isFetching }} />
-                    </>
-                ) : (
-                    <NoConnections />
-                )
+            {isError
+                ? `We can't show your connections at this time. Please try again later.`
+                : isLoading || connections.length
+                    ? (
+                        <>
+                            <ConnectionsTable connections={connections} isLoading={isLoading} />
+                            <CreateConnectionButton onClick={() => { }} buttonProps={{ disabled: isLoading }} />
+                        </>
+                    ) : (
+                        <NoConnections />
+                    )
             }
         </Page>
     );
