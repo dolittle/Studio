@@ -7,19 +7,11 @@ import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-d
 
 import { ListItem, ListItemButton, ListItemIcon, ListItemText, SxProps } from '@mui/material';
 
-const selectedStyles = {
-    '.MuiListItemButton-root.Mui-selected': {
-        color: 'primary.main',
-        backgroundColor: 'transparent',
-    },
-};
-
 type RouterLinkListItemProps = {
     to: string;
     icon?: React.ReactElement;
     text?: string;
     inset?: boolean;
-    selected?: boolean;
     sx?: SxProps;
     variantButton?: boolean;
 };
@@ -29,10 +21,10 @@ const Link = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function Link(
     return <RouterLink ref={ref} {...itemProps} role={undefined} />;
 });
 
-export const RouterLinkListItem = ({ to, icon, text, inset, selected, sx, variantButton }: RouterLinkListItemProps) =>
-    <ListItem disablePadding sx={{ ...selectedStyles, ...sx }}>
-        <ListItemButton component={Link} to={to} selected={selected} dense>
-            {icon ? <ListItemIcon sx={{ color: 'text.primary' }}>{icon}</ListItemIcon> : null}
+export const RouterLinkListItem = ({ to, icon, text, inset, sx, variantButton }: RouterLinkListItemProps) =>
+    <ListItem disablePadding>
+        <ListItemButton component={Link} to={to} selected={window.location.href.includes(to)} dense>
+            {icon ? <ListItemIcon sx={{ color: 'inherit' }}>{icon}</ListItemIcon> : null}
 
             <ListItemText inset={inset} primary={text} primaryTypographyProps={{ variant: variantButton ? 'button' : 'body2' }} />
         </ListItemButton>

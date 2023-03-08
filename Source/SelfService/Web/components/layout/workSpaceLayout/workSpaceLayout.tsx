@@ -28,7 +28,7 @@ export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
         />
 
         <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-            <Toolbar sx={{ minHeight: 100 }} />
+            <Toolbar />
 
             {children}
         </Box>

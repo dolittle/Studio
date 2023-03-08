@@ -12,16 +12,16 @@ import { RouterLinkListItem } from './RouterLinkListItem';
 
 export const MainLinks = () =>
     <>
-        <RouterLinkListItem to='' text='home' variantButton />
-        <RouterLinkListItem to='' text='solutions' variantButton />
-        <RouterLinkListItem to='' text='integrations' selected variantButton />
+        <RouterLinkListItem to='#' text='home' variantButton />
+        <RouterLinkListItem to='#' text='solutions' variantButton />
+        <RouterLinkListItem to='integrations' text='integrations' variantButton />
     </>;
 
 export const MoreOptions = () =>
     <>
-        <RouterLinkListItem to='' text='Documentation' icon={<Icon icon='DescriptionRounded' />} />
-        <RouterLinkListItem to='' text='Change Organization' icon={<Icon icon='SupervisedUserCircleRounded' />} />
-        <RouterLinkListItem to='' text='Log out' icon={<Icon icon='LogoutRounded' />} />
+        <RouterLinkListItem to='#' text='Documentation' icon={<Icon icon='DescriptionRounded' />} />
+        <RouterLinkListItem to='#' text='Change Organization' icon={<Icon icon='SupervisedUserCircleRounded' />} />
+        <RouterLinkListItem to='#' text='Log out' icon={<Icon icon='LogoutRounded' />} />
     </>;
 
 export const MoreOptionsMenu = () => {
@@ -81,9 +81,9 @@ export const SpaceSelectionMenu = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <RouterLinkListItem to='' text='Default space' icon={<Icon icon='CheckRounded' />} />
-                <RouterLinkListItem to='' text='Space 2' inset />
-                <RouterLinkListItem to='' text='Create New Space' icon={<Icon icon='AddBoxRounded' />} />
+                <RouterLinkListItem to='#' text='Default space' icon={<Icon icon='CheckRounded' />} />
+                <RouterLinkListItem to='#' text='Space 2' inset />
+                <RouterLinkListItem to='#' text='Create New Space' icon={<Icon icon='AddBoxRounded' />} />
             </Menu>
         </>
     );
@@ -97,14 +97,14 @@ export const SecondaryLinks = () =>
 
 export const SideBarPrimaryLinks = () =>
     <>
-        <RouterLinkListItem to='' text='ERP Connections' icon={<Icon icon='PolylineRounded' />} />
-        <RouterLinkListItem to='' text='Bridge Designer' icon={<Icon icon='Bridge' />} />
+        <RouterLinkListItem to='#' text='ERP Connections' icon={<Icon icon='PolylineRounded' />} />
+        <RouterLinkListItem to='/integrations' text='Bridge Designer' icon={<Icon icon='Bridge' />} />
     </>;
 
 export const SideBarSecondaryLinks = () =>
     <>
-        <RouterLinkListItem to='' text='Microservices' icon={<Icon icon='HexagonRounded' />} />
-        <RouterLinkListItem to='' text='Backups' icon={<Icon icon='BackupRounded' />} />
-        <RouterLinkListItem to='' text='Container Registry' icon={<Icon icon='ContainerRegistry' />} />
-        <RouterLinkListItem to='' text='Logs' icon={<Icon icon='TextSnippetRounded' />} />
+        <RouterLinkListItem to='#' text='Microservices' icon={<Icon icon='HexagonRounded' />} />
+        <RouterLinkListItem to='#' text='Backups' icon={<Icon icon='BackupRounded' />} />
+        <RouterLinkListItem to='#' text='Container Registry' icon={<Icon icon='ContainerRegistry' />} />
+        <RouterLinkListItem to='#' text='Logs' icon={<Icon icon='TextSnippetRounded' />} />
     </>;
