@@ -53,14 +53,13 @@ type NavigationBarProps = {
  */
 export const NavigationBar = ({ mainLinks, secondaryLinks, mobileDropdownMenu, mobileSecondaryLinks }: NavigationBarProps) => {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-    const toggleMobileNav = () => setIsMobileNavOpen(prevState => !prevState);
 
     return (
         <AppBar component='nav' sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
             {isMobileNavOpen &&
                 <NavigationBarMobile
                     isOpen={isMobileNavOpen}
-                    setIsOpen={toggleMobileNav}
+                    onClose={() => setIsMobileNavOpen(false)}
                     mobileMainLinks={mainLinks}
                     mobileSecondaryLinks={mobileSecondaryLinks}
                 />
@@ -72,7 +71,7 @@ export const NavigationBar = ({ mainLinks, secondaryLinks, mobileDropdownMenu, m
                         tooltipText='Toggle navigation menu'
                         icon='MenuRounded'
                         edge='start'
-                        onClick={toggleMobileNav}
+                        onClick={() => setIsMobileNavOpen(prevState => !prevState)}
                     />
 
                     {mobileDropdownMenu}
