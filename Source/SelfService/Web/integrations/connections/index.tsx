@@ -5,7 +5,7 @@ import React, { } from 'react';
 import { NoConnections } from './noConnections';
 import { Page } from '../../components/layout/page';
 import { ConnectionsTable } from './connectionsTable';
-import { useConnectionsGet } from '../../apis/integrations/useConnectionsGet';
+import { useConnectionsGet } from '../../apis/integrations/connections.hooks';
 import { CreateConnectionButton } from './createConnectionButton';
 
 export const Connections = () => {
