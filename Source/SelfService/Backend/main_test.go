@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -139,6 +141,109 @@ func TestProxyOverwritingPlatforAPI(t *testing.T) {
 	res, err = http.Get(ts.URL + "/hello")
 	if err != nil {
 		t.Errorf("Could not get %s", ts.URL)
+	}
+	if res.StatusCode != 200 {
+		t.Errorf("Expected Status OK, got %v", res.Status)
+	}
+}
+
+func TestParseSetHeaders(t *testing.T) {
+	setHeaders, err := parseSetHeaders(`{"/foo/": {"X-Test": "bar"}}`)
+	if err != nil {
+		t.Errorf("Could not parse SetHeader, %v", err)
+	}
+	tmpl := (*setHeaders)["/foo/"]["X-Test"]
+	var res bytes.Buffer
+	if err := tmpl.Execute(&res, nil); err != nil {
+		t.Errorf("Something went wrong with the header template! %v", err)
+	}
+	if res.String() != "bar" {
+		t.Errorf(`Expected value to be "bar", got "%s"`, res.String())
+	}
+}
+
+func TestSetHeadersEnvVar(t *testing.T) {
+	conf := initConfig()
+	if conf.SetHeaders != nil {
+		t.Errorf("Expected empty setHeaders!")
+	}
+	os.Setenv("SET_HEADERS", `{"/hello": {"X-Test": "world"}}`)
+	conf = initConfig()
+
+	if (*conf.SetHeaders)["/hello"]["X-Test"] == nil {
+		t.Errorf("Expected a template!")
+	}
+}
+func TestSettingHeadersToFixedValue(t *testing.T) {
+	path := "/foo/"
+	hdr := "X-Test"
+	val := "foo"
+	fooAPI := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != path {
+			t.Error("Path should be unaltered")
+		}
+		if r.Header.Get(hdr) != val {
+			t.Errorf("Expexed header to be set!")
+		}
+	}))
+	defer fooAPI.Close()
+
+	fooURL, _ := url.Parse(fooAPI.URL)
+	os.Setenv("PROXY", fmt.Sprintf(`{"%s": "%s"}`, path, fooURL.Host))
+	os.Setenv("SET_HEADERS", fmt.Sprintf(`{"%s": {"%s": "%s"}}`, path, hdr, val))
+	conf := initConfig()
+	service := NewBackend(logrus.StandardLogger(), conf)
+
+	ts := httptest.NewServer(service.mux)
+	defer ts.Close()
+
+	res, err := http.Get(ts.URL + path)
+	if err != nil {
+		t.Errorf("Could not get %s", ts.URL+path)
+	}
+	if res.StatusCode != 200 {
+		t.Errorf("Expected Status OK, got %v", res.Status)
+	}
+}
+
+func TestSettingHeadersToValueFoundInHeader(t *testing.T) {
+	path := "/foo/"
+	hdr := "X-Test"
+	val := "foo"
+	hdrVal := fmt.Sprintf(`{{ .Header.Get \"%s\" }}`, hdr)
+	fooAPI := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != path {
+			t.Error("Path should be unaltered")
+		}
+		if r.Header.Get(hdr) != val {
+			t.Errorf("Expexed header to be foo, got %s!", r.Header.Get(hdr))
+		}
+	}))
+	defer fooAPI.Close()
+
+	fooURL, _ := url.Parse(fooAPI.URL)
+	os.Setenv("PROXY", fmt.Sprintf(`{"%s": "%s"}`, path, fooURL.Host))
+	os.Setenv("SET_HEADERS", fmt.Sprintf(`{"%s": {"%s": "%s"}}`, path, hdr, hdrVal))
+	conf := initConfig()
+
+	service := NewBackend(logrus.StandardLogger(), conf)
+
+	ts := httptest.NewServer(service.mux)
+	defer ts.Close()
+
+	reqURL, _ := url.Parse(ts.URL + path)
+	reqHDR := http.Header{}
+	reqHDR.Add(hdr, val)
+
+	req := http.Request{
+		Method: "GET",
+		URL:    reqURL,
+		Header: reqHDR,
+	}
+	client := &http.Client{}
+	res, err := client.Do(&req)
+	if err != nil {
+		t.Errorf("Could not get %s", ts.URL+path)
 	}
 	if res.StatusCode != 200 {
 		t.Errorf("Expected Status OK, got %v", res.Status)
