@@ -1,3 +1,19 @@
+# [3.2.2] - 2023-3-8 [PR: #323](https://github.com/dolittle/Studio/pull/323)
+## Summary
+
+This adds a new layout to workspaces. The layout includes a responsive top main navigation bar with SelectMenus and a collapsible sidebar.
+
+<img width="993" alt="Screenshot 2023-03-08 at 02 51 15" src="https://user-images.githubusercontent.com/19160439/223591179-4fa19b2b-4b1c-4ebf-944b-93901bca8d9b.png">
+
+### Added
+
+- Icon component to Design System/atoms
+- NavigationBar to Design System/molecules
+- SideBar to Design System/molecules
+- JsDocs to Design System
+- Display 'current route' in stories
+
+
 # [3.2.1] - 2023-3-1 [PR: #320](https://github.com/dolittle/Studio/pull/320)
 ## Summary
 
