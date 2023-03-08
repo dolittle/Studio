@@ -3,18 +3,26 @@
 
 import React from 'react';
 
+import { Route, Routes } from 'react-router-dom';
+
 import { Box } from '@mui/material';
 
 import { componentStories, SideBar } from '@dolittle/design-system';
 
 import { SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/dummyContent';
-import { Router } from '../../helpers/ReactRouter';
+import { Content, Router } from '../../helpers/ReactRouter';
 
 const { metadata, createStory } = componentStories(SideBar, {
     decorator: (Story) => (
         <Router>
-            <Box sx={{ minHeight: 300 }}>
+            <Box sx={{ display: 'flex', minHeight: 400 }}>
                 {Story()}
+
+                <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+                    <Routes>
+                        <Route path='*' element={<Content />} />
+                    </Routes>
+                </Box>
             </Box>
         </Router>
     ),
@@ -22,6 +30,15 @@ const { metadata, createStory } = componentStories(SideBar, {
 
 metadata.parameters = {
     controls: { include: [] },
+    docs: {
+        source: {
+            code: `
+<SideBar
+    primaryLinks={<SideBarPrimaryLinks />}
+    secondaryLinks={<SideBarSecondaryLinks />}
+/>`,
+        },
+    },
 };
 
 metadata.args = {
