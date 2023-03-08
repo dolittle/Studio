@@ -99,16 +99,16 @@ export const SecondaryLinks = () =>
 
 export const SideBarPrimaryLinks = () =>
     <>
-        <RouterLinkListItem to='primary-link-1' text='Primary link 1' icon={<Icon icon='PolylineRounded' />} />
-        <RouterLinkListItem to='primary-link-2' text='Primary link 2' icon={<Icon icon='Bridge' />} />
+        <RouterLinkListItem to='sidebar-primary-link-1' text='Primary link 1' icon={<Icon icon='PolylineRounded' />} />
+        <RouterLinkListItem to='sidebar-primary-link-2' text='Primary link 2' icon={<Icon icon='Bridge' />} />
     </>;
 
 export const SideBarSecondaryLinks = () =>
     <>
-        <RouterLinkListItem to='secondary-link-1' text='Secondary link 1' icon={<Icon icon='HexagonRounded' />} />
-        <RouterLinkListItem to='secondary-link-2' text='Secondary link 2' icon={<Icon icon='BackupRounded' />} />
-        <RouterLinkListItem to='secondary-link-3' text='Secondary link 3' icon={<Icon icon='ContainerRegistry' />} />
-        <RouterLinkListItem to='secondary-link-4' text='Secondary link 4' icon={<Icon icon='TextSnippetRounded' />} />
+        <RouterLinkListItem to='sidebar-secondary-link-1' text='Secondary link 1' icon={<Icon icon='HexagonRounded' />} />
+        <RouterLinkListItem to='sidebar-secondary-link-2' text='Secondary link 2' icon={<Icon icon='BackupRounded' />} />
+        <RouterLinkListItem to='sidebar-secondary-link-3' text='Secondary link 3' icon={<Icon icon='ContainerRegistry' />} />
+        <RouterLinkListItem to='sidebar-secondary-link-4' text='Secondary link 4' icon={<Icon icon='TextSnippetRounded' />} />
     </>;
 
 export const DummyMainContent = () =>
