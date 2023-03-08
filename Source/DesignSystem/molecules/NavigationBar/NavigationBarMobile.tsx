@@ -7,18 +7,18 @@ import { Box, Divider, Drawer, List, Toolbar } from '@mui/material';
 
 type NavigationBarMobileProps = {
     isOpen: boolean;
-    setIsOpen: (isOpen: boolean) => void;
+    onClose: () => void;
     mobileMainLinks?: JSX.Element;
     mobileSecondaryLinks?: JSX.Element;
 };
 
-export const NavigationBarMobile = ({ isOpen, setIsOpen, mobileMainLinks, mobileSecondaryLinks }: NavigationBarMobileProps) =>
+export const NavigationBarMobile = ({ isOpen, onClose, mobileMainLinks, mobileSecondaryLinks }: NavigationBarMobileProps) =>
     <Box component='nav'>
         <Drawer
             variant='temporary'
             open={isOpen}
-            onClose={setIsOpen}
-            onClick={() => setIsOpen(false)}
+            onClose={onClose}
+            onClick={onClose}
             ModalProps={{ keepMounted: true }}
             sx={{ display: { xs: 'block', md: 'none' } }}
         >
