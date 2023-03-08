@@ -3,5 +3,11 @@
 import { QueryClient } from '@tanstack/react-query';
 
 export const buildQueryClient = () =>{
-    return new QueryClient();
+    return new QueryClient({
+        defaultOptions: {
+            queries:{
+                retry: false, //retrying by default is a convenient feature, but can become noisy. Experimenting with it turned off. This can be overridden for a specific query
+            }
+        }
+    });
 };
