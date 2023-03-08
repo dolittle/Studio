@@ -22,6 +22,7 @@
         "@shared/styling": "1.0.0",
         "@shared/web": "1.0.0",
         "@tanstack/react-query": "4.26.1",
+        "@tanstack/react-query-devtools": "^4.26.1",
         "date-fns": "2.29.1",
         "generate-password-browser": "1.1.0",
         "notistack": "3.0.0-alpha.11",
