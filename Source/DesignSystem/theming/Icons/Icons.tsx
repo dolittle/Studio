@@ -16,6 +16,7 @@ import {
     DeleteRounded,
     DescriptionRounded,
     DownloadRounded,
+    DnsRounded,
     EditRounded,
     ErrorRounded,
     Explore,
@@ -63,6 +64,7 @@ export interface SvgIconsDefinition {
     'DescriptionRounded' |
     'Dolittle' |
     'DownloadRounded' |
+    'DnsRounded' |
     'EditRounded' |
     'ErrorRounded' |
     'Explore' |
@@ -106,6 +108,7 @@ export const SvgIcons = {
     DescriptionRounded: <DescriptionRounded />,
     Dolittle: <Dolittle />,
     DownloadRounded: <DownloadRounded />,
+    DnsRounded: <DnsRounded />,
     EditRounded: <EditRounded />,
     ErrorRounded: <ErrorRounded />,
     Explore: <Explore />,

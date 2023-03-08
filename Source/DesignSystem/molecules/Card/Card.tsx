@@ -3,32 +3,43 @@
 
 import React from 'react';
 
-import { Box, Card as MuiCard } from '@mui/material';
+import { Card as MuiCard, CardHeader, CardActionArea, CardActions, CardContent, List, Typography } from '@mui/material';
 
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { Button, Icon } from '@dolittle/design-system';
 
 export const Card = () => {
     return (
-        <MuiCard sx={{ minWidth: 275 }}>
-            <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Word of the Day
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    adjective
-                </Typography>
-                <Typography variant="body2">
-                    well meaning and kindly.
-                    <br />
-                    {'"a benevolent smile"'}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="small">Learn More</Button>
-            </CardActions>
+        <MuiCard sx={{ maxWidth: 316 }}>
+            <CardActionArea sx={{ px: 3, py: 3.25 }}>
+                <CardHeader avatar={<Icon color='primary' icon='DnsRounded' />} sx={{ p: 0, pb: 3.25 }} />
+
+                <CardContent sx={{ p: 0, pb: 3 }}>
+                    <Typography variant='h4' sx={{ pb: 3.5 }}>On Premise</Typography>
+
+                    <Typography variant='body1' sx={{ pb: 3 }}>
+                        Your team will be responsible for hosting, establishing backups and making sure the connector is running.
+                    </Typography>
+
+                    <Typography variant='subtitle2' gutterBottom>{`What you'll need`}</Typography>
+
+                    {/* TODO: Map them */}
+                    <List sx={{ listStyle: 'disc', px: 3, pb: 3 }}>
+                        <li><Typography>Docker</Typography></li>
+                        <li><Typography>Firewall access</Typography></li>
+                        <li><Typography>Ion M3 (and optionally the meta data publisher)</Typography></li>
+                        <li><Typography>Admin level access to M3</Typography></li>
+                        <li><Typography>Approximately 16gb ram</Typography></li>
+                    </List>
+
+                    <Typography variant='subtitle2' gutterBottom>Approximate setup time</Typography>
+
+                    <Typography>10 min</Typography>
+                </CardContent>
+
+                <CardActions sx={{ p: 0 }}>
+                    <Button label='select' variant='outlined' isFullWidth />
+                </CardActions>
+            </CardActionArea>
         </MuiCard>
     );
 };
