@@ -6,12 +6,21 @@ import React, { useState } from 'react';
 import { Card as MuiCard, CardHeader, CardActionArea, CardActions, CardContent, Collapse, List, Typography } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 
-import { Button, Icon } from '@dolittle/design-system';
+import { Button, Icon, SvgIconsDefinition } from '@dolittle/design-system';
 
-const listItems = ['Docker', 'Firewall access', 'Ion M3 (and optionally the meta data publisher)', 'Admin level access to M3', 'Approximately 16gb ram'];
+type CardProps = {
+    icon: SvgIconsDefinition['icon'];
+    title: string;
+    description: string;
+    listTitle: string;
+    listItems: string[];
+    footerTitle: string;
+    footerText: string;
+};
 
-export const Card = () => {
+export const Card = ({ icon, title, description, listTitle, listItems, footerTitle, footerText }: CardProps) => {
     const [isCardExpanded, setCardIsExpanded] = useState(false);
+    const toggleCardIsExpanded = () => setCardIsExpanded(!isCardExpanded);
 
     return (
         <MuiCard
@@ -20,27 +29,24 @@ export const Card = () => {
                 'maxWidth': 316,
                 'border': '1px solid',
                 'borderColor': isCardExpanded ? 'primary.main' : 'transparent',
-                'backgroundColor': isCardExpanded ? theme => `${alpha(theme.palette.primary.main, 0.10)}` : 'background.paper',
+                'backgroundColor': isCardExpanded ? theme => `${alpha(theme.palette.primary.main, 0.16)}` : 'background.paper',
                 '&:hover': {
                     backgroundColor: theme => `${alpha(theme.palette.primary.main, 0.16)}`,
                     borderColor: 'primary.main',
                 },
             }}
         >
-            <CardActionArea onClick={() => setCardIsExpanded(!isCardExpanded)} sx={{ p: 3 }}>
-                <CardHeader avatar={<Icon color='primary' icon='DnsRounded' />} sx={{ p: 0, pb: 3.25 }} />
+            <CardActionArea onClick={toggleCardIsExpanded} sx={{ p: 3 }}>
+                <CardHeader avatar={<Icon color='primary' icon={icon} />} sx={{ p: 0, pb: 3.25 }} />
 
                 <CardContent sx={{ p: 0, pb: 3 }}>
-                    <Typography variant='h4' sx={{ pb: 3.5 }}>On Premise</Typography>
-
-                    <Typography variant='body1'>
-                        Your team will be responsible for hosting, establishing backups and making sure the connector is running.
-                    </Typography>
+                    <Typography variant='h4' sx={{ pb: 3.5 }}>{title}</Typography>
+                    <Typography>{description}</Typography>
                 </CardContent>
 
                 <Collapse in={isCardExpanded} timeout='auto' unmountOnExit>
                     <CardContent sx={{ p: 0, pb: 3 }}>
-                        <Typography variant='subtitle2' gutterBottom>{`What you'll need`}</Typography>
+                        <Typography variant='subtitle2' gutterBottom>{listTitle}</Typography>
 
                         <List sx={{ listStyle: 'disc', px: 3, pb: 3 }}>
                             {listItems.map((item, index) => (
@@ -50,9 +56,8 @@ export const Card = () => {
                             ))}
                         </List>
 
-                        <Typography variant='subtitle2' gutterBottom>Approximate setup time</Typography>
-
-                        <Typography>10 min</Typography>
+                        <Typography variant='subtitle2' gutterBottom>{footerTitle}</Typography>
+                        <Typography>{footerText}</Typography>
                     </CardContent>
                 </Collapse>
 
@@ -60,9 +65,9 @@ export const Card = () => {
                     <Button
                         label={isCardExpanded ? 'selected' : 'select'}
                         variant='outlined'
-                        startWithIcon={isCardExpanded ? <Icon color='primary' icon='CheckRounded' /> : undefined}
+                        startWithIcon={isCardExpanded ? <Icon icon='CheckRounded' /> : undefined}
                         isFullWidth
-                        onClick={() => setCardIsExpanded(!isCardExpanded)}
+                        onClick={toggleCardIsExpanded}
                     />
                 </CardActions>
             </CardActionArea>
