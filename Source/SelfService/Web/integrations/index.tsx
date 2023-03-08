@@ -1,10 +1,11 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 
 import { useRoutes, useParams } from 'react-router-dom';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { WorkSpaceLayout } from '../components/layout/workSpaceLayout/workSpaceLayout';
 import { buildQueryClient } from '../apis/integrations/queryClient';
 import { routes } from './routes';
@@ -18,6 +19,7 @@ export const IntegrationsIndex = () => {
         <WorkSpaceLayout>
             <QueryClientProvider client={queryClient}>
                 {routesElement}
+                <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
         </WorkSpaceLayout>
     );
