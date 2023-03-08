@@ -13,6 +13,7 @@ import {
     CheckCircleRounded,
     ChevronRight,
     CloseRounded,
+    CloudRounded,
     DeleteRounded,
     DescriptionRounded,
     DownloadRounded,
@@ -60,6 +61,7 @@ export interface SvgIconsDefinition {
     'CheckRounded' |
     'ChevronRight' |
     'CloseRounded' |
+    'CloudRounded' |
     'DeleteRounded' |
     'DescriptionRounded' |
     'Dolittle' |
@@ -104,6 +106,7 @@ export const SvgIcons = {
     CheckRounded: <CheckRounded />,
     ChevronRight: <ChevronRight />,
     CloseRounded: <CloseRounded />,
+    CloudRounded: <CloudRounded />,
     DeleteRounded: <DeleteRounded />,
     DescriptionRounded: <DescriptionRounded />,
     Dolittle: <Dolittle />,
