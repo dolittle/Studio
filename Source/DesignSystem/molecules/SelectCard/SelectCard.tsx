@@ -8,7 +8,7 @@ import { alpha } from '@mui/material/styles';
 
 import { Button, Icon, SvgIconsDefinition } from '@dolittle/design-system';
 
-type CardProps = {
+type SelectCardProps = {
     icon: SvgIconsDefinition['icon'];
     title: string;
     description: string;
@@ -18,7 +18,7 @@ type CardProps = {
     footerText: string;
 };
 
-export const Card = ({ icon, title, description, listTitle, listItems, footerTitle, footerText }: CardProps) => {
+export const SelectCard = ({ icon, title, description, listTitle, listItems, footerTitle, footerText }: SelectCardProps) => {
     const [isCardExpanded, setCardIsExpanded] = useState(false);
     const toggleCardIsExpanded = () => setCardIsExpanded(!isCardExpanded);
 
