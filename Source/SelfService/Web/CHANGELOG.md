@@ -1,3 +1,11 @@
+# [3.3.0] - 2023-3-8 [PR: #325](https://github.com/dolittle/Studio/pull/325)
+## Summary
+
+- First steps of the Connections page
+- Add react query
+- First api-integration against the bridge
+
+
 # [3.2.2] - 2023-3-8 [PR: #323](https://github.com/dolittle/Studio/pull/323)
 ## Summary
 
