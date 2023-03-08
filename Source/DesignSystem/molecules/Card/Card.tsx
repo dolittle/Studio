@@ -8,6 +8,8 @@ import { alpha } from '@mui/material/styles';
 
 import { Button, Icon } from '@dolittle/design-system';
 
+const listItems = ['Docker', 'Firewall access', 'Ion M3 (and optionally the meta data publisher)', 'Admin level access to M3', 'Approximately 16gb ram'];
+
 export const Card = () => {
     const [isCardexpanded, setCardIsExpanded] = useState(false);
 
@@ -40,13 +42,12 @@ export const Card = () => {
                     <CardContent sx={{ p: 0, pb: 3 }}>
                         <Typography variant='subtitle2' gutterBottom>{`What you'll need`}</Typography>
 
-                        {/* TODO: Map them */}
                         <List sx={{ listStyle: 'disc', px: 3, pb: 3 }}>
-                            <li><Typography>Docker</Typography></li>
-                            <li><Typography>Firewall access</Typography></li>
-                            <li><Typography>Ion M3 (and optionally the meta data publisher)</Typography></li>
-                            <li><Typography>Admin level access to M3</Typography></li>
-                            <li><Typography>Approximately 16gb ram</Typography></li>
+                            {listItems.map((item, index) => (
+                                <li key={index}>
+                                    <Typography>{item}</Typography>
+                                </li>
+                            ))}
                         </List>
 
                         <Typography variant='subtitle2' gutterBottom>Approximate setup time</Typography>
