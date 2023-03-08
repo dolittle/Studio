@@ -8,16 +8,51 @@ import { alpha } from '@mui/material/styles';
 
 import { Button, Icon, SvgIconsDefinition } from '@dolittle/design-system';
 
+/**
+ * The props for a {@link SelectCard} component.
+ */
 type SelectCardProps = {
+    /**
+     * The icon to display in the card.
+     */
     icon: SvgIconsDefinition['icon'];
+
+    /**
+     * The title of the card.
+     */
     title: string;
+
+    /**
+     * The description of the card.
+     */
     description: string;
+
+    /**
+     * The title of the list.
+     */
     listTitle: string;
+
+    /**
+     * The list items.
+     */
     listItems: string[];
+
+    /**
+     * The title of the footer.
+     */
     footerTitle: string;
+
+    /**
+     * The text of the footer.
+     */
     footerText: string;
 };
 
+/**
+ * Select Card is a expandable component that displays a card with a title, description, list of items and a footer.
+ * @param {SelectCardProps} props - The {@link SelectCardProps} that contains the properties for the Select Card component.
+ * @returns A {@link SelectCard} component.
+ */
 export const SelectCard = ({ icon, title, description, listTitle, listItems, footerTitle, footerText }: SelectCardProps) => {
     const [isCardExpanded, setCardIsExpanded] = useState(false);
     const toggleCardIsExpanded = () => setCardIsExpanded(!isCardExpanded);
