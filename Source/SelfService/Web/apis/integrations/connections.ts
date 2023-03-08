@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { getBridgeServerUrlPrefix } from './api';
+import { generateStatusErrorMessage, getBridgeServerUrlPrefix } from './api';
 
 export type IonConfiguration = {
     gatewayUrl: string;
@@ -21,7 +21,7 @@ export type MdpConfiguration = {
 };
 
 export type ConnectionStatus = {
-    name: 'Registered' | 'CloudDeployed' | 'Downloaded' | 'Unconfigured' | 'MdpConfigurationSent' | 'MdpConnected' | 'MdpConfigurationFailed' | 'IonConfigurationSent' | 'IonConnectionFailed' ; //TODO: ADD MORE
+    name: 'Registered' | 'CloudDeployed' | 'Downloaded' | 'Unconfigured' | 'MdpConfigurationSent' | 'MdpConnected' | 'MdpConfigurationFailed' | 'IonConfigurationSent' | 'IonConnectionFailed'; //TODO: ADD MORE
     description: string;
 };
 
@@ -47,6 +47,13 @@ export async function connectionsGet(): Promise<Connection[]> {
             method: 'GET',
             mode: 'cors'
         });
-    const jsonResult = await result.json();
-    return jsonResult;
+
+    if (result.ok) {
+        const jsonResult = await result.json();
+        return jsonResult;
+    } else {
+        throw new Error(await generateStatusErrorMessage(result));
+    }
 };
+
+
