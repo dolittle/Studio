@@ -28,7 +28,18 @@ const { metadata, createStory } = componentStories(NavigationBar, {
 });
 
 metadata.parameters = {
-    controls: { include: [] }
+    controls: { include: [] },
+    docs: {
+        source: {
+            code: `
+ <NavigationBar
+   mainLinks={<MainLinks />}
+   mobileDropdownMenu={<SelectionMenu />}
+   mobileSecondaryLinks={<MobileSecondaryLinks />}
+   secondaryLinks={<SecondaryLinks />}
+ />`,
+        },
+    },
 };
 
 metadata.args = {
