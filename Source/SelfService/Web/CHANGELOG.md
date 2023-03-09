@@ -1,3 +1,11 @@
+# [3.3.1] - 2023-3-9 [PR: #327](https://github.com/dolittle/Studio/pull/327)
+# Summary
+
+- Add generated api's for integrations based on Swagger/OpenAPI and typescript fetch
+- Replace hand-rolled connections api with generated in hook and use in component
+- Update api-hooks filename to match api filename
+
+
 # [3.3.0] - 2023-3-8 [PR: #325](https://github.com/dolittle/Studio/pull/325)
 ## Summary
 
