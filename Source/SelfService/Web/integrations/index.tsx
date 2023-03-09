@@ -5,7 +5,7 @@ import React from 'react';
 
 import { useRoutes, useParams } from 'react-router-dom';
 
-import { Typography } from '@mui/material';
+import { Typography, Toolbar } from '@mui/material';
 
 import { WorkSpaceLayout } from '../components/layout/workSpaceLayout/workSpaceLayout';
 import { routes } from './routes';
@@ -16,8 +16,10 @@ export const IntegrationsIndex = () => {
 
     return (
         <WorkSpaceLayout>
-            <Typography variant='h1'>Integrations</Typography>
-            <Typography>Space: {applicationId}</Typography>
+            <Toolbar>
+                <Typography>Space: {applicationId}</Typography>
+            </Toolbar>
+
             {routesElement}
         </WorkSpaceLayout>
     );
