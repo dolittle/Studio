@@ -14,7 +14,7 @@ type WorkSpaceLayoutProps = {
 };
 
 export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ height: '100%', display: 'flex' }}>
         <NavigationBar
             mainLinks={<MainLinks />}
             secondaryLinks={<SecondaryLinks />}

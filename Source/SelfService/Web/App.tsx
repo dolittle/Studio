@@ -39,8 +39,8 @@ import { IntegrationsIndex } from './integrations';
 // Set license info for MUI components
 LicenseInfo.setLicenseKey(process.env.MUI_LICENSE_KEY!);
 
-// Make all stacked snackbars with same width
-const snackbarStyles = { '& .notistack-SnackbarContainer>*': { width: 1 } };
+// Make all stacked snackbars with same width and add full height to container
+const snackbarStyles = { 'height': '100%', '& .notistack-SnackbarContainer>*': { width: 1 } };
 
 export const App = () => {
     useViewportResize();
