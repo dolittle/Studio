@@ -5,14 +5,14 @@ import React from 'react';
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Paper, Tooltip } from '@mui/material';
 
-import { Connection } from '../../apis/integrations/connections';
+import { ConnectionModel } from '../../apis/integrations/generated';
 
 export type ConnectionsTableProps = {
-    connections: Connection[];
+    connections: ConnectionModel[];
     isLoading: boolean;
 };
 
-const connectionsColumns: GridColDef<Connection>[] = [
+const connectionsColumns: GridColDef<ConnectionModel>[] = [
     {
         field: 'name',
         headerName: 'Name',
@@ -37,7 +37,7 @@ const connectionsColumns: GridColDef<Connection>[] = [
         headerName: 'Connection Status',
         minWidth: 270,
         flex: 1,
-        valueGetter: ({ row }) => row?.status.name
+        valueGetter: ({ row }) => row?.status?.name
     },
 ];
 
