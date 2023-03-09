@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Box, Toolbar } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { NavigationBar, SideBar } from '@dolittle/design-system';
 
@@ -27,9 +27,7 @@ export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
             secondaryLinks={<SideBarSecondaryLinks />}
         />
 
-        <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-            <Toolbar />
-
+        <Box component='main' sx={{ 'flexGrow': 1, 'm': 3, 'mt': 8, '& .MuiToolbar-root': { p: 0 } }}>
             {children}
         </Box>
     </Box>;

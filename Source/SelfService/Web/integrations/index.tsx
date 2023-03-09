@@ -6,6 +6,9 @@ import React from 'react';
 import { useRoutes, useParams } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+import { Typography, Toolbar } from '@mui/material';
+
 import { WorkSpaceLayout } from '../components/layout/workSpaceLayout/workSpaceLayout';
 import { buildQueryClient } from '../apis/integrations/queryClient';
 import { routes } from './routes';
@@ -18,6 +21,9 @@ export const IntegrationsIndex = () => {
     return (
         <WorkSpaceLayout>
             <QueryClientProvider client={queryClient}>
+                <Toolbar>
+                    <Typography>Space: {applicationId}</Typography>
+                </Toolbar>
                 {routesElement}
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
