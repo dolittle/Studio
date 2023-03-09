@@ -8,19 +8,13 @@ const { metadata, createStory } = componentStories(SelectCard);
 metadata.title = 'Select Card';
 
 metadata.args = {
-    icon: 'DnsRounded',
-    title: 'On Premise',
-    description: 'Your team will be responsible for hosting, establishing backups and making sure the connector is running.',
-    listTitle: `What you'll need`,
-    listItems: [
-        'Docker',
-        'Firewall access',
-        'Ion M3 (and optionally the meta data publisher)',
-        'Admin level access to M3',
-        'Approximately 16gb ram'
-    ],
-    footerTitle: 'Approximate setup time',
-    footerText: '10 min',
+    icon: 'Dolittle',
+    title: 'Title',
+    description: 'This is a description for the select card.',
+    listTitle: 'List title',
+    listItems: ['List item 1', 'List item 2', 'List item 3', 'List item 4'],
+    footerTitle: 'Footer title',
+    footerText: 'This is a footer text',
 };
 
 export default metadata;
