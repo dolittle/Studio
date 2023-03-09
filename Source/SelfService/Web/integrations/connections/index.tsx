@@ -5,13 +5,12 @@ import React, { } from 'react';
 import { NoConnections } from './noConnections';
 import { Page } from '../../components/layout/page';
 import { ConnectionsTable } from './connectionsTable';
-import { useConnectionsGet } from '../../apis/integrations/connections.hooks';
+import { useConnectionsGet  } from '../../apis/integrations/connections.hooks';
 import { CreateConnectionButton } from './createConnectionButton';
 
 export const Connections = () => {
     const { data, isLoading, isFetching, isError, error } = useConnectionsGet();
-    const connections = data || [];
-
+    const connections = data?.value || [];
     return (
         <Page title='Connections'>
             {isError
