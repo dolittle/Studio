@@ -4,12 +4,19 @@ import React from 'react';
 import { RouteObject } from 'react-router-dom';
 
 import { HomeScreen } from './home';
+import { ConnectionsScreen } from './connections';
 
 export const routes: RouteObject[] = [
     {
-      path: '/',
-      element: <HomeScreen />,
-    //   errorElement: <ErrorPage />,
-      children: [],
+        path: '/',
+        element: <HomeScreen />,
+        //   errorElement: <ErrorPage />,
+        children: [],
     },
-  ];
+    {
+        path: '/connections',
+        element: <ConnectionsScreen />,
+        //   errorElement: <ErrorPage />,
+        children: [],
+    },
+];
