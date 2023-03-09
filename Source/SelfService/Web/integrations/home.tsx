@@ -22,10 +22,9 @@ const dolittleCloudList = [
 ];
 
 // sx={{ height: 'fit-content', display: 'flex', justifyContent: 'center', alignContent: 'center', gap: 3 }}
-
 export const HomeScreen = () =>
     <>
-        <Grid container>
+        <Grid container sx={{}}>
             <Grid item xs={4}>
                 <SelectCard
                     icon='DnsRounded'
