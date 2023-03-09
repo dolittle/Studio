@@ -24,6 +24,7 @@ export const IntegrationsIndex = () => {
                 <Toolbar>
                     <Typography>Space: {applicationId}</Typography>
                 </Toolbar>
+
                 {routesElement}
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
