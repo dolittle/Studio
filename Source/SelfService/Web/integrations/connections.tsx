@@ -3,9 +3,35 @@
 
 import React from 'react';
 
-import { Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 
-import { SelectCard } from '@dolittle/design-system';
+import { Button, SelectCard } from '@dolittle/design-system';
+
+const styles = {
+    wrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        mt: 6,
+    },
+    container: {
+        justifyContent: 'center',
+        mt: 11.25,
+    },
+    subtitle: {
+        mt: 6,
+        textAlign: 'center'
+    },
+    footer: {
+        width: 1,
+        mt: 'auto',
+        pt: 11.25,
+        pb: 6,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignSelf: 'center',
+    },
+};
 
 const onPremiseList = [
     'Docker',
@@ -23,7 +49,11 @@ const dolittleCloudList = [
 
 export const ConnectionsScreen = () =>
     <>
-        <Grid container spacing={3} sx={{ justifyContent: 'center' }}>
+        <Typography variant='h1'>New M3 Connection</Typography>
+
+        <Typography variant='h4' sx={styles.subtitle}>Before we get started, where would you like to host your M3 connector?</Typography>
+
+        <Grid container spacing={3} sx={styles.container}>
             <Grid item>
                 <SelectCard
                     icon='DnsRounded'
@@ -48,4 +78,9 @@ export const ConnectionsScreen = () =>
                 />
             </Grid>
         </Grid>
+
+        <Box sx={styles.footer}>
+            <Button label='cancel' color='subtle' onClick={() => { }} />
+            <Button label='get started' variant='filled' disabled onClick={() => { }} />
+        </Box>
     </>;
