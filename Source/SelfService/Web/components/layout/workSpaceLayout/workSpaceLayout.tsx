@@ -9,12 +9,27 @@ import { NavigationBar, SideBar } from '@dolittle/design-system';
 
 import { MainLinks, SecondaryLinks, SpaceSelectionMenu, MoreOptions, SideBarPrimaryLinks, SideBarSecondaryLinks } from './linksHelper';
 
+const styles = {
+    layout: {
+        height: '100%',
+        display: 'flex',
+    },
+    main: {
+        'display': 'flex',
+        'flexDirection': 'column',
+        'flexGrow': 1,
+        'm': 3,
+        'mt': 8,
+        '& .MuiToolbar-root': { p: 0 },
+    },
+};
+
 type WorkSpaceLayoutProps = {
     children: React.ReactNode;
 };
 
 export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Box sx={{ height: '100%', display: 'flex' }}>
+    <Box sx={styles.layout}>
         <NavigationBar
             mainLinks={<MainLinks />}
             secondaryLinks={<SecondaryLinks />}
@@ -27,7 +42,7 @@ export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
             secondaryLinks={<SideBarSecondaryLinks />}
         />
 
-        <Box component='main' sx={{ 'flexGrow': 1, 'm': 3, 'mt': 8, '& .MuiToolbar-root': { p: 0 } }}>
+        <Box component='main' sx={styles.main}>
             {children}
         </Box>
     </Box>;
