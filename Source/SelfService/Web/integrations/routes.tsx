@@ -19,7 +19,7 @@ export const routes: RouteObject[] = [
         children: [],
     },
     {
-        path: '/bridge',
+        path: '/connections/new-m3-connection',
         element: <ConnectionsScreen />,
         //   errorElement: <ErrorPage />,
         children: [],
