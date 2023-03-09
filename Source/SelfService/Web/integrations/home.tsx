@@ -21,10 +21,9 @@ const dolittleCloudList = [
     'Admin level access to M3',
 ];
 
-// sx={{ height: 'fit-content', display: 'flex', justifyContent: 'center', alignContent: 'center', gap: 3 }}
 export const HomeScreen = () =>
     <>
-        <Grid container sx={{}}>
+        <Grid container sx={{ justifyContent: 'center' }}>
             <Grid item xs={4}>
                 <SelectCard
                     icon='DnsRounded'
