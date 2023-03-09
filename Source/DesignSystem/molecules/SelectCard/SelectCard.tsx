@@ -79,7 +79,7 @@ export const SelectCard = ({ icon, title, description, listTitle, listItems, foo
 
     return (
         <MuiCard elevation={0} sx={styles.card}>
-            <CardActionArea onClick={toggleCardIsExpanded} sx={styles.wrapper}>
+            <CardActionArea component='div' onClick={toggleCardIsExpanded} sx={styles.wrapper}>
                 <div>
                     <CardHeader avatar={<Icon color='primary' icon={icon} />} sx={{ p: 0, pb: 3.25 }} />
 
