@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 
-import { Card as MuiCard, CardHeader, CardActionArea, CardActions, CardContent, Collapse, List, Typography } from '@mui/material';
+import { Box, Card as MuiCard, CardHeader, CardActionArea, CardActions, CardContent, Collapse, List, Typography } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 
 import { Button, Icon, SvgIconsDefinition } from '@dolittle/design-system';
@@ -80,16 +80,16 @@ export const SelectCard = ({ icon, title, description, listTitle, listItems, foo
     return (
         <MuiCard elevation={0} sx={styles.card}>
             <CardActionArea component='div' onClick={toggleCardIsExpanded} sx={styles.wrapper}>
-                <div>
+                <Box sx={{ width: 1 }}>
                     <CardHeader avatar={<Icon color='primary' icon={icon} />} sx={{ p: 0, pb: 3.25 }} />
 
                     <CardContent sx={{ p: 0, pb: 3 }}>
                         <Typography variant='h4' sx={{ pb: 3.5 }}>{title}</Typography>
                         <Typography>{description}</Typography>
                     </CardContent>
-                </div>
+                </Box>
 
-                <Collapse in={isCardExpanded} timeout='auto' unmountOnExit>
+                <Collapse in={isCardExpanded} timeout='auto' unmountOnExit sx={{ width: 1 }}>
                     <CardContent sx={{ p: 0, pb: 3 }}>
                         <Typography variant='subtitle2' gutterBottom>{listTitle}</Typography>
 
