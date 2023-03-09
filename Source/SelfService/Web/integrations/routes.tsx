@@ -3,16 +3,23 @@
 import React from 'react';
 import { RouteObject, Navigate } from 'react-router-dom';
 import { Connections } from './connections';
+import { ConnectionsScreen } from './connectionsScreen';
 
 export const routes: RouteObject[] = [
     {
-      path: '/',
-      element: <Navigate to='connections'/>,
-      children: [],
+        path: '/',
+        element: <Navigate to='connections' />,
+        children: [],
     },
     {
-      path: '/connections',
-      element: <Connections />,
-      children: [],
+        path: '/connections',
+        element: <Connections />,
+        children: [],
     },
-  ];
+    {
+        path: '/connections',
+        element: <ConnectionsScreen />,
+        //   errorElement: <ErrorPage />,
+        children: [],
+    },
+];
