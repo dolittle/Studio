@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 
 import { SelectCard } from '@dolittle/design-system';
 
@@ -23,8 +23,8 @@ const dolittleCloudList = [
 
 export const HomeScreen = () =>
     <>
-        <Grid container sx={{ justifyContent: 'center' }}>
-            <Grid item xs={4}>
+        <Grid container spacing={3} sx={{ justifyContent: 'center' }}>
+            <Grid item>
                 <SelectCard
                     icon='DnsRounded'
                     title='On Premise'
@@ -36,7 +36,7 @@ export const HomeScreen = () =>
                 />
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item>
                 <SelectCard
                     icon='CloudRounded'
                     title='In the Dolittle Cloud'
