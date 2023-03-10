@@ -8,9 +8,23 @@ import { FormControl, FormControlLabel, Switch as MuiSwitch } from '@mui/materia
 import { useController, FieldProps } from './helpers';
 import type { Form } from './Form';
 
+const styles = {
+    formControl: {
+        mt: 1.5,
+        mx: 0,
+        flexDirection: { xs: 'column-reverse', sm: 'row' },
+        alignItems: 'flex-start',
+        pointerEvents: 'none',
+    },
+    switch: {
+        mt: { xs: 1, sm: 0 },
+        pointerEvents: 'auto',
+    },
+};
+
 /**
  * Creates a switch field to be used in a {@link Form}.
- * @param props - The {@link FieldProps} for the switch.
+ * @param props - The {@link FieldProps} that contains the properties for the switch.
  * @returns A {@link Switch} component.
  */
 export const Switch = (props: FieldProps) => {
@@ -26,11 +40,11 @@ export const Switch = (props: FieldProps) => {
                         checked={!!field.value}
                         disabled={props.disabled}
                         size='small'
-                        sx={{ pointerEvents: 'auto' }}
+                        sx={styles.switch}
                     />
                 }
                 label={props.label}
-                sx={{ mt: 1.5, pointerEvents: 'none' }}
+                sx={styles.formControl}
             />
         </FormControl>
     );

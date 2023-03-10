@@ -8,6 +8,18 @@ import { AddCircle, DeleteRounded, DownloadRounded } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system';
 
+const styles = {
+    display: 'flex',
+    flexDirection: { xs: 'column', md: 'row' },
+    alignItems: 'start',
+    mb: 1.5,
+    button: {
+        'mr': 2.5,
+        'mb': 1,
+        '&:last-of-type': { mr: 0 },
+    },
+};
+
 type HeaderButtonsProps = {
     filePrompt: () => void;
     deleteDisabled: boolean;
@@ -17,7 +29,7 @@ type HeaderButtonsProps = {
 };
 
 export const HeaderButtons = ({ filePrompt, deleteDisabled, downloadDisabled, handleDelete, handleDownload }: HeaderButtonsProps) =>
-    <Box sx={{ mb: 2.875, button: { 'mr': 2.5, '&:last-of-type': { mr: 0 } } }}>
+    <Box sx={styles}>
         <Button
             label='Add File(s)'
             startWithIcon={<AddCircle />}
