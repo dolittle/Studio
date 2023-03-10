@@ -22,7 +22,7 @@ const Link = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function Link(
 
 export const RouterLinkListItem = ({ to, icon, text, inset, variantButton }: RouterLinkListItemProps) =>
     <ListItem disablePadding>
-        <ListItemButton component={Link} to={to} selected={window.location.href.includes(to)} dense>
+        <ListItemButton component={Link} to={to} selected={window.location.href.includes(to)} dense sx={{ whiteSpace: 'nowrap' }}>
             {icon ? <ListItemIcon sx={{ color: 'inherit' }}>{icon}</ListItemIcon> : null}
 
             <ListItemText inset={inset} primary={text} primaryTypographyProps={{ variant: variantButton ? 'button' : 'body2' }} />
