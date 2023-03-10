@@ -1,3 +1,24 @@
+# [1.5.0] - 2023-3-10 [PR: #324](https://github.com/dolittle/Studio/pull/324)
+## Summary
+
+Introducing the `SET_HEADERS` environment variable for configuring custom headers for routes. The value of this is expected to be a valid json document, where the keys are the `http.ServeMux` pattern to set headers for, and the value are a json document mapping from http header to [text/template](https://pkg.go.dev/text/template) value (this template is then executed with the incoming request as the data argument). Note: The pattern MUST exactly match a route defined in the `PROXY` environment variable. Also if no `PROXY` is defined, `SET_HEADERS` is ignored.
+
+Example:
+```
+SET_HEADERS='{"/bridge/": {"X-organisation-id": "{{ .Header.Get \"Tenant-ID\" }}", "Tenant-ID": "..."}}'
+```
+
+### Added
+
+- `SET_HEADERS` environment variable
+- `parseSetHeaders` for parsing the value of `SET_HEADERS`
+- functionality for setting headers on the downstream request in the `Proxy` function
+
+### Changed
+
+- `Proxy` now needs both the `pattern` and the `host` as arguments
+
+
 # [1.4.0] - 2023-3-3 [PR: #316](https://github.com/dolittle/Studio/pull/316)
 ## Summary
 To enable requests to be routed to different backend services, this PR introduces proxy configuration via the `PROXY` environment variable. This is needed for e.g. routing bridge related requests to the bridge-api, and platform related request to the platform-api. Also some rudimentary tests are added.
