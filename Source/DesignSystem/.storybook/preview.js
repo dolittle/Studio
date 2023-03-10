@@ -12,7 +12,7 @@ export const decorators = [
     Story => (
         <ThemeProvider theme={themeDark}>
             <CssBaseline />
-            <Story />
+            {Story()}
         </ThemeProvider>
     ),
 ];
