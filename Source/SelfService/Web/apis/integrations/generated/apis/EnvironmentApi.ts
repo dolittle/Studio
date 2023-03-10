@@ -34,6 +34,10 @@ export class EnvironmentApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
         const response = await this.request({
             path: `/metadata/environments`,
             method: 'GET',
