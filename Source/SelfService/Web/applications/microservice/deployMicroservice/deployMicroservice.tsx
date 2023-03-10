@@ -28,21 +28,14 @@ const styles = {
     form: {
         'mt': 4.5,
         'ml': 3,
-        '& .MuiFormControl-root': {
-            my: 1
-        },
-        '.MuiFormControlLabel-root': {
-            ml: 0
-        }
+        '& .MuiFormControl-root': { my: 1 },
     },
     formSections: {
         'mb': 4,
         'display': 'flex',
         'flexDirection': 'column',
-        '&:last-child': {
-            mb: 0
-        }
-    }
+        '&:last-child': { mb: 0 },
+    },
 };
 
 type DeployMicroserviceProps = {

@@ -97,7 +97,7 @@ export const HealthStatus = ({ applicationId, environment, microserviceId, msNam
                 label='Restart Microservice'
                 startWithIcon={<RestartAltRounded />}
                 onClick={() => setRestartDialogIsOpen(true)}
-                sx={{ mb: 2.5, mt: 3.5 }}
+                sx={{ mb: 2.5 }}
             />
 
             {containerTables.length > 0

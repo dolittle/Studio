@@ -37,7 +37,12 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
 
     return (
         <FormControl size='small' sx={{ width: 220, ...sx }}>
-            <InputLabel id={`${selectProps.id}-select`} required={isRequired(selectProps.required)}>
+            <InputLabel
+                id={`${selectProps.id}-select`}
+                disabled={selectProps.disabled}
+                required={isRequired(selectProps.required)}
+                size='small'
+            >
                 {selectProps.label}
             </InputLabel>
 
@@ -54,11 +59,11 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
                 MenuProps={{
                     anchorOrigin: {
                         vertical: 'bottom',
-                        horizontal: 'right'
+                        horizontal: 'right',
                     },
                     transformOrigin: {
                         vertical: 'top',
-                        horizontal: 'right'
+                        horizontal: 'right',
                     }
                 }}
             >
