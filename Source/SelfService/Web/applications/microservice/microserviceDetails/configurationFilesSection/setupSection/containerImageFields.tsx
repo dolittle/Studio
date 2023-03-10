@@ -23,7 +23,8 @@ export const ContainerImageFields = ({ disabled, sx }: ContainerImageFieldsProps
             label='Image Name'
             required
             disabled={disabled}
-            sx={{ width: 500 }}
+            dashedBorder
+            sx={{ width: 1, maxWidth: 500, minWidth: 220 }}
         />
 
         <Input
@@ -35,13 +36,15 @@ export const ContainerImageFields = ({ disabled, sx }: ContainerImageFieldsProps
                 value: /^[0-9]+$/,
                 message: 'Please enter a valid port number.'
             }}
+            dashedBorder
         />
 
         <Input
             id='entrypoint'
             label='Entrypoint'
             disabled={disabled}
+            dashedBorder
         />
 
-        <HeadArguments disabled={disabled} />
+        <HeadArguments disabled={disabled} dashedBorder />
     </Box>;

@@ -12,7 +12,7 @@ type SetupFieldsProps = {
     options: {
         value: string;
         displayValue: string;
-    }[]
+    }[];
     sx: SxProps;
 };
 
@@ -20,8 +20,8 @@ export const SetupFields = ({ disabled, options, sx }: SetupFieldsProps) =>
     <Box sx={sx}>
         <Typography variant='subtitle2' sx={{ mb: 2 }}>Configuration Setup</Typography>
 
-        <Input id='microserviceName' label='Microservice Name' required disabled />
-        <Input id='developmentEnvironment' label='Development Environment' disabled />
+        <Input id='microserviceName' label='Microservice Name' required disabled dashedBorder />
+        <Input id='developmentEnvironment' label='Development Environment' disabled dashedBorder />
 
         <Select
             id='runtimeVersion'
@@ -29,5 +29,6 @@ export const SetupFields = ({ disabled, options, sx }: SetupFieldsProps) =>
             options={options}
             required
             disabled={disabled}
+            sx={{ '& fieldset': { borderStyle: 'dashed' } }}
         />
     </Box>;

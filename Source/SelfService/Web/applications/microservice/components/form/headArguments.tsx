@@ -5,12 +5,16 @@ import React from 'react';
 
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { Box } from '@mui/material';
 import { AddCircleRounded, DeleteRounded } from '@mui/icons-material';
 
 import { Button, Input } from '@dolittle/design-system';
 
-export const HeadArguments = ({ disabled }: { disabled?: boolean }) => {
+type HeadArgumentsProps = {
+    disabled?: boolean;
+    dashedBorder?: boolean;
+};
+
+export const HeadArguments = ({ disabled, dashedBorder }: HeadArgumentsProps) => {
     const { formState: { errors } } = useFormContext();
 
     // Name comes from the Form initial values and the name of the fields array.
@@ -22,15 +26,16 @@ export const HeadArguments = ({ disabled }: { disabled?: boolean }) => {
     const hasErrors = Object.keys(errors).includes('headArguments');
 
     return (
-        <Box>
+        <>
             {fields.map((arg, index) => (
-                <Box key={arg.id}>
+                <div key={arg.id}>
                     <Input
                         id={`headArguments.${index}.value`}
                         label='CMD Argument'
                         autoFocus
                         disabled={disabled}
                         required
+                        dashedBorder={dashedBorder}
                         sx={{ width: 220 }}
                     />
                     <Button
@@ -41,7 +46,7 @@ export const HeadArguments = ({ disabled }: { disabled?: boolean }) => {
                         onClick={() => remove(index)}
                         sx={{ m: 1.5 }}
                     />
-                </Box>
+                </div>
             ))}
 
             <Button
@@ -50,8 +55,8 @@ export const HeadArguments = ({ disabled }: { disabled?: boolean }) => {
                 startWithIcon={<AddCircleRounded />}
                 disabled={disabled || hasErrors}
                 onClick={() => append({ value: '' })}
-                sx={{ mt: 2.5 }}
+                sx={{ width: 'fit-content', mt: 2.5 }}
             />
-        </Box>
+        </>
     );
 };
