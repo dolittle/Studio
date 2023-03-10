@@ -32,6 +32,7 @@ export const PublicUrlFields = ({ disabled, onChange, showPublicUrlInfo, sx }: P
                 startAdornment='/'
                 placeholder='leave blank for default path'
                 disabled={disabled}
+                dashedBorder
                 sx={{ width: 226 }}
             />
         }
