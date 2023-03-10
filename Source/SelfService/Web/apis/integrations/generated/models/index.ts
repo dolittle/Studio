@@ -7,6 +7,7 @@ export * from './ConnectionModel';
 export * from './ConnectionModelArrayResult';
 export * from './ConnectionModelResult';
 export * from './ConnectionStatus';
+export * from './EnvironmentType';
 export * from './FieldType';
 export * from './IndexColumn';
 export * from './IonConfigDto';

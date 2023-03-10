@@ -50,6 +50,10 @@ export class ProgramMetadataApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
         const response = await this.request({
             path: `/metadata/environments/{environment}/programs`.replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
             method: 'GET',
@@ -81,6 +85,10 @@ export class ProgramMetadataApi extends runtime.BaseAPI {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
 
         const response = await this.request({
             path: `/metadata/environments/{environment}/programs/{program}`.replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"program"}}`, encodeURIComponent(String(requestParameters.program))),

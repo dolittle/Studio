@@ -25,6 +25,12 @@ import {
     ConnectionStatusFromJSONTyped,
     ConnectionStatusToJSON,
 } from './ConnectionStatus';
+import type { EnvironmentType } from './EnvironmentType';
+import {
+    EnvironmentTypeFromJSON,
+    EnvironmentTypeFromJSONTyped,
+    EnvironmentTypeToJSON,
+} from './EnvironmentType';
 import type { ReadModelMetadata } from './ReadModelMetadata';
 import {
     ReadModelMetadataFromJSON,
@@ -55,6 +61,12 @@ export interface ConnectionModel {
      * @type {string}
      * @memberof ConnectionModel
      */
+    readonly connectionId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConnectionModel
+     */
     name?: string | null;
     /**
      * 
@@ -62,6 +74,12 @@ export interface ConnectionModel {
      * @memberof ConnectionModel
      */
     description?: string | null;
+    /**
+     * 
+     * @type {EnvironmentType}
+     * @memberof ConnectionModel
+     */
+    chosenEnvironment?: EnvironmentType;
     /**
      * 
      * @type {ConnectionConfiguration}
@@ -97,8 +115,10 @@ export function ConnectionModelFromJSONTyped(json: any, ignoreDiscriminator: boo
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'metadata': !exists(json, 'metadata') ? undefined : ReadModelMetadataFromJSON(json['metadata']),
+        'connectionId': !exists(json, 'connectionId') ? undefined : json['connectionId'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'chosenEnvironment': !exists(json, 'chosenEnvironment') ? undefined : EnvironmentTypeFromJSON(json['chosenEnvironment']),
         '_configuration': !exists(json, 'configuration') ? undefined : ConnectionConfigurationFromJSON(json['configuration']),
         'status': !exists(json, 'status') ? undefined : ConnectionStatusFromJSON(json['status']),
     };
@@ -117,6 +137,7 @@ export function ConnectionModelToJSON(value?: ConnectionModel | null): any {
         'metadata': ReadModelMetadataToJSON(value.metadata),
         'name': value.name,
         'description': value.description,
+        'chosenEnvironment': EnvironmentTypeToJSON(value.chosenEnvironment),
         'configuration': ConnectionConfigurationToJSON(value._configuration),
         'status': ConnectionStatusToJSON(value.status),
     };

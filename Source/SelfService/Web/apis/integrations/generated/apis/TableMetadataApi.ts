@@ -34,15 +34,15 @@ export interface ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesGet
 }
 
 export interface ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGetRequest {
+    connectionId: string;
     environment: string;
     tableName: string;
-    connectionId: string;
 }
 
 export interface ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGetRequest {
+    connectionId: string;
     environment: string;
     tableName: string;
-    connectionId: string;
 }
 
 /**
@@ -65,6 +65,10 @@ export class TableMetadataApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
         const response = await this.request({
             path: `/connections/{connectionId}/metadata/environments/{environment}/tables`.replace(`{${"connectionId"}}`, encodeURIComponent(String(requestParameters.connectionId))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
             method: 'GET',
@@ -85,6 +89,10 @@ export class TableMetadataApi extends runtime.BaseAPI {
     /**
      */
     async connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGetRaw(requestParameters: ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TableDto>> {
+        if (requestParameters.connectionId === null || requestParameters.connectionId === undefined) {
+            throw new runtime.RequiredError('connectionId','Required parameter requestParameters.connectionId was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGet.');
+        }
+
         if (requestParameters.environment === null || requestParameters.environment === undefined) {
             throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGet.');
         }
@@ -93,16 +101,16 @@ export class TableMetadataApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tableName','Required parameter requestParameters.tableName was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGet.');
         }
 
-        if (requestParameters.connectionId === null || requestParameters.connectionId === undefined) {
-            throw new runtime.RequiredError('connectionId','Required parameter requestParameters.connectionId was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGet.');
-        }
-
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
         const response = await this.request({
-            path: `/connections/{connectionId}/metadata/environments/{environment}/tables/{tableName}`.replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"tableName"}}`, encodeURIComponent(String(requestParameters.tableName))).replace(`{${"connectionId"}}`, encodeURIComponent(String(requestParameters.connectionId))),
+            path: `/connections/{connectionId}/metadata/environments/{environment}/tables/{tableName}`.replace(`{${"connectionId"}}`, encodeURIComponent(String(requestParameters.connectionId))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"tableName"}}`, encodeURIComponent(String(requestParameters.tableName))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -121,6 +129,10 @@ export class TableMetadataApi extends runtime.BaseAPI {
     /**
      */
     async connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGetRaw(requestParameters: ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RelatedTable>>> {
+        if (requestParameters.connectionId === null || requestParameters.connectionId === undefined) {
+            throw new runtime.RequiredError('connectionId','Required parameter requestParameters.connectionId was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGet.');
+        }
+
         if (requestParameters.environment === null || requestParameters.environment === undefined) {
             throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGet.');
         }
@@ -129,16 +141,16 @@ export class TableMetadataApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tableName','Required parameter requestParameters.tableName was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGet.');
         }
 
-        if (requestParameters.connectionId === null || requestParameters.connectionId === undefined) {
-            throw new runtime.RequiredError('connectionId','Required parameter requestParameters.connectionId was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGet.');
-        }
-
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
         const response = await this.request({
-            path: `/connections/{connectionId}/metadata/environments/{environment}/tables/{tableName}/related-tables`.replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"tableName"}}`, encodeURIComponent(String(requestParameters.tableName))).replace(`{${"connectionId"}}`, encodeURIComponent(String(requestParameters.connectionId))),
+            path: `/connections/{connectionId}/metadata/environments/{environment}/tables/{tableName}/related-tables`.replace(`{${"connectionId"}}`, encodeURIComponent(String(requestParameters.connectionId))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"tableName"}}`, encodeURIComponent(String(requestParameters.tableName))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
