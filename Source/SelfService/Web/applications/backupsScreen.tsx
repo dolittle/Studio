@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 
 import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
-import { ViewCard } from '../solutions/backup/viewCard';
+import { ViewCard } from './backup/viewCard';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { useRouteApplicationParams } from '../utils/route';
