@@ -25,15 +25,15 @@ import { DieAndRestart } from './components/dieAndRestart';
 
 import { LayoutWithSidebar } from './components/layout/layoutWithSidebar';
 
-import { BackupsScreen } from './solutions/backupsScreen';
-import { DocumentationScreen } from './solutions/documentationScreen';
-import { MicroservicesScreen } from './solutions/microservicesScreen';
+import { BackupsScreen } from './applications/backupsScreen';
+import { DocumentationScreen } from './applications/documentationScreen';
+import { MicroservicesScreen } from './applications/microservicesScreen';
 import { Screen as AdminScreen } from './admin/adminScreen';
 import { ApplicationsScreen } from './spaces/applications/applicationsScreen';
 import { ApplicationScreen } from './spaces/applications/applicationScreen';
-import { ContainerRegistryScreen } from './solutions/containerRegistryScreen';
-import { M3ConnectorScreen } from './solutions/m3connectorScreen';
-import { LogsScreen } from './solutions/logsScreen';
+import { ContainerRegistryScreen } from './applications/containerRegistryScreen';
+import { M3ConnectorScreen } from './applications/m3connectorScreen';
+import { LogsScreen } from './applications/logsScreen';
 import { IntegrationsIndex } from './integrations';
 
 // Set license info for MUI components
