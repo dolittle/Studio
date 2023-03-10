@@ -1,3 +1,18 @@
+# [3.3.2] - 2023-3-10 [PR: #329](https://github.com/dolittle/Studio/pull/329)
+## Summary
+
+Small code cleanup and made microservices detail view page more mobile friendly.
+
+### Changed
+
+- Used 'dashedBorder' styles from Design System on inputs
+
+### Fixed
+
+- Disabled buttons going multiple lines
+- Styles so pages are looking better on mobile
+
+
 # [3.3.1] - 2023-3-9 [PR: #327](https://github.com/dolittle/Studio/pull/327)
 # Summary
 
