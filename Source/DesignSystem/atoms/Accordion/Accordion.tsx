@@ -9,26 +9,26 @@ import { ExpandCircleDownRounded } from '@mui/icons-material';
 const styles = {
     accordion: {
         backgroundColor: 'transparent',
-        backgroundImage: 'none'
+        backgroundImage: 'none',
     },
     accordionSummary: {
-        // Move expand arrow to the left side
-        'flexDirection': 'row-reverse',
-        // Disable 'expand' click for the whole line
-        'pointerEvents': 'none',
         'p': 0,
+        // Move the expansion arrow to the left side
+        'flexDirection': 'row-reverse',
+        // Disable 'expand' click for the entire row
+        'pointerEvents': 'none',
         '& .MuiAccordionSummary-expandIconWrapper': {
             transform: 'rotate(180deg)',
         },
         '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
             transform: 'rotate(0deg)',
-        }
+        },
     },
     expandIcon: {
         color: 'text.secondary',
-        // Allow 'expand' click for the icon only
-        pointerEvents: 'auto'
-    }
+        // Enable 'expand' click on icon only
+        pointerEvents: 'auto',
+    },
 };
 
 export type AccordionProps = {
@@ -39,11 +39,7 @@ export type AccordionProps = {
 };
 
 export const Accordion = ({ defaultExpanded, id, title, children }: AccordionProps) =>
-    <MuiAccordion
-        defaultExpanded={defaultExpanded}
-        TransitionProps={{ unmountOnExit: true }}
-        sx={styles.accordion}
-    >
+    <MuiAccordion defaultExpanded={defaultExpanded} TransitionProps={{ unmountOnExit: true }} sx={styles.accordion}>
         <AccordionSummary
             expandIcon={<ExpandCircleDownRounded sx={styles.expandIcon} />}
             aria-controls={id}

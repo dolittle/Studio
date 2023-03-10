@@ -48,11 +48,10 @@ export const RouterLinkListItem = ({ to, icon, text, inset, sx, variantButton }:
 
     return (
         <ListItem disablePadding sx={sx}>
-            <ListItemButton component={Link} to={to} selected={location.pathname.includes(to)} dense>
+            <ListItemButton component={Link} to={to} selected={location.pathname.includes(to)} dense sx={{ whiteSpace: 'nowrap' }}>
                 {icon ? <ListItemIcon sx={{ color: 'inherit' }}>{icon}</ListItemIcon> : null}
                 <ListItemText inset={inset} primary={text} primaryTypographyProps={{ variant: variantButton ? 'button' : 'body2' }} />
             </ListItemButton>
         </ListItem>
     );
 };
-//location.pathname.includes(to) ? 'primary.main' :

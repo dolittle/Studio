@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
-import { Box } from '@mui/material';
-
 import { Accordion, AlertDialog, Form } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
@@ -25,25 +23,14 @@ import { getRuntimeNumberFromString } from '../../../helpers';
 
 const styles = {
     form: {
-        'mt': 3,
-        '& .MuiFormControl-root': {
-            'my': 1,
-            '& fieldset': {
-                borderStyle: 'dashed'
-            }
-        },
-        '.MuiFormControlLabel-root': {
-            ml: 0
-        }
+        '& .MuiFormControl-root': { my: 1 },
     },
     formSections: {
         'mb': 4,
         'display': 'flex',
         'flexDirection': 'column',
-        '&:last-child': {
-            mb: 0
-        }
-    }
+        '&:last-child': { mb: 0 },
+    },
 };
 
 type SetupSectionProps = {
@@ -101,7 +88,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
     };
 
     return (
-        <Box>
+        <>
             <AlertDialog
                 id='delete-microservice'
                 title='Delete microservice?'
@@ -128,7 +115,6 @@ export const SetupSection = ({ application, applicationId, environment, microser
                     handleRestartDialog={() => setRestartDialogIsOpen(true)}
                     handleDeleteDialog={() => setDeleteDialogIsOpen(true)}
                     disabled={formIsNotEditable}
-                    sx={{ mr: 2.5 }}
                 />
 
                 <Form<MicroserviceFormParameters>
@@ -167,6 +153,6 @@ export const SetupSection = ({ application, applicationId, environment, microser
                     }
                 </Form>
             </Accordion>
-        </Box>
+        </>
     );
 };
