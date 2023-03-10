@@ -37,7 +37,7 @@ export const ContainerImageFields = ({ sx }: ContainerImageFieldsProps) =>
                 id='headImage'
                 label='Image Name'
                 required='Provide an image name.'
-                sx={{ width: 500 }}
+                sx={{ width: 1, maxWidth: 500, minWidth: 220 }}
             />
         </Tooltip>
 

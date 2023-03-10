@@ -22,13 +22,13 @@ const envVariableColumns: GridColDef<EnvironmentVariableTableRow>[] = [
         field: 'name',
         headerName: 'Name',
         width: 330,
-        editable: true
+        editable: true,
     },
     {
         field: 'value',
         headerName: 'Value',
         width: 330,
-        editable: true
+        editable: true,
     },
     {
         field: 'isSecret',
@@ -39,22 +39,29 @@ const envVariableColumns: GridColDef<EnvironmentVariableTableRow>[] = [
         renderCell: ({ value }) => (
             <Button label={value ? 'Yes' : 'No'} color='subtle' endWithIcon={<ArrowDropDown />} sx={{ width: 1, height: 1 }} />
         ),
-        width: 90
-    }
+        width: 90,
+    },
 ];
 
 const styles = {
+    buttonWrapper: {
+        display: 'flex',
+        flexDirection: { xs: 'column', xl: 'row' },
+        alignItems: 'start',
+        mb: 1.5,
+        button: {
+            'mr': 2.5,
+            'mb': 1,
+            '&:last-of-type': { mr: 0 },
+        },
+    },
     isSecretCell: {
         'mb': 8,
         '& .MuiOutlinedInput-root': {
-            '& .MuiSelect-select': {
-                p: '10px 15px'
-            },
-            '& fieldset': {
-                border: 'none'
-            }
-        }
-    }
+            '& .MuiSelect-select': { p: '10px 15px' },
+            '& fieldset': { border: 'none' },
+        },
+    },
 };
 
 type EnvironmentVariableTableRow = InputEnvironmentVariable & {
@@ -173,7 +180,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
             name: '',
             value: '',
             isSecret: false,
-            isNew: true
+            isNew: true,
         };
 
         const updateChangedRows = [...envVariableTableRows, newEnvVariable];
@@ -226,12 +233,8 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
 
     return (
         <>
-            <Accordion
-                id='environment-variables'
-                title='Environment Variables'
-                defaultExpanded
-            >
-                <Box sx={{ mb: 2.875, button: { 'mr': 2.5, '&:last-of-type': { mr: 0 } } }}>
+            <Accordion id='environment-variables' title='Environment Variables' defaultExpanded>
+                <Box sx={styles.buttonWrapper}>
                     <Button
                         label='Add new variable row'
                         disabled={disableAddButton}
