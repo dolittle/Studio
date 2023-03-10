@@ -1,34 +1,47 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Tab as MuiTab, Tabs as MuiTabs } from '@mui/material';
 
 const styles = {
     tabs: {
+        'mb': 3.5,
+        '& .MuiTabs-flexContainer': {
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: 'center',
+        },
         '& .MuiTabs-indicator': {
             display: 'flex',
             justifyContent: 'center',
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
         },
         '& .MuiTabs-indicatorSpan': {
-            maxWidth: 40,
             width: 1,
-            backgroundColor: 'primary.main'
-        }
+            maxWidth: 40,
+            backgroundColor: 'primary.main',
+            display: { xs: 'none', md: 'block' },
+        },
     },
     tab: {
         'fontSize': 14,
-        'mr': 8,
-        '&:last-child': {
-            mr: 0
-        }
-    }
+        'mr': { xs: 0, md: 8 },
+        'mb': { xs: 2, md: 0 },
+        '&:last-child': { mr: 0 },
+        'borderBottom': { xs: '2px solid', md: 'none' },
+    },
 };
 
 type Tab = {
+    /**
+     * The label to display for the tab.
+     */
     label: string;
+
+    /**
+     * The react element to render when the tab is selected.
+     */
     render: () => React.ReactNode;
 };
 
@@ -37,19 +50,19 @@ type Tab = {
  */
 export type TabsProps = {
     /**
-     * Required. The tabs to display.
-     * @type {Tab[]}
+     * The tabs to display.
+     *
+     * Create a tab by providing a label and a react element to render.
      */
     tabs: Tab[];
 };
 
 /**
- * @param {...TabsProps} props - The {@link TabsProps}.
- * @returns {ReactElement} A new {@link Tabs} component.
- * @example
- * <Tabs tabs={[{ label: 'First tab', render: () => <h1>Hello</h1> }, { label: 'Second tab', render: () => <h1>World</h1> }]} />
+ * Tabs is a component that displays a set of tabs.
+ * @param {TabsProps} props - The {@link TabsProps}.
+ * @returns A {@link Tabs} component.
  */
-export const Tabs = ({ tabs }: TabsProps): ReactElement => {
+export const Tabs = ({ tabs }: TabsProps) => {
     const [currentTab, setCurrentTab] = useState(0);
 
     useEffect(() => {
@@ -72,11 +85,11 @@ export const Tabs = ({ tabs }: TabsProps): ReactElement => {
                 onChange={handleChange}
                 sx={{ ...styles.tabs }}
             >
-                {tabs.map((tab, key) =>
+                {tabs.map((tab, index) =>
                     <MuiTab
-                        key={key}
-                        id={`tabpanel-${key}`}
-                        aria-labelledby={`tab-${key}`}
+                        key={index}
+                        id={`tabpanel-${index}`}
+                        aria-labelledby={`tab-${index}`}
                         disableRipple
                         label={tab.label}
                         sx={{ ...styles.tab }}
