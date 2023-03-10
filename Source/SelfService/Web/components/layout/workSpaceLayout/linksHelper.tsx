@@ -13,7 +13,7 @@ import { RouterLinkListItem } from './RouterLinkListItem';
 export const MainLinks = () =>
     <>
         <RouterLinkListItem to='#' text='home' variantButton />
-        <RouterLinkListItem to='#' text='solutions' variantButton />
+        <RouterLinkListItem to='#' text='applications' variantButton />
         <RouterLinkListItem to='integrations' text='integrations' variantButton />
     </>;
 
