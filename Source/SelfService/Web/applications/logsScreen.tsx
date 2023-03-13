@@ -2,14 +2,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
+import { useGlobalContext } from '../context/globalContext';
 
 import { Box, Typography } from '@mui/material';
 
 import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../apis/solutions/api';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../apis/solutions/application';
 
-import { useGlobalContext } from '../context/globalContext';
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
 import { LayoutWithSidebar, getMenuWithApplication } from '../components/layout/layoutWithSidebar';
 import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
@@ -30,7 +31,8 @@ const DAY = 86_400_000_000_000n;
 
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
-    const { setNotification } = useGlobalContext();
+    const { hasManyCustomers, setNotification } = useGlobalContext();
+
     const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
 
@@ -100,7 +102,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
         );
     }
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment);
+    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasManyCustomers);
 
     return (
         <LayoutWithSidebar navigation={nav}>

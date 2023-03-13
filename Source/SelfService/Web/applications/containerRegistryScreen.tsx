@@ -9,6 +9,8 @@ import {
     generatePath
 } from 'react-router-dom';
 
+import { useGlobalContext } from '../context/globalContext';
+
 import { ShortInfoWithEnvironment } from '../apis/solutions/api';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 
@@ -30,6 +32,8 @@ import { Typography } from '@mui/material';
 
 export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
+    const { hasManyCustomers } = useGlobalContext();
+
     const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
 
@@ -86,7 +90,7 @@ export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplica
         );
     }
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment);
+    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasManyCustomers);
 
     const routes = [];
 

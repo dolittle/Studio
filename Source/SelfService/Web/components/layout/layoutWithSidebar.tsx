@@ -28,8 +28,8 @@ export type NavigationMenuItem = {
 };
 
 export type NavigationListItemButtonProps = ListItemButtonBaseProps & {
-    navigationMenuItem: NavigationMenuItem,
-    navigate: NavigateFunction //TODO PAV: Does this still need to be passed in, or can it use a hook to resolve?
+    navigationMenuItem: NavigationMenuItem;
+    navigate: NavigateFunction; //TODO PAV: Does this still need to be passed in, or can it use a hook to resolve?
 };
 
 export const LayoutWithSidebar = ({ navigation, children }: LayoutWithSidebarProps) =>
@@ -46,7 +46,7 @@ export const LayoutWithSidebar = ({ navigation, children }: LayoutWithSidebarPro
         </div>
     </div>;
 
-export const getDefaultMenuWithItems = (navigate: NavigateFunction, mainNavigationItems: any[], secondaryNavigationItems: any[]): ReactNode =>
+const getDefaultMenuWithItems = (navigate: NavigateFunction, mainNavigationItems: any[], secondaryNavigationItems: any[]): ReactNode =>
     <>
         <List sx={{ p: 0, m: 0 }}>
             {mainNavigationItems.map(navigationItem => (
@@ -55,7 +55,7 @@ export const getDefaultMenuWithItems = (navigate: NavigateFunction, mainNavigati
                     navigationMenuItem={navigationItem}
                     navigate={navigate}
                 >
-                    <ListItemIcon sx={{ mr: '1rem', minWidth: 0, color: 'text.secondary' }}>
+                    <ListItemIcon sx={{ mr: 2, minWidth: 0, color: 'text.secondary' }}>
                         {navigationItem.icon}
                     </ListItemIcon>
                     <ListItemText>
@@ -67,7 +67,7 @@ export const getDefaultMenuWithItems = (navigate: NavigateFunction, mainNavigati
         <List sx={{ p: 0, m: 0, position: 'fixed', bottom: 0 }}>
             {secondaryNavigationItems.map(link => (
                 <NavigationListItemButton key={link.name} navigationMenuItem={link} navigate={navigate}>
-                    <ListItemIcon sx={{ mr: '1rem', minWidth: 0, color: 'text.secondary' }}>
+                    <ListItemIcon sx={{ mr: 2, minWidth: 0, color: 'text.secondary' }}>
                         {link.icon}
                     </ListItemIcon>
                     <ListItemText>
@@ -78,7 +78,7 @@ export const getDefaultMenuWithItems = (navigate: NavigateFunction, mainNavigati
         </List>
     </>;
 
-export const NavigationListItemButton = ({ navigationMenuItem, navigate, ...props }: NavigationListItemButtonProps) => {
+const NavigationListItemButton = ({ navigationMenuItem, navigate, ...props }: NavigationListItemButtonProps) => {
     const defaultProps: ListItemButtonBaseProps = {
         disableGutters: true,
         selected: window.location.href.includes(navigationMenuItem.href),
@@ -87,8 +87,8 @@ export const NavigationListItemButton = ({ navigationMenuItem, navigate, ...prop
             whiteSpace: 'nowrap',
             padding: '0.5rem 1rem',
             cursor: 'pointer',
-            margin: '0 -1rem'
-        }
+            margin: '0 -1rem',
+        },
     };
 
     return (
@@ -103,9 +103,10 @@ export const NavigationListItemButton = ({ navigationMenuItem, navigate, ...prop
         />);
 };
 
-export const getMenuWithApplication = (navigate: NavigateFunction, application: HttpResponseApplication, environment: string): ReactNode => {
-    const applicationId = application.id;
+export const getMenuWithApplication = (
+    navigate: NavigateFunction, application: HttpResponseApplication, environment: string, hasManyCustomers: boolean) => {
 
+    const applicationId = application.id;
     const hasConnector = application.environments.find(_environment => _environment.connections.m3Connector);
 
     const mainNavigationItems: NavigationMenuItem[] = [
@@ -137,13 +138,16 @@ export const getMenuWithApplication = (navigate: NavigateFunction, application: 
             name: 'Documentation',
             icon: <FindInPageRounded />
         },
-        {
+    ];
+
+    if (hasManyCustomers) {
+        secondaryNavigationItems.push({
             href: '/.auth/cookies/initiate',
             name: 'Change Customer',
             icon: <SettingsRounded />,
-            forceReload: true
-        }
-    ];
+            forceReload: true,
+        });
+    }
 
     if (hasConnector) {
         // Put before documentation link
