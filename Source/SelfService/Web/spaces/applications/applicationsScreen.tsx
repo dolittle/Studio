@@ -15,6 +15,7 @@ import { LoginWrapper } from '../../components/layout/loginWrapper';
 import { useGlobalContext } from '../../context/globalContext';
 
 import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
+import { getCustomers } from '../../apis/solutions/customer';
 import { HttpResponseApplications, getApplications } from '../../apis/solutions/application';
 
 import { ApplicationsList } from './applicationsList';
@@ -26,6 +27,7 @@ export const ApplicationsScreen = () => {
     const [applicationInfos, setApplicationInfos] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
+    const [hasManyCustomers, setHasManyCustomers] = useState(false);
     const { setCurrentEnvironment } = useGlobalContext();
 
     // TODO handle when not 200!
@@ -40,6 +42,12 @@ export const ApplicationsScreen = () => {
         }).catch(error => {
             console.log(error);
             enqueueSnackbar('Failed getting data from the server', { variant: 'error' });
+        });
+    }, []);
+
+    useEffect(() => {
+        getCustomers().then(customers => {
+            customers.length === 1 ? setHasManyCustomers(false) : setHasManyCustomers(true);
         });
     }, []);
 
@@ -75,7 +83,9 @@ export const ApplicationsScreen = () => {
             <ApplicationsList data={applicationInfos} onChoose={onEnvironmentChoose} />
 
             <Box sx={{ mt: 12.5, display: 'flex', justifyContent: 'space-around' }}>
-                <Button label='Back to tenant' color='subtle' startWithIcon={<ArrowBack />} href='/.auth/cookies/initiate' />
+                {hasManyCustomers &&
+                    <Button label='Back to Customers' color='subtle' startWithIcon={<ArrowBack />} href='/.auth/cookies/initiate' />
+                }
                 <Button label='Log out' color='subtle' href='/.auth/cookies/logout' />
             </Box>
         </LoginWrapper>
