@@ -23,7 +23,7 @@ type Props = {
 
 export const M3ConnectorScreen: React.FunctionComponent<Props> = (props) => {
     const navigate = useNavigate();
-    const { currentEnvironment, hasManyCustomers } = useGlobalContext();
+    const { currentEnvironment, hasOneCustomer } = useGlobalContext();
 
     const routeApplicationProps = useRouteApplicationParams();
     const applicationId = routeApplicationProps.applicationId;
@@ -58,7 +58,7 @@ export const M3ConnectorScreen: React.FunctionComponent<Props> = (props) => {
         );
     }
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasManyCustomers);
+    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
 
     const routes = [];
 

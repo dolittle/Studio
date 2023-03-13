@@ -18,8 +18,8 @@ export type GlobalContextType = {
     setError: (obj: any) => void;
     clearNotification: () => void;
     setCurrentEnvironment: (environment: string) => void;
-    hasManyCustomers: boolean,
-    setHasManyCustomers: (hasManyCustomers: boolean) => void;
+    hasOneCustomer: boolean,
+    setHasOneCustomer: (hasOneCustomer: boolean) => void;
     setCurrentApplicationId: (applicationId: string) => void;
     currentEnvironment: string,
     currentApplicationId: string,
@@ -43,8 +43,8 @@ export const GlobalContext = createContext<GlobalContextType>({
     clearNotification: () => console.warn('clearNotification function not set'),
     setCurrentEnvironment: (environment: string) => console.warn('setCurrentEnvironment function not set'),
     setCurrentApplicationId: (applicationId: string) => console.warn('setCurrentApplicationId function not set'),
-    hasManyCustomers: false,
-    setHasManyCustomers: (hasManyCustomers: boolean) => console.warn('setHasOneCustomer function not set'),
+    hasOneCustomer: false,
+    setHasOneCustomer: (hasOneCustomer: boolean) => console.warn('setHasOneCustomer function not set'),
     currentEnvironment: '',
     currentApplicationId: '',
     clearGlobalState: () => console.warn('clearGlobalState function not set'),
@@ -79,7 +79,7 @@ export const GlobalContextProvider: React.FunctionComponent<GlobalContextProvide
     const [lastError, setLastError] = useState({} as any);
     const [currentApplicationId, _setCurrentApplicationId] = useState(initCurrentApplicationId);
     const [currentEnvironment, _setCurrentEnvironment] = useState(initCurrentEnvironment);
-    const [hasManyCustomers, setHasManyCustomers] = useState(false);
+    const [hasOneCustomer, setHasOneCustomer] = useState(false);
     const [lastMessage, setLastMessage] = useState(newNotification('', ''));
     const setNotification = (message: string, level: string) => {
         const n = newNotification(message, level);
@@ -136,8 +136,8 @@ export const GlobalContextProvider: React.FunctionComponent<GlobalContextProvide
             clearNotification,
             currentEnvironment,
             setCurrentEnvironment,
-            hasManyCustomers,
-            setHasManyCustomers,
+            hasOneCustomer,
+            setHasOneCustomer,
             currentApplicationId,
             setCurrentApplicationId,
             clearGlobalState,

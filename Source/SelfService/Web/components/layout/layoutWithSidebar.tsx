@@ -104,7 +104,7 @@ const NavigationListItemButton = ({ navigationMenuItem, navigate, ...props }: Na
 };
 
 export const getMenuWithApplication = (
-    navigate: NavigateFunction, application: HttpResponseApplication, environment: string, hasManyCustomers: boolean) => {
+    navigate: NavigateFunction, application: HttpResponseApplication, environment: string, hasOneCustomer: boolean) => {
 
     const applicationId = application.id;
     const hasConnector = application.environments.find(_environment => _environment.connections.m3Connector);
@@ -140,7 +140,7 @@ export const getMenuWithApplication = (
         },
     ];
 
-    if (hasManyCustomers) {
+    if (!hasOneCustomer) {
         secondaryNavigationItems.push({
             href: '/.auth/cookies/initiate',
             name: 'Change Customer',

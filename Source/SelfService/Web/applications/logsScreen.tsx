@@ -31,7 +31,7 @@ const DAY = 86_400_000_000_000n;
 
 export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
-    const { hasManyCustomers, setNotification } = useGlobalContext();
+    const { hasOneCustomer, setNotification } = useGlobalContext();
 
     const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
@@ -102,7 +102,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
         );
     }
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasManyCustomers);
+    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
 
     return (
         <LayoutWithSidebar navigation={nav}>
