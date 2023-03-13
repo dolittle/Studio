@@ -24,7 +24,7 @@ import { ApplicationsList } from './applicationsList';
 export const ApplicationsScreen = () => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
-    const { hasManyCustomers, setCurrentEnvironment, setHasManyCustomers } = useGlobalContext();
+    const { hasOneCustomer, setCurrentEnvironment, setHasOneCustomer } = useGlobalContext();
 
     const [applicationInfos, setApplicationInfos] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
@@ -47,7 +47,7 @@ export const ApplicationsScreen = () => {
 
     useEffect(() => {
         getCustomers().then(customers => {
-            customers.length === 1 ? setHasManyCustomers(false) : setHasManyCustomers(true);
+            customers.length === 1 ? setHasOneCustomer(true) : setHasOneCustomer(false);
         });
     }, []);
 
@@ -83,7 +83,7 @@ export const ApplicationsScreen = () => {
             <ApplicationsList data={applicationInfos} onChoose={onEnvironmentChoose} />
 
             <Box sx={{ mt: 12.5, display: 'flex', justifyContent: 'space-around' }}>
-                {hasManyCustomers &&
+                {!hasOneCustomer &&
                     <Button label='Back to Customers' color='subtle' startWithIcon={<ArrowBack />} href='/.auth/cookies/initiate' />
                 }
                 <Button label='Log out' color='subtle' href='/.auth/cookies/logout' />

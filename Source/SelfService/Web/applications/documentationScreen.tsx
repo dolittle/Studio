@@ -36,7 +36,7 @@ import { withRouteApplicationState } from '../spaces/applications/withRouteAppli
 
 export const DocumentationScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
-    const { hasManyCustomers, setNotification } = useGlobalContext();
+    const { hasOneCustomer, setNotification } = useGlobalContext();
 
     const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
@@ -95,7 +95,7 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
         );
     }
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasManyCustomers);
+    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
 
     const routes = [
         {

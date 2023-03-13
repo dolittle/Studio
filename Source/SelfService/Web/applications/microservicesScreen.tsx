@@ -29,7 +29,7 @@ import { Typography } from '@mui/material';
 
 export const MicroservicesScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
-    const { hasManyCustomers, setNotification } = useGlobalContext();
+    const { hasOneCustomer, setNotification } = useGlobalContext();
 
     const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
@@ -93,7 +93,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
         );
     }
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasManyCustomers);
+    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
 
     const routes = [
         {

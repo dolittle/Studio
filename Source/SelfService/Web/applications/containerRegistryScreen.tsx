@@ -32,7 +32,7 @@ import { Typography } from '@mui/material';
 
 export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
-    const { hasManyCustomers } = useGlobalContext();
+    const { hasOneCustomer } = useGlobalContext();
 
     const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
@@ -90,7 +90,7 @@ export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplica
         );
     }
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasManyCustomers);
+    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
 
     const routes = [];
 
