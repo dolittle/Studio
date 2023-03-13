@@ -9,6 +9,7 @@ develop-backend:
 	cd Source/SelfService/Backend && \
 	HEADER_SECRET="FAKE" \
 	PROXY='{"/": "localhost:8081", "/bridge/": "127.0.0.1:5000"}' \
+	SET_HEADERS='{"/bridge/": {"X-Organization-ID": "{{ .Header.Get \"Tenant-ID\" }}"}} ' \
 	DEVELOPMENT_CUSTOMER_ID="${DEVELOPMENT_CUSTOMER_ID}" \
 	DEVELOPMENT_USER_ID="${DEVELOPMENT_USER_ID}" \
 	go run main.go
