@@ -4,7 +4,6 @@
 import { getServerUrlPrefix, JobInfo, parseJSONResponse, ShortInfo, ShortInfoWithEnvironment } from './api';
 import { Studio } from './studio';
 
-
 export type CustomerDetailed = {
     customer: Customer;
     applications: ShortInfoWithEnvironment[];
@@ -19,7 +18,6 @@ export type HttpCustomerRequest = {
     name: string;
 };
 
-
 export async function getCustomer(customerId: string): Promise<CustomerDetailed> {
     const url = `${getServerUrlPrefix()}/customer/${customerId}`;
 
@@ -27,12 +25,12 @@ export async function getCustomer(customerId: string): Promise<CustomerDetailed>
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
 
     const data = await parseJSONResponse(response);
     return data;
-}
+};
 
 export async function getCustomers(): Promise<Customers> {
     const url = `${getServerUrlPrefix()}/customers`;
@@ -41,16 +39,16 @@ export async function getCustomers(): Promise<Customers> {
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
 
     const data = await parseJSONResponse(response);
     return data;
-}
-
+};
 
 export async function createCustomer(input: HttpCustomerRequest): Promise<JobInfo | any> {
     const url = `${getServerUrlPrefix()}/customer`;
+
     const response = await fetch(
         url,
         {
@@ -64,4 +62,4 @@ export async function createCustomer(input: HttpCustomerRequest): Promise<JobInf
 
     const data = await parseJSONResponse(response);
     return data;
-}
+};
