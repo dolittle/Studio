@@ -12,6 +12,7 @@ import { Typography, Toolbar } from '@mui/material';
 import { WorkSpaceLayout } from '../components/layout/workSpaceLayout/workSpaceLayout';
 import { buildQueryClient } from '../apis/integrations/queryClient';
 import { routes } from './routes';
+import { DebugRouter } from '../components/debugRouter';
 
 export const IntegrationsIndex = () => {
     const queryClient = buildQueryClient();
@@ -21,10 +22,6 @@ export const IntegrationsIndex = () => {
     return (
         <WorkSpaceLayout>
             <QueryClientProvider client={queryClient}>
-                <Toolbar>
-                    <Typography>Space: {applicationId}</Typography>
-                </Toolbar>
-
                 {routesElement}
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
