@@ -24,7 +24,7 @@ type Props = {
 
 export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
     const navigate = useNavigate();
-    const { currentEnvironment } = useGlobalContext();
+    const { currentEnvironment, hasManyCustomers } = useGlobalContext();
 
     const routeApplicationProps = useRouteApplicationParams();
     const applicationId = routeApplicationProps.applicationId;
@@ -59,7 +59,7 @@ export const BackupsScreen: React.FunctionComponent<Props> = (props) => {
         );
     }
     const environments = application.environments;
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment);
+    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasManyCustomers);
 
     const routes = [
         {

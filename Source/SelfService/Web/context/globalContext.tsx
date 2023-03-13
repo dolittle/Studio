@@ -5,10 +5,9 @@ import React, { createContext, useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export type NotificationItem = {
-    message: string
-    level: string
+    message: string;
+    level: string;
 };
-
 
 export type GlobalContextType = {
     messages: any[],
@@ -19,6 +18,8 @@ export type GlobalContextType = {
     setError: (obj: any) => void;
     clearNotification: () => void;
     setCurrentEnvironment: (environment: string) => void;
+    hasManyCustomers: boolean,
+    setHasManyCustomers: (hasManyCustomers: boolean) => void;
     setCurrentApplicationId: (applicationId: string) => void;
     currentEnvironment: string,
     currentApplicationId: string,
@@ -27,9 +28,6 @@ export type GlobalContextType = {
 
 let _messages: any[] = [];
 let _errors: any[] = [];
-
-
-
 
 export const newNotification = (message: string, level: string): NotificationItem => {
     return { message, level } as NotificationItem;
@@ -41,12 +39,12 @@ export const GlobalContext = createContext<GlobalContextType>({
     lastMessage: newNotification('', ''),
     lastError: undefined,
     setError: (obj) => console.warn('setError function not set'),
-    setNotification: (message, level) => {
-        console.log(message, level);
-    },
+    setNotification: (message, level) => { console.log(message, level); },
     clearNotification: () => console.warn('clearNotification function not set'),
     setCurrentEnvironment: (environment: string) => console.warn('setCurrentEnvironment function not set'),
     setCurrentApplicationId: (applicationId: string) => console.warn('setCurrentApplicationId function not set'),
+    hasManyCustomers: false,
+    setHasManyCustomers: (hasManyCustomers: boolean) => console.warn('setHasOneCustomer function not set'),
     currentEnvironment: '',
     currentApplicationId: '',
     clearGlobalState: () => console.warn('clearGlobalState function not set'),
@@ -65,7 +63,6 @@ const saveToLocalStorage = (key: string, newValue: any): any => {
     localStorage.setItem(key, JSON.stringify(newValue));
 };
 
-
 type GlobalContextProviderProps = {
     children?: React.ReactNode
 };
@@ -82,6 +79,7 @@ export const GlobalContextProvider: React.FunctionComponent<GlobalContextProvide
     const [lastError, setLastError] = useState({} as any);
     const [currentApplicationId, _setCurrentApplicationId] = useState(initCurrentApplicationId);
     const [currentEnvironment, _setCurrentEnvironment] = useState(initCurrentEnvironment);
+    const [hasManyCustomers, setHasManyCustomers] = useState(false);
     const [lastMessage, setLastMessage] = useState(newNotification('', ''));
     const setNotification = (message: string, level: string) => {
         const n = newNotification(message, level);
@@ -101,7 +99,6 @@ export const GlobalContextProvider: React.FunctionComponent<GlobalContextProvide
         setLastError(record);
         saveToLocalStorage('errors', _errors);
     };
-
 
     const clearNotification = () => {
         const n = newNotification('', '');
@@ -139,6 +136,8 @@ export const GlobalContextProvider: React.FunctionComponent<GlobalContextProvide
             clearNotification,
             currentEnvironment,
             setCurrentEnvironment,
+            hasManyCustomers,
+            setHasManyCustomers,
             currentApplicationId,
             setCurrentApplicationId,
             clearGlobalState,

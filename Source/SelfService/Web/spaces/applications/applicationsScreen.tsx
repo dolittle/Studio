@@ -2,7 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useEffect } from 'react';
+
 import { useNavigate } from 'react-router-dom';
+import { useGlobalContext } from '../../context/globalContext';
 
 import { useSnackbar } from 'notistack';
 
@@ -12,7 +14,6 @@ import { AddCircle, ArrowBack } from '@mui/icons-material';
 import { Button } from '@dolittle/design-system';
 
 import { LoginWrapper } from '../../components/layout/loginWrapper';
-import { useGlobalContext } from '../../context/globalContext';
 
 import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
 import { getCustomers } from '../../apis/solutions/customer';
@@ -23,12 +24,11 @@ import { ApplicationsList } from './applicationsList';
 export const ApplicationsScreen = () => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
+    const { hasManyCustomers, setCurrentEnvironment, setHasManyCustomers } = useGlobalContext();
 
     const [applicationInfos, setApplicationInfos] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
-    const [hasManyCustomers, setHasManyCustomers] = useState(false);
-    const { setCurrentEnvironment } = useGlobalContext();
 
     // TODO handle when not 200!
     useEffect(() => {
