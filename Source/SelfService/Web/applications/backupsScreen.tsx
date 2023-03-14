@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, generatePath } from 'react-router-dom';
 import { useGlobalContext } from '../context/globalContext';
 
-import { Typography } from '@mui/material';
+import { List, Typography } from '@mui/material';
 
 import { useRouteApplicationParams } from '../utils/route';
 import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
@@ -87,13 +87,13 @@ export const BackupsScreen = () => {
             <Routes>
                 <Route path="/overview" element={
                     <div className="serv">
-                        <ul>
-                            {environments.map((environment) => (
+                        <List>
+                            {environments.map(environment => (
                                 <li key={environment.name}>
                                     <ViewCard application={application} environment={environment.name} />
                                 </li>
-                            ))};
-                        </ul>
+                            ))}
+                        </List>
                     </div>
                 } />
 
