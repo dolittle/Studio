@@ -11,7 +11,7 @@ metadata.title = 'Dummy component';
 metadata.parameters = {
     docs: {
         description: {
-            component: `test`
+            component: `Write the description of the component here.`
         },
     },
 };
@@ -24,7 +24,7 @@ export const Enabled = createStory();
 Enabled.parameters = {
     docs: {
         description: {
-            story: `test`
+            story: `Write the individual component story description here.`
         }
     }
 };
