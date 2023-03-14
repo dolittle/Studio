@@ -6,7 +6,7 @@ import { RouteObject, Navigate } from 'react-router-dom';
 
 import { Connections } from './connections';
 import { ConnectionsScreen } from './connectionsScreen';
-import { NewConnection } from './newConnection';
+import { NewConnection } from './setupConnection';
 
 export const routes: RouteObject[] = [
     {
@@ -20,7 +20,7 @@ export const routes: RouteObject[] = [
         children: [],
     },
     {
-        path: 'connections/new/m3/:connectionId/*',
+        path: 'connections/setup/m3/:connectionId/*',
         element: <NewConnection />,
     },
     {

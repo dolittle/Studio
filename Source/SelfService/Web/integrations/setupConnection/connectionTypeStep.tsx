@@ -4,10 +4,10 @@
 import React from 'react';
 import { ConnectionsScreen } from '../connectionsScreen';
 
-export const ConnectionTypeScreen = () => {
+export const ConnectionTypeStep = () => {
     return (
         <>
-            <ConnectionsScreen />
+
         </>
     );
 };

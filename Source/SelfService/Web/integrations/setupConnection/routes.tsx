@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { RouteObject, Navigate } from 'react-router-dom';
-import { ConnectionTypeScreen } from './connectionTypeScreen';
+import { ConnectionTypeStep } from './connectionTypeStep';
 
 
 export const routes: RouteObject[] = [
@@ -14,7 +14,7 @@ export const routes: RouteObject[] = [
     },
     {
         path: 'connection-type',
-        element: <ConnectionTypeScreen />,
+        element: <ConnectionTypeStep />,
         children: [],
     },
 ];
