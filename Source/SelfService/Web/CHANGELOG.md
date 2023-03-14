@@ -1,3 +1,24 @@
+# [3.3.3] - 2023-3-14 [PR: #330](https://github.com/dolittle/Studio/pull/330)
+## Summary
+
+Don't show 'change customer' button, if there is only one customer.
+
+<img width="208" alt="Screenshot 2023-03-14 at 07 54 55" src="https://user-images.githubusercontent.com/19160439/224910089-aef62218-1b0f-40ea-b07a-4f2003c8d5e1.png">
+
+### Added
+
+- Lang attribute to HTML
+
+### Changed
+
+- Combine sidebar bottom navigation items with main navigation
+
+### Removed
+
+- Button line-height from theme
+- BackupsScreen list item dot
+
+
 # [3.3.2] - 2023-3-10 [PR: #329](https://github.com/dolittle/Studio/pull/329)
 ## Summary
 
