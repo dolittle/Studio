@@ -2,44 +2,33 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import {
-    Route,
-    useNavigate,
-    Routes,
-    generatePath
-} from 'react-router-dom';
 
+import { Route, useNavigate, Routes } from 'react-router-dom';
 import { useGlobalContext } from '../context/globalContext';
 
-import { ShortInfoWithEnvironment } from '../apis/solutions/api';
-import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
-
-
-import { RouteNotFound } from '../components/notfound';
-import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
-import { TopNavBar } from '../components/layout/topNavBar';
-import {
-    HttpResponseApplication,
-    getApplications,
-    getApplication,
-    HttpResponseApplications,
-} from '../apis/solutions/application';
-import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
-import { ContainerRegistryContainer } from './containerregistry/container';
 import { Typography } from '@mui/material';
 
+import { ShortInfoWithEnvironment } from '../apis/solutions/api';
+import { getApplication, getApplications, HttpResponseApplication, HttpResponseApplications } from '../apis/solutions/application';
 
+import { RouteNotFound } from '../components/notfound';
+import { TopNavBar } from '../components/layout/topNavBar';
+import { ContainerRegistryContainer } from './containerregistry/container';
+import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
+import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 
-export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
+import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
+
+export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
     const { hasOneCustomer } = useGlobalContext();
-
-    const currentEnvironment = routeApplicationParams.environment;
-    const currentApplicationId = routeApplicationParams.applicationId;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
+
+    const currentEnvironment = routeApplicationParams.environment;
+    const currentApplicationId = routeApplicationParams.applicationId;
 
     useEffect(() => {
         if (!currentEnvironment || !currentApplicationId) {
@@ -63,21 +52,15 @@ export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplica
             setApplications(applicationsData.applications);
             setApplication(applicationData);
             setLoaded(true);
-        }).catch((error) => {
+        }).catch(error => {
             console.log(error);
         });
     }, [currentApplicationId, currentEnvironment]);
 
-    if (!loaded) {
-        return null;
-    }
+    if (!loaded) return null;
 
     if (application.id === '') {
-        return (
-            <>
-                <Typography variant='h1' my={2}>Application with this environment not found</Typography>
-            </>
-        );
+        return <Typography variant='h1' my={2}>Application with this environment not found</Typography>;
     }
 
     if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
@@ -99,13 +82,9 @@ export const ContainerRegistryScreen: React.FunctionComponent = withRouteApplica
             <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
 
             <Routes>
-                <Route
-                    path="/overview/*"
-                    element={<ContainerRegistryContainer application={application} environment={currentEnvironment} />} />
-
+                <Route path="/overview/*" element={<ContainerRegistryContainer application={application} environment={currentEnvironment} />} />
                 <Route path='*' element={<RouteNotFound redirectUrl={'overview'} auto={true} />} />
-
             </Routes>
-        </LayoutWithSidebar >
+        </LayoutWithSidebar>
     );
 });

@@ -2,7 +2,16 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
+
 import { Route, useNavigate, Routes, generatePath } from 'react-router-dom';
+import { useGlobalContext } from '../context/globalContext';
+
+import { Typography } from '@mui/material';
+// I wonder if scss is scoped like svelte. I hope so!
+// Not scoped like svelte
+import '../spaces/applications/applicationScreen.scss';
+
+import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
 
 import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../apis/solutions/api';
 import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../apis/solutions/application';
@@ -11,21 +20,11 @@ import { Microservice } from './microservice/microservices/microservices';
 import { MicroserviceNewScreen } from './microservice/microserviceNewScreen';
 import { MicroserviceViewScreen } from './microservice/microserviceViewScreen';
 import { LayoutWithSidebar, getMenuWithApplication } from '../components/layout/layoutWithSidebar';
-
-// I wonder if scss is scoped like svelte. I hope so!
-// Not scoped like svelte
-import '../spaces/applications/applicationScreen.scss';
-
-import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
-import { useGlobalContext } from '../context/globalContext';
-
 import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
 import { TopNavBar } from '../components/layout/topNavBar';
 
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
-
-import { Typography } from '@mui/material';
 
 export const MicroservicesScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
@@ -71,16 +70,10 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
         });
     }, [currentEnvironment, currentApplicationId]);
 
-    if (!loaded) {
-        return null;
-    }
+    if (!loaded) return null;
 
     if (application.id === '') {
-        return (
-            <>
-                <Typography variant='h1' my={2}>Application with this environment not found</Typography>
-            </>
-        );
+        return <Typography variant='h1' my={2}>Application with this environment not found</Typography>;
     }
 
     if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
@@ -101,68 +94,57 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
             to: generatePath(
                 '/microservices/application/:applicationId/:environment/overview', {
                 applicationId: application.id,
-                environment: currentEnvironment
+                environment: currentEnvironment,
             }),
-            name: 'Microservices'
+            name: 'Microservices',
         },
         {
             path: '/microservices/application/:applicationId/:environment/overview',
             to: generatePath(
                 '/microservices/application/:applicationId/:environment/overview', {
                 applicationId: application.id,
-                environment: currentEnvironment
+                environment: currentEnvironment,
             }),
-            name: 'Overview'
+            name: 'Overview',
         },
         {
             path: '/microservices/application/:applicationId/:environment/create',
             to: generatePath(
                 '/microservices/application/:applicationId/:environment/create', {
                 applicationId: application.id,
-                environment: currentEnvironment
+                environment: currentEnvironment,
             }),
-            name: 'Create'
+            name: 'Create',
         },
         {
             path: '/microservices/application/:applicationId/:environment/edit',
             to: generatePath(
                 '/microservices/application/:applicationId/:environment/edit', {
                 applicationId: application.id,
-                environment: currentEnvironment
+                environment: currentEnvironment,
             }),
-            name: 'Edit'
+            name: 'Edit',
         },
         {
             path: '/microservices/application/:applicationId/:environment/view',
             to: generatePath(
                 '/microservices/application/:applicationId/:environment/view', {
                 applicationId: application.id,
-                environment: currentEnvironment
+                environment: currentEnvironment,
             }),
-            name: 'View'
-        }
+            name: 'View',
+        },
     ];
-
-
 
     return (
         <LayoutWithSidebar navigation={nav}>
             <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
+
             <Routes>
-                <Route
-                    path="/overview"
-                    element={<Microservice application={application} environment={currentEnvironment} />} />
-
-                <Route
-                    path="/create"
-                    element={<MicroserviceNewScreen application={application} environment={currentEnvironment} />} />
-
-                <Route
-                    path="/view/:microserviceId"
-                    element={<MicroserviceViewScreen application={application} environment={currentEnvironment} />} />
-
+                <Route path="/overview" element={<Microservice application={application} environment={currentEnvironment} />} />
+                <Route path="/create" element={<MicroserviceNewScreen application={application} environment={currentEnvironment} />} />
+                <Route path="/view/:microserviceId" element={<MicroserviceViewScreen application={application} environment={currentEnvironment} />} />
                 <Route path='*' element={<RouteNotFound redirectUrl={'overview'} auto={true} />} />
-
             </Routes>
         </LayoutWithSidebar>
     );

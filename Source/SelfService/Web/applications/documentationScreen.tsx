@@ -2,39 +2,27 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import {
-    Route,
-    useNavigate,
-    Routes,
-    generatePath
-} from 'react-router-dom';
+
+import { Route, useNavigate, Routes, generatePath } from 'react-router-dom';
+import { useGlobalContext } from '../context/globalContext';
 
 import { Typography } from '@mui/material';
-
-import { ShortInfoWithEnvironment } from '../apis/solutions/api';
-import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
-
 
 // I wonder if scss is scoped like svelte. I hope so!
 // Not scoped like svelte
 import '../spaces/applications/applicationScreen.scss';
 
-import { DocumentationContainerScreen } from './documentation/container';
-import { RouteNotFound } from '../components/notfound';
-import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
-import { useGlobalContext } from '../context/globalContext';
+import { ShortInfoWithEnvironment } from '../apis/solutions/api';
+import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../apis/solutions/application';
+
 import { TopNavBar } from '../components/layout/topNavBar';
-import {
-    HttpResponseApplication,
-    getApplications,
-    getApplication,
-    HttpResponseApplications,
-} from '../apis/solutions/application';
+import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
+import { DocumentationContainerScreen } from './documentation/container';
+import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
+
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
-
-
-export const DocumentationScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
+export const DocumentationScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
     const { hasOneCustomer, setNotification } = useGlobalContext();
 
@@ -67,22 +55,16 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
             setApplications(applicationsData.applications);
             setApplication(applicationData);
             setLoaded(true);
-        }).catch((error) => {
+        }).catch(error => {
             console.log(error);
             setNotification('Failed getting data from the server', 'error');
         });
     }, [currentApplicationId, currentEnvironment]);
 
-    if (!loaded) {
-        return null;
-    }
+    if (!loaded) return null;
 
     if (application.id === '') {
-        return (
-            <>
-                <Typography variant='h1' my={2}>Application with this environment not found</Typography>
-            </>
-        );
+        return <Typography variant='h1' my={2}>Application with this environment not found</Typography>;
     }
 
     if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
@@ -104,7 +86,7 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
                 applicationId: application.id,
                 environment: currentEnvironment,
             }),
-            name: 'Documentation'
+            name: 'Documentation',
         },
         {
             path: '/documentation/application/:applicationId/:environment/overview',
@@ -112,7 +94,7 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
                 applicationId: application.id,
                 environment: currentEnvironment,
             }),
-            name: 'Overview'
+            name: 'Overview',
         },
         {
             path: '/documentation/application/:applicationId/:environment/container-registry-info',
@@ -129,13 +111,13 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
                 environment: currentEnvironment,
             }),
             name: 'Verify access to kubernetes',
-        }
+        },
     ];
 
-    const redirectUrl = generatePath('/documentation/application/:applicationId/:environment/overview', {
-        applicationId: currentApplicationId,
-        environment: currentEnvironment,
-    });
+    // const redirectUrl = generatePath('/documentation/application/:applicationId/:environment/overview', {
+    //     applicationId: currentApplicationId,
+    //     environment: currentEnvironment,
+    // });
 
     return (
         <LayoutWithSidebar navigation={nav}>
@@ -144,6 +126,6 @@ export const DocumentationScreen: React.FunctionComponent = withRouteApplication
             <Routes>
                 <Route path='/*' element={<DocumentationContainerScreen application={application} environment={currentEnvironment} />} />
             </Routes>
-        </LayoutWithSidebar >
+        </LayoutWithSidebar>
     );
 });

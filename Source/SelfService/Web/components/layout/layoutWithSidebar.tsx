@@ -2,17 +2,18 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { ReactNode } from 'react';
-import './layout.scss';
+
 import { NavigateFunction } from 'react-router-dom';
+
+import { List, ListItemButton, ListItemButtonBaseProps, ListItemIcon, ListItemText, Paper } from '@mui/material';
+import { BackupRounded, HexagonRounded, FindInPageRounded, TextSnippetRounded, PolylineRounded, SettingsRounded } from '@mui/icons-material';
+
+import './layout.scss';
 
 import { HttpResponseApplication } from '../../apis/solutions/application';
 
-import { BackupRounded, HexagonRounded, FindInPageRounded, TextSnippetRounded, PolylineRounded, SettingsRounded } from '@mui/icons-material';
-import { List, ListItemButton, ListItemButtonBaseProps, ListItemIcon, ListItemText, Paper } from '@mui/material';
-
 import { ContainerRegistryRounded } from '../../assets/icons';
 import { DolittleLogoMedium } from '../../assets/logos';
-
 import { AlertBox } from '../alertBox';
 
 type LayoutWithSidebarProps = {
@@ -113,22 +114,22 @@ export const getMenuWithApplication = (
         {
             href: `/backups/application/${applicationId}/overview`,
             name: 'Backups',
-            icon: <BackupRounded />
+            icon: <BackupRounded />,
         },
         {
             href: `/microservices/application/${applicationId}/${environment}/overview`,
             name: 'Microservices',
-            icon: <HexagonRounded />
+            icon: <HexagonRounded />,
         },
         {
             href: `/containerregistry/application/${applicationId}/${environment}/overview`,
             name: 'Container Registry',
-            icon: <ContainerRegistryRounded />
+            icon: <ContainerRegistryRounded />,
         },
         {
             href: `/logs/application/${applicationId}/${environment}`,
             name: 'Logs',
-            icon: <TextSnippetRounded />
+            icon: <TextSnippetRounded />,
         },
     ];
 
@@ -136,7 +137,7 @@ export const getMenuWithApplication = (
         {
             href: `/documentation/application/${applicationId}/${environment}/overview`,
             name: 'Documentation',
-            icon: <FindInPageRounded />
+            icon: <FindInPageRounded />,
         },
     ];
 
@@ -154,7 +155,7 @@ export const getMenuWithApplication = (
         mainNavigationItems.splice(mainNavigationItems.length - 1, 0, {
             href: `/m3connector/application/${applicationId}/${environment}/details`,
             name: 'M3 Connector',
-            icon: <PolylineRounded />
+            icon: <PolylineRounded />,
         });
     }
 

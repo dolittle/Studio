@@ -4,21 +4,19 @@
 import React, { useState, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { useGlobalContext } from '../../context/globalContext';
-
 import { useSnackbar } from 'notistack';
+import { useGlobalContext } from '../../context/globalContext';
 
 import { Box, Typography } from '@mui/material';
 import { AddCircle, ArrowBack } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system';
 
-import { LoginWrapper } from '../../components/layout/loginWrapper';
-
 import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
 import { getCustomers } from '../../apis/solutions/customer';
 import { HttpResponseApplications, getApplications } from '../../apis/solutions/application';
 
+import { LoginWrapper } from '../../components/layout/loginWrapper';
 import { ApplicationsList } from './applicationsList';
 
 export const ApplicationsScreen = () => {
