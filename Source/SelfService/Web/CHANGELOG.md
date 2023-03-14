@@ -1,3 +1,8 @@
+# [3.3.5] - 2023-3-14 [PR: #334](https://github.com/dolittle/Studio/pull/334)
+Don't need to have this prefix in right now, and it's a little annoying.
+When we model "workspaces" in, it may need to come back
+
+
 # [3.3.4] - 2023-3-14 [PR: #331](https://github.com/dolittle/Studio/pull/331)
 ## Summary
 
