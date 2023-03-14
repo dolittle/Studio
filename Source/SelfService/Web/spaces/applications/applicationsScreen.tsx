@@ -13,7 +13,6 @@ import { AddCircle, ArrowBack } from '@mui/icons-material';
 import { Button } from '@dolittle/design-system';
 
 import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
-import { getCustomers } from '../../apis/solutions/customer';
 import { HttpResponseApplications, getApplications } from '../../apis/solutions/application';
 
 import { LoginWrapper } from '../../components/layout/loginWrapper';
@@ -22,7 +21,7 @@ import { ApplicationsList } from './applicationsList';
 export const ApplicationsScreen = () => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
-    const { hasOneCustomer, setCurrentEnvironment, setHasOneCustomer } = useGlobalContext();
+    const { hasOneCustomer, setCurrentEnvironment } = useGlobalContext();
 
     const [applicationInfos, setApplicationInfos] = useState([] as ShortInfoWithEnvironment[]);
     const [loaded, setLoaded] = useState(false);
@@ -40,12 +39,6 @@ export const ApplicationsScreen = () => {
         }).catch(error => {
             console.log(error);
             enqueueSnackbar('Failed getting data from the server', { variant: 'error' });
-        });
-    }, []);
-
-    useEffect(() => {
-        getCustomers().then(customers => {
-            customers.length === 1 ? setHasOneCustomer(true) : setHasOneCustomer(false);
         });
     }, []);
 
