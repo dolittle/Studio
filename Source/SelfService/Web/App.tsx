@@ -97,7 +97,7 @@ export const App = () => {
                                             <DieAndRestart />
                                         </LayoutWithSidebar>
                                     } />
-                                    <Route path="/:applicationId/integrations/*" element={<IntegrationsIndex />} />
+                                    <Route path="/integrations/*" element={<IntegrationsIndex />} />
                                     <Route path='*' element={<RouteNotFound redirectUrl='/applications' auto={true} />} />
                                 </Routes>
                             </SnackbarProvider>
