@@ -6,42 +6,75 @@ import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } 
 import { Paper, Tooltip } from '@mui/material';
 
 import { ConnectionModel } from '../../apis/integrations/generated';
+import { Icon, IconButton } from '@dolittle/design-system';
+import { useConnectionsIdDelete } from '../../apis/integrations/connectionsApi.hooks';
+import { enqueueSnackbar } from 'notistack';
+import { useQueryClient } from '@tanstack/react-query';
+import { CACHE_KEYS } from '../../apis/integrations/CacheKeys';
 
 export type ConnectionsTableProps = {
     connections: ConnectionModel[];
     isLoading: boolean;
 };
 
-const connectionsColumns: GridColDef<ConnectionModel>[] = [
-    {
-        field: 'name',
-        headerName: 'Name',
-        minWidth: 270,
-        flex: 1,
-    },
-    {
-        field: 'description',
-        headerName: 'Description',
-        minWidth: 270,
-        flex: 1,
-    },
-    {
-        field: 'source',
-        headerName: 'Source',
-        minWidth: 270,
-        flex: 1,
-        valueGetter: ({ row }) => 'M3'
-    },
-    {
-        field: 'status',
-        headerName: 'Connection Status',
-        minWidth: 270,
-        flex: 1,
-        valueGetter: ({ row }) => row?.status?.name
-    },
-];
+
 
 export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTableProps) => {
+    const deleteMutation = useConnectionsIdDelete();
+    const queryClient = useQueryClient();
+    const connectionsColumns: GridColDef<ConnectionModel>[] = [
+        {
+            field: 'name',
+            headerName: 'Name',
+            minWidth: 270,
+            flex: 1,
+        },
+        {
+            field: 'description',
+            headerName: 'Description',
+            minWidth: 270,
+            flex: 1,
+        },
+        {
+            field: 'source',
+            headerName: 'Source',
+            minWidth: 270,
+            flex: 1,
+            valueGetter: ({ row }) => 'M3'
+        },
+        {
+            field: 'status',
+            headerName: 'Connection Status',
+            minWidth: 270,
+            flex: 1,
+            valueGetter: ({ row }) => row?.status?.name
+        },
+        {
+            field: 'actions',
+            headerName: 'Actions',
+            minWidth: 100,
+            flex: 1,
+            renderCell({ row }) {
+                return <IconButton icon='DeleteRounded' onClick={() => deleteConnection(row)} />;
+            },
+            valueGetter: ({ row }) => row?.status?.name
+        },
+    ];
+
+    const deleteConnection = (connection: ConnectionModel) => {
+        deleteMutation.mutate(
+            { id: connection.connectionId! },
+            {
+                onSuccess() {
+                    queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connections_GET] });
+                    enqueueSnackbar(`Deleted connection: ${connection.connectionId}`, { variant: 'success' });
+                },
+                onError() {
+                    enqueueSnackbar(`Error occurred when deleting connection: ${connection.connectionId}`, { variant: 'error' });
+                },
+            }
+        );
+    };
 
     return (
         <Paper sx={{ width: 1 }}>
@@ -55,7 +88,7 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
                 hideFooter
                 disableSelectionOnClick
                 loading={isLoading}
-                // onRowClick={({ row }) => onTableRowClick(row.id)}
+            // onRowClick={({ row }) => onTableRowClick(row.id)}
             />
         </Paper>
     );
