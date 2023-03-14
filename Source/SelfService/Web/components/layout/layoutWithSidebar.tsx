@@ -47,37 +47,19 @@ export const LayoutWithSidebar = ({ navigation, children }: LayoutWithSidebarPro
         </div>
     </div>;
 
-const getDefaultMenuWithItems = (navigate: NavigateFunction, mainNavigationItems: any[], secondaryNavigationItems: any[]): ReactNode =>
-    <>
-        <List sx={{ p: 0, m: 0 }}>
-            {mainNavigationItems.map(navigationItem => (
-                <NavigationListItemButton
-                    key={navigationItem.name}
-                    navigationMenuItem={navigationItem}
-                    navigate={navigate}
-                >
-                    <ListItemIcon sx={{ mr: 2, minWidth: 0, color: 'text.secondary' }}>
-                        {navigationItem.icon}
-                    </ListItemIcon>
-                    <ListItemText>
-                        {navigationItem.name}
-                    </ListItemText>
-                </NavigationListItemButton>
-            ))}
-        </List>
-        <List sx={{ p: 0, m: 0, position: 'fixed', bottom: 0 }}>
-            {secondaryNavigationItems.map(link => (
-                <NavigationListItemButton key={link.name} navigationMenuItem={link} navigate={navigate}>
-                    <ListItemIcon sx={{ mr: 2, minWidth: 0, color: 'text.secondary' }}>
-                        {link.icon}
-                    </ListItemIcon>
-                    <ListItemText>
-                        {link.name}
-                    </ListItemText>
-                </NavigationListItemButton>
-            ))}
-        </List>
-    </>;
+const getDefaultMenuWithItems = (navigate: NavigateFunction, mainNavigationItems: any[]) =>
+    <List sx={{ p: 0, m: 0 }}>
+        {mainNavigationItems.map(navigationItem =>
+            <NavigationListItemButton key={navigationItem.name} navigationMenuItem={navigationItem} navigate={navigate}>
+                <ListItemIcon sx={{ mr: 2, minWidth: 0, color: 'text.secondary' }}>
+                    {navigationItem.icon}
+                </ListItemIcon>
+                <ListItemText>
+                    {navigationItem.name}
+                </ListItemText>
+            </NavigationListItemButton>
+        )}
+    </List>;
 
 const NavigationListItemButton = ({ navigationMenuItem, navigate, ...props }: NavigationListItemButtonProps) => {
     const defaultProps: ListItemButtonBaseProps = {
@@ -131,9 +113,6 @@ export const getMenuWithApplication = (
             name: 'Logs',
             icon: <TextSnippetRounded />,
         },
-    ];
-
-    const secondaryNavigationItems: NavigationMenuItem[] = [
         {
             href: `/documentation/application/${applicationId}/${environment}/overview`,
             name: 'Documentation',
@@ -142,7 +121,7 @@ export const getMenuWithApplication = (
     ];
 
     if (!hasOneCustomer) {
-        secondaryNavigationItems.push({
+        mainNavigationItems.push({
             href: '/.auth/cookies/initiate',
             name: 'Change Customer',
             icon: <SettingsRounded />,
@@ -152,12 +131,12 @@ export const getMenuWithApplication = (
 
     if (hasConnector) {
         // Put before documentation link
-        mainNavigationItems.splice(mainNavigationItems.length - 1, 0, {
+        mainNavigationItems.splice(mainNavigationItems.length - 2, 0, {
             href: `/m3connector/application/${applicationId}/${environment}/details`,
             name: 'M3 Connector',
             icon: <PolylineRounded />,
         });
     }
 
-    return getDefaultMenuWithItems(navigate, mainNavigationItems, secondaryNavigationItems);
+    return getDefaultMenuWithItems(navigate, mainNavigationItems);
 };
