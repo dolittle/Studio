@@ -22,7 +22,9 @@ export const IntegrationsIndex = () => {
     return (
         <WorkSpaceLayout>
             <QueryClientProvider client={queryClient}>
-                {routesElement}
+                <DebugRouter>
+                    {routesElement}
+                </DebugRouter>
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
         </WorkSpaceLayout>

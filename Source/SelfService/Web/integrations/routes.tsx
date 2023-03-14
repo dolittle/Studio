@@ -6,22 +6,26 @@ import { RouteObject, Navigate } from 'react-router-dom';
 
 import { Connections } from './connections';
 import { ConnectionsScreen } from './connectionsScreen';
+import { NewConnection } from './newConnection';
 
 export const routes: RouteObject[] = [
     {
-        path: '/',
+        path: '',
         element: <Navigate to='connections' />,
         children: [],
     },
     {
-        path: '/connections',
+        path: 'connections',
         element: <Connections />,
         children: [],
     },
     {
-        path: '/connections/new-m3-connection',
+        path: 'connections/new/m3/:connectionId/*',
+        element: <NewConnection />,
+    },
+    {
+        path: 'connections/new-m3-connection',
         element: <ConnectionsScreen />,
-        //   errorElement: <ErrorPage />,
         children: [],
     },
 ];
