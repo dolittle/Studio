@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { createContext, useContext, useState } from 'react';
+
 import { useLocation } from 'react-router-dom';
 
 export type NotificationItem = {
@@ -10,20 +11,20 @@ export type NotificationItem = {
 };
 
 export type GlobalContextType = {
-    messages: any[],
-    lastMessage: NotificationItem,
-    lastError: any,
-    errors: any[],
+    messages: any[];
+    lastMessage: NotificationItem;
+    lastError: any;
+    errors: any[];
     setNotification: (message: string, level: string) => void;
     setError: (obj: any) => void;
     clearNotification: () => void;
     setCurrentEnvironment: (environment: string) => void;
-    hasOneCustomer: boolean,
+    hasOneCustomer: boolean;
     setHasOneCustomer: (hasOneCustomer: boolean) => void;
     setCurrentApplicationId: (applicationId: string) => void;
-    currentEnvironment: string,
-    currentApplicationId: string,
-    clearGlobalState: () => void,
+    currentEnvironment: string;
+    currentApplicationId: string;
+    clearGlobalState: () => void;
 };
 
 let _messages: any[] = [];
@@ -41,12 +42,12 @@ export const GlobalContext = createContext<GlobalContextType>({
     setError: (obj) => console.warn('setError function not set'),
     setNotification: (message, level) => { console.log(message, level); },
     clearNotification: () => console.warn('clearNotification function not set'),
+    currentEnvironment: '',
     setCurrentEnvironment: (environment: string) => console.warn('setCurrentEnvironment function not set'),
+    currentApplicationId: '',
     setCurrentApplicationId: (applicationId: string) => console.warn('setCurrentApplicationId function not set'),
     hasOneCustomer: false,
     setHasOneCustomer: (hasOneCustomer: boolean) => console.warn('setHasOneCustomer function not set'),
-    currentEnvironment: '',
-    currentApplicationId: '',
     clearGlobalState: () => console.warn('clearGlobalState function not set'),
 });
 
@@ -64,12 +65,11 @@ const saveToLocalStorage = (key: string, newValue: any): any => {
 };
 
 type GlobalContextProviderProps = {
-    children?: React.ReactNode
+    children?: React.ReactNode;
 };
 
-export const GlobalContextProvider: React.FunctionComponent<GlobalContextProviderProps> = ({ children }) => {
+export const GlobalContextProvider = ({ children }: GlobalContextProviderProps) => {
     const location = useLocation();
-
     const initErrors = getFromLocalStorage('errors', []);
     const initCurrentApplicationId = getFromLocalStorage('currentApplicationId', '');
     const initCurrentEnvironment = getFromLocalStorage('currentEnvironment', '');

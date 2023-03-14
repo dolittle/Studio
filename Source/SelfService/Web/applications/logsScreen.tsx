@@ -29,7 +29,7 @@ import { withRouteApplicationState } from '../spaces/applications/withRouteAppli
  */
 const DAY = 86_400_000_000_000n;
 
-export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ routeApplicationParams }) => {
+export const LogsScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
     const { hasOneCustomer, setNotification } = useGlobalContext();
 
@@ -84,9 +84,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
         });
     }, [currentEnvironment, currentApplicationId]);
 
-    if (!loaded) {
-        return null;
-    }
+    if (!loaded) return null;
 
     if (application.id === '') {
         return <Typography variant='h1' my={2}>Application with this environment not found</Typography>;
@@ -108,6 +106,7 @@ export const LogsScreen: React.FunctionComponent = withRouteApplicationState(({ 
         <LayoutWithSidebar navigation={nav}>
             <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
             <Typography variant='h1'>Logs</Typography>
+
             <Box mt={3}>
                 <LogFilterPanel microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
                 {
