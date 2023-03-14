@@ -1,3 +1,9 @@
+# [3.3.4] - 2023-3-14 [PR: #331](https://github.com/dolittle/Studio/pull/331)
+## Summary
+
+Make it possible to create and delete connections from the integrations/connections page. The Delete functionality is added as a debug-only feature.
+
+
 # [3.3.3] - 2023-3-14 [PR: #330](https://github.com/dolittle/Studio/pull/330)
 ## Summary
 
