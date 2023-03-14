@@ -7,7 +7,11 @@ import { SvgIcons } from '@dolittle/design-system/theming/Icons/Icons';
 
 import { NoEntityView } from '../../components/noEntityView/noEntityView';
 
-export const NoConnections = () => {
+export type NoConnectionsProps = {
+    onCreateNew: () => void;
+};
+
+export const NoConnections = ({onCreateNew}: NoConnectionsProps) => {
 
         return (
         <NoEntityView
@@ -15,9 +19,7 @@ export const NoConnections = () => {
             createEntityProps={{
                 createEntityText: 'Set up M3 connection',
                 createEntityIcon: SvgIcons.PolylineRounded,
-                onCreateEntity(): void {
-                    throw new Error('Function not implemented.');
-                }
+                onCreateEntity: onCreateNew
             }}
         >
             <Typography component='p' variant='body1' mb={2}>
