@@ -26,3 +26,4 @@ export { SelectCard } from './molecules/SelectCard';
 export { Graph } from './molecules/Metrics/Graph';
 export { NavigationBar } from './molecules/NavigationBar';
 export { SideBar } from './molecules/SideBar';
+export { Stepper } from './molecules/Stepper';
