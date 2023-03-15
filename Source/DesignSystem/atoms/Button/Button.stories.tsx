@@ -90,9 +90,10 @@ Text.parameters = {
     docs: {
         description: {
             story: `Text buttons are used for secondary actions, such as 'cancel' or to carry out an optional action within the page.
-            They are commonly found in dialogs, cards or sometimes toolbars. Text buttons may use our primary main color or the inherit color
+            They are commonly found in dialogs, cards or toolbars. Text buttons may use our primary main color or the inherit color
             of the page depending on whether or not the user's attention should be drawn to the button or if the button needs to be distinguished
-            from other content on the page`
+            from other content on the page. When there are several actions the user can take on a single page it's best to use text buttons to save space
+            and to inadvertently prevent creating a call to action that should not exist.`
         }
     }
 };
@@ -134,13 +135,23 @@ Outlined.decorators = [Story => <Box sx={spacing}>{Story()}</Box>];
 Outlined.parameters = {
     docs: {
         description: {
-            story: `Outlined buttons are reserved for login screens. The empty fill allows third-party icons to be used in their original styling.`
+            story: `Outlined buttons can be used in login screens or as a secondary call to action on a page where there are already text buttons and primary buttons. 
+            The empty fill allows third-party icons to be used in their original styling.`
         }
     }
 };
 
 export const Fullwidth = () =>
     <Button label='full width button with custom style' variant='fullwidth' startWithIcon={<AddCircle />} />;
+
+Fullwidth.parameters = {
+    docs: {
+        description: {
+               story: `Full width button are typically used for primary actions. They are used when inside a parent container or beneath a container whose width expands. 
+               The full width button can signal the action applies to all content above, in its surrounding container or to visually balance the empty space.`
+        }
+     }
+ };
 
 export const UseInForms = () => (
     <>
@@ -150,6 +161,15 @@ export const UseInForms = () => (
     </>
 );
 UseInForms.decorators = [Story => <Box sx={spacing}>{Story()}</Box>];
+
+UseInForms.parameters = {
+    docs: {
+        description: {
+            story: `Form buttons are used in dialogs or forms. If there is more than one button option it is important to distinguish between the choices 
+            by using different styling and careful wording.`
+        }
+    }
+};
 
 export const UseAsLink = () => (
     <>
@@ -178,3 +198,13 @@ UseAsLink.decorators = [Story =>
         <Box sx={{ '& a': { mr: 3, mb: 3 } }}>{Story()}</Box>
     </BrowserRouter>
 ];
+
+UseAsLink.parameters = {
+    docs: {
+        description: {
+            story: `Link buttons are used to link to external documentation, emails or 
+            provide internal linking. Internal links should use the inherit color of their parent
+            container. External links should use the secondary color.`
+        }
+    }
+};
