@@ -14,7 +14,7 @@ type StepContent = {
     label: string;
 
     /**
-     * The react element to render when the step is active.
+     * The `react element` to render when the step is active.
      */
     render: () => React.ReactNode;
 };
@@ -23,12 +23,12 @@ export type StepperProps = {
     /**
      * The content to display for each step.
      *
-     * Add a step as array of objects by providing a label and a react element to render.
+     * Add as array of objects by providing a `label` and a `react element` to render.
      */
     steps: StepContent[];
 
     /**
-     * The react element to display when the stepper is finished.
+     * The `react element` to display when the stepper is finished.
      */
     finishedContent?: React.ReactNode;
 
@@ -84,7 +84,6 @@ export const Stepper = ({ steps, finishedContent, optionalStepIndex }: StepperPr
 
     return (
         <Box sx={{ width: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            {/* Header */}
             <MuiStepper activeStep={activeStep} sx={{ mb: 3.5 }}>
                 {steps.map((step, index) => {
                     const stepProps: { completed?: boolean } = {};
@@ -106,12 +105,10 @@ export const Stepper = ({ steps, finishedContent, optionalStepIndex }: StepperPr
                 })}
             </MuiStepper>
 
-            {/* Step content */}
             <Box sx={{ width: 1, maxWidth: 814, alignSelf: 'center', mb: 3.5 }}>
                 {steps[activeStep]?.render()}
             </Box>
 
-            {/* Step action buttons or if steps are finished, display finishedContent */}
             {activeStep === steps.length ? finishedContent :
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                     <Button
