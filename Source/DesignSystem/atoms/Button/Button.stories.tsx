@@ -20,8 +20,7 @@ export default {
     component: Button,
     parameters: {
         docs: {
-            description: { component: `A button triggers an event or action. Its label should let the user know what will happen next. Buttons come in three style variations. 
-            All variations can be used with or without icons to help lift the UI and quickly visually communicate to the user what the button will do.` },
+            description: { component: `` },
         },
     },
     argTypes: {
