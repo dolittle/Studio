@@ -16,6 +16,7 @@ export { Icon } from './atoms/Icon';
 export { IconButton } from './atoms/IconButton';
 export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
+export { SimpleCard } from './atoms/SimpleCard';
 export { Summary } from './atoms/Metrics';
 export { Tabs } from './atoms/Tabs';
 export { Tooltip } from './atoms/Tooltip';
