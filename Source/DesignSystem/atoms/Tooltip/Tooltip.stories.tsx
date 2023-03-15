@@ -48,7 +48,7 @@ export const HoverToolTip = createStory();
 HoverToolTip.parameters = {
     docs: {
         description: {
-            story: `Hover tooltips are useful when space is a premium, especially whenneeding to elaborate on an element's function or provide more information.
+            story: `Hover tooltips are useful when space is at a premium, especially whenneeding to elaborate on an element's function or provide more information.
             Position hover tooltips so that they are close enough to the element they are referring to but do not cover up or hide other elements and information on the page.`
         }
     }
