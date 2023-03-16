@@ -19,6 +19,15 @@ function SlideTransition(props: SlideProps) {
 export default {
     title: 'Snackbar',
     component: SnackbarProvider,
+    parameters: {
+        docs: {
+            description: { component: `Snackbars are used to inform the user of a specific process or task that has happened or failed to happened. 
+            They are not used for urgent / high priority feedback from the user or for system error states such as failing to load a page or present data. 
+            In these cases, use a dialog or alertbox, respectively. Snackbars appear temporarily and go away on their own, using a slide transition from the bottom up when 
+            entering the screen and a slide transition towards the bottom of the screen when leaving. They should not interrupt the user experience and they don't require user input to disappear. 
+            Only one snackbar should appear at a time.` },
+        },
+    },
     argTypes: {
         children: {
             table: {
@@ -107,3 +116,15 @@ Snackbars.args = {
     maxSnack: 6,
     autoHideDuration: 4000
 };
+
+// Unable to render a story placeholder. Please see code below
+// export const ActionSnackbar = createStory();
+
+// ActionSnackbar.parameters = {
+//     docs: {
+//         description: {
+//             story: `A snackbar can contain one action, such as ‘view’ to open a downloaded file or ‘undo’ to reverse an action. 
+//             It can contain a dismiss or cancel option in the form of an ‘X’ icon.`
+//         }
+//     }
+// };
