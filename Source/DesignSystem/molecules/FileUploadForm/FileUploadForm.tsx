@@ -19,16 +19,10 @@ const styles = {
         border: '1px dashed',
         borderColor: 'outlineborder',
     },
-    formLabel: {
+    alignment: {
         display: 'flex',
         alignItems: 'center',
         gap: 1,
-    },
-    fileBox: {
-        display: 'flex',
-        alignItems: 'center',
-        mt: 1,
-        gap: 1.5,
     },
     dropArea: {
         position: 'absolute',
@@ -170,7 +164,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
                 onChange={onFileSelect}
             />
 
-            <Box sx={styles.formLabel}>
+            <Box sx={styles.alignment}>
                 <Button
                     label='Upload file'
                     type='submit'
@@ -181,14 +175,14 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
             </Box>
 
             {fileError && !fileName &&
-                <Box sx={{ ...styles.fileBox, color: 'error.main', }}>
+                <Box sx={{ ...styles.alignment, mt: 1, color: 'error.main', }}>
                     <Icon icon='ErrorRounded' />
                     <Typography variant='body2'>{`Wrong file type. Please upload a ${listValidFileExtensions()} file.`}</Typography>
                 </Box>
             }
 
             {!fileError && fileName &&
-                <Box sx={styles.fileBox}>
+                <Box sx={{ ...styles.alignment, mt: 1 }}>
                     <Typography>{fileName}</Typography>
                     <IconButton icon='CancelRounded' color='primary' tooltipText='Delete file' />
                 </Box>
