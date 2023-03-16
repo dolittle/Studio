@@ -10,18 +10,14 @@ import { alpha } from '@mui/material/styles';
 import { Button } from '@dolittle/design-system';
 
 const styles = {
-    wrapper: {
-        width: 1,
-        height: 132,
-        border: '1px dashed',
-        borderColor: 'outlineborder',
-    },
     form: {
         width: 1,
-        height: 1,
-        position: 'relative',
+        height: 132,
         display: 'flex',
         justifyContent: 'center',
+        position: 'relative',
+        border: '1px dashed',
+        borderColor: 'outlineborder',
     },
     formLabel: {
         display: 'flex',
@@ -86,30 +82,34 @@ export const FileUploadBox = () => {
     };
 
     return (
-        <Box sx={styles.wrapper}>
-            <Box component='form' id='form-file-upload' onDragEnter={handleDrag} onSubmit={handleSubmit} sx={styles.form}>
-                <input ref={inputRef} type='file' id='input-file-upload' multiple={true} onChange={handleChange} hidden />
+        <Box
+            component='form'
+            id='form-file-upload'
+            onDragEnter={handleDrag}
+            onSubmit={handleSubmit}
+            sx={styles.form}
+        >
+            <input ref={inputRef} type='file' id='input-file-upload' multiple={true} onChange={handleChange} hidden />
 
-                <Box component='label' id='label-file-upload' htmlFor='input-file-upload' sx={styles.formLabel}>
-                    <Button
-                        label='Upload file'
-                        type='submit'
-                        startWithIcon={<UploadRounded />}
-                        onClick={() => inputRef.current?.click()}
-                    />
-                    <Typography>or drag it here</Typography>
-                </Box>
-
-                {dragActive &&
-                    <Box
-                        onDragEnter={handleDrag}
-                        onDragLeave={handleDrag}
-                        onDragOver={handleDrag}
-                        onDrop={handleDrop}
-                        sx={styles.dropArea}
-                    />
-                }
+            <Box component='label' id='label-file-upload' htmlFor='input-file-upload' sx={styles.formLabel}>
+                <Button
+                    label='Upload file'
+                    type='submit'
+                    startWithIcon={<UploadRounded />}
+                    onClick={() => inputRef.current?.click()}
+                />
+                <Typography>or drag it here</Typography>
             </Box>
+
+            {dragActive &&
+                <Box
+                    onDragEnter={handleDrag}
+                    onDragLeave={handleDrag}
+                    onDragOver={handleDrag}
+                    onDrop={handleDrop}
+                    sx={styles.dropArea}
+                />
+            }
         </Box>
     );
 };
