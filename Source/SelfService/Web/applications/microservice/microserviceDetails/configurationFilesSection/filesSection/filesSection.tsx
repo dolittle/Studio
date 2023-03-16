@@ -58,7 +58,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 fileName: name,
                 path: '/app/data/',
                 dateAdded: 'N/A',
-                addedBy: 'N/A'
+                addedBy: 'N/A',
             } as ConfigFilesTableRow;
         });
 
@@ -69,31 +69,15 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         const files = selected instanceof FileList ? Array.from(selected) : [selected];
 
         for (const file of files) {
-            if (validateFileSize(file) && validateFileChars(file)) {
+            if (validateFile(file.size > MAX_CONFIGMAP_ENTRY_SIZE) && validateFile(isAlphaNumeric.test(file.name))) {
                 await saveConfigFile(file);
+            } else {
+                setValidateFileDialogIsOpen(prev => ({ isOpen: true, file: [...prev.file, file] }));
             }
         }
     };
 
-    const validateFileSize = (file: File): boolean => {
-        if (file.size > MAX_CONFIGMAP_ENTRY_SIZE) {
-            setValidateFileDialogIsOpen(prev => ({ isOpen: true, file: [...prev.file, file] }));
-
-            return false;
-        }
-
-        return true;
-    };
-
-    const validateFileChars = (file: File): boolean => {
-        if ((isAlphaNumeric).test(file.name)) {
-            setValidateFileDialogIsOpen(prev => ({ isOpen: true, file: [...prev.file, file] }));
-
-            return false;
-        }
-
-        return true;
-    };
+    const validateFile = (pattern: boolean) => pattern ? false : true;
 
     const saveConfigFile = async (file: File): Promise<void> => {
         const formData = new FormData();
