@@ -42,7 +42,7 @@ export type OnFileSelectCallback = (file: File | FileList, event?) => void;
 export type FileUploadFormProps = {
     onSelected: OnFileSelectCallback;
     onConfirmed?: OnFileConfirmCallback;
-    allowMultipleFiles: boolean;
+    allowMultipleFiles?: boolean;
     hideForm?: boolean;
     validFileExtensions?: string[];
 };
@@ -91,8 +91,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
 
         const files = event.dataTransfer.files;
         if (!files || files.length === 0) return;
-
-        handleFormBoxFileStatus(files);
+        if (!hideForm) handleFormBoxFileStatus(files);
         onSelected(files[0], event);
     };
 
@@ -103,8 +102,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
     const onFileSelect = (event: FormEvent<HTMLInputElement>) => {
         const files = (event?.target as HTMLInputElement)?.files;
         if (!files || files.length === 0) return;
-
-        handleFormBoxFileStatus(files);
+        if (!hideForm) handleFormBoxFileStatus(files);
         onSelected(allowMultipleFiles ? files : files[0], event);
     };
 
