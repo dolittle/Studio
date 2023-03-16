@@ -10,6 +10,9 @@ const { metadata, createStory } = componentStories(Tabs);
 metadata.parameters = {
     controls: { include: [] },
     docs: {
+        description: { component: `Tabs organize and allow navigation between groups of content that are related and at the same level of hierarchy. 
+        Only one tab can be active at a time. The left most tab is activated by default when a user visits a page with tabs. 
+        Keep tab labels between one to two words at most. They should be descriptive enough to let the user know what content is contained within that tab. ` },
         source: {
             code: `
 tabs: [
