@@ -139,6 +139,11 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
         onConfirmed?.(form, event);
     };
 
+    const handleFileDelete = () => {
+        setFileName('');
+        setFileError(false);
+    };
+
     return (
         <Box
             component='form'
@@ -182,7 +187,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
             {!fileError && fileName &&
                 <Box sx={{ ...styles.alignment, mt: 1 }}>
                     <Typography>{fileName}</Typography>
-                    <IconButton icon='CancelRounded' color='primary' tooltipText='Delete file' />
+                    <IconButton icon='CancelRounded' color='primary' tooltipText='Delete file' onClick={handleFileDelete} />
                 </Box>
             }
 
