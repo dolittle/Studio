@@ -10,6 +10,15 @@ import { componentStories, IconButton, availableIcons, SvgIconsDefinition } from
 const { metadata, createStory } = componentStories(IconButton);
 
 metadata.title = 'Icon Button';
+metadata.parameters = {
+    docs: {
+        description: { component: `Icon buttons are commonly used in toolbars or when trying to save space in components such as data grids or cards. 
+        Icon only buttons should only be used when the icon is strongly associated with the action such as a trash icon for the 'delete' action 
+        or the floppy disk for the 'save' action. If the user has to guess what the icon button does, use a text button instead. 
+        If an icon button is the only feasible choice due to space or consistency in the UI then include a hover tooltip that indicates the function of the button. 
+        By default, use the inherit color.` },
+    },
+};
 
 metadata.argTypes = {
     download: { control: false },
