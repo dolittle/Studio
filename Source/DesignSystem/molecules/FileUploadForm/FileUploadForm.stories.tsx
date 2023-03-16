@@ -16,7 +16,7 @@ export default {
     component: FileUploadForm,
     parameters: {
         controls: {
-            include: ['allowMultipleFiles', 'hiddenFileBox']
+            include: ['allowMultipleFiles', 'hideForm']
         },
         docs: {
             description: {
@@ -24,14 +24,11 @@ export default {
             },
         },
     },
-    argTypes: {},
     args: {
         onSelected: file => console.log(file),
         allowMultipleFiles: true,
         hideForm: false,
-
-        // accept: '*',
-        // dropzoneTextError: 'An error occurred while uploading the file',
+        validFileExtensions: [],
     },
 } as ComponentMeta<typeof FileUploadForm>;
 
@@ -54,6 +51,28 @@ export const HiddenForm = () => {
                 onSelected={file => console.log(file)}
                 allowMultipleFiles
                 hideForm
+            />
+        </>
+    );
+};
+
+export const WithValidFileExtensions = () => {
+    const fileUploadRef = useRef<FileUploadFormRef>(null);
+
+    return (
+        <>
+            <Button
+                label='Upload file'
+                type='submit'
+                startWithIcon={<UploadRounded />}
+                onClick={() => fileUploadRef.current?.showPrompt()}
+            />
+
+            <FileUploadForm
+                ref={fileUploadRef}
+                onSelected={file => console.log(file)}
+                allowMultipleFiles
+                validFileExtensions={['json', 'yaml', 'yml']}
             />
         </>
     );
