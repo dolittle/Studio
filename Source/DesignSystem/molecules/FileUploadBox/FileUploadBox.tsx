@@ -36,10 +36,20 @@ const styles = {
     },
 };
 
-export const FileUploadBox = () => {
+export type FileUploadFormRef = {
+    showPrompt: () => void;
+    confirmSelected: () => void;
+};
+
+export type FileUploadBoxProps = {
+    allowMultipleFiles: boolean;
+};
+
+export const FileUploadBox = ({ allowMultipleFiles }: FileUploadBoxProps) => {
     const [dragActive, setDragActive] = useState(false);
 
-    const inputRef = useRef<HTMLInputElement>(null);
+    const formRef = useRef<HTMLFormElement>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     //React.DragEvent<HTMLLabelElement>
     const handleDrag = (event: any) => {
@@ -77,26 +87,36 @@ export const FileUploadBox = () => {
         }
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const onFileSubmitted = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
     };
 
     return (
         <Box
             component='form'
+            ref={formRef}
+            method='put'
             id='form-file-upload'
             onDragEnter={handleDrag}
-            onSubmit={handleSubmit}
+            onSubmit={onFileSubmitted}
             sx={styles.form}
         >
-            <input ref={inputRef} type='file' id='input-file-upload' multiple={true} onChange={handleChange} hidden />
+            <input
+                ref={fileInputRef}
+                id='input-file-upload'
+                type='file'
+                name='file'
+                hidden
+                multiple={allowMultipleFiles}
+                onChange={handleChange}
+            />
 
-            <Box component='label' id='label-file-upload' htmlFor='input-file-upload' sx={styles.formLabel}>
+            <Box sx={styles.formLabel}>
                 <Button
                     label='Upload file'
                     type='submit'
                     startWithIcon={<UploadRounded />}
-                    onClick={() => inputRef.current?.click()}
+                    onClick={() => fileInputRef.current?.click()}
                 />
                 <Typography>or drag it here</Typography>
             </Box>
