@@ -3,9 +3,8 @@
 
 import React, { DragEvent, FormEvent, useImperativeHandle, useState, useRef } from 'react';
 
-import { Box, Typography } from '@mui/material';
+import { alpha, Box, Typography } from '@mui/material';
 import { UploadRounded } from '@mui/icons-material';
-import { alpha } from '@mui/material/styles';
 
 import { Button } from '@dolittle/design-system';
 
@@ -50,7 +49,7 @@ export type FileUploadFormRef = {
     confirmSelected: () => void;
 };
 
-export const FileUploadBox = React.forwardRef<FileUploadFormRef, FileUploadFormProps>(function FileUploadBox({
+export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadFormProps>(function FileUploadForm({
     onSelected, onConfirmed, allowMultipleFiles = false, hiddenFileBox = false }: FileUploadFormProps, ref: React.ForwardedRef<FileUploadFormRef>) {
 
     const [dragActive, setDragActive] = useState(false);
