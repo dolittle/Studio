@@ -58,7 +58,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
 
     const [dragActive, setDragActive] = useState(false);
 
-    const [fileError, setFileError] = useState(false);
+    const [fileFormatError, setFileFormatError] = useState(false);
     const [fileName, setFileName] = useState('');
 
     const formRef = useRef<HTMLFormElement>(null);
@@ -91,7 +91,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
 
         const files = event.dataTransfer.files;
         if (!files || files.length === 0) return;
-        if (!hideForm) handleFormBoxFileStatus(files);
+        if (!hideForm) showFormBoxFile(files);
         onSelected(files[0], event);
     };
 
@@ -102,18 +102,18 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
     const onFileSelect = (event: FormEvent<HTMLInputElement>) => {
         const files = (event?.target as HTMLInputElement)?.files;
         if (!files || files.length === 0) return;
-        if (!hideForm) handleFormBoxFileStatus(files);
+        if (!hideForm) showFormBoxFile(files);
         onSelected(allowMultipleFiles ? files : files[0], event);
     };
 
-    const handleFormBoxFileStatus = (files: FileList) => {
+    const showFormBoxFile = (files: FileList) => {
         const fileExtension = files[0].name.split('.').pop() as string;
 
         if (!validFileExtensions.length || validFileExtensions.includes(fileExtension)) {
-            setFileError(false);
+            setFileFormatError(false);
             setFileName(files[0].name);
         } else {
-            setFileError(true);
+            setFileFormatError(true);
             setFileName('');
         }
     };
@@ -141,7 +141,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
 
     const handleFileDelete = () => {
         setFileName('');
-        setFileError(false);
+        setFileFormatError(false);
     };
 
     return (
@@ -177,14 +177,14 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
                 <Typography>or drag it here</Typography>
             </Box>
 
-            {fileError && !fileName &&
+            {fileFormatError && !fileName &&
                 <Box sx={{ ...styles.alignment, mt: 1, color: 'error.main', }}>
                     <Icon icon='ErrorRounded' />
                     <Typography variant='body2'>{`Wrong file type. Please upload a ${listValidFileExtensions()} file.`}</Typography>
                 </Box>
             }
 
-            {!fileError && fileName &&
+            {!fileFormatError && fileName &&
                 <Box sx={{ ...styles.alignment, mt: 1 }}>
                     <Typography>{fileName}</Typography>
                     <IconButton icon='CancelRounded' color='primary' tooltipText='Delete file' onClick={handleFileDelete} />
