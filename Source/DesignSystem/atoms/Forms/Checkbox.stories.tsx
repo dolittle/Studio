@@ -16,6 +16,19 @@ const { metadata, createStory } = componentStories(Checkbox, {
 });
 
 metadata.parameters = {
+    docs: {
+        description: { component: `A checkbox is an input control that allows a user to select one or more options from a number of choices, 
+including sub-selections, or to turn an item on or off in a desktop environment. Checkboxes should be used instead of switches if multiple options can be selected from a list. 
+There are three variants of a checkbox: selected, unselected, and indeterminate. Always provide a succinct, yet clear label, as to what the checkbox is for.
+
+**Parent and child checkboxes:**
+When the parent checkbox is checked, all child checkboxes are checked. If the parent checkbox is unchecked, all child checkboxes become unchecked. If some child checkboxes are checked, but not all, the parent
+checkbox becomes an indeterminate checkbox. 
+
+**Disabled checkboxes:**
+Disabled checkboxes can be selected, unselected or indeterminate. Disable a checkbox when the user should not have the option to select or deselect the item. 
+Consider offering a reason as to why the checkbox is disabled with a hover tooltip if it is not obvious in the UI or the user might benefit from the understanding.` },
+    },
     controls: { include: ['id', 'label', 'disabled', 'required'] },
 };
 
