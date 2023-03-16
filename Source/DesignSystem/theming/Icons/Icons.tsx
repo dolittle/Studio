@@ -9,6 +9,7 @@ import {
     AppsRounded,
     ArrowBack,
     BackupRounded,
+    CancelRounded,
     CheckRounded,
     CheckCircleRounded,
     ChevronRight,
@@ -56,6 +57,7 @@ export interface SvgIconsDefinition {
     'ArrowBack' |
     'BackupRounded' |
     'Bridge' |
+    'CancelRounded' |
     'ContainerRegistry' |
     'CheckCircleRounded' |
     'CheckRounded' |
@@ -101,6 +103,7 @@ export const SvgIcons = {
     ArrowBack: <ArrowBack />,
     BackupRounded: <BackupRounded />,
     Bridge: <Bridge />,
+    CancelRounded: <CancelRounded />,
     ContainerRegistry: <ContainerRegistry />,
     CheckCircleRounded: <CheckCircleRounded />,
     CheckRounded: <CheckRounded />,
