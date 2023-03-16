@@ -37,6 +37,20 @@ const { metadata, createStory } = componentStories(Input, {
 });
 
 metadata.parameters = {
+    docs: {
+        description: { component: `By default, we use an outlined input field with a label. Labels should make it easy for the user
+to understand the requested information and to address any errors.
+
+**Helper text:** Helper text should not repeat the label but, rather, provide additional guidance about the input field. It should only take up a single line below the field. Helper text should only be added when it can provide more value.
+
+**Error text:** Error text, like helper text, should display instructions on how to fix the error and only take up a single line below the field. When an input field has an error, it should render an error state in the main error color.
+
+**Icons:** Icons in text fields are optional and, if used, should provide additional functionality, not decoration. Examples include, a drop down arrow to expand the options (this is a 'Select' component), an 'X' icon to clear the input or an '!' icon to indicate an error.
+
+**Prefix and suffix text:** Include a prefix or suffix in fields when it makes sense. Examples include a '$' symbol at the beginning when the user must input a monetary value or 'kgs' at the end when a user must enter a weight value.
+
+**Layout:** Input fields should expand with fluid layouts but never fill an entire width of a large screen. Take care to keep alignment on text fields where it makes sense and shorten fields where appropriate. For example, an input field for abbreviated state names such as AL, AK, AZ, AR, etc.. can be shortened. However, an input field for first and last name will be longer and should maintain the same width as each other.` },
+    },
     controls: { include: ['id', 'label', 'autoFocus', 'startAdornment', 'placeholder', 'disabled', 'required', 'pattern'] },
 };
 
@@ -90,6 +104,17 @@ export const Required = createStory({
     required: true,
 });
 
+Required.parameters = {
+    docs: {
+        description: {
+            story: `Always include an asterisk (*) on the label when input is required from the user. 
+            Alternatively, you can leave out the asterisk IF all fields are required and only a few are optional. 
+            In this case, include the type (optional) in the label. This is only recommended in familiar tasks where users expect certain information to be required, 
+            such as a signup or checkout process.`
+        }
+    }
+};
+
 export const RequiredWithCustomMessage = createStory({
     id: 'requiredInputWithCustomMessage',
     label: 'Custom required message',
@@ -106,6 +131,7 @@ export const RequiredWithCustomRegexPattern = createStory({
     required: true,
 });
 
+//TODO: change styling and name to disabled
 export const WithDashedBorder = createStory({
     id: 'dashedInput',
     label: 'With dashed border',

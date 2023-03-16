@@ -19,9 +19,10 @@ export default metadata;
 
 export const Default = createStory({});
 
+//TODO: Implement component
+
 export const ErrorSpinner = createStory({});
 
-//TODO: Implement component
 ErrorSpinner.parameters = {
     docs: {
         description: {
