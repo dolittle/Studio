@@ -9,6 +9,37 @@ import { alpha } from '@mui/material/styles';
 
 import { Button } from '@dolittle/design-system';
 
+const styles = {
+    wrapper: {
+        width: 1,
+        height: 132,
+        border: '1px dashed',
+        borderColor: 'outlineborder',
+    },
+    form: {
+        width: 1,
+        height: 1,
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    formLabel: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1,
+    },
+    dropArea: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        width: 1,
+        height: 1,
+        backgroundColor: theme => `${alpha(theme.palette.primary.main, 0.16)}`,
+    },
+};
+
 export const FileUploadBox = () => {
     const [dragActive, setDragActive] = useState(false);
 
@@ -55,37 +86,11 @@ export const FileUploadBox = () => {
     };
 
     return (
-        <Box sx={{
-            width: 1,
-            height: 132,
-            border: '1px dashed',
-            borderColor: 'outlineborder',
-        }}>
-            <Box
-                component='form'
-                id='form-file-upload'
-                onDragEnter={handleDrag}
-                onSubmit={handleSubmit}
-                sx={{
-                    width: 1,
-                    height: 1,
-                    position: 'relative',
-                    display: 'flex',
-                    justifyContent: 'center',
-                }}
-            >
+        <Box sx={styles.wrapper}>
+            <Box component='form' id='form-file-upload' onDragEnter={handleDrag} onSubmit={handleSubmit} sx={styles.form}>
                 <input ref={inputRef} type='file' id='input-file-upload' multiple={true} onChange={handleChange} hidden />
 
-                <Box
-                    component='label'
-                    id='label-file-upload'
-                    htmlFor='input-file-upload'
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 1,
-                    }}
-                >
+                <Box component='label' id='label-file-upload' htmlFor='input-file-upload' sx={styles.formLabel}>
                     <Button
                         label='Upload file'
                         type='submit'
@@ -101,18 +106,8 @@ export const FileUploadBox = () => {
                         onDragLeave={handleDrag}
                         onDragOver={handleDrag}
                         onDrop={handleDrop}
-                        sx={{
-                            position: 'absolute',
-                            top: 0,
-                            right: 0,
-                            bottom: 0,
-                            left: 0,
-                            width: 1,
-                            height: 1,
-                            backgroundColor: theme => `${alpha(theme.palette.primary.main, 0.16)}`,
-                        }}
-                    >
-                    </Box>
+                        sx={styles.dropArea}
+                    />
                 }
             </Box>
         </Box>
