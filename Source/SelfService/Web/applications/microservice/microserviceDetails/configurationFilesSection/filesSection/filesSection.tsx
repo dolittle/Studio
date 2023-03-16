@@ -71,8 +71,8 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         for (const file of files) {
             if (validateFileSize(file) && validateFileChars(file)) {
                 await saveConfigFile(file);
-            };
-        };
+            }
+        }
     };
 
     const validateFileSize = (file: File): boolean => {
@@ -80,7 +80,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             setValidateFileDialogIsOpen(prev => ({ isOpen: true, file: [...prev.file, file] }));
 
             return false;
-        };
+        }
 
         return true;
     };
@@ -90,7 +90,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             setValidateFileDialogIsOpen(prev => ({ isOpen: true, file: [...prev.file, file] }));
 
             return false;
-        };
+        }
 
         return true;
     };
@@ -108,7 +108,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
             setRestartInfoBoxIsOpen(true);
         } else {
             enqueueSnackbar('File not added. Please try again.', { variant: 'error' });
-        };
+        }
     };
 
     const handleConfigFileDelete = async (): Promise<void> => {
@@ -123,8 +123,8 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 setDeleteConfigFileDialogIsOpen(false);
 
                 return;
-            };
-        };
+            }
+        }
 
         setDeleteConfigFileDialogIsOpen(false);
         fetchAndUpdateConfigFileNamesList();
