@@ -1,3 +1,11 @@
+# [3.3.6] - 2023-3-16 [PR: #339](https://github.com/dolittle/Studio/pull/339)
+## Summary
+
+Add FileUploadForm component to Design System and used it in filesSection.tsx.
+
+<img width="712" alt="Screenshot 2023-03-16 at 23 53 29" src="https://user-images.githubusercontent.com/19160439/225761292-0d40cf96-6891-4c8c-90c6-b869458e2037.png">
+
+
 # [3.3.5] - 2023-3-14 [PR: #334](https://github.com/dolittle/Studio/pull/334)
 Don't need to have this prefix in right now, and it's a little annoying.
 When we model "workspaces" in, it may need to come back
