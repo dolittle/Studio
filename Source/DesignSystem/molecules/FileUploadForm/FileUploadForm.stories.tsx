@@ -28,7 +28,7 @@ export default {
     args: {
         onSelected: file => console.log(file),
         allowMultipleFiles: true,
-        hiddenFileBox: false,
+        hideForm: false,
 
         // accept: '*',
         // dropzoneTextError: 'An error occurred while uploading the file',
@@ -53,7 +53,7 @@ export const HiddenForm = () => {
                 ref={fileUploadRef}
                 onSelected={file => console.log(file)}
                 allowMultipleFiles
-                hiddenFileBox
+                hideForm
             />
         </>
     );
