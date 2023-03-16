@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
-import { Accordion } from '@dolittle/design-system';
+import { Accordion, FileUploadForm, FileUploadFormRef } from '@dolittle/design-system';
 
 import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../../apis/solutions/api';
 
@@ -17,7 +17,6 @@ import { RestartMicroserviceDialog } from '../../../components/restartMicroservi
 import { EmptyDataTable } from '../../../components/emptyDataTable';
 import { RestartInfoBox } from '../../../components/restartInfoBox';
 
-import { FileUploadForm, FileUploadFormRef } from './fileUploadForm';
 import { ConfigFilesTable, ConfigFilesTableRow } from './configFilesTable';
 import { ValidateFileDialog } from './validateFileDialog';
 import { DeleteConfigFileDialog } from './deleteConfigFileDialog';
@@ -190,7 +189,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                     handleDownload={handleConfigFileDownload}
                 />
 
-                <FileUploadForm ref={fileUploadRef} onSelected={handleFileSelect} allowMultipleFiles />
+                <FileUploadForm ref={fileUploadRef} onSelected={handleFileSelect} allowMultipleFiles hideForm />
 
                 <RestartInfoBox microserviceName={microserviceName} isOpen={restartInfoBoxIsOpen} onDismissed={() => setRestartInfoBoxIsOpen(false)} />
 
