@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useRef, useState } from 'react';
+import React, { DragEvent, FormEvent, useImperativeHandle, useState, useRef } from 'react';
 
 import { Box, Typography } from '@mui/material';
 import { UploadRounded } from '@mui/icons-material';
@@ -13,7 +13,6 @@ const styles = {
     form: {
         width: 1,
         height: 132,
-        display: 'flex',
         justifyContent: 'center',
         position: 'relative',
         border: '1px dashed',
@@ -36,23 +35,38 @@ const styles = {
     },
 };
 
+export type OnFileConfirmCallback = (form: FormData, event?) => void;
+export type OnFileSelectCallback = (file: File | FileList, event?) => void;
+
+export type FileUploadFormProps = {
+    onSelected: OnFileSelectCallback;
+    onConfirmed?: OnFileConfirmCallback;
+    allowMultipleFiles: boolean;
+    hiddenFileBox?: boolean;
+};
+
 export type FileUploadFormRef = {
     showPrompt: () => void;
     confirmSelected: () => void;
 };
 
-export type FileUploadBoxProps = {
-    allowMultipleFiles: boolean;
-};
+export const FileUploadBox = React.forwardRef<FileUploadFormRef, FileUploadFormProps>(function FileUploadBox({
+    onSelected, onConfirmed, allowMultipleFiles = false, hiddenFileBox = false }: FileUploadFormProps, ref: React.ForwardedRef<FileUploadFormRef>) {
 
-export const FileUploadBox = ({ allowMultipleFiles }: FileUploadBoxProps) => {
     const [dragActive, setDragActive] = useState(false);
 
     const formRef = useRef<HTMLFormElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    //React.DragEvent<HTMLLabelElement>
-    const handleDrag = (event: any) => {
+    useImperativeHandle(ref, (): FileUploadFormRef => ({
+        showPrompt: () => fileInputRef?.current?.click(),
+        confirmSelected: () => {
+            const event = new Event('submit', { bubbles: true, cancelable: true });
+            formRef?.current?.dispatchEvent(event);
+        },
+    }));
+
+    const handleFileDrag = (event: DragEvent) => {
         event.preventDefault();
         event.stopPropagation();
 
@@ -63,32 +77,34 @@ export const FileUploadBox = ({ allowMultipleFiles }: FileUploadBoxProps) => {
         }
     };
 
-    //: React.DragEvent<HTMLLabelElement>
-    const handleDrop = (event: any) => {
+    const onFileDrop = (event: DragEvent) => {
         event.preventDefault();
         event.stopPropagation();
 
         setDragActive(false);
 
         const files = event.dataTransfer.files;
-
-        if (event.dataTransfer.files && event.dataTransfer.files[0]) {
-            console.log(files);
-        }
+        if (!files || files.length === 0) return;
+        onSelected(allowMultipleFiles ? files : files[0], event);
     };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault();
-
-        const files = event.currentTarget.files;
-
-        if (files) {
-            console.log(files);
-        }
+    /**
+     * Serves change event and file from target.
+     * @param event
+     */
+    const onFileSelect = (event: FormEvent<HTMLInputElement>) => {
+        const files = (event?.target as HTMLInputElement)?.files;
+        if (!files || files.length === 0) return;
+        onSelected(allowMultipleFiles ? files : files[0], event);
     };
 
-    const onFileSubmitted = (event: React.FormEvent<HTMLFormElement>) => {
+    /**
+     * @param event Serves submit event and formdata to client.
+     */
+    const onFileSubmitted = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        const form = new FormData(event.target as HTMLFormElement);
+        onConfirmed?.(form, event);
     };
 
     return (
@@ -97,9 +113,12 @@ export const FileUploadBox = ({ allowMultipleFiles }: FileUploadBoxProps) => {
             ref={formRef}
             method='put'
             id='form-file-upload'
-            onDragEnter={handleDrag}
+            onDragEnter={handleFileDrag}
             onSubmit={onFileSubmitted}
-            sx={styles.form}
+            sx={{
+                display: hiddenFileBox ? 'none' : 'flex',
+                ...styles.form,
+            }}
         >
             <input
                 ref={fileInputRef}
@@ -108,7 +127,7 @@ export const FileUploadBox = ({ allowMultipleFiles }: FileUploadBoxProps) => {
                 name='file'
                 hidden
                 multiple={allowMultipleFiles}
-                onChange={handleChange}
+                onChange={onFileSelect}
             />
 
             <Box sx={styles.formLabel}>
@@ -123,13 +142,13 @@ export const FileUploadBox = ({ allowMultipleFiles }: FileUploadBoxProps) => {
 
             {dragActive &&
                 <Box
-                    onDragEnter={handleDrag}
-                    onDragLeave={handleDrag}
-                    onDragOver={handleDrag}
-                    onDrop={handleDrop}
+                    onDragEnter={handleFileDrag}
+                    onDragLeave={handleFileDrag}
+                    onDragOver={handleFileDrag}
+                    onDrop={onFileDrop}
                     sx={styles.dropArea}
                 />
             }
         </Box>
     );
-};
+});
