@@ -117,14 +117,15 @@ Snackbars.args = {
     autoHideDuration: 4000
 };
 
-// Unable to render a story placeholder. Please see code below
-// export const ActionSnackbar = createStory();
+//TODO: Implement component
+export const SnackbarsWithAction = ()=><></>;
 
-// ActionSnackbar.parameters = {
-//     docs: {
-//         description: {
-//             story: `A snackbar can contain one action, such as ‘view’ to open a downloaded file or ‘undo’ to reverse an action. 
-//             It can contain a dismiss or cancel option in the form of an ‘X’ icon.`
-//         }
-//     }
-// };
+
+SnackbarsWithAction.parameters = {
+    docs: {
+        description: {
+            story: `A snackbar can contain one action, such as 'view' to open a downloaded file or 'undo' to reverse an action. 
+            It can contain a dismiss or cancel option in the form of an 'X' icon.`
+        }
+    }
+};
