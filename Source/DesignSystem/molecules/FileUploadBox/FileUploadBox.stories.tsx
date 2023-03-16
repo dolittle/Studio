@@ -3,28 +3,58 @@
 
 import React, { useRef } from 'react';
 
-import { componentStories, Button, FileUploadBox } from '@dolittle/design-system';
+import { ComponentMeta } from '@storybook/react';
+
+import { UploadRounded } from '@mui/icons-material';
+
+import { Button, FileUploadBox, FileUploadFormProps } from '@dolittle/design-system';
 
 import { FileUploadFormRef } from './FileUploadBox';
 
-const { metadata, createStory } = componentStories(FileUploadBox, {
-    decorator: (Story) => {
-        const fileUploadRef = useRef<FileUploadFormRef>(null);
+export default {
+    title: 'File Upload Box',
+    component: FileUploadBox,
+    parameters: {
+        controls: {
+            include: ['allowMultipleFiles', 'hiddenFileBox']
+        },
+        docs: {
+            description: {
+                component: `A file upload box is a component that allows the user to upload files to the system.`,
+            },
+        },
+    },
+    argTypes: {},
+    args: {
+        onSelected: file => console.log(file),
+        allowMultipleFiles: true,
+        hiddenFileBox: false,
 
-        return (
-            <>
-                {Story()}
-                <Button
-                    label='Upload file'
-                    type='submit'
-                    //startWithIcon={<UploadRounded />}
-                    onClick={() => fileUploadRef.current?.showPrompt()}
-                />
-            </>
-        );
-    }
-});
+        // accept: '*',
+        // dropzoneTextError: 'An error occurred while uploading the file',
+    },
+} as ComponentMeta<typeof FileUploadBox>;
 
-export default metadata;
+export const Default = (args: FileUploadFormProps) => <FileUploadBox {...args} />;
 
-export const Default = createStory();
+export const HiddenFileBox = () => {
+    const fileUploadRef = useRef<FileUploadFormRef>(null);
+
+    return (
+        <>
+            <Button
+                label='Upload file'
+                type='submit'
+                startWithIcon={<UploadRounded />}
+                onClick={() => fileUploadRef.current?.showPrompt()}
+            />
+
+            <FileUploadBox
+                ref={fileUploadRef}
+                onSelected={file => console.log(file)}
+                allowMultipleFiles
+                hiddenFileBox
+            />
+        </>
+    );
+};

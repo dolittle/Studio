@@ -23,7 +23,7 @@ export { Tooltip } from './atoms/Tooltip';
 export { InputMessages, OutputMessages, Terminal, TerminalConnect, TerminalStreams } from './atoms/Terminal';
 
 // Molecules
-export { FileUploadBox } from './molecules/FileUploadBox';
+export { FileUploadBox, FileUploadFormProps } from './molecules/FileUploadBox';
 export { Graph } from './molecules/Metrics/Graph';
 export { NavigationBar } from './molecules/NavigationBar';
 export { SelectCard } from './molecules/SelectCard';
