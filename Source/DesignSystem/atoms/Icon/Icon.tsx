@@ -7,7 +7,7 @@ import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
 
 type IconProps = {
     icon: SvgIconsDefinition['icon'];
-    color?: 'inherit' | 'primary';
+    color?: 'inherit' | 'primary' | 'secondary' | 'action' | 'disabled' | 'error';
     size?: 'small' | 'medium';
 };
 
