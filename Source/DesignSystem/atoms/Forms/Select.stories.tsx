@@ -30,6 +30,10 @@ const { metadata, createStory } = componentStories(Select, {
 });
 
 metadata.parameters = {
+    docs: {
+        description: { component: `Use a select input field when the user needs to input information but should only choose from a list of pre-determined items. 
+This is ideal for forms where there are finite values to choose from or when filtering items.` },
+    },
     controls: { include: ['id', 'label', 'options', 'defaultValue', 'disabled', 'required'] },
 };
 
