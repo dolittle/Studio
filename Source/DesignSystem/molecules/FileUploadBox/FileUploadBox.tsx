@@ -3,7 +3,9 @@
 
 import React, { useRef, useState } from 'react';
 
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { UploadRounded } from '@mui/icons-material';
+import { alpha } from '@mui/material/styles';
 
 import { Button } from '@dolittle/design-system';
 
@@ -53,13 +55,46 @@ export const FileUploadBox = () => {
     };
 
     return (
-        <>
-            <form id='form-file-upload' onDragEnter={handleDrag} onSubmit={handleSubmit} style={{ position: 'relative' }}>
+        <Box sx={{
+            width: 1,
+            height: 132,
+            border: '1px dashed',
+            borderColor: 'outlineborder',
+        }}>
+            <Box
+                component='form'
+                id='form-file-upload'
+                onDragEnter={handleDrag}
+                onSubmit={handleSubmit}
+                sx={{
+                    width: 1,
+                    height: 1,
+                    position: 'relative',
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}
+            >
                 <input ref={inputRef} type='file' id='input-file-upload' multiple={true} onChange={handleChange} hidden />
 
-                <label id='label-file-upload' htmlFor='input-file-upload'>
-                    <p>Drag and drop your file here</p>
-                </label>
+                <Box
+                    component='label'
+                    id='label-file-upload'
+                    htmlFor='input-file-upload'
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                    }}
+                >
+                    <Button
+                        label='Upload file'
+                        type='submit'
+                        startWithIcon={<UploadRounded />}
+                        onClick={() => inputRef.current?.click()}
+                    />
+                    <Typography>or drag it here</Typography>
+                </Box>
+
                 {dragActive &&
                     <Box
                         onDragEnter={handleDrag}
@@ -72,25 +107,14 @@ export const FileUploadBox = () => {
                             right: 0,
                             bottom: 0,
                             left: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                            //zIndex: 1000,
-                            //display: 'flex',
-                            //justifyContent: 'center',
-                            //alignItems: 'center',
-                            //color: 'white',
-                            //fontSize: '1.5rem',
-                            //cursor: 'pointer',
-                            // '&:hover': {
-                            //     backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                            // },
+                            width: 1,
+                            height: 1,
+                            backgroundColor: theme => `${alpha(theme.palette.primary.main, 0.16)}`,
                         }}
                     >
                     </Box>
                 }
-            </form>
-            <Button label='Upload file' type='submit' onClick={() => inputRef.current?.click()} />
-        </>
+            </Box>
+        </Box>
     );
 };
