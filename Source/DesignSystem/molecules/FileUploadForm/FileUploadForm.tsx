@@ -41,7 +41,7 @@ export type FileUploadFormProps = {
     onSelected: OnFileSelectCallback;
     onConfirmed?: OnFileConfirmCallback;
     allowMultipleFiles: boolean;
-    hiddenFileBox?: boolean;
+    hideForm?: boolean;
 };
 
 export type FileUploadFormRef = {
@@ -50,7 +50,7 @@ export type FileUploadFormRef = {
 };
 
 export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadFormProps>(function FileUploadForm({
-    onSelected, onConfirmed, allowMultipleFiles = false, hiddenFileBox = false }: FileUploadFormProps, ref: React.ForwardedRef<FileUploadFormRef>) {
+    onSelected, onConfirmed, allowMultipleFiles = false, hideForm = false }: FileUploadFormProps, ref: React.ForwardedRef<FileUploadFormRef>) {
 
     const [dragActive, setDragActive] = useState(false);
 
@@ -115,7 +115,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
             onDragEnter={handleFileDrag}
             onSubmit={onFileSubmitted}
             sx={{
-                display: hiddenFileBox ? 'none' : 'flex',
+                display: hideForm ? 'none' : 'flex',
                 ...styles.form,
             }}
         >
