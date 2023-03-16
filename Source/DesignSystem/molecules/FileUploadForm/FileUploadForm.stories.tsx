@@ -7,13 +7,13 @@ import { ComponentMeta } from '@storybook/react';
 
 import { UploadRounded } from '@mui/icons-material';
 
-import { Button, FileUploadBox, FileUploadFormProps } from '@dolittle/design-system';
+import { Button, FileUploadForm, FileUploadFormProps } from '@dolittle/design-system';
 
-import { FileUploadFormRef } from './FileUploadBox';
+import { FileUploadFormRef } from './FileUploadForm';
 
 export default {
-    title: 'File Upload Box',
-    component: FileUploadBox,
+    title: 'File Upload Form',
+    component: FileUploadForm,
     parameters: {
         controls: {
             include: ['allowMultipleFiles', 'hiddenFileBox']
@@ -33,11 +33,11 @@ export default {
         // accept: '*',
         // dropzoneTextError: 'An error occurred while uploading the file',
     },
-} as ComponentMeta<typeof FileUploadBox>;
+} as ComponentMeta<typeof FileUploadForm>;
 
-export const Default = (args: FileUploadFormProps) => <FileUploadBox {...args} />;
+export const Default = (args: FileUploadFormProps) => <FileUploadForm {...args} />;
 
-export const HiddenFileBox = () => {
+export const HiddenForm = () => {
     const fileUploadRef = useRef<FileUploadFormRef>(null);
 
     return (
@@ -49,7 +49,7 @@ export const HiddenFileBox = () => {
                 onClick={() => fileUploadRef.current?.showPrompt()}
             />
 
-            <FileUploadBox
+            <FileUploadForm
                 ref={fileUploadRef}
                 onSelected={file => console.log(file)}
                 allowMultipleFiles
