@@ -7,19 +7,29 @@ import { Box, CircularProgress, Paper, Typography } from '@mui/material';
 
 import { Button, Icon } from '@dolittle/design-system';
 
+import { WizardStepSubContent } from './components/WizardStepSubContent';
+
+const title1 = '1. Grant firewall access';
+const subTitle1 = 'If you are not responsible for firewall access, please share the information below with the party responsible for your network infrastructure:';
+
+const title2 = '2. Download connector bundle and run it';
+const subTitle2 = `Once you have opened the host/port combination, you can download the connector bundle and run it.
+                    The bundle consists of a Docker compose file, shell file and README file with instructions.`;
+
+const mapSubContentSample = (title: string, subTitle: string, children: React.ReactNode) => {
+    return (
+        <WizardStepSubContent title={title} subTitle={subTitle}>
+            {children}
+        </WizardStepSubContent>
+    );
+};
+
 export const WizardStepOne = () => {
     return (
         <>
             <Typography variant='h4'>Let’s configure your organization’s firewall access</Typography>
 
-            <Box sx={{ maxWidth: 732, mt: 5.25, mx: 'auto' }}>
-                <Typography variant='subtitle2' sx={{ mb: 1 }}>1. Grant firewall access</Typography>
-
-                <Typography>
-                    If you are not responsible for firewall access, please share the information below with the
-                    party responsible for your network infrastructure:
-                </Typography>
-
+            <WizardStepSubContent title={title1} subTitle={subTitle1}>
                 <Paper elevation={0} sx={{ 'mt': 3, 'p': 2, '& p': { mb: 3 } }}>
                     <Typography>
                         Please make sure your organization’s firewall rules allow the M3 connector to connect to Kafka in order
@@ -43,18 +53,11 @@ export const WizardStepOne = () => {
 
                     <Button label='Copy content' startWithIcon={<Icon icon='CopyAllRounded' />} />
                 </Paper>
-            </Box>
+            </WizardStepSubContent>
 
-            <Box sx={{ maxWidth: 732, mt: 5.25, mx: 'auto' }}>
-                <Typography variant='subtitle2' sx={{ mb: 1 }}>2. Download connector bundle and run it</Typography>
-
-                <Typography sx={{ mb: 3 }}>
-                    Once you have opened the host/port combination, you can download the connector bundle and run it.
-                    The bundle consists of a Docker compose file, shell file and README file with instructions.
-                </Typography>
-
+            <WizardStepSubContent title={title2} subTitle={subTitle2}>
                 <Button label='Download Connector Bundle' startWithIcon={<Icon icon='DownloadRounded' />} />
-            </Box>
+            </WizardStepSubContent>
 
             <Box sx={{ maxWidth: 732, mt: 8, mx: 'auto', color: 'text.secondary', display: 'flex' }}>
                 <CircularProgress color='inherit' size={20} />
