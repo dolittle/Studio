@@ -10,6 +10,7 @@ import { Stepper } from '@dolittle/design-system';
 import { WizardStepOne } from './steps/wizardStepOne';
 import { WizardStepTwo } from './steps/wizardStepTwo';
 import { WizardStepThree } from './steps/wizardStepThree';
+import { WizardFinished } from './steps/wizardFinished';
 
 export const Wizard = () => {
     return (
@@ -31,6 +32,7 @@ export const Wizard = () => {
                         render: () => <WizardStepThree />,
                     },
                 ]}
+                finishedContent={<WizardFinished />}
             />
         </>
     );
