@@ -9,7 +9,7 @@ const { metadata, createStory } = componentStories(SimpleCard);
 
 metadata.title = 'Simple Card';
 
-//TODO: Fix line breaking for component description. Unable to enter to new line without breaking the syntax. 
+//TODO: Fix line breaking for component description. Unable to enter to new line without breaking the syntax.
 metadata.parameters = {
     docs: {
         description: {
