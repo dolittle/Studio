@@ -83,7 +83,7 @@ export const Stepper = ({ steps, finishedContent, optionalStepIndex }: StepperPr
     };
 
     return (
-        <Box sx={{ width: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <Box sx={{ width: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', pb: 10 }}>
             <MuiStepper activeStep={activeStep} sx={{ mb: 3.5 }}>
                 {steps.map((step, index) => {
                     const stepProps: { completed?: boolean } = {};
@@ -112,7 +112,7 @@ export const Stepper = ({ steps, finishedContent, optionalStepIndex }: StepperPr
                 })}
             </MuiStepper>
 
-            <Box sx={{ width: 1, maxWidth: 814, alignSelf: 'center', mb: 3.5 }}>
+            <Box sx={{ width: 1, maxWidth: 814, alignSelf: 'center', mb: 11 }}>
                 {steps[activeStep]?.render()}
             </Box>
 
