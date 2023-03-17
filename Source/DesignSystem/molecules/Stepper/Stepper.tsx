@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box, Stepper as MuiStepper, Step, StepLabel, Typography } from '@mui/material';
 
@@ -41,6 +41,15 @@ export type StepperProps = {
 export const Stepper = ({ steps, finishedContent, optionalStepIndex }: StepperProps) => {
     const [activeStep, setActiveStep] = useState(0);
     const [skippedStep, setSkippedStep] = useState(new Set<number>());
+
+    // Scroll to top of page when active step changes.
+    useEffect(() => {
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+    }, [activeStep]);
 
     const isStepOptional = (step: number) => {
         return step === optionalStepIndex;
