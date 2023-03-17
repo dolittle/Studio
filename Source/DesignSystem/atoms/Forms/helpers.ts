@@ -14,6 +14,8 @@ type InputProps = {
 
     /**
      * The human readable label for the field.
+     *
+     * This is used to generate default error messages so please use capitalization as necessary.
      */
     label: string;
 
