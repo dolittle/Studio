@@ -14,7 +14,16 @@ const dummyText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed 
 metadata.parameters = {
     docs: {
         description: {
-            component: ``,
+            component: `A stepper conveys progress through numbered steps to provide a wizard-like flow. Use steppers to break down complex user tasks into digestible pieces. 
+            Use simple, but descriptive names for the stepper labels. Steppers can be displayed horizontally or vertically and can be editable or non-editable. 
+            Editable steppers should allow the user to return to a previous step with a 'Back' button or by clicking on the step itself. 
+            Editing poses a distraction risk to form completion, however, removing the editing option can force a user to cancel the form and begin again with their changes. 
+            Take caution when considering which to use. Steppers can also be linear or non-linear. Linear steppers require the user to complete the steps in order to move on to the next. 
+            Always indicate in the stepper label if a step is optional.
+            
+* Horizontal stepper: this is ideal when contents of one step depend on an earlier step. 
+* Vertical stepper: this is designed for narrow screens and ideal for mobile.
+* Layout: steppers should fill the width or height of the content within.`,
         },
     },
 };

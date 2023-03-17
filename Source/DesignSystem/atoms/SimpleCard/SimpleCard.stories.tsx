@@ -9,10 +9,11 @@ const { metadata, createStory } = componentStories(SimpleCard);
 
 metadata.title = 'Simple Card';
 
+//TODO: Fix line breaking for component description. Unable to enter to new line without breaking the syntax.
 metadata.parameters = {
     docs: {
         description: {
-            component: 'A simple card with a title, subtitle, description and actions.',
+        component: 'Simple cards are surfaces that display content and actions on a single topic. They should be easy to scan for relevant and actionable information. Elements, such as text, images and buttons should be placed on them in a way that clearly indicates their hierarchy. A card can stand alone, without relying on surrounding elements for context. They are a great way to visually organize various types of information or categories.',
         },
     },
 };
@@ -42,7 +43,7 @@ export const WithSubtitle = createStory({
 WithSubtitle.parameters = {
     docs: {
         description: {
-            story: 'A card with a subtitle.',
+            story: 'A card can contain an optional subtitle. Subtitles are a great way to add metadata such as location tags, authors or dates. They can also be used to convey additional information about the card details. Card subtitles should display in the secondary color.',
         },
     },
 };

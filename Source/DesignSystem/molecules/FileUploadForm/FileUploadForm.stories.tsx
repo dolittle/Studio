@@ -19,7 +19,9 @@ export default {
         controls: { include: [] },
         docs: {
             description: {
-                component: `A file upload box is a component that allows the user to upload files to the system.`,
+                component: `A file upload box is a component that allows the user to upload files to the system via a button click or the drag and drop functionality. 
+                The container of the upload box should fill its parent container and expand in height as needed when validating or displaying files that have been uploaded. 
+                Upload forms are preferred to the standard upload button when space permits as they offer two convenient ways to upload a file.`,
             },
         },
     },
@@ -68,6 +70,14 @@ export const HiddenForm = () => {
     );
 };
 
+HiddenForm.parameters = {
+    docs: {
+        description: {
+            story: 'When space does not permit, such as in a toolbar or when grouped with several other action items, a hidden form is preferred for uploading documents.',
+        },
+    },
+};
+
 export const WithValidation = () => {
     const fileUploadRef = useRef<FileUploadFormRef>(null);
 
@@ -78,4 +88,12 @@ export const WithValidation = () => {
             validFileExtensions={['json', 'yaml', 'yml']}
         />
     );
+};
+
+WithValidation.parameters = {
+    docs: {
+        description: {
+            story: 'The files uploaded should be validated. If they are incorrect (wrong file type or too many), then an error message should display inside the upload form.',
+        },
+    },
 };
