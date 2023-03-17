@@ -9,12 +9,12 @@ import { Button } from '@dolittle/design-system';
 
 type StepContent = {
     /**
-     * The label to display for the step.
+     * The `label` to display for the step.
      */
     label: string;
 
     /**
-     * The `react element` to render when the step is active.
+     * The react element to `render` when the step is active.
      */
     render: () => React.ReactNode;
 };
@@ -23,7 +23,7 @@ export type StepperProps = {
     /**
      * The content to display for each step.
      *
-     * Add as array of objects by providing a `label` and a `react element` to render.
+     * Add as array of objects by providing a `label` and a react element to `render`.
      */
     steps: StepContent[];
 
@@ -122,10 +122,13 @@ export const Stepper = ({ steps, finishedContent, optionalStepIndex }: StepperPr
             </MuiStepper>
 
             <Box sx={{ width: 1, maxWidth: 814, alignSelf: 'center', mb: 11 }}>
-                {steps[activeStep]?.render()}
+                {activeStep !== steps.length ?
+                    steps[activeStep]?.render() :
+                    finishedContent
+                }
             </Box>
 
-            {activeStep === steps.length ? finishedContent :
+            {activeStep !== steps.length &&
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                     <Button
                         label='Cancel'
