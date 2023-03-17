@@ -169,7 +169,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
 
             <Box sx={styles.alignment}>
                 <Button
-                    label='Upload file'
+                    label='Choose file'
                     type='submit'
                     startWithIcon={<UploadRounded />}
                     onClick={() => fileInputRef.current?.click()}
