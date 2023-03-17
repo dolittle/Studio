@@ -2,20 +2,24 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useParams, Outlet, useRoutes } from 'react-router-dom';
-import { DebugRouter } from '../../components/debugRouter';
+import { useParams } from 'react-router-dom';
 import { Page } from '../../components/layout/page';
-import { routes } from './routes';
+import { useOnPremiseWizard } from './onPremiseWizardReducer';
+
+import { WizardContextProvider } from './WizardContext';
+
+
 
 export const NewConnection = () => {
-    const { connectionsId } = useParams();
-    const routesElement = useRoutes(routes);
+    const { connectionId } = useParams();
+    // const routesElement = useRoutes(routes);
+    const [state, dispatch] = useOnPremiseWizard(connectionId || '');
 
     return (
         <Page title='New M3 Connection'>
-            <DebugRouter>
-                {routesElement}
-            </DebugRouter>
+            <WizardContextProvider state={state} dispatch={dispatch}>
+                {state.steps[state.currentStepIndex].component}
+            </WizardContextProvider>
         </Page>
     );
 };

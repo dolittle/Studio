@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { RouteObject, Navigate } from 'react-router-dom';
-import { ConnectionTypeStep } from './connectionTypeStep';
+import { ConnectionTypeStep } from './steps/connectionTypeStep';
 
 
 export const routes: RouteObject[] = [
