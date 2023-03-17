@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Box } from '@mui/material';
+import { Box, Toolbar } from '@mui/material';
 
 import { NavigationBar, SideBar } from '@dolittle/design-system';
 
@@ -11,7 +11,7 @@ import { MainLinks, SecondaryLinks, SpaceSelectionMenu, MoreOptions, SideBarPrim
 
 const styles = {
     layout: {
-        height: '100%',
+        height: 1,
         display: 'flex',
     },
     main: {
@@ -43,6 +43,7 @@ export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
         />
 
         <Box component='main' sx={styles.main}>
+            <Toolbar />
             {children}
         </Box>
     </Box>;
