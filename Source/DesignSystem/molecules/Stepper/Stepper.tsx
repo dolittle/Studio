@@ -98,7 +98,14 @@ export const Stepper = ({ steps, finishedContent, optionalStepIndex }: StepperPr
                     }
 
                     return (
-                        <Step key={index} {...stepProps}>
+                        <Step
+                            key={index}
+                            sx={{
+                                pl: index === 0 ? 0 : 1,
+                                pr: index === steps.length - 1 ? 0 : 1,
+                            }}
+                            {...stepProps}
+                        >
                             <StepLabel {...labelProps}>{step.label}</StepLabel>
                         </Step>
                     );
