@@ -1,3 +1,11 @@
+# [3.3.7] - 2023-3-20 [PR: #341](https://github.com/dolittle/Studio/pull/341)
+## Summary
+
+Add Stepper into Design System and use it in: integrations/connections/new-m3-connection/wizard
+
+<img width="1078" alt="Screenshot 2023-03-20 at 21 39 05" src="https://user-images.githubusercontent.com/19160439/226456969-3d25aaee-91ca-440f-96b7-29c03b79369b.png">
+
+
 # [3.3.6] - 2023-3-16 [PR: #339](https://github.com/dolittle/Studio/pull/339)
 ## Summary
 
