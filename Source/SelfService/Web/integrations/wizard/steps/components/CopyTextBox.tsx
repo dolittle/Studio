@@ -3,6 +3,8 @@
 
 import React from 'react';
 
+import { useSnackbar } from 'notistack';
+
 import { Paper, Typography } from '@mui/material';
 
 import { Button, Icon } from '@dolittle/design-system';
@@ -33,31 +35,41 @@ ${ipAddress2}
 ${ipAddress3}
 `;
 
-export const CopyTextBox = () =>
-    <Paper elevation={0} sx={{ 'mt': 3, 'p': 2, '& p': { mb: 3 } }}>
-        <Typography>
-            Please make sure your organization’s firewall rules allow the M3 connector to connect to Kafka in order
-            to communicate with our API. The Kafka cluster is reachable as:
-        </Typography>
+export const CopyTextBox = () => {
+    const { enqueueSnackbar } = useSnackbar();
 
-        <Typography>
-            <b>kafka-test-env-dolittle-test-env.aivencloud.com</b>, and is using <b>port 14691</b>.
-        </Typography>
+    const handleCopy = () => {
+        navigator.clipboard.writeText(textToCopy);
+        enqueueSnackbar('Copied to clipboard');
+    };
 
-        <Typography>
-            All IPs for that address need to be available for outgoing traffic on port 14691. <br />
-            This includes the following IPs:
-        </Typography>
+    return (
+        <Paper elevation={0} sx={{ 'mt': 3, 'p': 2, '& p': { mb: 3 } }}>
+            <Typography>
+                Please make sure your organization’s firewall rules allow the M3 connector to connect to Kafka in order
+                to communicate with our API. The Kafka cluster is reachable as:
+            </Typography>
 
-        <Typography>For example, the following IP addresses are reachable:</Typography>
+            <Typography>
+                <b>kafka-test-env-dolittle-test-env.aivencloud.com</b>, and is using <b>port 14691</b>.
+            </Typography>
 
-        <Typography>134.122.86.202:14691 (outgoing)</Typography>
-        <Typography>165.22.83.2:14691 (outgoing)</Typography>
-        <Typography>134.122.94.197:14691 (outgoing)</Typography>
+            <Typography>
+                All IPs for that address need to be available for outgoing traffic on port 14691. <br />
+                This includes the following IPs:
+            </Typography>
 
-        <Button
-            label='Copy content'
-            startWithIcon={<Icon icon='CopyAllRounded' />}
-            onClick={() => navigator.clipboard.writeText(textToCopy)}
-        />
-    </Paper>;
+            <Typography>For example, the following IP addresses are reachable:</Typography>
+
+            <Typography>134.122.86.202:14691 (outgoing)</Typography>
+            <Typography>165.22.83.2:14691 (outgoing)</Typography>
+            <Typography>134.122.94.197:14691 (outgoing)</Typography>
+
+            <Button
+                label='Copy content'
+                startWithIcon={<Icon icon='CopyAllRounded' />}
+                onClick={handleCopy}
+            />
+        </Paper>
+    );
+};
