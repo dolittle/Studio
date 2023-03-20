@@ -15,6 +15,6 @@ type WizardStepSubContentProps = {
 export const WizardStepSubContent = ({ title, subTitle, children, sx }: WizardStepSubContentProps) =>
     <Box sx={{ maxWidth: 732, mt: 5.25, mx: 'auto', ...sx }}>
         <Typography variant='subtitle2' sx={{ mb: 1 }}>{title}</Typography>
-        <Typography>{subTitle}</Typography>
+        <Typography sx={{ mb: 1 }}>{subTitle}</Typography>
         {children}
     </Box>;
