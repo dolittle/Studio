@@ -3,17 +3,23 @@
 
 import React from 'react';
 
+import { action } from '@storybook/addon-actions';
+
 import { componentStories, Button, SimpleCard } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(SimpleCard);
 
 metadata.title = 'Card/Simple Card';
 
-//TODO: Fix line breaking for component description. Unable to enter to new line without breaking the syntax.
 metadata.parameters = {
     docs: {
         description: {
-            component: 'Simple cards are surfaces that display content and actions on a single topic. They should be easy to scan for relevant and actionable information. Elements, such as text, images and buttons should be placed on them in a way that clearly indicates their hierarchy. A card can stand alone, without relying on surrounding elements for context. They are a great way to visually organize various types of information or categories.',
+            component: `Simple cards are surfaces that display content and actions on a single topic.
+They should be easy to scan for relevant and actionable information. Elements, such as text,
+images and buttons should be placed on them in a way that clearly indicates their hierarchy.
+
+A card can stand alone, without relying on surrounding elements for context. They are a great
+way to visually organize various types of information or categories.`,
         },
     },
 };
@@ -24,13 +30,15 @@ metadata.argTypes = {
 
 metadata.args = {
     title: 'Card Title',
+    subtitle: '',
     description: 'Here is a description of the card. It can be a bit longer than the title, but not too long.',
     actions: (
         <div>
             <Button label='Secondary button' color='subtle' href='#' target />
-            <Button label='Primary button' />
+            <Button label='Primary button' onClick={action('clicked')} />
         </div>
     ),
+    actionsAlignment: 'left',
 };
 
 export default metadata;
@@ -43,13 +51,15 @@ export const WithSubtitle = createStory({
 WithSubtitle.parameters = {
     docs: {
         description: {
-            story: 'A card can contain an optional subtitle. Subtitles are a great way to add metadata such as location tags, authors or dates. They can also be used to convey additional information about the card details. Card subtitles should display in the secondary color.',
+            story: `A card can contain an optional subtitle. Subtitles are a great way to add metadata such as
+            location tags, authors or dates. They can also be used to convey additional information about the card details.
+            Card subtitles should display in the secondary color.`,
         },
     },
 };
 
 export const RightAlignedButton = createStory({
-    actions: <Button label='Right aligned button' />,
+    actions: <Button label='Right aligned button' onClick={action('clicked')} />,
     actionsAlignment: 'right',
 });
 RightAlignedButton.parameters = {
