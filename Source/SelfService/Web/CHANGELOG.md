@@ -1,3 +1,30 @@
+# [3.3.9] - 2023-3-21 [PR: #344](https://github.com/dolittle/Studio/pull/344)
+## Summary
+
+Change Integration page Wizzard to Accortion (hard coded version).
+
+<img width="758" alt="Screenshot 2023-03-21 at 21 21 03" src="https://user-images.githubusercontent.com/19160439/226721720-015f82ce-4c08-43cc-88b8-2c5e4201bc0e.png">
+
+### Added
+
+- Accordion to stories
+- Icon to stories
+- Design System docs
+- Accordion to Integration page (hard coded)
+
+### Changed
+
+- Accordion 'expand' icon rotate direction
+
+### Fixed
+
+- Improved Design System components
+
+### Removed
+
+- Cleaned Design System code
+
+
 # [3.3.8] - 2023-3-21 [PR: #342](https://github.com/dolittle/Studio/pull/342)
 - add hook to get a specific connection by id
 - Add route to the connection page, and route for creating new
