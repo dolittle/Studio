@@ -58,64 +58,58 @@ export const SelectCard = ({ icon, title, description, listTitle, listItems, foo
     const toggleCardIsExpanded = () => setCardIsExpanded(!isCardExpanded);
 
     const styles = {
-        card: {
-            'maxWidth': 316,
-            'border': '1px solid',
-            'borderColor': isCardExpanded ? 'primary.main' : 'transparent',
-            'backgroundColor': isCardExpanded ? theme => `${alpha(theme.palette.primary.main, 0.16)}` : 'background.paper',
-            '&:hover': {
-                backgroundColor: theme => `${alpha(theme.palette.primary.main, 0.16)}`,
-                borderColor: 'primary.main',
-            },
-        },
-        wrapper: {
-            p: 3,
-            minHeight: 300,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
+        'maxWidth': 316,
+        'minHeight': 300,
+        'p': 3,
+        'display': 'flex',
+        'flexDirection': 'column',
+        'justifyContent': 'space-between',
+        'border': '1px solid',
+        'borderColor': isCardExpanded ? 'primary.main' : 'transparent',
+        'backgroundColor': isCardExpanded ? theme => `${alpha(theme.palette.primary.main, 0.16)}` : 'background.paper',
+        '&:hover': {
+            backgroundColor: theme => `${alpha(theme.palette.primary.main, 0.16)}`,
+            borderColor: 'primary.main',
         },
     };
 
     return (
-        <MuiCard elevation={0} sx={styles.card}>
-            <CardActionArea component='div' onClick={toggleCardIsExpanded} sx={styles.wrapper}>
-                <Box sx={{ width: 1 }}>
-                    <CardHeader avatar={<Icon color='primary' icon={icon} />} sx={{ p: 0, pb: 3.25 }} />
+        <MuiCard elevation={0} sx={styles}>
+            <Box sx={{ width: 1 }}>
+                <CardHeader avatar={<Icon color='primary' icon={icon} />} sx={{ p: 0, pb: 3.25 }} />
 
-                    <CardContent sx={{ p: 0, pb: 3 }}>
-                        <Typography variant='h4' sx={{ pb: 3.5 }}>{title}</Typography>
-                        <Typography>{description}</Typography>
-                    </CardContent>
-                </Box>
+                <CardContent sx={{ p: 0, pb: 3 }}>
+                    <Typography variant='h4' sx={{ pb: 3.5 }}>{title}</Typography>
+                    <Typography>{description}</Typography>
+                </CardContent>
+            </Box>
 
-                <Collapse in={isCardExpanded} timeout='auto' unmountOnExit sx={{ width: 1 }}>
-                    <CardContent sx={{ p: 0, pb: 3 }}>
-                        <Typography variant='subtitle2' gutterBottom>{listTitle}</Typography>
+            <Collapse in={isCardExpanded} timeout='auto' unmountOnExit sx={{ width: 1 }}>
+                <CardContent sx={{ p: 0, pb: 3 }}>
+                    <Typography variant='subtitle2' gutterBottom>{listTitle}</Typography>
 
-                        <List sx={{ listStyle: 'disc', px: 3, pb: 3 }}>
-                            {listItems.map((item, index) => (
-                                <li key={index}>
-                                    <Typography>{item}</Typography>
-                                </li>
-                            ))}
-                        </List>
+                    <List sx={{ listStyle: 'disc', px: 3, pb: 3 }}>
+                        {listItems.map((item, index) => (
+                            <li key={index}>
+                                <Typography>{item}</Typography>
+                            </li>
+                        ))}
+                    </List>
 
-                        <Typography variant='subtitle2' gutterBottom>{footerTitle}</Typography>
-                        <Typography>{footerText}</Typography>
-                    </CardContent>
-                </Collapse>
+                    <Typography variant='subtitle2' gutterBottom>{footerTitle}</Typography>
+                    <Typography>{footerText}</Typography>
+                </CardContent>
+            </Collapse>
 
-                <CardActions sx={{ width: 1, p: 0 }}>
-                    <Button
-                        label={isCardExpanded ? 'selected' : 'select'}
-                        variant='outlined'
-                        startWithIcon={isCardExpanded ? <Icon icon='CheckRounded' /> : undefined}
-                        isFullWidth
-                        onClick={toggleCardIsExpanded}
-                    />
-                </CardActions>
-            </CardActionArea>
+            <CardActions sx={{ width: 1, p: 0 }}>
+                <Button
+                    label={isCardExpanded ? 'selected' : 'select'}
+                    variant='outlined'
+                    startWithIcon={isCardExpanded ? <Icon icon='CheckRounded' /> : undefined}
+                    isFullWidth
+                    onClick={toggleCardIsExpanded}
+                />
+            </CardActions>
         </MuiCard>
     );
 };
