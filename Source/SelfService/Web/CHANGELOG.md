@@ -1,3 +1,8 @@
+# [3.3.8] - 2023-3-21 [PR: #342](https://github.com/dolittle/Studio/pull/342)
+- add hook to get a specific connection by id
+- Add route to the connection page, and route for creating new
+
+
 # [3.3.7] - 2023-3-20 [PR: #341](https://github.com/dolittle/Studio/pull/341)
 ## Summary
 
