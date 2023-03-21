@@ -51,10 +51,10 @@ DefaultExpanded.decorators = [
 export const OneExpanded = createStory();
 OneExpanded.decorators = [
     () => {
-        const [expanded, setExpanded] = useState<string | false>(false);
+        const [isExpanded, setIsExpanded] = useState<string | false>(false);
 
-        const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-            setExpanded(isExpanded ? panel : false);
+        const handleExpanded = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+            setIsExpanded(isExpanded ? panel : false);
         };
 
         return (
@@ -62,8 +62,8 @@ OneExpanded.decorators = [
                 <Accordion
                     id='one-expanded-1'
                     title='Allow Only One Expanded 1'
-                    expanded={expanded === 'one-expanded-1'}
-                    handleChange={handleChange('one-expanded-1')}
+                    expanded={isExpanded === 'one-expanded-1'}
+                    onExpanded={handleExpanded('one-expanded-1')}
                 >
                     <DummyChildrenContent />
                 </Accordion>
@@ -71,8 +71,8 @@ OneExpanded.decorators = [
                 <Accordion
                     id='one-expanded-2'
                     title='Allow Only One Expanded 2'
-                    expanded={expanded === 'one-expanded-2'}
-                    handleChange={handleChange('one-expanded-2')}
+                    expanded={isExpanded === 'one-expanded-2'}
+                    onExpanded={handleExpanded('one-expanded-2')}
                 >
                     <DummyChildrenContent />
                 </Accordion>
@@ -80,8 +80,8 @@ OneExpanded.decorators = [
                 <Accordion
                     id='one-expanded-3'
                     title='Allow Only One Expanded 3'
-                    expanded={expanded === 'one-expanded-3'}
-                    handleChange={handleChange('one-expanded-3')}
+                    expanded={isExpanded === 'one-expanded-3'}
+                    onExpanded={handleExpanded('one-expanded-3')}
                 >
                     <DummyChildrenContent />
                 </Accordion>

@@ -68,7 +68,7 @@ export type AccordionProps = {
     /**
      * The callback function that is called when the accordion is expanded or collapsed.
      */
-    handleChange?: (event: React.SyntheticEvent, isExpanded: boolean) => void;
+    onExpanded?: (event: React.SyntheticEvent, isExpanded: boolean) => void;
 
     /**
      * The content of the accordion.
@@ -88,11 +88,11 @@ export type AccordionProps = {
  * @param {AccordionProps} props - The {@link AccordionProps}.
  * @returns A {@link Accordion} component.
  */
-export const Accordion = ({ id, title, handleChange, expanded, defaultExpanded, children, sx }: AccordionProps) =>
+export const Accordion = ({ id, title, defaultExpanded, expanded, onExpanded, children, sx }: AccordionProps) =>
     <MuiAccordion
         defaultExpanded={defaultExpanded}
         expanded={expanded}
-        onChange={handleChange}
+        onChange={onExpanded}
         sx={{ ...styles.accordion, ...sx }}
     >
         <AccordionSummary
