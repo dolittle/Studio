@@ -42,19 +42,9 @@ export const Default = createStory();
 export const DefaultExpanded = createStory();
 DefaultExpanded.decorators = [
     () => (
-        <>
-            <Accordion id='expanded-1' title='Expanded By Default 1' defaultExpanded>
-                <DummyChildrenContent />
-            </Accordion>
-
-            <Accordion id='expanded-2' title='Expanded By Default 2' defaultExpanded>
-                <DummyChildrenContent />
-            </Accordion>
-
-            <Accordion id='expanded-3' title='Expanded By Default 3' defaultExpanded>
-                <DummyChildrenContent />
-            </Accordion>
-        </>
+        <Accordion id='expanded-1' title='Expanded By Default 1' defaultExpanded>
+            <DummyChildrenContent />
+        </Accordion>
     )
 ];
 

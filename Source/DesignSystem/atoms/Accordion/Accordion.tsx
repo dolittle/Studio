@@ -31,15 +31,55 @@ const styles = {
     },
 };
 
+/**
+ * The props for a {@link Accordion} component.
+ */
 export type AccordionProps = {
+    /**
+     * The id of the accordion. Used for accessibility.
+     */
     id: string;
+
+    /**
+     * The title of the accordion. Displayed in the header.
+     */
     title: string;
+
+    /**
+     * Whether the accordion is expanded or not on initial render.
+     *
+     * @default false
+     */
     defaultExpanded?: boolean;
+
+    /**
+     * Whether the accordion is expanded or not.
+     *
+     * If provided, the accordion will be controlled by the parent.
+     *
+     * @default false
+     */
     expanded?: boolean;
+
+    /**
+     * The callback function that is called when the accordion is expanded or collapsed.
+     */
     handleChange?: (event: React.SyntheticEvent, isExpanded: boolean) => void;
+
+    /**
+     * The content of the accordion.
+     *
+     * This is the content that is displayed when the accordion is expanded.
+     */
     children: React.ReactNode;
 };
 
+
+/**
+ * The Accordion component is used to display a collapsible section of content.
+ * @param {AccordionProps} props - The {@link AccordionProps} that contains the properties for the accordion.
+ * @returns A {@link Accordion} component.
+ */
 export const Accordion = ({ id, title, handleChange, expanded, defaultExpanded, children }: AccordionProps) =>
     <MuiAccordion
         defaultExpanded={defaultExpanded}
