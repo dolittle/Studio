@@ -31,8 +31,11 @@ const { metadata, createStory } = componentStories(SideBar, {
 metadata.parameters = {
     controls: { include: [] },
     docs: {
-        description: { component: `The side navigation bar contains sub-menu navigation items linked to the top navigation bar items. It can be made collapsable, using icons only. Menu names should be revealed upon hover when in the collapsed state with a tooltip. 
-        The side navigation bar uses the default background and elevation.` },
+        description: {
+            component: `The side navigation bar contains sub-menu navigation items linked to the top navigation bar items. It can be made collapsable, 
+            using icons only. Menu names should be revealed upon hover when in the collapsed state with a tooltip. 
+            The side navigation bar uses the default background and elevation.`
+        },
         source: {
             code: `
 <SideBar

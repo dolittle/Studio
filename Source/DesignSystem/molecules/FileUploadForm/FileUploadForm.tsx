@@ -39,19 +39,55 @@ const styles = {
 export type OnFileConfirmCallback = (form: FormData, event?) => void;
 export type OnFileSelectCallback = (file: File | FileList, event?) => void;
 
-export type FileUploadFormProps = {
-    onSelected: OnFileSelectCallback;
-    onConfirmed?: OnFileConfirmCallback;
-    allowMultipleFiles?: boolean;
-    hideForm?: boolean;
-    validFileExtensions?: string[];
-};
-
 export type FileUploadFormRef = {
     showPrompt: () => void;
     confirmSelected: () => void;
 };
 
+/**
+ * The props for a {@link FileUploadForm} component.
+ */
+export type FileUploadFormProps = {
+    /**
+     * The callback for when a file is selected.
+     */
+    onSelected: OnFileSelectCallback;
+
+    /**
+     * The callback for when a file is confirmed.
+     */
+    onConfirmed?: OnFileConfirmCallback;
+
+    /**
+     * Whether to allow multiple files to be selected.
+     *
+     * Set to true if you want to allow multiple files to be selected.
+     * @default false
+     */
+    allowMultipleFiles?: boolean;
+
+    /**
+     * Whether to hide the form.
+     *
+     * Set to true if you want to use the component as a button.
+     * @default false
+     */
+    hideForm?: boolean;
+
+    /**
+     * The valid file extensions.
+     *
+     * Add the file extensions you want to allow, without the dot.
+     * @default []
+     */
+    validFileExtensions?: string[];
+};
+
+/**
+ * A component for uploading files.
+ * @param {FileUploadFormProps} props - The {@link IconButtonProps}.
+ * @returns A {@link FileUploadForm} component.
+ */
 export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadFormProps>(function FileUploadForm({
     onSelected, onConfirmed, allowMultipleFiles = false, hideForm = false, validFileExtensions = [] }:
     FileUploadFormProps, ref: React.ForwardedRef<FileUploadFormRef>) {
@@ -83,30 +119,8 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
         }
     };
 
-    const onFileDrop = (event: DragEvent) => {
-        event.preventDefault();
-        event.stopPropagation();
-
-        setDragActive(false);
-
-        const files = event.dataTransfer.files;
-        if (!files || files.length === 0) return;
-        if (!hideForm) showFormBoxFile(files);
-        onSelected(files[0], event);
-    };
-
-    /**
-     * Serves change event and file from target.
-     * @param event
-     */
-    const onFileSelect = (event: FormEvent<HTMLInputElement>) => {
-        const files = (event?.target as HTMLInputElement)?.files;
-        if (!files || files.length === 0) return;
-        if (!hideForm) showFormBoxFile(files);
-        onSelected(allowMultipleFiles ? files : files[0], event);
-    };
-
-    const showFormBoxFile = (files: FileList) => {
+    // TODO: Frontend display only
+    const showFileNameInBox = (files: FileList) => {
         const fileExtension = files[0].name.split('.').pop() as string;
 
         if (!validFileExtensions.length || validFileExtensions.includes(fileExtension)) {
@@ -122,12 +136,41 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
         if (!validFileExtensions.length) return;
 
         if (validFileExtensions.length === 1) {
-            return validFileExtensions[0].toUpperCase();
+            return validFileExtensions[0];
         } else if (validFileExtensions.length === 2) {
-            return `${validFileExtensions[0].toUpperCase()} or ${validFileExtensions[1].toUpperCase()}`;
+            return `${validFileExtensions[0]} or ${validFileExtensions[1]}`;
         } else {
-            return `${validFileExtensions.slice(0, -1).join(', ').toUpperCase()}, or ${validFileExtensions.slice(-1).join('').toUpperCase()}`;
+            return `${validFileExtensions.slice(0, -1).join(', ')}, or ${validFileExtensions.slice(-1).join('')}`;
         }
+    };
+
+    // TODO: Frontend display only
+    const handleFileDelete = () => {
+        setFileName('');
+        setFileFormatError(false);
+    };
+
+    const onFileDrop = (event: DragEvent) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        setDragActive(false);
+
+        const files = event.dataTransfer.files;
+        if (!files || files.length === 0) return;
+        if (!hideForm) showFileNameInBox(files);
+        onSelected(files[0], event);
+    };
+
+    /**
+     * Serves change event and file from target.
+     * @param event
+     */
+    const onFileSelect = (event: FormEvent<HTMLInputElement>) => {
+        const files = (event?.target as HTMLInputElement)?.files;
+        if (!files || files.length === 0) return;
+        if (!hideForm) showFileNameInBox(files);
+        onSelected(allowMultipleFiles ? files : files[0], event);
     };
 
     /**
@@ -137,11 +180,6 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
         event.preventDefault();
         const form = new FormData(event.target as HTMLFormElement);
         onConfirmed?.(form, event);
-    };
-
-    const handleFileDelete = () => {
-        setFileName('');
-        setFileFormatError(false);
     };
 
     return (
