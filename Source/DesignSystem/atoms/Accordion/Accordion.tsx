@@ -18,7 +18,7 @@ const styles = {
         // Disable 'expand' click for the entire row
         'pointerEvents': 'none',
         '& .MuiAccordionSummary-expandIconWrapper': {
-            transform: 'rotate(180deg)',
+            transform: 'rotate(-90deg)',
         },
         '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
             transform: 'rotate(0deg)',
@@ -74,10 +74,9 @@ export type AccordionProps = {
     children: React.ReactNode;
 };
 
-
 /**
  * The Accordion component is used to display a collapsible section of content.
- * @param {AccordionProps} props - The {@link AccordionProps} that contains the properties for the accordion.
+ * @param {AccordionProps} props - The {@link AccordionProps}.
  * @returns A {@link Accordion} component.
  */
 export const Accordion = ({ id, title, handleChange, expanded, defaultExpanded, children }: AccordionProps) =>
