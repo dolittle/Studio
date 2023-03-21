@@ -34,16 +34,23 @@ const styles = {
 export type AccordionProps = {
     id: string;
     title: string;
-    children: React.ReactNode;
     defaultExpanded?: boolean;
+    expanded?: boolean;
+    handleChange?: (event: React.SyntheticEvent, isExpanded: boolean) => void;
+    children: React.ReactNode;
 };
 
-export const Accordion = ({ defaultExpanded, id, title, children }: AccordionProps) =>
-    <MuiAccordion defaultExpanded={defaultExpanded} TransitionProps={{ unmountOnExit: true }} sx={styles.accordion}>
+export const Accordion = ({ id, title, handleChange, expanded, defaultExpanded, children }: AccordionProps) =>
+    <MuiAccordion
+        defaultExpanded={defaultExpanded}
+        expanded={expanded}
+        onChange={handleChange}
+        sx={styles.accordion}
+    >
         <AccordionSummary
             expandIcon={<ExpandCircleDownRounded sx={styles.expandIcon} />}
-            aria-controls={id}
-            id={id}
+            aria-controls={`${id}-content`}
+            id={`${id}-header`}
             sx={styles.accordionSummary}
         >
             <Typography variant='subtitle1' sx={{ ml: 1.25 }}>{title}</Typography>
