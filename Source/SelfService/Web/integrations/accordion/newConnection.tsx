@@ -39,11 +39,11 @@ export const NewConnectionSample = () => {
                 <Button label='Download Connector Bundle' startWithIcon={<Icon icon='DownloadRounded' />} sx={{ mt: 3.5 }} onClick={() => { }} />
             </NewConnectionAccordion>
 
-            <NewConnectionAccordion id='MetadataPublisherCredentials' title='Metadata Publisher Credentials' description={metadataPublisherDescription}>
+            <NewConnectionAccordion id='metadataPublisherCredentials' title='Metadata Publisher Credentials' description={metadataPublisherDescription}>
                 <MetadataPublisherForm />
             </NewConnectionAccordion>
 
-            <NewConnectionAccordion id='IONCredentials' title='ION Service Account Credentials' description={ionCredentialsDescription}>
+            <NewConnectionAccordion id='ionCredentials' title='ION Service Account Credentials' description={ionCredentialsDescription}>
                 <InstructionsList />
 
                 <Box sx={{ pl: 3 }}>
