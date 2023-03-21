@@ -26,7 +26,7 @@ export const Connections = () => {
 
     const handleCreateNew = () => {
         if (!newConnectionId) {
-            enqueueSnackbar<'error'>('Could not create new connection at this time');
+            enqueueSnackbar('Could not create new connection at this time', { variant: 'error' });
             return;
         }
         console.log('mutating', newConnectionId);
