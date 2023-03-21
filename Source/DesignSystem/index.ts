@@ -16,7 +16,6 @@ export { Icon } from './atoms/Icon';
 export { IconButton } from './atoms/IconButton';
 export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
-export { SimpleCard } from './atoms/SimpleCard';
 export { Summary } from './atoms/Metrics';
 export { Tabs } from './atoms/Tabs';
 export { Tooltip } from './atoms/Tooltip';
@@ -26,6 +25,6 @@ export { InputMessages, OutputMessages, Terminal, TerminalConnect, TerminalStrea
 export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecules/FileUploadForm';
 export { Graph } from './molecules/Metrics/Graph';
 export { NavigationBar } from './molecules/NavigationBar';
-export { SelectCard } from './molecules/SelectCard';
+export { SelectCard, SimpleCard } from './molecules/Card';
 export { SideBar } from './molecules/SideBar';
 export { Stepper } from './molecules/Stepper';
