@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 
-import { Box, Toolbar } from '@mui/material';
+import { Toolbar } from '@mui/material';
 
 import { componentStories, NavigationBar } from '@dolittle/design-system';
 
@@ -15,14 +15,12 @@ import { Content, Router } from '../../helpers/ReactRouter';
 const { metadata, createStory } = componentStories(NavigationBar, {
     decorator: (Story) => (
         <Router>
-            <Box>
-                <Toolbar />
-                <Routes>
-                    <Route path='*' element={<Content />} />
-                </Routes>
+            <Toolbar />
+            <Routes>
+                <Route path='*' element={<Content />} />
+            </Routes>
 
-                {Story()}
-            </Box>
+            {Story()}
         </Router>
     ),
 });
@@ -30,7 +28,8 @@ const { metadata, createStory } = componentStories(NavigationBar, {
 metadata.parameters = {
     controls: { include: [] },
     docs: {
-        description: { component: `The top navigation bar is always positioned at the top of the page and puts high priority destinations within reach on large screens. 
+        description: {
+            component: `The top navigation bar is always positioned at the top of the page and puts high priority destinations within reach on large screens. 
         The top navigation bar uses a background and elevation of 4. ` },
         source: {
             code: `
