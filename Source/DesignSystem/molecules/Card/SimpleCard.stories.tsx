@@ -7,13 +7,13 @@ import { componentStories, Button, SimpleCard } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(SimpleCard);
 
-metadata.title = 'Simple Card';
+metadata.title = 'Card/Simple Card';
 
 //TODO: Fix line breaking for component description. Unable to enter to new line without breaking the syntax.
 metadata.parameters = {
     docs: {
         description: {
-        component: 'Simple cards are surfaces that display content and actions on a single topic. They should be easy to scan for relevant and actionable information. Elements, such as text, images and buttons should be placed on them in a way that clearly indicates their hierarchy. A card can stand alone, without relying on surrounding elements for context. They are a great way to visually organize various types of information or categories.',
+            component: 'Simple cards are surfaces that display content and actions on a single topic. They should be easy to scan for relevant and actionable information. Elements, such as text, images and buttons should be placed on them in a way that clearly indicates their hierarchy. A card can stand alone, without relying on surrounding elements for context. They are a great way to visually organize various types of information or categories.',
         },
     },
 };
