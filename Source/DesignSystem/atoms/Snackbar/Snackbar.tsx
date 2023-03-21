@@ -8,6 +8,8 @@ import { CustomContentProps, SnackbarContent } from 'notistack';
 
 import { makeStyles } from '@mui/styles';
 
+// TODO: Wrong implementation of snackbar.
+
 const useStyles = makeStyles(() => ({
     root: {
         backgroundColor: '#323232',
