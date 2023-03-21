@@ -12,7 +12,7 @@ type IconProps = {
 };
 
 export const Icon = ({ icon, color = 'inherit', size = 'small' }: IconProps) => {
-    const clonedIcon = React.cloneElement(SvgIcons[icon], { fontSize: size, color });
+    const clonedIcon = React.cloneElement(SvgIcons[icon], { 'fontSize': size, color, 'aria-hidden': true });
 
     return <>{clonedIcon}</>;
 };
