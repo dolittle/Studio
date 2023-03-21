@@ -5,14 +5,16 @@ import React from 'react';
 
 import { componentStories, AlertBox } from '@dolittle/design-system';
 
-import { alertBoxDescription, AlertBoxErrorTitle, AlertBoxErrorMessage, AlertBoxInfoMessage } from './helpers';
+import { AlertBoxErrorTitle, AlertBoxErrorMessage, AlertBoxInfoMessage } from './helpers';
 
 const { metadata, createStory } = componentStories(AlertBox);
 
 metadata.title = 'Alert Box';
+
 metadata.parameters = {
     docs: {
-        description: { component: `
+        description: {
+            component: `
 An alert displays a short, important message in a way that attracts the user's attention without interrupting the user's tasks.
 These should not be confused with snackbars, which are used to signal feedback around specific system tasks that a user has just 
 completed or attempted to complete. Alerts are used to indicate system status and feedback as a whole.
@@ -39,16 +41,8 @@ metadata.argTypes = {
             AlertBoxErrorMessage: <AlertBoxErrorMessage />,
             AlertBoxInfoMessage: <AlertBoxInfoMessage />,
         },
-        table: {
-            type: { summary: 'string | ReactElement' },
-        },
     },
-    sx: {
-        control: false,
-        table: {
-            type: { summary: 'SxProps' },
-        },
-    },
+    sx: { control: false },
 };
 
 metadata.args = {
