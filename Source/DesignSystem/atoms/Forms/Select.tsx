@@ -29,7 +29,7 @@ export type SelectProps<T = string> = {
 
 /**
  * Creates an select input field to be used in a {@link Form}.
- * @param {SelectProps} props - The {@link SelectProps} that contains the properties for the select.
+ * @param {SelectProps} props - The {@link SelectProps}.
  * @returns A {@link Select} component.
  */
 export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onOpen, sx, ...selectProps }, ref) => {
@@ -42,6 +42,7 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
                 disabled={selectProps.disabled}
                 required={isRequired(selectProps.required)}
                 size='small'
+                sx={{ typography: 'body2' }}
             >
                 {selectProps.label}
             </InputLabel>
@@ -55,16 +56,11 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
                 disabled={selectProps.disabled}
                 onOpen={onOpen}
                 size='small'
+                sx={{ typography: 'body2' }}
                 autoWidth
                 MenuProps={{
-                    anchorOrigin: {
-                        vertical: 'bottom',
-                        horizontal: 'right',
-                    },
-                    transformOrigin: {
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }
+                    anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
+                    transformOrigin: { vertical: 'top', horizontal: 'right' }
                 }}
             >
                 {options.map(option => (
