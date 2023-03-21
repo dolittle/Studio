@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 
-import { Box, Card as MuiCard, CardHeader, CardActionArea, CardActions, CardContent, Collapse, List, Typography } from '@mui/material';
+import { Box, Card as MuiCard, CardHeader, CardActions, CardContent, Collapse, List, Typography } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 
 import { Button, Icon, SvgIconsDefinition } from '@dolittle/design-system';
@@ -46,16 +46,25 @@ type SelectCardProps = {
      * The text of the footer.
      */
     footerText: string;
+
+    /**
+     * The callback function when the card is selected.
+     */
+    onCardSelect?: () => void;
 };
 
 /**
  * Select Card is a expandable component that displays a card with a title, description, list of items and a footer.
- * @param {SelectCardProps} props - The {@link SelectCardProps} that contains the properties for the Select Card component.
+ * @param {SelectCardProps} props - The {@link SelectCardProps}.
  * @returns A {@link SelectCard} component.
  */
-export const SelectCard = ({ icon, title, description, listTitle, listItems, footerTitle, footerText }: SelectCardProps) => {
+export const SelectCard = ({ icon, title, description, listTitle, listItems, footerTitle, footerText, onCardSelect }: SelectCardProps) => {
     const [isCardExpanded, setCardIsExpanded] = useState(false);
-    const toggleCardIsExpanded = () => setCardIsExpanded(!isCardExpanded);
+
+    const handleSelect = () => {
+        setCardIsExpanded(!isCardExpanded);
+        onCardSelect?.();
+    };
 
     const styles = {
         'maxWidth': 316,
@@ -107,7 +116,7 @@ export const SelectCard = ({ icon, title, description, listTitle, listItems, foo
                     variant='outlined'
                     startWithIcon={isCardExpanded ? <Icon icon='CheckRounded' /> : undefined}
                     isFullWidth
-                    onClick={toggleCardIsExpanded}
+                    onClick={handleSelect}
                 />
             </CardActions>
         </MuiCard>
