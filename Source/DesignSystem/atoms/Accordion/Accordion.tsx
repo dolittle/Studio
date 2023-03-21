@@ -3,13 +3,17 @@
 
 import React from 'react';
 
-import { Accordion as MuiAccordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import { Accordion as MuiAccordion, AccordionDetails, AccordionSummary, SxProps, Typography } from '@mui/material';
 import { ExpandCircleDownRounded } from '@mui/icons-material';
 
 const styles = {
     accordion: {
-        backgroundColor: 'transparent',
-        backgroundImage: 'none',
+        'backgroundColor': 'transparent',
+        'backgroundImage': 'none',
+        'boxShadow': 'none',
+        '::before': {
+            display: 'none',
+        },
     },
     accordionSummary: {
         'p': 0,
@@ -72,6 +76,11 @@ export type AccordionProps = {
      * This is the content that is displayed when the accordion is expanded.
      */
     children: React.ReactNode;
+
+    /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
+    sx?: SxProps;
 };
 
 /**
@@ -79,12 +88,12 @@ export type AccordionProps = {
  * @param {AccordionProps} props - The {@link AccordionProps}.
  * @returns A {@link Accordion} component.
  */
-export const Accordion = ({ id, title, handleChange, expanded, defaultExpanded, children }: AccordionProps) =>
+export const Accordion = ({ id, title, handleChange, expanded, defaultExpanded, children, sx }: AccordionProps) =>
     <MuiAccordion
         defaultExpanded={defaultExpanded}
         expanded={expanded}
         onChange={handleChange}
-        sx={styles.accordion}
+        sx={{ ...styles.accordion, ...sx }}
     >
         <AccordionSummary
             expandIcon={<ExpandCircleDownRounded sx={styles.expandIcon} />}
