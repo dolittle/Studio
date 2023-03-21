@@ -20,6 +20,12 @@ Avoid unneccessarily adding icons so as not to clutter the UI and overwhelm the 
     },
 };
 
+metadata.args = {
+    icon: 'Dolittle',
+    color: 'inherit',
+    size: 'small',
+};
+
 export default metadata;
 
 export const Default = createStory({
