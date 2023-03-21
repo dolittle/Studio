@@ -41,7 +41,7 @@ type MetadataPublisherParameters = {
 
 export const NewConnectionSample = () => {
     return (
-        <Box sx={{ maxWidth: 814 }}>
+        <Box sx={{ maxWidth: 814, mt: 8 }}>
             <Typography variant='subtitle1'>Let’s get your M3 connector up and running...</Typography>
 
             <Box sx={{ mt: 3, ml: 3 }}>
@@ -83,7 +83,7 @@ export const NewConnectionSample = () => {
             </Accordion>
 
             <Accordion id='MetadataPublisherCredentials' title='Metadata Publisher Credentials' sx={{ mt: 8 }}>
-                <Typography>
+                <Typography sx={{ maxWidth: 660 }}>
                     This will allow us to access your service and provide the data, including custom data fields, needed to configure your application logic.
                 </Typography>
 
@@ -93,7 +93,7 @@ export const NewConnectionSample = () => {
                         password: '',
                     }}
                     onSubmit={() => { }}
-                    sx={{ mt: 6.5 }}
+                    sx={{ mt: 3 }}
                 >
                     <Stack spacing={3.5}>
                         <Input
@@ -109,18 +109,26 @@ export const NewConnectionSample = () => {
             </Accordion>
 
             <Accordion id='IONCredentials' title='ION Service Account Credentials' sx={{ mt: 8 }}>
-                <Typography>
+                <Typography sx={{ maxWidth: 660 }}>
                     Follow the steps below then upload your credentials. If you already have an ION service account setup, skip to step 8 to access your credentials.
                 </Typography>
 
-                <Box sx={{ 'pt': 1, 'pl': 3, '& p': { mb: 2 } }}>
+                <Box sx={{ 'maxWidth': 660, 'pt': 3, 'pl': 3, '& p': { mb: 2 } }}>
                     {instructionsList(instructions)}
                 </Box>
 
-                <Box sx={{ maxWidth: 732, mt: 8, mx: 'auto' }}>
+                <Box sx={{ pl: 3 }}>
                     <FileUploadForm onSelected={file => console.log(file)} validFileExtensions={['json']} />
                 </Box>
             </Accordion>
+
+            <Button
+                label='Create connection'
+                variant='filled'
+                startWithIcon={<Icon icon='PolylineRounded' />}
+                onClick={() => { }}
+                sx={{ my: 8 }}
+            />
         </Box>
     );
 };
