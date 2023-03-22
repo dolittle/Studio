@@ -32,7 +32,7 @@ export const PublicUrlFields = ({ sx }: PublicUrlFieldsProps) => {
             />
 
             {showPublicUrlInfo &&
-                <Tooltip id='public-url-tooltip' tooltipTitle='PATH' tooltipText={<PublicUrlFieldDescription />}>
+                <Tooltip tooltipTitle='PATH' tooltipText={<PublicUrlFieldDescription />}>
                     <Input
                         id='ingressPath'
                         label='Path'

@@ -29,7 +29,6 @@ export const SetupFields = ({ options, sx }: SetupFieldsProps) => {
             <Input id='developmentEnvironment' label='Development Environment' disabled />
 
             <Tooltip
-                id='runtime-version-tooltip'
                 tooltipTitle='Runtime'
                 tooltipText={runtimeDescription}
                 open={showEntrypointInfo}
