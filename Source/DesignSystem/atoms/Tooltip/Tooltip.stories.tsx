@@ -29,7 +29,7 @@ metadata.parameters = {
         Common use cases for tooltips are icon only buttons, truncated labels on data grids, or to display
         relevant information when an item is in focus such as a input textfield.` },
     },
-    controls: { include: ['tooltipTitle', 'tooltipText'] }
+    controls: { include: ['tooltipTitle', 'tooltipText'] },
 };
 
 metadata.argTypes = {
@@ -41,21 +41,24 @@ metadata.argTypes = {
 metadata.args = {
     tooltipTitle: 'Default tooltip',
     tooltipText: 'This is example text for the right aligned focused Input field.',
-    children: <Input id='default' label='Click to focus...' />,
+    children: <Input id='default' label='Click to show tooltip...' />,
 };
 
 export default metadata;
 
 export const Default = createStory();
 
-// export const HoverToolTip = createStory();
-// HoverToolTip.parameters = {
-//     docs: {
-//         description: {
-//             story: `Hover tooltips are useful when space is at a premium, especially whenneeding to elaborate on an element's
-//             function or provide more information.
-//             Position hover tooltips so that they are close enough to the element they are referring to but do not cover up or hide
-//             other elements and information on the page.`
-//         },
-//     },
-// };
+export const HoverTooltip = createStory({
+    displayOnHover: true,
+    children: <Input id='default' label='Hover to show tooltip...' />,
+});
+HoverTooltip.parameters = {
+    docs: {
+        description: {
+            story: `Hover tooltips are useful when space is at a premium, especially whenneeding to elaborate on an element's
+            function or provide more information.
+            Position hover tooltips so that they are close enough to the element they are referring to but do not cover up or hide
+            other elements and information on the page.`
+        },
+    },
+};
