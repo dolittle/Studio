@@ -10,11 +10,6 @@ import { SxProps, Tooltip as MuiTooltip, Typography } from '@mui/material';
  */
 type TooltipProps = {
     /**
-     * Unique id to add every tooltip.
-     */
-    id?: string;
-
-    /**
      * The tooltip title.
      */
     tooltipTitle: string;
@@ -63,9 +58,8 @@ type TooltipProps = {
  * @param {TooltipProps} props - The {@link TooltipProps}.
  * @returns A {@link Tooltip} component.
  */
-export const Tooltip = ({ id, tooltipTitle, tooltipText, open, handleOpen, handleClose, children, sx }: TooltipProps) =>
+export const Tooltip = ({ tooltipTitle, tooltipText, open, handleOpen, handleClose, children, sx }: TooltipProps) =>
     <MuiTooltip
-        id={`${id}-tooltip`}
         open={open}
         onOpen={handleOpen}
         onClose={handleClose}

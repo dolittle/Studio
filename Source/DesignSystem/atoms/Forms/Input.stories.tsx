@@ -38,7 +38,8 @@ const { metadata, createStory } = componentStories(Input, {
 
 metadata.parameters = {
     docs: {
-        description: { component: `By default, we use an outlined input field with a label. Labels should make it easy for the user
+        description: {
+            component: `By default, we use an outlined input field with a label. Labels should make it easy for the user
 to understand the requested information and to address any errors.
 
 **Helper text:** Helper text should not repeat the label but, rather, provide additional guidance about the input field. It should only take up a single line below the field. Helper text should only be added when it can provide more value.
@@ -103,7 +104,6 @@ export const Required = createStory({
     label: 'Required input',
     required: true,
 });
-
 Required.parameters = {
     docs: {
         description: {
@@ -111,8 +111,8 @@ Required.parameters = {
             Alternatively, you can leave out the asterisk IF all fields are required and only a few are optional. 
             In this case, include the type (optional) in the label. This is only recommended in familiar tasks where users expect certain information to be required, 
             such as a signup or checkout process.`
-        }
-    }
+        },
+    },
 };
 
 export const RequiredWithCustomMessage = createStory({
@@ -145,7 +145,6 @@ export const WithSideTooltip = createStory({
 WithSideTooltip.decorators = [
     (Story) => (
         <Tooltip
-            id='inputTooltip'
             tooltipTitle='Title'
             tooltipText='Use this tooltip to provide additional information about the input.'
         >

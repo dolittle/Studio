@@ -29,7 +29,7 @@ metadata.parameters = {
         Common use cases for tooltips are icon only buttons, truncated labels on data grids, or to display
         relevant information when an item is in focus such as a input textfield.` },
     },
-    controls: { include: ['id', 'tooltipTitle', 'tooltipText'] }
+    controls: { include: ['tooltipTitle', 'tooltipText'] }
 };
 
 metadata.argTypes = {
@@ -39,7 +39,6 @@ metadata.argTypes = {
 };
 
 metadata.args = {
-    id: 'default',
     tooltipTitle: 'Default tooltip',
     tooltipText: 'This is example text for the right aligned focused Input field.',
     children: <Input id='default' label='Click to focus...' />,

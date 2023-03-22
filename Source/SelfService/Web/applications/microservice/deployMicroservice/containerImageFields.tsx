@@ -32,7 +32,7 @@ export const ContainerImageFields = ({ sx }: ContainerImageFieldsProps) =>
     <Box sx={sx}>
         <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
 
-        <Tooltip id='image-tooltip' tooltipTitle='Image Name' tooltipText='Please provide the container image name for your microservice.'>
+        <Tooltip tooltipTitle='Image Name' tooltipText='Please provide the container image name for your microservice.'>
             <Input
                 id='headImage'
                 label='Image Name'
@@ -41,7 +41,7 @@ export const ContainerImageFields = ({ sx }: ContainerImageFieldsProps) =>
             />
         </Tooltip>
 
-        <Tooltip id='port-tooltip' tooltipTitle='Port' tooltipText={portDescription} sx={{ top: 6 }}>
+        <Tooltip tooltipTitle='Port' tooltipText={portDescription} sx={{ top: 6 }}>
             <Input
                 id='headPort'
                 label='Port'
@@ -53,7 +53,7 @@ export const ContainerImageFields = ({ sx }: ContainerImageFieldsProps) =>
             />
         </Tooltip>
 
-        <Tooltip id='entrypoint-tooltip' tooltipTitle='Entrypoint' tooltipText={<EntrypointDescription />}>
+        <Tooltip tooltipTitle='Entrypoint' tooltipText={<EntrypointDescription />}>
             <Input id='entrypoint' label='Entrypoint' />
         </Tooltip>
 
