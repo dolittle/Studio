@@ -1,3 +1,9 @@
+# [3.3.11] - 2023-3-22 [PR: #346](https://github.com/dolittle/Studio/pull/346)
+- Basic routing for connection details tab routes & new connection page
+- Scaffold connection details sub components
+- Move 'new connection' route to own folder
+
+
 # [3.3.10] - 2023-3-22 [PR: #345](https://github.com/dolittle/Studio/pull/345)
 ## Summary
 
