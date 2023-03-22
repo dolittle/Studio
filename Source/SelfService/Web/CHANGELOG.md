@@ -1,3 +1,11 @@
+# [3.3.12] - 2023-3-22 [PR: #347](https://github.com/dolittle/Studio/pull/347)
+- Initial test component for Accordion List => needs to be moved to Design System
+- Initial implementation of AccordList component
+- Create first stories for AccordionList component
+- Fix wrong import of componentStories
+- Fix typo in comment
+
+
 # [3.3.11] - 2023-3-22 [PR: #346](https://github.com/dolittle/Studio/pull/346)
 - Basic routing for connection details tab routes & new connection page
 - Scaffold connection details sub components
