@@ -4,26 +4,28 @@
 import React from 'react';
 import { RouteObject, Navigate } from 'react-router-dom';
 import { ConnectionDetails } from './connectionDetails';
+import { ConfigurationView } from './connectionDetails/configuration';
+import { ExposeView } from './connectionDetails/expose';
+import { MessagesView } from './connectionDetails/messages';
 import { NewConnection } from './newConnection';
 
 
 export const routes: RouteObject[] = [
     {
-        //connection page
         path: '*',
         element: <ConnectionDetails />,
         children: [
             {
                 path: 'configuration',
-                element: <div>configuration</div>,
+                element: <ConfigurationView />,
             },
             {
                 path: 'messages',
-                element: <div>messages</div>,
+                element: <MessagesView/>,
             },
             {
                 path: 'expose',
-                element: <div>expose</div>,
+                element: <ExposeView />,
             },
         ],
     },
