@@ -18,7 +18,7 @@ const styles = {
         'display': 'flex',
         'flexDirection': 'column',
         'flexGrow': 1,
-        'm': 5,
+        'm': 4,
         'mt': 8,
         '& .MuiToolbar-root': { p: 0 },
     },
