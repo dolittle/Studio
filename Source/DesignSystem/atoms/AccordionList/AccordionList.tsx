@@ -31,7 +31,7 @@ export type AccordionListProps = {
 
 /**
  * The AccordionList component is used to display a list of {@link Accordion} components.
- * It supports enabling "singøe expanded mode", allowing only a single accordion item to be open at any time.
+ * It supports enabling "single expanded mode", allowing only a single accordion item to be open at any time.
  * @param {AccordionListProps} props - The {@link AccordionListProps}.
  * @returns A {@link AccordionList} component.
  */
