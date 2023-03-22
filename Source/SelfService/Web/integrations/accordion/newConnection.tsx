@@ -7,7 +7,7 @@ import { Box, Typography } from '@mui/material';
 
 import { Button, FileUploadForm } from '@dolittle/design-system';
 
-import { NewConnectionAccordion } from './components/newConnectionAccordion';
+import { AccordionList, AccordionListProps, NewConnectionAccordion } from './components/newConnectionAccordion';
 import { InitialSetupForm } from './components/initialSetupForm';
 import { MetadataPublisherForm } from './components/metadataPublisherForm';
 import { InstructionsList } from './components/instructionsList';
@@ -19,6 +19,38 @@ const metadataPublisherDescription = `This will allow us to access your service 
 const ionCredentialsDescription = `Follow the steps below then upload your credentials. If you already have an ION service account setup, skip to step 8 to access your credentials.`;
 
 export const NewConnectionSample = () => {
+    const accordionProps: AccordionListProps = {
+        items: [
+            {
+                id: 'hostConnectorBundle',
+                title: 'Host Your Connector Bundle',
+                children: <ConnectorBundle />
+            },
+            {
+                id: 'metadataPublisherCredentials',
+                title: 'Metadata Publisher Credentials',
+                description: metadataPublisherDescription,
+                children: <MetadataPublisherForm />
+            },
+            {
+                id: 'ionCredentials',
+                title: 'ION Service Account Credentials',
+                description: ionCredentialsDescription,
+                children: (
+                    <>
+
+                        <InstructionsList />
+                        <Box sx={{ pl: 3 }}>
+                            <FileUploadForm onSelected={file => console.log(file)} validFileExtensions={['json']} />
+                        </Box>
+                    </>
+                )
+            }
+
+        ],
+        singleExpandMode: true
+    };
+
     return (
         <>
             <Typography variant='h1'>New M3 Connection</Typography>
@@ -30,8 +62,9 @@ export const NewConnectionSample = () => {
                     <Typography sx={{ maxWidth: 660 }}>{newConnectionDescription}</Typography>
                     <InitialSetupForm />
                 </Box>
+                <AccordionList  {...accordionProps} />
 
-                <NewConnectionAccordion id='hostConnectorBundle' title='Host Your Connector Bundle'>
+                {/* <NewConnectionAccordion id='hostConnectorBundle' title='Host Your Connector Bundle'>
                     <ConnectorBundle />
                 </NewConnectionAccordion>
 
@@ -45,7 +78,7 @@ export const NewConnectionSample = () => {
                     <Box sx={{ pl: 3 }}>
                         <FileUploadForm onSelected={file => console.log(file)} validFileExtensions={['json']} />
                     </Box>
-                </NewConnectionAccordion>
+                </NewConnectionAccordion> */}
 
                 <Box sx={{ my: 5 }}>
                     <Button
