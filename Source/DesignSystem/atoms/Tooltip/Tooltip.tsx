@@ -12,7 +12,17 @@ type TooltipProps = {
     /**
      * Unique id to add every tooltip.
      */
-    id: string;
+    id?: string;
+
+    /**
+     * The tooltip title.
+     */
+    tooltipTitle: string;
+
+    /**
+     * The tooltip text.
+     */
+    tooltipText: string | React.ReactNode;
 
     /**
      * You can use the open, onOpen and onClose props to control the behavior of the tooltip.
@@ -24,16 +34,6 @@ type TooltipProps = {
     open?: boolean;
     handleOpen?: () => void;
     handleClose?: () => void;
-
-    /**
-     * The tooltip title.
-     */
-    tooltipTitle: string;
-
-    /**
-     * The tooltip text.
-     */
-    tooltipText: string | React.ReactNode;
 
     /**
      * Tooltip won't show on hover.
@@ -48,22 +48,22 @@ type TooltipProps = {
     placement?: never;
 
     /**
-     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
-     */
-    sx?: SxProps;
-
-    /**
      * The content to show tooltip on.
      */
     children: ReactElement<any, any>;
+
+    /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
+    sx?: SxProps;
 };
 
 /**
  * Used to display a tooltip on focus.
- * @param {TooltipProps} props - The {@link TooltipProps} that contains the props for the tooltip component.
+ * @param {TooltipProps} props - The {@link TooltipProps}.
  * @returns A {@link Tooltip} component.
  */
-export const Tooltip = ({ id, open, handleOpen, handleClose, tooltipTitle, tooltipText, sx, children }: TooltipProps) =>
+export const Tooltip = ({ id, tooltipTitle, tooltipText, open, handleOpen, handleClose, children, sx }: TooltipProps) =>
     <MuiTooltip
         id={`${id}-tooltip`}
         open={open}
