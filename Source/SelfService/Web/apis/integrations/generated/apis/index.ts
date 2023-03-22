@@ -1,8 +1,10 @@
 /* tslint:disable */
 /* eslint-disable */
-export * from './ConfigurationApi';
+export * from './ConnectionConfigurationApi';
 export * from './ConnectionsApi';
+export * from './DeploymentApi';
 export * from './EnvironmentApi';
 export * from './LoginApi';
+export * from './MessageMappingApi';
 export * from './ProgramMetadataApi';
 export * from './TableMetadataApi';
