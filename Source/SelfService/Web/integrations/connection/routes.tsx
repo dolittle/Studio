@@ -3,18 +3,33 @@
 
 import React from 'react';
 import { RouteObject, Navigate } from 'react-router-dom';
+import { ConnectionDetails } from './connectionDetails';
+import { NewConnection } from './newConnection';
 
 
 export const routes: RouteObject[] = [
     {
         //connection page
-        path: '',
-        element: <div>Connection Screen</div>,
-        children: [],
+        path: '*',
+        element: <ConnectionDetails />,
+        children: [
+            {
+                path: 'configuration',
+                element: <div>configuration</div>,
+            },
+            {
+                path: 'messages',
+                element: <div>messages</div>,
+            },
+            {
+                path: 'expose',
+                element: <div>expose</div>,
+            },
+        ],
     },
     {
         path: 'new/',
-        element: <div>new page, redirect to connection-page and replace in history if connection already exists</div>,
+        element: <NewConnection />,
         children: [],
     },
 ];

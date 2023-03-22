@@ -12,11 +12,9 @@ export const Connection = () => {
     const routesElement = useRoutes(routes);
 
     return (
-        <Page title='M3 Connection'>
-            <DebugRouter>
-                {routesElement}
-            </DebugRouter>
-        </Page>
+        <DebugRouter>
+            {routesElement}
+        </DebugRouter>
     );
 };
 
