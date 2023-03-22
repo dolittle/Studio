@@ -31,10 +31,10 @@ type TooltipProps = {
     handleClose?: () => void;
 
     /**
-     * Tooltip won't show on hover.
-     * @default true
+     * If true, the tooltip is shown when the element is hovered.
+     * @default false
      */
-    disableHoverListener?: never;
+    displayOnHover?: boolean;
 
     /**
      * Tooltip is placed on the right.
@@ -54,16 +54,16 @@ type TooltipProps = {
 };
 
 /**
- * Used to display a tooltip on focus.
+ * Used to display a large tooltip on right side of an input.
  * @param {TooltipProps} props - The {@link TooltipProps}.
  * @returns A {@link Tooltip} component.
  */
-export const Tooltip = ({ tooltipTitle, tooltipText, open, handleOpen, handleClose, children, sx }: TooltipProps) =>
+export const Tooltip = ({ tooltipTitle, tooltipText, open, handleOpen, handleClose, displayOnHover, children, sx }: TooltipProps) =>
     <MuiTooltip
         open={open}
         onOpen={handleOpen}
         onClose={handleClose}
-        disableHoverListener
+        disableHoverListener={!displayOnHover}
         placement='right'
         componentsProps={{
             tooltip: {
