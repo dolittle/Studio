@@ -1,12 +1,14 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+
 export { componentStories, type ComponentStories } from './componentStories';
 export { availableIcons, SvgIcons, SvgIconsDefinition } from './theming/Icons/Icons';
 export { themeDark } from './theming/theme';
 
 // Atoms
 export { Accordion } from './atoms/Accordion';
+export { AccordionList, AccordionListProps } from './atoms/AccordionList';
 export { AlertDialog, AlertDialogProps } from './atoms/AlertDialog';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
 export { Button, ButtonProps } from './atoms/Button';
