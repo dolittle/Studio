@@ -7,7 +7,7 @@ import { ConnectionDetails } from './connectionDetails';
 import { ConfigurationView } from './connectionDetails/configuration';
 import { ExposeView } from './connectionDetails/expose';
 import { MessagesView } from './connectionDetails/messages';
-import { NewConnection } from './newConnection';
+import { NewConnection } from './new';
 
 
 export const routes: RouteObject[] = [
