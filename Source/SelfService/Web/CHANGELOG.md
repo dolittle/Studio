@@ -1,3 +1,9 @@
+# [3.3.10] - 2023-3-22 [PR: #345](https://github.com/dolittle/Studio/pull/345)
+## Summary
+
+Integration page connection updates
+
+
 # [3.3.9] - 2023-3-21 [PR: #344](https://github.com/dolittle/Studio/pull/344)
 ## Summary
 
