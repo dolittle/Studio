@@ -4,8 +4,7 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 
-import componentStories from 'Source/DesignSystem/componentStories';
-import { AccordionList, AccordionListProps } from './AccordionList';
+import { componentStories, AccordionList  } from '@dolittle/design-system';
 import { AccordionProps } from '../Accordion/Accordion';
 
 const DummyChildrenContent = () =>
@@ -60,7 +59,9 @@ export const Default = createStory();
 export const InitialExpanded = createStory();
 InitialExpanded.parameters = {
     docs: {
-        story:`In this example, you can see the second accordion item is pre-expanded`,
+        description:{
+            story:`In this example, you can see the second accordion item is pre-expanded`,
+        }
     }
 };
 
