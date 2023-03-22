@@ -10,7 +10,7 @@ import { Accordion } from '@dolittle/design-system';
 type NewConnectionAccordionProps = {
     id: string;
     title: string;
-    description: string;
+    description?: string;
     children: React.ReactNode;
 
     onExpanded?: any;
