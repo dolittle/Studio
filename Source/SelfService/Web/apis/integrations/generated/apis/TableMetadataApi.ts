@@ -28,19 +28,19 @@ import {
     TableDtoToJSON,
 } from '../models';
 
-export interface ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesGetRequest {
-    connectionId: string;
+export interface ConnectionsIdMetadataEnvironmentsEnvironmentTablesGetRequest {
+    id: string;
     environment: string;
 }
 
-export interface ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGetRequest {
-    connectionId: string;
+export interface ConnectionsIdMetadataEnvironmentsEnvironmentTablesTableNameGetRequest {
+    id: string;
     environment: string;
     tableName: string;
 }
 
-export interface ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGetRequest {
-    connectionId: string;
+export interface ConnectionsIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGetRequest {
+    id: string;
     environment: string;
     tableName: string;
 }
@@ -52,13 +52,13 @@ export class TableMetadataApi extends runtime.BaseAPI {
 
     /**
      */
-    async connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesGetRaw(requestParameters: ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ListTable>>> {
-        if (requestParameters.connectionId === null || requestParameters.connectionId === undefined) {
-            throw new runtime.RequiredError('connectionId','Required parameter requestParameters.connectionId was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesGet.');
+    async connectionsIdMetadataEnvironmentsEnvironmentTablesGetRaw(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentTablesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ListTable>>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentTablesGet.');
         }
 
         if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesGet.');
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentTablesGet.');
         }
 
         const queryParameters: any = {};
@@ -70,7 +70,7 @@ export class TableMetadataApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/connections/{connectionId}/metadata/environments/{environment}/tables`.replace(`{${"connectionId"}}`, encodeURIComponent(String(requestParameters.connectionId))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
+            path: `/connections/{id}/metadata/environments/{environment}/tables`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -81,24 +81,24 @@ export class TableMetadataApi extends runtime.BaseAPI {
 
     /**
      */
-    async connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesGet(requestParameters: ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ListTable>> {
-        const response = await this.connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesGetRaw(requestParameters, initOverrides);
+    async connectionsIdMetadataEnvironmentsEnvironmentTablesGet(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentTablesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ListTable>> {
+        const response = await this.connectionsIdMetadataEnvironmentsEnvironmentTablesGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGetRaw(requestParameters: ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TableDto>> {
-        if (requestParameters.connectionId === null || requestParameters.connectionId === undefined) {
-            throw new runtime.RequiredError('connectionId','Required parameter requestParameters.connectionId was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGet.');
+    async connectionsIdMetadataEnvironmentsEnvironmentTablesTableNameGetRaw(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentTablesTableNameGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TableDto>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentTablesTableNameGet.');
         }
 
         if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGet.');
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentTablesTableNameGet.');
         }
 
         if (requestParameters.tableName === null || requestParameters.tableName === undefined) {
-            throw new runtime.RequiredError('tableName','Required parameter requestParameters.tableName was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGet.');
+            throw new runtime.RequiredError('tableName','Required parameter requestParameters.tableName was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentTablesTableNameGet.');
         }
 
         const queryParameters: any = {};
@@ -110,7 +110,7 @@ export class TableMetadataApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/connections/{connectionId}/metadata/environments/{environment}/tables/{tableName}`.replace(`{${"connectionId"}}`, encodeURIComponent(String(requestParameters.connectionId))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"tableName"}}`, encodeURIComponent(String(requestParameters.tableName))),
+            path: `/connections/{id}/metadata/environments/{environment}/tables/{tableName}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"tableName"}}`, encodeURIComponent(String(requestParameters.tableName))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -121,24 +121,24 @@ export class TableMetadataApi extends runtime.BaseAPI {
 
     /**
      */
-    async connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGet(requestParameters: ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TableDto> {
-        const response = await this.connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameGetRaw(requestParameters, initOverrides);
+    async connectionsIdMetadataEnvironmentsEnvironmentTablesTableNameGet(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentTablesTableNameGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TableDto> {
+        const response = await this.connectionsIdMetadataEnvironmentsEnvironmentTablesTableNameGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGetRaw(requestParameters: ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RelatedTable>>> {
-        if (requestParameters.connectionId === null || requestParameters.connectionId === undefined) {
-            throw new runtime.RequiredError('connectionId','Required parameter requestParameters.connectionId was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGet.');
+    async connectionsIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGetRaw(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RelatedTable>>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGet.');
         }
 
         if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGet.');
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGet.');
         }
 
         if (requestParameters.tableName === null || requestParameters.tableName === undefined) {
-            throw new runtime.RequiredError('tableName','Required parameter requestParameters.tableName was null or undefined when calling connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGet.');
+            throw new runtime.RequiredError('tableName','Required parameter requestParameters.tableName was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGet.');
         }
 
         const queryParameters: any = {};
@@ -150,7 +150,7 @@ export class TableMetadataApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/connections/{connectionId}/metadata/environments/{environment}/tables/{tableName}/related-tables`.replace(`{${"connectionId"}}`, encodeURIComponent(String(requestParameters.connectionId))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"tableName"}}`, encodeURIComponent(String(requestParameters.tableName))),
+            path: `/connections/{id}/metadata/environments/{environment}/tables/{tableName}/related-tables`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"tableName"}}`, encodeURIComponent(String(requestParameters.tableName))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -161,8 +161,8 @@ export class TableMetadataApi extends runtime.BaseAPI {
 
     /**
      */
-    async connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGet(requestParameters: ConnectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<RelatedTable>> {
-        const response = await this.connectionsConnectionIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGetRaw(requestParameters, initOverrides);
+    async connectionsIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGet(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<RelatedTable>> {
+        const response = await this.connectionsIdMetadataEnvironmentsEnvironmentTablesTableNameRelatedTablesGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

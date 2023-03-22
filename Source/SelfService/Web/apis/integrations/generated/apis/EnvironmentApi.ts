@@ -22,6 +22,10 @@ import {
     M3EnvironmentListDtoToJSON,
 } from '../models';
 
+export interface ConnectionsIdMetadataEnvironmentsGetRequest {
+    id: string;
+}
+
 /**
  * 
  */
@@ -29,7 +33,11 @@ export class EnvironmentApi extends runtime.BaseAPI {
 
     /**
      */
-    async metadataEnvironmentsGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<M3EnvironmentListDto>>> {
+    async connectionsIdMetadataEnvironmentsGetRaw(requestParameters: ConnectionsIdMetadataEnvironmentsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<M3EnvironmentListDto>>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMetadataEnvironmentsGet.');
+        }
+
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -39,7 +47,7 @@ export class EnvironmentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/metadata/environments`,
+            path: `/connections/{id}/metadata/environments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -50,8 +58,8 @@ export class EnvironmentApi extends runtime.BaseAPI {
 
     /**
      */
-    async metadataEnvironmentsGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<M3EnvironmentListDto>> {
-        const response = await this.metadataEnvironmentsGetRaw(initOverrides);
+    async connectionsIdMetadataEnvironmentsGet(requestParameters: ConnectionsIdMetadataEnvironmentsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<M3EnvironmentListDto>> {
+        const response = await this.connectionsIdMetadataEnvironmentsGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

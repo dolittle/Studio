@@ -1,8 +1,10 @@
 .openapi-generator-ignore
-apis/ConfigurationApi.ts
+apis/ConnectionConfigurationApi.ts
 apis/ConnectionsApi.ts
+apis/DeploymentApi.ts
 apis/EnvironmentApi.ts
 apis/LoginApi.ts
+apis/MessageMappingApi.ts
 apis/ProgramMetadataApi.ts
 apis/TableMetadataApi.ts
 apis/index.ts
@@ -17,7 +19,6 @@ models/ConnectionStatus.ts
 models/EnvironmentType.ts
 models/FieldType.ts
 models/IndexColumn.ts
-models/IonConfigDto.ts
 models/IonConfigRequest.ts
 models/IonConfiguration.ts
 models/IonConfigurationResult.ts
@@ -26,7 +27,8 @@ models/ListTable.ts
 models/M3EnvironmentListDto.ts
 models/MdpConfiguration.ts
 models/MdpConfigurationResult.ts
-models/MetadataPublisherConfigDto.ts
+models/MessageMappingModel.ts
+models/MessageMappingModelResult.ts
 models/MetadataPublisherConfigRequest.ts
 models/ModelIndex.ts
 models/ProblemDetails.ts
@@ -34,6 +36,7 @@ models/ProgramDetails.ts
 models/ProgramHeader.ts
 models/ReadModelMetadata.ts
 models/RelatedTable.ts
+models/RemoteServiceStatus.ts
 models/SortDirection.ts
 models/StringResult.ts
 models/Table.ts

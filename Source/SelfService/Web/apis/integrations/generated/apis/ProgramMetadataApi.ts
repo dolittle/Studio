@@ -25,11 +25,13 @@ import {
     ProgramHeaderToJSON,
 } from '../models';
 
-export interface MetadataEnvironmentsEnvironmentProgramsGetRequest {
+export interface ConnectionsIdMetadataEnvironmentsEnvironmentProgramsGetRequest {
+    id: string;
     environment: string;
 }
 
-export interface MetadataEnvironmentsEnvironmentProgramsProgramGetRequest {
+export interface ConnectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGetRequest {
+    id: string;
     environment: string;
     program: string;
 }
@@ -41,9 +43,13 @@ export class ProgramMetadataApi extends runtime.BaseAPI {
 
     /**
      */
-    async metadataEnvironmentsEnvironmentProgramsGetRaw(requestParameters: MetadataEnvironmentsEnvironmentProgramsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProgramHeader>>> {
+    async connectionsIdMetadataEnvironmentsEnvironmentProgramsGetRaw(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentProgramsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProgramHeader>>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentProgramsGet.');
+        }
+
         if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling metadataEnvironmentsEnvironmentProgramsGet.');
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentProgramsGet.');
         }
 
         const queryParameters: any = {};
@@ -55,7 +61,7 @@ export class ProgramMetadataApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/metadata/environments/{environment}/programs`.replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
+            path: `/connections/{id}/metadata/environments/{environment}/programs`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -66,20 +72,24 @@ export class ProgramMetadataApi extends runtime.BaseAPI {
 
     /**
      */
-    async metadataEnvironmentsEnvironmentProgramsGet(requestParameters: MetadataEnvironmentsEnvironmentProgramsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ProgramHeader>> {
-        const response = await this.metadataEnvironmentsEnvironmentProgramsGetRaw(requestParameters, initOverrides);
+    async connectionsIdMetadataEnvironmentsEnvironmentProgramsGet(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentProgramsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ProgramHeader>> {
+        const response = await this.connectionsIdMetadataEnvironmentsEnvironmentProgramsGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async metadataEnvironmentsEnvironmentProgramsProgramGetRaw(requestParameters: MetadataEnvironmentsEnvironmentProgramsProgramGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProgramDetails>>> {
+    async connectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGetRaw(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProgramDetails>>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGet.');
+        }
+
         if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling metadataEnvironmentsEnvironmentProgramsProgramGet.');
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGet.');
         }
 
         if (requestParameters.program === null || requestParameters.program === undefined) {
-            throw new runtime.RequiredError('program','Required parameter requestParameters.program was null or undefined when calling metadataEnvironmentsEnvironmentProgramsProgramGet.');
+            throw new runtime.RequiredError('program','Required parameter requestParameters.program was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGet.');
         }
 
         const queryParameters: any = {};
@@ -91,7 +101,7 @@ export class ProgramMetadataApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/metadata/environments/{environment}/programs/{program}`.replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"program"}}`, encodeURIComponent(String(requestParameters.program))),
+            path: `/connections/{id}/metadata/environments/{environment}/programs/{program}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"program"}}`, encodeURIComponent(String(requestParameters.program))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -102,8 +112,8 @@ export class ProgramMetadataApi extends runtime.BaseAPI {
 
     /**
      */
-    async metadataEnvironmentsEnvironmentProgramsProgramGet(requestParameters: MetadataEnvironmentsEnvironmentProgramsProgramGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ProgramDetails>> {
-        const response = await this.metadataEnvironmentsEnvironmentProgramsProgramGetRaw(requestParameters, initOverrides);
+    async connectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGet(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ProgramDetails>> {
+        const response = await this.connectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

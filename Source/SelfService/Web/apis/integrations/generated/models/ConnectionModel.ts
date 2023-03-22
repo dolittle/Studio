@@ -37,6 +37,12 @@ import {
     ReadModelMetadataFromJSONTyped,
     ReadModelMetadataToJSON,
 } from './ReadModelMetadata';
+import type { RemoteServiceStatus } from './RemoteServiceStatus';
+import {
+    RemoteServiceStatusFromJSON,
+    RemoteServiceStatusFromJSONTyped,
+    RemoteServiceStatusToJSON,
+} from './RemoteServiceStatus';
 
 /**
  * 
@@ -92,6 +98,18 @@ export interface ConnectionModel {
      * @memberof ConnectionModel
      */
     status?: ConnectionStatus;
+    /**
+     * 
+     * @type {RemoteServiceStatus}
+     * @memberof ConnectionModel
+     */
+    mdpStatus?: RemoteServiceStatus;
+    /**
+     * 
+     * @type {RemoteServiceStatus}
+     * @memberof ConnectionModel
+     */
+    ionStatus?: RemoteServiceStatus;
 }
 
 /**
@@ -121,6 +139,8 @@ export function ConnectionModelFromJSONTyped(json: any, ignoreDiscriminator: boo
         'chosenEnvironment': !exists(json, 'chosenEnvironment') ? undefined : EnvironmentTypeFromJSON(json['chosenEnvironment']),
         '_configuration': !exists(json, 'configuration') ? undefined : ConnectionConfigurationFromJSON(json['configuration']),
         'status': !exists(json, 'status') ? undefined : ConnectionStatusFromJSON(json['status']),
+        'mdpStatus': !exists(json, 'mdpStatus') ? undefined : RemoteServiceStatusFromJSON(json['mdpStatus']),
+        'ionStatus': !exists(json, 'ionStatus') ? undefined : RemoteServiceStatusFromJSON(json['ionStatus']),
     };
 }
 
@@ -140,6 +160,8 @@ export function ConnectionModelToJSON(value?: ConnectionModel | null): any {
         'chosenEnvironment': EnvironmentTypeToJSON(value.chosenEnvironment),
         'configuration': ConnectionConfigurationToJSON(value._configuration),
         'status': ConnectionStatusToJSON(value.status),
+        'mdpStatus': RemoteServiceStatusToJSON(value.mdpStatus),
+        'ionStatus': RemoteServiceStatusToJSON(value.ionStatus),
     };
 }
 
