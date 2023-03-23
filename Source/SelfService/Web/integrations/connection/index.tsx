@@ -23,21 +23,20 @@ export const Connection = () => {
     useEffect(() => {
         if (query.data?.value && !location.pathname.includes('new')) {
             if (pendingStatuses.includes(query.data.value.status?.name?.toLowerCase() || '')) {
-                navigate('new');
+                navigate('new', { replace: true });
             }
         }
     }, [query.data, location.pathname]);
 
+    if (query.isError) {
+        return <>Something went wrong. Could not load connection details for {connectionId}</>;
+    }
+
     return (
         <>
-            {query.isSuccess ? (
-                <DebugRouter>
-                    {routesElement}
-                </DebugRouter>
-
-            )
-                : (`Something went wrong. Could not load connection details for ${connectionId}`)
-            }
+            <DebugRouter>
+                {routesElement}
+            </DebugRouter>
         </>
     );
 };
