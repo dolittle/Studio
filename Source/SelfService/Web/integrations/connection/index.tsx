@@ -13,19 +13,13 @@ import { useConnectionId } from '../routes.hooks';
 const pendingStatuses = ['registered', 'pending'];
 
 export const Connection = () => {
-    // Is there a connection for this id?
-    // If not: show some error page
-    // If connection, check status.
-    // If status == Registered or pending => redirect to new
-    // if not, show details page.
-
-    const location = useLocation();
-    const navigate = useNavigate();
     const connectionId = useConnectionId();
     const routesElement = useRoutes(routes);
     const query = useConnectionsIdGet({ id: connectionId || '' });
-    // console.log(query.data?.value);
 
+    // const useNavigateIfStatusIsPending
+    const location = useLocation();
+    const navigate = useNavigate();
     useEffect(() => {
         if (query.data?.value && !location.pathname.includes('new')) {
             if (pendingStatuses.includes(query.data.value.status?.name?.toLowerCase() || '')) {

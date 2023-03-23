@@ -7,8 +7,6 @@ import { Connection } from './connection';
 
 import { Connections } from './connections';
 import { ConnectionsScreen } from './connectionsScreen';
-import { Wizard } from './wizard/wizard';
-//import { NewConnectionSample } from './accordion/newConnection';
 
 export const routes: RouteObject[] = [
     {
@@ -34,14 +32,4 @@ export const routes: RouteObject[] = [
         element: <ConnectionsScreen />,
         children: [],
     },
-    {
-        path: 'connections/new-m3-connection/wizard',
-        element: <Wizard />,
-        children: [],
-    },
-    // {
-    //     path: 'connections/new-m3-connection/accordion',
-    //     element: <NewConnectionSample />,
-    //     children: [],
-    // },
 ];
