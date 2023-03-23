@@ -62,23 +62,8 @@ export const NewConnectionSample = () => {
                     <Typography sx={{ maxWidth: 660 }}>{newConnectionDescription}</Typography>
                     <InitialSetupForm />
                 </Box>
+
                 <AccordionList  {...accordionProps} />
-
-                {/* <NewConnectionAccordion id='hostConnectorBundle' title='Host Your Connector Bundle'>
-                    <ConnectorBundle />
-                </NewConnectionAccordion>
-
-                <NewConnectionAccordion id='metadataPublisherCredentials' title='Metadata Publisher Credentials' description={metadataPublisherDescription}>
-                    <MetadataPublisherForm />
-                </NewConnectionAccordion>
-
-                <NewConnectionAccordion id='ionCredentials' title='ION Service Account Credentials' description={ionCredentialsDescription}>
-                    <InstructionsList />
-
-                    <Box sx={{ pl: 3 }}>
-                        <FileUploadForm onSelected={file => console.log(file)} validFileExtensions={['json']} />
-                    </Box>
-                </NewConnectionAccordion> */}
 
                 <Box sx={{ my: 5 }}>
                     <Button
