@@ -3,7 +3,7 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { API_CONFIGURATION } from './api';
 import { CACHE_KEYS } from './CacheKeys';
-import { ConnectionsApi, ConnectionsIdDeleteRequest, ConnectionsIdPostRequest, ConnectionsIdGetRequest } from './generated';
+import { ConnectionsApi, ConnectionsIdDeleteRequest, ConnectionsIdPostRequest, ConnectionsIdGetRequest, ConnectionsIdNamePostRequest } from './generated';
 
 let apiInstance: ConnectionsApi | undefined;
 
@@ -44,6 +44,13 @@ export const useConnectionsIdDelete = () => {
     const api = getOrCreateApi();
     return useMutation({
         mutationFn: (params: ConnectionsIdDeleteRequest) => api.connectionsIdDelete(params),
+    });
+};
+
+export const useConnectionsIdNamePost = () => {
+    const api = getOrCreateApi();
+    return useMutation({
+        mutationFn: (params: ConnectionsIdNamePostRequest) => api.connectionsIdNamePost(params),
     });
 };
 

@@ -4,10 +4,12 @@
 import React, { useReducer } from 'react';
 
 import { Box, Typography } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { AccordionList, AccordionListProps, Button } from '@dolittle/design-system';
 
-import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
+import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
+import { useConnectionsIdGet, useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
 import { Page } from '../../../components/layout/page';
 import { useConnectionId } from '../../routes.hooks';
 import { MaxWidthTextBlock } from './components/MaxWidthTextBlock';
@@ -48,21 +50,39 @@ const accordionListProps: AccordionListProps = {
 export const NewConnectionView = () => {
     const connectionId = useConnectionId();
     const query = useConnectionsIdGet({ id: connectionId || '' });
+    const nameMutation = useConnectionsIdNamePost();
+    const queryClient = useQueryClient();
 
-    const [state, dispatch] = useReducer(connectionConfigurationReducer, {deploymentType: '', name: ''});
+    const [state, dispatch] = useReducer(connectionConfigurationReducer, { deploymentType: '', name: '' });
 
 
     if (query.isLoading) {
         return <>Loading</>;
     }
 
-    if (!query.data?.value) {
+    if (!query.data?.value || !connectionId) {
         return null;
     }
     const connection = query.data.value;
     const links = query.data.links;
     const shouldUseOnPrem = links?.some(link => link.rel === 'deploy-on-premise') || false;
     const shouldUseCloud = links?.some(link => link.rel === 'deploy-to-cloud') || false;
+
+    const handleSave = () => {
+        nameMutation.mutate(
+            { id: connectionId, body: state.name },
+            {
+                onSuccess(data, variables, context) {
+                    //TODO: Is invalidating enough, or do you also have to reftch?
+                    queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connections_GET, connectionId] });
+                    console.log('Success', data);
+                },
+                onError(data, variables, context) {
+                    console.log('Error', data);
+                },
+            }
+        );
+    };
 
     return (
         <Page title='New M3 Connection'>
@@ -85,9 +105,9 @@ export const NewConnectionView = () => {
 
                     <Box sx={{ my: 5 }}>
                         <Button
-                            label='Save connection'
+                            label={nameMutation.isLoading ? '...Loading' : 'Save connection'}
                             // disabled
-                            onClick={() => { }}
+                            onClick={() => handleSave()}
                             sx={{ mr: 3 }}
                         />
 
