@@ -1,3 +1,10 @@
+# [3.3.15] - 2023-3-23 [PR: #350](https://github.com/dolittle/Studio/pull/350)
+- Only show error message when query has error
+- Set the staleTime for connectionId query to 1 min
+- Populate name and start use of reducer to save value
+- Successfully post a name change to the server
+
+
 # [3.3.14] - 2023-3-23 [PR: #349](https://github.com/dolittle/Studio/pull/349)
 ## Summary
 
