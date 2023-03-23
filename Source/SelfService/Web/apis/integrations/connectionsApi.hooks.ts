@@ -27,7 +27,9 @@ export const useConnectionsIdGet = (params: ConnectionsIdGetRequest) => {
     const api = getOrCreateApi();
     return useQuery({
         queryKey: [CACHE_KEYS.Connection_GET, params.id],
-        queryFn: api.connectionsIdGet.bind(api, params)
+        queryFn: api.connectionsIdGet.bind(api, params),
+        // cacheTime: 60000,
+        staleTime: 60000,
     });
 };
 
