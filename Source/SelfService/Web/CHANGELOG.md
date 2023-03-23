@@ -1,3 +1,9 @@
+# [3.3.14] - 2023-3-23 [PR: #349](https://github.com/dolittle/Studio/pull/349)
+## Summary
+
+Add NewM3Connetion page content
+
+
 # [3.3.12] - 2023-3-22 [PR: #347](https://github.com/dolittle/Studio/pull/347)
 - Initial test component for Accordion List => needs to be moved to Design System
 - Initial implementation of AccordList component
