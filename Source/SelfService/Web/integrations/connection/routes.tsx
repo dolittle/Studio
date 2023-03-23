@@ -7,7 +7,7 @@ import { ConnectionDetails } from './connectionDetails';
 import { ConfigurationView } from './connectionDetails/configuration';
 import { ExposeView } from './connectionDetails/expose';
 import { MessagesView } from './connectionDetails/messages';
-import { NewConnection } from './new';
+import { NewConnectionView } from './new';
 
 
 export const routes: RouteObject[] = [
@@ -21,7 +21,7 @@ export const routes: RouteObject[] = [
             },
             {
                 path: 'messages',
-                element: <MessagesView/>,
+                element: <MessagesView />,
             },
             {
                 path: 'expose',
@@ -31,7 +31,7 @@ export const routes: RouteObject[] = [
     },
     {
         path: 'new/',
-        element: <NewConnection />,
+        element: <NewConnectionView />,
         children: [],
     },
 ];
