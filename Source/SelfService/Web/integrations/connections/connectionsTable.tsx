@@ -2,7 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
+
+import { useNavigate } from 'react-router-dom';
+
+import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams, GridEventListener } from '@mui/x-data-grid-pro';
 import { Paper, Tooltip } from '@mui/material';
 
 import { ConnectionModel } from '../../apis/integrations/generated';
@@ -20,8 +23,10 @@ export type ConnectionsTableProps = {
 
 
 export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTableProps) => {
+    const navigate = useNavigate();
     const deleteMutation = useConnectionsIdDelete();
     const queryClient = useQueryClient();
+
     const connectionsColumns: GridColDef<ConnectionModel>[] = [
         {
             field: 'name',
@@ -61,6 +66,13 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
         },
     ];
 
+    const handleRowClick = (connectionModel: ConnectionModel) => {
+        if (connectionModel.connectionId) {
+            const href = connectionModel.connectionId;
+            navigate(href);
+        }
+    };
+
     const deleteConnection = (connection: ConnectionModel) => {
         deleteMutation.mutate(
             { id: connection.connectionId! },
@@ -88,7 +100,7 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
                 hideFooter
                 disableSelectionOnClick
                 loading={isLoading}
-            // onRowClick={({ row }) => onTableRowClick(row.id)}
+                onRowClick={({ row }) => handleRowClick(row)}
             />
         </Paper>
     );
