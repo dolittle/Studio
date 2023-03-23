@@ -9,7 +9,6 @@ import { Connections } from './connections';
 import { ConnectionsScreen } from './connectionsScreen';
 import { Wizard } from './wizard/wizard';
 import { NewConnectionSample } from './accordion/newConnection';
-import { NewConnection } from './newConnection';
 
 export const routes: RouteObject[] = [
     {
@@ -27,12 +26,6 @@ export const routes: RouteObject[] = [
         // Show details for a single connection. Including creating a new one
         path: 'connections/:connectionId/*',
         element: <Connection />,
-    },
-    {
-        // Test page for starting a new connection wizard
-        // to be removed
-        path: 'connections/new/m3/:connectionId/*',
-        element: <NewConnection />,
     },
     {
         // Test page for selecting connection type
