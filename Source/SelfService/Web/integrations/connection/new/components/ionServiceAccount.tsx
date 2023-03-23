@@ -3,9 +3,11 @@
 
 import React from 'react';
 
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { FileUploadForm } from '@dolittle/design-system';
+
+import { MaxWidthTextBlock } from './MaxWidthTextBlock';
 
 export const instructions = [
     `1. Open Infor ION API. Open the menu from the upper left corner and select 'Infor ION API'.`,
@@ -20,17 +22,21 @@ export const instructions = [
     `10. Last, click 'Download'. Upload the files below.`,
 ];
 
-const instructionsListItem = (items: string[]) => (
-    items.map((item, index) => (
-        <Typography key={index} sx={{ mb: 2 }}>{item}</Typography>
-    ))
-);
+const InstructionsListItems = () =>
+    <Box sx={{ pl: 3, pt: 3 }}>
+        {instructions.map((item, index) => (
+            <MaxWidthTextBlock key={index} sx={{ mb: 2 }}>{item}</MaxWidthTextBlock>
+        ))}
+    </Box>;
 
 export const IonServiceAccount = () =>
-    <Box sx={{ pl: 3, pt: 3 }}>
-        <Box sx={{ maxWidth: 660 }}>
-            {instructionsListItem(instructions)}
-        </Box>
+    <>
+        <MaxWidthTextBlock>
+            Follow the steps below then upload your credentials. If you already have an ION service account setup, skip to step 8 to access your credentials.
+        </MaxWidthTextBlock>
 
-        <FileUploadForm onSelected={file => console.log(file)} validFileExtensions={['json']} />
-    </Box>;
+        <Box sx={{ pl: 3, pt: 3 }}>
+            <InstructionsListItems />
+            <FileUploadForm onSelected={file => console.log(file)} validFileExtensions={['json']} />
+        </Box>
+    </>;
