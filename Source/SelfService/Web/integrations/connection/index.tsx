@@ -2,10 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect } from 'react';
-import { useParams, Outlet, useRoutes, useNavigate, useLocation } from 'react-router-dom';
+import { useRoutes, useNavigate, useLocation } from 'react-router-dom';
 import { useConnectionsIdGet } from '../../apis/integrations/connectionsApi.hooks';
 import { DebugRouter } from '../../components/debugRouter';
-import { Page } from '../../components/layout/page';
 import { routes } from './routes';
 
 import { useConnectionId } from '../routes.hooks';

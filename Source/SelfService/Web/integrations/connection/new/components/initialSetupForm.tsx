@@ -6,6 +6,7 @@ import React from 'react';
 import { Stack } from '@mui/material';
 
 import { Form, Input, Select, Tooltip } from '@dolittle/design-system';
+import { ConnectionConfigurationAction, ConnectionConfigurationActionKind } from '../connectionConfigurationReducer';
 
 const selectValues = [
     { value: 'On Premise', displayValue: 'On Premise' },
@@ -18,7 +19,7 @@ const ConnectorNameTooltipText = () =>
         We recommend naming your connector based on its intended use. For example, <i>M3 Connector Test</i> or <i>M3 Connector Production</i>.
     </>;
 
-const hostingTooltipText = `Currently, you can only setup the connection with on premise hosting. Soon, we will support setup in the 
+const hostingTooltipText = `Currently, you can only setup the connection with on premise hosting. Soon, we will support setup in the
 cloud where Dolittle takes care of hosting, establishing backups and making sure the connector is running.`;
 
 type InitialSetupParameters = {
@@ -26,10 +27,23 @@ type InitialSetupParameters = {
     selectHosting: string;
 };
 
-export const InitialSetupForm = () =>
+export type InitialSetupFormProps = {
+    connectorName: string;
+    supportsOnPremise: boolean;
+    supportsCloud: boolean;
+    dispatch: React.Dispatch<ConnectionConfigurationAction>
+};
+
+const getSelectValues = (supportsOnPremise: boolean, supportsOnCloud: boolean) => {
+    //TODO: return only what is supported
+    //TODO; Should be unselected by default
+    return selectValues;
+};
+
+export const InitialSetupForm = ({ connectorName, supportsOnPremise, supportsCloud, dispatch }: InitialSetupFormProps) =>
     <Form<InitialSetupParameters>
         initialValues={{
-            connectorName: '',
+            connectorName,
             selectHosting: 'On Premise',
         }}
         onSubmit={() => { }}
@@ -37,11 +51,15 @@ export const InitialSetupForm = () =>
     >
         <Stack spacing={3.5}>
             <Tooltip tooltipTitle='CONNECTOR NAME' tooltipText={<ConnectorNameTooltipText />}>
-                <Input id='connectorName' label='Connector Name' required />
+                <Input id='connectorName' label='Connector Name' required onChange={(e) => {
+                    //store value in a smart place (like state)
+                    // parent should have access to state
+                    dispatch({ key: ConnectionConfigurationActionKind.NameSet, payload: e.target.value});
+                }} />
             </Tooltip>
 
             <Tooltip tooltipTitle='HOSTING' tooltipText={hostingTooltipText} displayOnHover>
-                <Select id='selectHosting' label='Hosting' options={selectValues} required disabled />
+                <Select id='selectHosting' label='Hosting' options={getSelectValues(supportsOnPremise, supportsCloud)} required disabled />
             </Tooltip>
         </Stack>
     </Form>;
