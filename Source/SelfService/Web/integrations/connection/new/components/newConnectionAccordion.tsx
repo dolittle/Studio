@@ -44,7 +44,7 @@ export type AccordionListProps = {
     singleExpandMode: boolean;
 };
 
-export const AccordionList = ({singleExpandMode, items}: AccordionListProps) => {
+export const AccordionList = ({ singleExpandMode, items }: AccordionListProps) => {
 
     const [expanded, setExpanded] = useState<string | false>(false);
 
@@ -54,23 +54,20 @@ export const AccordionList = ({singleExpandMode, items}: AccordionListProps) => 
 
     return (
         <>
-        {items.map(i => (
-            <Accordion
-                key={i.id}
-                id={i.id}
-                title={i.title}
-                expanded={singleExpandMode ? expanded === i.id : undefined}
-                onExpanded={handleChange(i.id)}
-                sx={{ mt: 8 }}
-            >
-                <Box sx={{ ml: 3 }}>
+            {items.map(i => (
+                <Accordion
+                    key={i.id}
+                    id={i.id}
+                    title={i.title}
+                    expanded={singleExpandMode ? expanded === i.id : undefined}
+                    onExpanded={handleChange(i.id)}
+                    sx={{ mt: 8 }}
+                >
                     <Typography sx={{ maxWidth: 660 }}>{i.description}</Typography>
                     {i.children}
-                </Box>
-            </Accordion>
-        ))}
+                </Accordion>
+            ))}
         </>
     );
-
 };
 
