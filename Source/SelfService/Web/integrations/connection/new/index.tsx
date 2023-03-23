@@ -17,31 +17,31 @@ import { ConnectorBundle } from './components/connectorBundle';
 const newConnectionDescription = `This process might take some time depending on access rights and working knowledge of
                     your organization's firewall and M3 system. You can always save and create the connection setup details then come back at a later time to finish.`;
 
-export const NewConnectionView = () => {
-    const accordionListProps: AccordionListProps = {
-        singleExpandMode: true,
-        items: [
-            {
-                id: 'hostConnectorBundle',
-                title: 'Host Your Connector Bundle',
-                children: <ConnectorBundle />,
-                sx: { mt: 8 },
-            },
-            {
-                id: 'metadataPublisherCredentials',
-                title: 'Metadata Publisher Credentials',
-                children: <MetadataPublisherCredentials />,
-                sx: { mt: 8 },
-            },
-            {
-                id: 'ionCredentials',
-                title: 'ION Service Account Credentials',
-                children: <IonServiceAccount />,
-                sx: { mt: 8 },
-            }
-        ],
-    };
+const accordionListProps: AccordionListProps = {
+    singleExpandMode: true,
+    items: [
+        {
+            id: 'hostConnectorBundle',
+            title: 'Host Your Connector Bundle',
+            children: <ConnectorBundle />,
+            sx: { mt: 8 },
+        },
+        {
+            id: 'metadataPublisherCredentials',
+            title: 'Metadata Publisher Credentials',
+            children: <MetadataPublisherCredentials />,
+            sx: { mt: 8 },
+        },
+        {
+            id: 'ionCredentials',
+            title: 'ION Service Account Credentials',
+            children: <IonServiceAccount />,
+            sx: { mt: 8 },
+        },
+    ],
+};
 
+export const NewConnectionView = () => {
     return (
         <Page title='New M3 Connection'>
             <Box sx={{ maxWidth: 814, mt: 7, ml: 1 }}>
