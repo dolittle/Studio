@@ -10,6 +10,7 @@ import { AccordionList, AccordionListProps, Button, Form } from '@dolittle/desig
 
 //import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
 import { useConnectionsIdGet, useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
+import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
 
 import { Page } from '../../../components/layout/page';
 import { useConnectionId } from '../../routes.hooks';
@@ -58,6 +59,8 @@ export const NewConnectionView = () => {
     const connectionId = useConnectionId();
     const query = useConnectionsIdGet({ id: connectionId || '' });
     const nameMutation = useConnectionsIdNamePost();
+    const mdpConfigurationMutation = useConnectionsIdConfigurationMdpPost();
+    const ionConfigurationMutation = useConnectionsIdConfigurationIonPost();
     const queryClient = useQueryClient();
 
     //const [state, dispatch] = useReducer(connectionConfigurationReducer, { deploymentType: '', name: '' });
@@ -72,7 +75,25 @@ export const NewConnectionView = () => {
 
     console.log('links', links);
 
-    const handleM3ConnectionSave = () => {
+    const handleM3ConnectionSave = (values: M3ConnectionParameters) => {
+        const { connectorName, selectHosting, metadataPublisher, metadataPublisherPassword } = values;
+
+        console.log('values', values);
+
+        if (connection.name !== connectorName) {
+            nameMutation.mutate(
+                { id: connectionId, body: connectorName },
+                {
+                    onSuccess(data, variables, context) {
+                        console.log('Success', data);
+                    },
+                    onError(data, variables, context) {
+                        console.log('Error', data);
+                    },
+                }
+            );
+        }
+
         // nameMutation.mutate(
         //     { id: connectionId, body: state.name },
         //     {
@@ -97,8 +118,8 @@ export const NewConnectionView = () => {
                     initialValues={{
                         connectorName: connection.name || '',
                         selectHosting: 'On Premise',
-                        metadataPublisher: '',
-                        metadataPublisherPassword: '',
+                        metadataPublisher: connection._configuration?.mdp?.url || '',
+                        metadataPublisherPassword: connection._configuration?.mdp?.password || '',
                     }}
                     onSubmit={handleM3ConnectionSave}
                     sx={{ ml: 3 }}
