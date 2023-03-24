@@ -11,6 +11,7 @@ import { AccordionList, AccordionListProps, Button, Form } from '@dolittle/desig
 //import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
 import { useConnectionsIdGet, useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
+import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
 
 import { Page } from '../../../components/layout/page';
 import { useConnectionId } from '../../routes.hooks';
@@ -61,6 +62,8 @@ export const NewConnectionView = () => {
     const nameMutation = useConnectionsIdNamePost();
     const mdpConfigurationMutation = useConnectionsIdConfigurationMdpPost();
     const ionConfigurationMutation = useConnectionsIdConfigurationIonPost();
+    const onPremisesConfigurationMutation = useConnectionsIdDeployOnPremisesPost();
+    const onCloudConfigurationMutation = useConnectionsIdDeployCloudPost();
     const queryClient = useQueryClient();
 
     //const [state, dispatch] = useReducer(connectionConfigurationReducer, { deploymentType: '', name: '' });
@@ -86,12 +89,24 @@ export const NewConnectionView = () => {
             );
         }
 
-        // Check if connection is set on entity. if set dont post anything
-        // if not set, check if value is present in form
-        // post
+        if (!hasSelectedDeploymentType && selectHosting) {
+            if (selectHosting === 'On Premises') {
+                onPremisesConfigurationMutation.mutate(
+                    {
+                        id: connectionId,
+                    },
+                    { onSuccess: () => console.log('Success'), onError: () => console.log('Error') }
+                );
+            }
 
-        if(!hasSelectedDeploymentType && selectHosting) {
-
+            if (selectHosting === 'On Cloud') {
+                onCloudConfigurationMutation.mutate(
+                    {
+                        id: connectionId,
+                    },
+                    { onSuccess: () => console.log('Success'), onError: () => console.log('Error') }
+                );
+            }
         }
 
         if (connection._configuration?.mdp?.url !== metadataPublisher
