@@ -18,7 +18,7 @@ import { useConnectionId } from '../../routes.hooks';
 import { MaxWidthTextBlock } from './components/MaxWidthTextBlock';
 import { MainM3ConnectionInfo } from './components/MainM3ConnectionInfo';
 import { MetadataPublisherCredentials } from './components/MetadataPublisherCredentials';
-import { ActionButtons } from './components/actionButtons';
+import { ActionButtons } from './components/ActionButtons';
 
 import { IonServiceAccount } from './components/ionServiceAccount';
 import { ConnectorBundle } from './components/connectorBundle';
@@ -85,16 +85,16 @@ export const NewConnectionView = () => {
             );
         }
 
-        if (connection._configuration?.mdp?.url !== metadataPublisher) {
+        if (connection._configuration?.mdp?.url !== metadataPublisher
+            || connection._configuration?.mdp?.password !== metadataPublisherPassword) {
             mdpConfigurationMutation.mutate(
-                { id: connectionId },
-                { onSuccess: () => console.log('Success'), onError: () => console.log('Error') }
-            );
-        }
-
-        if (connection._configuration?.mdp?.password !== metadataPublisherPassword) {
-            mdpConfigurationMutation.mutate(
-                { id: connectionId },
+                {
+                    id: connectionId,
+                    metadataPublisherConfigRequest: {
+                        url: metadataPublisher,
+                        password: metadataPublisherPassword
+                    },
+                },
                 { onSuccess: () => console.log('Success'), onError: () => console.log('Error') }
             );
         }
