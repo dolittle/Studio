@@ -73,24 +73,29 @@ export const NewConnectionView = () => {
     //const shouldUseOnPrem = links?.some(link => link.rel === 'deploy-on-premise') || false;
     //const shouldUseCloud = links?.some(link => link.rel === 'deploy-to-cloud') || false;
 
-    console.log('links', links);
+    //console.log('links', links);
 
     const handleM3ConnectionSave = (values: M3ConnectionParameters) => {
         const { connectorName, selectHosting, metadataPublisher, metadataPublisherPassword } = values;
 
-        console.log('values', values);
-
         if (connection.name !== connectorName) {
             nameMutation.mutate(
                 { id: connectionId, body: connectorName },
-                {
-                    onSuccess(data, variables, context) {
-                        console.log('Success', data);
-                    },
-                    onError(data, variables, context) {
-                        console.log('Error', data);
-                    },
-                }
+                { onSuccess: () => console.log('Success'), onError: () => console.log('Error') }
+            );
+        }
+
+        if (connection._configuration?.mdp?.url !== metadataPublisher) {
+            mdpConfigurationMutation.mutate(
+                { id: connectionId },
+                { onSuccess: () => console.log('Success'), onError: () => console.log('Error') }
+            );
+        }
+
+        if (connection._configuration?.mdp?.password !== metadataPublisherPassword) {
+            mdpConfigurationMutation.mutate(
+                { id: connectionId },
+                { onSuccess: () => console.log('Success'), onError: () => console.log('Error') }
             );
         }
 
