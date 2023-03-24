@@ -29,12 +29,12 @@ const getSelectValues = (links?: Link[] | null) => {
     const shouldUseCloud = links?.some(link => link.rel === 'deploy-to-cloud') || false;
     const selectValues: SelectPropsOptions = [];
 
-    if (shouldUseOnPrem) {
-        selectValues.push({ value: 'On Premises', displayValue: 'On Premises' });
-    }
-    if (shouldUseCloud) {
-        selectValues.push({ value: 'On Cloud', displayValue: 'In the Dolittle Cloud' });
-    }
+    // if (shouldUseOnPrem) {
+        selectValues.push({ value: 'On premises', displayValue: 'On Premises' });
+    // }
+    // if (shouldUseCloud) {
+        selectValues.push({ value: 'Cloud', displayValue: 'In the Dolittle Cloud' });
+    // }
     return selectValues;
 };
 
