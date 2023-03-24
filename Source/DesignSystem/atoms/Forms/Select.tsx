@@ -7,6 +7,8 @@ import { FormControl, InputLabel, MenuItem, Select as MuiSelect, SelectProps as 
 
 import { useController, isRequired, FieldProps } from './helpers';
 
+export type SelectPropsOptions<T = string> = { value: T, displayValue: string }[];
+
 /**
  * The props for a {@link Select} component.
  */
@@ -14,7 +16,7 @@ export type SelectProps<T = string> = {
     /**
      * The options to display in the select.
      */
-    options: { value: T, displayValue: string }[];
+    options: SelectPropsOptions;
 
     /**
      * An optional callback to call when the select is opened.
