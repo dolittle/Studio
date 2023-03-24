@@ -70,19 +70,28 @@ export const NewConnectionView = () => {
 
     const connection = query.data.value;
     const links = query.data.links;
-    //const shouldUseOnPrem = links?.some(link => link.rel === 'deploy-on-premise') || false;
-    //const shouldUseCloud = links?.some(link => link.rel === 'deploy-to-cloud') || false;
 
-    //console.log('links', links);
+    const hasSelectedDeploymentType = connection.chosenEnvironment?.value?.toLowerCase() !== 'unknown';
 
     const handleM3ConnectionSave = (values: M3ConnectionParameters) => {
         const { connectorName, selectHosting, metadataPublisher, metadataPublisherPassword } = values;
 
         if (connection.name !== connectorName) {
             nameMutation.mutate(
-                { id: connectionId, body: connectorName },
+                {
+                    id: connectionId,
+                    body: connectorName
+                },
                 { onSuccess: () => console.log('Success'), onError: () => console.log('Error') }
             );
+        }
+
+        // Check if connection is set on entity. if set dont post anything
+        // if not set, check if value is present in form
+        // post
+
+        if(!hasSelectedDeploymentType && selectHosting) {
+
         }
 
         if (connection._configuration?.mdp?.url !== metadataPublisher
@@ -122,14 +131,14 @@ export const NewConnectionView = () => {
                 <Form<M3ConnectionParameters>
                     initialValues={{
                         connectorName: connection.name || '',
-                        selectHosting: 'On Premise',
+                        selectHosting: '',
                         metadataPublisher: connection._configuration?.mdp?.url || '',
                         metadataPublisherPassword: connection._configuration?.mdp?.password || '',
                     }}
                     onSubmit={handleM3ConnectionSave}
                     sx={{ ml: 3 }}
                 >
-                    <MainM3ConnectionInfo />
+                    <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} />
 
                     <AccordionList  {...accordionListProps} />
 
