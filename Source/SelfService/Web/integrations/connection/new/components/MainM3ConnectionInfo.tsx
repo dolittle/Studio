@@ -50,7 +50,7 @@ export const MainM3ConnectionInfo = () =>
         <MaxWidthTextBlock>{newConnectionDescription}</MaxWidthTextBlock>
 
         <Tooltip tooltipTitle='Connector Name' tooltipText={<ConnectorNameTooltipText />}>
-            <Input id='connectorName' label='Connector Name' required onChange={(e) => {
+            <Input id='connectorName' label='Connector Name *' onChange={(e) => {
                 //store value in a smart place (like state)
                 // parent should have access to state
                 //dispatch({ key: ConnectionConfigurationActionKind.NameSet, payload: e.target.value });
@@ -58,6 +58,6 @@ export const MainM3ConnectionInfo = () =>
         </Tooltip>
 
         <Tooltip tooltipTitle='Hosting' tooltipText={hostingTooltipText} displayOnHover>
-            <Select id='selectHosting' label='Hosting' options={selectValues} required disabled />
+            <Select id='selectHosting' label='Hosting *' options={selectValues} disabled />
         </Tooltip>
     </Stack>;
