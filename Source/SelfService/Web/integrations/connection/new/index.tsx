@@ -75,6 +75,11 @@ export const NewConnectionView = () => {
 
     const hasSelectedDeploymentType = connection.chosenEnvironment?.value?.toLowerCase() !== 'unknown';
 
+    const handleM3ConnectionSuccessfulSave = (message: string) => {
+        enqueueSnackbar(message);
+        queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
+    };
+
     const handleM3ConnectionSave = (values: M3ConnectionParameters) => {
         const { connectorName, selectHosting, metadataPublisher, metadataPublisherPassword } = values;
 
@@ -82,14 +87,12 @@ export const NewConnectionView = () => {
             nameMutation.mutate(
                 {
                     id: connectionId,
-                    body: connectorName
+                    body: connectorName,
                 },
                 {
-                    onSuccess: () => {
-                        enqueueSnackbar('Saved Name');
-                        queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
-                    }, onError: () => console.log('Error')
-                }
+                    onSuccess: () => { handleM3ConnectionSuccessfulSave('Saved Name'); },
+                    onError: () => console.log('Error'),
+                },
             );
         }
 
@@ -100,11 +103,9 @@ export const NewConnectionView = () => {
                         id: connectionId,
                     },
                     {
-                        onSuccess: () => {
-                            enqueueSnackbar('Saved Hosting Type');
-                            queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
-                        }, onError: () => console.log('Error')
-                    }
+                        onSuccess: () => { handleM3ConnectionSuccessfulSave('Saved Hosting Type'); },
+                        onError: () => console.log('Error'),
+                    },
                 );
             }
 
@@ -114,11 +115,9 @@ export const NewConnectionView = () => {
                         id: connectionId,
                     },
                     {
-                        onSuccess: () => {
-                            enqueueSnackbar('Saved Hosting Type');
-                            queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
-                        }, onError: () => console.log('Error')
-                    }
+                        onSuccess: () => { handleM3ConnectionSuccessfulSave('Saved Hosting Type'); },
+                        onError: () => console.log('Error'),
+                    },
                 );
             }
         }
@@ -130,15 +129,13 @@ export const NewConnectionView = () => {
                     id: connectionId,
                     metadataPublisherConfigRequest: {
                         url: metadataPublisher,
-                        password: metadataPublisherPassword
+                        password: metadataPublisherPassword,
                     },
                 },
                 {
-                    onSuccess: () => {
-                        enqueueSnackbar('Saved MDP Configuration');
-                        queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
-                    }, onError: () => console.log('Error')
-                }
+                    onSuccess: () => { handleM3ConnectionSuccessfulSave('Saved MDP Configuration'); },
+                    onError: () => console.log('Error'),
+                },
             );
         }
     };

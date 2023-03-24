@@ -11,7 +11,7 @@ export const ActionButtons = () =>
     <Box sx={{ my: 5 }}>
         <Button
             label='Save connection'
-            disabled
+            //disabled
             type='submit'
             sx={{ mr: 3 }}
         />
