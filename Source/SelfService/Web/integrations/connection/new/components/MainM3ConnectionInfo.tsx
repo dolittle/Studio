@@ -24,17 +24,25 @@ const hostingTooltipText = `Currently, you can only setup the connection with on
 
 
 
-const getSelectValues = (links?: Link[] | null) => {
+const getSelectValues = (links: Link[] | null, hasSelectedDeploymentType: boolean) => {
     const shouldUseOnPrem = links?.some(link => link.rel === 'deploy-on-premises') || false;
     const shouldUseCloud = links?.some(link => link.rel === 'deploy-to-cloud') || false;
-    const selectValues: SelectPropsOptions = [];
+    const selectValues: SelectPropsOptions = [
+        { value: 'On premises', displayValue: 'On Premises' },
+        { value: 'Cloud', displayValue: 'In the Dolittle Cloud' },
+    ];
 
-    // if (shouldUseOnPrem) {
-        selectValues.push({ value: 'On premises', displayValue: 'On Premises' });
-    // }
-    // if (shouldUseCloud) {
-        selectValues.push({ value: 'Cloud', displayValue: 'In the Dolittle Cloud' });
-    // }
+    if (hasSelectedDeploymentType) {
+        return selectValues;
+    }
+
+    if (!shouldUseOnPrem) {
+        selectValues.splice(selectValues.findIndex(select => select.value === 'On premises'), 1);
+    }
+    if (!shouldUseCloud) {
+        selectValues.splice(selectValues.findIndex(value => value.value === 'Cloud'), 1);
+    }
+
     return selectValues;
 };
 
@@ -51,15 +59,15 @@ export const MainM3ConnectionInfo = (props: MainM3ConnectionInfoProps) => {
             <MaxWidthTextBlock>{newConnectionDescription}</MaxWidthTextBlock>
 
             <Tooltip tooltipTitle='Connector Name' tooltipText={<ConnectorNameTooltipText />}>
-                <Input id='connectorName' label='Connector Name *' onChange={(e) => {
-                    //store value in a smart place (like state)
-                    // parent should have access to state
-                    //dispatch({ key: ConnectionConfigurationActionKind.NameSet, payload: e.target.value });
-                }} />
+                <Input id='connectorName' label='Connector Name *' />
             </Tooltip>
 
             <Tooltip tooltipTitle='Hosting' tooltipText={hostingTooltipText} displayOnHover>
-                <Select id='selectHosting' label='Hosting *' options={getSelectValues(props.connectionIdLinks)} disabled={hasSelectedDeploymentType} />
+                <Select
+                    id='selectHosting'
+                    label='Hosting *'
+                    options={getSelectValues(props.connectionIdLinks || [], hasSelectedDeploymentType)} disabled={hasSelectedDeploymentType}
+                />
             </Tooltip>
         </Stack>
     );
