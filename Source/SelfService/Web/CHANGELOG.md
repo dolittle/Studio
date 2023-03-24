@@ -1,3 +1,23 @@
+# [3.3.16] - 2023-3-24 [PR: #351](https://github.com/dolittle/Studio/pull/351)
+## Summary
+
+Add functionality to 'new m3 connection' page.
+
+<img width="739" alt="Screenshot 2023-03-24 at 18 48 14" src="https://user-images.githubusercontent.com/19160439/227589484-c8639927-8b7a-4251-a62f-878b5ce60939.png">
+
+### Added
+
+- Api hooks
+
+### Fixed
+
+- Tooltip sx props location
+
+### Removed
+
+- Unused code
+
+
 # [3.3.15] - 2023-3-23 [PR: #350](https://github.com/dolittle/Studio/pull/350)
 - Only show error message when query has error
 - Set the staleTime for connectionId query to 1 min
