@@ -10,6 +10,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { AccordionList, AccordionListProps, Button, Form } from '@dolittle/design-system';
 
 //import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
+import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
 import { useConnectionsIdGet, useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
 import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
@@ -66,7 +67,7 @@ export const NewConnectionView = () => {
     const onPremisesConfigurationMutation = useConnectionsIdDeployOnPremisesPost();
     const onCloudConfigurationMutation = useConnectionsIdDeployCloudPost();
     const queryClient = useQueryClient();
-    const {enqueueSnackbar} = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
 
     //const [state, dispatch] = useReducer(connectionConfigurationReducer, { deploymentType: '', name: '' });
 
@@ -87,26 +88,41 @@ export const NewConnectionView = () => {
                     id: connectionId,
                     body: connectorName
                 },
-                { onSuccess: () => {enqueueSnackbar('Saved Name');}, onError: () => console.log('Error') }
+                {
+                    onSuccess: () => {
+                        enqueueSnackbar('Saved Name');
+                        queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
+                    }, onError: () => console.log('Error')
+                }
             );
         }
 
         if (!hasSelectedDeploymentType && selectHosting) {
-            if (selectHosting === 'On Premises') {
+            if (selectHosting === 'On premises') {
                 onPremisesConfigurationMutation.mutate(
                     {
                         id: connectionId,
                     },
-                    { onSuccess: () => {enqueueSnackbar('Saved Hosting Type');}, onError: () => console.log('Error') }
+                    {
+                        onSuccess: () => {
+                            enqueueSnackbar('Saved Hosting Type');
+                            queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
+                        }, onError: () => console.log('Error')
+                    }
                 );
             }
 
-            if (selectHosting === 'On Cloud') {
+            if (selectHosting === 'Cloud') {
                 onCloudConfigurationMutation.mutate(
                     {
                         id: connectionId,
                     },
-                    { onSuccess: () => {enqueueSnackbar('Saved Hosting Type');}, onError: () => console.log('Error') }
+                    {
+                        onSuccess: () => {
+                            enqueueSnackbar('Saved Hosting Type');
+                            queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
+                        }, onError: () => console.log('Error')
+                    }
                 );
             }
         }
@@ -121,25 +137,14 @@ export const NewConnectionView = () => {
                         password: metadataPublisherPassword
                     },
                 },
-                { onSuccess: () => {enqueueSnackbar('Saved MDP Configuration');}, onError: () => console.log('Error') }
+                { onSuccess: () => {
+                    enqueueSnackbar('Saved MDP Configuration');
+                    queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
+                }, onError: () => console.log('Error') }
             );
         }
-
-        // nameMutation.mutate(
-        //     { id: connectionId, body: state.name },
-        //     {
-        //         onSuccess(data, variables, context) {
-        //             //TODO: Is invalidating enough, or do you also have to reftch?
-        //             queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connections_GET, connectionId] });
-        //             console.log('Success', data);
-        //         },
-        //         onError(data, variables, context) {
-        //             console.log('Error', data);
-        //         },
-        //     }
-        // );
     };
-console.log(connection.chosenEnvironment?.value);
+
     return (
         <Page title='New M3 Connection'>
             <Box sx={{ maxWidth: 814, mt: 7, ml: 1 }}>
