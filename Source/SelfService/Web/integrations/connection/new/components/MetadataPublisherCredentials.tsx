@@ -6,6 +6,7 @@ import React from 'react';
 import { Stack } from '@mui/material';
 
 import { Input } from '@dolittle/design-system';
+
 import { MaxWidthTextBlock } from './MaxWidthTextBlock';
 
 export const MetadataPublisherCredentials = () =>

@@ -9,7 +9,7 @@ import { Paper, Typography } from '@mui/material';
 
 import { Button, Icon } from '@dolittle/design-system';
 
-const instruction1 = 'Please make sure your organization’s firewall rules allow the M3 connector to connect to Kafka in order to communicate with our API. The Kafka cluster is reachable as:';
+const instruction1 = `Please make sure your organization's firewall rules allow the M3 connector to connect to Kafka in order to communicate with our API. The Kafka cluster is reachable as:`;
 const instruction2 = 'kafka-test-env-dolittle-test-env.aivencloud.com, and is using port 14691.';
 const instruction3 = `All IPs for that address need to be available for outgoing traffic on port 14691.
 This includes the following IPs:`;
@@ -38,7 +38,7 @@ ${ipAddress3}
 export const CopyTextBox = () => {
     const { enqueueSnackbar } = useSnackbar();
 
-    const handleCopy = () => {
+    const handleTextCopy = () => {
         navigator.clipboard.writeText(textToCopy);
         enqueueSnackbar('Copied to clipboard');
     };
@@ -68,7 +68,7 @@ export const CopyTextBox = () => {
             <Button
                 label='Copy content'
                 startWithIcon={<Icon icon='CopyAllRounded' />}
-                onClick={handleCopy}
+                onClick={handleTextCopy}
             />
         </Paper>
     );

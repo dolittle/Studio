@@ -22,7 +22,7 @@ import { Page } from '../../../components/layout/page';
 import { MainM3ConnectionInfo } from './components/MainM3ConnectionInfo';
 import { MetadataPublisherCredentials } from './components/MetadataPublisherCredentials';
 import { ConnectorBundle } from './components/connectorBundle';
-import { IonServiceAccount } from './components/ionServiceAccount';
+import { IonServiceAccountCredentials } from './components/IonServiceAccountCredentials';
 import { ActionButtons } from './components/ActionButtons';
 
 const accordionListProps: AccordionListProps = {
@@ -43,7 +43,7 @@ const accordionListProps: AccordionListProps = {
         {
             id: 'ionCredentials',
             title: 'ION Service Account Credentials',
-            children: <IonServiceAccount />,
+            children: <IonServiceAccountCredentials />,
             sx: { mt: 8 },
         },
     ],
