@@ -29,14 +29,13 @@ const InstructionsListItems = () =>
         ))}
     </Box>;
 
-export const IonServiceAccount = () =>
+export const IonServiceAccountCredentials = () =>
     <>
         <MaxWidthTextBlock>
             Follow the steps below then upload your credentials. If you already have an ION service account setup, skip to step 8 to access your credentials.
         </MaxWidthTextBlock>
 
-        <Box sx={{ pl: 3, pt: 3 }}>
-            <InstructionsListItems />
-            <FileUploadForm onSelected={file => console.log(file)} validFileExtensions={['json']} />
-        </Box>
+        <InstructionsListItems />
+
+        <FileUploadForm onSelected={file => console.log(file)} validFileExtensions={['json']} />
     </>;
