@@ -3,7 +3,14 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { API_CONFIGURATION } from './api';
 import { CACHE_KEYS } from './CacheKeys';
-import { ConnectionsApi, ConnectionsIdDeleteRequest, ConnectionsIdPostRequest, ConnectionsIdGetRequest, ConnectionsIdNamePostRequest } from './generated';
+import {
+    ConnectionsApi,
+    ConnectionsIdDeleteRequest,
+    ConnectionsIdPostRequest,
+    ConnectionsIdGetRequest,
+    ConnectionsIdNamePostRequest,
+    ConnectionsIdConnectorDeploymentGetRequest,
+} from './generated';
 
 let apiInstance: ConnectionsApi | undefined;
 
@@ -54,3 +61,12 @@ export const useConnectionsIdNamePost = () => {
     });
 };
 
+export const useConnectionsIdConnectorDeploymentGet = (params: ConnectionsIdConnectorDeploymentGetRequest) => {
+    const api = getOrCreateApi();
+    return useQuery({
+        queryKey: [CACHE_KEYS.Connection_GET, params.id, CACHE_KEYS.ConnectionsConnectorDeployment_GET],
+        queryFn: api.connectionsIdConnectorDeploymentGet.bind(api, params),
+        // cacheTime: 60000,
+        staleTime: 60000,
+    });
+};
