@@ -2,13 +2,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import { RouteObject, Navigate } from 'react-router-dom';
+
 import { ConnectionDetails } from './connectionDetails';
 import { ConfigurationView } from './connectionDetails/configuration';
 import { ExposeView } from './connectionDetails/expose';
 import { MessagesView } from './connectionDetails/messages';
-import { NewConnectionView } from './new';
 
+import { NewConnectionView } from './new';
 
 export const routes: RouteObject[] = [
     {

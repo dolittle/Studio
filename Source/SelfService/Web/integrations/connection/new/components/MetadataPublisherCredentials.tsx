@@ -5,13 +5,8 @@ import React from 'react';
 
 import { Stack } from '@mui/material';
 
-import { Form, Input } from '@dolittle/design-system';
+import { Input } from '@dolittle/design-system';
 import { MaxWidthTextBlock } from './MaxWidthTextBlock';
-
-// type MetadataPublisherParameters = {
-//     metadataPublisher: string;
-//     password: string;
-// };
 
 export const MetadataPublisherCredentials = () =>
     <>

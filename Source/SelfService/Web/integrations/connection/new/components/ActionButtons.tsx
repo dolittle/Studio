@@ -11,8 +11,7 @@ export const ActionButtons = () =>
     <Box sx={{ my: 5 }}>
         <Button
             label='Save connection'
-            // disabled
-            //onClick={() => handleSave()}
+            disabled
             type='submit'
             sx={{ mr: 3 }}
         />
