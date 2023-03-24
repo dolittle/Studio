@@ -30,10 +30,10 @@ const getSelectValues = (links?: Link[] | null) => {
     const selectValues: SelectPropsOptions = [];
 
     if (shouldUseOnPrem) {
-        selectValues.push({ value: 'On Premise', displayValue: 'On Premise' });
+        selectValues.push({ value: 'On Premises', displayValue: 'On Premises' });
     }
     if (shouldUseCloud) {
-        selectValues.push({ value: 'In the Dolittle Cloud', displayValue: 'In the Dolittle Cloud' });
+        selectValues.push({ value: 'On Cloud', displayValue: 'In the Dolittle Cloud' });
     }
     return selectValues;
 };
