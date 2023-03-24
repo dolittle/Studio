@@ -41,7 +41,7 @@ export const ContainerImageFields = ({ sx }: ContainerImageFieldsProps) =>
             />
         </Tooltip>
 
-        <Tooltip tooltipTitle='Port' tooltipText={portDescription} sx={{ top: 6 }}>
+        <Tooltip tooltipTitle='Port' tooltipText={portDescription} sx={{ position: 'relative', top: 6 }}>
             <Input
                 id='headPort'
                 label='Port'
