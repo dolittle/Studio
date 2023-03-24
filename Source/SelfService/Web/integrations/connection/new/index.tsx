@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useReducer } from 'react';
+import { useSnackbar } from 'notistack';
 
 import { Box, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
@@ -65,6 +66,7 @@ export const NewConnectionView = () => {
     const onPremisesConfigurationMutation = useConnectionsIdDeployOnPremisesPost();
     const onCloudConfigurationMutation = useConnectionsIdDeployCloudPost();
     const queryClient = useQueryClient();
+    const {enqueueSnackbar} = useSnackbar();
 
     //const [state, dispatch] = useReducer(connectionConfigurationReducer, { deploymentType: '', name: '' });
 
@@ -85,7 +87,7 @@ export const NewConnectionView = () => {
                     id: connectionId,
                     body: connectorName
                 },
-                { onSuccess: () => console.log('Success'), onError: () => console.log('Error') }
+                { onSuccess: () => {enqueueSnackbar('Saved Name');}, onError: () => console.log('Error') }
             );
         }
 
@@ -95,7 +97,7 @@ export const NewConnectionView = () => {
                     {
                         id: connectionId,
                     },
-                    { onSuccess: () => console.log('Success'), onError: () => console.log('Error') }
+                    { onSuccess: () => {enqueueSnackbar('Saved Hosting Type');}, onError: () => console.log('Error') }
                 );
             }
 
@@ -104,7 +106,7 @@ export const NewConnectionView = () => {
                     {
                         id: connectionId,
                     },
-                    { onSuccess: () => console.log('Success'), onError: () => console.log('Error') }
+                    { onSuccess: () => {enqueueSnackbar('Saved Hosting Type');}, onError: () => console.log('Error') }
                 );
             }
         }
@@ -119,7 +121,7 @@ export const NewConnectionView = () => {
                         password: metadataPublisherPassword
                     },
                 },
-                { onSuccess: () => console.log('Success'), onError: () => console.log('Error') }
+                { onSuccess: () => {enqueueSnackbar('Saved MDP Configuration');}, onError: () => console.log('Error') }
             );
         }
 
@@ -137,7 +139,7 @@ export const NewConnectionView = () => {
         //     }
         // );
     };
-
+console.log(connection.chosenEnvironment?.value);
     return (
         <Page title='New M3 Connection'>
             <Box sx={{ maxWidth: 814, mt: 7, ml: 1 }}>
@@ -146,7 +148,7 @@ export const NewConnectionView = () => {
                 <Form<M3ConnectionParameters>
                     initialValues={{
                         connectorName: connection.name || '',
-                        selectHosting: '',
+                        selectHosting: hasSelectedDeploymentType ? connection.chosenEnvironment?.value || '' : '',
                         metadataPublisher: connection._configuration?.mdp?.url || '',
                         metadataPublisherPassword: connection._configuration?.mdp?.password || '',
                     }}

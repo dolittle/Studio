@@ -34,7 +34,7 @@ export const Connections = () => {
             { id: newConnectionId }, {
             onSuccess: (result) => {
                 //TODO: Move the generating of this url to a "well-known" place
-                const href = `new/m3/${newConnectionId}/`;
+                const href = `${newConnectionId}`;
                 enqueueSnackbar('Connection created', {variant: 'success'});
                 navigate(href);
             },
