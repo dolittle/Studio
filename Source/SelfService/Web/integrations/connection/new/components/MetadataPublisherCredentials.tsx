@@ -22,11 +22,10 @@ export const MetadataPublisherCredentials = () =>
         <Stack spacing={3.5} sx={{ mt: 3 }}>
             <Input
                 id='metadataPublisher'
-                label='Your Metadata Publisher URL'
+                label='Your Metadata Publisher URL *'
                 placeholder='Your metadata publisher URL goes here...'
-                required
                 sx={{ width: 1, maxWidth: 500 }}
             />
-            <Input id='metadataPublisherPassword' label='Password' placeholder='Your password' required />
+            <Input id='metadataPublisherPassword' label='Password *' placeholder='Your password' />
         </Stack>
     </>;
