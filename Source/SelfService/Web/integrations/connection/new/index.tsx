@@ -52,7 +52,7 @@ const accordionListProps: AccordionListProps = {
 export type M3ConnectionParameters = {
     connectorName: string;
     selectHosting: string;
-    metadataPublisher: string;
+    metadataPublisherUrl: string;
     metadataPublisherPassword: string;
 };
 
@@ -74,6 +74,8 @@ export const NewConnectionView = () => {
     const links = query.data.links;
 
     const hasSelectedDeploymentType = connection.chosenEnvironment?.value?.toLowerCase() !== 'unknown';
+    const metadataPublisherUrl = connection._configuration?.mdp?.url;
+    const metadataPublisherPassword = connection._configuration?.mdp?.password;
 
     const handleM3ConnectionSuccessfulSave = (message: string) => {
         enqueueSnackbar(message);
@@ -81,13 +83,11 @@ export const NewConnectionView = () => {
     };
 
     const handleM3ConnectionSave = (values: M3ConnectionParameters) => {
-        const { connectorName, selectHosting, metadataPublisher, metadataPublisherPassword } = values;
-
-        if (connection.name !== connectorName) {
+        if (connection.name !== values.connectorName) {
             nameMutation.mutate(
                 {
                     id: connectionId,
-                    body: connectorName,
+                    body: values.connectorName,
                 },
                 {
                     onSuccess: () => { handleM3ConnectionSuccessfulSave('Saved Name'); },
@@ -96,8 +96,8 @@ export const NewConnectionView = () => {
             );
         }
 
-        if (!hasSelectedDeploymentType && selectHosting) {
-            if (selectHosting === 'On premises') {
+        if (!hasSelectedDeploymentType && values.selectHosting) {
+            if (values.selectHosting === 'On premises') {
                 onPremisesConfigurationMutation.mutate(
                     {
                         id: connectionId,
@@ -109,7 +109,7 @@ export const NewConnectionView = () => {
                 );
             }
 
-            if (selectHosting === 'Cloud') {
+            if (values.selectHosting === 'Cloud') {
                 onCloudConfigurationMutation.mutate(
                     {
                         id: connectionId,
@@ -122,14 +122,13 @@ export const NewConnectionView = () => {
             }
         }
 
-        if (connection._configuration?.mdp?.url !== metadataPublisher
-            || connection._configuration?.mdp?.password !== metadataPublisherPassword) {
+        if (metadataPublisherUrl !== values.metadataPublisherUrl || metadataPublisherPassword !== values.metadataPublisherPassword) {
             mdpConfigurationMutation.mutate(
                 {
                     id: connectionId,
                     metadataPublisherConfigRequest: {
-                        url: metadataPublisher,
-                        password: metadataPublisherPassword,
+                        url: values.metadataPublisherUrl,
+                        password: values.metadataPublisherPassword,
                     },
                 },
                 {
@@ -149,8 +148,8 @@ export const NewConnectionView = () => {
                     initialValues={{
                         connectorName: connection.name || '',
                         selectHosting: hasSelectedDeploymentType ? connection.chosenEnvironment?.value || '' : '',
-                        metadataPublisher: connection._configuration?.mdp?.url || '',
-                        metadataPublisherPassword: connection._configuration?.mdp?.password || '',
+                        metadataPublisherUrl: metadataPublisherUrl || '',
+                        metadataPublisherPassword: metadataPublisherPassword || '',
                     }}
                     onSubmit={handleM3ConnectionSave}
                     sx={{ ml: 3 }}
