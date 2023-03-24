@@ -9,9 +9,11 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { Typography, Toolbar } from '@mui/material';
 
-import { WorkSpaceLayout } from '../components/layout/workSpaceLayout/workSpaceLayout';
 import { buildQueryClient } from '../apis/integrations/queryClient';
+
 import { routes } from './routes';
+
+import { WorkSpaceLayout } from '../components/layout/workSpaceLayout/workSpaceLayout';
 import { DebugRouter } from '../components/debugRouter';
 
 export const IntegrationsIndex = () => {

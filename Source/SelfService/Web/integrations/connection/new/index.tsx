@@ -1,31 +1,29 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useReducer } from 'react';
-import { useSnackbar } from 'notistack';
+import React from 'react';
 
-import { Box, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { AccordionList, AccordionListProps, Button, Form } from '@dolittle/design-system';
+import { Box, Typography } from '@mui/material';
 
-//import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
+import { AccordionList, AccordionListProps, Form } from '@dolittle/design-system';
+
 import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
-import { useConnectionsIdGet, useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
-import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
-import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
 
-import { Page } from '../../../components/layout/page';
+import { useConnectionsIdGet, useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
+import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
+import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
+
 import { useConnectionId } from '../../routes.hooks';
 
-import { MaxWidthTextBlock } from './components/MaxWidthTextBlock';
+import { Page } from '../../../components/layout/page';
 import { MainM3ConnectionInfo } from './components/MainM3ConnectionInfo';
 import { MetadataPublisherCredentials } from './components/MetadataPublisherCredentials';
-import { ActionButtons } from './components/ActionButtons';
-
-import { IonServiceAccount } from './components/ionServiceAccount';
 import { ConnectorBundle } from './components/connectorBundle';
-//import { connectionConfigurationReducer } from './connectionConfigurationReducer';
+import { IonServiceAccount } from './components/ionServiceAccount';
+import { ActionButtons } from './components/ActionButtons';
 
 const accordionListProps: AccordionListProps = {
     singleExpandMode: true,
@@ -51,7 +49,7 @@ const accordionListProps: AccordionListProps = {
     ],
 };
 
-type M3ConnectionParameters = {
+export type M3ConnectionParameters = {
     connectorName: string;
     selectHosting: string;
     metadataPublisher: string;
@@ -68,8 +66,6 @@ export const NewConnectionView = () => {
     const onCloudConfigurationMutation = useConnectionsIdDeployCloudPost();
     const queryClient = useQueryClient();
     const { enqueueSnackbar } = useSnackbar();
-
-    //const [state, dispatch] = useReducer(connectionConfigurationReducer, { deploymentType: '', name: '' });
 
     if (query.isLoading) return <>Loading</>;
     if (!query.data?.value || !connectionId) return null;
@@ -137,10 +133,12 @@ export const NewConnectionView = () => {
                         password: metadataPublisherPassword
                     },
                 },
-                { onSuccess: () => {
-                    enqueueSnackbar('Saved MDP Configuration');
-                    queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
-                }, onError: () => console.log('Error') }
+                {
+                    onSuccess: () => {
+                        enqueueSnackbar('Saved MDP Configuration');
+                        queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
+                    }, onError: () => console.log('Error')
+                }
             );
         }
     };

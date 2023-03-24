@@ -7,22 +7,21 @@ import { Stack } from '@mui/material';
 
 import { Input, Select, SelectPropsOptions, Tooltip } from '@dolittle/design-system';
 
-import { MaxWidthTextBlock } from './MaxWidthTextBlock';
 import { Link } from '../../../../apis/integrations/generated';
 
-
+import { MaxWidthTextBlock } from './MaxWidthTextBlock';
 
 const newConnectionDescription = `This process might take some time depending on access rights and working knowledge of
                     your organization's firewall and M3 system. You can always save and create the connection setup details then come back at a later time to finish.`;
+
 const ConnectorNameTooltipText = () =>
     <>
         Provide a name for this M3 connector instance. You can have multiple M3 connectors.
         We recommend naming your connector based on its intended use. For example, <i>M3 Connector Test</i> or <i>M3 Connector Production</i>.
     </>;
+
 const hostingTooltipText = `Currently, you can only setup the connection with on premise hosting. Soon, we will support setup in the
                     cloud where Dolittle takes care of hosting, establishing backups and making sure the connector is running.`;
-
-
 
 const getSelectValues = (links: Link[] | null, hasSelectedDeploymentType: boolean) => {
     const shouldUseOnPrem = links?.some(link => link.rel === 'deploy-on-premises') || false;
