@@ -26,6 +26,7 @@ const hostingTooltipText = `Currently, you can only setup the connection with on
 const getSelectValues = (links: Link[] | null, hasSelectedDeploymentType: boolean) => {
     const shouldUseOnPrem = links?.some(link => link.rel === 'deploy-on-premises') || false;
     const shouldUseCloud = links?.some(link => link.rel === 'deploy-to-cloud') || false;
+
     const selectValues: SelectPropsOptions = [
         { value: 'On premises', displayValue: 'On Premises' },
         { value: 'Cloud', displayValue: 'In the Dolittle Cloud' },
@@ -51,7 +52,7 @@ export type MainM3ConnectionInfoProps = {
 };
 
 export const MainM3ConnectionInfo = (props: MainM3ConnectionInfoProps) => {
-    const hasSelectedDeploymentType = props.hasSelectedDeploymentType; //check value on entity
+    const hasSelectedDeploymentType = props.hasSelectedDeploymentType;
 
     return (
         <Stack spacing={3.5} sx={{ mt: 3, ml: 3 }}>
@@ -61,7 +62,7 @@ export const MainM3ConnectionInfo = (props: MainM3ConnectionInfoProps) => {
                 <Input id='connectorName' label='Connector Name *' />
             </Tooltip>
 
-            <Tooltip tooltipTitle='Hosting' tooltipText={hostingTooltipText} displayOnHover sx={{ top: 40, left: 30 }}>
+            <Tooltip tooltipTitle='Hosting' tooltipText={hostingTooltipText} displayOnHover sx={{ top: 38, left: 30 }}>
                 <Select
                     id='selectHosting'
                     label='Hosting *'
