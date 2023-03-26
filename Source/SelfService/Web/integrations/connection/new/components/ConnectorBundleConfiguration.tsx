@@ -7,7 +7,7 @@ import { Typography } from '@mui/material';
 
 import { Button, Icon } from '@dolittle/design-system';
 
-import { CopyTextBox } from './copyTextBox';
+import { TextCopyBox } from './TextCopyBox';
 import { MaxWidthTextBlock } from './MaxWidthTextBlock';
 
 export const ConnectorBundleConfiguration = () =>
@@ -30,5 +30,5 @@ export const ConnectorBundleConfiguration = () =>
                 responsible for firewall access, please share the information below with the responsible party:`}
         </MaxWidthTextBlock>
 
-        <CopyTextBox />
+        <TextCopyBox />
     </>;

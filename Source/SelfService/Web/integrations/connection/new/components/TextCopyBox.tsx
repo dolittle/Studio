@@ -35,7 +35,7 @@ ${ipAddress2}
 ${ipAddress3}
 `;
 
-export const CopyTextBox = () => {
+export const TextCopyBox = () => {
     const { enqueueSnackbar } = useSnackbar();
 
     const handleTextCopy = () => {
