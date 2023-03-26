@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { } from 'react';
+import React from 'react';
 
 import { useSnackbar } from 'notistack';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -16,8 +16,8 @@ import { CreateConnectionButton } from './createConnectionButton';
 export const Connections = () => {
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
-    const { applicationId } = useParams();
 
+    const { applicationId } = useParams();
     const { data, isLoading, isFetching, isError, error } = useConnectionsGet();
     const mutation = useConnectionsIdPost();
 
