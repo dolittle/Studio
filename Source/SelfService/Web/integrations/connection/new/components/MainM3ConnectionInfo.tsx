@@ -57,11 +57,11 @@ export const MainM3ConnectionInfo = (props: MainM3ConnectionInfoProps) => {
         <Stack spacing={3.5} sx={{ mt: 3, ml: 3 }}>
             <MaxWidthTextBlock>{newConnectionDescription}</MaxWidthTextBlock>
 
-            <Tooltip tooltipTitle='Connector Name' tooltipText={<ConnectorNameTooltipText />}>
+            <Tooltip tooltipTitle='Connector Name' tooltipText={<ConnectorNameTooltipText />} sx={{ top: 16 }}>
                 <Input id='connectorName' label='Connector Name *' />
             </Tooltip>
 
-            <Tooltip tooltipTitle='Hosting' tooltipText={hostingTooltipText} displayOnHover sx={{ position: 'relative', top: '24px' }}>
+            <Tooltip tooltipTitle='Hosting' tooltipText={hostingTooltipText} displayOnHover sx={{ top: 40, left: 30 }}>
                 <Select
                     id='selectHosting'
                     label='Hosting *'
