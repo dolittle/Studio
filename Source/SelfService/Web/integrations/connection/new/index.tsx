@@ -77,7 +77,7 @@ export const NewConnectionView = () => {
     const metadataPublisherUrl = connection._configuration?.mdp?.url;
     const metadataPublisherPassword = connection._configuration?.mdp?.password;
 
-    const handleM3ConnectionSuccessfulSave = (message: string) => {
+    const handleSuccessfulSave = (message: string) => {
         enqueueSnackbar(message);
         queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
     };
@@ -90,7 +90,7 @@ export const NewConnectionView = () => {
                     body: values.connectorName,
                 },
                 {
-                    onSuccess: () => { handleM3ConnectionSuccessfulSave('Saved Name'); },
+                    onSuccess: () => { handleSuccessfulSave('Saved Name'); },
                     onError: () => console.log('Error'),
                 },
             );
@@ -103,7 +103,7 @@ export const NewConnectionView = () => {
                         id: connectionId,
                     },
                     {
-                        onSuccess: () => { handleM3ConnectionSuccessfulSave('Saved Hosting Type'); },
+                        onSuccess: () => { handleSuccessfulSave('Saved Hosting Type'); },
                         onError: () => console.log('Error'),
                     },
                 );
@@ -115,7 +115,7 @@ export const NewConnectionView = () => {
                         id: connectionId,
                     },
                     {
-                        onSuccess: () => { handleM3ConnectionSuccessfulSave('Saved Hosting Type'); },
+                        onSuccess: () => { handleSuccessfulSave('Saved Hosting Type'); },
                         onError: () => console.log('Error'),
                     },
                 );
@@ -132,7 +132,7 @@ export const NewConnectionView = () => {
                     },
                 },
                 {
-                    onSuccess: () => { handleM3ConnectionSuccessfulSave('Saved MDP Configuration'); },
+                    onSuccess: () => { handleSuccessfulSave('Saved MDP Configuration'); },
                     onError: () => console.log('Error'),
                 },
             );
