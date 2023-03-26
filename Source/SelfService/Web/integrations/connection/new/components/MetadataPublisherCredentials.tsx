@@ -17,7 +17,7 @@ export const MetadataPublisherCredentials = () =>
 
         <Stack spacing={3.5} sx={{ mt: 3 }}>
             <Input
-                id='metadataPublisher'
+                id='metadataPublisherUrl'
                 label='Your Metadata Publisher URL *'
                 placeholder='Your metadata publisher URL goes here...'
                 sx={{ width: 1, maxWidth: 500 }}
