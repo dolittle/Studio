@@ -1,3 +1,15 @@
+# [3.3.17] - 2023-3-26 [PR: #352](https://github.com/dolittle/Studio/pull/352)
+## Summary
+
+Add titles to pages. 
+
+<img width="673" alt="Screenshot 2023-03-26 at 01 46 36" src="https://user-images.githubusercontent.com/19160439/227748513-8f73a6d7-123e-4a85-8de1-2cbcbe434573.png">
+
+### Added
+
+- usePageTitle hook.
+
+
 # [3.3.16] - 2023-3-24 [PR: #351](https://github.com/dolittle/Studio/pull/351)
 ## Summary
 
