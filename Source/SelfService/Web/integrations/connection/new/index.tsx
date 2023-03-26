@@ -11,7 +11,6 @@ import { Box, Typography } from '@mui/material';
 import { AccordionList, AccordionListProps, Form } from '@dolittle/design-system';
 
 import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
-
 import { useConnectionsIdGet, useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
 import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
@@ -20,8 +19,8 @@ import { useConnectionId } from '../../routes.hooks';
 
 import { Page } from '../../../components/layout/page';
 import { MainM3ConnectionInfo } from './components/MainM3ConnectionInfo';
-import { MetadataPublisherCredentials } from './components/MetadataPublisherCredentials';
 import { ConnectorBundle } from './components/connectorBundle';
+import { MetadataPublisherCredentials } from './components/MetadataPublisherCredentials';
 import { IonServiceAccountCredentials } from './components/IonServiceAccountCredentials';
 import { ActionButtons } from './components/ActionButtons';
 
@@ -57,15 +56,17 @@ export type M3ConnectionParameters = {
 };
 
 export const NewConnectionView = () => {
+    const { enqueueSnackbar } = useSnackbar();
+
     const connectionId = useConnectionId();
+    const queryClient = useQueryClient();
     const query = useConnectionsIdGet({ id: connectionId || '' });
+
     const nameMutation = useConnectionsIdNamePost();
-    const mdpConfigurationMutation = useConnectionsIdConfigurationMdpPost();
-    const ionConfigurationMutation = useConnectionsIdConfigurationIonPost();
     const onPremisesConfigurationMutation = useConnectionsIdDeployOnPremisesPost();
     const onCloudConfigurationMutation = useConnectionsIdDeployCloudPost();
-    const queryClient = useQueryClient();
-    const { enqueueSnackbar } = useSnackbar();
+    const ionConfigurationMutation = useConnectionsIdConfigurationIonPost();
+    const mdpConfigurationMutation = useConnectionsIdConfigurationMdpPost();
 
     if (query.isLoading) return <>Loading</>;
     if (!query.data?.value || !connectionId) return null;
