@@ -17,10 +17,14 @@ const styles = {
     },
     accordionSummary: {
         'p': 0,
-        // Move the expansion arrow to the left side
+        // Move the expansion arrow to the left side.
         'flexDirection': 'row-reverse',
-        // Disable 'expand' click for the entire row
+        // Disable 'expand' click for the entire row.
         'pointerEvents': 'none',
+        // Enable 'expand' click on title.
+        '& h6': {
+            pointerEvents: 'auto',
+        },
         '& .MuiAccordionSummary-expandIconWrapper': {
             transform: 'rotate(-90deg)',
         },
@@ -30,7 +34,7 @@ const styles = {
     },
     expandIcon: {
         color: 'text.secondary',
-        // Enable 'expand' click on icon only
+        // Enable 'expand' click on icon.
         pointerEvents: 'auto',
     },
 };
