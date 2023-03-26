@@ -10,7 +10,7 @@ import { Button, Icon } from '@dolittle/design-system';
 import { CopyTextBox } from './copyTextBox';
 import { MaxWidthTextBlock } from './MaxWidthTextBlock';
 
-export const ConnectorBundle = () =>
+export const ConnectorBundleConfiguration = () =>
     <>
         <Typography variant='subtitle2' gutterBottom>Download connector bundle</Typography>
         <MaxWidthTextBlock>
