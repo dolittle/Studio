@@ -67,7 +67,7 @@ export const Tooltip = ({ tooltipTitle, tooltipText, open, handleOpen, handleClo
         placement='right'
         componentsProps={{
             tooltip: {
-                sx: { maxWidth: 520, backgroundColor: 'action.hover', ...sx },
+                sx: { position: 'relative', maxWidth: 520, backgroundColor: 'action.hover', ...sx },
             },
         }}
         title={
