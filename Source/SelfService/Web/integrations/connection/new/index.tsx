@@ -11,7 +11,7 @@ import { Box, Typography } from '@mui/material';
 import { AccordionList, AccordionListProps, Form } from '@dolittle/design-system';
 
 import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
-import { useConnectionsIdGet, useConnectionsIdNamePost, useConnectionsIdConnectorDeploymentGet } from '../../../apis/integrations/connectionsApi.hooks';
+import { useConnectionsIdGet, useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
 import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
 
@@ -65,7 +65,6 @@ export const NewConnectionView = () => {
     const nameMutation = useConnectionsIdNamePost();
     const onPremisesConfigurationMutation = useConnectionsIdDeployOnPremisesPost();
     const onCloudConfigurationMutation = useConnectionsIdDeployCloudPost();
-    const downloadConnectorBundleMutation = useConnectionsIdConnectorDeploymentGet({ id: connectionId || '' });
     const ionConfigurationMutation = useConnectionsIdConfigurationIonPost();
     const mdpConfigurationMutation = useConnectionsIdConfigurationMdpPost();
 
@@ -75,7 +74,8 @@ export const NewConnectionView = () => {
     const connection = query.data.value;
     const links = query.data.links;
 
-    const hasSelectedDeploymentType = connection.chosenEnvironment?.value?.toLowerCase() !== 'unknown';
+    const deploymentType = connection.chosenEnvironment?.value;
+    const hasSelectedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
     const metadataPublisherUrl = connection._configuration?.mdp?.url;
     const metadataPublisherPassword = connection._configuration?.mdp?.password;
 
@@ -149,7 +149,7 @@ export const NewConnectionView = () => {
                 <Form<M3ConnectionParameters>
                     initialValues={{
                         connectorName: connection.name || '',
-                        selectHosting: hasSelectedDeploymentType ? connection.chosenEnvironment?.value || '' : '',
+                        selectHosting: hasSelectedDeploymentType ? deploymentType || '' : '',
                         metadataPublisherUrl: metadataPublisherUrl || '',
                         metadataPublisherPassword: metadataPublisherPassword || '',
                     }}
