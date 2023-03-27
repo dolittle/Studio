@@ -26,6 +26,7 @@ metadata.parameters = {
 metadata.argTypes = {
     children: { control: false },
     expanded: { control: false },
+    sx: { control: false },
 };
 
 metadata.args = {
@@ -90,4 +91,8 @@ OneExpanded.decorators = [
     }
 ];
 
-export const WithStatusMessage = createStory();
+export const WithStatusMessage = createStory({
+    title: 'With Status Message',
+    progressStatus: 'waiting',
+    progressMessage: 'Waiting for something to happen...',
+});
