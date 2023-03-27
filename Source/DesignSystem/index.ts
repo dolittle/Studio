@@ -1,7 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-
 export { componentStories, type ComponentStories } from './componentStories';
 export { availableIcons, SvgIcons, SvgIconsDefinition } from './theming/Icons/Icons';
 export { themeDark } from './theming/theme';
@@ -18,6 +17,7 @@ export { Icon } from './atoms/Icon';
 export { IconButton } from './atoms/IconButton';
 export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
+export { StatusIndicator, StatusIndicatorProps } from './atoms/StatusIndicator';
 export { Summary } from './atoms/Metrics';
 export { Tabs } from './atoms/Tabs';
 export { Tooltip } from './atoms/Tooltip';

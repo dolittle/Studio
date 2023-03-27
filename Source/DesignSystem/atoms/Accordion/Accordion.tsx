@@ -6,6 +6,8 @@ import React from 'react';
 import { Accordion as MuiAccordion, AccordionDetails, AccordionSummary, SxProps, Typography } from '@mui/material';
 import { ExpandCircleDownRounded } from '@mui/icons-material';
 
+import { StatusIndicator, StatusIndicatorProps } from '@dolittle/design-system';
+
 const styles = {
     accordion: {
         'backgroundColor': 'transparent',
@@ -54,6 +56,17 @@ export type AccordionProps = {
     title: string;
 
     /**
+     * The status of the accordion. Displayed in the header.
+     * @default undefined
+     */
+    progressStatus?: StatusIndicatorProps['status'];
+
+    /**
+     * The status text of the accordion. Displayed in the header.
+     */
+    progressMessage?: StatusIndicatorProps['label'];
+
+    /**
      * Whether the accordion is expanded or not on initial render.
      *
      * @default false
@@ -92,7 +105,7 @@ export type AccordionProps = {
  * @param {AccordionProps} props - The {@link AccordionProps}.
  * @returns A {@link Accordion} component.
  */
-export const Accordion = ({ id, title, defaultExpanded, expanded, onExpanded, children, sx }: AccordionProps) =>
+export const Accordion = ({ id, title, progressStatus, progressMessage, defaultExpanded, expanded, onExpanded, children, sx }: AccordionProps) =>
     <MuiAccordion
         defaultExpanded={defaultExpanded}
         expanded={expanded}
@@ -105,7 +118,8 @@ export const Accordion = ({ id, title, defaultExpanded, expanded, onExpanded, ch
             id={`${id}-header`}
             sx={styles.accordionSummary}
         >
-            <Typography variant='subtitle1' sx={{ ml: 1.25 }}>{title}</Typography>
+            <Typography variant='subtitle1' sx={{ ml: 1.25, mr: 3 }}>{title}</Typography>
+            {progressStatus && <StatusIndicator status={progressStatus} label={progressMessage} />}
         </AccordionSummary>
 
         <AccordionDetails>{children}</AccordionDetails>
