@@ -49,6 +49,6 @@ export const connectionStatusCondition = (status: string) => {
         case ConnectionStatus.Failing:
             return { color: 'error.main', icon: 'ErrorRounded' } as ConnectionStatusCondition;
         case ConnectionStatus.Unknown:
-            return { color: 'info.main', icon: 'QuestionMark' } as ConnectionStatusCondition;
+            return { color: 'info.main', icon: 'QuestionMarkRounded' } as ConnectionStatusCondition;
     }
 };

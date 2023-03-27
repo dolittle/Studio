@@ -35,7 +35,7 @@ import {
     MenuRounded,
     MoreVertRounded,
     PolylineRounded,
-    QuestionMark,
+    QuestionMarkRounded,
     RefreshRounded,
     RestartAltRounded,
     RocketLaunch,
@@ -86,7 +86,7 @@ export interface SvgIconsDefinition {
     'MenuRounded' |
     'MoreVertRounded' |
     'PolylineRounded' |
-    'QuestionMark' |
+    'QuestionMarkRounded' |
     'RefreshRounded' |
     'RestartAltRounded' |
     'RocketLaunch' |
@@ -133,7 +133,7 @@ export const SvgIcons = {
     MenuRounded: <MenuRounded />,
     MoreVertRounded: <MoreVertRounded />,
     PolylineRounded: <PolylineRounded />,
-    QuestionMark: <QuestionMark />,
+    QuestionMarkRounded: <QuestionMarkRounded />,
     RefreshRounded: <RefreshRounded />,
     RestartAltRounded: <RestartAltRounded />,
     RocketLaunch: <RocketLaunch />,
