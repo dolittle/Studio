@@ -63,8 +63,8 @@ export const StatusIndicator = ({ label, status, filledVariant }: StatusIndicato
     return (
         <Box sx={filledVariant ? styles.variantFilled : styles.variantText}>
             {icon && <Icon icon={icon} />}
-            {status === 'waiting' && <CircularProgress color='inherit' size={15} />}
-            <Typography variant='button' sx={{ ml: 1.5 }}>{label ?? status}</Typography>
+            {status === 'waiting' && <CircularProgress color='inherit' size={16} />}
+            <Typography variant='button' sx={{ ml: 1 }}>{label ?? status}</Typography>
         </Box>
     );
 };
