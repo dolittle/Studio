@@ -37,6 +37,7 @@ TextVariants.decorators = [
             <StatusIndicator status='connected' />
             <StatusIndicator status='pending' />
             <StatusIndicator status='failed' />
+            <StatusIndicator status='unknown' label='Unknown status value' />
         </Grid>
     )
 ];
@@ -50,6 +51,7 @@ FilledVariants.decorators = [
             <StatusIndicator status='connected' filledVariant />
             <StatusIndicator status='pending' filledVariant />
             <StatusIndicator status='failed' filledVariant />
+            <StatusIndicator status='unknown' label='Unknown status value' filledVariant />
         </Grid>
     )
 ];
