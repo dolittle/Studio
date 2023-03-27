@@ -62,7 +62,7 @@ export const MainM3ConnectionInfo = (props: MainM3ConnectionInfoProps) => {
                 <Input id='connectorName' label='Connector Name *' />
             </Tooltip>
 
-            <Tooltip tooltipTitle='Hosting' tooltipText={hostingTooltipText} displayOnHover sx={{ top: 38, left: 30 }}>
+            <Tooltip tooltipTitle='Hosting' tooltipText={hostingTooltipText} displayOnHover={hasSelectedDeploymentType} sx={{ top: 38 }}>
                 <Select
                     id='selectHosting'
                     label='Hosting *'
