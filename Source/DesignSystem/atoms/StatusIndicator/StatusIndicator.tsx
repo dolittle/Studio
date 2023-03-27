@@ -16,7 +16,7 @@ export type StatusIndicatorProps = {
     /**
      * The status to show.
      */
-    status: 'running' | 'connected' | 'pending' | 'waiting' | 'failed';
+    status: 'running' | 'connected' | 'pending' | 'waiting' | 'failed' | 'unknown';
 
     /**
      * The label to show.
