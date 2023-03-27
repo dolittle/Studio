@@ -1,3 +1,22 @@
+# [3.3.18] - 2023-3-27 [PR: #353](https://github.com/dolittle/Studio/pull/353)
+## Summary
+
+Add StatusIndicator component to Design System.
+
+<img width="879" alt="Screenshot 2023-03-27 at 09 36 59" src="https://user-images.githubusercontent.com/19160439/227859997-14c87f3a-5303-4cf0-b390-34800f961fdc.png">
+
+### Added
+
+- Accordion 'expand' on title click
+- StatusIndicator comonent to Design System
+- StatusIndicator to Accordtion props
+
+### Changed
+
+- Minor styling fixes
+- Wording/components name fixes
+
+
 # [3.3.17] - 2023-3-26 [PR: #352](https://github.com/dolittle/Studio/pull/352)
 ## Summary
 
