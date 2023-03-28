@@ -1,9 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { Tab as MuiTab, Tabs as MuiTabs } from '@mui/material';
+import { Tab as MuiTab, Tabs as MuiTabs, ButtonTypeMap, ExtendButtonBase } from '@mui/material';
 
 const styles = {
     tabs: {
@@ -40,9 +40,10 @@ type Tab = {
     label: string;
 
     /**
-     * Add a function to handle navigation.
+     * The overrides prop gives you access to the underlying MuiButtonProps object, overriding the styles defined by the component and Material-UI.
+     * @default undefined
      */
-    handleNavigate?: () => void;
+    overrides?: Partial<ExtendButtonBase<ButtonTypeMap>>;
 
     /**
      * The react element to render when the tab is selected.
@@ -60,6 +61,14 @@ export type TabsProps = {
      * Create a tab by providing a `label` and a react element to `render`.
      */
     tabs: Tab[];
+
+    /**
+     * The index of the tab to pre select.
+     * @default 0
+     */
+    selectedTab?: number;
+
+    linkTab?: boolean;
 };
 
 /**
@@ -67,24 +76,24 @@ export type TabsProps = {
  * @param {TabsProps} props - The {@link TabsProps}.
  * @returns A {@link Tabs} component.
  */
-export const Tabs = ({ tabs }: TabsProps) => {
-    const [currentTab, setCurrentTab] = useState(0);
+export const Tabs = ({ tabs, selectedTab = 0 }: TabsProps) => {
+    const [currentTab, setCurrentTab] = useState(selectedTab);
 
-    useEffect(() => {
-        const storedSelectedOption = parseInt(sessionStorage.getItem('selectedTab') || '0');
-        setCurrentTab(storedSelectedOption);
-    }, []);
+    // useEffect(() => {
+    //     //const storedSelectedOption = parseInt(sessionStorage.getItem('selectedTab') || '0');
+    //     setCurrentTab(selectedTab);
+    // }, []);
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setCurrentTab(newValue);
-        sessionStorage.setItem('selectedTab', newValue.toString());
+        //sessionStorage.setItem('selectedTab', newValue.toString());
     };
 
     return (
         <>
             <MuiTabs
                 value={currentTab}
-                onChange={handleChange}
+                onChange={handleTabChange}
                 TabIndicatorProps={
                     { children: <span className='MuiTabs-indicatorSpan' /> }
                 }
@@ -96,9 +105,9 @@ export const Tabs = ({ tabs }: TabsProps) => {
                         id={`tabpanel-${index}`}
                         aria-labelledby={`tab-${index}`}
                         label={tab.label}
-                        onClick={tab.handleNavigate}
                         disableRipple
                         sx={{ ...styles.tab }}
+                        {...tab.overrides}
                     />
                 )}
             </MuiTabs>
