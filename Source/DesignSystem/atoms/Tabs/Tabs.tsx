@@ -40,6 +40,11 @@ type Tab = {
     label: string;
 
     /**
+     * Add a function to handle navigation.
+     */
+    handleNavigate?: () => void;
+
+    /**
      * The react element to render when the tab is selected.
      */
     render: () => React.ReactNode;
@@ -52,7 +57,7 @@ export type TabsProps = {
     /**
      * The tabs to display.
      *
-     * Create a tab by providing a label and a react element to render.
+     * Create a tab by providing a `label` and a react element to `render`.
      */
     tabs: Tab[];
 };
@@ -78,11 +83,11 @@ export const Tabs = ({ tabs }: TabsProps) => {
     return (
         <>
             <MuiTabs
+                value={currentTab}
+                onChange={handleChange}
                 TabIndicatorProps={
                     { children: <span className='MuiTabs-indicatorSpan' /> }
                 }
-                value={currentTab}
-                onChange={handleChange}
                 sx={{ ...styles.tabs }}
             >
                 {tabs.map((tab, index) =>
@@ -90,8 +95,9 @@ export const Tabs = ({ tabs }: TabsProps) => {
                         key={index}
                         id={`tabpanel-${index}`}
                         aria-labelledby={`tab-${index}`}
-                        disableRipple
                         label={tab.label}
+                        onClick={tab.handleNavigate}
+                        disableRipple
                         sx={{ ...styles.tab }}
                     />
                 )}
