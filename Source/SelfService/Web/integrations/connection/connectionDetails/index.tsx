@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 
 import { useConnectionId } from '../../routes.hooks';
 
@@ -12,33 +12,36 @@ import { Tabs } from '@dolittle/design-system';
 import { Page } from '../../../components/layout/page';
 
 export const ConnectionDetails = () => {
-    const navigate = useNavigate();
     const connectionId = useConnectionId();
 
-    //console.log('connectionId', connectionId);
-
-    // Get connection name
-    // Show status
-
-    // TODO: Don't know what to do with `render` yet.
     return (
         <Page title='Connection Details'>
             <Tabs
+                selectedTab={1}
                 tabs={[
                     {
-                        label: 'Configuration',
-                        handleNavigate: () => navigate('configuration'),
+                        label: 'configuration',
                         render: () => <></>,
+                        overrides: {
+                            component: Link,
+                            to: 'configuration',
+                        },
                     },
                     {
-                        label: 'Messages',
-                        handleNavigate: () => navigate('messages'),
+                        label: 'messages',
                         render: () => <></>,
+                        overrides: {
+                            component: Link,
+                            to: 'messages',
+                        },
                     },
                     {
-                        label: 'Expose Data',
-                        handleNavigate: () => navigate('expose'),
+                        label: 'expose',
                         render: () => <></>,
+                        overrides: {
+                            component: Link,
+                            to: 'expose',
+                        },
                     },
                 ]}
             />
