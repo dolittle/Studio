@@ -13,6 +13,7 @@ enum ConnectionStatus {
     Unknown = 6,
 };
 
+// To get the overall status.
 const getConnectionStatus = (status: string): ConnectionStatus => {
     if (!status && typeof status !== 'string') {
         return ConnectionStatus.Unknown;
