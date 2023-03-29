@@ -1,4 +1,5 @@
 .openapi-generator-ignore
+apis/AsyncApiApi.ts
 apis/ConnectionConfigurationApi.ts
 apis/ConnectionsApi.ts
 apis/DeploymentApi.ts
@@ -12,10 +13,12 @@ index.ts
 models/ColumnMetadata.ts
 models/ConnectionConfiguration.ts
 models/ConnectionConfigurationResult.ts
+models/ConnectionId.ts
 models/ConnectionModel.ts
 models/ConnectionModelArrayResult.ts
 models/ConnectionModelResult.ts
 models/ConnectionStatus.ts
+models/ConnectionWithinOrgId.ts
 models/EnvironmentType.ts
 models/FieldType.ts
 models/IndexColumn.ts
@@ -25,12 +28,18 @@ models/IonConfigurationResult.ts
 models/Link.ts
 models/ListTable.ts
 models/M3EnvironmentListDto.ts
+models/MappableTable.ts
+models/MappableTableColumn.ts
+models/MappedField.ts
 models/MdpConfiguration.ts
 models/MdpConfigurationResult.ts
 models/MessageMappingModel.ts
+models/MessageMappingModelIEnumerableResult.ts
 models/MessageMappingModelResult.ts
 models/MetadataPublisherConfigRequest.ts
 models/ModelIndex.ts
+models/NoSuchReadModelResult.ts
+models/Organization.ts
 models/ProblemDetails.ts
 models/ProgramDetails.ts
 models/ProgramHeader.ts
