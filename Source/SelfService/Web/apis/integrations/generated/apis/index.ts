@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './AsyncApiApi';
 export * from './ConnectionConfigurationApi';
 export * from './ConnectionsApi';
 export * from './DeploymentApi';

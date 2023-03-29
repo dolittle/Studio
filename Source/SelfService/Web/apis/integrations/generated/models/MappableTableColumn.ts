@@ -23,69 +23,62 @@ import {
 /**
  * 
  * @export
- * @interface ColumnMetadata
+ * @interface MappableTableColumn
  */
-export interface ColumnMetadata {
+export interface MappableTableColumn {
     /**
      * 
      * @type {string}
-     * @memberof ColumnMetadata
+     * @memberof MappableTableColumn
      */
-    name?: string | null;
+    m3ColumnName?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof ColumnMetadata
+     * @memberof MappableTableColumn
      */
-    description?: string | null;
+    m3Description?: string | null;
     /**
      * 
      * @type {FieldType}
-     * @memberof ColumnMetadata
+     * @memberof MappableTableColumn
      */
     type?: FieldType;
     /**
      * 
      * @type {number}
-     * @memberof ColumnMetadata
+     * @memberof MappableTableColumn
      */
     fieldLength?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ColumnMetadata
-     */
-    decimalPlaces?: number;
 }
 
 /**
- * Check if a given object implements the ColumnMetadata interface.
+ * Check if a given object implements the MappableTableColumn interface.
  */
-export function instanceOfColumnMetadata(value: object): boolean {
+export function instanceOfMappableTableColumn(value: object): boolean {
     let isInstance = true;
 
     return isInstance;
 }
 
-export function ColumnMetadataFromJSON(json: any): ColumnMetadata {
-    return ColumnMetadataFromJSONTyped(json, false);
+export function MappableTableColumnFromJSON(json: any): MappableTableColumn {
+    return MappableTableColumnFromJSONTyped(json, false);
 }
 
-export function ColumnMetadataFromJSONTyped(json: any, ignoreDiscriminator: boolean): ColumnMetadata {
+export function MappableTableColumnFromJSONTyped(json: any, ignoreDiscriminator: boolean): MappableTableColumn {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
+        'm3ColumnName': !exists(json, 'm3ColumnName') ? undefined : json['m3ColumnName'],
+        'm3Description': !exists(json, 'm3Description') ? undefined : json['m3Description'],
         'type': !exists(json, 'type') ? undefined : FieldTypeFromJSON(json['type']),
         'fieldLength': !exists(json, 'fieldLength') ? undefined : json['fieldLength'],
-        'decimalPlaces': !exists(json, 'decimalPlaces') ? undefined : json['decimalPlaces'],
     };
 }
 
-export function ColumnMetadataToJSON(value?: ColumnMetadata | null): any {
+export function MappableTableColumnToJSON(value?: MappableTableColumn | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -94,11 +87,10 @@ export function ColumnMetadataToJSON(value?: ColumnMetadata | null): any {
     }
     return {
         
-        'name': value.name,
-        'description': value.description,
+        'm3ColumnName': value.m3ColumnName,
+        'm3Description': value.m3Description,
         'type': FieldTypeToJSON(value.type),
         'fieldLength': value.fieldLength,
-        'decimalPlaces': value.decimalPlaces,
     };
 }
 

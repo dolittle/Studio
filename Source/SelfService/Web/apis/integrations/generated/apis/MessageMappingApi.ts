@@ -15,16 +15,33 @@
 
 import * as runtime from '../runtime';
 import type {
+  MessageMappingModelIEnumerableResult,
   MessageMappingModelResult,
+  NoSuchReadModelResult,
+  ProblemDetails,
 } from '../models';
 import {
+    MessageMappingModelIEnumerableResultFromJSON,
+    MessageMappingModelIEnumerableResultToJSON,
     MessageMappingModelResultFromJSON,
     MessageMappingModelResultToJSON,
+    NoSuchReadModelResultFromJSON,
+    NoSuchReadModelResultToJSON,
+    ProblemDetailsFromJSON,
+    ProblemDetailsToJSON,
 } from '../models';
 
 export interface ConnectionsIdMessageMappingsGetRequest {
     id: string;
-    xOranizationId?: string;
+    xOrganizationId?: string;
+}
+
+export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest {
+    id: string;
+    table: string;
+    message2: string;
+    xOrganizationId?: string;
+    message?: string;
 }
 
 /**
@@ -34,7 +51,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
 
     /**
      */
-    async connectionsIdMessageMappingsGetRaw(requestParameters: ConnectionsIdMessageMappingsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageMappingModelResult>> {
+    async connectionsIdMessageMappingsGetRaw(requestParameters: ConnectionsIdMessageMappingsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageMappingModelIEnumerableResult>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsGet.');
         }
@@ -43,8 +60,8 @@ export class MessageMappingApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xOranizationId !== undefined && requestParameters.xOranizationId !== null) {
-            headerParameters['X-Oranization-Id'] = String(requestParameters.xOranizationId);
+        if (requestParameters.xOrganizationId !== undefined && requestParameters.xOrganizationId !== null) {
+            headerParameters['X-Organization-Id'] = String(requestParameters.xOrganizationId);
         }
 
         if (this.configuration && this.configuration.apiKey) {
@@ -58,13 +75,61 @@ export class MessageMappingApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
+        return new runtime.JSONApiResponse(response, (jsonValue) => MessageMappingModelIEnumerableResultFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async connectionsIdMessageMappingsGet(requestParameters: ConnectionsIdMessageMappingsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageMappingModelIEnumerableResult> {
+        const response = await this.connectionsIdMessageMappingsGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async connectionsIdMessageMappingsTablesTableMessagesMessageGetRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageMappingModelResult>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageGet.');
+        }
+
+        if (requestParameters.table === null || requestParameters.table === undefined) {
+            throw new runtime.RequiredError('table','Required parameter requestParameters.table was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageGet.');
+        }
+
+        if (requestParameters.message2 === null || requestParameters.message2 === undefined) {
+            throw new runtime.RequiredError('message2','Required parameter requestParameters.message2 was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageGet.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.message !== undefined) {
+            queryParameters['message'] = requestParameters.message;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.xOrganizationId !== undefined && requestParameters.xOrganizationId !== null) {
+            headerParameters['X-Organization-Id'] = String(requestParameters.xOrganizationId);
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        const response = await this.request({
+            path: `/connections/{id}/message-mappings/tables/{table}/messages/{message}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"table"}}`, encodeURIComponent(String(requestParameters.table))).replace(`{${"message"}}`, encodeURIComponent(String(requestParameters.message2))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
         return new runtime.JSONApiResponse(response, (jsonValue) => MessageMappingModelResultFromJSON(jsonValue));
     }
 
     /**
      */
-    async connectionsIdMessageMappingsGet(requestParameters: ConnectionsIdMessageMappingsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageMappingModelResult> {
-        const response = await this.connectionsIdMessageMappingsGetRaw(requestParameters, initOverrides);
+    async connectionsIdMessageMappingsTablesTableMessagesMessageGet(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageMappingModelResult> {
+        const response = await this.connectionsIdMessageMappingsTablesTableMessagesMessageGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

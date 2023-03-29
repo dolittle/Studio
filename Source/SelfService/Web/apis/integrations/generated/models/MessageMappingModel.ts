@@ -13,6 +13,24 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { ConnectionId } from './ConnectionId';
+import {
+    ConnectionIdFromJSON,
+    ConnectionIdFromJSONTyped,
+    ConnectionIdToJSON,
+} from './ConnectionId';
+import type { MappableTable } from './MappableTable';
+import {
+    MappableTableFromJSON,
+    MappableTableFromJSONTyped,
+    MappableTableToJSON,
+} from './MappableTable';
+import type { MappedField } from './MappedField';
+import {
+    MappedFieldFromJSON,
+    MappedFieldFromJSONTyped,
+    MappedFieldToJSON,
+} from './MappedField';
 import type { ReadModelMetadata } from './ReadModelMetadata';
 import {
     ReadModelMetadataFromJSON,
@@ -38,6 +56,54 @@ export interface MessageMappingModel {
      * @memberof MessageMappingModel
      */
     metadata?: ReadModelMetadata;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageMappingModel
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {ConnectionId}
+     * @memberof MessageMappingModel
+     */
+    connection?: ConnectionId;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageMappingModel
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {MappableTable}
+     * @memberof MessageMappingModel
+     */
+    fromTable?: MappableTable;
+    /**
+     * 
+     * @type {Array<MappedField>}
+     * @memberof MessageMappingModel
+     */
+    fieldMappings?: Array<MappedField> | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof MessageMappingModel
+     */
+    deployedAt?: Date;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageMappingModel
+     */
+    deployedVersion?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageMappingModel
+     */
+    confirmedDeployedVersion?: number | null;
 }
 
 /**
@@ -61,6 +127,14 @@ export function MessageMappingModelFromJSONTyped(json: any, ignoreDiscriminator:
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'metadata': !exists(json, 'metadata') ? undefined : ReadModelMetadataFromJSON(json['metadata']),
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'connection': !exists(json, 'connection') ? undefined : ConnectionIdFromJSON(json['connection']),
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'fromTable': !exists(json, 'fromTable') ? undefined : MappableTableFromJSON(json['fromTable']),
+        'fieldMappings': !exists(json, 'fieldMappings') ? undefined : (json['fieldMappings'] === null ? null : (json['fieldMappings'] as Array<any>).map(MappedFieldFromJSON)),
+        'deployedAt': !exists(json, 'deployedAt') ? undefined : (new Date(json['deployedAt'])),
+        'deployedVersion': !exists(json, 'deployedVersion') ? undefined : json['deployedVersion'],
+        'confirmedDeployedVersion': !exists(json, 'confirmedDeployedVersion') ? undefined : json['confirmedDeployedVersion'],
     };
 }
 
@@ -75,6 +149,14 @@ export function MessageMappingModelToJSON(value?: MessageMappingModel | null): a
         
         'id': value.id,
         'metadata': ReadModelMetadataToJSON(value.metadata),
+        'name': value.name,
+        'connection': ConnectionIdToJSON(value.connection),
+        'description': value.description,
+        'fromTable': MappableTableToJSON(value.fromTable),
+        'fieldMappings': value.fieldMappings === undefined ? undefined : (value.fieldMappings === null ? null : (value.fieldMappings as Array<any>).map(MappedFieldToJSON)),
+        'deployedAt': value.deployedAt === undefined ? undefined : (value.deployedAt.toISOString()),
+        'deployedVersion': value.deployedVersion,
+        'confirmedDeployedVersion': value.confirmedDeployedVersion,
     };
 }
 
