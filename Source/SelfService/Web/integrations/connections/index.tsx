@@ -53,7 +53,7 @@ export const Connections = () => {
     };
 
     return (
-        <Page title='Connections'>
+        <Page title='Connections' sx={{ mb: 4 }}>
             {isError
                 ? `We can't show your connections at this time. Please try again later.`
                 : isLoading || connections.length

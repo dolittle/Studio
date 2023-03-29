@@ -5,6 +5,8 @@ import React from 'react';
 
 import { Outlet, Link, useLocation, Location } from 'react-router-dom';
 
+import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
+
 import { useConnectionId } from '../../routes.hooks';
 
 import { Tabs } from '@dolittle/design-system';
@@ -20,11 +22,20 @@ const getCurrentTab = (location: Location) => {
 };
 
 export const ConnectionDetails = () => {
-    const connectionId = useConnectionId();
     const location = useLocation();
+    const connectionId = useConnectionId();
+    const query = useConnectionsIdGet({ id: connectionId || '' });
+
+    //console.log('query', data?.value?.status?.name)
+
+    if (query.isLoading) return <>Loading</>;
+    if (!query.data?.value || !connectionId) return null;
+
+    const pageTitle = query.data.value.name || 'Connection Details';
+    const pageHealthStatus = query.data.value.status?.name || 'N/A';
 
     return (
-        <Page title='Connection Details'>
+        <Page title={pageTitle} healthStatus={pageHealthStatus} sx={{ mb: 4 }}>
             <Tabs
                 selectedTab={getCurrentTab(location)}
                 tabs={[
