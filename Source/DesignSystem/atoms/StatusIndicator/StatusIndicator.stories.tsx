@@ -19,25 +19,33 @@ metadata.parameters = {
     },
 };
 
+metadata.argTypes = {
+    status: {
+        control: {
+            type: 'select',
+            options: ['connected', 'waiting', 'pending', 'failed', 'unknown'],
+        },
+    },
+};
+
 metadata.args = {
-    status: 'running',
-    filledVariant: false,
+    status: 'connected',
+    variantFilled: false,
 };
 
 export default metadata;
 
 export const Default = createStory();
 
-export const TextVariants = createStory();
-TextVariants.decorators = [
+export const DefaultVariants = createStory();
+DefaultVariants.decorators = [
     () => (
         <Grid container gap={3}>
-            <StatusIndicator status='running' />
-            <StatusIndicator status='waiting' />
             <StatusIndicator status='connected' />
+            <StatusIndicator status='waiting' />
             <StatusIndicator status='pending' />
             <StatusIndicator status='failed' />
-            <StatusIndicator status='unknown' label='Unknown status value' />
+            <StatusIndicator status='unknown' />
         </Grid>
     )
 ];
@@ -46,12 +54,15 @@ export const FilledVariants = createStory();
 FilledVariants.decorators = [
     () => (
         <Grid container gap={3}>
-            <StatusIndicator status='running' filledVariant />
-            <StatusIndicator status='waiting' filledVariant />
-            <StatusIndicator status='connected' filledVariant />
-            <StatusIndicator status='pending' filledVariant />
-            <StatusIndicator status='failed' filledVariant />
-            <StatusIndicator status='unknown' label='Unknown status value' filledVariant />
+            <StatusIndicator status='connected' variantFilled />
+            <StatusIndicator status='waiting' variantFilled />
+            <StatusIndicator status='pending' variantFilled />
+            <StatusIndicator status='failed' variantFilled />
+            <StatusIndicator status='unknown' variantFilled />
         </Grid>
     )
 ];
+
+export const WithCustomLabel = createStory({
+    label: 'Add your label here',
+});
