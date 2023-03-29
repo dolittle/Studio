@@ -3,21 +3,28 @@
 
 import React from 'react';
 
-import { Typography } from '@mui/material';
+import { Box, SxProps, Typography } from '@mui/material';
+
+import { StatusIndicator } from '@dolittle/design-system';
 
 import { usePageTitle } from '../../utils/usePageTitle';
 
 export type PageProps = {
     title: string;
+    healthStatus?: string;
     children?: React.ReactNode;
+    sx?: SxProps;
 };
 
-export const Page = ({ title, children }: PageProps) => {
+export const Page = ({ title, healthStatus, children, sx }: PageProps) => {
     usePageTitle(title);
 
     return (
         <>
-            <Typography variant='h1' my={2}>{title}</Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', my: 1, ...sx }}>
+                <Typography variant='h1' sx={{ mr: healthStatus ? 3 : 0 }}>{title}</Typography>
+                {healthStatus && <StatusIndicator status={healthStatus} variantFilled />}
+            </Box>
             {children}
         </>
     );
