@@ -4,6 +4,7 @@ ARG MUI_LICENSE_KEY_ARG
 # Install dependencies
 WORKDIR /build
 COPY package.json ./package.json
+COPY yarn.lock ./yarn.lock
 COPY Source/DesignSystem/package.json ./Source/DesignSystem/package.json
 COPY Source/Shared/Specs/package.json ./Source/Shared/Specs/package.json
 COPY Source/Shared/Styling/package.json ./Source/Shared/Styling/package.json
