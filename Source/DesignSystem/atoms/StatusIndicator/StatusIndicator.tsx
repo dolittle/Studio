@@ -3,11 +3,28 @@
 
 import React from 'react';
 
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, SxProps, Typography } from '@mui/material';
 
-import { Icon } from '@dolittle/design-system';
+import { Icon, SvgIconsDefinition } from '@dolittle/design-system';
 
-import { connectionStatusCondition } from './helpers';
+type ConnectionStatusCondition = {
+    color: 'text.secondary' | 'success.main' | 'warning.main' | 'error.main' | 'info.main';
+    icon: SvgIconsDefinition['icon'] | null;
+};
+
+const connectionStatusCondition = (status: string): ConnectionStatusCondition => {
+    if (status === 'running' || status === 'connected') {
+        return { color: 'success.main', icon: 'CheckCircleRounded' };
+    } else if (status === 'pending') {
+        return { color: 'warning.main', icon: 'WarningRounded' };
+    } else if (status === 'waiting') {
+        return { color: 'text.secondary', icon: null };
+    } else if (status === 'failed' || status === 'failing') {
+        return { color: 'error.main', icon: 'ErrorRounded' };
+    }
+
+    return { color: 'text.secondary', icon: 'HelpRounded' };
+};
 
 /**
  * The props for a {@link StatusIndicator} component.
@@ -16,7 +33,7 @@ export type StatusIndicatorProps = {
     /**
      * The status to show.
      */
-    status: 'running' | 'connected' | 'pending' | 'waiting' | 'failed' | 'unknown';
+    status: string;
 
     /**
      * The label to show.
@@ -30,7 +47,9 @@ export type StatusIndicatorProps = {
      * Whether to show the status as a filled variant.
      * @default false
      */
-    filledVariant?: boolean;
+    variantFilled?: boolean;
+
+    sx?: SxProps;
 };
 
 /**
@@ -38,30 +57,32 @@ export type StatusIndicatorProps = {
  * @param {StatusIndicatorProps} props - The {@link StatusIndicatorProps}.
  * @returns A {@link StatusIndicator} component.
  */
-export const StatusIndicator = ({ label, status, filledVariant }: StatusIndicatorProps) => {
+export const StatusIndicator = ({ label, status, variantFilled, sx }: StatusIndicatorProps) => {
     const { color, icon } = connectionStatusCondition(status.toLowerCase());
 
     const styles = {
         variantText: {
-            color: color === 'subtle' ? 'text.secondary' : color,
+            color,
             display: 'inline-flex',
             alignItems: 'center',
+            ...sx,
         },
         variantFilled: {
             minWidth: 64,
             py: 0.75,
             px: 2,
             color: 'background.paper',
-            backgroundColor: color === 'subtle' ? 'text.secondary' : color,
+            backgroundColor: color,
             borderRadius: '4px',
             display: 'inline-flex',
             justifyContent: 'center',
             alignItems: 'center',
+            ...sx,
         },
     };
 
     return (
-        <Box sx={filledVariant ? styles.variantFilled : styles.variantText}>
+        <Box sx={variantFilled ? styles.variantFilled : styles.variantText}>
             {icon && <Icon icon={icon} />}
             {status === 'waiting' && <CircularProgress color='inherit' size={16} />}
             <Typography variant='button' sx={{ ml: 1 }}>{label ?? status}</Typography>
