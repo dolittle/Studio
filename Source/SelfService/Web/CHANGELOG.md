@@ -1,3 +1,21 @@
+# [3.3.19] - 2023-3-29 [PR: #354](https://github.com/dolittle/Studio/pull/354)
+## Summary
+
+Fixing broken build
+
+### Added
+
+yarn.lock 
+
+### Changed
+
+build
+
+### Fixed
+
+- ???
+
+
 # [3.3.18] - 2023-3-27 [PR: #353](https://github.com/dolittle/Studio/pull/353)
 ## Summary
 
