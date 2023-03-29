@@ -40,15 +40,15 @@ type Tab = {
     label: string;
 
     /**
+     * The react element to render when the tab is selected.
+     */
+    render: () => React.ReactNode;
+
+    /**
      * The overrides prop gives you access to the underlying MuiButtonProps object, overriding the styles defined by the component and Material-UI.
      * @default undefined
      */
     overrides?: Partial<ExtendButtonBase<ButtonTypeMap>>;
-
-    /**
-     * The react element to render when the tab is selected.
-     */
-    render: () => React.ReactNode;
 };
 
 /**
@@ -56,11 +56,9 @@ type Tab = {
  */
 export type TabsProps = {
     /**
-     * The tabs to display.
-     *
-     * Create a tab by providing a `label` and a react element to `render`.
+     * Add an unique id to the tabs if you want to persist the selected tab in the session storage.
      */
-    tabs: Tab[];
+    id?: string;
 
     /**
      * The index of the tab to pre select.
@@ -68,7 +66,13 @@ export type TabsProps = {
      */
     selectedTab?: number;
 
-    linkTab?: boolean;
+    /**
+     * The tabs to display.
+     *
+     * Create a tab by providing a `label` and a react element to `render`.
+     */
+    tabs: Tab[];
+
 };
 
 /**
@@ -76,22 +80,18 @@ export type TabsProps = {
  * @param {TabsProps} props - The {@link TabsProps}.
  * @returns A {@link Tabs} component.
  */
-export const Tabs = ({ tabs, selectedTab = 0 }: TabsProps) => {
+export const Tabs = ({ id, selectedTab = 0, tabs }: TabsProps) => {
     const [currentTab, setCurrentTab] = useState(selectedTab);
-
-    // useEffect(() => {
-    //     //const storedSelectedOption = parseInt(sessionStorage.getItem('selectedTab') || '0');
-    //     setCurrentTab(selectedTab);
-    // }, []);
 
     const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setCurrentTab(newValue);
-        //sessionStorage.setItem('selectedTab', newValue.toString());
+        if (id) sessionStorage.setItem(id, newValue.toString());
     };
 
     return (
         <>
             <MuiTabs
+                id={id}
                 value={currentTab}
                 onChange={handleTabChange}
                 TabIndicatorProps={

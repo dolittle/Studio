@@ -40,10 +40,9 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
 
     const getContainerStatuses = () => podsData.pods.flatMap(pod =>
         pod.containers.map(container => container.state));
-
     const applicationId = application.id;
-
     const canEdit = canEditMicroservice(application.environments, environment, currentMicroservice.id);
+    const getLastOpenTab = parseInt(sessionStorage.getItem('microservice-details-tabs') || '0');
 
     // What is the purpose of this??
     let ms = {} as MicroserviceSimple;
@@ -114,7 +113,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                 msName={currentMicroservice.name}
                 data={podsData}
             />
-        }
+        },
     ];
 
     const terminalAvailable = useTerminalAvailable(applicationId, environment, microserviceId);
@@ -138,7 +137,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                 <ContainerHealthStatus status={getContainerStatuses()} />
             </Box>
 
-            <Tabs tabs={tabs} />
+            <Tabs id='microservice-details-tabs' selectedTab={getLastOpenTab} tabs={tabs} />
         </>
     );
 };
