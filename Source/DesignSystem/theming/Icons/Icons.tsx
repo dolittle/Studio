@@ -27,6 +27,7 @@ import {
     ExpandMore,
     ExpandLess,
     FindInPageRounded,
+    HelpRounded,
     HexagonRounded,
     InsightsRounded,
     KeyboardDoubleArrowLeft,
@@ -35,7 +36,6 @@ import {
     MenuRounded,
     MoreVertRounded,
     PolylineRounded,
-    QuestionMarkRounded,
     RefreshRounded,
     RestartAltRounded,
     RocketLaunch,
@@ -78,6 +78,7 @@ export interface SvgIconsDefinition {
     'ExpandMore' |
     'ExpandLess' |
     'FindInPageRounded' |
+    'HelpRounded' |
     'HexagonRounded' |
     'InsightsRounded' |
     'KeyboardDoubleArrowLeft' |
@@ -86,7 +87,6 @@ export interface SvgIconsDefinition {
     'MenuRounded' |
     'MoreVertRounded' |
     'PolylineRounded' |
-    'QuestionMarkRounded' |
     'RefreshRounded' |
     'RestartAltRounded' |
     'RocketLaunch' |
@@ -125,6 +125,7 @@ export const SvgIcons = {
     ExpandMore: <ExpandMore />,
     ExpandLess: <ExpandLess />,
     FindInPageRounded: <FindInPageRounded />,
+    HelpRounded: <HelpRounded />,
     HexagonRounded: <HexagonRounded />,
     InsightsRounded: <InsightsRounded />,
     KeyboardDoubleArrowLeft: <KeyboardDoubleArrowLeft />,
@@ -133,7 +134,6 @@ export const SvgIcons = {
     MenuRounded: <MenuRounded />,
     MoreVertRounded: <MoreVertRounded />,
     PolylineRounded: <PolylineRounded />,
-    QuestionMarkRounded: <QuestionMarkRounded />,
     RefreshRounded: <RefreshRounded />,
     RestartAltRounded: <RestartAltRounded />,
     RocketLaunch: <RocketLaunch />,
