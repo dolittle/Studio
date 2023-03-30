@@ -5,9 +5,7 @@ import React from 'react';
 
 import { Box } from '@mui/material';
 
-import { FileUploadForm } from '@dolittle/design-system';
-
-import { MaxWidthTextBlock } from './MaxWidthTextBlock';
+import { FileUploadForm, MaxWidthTextBlock } from '@dolittle/design-system';
 
 export const instructions = [
     `1. Open Infor ION API. Open the menu from the upper left corner and select 'Infor ION API'.`,
