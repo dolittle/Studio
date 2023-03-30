@@ -6,7 +6,7 @@ export { availableIcons, SvgIcons, SvgIconsDefinition } from './theming/Icons/Ic
 export { themeDark } from './theming/theme';
 
 // Atoms
-export { Accordion } from './atoms/Accordion';
+export { Accordion, AccordionProps } from './atoms/Accordion';
 export { AccordionList, AccordionListProps } from './atoms/AccordionList';
 export { AlertDialog, AlertDialogProps } from './atoms/AlertDialog';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
@@ -21,8 +21,9 @@ export { LoadingSpinner } from './atoms/LoadingSpinner';
 export { StatusIndicator, StatusIndicatorProps } from './atoms/StatusIndicator';
 export { Summary } from './atoms/Metrics';
 export { Tabs } from './atoms/Tabs';
+export { MaxWidthTextBlock } from './atoms/Typography/MaxWidthTextBlock';
+export { Terminal, TerminalConnect, TerminalStreams, InputMessages, OutputMessages } from './atoms/Terminal';
 export { Tooltip } from './atoms/Tooltip';
-export { InputMessages, OutputMessages, Terminal, TerminalConnect, TerminalStreams } from './atoms/Terminal';
 
 // Molecules
 export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecules/FileUploadForm';
