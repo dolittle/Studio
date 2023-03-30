@@ -17,12 +17,13 @@ export type NoEntityViewProps = {
     title: string;
 
     /**
-     * The props for the {@link CreateEntityBox} component*
+     * The props for the {@link CreateEntityBox} component.
      */
     createEntityProps: CreateEntityBoxProps;
 
     /**
      * Children to display addition text or information at the bottom of the view.
+     *
      * Use this space for descriptive text that helps explain what it means to not have an entity to the user.
      */
     children?: React.ReactNode;
@@ -43,6 +44,3 @@ export const NoEntityView = ({ title, createEntityProps, children }: NoEntityVie
 
         {children}
     </Grid>;
-
-
-

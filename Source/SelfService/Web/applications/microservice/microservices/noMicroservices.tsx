@@ -18,7 +18,7 @@ export const NoMicroservices = ({ onCreate }: NoMicroservicesProps) =>
         createEntityProps={{
             createEntityText: 'Deploy new microservice',
             createEntityIcon: <RocketLaunch />,
-            onCreateEntity: onCreate
+            onCreateEntity: onCreate,
         }}
     >
         <Typography variant='body1' mb={2}>
@@ -26,6 +26,6 @@ export const NoMicroservices = ({ onCreate }: NoMicroservicesProps) =>
         </Typography>
 
         <Typography variant='body1'>
-            To deploy a new microservice click on the &apos;deploy a microservice&apos; button or &apos;deploy new&apos; tab at the top.
+            {`To deploy a new microservice click on the 'deploy a microservice' button or 'deploy new' tab at the top.`}
         </Typography>
     </NoEntityView>;
