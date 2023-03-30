@@ -1,3 +1,30 @@
+# [3.3.20] - 2023-3-30 [PR: #355](https://github.com/dolittle/Studio/pull/355)
+## Summary
+
+Start the ConnecitonDetails implementation. Add link tabs to navigate through connection details. Refine the design system accordingly.
+
+<img width="998" alt="Screenshot 2023-03-30 at 09 55 19" src="https://user-images.githubusercontent.com/19160439/228757798-4dd278ee-6f6b-4056-9b7c-867b3ffc3dd6.png">
+
+### Added
+
+- StatusIndicator improvements
+- Override props in Tabs to add Tabs as a Link component
+- Route to 'messages' tab by default if ConnectionTable is clicked
+- StatusIndicator to Page component
+- DataTableToolbar to Design System
+- NewMessage component
+
+### Changed
+
+- Updated generated API-s
+- Added `id` to Tabs to get the last opened tab from `sessionStorage`, if necessary
+- Replaced 'QuesrionMarkRounded' with 'HelpRounded' in Icons and in StatusIndicator
+
+### Fixed
+
+- Tooltips display in NewM3Conneciton
+
+
 # [3.3.19] - 2023-3-29 [PR: #354](https://github.com/dolittle/Studio/pull/354)
 ## Summary
 
