@@ -9,6 +9,8 @@ import { ConnectionDetails } from './connectionDetails';
 import { ConfigurationView } from './connectionDetails/configuration';
 import { ExposeView } from './connectionDetails/expose';
 import { MessagesView } from './connectionDetails/messages';
+import { MessageRoot } from './connectionDetails/messages/MessageRoot';
+import { ChangeMessageView } from './connectionDetails/messages/changeMessage';
 
 import { NewConnectionView } from './new';
 
@@ -22,8 +24,22 @@ export const routes: RouteObject[] = [
                 element: <ConfigurationView />,
             },
             {
-                path: 'messages',
-                element: <MessagesView />,
+                path: 'messages/*',
+                element: <MessageRoot />,
+                children: [
+                    {
+                        path: '',
+                        element: <MessagesView />,
+                    },
+                    {
+                        path: 'new',
+                        element: <ChangeMessageView />,
+                    },
+                    {
+                        path: 'edit/:messageId',
+                        element: <ChangeMessageView />,
+                    },
+                ]
             },
             {
                 path: 'expose',
