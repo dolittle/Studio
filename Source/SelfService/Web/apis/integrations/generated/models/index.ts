@@ -36,6 +36,7 @@ export * from './ProgramHeader';
 export * from './ReadModelMetadata';
 export * from './RelatedTable';
 export * from './RemoteServiceStatus';
+export * from './SetMessageMappingRequestArguments';
 export * from './SortDirection';
 export * from './StringResult';
 export * from './Table';

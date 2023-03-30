@@ -37,6 +37,12 @@ export interface ColumnMetadata {
      * @type {string}
      * @memberof ColumnMetadata
      */
+    key?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ColumnMetadata
+     */
     description?: string | null;
     /**
      * 
@@ -78,6 +84,7 @@ export function ColumnMetadataFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'name': !exists(json, 'name') ? undefined : json['name'],
+        'key': !exists(json, 'key') ? undefined : json['key'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'type': !exists(json, 'type') ? undefined : FieldTypeFromJSON(json['type']),
         'fieldLength': !exists(json, 'fieldLength') ? undefined : json['fieldLength'],
@@ -95,6 +102,7 @@ export function ColumnMetadataToJSON(value?: ColumnMetadata | null): any {
     return {
         
         'name': value.name,
+        'key': value.key,
         'description': value.description,
         'type': FieldTypeToJSON(value.type),
         'fieldLength': value.fieldLength,

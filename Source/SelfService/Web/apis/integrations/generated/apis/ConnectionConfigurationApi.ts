@@ -61,6 +61,11 @@ export interface ConnectionsIdConfigurationIonSimulateSuccessPutRequest {
     id: string;
 }
 
+export interface ConnectionsIdConfigurationMdpConcurrencyPostRequest {
+    id: string;
+    concurrency?: number;
+}
+
 export interface ConnectionsIdConfigurationMdpGetRequest {
     id: string;
 }
@@ -253,6 +258,44 @@ export class ConnectionConfigurationApi extends runtime.BaseAPI {
      */
     async connectionsIdConfigurationIonSimulateSuccessPut(requestParameters: ConnectionsIdConfigurationIonSimulateSuccessPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ConnectionModelResult> {
         const response = await this.connectionsIdConfigurationIonSimulateSuccessPutRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * POST to this resource to configure the Metadata Publisher (MDP) for the  connection. The MDP service is gives the Bridge API insight into the tables,  fields, programs and environments in the M3 -instance.  This endpoint is used to configure the concurrency level for the MDP service (How many parallel requests it handles).  High concurrency can improve throughput, but also increases the load on the MDP instance.
+     */
+    async connectionsIdConfigurationMdpConcurrencyPostRaw(requestParameters: ConnectionsIdConfigurationMdpConcurrencyPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MdpConfigurationResult>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdConfigurationMdpConcurrencyPost.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.concurrency !== undefined) {
+            queryParameters['concurrency'] = requestParameters.concurrency;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        const response = await this.request({
+            path: `/connections/{id}/configuration/mdp/concurrency`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MdpConfigurationResultFromJSON(jsonValue));
+    }
+
+    /**
+     * POST to this resource to configure the Metadata Publisher (MDP) for the  connection. The MDP service is gives the Bridge API insight into the tables,  fields, programs and environments in the M3 -instance.  This endpoint is used to configure the concurrency level for the MDP service (How many parallel requests it handles).  High concurrency can improve throughput, but also increases the load on the MDP instance.
+     */
+    async connectionsIdConfigurationMdpConcurrencyPost(requestParameters: ConnectionsIdConfigurationMdpConcurrencyPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MdpConfigurationResult> {
+        const response = await this.connectionsIdConfigurationMdpConcurrencyPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

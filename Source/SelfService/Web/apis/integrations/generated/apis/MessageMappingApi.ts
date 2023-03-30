@@ -19,6 +19,7 @@ import type {
   MessageMappingModelResult,
   NoSuchReadModelResult,
   ProblemDetails,
+  SetMessageMappingRequestArguments,
 } from '../models';
 import {
     MessageMappingModelIEnumerableResultFromJSON,
@@ -29,19 +30,28 @@ import {
     NoSuchReadModelResultToJSON,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
+    SetMessageMappingRequestArgumentsFromJSON,
+    SetMessageMappingRequestArgumentsToJSON,
 } from '../models';
 
 export interface ConnectionsIdMessageMappingsGetRequest {
     id: string;
-    xOrganizationId?: string;
 }
 
 export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest {
     id: string;
     table: string;
-    message2: string;
+    messageName: string;
+    message: string;
     xOrganizationId?: string;
-    message?: string;
+}
+
+export interface ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest {
+    id: string;
+    table: string;
+    messageName: string;
+    message: string;
+    setMessageMappingRequestArguments?: SetMessageMappingRequestArguments;
 }
 
 /**
@@ -59,10 +69,6 @@ export class MessageMappingApi extends runtime.BaseAPI {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters.xOrganizationId !== undefined && requestParameters.xOrganizationId !== null) {
-            headerParameters['X-Organization-Id'] = String(requestParameters.xOrganizationId);
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
@@ -96,15 +102,15 @@ export class MessageMappingApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('table','Required parameter requestParameters.table was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageGet.');
         }
 
-        if (requestParameters.message2 === null || requestParameters.message2 === undefined) {
-            throw new runtime.RequiredError('message2','Required parameter requestParameters.message2 was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageGet.');
+        if (requestParameters.messageName === null || requestParameters.messageName === undefined) {
+            throw new runtime.RequiredError('messageName','Required parameter requestParameters.messageName was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageGet.');
+        }
+
+        if (requestParameters.message === null || requestParameters.message === undefined) {
+            throw new runtime.RequiredError('message','Required parameter requestParameters.message was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageGet.');
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.message !== undefined) {
-            queryParameters['message'] = requestParameters.message;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -117,7 +123,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/connections/{id}/message-mappings/tables/{table}/messages/{message}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"table"}}`, encodeURIComponent(String(requestParameters.table))).replace(`{${"message"}}`, encodeURIComponent(String(requestParameters.message2))),
+            path: `/connections/{id}/message-mappings/tables/{table}/messages/{message}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"table"}}`, encodeURIComponent(String(requestParameters.table))).replace(`{${"messageName"}}`, encodeURIComponent(String(requestParameters.messageName))).replace(`{${"message"}}`, encodeURIComponent(String(requestParameters.message))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -130,6 +136,53 @@ export class MessageMappingApi extends runtime.BaseAPI {
      */
     async connectionsIdMessageMappingsTablesTableMessagesMessageGet(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageMappingModelResult> {
         const response = await this.connectionsIdMessageMappingsTablesTableMessagesMessageGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async connectionsIdMessageMappingsTablesTableMessagesMessagePostRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageMappingModelResult>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessagePost.');
+        }
+
+        if (requestParameters.table === null || requestParameters.table === undefined) {
+            throw new runtime.RequiredError('table','Required parameter requestParameters.table was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessagePost.');
+        }
+
+        if (requestParameters.messageName === null || requestParameters.messageName === undefined) {
+            throw new runtime.RequiredError('messageName','Required parameter requestParameters.messageName was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessagePost.');
+        }
+
+        if (requestParameters.message === null || requestParameters.message === undefined) {
+            throw new runtime.RequiredError('message','Required parameter requestParameters.message was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessagePost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        const response = await this.request({
+            path: `/connections/{id}/message-mappings/tables/{table}/messages/{message}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"table"}}`, encodeURIComponent(String(requestParameters.table))).replace(`{${"messageName"}}`, encodeURIComponent(String(requestParameters.messageName))).replace(`{${"message"}}`, encodeURIComponent(String(requestParameters.message))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: SetMessageMappingRequestArgumentsToJSON(requestParameters.setMessageMappingRequestArguments),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MessageMappingModelResultFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async connectionsIdMessageMappingsTablesTableMessagesMessagePost(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageMappingModelResult> {
+        const response = await this.connectionsIdMessageMappingsTablesTableMessagesMessagePostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

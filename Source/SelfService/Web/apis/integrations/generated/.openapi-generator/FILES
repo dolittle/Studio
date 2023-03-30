@@ -6,6 +6,7 @@ apis/DeploymentApi.ts
 apis/EnvironmentApi.ts
 apis/LoginApi.ts
 apis/MessageMappingApi.ts
+apis/MetadataAdminApi.ts
 apis/ProgramMetadataApi.ts
 apis/TableMetadataApi.ts
 apis/index.ts
@@ -46,6 +47,7 @@ models/ProgramHeader.ts
 models/ReadModelMetadata.ts
 models/RelatedTable.ts
 models/RemoteServiceStatus.ts
+models/SetMessageMappingRequestArguments.ts
 models/SortDirection.ts
 models/StringResult.ts
 models/Table.ts

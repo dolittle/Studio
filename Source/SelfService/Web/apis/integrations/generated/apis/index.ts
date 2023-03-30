@@ -7,5 +7,6 @@ export * from './DeploymentApi';
 export * from './EnvironmentApi';
 export * from './LoginApi';
 export * from './MessageMappingApi';
+export * from './MetadataAdminApi';
 export * from './ProgramMetadataApi';
 export * from './TableMetadataApi';
