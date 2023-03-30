@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-
 import React from 'react';
 
 import { Box, Paper, SvgIconProps } from '@mui/material';
+
 import { Button } from '@dolittle/design-system';
 
 const styles = {
@@ -14,28 +14,31 @@ const styles = {
         height: '174px',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        mt: 6.75,
+        mb: 5.75,
     },
     dashedBorder: {
         'width': 1,
         'height': 1,
         'position': 'absolute',
-        'top': '-8px',
-        'left': '-8px',
+        'top': -8,
+        'left': -8,
         'pointerEvents': 'none',
         'clipPath': 'inset(0 round 5px)',
         ':before': {
             content: '""',
             position: 'absolute',
-            left: '-3px',
-            top: '-3px',
-            right: '-3px',
-            bottom: '-3px',
-            border: '4px dashed #504D4D',
+            left: -3,
+            top: -3,
+            right: -3,
+            bottom: -3,
+            border: '4px dashed',
+            borderColor: 'outlineborder',
             borderRadius: '10px',
-            boxSizing: 'border-box'
-        }
-    }
+            boxSizing: 'border-box',
+        },
+    },
 };
 
 export type CreateEntityBoxProps = {
@@ -44,11 +47,8 @@ export type CreateEntityBoxProps = {
     onCreateEntity: () => void;
 };
 
-export const CreateEntityBox = ({createEntityText = '', createEntityIcon, onCreateEntity}: CreateEntityBoxProps) => {
-    return(
-    <Box component={Paper} mt={6.75} mb={5.75} sx={styles.deployButtonWrapper}>
+export const CreateEntityBox = ({ createEntityText = '', createEntityIcon, onCreateEntity }: CreateEntityBoxProps) =>
+    <Paper sx={styles.deployButtonWrapper}>
         <Box sx={styles.dashedBorder}></Box>
         <Button label={createEntityText} isFullWidth startWithIcon={createEntityIcon} onClick={onCreateEntity} sx={{ height: 1 }} />
-    </Box>
-    );
-};
+    </Paper>;
