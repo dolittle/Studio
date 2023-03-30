@@ -6,11 +6,11 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
-import { Box, Divider, Paper, Typography } from '@mui/material';
+import { Paper } from '@mui/material';
 
-import { Button, Icon } from '@dolittle/design-system';
+import { DataTableToolbar, Icon } from '@dolittle/design-system';
 
-const messagesColumn: GridColDef[] = [
+const messagesDataColumn: GridColDef[] = [
     {
         field: 'name',
         headerName: 'Message Type',
@@ -43,20 +43,23 @@ const messagesColumn: GridColDef[] = [
     },
 ];
 
-const CustomToolbar = () => {
-    return (
-        <Box sx={{ borderBottom: '1px solid', borderColor: 'outlineborder' }}>
-            <Box sx={{ minHeight: 64, display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 1.25, }}>
-                <Typography variant='subtitle2'>Your Messages</Typography>
-                <Box sx={{ display: 'flex', gap: 4 }}>
-                    <Button label='Delete messages' startWithIcon={<Icon icon='DeleteRounded' />} disabled />
-                    <Button label='Copy Messages to...' startWithIcon={<Icon icon='CopyAllRounded' />} disabled />
-                    <Button label='Deploy message(s)...' startWithIcon={<Icon icon='RocketLaunch' />} disabled />
-                </Box>
-            </Box>
-        </Box>
-    );
-};
+export const messagesToolbarButtons = [
+    {
+        label: 'Delete messages',
+        startWithIcon: <Icon icon='DeleteRounded' />,
+        disabled: true,
+    },
+    {
+        label: 'Copy Messages to...',
+        startWithIcon: <Icon icon='CopyAllRounded' />,
+        disabled: true,
+    },
+    {
+        label: 'Deploy message(s)...',
+        startWithIcon: <Icon icon='RocketLaunch' />,
+        disabled: true,
+    },
+];
 
 export const MessagesView = () => {
     return (
@@ -64,7 +67,7 @@ export const MessagesView = () => {
             <Paper sx={{ width: 1, mt: 2 }}>
                 <DataGridPro
                     rows={[{ id: 1, name: 'test' }]}
-                    columns={messagesColumn}
+                    columns={messagesDataColumn}
                     //loading={loadingRows}
                     headerHeight={46}
                     getRowHeight={() => 'auto'}
@@ -75,7 +78,7 @@ export const MessagesView = () => {
                     checkboxSelection
                     disableSelectionOnClick
                     components={{
-                        Toolbar: () => <CustomToolbar />,
+                        Toolbar: () => <DataTableToolbar title='Your Messages' buttons={messagesToolbarButtons} />,
                     }}
                 />
             </Paper>
