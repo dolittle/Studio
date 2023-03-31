@@ -4,20 +4,22 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import { SectionDivider } from './SectionDivider';
-import { CardHeader } from './CardHeader';
+import { CardHeader, CardHeaderProps } from './CardHeader';
 
 export type CardSectionProps = {
-    title: string;
+    title?: string;
+    hideHeader?: boolean;
+    headerProps?: Partial<CardHeaderProps>
     children?: React.ReactNode;
 };
 
 
-export const CardSection = ({ title, children }: CardSectionProps) => {
+export const CardSection = ({ title = '', hideHeader, headerProps, children }: CardSectionProps) => {
     return (
         <>
             <SectionDivider />
-            <Box sx={{my: 2}}>
-                <CardHeader title={title} titleTextVariant='subtitle' />
+            <Box sx={{ my: 2 }}>
+                {!hideHeader && <CardHeader title={title} titleTextVariant='subtitle' {...headerProps}/>}
                 {children}
             </Box>
         </>
