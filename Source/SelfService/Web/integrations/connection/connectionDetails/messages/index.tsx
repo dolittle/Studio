@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useConnectionId } from '../../../routes.hooks';
 
 import { AlertBox, LoadingSpinner } from '@dolittle/design-system';
@@ -16,7 +16,11 @@ import { NoMessages } from './components/NoMessages';
 
 export const MessagesView = () => {
     const connectionId = useConnectionId();
+    const navigate = useNavigate();
     const { data, isError, isLoading } = useConnectionsIdMessageMappingsGet({ id: connectionId || '' });
+    const handleCreateNewMessage = () => {
+        navigate('new');
+    };
 
     //console.log(data?.value);
 
@@ -37,8 +41,8 @@ export const MessagesView = () => {
         messagesDataRows.length ?
             <>
                 <MessagesTable rows={messagesDataRows} />
-                <CreateMessagesButton onClick={() => { }} />
+                <CreateMessagesButton onClick={() => { handleCreateNewMessage(); }} />
             </> :
-            <NoMessages onCreateNew={() => { }} />
+            <NoMessages onCreateNew={() => { handleCreateNewMessage(); }} />
     );
 };
