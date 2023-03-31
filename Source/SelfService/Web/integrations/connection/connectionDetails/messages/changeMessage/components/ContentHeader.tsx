@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { Button, ButtonProps } from '@dolittle/design-system';
 
@@ -18,7 +18,7 @@ const styles = {
     buttonGroup: {
         display: 'flex',
         gap: 4,
-    }
+    },
 };
 
 export type ContentHeaderProps = {
@@ -28,11 +28,9 @@ export type ContentHeaderProps = {
 };
 
 export const ContentHeader = ({ title, buttons, titleTextVariant = 'title' }: ContentHeaderProps) =>
-    <>
-        <Box sx={styles.wrapper}>
-            <Typography variant={titleTextVariant === 'title' ? 'subtitle1' : 'subtitle2'} noWrap>{title}</Typography>
-            <Box sx={styles.buttonGroup}>
-                {buttons?.map((button, index) => <Button key={index} {...button} />)}
-            </Box>
+    <Box sx={styles.wrapper}>
+        <Typography variant={titleTextVariant === 'title' ? 'subtitle1' : 'subtitle2'} noWrap>{title}</Typography>
+        <Box sx={styles.buttonGroup}>
+            {buttons?.map((button, index) => <Button key={index} {...button} />)}
         </Box>
-    </>;
+    </Box>;
