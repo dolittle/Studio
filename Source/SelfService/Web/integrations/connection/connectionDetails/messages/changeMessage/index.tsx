@@ -5,8 +5,8 @@ import React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Form } from '@dolittle/design-system';
 
-import { CardPage } from './components/CardPage';
-import { CardHeader } from './components/CardHeader';
+import { ContentContainer } from './components/ContentContainer';
+import { ContentHeader } from './components/ContentHeader';
 import { TableSearchSection } from './components/TableSearchSection';
 import { MessageDetailsSection } from './components/MessageDetailsSection';
 import { SubmitButtonSection } from './components/SubmitButtonSection';
@@ -32,8 +32,8 @@ export const ChangeMessageView = () => {
     return (
         <>
             Mode: {mode === 'new' ? 'New message mode' : `Edit message mode for ${messageId}`}
-            <CardPage>
-                <CardHeader title={mode === 'new' ? 'Create New Message' : 'Edit Message'} />
+            <ContentContainer>
+                <ContentHeader title={mode === 'new' ? 'Create New Message' : 'Edit Message'} />
                 <Form<NewMessageMappingParameters>
                     initialValues={{
                         name: '',
@@ -46,7 +46,7 @@ export const ChangeMessageView = () => {
                     <TableSection mode={mode}  tableName='MITLAB'/>
                     <SubmitButtonSection mode={mode} isSubmitting={false} />
                 </Form>
-            </CardPage>
+            </ContentContainer>
         </>
     );
 };

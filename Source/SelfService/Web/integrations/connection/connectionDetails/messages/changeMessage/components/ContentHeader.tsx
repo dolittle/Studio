@@ -21,13 +21,13 @@ const styles = {
     }
 };
 
-export type CardHeaderProps = {
+export type ContentHeaderProps = {
     title: string;
     titleTextVariant?: 'title' | 'subtitle'
     buttons?: ButtonProps[];
 };
 
-export const CardHeader = ({ title, buttons, titleTextVariant = 'title' }: CardHeaderProps) =>
+export const ContentHeader = ({ title, buttons, titleTextVariant = 'title' }: ContentHeaderProps) =>
     <>
         <Box sx={styles.wrapper}>
             <Typography variant={titleTextVariant === 'title' ? 'subtitle1' : 'subtitle2'} noWrap>{title}</Typography>

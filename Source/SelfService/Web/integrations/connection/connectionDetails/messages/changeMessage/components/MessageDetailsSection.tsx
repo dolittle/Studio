@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { ViewModeProps } from '../ViewMode';
-import { CardSection } from './CardSection';
+import { ContentSection } from './ContentSection';
 
 
 export type MessageDetailsSectionProps = ViewModeProps & {
@@ -12,8 +12,8 @@ export type MessageDetailsSectionProps = ViewModeProps & {
 
 export const MessageDetailsSection = (props: MessageDetailsSectionProps) => {
     return (
-        <CardSection title='Message Details'>
+        <ContentSection title='Message Details'>
             Name and Description here
-        </CardSection>
+        </ContentSection>
     );
 };

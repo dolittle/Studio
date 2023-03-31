@@ -4,12 +4,12 @@
 import React from 'react';
 import { Paper } from '@mui/material';
 
-export type CardPageProps = {
+export type ContentContainerProps = {
     children?: React.ReactNode;
 };
 
 
-export const CardPage = ({ children }: CardPageProps) => {
+export const ContentContainer = ({ children }: ContentContainerProps) => {
     return (
         <Paper sx={{ width: 1, mt: 2, px: 2 }}>
             {children}

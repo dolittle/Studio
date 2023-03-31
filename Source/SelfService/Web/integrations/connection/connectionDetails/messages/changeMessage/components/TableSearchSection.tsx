@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { ViewModeProps } from '../ViewMode';
-import { CardSection } from './CardSection';
+import { ContentSection } from './ContentSection';
 
 export type TableSearchSectionProps = ViewModeProps & {
 
@@ -11,8 +11,8 @@ export type TableSearchSectionProps = ViewModeProps & {
 
 export const TableSearchSection = (props: TableSearchSectionProps) => {
     return (
-        <CardSection title='Browse M3 Table names'>
+        <ContentSection title='Browse M3 Table names'>
             Search component here
-        </CardSection>
+        </ContentSection>
     );
 };

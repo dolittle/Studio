@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { ViewModeProps } from '../ViewMode';
-import { CardSection } from './CardSection';
+import { ContentSection } from './ContentSection';
 
 export type TableSectionProps = ViewModeProps & {
     tableName: string;
@@ -11,8 +11,8 @@ export type TableSectionProps = ViewModeProps & {
 
 export const TableSection = (props: TableSectionProps) => {
     return (
-        <CardSection title={`${props.tableName} Table`}>
+        <ContentSection title={`${props.tableName} Table`}>
             Table component here
-        </CardSection>
+        </ContentSection>
     );
 };
