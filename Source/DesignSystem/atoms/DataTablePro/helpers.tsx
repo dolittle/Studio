@@ -21,15 +21,15 @@ export const toolbarButtons = [
     {
         label: 'Button one',
         startWithIcon: <Icon icon='DeleteRounded' />,
-    },
+    } as const,
     {
         label: 'Botton two',
         startWithIcon: <Icon icon='CopyAllRounded' />,
-    },
+    } as const,
     {
         label: 'Button three',
         startWithIcon: <Icon icon='RocketLaunch' />,
-    },
+    } as const,
 ];
 
 export const dataTableDescription = `Data tables are an excellent way to organize vast amounts of data. Data tables should be easy to scan, 

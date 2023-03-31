@@ -3,10 +3,29 @@
 
 import React from 'react';
 
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import { Paper } from '@mui/material';
+import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 
 import { TableListingEntry } from '../../../../../../apis/integrations/generated';
+
+const columns: GridColDef<TableListingEntry>[] = [
+    {
+        field: 'name',
+        headerName: 'Name',
+        minWidth: 270,
+        flex: 1,
+    },
+    {
+        field: 'description',
+        headerName: 'Description',
+        minWidth: 270,
+        flex: 1,
+    },
+];
+
+type DataGridTableListingEntry = TableListingEntry & {
+    id: string;
+};
 
 export type TableSearchResultsProps = {
     tableListings: TableListingEntry[];
@@ -14,35 +33,13 @@ export type TableSearchResultsProps = {
     onTableSelected: (table: TableListingEntry) => void;
 };
 
-type DataGridTableListingEntry = TableListingEntry & {
-    id: string;
-};
-
-
-
 export const TableSearchResults = ({ tableListings, isLoading, onTableSelected }: TableSearchResultsProps) => {
-
     const dataGridListing: DataGridTableListingEntry[] = tableListings.map((tableListing) => {
         return {
             id: tableListing.name || '',
-            ...tableListing
+            ...tableListing,
         };
     });
-
-    const columns: GridColDef<TableListingEntry>[] = [
-        {
-            field: 'name',
-            headerName: 'Name',
-            minWidth: 270,
-            flex: 1,
-        },
-        {
-            field: 'description',
-            headerName: 'Description',
-            minWidth: 270,
-            flex: 1,
-        }
-    ];
 
     const handleRowClick = (tableListing: TableListingEntry) => {
         onTableSelected(tableListing);
@@ -65,4 +62,3 @@ export const TableSearchResults = ({ tableListings, isLoading, onTableSelected }
         </Paper>
     );
 };
-

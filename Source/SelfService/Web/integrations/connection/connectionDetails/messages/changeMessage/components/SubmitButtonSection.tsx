@@ -2,17 +2,20 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import { Button } from '@dolittle/design-system';
+
 import { ViewModeProps } from '../ViewMode';
 import { ContentSection } from './ContentSection';
 
 export type SubmitButtonSectionProps = ViewModeProps & {
     disabled?: boolean;
-    isSubmitting: boolean
+    isSubmitting: boolean;
 };
 
 export const SubmitButtonSection = (props: SubmitButtonSectionProps) => {
     const buttonText = props.mode === 'new' ? 'Add Message and close' : 'Save Message and close';
+
     return (
         <ContentSection hideHeader>
             <Button

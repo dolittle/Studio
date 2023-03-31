@@ -3,13 +3,12 @@
 
 import React from 'react';
 
-import { Box, Typography } from '@mui/material';
+import { Box, SxProps, Typography } from '@mui/material';
 
 import { Button, ButtonProps } from '@dolittle/design-system';
 
 const styles = {
     wrapper: {
-        minHeight: 64,
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -25,10 +24,11 @@ export type ContentHeaderProps = {
     title: string;
     titleTextVariant?: 'title' | 'subtitle'
     buttons?: ButtonProps[];
+    sx?: SxProps;
 };
 
-export const ContentHeader = ({ title, buttons, titleTextVariant = 'title' }: ContentHeaderProps) =>
-    <Box sx={styles.wrapper}>
+export const ContentHeader = ({ title, buttons, titleTextVariant = 'title', sx }: ContentHeaderProps) =>
+    <Box sx={{ ...styles.wrapper, ...sx }}>
         <Typography variant={titleTextVariant === 'title' ? 'subtitle1' : 'subtitle2'} noWrap>{title}</Typography>
         <Box sx={styles.buttonGroup}>
             {buttons?.map((button, index) => <Button key={index} {...button} />)}
