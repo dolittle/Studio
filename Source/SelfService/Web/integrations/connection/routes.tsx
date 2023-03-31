@@ -8,7 +8,7 @@ import { RouteObject, Navigate } from 'react-router-dom';
 import { ConnectionDetails } from './connectionDetails';
 import { ConfigurationView } from './connectionDetails/configuration';
 import { ExposeView } from './connectionDetails/expose';
-import { MessagesView } from './connectionDetails/messages/MessagesView';
+import { MessagesListView } from './connectionDetails/messages/MessagesListView';
 import { MessagesViewRoot } from './connectionDetails/messages';
 import { ChangeMessageView } from './connectionDetails/messages/changeMessage';
 
@@ -29,7 +29,7 @@ export const routes: RouteObject[] = [
                 children: [
                     {
                         path: '',
-                        element: <MessagesView />,
+                        element: <MessagesListView />,
                     },
                     {
                         path: 'new',

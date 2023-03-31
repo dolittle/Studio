@@ -14,7 +14,7 @@ import { MessagesTable } from './components/MessagesTable';
 import { CreateMessagesButton } from './components/CreateMessagesButton';
 import { NoMessages } from './components/NoMessages';
 
-export const MessagesView = () => {
+export const MessagesListView = () => {
     const connectionId = useConnectionId();
     const navigate = useNavigate();
     const { data, isError, isLoading } = useConnectionsIdMessageMappingsGet({ id: connectionId || '' });
