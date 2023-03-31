@@ -4,7 +4,7 @@
 import React from 'react';
 import { Button } from '@dolittle/design-system';
 import { ViewModeProps } from '../ViewMode';
-import { CardSection } from './CardSection';
+import { ContentSection } from './ContentSection';
 
 export type SubmitButtonSectionProps = ViewModeProps & {
     disabled?: boolean;
@@ -14,7 +14,7 @@ export type SubmitButtonSectionProps = ViewModeProps & {
 export const SubmitButtonSection = (props: SubmitButtonSectionProps) => {
     const buttonText = props.mode === 'new' ? 'Add Message and close' : 'Save Message and close';
     return (
-        <CardSection hideHeader>
+        <ContentSection hideHeader>
             <Button
                 label={props.isSubmitting ? 'Saving...' : buttonText}
                 variant='fullwidth'
@@ -22,6 +22,6 @@ export const SubmitButtonSection = (props: SubmitButtonSectionProps) => {
                 sx={{ mt: 2.125 }}
                 disabled={!props.disabled}
             />
-        </CardSection>
+        </ContentSection>
     );
 };

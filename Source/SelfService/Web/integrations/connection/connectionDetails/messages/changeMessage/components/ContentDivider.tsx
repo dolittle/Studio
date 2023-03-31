@@ -4,7 +4,7 @@
 import React from 'react';
 import { Divider, DividerProps } from '@mui/material';
 
-export const SectionDivider = (props: DividerProps) => {
+export const ContentDivider = (props: DividerProps) => {
     return (
         <Divider sx={{
             borderColor: 'outlineborder',
