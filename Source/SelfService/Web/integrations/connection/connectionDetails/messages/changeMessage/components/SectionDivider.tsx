@@ -7,7 +7,6 @@ import { Divider, DividerProps } from '@mui/material';
 export const SectionDivider = (props: DividerProps) => {
     return (
         <Divider sx={{
-            // mx: 1,
             borderColor: 'outlineborder',
         }} {...props} />
     );
