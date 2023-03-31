@@ -1,3 +1,13 @@
+# [3.4.2] - 2023-3-31 [PR: #357](https://github.com/dolittle/Studio/pull/357)
+- Add child routes for new message and edit message
+- Scaffold page structure for new message
+- Separate card header (for now) and adding some spacing
+- Add more sections and pass inn viewmode to sections
+- Add Table Section
+- Rename the Card* components to Content* components
+- Navigate to new message type page on click
+
+
 # [3.4.1] - 2023-3-31 [PR: #356](https://github.com/dolittle/Studio/pull/356)
 ## Summary
 
