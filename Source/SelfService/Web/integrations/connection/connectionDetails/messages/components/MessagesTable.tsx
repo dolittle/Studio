@@ -8,7 +8,7 @@ import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 
 import { DataTableToolbar, Icon } from '@dolittle/design-system';
 
-const messagesDataColumn: GridColDef[] = [
+const messagesDataColumns: GridColDef[] = [
     {
         field: 'name',
         headerName: 'Message Type',
@@ -41,7 +41,7 @@ const messagesDataColumn: GridColDef[] = [
     },
 ];
 
-export const messagesToolbarButtons = [
+const messagesToolbarButtons = [
     {
         label: 'Delete messages',
         startWithIcon: <Icon icon='DeleteRounded' />,
@@ -61,15 +61,15 @@ export const messagesToolbarButtons = [
 
 type MessagesTableProps = {
     rows: any[];
-    loading: boolean;
+    loading?: boolean;
 };
 
-export const MessagesTable = ({ rows, loading }: MessagesTableProps) =>
+export const MessagesTable = ({ rows }: MessagesTableProps) =>
     <Paper sx={{ width: 1, mt: 2 }}>
         <DataGridPro
             rows={rows}
-            columns={messagesDataColumn}
-            loading={loading}
+            columns={messagesDataColumns}
+            //loading={loading}
             headerHeight={46}
             getRowHeight={() => 'auto'}
             //onRowClick={({ row }) => onTableRowClick(row.id)}

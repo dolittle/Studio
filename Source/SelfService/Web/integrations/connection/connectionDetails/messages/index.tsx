@@ -6,21 +6,39 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { useConnectionId } from '../../../routes.hooks';
 
+import { AlertBox, LoadingSpinner } from '@dolittle/design-system';
+
 import { useConnectionsIdMessageMappingsGet } from '../../../../apis/integrations/messageMappingApi.hooks';
 
-import { MessagesTable } from './MessagesTable';
+import { MessagesTable } from './components/MessagesTable';
+import { CreateMessagesButton } from './components/CreateMessagesButton';
+import { NoMessages } from './components/NoMessages';
 
 export const MessagesView = () => {
     const connectionId = useConnectionId();
-    const query = useConnectionsIdMessageMappingsGet({ id: connectionId || '' });
+    const { data, isError, isLoading } = useConnectionsIdMessageMappingsGet({ id: connectionId || '' });
 
-    const messagesDataRows = query?.data?.value || [];
+    //console.log(data?.value);
 
-    console.log(query.data?.value);
+    const messagesDataRows = data?.value?.map(message => ({
+        id: message.id,
+        name: message.name,
+        description: message.description,
+        // type: message.type,
+        // createdAt: message.createdAt,
+        // updatedAt: message.updatedAt,
+        //actions: <Outlet state={{ message }} />,
+    })) || [];
+
+    if (isLoading) return <LoadingSpinner />;
+    if (isError) return <AlertBox />;
 
     return (
-        <>
-            <MessagesTable rows={messagesDataRows} loading={query.isLoading} />
-        </>
+        messagesDataRows.length ?
+            <>
+                <MessagesTable rows={messagesDataRows} />
+                <CreateMessagesButton onClick={() => { }} />
+            </> :
+            <NoMessages onCreateNew={() => { }} />
     );
 };
