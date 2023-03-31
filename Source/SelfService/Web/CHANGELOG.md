@@ -1,3 +1,9 @@
+# [3.4.3] - 2023-3-31 [PR: #358](https://github.com/dolittle/Studio/pull/358)
+## Summary
+
+General code refactoring and wording improvements.
+
+
 # [3.4.2] - 2023-3-31 [PR: #357](https://github.com/dolittle/Studio/pull/357)
 - Add child routes for new message and edit message
 - Scaffold page structure for new message
