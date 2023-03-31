@@ -31,7 +31,7 @@ const tabs = [
         },
     },
     {
-        label: 'messages',
+        label: 'message types',
         render: () => <></>,
         overrides: {
             component: Link,
@@ -39,7 +39,7 @@ const tabs = [
         },
     },
     {
-        label: 'expose',
+        label: 'expose data',
         render: () => <></>,
         overrides: {
             component: Link,
