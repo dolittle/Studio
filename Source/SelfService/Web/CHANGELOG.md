@@ -1,3 +1,18 @@
+# [3.4.1] - 2023-3-31 [PR: #356](https://github.com/dolittle/Studio/pull/356)
+## Summary
+
+Add ConnectionDetails/MessageView page.
+
+### Added
+
+- MessageMappingApi.hooks
+
+### Changed
+
+- Describe the outwards facing code change
+- 'MessageRounded' to available Icons list
+
+
 # [3.4.0] - 2023-3-30 [PR: #335](https://github.com/dolittle/Studio/pull/335)
 Bumps [webpack](https://github.com/webpack/webpack) from 5.74.0 to 5.76.0.
 <details>

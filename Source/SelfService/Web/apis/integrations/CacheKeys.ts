@@ -5,4 +5,5 @@ export enum CACHE_KEYS {
     Connections_GET = 'connections_get',
     ConnectionsConnectorDeployment_GET = 'connections_connector_deployment_get',
     Connection_GET = 'connection_get',
+    ConnectionMessageMapping_GET = 'connection_message_get',
 };

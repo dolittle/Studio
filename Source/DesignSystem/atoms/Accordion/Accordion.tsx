@@ -13,9 +13,7 @@ const styles = {
         'backgroundColor': 'transparent',
         'backgroundImage': 'none',
         'boxShadow': 'none',
-        '::before': {
-            display: 'none',
-        },
+        '::before': { display: 'none' },
     },
     accordionSummary: {
         'p': 0,
@@ -59,16 +57,17 @@ export type AccordionProps = {
      * The status of the accordion. Displayed in the header.
      * @default undefined
      */
-    progressStatus?: StatusIndicatorProps['status'];
+    progressStatus?: string;
 
     /**
      * The status text of the accordion. Displayed in the header.
+     *
+     * If not provided, the status will be used as the label.
      */
-    progressMessage?: StatusIndicatorProps['label'];
+    progressMessage?: string;
 
     /**
      * Whether the accordion is expanded or not on initial render.
-     *
      * @default false
      */
     defaultExpanded?: boolean;
@@ -77,7 +76,6 @@ export type AccordionProps = {
      * Whether the accordion is expanded or not.
      *
      * If provided, the accordion will be controlled by the parent.
-     *
      * @default false
      */
     expanded?: boolean;

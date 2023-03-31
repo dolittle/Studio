@@ -3,19 +3,17 @@
 
 import React from 'react';
 
-import { Button, ButtonProps, Icon } from '@dolittle/design-system/';
+import { Button, Icon } from '@dolittle/design-system/';
 
 export type CreateConnectionButtonProps = {
     onClick: () => void;
-    buttonProps?: Partial<ButtonProps>;
 };
 
-export const CreateConnectionButton = ({ onClick, buttonProps }: CreateConnectionButtonProps) =>
+export const CreateMessagesButton = ({ onClick }: CreateConnectionButtonProps) =>
     <Button
-        label='Set up new connection'
+        label='Create new message'
         variant='fullwidth'
-        startWithIcon={<Icon icon='PolylineRounded' />}
+        startWithIcon={<Icon icon='MessageRounded' />}
         onClick={onClick}
         sx={{ mt: 2.125 }}
-        {...buttonProps}
     />;

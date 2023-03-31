@@ -5,10 +5,9 @@ import React from 'react';
 
 import { Typography } from '@mui/material';
 
-import { Button, Icon } from '@dolittle/design-system';
+import { Button, Icon, MaxWidthTextBlock } from '@dolittle/design-system';
 
 import { TextCopyBox } from './TextCopyBox';
-import { MaxWidthTextBlock } from './MaxWidthTextBlock';
 
 export const ConnectorBundleConfiguration = () =>
     <>

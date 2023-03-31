@@ -4,84 +4,41 @@
 import React from 'react';
 
 import { Outlet } from 'react-router-dom';
+import { useConnectionId } from '../../../routes.hooks';
 
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
-import { Paper } from '@mui/material';
+import { AlertBox, LoadingSpinner } from '@dolittle/design-system';
 
-import { DataTableToolbar, Icon } from '@dolittle/design-system';
+import { useConnectionsIdMessageMappingsGet } from '../../../../apis/integrations/messageMappingApi.hooks';
 
-const messagesDataColumn: GridColDef[] = [
-    {
-        field: 'name',
-        headerName: 'Message Type',
-        // minWidth: 270,
-        // flex: 1,
-    },
-    {
-        field: 'name',
-        headerName: 'Description',
-        // minWidth: 270,
-        // flex: 1,
-    },
-    {
-        field: 'name',
-        headerName: 'Table Name',
-        // minWidth: 270,
-        // flex: 1,
-    },
-    {
-        field: 'name',
-        headerName: 'No. of Mapped Fields',
-        // minWidth: 270,
-        //flex: 1,
-    },
-    {
-        field: 'name',
-        headerName: 'Last Deployed',
-        // minWidth: 270,
-        // flex: 1,
-    },
-];
-
-export const messagesToolbarButtons = [
-    {
-        label: 'Delete messages',
-        startWithIcon: <Icon icon='DeleteRounded' />,
-        disabled: true,
-    },
-    {
-        label: 'Copy Messages to...',
-        startWithIcon: <Icon icon='CopyAllRounded' />,
-        disabled: true,
-    },
-    {
-        label: 'Deploy message(s)...',
-        startWithIcon: <Icon icon='RocketLaunch' />,
-        disabled: true,
-    },
-];
+import { MessagesTable } from './components/MessagesTable';
+import { CreateMessagesButton } from './components/CreateMessagesButton';
+import { NoMessages } from './components/NoMessages';
 
 export const MessagesView = () => {
+    const connectionId = useConnectionId();
+    const { data, isError, isLoading } = useConnectionsIdMessageMappingsGet({ id: connectionId || '' });
+
+    //console.log(data?.value);
+
+    const messagesDataRows = data?.value?.map(message => ({
+        id: message.id,
+        name: message.name,
+        description: message.description,
+        // type: message.type,
+        // createdAt: message.createdAt,
+        // updatedAt: message.updatedAt,
+        //actions: <Outlet state={{ message }} />,
+    })) || [];
+
+    if (isLoading) return <LoadingSpinner />;
+    if (isError) return <AlertBox />;
+
     return (
-        <>
-            <Paper sx={{ width: 1, mt: 2 }}>
-                <DataGridPro
-                    rows={[{ id: 1, name: 'test' }]}
-                    columns={messagesDataColumn}
-                    //loading={loadingRows}
-                    headerHeight={46}
-                    getRowHeight={() => 'auto'}
-                    //onRowClick={({ row }) => onTableRowClick(row.id)}
-                    autoHeight
-                    hideFooter
-                    disableColumnMenu
-                    checkboxSelection
-                    disableSelectionOnClick
-                    components={{
-                        Toolbar: () => <DataTableToolbar title='Your Messages' buttons={messagesToolbarButtons} />,
-                    }}
-                />
-            </Paper>
-        </>
+        messagesDataRows.length ?
+            <>
+                <MessagesTable rows={messagesDataRows} />
+                <CreateMessagesButton onClick={() => { }} />
+            </> :
+            <NoMessages onCreateNew={() => { }} />
     );
 };
