@@ -19,7 +19,7 @@ export const ContentSection = ({ title = '', hideHeader, headerProps, children }
         <>
             <ContentDivider />
             <Box sx={{ my: 2 }}>
-                {!hideHeader && <ContentHeader title={title} titleTextVariant='subtitle' {...headerProps}/>}
+                {!hideHeader && <ContentHeader title={title} titleTextVariant='subtitle' {...headerProps} />}
                 {children}
             </Box>
         </>
