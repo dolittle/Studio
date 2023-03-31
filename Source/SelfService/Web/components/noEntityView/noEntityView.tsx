@@ -40,7 +40,7 @@ export const NoEntityView = ({ title, createEntityProps, description, subDescrip
         direction='column'
         alignItems='center'
         justifyContent='center'
-        sx={{ minHeight: '80vh' }}
+        sx={{ height: 1 }}
     >
         <Typography variant='h2'>{title}</Typography>
 

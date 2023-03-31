@@ -25,7 +25,7 @@ export const MessageDetailsSection = (props: MessageDetailsSectionProps) => {
 
                 <Stack spacing={3}>
                     <Typography variant='subtitle2'>Add a description for this message type</Typography>
-                    <Input id='messageTypeName' label='Message Type Name' required />
+                    <Input id='messageTypeDescription' label='Message Type Description' required />
                 </Stack>
             </Grid>
         </ContentSection>
