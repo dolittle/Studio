@@ -5,6 +5,7 @@ apis/ConnectionsApi.ts
 apis/DeploymentApi.ts
 apis/EnvironmentApi.ts
 apis/LoginApi.ts
+apis/MappableTablesApi.ts
 apis/MessageMappingApi.ts
 apis/MetadataAdminApi.ts
 apis/ProgramMetadataApi.ts
@@ -31,6 +32,7 @@ models/ListTable.ts
 models/M3EnvironmentListDto.ts
 models/MappableTable.ts
 models/MappableTableColumn.ts
+models/MappableTableResult.ts
 models/MappedField.ts
 models/MdpConfiguration.ts
 models/MdpConfigurationResult.ts
@@ -52,5 +54,7 @@ models/SortDirection.ts
 models/StringResult.ts
 models/Table.ts
 models/TableDto.ts
+models/TableListingEntry.ts
+models/TableListingEntryIEnumerableResult.ts
 models/index.ts
 runtime.ts

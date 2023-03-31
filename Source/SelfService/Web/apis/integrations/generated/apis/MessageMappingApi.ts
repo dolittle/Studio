@@ -41,7 +41,6 @@ export interface ConnectionsIdMessageMappingsGetRequest {
 export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest {
     id: string;
     table: string;
-    messageName: string;
     message: string;
     xOrganizationId?: string;
 }
@@ -49,7 +48,6 @@ export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageGetReques
 export interface ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest {
     id: string;
     table: string;
-    messageName: string;
     message: string;
     setMessageMappingRequestArguments?: SetMessageMappingRequestArguments;
 }
@@ -102,10 +100,6 @@ export class MessageMappingApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('table','Required parameter requestParameters.table was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageGet.');
         }
 
-        if (requestParameters.messageName === null || requestParameters.messageName === undefined) {
-            throw new runtime.RequiredError('messageName','Required parameter requestParameters.messageName was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageGet.');
-        }
-
         if (requestParameters.message === null || requestParameters.message === undefined) {
             throw new runtime.RequiredError('message','Required parameter requestParameters.message was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageGet.');
         }
@@ -123,7 +117,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/connections/{id}/message-mappings/tables/{table}/messages/{message}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"table"}}`, encodeURIComponent(String(requestParameters.table))).replace(`{${"messageName"}}`, encodeURIComponent(String(requestParameters.messageName))).replace(`{${"message"}}`, encodeURIComponent(String(requestParameters.message))),
+            path: `/connections/{id}/message-mappings/tables/{table}/messages/{message}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"table"}}`, encodeURIComponent(String(requestParameters.table))).replace(`{${"message"}}`, encodeURIComponent(String(requestParameters.message))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -150,10 +144,6 @@ export class MessageMappingApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('table','Required parameter requestParameters.table was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessagePost.');
         }
 
-        if (requestParameters.messageName === null || requestParameters.messageName === undefined) {
-            throw new runtime.RequiredError('messageName','Required parameter requestParameters.messageName was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessagePost.');
-        }
-
         if (requestParameters.message === null || requestParameters.message === undefined) {
             throw new runtime.RequiredError('message','Required parameter requestParameters.message was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessagePost.');
         }
@@ -169,7 +159,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/connections/{id}/message-mappings/tables/{table}/messages/{message}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"table"}}`, encodeURIComponent(String(requestParameters.table))).replace(`{${"messageName"}}`, encodeURIComponent(String(requestParameters.messageName))).replace(`{${"message"}}`, encodeURIComponent(String(requestParameters.message))),
+            path: `/connections/{id}/message-mappings/tables/{table}/messages/{message}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"table"}}`, encodeURIComponent(String(requestParameters.table))).replace(`{${"message"}}`, encodeURIComponent(String(requestParameters.message))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
