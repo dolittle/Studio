@@ -2,10 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Divider } from '@mui/material';
+import { Box } from '@mui/material';
+import { SectionDivider } from './SectionDivider';
+import { CardHeader } from './CardHeader';
 
 export type CardSectionProps = {
-    title?: string;
+    title: string;
     children?: React.ReactNode;
 };
 
@@ -13,9 +15,11 @@ export type CardSectionProps = {
 export const CardSection = ({ title, children }: CardSectionProps) => {
     return (
         <>
-            <Divider />
-            {title}
-            {children}
+            <SectionDivider />
+            <Box sx={{my: 2}}>
+                <CardHeader title={title} titleTextVariant='subtitle' />
+                {children}
+            </Box>
         </>
     );
 };

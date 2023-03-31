@@ -11,7 +11,7 @@ export type CardPageProps = {
 
 export const CardPage = ({ children }: CardPageProps) => {
     return (
-        <Paper sx={{ width: 1, mt: 2 }}>
+        <Paper sx={{ width: 1, mt: 2, px: 2 }}>
             {children}
         </Paper>
     );
