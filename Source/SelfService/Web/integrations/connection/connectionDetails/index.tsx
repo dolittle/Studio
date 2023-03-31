@@ -21,6 +21,33 @@ const getCurrentTab = (location: Location) => {
     return 0;
 };
 
+const tabs = [
+    {
+        label: 'configuration',
+        render: () => <></>,
+        overrides: {
+            component: Link,
+            to: 'configuration',
+        },
+    },
+    {
+        label: 'messages',
+        render: () => <></>,
+        overrides: {
+            component: Link,
+            to: 'messages',
+        },
+    },
+    {
+        label: 'expose',
+        render: () => <></>,
+        overrides: {
+            component: Link,
+            to: 'expose',
+        },
+    },
+];
+
 export const ConnectionDetails = () => {
     const location = useLocation();
     const connectionId = useConnectionId();
@@ -36,35 +63,7 @@ export const ConnectionDetails = () => {
 
     return (
         <Page title={pageTitle} healthStatus={pageHealthStatus} sx={{ mb: 4 }}>
-            <Tabs
-                selectedTab={getCurrentTab(location)}
-                tabs={[
-                    {
-                        label: 'configuration',
-                        render: () => <></>,
-                        overrides: {
-                            component: Link,
-                            to: 'configuration',
-                        },
-                    },
-                    {
-                        label: 'messages',
-                        render: () => <></>,
-                        overrides: {
-                            component: Link,
-                            to: 'messages',
-                        },
-                    },
-                    {
-                        label: 'expose',
-                        render: () => <></>,
-                        overrides: {
-                            component: Link,
-                            to: 'expose',
-                        },
-                    },
-                ]}
-            />
+            <Tabs selectedTab={getCurrentTab(location)} tabs={tabs} />
             <Outlet />
         </Page>
     );
