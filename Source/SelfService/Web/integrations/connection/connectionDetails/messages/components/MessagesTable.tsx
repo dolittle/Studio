@@ -46,17 +46,17 @@ const messagesToolbarButtons = [
         label: 'Delete messages',
         startWithIcon: <Icon icon='DeleteRounded' />,
         disabled: true,
-    },
+    } as const,
     {
         label: 'Copy Messages to...',
         startWithIcon: <Icon icon='CopyAllRounded' />,
         disabled: true,
-    },
+    } as const,
     {
         label: 'Deploy message(s)...',
         startWithIcon: <Icon icon='RocketLaunch' />,
         disabled: true,
-    },
+    } as const,
 ];
 
 type MessagesTableProps = {

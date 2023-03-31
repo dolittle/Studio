@@ -33,13 +33,13 @@ export const ChangeMessageView = () => {
     };
 
     const title = mode === 'new' ? 'Create New Message Type' : 'Edit Message';
-    //const toolbarButtons = [{ label: 'Discard changes', startWithIcon: <Icon icon='CancelRounded' />, color: 'subtle' }];
+    const toolbarButtons = { label: 'Discard changes', startWithIcon: <Icon icon='CancelRounded' />, color: 'subtle' } as const;
 
     return (
         <>
             Mode: {mode === 'new' ? 'New message mode' : `Edit message mode for ${messageId}`}
             <ContentContainer>
-                <ContentHeader title={title} buttons={[{ label: 'Discard changes', startWithIcon: <Icon icon='CancelRounded' />, color: 'subtle' }]} />
+                <ContentHeader title={title} buttons={[toolbarButtons]} sx={{ minHeight: 64 }} />
                 <Form<NewMessageMappingParameters>
                     initialValues={{
                         name: '',

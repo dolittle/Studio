@@ -10,24 +10,19 @@ import { Input } from '@dolittle/design-system';
 import { ViewModeProps } from '../ViewMode';
 import { ContentSection } from './ContentSection';
 
-export type MessageDetailsSectionProps = ViewModeProps & {
+export type MessageDetailsSectionProps = ViewModeProps & {};
 
-};
+export const MessageDetailsSection = (props: MessageDetailsSectionProps) =>
+    <ContentSection hideHeader>
+        <Grid container gap={4}>
+            <Stack spacing={3}>
+                <Typography variant='subtitle2'>Provide a name for your message type</Typography>
+                <Input id='messageTypeName' label='Message Type Name' required />
+            </Stack>
 
-export const MessageDetailsSection = (props: MessageDetailsSectionProps) => {
-    return (
-        <ContentSection hideHeader>
-            <Grid container gap={12}>
-                <Stack spacing={3}>
-                    <Typography variant='subtitle2'>Provide a name for your message type</Typography>
-                    <Input id='messageTypeName' label='Message Type Name' required />
-                </Stack>
-
-                <Stack spacing={3}>
-                    <Typography variant='subtitle2'>Add a description for this message type</Typography>
-                    <Input id='messageTypeDescription' label='Message Type Description' required />
-                </Stack>
-            </Grid>
-        </ContentSection>
-    );
-};
+            <Stack spacing={3}>
+                <Typography variant='subtitle2'>Add a description for this message type</Typography>
+                <Input id='messageTypeDescription' label='Message Type Description' />
+            </Stack>
+        </Grid>
+    </ContentSection>;

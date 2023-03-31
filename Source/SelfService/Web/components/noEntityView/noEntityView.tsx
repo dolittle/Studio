@@ -40,14 +40,15 @@ export const NoEntityView = ({ title, createEntityProps, description, subDescrip
         direction='column'
         alignItems='center'
         justifyContent='center'
+        textAlign='center'
         sx={{ height: 1 }}
     >
         <Typography variant='h2'>{title}</Typography>
 
         <CreateEntityBox {...createEntityProps} />
 
-        <MaxWidthTextBlock sx={{ mb: 2 }}>{description}</MaxWidthTextBlock>
-        <MaxWidthTextBlock>{subDescription}</MaxWidthTextBlock>
+        <Typography sx={{ maxWidth: 543, mb: 2 }}>{description}</Typography>
+        <Typography sx={{ maxWidth: 543 }}>{subDescription}</Typography>
 
         {children}
     </Grid>;
