@@ -5,6 +5,8 @@ import React from 'react';
 
 import { Grid, Typography } from '@mui/material';
 
+import { MaxWidthTextBlock } from '@dolittle/design-system';
+
 import { CreateEntityBox, CreateEntityBoxProps } from './createEntityBox';
 
 /**
@@ -27,9 +29,11 @@ export type NoEntityViewProps = {
      * Use this space for descriptive text that helps explain what it means to not have an entity to the user.
      */
     children?: React.ReactNode;
+    description?: string;
+    subDescription?: string;
 };
 
-export const NoEntityView = ({ title, createEntityProps, children }: NoEntityViewProps) =>
+export const NoEntityView = ({ title, createEntityProps, description, subDescription, children }: NoEntityViewProps) =>
     <Grid
         container
         spacing={0}
@@ -41,6 +45,9 @@ export const NoEntityView = ({ title, createEntityProps, children }: NoEntityVie
         <Typography variant='h2'>{title}</Typography>
 
         <CreateEntityBox {...createEntityProps} />
+
+        <MaxWidthTextBlock sx={{ mb: 2 }}>{description}</MaxWidthTextBlock>
+        <MaxWidthTextBlock>{subDescription}</MaxWidthTextBlock>
 
         {children}
     </Grid>;

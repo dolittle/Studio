@@ -5,8 +5,6 @@ import React from 'react';
 
 import { Link } from '@dolittle/design-system';
 
-export const alertBoxDescription = ``;
-
 export const AlertBoxErrorTitle = 'Oops, something went wrong';
 
 export const AlertBoxErrorMessage = () =>

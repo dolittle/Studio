@@ -3,17 +3,15 @@
 
 import React, { useState } from 'react';
 
-import { Typography } from '@mui/material';
-
-import { componentStories, Accordion } from '@dolittle/design-system';
+import { componentStories, Accordion, MaxWidthTextBlock } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(Accordion);
 
 const DummyChildrenContent = () =>
-    <Typography>
+    <MaxWidthTextBlock>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa illo similique consequuntur dolores natus ex
         sunt esse mollitia id atque. Atque molestiae cum magnam eligendi maxime id sapiente quaerat suscipit?
-    </Typography>;
+    </MaxWidthTextBlock>;
 
 metadata.parameters = {
     docs: {
@@ -24,6 +22,12 @@ metadata.parameters = {
 };
 
 metadata.argTypes = {
+    progressStatus: {
+        control: {
+            type: 'select',
+            options: ['connected', 'waiting', 'pending', 'failed', 'unknown'],
+        },
+    },
     children: { control: false },
     expanded: { control: false },
     sx: { control: false },
@@ -40,59 +44,40 @@ export default metadata;
 
 export const Default = createStory();
 
-export const DefaultExpanded = createStory();
-DefaultExpanded.decorators = [
-    () => (
-        <Accordion id='expanded-1' title='Expanded By Default 1' defaultExpanded>
-            <DummyChildrenContent />
-        </Accordion>
-    )
-];
+export const DefaultExpanded = createStory({
+    id: 'expanded-1',
+    title: 'Expanded By Default 1',
+    defaultExpanded: true,
+    children: <DummyChildrenContent />,
+});
 
-export const OneExpanded = createStory();
-OneExpanded.decorators = [
+export const WithStatusMessage = createStory();
+WithStatusMessage.decorators = [
     () => {
-        const [isExpanded, setIsExpanded] = useState<string | false>(false);
+        const [status, setStatus] = useState('waiting');
 
-        const handleExpanded = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-            setIsExpanded(isExpanded ? panel : false);
-        };
+        // eslint-disable-next-line no-restricted-globals
+        setInterval(() => {
+            if (status !== 'waiting') setStatus('waiting');
+            else {
+                const random = Math.random();
+
+                if (random < 0.2) setStatus('failed');
+                else if (random < 0.4) setStatus('pending');
+                else if (random < 0.8) setStatus('connected');
+                else setStatus('unknown');
+            }
+        }, 4000);
 
         return (
-            <>
-                <Accordion
-                    id='one-expanded-1'
-                    title='Allow Only One Expanded 1'
-                    expanded={isExpanded === 'one-expanded-1'}
-                    onExpanded={handleExpanded('one-expanded-1')}
-                >
-                    <DummyChildrenContent />
-                </Accordion>
-
-                <Accordion
-                    id='one-expanded-2'
-                    title='Allow Only One Expanded 2'
-                    expanded={isExpanded === 'one-expanded-2'}
-                    onExpanded={handleExpanded('one-expanded-2')}
-                >
-                    <DummyChildrenContent />
-                </Accordion>
-
-                <Accordion
-                    id='one-expanded-3'
-                    title='Allow Only One Expanded 3'
-                    expanded={isExpanded === 'one-expanded-3'}
-                    onExpanded={handleExpanded('one-expanded-3')}
-                >
-                    <DummyChildrenContent />
-                </Accordion>
-            </>
+            <Accordion
+                id='with-status-message'
+                title='With Status Message'
+                progressStatus={status}
+                progressMessage={status === 'waiting' ? 'Waiting for something to happen...' : undefined}
+            >
+                <DummyChildrenContent />
+            </Accordion>
         );
     }
 ];
-
-export const WithStatusMessage = createStory({
-    title: 'With Status Message',
-    progressStatus: 'waiting',
-    progressMessage: 'Waiting for something to happen...',
-});

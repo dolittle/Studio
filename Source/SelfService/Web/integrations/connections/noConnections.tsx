@@ -2,8 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Typography } from '@mui/material';
-import { SvgIcons } from '@dolittle/design-system/theming/Icons/Icons';
+
+import { Icon } from '@dolittle/design-system';
 
 import { NoEntityView } from '../../components/noEntityView/noEntityView';
 
@@ -11,24 +11,15 @@ export type NoConnectionsProps = {
     onCreateNew: () => void;
 };
 
-export const NoConnections = ({onCreateNew}: NoConnectionsProps) => {
-
-        return (
-        <NoEntityView
-            title='No connections established yet...'
-            createEntityProps={{
-                createEntityText: 'Set up M3 connection',
-                createEntityIcon: SvgIcons.PolylineRounded,
-                onCreateEntity: onCreateNew
-            }}
-        >
-            <Typography component='p' variant='body1' mb={2}>
-                After you set up your first connection it will appear here.
-            </Typography>
-
-            <Typography component='p' variant='body1'>
-                The Dolittle platform currently supports M3 integrations. We are looking to expand this in the future to other ERP systems, so be sure to check back in or let us know what your needs are!
-            </Typography>
-        </NoEntityView>
-    );
-};
+export const NoConnections = ({ onCreateNew }: NoConnectionsProps) =>
+    <NoEntityView
+        title='No connections established yet...'
+        createEntityProps={{
+            createEntityText: 'Set up M3 connection',
+            createEntityIcon: <Icon icon='PolylineRounded' />,
+            onCreateEntity: onCreateNew,
+        }}
+        description='After you set up your first connection it will appear here.'
+        subDescription='The Dolittle platform currently supports M3 integrations. We are looking to expand this in the future to other ERP systems,
+            so be sure to check back in or let us know what your needs are!'
+    />;

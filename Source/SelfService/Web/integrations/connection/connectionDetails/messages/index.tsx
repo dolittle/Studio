@@ -4,84 +4,23 @@
 import React from 'react';
 
 import { Outlet } from 'react-router-dom';
+import { useConnectionId } from '../../../routes.hooks';
 
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
-import { Paper } from '@mui/material';
+import { useConnectionsIdMessageMappingsGet } from '../../../../apis/integrations/messageMappingApi.hooks';
 
-import { DataTableToolbar, Icon } from '@dolittle/design-system';
-
-const messagesDataColumn: GridColDef[] = [
-    {
-        field: 'name',
-        headerName: 'Message Type',
-        // minWidth: 270,
-        // flex: 1,
-    },
-    {
-        field: 'name',
-        headerName: 'Description',
-        // minWidth: 270,
-        // flex: 1,
-    },
-    {
-        field: 'name',
-        headerName: 'Table Name',
-        // minWidth: 270,
-        // flex: 1,
-    },
-    {
-        field: 'name',
-        headerName: 'No. of Mapped Fields',
-        // minWidth: 270,
-        //flex: 1,
-    },
-    {
-        field: 'name',
-        headerName: 'Last Deployed',
-        // minWidth: 270,
-        // flex: 1,
-    },
-];
-
-export const messagesToolbarButtons = [
-    {
-        label: 'Delete messages',
-        startWithIcon: <Icon icon='DeleteRounded' />,
-        disabled: true,
-    },
-    {
-        label: 'Copy Messages to...',
-        startWithIcon: <Icon icon='CopyAllRounded' />,
-        disabled: true,
-    },
-    {
-        label: 'Deploy message(s)...',
-        startWithIcon: <Icon icon='RocketLaunch' />,
-        disabled: true,
-    },
-];
+import { MessagesTable } from './MessagesTable';
 
 export const MessagesView = () => {
+    const connectionId = useConnectionId();
+    const query = useConnectionsIdMessageMappingsGet({ id: connectionId || '' });
+
+    const messagesDataRows = query?.data?.value || [];
+
+    console.log(query.data?.value);
+
     return (
         <>
-            <Paper sx={{ width: 1, mt: 2 }}>
-                <DataGridPro
-                    rows={[{ id: 1, name: 'test' }]}
-                    columns={messagesDataColumn}
-                    //loading={loadingRows}
-                    headerHeight={46}
-                    getRowHeight={() => 'auto'}
-                    //onRowClick={({ row }) => onTableRowClick(row.id)}
-                    autoHeight
-                    hideFooter
-                    disableColumnMenu
-                    checkboxSelection
-                    disableSelectionOnClick
-                    components={{
-                        Toolbar: () => <DataTableToolbar title='Your Messages' buttons={messagesToolbarButtons} />,
-                    }}
-                />
-            </Paper>
+            <MessagesTable rows={messagesDataRows} loading={query.isLoading} />
         </>
     );
 };
