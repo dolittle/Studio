@@ -11,6 +11,7 @@ import { TableSearchSection } from './components/TableSearchSection';
 import { MessageDetailsSection } from './components/MessageDetailsSection';
 import { SubmitButtonSection } from './components/SubmitButtonSection';
 import { ViewMode } from './ViewMode';
+import { TableSection } from './components/TableSection';
 
 
 export type NewMessageMappingParameters = {
@@ -42,6 +43,7 @@ export const ChangeMessageView = () => {
                 >
                     <MessageDetailsSection mode={mode} />
                     <TableSearchSection mode={mode} />
+                    <TableSection mode={mode}  tableName='MITLAB'/>
                     <SubmitButtonSection mode={mode} isSubmitting={false} />
                 </Form>
             </CardPage>
