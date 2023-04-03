@@ -27,12 +27,12 @@ export type NewMessageMappingParameters = {
 export const ChangeMessageView = () => {
     const location = useLocation();
     const { messageId } = useParams();
+
     const [searchInput, setSearchInput] = useState<string>('');
     const [selectedTable, setSelectedTable] = useState<TableListingEntry>();
 
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
     const showTable = !!selectedTable;
-
 
     const title = mode === 'new' ? 'Create New Message Type' : 'Edit Message';
     const toolbarButtons = { label: 'Discard changes', startWithIcon: <Icon icon='CancelRounded' />, color: 'subtle' } as const;
@@ -52,8 +52,8 @@ export const ChangeMessageView = () => {
                     initialValues={{
                         name: '',
                         description: '',
-                        messageTypeName: 'Supplier',
-                        messageTypeDescription: 'Supplier Details',
+                        messageTypeName: '',
+                        messageTypeDescription: '',
                     }}
                     onSubmit={handleNewMessageSave}
                 >
@@ -69,7 +69,7 @@ export const ChangeMessageView = () => {
                             onTableSelected={setSelectedTable}
                             searchInput={searchInput}
                             setSearchInput={setSearchInput}
-                            />
+                        />
                     }
                     <SubmitButtonSection mode={mode} isSubmitting={false} />
                 </Form>
