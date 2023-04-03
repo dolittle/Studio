@@ -49,10 +49,7 @@ export const TableSearchSection = ({ onTableSelected, searchInput, setSearchInpu
                 onChange={e => setSearchInput(e.target.value)}
             />
 
-            {/* SHOW SEARCH RESULTS HERE */}
-            {/* Results: {query.data?.value?.length} */}
-
-            {searchResults.length &&
+            {!!searchResults.length &&
                 <TableSearchResults
                     tableListings={searchResults}
                     isLoading={query.isLoading}
