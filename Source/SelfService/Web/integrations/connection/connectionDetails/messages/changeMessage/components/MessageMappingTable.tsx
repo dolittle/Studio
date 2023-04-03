@@ -59,7 +59,7 @@ export const MessageMappingTable = ({ mappableTableColumns, selectedIds, onSelec
                 loading={isLoading}
                 pagination
                 pageSize={10}
-                // rowsPerPageOptions={[10, 25, 50, 100]}
+                rowsPerPageOptions={[10]}
                 disableColumnMenu
                 disableSelectionOnClick
                 hideFooterSelectedRowCount
