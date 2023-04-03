@@ -25,22 +25,18 @@ const SearchFieldAdornment = (
 );
 
 export type TableSearchSectionProps = ViewModeProps & {
-
+    onTableSelected: (table: TableListingEntry) => void;
 };
 
 export const TableSearchSection = (props: TableSearchSectionProps) => {
     const connectionId = useConnectionId();
 
     const [searchInput, setSearchInput] = useState<string>('');
-    const [selectedTable, setSelectedTable] = useState<TableListingEntry>();
 
     const [debouncedSearchTerm] = useDebounce(searchInput, 500);
     const query = useConnectionsIdMessageMappingsTablesSearchGet({ id: connectionId || '', search: debouncedSearchTerm });
 
     const searchResults = query.data?.value || [];
-    const showTable = selectedTable?.name !== '';
-
-    console.log('Selected Table', selectedTable);
 
     return (
         <ContentSection title='Browse M3 Table names'>
@@ -49,6 +45,7 @@ export const TableSearchSection = (props: TableSearchSectionProps) => {
                 InputProps={{ startAdornment: SearchFieldAdornment }}
                 placeholder='Search'
                 sx={{ my: 3 }}
+                onChange={e => setSearchInput(e.target.value)}
             />
 
             {/* SHOW SEARCH RESULTS HERE */}
@@ -58,9 +55,10 @@ export const TableSearchSection = (props: TableSearchSectionProps) => {
                 <TableSearchResults
                     tableListings={searchResults}
                     isLoading={query.isLoading}
-                    onTableSelected={table => { setSelectedTable(table); }}
+                    onTableSelected={table => { props.onTableSelected(table); }}
                 />
             }
+
         </ContentSection>
     );
 };
