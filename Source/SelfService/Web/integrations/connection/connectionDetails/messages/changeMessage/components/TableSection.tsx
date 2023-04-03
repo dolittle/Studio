@@ -3,7 +3,9 @@
 
 import React, { useState } from 'react';
 
-import { AlertBox, Button, Icon } from '@dolittle/design-system/';
+import { Grid, Switch } from '@mui/material';
+
+import { AlertBox, Button, Icon, MaxWidthTextBlock } from '@dolittle/design-system/';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { TableListingEntry } from '../../../../../../apis/integrations/generated';
@@ -52,6 +54,15 @@ export const TableSection = (props: TableSectionProps) => {
                 />
             }
         >
+            <Grid container sx={{ py: 3, justifyContent: 'space-between', alignContent: 'flex-start' }}>
+                <MaxWidthTextBlock>
+                    {`You can edit the field descriptions and add a remapped name to provide appropriate semantics that make sense for your 
+                organization's business logic.`}
+                </MaxWidthTextBlock>
+
+                <Switch />
+            </Grid>
+
             <MessageMappingTable
                 mappableTableColumns={mappableTableColumns}
                 isLoading={isLoading}
