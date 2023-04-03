@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { Paper } from '@mui/material';
-import { DataGridPro, GridColDef, GridSelectionModel, GridInputSelectionModel } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridSelectionModel, GridRowId } from '@mui/x-data-grid-pro';
 
 import { MappableTableColumn } from '../../../../../../apis/integrations/generated';
 
@@ -31,16 +31,11 @@ export type MessageMappingTableProps = {
     mappableTableColumns: MappableTableColumn[];
     selectedIds: GridSelectionModel;
     onSelectedIdsChanged: (newSelectedIds: GridSelectionModel) => void;
+    disabledRows?: GridRowId[];
     isLoading: boolean;
 };
 
-export const MessageMappingTable = ({
-    mappableTableColumns,
-    isLoading,
-    selectedIds,
-    onSelectedIdsChanged
-}: MessageMappingTableProps) => {
-
+export const MessageMappingTable = ({ mappableTableColumns, selectedIds, onSelectedIdsChanged, disabledRows, isLoading, }: MessageMappingTableProps) => {
     const dataGridListing: DataGridTableListingEntry[] = mappableTableColumns
         .map(mappableTableColumn => {
             return {
@@ -57,16 +52,17 @@ export const MessageMappingTable = ({
                 getRowHeight={() => 'auto'}
                 autoHeight
                 headerHeight={46}
-                disableColumnMenu
-                disableSelectionOnClick
                 checkboxSelection
+                onSelectionModelChange={onSelectedIdsChanged}
+                selectionModel={selectedIds}
+                isRowSelectable={row => !disabledRows?.includes(row.id) || false}
                 loading={isLoading}
                 pagination
                 pageSize={10}
                 // rowsPerPageOptions={[10, 25, 50, 100]}
-                onSelectionModelChange={onSelectedIdsChanged}
-                selectionModel={selectedIds}
-            //onRowClick={({ row }) => (row)}
+                disableColumnMenu
+                disableSelectionOnClick
+                hideFooterSelectedRowCount
             />
         </Paper>
     );
