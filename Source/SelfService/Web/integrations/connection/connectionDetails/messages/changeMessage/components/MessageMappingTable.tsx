@@ -62,7 +62,6 @@ export const MessageMappingTable = ({ mappableTableColumns, selectedIds, onSelec
                 rowsPerPageOptions={[10]}
                 disableColumnMenu
                 disableSelectionOnClick
-                hideFooterSelectedRowCount
             />
         </Paper>
     );
