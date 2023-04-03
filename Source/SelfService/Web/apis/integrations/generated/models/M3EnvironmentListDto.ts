@@ -43,6 +43,18 @@ export interface M3EnvironmentListDto {
      * @memberof M3EnvironmentListDto
      */
     tableCount?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof M3EnvironmentListDto
+     */
+    baseVersion?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof M3EnvironmentListDto
+     */
+    components?: string | null;
 }
 
 /**
@@ -68,6 +80,8 @@ export function M3EnvironmentListDtoFromJSONTyped(json: any, ignoreDiscriminator
         'description': !exists(json, 'description') ? undefined : json['description'],
         'baseEnvironment': !exists(json, 'baseEnvironment') ? undefined : json['baseEnvironment'],
         'tableCount': !exists(json, 'tableCount') ? undefined : json['tableCount'],
+        'baseVersion': !exists(json, 'baseVersion') ? undefined : json['baseVersion'],
+        'components': !exists(json, 'components') ? undefined : json['components'],
     };
 }
 
@@ -84,6 +98,8 @@ export function M3EnvironmentListDtoToJSON(value?: M3EnvironmentListDto | null):
         'description': value.description,
         'baseEnvironment': value.baseEnvironment,
         'tableCount': value.tableCount,
+        'baseVersion': value.baseVersion,
+        'components': value.components,
     };
 }
 

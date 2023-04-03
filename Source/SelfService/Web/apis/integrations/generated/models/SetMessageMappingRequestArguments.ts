@@ -13,18 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { MappableTable } from './MappableTable';
+import type { FieldMapping } from './FieldMapping';
 import {
-    MappableTableFromJSON,
-    MappableTableFromJSONTyped,
-    MappableTableToJSON,
-} from './MappableTable';
-import type { MappedField } from './MappedField';
-import {
-    MappedFieldFromJSON,
-    MappedFieldFromJSONTyped,
-    MappedFieldToJSON,
-} from './MappedField';
+    FieldMappingFromJSON,
+    FieldMappingFromJSONTyped,
+    FieldMappingToJSON,
+} from './FieldMapping';
 
 /**
  * 
@@ -46,16 +40,10 @@ export interface SetMessageMappingRequestArguments {
     description?: string | null;
     /**
      * 
-     * @type {MappableTable}
+     * @type {Array<FieldMapping>}
      * @memberof SetMessageMappingRequestArguments
      */
-    table?: MappableTable;
-    /**
-     * 
-     * @type {Array<MappedField>}
-     * @memberof SetMessageMappingRequestArguments
-     */
-    fields?: Array<MappedField> | null;
+    fields?: Array<FieldMapping> | null;
 }
 
 /**
@@ -79,8 +67,7 @@ export function SetMessageMappingRequestArgumentsFromJSONTyped(json: any, ignore
         
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'table': !exists(json, 'table') ? undefined : MappableTableFromJSON(json['table']),
-        'fields': !exists(json, 'fields') ? undefined : (json['fields'] === null ? null : (json['fields'] as Array<any>).map(MappedFieldFromJSON)),
+        'fields': !exists(json, 'fields') ? undefined : (json['fields'] === null ? null : (json['fields'] as Array<any>).map(FieldMappingFromJSON)),
     };
 }
 
@@ -95,8 +82,7 @@ export function SetMessageMappingRequestArgumentsToJSON(value?: SetMessageMappin
         
         'name': value.name,
         'description': value.description,
-        'table': MappableTableToJSON(value.table),
-        'fields': value.fields === undefined ? undefined : (value.fields === null ? null : (value.fields as Array<any>).map(MappedFieldToJSON)),
+        'fields': value.fields === undefined ? undefined : (value.fields === null ? null : (value.fields as Array<any>).map(FieldMappingToJSON)),
     };
 }
 
