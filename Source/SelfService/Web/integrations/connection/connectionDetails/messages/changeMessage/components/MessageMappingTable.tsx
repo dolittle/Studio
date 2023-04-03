@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Paper } from '@mui/material';
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridSelectionModel, GridInputSelectionModel } from '@mui/x-data-grid-pro';
 
 import { MappableTableColumn } from '../../../../../../apis/integrations/generated';
 
@@ -29,16 +29,25 @@ const columns: GridColDef<DataGridTableListingEntry>[] = [
 
 export type MessageMappingTableProps = {
     mappableTableColumns: MappableTableColumn[];
+    selectedIds: GridSelectionModel;
+    onSelectedIdsChanged: (newSelectedIds: GridSelectionModel) => void;
     isLoading: boolean;
 };
 
-export const MessageMappingTable = ({ mappableTableColumns, isLoading }: MessageMappingTableProps) => {
-    const dataGridListing: DataGridTableListingEntry[] = mappableTableColumns.map(mappableTableColumn => {
-        return {
-            id: mappableTableColumn.m3ColumnName || '',
-            ...mappableTableColumn,
-        };
-    });
+export const MessageMappingTable = ({
+    mappableTableColumns,
+    isLoading,
+    selectedIds,
+    onSelectedIdsChanged
+}: MessageMappingTableProps) => {
+
+    const dataGridListing: DataGridTableListingEntry[] = mappableTableColumns
+        .map(mappableTableColumn => {
+            return {
+                id: mappableTableColumn.m3ColumnName!,
+                ...mappableTableColumn,
+            };
+        });
 
     return (
         <Paper sx={{ width: 1 }}>
@@ -54,6 +63,9 @@ export const MessageMappingTable = ({ mappableTableColumns, isLoading }: Message
                 loading={isLoading}
                 pagination
                 pageSize={10}
+                // rowsPerPageOptions={[10, 25, 50, 100]}
+                onSelectionModelChange={onSelectedIdsChanged}
+                selectionModel={selectedIds}
             //onRowClick={({ row }) => (row)}
             />
         </Paper>

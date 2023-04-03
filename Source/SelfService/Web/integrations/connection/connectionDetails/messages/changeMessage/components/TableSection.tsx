@@ -1,9 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 
 import { AlertBox, Button, Icon } from '@dolittle/design-system/';
+import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { TableListingEntry } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
@@ -21,6 +22,7 @@ export type TableSectionProps = ViewModeProps & {
 
 export const TableSection = (props: TableSectionProps) => {
     const connectionId = useConnectionId();
+    const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>([]);
 
     if (!connectionId || !props.selectedTable.name) {
         return (
@@ -28,12 +30,29 @@ export const TableSection = (props: TableSectionProps) => {
         );
     };
 
-    const { data: mappableTableResult, isLoading } = useConnectionsIdMessageMappingsTablesTableGet({
+    const { data: mappableTableResult, isLoading, isInitialLoading } = useConnectionsIdMessageMappingsTablesTableGet({
         id: connectionId,
         table: props.selectedTable.name,
     });
 
+    if (!mappableTableResult?.value) {
+        return (
+            <AlertBox />
+        );
+    }
+
     const mappableTableColumns = mappableTableResult?.value?.columns || [];
+    const requiredTableColumns = mappableTableResult?.value?.required || [];
+    const preselectedInitialIds = requiredTableColumns.map(required => required.m3ColumnName!);
+
+    if (isInitialLoading) {
+        // we want to set this value only once, when the data is loaded for the first time
+        // setSelectedRowIds(preselectedInitialIds);
+        setSelectedRowIds(['CFACGR']);
+    }
+
+
+    console.log(selectedRowIds);
 
     return (
         <ContentSection
@@ -49,10 +68,14 @@ export const TableSection = (props: TableSectionProps) => {
                 />
             }
         >
-            <MessageMappingTable
-                mappableTableColumns={mappableTableColumns}
-                isLoading={isLoading}
-            />
+            {!!mappableTableResult.value &&
+                <MessageMappingTable
+                    mappableTableColumns={mappableTableColumns}
+                    isLoading={isLoading}
+                    selectedIds={selectedRowIds}
+                    onSelectedIdsChanged={setSelectedRowIds}
+                />
+            }
         </ContentSection>
     );
 };
