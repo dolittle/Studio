@@ -3,9 +3,9 @@
 
 import React, { useState } from 'react';
 
-import { Grid, Switch } from '@mui/material';
+import { Grid } from '@mui/material';
 
-import { AlertBox, Button, Icon, MaxWidthTextBlock } from '@dolittle/design-system/';
+import { AlertBox, Button, Icon, MaxWidthTextBlock, Switch } from '@dolittle/design-system/';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { TableListingEntry } from '../../../../../../apis/integrations/generated';
@@ -26,6 +26,7 @@ export type TableSectionProps = ViewModeProps & {
 export const TableSection = (props: TableSectionProps) => {
     const connectionId = useConnectionId();
     const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>([]);
+    const [hideUnselectedRows, setHideUnselectedRows] = useState(false);
 
     if (!connectionId || !props.selectedTable.name) return <AlertBox />;
 
@@ -60,7 +61,7 @@ export const TableSection = (props: TableSectionProps) => {
                 organization's business logic.`}
                 </MaxWidthTextBlock>
 
-                <Switch />
+                <Switch id='hideUnselectedRows' label='Hide Unselected Rows' onChange={() => setHideUnselectedRows(!hideUnselectedRows)} />
             </Grid>
 
             <MessageMappingTable
@@ -69,6 +70,7 @@ export const TableSection = (props: TableSectionProps) => {
                 selectedIds={(selectedRowIds.length > 0) ? selectedRowIds : preselectedInitialIds as GridSelectionModel}
                 disabledRows={preselectedInitialIds}
                 onSelectedIdsChanged={setSelectedRowIds}
+                hideUnselectedRows={hideUnselectedRows}
             />
 
             <SubmitButtonSection mode={props.mode} isSubmitting={false} />
