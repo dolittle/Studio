@@ -13,6 +13,19 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { ImportState } from './ImportState';
+import {
+    ImportStateFromJSON,
+    ImportStateFromJSONTyped,
+    ImportStateToJSON,
+} from './ImportState';
+import type { TableKind } from './TableKind';
+import {
+    TableKindFromJSON,
+    TableKindFromJSONTyped,
+    TableKindToJSON,
+} from './TableKind';
+
 /**
  * 
  * @export
@@ -45,22 +58,22 @@ export interface ListTable {
     component?: string | null;
     /**
      * 
-     * @type {boolean}
+     * @type {TableKind}
      * @memberof ListTable
      */
-    baseTable?: boolean;
+    kind?: TableKind;
     /**
      * 
-     * @type {boolean}
+     * @type {ImportState}
      * @memberof ListTable
      */
-    loaded?: boolean;
+    loaded?: ImportState;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof ListTable
      */
-    env?: string | null;
+    importance?: number;
 }
 
 /**
@@ -86,9 +99,9 @@ export function ListTableFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'description': !exists(json, 'description') ? undefined : json['description'],
         'category': !exists(json, 'category') ? undefined : json['category'],
         'component': !exists(json, 'component') ? undefined : json['component'],
-        'baseTable': !exists(json, 'baseTable') ? undefined : json['baseTable'],
-        'loaded': !exists(json, 'loaded') ? undefined : json['loaded'],
-        'env': !exists(json, 'env') ? undefined : json['env'],
+        'kind': !exists(json, 'kind') ? undefined : TableKindFromJSON(json['kind']),
+        'loaded': !exists(json, 'loaded') ? undefined : ImportStateFromJSON(json['loaded']),
+        'importance': !exists(json, 'importance') ? undefined : json['importance'],
     };
 }
 
@@ -105,9 +118,9 @@ export function ListTableToJSON(value?: ListTable | null): any {
         'description': value.description,
         'category': value.category,
         'component': value.component,
-        'baseTable': value.baseTable,
-        'loaded': value.loaded,
-        'env': value.env,
+        'kind': TableKindToJSON(value.kind),
+        'loaded': ImportStateToJSON(value.loaded),
+        'importance': value.importance,
     };
 }
 

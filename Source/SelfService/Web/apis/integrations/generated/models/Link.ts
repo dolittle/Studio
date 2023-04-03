@@ -34,6 +34,14 @@ export interface Link {
      * @memberof Link
      */
     href?: string | null;
+    /**
+     * The title of the link. This is a human readable description of the link.
+     * Used for display purposes, and to distinguish between links with the same
+     * relation.
+     * @type {string}
+     * @memberof Link
+     */
+    title?: string | null;
 }
 
 /**
@@ -57,6 +65,7 @@ export function LinkFromJSONTyped(json: any, ignoreDiscriminator: boolean): Link
         
         'rel': !exists(json, 'rel') ? undefined : json['rel'],
         'href': !exists(json, 'href') ? undefined : json['href'],
+        'title': !exists(json, 'title') ? undefined : json['title'],
     };
 }
 
@@ -71,6 +80,7 @@ export function LinkToJSON(value?: Link | null): any {
         
         'rel': value.rel,
         'href': value.href,
+        'title': value.title,
     };
 }
 

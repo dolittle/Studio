@@ -36,6 +36,8 @@ import {
 
 export interface ConnectionsIdMessageMappingsGetRequest {
     id: string;
+    startIndex?: number;
+    pageSize?: number;
 }
 
 export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest {
@@ -65,6 +67,14 @@ export class MessageMappingApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.startIndex !== undefined) {
+            queryParameters['startIndex'] = requestParameters.startIndex;
+        }
+
+        if (requestParameters.pageSize !== undefined) {
+            queryParameters['pageSize'] = requestParameters.pageSize;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 

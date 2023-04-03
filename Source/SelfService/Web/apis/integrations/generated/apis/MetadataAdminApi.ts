@@ -22,6 +22,12 @@ import {
     M3EnvironmentListDtoToJSON,
 } from '../models';
 
+export interface ConnectionsIdMetadataAdminImportTablePostRequest {
+    id: string;
+    m3Environment?: string;
+    tableName?: string;
+}
+
 export interface ConnectionsIdMetadataAdminReimportBasePostRequest {
     id: string;
     version?: string;
@@ -35,6 +41,46 @@ export interface ConnectionsIdMetadataAdminReimportPostRequest {
  * 
  */
 export class MetadataAdminApi extends runtime.BaseAPI {
+
+    /**
+     */
+    async connectionsIdMetadataAdminImportTablePostRaw(requestParameters: ConnectionsIdMetadataAdminImportTablePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<M3EnvironmentListDto>>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMetadataAdminImportTablePost.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.m3Environment !== undefined) {
+            queryParameters['m3Environment'] = requestParameters.m3Environment;
+        }
+
+        if (requestParameters.tableName !== undefined) {
+            queryParameters['tableName'] = requestParameters.tableName;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        const response = await this.request({
+            path: `/connections/{id}/metadata/admin/import-table`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(M3EnvironmentListDtoFromJSON));
+    }
+
+    /**
+     */
+    async connectionsIdMetadataAdminImportTablePost(requestParameters: ConnectionsIdMetadataAdminImportTablePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<M3EnvironmentListDto>> {
+        const response = await this.connectionsIdMetadataAdminImportTablePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      */

@@ -1,5 +1,6 @@
 .openapi-generator-ignore
 apis/AsyncApiApi.ts
+apis/BaseMetadataApi.ts
 apis/ConnectionConfigurationApi.ts
 apis/ConnectionsApi.ts
 apis/DeploymentApi.ts
@@ -22,7 +23,9 @@ models/ConnectionModelResult.ts
 models/ConnectionStatus.ts
 models/ConnectionWithinOrgId.ts
 models/EnvironmentType.ts
+models/FieldMapping.ts
 models/FieldType.ts
+models/ImportState.ts
 models/IndexColumn.ts
 models/IonConfigRequest.ts
 models/IonConfiguration.ts
@@ -54,6 +57,7 @@ models/SortDirection.ts
 models/StringResult.ts
 models/Table.ts
 models/TableDto.ts
+models/TableKind.ts
 models/TableListingEntry.ts
 models/TableListingEntryIEnumerableResult.ts
 models/index.ts
