@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 
 import { AlertBox, Button, Icon } from '@dolittle/design-system/';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
@@ -30,7 +30,7 @@ export const TableSection = (props: TableSectionProps) => {
         );
     };
 
-    const { data: mappableTableResult, isLoading, isInitialLoading } = useConnectionsIdMessageMappingsTablesTableGet({
+    const { data: mappableTableResult, isLoading } = useConnectionsIdMessageMappingsTablesTableGet({
         id: connectionId,
         table: props.selectedTable.name,
     });
@@ -41,16 +41,9 @@ export const TableSection = (props: TableSectionProps) => {
         );
     }
 
-    const mappableTableColumns = mappableTableResult?.value?.columns || [];
-    const requiredTableColumns = mappableTableResult?.value?.required || [];
+    const mappableTableColumns = mappableTableResult.value.columns || [];
+    const requiredTableColumns = mappableTableResult.value.required || [];
     const preselectedInitialIds = requiredTableColumns.map(required => required.m3ColumnName!);
-
-    if (isInitialLoading) {
-        // we want to set this value only once, when the data is loaded for the first time
-        // setSelectedRowIds(preselectedInitialIds);
-        setSelectedRowIds(['CFACGR']);
-    }
-
 
     console.log(selectedRowIds);
 
@@ -72,7 +65,8 @@ export const TableSection = (props: TableSectionProps) => {
                 <MessageMappingTable
                     mappableTableColumns={mappableTableColumns}
                     isLoading={isLoading}
-                    selectedIds={selectedRowIds}
+                    selectedIds={(selectedRowIds.length > 0) ? selectedRowIds : preselectedInitialIds as GridSelectionModel}
+                    disabledRows={preselectedInitialIds}
                     onSelectedIdsChanged={setSelectedRowIds}
                 />
             }
