@@ -14,7 +14,6 @@ import { ContentContainer } from './components/ContentContainer';
 import { ContentHeader } from './components/ContentHeader';
 import { TableSearchSection } from './components/TableSearchSection';
 import { MessageDetailsSection } from './components/MessageDetailsSection';
-import { SubmitButtonSection } from './components/SubmitButtonSection';
 import { TableSection } from './components/TableSection';
 
 export type NewMessageMappingParameters = {
@@ -71,7 +70,6 @@ export const ChangeMessageView = () => {
                             setSearchInput={setSearchInput}
                         />
                     }
-                    <SubmitButtonSection mode={mode} isSubmitting={false} />
                 </Form>
             </ContentContainer>
         </>
