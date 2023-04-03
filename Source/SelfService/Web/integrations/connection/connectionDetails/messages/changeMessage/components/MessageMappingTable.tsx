@@ -33,9 +33,18 @@ export type MessageMappingTableProps = {
     onSelectedIdsChanged: (newSelectedIds: GridSelectionModel) => void;
     disabledRows?: GridRowId[];
     isLoading: boolean;
+    hideUnselectedRows?: boolean;
 };
 
-export const MessageMappingTable = ({ mappableTableColumns, selectedIds, onSelectedIdsChanged, disabledRows, isLoading, }: MessageMappingTableProps) => {
+export const MessageMappingTable = ({
+    mappableTableColumns,
+    selectedIds,
+    onSelectedIdsChanged,
+    disabledRows,
+    isLoading,
+    hideUnselectedRows
+}: MessageMappingTableProps) => {
+
     const dataGridListing: DataGridTableListingEntry[] = mappableTableColumns
         .map(mappableTableColumn => {
             return {
@@ -57,11 +66,13 @@ export const MessageMappingTable = ({ mappableTableColumns, selectedIds, onSelec
                 selectionModel={selectedIds}
                 isRowSelectable={row => !disabledRows?.includes(row.id) || false}
                 loading={isLoading}
+                getRowClassName={row => selectedIds?.includes(row.id) ? '' : 'hide-row'}
                 pagination
                 pageSize={10}
                 rowsPerPageOptions={[10]}
                 disableColumnMenu
                 disableSelectionOnClick
+                sx={{ '& .hide-row': { display: hideUnselectedRows ? 'none' : 'flex' } }}
             />
         </Paper>
     );
