@@ -55,7 +55,7 @@ export const ChangeMessageView = () => {
                 >
                     <MessageDetailsSection mode={mode} />
                     {showTable
-                        ? <TableSection mode={mode} selectedTable={selectedTable} />
+                        ? <TableSection mode={mode} selectedTable={selectedTable} onBackToSearchResultsClicked={() => setSelectedTable(undefined)} />
                         : <TableSearchSection mode={mode} onTableSelected={setSelectedTable} />
                     }
                     <SubmitButtonSection mode={mode} isSubmitting={false} />
