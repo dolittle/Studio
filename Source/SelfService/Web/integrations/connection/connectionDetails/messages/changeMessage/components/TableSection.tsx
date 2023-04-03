@@ -24,28 +24,18 @@ export const TableSection = (props: TableSectionProps) => {
     const connectionId = useConnectionId();
     const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>([]);
 
-    if (!connectionId || !props.selectedTable.name) {
-        return (
-            <AlertBox />
-        );
-    };
+    if (!connectionId || !props.selectedTable.name) return <AlertBox />;
 
     const { data: mappableTableResult, isLoading } = useConnectionsIdMessageMappingsTablesTableGet({
         id: connectionId,
         table: props.selectedTable.name,
     });
 
-    if (!mappableTableResult?.value) {
-        return (
-            <AlertBox />
-        );
-    }
+    if (!mappableTableResult?.value) return <AlertBox />;
 
     const mappableTableColumns = mappableTableResult.value.columns || [];
     const requiredTableColumns = mappableTableResult.value.required || [];
     const preselectedInitialIds = requiredTableColumns.map(required => required.m3ColumnName!);
-
-    console.log(selectedRowIds);
 
     return (
         <ContentSection
@@ -61,15 +51,13 @@ export const TableSection = (props: TableSectionProps) => {
                 />
             }
         >
-            {!!mappableTableResult.value &&
-                <MessageMappingTable
-                    mappableTableColumns={mappableTableColumns}
-                    isLoading={isLoading}
-                    selectedIds={(selectedRowIds.length > 0) ? selectedRowIds : preselectedInitialIds as GridSelectionModel}
-                    disabledRows={preselectedInitialIds}
-                    onSelectedIdsChanged={setSelectedRowIds}
-                />
-            }
+            <MessageMappingTable
+                mappableTableColumns={mappableTableColumns}
+                isLoading={isLoading}
+                selectedIds={(selectedRowIds.length > 0) ? selectedRowIds : preselectedInitialIds as GridSelectionModel}
+                disabledRows={preselectedInitialIds}
+                onSelectedIdsChanged={setSelectedRowIds}
+            />
         </ContentSection>
     );
 };
