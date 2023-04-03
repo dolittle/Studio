@@ -2,8 +2,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import { Button, Icon } from '@dolittle/design-system/';
+
 import { TableListingEntry } from '../../../../../../apis/integrations/generated';
+
 import { ViewModeProps } from '../ViewMode';
 import { ContentSection } from './ContentSection';
 

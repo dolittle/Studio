@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { API_CONFIGURATION } from './api';
 import { CACHE_KEYS } from './CacheKeys';
-import { ConnectionsIdMessageMappingsTablesSearchGetRequest, MappableTablesApi, } from './generated';
+import { ConnectionsIdMessageMappingsTablesSearchGetRequest, MappableTablesApi, ConnectionsIdMessageMappingsTablesTableGetRequest } from './generated';
 
 let apiInstance: MappableTablesApi | undefined;
 
@@ -19,9 +19,31 @@ const getOrCreateApi = () => {
 export const useConnectionsIdMessageMappingsTablesSearchGet = (params: ConnectionsIdMessageMappingsTablesSearchGetRequest) => {
     const api = getOrCreateApi();
     return useQuery({
-        queryKey: [CACHE_KEYS.ConnectionMappableTables_GET, params.id, params.search, params.pageSize, params.startIndex],
+        queryKey: [
+            CACHE_KEYS.ConnectionMappableTables_GET,
+            CACHE_KEYS.ConnectionMappableTablesSearch_GET,
+            params.id,
+            params.search,
+            params.pageSize,
+            params.startIndex,
+        ],
         queryFn: api.connectionsIdMessageMappingsTablesSearchGet.bind(api, params),
         staleTime: 60000,
         enabled: !!params.id && !!params.search,
+    });
+};
+
+export const useConnectionsIdMessageMappingsTablesTableGet = (params: ConnectionsIdMessageMappingsTablesTableGetRequest) => {
+    const api = getOrCreateApi();
+    return useQuery({
+        queryKey: [
+            CACHE_KEYS.ConnectionMappableTables_GET,
+            CACHE_KEYS.ConnectionMappableTablesTable_GET,
+            params.id,
+            params.table,
+        ],
+        queryFn: api.connectionsIdMessageMappingsTablesTableGet.bind(api, params),
+        staleTime: 60000,
+        enabled: !!params.id && !!params.table,
     });
 };
