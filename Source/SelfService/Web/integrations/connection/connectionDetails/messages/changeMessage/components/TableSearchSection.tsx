@@ -26,13 +26,13 @@ const SearchFieldAdornment = (
 
 export type TableSearchSectionProps = ViewModeProps & {
     onTableSelected: (table: TableListingEntry) => void;
+    searchInput: string;
+    setSearchInput: (searchInput: string) => void;
+
 };
 
-export const TableSearchSection = (props: TableSearchSectionProps) => {
+export const TableSearchSection = ({ onTableSelected, searchInput, setSearchInput }: TableSearchSectionProps) => {
     const connectionId = useConnectionId();
-
-    const [searchInput, setSearchInput] = useState<string>('');
-
     const [debouncedSearchTerm] = useDebounce(searchInput, 500);
     const query = useConnectionsIdMessageMappingsTablesSearchGet({ id: connectionId || '', search: debouncedSearchTerm });
 
@@ -45,6 +45,7 @@ export const TableSearchSection = (props: TableSearchSectionProps) => {
                 InputProps={{ startAdornment: SearchFieldAdornment }}
                 placeholder='Search'
                 sx={{ my: 3 }}
+                value={searchInput}
                 onChange={e => setSearchInput(e.target.value)}
             />
 
@@ -55,7 +56,7 @@ export const TableSearchSection = (props: TableSearchSectionProps) => {
                 <TableSearchResults
                     tableListings={searchResults}
                     isLoading={query.isLoading}
-                    onTableSelected={table => { props.onTableSelected(table); }}
+                    onTableSelected={table => { onTableSelected(table); }}
                 />
             }
 

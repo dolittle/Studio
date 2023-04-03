@@ -27,6 +27,7 @@ export type NewMessageMappingParameters = {
 export const ChangeMessageView = () => {
     const location = useLocation();
     const { messageId } = useParams();
+    const [searchInput, setSearchInput] = useState<string>('');
     const [selectedTable, setSelectedTable] = useState<TableListingEntry>();
 
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
@@ -39,6 +40,9 @@ export const ChangeMessageView = () => {
     const handleNewMessageSave = (values: NewMessageMappingParameters) => {
 
     };
+
+    const removeSelectedTable = () => setSelectedTable(undefined);
+
     return (
         <>
             Mode: {mode === 'new' ? 'New message mode' : `Edit message mode for ${messageId}`}
@@ -55,8 +59,17 @@ export const ChangeMessageView = () => {
                 >
                     <MessageDetailsSection mode={mode} />
                     {showTable
-                        ? <TableSection mode={mode} selectedTable={selectedTable} onBackToSearchResultsClicked={() => setSelectedTable(undefined)} />
-                        : <TableSearchSection mode={mode} onTableSelected={setSelectedTable} />
+                        ? <TableSection
+                            mode={mode}
+                            selectedTable={selectedTable}
+                            onBackToSearchResultsClicked={() => removeSelectedTable()}
+                        />
+                        : <TableSearchSection
+                            mode={mode}
+                            onTableSelected={setSelectedTable}
+                            searchInput={searchInput}
+                            setSearchInput={setSearchInput}
+                            />
                     }
                     <SubmitButtonSection mode={mode} isSubmitting={false} />
                 </Form>
