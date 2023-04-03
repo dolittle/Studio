@@ -1,3 +1,8 @@
+# [3.4.4] - 2023-4-3 [PR: #359](https://github.com/dolittle/Studio/pull/359)
+- Presist the search state when going back to search results
+- Not show '0' when there are no search results
+
+
 # [3.4.3] - 2023-3-31 [PR: #358](https://github.com/dolittle/Studio/pull/358)
 ## Summary
 
