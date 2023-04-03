@@ -14,6 +14,7 @@ import { useConnectionId } from '../../../../../routes.hooks';
 import { ViewModeProps } from '../ViewMode';
 import { ContentSection } from './ContentSection';
 import { MessageMappingTable } from './MessageMappingTable';
+import { SubmitButtonSection } from './SubmitButtonSection';
 
 export type TableSectionProps = ViewModeProps & {
     selectedTable: TableListingEntry;
@@ -58,6 +59,8 @@ export const TableSection = (props: TableSectionProps) => {
                 disabledRows={preselectedInitialIds}
                 onSelectedIdsChanged={setSelectedRowIds}
             />
+
+            <SubmitButtonSection mode={props.mode} isSubmitting={false} />
         </ContentSection>
     );
 };
