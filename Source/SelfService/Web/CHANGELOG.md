@@ -1,3 +1,32 @@
+# [3.4.5] - 2023-4-4 [PR: #360](https://github.com/dolittle/Studio/pull/360)
+- Add query to get a MessageMappingTable
+- Show MessageMappingTable
+- Update generated Integrations API-s
+- Add first steps of the table selection process
+- Preselect and disable MessageMappingTable row
+- Code refactoring
+- Remove MessageType input values
+- Fix MessageMappingTable pagination warning
+- Add TableSearchSection typography
+- Move SubmitButtonSection into right place
+- Add MessageMappingTable header section
+- Show  MessageMappingTable selected row count in footer
+- Hide unselected MessageMappingTable rows
+- Add DataTablePro stories
+- Update theme - remove MuiDataGrid overrides
+- Add MessageMapping styles
+- Add AlertDialog to ChangeMessageView
+- TableSearchResult style update
+- Add MessageMappingTable styles
+- Update DataGrid styles in Theme
+- Add spacing
+- Change hiding of unselected to be done on the dataset, instead of through css
+- Not return any initial content when loading the table data
+- Replace "null" with a linear indicator to indicate that something is happening
+- Move early returns after the query into the main render
+- Wrap the filter logic in a useMemo
+
+
 # [3.4.4] - 2023-4-3 [PR: #359](https://github.com/dolittle/Studio/pull/359)
 - Presist the search state when going back to search results
 - Not show '0' when there are no search results
