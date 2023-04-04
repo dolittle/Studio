@@ -8,8 +8,9 @@ import { DataGridPro, GridColDef, GridSelectionModel, GridRowId } from '@mui/x-d
 
 import { MappableTableColumn } from '../../../../../../apis/integrations/generated';
 
-type DataGridTableListingEntry = MappableTableColumn & {
+export type DataGridTableListingEntry = MappableTableColumn & {
     id: string;
+    fieldName: string;
 };
 
 const columns: GridColDef<DataGridTableListingEntry>[] = [
@@ -25,7 +26,7 @@ const columns: GridColDef<DataGridTableListingEntry>[] = [
         minWidth: 270,
     },
     {
-        field: '',
+        field: 'fieldName',
         headerName: 'Remapped Name',
         editable: true,
         minWidth: 270,
@@ -33,29 +34,30 @@ const columns: GridColDef<DataGridTableListingEntry>[] = [
 ];
 
 export type MessageMappingTableProps = {
-    mappableTableColumns: MappableTableColumn[];
+    dataGridListing: DataGridTableListingEntry[];
     selectedIds: GridSelectionModel;
     onSelectedIdsChanged: (newSelectedIds: GridSelectionModel) => void;
     disabledRows?: GridRowId[];
     isLoading: boolean;
     hideUnselectedRows?: boolean;
+    onFieldMapped: (m3Field: string, mappedFieldName) => void;
 };
 
 export const MessageMappingTable = ({
-    mappableTableColumns,
+    dataGridListing,
     selectedIds,
     onSelectedIdsChanged,
     disabledRows,
     isLoading,
+    onFieldMapped
 }: MessageMappingTableProps) => {
 
-    const dataGridListing: DataGridTableListingEntry[] = mappableTableColumns
-        .map(mappableTableColumn => {
-            return {
-                id: mappableTableColumn.m3ColumnName!,
-                ...mappableTableColumn,
-            };
-        });
+    const processRowUpdate = (newRow: DataGridTableListingEntry, oldRow: DataGridTableListingEntry): DataGridTableListingEntry | Promise<DataGridTableListingEntry> => {
+        // if field is not selected, mark as selected using the useApiRef
+        console.log('processRowUpdate', newRow, oldRow);
+        onFieldMapped(newRow.id, newRow.fieldName);
+        return newRow;
+    };
 
     return (
         <Paper elevation={0} sx={{ width: 1, boxShadow: 'none' }}>
@@ -73,6 +75,9 @@ export const MessageMappingTable = ({
                 pagination
                 pageSize={10}
                 rowsPerPageOptions={[10]}
+                processRowUpdate={processRowUpdate}
+                onProcessRowUpdateError={error => console.log(error)}
+                experimentalFeatures={{ newEditingApi: true }}
                 disableColumnMenu
                 disableColumnReorder
                 disableColumnResize
