@@ -3,7 +3,7 @@
 
 import React, { useState, useMemo } from 'react';
 
-import { Grid } from '@mui/material';
+import { Grid, LinearProgress } from '@mui/material';
 
 import { AlertBox, Button, Icon, MaxWidthTextBlock, Switch } from '@dolittle/design-system/';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
@@ -35,7 +35,7 @@ export const TableSection = (props: TableSectionProps) => {
         table: props.selectedTable.name,
     });
 
-    if (isInitialLoading) return null;
+    if (isInitialLoading) return <LinearProgress />;
     if (!mappableTableResult?.value) return <AlertBox />;
 
     const allMappableTableColumns = mappableTableResult.value.columns || [];
