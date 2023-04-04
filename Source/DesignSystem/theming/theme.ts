@@ -188,7 +188,7 @@ const components: Components & DataGridProComponents = {
                 },
             },
             {
-                // Add custom background color to the contained button variant with inherit color
+                // Add a custom background color to the contained button variant with inherit color
                 props: { color: 'inherit', variant: 'contained' },
                 style: {
                     'backgroundColor': '#616161',
@@ -199,18 +199,42 @@ const components: Components & DataGridProComponents = {
     },
     MuiDataGrid: {
         styleOverrides: {
+            columnHeaders: {
+                borderColor: 'rgba(226, 255, 97, 0.05)',
+            },
+            columnHeaderTitle: {
+                fontWeight: 500,
+                letterSpacing: '0.17px',
+                // Hack for the column header title to be aligned with the centered columns (because of iconButtonContainer visibility)
+                marginLeft: 25,
+            },
+            iconButtonContainer: {
+                visibility: 'visible',
+                width: 'unset',
+            },
+            columnSeparator: {
+                display: 'none',
+            },
+            cell: {
+                whiteSpace: 'normal',
+                wordWrap: 'break-word',
+                borderColor: 'rgba(226, 255, 97, 0.05)',
+            },
+            footerContainer: {
+                borderColor: 'rgba(226, 255, 97, 0.05)',
+            },
             root: {
-                '.MuiDataGrid-columnHeaderTitle': {
-                    fontWeight: 500,
-                    letterSpacing: '0.17px'
+                'border': 'none',
+                '& .MuiIconButton-root': {
+                    marginLeft: 8,
                 },
-                '.MuiDataGrid-row': {
-                    minHeight: '2.625rem',
-                    cursor: 'pointer'
+                '& .MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted) .MuiDataGrid-sortIcon': {
+                    opacity: 1,
                 },
-                '.MuiDataGrid-columnSeparator': {
-                    display: 'none'
+                '& .MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted):hover .MuiDataGrid-sortIcon': {
+                    opacity: 1,
                 },
+
                 '.MuiDataGrid-columnHeader:focus': {
                     outline: 'none'
                 },
@@ -222,24 +246,6 @@ const components: Components & DataGridProComponents = {
                 },
                 '.MuiDataGrid-cell:focus-within': {
                     outline: 'none'
-                },
-                '.MuiIconButton-root': {
-                    'visibility': 'visible',
-                    ':hover': {
-                        backgroundColor: 'transparent'
-                    }
-                },
-                '.MuiDataGrid-sortIcon': {
-                    color: 'rgba(255, 255, 255, 0.38);',
-                    width: '1.25rem',
-                    height: '1.25rem'
-                },
-                '.MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted) .MuiDataGrid-sortIcon': {
-                    opacity: 1
-                },
-                '.MuiDataGrid-cell': {
-                    whiteSpace: 'normal',
-                    wordWrap: 'break-word'
                 },
                 '.MuiDataGrid-cellContent': {
                     padding: '0.6875rem 0'
