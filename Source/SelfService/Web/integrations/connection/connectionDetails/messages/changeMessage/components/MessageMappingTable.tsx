@@ -54,9 +54,10 @@ export const MessageMappingTable = ({
 
     const gridApiRef = useGridApiRef();
 
-    const processRowUpdate = (newRow: DataGridTableListingEntry, oldRow: DataGridTableListingEntry): DataGridTableListingEntry | Promise<DataGridTableListingEntry> => {
-        // if field is not selected, mark as selected using the useApiRef
-        console.log('processRowUpdate', newRow, oldRow);
+    const processRowUpdate = (
+        newRow: DataGridTableListingEntry,
+        oldRow: DataGridTableListingEntry
+    ): DataGridTableListingEntry | Promise<DataGridTableListingEntry> => {
         onFieldMapped(newRow.id, newRow.fieldName);
         gridApiRef.current.selectRow(newRow.id, true);
         return newRow;
