@@ -3,17 +3,13 @@
 
 import React from 'react';
 
-import { Box, Toolbar } from '@mui/material';
+import { Grid, Box, Toolbar } from '@mui/material';
 
 import { NavigationBar, SideBar } from '@dolittle/design-system';
 
 import { MainLinks, SecondaryLinks, SpaceSelectionMenu, MoreOptions, SideBarPrimaryLinks, SideBarSecondaryLinks } from './linksHelper';
 
 const styles = {
-    layout: {
-        height: 1,
-        display: 'flex',
-    },
     main: {
         'display': 'flex',
         'flexDirection': 'column',
@@ -29,7 +25,7 @@ type WorkSpaceLayoutProps = {
 };
 
 export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Box sx={styles.layout}>
+    <Grid container>
         <NavigationBar
             mainLinks={<MainLinks />}
             secondaryLinks={<SecondaryLinks />}
@@ -46,4 +42,4 @@ export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
             <Toolbar />
             {children}
         </Box>
-    </Box>;
+    </Grid>;
