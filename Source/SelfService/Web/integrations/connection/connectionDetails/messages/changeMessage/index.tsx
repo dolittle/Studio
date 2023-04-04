@@ -7,7 +7,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { AlertDialog, Form, Icon } from '@dolittle/design-system';
 
-import { TableListingEntry } from '../../../../../apis/integrations/generated';
+import { SetMessageMappingRequestArguments, TableListingEntry } from '../../../../../apis/integrations/generated';
 
 import { ViewMode } from './ViewMode';
 import { ContentContainer } from './components/ContentContainer';
@@ -15,6 +15,7 @@ import { ContentHeader } from './components/ContentHeader';
 import { TableSearchSection } from './components/TableSearchSection';
 import { MessageDetailsSection } from './components/MessageDetailsSection';
 import { TableSection } from './components/TableSection';
+import { SubmitButtonSection } from './components/SubmitButtonSection';
 
 export type NewMessageMappingParameters = {
     name: string;
@@ -59,8 +60,8 @@ export const ChangeMessageView = () => {
         else navigate(`/integrations/connections/${messageId}`);
     };
 
-    const handleNewMessageSave = (values: NewMessageMappingParameters) => {
-
+    const handleNewMessageSave = (values: SetMessageMappingRequestArguments) => {
+        console.log('saving', values);
     };
 
     const removeSelectedTable = () => setSelectedTable(undefined);
@@ -82,22 +83,28 @@ export const ChangeMessageView = () => {
 
                 <ContentHeader title={title} buttons={[toolbarButtons]} sx={{ minHeight: 64 }} />
 
-                <Form<NewMessageMappingParameters>
+                <Form<SetMessageMappingRequestArguments>
                     initialValues={{
                         name: '',
                         description: '',
-                        messageTypeName: '',
-                        messageTypeDescription: '',
+                        fields: [],
                     }}
                     onSubmit={handleNewMessageSave}
                 >
                     <MessageDetailsSection mode={mode} />
                     {showTable
-                        ? <TableSection
-                            mode={mode}
-                            selectedTable={selectedTable}
-                            onBackToSearchResultsClicked={() => removeSelectedTable()}
-                        />
+                        ? <>
+                            <TableSection
+                                mode={mode}
+                                selectedTable={selectedTable}
+                                onBackToSearchResultsClicked={() => removeSelectedTable()}
+                            />
+                            <SubmitButtonSection
+                                mode={mode}
+                                isSubmitting={false}
+                            />
+                        </>
+
                         : <TableSearchSection
                             mode={mode}
                             onTableSelected={setSelectedTable}
