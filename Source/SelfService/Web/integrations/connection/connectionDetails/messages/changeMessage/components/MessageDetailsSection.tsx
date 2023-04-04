@@ -17,12 +17,12 @@ export const MessageDetailsSection = (props: MessageDetailsSectionProps) =>
         <Grid container gap={4}>
             <Stack spacing={3}>
                 <Typography variant='subtitle2'>Provide a name for your message type</Typography>
-                <Input id='messageTypeName' label='Message Type Name' required />
+                <Input id='name' label='Message Type Name' required />
             </Stack>
 
             <Stack spacing={3}>
                 <Typography variant='subtitle2'>Add a description for this message type</Typography>
-                <Input id='messageTypeDescription' label='Message Type Description' />
+                <Input id='description' label='Message Type Description' />
             </Stack>
         </Grid>
     </ContentSection>;

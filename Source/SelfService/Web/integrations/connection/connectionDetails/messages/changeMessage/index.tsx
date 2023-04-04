@@ -4,10 +4,11 @@
 import React, { useState } from 'react';
 
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-
 import { AlertDialog, Form, Icon } from '@dolittle/design-system';
 
 import { SetMessageMappingRequestArguments, TableListingEntry } from '../../../../../apis/integrations/generated';
+import { useConnectionsIdMessageMappingsTablesTableMessagesMessagePost } from '../../../../../apis/integrations/messageMappingApi.hooks';
+import { useConnectionId } from '../../../../routes.hooks';
 
 import { ViewMode } from './ViewMode';
 import { ContentContainer } from './components/ContentContainer';
@@ -28,6 +29,8 @@ export const ChangeMessageView = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { messageId } = useParams();
+    const connectionId = useConnectionId();
+    const saveMessageMappingMutation = useConnectionsIdMessageMappingsTablesTableMessagesMessagePost();
 
     const [searchInput, setSearchInput] = useState<string>('');
     const [selectedTable, setSelectedTable] = useState<TableListingEntry>();
@@ -61,7 +64,23 @@ export const ChangeMessageView = () => {
     };
 
     const handleNewMessageSave = (values: SetMessageMappingRequestArguments) => {
-        console.log('saving', values);
+        saveMessageMappingMutation.mutate({
+            id: connectionId!,
+            message: values.name!,
+            table: selectedTable?.name!,
+            setMessageMappingRequestArguments: {
+                name: values.name!,
+                description: values.description!,
+                fields: values.fields!,
+            }
+        }, {
+            onSuccess(data, variables, context) {
+                console.log('success', data);
+            },
+            onError(error, variables, context) {
+                console.log('error', error);
+            }
+        });
     };
 
     const removeSelectedTable = () => setSelectedTable(undefined);
@@ -101,7 +120,7 @@ export const ChangeMessageView = () => {
                             />
                             <SubmitButtonSection
                                 mode={mode}
-                                isSubmitting={false}
+                                isSubmitting={saveMessageMappingMutation.isLoading}
                             />
                         </>
 
