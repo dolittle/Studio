@@ -39,7 +39,10 @@ export const TableSection = (props: TableSectionProps) => {
     const requiredTableColumns = mappableTableResult?.value?.required || [];
     const preselectedInitialIds = requiredTableColumns.map(required => required.m3ColumnName!);
     const selectedIds = (selectedRowIds.length > 0) ? selectedRowIds : preselectedInitialIds as GridSelectionModel;
-    const selectedTableColumns = allMappableTableColumns.filter(column => selectedIds.includes(column.m3ColumnName!));
+    const selectedTableColumns = useMemo(
+        () => allMappableTableColumns.filter(column => selectedIds.includes(column.m3ColumnName!)),
+        [allMappableTableColumns, selectedIds]
+    );
 
     return (
         <>
