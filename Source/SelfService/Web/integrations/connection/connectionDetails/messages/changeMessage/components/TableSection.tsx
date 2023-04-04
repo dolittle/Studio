@@ -3,10 +3,11 @@
 
 import React, { useState, useMemo } from 'react';
 
-import { Grid, LinearProgress } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
 
-import { AlertBox, Button, Icon, MaxWidthTextBlock, Switch } from '@dolittle/design-system/';
+import { Grid, LinearProgress } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
+import { AlertBox, Button, Icon, MaxWidthTextBlock, Switch } from '@dolittle/design-system/';
 
 import { FieldMapping, TableListingEntry } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
@@ -16,7 +17,7 @@ import { useConnectionId } from '../../../../../routes.hooks';
 import { ViewModeProps } from '../ViewMode';
 import { ContentSection } from './ContentSection';
 import { DataGridTableListingEntry, MessageMappingTable } from './MessageMappingTable';
-import { SubmitButtonSection } from './SubmitButtonSection';
+
 
 export type TableSectionProps = ViewModeProps & {
     selectedTable: TableListingEntry;
@@ -28,6 +29,7 @@ export const TableSection = (props: TableSectionProps) => {
     const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>([]);
     const [hideUnselectedRows, setHideUnselectedRows] = useState(false);
     const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(new Map());
+    const { setValue } = useFormContext();
 
     if (!connectionId || !props.selectedTable.name) return <AlertBox />;
 
@@ -47,7 +49,8 @@ export const TableSection = (props: TableSectionProps) => {
             fieldName: mappedFields.get(column.m3ColumnName!)?.fieldName || '',
             ...column,
         })),
-        [allMappableTableColumns, mappedFields]);
+        [allMappableTableColumns, mappedFields]
+    );
 
     const selectedTableColumns = useMemo(
         () => gridMappableTableColumns.filter(column => selectedIds.includes(column.m3ColumnName!)),
@@ -65,6 +68,15 @@ export const TableSection = (props: TableSectionProps) => {
             return newMappedFields;
         });
     };
+
+    React.useEffect(() => {
+        const fields: FieldMapping[] = selectedTableColumns.map(column => ({
+            columnName: column.m3ColumnName!,
+            fieldName: column.fieldName,
+            fieldDescription: '',
+        }));
+        setValue('fields', fields);
+    }, [selectedTableColumns]);
 
     return (
         <>
@@ -99,7 +111,6 @@ export const TableSection = (props: TableSectionProps) => {
                                 onSelectedIdsChanged={setSelectedRowIds}
                                 onFieldMapped={onFieldMapped}
                             />
-                            <SubmitButtonSection mode={props.mode} isSubmitting={false} />
                         </>
                     )}
                 </ContentSection>
