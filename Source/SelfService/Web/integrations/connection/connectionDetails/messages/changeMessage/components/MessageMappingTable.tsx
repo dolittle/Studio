@@ -21,6 +21,13 @@ const columns: GridColDef<DataGridTableListingEntry>[] = [
     {
         field: 'm3Description',
         headerName: 'M3 Description',
+        editable: true,
+        minWidth: 270,
+    },
+    {
+        field: '',
+        headerName: 'Remapped Name',
+        editable: true,
         minWidth: 270,
     },
 ];
@@ -40,7 +47,7 @@ export const MessageMappingTable = ({
     onSelectedIdsChanged,
     disabledRows,
     isLoading,
-    hideUnselectedRows
+    hideUnselectedRows,
 }: MessageMappingTableProps) => {
 
     const dataGridListing: DataGridTableListingEntry[] = mappableTableColumns
@@ -52,7 +59,7 @@ export const MessageMappingTable = ({
         });
 
     return (
-        <Paper sx={{ width: 1, boxShadow: 'none' }}>
+        <Paper elevation={0} sx={{ width: 1, boxShadow: 'none' }}>
             <DataGridPro
                 rows={dataGridListing}
                 columns={columns}
