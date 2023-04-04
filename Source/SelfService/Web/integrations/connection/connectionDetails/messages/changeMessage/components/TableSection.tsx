@@ -40,6 +40,7 @@ export const TableSection = (props: TableSectionProps) => {
     const mappableTableColumns = mappableTableResult.value.columns || [];
     const requiredTableColumns = mappableTableResult.value.required || [];
     const preselectedInitialIds = requiredTableColumns.map(required => required.m3ColumnName!);
+    const selectedIds = (selectedRowIds.length > 0) ? selectedRowIds : preselectedInitialIds as GridSelectionModel;
 
     return (
         <ContentSection
@@ -67,7 +68,7 @@ export const TableSection = (props: TableSectionProps) => {
             <MessageMappingTable
                 mappableTableColumns={mappableTableColumns}
                 isLoading={isLoading}
-                selectedIds={(selectedRowIds.length > 0) ? selectedRowIds : preselectedInitialIds as GridSelectionModel}
+                selectedIds={selectedIds}
                 disabledRows={preselectedInitialIds}
                 onSelectedIdsChanged={setSelectedRowIds}
                 hideUnselectedRows={hideUnselectedRows}

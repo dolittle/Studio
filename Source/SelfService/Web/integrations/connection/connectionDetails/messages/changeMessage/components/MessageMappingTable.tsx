@@ -17,13 +17,11 @@ const columns: GridColDef<DataGridTableListingEntry>[] = [
         field: 'm3ColumnName',
         headerName: 'M3 Field Name',
         minWidth: 270,
-        flex: 1,
     },
     {
         field: 'm3Description',
         headerName: 'M3 Description',
         minWidth: 270,
-        flex: 1,
     },
 ];
 
@@ -54,7 +52,7 @@ export const MessageMappingTable = ({
         });
 
     return (
-        <Paper sx={{ width: 1 }}>
+        <Paper sx={{ width: 1, boxShadow: 'none' }}>
             <DataGridPro
                 rows={dataGridListing}
                 columns={columns}
@@ -71,6 +69,9 @@ export const MessageMappingTable = ({
                 pageSize={10}
                 rowsPerPageOptions={[10]}
                 disableColumnMenu
+                disableColumnReorder
+                disableColumnResize
+                disableColumnSelector
                 disableSelectionOnClick
                 sx={{ '& .hide-row': { display: hideUnselectedRows ? 'none' : 'flex' } }}
             />
