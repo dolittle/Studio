@@ -3,9 +3,9 @@
 
 import React, { useState } from 'react';
 
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { Form, Icon } from '@dolittle/design-system';
+import { AlertDialog, Form, Icon } from '@dolittle/design-system';
 
 import { TableListingEntry } from '../../../../../apis/integrations/generated';
 
@@ -25,16 +25,39 @@ export type NewMessageMappingParameters = {
 
 export const ChangeMessageView = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { messageId } = useParams();
 
     const [searchInput, setSearchInput] = useState<string>('');
     const [selectedTable, setSelectedTable] = useState<TableListingEntry>();
+    const [showDiscardChangesDialog, setShowDiscardChangesDialog] = useState(false);
 
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
     const showTable = !!selectedTable;
-
     const title = mode === 'new' ? 'Create New Message Type' : 'Edit Message';
-    const toolbarButtons = { label: 'Discard changes', startWithIcon: <Icon icon='CancelRounded' />, color: 'subtle' } as const;
+
+    const toolbarButtons = {
+        label: 'Discard changes',
+        startWithIcon: <Icon icon='CancelRounded' />,
+        color: 'subtle',
+        onClick: () => setShowDiscardChangesDialog(true),
+    } as const;
+
+    // TODO: Implement this.
+    // Prevent the user from accidentally closing the browser tab if they have unsaved changes.
+
+    // window.addEventListener('beforeunload', (event) => {
+    //     event.preventDefault();
+    //     return event.returnValue = 'Are you sure you want to close?';
+    // });
+
+    // TODO: Implement this.
+    const cancelMessageMapping = () => {
+        setShowDiscardChangesDialog(false);
+
+        if (mode === 'new') navigate('/integrations/connections');
+        else navigate(`/integrations/connections/${messageId}`);
+    };
 
     const handleNewMessageSave = (values: NewMessageMappingParameters) => {
 
@@ -46,7 +69,19 @@ export const ChangeMessageView = () => {
         <>
             Mode: {mode === 'new' ? 'New message mode' : `Edit message mode for ${messageId}`}
             <ContentContainer>
+                <AlertDialog
+                    id='discard-changes-dialog'
+                    title='Are you sure that you want to discard these changes?'
+                    description={`By clicking ‘discard changes' none of the changes you have made to this screen will be stored.`}
+                    isOpen={showDiscardChangesDialog}
+                    onCancel={() => cancelMessageMapping()}
+                    onConfirm={() => setShowDiscardChangesDialog(false)}
+                    cancelBtnText='Discard changes'
+                    confirmBtnText='Continue working'
+                />
+
                 <ContentHeader title={title} buttons={[toolbarButtons]} sx={{ minHeight: 64 }} />
+
                 <Form<NewMessageMappingParameters>
                     initialValues={{
                         name: '',
