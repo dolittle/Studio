@@ -35,47 +35,49 @@ export const TableSection = (props: TableSectionProps) => {
         table: props.selectedTable.name,
     });
 
-    if (isInitialLoading) return <LinearProgress />;
-    if (!mappableTableResult?.value) return <AlertBox />;
-
-    const allMappableTableColumns = mappableTableResult.value.columns || [];
-    const requiredTableColumns = mappableTableResult.value.required || [];
+    const allMappableTableColumns = mappableTableResult?.value?.columns || [];
+    const requiredTableColumns = mappableTableResult?.value?.required || [];
     const preselectedInitialIds = requiredTableColumns.map(required => required.m3ColumnName!);
     const selectedIds = (selectedRowIds.length > 0) ? selectedRowIds : preselectedInitialIds as GridSelectionModel;
     const selectedTableColumns = allMappableTableColumns.filter(column => selectedIds.includes(column.m3ColumnName!));
 
     return (
-        <ContentSection
-            title={`${props.selectedTable.name} Table`}
-            beforeHeaderSlot={
-                <Button
-                    label='Back to Search Results'
-                    startWithIcon={<Icon icon='ArrowBack' />}
-                    variant='text'
-                    color='subtle'
-                    sx={{ ml: 1, mt: 2 }}
-                    onClick={props.onBackToSearchResultsClicked}
-                />
-            }
-        >
-            <Grid container gap={2} sx={{ py: 3, justifyContent: 'space-between', alignContent: 'flex-start' }}>
-                <MaxWidthTextBlock>
-                    {`You can edit the field descriptions and add a remapped name to provide appropriate semantics that make sense for your
-                organization's business logic.`}
-                </MaxWidthTextBlock>
-
-                <Switch id='hideUnselectedRows' label='Hide Unselected Rows' onChange={() => setHideUnselectedRows(!hideUnselectedRows)} />
-            </Grid>
-
-            <MessageMappingTable
-                mappableTableColumns={hideUnselectedRows ? selectedTableColumns : allMappableTableColumns}
-                isLoading={isLoading}
-                selectedIds={selectedIds}
-                disabledRows={preselectedInitialIds}
-                onSelectedIdsChanged={setSelectedRowIds}
-            />
-
-            <SubmitButtonSection mode={props.mode} isSubmitting={false} />
-        </ContentSection>
+        <>
+            {isInitialLoading ? <LinearProgress /> : (
+                <ContentSection
+                    title={`${props.selectedTable.name} Table`}
+                    beforeHeaderSlot={
+                        <Button
+                            label='Back to Search Results'
+                            startWithIcon={<Icon icon='ArrowBack' />}
+                            variant='text'
+                            color='subtle'
+                            sx={{ ml: 1, mt: 2 }}
+                            onClick={props.onBackToSearchResultsClicked}
+                        />
+                    }
+                >
+                    {!mappableTableResult?.value ? <AlertBox /> : (
+                        <>
+                            <Grid container gap={2} sx={{ py: 3, justifyContent: 'space-between', alignContent: 'flex-start' }}>
+                                <MaxWidthTextBlock>
+                                    {`You can edit the field descriptions and add a remapped name to provide appropriate semantics that make sense for your
+                        organization's business logic.`}
+                                </MaxWidthTextBlock>
+                                <Switch id='hideUnselectedRows' label='Hide Unselected Rows' onChange={() => setHideUnselectedRows(!hideUnselectedRows)} />
+                            </Grid>
+                            <MessageMappingTable
+                                mappableTableColumns={hideUnselectedRows ? selectedTableColumns : allMappableTableColumns}
+                                isLoading={isLoading}
+                                selectedIds={selectedIds}
+                                disabledRows={preselectedInitialIds}
+                                onSelectedIdsChanged={setSelectedRowIds}
+                            />
+                            <SubmitButtonSection mode={props.mode} isSubmitting={false} />
+                        </>
+                    )}
+                </ContentSection>
+            )}
+        </>
     );
 };
