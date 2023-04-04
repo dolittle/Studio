@@ -3,18 +3,20 @@
 
 import React from 'react';
 
+import { GridColDef } from '@mui/x-data-grid-pro';
+
 import { Icon } from '@dolittle/design-system';
 
 export const rows = [
     { id: 1, col1: 'Row 1', col2: 'Row 1', col3: 'Row 1' },
     { id: 2, col1: 'Row 2', col2: 'Row 2', col3: 'Row 2' },
-    { id: 3, col1: 'Row 3', col2: 'Row 3', col3: 'Row 3' }
+    { id: 3, col1: 'Row 3', col2: 'Row 3', col3: 'Row 3' },
 ];
 
-export const columns = [
-    { field: 'col1', headerName: 'Column 1', flex: 1, width: 150 },
+export const columns: GridColDef[] = [
+    { field: 'col1', headerName: 'Column 1', headerAlign: 'center', flex: 1, width: 150 },
     { field: 'col2', headerName: 'Column 2', flex: 1, width: 150 },
-    { field: 'col3', headerName: 'Column 3', flex: 1, width: 150 }
+    { field: 'col3', headerName: 'Column 3', flex: 1, width: 150 },
 ];
 
 export const toolbarButtons = [
