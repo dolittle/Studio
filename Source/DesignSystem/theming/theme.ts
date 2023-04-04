@@ -63,7 +63,7 @@ export const typography: TypographyOptions = {
         fontSize: '0.75rem', //12px
         lineHeight: '0.75rem', //12px
         fontWeight: 400,
-        letterSpacing: '0.03rem'
+        letterSpacing: '0.03rem',
     },
     overline: {
         fontSize: '0.625rem', //10px
@@ -188,17 +188,21 @@ const components: Components & DataGridProComponents = {
                 },
             },
             {
-                // Add a custom background color to the contained button variant with inherit color
+                // Add a custom background color to the contained button variant with inherit color.
                 props: { color: 'inherit', variant: 'contained' },
                 style: {
                     'backgroundColor': '#616161',
-                    '&:hover': { backgroundColor: '#757575' }
+                    '&:hover': { backgroundColor: '#757575' },
                 },
             },
         ],
     },
     MuiDataGrid: {
         styleOverrides: {
+            columnHeader: {
+                ':focus': { outline: 'none' },
+                ':focus-within': { outline: 'none' },
+            },
             columnHeaders: {
                 borderColor: 'rgba(226, 255, 97, 0.05)',
             },
@@ -218,6 +222,10 @@ const components: Components & DataGridProComponents = {
                 wordWrap: 'break-word',
                 borderColor: 'rgba(226, 255, 97, 0.05)',
             },
+            cellContent: {
+                paddingTop: 11,
+                paddingBottom: 11,
+            },
             row: {
                 cursor: 'pointer',
             },
@@ -235,22 +243,6 @@ const components: Components & DataGridProComponents = {
                 '& .MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted):hover .MuiDataGrid-sortIcon': {
                     opacity: 1,
                 },
-
-                '.MuiDataGrid-columnHeader:focus': {
-                    outline: 'none'
-                },
-                '.MuiDataGrid-columnHeader:focus-within': {
-                    outline: 'none'
-                },
-                '.MuiDataGrid-columnHeaderDraggableContainer': {
-                    outline: 'none'
-                },
-                '.MuiDataGrid-cell:focus-within': {
-                    outline: 'none'
-                },
-                '.MuiDataGrid-cellContent': {
-                    padding: '0.6875rem 0'
-                }
             },
         },
     },
