@@ -15,7 +15,7 @@ import { DataTableToolbar } from './DataTableToolbar';
 export default {
     decorators: [
         (Story) => (
-            <Paper sx={{ width: 1, height: 1, minHeight: 250 }}>
+            <Paper sx={{ width: 1, height: 1, minHeight: 250, boxShadow: 'none' }}>
                 {Story()}
             </Paper>
         )
@@ -70,9 +70,13 @@ export const Default = () =>
         columns={columns}
         headerHeight={46}
         getRowHeight={() => 'auto'}
+        disableSelectionOnClick
         autoHeight
         hideFooter
         disableColumnMenu
+        disableColumnReorder
+        disableColumnResize
+        disableColumnSelector
     />;
 
 export const WithCustomToolbar = () =>
@@ -81,9 +85,13 @@ export const WithCustomToolbar = () =>
         columns={columns}
         headerHeight={46}
         getRowHeight={() => 'auto'}
+        disableSelectionOnClick
         autoHeight
         hideFooter
         disableColumnMenu
+        disableColumnReorder
+        disableColumnResize
+        disableColumnSelector
         components={{
             Toolbar: () => <DataTableToolbar title='Toolbar title' buttons={toolbarButtons} />,
         }}
@@ -125,12 +133,45 @@ export const WithCustomToolbar = () =>
 //     );
 // };
 
-// export const WithActionIcons = () => {};
+// export const WithIcons = () => {};
 
 //export const EditableCells = () => {};
 
-//export const WithCheckboxSelection = () => {}; //checkboxSelection
+export const WithCheckboxSelection = () =>
+    <DataGridPro
+        rows={rows}
+        columns={columns}
+        headerHeight={46}
+        getRowHeight={() => 'auto'}
+        autoHeight
+        checkboxSelection
+        //onSelectionModelChange={onSelectedIdsChanged}
+        //selectionModel={selectedIds}
+        hideFooter
+        disableColumnMenu
+        disableColumnReorder
+        disableColumnResize
+        disableColumnSelector
+        disableSelectionOnClick
+    />;
 
 //export const ExpandableRows = () => {};
 
-//export const Pagination = () => {};
+export const Pagination = () =>
+    <DataGridPro
+        rows={rows}
+        columns={columns}
+        headerHeight={46}
+        getRowHeight={() => 'auto'}
+        autoHeight
+        pagination
+        pageSize={10}
+        rowsPerPageOptions={[10]}
+        disableColumnMenu
+        disableColumnReorder
+        disableColumnResize
+        disableColumnSelector
+        disableSelectionOnClick
+    />;
+
+//getRowClassName={row => selectedIds?.includes(row.id) ? '' : 'hide-row'}
