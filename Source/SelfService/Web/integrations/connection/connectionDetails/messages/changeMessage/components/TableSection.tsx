@@ -38,23 +38,17 @@ export const TableSection = (props: TableSectionProps) => {
 
     const allMappableTableColumns = mappableTableResult?.value?.columns || [];
     const requiredTableColumns = mappableTableResult?.value?.required || [];
-    const preselectedInitialIds = requiredTableColumns.map(required => required.m3ColumnName!);
-    const selectedIds = (selectedRowIds.length > 0) ? selectedRowIds : preselectedInitialIds as GridSelectionModel;
+    const requiredTableColumnIds = requiredTableColumns.map(required => required.m3ColumnName!);
+    const selectedIds = (selectedRowIds.length > 0) ? selectedRowIds : requiredTableColumnIds as GridSelectionModel;
 
     const gridMappableTableColumns: DataGridTableListingEntry[] = useMemo(
-        () => allMappableTableColumns.map(column => {
-            const id = column.m3ColumnName!;
-            const fieldName = mappedFields.get(column.m3ColumnName!)?.fieldName || '';
-            console.log('mapping field', id);
-            console.log('mapping fieldName', fieldName);
-            console.log('Available mappings', Array.from(mappedFields.values()));
-            return {
-                id,
-                fieldName,
-                ...column,
-            };
-        }),
+        () => allMappableTableColumns.map(column => ({
+            id: column.m3ColumnName!,
+            fieldName: mappedFields.get(column.m3ColumnName!)?.fieldName || '',
+            ...column,
+        })),
         [allMappableTableColumns, mappedFields]);
+
     const selectedTableColumns = useMemo(
         () => gridMappableTableColumns.filter(column => selectedIds.includes(column.m3ColumnName!)),
         [allMappableTableColumns, selectedIds]
@@ -101,7 +95,7 @@ export const TableSection = (props: TableSectionProps) => {
                                 dataGridListing={hideUnselectedRows ? selectedTableColumns : gridMappableTableColumns}
                                 isLoading={isLoading}
                                 selectedIds={selectedIds}
-                                disabledRows={preselectedInitialIds}
+                                disabledRows={requiredTableColumnIds}
                                 onSelectedIdsChanged={setSelectedRowIds}
                                 onFieldMapped={onFieldMapped}
                             />
