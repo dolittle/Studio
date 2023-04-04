@@ -205,8 +205,6 @@ const components: Components & DataGridProComponents = {
             columnHeaderTitle: {
                 fontWeight: 500,
                 letterSpacing: '0.17px',
-                // Hack for the column header title to be aligned with the centered columns (because of iconButtonContainer visibility)
-                marginLeft: 25,
             },
             iconButtonContainer: {
                 visibility: 'visible',
@@ -219,6 +217,9 @@ const components: Components & DataGridProComponents = {
                 whiteSpace: 'normal',
                 wordWrap: 'break-word',
                 borderColor: 'rgba(226, 255, 97, 0.05)',
+            },
+            row: {
+                cursor: 'pointer',
             },
             footerContainer: {
                 borderColor: 'rgba(226, 255, 97, 0.05)',

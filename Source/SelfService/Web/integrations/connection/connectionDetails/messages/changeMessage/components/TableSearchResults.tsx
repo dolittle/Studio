@@ -12,8 +12,6 @@ const columns: GridColDef<TableListingEntry>[] = [
     {
         field: 'name',
         headerName: 'Table Name',
-        headerAlign: 'center',
-        align: 'center',
         minWidth: 200,
     },
     {
