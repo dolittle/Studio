@@ -4,7 +4,7 @@
 import React from 'react';
 
 import { Paper } from '@mui/material';
-import { DataGridPro, GridColDef, GridSelectionModel, GridRowId } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridSelectionModel, GridRowId, useGridApiRef } from '@mui/x-data-grid-pro';
 
 import { MappableTableColumn } from '../../../../../../apis/integrations/generated';
 
@@ -52,16 +52,20 @@ export const MessageMappingTable = ({
     onFieldMapped
 }: MessageMappingTableProps) => {
 
+    const gridApiRef = useGridApiRef();
+
     const processRowUpdate = (newRow: DataGridTableListingEntry, oldRow: DataGridTableListingEntry): DataGridTableListingEntry | Promise<DataGridTableListingEntry> => {
         // if field is not selected, mark as selected using the useApiRef
         console.log('processRowUpdate', newRow, oldRow);
         onFieldMapped(newRow.id, newRow.fieldName);
+        gridApiRef.current.selectRow(newRow.id, true);
         return newRow;
     };
 
     return (
         <Paper elevation={0} sx={{ width: 1, boxShadow: 'none' }}>
             <DataGridPro
+                apiRef={gridApiRef}
                 rows={dataGridListing}
                 columns={columns}
                 getRowHeight={() => 'auto'}
