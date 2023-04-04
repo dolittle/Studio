@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { enqueueSnackbar } from 'notistack';
 import { AlertDialog, Form, Icon } from '@dolittle/design-system';
 
 import { SetMessageMappingRequestArguments, TableListingEntry } from '../../../../../apis/integrations/generated';
@@ -75,10 +76,12 @@ export const ChangeMessageView = () => {
             }
         }, {
             onSuccess(data, variables, context) {
-                console.log('success', data);
+                navigate(`messages`);
+                enqueueSnackbar('Message successfully created', { variant: 'success' });
             },
             onError(error, variables, context) {
                 console.log('error', error);
+                enqueueSnackbar('Something went wrong when trying to save the message', { variant: 'error' });
             }
         });
     };
