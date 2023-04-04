@@ -56,7 +56,7 @@ export const TableSection = (props: TableSectionProps) => {
                 />
             }
         >
-            <Grid container sx={{ py: 3, justifyContent: 'space-between', alignContent: 'flex-start' }}>
+            <Grid container gap={2} sx={{ py: 3, justifyContent: 'space-between', alignContent: 'flex-start' }}>
                 <MaxWidthTextBlock>
                     {`You can edit the field descriptions and add a remapped name to provide appropriate semantics that make sense for your 
                 organization's business logic.`}
