@@ -30,11 +30,12 @@ export const TableSection = (props: TableSectionProps) => {
 
     if (!connectionId || !props.selectedTable.name) return <AlertBox />;
 
-    const { data: mappableTableResult, isLoading } = useConnectionsIdMessageMappingsTablesTableGet({
+    const { data: mappableTableResult, isLoading, isInitialLoading } = useConnectionsIdMessageMappingsTablesTableGet({
         id: connectionId,
         table: props.selectedTable.name,
     });
 
+    if (isInitialLoading) return null;
     if (!mappableTableResult?.value) return <AlertBox />;
 
     const allMappableTableColumns = mappableTableResult.value.columns || [];
