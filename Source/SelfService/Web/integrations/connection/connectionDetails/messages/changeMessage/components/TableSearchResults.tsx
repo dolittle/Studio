@@ -11,15 +11,16 @@ import { TableListingEntry } from '../../../../../../apis/integrations/generated
 const columns: GridColDef<TableListingEntry>[] = [
     {
         field: 'name',
-        headerName: 'Name',
-        minWidth: 270,
-        flex: 1,
+        headerName: 'Table Name',
+        headerAlign: 'center',
+        align: 'center',
+        minWidth: 200,
     },
     {
         field: 'description',
         headerName: 'Description',
-        minWidth: 270,
-        flex: 1,
+        sortable: false,
+        minWidth: 352,
     },
 ];
 
@@ -46,15 +47,18 @@ export const TableSearchResults = ({ tableListings, isLoading, onTableSelected }
     };
 
     return (
-        <Paper sx={{ width: 1 }}>
+        <Paper sx={{ width: 1, boxShadow: 'none' }}>
             <DataGridPro
                 rows={dataGridListing}
                 columns={columns}
                 getRowHeight={() => 'auto'}
                 autoHeight
                 headerHeight={46}
-                disableColumnMenu
                 hideFooter
+                disableColumnMenu
+                disableColumnReorder
+                disableColumnResize
+                disableColumnSelector
                 disableSelectionOnClick
                 loading={isLoading}
                 onRowClick={({ row }) => handleRowClick(row)}

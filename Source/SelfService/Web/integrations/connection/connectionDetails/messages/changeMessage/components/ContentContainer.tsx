@@ -10,6 +10,6 @@ export type ContentContainerProps = {
 };
 
 export const ContentContainer = ({ children }: ContentContainerProps) =>
-    <Paper sx={{ width: 1, mt: 2, px: 2 }}>
+    <Paper sx={{ width: 1, my: 2, px: 2 }}>
         {children}
     </Paper>;
