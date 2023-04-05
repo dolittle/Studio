@@ -1,3 +1,10 @@
+# [3.4.10] - 2023-4-5 [PR: #365](https://github.com/dolittle/Studio/pull/365)
+- Update codegen to go towards 127.0.0.1 (since bridge api is hosted in a devcontainer)
+- Updated generated api's
+- Use the messageName from the url after api changes
+- Fix succesful navigation
+
+
 # [3.4.9] - 2023-4-5 [PR: #364](https://github.com/dolittle/Studio/pull/364)
 - Move messageList into its own component folder
 - Map values from the messageMappingsModel
