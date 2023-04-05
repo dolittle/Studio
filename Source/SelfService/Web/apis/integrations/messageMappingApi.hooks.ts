@@ -8,7 +8,8 @@ import { CACHE_KEYS } from './CacheKeys';
 import {
     MessageMappingApi,
     ConnectionsIdMessageMappingsGetRequest,
-    ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest
+    ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest,
+    ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest
 } from './generated';
 
 let apiInstance: MessageMappingApi | undefined;
@@ -23,9 +24,19 @@ const getOrCreateApi = () => {
 export const useConnectionsIdMessageMappingsGet = (params: ConnectionsIdMessageMappingsGetRequest) => {
     const api = getOrCreateApi();
     return useQuery({
-        queryKey: [CACHE_KEYS.ConnectionMessageMapping_GET, params.id],
+        queryKey: [CACHE_KEYS.ConnectionMessageMappings_GET, params.id],
         queryFn: api.connectionsIdMessageMappingsGet.bind(api, params),
         staleTime: 60000,
+    });
+};
+
+export const useConnectionsIdMessageMappingsTablesTableMessagesMessageGet = (params: ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest) => {
+    const api = getOrCreateApi();
+    return useQuery({
+        queryKey: [CACHE_KEYS.ConnectionMessageMapping_GET, params.id, params.table, params.message],
+        queryFn: api.connectionsIdMessageMappingsTablesTableMessagesMessageGet.bind(api, params),
+        staleTime: 60000,
+        enabled: !!params.id && !!params.table && !!params.message,
     });
 };
 
