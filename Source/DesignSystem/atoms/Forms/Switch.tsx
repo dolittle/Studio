@@ -24,7 +24,7 @@ const styles = {
 
 /**
  * Creates a switch field to be used in a {@link Form}.
- * @param props - The {@link FieldProps} that contains the properties for the switch.
+ * @param props - The {@link FieldProps}.
  * @returns A {@link Switch} component.
  */
 export const Switch = (props: FieldProps) => {
