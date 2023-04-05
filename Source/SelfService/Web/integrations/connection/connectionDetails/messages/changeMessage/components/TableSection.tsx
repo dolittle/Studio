@@ -108,14 +108,14 @@ export const TableSection = (props: TableSectionProps) => {
                 <ContentSection
                     title={`${props.selectedTableName} Table`}
                     beforeHeaderSlot={
-                        <Button
+                        props.mode === 'new' && (<Button
                             label='Back to Search Results'
                             startWithIcon={<Icon icon='ArrowBack' />}
                             variant='text'
                             color='subtle'
                             sx={{ ml: 1, mt: 2 }}
                             onClick={props.onBackToSearchResultsClicked}
-                        />
+                        />)
                     }
                 >
                     {!mappableTableResult?.value ? <AlertBox /> : (
