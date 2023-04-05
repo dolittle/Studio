@@ -7,8 +7,9 @@ import { Paper } from '@mui/material';
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 
 import { DataTableToolbar, Icon } from '@dolittle/design-system';
+import { MessageMappingModel } from '../../../../../apis/integrations/generated';
 
-const messagesDataColumns: GridColDef[] = [
+const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
     {
         field: 'name',
         headerName: 'Message Type',
@@ -16,7 +17,7 @@ const messagesDataColumns: GridColDef[] = [
         flex: 1,
     },
     {
-        field: 'fromTable.description',
+        field: 'description',
         headerName: 'Description',
         // minWidth: 270,
         flex: 1,
@@ -26,18 +27,21 @@ const messagesDataColumns: GridColDef[] = [
         headerName: 'Table Name',
         // minWidth: 270,
         flex: 1,
+        valueGetter: (params) => params.row.fromTable?.name,
     },
     {
         field: 'fieldMappings',
         headerName: 'No. of Mapped Fields',
         // minWidth: 270,
         flex: 1,
+        valueGetter: (params) => params.row.fieldMappings?.length,
     },
     {
         field: 'deployedAt',
         headerName: 'Last Deployed',
         //minWidth: 270,
         flex: 1,
+        valueGetter: (params) => params.row.deployedAt,
     },
 ];
 
