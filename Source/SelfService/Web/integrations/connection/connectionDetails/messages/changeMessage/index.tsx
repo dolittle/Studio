@@ -5,10 +5,13 @@ import React, { useState } from 'react';
 
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { enqueueSnackbar } from 'notistack';
-import { AlertDialog, Form, Icon } from '@dolittle/design-system';
+import { AlertBox, AlertDialog, Form, Icon } from '@dolittle/design-system';
 
 import { SetMessageMappingRequestArguments, TableListingEntry } from '../../../../../apis/integrations/generated';
-import { useConnectionsIdMessageMappingsTablesTableMessagesMessagePost } from '../../../../../apis/integrations/messageMappingApi.hooks';
+import {
+    useConnectionsIdMessageMappingsTablesTableMessagesMessageGet,
+    useConnectionsIdMessageMappingsTablesTableMessagesMessagePost
+} from '../../../../../apis/integrations/messageMappingApi.hooks';
 import { useConnectionId } from '../../../../routes.hooks';
 
 import { ViewMode } from './ViewMode';
@@ -29,9 +32,10 @@ export type NewMessageMappingParameters = {
 export const ChangeMessageView = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { messageId } = useParams();
+    const { table, messageId } = useParams();
     const connectionId = useConnectionId();
     const saveMessageMappingMutation = useConnectionsIdMessageMappingsTablesTableMessagesMessagePost();
+    const messageQuery = useConnectionsIdMessageMappingsTablesTableMessagesMessageGet({ id: connectionId!, table: table!, message: messageId! });
 
     const [searchInput, setSearchInput] = useState<string>('');
     const [selectedTable, setSelectedTable] = useState<TableListingEntry>();
@@ -39,7 +43,7 @@ export const ChangeMessageView = () => {
 
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
     const showTable = !!selectedTable;
-    const title = mode === 'new' ? 'Create New Message Type' : 'Edit Message';
+    const title = mode === 'new' ? 'Create New Message Type' : `Edit Message Type - ${messageId}`;
 
     const toolbarButtons = {
         label: 'Discard changes',
@@ -90,51 +94,61 @@ export const ChangeMessageView = () => {
 
     return (
         <>
-            Mode: {mode === 'new' ? 'New message mode' : `Edit message mode for ${messageId}`}
             <ContentContainer>
-                <AlertDialog
-                    id='discard-changes-dialog'
-                    title='Are you sure that you want to discard these changes?'
-                    description={`By clicking ‘discard changes' none of the changes you have made to this screen will be stored.`}
-                    isOpen={showDiscardChangesDialog}
-                    onCancel={() => cancelMessageMapping()}
-                    onConfirm={() => setShowDiscardChangesDialog(false)}
-                    cancelBtnText='Discard changes'
-                    confirmBtnText='Continue working'
-                />
-
-                <ContentHeader title={title} buttons={[toolbarButtons]} sx={{ minHeight: 64 }} />
-
-                <Form<SetMessageMappingRequestArguments>
-                    initialValues={{
-                        name: '',
-                        description: '',
-                        fields: [],
-                    }}
-                    onSubmit={handleNewMessageSave}
-                >
-                    <MessageDetailsSection mode={mode} />
-                    {showTable
-                        ? <>
-                            <TableSection
-                                mode={mode}
-                                selectedTable={selectedTable}
-                                onBackToSearchResultsClicked={() => removeSelectedTable()}
+                {mode === 'edit' && messageQuery.isError
+                    ? <AlertBox />
+                    : (
+                        <>
+                            <AlertDialog
+                                id='discard-changes-dialog'
+                                title='Are you sure that you want to discard these changes?'
+                                description={`By clicking ‘discard changes' none of the changes you have made to this screen will be stored.`}
+                                isOpen={showDiscardChangesDialog}
+                                onCancel={() => cancelMessageMapping()}
+                                onConfirm={() => setShowDiscardChangesDialog(false)}
+                                cancelBtnText='Discard changes'
+                                confirmBtnText='Continue working'
                             />
-                            <SubmitButtonSection
-                                mode={mode}
-                                isSubmitting={saveMessageMappingMutation.isLoading}
+
+                            <ContentHeader
+                                title={title}
+                                buttons={[toolbarButtons]}
+                                sx={{ minHeight: 64 }}
                             />
+
+                            <Form<SetMessageMappingRequestArguments>
+                                initialValues={{
+                                    name: '',
+                                    description: '',
+                                    fields: [],
+                                }}
+                                onSubmit={handleNewMessageSave}
+                            >
+                                <MessageDetailsSection mode={mode} />
+                                {showTable
+                                    ? <>
+                                        <TableSection
+                                            mode={mode}
+                                            selectedTable={selectedTable}
+                                            onBackToSearchResultsClicked={() => removeSelectedTable()}
+                                        />
+                                        <SubmitButtonSection
+                                            mode={mode}
+                                            isSubmitting={saveMessageMappingMutation.isLoading}
+                                        />
+                                    </>
+
+                                    : <TableSearchSection
+                                        mode={mode}
+                                        onTableSelected={setSelectedTable}
+                                        searchInput={searchInput}
+                                        setSearchInput={setSearchInput}
+                                    />
+                                }
+                            </Form>
                         </>
-
-                        : <TableSearchSection
-                            mode={mode}
-                            onTableSelected={setSelectedTable}
-                            searchInput={searchInput}
-                            setSearchInput={setSearchInput}
-                        />
-                    }
-                </Form>
+                    )
+                }
             </ContentContainer>
         </>
     );

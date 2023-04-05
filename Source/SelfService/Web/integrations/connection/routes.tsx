@@ -36,7 +36,7 @@ export const routes: RouteObject[] = [
                         element: <ChangeMessageView />,
                     },
                     {
-                        path: 'edit/:messageId',
+                        path: 'edit/:table/:messageId',
                         element: <ChangeMessageView />,
                     },
                 ]
