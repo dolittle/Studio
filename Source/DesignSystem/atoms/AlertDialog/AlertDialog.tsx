@@ -97,6 +97,12 @@ export type AlertDialogProps = {
      * The callback that is called when the dialog is confirmed.
      */
     onConfirm: () => void;
+
+    /**
+     * The callback that is called when the dialog is closed.
+     * @default onCancel
+     */
+    onClose?: () => void;
 };
 
 /**
@@ -104,10 +110,10 @@ export type AlertDialogProps = {
  * @param {AlertDialogProps} props - The {@link AlertDialogProps} that contains the properties for the alert dialog.
  * @returns A {@link AlertDialog} component.
  */
-export const AlertDialog = ({ id, title, description, children, confirmBtnColor, cancelBtnText, confirmBtnText, isOpen, onCancel, onConfirm }: AlertDialogProps) =>
+export const AlertDialog = ({ id, title, description, children, confirmBtnColor, cancelBtnText, confirmBtnText, isOpen, onCancel, onConfirm, onClose }: AlertDialogProps) =>
     <Dialog
         open={isOpen ?? false}
-        onClose={onCancel}
+        onClose={onClose ?? onCancel}
         aria-labelledby={`${id}-dialog-title`}
         aria-describedby={`${id}-dialog-description`}
         PaperComponent={(props: PaperProps) =>
@@ -118,7 +124,7 @@ export const AlertDialog = ({ id, title, description, children, confirmBtnColor,
     >
         <DialogTitle id={`${id}-dialog-title`} sx={styles.title}>
             {title}
-            <IconButton tooltipText='Close dialog' edge='end' onClick={onCancel} />
+            <IconButton tooltipText='Close dialog' edge='end' onClick={onClose ?? onCancel} />
         </DialogTitle>
 
         <DialogContent sx={{ typography: 'body2' }}>
