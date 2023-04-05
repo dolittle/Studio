@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 
 import { useFormContext } from 'react-hook-form';
 
@@ -9,7 +9,7 @@ import { Grid, LinearProgress } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 import { AlertBox, Button, Icon, MaxWidthTextBlock, Switch } from '@dolittle/design-system/';
 
-import { FieldMapping, TableListingEntry } from '../../../../../../apis/integrations/generated';
+import { FieldMapping, MappedField, TableListingEntry } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
 
 import { useConnectionId } from '../../../../../routes.hooks';
@@ -21,13 +21,15 @@ import { DataGridTableListingEntry, MessageMappingTable } from './MessageMapping
 
 export type TableSectionProps = ViewModeProps & {
     selectedTableName: string;
+    initialSelectedFields: MappedField[];
     onBackToSearchResultsClicked: () => void;
 };
 
 export const TableSection = (props: TableSectionProps) => {
     const connectionId = useConnectionId();
     const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>([]);
-    const [hideUnselectedRows, setHideUnselectedRows] = useState(false);
+    const [hideUnselectedRows, setHideUnselectedRows] = useState(props.mode === 'edit');
+
     const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(new Map());
     const { setValue } = useFormContext();
 
@@ -57,6 +59,37 @@ export const TableSection = (props: TableSectionProps) => {
         [allMappableTableColumns, selectedIds]
     );
 
+    const initialMapped: Map<string, FieldMapping> = useMemo(() => new Map(
+        props.initialSelectedFields.map(
+            field => [
+                field.mappedColumn?.m3ColumnName!, {
+                    columnName: field.mappedColumn?.m3ColumnName!,
+                    fieldName: field.mappedName,
+                    fieldDescription: field.mappedDescription,
+                }]) || []),
+        [props.initialSelectedFields]);
+
+    useEffect(() => {
+        setMappedFields(initialMapped);
+    }, [initialMapped]);
+
+    const initialSelected = useMemo(
+        () => props.initialSelectedFields.map(field => field.mappedColumn?.m3ColumnName!) || [],
+        [props.initialSelectedFields]
+    );
+    useEffect(() => {
+        setSelectedRowIds(initialSelected);
+    }, [initialSelected]);
+
+    useEffect(() => {
+        const fields: FieldMapping[] = selectedTableColumns.map(column => ({
+            columnName: column.m3ColumnName!,
+            fieldName: column.fieldName,
+            fieldDescription: '',
+        }));
+        setValue('fields', fields);
+    }, [selectedTableColumns]);
+
     const onFieldMapped = (m3Field: string, mappedFieldName: any) => {
         setMappedFields((prevMappedFields) => {
             const newMappedFields = new Map(prevMappedFields);
@@ -68,15 +101,6 @@ export const TableSection = (props: TableSectionProps) => {
             return newMappedFields;
         });
     };
-
-    React.useEffect(() => {
-        const fields: FieldMapping[] = selectedTableColumns.map(column => ({
-            columnName: column.m3ColumnName!,
-            fieldName: column.fieldName,
-            fieldDescription: '',
-        }));
-        setValue('fields', fields);
-    }, [selectedTableColumns]);
 
     return (
         <>

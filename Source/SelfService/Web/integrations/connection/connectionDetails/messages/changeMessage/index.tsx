@@ -34,19 +34,24 @@ export const ChangeMessageView = () => {
     const navigate = useNavigate();
     const { table, messageId } = useParams();
     const connectionId = useConnectionId();
-    const saveMessageMappingMutation = useConnectionsIdMessageMappingsTablesTableMessagesMessagePost();
-    const messageQuery = useConnectionsIdMessageMappingsTablesTableMessagesMessageGet({ id: connectionId!, table: table!, message: messageId! });
-
     const [searchInput, setSearchInput] = useState<string>('');
-    const [selectedTableName, setSelectedTableName] = useState<string>();
+    const [selectedTableName, setSelectedTableName] = useState<string>('');
     const [showDiscardChangesDialog, setShowDiscardChangesDialog] = useState(false);
 
+    const saveMessageMappingMutation = useConnectionsIdMessageMappingsTablesTableMessagesMessagePost();
+
+    const messageQuery = useConnectionsIdMessageMappingsTablesTableMessagesMessageGet({ id: connectionId!, table: table!, message: messageId! });
+
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
-    const showTable = !!selectedTableName;
+    const showTable = !!selectedTableName || mode === 'edit';
     const title = mode === 'new' ? 'Create New Message Type' : `Edit Message Type - ${messageId}`;
-    if(mode === 'edit' && table && !selectedTableName) {
+
+    const messageType = messageQuery.data?.value;
+
+    if (mode === 'edit' && table && !selectedTableName) {
         setSelectedTableName(table);
     }
+
 
     const toolbarButtons = {
         label: 'Discard changes',
@@ -93,7 +98,7 @@ export const ChangeMessageView = () => {
         });
     };
 
-    const removeSelectedTable = () => setSelectedTableName(undefined);
+    const removeSelectedTable = () => setSelectedTableName('');
 
     return (
         <>
@@ -133,6 +138,7 @@ export const ChangeMessageView = () => {
                                         <TableSection
                                             mode={mode}
                                             selectedTableName={selectedTableName}
+                                            initialSelectedFields={messageType?.fieldMappings ?? []}
                                             onBackToSearchResultsClicked={() => removeSelectedTable()}
                                         />
                                         <SubmitButtonSection
