@@ -40,11 +40,16 @@ export interface ConnectionsIdMessageMappingsGetRequest {
     pageSize?: number;
 }
 
+export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest {
+    id: string;
+    table: string;
+    message: string;
+}
+
 export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest {
     id: string;
     table: string;
     message: string;
-    xOrganizationId?: string;
 }
 
 export interface ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest {
@@ -101,6 +106,45 @@ export class MessageMappingApi extends runtime.BaseAPI {
 
     /**
      */
+    async connectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageDeployPost.');
+        }
+
+        if (requestParameters.table === null || requestParameters.table === undefined) {
+            throw new runtime.RequiredError('table','Required parameter requestParameters.table was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageDeployPost.');
+        }
+
+        if (requestParameters.message === null || requestParameters.message === undefined) {
+            throw new runtime.RequiredError('message','Required parameter requestParameters.message was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageDeployPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        const response = await this.request({
+            path: `/connections/{id}/message-mappings/tables/{table}/messages/{message}/deploy`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"table"}}`, encodeURIComponent(String(requestParameters.table))).replace(`{${"message"}}`, encodeURIComponent(String(requestParameters.message))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async connectionsIdMessageMappingsTablesTableMessagesMessageDeployPost(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.connectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     */
     async connectionsIdMessageMappingsTablesTableMessagesMessageGetRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageMappingModelResult>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageGet.');
@@ -117,10 +161,6 @@ export class MessageMappingApi extends runtime.BaseAPI {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters.xOrganizationId !== undefined && requestParameters.xOrganizationId !== null) {
-            headerParameters['X-Organization-Id'] = String(requestParameters.xOrganizationId);
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
@@ -145,7 +185,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
 
     /**
      */
-    async connectionsIdMessageMappingsTablesTableMessagesMessagePostRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageMappingModelResult>> {
+    async connectionsIdMessageMappingsTablesTableMessagesMessagePostRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessagePost.');
         }
@@ -176,14 +216,13 @@ export class MessageMappingApi extends runtime.BaseAPI {
             body: SetMessageMappingRequestArgumentsToJSON(requestParameters.setMessageMappingRequestArguments),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MessageMappingModelResultFromJSON(jsonValue));
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      */
-    async connectionsIdMessageMappingsTablesTableMessagesMessagePost(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageMappingModelResult> {
-        const response = await this.connectionsIdMessageMappingsTablesTableMessagesMessagePostRaw(requestParameters, initOverrides);
-        return await response.value();
+    async connectionsIdMessageMappingsTablesTableMessagesMessagePost(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.connectionsIdMessageMappingsTablesTableMessagesMessagePostRaw(requestParameters, initOverrides);
     }
 
 }
