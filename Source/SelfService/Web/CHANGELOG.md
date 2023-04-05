@@ -1,3 +1,15 @@
+# [3.4.8] - 2023-4-5 [PR: #363](https://github.com/dolittle/Studio/pull/363)
+- Add query for getting a message
+- Use query to fetch message type on edit page
+- Change selectedTable to be selectedTableName.
+- Use the existing field mapping to set the initial state in table
+- Not show "back to search" for edit mode
+- Only render content if new or query returns data
+- Rename wording of hide/show selected switch
+- Remove the "isDirty" check for now - need to get this to work with table values
+- Add support to override the onClose action on AlertDialog
+
+
 # [3.4.7] - 2023-4-5 [PR: #362](https://github.com/dolittle/Studio/pull/362)
 ## Summary
 
