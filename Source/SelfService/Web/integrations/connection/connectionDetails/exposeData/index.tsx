@@ -102,7 +102,7 @@ export const ExposeDataView = () => {
             </Box>
 
             <Collapse in={openCredentials}>
-                <Grid container xs spacing={4} sx={{ my: 3, pb: 2, justifyContent: 'space-around' }}>
+                <Grid container xs sx={{ my: 3, pb: 2, justifyContent: 'space-around' }}>
                     <Grid item>
                         <Typography sx={{ mb: 2 }}>Who or what are these credentials for?</Typography>
                         <TextField id='credentialsName' label='Name' size='small' />
