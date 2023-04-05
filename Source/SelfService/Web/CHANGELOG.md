@@ -1,3 +1,11 @@
+# [3.4.9] - 2023-4-5 [PR: #364](https://github.com/dolittle/Studio/pull/364)
+- Move messageList into its own component folder
+- Map values from the messageMappingsModel
+- Move practical date formating functions into utils so it's available for both modules
+- Format date correctly
+- Allow clicking a table entry to navigate to the edit view of message type
+
+
 # [3.4.8] - 2023-4-5 [PR: #363](https://github.com/dolittle/Studio/pull/363)
 - Add query for getting a message
 - Use query to fetch message type on edit page
