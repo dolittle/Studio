@@ -1,3 +1,13 @@
+# [3.4.6] - 2023-4-5 [PR: #361](https://github.com/dolittle/Studio/pull/361)
+- Successfully map the fiieldName changes from table into state
+- clean up the code and remove some logging
+- Use form context to set the selected fields in form
+- Use form context's isValid to disable save button
+- Mark row as selected when value has been mapped
+- Wire up the mutation to save a new message type
+- Add success and error handling with navigation and snackbars
+
+
 # [3.4.5] - 2023-4-4 [PR: #360](https://github.com/dolittle/Studio/pull/360)
 - Add query to get a MessageMappingTable
 - Show MessageMappingTable
