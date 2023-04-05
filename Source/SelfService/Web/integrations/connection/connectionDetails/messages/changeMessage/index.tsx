@@ -107,54 +107,62 @@ export const ChangeMessageView = () => {
                     ? <AlertBox />
                     : (
                         <>
-                            <AlertDialog
-                                id='discard-changes-dialog'
-                                title='Are you sure that you want to discard these changes?'
-                                description={`By clicking ‘discard changes' none of the changes you have made to this screen will be stored.`}
-                                isOpen={showDiscardChangesDialog}
-                                onCancel={() => cancelMessageMapping()}
-                                onConfirm={() => setShowDiscardChangesDialog(false)}
-                                cancelBtnText='Discard changes'
-                                confirmBtnText='Continue working'
-                            />
-
-                            <ContentHeader
-                                title={title}
-                                buttons={[toolbarButtons]}
-                                sx={{ minHeight: 64 }}
-                            />
-
-                            <Form<SetMessageMappingRequestArguments>
-                                initialValues={{
-                                    name: '',
-                                    description: '',
-                                    fields: [],
-                                }}
-                                onSubmit={handleNewMessageSave}
-                            >
-                                <MessageDetailsSection mode={mode} />
-                                {showTable
-                                    ? <>
-                                        <TableSection
-                                            mode={mode}
-                                            selectedTableName={selectedTableName}
-                                            initialSelectedFields={messageType?.fieldMappings ?? []}
-                                            onBackToSearchResultsClicked={() => removeSelectedTable()}
-                                        />
-                                        <SubmitButtonSection
-                                            mode={mode}
-                                            isSubmitting={saveMessageMappingMutation.isLoading}
-                                        />
-                                    </>
-
-                                    : <TableSearchSection
-                                        mode={mode}
-                                        onTableSelected={setSelectedTableName}
-                                        searchInput={searchInput}
-                                        setSearchInput={setSearchInput}
+                            {mode === 'new' || messageQuery.isSuccess && (
+                                <>
+                                    <AlertDialog
+                                        id='discard-changes-dialog'
+                                        title='Are you sure that you want to discard these changes?'
+                                        description={`By clicking ‘discard changes' none of the changes you have made to this screen will be stored.`}
+                                        isOpen={showDiscardChangesDialog}
+                                        onCancel={() => cancelMessageMapping()}
+                                        onConfirm={() => setShowDiscardChangesDialog(false)}
+                                        cancelBtnText='Discard changes'
+                                        confirmBtnText='Continue working'
                                     />
-                                }
-                            </Form>
+
+                                    <ContentHeader
+                                        title={title}
+                                        buttons={[toolbarButtons]}
+                                        sx={{ minHeight: 64 }}
+                                    />
+
+                                    <Form<SetMessageMappingRequestArguments>
+                                        initialValues={{
+                                            name: messageType?.name ?? '',
+                                            description: messageType?.description ?? '',
+                                            fields: messageType?.fieldMappings?.map(field => ({
+                                                columnName: field.mappedColumn?.m3ColumnName!,
+                                                fieldName: field.mappedName,
+                                                fieldDescription: field.mappedDescription,
+                                            })) || [],
+                                        }}
+                                        onSubmit={handleNewMessageSave}
+                                    >
+                                        <MessageDetailsSection mode={mode} />
+                                        {showTable
+                                            ? <>
+                                                <TableSection
+                                                    mode={mode}
+                                                    selectedTableName={selectedTableName}
+                                                    initialSelectedFields={messageType?.fieldMappings ?? []}
+                                                    onBackToSearchResultsClicked={() => removeSelectedTable()}
+                                                />
+                                                <SubmitButtonSection
+                                                    mode={mode}
+                                                    isSubmitting={saveMessageMappingMutation.isLoading}
+                                                />
+                                            </>
+
+                                            : <TableSearchSection
+                                                mode={mode}
+                                                onTableSelected={setSelectedTableName}
+                                                searchInput={searchInput}
+                                                setSearchInput={setSearchInput}
+                                            />
+                                        }
+                                    </Form>
+                                </>
+                            )}
                         </>
                     )
                 }
