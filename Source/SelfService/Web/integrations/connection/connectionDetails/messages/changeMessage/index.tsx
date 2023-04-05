@@ -22,12 +22,11 @@ import { MessageDetailsSection } from './components/MessageDetailsSection';
 import { TableSection } from './components/TableSection';
 import { SubmitButtonSection } from './components/SubmitButtonSection';
 
-export type NewMessageMappingParameters = {
+export type NewMessageMappingParameters = SetMessageMappingRequestArguments &{
     name: string;
-    description: string;
-    messageTypeName: string;
-    messageTypeDescription: string;
 };
+
+
 
 export const ChangeMessageView = () => {
     const location = useLocation();
@@ -87,7 +86,7 @@ export const ChangeMessageView = () => {
             }
         }, {
             onSuccess(data, variables, context) {
-                navigate(`messages`);
+                navigate(`..`);
                 enqueueSnackbar('Message successfully created', { variant: 'success' });
             },
             onError(error, variables, context) {
@@ -126,9 +125,9 @@ export const ChangeMessageView = () => {
                                         sx={{ minHeight: 64 }}
                                     />
 
-                                    <Form<SetMessageMappingRequestArguments>
+                                    <Form<NewMessageMappingParameters>
                                         initialValues={{
-                                            name: messageType?.name ?? '',
+                                            name: messageId ?? '',
                                             description: messageType?.description ?? '',
                                             fields: messageType?.fieldMappings?.map(field => ({
                                                 columnName: field.mappedColumn?.m3ColumnName!,
