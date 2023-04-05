@@ -14,7 +14,7 @@ mkdir -p in/integrations-api
 mkdir -p out/integrations-api/typescript-fetch
 
 # wget the swagger.json for bridge-api localhost
-wget http://localhost:5000/swagger/v1/swagger.json -O ./in/integrations-api/swagger.json
+wget http://127.0.0.1:5000/swagger/v1/swagger.json -O ./in/integrations-api/swagger.json
 
 # generate bridge-api client in typescript-fetch
 docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate -i /local/in/integrations-api/swagger.json -g typescript-fetch -o /local/out/integrations-api/typescript-fetch
