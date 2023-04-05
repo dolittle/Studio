@@ -1,3 +1,11 @@
+# [3.4.7] - 2023-4-5 [PR: #362](https://github.com/dolittle/Studio/pull/362)
+## Summary
+
+Added 'Expose Data' static page to Connection Details.
+
+<img width="1261" alt="Screenshot 2023-04-05 at 12 57 27" src="https://user-images.githubusercontent.com/19160439/230048014-590175c9-f050-4837-bbd9-b012ada59e94.png">
+
+
 # [3.4.6] - 2023-4-5 [PR: #361](https://github.com/dolittle/Studio/pull/361)
 - Successfully map the fiieldName changes from table into state
 - clean up the code and remove some logging
