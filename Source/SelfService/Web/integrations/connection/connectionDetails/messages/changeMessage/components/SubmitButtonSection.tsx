@@ -26,7 +26,7 @@ export const SubmitButtonSection = (props: SubmitButtonSectionProps) => {
                 variant='fullwidth'
                 type='submit'
                 sx={{ mt: 2.125 }}
-                disabled={!isValid || !isDirty || props.isSubmitting || props.disabled  }
+                disabled={!isValid || props.isSubmitting || props.disabled  }
             />
         </ContentSection>
     );
