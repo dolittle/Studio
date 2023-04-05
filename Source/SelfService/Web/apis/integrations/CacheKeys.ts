@@ -8,6 +8,9 @@ export enum CACHE_KEYS {
 
     //ConnectionApi
     Connection_GET = 'connection_get',
+
+    //MessageMappingApi
+    ConnectionMessageMappings_GET = 'connection_messages_get',
     ConnectionMessageMapping_GET = 'connection_message_get',
 
     //MappableTablesApi
