@@ -8,6 +8,7 @@ import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 
 import { DataTableToolbar, Icon } from '@dolittle/design-system';
 import { MessageMappingModel } from '../../../../../apis/integrations/generated';
+import { formatStartingDate, formatDate } from '../../../../../utils/dates';
 
 const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
     {
@@ -41,7 +42,7 @@ const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
         headerName: 'Last Deployed',
         //minWidth: 270,
         flex: 1,
-        valueGetter: (params) => params.row.deployedAt,
+        valueGetter: (params) => params.row.deployedAt ? formatDate(params.row.deployedAt) : '',
     },
 ];
 

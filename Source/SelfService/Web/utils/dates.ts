@@ -65,3 +65,8 @@ export const formatStartingDate = (initialDate: string) => {
 
     return format(parsedDate, 'yyyy/MM/dd HH:mm:ss');
 };
+
+export const formatDate = (date: Date): string => {
+    return format(date, 'yyyy/MM/dd');
+};
+
