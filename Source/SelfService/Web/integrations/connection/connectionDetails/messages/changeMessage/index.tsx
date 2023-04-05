@@ -59,6 +59,7 @@ export const ChangeMessageView = () => {
         onClick: () => setShowDiscardChangesDialog(true),
     } as const;
 
+
     // TODO: Implement this.
     // Prevent the user from accidentally closing the browser tab if they have unsaved changes.
 
