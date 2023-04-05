@@ -27,10 +27,23 @@ export type TableSectionProps = ViewModeProps & {
 
 export const TableSection = (props: TableSectionProps) => {
     const connectionId = useConnectionId();
-    const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>([]);
+    const initialSelected = useMemo(
+        () => props.initialSelectedFields.map(field => field.mappedColumn?.m3ColumnName!) || [],
+        [props.initialSelectedFields]
+    );
+    const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>(initialSelected);
     const [hideUnselectedRows, setHideUnselectedRows] = useState(props.mode === 'edit');
 
-    const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(new Map());
+    const initialMapped: Map<string, FieldMapping> = useMemo(() => new Map(
+        props.initialSelectedFields.map(
+            field => [
+                field.mappedColumn?.m3ColumnName!, {
+                    columnName: field.mappedColumn?.m3ColumnName!,
+                    fieldName: field.mappedName,
+                    fieldDescription: field.mappedDescription,
+                }]) || []),
+        [props.initialSelectedFields]);
+    const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(initialMapped);
     const { setValue } = useFormContext();
 
     if (!connectionId || !props.selectedTableName) return <AlertBox />;
@@ -58,28 +71,6 @@ export const TableSection = (props: TableSectionProps) => {
         () => gridMappableTableColumns.filter(column => selectedIds.includes(column.m3ColumnName!)),
         [allMappableTableColumns, selectedIds]
     );
-
-    const initialMapped: Map<string, FieldMapping> = useMemo(() => new Map(
-        props.initialSelectedFields.map(
-            field => [
-                field.mappedColumn?.m3ColumnName!, {
-                    columnName: field.mappedColumn?.m3ColumnName!,
-                    fieldName: field.mappedName,
-                    fieldDescription: field.mappedDescription,
-                }]) || []),
-        [props.initialSelectedFields]);
-
-    useEffect(() => {
-        setMappedFields(initialMapped);
-    }, [initialMapped]);
-
-    const initialSelected = useMemo(
-        () => props.initialSelectedFields.map(field => field.mappedColumn?.m3ColumnName!) || [],
-        [props.initialSelectedFields]
-    );
-    useEffect(() => {
-        setSelectedRowIds(initialSelected);
-    }, [initialSelected]);
 
     useEffect(() => {
         const fields: FieldMapping[] = selectedTableColumns.map(column => ({
