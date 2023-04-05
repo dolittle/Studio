@@ -22,7 +22,7 @@ import { MessageDetailsSection } from './components/MessageDetailsSection';
 import { TableSection } from './components/TableSection';
 import { SubmitButtonSection } from './components/SubmitButtonSection';
 
-export type NewMessageMappingParameters = SetMessageMappingRequestArguments &{
+export type NewMessageMappingParameters = SetMessageMappingRequestArguments & {
     name: string;
 };
 
@@ -104,7 +104,7 @@ export const ChangeMessageView = () => {
                     ? <AlertBox />
                     : (
                         <>
-                            {mode === 'new' || messageQuery.isSuccess && (
+                            {(mode === 'new' || messageQuery.isSuccess) && (
                                 <>
                                     <AlertDialog
                                         id='discard-changes-dialog'
