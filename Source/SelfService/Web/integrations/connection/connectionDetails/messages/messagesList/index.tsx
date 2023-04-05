@@ -24,23 +24,18 @@ export const MessagesListView = () => {
 
     //console.log(data?.value);
 
-    const messagesDataRows = data?.value?.map(message => ({
-        id: message.id,
-        name: message.name,
-        description: message.description,
-        // type: message.type,
-        // createdAt: message.createdAt,
-        // updatedAt: message.updatedAt,
-        //actions: <Outlet state={{ message }} />,
+    const messageTypesRows = data?.value?.map(mapping => ({
+        id: mapping.id!,
+        ...mapping
     })) || [];
 
     if (isLoading) return <LoadingSpinner />;
     if (isError) return <AlertBox />;
 
     return (
-        messagesDataRows.length ?
+        messageTypesRows.length ?
             <>
-                <MessagesTable rows={messagesDataRows} />
+                <MessagesTable rows={messageTypesRows} />
                 <CreateMessagesButton onClick={() => { handleCreateNewMessage(); }} />
             </> :
             <NoMessages onCreateNew={() => { handleCreateNewMessage(); }} />
