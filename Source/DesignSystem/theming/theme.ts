@@ -218,9 +218,12 @@ const components: Components & DataGridProComponents = {
                 display: 'none',
             },
             cell: {
-                whiteSpace: 'normal',
-                wordWrap: 'break-word',
-                borderColor: 'rgba(226, 255, 97, 0.05)',
+                'whiteSpace': 'normal',
+                'wordWrap': 'break-word',
+                'borderColor': 'rgba(226, 255, 97, 0.05)',
+                ':not(.MuiDataGrid-cell--editable)': {
+                    ':focus': { outline: 'none' },
+                },
             },
             cellContent: {
                 paddingTop: 11,
