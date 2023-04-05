@@ -65,7 +65,7 @@ type MessagesTableProps = {
 };
 
 export const MessagesTable = ({ rows }: MessagesTableProps) =>
-    <Paper sx={{ width: 1, mt: 2 }}>
+    <Paper sx={{ width: 1, mt: 2, boxShadow: 'none' }}>
         <DataGridPro
             rows={rows}
             columns={messagesDataColumns}
