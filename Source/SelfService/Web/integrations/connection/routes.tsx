@@ -7,7 +7,7 @@ import { RouteObject, Navigate } from 'react-router-dom';
 
 import { ConnectionDetails } from './connectionDetails';
 import { ConfigurationView } from './connectionDetails/configuration';
-import { ExposeView } from './connectionDetails/expose';
+import { ExposeDataView } from './connectionDetails/exposeData';
 import { MessagesListView } from './connectionDetails/messages/MessagesListView';
 import { MessagesViewRoot } from './connectionDetails/messages';
 import { ChangeMessageView } from './connectionDetails/messages/changeMessage';
@@ -43,7 +43,7 @@ export const routes: RouteObject[] = [
             },
             {
                 path: 'expose',
-                element: <ExposeView />,
+                element: <ExposeDataView />,
             },
         ],
     },
