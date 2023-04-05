@@ -9,7 +9,7 @@ import { Grid, LinearProgress } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 import { AlertBox, Button, Icon, MaxWidthTextBlock, Switch } from '@dolittle/design-system/';
 
-import { FieldMapping, MappedField, TableListingEntry } from '../../../../../../apis/integrations/generated';
+import { FieldMapping, MappedField } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
 
 import { useConnectionId } from '../../../../../routes.hooks';
@@ -44,7 +44,7 @@ export const TableSection = (props: TableSectionProps) => {
                 }]) || []),
         [props.initialSelectedFields]);
     const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(initialMapped);
-    const { setValue } = useFormContext();
+    const { setValue: setFormValue, getValues: getFormValues,  } = useFormContext();
 
     if (!connectionId || !props.selectedTableName) return <AlertBox />;
 
@@ -78,7 +78,7 @@ export const TableSection = (props: TableSectionProps) => {
             fieldName: column.fieldName,
             fieldDescription: '',
         }));
-        setValue('fields', fields);
+        setFormValue('fields', fields);
     }, [selectedTableColumns]);
 
     const onFieldMapped = (m3Field: string, mappedFieldName: any) => {
