@@ -74,10 +74,10 @@ export const ChangeMessageView = () => {
         navigate('..');
     };
 
-    const handleNewMessageSave = (values: SetMessageMappingRequestArguments) => {
+    const handleNewMessageSave = (values: NewMessageMappingParameters) => {
         saveMessageMappingMutation.mutate({
             id: connectionId!,
-            message: messageId!,
+            message: values.name,
             table: selectedTableName!,
             setMessageMappingRequestArguments: {
                 description: values.description!,
