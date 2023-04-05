@@ -40,6 +40,7 @@ import {
     RefreshRounded,
     RestartAltRounded,
     RocketLaunch,
+    SaveRounded,
     Search,
     SettingsRounded,
     SupervisedUserCircleRounded,
@@ -92,6 +93,7 @@ export interface SvgIconsDefinition {
     'RefreshRounded' |
     'RestartAltRounded' |
     'RocketLaunch' |
+    'SaveRounded' |
     'Search' |
     'SettingsRounded' |
     'SupervisedUserCircleRounded' |
@@ -140,6 +142,7 @@ export const SvgIcons = {
     RefreshRounded: <RefreshRounded />,
     RestartAltRounded: <RestartAltRounded />,
     RocketLaunch: <RocketLaunch />,
+    SaveRounded: <SaveRounded />,
     Search: <Search />,
     SettingsRounded: <SettingsRounded />,
     SupervisedUserCircleRounded: <SupervisedUserCircleRounded />,
