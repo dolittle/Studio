@@ -38,12 +38,15 @@ export const ChangeMessageView = () => {
     const messageQuery = useConnectionsIdMessageMappingsTablesTableMessagesMessageGet({ id: connectionId!, table: table!, message: messageId! });
 
     const [searchInput, setSearchInput] = useState<string>('');
-    const [selectedTable, setSelectedTable] = useState<TableListingEntry>();
+    const [selectedTableName, setSelectedTableName] = useState<string>();
     const [showDiscardChangesDialog, setShowDiscardChangesDialog] = useState(false);
 
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
-    const showTable = !!selectedTable;
+    const showTable = !!selectedTableName;
     const title = mode === 'new' ? 'Create New Message Type' : `Edit Message Type - ${messageId}`;
+    if(mode === 'edit' && table && !selectedTableName) {
+        setSelectedTableName(table);
+    }
 
     const toolbarButtons = {
         label: 'Discard changes',
@@ -72,7 +75,7 @@ export const ChangeMessageView = () => {
         saveMessageMappingMutation.mutate({
             id: connectionId!,
             message: values.name!,
-            table: selectedTable?.name!,
+            table: selectedTableName!,
             setMessageMappingRequestArguments: {
                 name: values.name!,
                 description: values.description!,
@@ -90,7 +93,7 @@ export const ChangeMessageView = () => {
         });
     };
 
-    const removeSelectedTable = () => setSelectedTable(undefined);
+    const removeSelectedTable = () => setSelectedTableName(undefined);
 
     return (
         <>
@@ -129,7 +132,7 @@ export const ChangeMessageView = () => {
                                     ? <>
                                         <TableSection
                                             mode={mode}
-                                            selectedTable={selectedTable}
+                                            selectedTableName={selectedTableName}
                                             onBackToSearchResultsClicked={() => removeSelectedTable()}
                                         />
                                         <SubmitButtonSection
@@ -140,7 +143,7 @@ export const ChangeMessageView = () => {
 
                                     : <TableSearchSection
                                         mode={mode}
-                                        onTableSelected={setSelectedTable}
+                                        onTableSelected={setSelectedTableName}
                                         searchInput={searchInput}
                                         setSearchInput={setSearchInput}
                                     />

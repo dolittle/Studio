@@ -20,7 +20,7 @@ import { DataGridTableListingEntry, MessageMappingTable } from './MessageMapping
 
 
 export type TableSectionProps = ViewModeProps & {
-    selectedTable: TableListingEntry;
+    selectedTableName: string;
     onBackToSearchResultsClicked: () => void;
 };
 
@@ -31,11 +31,11 @@ export const TableSection = (props: TableSectionProps) => {
     const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(new Map());
     const { setValue } = useFormContext();
 
-    if (!connectionId || !props.selectedTable.name) return <AlertBox />;
+    if (!connectionId || !props.selectedTableName) return <AlertBox />;
 
     const { data: mappableTableResult, isLoading, isInitialLoading } = useConnectionsIdMessageMappingsTablesTableGet({
         id: connectionId,
-        table: props.selectedTable.name,
+        table: props.selectedTableName,
     });
 
     const allMappableTableColumns = mappableTableResult?.value?.columns || [];
@@ -82,7 +82,7 @@ export const TableSection = (props: TableSectionProps) => {
         <>
             {isInitialLoading ? <LinearProgress /> : (
                 <ContentSection
-                    title={`${props.selectedTable.name} Table`}
+                    title={`${props.selectedTableName} Table`}
                     beforeHeaderSlot={
                         <Button
                             label='Back to Search Results'
