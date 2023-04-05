@@ -4,15 +4,15 @@
 import React from 'react';
 
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useConnectionId } from '../../../routes.hooks';
+import { useConnectionId } from '../../../../routes.hooks';
 
 import { AlertBox, LoadingSpinner } from '@dolittle/design-system';
 
-import { useConnectionsIdMessageMappingsGet } from '../../../../apis/integrations/messageMappingApi.hooks';
+import { useConnectionsIdMessageMappingsGet } from '../../../../../apis/integrations/messageMappingApi.hooks';
 
-import { MessagesTable } from './components/MessagesTable';
-import { CreateMessagesButton } from './components/CreateMessagesButton';
-import { NoMessages } from './components/NoMessages';
+import { MessagesTable } from './MessagesTable';
+import { CreateMessagesButton } from './CreateMessagesButton';
+import { NoMessages } from './NoMessages';
 
 export const MessagesListView = () => {
     const connectionId = useConnectionId();
