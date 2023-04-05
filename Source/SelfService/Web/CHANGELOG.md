@@ -1,3 +1,9 @@
+# [3.4.13] - 2023-4-5 [PR: #367](https://github.com/dolittle/Studio/pull/367)
+## Summary
+
+Added initial Configuration page.
+
+
 # [3.4.10] - 2023-4-5 [PR: #365](https://github.com/dolittle/Studio/pull/365)
 - Update codegen to go towards 127.0.0.1 (since bridge api is hosted in a devcontainer)
 - Updated generated api's
