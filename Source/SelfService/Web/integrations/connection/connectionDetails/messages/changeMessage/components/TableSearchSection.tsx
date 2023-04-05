@@ -24,7 +24,7 @@ const SearchFieldAdornment =
     </InputAdornment>;
 
 export type TableSearchSectionProps = ViewModeProps & {
-    onTableSelected: (table: TableListingEntry) => void;
+    onTableSelected: (tableName: string) => void;
     searchInput: string;
     setSearchInput: (searchInput: string) => void;
 };
@@ -53,7 +53,7 @@ export const TableSearchSection = ({ onTableSelected, searchInput, setSearchInpu
                     <TableSearchResults
                         tableListings={searchResults}
                         isLoading={query.isLoading}
-                        onTableSelected={table => { onTableSelected(table); }}
+                        onTableSelected={table => { onTableSelected(table.name!); }}
                     />
                 </>
             }
