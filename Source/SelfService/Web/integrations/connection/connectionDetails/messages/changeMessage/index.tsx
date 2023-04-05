@@ -72,8 +72,7 @@ export const ChangeMessageView = () => {
     const cancelMessageMapping = () => {
         setShowDiscardChangesDialog(false);
 
-        if (mode === 'new') navigate('/integrations/connections');
-        else navigate(`/integrations/connections/${messageId}`);
+        navigate('..');
     };
 
     const handleNewMessageSave = (values: SetMessageMappingRequestArguments) => {
@@ -115,6 +114,7 @@ export const ChangeMessageView = () => {
                                         description={`By clicking ‘discard changes' none of the changes you have made to this screen will be stored.`}
                                         isOpen={showDiscardChangesDialog}
                                         onCancel={() => cancelMessageMapping()}
+                                        onClose={() => setShowDiscardChangesDialog(false)}
                                         onConfirm={() => setShowDiscardChangesDialog(false)}
                                         cancelBtnText='Discard changes'
                                         confirmBtnText='Continue working'
