@@ -17,8 +17,6 @@ export type ButtonProps = {
     /**
      * Buttons has four different variants.
      *
-     * The `text` variant is the default variant.
-     *
      * The `fullwidth` variant comes with custom styles and it takes up the entire width of its container.
      * @default text
      */
@@ -26,8 +24,6 @@ export type ButtonProps = {
 
     /**
      * Buttons has seven different colors.
-     *
-     * The `primary` color is the default color.
      *
      * `subtle` color inherits the color of the parent element.
      * @default primary
@@ -65,7 +61,7 @@ export type ButtonProps = {
     type?: 'button' | 'submit' | 'reset';
 
     /**
-     * Add a href to the button. If this is set, the button will be rendered as an anchor tag.
+     * Add a `href` to the button. If this is set, the button will be rendered as an `a` tag.
      * @default undefined
      */
     href?: string;
@@ -87,9 +83,7 @@ export type ButtonProps = {
     /**
      * The component to render button as.
      *
-     * Use `span` if you want button styles, but element isn't really a button - like inside data tables.
-     *
-     * If you used the href prop, the component will automatically render as an `a` tag.
+     * If you used the `href` prop, the component will automatically render as an `a` tag.
      * @default button
      */
     component?: 'button' | 'span' | 'a';
@@ -107,7 +101,7 @@ export type ButtonProps = {
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
 
     /**
-     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     * The `sx` prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      * @default undefined
      */
     sx?: SxProps;
@@ -121,7 +115,7 @@ export type ButtonProps = {
 
 /**
  * The button component is used to trigger an action or event, such as submitting a form, opening a dialog, canceling an action, or performing a delete operation.
- * @param {ButtonProps} props - The {@link ButtonProps} that contains the properties for the button component.
+ * @param {ButtonProps} props - The {@link ButtonProps}.
  * @returns A {@link Button} component.
  */
 export const Button = (
