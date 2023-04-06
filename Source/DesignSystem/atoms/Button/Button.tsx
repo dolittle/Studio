@@ -135,7 +135,7 @@ export const Button = (
         component={component === 'span' ? 'span' : href ? 'a' : 'button'}
         role={role}
         onClick={onClick}
-        sx={{ whiteSpace: 'nowrap', ...sx }}
+        sx={{ whiteSpace: 'nowrap', minHeight: 36, ...sx }}
         rel={target ? 'noopener noreferrer' : undefined}
         disableFocusRipple
         {...overrides}
