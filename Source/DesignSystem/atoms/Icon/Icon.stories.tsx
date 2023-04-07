@@ -34,5 +34,5 @@ export const Default = createStory({
 
 export const IconsWeUse = () =>
     <Box sx={{ '& svg': { m: 1 } }}>
-        {availableIcons.map(key => <Icon key={key} icon={key as SvgIconsDefinition['icon']} />)}
+        {availableIcons.map(key => <Icon key={key} icon={key as SvgIconsDefinition} />)}
     </Box>;

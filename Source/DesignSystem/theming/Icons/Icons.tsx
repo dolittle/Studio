@@ -51,56 +51,7 @@ import {
 
 import { Bridge, Dolittle, ContainerRegistry } from './CustomIcons';
 
-// TODO: This is a temporary solution to get the icons type working.
-export interface SvgIconsDefinition {
-    icon:
-    'AddBoxRounded' |
-    'AddCircle' |
-    'AppsRounded' |
-    'ArrowBack' |
-    'BackupRounded' |
-    'Bridge' |
-    'CancelRounded' |
-    'ContainerRegistry' |
-    'CheckCircleRounded' |
-    'CheckRounded' |
-    'ChevronRight' |
-    'CloseRounded' |
-    'CloudRounded' |
-    'CopyAllRounded' |
-    'DeleteRounded' |
-    'DescriptionRounded' |
-    'Dolittle' |
-    'DownloadRounded' |
-    'DnsRounded' |
-    'EditRounded' |
-    'ErrorRounded' |
-    'Explore' |
-    'ExpandCircleDownRounded' |
-    'ExpandMore' |
-    'ExpandLess' |
-    'FindInPageRounded' |
-    'HelpRounded' |
-    'HexagonRounded' |
-    'InsightsRounded' |
-    'KeyboardDoubleArrowLeft' |
-    'KeyboardDoubleArrowRight' |
-    'LogoutRounded' |
-    'MenuRounded' |
-    'MessageRounded' |
-    'MoreVertRounded' |
-    'PolylineRounded' |
-    'RefreshRounded' |
-    'RestartAltRounded' |
-    'RocketLaunch' |
-    'SaveRounded' |
-    'Search' |
-    'SettingsRounded' |
-    'SupervisedUserCircleRounded' |
-    'TextSnippetRounded' |
-    'UploadRounded' |
-    'WarningRounded'
-};
+export type SvgIconsDefinition = keyof typeof SvgIcons;
 
 export const SvgIcons = {
     AddBoxRounded: <AddBoxRounded />,

@@ -9,7 +9,7 @@ import { Icon, SvgIconsDefinition } from '@dolittle/design-system';
 
 type ConnectionStatusCondition = {
     color: 'text.secondary' | 'success.main' | 'warning.main' | 'error.main' | 'info.main';
-    icon: SvgIconsDefinition['icon'] | null;
+    icon: SvgIconsDefinition | null;
 };
 
 const connectionStatusCondition = (status: string): ConnectionStatusCondition => {
