@@ -6,9 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 
 import { DataGridPro, GridColDef, GridRowId, GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
-
 import { Box, Paper } from '@mui/material';
-import { AddCircle, DeleteRounded, DownloadRounded, ArrowDropDown } from '@mui/icons-material';
 
 import { Accordion, Button } from '@dolittle/design-system';
 
@@ -37,7 +35,7 @@ const envVariableColumns: GridColDef<EnvironmentVariableTableRow>[] = [
         valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
         editable: true,
         renderCell: ({ value }) => (
-            <Button label={value ? 'Yes' : 'No'} color='subtle' endWithIcon={<ArrowDropDown />} sx={{ width: 1, height: 1 }} />
+            <Button label={value ? 'Yes' : 'No'} color='subtle' endWithIcon='ArrowDropDownRounded' sx={{ width: 1, height: 1 }} />
         ),
         width: 90,
     },
@@ -238,25 +236,25 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     <Button
                         label='Add new variable row'
                         disabled={disableAddButton}
-                        startWithIcon={<AddCircle />}
+                        startWithIcon='AddCircle'
                         onClick={handleEnvVariableAdd}
                     />
                     <Button
                         label='Delete Variable(s)'
                         disabled={!selectedRowIds.length || noEnvVariables}
-                        startWithIcon={<DeleteRounded />}
+                        startWithIcon='DeleteRounded'
                         onClick={handleEnvVariableDelete}
                     />
                     <Button
                         label='Download secret env-variables yaml'
                         disabled={noSecretEnvVariables}
-                        startWithIcon={<DownloadRounded />}
+                        startWithIcon='DownloadRounded'
                         onClick={handleSecretEnvVariableDownload}
                     />
                     <Button
                         label='Download env-variables yaml'
                         disabled={noPublicEnvVariables}
-                        startWithIcon={<DownloadRounded />}
+                        startWithIcon='DownloadRounded'
                         onClick={handleEnvVariableDownload}
                     />
                 </Box>

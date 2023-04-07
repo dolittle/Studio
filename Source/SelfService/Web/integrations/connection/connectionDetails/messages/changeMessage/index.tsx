@@ -54,7 +54,7 @@ export const ChangeMessageView = () => {
 
     const toolbarButtons = {
         label: 'Discard changes',
-        startWithIcon: <Icon icon='CancelRounded' />,
+        startWithIcon: 'CancelRounded',
         color: 'subtle',
         onClick: () => setShowDiscardChangesDialog(true),
     } as const;

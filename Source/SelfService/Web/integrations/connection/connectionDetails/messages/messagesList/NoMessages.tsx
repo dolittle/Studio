@@ -3,8 +3,6 @@
 
 import React from 'react';
 
-import { Icon } from '@dolittle/design-system';
-
 import { NoEntityView } from '../../../../../components/noEntityView/noEntityView';
 
 export type NoMessagesProps = {
@@ -16,7 +14,7 @@ export const NoMessages = ({ onCreateNew }: NoMessagesProps) =>
         title='No message types have been created yet...'
         createEntityProps={{
             createEntityText: 'create new message types',
-            createEntityIcon: <Icon icon='MessageRounded' />,
+            createEntityIcon: 'MessageRounded',
             onCreateEntity: onCreateNew,
         }}
         description='Once you create your first message type, it will appear here.'

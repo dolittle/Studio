@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Typography } from '@mui/material';
 
-import { Button, Icon, MaxWidthTextBlock } from '@dolittle/design-system';
+import { Button, MaxWidthTextBlock } from '@dolittle/design-system';
 
 import { TextCopyBox } from './TextCopyBox';
 
@@ -18,7 +18,7 @@ export const ConnectorBundleConfiguration = () =>
 
         <Button
             label='Download Connector Bundle'
-            startWithIcon={<Icon icon='DownloadRounded' />}
+            startWithIcon='DownloadRounded'
             onClick={() => { }}
             sx={{ my: 3.5 }}
         />

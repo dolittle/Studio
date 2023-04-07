@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Box, Paper } from '@mui/material';
 
-import { Button } from '@dolittle/design-system';
+import { Button, SvgIconsDefinition } from '@dolittle/design-system';
 
 const styles = {
     deployButtonWrapper: {
@@ -43,7 +43,7 @@ const styles = {
 
 export type CreateEntityBoxProps = {
     createEntityText?: string;
-    createEntityIcon?: React.ReactElement;
+    createEntityIcon?: SvgIconsDefinition;
     onCreateEntity: () => void;
 };
 

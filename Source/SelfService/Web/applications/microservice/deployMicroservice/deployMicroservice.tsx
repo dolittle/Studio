@@ -2,12 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
 import { Typography } from '@mui/material';
-import { RocketLaunch } from '@mui/icons-material';
 
 import { Guid } from '@dolittle/rudiments';
 import { Button, Form, LoadingSpinner } from '@dolittle/design-system';
@@ -151,7 +151,7 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
                         variant='filled'
                         label='Deploy microservice'
                         type='submit'
-                        startWithIcon={<RocketLaunch />}
+                        startWithIcon='RocketLaunch'
                         sx={{ mt: 1 }}
                     />
                 )}

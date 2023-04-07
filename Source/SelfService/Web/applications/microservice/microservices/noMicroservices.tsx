@@ -3,8 +3,6 @@
 
 import React from 'react';
 
-import { Icon } from '@dolittle/design-system';
-
 import { NoEntityView } from '../../../components/noEntityView/noEntityView';
 
 type NoMicroservicesProps = {
@@ -16,7 +14,7 @@ export const NoMicroservices = ({ onCreate }: NoMicroservicesProps) =>
         title='No microservices deployed yet...'
         createEntityProps={{
             createEntityText: 'Deploy new microservice',
-            createEntityIcon: <Icon icon='RocketLaunch' />,
+            createEntityIcon: 'RocketLaunch',
             onCreateEntity: onCreate,
         }}
         description='After you deploy your first microservice it will appear here.'

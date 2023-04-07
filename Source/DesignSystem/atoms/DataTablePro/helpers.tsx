@@ -1,11 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
-
 import { GridColDef } from '@mui/x-data-grid-pro';
-
-import { Icon } from '@dolittle/design-system';
 
 export const rows = [
     { id: 1, col1: 'Row 1', col2: 'Row 1', col3: 'Row 1' },
@@ -22,15 +18,15 @@ export const columns: GridColDef[] = [
 export const toolbarButtons = [
     {
         label: 'Button one',
-        startWithIcon: <Icon icon='DeleteRounded' />,
+        startWithIcon: 'DeleteRounded',
     } as const,
     {
         label: 'Botton two',
-        startWithIcon: <Icon icon='CopyAllRounded' />,
+        startWithIcon: 'CopyAllRounded',
     } as const,
     {
         label: 'Button three',
-        startWithIcon: <Icon icon='RocketLaunch' />,
+        startWithIcon: 'RocketLaunch',
     } as const,
 ];
 

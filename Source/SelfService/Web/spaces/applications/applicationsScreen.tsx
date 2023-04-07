@@ -8,7 +8,6 @@ import { useSnackbar } from 'notistack';
 import { useGlobalContext } from '../../context/globalContext';
 
 import { Box, Typography } from '@mui/material';
-import { AddCircle, ArrowBack } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system';
 
@@ -68,14 +67,14 @@ export const ApplicationsScreen = () => {
             </Typography>
 
             <Box sx={{ width: 1 }}>
-                <Button label='Create new Application' startWithIcon={<AddCircle />} onClick={handleApplicationCreate} />
+                <Button label='Create new Application' startWithIcon='AddCircle' onClick={handleApplicationCreate} />
             </Box>
 
             <ApplicationsList data={applicationInfos} onChoose={onEnvironmentChoose} />
 
             <Box sx={{ mt: 12.5, display: 'flex', justifyContent: 'space-around' }}>
                 {!hasOneCustomer &&
-                    <Button label='Back to Customers' color='subtle' startWithIcon={<ArrowBack />} href='/.auth/cookies/initiate' />
+                    <Button label='Back to Customers' color='subtle' startWithIcon='ArrowBack' href='/.auth/cookies/initiate' />
                 }
                 <Button label='Log out' color='subtle' href='/.auth/cookies/logout' />
             </Box>

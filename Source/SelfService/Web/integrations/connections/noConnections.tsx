@@ -3,8 +3,6 @@
 
 import React from 'react';
 
-import { Icon } from '@dolittle/design-system';
-
 import { NoEntityView } from '../../components/noEntityView/noEntityView';
 
 export type NoConnectionsProps = {
@@ -16,7 +14,7 @@ export const NoConnections = ({ onCreateNew }: NoConnectionsProps) =>
         title='No connections established yet...'
         createEntityProps={{
             createEntityText: 'Set up M3 connection',
-            createEntityIcon: <Icon icon='PolylineRounded' />,
+            createEntityIcon: 'PolylineRounded',
             onCreateEntity: onCreateNew,
         }}
         description='After you set up your first connection it will appear here.'

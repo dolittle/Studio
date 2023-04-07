@@ -3,16 +3,14 @@
 
 import React from 'react';
 
-import { CheckCircleRounded, ErrorRounded, WarningRounded, QuestionMark } from '@mui/icons-material';
-
-import { Button } from '@dolittle/design-system';
+import { Button, SvgIconsDefinition } from '@dolittle/design-system';
 
 enum MicroserviceStatus {
     Running = 0,
     Pending = 1,
     Failing = 2,
     Unknown = 3,
-}
+};
 
 const getMicroserviceState = (phase?: string): MicroserviceStatus => {
     const checkStatus = phase?.toLowerCase?.();
@@ -33,28 +31,28 @@ const getMicroserviceState = (phase?: string): MicroserviceStatus => {
 
 type StatusInfo = {
     color: 'subtle' | 'error' | 'info' | 'success' | 'warning';
-    icon: JSX.Element;
+    icon: SvgIconsDefinition;
     label: string
 };
 
 const statusInfo = (status: string) => {
     let color = 'subtle';
-    let icon = <QuestionMark />;
+    let icon = 'QuestionMark';
     let label = 'n/a';
 
     switch (getMicroserviceState(status)) {
         case MicroserviceStatus.Running:
-            icon = <CheckCircleRounded />;
+            icon = 'CheckCircleRounded';
             label = 'running';
             break;
         case MicroserviceStatus.Pending:
             color = 'warning';
-            icon = <WarningRounded />;
+            icon = 'WarningRounded';
             label = 'pending';
             break;
         case MicroserviceStatus.Failing:
             color = 'error';
-            icon = <ErrorRounded />;
+            icon = 'ErrorRounded';
             label = 'failed';
             break;
         case MicroserviceStatus.Unknown:

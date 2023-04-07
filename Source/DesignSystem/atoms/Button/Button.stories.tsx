@@ -9,7 +9,6 @@ import { ComponentMeta } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { Box } from '@mui/material';
-import { AddCircle } from '@mui/icons-material';
 
 import { Button, ButtonProps, availableIcons, SvgIcons } from '@dolittle/design-system';
 
@@ -20,7 +19,8 @@ export default {
     component: Button,
     parameters: {
         docs: {
-            description: { component: `A button triggers an event or action. Its label should let the user know what will happen next. Buttons come in three style variations. 
+            description: {
+                component: `A button triggers an event or action. Its label should let the user know what will happen next. Buttons come in three style variations. 
             All variations can be used with or without icons to help lift the UI and quickly visually communicate to the user what the button will do.` },
         },
     },
@@ -39,17 +39,11 @@ export default {
         },
         startWithIcon: {
             options: availableIcons,
-            mapping: SvgIcons,
-            table: {
-                type: { summary: 'ReactElement<SvgIconProps>' },
-            },
+            mapping: SvgIcons[availableIcons[0]],
         },
         endWithIcon: {
             options: availableIcons,
-            mapping: SvgIcons,
-            table: {
-                type: { summary: 'ReactElement<SvgIconProps>' },
-            },
+            mapping: SvgIcons[availableIcons[0]],
         },
         onClick: { control: false },
         sx: { control: false },
@@ -80,8 +74,8 @@ export const Text = () => (
         <Button label='subtle' color='subtle' />
         <Button label='disabled' disabled />
         <br />
-        <Button label='start with icon' startWithIcon={<AddCircle />} />
-        <Button label='end with icon' endWithIcon={<AddCircle />} />
+        <Button label='start with icon' startWithIcon='AddCircle' />
+        <Button label='end with icon' endWithIcon='AddCircle' />
     </>
 );
 Text.decorators = [Story => <Box sx={spacing}>{Story()}</Box>];
@@ -104,8 +98,8 @@ export const Filled = () => (
         <Button label='subtle' variant='filled' color='subtle' />
         <Button label='disabled' variant='filled' disabled />
         <br />
-        <Button label='start with icon' variant='filled' startWithIcon={<AddCircle />} />
-        <Button label='end with icon' variant='filled' endWithIcon={<AddCircle />} />
+        <Button label='start with icon' variant='filled' startWithIcon='AddCircle' />
+        <Button label='end with icon' variant='filled' endWithIcon='AddCircle' />
     </>
 );
 Filled.decorators = [Story => <Box sx={spacing}>{Story()}</Box>];
@@ -126,8 +120,8 @@ export const Outlined = () => (
         <Button label='subtle' variant='outlined' color='subtle' />
         <Button label='disabled' variant='outlined' disabled />
         <br />
-        <Button label='start with icon' variant='outlined' startWithIcon={<AddCircle />} />
-        <Button label='end with icon' variant='outlined' endWithIcon={<AddCircle />} />
+        <Button label='start with icon' variant='outlined' startWithIcon='AddCircle' />
+        <Button label='end with icon' variant='outlined' endWithIcon='AddCircle' />
     </>
 );
 Outlined.decorators = [Story => <Box sx={spacing}>{Story()}</Box>];
@@ -142,16 +136,16 @@ Outlined.parameters = {
 };
 
 export const Fullwidth = () =>
-    <Button label='full width button with custom style' variant='fullwidth' startWithIcon={<AddCircle />} />;
+    <Button label='full width button with custom style' variant='fullwidth' startWithIcon='AddCircle' />;
 
 Fullwidth.parameters = {
     docs: {
         description: {
-               story: `Full width button are typically used for primary actions. They are used when inside a parent container or beneath a container whose width expands. 
+            story: `Full width button are typically used for primary actions. They are used when inside a parent container or beneath a container whose width expands. 
                The full width button can signal the action applies to all content above, in its surrounding container or to visually balance the empty space.`
         }
-     }
- };
+    }
+};
 
 export const UseInForms = () => (
     <>

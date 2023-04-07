@@ -2,8 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
+import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import { HttpResponseApplication } from '../../../apis/solutions/application';
@@ -12,7 +12,6 @@ import { useReadable } from 'use-svelte-store';
 import { canEditMicroservices, microservices } from '../../stores/microservice';
 
 import { Typography } from '@mui/material';
-import { RocketLaunch } from '@mui/icons-material';
 
 import { Button, LoadingSpinner } from '@dolittle/design-system';
 
@@ -81,7 +80,7 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
                 <Button
                     label='Deploy New Microservice'
                     variant='fullwidth'
-                    startWithIcon={<RocketLaunch />}
+                    startWithIcon='RocketLaunch'
                     onClick={() => handleCreateMicroservice()}
                     sx={{ mt: 2.125 }}
                 />

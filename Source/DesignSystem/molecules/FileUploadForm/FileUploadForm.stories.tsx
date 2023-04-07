@@ -6,7 +6,6 @@ import React, { useRef, useState } from 'react';
 import { ComponentMeta } from '@storybook/react';
 
 import { List } from '@mui/material';
-import { UploadRounded } from '@mui/icons-material';
 
 import { Button, FileUploadForm, FileUploadFormProps } from '@dolittle/design-system';
 
@@ -50,7 +49,7 @@ export const HiddenForm = () => {
             <Button
                 label='Upload file(s)'
                 type='submit'
-                startWithIcon={<UploadRounded />}
+                startWithIcon='UploadRounded'
                 onClick={() => fileUploadRef.current?.showPrompt()}
             />
 

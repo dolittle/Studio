@@ -5,8 +5,6 @@ import React from 'react';
 
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { AddCircleRounded, DeleteRounded } from '@mui/icons-material';
-
 import { Button, Input } from '@dolittle/design-system';
 
 type HeadArgumentsProps = {
@@ -42,7 +40,7 @@ export const HeadArguments = ({ disabled, dashedBorder }: HeadArgumentsProps) =>
                         label='Remove'
                         color='subtle'
                         disabled={disabled}
-                        startWithIcon={<DeleteRounded />}
+                        startWithIcon='DeleteRounded'
                         onClick={() => remove(index)}
                         sx={{ m: 1.5 }}
                     />
@@ -52,7 +50,7 @@ export const HeadArguments = ({ disabled, dashedBorder }: HeadArgumentsProps) =>
             <Button
                 label='Add CMD argument'
                 color='subtle'
-                startWithIcon={<AddCircleRounded />}
+                startWithIcon='AddCircle'
                 disabled={disabled || hasErrors}
                 onClick={() => append({ value: '' })}
                 sx={{ width: 'fit-content', mt: 2.5 }}

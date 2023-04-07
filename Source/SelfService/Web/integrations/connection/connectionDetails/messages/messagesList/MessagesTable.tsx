@@ -7,7 +7,7 @@ import { Paper } from '@mui/material';
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import { useNavigate } from 'react-router-dom';
 
-import { DataTableToolbar, Icon } from '@dolittle/design-system';
+import { DataTableToolbar } from '@dolittle/design-system';
 import { MessageMappingModel } from '../../../../../apis/integrations/generated';
 import { formatStartingDate, formatDate } from '../../../../../utils/dates';
 
@@ -50,17 +50,17 @@ const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
 const messagesToolbarButtons = [
     {
         label: 'Delete messages',
-        startWithIcon: <Icon icon='DeleteRounded' />,
+        startWithIcon: 'DeleteRounded',
         disabled: true,
     } as const,
     {
         label: 'Copy Messages to...',
-        startWithIcon: <Icon icon='CopyAllRounded' />,
+        startWithIcon: 'CopyAllRounded',
         disabled: true,
     } as const,
     {
         label: 'Deploy message(s)...',
-        startWithIcon: <Icon icon='RocketLaunch' />,
+        startWithIcon: 'RocketLaunch',
         disabled: true,
     } as const,
 ];

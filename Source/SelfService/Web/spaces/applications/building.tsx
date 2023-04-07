@@ -2,14 +2,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
+
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { isApplicationOnline } from '../../apis/solutions/application';
 
 import { Box, List, ListItem, Typography } from '@mui/material';
-import { ArrowBack } from '@mui/icons-material';
 
 import { AlertBox, AlertBoxErrorMessage, LoadingSpinner } from '@dolittle/design-system';
+
 import { ButtonLink } from '../../components/buttonLink';
 
 export const Building = () => {
@@ -39,7 +40,7 @@ export const Building = () => {
                 <ButtonLink
                     label='Go back to applications page'
                     color='subtle'
-                    startWithIcon={<ArrowBack />}
+                    startWithIcon='ArrowBack'
                     sx={{ mt: 4 }}
                     href='/applications'
                 />

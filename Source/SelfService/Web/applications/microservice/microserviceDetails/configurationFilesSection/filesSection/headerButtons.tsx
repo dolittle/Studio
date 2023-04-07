@@ -4,7 +4,6 @@
 import React from 'react';
 
 import { Box } from '@mui/material';
-import { AddCircle, DeleteRounded, DownloadRounded } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system';
 
@@ -32,20 +31,20 @@ export const HeaderButtons = ({ filePrompt, deleteDisabled, downloadDisabled, ha
     <Box sx={styles}>
         <Button
             label='Add File(s)'
-            startWithIcon={<AddCircle />}
+            startWithIcon='AddCircle'
             onClick={filePrompt}
         />
         <Button
             label='Delete File(s)'
             disabled={deleteDisabled}
-            startWithIcon={<DeleteRounded />}
+            startWithIcon='DeleteRounded'
             onClick={handleDelete}
         />
 
         <Button
             label={`Download Configuration Files Yaml`}
             disabled={downloadDisabled}
-            startWithIcon={<DownloadRounded />}
+            startWithIcon='DownloadRounded'
             onClick={handleDownload}
         />
     </Box>;

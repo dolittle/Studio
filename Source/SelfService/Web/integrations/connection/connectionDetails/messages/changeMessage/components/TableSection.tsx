@@ -7,7 +7,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { Grid, LinearProgress } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
-import { AlertBox, Button, Icon, MaxWidthTextBlock, Switch } from '@dolittle/design-system/';
+import { AlertBox, Button, MaxWidthTextBlock, Switch } from '@dolittle/design-system/';
 
 import { FieldMapping, MappedField } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
@@ -44,7 +44,7 @@ export const TableSection = (props: TableSectionProps) => {
                 }]) || []),
         [props.initialSelectedFields]);
     const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(initialMapped);
-    const { setValue: setFormValue, getValues: getFormValues,  } = useFormContext();
+    const { setValue: setFormValue, getValues: getFormValues, } = useFormContext();
 
     if (!connectionId || !props.selectedTableName) return <AlertBox />;
 
@@ -101,7 +101,7 @@ export const TableSection = (props: TableSectionProps) => {
                     beforeHeaderSlot={
                         props.mode === 'new' && (<Button
                             label='Back to Search Results'
-                            startWithIcon={<Icon icon='ArrowBack' />}
+                            startWithIcon='ArrowBack'
                             variant='text'
                             color='subtle'
                             sx={{ ml: 1, mt: 2 }}
