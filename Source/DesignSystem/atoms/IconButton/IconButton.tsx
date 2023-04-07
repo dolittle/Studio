@@ -28,7 +28,7 @@ export type IconButtonProps = {
      *
      * @default CloseRounded
      */
-    icon?: SvgIconsDefinition['icon'];
+    icon?: SvgIconsDefinition;
 
     /**
      * Most icons will use the default `inherit` color.
@@ -85,7 +85,7 @@ export type IconButtonProps = {
 
 /**
  * The icon button component is used to perform an action.
- * @param {IconButtonProps} props - The {@link IconButtonProps} that contains the properties for the confirm dialog.
+ * @param {IconButtonProps} props - The {@link IconButtonProps}.
  * @returns A {@link IconButton} component.
  */
 export const IconButton = ({ tooltipText, icon = 'CloseRounded', color, size = 'small', edge, disabled, href, download, onClick, sx }: IconButtonProps) => {

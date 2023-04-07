@@ -15,7 +15,7 @@ type SelectCardProps = {
     /**
      * The icon to display in the card.
      */
-    icon: SvgIconsDefinition['icon'];
+    icon: SvgIconsDefinition;
 
     /**
      * The title of the card.

@@ -12,7 +12,7 @@ type IconProps = {
     /**
      * Usual MUI icon writen as a `string`. Must be a valid `SvgIconsDefinition`.
      */
-    icon: SvgIconsDefinition['icon'];
+    icon: SvgIconsDefinition;
 
     /**
      * Most icons will use the default `inherit` color.
@@ -29,7 +29,7 @@ type IconProps = {
 
 /**
  * The {@link Icon} component is used to display icons.
- * @param {IconProps} props - The {@link IconProps} that contains the properties for the icon component.
+ * @param {IconProps} props - The {@link IconProps}.
  * @returns A {@link Icon} component.
  */
 export const Icon = ({ icon, color = 'inherit', size = 'small' }: IconProps) => {
