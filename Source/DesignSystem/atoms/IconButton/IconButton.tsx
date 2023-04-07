@@ -17,7 +17,7 @@ export type IconButtonProps = {
      * It is also used as the `aria-label` for the icon button.
      * @default undefined
      */
-    tooltipText?: string;
+    tooltipText: string;
 
     /**
      * Usual MUI icon writen as a `string`. Must be a valid `SvgIconsDefinition`.
@@ -78,7 +78,7 @@ export type IconButtonProps = {
     onClick?: MouseEventHandler<HTMLButtonElement>;
 
     /**
-     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     * The `sx` prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
 };
