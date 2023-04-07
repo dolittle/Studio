@@ -4,7 +4,6 @@
 import React, { DragEvent, FormEvent, useImperativeHandle, useState, useRef } from 'react';
 
 import { alpha, Box, Typography } from '@mui/material';
-import { UploadRounded } from '@mui/icons-material';
 
 import { Button, Icon, IconButton } from '@dolittle/design-system';
 
@@ -209,7 +208,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
                 <Button
                     label='Choose file'
                     type='submit'
-                    startWithIcon={<UploadRounded />}
+                    startWithIcon='UploadRounded'
                     onClick={() => fileInputRef.current?.click()}
                 />
                 <Typography>or drag it here</Typography>

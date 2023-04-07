@@ -1,9 +1,11 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { ReactElement } from 'react';
+import React from 'react';
 
-import { Button as MuiButton, ExtendButtonBase, ButtonTypeMap, SvgIconProps, SxProps } from '@mui/material';
+import { Button as MuiButton, ExtendButtonBase, ButtonTypeMap, SxProps } from '@mui/material';
+
+import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
 
 /**
  * The props for a {@link Button} component.
@@ -32,15 +34,19 @@ export type ButtonProps = {
 
     /**
      * Add an icon to the start of the button.
+     *
+     * List of available icons can be found in {@link SvgIcons}.
      * @default undefined
      */
-    startWithIcon?: ReactElement<SvgIconProps>;
+    startWithIcon?: SvgIconsDefinition;
 
     /**
      * Add an icon to the end of the button.
+     *
+     * List of available icons can be found in {@link SvgIcons}.
      * @default undefined
      */
-    endWithIcon?: ReactElement<SvgIconProps>;
+    endWithIcon?: SvgIconsDefinition;
 
     /**
      * Set to `true` if button should take up the entire width of its container.
@@ -124,8 +130,8 @@ export const Button = (
     <MuiButton
         variant={variant === 'filled' ? 'contained' : variant}
         color={color === 'subtle' ? 'inherit' : color}
-        startIcon={startWithIcon}
-        endIcon={endWithIcon}
+        startIcon={startWithIcon ? SvgIcons[startWithIcon] : undefined}
+        endIcon={endWithIcon ? SvgIcons[endWithIcon] : undefined}
         fullWidth={isFullWidth}
         disabled={disabled}
         type={type}

@@ -35,9 +35,9 @@ export const ConfigurationView = () => {
             <Typography variant='subtitle1'>Configuration Setup</Typography>
 
             <Box sx={{ display: 'flex', mt: 4, gap: 2 }}>
-                <Button label='Edit' startWithIcon={<Icon icon='EditRounded' />} />
-                <Button label='Save' startWithIcon={<Icon icon='SaveRounded' />} disabled />
-                <Button label='Delete Connection' startWithIcon={<Icon icon='DeleteRounded' />} />
+                <Button label='Edit' startWithIcon='EditRounded' />
+                <Button label='Save' startWithIcon='SaveRounded' disabled />
+                <Button label='Delete Connection' startWithIcon='DeleteRounded' />
             </Box>
 
             <Form
@@ -72,7 +72,7 @@ export const ConfigurationView = () => {
 
                     <Button
                         label='Download Connector Bundle'
-                        startWithIcon={<Icon icon='DownloadRounded' />}
+                        startWithIcon='DownloadRounded'
                         onClick={() => { }}
                         sx={{ my: 3.5 }}
                     />

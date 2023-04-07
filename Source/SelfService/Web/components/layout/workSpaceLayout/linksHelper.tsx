@@ -4,7 +4,6 @@
 import React, { useState } from 'react';
 
 import { Menu } from '@mui/material';
-import { ArrowDropDownRounded, ArrowDropUpRounded } from '@mui/icons-material';
 
 import { Button, IconButton, Icon } from '@dolittle/design-system';
 
@@ -64,7 +63,7 @@ export const SpaceSelectionMenu = () => {
             <Button
                 label='Default space'
                 color='subtle'
-                endWithIcon={open ? <ArrowDropUpRounded /> : <ArrowDropDownRounded />}
+                endWithIcon={open ? 'ArrowDropUpRounded' : 'ArrowDropDownRounded'}
                 onClick={e => setAnchorEl(e.currentTarget)}
                 aria-haspopup='true'
                 aria-controls={open ? 'select-space' : undefined}

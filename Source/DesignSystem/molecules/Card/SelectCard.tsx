@@ -114,7 +114,7 @@ export const SelectCard = ({ icon, title, description, listTitle, listItems, foo
                 <Button
                     label={isCardExpanded ? 'selected' : 'select'}
                     variant='outlined'
-                    startWithIcon={isCardExpanded ? <Icon icon='CheckRounded' /> : undefined}
+                    startWithIcon={isCardExpanded ? 'CheckRounded' : undefined}
                     isFullWidth
                     onClick={handleSelect}
                 />

@@ -13,10 +13,11 @@ export const FilterSelect = <T,>(props: FilterSelectProps<T>) =>
         variant='filled'
         disableUnderline
         sx={{
-            'p': 0,
-            'ml': 0,
-            'mr': 1,
+            //'p': 0,
+            //'ml': 0,
             'typography': 'button',
+            'mr': 1,
+            'lineHeight': '1.4375em',
             'backgroundColor': 'transparent',
             '&:hover': { backgroundColor: 'background.paper' },
             '& .MuiSelect-icon': { color: 'inherit' },

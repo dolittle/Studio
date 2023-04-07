@@ -125,7 +125,7 @@ export const ExposeDataView = () => {
                     <Grid item>
                         <Button
                             label='Copy Token'
-                            startWithIcon={<Icon icon='CopyAllRounded' />}
+                            startWithIcon='CopyAllRounded'
                             onClick={handleTokenCopy}
                             sx={{ mt: 4.5 }}
                         />
@@ -134,7 +134,7 @@ export const ExposeDataView = () => {
                     <Grid item>
                         <Button
                             label='Delete credentials'
-                            startWithIcon={<Icon icon='DeleteRounded' />}
+                            startWithIcon='DeleteRounded'
                             onClick={() => setOpenCredentials(false)}
                             sx={{ mt: 4.5 }}
                         />

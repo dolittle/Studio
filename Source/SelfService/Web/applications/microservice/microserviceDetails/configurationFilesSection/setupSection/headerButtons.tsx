@@ -4,7 +4,6 @@
 import React from 'react';
 
 import { Box, Tooltip } from '@mui/material';
-import { DeleteRounded, EditRounded, SaveRounded, RestartAltRounded } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system';
 
@@ -29,7 +28,7 @@ export const HeaderButtons = ({ handleRestartDialog, handleDeleteDialog, disable
                 <Button
                     label='edit'
                     disabled={disabled}
-                    startWithIcon={<EditRounded />}
+                    startWithIcon='EditRounded'
                 //onClick={() => setFormIsNotEditable(false)}
                 />
             </span>
@@ -39,19 +38,19 @@ export const HeaderButtons = ({ handleRestartDialog, handleDeleteDialog, disable
                 <Button
                     label='save'
                     disabled={disabled}
-                    startWithIcon={<SaveRounded />}
+                    startWithIcon='SaveRounded'
                 //onClick={() => setFormIsNotEditable(true)}
                 />
             </span>
         </Tooltip>
         <Button
             label='Restart Microservice'
-            startWithIcon={<RestartAltRounded />}
+            startWithIcon='RestartAltRounded'
             onClick={handleRestartDialog}
         />
         <Button
             label='Delete Microservice'
-            startWithIcon={<DeleteRounded />}
+            startWithIcon='DeleteRounded'
             onClick={handleDeleteDialog}
         />
     </Box>;

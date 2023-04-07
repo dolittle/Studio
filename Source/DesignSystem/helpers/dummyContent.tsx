@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Menu, Typography } from '@mui/material';
-import { ArrowDropDownRounded, ArrowDropUpRounded } from '@mui/icons-material';
 
 import { Button, IconButton, Icon } from '@dolittle/design-system';
 
@@ -66,7 +65,7 @@ export const SelectionMenu = () => {
             <Button
                 label='Selection menu'
                 color='subtle'
-                endWithIcon={open ? <ArrowDropUpRounded /> : <ArrowDropDownRounded />}
+                endWithIcon={open ? 'ArrowDropUpRounded' : 'ArrowDropDownRounded'}
                 onClick={e => setAnchorEl(e.currentTarget)}
                 aria-haspopup='true'
                 aria-controls={open ? 'select-selected' : undefined}

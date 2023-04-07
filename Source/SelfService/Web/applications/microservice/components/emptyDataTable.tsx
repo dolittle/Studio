@@ -4,7 +4,6 @@
 import React from 'react';
 
 import { Paper, SxProps, Typography } from '@mui/material';
-import { AddCircle } from '@mui/icons-material';
 
 import { Button } from '@dolittle/design-system';
 
@@ -21,5 +20,5 @@ export const EmptyDataTable = ({ title, description, label, sx, handleOnClick }:
         <Typography variant='h2'>{title}</Typography>
         <Typography variant='body1' sx={{ my: 2 }}>{description}</Typography>
 
-        <Button label={label} variant='fullwidth' startWithIcon={<AddCircle />} onClick={() => handleOnClick()} />
+        <Button label={label} variant='fullwidth' startWithIcon='AddCircle' onClick={() => handleOnClick()} />
     </Paper>;
