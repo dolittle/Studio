@@ -4,23 +4,22 @@
 import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { enqueueSnackbar } from 'notistack';
 
-import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams, GridEventListener } from '@mui/x-data-grid-pro';
-import { Paper, Tooltip } from '@mui/material';
+import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
+import { Paper } from '@mui/material';
+
+import { IconButton } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../apis/integrations/generated';
-import { Icon, IconButton } from '@dolittle/design-system';
-import { useConnectionsIdDelete } from '../../apis/integrations/connectionsApi.hooks';
-import { enqueueSnackbar } from 'notistack';
-import { useQueryClient } from '@tanstack/react-query';
 import { CACHE_KEYS } from '../../apis/integrations/CacheKeys';
+import { useConnectionsIdDelete } from '../../apis/integrations/connectionsApi.hooks';
 
 export type ConnectionsTableProps = {
     connections: ConnectionModel[];
     isLoading: boolean;
 };
-
-
 
 export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTableProps) => {
     const navigate = useNavigate();
@@ -45,14 +44,14 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
             headerName: 'Source',
             minWidth: 270,
             flex: 1,
-            valueGetter: ({ row }) => 'M3'
+            valueGetter: ({ row }) => 'M3',
         },
         {
             field: 'status',
             headerName: 'Connection Status',
             minWidth: 270,
             flex: 1,
-            valueGetter: ({ row }) => row?.status?.name
+            valueGetter: ({ row }) => row?.status?.name,
         },
         {
             field: 'actions',
@@ -60,9 +59,9 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
             minWidth: 100,
             flex: 1,
             renderCell({ row }) {
-                return <IconButton icon='DeleteRounded' onClick={() => deleteConnection(row)} />;
+                return <IconButton tooltipText='Delete connection' icon='DeleteRounded' onClick={() => deleteConnection(row)} />;
             },
-            valueGetter: ({ row }) => row?.status?.name
+            valueGetter: ({ row }) => row?.status?.name,
         },
     ];
 
@@ -84,7 +83,7 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
                 onError() {
                     enqueueSnackbar(`Error occurred when deleting connection: ${connection.connectionId}`, { variant: 'error' });
                 },
-            }
+            },
         );
     };
 
@@ -105,4 +104,3 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
         </Paper>
     );
 };
-
