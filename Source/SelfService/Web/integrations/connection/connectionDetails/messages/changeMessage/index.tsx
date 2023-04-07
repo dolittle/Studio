@@ -4,13 +4,15 @@
 import React, { useState } from 'react';
 
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { enqueueSnackbar } from 'notistack';
-import { AlertBox, AlertDialog, Form, Icon } from '@dolittle/design-system';
 
-import { SetMessageMappingRequestArguments, TableListingEntry } from '../../../../../apis/integrations/generated';
+import { enqueueSnackbar } from 'notistack';
+
+import { AlertBox, AlertDialog, Form } from '@dolittle/design-system';
+
+import { SetMessageMappingRequestArguments } from '../../../../../apis/integrations/generated';
 import {
     useConnectionsIdMessageMappingsTablesTableMessagesMessageGet,
-    useConnectionsIdMessageMappingsTablesTableMessagesMessagePost
+    useConnectionsIdMessageMappingsTablesTableMessagesMessagePost,
 } from '../../../../../apis/integrations/messageMappingApi.hooks';
 import { useConnectionId } from '../../../../routes.hooks';
 
@@ -26,19 +28,17 @@ export type NewMessageMappingParameters = SetMessageMappingRequestArguments & {
     name: string;
 };
 
-
-
 export const ChangeMessageView = () => {
-    const location = useLocation();
     const navigate = useNavigate();
+    const location = useLocation();
     const { table, messageId } = useParams();
     const connectionId = useConnectionId();
-    const [searchInput, setSearchInput] = useState<string>('');
-    const [selectedTableName, setSelectedTableName] = useState<string>('');
+
+    const [searchInput, setSearchInput] = useState('');
+    const [selectedTableName, setSelectedTableName] = useState('');
     const [showDiscardChangesDialog, setShowDiscardChangesDialog] = useState(false);
 
     const saveMessageMappingMutation = useConnectionsIdMessageMappingsTablesTableMessagesMessagePost();
-
     const messageQuery = useConnectionsIdMessageMappingsTablesTableMessagesMessageGet({ id: connectionId!, table: table!, message: messageId! });
 
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
@@ -50,7 +50,6 @@ export const ChangeMessageView = () => {
     if (mode === 'edit' && table && !selectedTableName) {
         setSelectedTableName(table);
     }
-
 
     const toolbarButtons = {
         label: 'Discard changes',
@@ -82,7 +81,7 @@ export const ChangeMessageView = () => {
             setMessageMappingRequestArguments: {
                 description: values.description!,
                 fields: values.fields!,
-            }
+            },
         }, {
             onSuccess(data, variables, context) {
                 navigate(`..`);
@@ -91,7 +90,7 @@ export const ChangeMessageView = () => {
             onError(error, variables, context) {
                 console.log('error', error);
                 enqueueSnackbar('Something went wrong when trying to save the message', { variant: 'error' });
-            }
+            },
         });
     };
 
