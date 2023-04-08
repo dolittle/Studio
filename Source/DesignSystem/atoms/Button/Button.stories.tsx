@@ -5,14 +5,14 @@ import React from 'react';
 
 import { Link, BrowserRouter } from 'react-router-dom';
 
-import { ComponentMeta } from '@storybook/react';
+import { ComponentMeta, DecoratorFn } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { Box } from '@mui/material';
 
 import { Button, ButtonProps, availableIcons, SvgIcons } from '@dolittle/design-system';
 
-const buttonsSpacing = { '& button': { mr: 3, mb: 3 } };
+const buttonWrapper = [Story => <Box sx={{ '& button': { mr: 3, mb: 3 } }} >{Story()}</Box>] as DecoratorFn[];
 
 export default {
     title: 'Button',
@@ -78,7 +78,7 @@ export const Text = () => (
         <Button label='end with icon' endWithIcon='AddCircle' />
     </>
 );
-Text.decorators = [Story => <Box sx={buttonsSpacing}>{Story()}</Box>];
+Text.decorators = buttonWrapper;
 Text.parameters = {
     docs: {
         description: {
@@ -101,7 +101,7 @@ export const Filled = () => (
         <Button label='end with icon' variant='filled' endWithIcon='AddCircle' />
     </>
 );
-Filled.decorators = [Story => <Box sx={buttonsSpacing}>{Story()}</Box>];
+Filled.decorators = buttonWrapper;
 Filled.parameters = {
     docs: {
         description: {
@@ -122,7 +122,7 @@ export const Outlined = () => (
         <Button label='end with icon' variant='outlined' endWithIcon='AddCircle' />
     </>
 );
-Outlined.decorators = [Story => <Box sx={buttonsSpacing}>{Story()}</Box>];
+Outlined.decorators = buttonWrapper;
 Outlined.parameters = {
     docs: {
         description: {
@@ -132,8 +132,13 @@ Outlined.parameters = {
     },
 };
 
-export const Fullwidth = () =>
-    <Button label='full width button with custom style' variant='fullwidth' startWithIcon='AddCircle' />;
+export const Fullwidth = () => (
+    <Button
+        label='full width button with custom style'
+        variant='fullwidth'
+        startWithIcon='AddCircle'
+    />
+);
 Fullwidth.parameters = {
     docs: {
         description: {
@@ -150,7 +155,7 @@ export const UseInForms = () => (
         <Button label='delete' color='error' onClick={action('deleted')} />
     </>
 );
-UseInForms.decorators = [Story => <Box sx={buttonsSpacing}>{Story()}</Box>];
+UseInForms.decorators = buttonWrapper;
 UseInForms.parameters = {
     docs: {
         description: {
