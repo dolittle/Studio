@@ -55,7 +55,7 @@ export const ViewAll = () => {
                 startWithIcon='AddCircle'
                 overrides={{
                     component: Link,
-                    to: '/admin/customer/create'
+                    to: '/admin/customer/create',
                 }}
             />
         </>
