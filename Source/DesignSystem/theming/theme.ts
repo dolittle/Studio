@@ -107,7 +107,7 @@ export const typography: TypographyOptions = {
         fontSize: '0.8125rem', //13px
         letterSpacing: '0.06em',
         fontWeight: 500,
-        lineHeight: 0,
+        lineHeight: 'normal',
     },
     monospace: {
         fontSize: '0.8125rem', //13px
