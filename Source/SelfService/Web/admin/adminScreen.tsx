@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Route, Routes, useNavigate, } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
 
@@ -16,7 +16,6 @@ import { View as ViewApplicationAccess } from './application/view';
 import { LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 
 export const Screen: React.FunctionComponent = () => {
-    const navigate = useNavigate();
     const nav = [];
 
     const welcome = (
@@ -26,9 +25,9 @@ export const Screen: React.FunctionComponent = () => {
                 label='Take me to the Customers'
                 variant='filled'
                 endWithIcon='KeyboardDoubleArrowRight'
-                onClick={() => {
-                    const href = `/admin/customers`;
-                    navigate(href);
+                overrides={{
+                    component: Link,
+                    to: '/admin/customers'
                 }}
             />
         </>
