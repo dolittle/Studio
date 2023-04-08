@@ -20,7 +20,6 @@ import {
 } from '../../apis/solutions/application';
 import { Customer, getCustomer } from '../../apis/solutions/customer';
 
-import { ButtonText } from '../../components/theme-legacy/buttonText';
 import { TextField } from '../../components/theme-legacy/textField';
 
 type ViewParams = {
@@ -52,22 +51,28 @@ export const View = () => {
             setLoaded(true);
         };
 
-        fetchData().catch((e) => {
+        fetchData().catch(() => {
             setFetchDataError(true);
             // TODO could be better with the message
             enqueueSnackbar('Failed to get data from the server.', { variant: 'error' });
         });
     }, []);
 
+    const handleBackToCustomers = () => {
+        const href = `/admin/customers`;
+        navigate(href);
+    };
+
+    const handleBackToCustomer = () => {
+        const href = `/admin/customer/${customerId}`;
+        navigate(href);
+    };
+
     if (fetchDataError) {
         return (
             <>
-                <p>Failed to fetch data</p>
-
-                <ButtonText onClick={async () => {
-                    const href = `/admin/customers`;
-                    navigate(href);
-                }}>Back to customers</ButtonText>
+                <Typography sx={{ mb: 3 }}>Failed to fetch data.</Typography>
+                <Button label='Back to customers' variant='filled' startWithIcon='ArrowBack' onClick={handleBackToCustomers} />
             </>
         );
     }
@@ -114,15 +119,11 @@ export const View = () => {
 
     return (
         <>
-            <Typography variant='h1' my={2}>Customer {customer.name}</Typography>
+            <Typography variant='h1' my={2}>Customer: {customer.name}</Typography>
+            <Button label='Back to customer' variant='filled' startWithIcon='ArrowBack' onClick={handleBackToCustomer} />
+            <Typography variant='h1' my={4}>Application: {accessInfo.name}</Typography>
 
-            <ButtonText onClick={async () => {
-                const href = `/admin/customer/${customerId}`;
-                navigate(href);
-            }}>Back to customer</ButtonText>
-
-            <Typography variant='h1' my={2}>Application {accessInfo.name}</Typography>
-            <Typography variant='h2' my={2}>Access View</Typography>
+            <Typography variant='h2' my={4}>Access View</Typography>
 
             <TextField id="userEmail"
                 label='Email'
@@ -134,14 +135,14 @@ export const View = () => {
                 }}
             />
 
-            <ButtonText onClick={handleAddEmail}>Add User</ButtonText>
+            <Button label='Add User' startWithIcon='AddCircle' onClick={handleAddEmail} />
 
             <ul>
                 {accessInfo.users.map(user => {
                     return (
                         <li key={user.email}>
                             <span>{user.email}</span>
-                            <ButtonText onClick={() => handleRemoveEmail(user.email)}>Remove User</ButtonText>
+                            <Button label='Remove User' onClick={() => handleRemoveEmail(user.email)} />
                         </li>
                     );
                 })}
