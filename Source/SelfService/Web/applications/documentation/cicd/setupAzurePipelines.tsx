@@ -2,62 +2,44 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import { useSnackbar } from 'notistack';
-import Input from '@mui/material/Input';
 
+import { Input, Typography } from '@mui/material';
 
-import { ButtonText } from '../../../components/theme-legacy/buttonText';
+import { Button } from '@dolittle/design-system';
+
 import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../../apis/solutions/cicd';
 import { Info } from '../../stores/documentationInfo';
-import { Typography } from '@mui/material';
 
-const styles = {
-    '& .MuiInput-input.Mui-disabled': {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        '-webkit-text-fill-color': (theme) => theme.palette.text.secondary
-    }
+export type DocProps = {
+    info: Info;
 };
 
-type Props = {
-    info: Info
-};
-
-export const Doc: React.FunctionComponent<Props> = (props) => {
+export const Doc = ({ info }: DocProps) => {
     const { enqueueSnackbar } = useSnackbar();
-    const _props = props!;
-    const info = _props.info;
+
     const applicationID = info.applicationId;
 
-    const buttonServiceAccount = <ButtonText
-        withIcon={false}
-        onClick={async (event: React.MouseEvent<HTMLElement>) => {
-            try {
-                const data = await getAzureDevopsKubernetesServiceAccount(applicationID);
-                await navigator.clipboard.writeText(JSON.stringify(data));
-                enqueueSnackbar('Kubernetes service account copied to clipboard.');
-            } catch {
-                enqueueSnackbar('Failed to get data.', { variant: 'error' });
-            }
-        }}
-    >
-        Copy Credentials to clipboard
-    </ButtonText>;
+    const handleKubernetesAccountCopy = async (event: React.MouseEvent<HTMLElement>) => {
+        try {
+            const data = await getAzureDevopsKubernetesServiceAccount(applicationID);
+            await navigator.clipboard.writeText(JSON.stringify(data));
+            enqueueSnackbar('Kubernetes service account copied to clipboard.');
+        } catch {
+            enqueueSnackbar('Failed to get data.', { variant: 'error' });
+        }
+    };
 
-
-    const buttonContainerRegistry = <ButtonText
-        withIcon={false}
-        onClick={async (event: React.MouseEvent<HTMLElement>) => {
-            try {
-                const data = await getContainerRegistry(applicationID);
-                await navigator.clipboard.writeText(JSON.stringify(data));
-                enqueueSnackbar('Container registry copied to clipboard.');
-            } catch {
-                enqueueSnackbar('Failed to get data.', { variant: 'error' });
-            }
-        }}
-    >
-        Copy Credentials to clipboard
-    </ButtonText>;
+    const handleContainerRegistryCopy = async (event: React.MouseEvent<HTMLElement>) => {
+        try {
+            const data = await getContainerRegistry(applicationID);
+            await navigator.clipboard.writeText(JSON.stringify(data));
+            enqueueSnackbar('Container registry copied to clipboard.');
+        } catch {
+            enqueueSnackbar('Failed to get data.', { variant: 'error' });
+        }
+    };
 
     const clusterEndpoint = info.endpoints.cluster;
     const containerRegistry = info.endpoints.containerRegistry;
@@ -69,26 +51,25 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
 
             <Input
                 fullWidth={true}
-                sx={styles}
                 defaultValue={clusterEndpoint}
                 disabled
-                inputProps={{ 'aria-label': 'cluster endpoint' }} />
+                inputProps={{ 'aria-label': 'cluster endpoint' }}
+            />
 
             <Typography variant='h3' my={2}>Container Registry</Typography>
-            <Input sx={styles}
+            <Input
                 fullWidth={true}
                 defaultValue={containerRegistry}
                 disabled
-                inputProps={{ 'aria-label': 'container registry endpoint' }} />
-
+                inputProps={{ 'aria-label': 'container registry endpoint' }}
+            />
 
             <Typography variant='h2' my={2}>Credentials</Typography>
             <Typography variant='h3' my={2}>Get credentials to deploy to the platform from the pipeline</Typography>
-            {buttonServiceAccount}
+            <Button label='Copy Credentials to clipboard' endWithIcon='CopyAllRounded' onClick={handleKubernetesAccountCopy} />
 
             <Typography variant='h3' my={2}>Get credentials to push to container registry</Typography>
-            {buttonContainerRegistry}
+            <Button label='Copy Credentials to clipboard' endWithIcon='CopyAllRounded' onClick={handleContainerRegistryCopy} />
         </>
     );
 };
-
