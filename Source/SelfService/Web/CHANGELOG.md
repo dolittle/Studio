@@ -1,3 +1,22 @@
+# [3.4.14] - 2023-4-8 [PR: #369](https://github.com/dolittle/Studio/pull/369)
+## Summary
+
+Refactored Button icons. Buttons now use icons from the `SvgIconsDefinition` list.
+
+<img width="1005" alt="Screenshot 2023-04-08 at 19 14 17" src="https://user-images.githubusercontent.com/19160439/230732018-5a11c337-63bc-4bb1-8e30-10e731db3d2c.png">
+
+### Changed
+
+- Improved Button documentation wording
+- Refactored Icons type definition
+- Refactored Button.stories
+- Made `tooltip` text 'required' for IconButton
+
+### Fixed
+
+- Button lineHeight so text would be center in 'Edge' and 'Chrome' browsers
+
+
 # [3.4.13] - 2023-4-5 [PR: #367](https://github.com/dolittle/Studio/pull/367)
 ## Summary
 
