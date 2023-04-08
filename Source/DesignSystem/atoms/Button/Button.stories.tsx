@@ -12,7 +12,7 @@ import { Box } from '@mui/material';
 
 import { Button, ButtonProps, availableIcons, SvgIcons } from '@dolittle/design-system';
 
-const buttonWrapper = [Story => <Box sx={{ '& button': { mr: 3, mb: 3 } }} >{Story()}</Box>] as DecoratorFn[];
+const buttonWrapper = [Story => <Box sx={{ '& button': { mr: 3, mb: 3 } }}>{Story()}</Box>] as DecoratorFn[];
 
 export default {
     title: 'Button',
