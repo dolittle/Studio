@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
-import { ButtonText } from '../../components/theme-legacy/buttonText';
+import { Button } from '@dolittle/design-system';
 
 import { LogsInRange } from './logsInRange';
 import { LogLines } from './logLines';
@@ -24,7 +24,7 @@ export type LogContextDialogState = {
 export const LogContextDialog = (
     state: LogContextDialogState,
     setState: React.Dispatch<React.SetStateAction<LogContextDialogState>>,
-    showTimestamp: boolean
+    showTimestamp: boolean,
 ) => (
     <Dialog
         open={state.show}
@@ -54,16 +54,14 @@ export const LogContextDialog = (
                             showTimestamp={showTimestamp}
                             sx={{
                                 '& > div:first-of-type': {
-                                    color: '#75e8db', // TODO: Where does this color come from?
+                                    color: 'success.main',
                                 },
                             }}
                         />
                     </DialogContent>
                     <DialogActions>
-                        <ButtonText onClick={() => setState({ ...state, show: false })}>
-                            Close
-                        </ButtonText>
-                        <ButtonText onClick={() => loadMoreLogs()}>Show more</ButtonText>
+                        <Button label='Close' color='subtle' onClick={() => setState({ ...state, show: false })} />
+                        <Button label='Show more' onClick={() => loadMoreLogs()} />
                     </DialogActions>
                 </>
             )}
