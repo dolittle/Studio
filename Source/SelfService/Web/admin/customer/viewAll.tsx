@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import { ListItem, Typography } from '@mui/material';
@@ -13,7 +13,6 @@ import { Button } from '@dolittle/design-system';
 import { getCustomers, Customers } from '../../apis/solutions/customer';
 
 export const ViewAll = () => {
-    const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
     const [loaded, setLoaded] = useState(false);
@@ -32,11 +31,6 @@ export const ViewAll = () => {
 
     if (!loaded) return null;
 
-    const handleCustomerCreate = () => {
-        const href = `/admin/customer/create`;
-        navigate(href);
-    };
-
     return (
         <>
             <Typography variant='h1' my={2}>View Customers</Typography>
@@ -44,12 +38,26 @@ export const ViewAll = () => {
             <ul>
                 {customers.map(customer =>
                     <ListItem key={`${customer.id}`}>
-                        <Button label={`${customer.name} (${customer.id})`} href={`/admin/customer/${customer.id}`} />
+                        <Button
+                            label={`${customer.name} (${customer.id})`}
+                            overrides={{
+                                component: Link,
+                                to: `/admin/customer/${customer.id}`
+                            }}
+                        />
                     </ListItem>
                 )}
             </ul>
 
-            <Button label='Create new Customer' variant='fullwidth' startWithIcon='AddCircle' onClick={handleCustomerCreate} />
+            <Button
+                label='Create new Customer'
+                variant='fullwidth'
+                startWithIcon='AddCircle'
+                overrides={{
+                    component: Link,
+                    to: '/admin/customer/create'
+                }}
+            />
         </>
     );
 };
