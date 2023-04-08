@@ -12,7 +12,7 @@ import { Box } from '@mui/material';
 
 import { Button, ButtonProps, availableIcons, SvgIcons } from '@dolittle/design-system';
 
-export const spacing = { '& button': { mr: 3, mb: 3 } };
+const buttonsSpacing = { '& button': { mr: 3, mb: 3 } };
 
 export default {
     title: 'Button',
@@ -78,8 +78,7 @@ export const Text = () => (
         <Button label='end with icon' endWithIcon='AddCircle' />
     </>
 );
-Text.decorators = [Story => <Box sx={spacing}>{Story()}</Box>];
-
+Text.decorators = [Story => <Box sx={buttonsSpacing}>{Story()}</Box>];
 Text.parameters = {
     docs: {
         description: {
@@ -88,8 +87,8 @@ Text.parameters = {
             of the page depending on whether or not the user's attention should be drawn to the button or if the button needs to be distinguished
             from other content on the page. When there are several actions the user can take on a single page it's best to use text buttons to save space
             and to inadvertently prevent creating a call to action that should not exist.`
-        }
-    }
+        },
+    },
 };
 
 export const Filled = () => (
@@ -102,16 +101,15 @@ export const Filled = () => (
         <Button label='end with icon' variant='filled' endWithIcon='AddCircle' />
     </>
 );
-Filled.decorators = [Story => <Box sx={spacing}>{Story()}</Box>];
-
+Filled.decorators = [Story => <Box sx={buttonsSpacing}>{Story()}</Box>];
 Filled.parameters = {
     docs: {
         description: {
             story: `Filled buttons are reserved for primary actions. They should be used to call attention to an action on a form or to
             highlight the strongest call to action on the page. Filled buttons should appear only once per container (not including the
             application header or in a modal dialog). Not every screen requires a primary action, or filled button. Filled buttons use our primary main color.`
-        }
-    }
+        },
+    },
 };
 
 export const Outlined = () => (
@@ -124,27 +122,25 @@ export const Outlined = () => (
         <Button label='end with icon' variant='outlined' endWithIcon='AddCircle' />
     </>
 );
-Outlined.decorators = [Story => <Box sx={spacing}>{Story()}</Box>];
-
+Outlined.decorators = [Story => <Box sx={buttonsSpacing}>{Story()}</Box>];
 Outlined.parameters = {
     docs: {
         description: {
-            story: `Outlined buttons can be used in login screens or as a secondary call to action on a page where there are already text buttons and primary buttons. 
+            story: `Outlined buttons can be used in login screens or as a secondary call to action on a page where there are already text buttons and primary buttons.
             The empty fill allows third-party icons to be used in their original styling.`
-        }
-    }
+        },
+    },
 };
 
 export const Fullwidth = () =>
     <Button label='full width button with custom style' variant='fullwidth' startWithIcon='AddCircle' />;
-
 Fullwidth.parameters = {
     docs: {
         description: {
-            story: `Full width button are typically used for primary actions. They are used when inside a parent container or beneath a container whose width expands. 
+            story: `Full width button are typically used for primary actions. They are used when inside a parent container or beneath a container whose width expands.
                The full width button can signal the action applies to all content above, in its surrounding container or to visually balance the empty space.`
-        }
-    }
+        },
+    },
 };
 
 export const UseInForms = () => (
@@ -154,15 +150,14 @@ export const UseInForms = () => (
         <Button label='delete' color='error' onClick={action('deleted')} />
     </>
 );
-UseInForms.decorators = [Story => <Box sx={spacing}>{Story()}</Box>];
-
+UseInForms.decorators = [Story => <Box sx={buttonsSpacing}>{Story()}</Box>];
 UseInForms.parameters = {
     docs: {
         description: {
-            story: `Form buttons are used in dialogs or forms. If there is more than one button option it is important to distinguish between the choices 
+            story: `Form buttons are used in dialogs or forms. If there is more than one button option it is important to distinguish between the choices
             by using different styling and careful wording.`
-        }
-    }
+        },
+    },
 };
 
 export const UseAsLink = () => (
@@ -192,13 +187,12 @@ UseAsLink.decorators = [Story =>
         <Box sx={{ '& a': { mr: 3, mb: 3 } }}>{Story()}</Box>
     </BrowserRouter>
 ];
-
 UseAsLink.parameters = {
     docs: {
         description: {
-            story: `Link buttons are used to link to external documentation, emails or 
+            story: `Link buttons are used to link to external documentation, emails or
             provide internal linking. Internal links should use the inherit color of their parent
             container. External links should use the secondary color.`
-        }
-    }
+        },
+    },
 };
