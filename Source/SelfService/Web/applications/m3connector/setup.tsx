@@ -2,31 +2,29 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { HttpResponseApplication } from '../../apis/solutions/application';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ButtonText } from '../../components/theme-legacy/buttonText';
 
-type Props = {
-    application: HttpResponseApplication
+import { useParams, useNavigate } from 'react-router-dom';
+
+import { Button } from '@dolittle/design-system';
+
+import { HttpResponseApplication } from '../../apis/solutions/application';
+
+export type M3ConnectorSetupProps = {
+    application: HttpResponseApplication;
 };
 
 type ViewParams = {
     environment: string;
 };
 
-export const View: React.FunctionComponent<Props> = (props) => {
+export const View = ({ application }: M3ConnectorSetupProps) => {
     const navigate = useNavigate();
     const { environment } = useParams<ViewParams>();
-    const _props = props!;
-    const application = _props.application;
+
     const applicationId = application.id;
-
-    console.log('environment', environment);
-
     const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
-    if (!environmentInfo) {
-        return <p>Environment not found</p>;
-    }
+
+    if (!environmentInfo) return <p>Environment not found</p>;
 
     const isSetup = environmentInfo.connections.m3Connector;
 
@@ -34,10 +32,13 @@ export const View: React.FunctionComponent<Props> = (props) => {
         return (
             <>
                 <p>Already setup</p>
-                <ButtonText onClick={async () => {
-                    const href = `/m3connector/application/${applicationId}/${environment}/details`;
-                    navigate(href);
-                }}>View Details</ButtonText>
+                <Button
+                    label='View Details'
+                    onClick={async () => {
+                        const href = `/m3connector/application/${applicationId}/${environment}/details`;
+                        navigate(href);
+                    }}
+                />
             </>
         );
     }
@@ -50,6 +51,3 @@ export const View: React.FunctionComponent<Props> = (props) => {
         </>
     );
 };
-
-
-
