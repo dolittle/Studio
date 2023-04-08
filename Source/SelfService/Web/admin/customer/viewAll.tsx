@@ -1,22 +1,18 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, {
-    useEffect,
-    useState
-} from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+
+import { ListItem, Typography } from '@mui/material';
+
+import { Button } from '@dolittle/design-system';
+
 import { getCustomers, Customers } from '../../apis/solutions/customer';
-import { ButtonText } from '../../components/theme-legacy/buttonText';
-import { Typography } from '@mui/material';
 
-
-type Props = {
-
-};
-
-export const ViewAll: React.FunctionComponent<Props> = (props) => {
+export const ViewAll = () => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -26,46 +22,34 @@ export const ViewAll: React.FunctionComponent<Props> = (props) => {
     useEffect(() => {
         getCustomers()
             .then(customers => {
-
                 setCustomers(customers);
                 setLoaded(true);
-            }).catch((error) => {
+            }).catch(error => {
                 console.log(error);
-                enqueueSnackbar('Failed getting data from the server', { variant: 'error' });
+                enqueueSnackbar('Failed getting data from the server.', { variant: 'error' });
             });
     }, []);
 
-    if (!loaded) {
-        return null;
-    }
+    if (!loaded) return null;
+
+    const handleCustomerCreate = () => {
+        const href = `/admin/customer/create`;
+        navigate(href);
+    };
 
     return (
         <>
-            <ButtonText
-                onClick={() => {
-                    const href = `/admin/customer/create`;
-                    navigate(href);
-                }}>
-                Create new Customer
-            </ButtonText>
-
             <Typography variant='h1' my={2}>View Customers</Typography>
 
             <ul>
-                {customers.map((customer) => {
-                    return <li key={`${customer.id}`}>
-
-                        <ButtonText
-                            onClick={() => {
-                                const href = `/admin/customer/${customer.id}`;
-                                navigate(href);
-                            }}
-                        >
-                            {customer.name} ({customer.id})
-                        </ButtonText>
-                    </li>;
-                })}
+                {customers.map(customer =>
+                    <ListItem key={`${customer.id}`}>
+                        <Button label={`${customer.name} (${customer.id})`} href={`/admin/customer/${customer.id}`} />
+                    </ListItem>
+                )}
             </ul>
+
+            <Button label='Create new Customer' variant='fullwidth' startWithIcon='AddCircle' onClick={handleCustomerCreate} />
         </>
     );
 };
