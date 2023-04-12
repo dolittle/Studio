@@ -42,7 +42,7 @@ export const ViewAll = () => {
                             label={`${customer.name} (${customer.id})`}
                             overrides={{
                                 component: Link,
-                                to: `/admin/customer/${customer.id}`
+                                to: `/admin/customer/${customer.id}`,
                             }}
                         />
                     </ListItem>
