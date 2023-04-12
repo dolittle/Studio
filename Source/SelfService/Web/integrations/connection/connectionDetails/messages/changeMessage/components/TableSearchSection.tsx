@@ -37,7 +37,7 @@ export const TableSearchSection = ({ onTableSelected, searchInput, setSearchInpu
     const searchResults = query.data?.value || [];
 
     return (
-        <ContentSection title='Browse M3 Table names'>
+        <ContentSection title='Browse M3 Tables'>
             <TextField
                 fullWidth
                 InputProps={{ startAdornment: SearchFieldAdornment }}
