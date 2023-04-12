@@ -33,7 +33,7 @@ export type TableSearchResultsProps = {
 };
 
 export const TableSearchResults = ({ tableListings, isLoading, onTableSelected }: TableSearchResultsProps) => {
-    const dataGridListing: DataGridTableListingEntry[] = tableListings.map((tableListing) => {
+    const dataGridListing: DataGridTableListingEntry[] = tableListings.map(tableListing => {
         return {
             id: tableListing.name || '',
             ...tableListing,
