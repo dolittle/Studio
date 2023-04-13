@@ -48,21 +48,24 @@ const tabs = [
     },
 ];
 
+const pageHealthStatus = (status: string) => {
+    if (status === 'registered' || status === 'pending') return 'pending';
+    return status;
+};
+
 export const ConnectionDetails = () => {
     const location = useLocation();
     const connectionId = useConnectionId();
     const query = useConnectionsIdGet({ id: connectionId || '' });
 
-    //console.log('query', data?.value?.status?.name)
-
     if (query.isLoading) return <>Loading</>;
     if (!query.data?.value || !connectionId) return null;
 
     const pageTitle = query.data.value.name || 'Connection Details';
-    const pageHealthStatus = query.data.value.status?.name || 'N/A';
+    const status = query.data.value.status?.name?.toLocaleLowerCase() || 'N/A';
 
     return (
-        <Page title={pageTitle} healthStatus={pageHealthStatus} sx={{ mb: 4 }}>
+        <Page title={pageTitle} healthStatus={pageHealthStatus(status)} sx={{ mb: 4 }}>
             <Tabs selectedTab={getCurrentTab(location)} tabs={tabs} />
             <Outlet />
         </Page>
