@@ -10,7 +10,7 @@ import { MappableTableColumn } from '../../../../../../apis/integrations/generat
 
 export type DataGridTableListingEntry = MappableTableColumn & {
     id: string;
-    fieldName: string;
+    fieldName: string | null;
 };
 
 const columns: GridColDef<DataGridTableListingEntry>[] = [
@@ -49,14 +49,14 @@ export const MessageMappingTable = ({
     onSelectedIdsChanged,
     disabledRows,
     isLoading,
-    onFieldMapped
+    onFieldMapped,
 }: MessageMappingTableProps) => {
 
     const gridApiRef = useGridApiRef();
 
     const processRowUpdate = (
         newRow: DataGridTableListingEntry,
-        oldRow: DataGridTableListingEntry
+        oldRow: DataGridTableListingEntry,
     ): DataGridTableListingEntry | Promise<DataGridTableListingEntry> => {
         onFieldMapped(newRow.id, newRow.fieldName);
         gridApiRef.current.selectRow(newRow.id, true);

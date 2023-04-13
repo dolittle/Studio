@@ -33,6 +33,12 @@ export interface TableListingEntry {
     description?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof TableListingEntry
+     */
+    summary?: string | null;
+    /**
+     * 
      * @type {number}
      * @memberof TableListingEntry
      */
@@ -72,6 +78,7 @@ export function TableListingEntryFromJSONTyped(json: any, ignoreDiscriminator: b
         
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'summary': !exists(json, 'summary') ? undefined : json['summary'],
         'numberOfColumns': !exists(json, 'numberOfColumns') ? undefined : json['numberOfColumns'],
         'lastUsed': !exists(json, 'lastUsed') ? undefined : (json['lastUsed'] === null ? null : new Date(json['lastUsed'])),
         'webhookConnected': !exists(json, 'webhookConnected') ? undefined : json['webhookConnected'],
@@ -89,6 +96,7 @@ export function TableListingEntryToJSON(value?: TableListingEntry | null): any {
         
         'name': value.name,
         'description': value.description,
+        'summary': value.summary,
         'numberOfColumns': value.numberOfColumns,
         'lastUsed': value.lastUsed === undefined ? undefined : (value.lastUsed === null ? null : value.lastUsed.toISOString()),
         'webhookConnected': value.webhookConnected,

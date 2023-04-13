@@ -20,6 +20,12 @@ const columns: GridColDef<TableListingEntry>[] = [
         sortable: false,
         minWidth: 352,
     },
+    {
+        field: 'summary',
+        headerName: 'Summary',
+        sortable: false,
+        minWidth: 352,
+    }
 ];
 
 type DataGridTableListingEntry = TableListingEntry & {
