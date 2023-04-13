@@ -5,8 +5,6 @@ import React from 'react';
 
 import { Grid, Typography } from '@mui/material';
 
-import { MaxWidthTextBlock } from '@dolittle/design-system';
-
 import { CreateEntityBox, CreateEntityBoxProps } from './createEntityBox';
 
 /**
