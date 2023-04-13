@@ -6,7 +6,7 @@ import React from 'react';
 import { Accordion as MuiAccordion, AccordionDetails, AccordionSummary, SxProps, Typography } from '@mui/material';
 import { ExpandCircleDownRounded } from '@mui/icons-material';
 
-import { StatusIndicator, StatusIndicatorProps } from '@dolittle/design-system';
+import { StatusIndicator } from '@dolittle/design-system';
 
 const styles = {
     accordion: {

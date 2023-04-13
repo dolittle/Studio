@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { RouteObject, Navigate } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 
 import { ConnectionDetails } from './connectionDetails';
 import { ConfigurationView } from './connectionDetails/configuration';
