@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { DataTableToolbar } from '@dolittle/design-system';
 import { MessageMappingModel } from '../../../../../apis/integrations/generated';
-import { formatStartingDate, formatDate } from '../../../../../utils/dates';
+import { formatDate } from '../../../../../utils/dates';
 
 const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
     {
@@ -65,34 +65,37 @@ const messagesToolbarButtons = [
     } as const,
 ];
 
-type MessagesTableProps = {
+export type MessagesTableProps = {
     rows: any[];
     loading?: boolean;
 };
 
 export const MessagesTable = ({ rows }: MessagesTableProps) => {
     const navigate = useNavigate();
+
     const onTableRowClick = (row: MessageMappingModel): void => {
         navigate(`edit/${row.fromTable?.name!}/${row.name}`);
     };
 
-    return <Paper sx={{ width: 1, mt: 2, boxShadow: 'none' }}>
-        <DataGridPro
-            rows={rows}
-            columns={messagesDataColumns}
-            //loading={loading}
-            headerHeight={46}
-            getRowHeight={() => 'auto'}
-            onRowClick={({ row }) => onTableRowClick(row as MessageMappingModel)}
-            autoHeight
-            hideFooter
-            disableColumnMenu
-            checkboxSelection
-            disableSelectionOnClick
-            components={{
-                Toolbar: () => <DataTableToolbar title='Your Messages' buttons={messagesToolbarButtons} />,
-            }} />
-    </Paper>;
+    return (
+        <Paper sx={{ width: 1, mt: 2, boxShadow: 'none' }}>
+            <DataGridPro
+                rows={rows}
+                columns={messagesDataColumns}
+                //loading={loading}
+                headerHeight={46}
+                getRowHeight={() => 'auto'}
+                onRowClick={({ row }) => onTableRowClick(row as MessageMappingModel)}
+                autoHeight
+                hideFooter
+                disableColumnMenu
+                checkboxSelection
+                disableSelectionOnClick
+                components={{
+                    Toolbar: () => <DataTableToolbar title='Your Messages' buttons={messagesToolbarButtons} />,
+                }} />
+        </Paper>
+    );
 };
 
 
