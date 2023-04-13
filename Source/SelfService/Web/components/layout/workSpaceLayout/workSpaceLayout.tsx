@@ -10,14 +10,13 @@ import { NavigationBar, SideBar } from '@dolittle/design-system';
 import { MainLinks, SecondaryLinks, SpaceSelectionMenu, MoreOptions, SideBarPrimaryLinks, SideBarSecondaryLinks } from './linksHelper';
 
 const styles = {
-    main: {
-        'display': 'flex',
-        'flexDirection': 'column',
-        'flexGrow': 1,
-        'm': 4,
-        'mt': 8,
-        '& .MuiToolbar-root': { p: 0 },
-    },
+    'minHeight': 'calc(100vh - 96px)',
+    'display': 'flex',
+    'flexDirection': 'column',
+    'flexGrow': 1,
+    'm': 4,
+    'mt': 8,
+    '& .MuiToolbar-root': { p: 0 },
 };
 
 type WorkSpaceLayoutProps = {
@@ -38,7 +37,7 @@ export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
             secondaryLinks={<SideBarSecondaryLinks />}
         />
 
-        <Box component='main' sx={styles.main}>
+        <Box component='main' sx={styles}>
             <Toolbar />
             {children}
         </Box>
