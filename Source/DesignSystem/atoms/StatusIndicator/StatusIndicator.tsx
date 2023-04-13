@@ -49,6 +49,9 @@ export type StatusIndicatorProps = {
      */
     variantFilled?: boolean;
 
+    /**
+     * The `sx` prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
     sx?: SxProps;
 };
 
@@ -69,6 +72,7 @@ export const StatusIndicator = ({ label, status, variantFilled, sx }: StatusIndi
         },
         variantFilled: {
             minWidth: 64,
+            minHeight: 36,
             py: 0.75,
             px: 2,
             color: 'background.paper',
