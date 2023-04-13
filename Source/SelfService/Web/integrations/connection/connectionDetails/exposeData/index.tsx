@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 
 import { Box, Collapse, Divider, Grid, FormGroup, FormControlLabel, FormHelperText, Paper, Switch, TextField, Typography } from '@mui/material';
 
-import { Button, Icon, IconButton, Link } from '@dolittle/design-system';
+import { Button, IconButton, Link } from '@dolittle/design-system';
 
 const styles = {
     content: {
