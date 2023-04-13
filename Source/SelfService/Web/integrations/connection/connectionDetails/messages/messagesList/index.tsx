@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useConnectionId } from '../../../../routes.hooks';
 
 import { AlertBox, LoadingSpinner } from '@dolittle/design-system';
@@ -17,12 +17,12 @@ import { NoMessages } from './NoMessages';
 export const MessagesListView = () => {
     const connectionId = useConnectionId();
     const navigate = useNavigate();
+
     const { data, isError, isLoading } = useConnectionsIdMessageMappingsGet({ id: connectionId || '' });
+
     const handleCreateNewMessage = () => {
         navigate('new');
     };
-
-    //console.log(data?.value);
 
     const messageTypesRows = data?.value?.map(mapping => ({
         id: mapping.id!,
