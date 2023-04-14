@@ -1,3 +1,9 @@
+# [3.4.15] - 2023-4-14 [PR: #370](https://github.com/dolittle/Studio/pull/370)
+## Summary
+
+Improved code turing hackhaton event.
+
+
 # [3.4.14] - 2023-4-8 [PR: #369](https://github.com/dolittle/Studio/pull/369)
 ## Summary
 
