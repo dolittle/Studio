@@ -11,7 +11,7 @@ import { Accordion, FileUploadForm, FileUploadFormRef } from '@dolittle/design-s
 
 import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../../apis/solutions/api';
 
-import { isAlphaNumeric } from '../../../helpers';
+import { isAlphaNumeric } from '../../../../../utils/helpers';
 
 import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
 import { EmptyDataTable } from '../../../components/emptyDataTable';

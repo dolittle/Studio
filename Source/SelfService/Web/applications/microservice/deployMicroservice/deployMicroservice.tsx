@@ -22,7 +22,7 @@ import { HasM3ConnectorField } from '../components/form/hasM3ConnectorField';
 import { SetupFields } from './setupFields';
 import { ContainerImageFields } from './containerImageFields';
 import { PublicUrlFields } from './publicUrlFields';
-import { getRuntimeNumberFromString } from '../helpers';
+import { getRuntimeNumberFromString } from '../../../utils/helpers';
 
 const styles = {
     form: {

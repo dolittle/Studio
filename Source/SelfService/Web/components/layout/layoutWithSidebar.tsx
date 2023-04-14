@@ -6,13 +6,13 @@ import React, { ReactNode } from 'react';
 import { NavigateFunction } from 'react-router-dom';
 
 import { List, ListItemButton, ListItemButtonBaseProps, ListItemIcon, ListItemText, Paper } from '@mui/material';
-import { BackupRounded, HexagonRounded, FindInPageRounded, TextSnippetRounded, PolylineRounded, SettingsRounded } from '@mui/icons-material';
+
+import { Icon } from '@dolittle/design-system';
 
 import './layout.scss';
 
 import { HttpResponseApplication } from '../../apis/solutions/application';
 
-import { ContainerRegistryRounded } from '../../assets/icons';
 import { DolittleLogoMedium } from '../../assets/logos';
 import { AlertBox } from '../alertBox';
 
@@ -83,7 +83,8 @@ const NavigationListItemButton = ({ navigationMenuItem, navigate, ...props }: Na
                 navigationMenuItem.forceReload ? window.location.href = href : navigate(href);
             }}
             {...props}
-        />);
+        />
+    );
 };
 
 export const getMenuWithApplication = (
@@ -96,27 +97,27 @@ export const getMenuWithApplication = (
         {
             href: `/backups/application/${applicationId}/overview`,
             name: 'Backups',
-            icon: <BackupRounded />,
+            icon: <Icon icon='BackupRounded' size='medium' />,
         },
         {
             href: `/microservices/application/${applicationId}/${environment}/overview`,
             name: 'Microservices',
-            icon: <HexagonRounded />,
+            icon: <Icon icon='HexagonRounded' size='medium' />,
         },
         {
             href: `/containerregistry/application/${applicationId}/${environment}/overview`,
             name: 'Container Registry',
-            icon: <ContainerRegistryRounded />,
+            icon: <Icon icon='ContainerRegistry' size='medium' />,
         },
         {
             href: `/logs/application/${applicationId}/${environment}`,
             name: 'Logs',
-            icon: <TextSnippetRounded />,
+            icon: <Icon icon='TextSnippetRounded' size='medium' />,
         },
         {
             href: `/documentation/application/${applicationId}/${environment}/overview`,
             name: 'Documentation',
-            icon: <FindInPageRounded />,
+            icon: <Icon icon='FindInPageRounded' size='medium' />,
         },
     ];
 
@@ -124,7 +125,7 @@ export const getMenuWithApplication = (
         mainNavigationItems.push({
             href: '/.auth/cookies/initiate',
             name: 'Change Customer',
-            icon: <SettingsRounded />,
+            icon: <Icon icon='SettingsRounded' size='medium' />,
             forceReload: true,
         });
     }
@@ -134,7 +135,7 @@ export const getMenuWithApplication = (
         mainNavigationItems.splice(mainNavigationItems.length - 2, 0, {
             href: `/m3connector/application/${applicationId}/${environment}/details`,
             name: 'M3 Connector',
-            icon: <PolylineRounded />,
+            icon: <Icon icon='PolylineRounded' size='medium' />,
         });
     }
 
