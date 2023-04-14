@@ -40,12 +40,6 @@ export interface MappableTableColumn {
     m3Description?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof MappableTableColumn
-     */
-    fieldName?: string | null;
-    /**
-     * 
      * @type {FieldType}
      * @memberof MappableTableColumn
      */
@@ -79,7 +73,6 @@ export function MappableTableColumnFromJSONTyped(json: any, ignoreDiscriminator:
         
         'm3ColumnName': !exists(json, 'm3ColumnName') ? undefined : json['m3ColumnName'],
         'm3Description': !exists(json, 'm3Description') ? undefined : json['m3Description'],
-        'fieldName': !exists(json, 'fieldName') ? undefined : json['fieldName'],
         'type': !exists(json, 'type') ? undefined : FieldTypeFromJSON(json['type']),
         'fieldLength': !exists(json, 'fieldLength') ? undefined : json['fieldLength'],
     };
@@ -96,7 +89,6 @@ export function MappableTableColumnToJSON(value?: MappableTableColumn | null): a
         
         'm3ColumnName': value.m3ColumnName,
         'm3Description': value.m3Description,
-        'fieldName': value.fieldName,
         'type': FieldTypeToJSON(value.type),
         'fieldLength': value.fieldLength,
     };
