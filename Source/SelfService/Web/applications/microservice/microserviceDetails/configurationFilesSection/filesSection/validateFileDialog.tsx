@@ -7,7 +7,7 @@ import { AlertDialog } from '@dolittle/design-system';
 
 import { Divider, List, ListItem, Typography } from '@mui/material';
 
-import { formatBytes } from '../../../helpers';
+import { formatBytes } from '../../../../../utils/helpers';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 

@@ -19,7 +19,7 @@ import { HeaderButtons } from './headerButtons';
 import { SetupFields } from './setupFields';
 import { ContainerImageFields } from './containerImageFields';
 import { PublicUrlFields } from './publicUrlFields';
-import { getRuntimeNumberFromString } from '../../../helpers';
+import { getRuntimeNumberFromString } from '../../../../../utils/helpers';
 
 const styles = {
     form: {

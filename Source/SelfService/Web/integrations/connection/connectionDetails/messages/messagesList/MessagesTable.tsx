@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { DataTableToolbar } from '@dolittle/design-system';
 import { MessageMappingModel } from '../../../../../apis/integrations/generated';
-import { formatStartingDate, formatDate } from '../../../../../utils/dates';
+import { formatStartingDate, formatDate } from '../../../../../utils/helpers/dates';
 
 const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
     {

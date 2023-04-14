@@ -8,7 +8,7 @@ import { GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-
 
 import { Summary } from '@dolittle/design-system';
 
-import { DownloadLogs, formatTime, formatStartingDate } from '../../helpers';
+import { DownloadLogs, formatTime, formatStartingDate } from '../../../../utils/helpers';
 
 import { StatusFieldCell } from '../../components/microserviceStatus';
 import { HealthStatusTableRow } from './healthStatusTable';

@@ -11,7 +11,7 @@ import { StatusFieldCell, customStatusFieldSort } from '../components/microservi
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Paper, Tooltip } from '@mui/material';
 
-import { getRuntimeNumberFromString } from '../helpers';
+import { getRuntimeNumberFromString } from '../../../utils/helpers';
 
 const PublicUrlCell = (params: GridRenderCellParams) => {
     const hasPublicUrl = params.row.edit?.extra?.isPublic;
