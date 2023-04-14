@@ -97,5 +97,3 @@ export const MessagesTable = ({ rows }: MessagesTableProps) => {
         </Paper>
     );
 };
-
-
