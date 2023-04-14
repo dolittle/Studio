@@ -148,9 +148,8 @@ export const ChangeMessageView = () => {
                                                     mode={mode}
                                                     isSubmitting={saveMessageMappingMutation.isLoading}
                                                 />
-                                            </>
-
-                                            : <TableSearchSection
+                                            </> :
+                                            <TableSearchSection
                                                 mode={mode}
                                                 onTableSelected={setSelectedTableName}
                                                 searchInput={searchInput}

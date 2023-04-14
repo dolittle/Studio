@@ -7,6 +7,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { Grid, LinearProgress } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
+
 import { AlertBox, Button, MaxWidthTextBlock, Switch } from '@dolittle/design-system/';
 
 import { FieldMapping, MappedField } from '../../../../../../apis/integrations/generated';
@@ -18,39 +19,40 @@ import { ViewModeProps } from '../ViewMode';
 import { ContentSection } from './ContentSection';
 import { DataGridTableListingEntry, MessageMappingTable } from './MessageMappingTable';
 
-
 export type TableSectionProps = ViewModeProps & {
     selectedTableName: string;
     initialSelectedFields: MappedField[];
     onBackToSearchResultsClicked: () => void;
 };
 
-export const TableSection = (props: TableSectionProps) => {
+export const TableSection = ({ selectedTableName, initialSelectedFields, onBackToSearchResultsClicked, mode }: TableSectionProps) => {
     const connectionId = useConnectionId();
     const initialSelected = useMemo(
-        () => props.initialSelectedFields.map(field => field.mappedColumn?.m3ColumnName!) || [],
-        [props.initialSelectedFields]
+        () => initialSelectedFields.map(field => field.mappedColumn?.m3ColumnName!) || [],
+        [initialSelectedFields]
     );
+
     const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>(initialSelected);
-    const [hideUnselectedRows, setHideUnselectedRows] = useState(props.mode === 'edit');
+    const [hideUnselectedRows, setHideUnselectedRows] = useState(mode === 'edit');
 
     const initialMapped: Map<string, FieldMapping> = useMemo(() => new Map(
-        props.initialSelectedFields.map(
+        initialSelectedFields.map(
             field => [
                 field.mappedColumn?.m3ColumnName!, {
                     columnName: field.mappedColumn?.m3ColumnName!,
                     fieldName: field.mappedName,
                     fieldDescription: field.mappedDescription,
                 }]) || []),
-        [props.initialSelectedFields]);
-    const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(initialMapped);
-    const { setValue: setFormValue, getValues: getFormValues, } = useFormContext();
+        [initialSelectedFields]);
 
-    if (!connectionId || !props.selectedTableName) return <AlertBox />;
+    const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(initialMapped);
+    const { setValue: setFormValue, getValues: getFormValues } = useFormContext();
+
+    if (!connectionId || !selectedTableName) return <AlertBox />;
 
     const { data: mappableTableResult, isLoading, isInitialLoading } = useConnectionsIdMessageMappingsTablesTableGet({
         id: connectionId,
-        table: props.selectedTableName,
+        table: selectedTableName,
     });
 
     const allMappableTableColumns = mappableTableResult?.value?.columns || [];
@@ -82,8 +84,9 @@ export const TableSection = (props: TableSectionProps) => {
     }, [selectedTableColumns]);
 
     const onFieldMapped = (m3Field: string, mappedFieldName: any) => {
-        setMappedFields((prevMappedFields) => {
+        setMappedFields(prevMappedFields => {
             const newMappedFields = new Map(prevMappedFields);
+
             if (mappedFieldName) {
                 newMappedFields.set(m3Field, { columnName: m3Field, fieldName: mappedFieldName });
             } else {
@@ -97,16 +100,17 @@ export const TableSection = (props: TableSectionProps) => {
         <>
             {isInitialLoading ? <LinearProgress /> : (
                 <ContentSection
-                    title={`${props.selectedTableName} Table`}
+                    title={`${selectedTableName} Table`}
                     beforeHeaderSlot={
-                        props.mode === 'new' && (<Button
+                        mode === 'new' &&
+                        <Button
                             label='Back to Search Results'
                             startWithIcon='ArrowBack'
                             variant='text'
                             color='subtle'
                             sx={{ ml: 1, mt: 2 }}
-                            onClick={props.onBackToSearchResultsClicked}
-                        />)
+                            onClick={onBackToSearchResultsClicked}
+                        />
                     }
                 >
                     {!mappableTableResult?.value ? <AlertBox /> : (
@@ -114,7 +118,7 @@ export const TableSection = (props: TableSectionProps) => {
                             <Grid container gap={2} sx={{ py: 3, justifyContent: 'space-between', alignContent: 'flex-start' }}>
                                 <MaxWidthTextBlock>
                                     {`You can edit the field descriptions and add a remapped name to provide appropriate semantics that make sense for your
-                        organization's business logic.`}
+                                        organization's business logic.`}
                                 </MaxWidthTextBlock>
                                 <Switch id='hideUnselectedRows' label='Hide Unselected Rows' onChange={() => setHideUnselectedRows(!hideUnselectedRows)} />
                             </Grid>

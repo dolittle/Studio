@@ -118,9 +118,8 @@ export const ConfigurationView = () => {
                     </MaxWidthTextBlock>
 
                     {/* <InstructionsListItems /> */}
-                    <FileUploadForm onSelected={file => console.log(file)} validFileExtensions={['json']} />
+                    {/* <FileUploadForm onSelected={file => console.log(file)} validFileExtensions={['json']} /> */}
                 </Accordion>
-
             </Form>
         </Box>
     );
