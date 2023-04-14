@@ -1,3 +1,9 @@
+# [3.4.16] - 2023-4-14 [PR: #371](https://github.com/dolittle/Studio/pull/371)
+## Summary
+
+Overall code cleanup from old code and used Design System comonents.
+
+
 # [3.4.15] - 2023-4-14 [PR: #370](https://github.com/dolittle/Studio/pull/370)
 ## Summary
 
