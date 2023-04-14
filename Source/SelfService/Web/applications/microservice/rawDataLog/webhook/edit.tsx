@@ -1,33 +1,36 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import React, { useState } from 'react';
 
 import { Label } from '@fluentui/react/lib/Label';
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
 import { Stack } from '@fluentui/react/lib/Stack';
-import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { MicroserviceRawDataLogIngestorWebhookConfig, ConnectorWebhookConfigBasic } from '../../../../apis/solutions/index';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { IDropdownOption } from '@fluentui/react';
+
+import { Button } from '@dolittle/design-system';
+
+import { MicroserviceRawDataLogIngestorWebhookConfig, ConnectorWebhookConfigBasic } from '../../../../apis/solutions/index';
 import { BasicAuthComponent } from '../../../../components/basicAuthComponent';
 import { BearerAuthComponent } from '../../../../components/bearerAuthComponent';
-import { trimPrefix, trimSuffix } from '../../../../utils/string';
+
+import { trimPrefix, trimSuffix } from '../../../../utils/helpers';
 import { makeBasicAuth, makeBearer } from '../../../../utils/httpCredentials';
 
 const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
 const stackTokens = { childrenGap: 15 };
 
-
-type Props = {
-    domain: string
-    ingressPath: string
-    webhook: MicroserviceRawDataLogIngestorWebhookConfig
+export type EditProps = {
+    domain: string;
+    ingressPath: string;
+    webhook: MicroserviceRawDataLogIngestorWebhookConfig;
     onAfterSave: (webhooks: MicroserviceRawDataLogIngestorWebhookConfig) => Promise<void>;
 };
 
 const defaultAuthType = 'Basic';
 
-export const Edit: React.FunctionComponent<Props | undefined> = (props) => {
+export const Edit = (props: EditProps) => {
     const currentWebhook = props!.webhook;
     let domain = props!.domain;
     let ingressPath = props!.ingressPath;
@@ -144,7 +147,6 @@ export const Edit: React.FunctionComponent<Props | undefined> = (props) => {
                 />
             </Stack>
 
-
             {authOptionState === 'Basic' && (
                 <BasicAuthComponent {...getUsernameAndPasswordFromBasicAuth(config[1])} onUpdate={onUpdateConfig} />
             )}
@@ -154,15 +156,11 @@ export const Edit: React.FunctionComponent<Props | undefined> = (props) => {
             )}
 
             <Stack horizontal horizontalAlign="end" tokens={stackTokens}>
-                <PrimaryButton text={actionText} onClick={() => {
-                    onAfterSave(webhook);
-                }} />
+                <Button label={actionText} onClick={() => onAfterSave(webhook)} />
             </Stack>
         </>
-
     );
 };
-
 
 function getAuthInfo(data: string): string[] {
     try {
@@ -196,4 +194,4 @@ function getUsernameAndPasswordFromBasicAuth(data: string): ConnectorWebhookConf
             password: '',
         } as ConnectorWebhookConfigBasic;
     }
-}
+};
