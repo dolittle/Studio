@@ -24,7 +24,7 @@ type WorkSpaceLayoutProps = {
 };
 
 export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Grid container>
+    <Grid container sx={{ flexFlow: 'nowrap' }}>
         <NavigationBar
             mainLinks={<MainLinks />}
             secondaryLinks={<SecondaryLinks />}
