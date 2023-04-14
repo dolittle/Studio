@@ -98,43 +98,44 @@ export const ChangeMessageView = () => {
 
     return (
         <>
-            <ContentContainer>
-                {mode === 'edit' && messageQuery.isError
-                    ? <AlertBox />
-                    : (
-                        <>
-                            {(mode === 'new' || messageQuery.isSuccess) && (
-                                <>
-                                    <AlertDialog
-                                        id='discard-changes-dialog'
-                                        title='Are you sure that you want to discard these changes?'
-                                        description={`By clicking ‘discard changes' none of the changes you have made to this screen will be stored.`}
-                                        isOpen={showDiscardChangesDialog}
-                                        onCancel={() => cancelMessageMapping()}
-                                        onClose={() => setShowDiscardChangesDialog(false)}
-                                        onConfirm={() => setShowDiscardChangesDialog(false)}
-                                        cancelBtnText='Discard changes'
-                                        confirmBtnText='Continue working'
-                                    />
+            <Form<NewMessageMappingParameters>
+                initialValues={{
+                    name: messageId ?? '',
+                    description: messageType?.description ?? '',
+                    fields: messageType?.fieldMappings?.map(field => ({
+                        columnName: field.mappedColumn?.m3ColumnName!,
+                        fieldName: field.mappedName,
+                        fieldDescription: field.mappedDescription,
+                    })) || [],
+                }}
+                onSubmit={handleNewMessageSave}
+            >
+                <ContentContainer>
+                    {mode === 'edit' && messageQuery.isError
+                        ? <AlertBox />
+                        : (
+                            <>
+                                {(mode === 'new' || messageQuery.isSuccess) && (
+                                    <>
+                                        <AlertDialog
+                                            id='discard-changes-dialog'
+                                            title='Are you sure that you want to discard these changes?'
+                                            description={`By clicking ‘discard changes' none of the changes you have made to this screen will be stored.`}
+                                            isOpen={showDiscardChangesDialog}
+                                            onCancel={() => cancelMessageMapping()}
+                                            onClose={() => setShowDiscardChangesDialog(false)}
+                                            onConfirm={() => setShowDiscardChangesDialog(false)}
+                                            cancelBtnText='Discard changes'
+                                            confirmBtnText='Continue working'
+                                        />
 
-                                    <ContentHeader
-                                        title={title}
-                                        buttons={[toolbarButtons]}
-                                        sx={{ minHeight: 64 }}
-                                    />
+                                        <ContentHeader
+                                            title={title}
+                                            buttons={[toolbarButtons]}
+                                            sx={{ minHeight: 64 }}
+                                        />
 
-                                    <Form<NewMessageMappingParameters>
-                                        initialValues={{
-                                            name: messageId ?? '',
-                                            description: messageType?.description ?? '',
-                                            fields: messageType?.fieldMappings?.map(field => ({
-                                                columnName: field.mappedColumn?.m3ColumnName!,
-                                                fieldName: field.mappedName,
-                                                fieldDescription: field.mappedDescription,
-                                            })) || [],
-                                        }}
-                                        onSubmit={handleNewMessageSave}
-                                    >
+
                                         <MessageDetailsSection mode={mode} />
                                         {showTable
                                             ? <>
@@ -156,13 +157,14 @@ export const ChangeMessageView = () => {
                                                 setSearchInput={setSearchInput}
                                             />
                                         }
-                                    </Form>
-                                </>
-                            )}
-                        </>
-                    )
-                }
-            </ContentContainer>
+
+                                    </>
+                                )}
+                            </>
+                        )
+                    }
+                </ContentContainer>
+            </Form>
         </>
     );
 };
