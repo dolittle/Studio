@@ -61,7 +61,12 @@ export const Index = () => {
                 >
                     <ChangeMessageView
                         mode={mode}
+                        table={table!}
+                        messageId={messageId!}
                         isSubmitting={saveMessageMappingMutation.isLoading}
+                        messageType={messageType}
+                        queryIsError={messageQuery.isError}
+                        queryIsSuccess={messageQuery.isSuccess}
                     />
                 </MessageMappingForm>
             </ContentContainer>
