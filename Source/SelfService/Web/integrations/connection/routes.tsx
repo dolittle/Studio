@@ -10,7 +10,7 @@ import { ConfigurationView } from './connectionDetails/configuration';
 import { ExposeDataView } from './connectionDetails/exposeData';
 import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { MessagesViewRoot } from './connectionDetails/messages';
-import { ChangeMessageView } from './connectionDetails/messages/changeMessage';
+import { Index as ChangeMessageView } from './connectionDetails/messages/changeMessage';
 
 import { NewConnectionView } from './new';
 
