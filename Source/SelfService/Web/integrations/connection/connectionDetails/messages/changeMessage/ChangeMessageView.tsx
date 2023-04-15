@@ -8,10 +8,7 @@ import { useFormState } from 'react-hook-form';
 
 import { AlertBox, AlertDialog } from '@dolittle/design-system';
 
-import {
-    useConnectionsIdMessageMappingsTablesTableMessagesMessageGet,
-} from '../../../../../apis/integrations/messageMappingApi.hooks';
-import { useConnectionId } from '../../../../routes.hooks';
+import { MessageMappingModel } from '../../../../../apis/integrations/generated';
 
 import { ViewMode } from './ViewMode';
 import { ContentHeader } from './components/ContentHeader';
@@ -23,26 +20,34 @@ import { SubmitButtonSection } from './components/SubmitButtonSection';
 
 export type ChangeMessageViewProps = {
     mode: ViewMode;
+    table: string,
+    messageId: string,
     isSubmitting: boolean;
+    messageType: MessageMappingModel | undefined;
+    queryIsError: boolean;
+    queryIsSuccess: boolean;
 };
 
 
-export const ChangeMessageView = ({ mode, isSubmitting }: ChangeMessageViewProps) => {
+export const ChangeMessageView = ({
+    mode,
+    table,
+    messageId,
+    isSubmitting,
+    messageType,
+    queryIsError,
+    queryIsSuccess,
+}: ChangeMessageViewProps) => {
     const navigate = useNavigate();
-    const { table, messageId } = useParams();
-    const connectionId = useConnectionId();
     const { isDirty } = useFormState();
 
     const [searchInput, setSearchInput] = useState('');
     const [selectedTableName, setSelectedTableName] = useState('');
     const [showDiscardChangesDialog, setShowDiscardChangesDialog] = useState(false);
 
-    const messageQuery = useConnectionsIdMessageMappingsTablesTableMessagesMessageGet({ id: connectionId!, table: table!, message: messageId! });
-
     const showTable = !!selectedTableName || mode === 'edit';
     const title = mode === 'new' ? 'Create New Message Type' : `Edit Message Type - ${messageId}`;
 
-    const messageType = messageQuery.data?.value;
 
     if (mode === 'edit' && table && !selectedTableName) {
         setSelectedTableName(table);
@@ -75,11 +80,11 @@ export const ChangeMessageView = ({ mode, isSubmitting }: ChangeMessageViewProps
 
     return (
         <>
-            {mode === 'edit' && messageQuery.isError
+            {mode === 'edit' && queryIsError
                 ? <AlertBox />
                 : (
                     <>
-                        {(mode === 'new' || messageQuery.isSuccess) && (
+                        {(mode === 'new' || queryIsSuccess) && (
                             <>
                                 <AlertDialog
                                     id='discard-changes-dialog'
