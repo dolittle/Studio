@@ -10,7 +10,6 @@ import { AlertBox, AlertDialog } from '@dolittle/design-system';
 
 import {
     useConnectionsIdMessageMappingsTablesTableMessagesMessageGet,
-    useConnectionsIdMessageMappingsTablesTableMessagesMessagePost
 } from '../../../../../apis/integrations/messageMappingApi.hooks';
 import { useConnectionId } from '../../../../routes.hooks';
 
@@ -24,10 +23,11 @@ import { SubmitButtonSection } from './components/SubmitButtonSection';
 
 export type ChangeMessageViewProps = {
     mode: ViewMode;
+    isSubmitting: boolean;
 };
 
 
-export const ChangeMessageView = ({ mode }: ChangeMessageViewProps) => {
+export const ChangeMessageView = ({ mode, isSubmitting }: ChangeMessageViewProps) => {
     const navigate = useNavigate();
     const { table, messageId } = useParams();
     const connectionId = useConnectionId();
@@ -38,7 +38,6 @@ export const ChangeMessageView = ({ mode }: ChangeMessageViewProps) => {
     const [showDiscardChangesDialog, setShowDiscardChangesDialog] = useState(false);
 
     const messageQuery = useConnectionsIdMessageMappingsTablesTableMessagesMessageGet({ id: connectionId!, table: table!, message: messageId! });
-    const saveMessageMappingMutation = useConnectionsIdMessageMappingsTablesTableMessagesMessagePost();
 
     const showTable = !!selectedTableName || mode === 'edit';
     const title = mode === 'new' ? 'Create New Message Type' : `Edit Message Type - ${messageId}`;
@@ -111,7 +110,7 @@ export const ChangeMessageView = ({ mode }: ChangeMessageViewProps) => {
                                         />
                                         <SubmitButtonSection
                                             mode={mode}
-                                            isSubmitting={saveMessageMappingMutation.isLoading}
+                                            isSubmitting={isSubmitting}
                                         />
                                     </> : <TableSearchSection
                                         mode={mode}
