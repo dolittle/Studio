@@ -59,7 +59,10 @@ export const Index = () => {
                     messageType={messageType!}
                     saveMessageMappingMutation={saveMessageMappingMutation}
                 >
-                    <ChangeMessageView mode={mode} />
+                    <ChangeMessageView
+                        mode={mode}
+                        isSubmitting={saveMessageMappingMutation.isLoading}
+                    />
                 </MessageMappingForm>
             </ContentContainer>
         </>
