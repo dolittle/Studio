@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
+import { useFormState } from 'react-hook-form';
 
 import { AlertBox, AlertDialog } from '@dolittle/design-system';
 
@@ -30,6 +31,7 @@ export const ChangeMessageView = ({ mode }: ChangeMessageViewProps) => {
     const navigate = useNavigate();
     const { table, messageId } = useParams();
     const connectionId = useConnectionId();
+    const { isDirty } = useFormState();
 
     const [searchInput, setSearchInput] = useState('');
     const [selectedTableName, setSelectedTableName] = useState('');
@@ -48,10 +50,10 @@ export const ChangeMessageView = ({ mode }: ChangeMessageViewProps) => {
     }
 
     const toolbarButtons = {
-        label: 'Discard changes',
+        label: isDirty ? 'Discard changes' : 'Cancel',
         startWithIcon: 'CancelRounded',
         color: 'subtle',
-        onClick: () => setShowDiscardChangesDialog(true),
+        onClick: () => isDirty ? setShowDiscardChangesDialog(true) : cancelMessageMapping(),
     } as const;
 
     // TODO: Implement this.
