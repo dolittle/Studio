@@ -5,14 +5,12 @@ import React, { useState } from 'react';
 
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { enqueueSnackbar } from 'notistack';
 
-import { AlertBox, AlertDialog, Form } from '@dolittle/design-system';
+import { AlertBox, AlertDialog } from '@dolittle/design-system';
 
-import { SetMessageMappingRequestArguments } from '../../../../../apis/integrations/generated';
 import {
     useConnectionsIdMessageMappingsTablesTableMessagesMessageGet,
-    useConnectionsIdMessageMappingsTablesTableMessagesMessagePost,
+    useConnectionsIdMessageMappingsTablesTableMessagesMessagePost
 } from '../../../../../apis/integrations/messageMappingApi.hooks';
 import { useConnectionId } from '../../../../routes.hooks';
 
@@ -23,10 +21,9 @@ import { TableSearchSection } from './components/TableSearchSection';
 import { MessageDetailsSection } from './components/MessageDetailsSection';
 import { TableSection } from './components/TableSection';
 import { SubmitButtonSection } from './components/SubmitButtonSection';
+import { MessageMappingForm } from './components/MessageMappingForm';
 
-export type NewMessageMappingParameters = SetMessageMappingRequestArguments & {
-    name: string;
-};
+
 
 export const ChangeMessageView = () => {
     const navigate = useNavigate();
@@ -38,8 +35,8 @@ export const ChangeMessageView = () => {
     const [selectedTableName, setSelectedTableName] = useState('');
     const [showDiscardChangesDialog, setShowDiscardChangesDialog] = useState(false);
 
-    const saveMessageMappingMutation = useConnectionsIdMessageMappingsTablesTableMessagesMessagePost();
     const messageQuery = useConnectionsIdMessageMappingsTablesTableMessagesMessageGet({ id: connectionId!, table: table!, message: messageId! });
+    const saveMessageMappingMutation = useConnectionsIdMessageMappingsTablesTableMessagesMessagePost();
 
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
     const showTable = !!selectedTableName || mode === 'edit';
@@ -73,44 +70,19 @@ export const ChangeMessageView = () => {
         navigate('..');
     };
 
-    const handleNewMessageSave = (values: NewMessageMappingParameters) => {
-        saveMessageMappingMutation.mutate({
-            id: connectionId!,
-            message: values.name,
-            table: selectedTableName!,
-            setMessageMappingRequestArguments: {
-                description: values.description!,
-                fields: values.fields!,
-            },
-        }, {
-            onSuccess(data, variables, context) {
-                navigate(`..`);
-                enqueueSnackbar('Message successfully created', { variant: 'success' });
-            },
-            onError(error, variables, context) {
-                console.log('error', error);
-                enqueueSnackbar('Something went wrong when trying to save the message', { variant: 'error' });
-            },
-        });
-    };
 
     const removeSelectedTable = () => setSelectedTableName('');
 
     return (
         <>
-            <Form<NewMessageMappingParameters>
-                initialValues={{
-                    name: messageId ?? '',
-                    description: messageType?.description ?? '',
-                    fields: messageType?.fieldMappings?.map(field => ({
-                        columnName: field.mappedColumn?.m3ColumnName!,
-                        fieldName: field.mappedName,
-                        fieldDescription: field.mappedDescription,
-                    })) || [],
-                }}
-                onSubmit={handleNewMessageSave}
-            >
-                <ContentContainer>
+            <ContentContainer>
+                <MessageMappingForm
+                    connectionId={connectionId!}
+                    selectedTableName={selectedTableName}
+                    messageId={messageId!}
+                    messageType={messageType!}
+                    saveMessageMappingMutation={saveMessageMappingMutation}
+                >
                     {mode === 'edit' && messageQuery.isError
                         ? <AlertBox />
                         : (
@@ -163,8 +135,8 @@ export const ChangeMessageView = () => {
                             </>
                         )
                     }
-                </ContentContainer>
-            </Form>
+                </MessageMappingForm>
+            </ContentContainer>
         </>
     );
 };
