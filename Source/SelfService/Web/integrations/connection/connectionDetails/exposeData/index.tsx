@@ -120,26 +120,28 @@ export const ExposeDataView = () => {
                             <TextField id='credentialsName' label='Name' size='small' />
                         </Grid>
 
-                        <Grid item>
-                            <Typography sx={{ mb: 2 }}>Credential Token</Typography>
-                            <TextField
-                                id='credentialsToken'
-                                label='Token'
-                                size='small'
-                                type='password'
-                                value={credetialToken}
-                                disabled
-                                sx={{ width: 400 }}
-                            />
-                            <FormHelperText>This bearer token should be used in the request header.</FormHelperText>
-                        </Grid>
+                        <Grid container item spacing={1} xs={6}>
+                            <Grid item>
+                                <Typography sx={{ mb: 2 }}>Credential Token</Typography>
+                                <TextField
+                                    id='credentialsToken'
+                                    label='Token'
+                                    size='small'
+                                    type='password'
+                                    value={credetialToken}
+                                    disabled
+                                    sx={{ width: 400 }}
+                                />
+                                <FormHelperText>This bearer token should be used in the request header.</FormHelperText>
+                            </Grid>
 
-                        <Grid item sx={{ alignSelf: 'center', mt: 2.5 }}>
-                            <Button
-                                label='Copy Token'
-                                startWithIcon='CopyAllRounded'
-                                onClick={handleTokenCopy}
-                            />
+                            <Grid item sx={{ alignSelf: 'center', mt: 2.5 }}>
+                                <Button
+                                    label='Copy Token'
+                                    startWithIcon='CopyAllRounded'
+                                    onClick={handleTokenCopy}
+                                />
+                            </Grid>
                         </Grid>
                     </Grid>
 
@@ -147,7 +149,8 @@ export const ExposeDataView = () => {
                         <Grid item>
                             <Button
                                 label='Delete credentials'
-                                color='error'
+                                color='subtle'
+                                variant='outlined'
                                 startWithIcon='DeleteRounded'
                                 onClick={() => setOpenCredentials(false)}
                             />
