@@ -12,6 +12,8 @@ import { MessageMappingModel } from '../../../../../apis/integrations/generated'
 
 import { formatStartingDate, formatDate } from '../../../../../utils/helpers/dates';
 
+const defaultEmptyDate = new Date('0001-01-01T00:00:00+00:00');
+
 const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
     {
         field: 'name',
@@ -44,7 +46,11 @@ const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
         headerName: 'Last Deployed',
         //minWidth: 270,
         flex: 1,
-        valueGetter: (params) => params.row.deployedAt ? formatDate(params.row.deployedAt) : '',
+        valueGetter: (params) => {
+            return params.row.deployedAt && params.row.deployedAt.toISOString() !== defaultEmptyDate.toISOString()
+                ? formatDate(params.row.deployedAt)
+                : '-';
+        },
     },
 ];
 
