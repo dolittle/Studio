@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { useConnectionId } from '../../../../routes.hooks';
 
 import { AlertBox, LoadingSpinner } from '@dolittle/design-system';
-import { ContentHeader } from '../../../../../components/layout/Content/ContentHeader';
 import { ContentContainer } from '../../../../../components/layout/Content/ContentContainer';
 
 import { useConnectionsIdMessageMappingsGet } from '../../../../../apis/integrations/messageMappingApi.hooks';
@@ -17,21 +16,19 @@ import { CreateMessagesButton } from './CreateMessagesButton';
 import { NoMessages } from './NoMessages';
 import { defaultEmptyDate } from './helpers';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
+import { MessagesHeader } from './MessagesHeader';
 
 
 export const MessagesListView = () => {
     const connectionId = useConnectionId();
     const navigate = useNavigate();
-    const [selectedMessageTypeIds, setSelectedMessageTypeIds] = useState<GridSelectionModel>([]);
+    const [selectedMessageTypeIds, setSelectedMessageTypeIds] = useState<string[]>([]);
 
     const { data, isError, isLoading } = useConnectionsIdMessageMappingsGet({ id: connectionId || '' });
 
     const handleCreateNewMessage = () => {
         navigate('new');
     };
-
-    const hasSelectedMessages = selectedMessageTypeIds.length > 0;
-
 
     const messageTypesRows = useMemo(() => {
         const mappedRows = data?.value?.map(mapping => ({
@@ -47,25 +44,6 @@ export const MessagesListView = () => {
         return sortedRows;
     }, [data?.value]);
 
-    const messagesToolbarButtons = useMemo(() => [
-        {
-            label: 'Delete messages',
-            startWithIcon: 'DeleteRounded',
-            disabled: true,
-        } as const,
-        {
-            label: 'Copy Messages to...',
-            startWithIcon: 'CopyAllRounded',
-            disabled: true,
-        } as const,
-        {
-            label: 'Deploy message(s)...',
-            startWithIcon: 'RocketLaunch',
-            disabled: !hasSelectedMessages,
-        } as const,
-    ], [hasSelectedMessages]);
-
-
     if (isLoading) return <LoadingSpinner />;
     if (isError) return <AlertBox />;
 
@@ -73,12 +51,7 @@ export const MessagesListView = () => {
         messageTypesRows.length ?
             <>
                 <ContentContainer>
-                    <ContentHeader
-                        title='Your Messages'
-                        buttons={messagesToolbarButtons}
-                        titleTextVariant='subtitle'
-                        sx={{ minHeight: 64 }}
-                    />
+                    <MessagesHeader selectedMessageTypeIds={selectedMessageTypeIds} />
                     <MessagesTable
                         rows={messageTypesRows}
                         onSelectedIdsChanged={setSelectedMessageTypeIds}
