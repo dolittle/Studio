@@ -23,14 +23,28 @@ const styles = {
 export type ContentHeaderProps = {
     title: string;
     titleTextVariant?: 'title' | 'subtitle'
+    /**
+     * Render buttons as an array of {@link ButtonProps} as part of the {@link ContentHeader}
+     */
     buttons?: ButtonProps[];
+
+    /**
+     * Override the default slot for rendering buttons.
+     * This is useful for rendering your own group components with more advanced logic,
+     * instead of passing in {@link buttons}
+     * {@override buttons}
+     */
+    buttonsSlot?: React.ReactNode;
     sx?: SxProps;
 };
 
-export const ContentHeader = ({ title, buttons, titleTextVariant = 'title', sx }: ContentHeaderProps) =>
+export const ContentHeader = ({ title, buttons, buttonsSlot, titleTextVariant = 'title', sx }: ContentHeaderProps) =>
     <Box sx={{ ...styles.wrapper, ...sx }}>
         <Typography variant={titleTextVariant === 'title' ? 'subtitle1' : 'subtitle2'} noWrap>{title}</Typography>
         <Box sx={styles.buttonGroup}>
-            {buttons?.map((button, index) => <Button key={index} {...button} />)}
+            {buttonsSlot
+                ? <>{buttonsSlot}</>
+                : buttons?.map((button, index) => <Button key={index} {...button} />)
+            }
         </Box>
     </Box>;
