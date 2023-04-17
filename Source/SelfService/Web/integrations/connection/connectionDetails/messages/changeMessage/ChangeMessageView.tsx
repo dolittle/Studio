@@ -3,8 +3,7 @@
 
 import React, { useState } from 'react';
 
-import { useNavigate, useParams } from 'react-router-dom';
-import { useFormState } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { AlertBox, AlertDialog } from '@dolittle/design-system';
 
@@ -16,6 +15,7 @@ import { TableSearchSection } from './components/TableSearchSection';
 import { MessageDetailsSection } from './components/MessageDetailsSection';
 import { TableSection } from './components/TableSection';
 import { SubmitButtonSection } from './components/SubmitButtonSection';
+import { CancelOrDiscardButton } from './components/CancelOrDiscardButton';
 
 
 export type ChangeMessageViewProps = {
@@ -39,7 +39,6 @@ export const ChangeMessageView = ({
     queryIsSuccess,
 }: ChangeMessageViewProps) => {
     const navigate = useNavigate();
-    const { isDirty } = useFormState();
 
     const [searchInput, setSearchInput] = useState('');
     const [selectedTableName, setSelectedTableName] = useState('');
@@ -52,13 +51,6 @@ export const ChangeMessageView = ({
     if (mode === 'edit' && table && !selectedTableName) {
         setSelectedTableName(table);
     }
-
-    const toolbarButtons = {
-        label: isDirty ? 'Discard changes' : 'Cancel',
-        startWithIcon: 'CancelRounded',
-        color: 'subtle',
-        onClick: () => isDirty ? setShowDiscardChangesDialog(true) : cancelMessageMapping(),
-    } as const;
 
     // TODO: Implement this.
     // Prevent the user from accidentally closing the browser tab if they have unsaved changes.
@@ -100,7 +92,12 @@ export const ChangeMessageView = ({
 
                                 <ContentHeader
                                     title={title}
-                                    buttons={[toolbarButtons]}
+                                    buttonsSlot={
+                                        <CancelOrDiscardButton
+                                            onCancelled={() => cancelMessageMapping()}
+                                            onDiscarded={() => setShowDiscardChangesDialog(true)}
+                                        />
+                                    }
                                     sx={{ minHeight: 64 }}
                                 />
 
@@ -133,4 +130,5 @@ export const ChangeMessageView = ({
         </>
     );
 };
+
 
