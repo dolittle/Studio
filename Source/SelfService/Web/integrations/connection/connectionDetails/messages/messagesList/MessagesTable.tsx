@@ -8,6 +8,10 @@ import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import { useNavigate } from 'react-router-dom';
 
 import { DataTableToolbar } from '@dolittle/design-system';
+import { ContentContainer } from '../../../../../components/layout/Content/ContentContainer';
+import { ContentHeader } from '../../../../../components/layout/Content/ContentHeader';
+import { ContentSection } from '../../../../../components/layout/Content/ContentSection';
+
 import { MessageMappingModel } from '../../../../../apis/integrations/generated';
 
 import { formatDate } from '../../../../../utils/helpers/dates';
@@ -84,22 +88,28 @@ export const MessagesTable = ({ rows }: MessagesTableProps) => {
     };
 
     return (
-        <Paper sx={{ width: 1, mt: 2, boxShadow: 'none' }}>
-            <DataGridPro
-                rows={rows}
-                columns={messagesDataColumns}
-                //loading={loading}
-                headerHeight={46}
-                getRowHeight={() => 'auto'}
-                onRowClick={({ row }) => onTableRowClick(row as MessageMappingModel)}
-                autoHeight
-                hideFooter
-                disableColumnMenu
-                checkboxSelection
-                disableSelectionOnClick
-                components={{
-                    Toolbar: () => <DataTableToolbar title='Your Messages' buttons={messagesToolbarButtons} />,
-                }} />
-        </Paper>
+        <ContentContainer>
+            <ContentHeader
+                title='Your Messages'
+                buttons={messagesToolbarButtons}
+                titleTextVariant='subtitle'
+                sx={{ minHeight: 64 }}
+            />
+            <ContentSection sx={{ mx: -2 }}>
+                <DataGridPro
+                    rows={rows}
+                    columns={messagesDataColumns}
+                    //loading={loading}
+                    headerHeight={46}
+                    getRowHeight={() => 'auto'}
+                    onRowClick={({ row }) => onTableRowClick(row as MessageMappingModel)}
+                    autoHeight
+                    hideFooter
+                    disableColumnMenu
+                    checkboxSelection
+                    disableSelectionOnClick
+                />
+            </ContentSection>
+        </ContentContainer>
     );
 };
