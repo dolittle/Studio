@@ -9,14 +9,13 @@ import { Grid, LinearProgress } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { AlertBox, Button, MaxWidthTextBlock, Switch } from '@dolittle/design-system/';
+import { ContentSection } from '../../../../../../components/layout/Content/ContentSection';
 
 import { FieldMapping, MappedField } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
-
 import { useConnectionId } from '../../../../../routes.hooks';
 
 import { ViewModeProps } from '../ViewMode';
-import { ContentSection } from './ContentSection';
 import { DataGridTableListingEntry, MessageMappingTable } from './MessageMappingTable';
 
 export type TableSectionProps = ViewModeProps & {

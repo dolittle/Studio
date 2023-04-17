@@ -8,13 +8,12 @@ import { useDebounce } from 'use-debounce';
 import { InputAdornment, TextField, Typography } from '@mui/material';
 
 import { Icon } from '@dolittle/design-system';
+import { ContentSection } from '../../../../../../components/layout/Content/ContentSection';
 
 import { useConnectionsIdMessageMappingsTablesSearchGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
-
 import { useConnectionId } from '../../../../../routes.hooks';
 
 import { ViewModeProps } from '../ViewMode';
-import { ContentSection } from './ContentSection';
 import { TableSearchResults } from './TableSearchResults';
 
 const SearchFieldAdornment =

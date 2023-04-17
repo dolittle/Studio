@@ -5,9 +5,10 @@ import React from 'react';
 
 import { useFormState } from 'react-hook-form';
 import { Button } from '@dolittle/design-system';
+import { ContentSection } from '../../../../../../components/layout/Content/ContentSection';
 
 import { ViewModeProps } from '../ViewMode';
-import { ContentSection } from './ContentSection';
+
 
 export type SubmitButtonSectionProps = ViewModeProps & {
     disabled?: boolean;

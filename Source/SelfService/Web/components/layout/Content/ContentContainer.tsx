@@ -13,3 +13,4 @@ export const ContentContainer = ({ children }: ContentContainerProps) =>
     <Paper sx={{ width: 1, my: 2, px: 2 }}>
         {children}
     </Paper>;
+

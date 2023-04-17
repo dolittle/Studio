@@ -8,7 +8,8 @@ import { Grid, Stack, Typography } from '@mui/material';
 import { Input } from '@dolittle/design-system';
 
 import { ViewModeProps } from '../ViewMode';
-import { ContentSection } from './ContentSection';
+import { ContentSection } from '../../../../../../components/layout/Content/ContentSection';
+
 
 export type MessageDetailsSectionProps = ViewModeProps & {};
 
