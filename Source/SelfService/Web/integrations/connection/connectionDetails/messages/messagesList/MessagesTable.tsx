@@ -3,13 +3,8 @@
 
 import React from 'react';
 
-import { Paper } from '@mui/material';
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridSelectionModel } from '@mui/x-data-grid-pro';
 import { useNavigate } from 'react-router-dom';
-
-import { DataTableToolbar } from '@dolittle/design-system';
-import { ContentContainer } from '../../../../../components/layout/Content/ContentContainer';
-import { ContentHeader } from '../../../../../components/layout/Content/ContentHeader';
 import { ContentSection } from '../../../../../components/layout/Content/ContentSection';
 
 import { MessageMappingModel } from '../../../../../apis/integrations/generated';
@@ -57,30 +52,14 @@ const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
     },
 ];
 
-const messagesToolbarButtons = [
-    {
-        label: 'Delete messages',
-        startWithIcon: 'DeleteRounded',
-        disabled: true,
-    } as const,
-    {
-        label: 'Copy Messages to...',
-        startWithIcon: 'CopyAllRounded',
-        disabled: true,
-    } as const,
-    {
-        label: 'Deploy message(s)...',
-        startWithIcon: 'RocketLaunch',
-        disabled: true,
-    } as const,
-];
 
 export type MessagesTableProps = {
     rows: any[];
     loading?: boolean;
+    onSelectedIdsChanged: (newSelectedIds: GridSelectionModel) => void;
 };
 
-export const MessagesTable = ({ rows }: MessagesTableProps) => {
+export const MessagesTable = ({ rows, onSelectedIdsChanged }: MessagesTableProps) => {
     const navigate = useNavigate();
 
     const onTableRowClick = (row: MessageMappingModel): void => {
@@ -88,28 +67,24 @@ export const MessagesTable = ({ rows }: MessagesTableProps) => {
     };
 
     return (
-        <ContentContainer>
-            <ContentHeader
-                title='Your Messages'
-                buttons={messagesToolbarButtons}
-                titleTextVariant='subtitle'
-                sx={{ minHeight: 64 }}
+
+        <ContentSection sx={{ mx: -2 }}>
+            <DataGridPro
+                rows={rows}
+                columns={messagesDataColumns}
+                //loading={loading}
+                headerHeight={46}
+                getRowHeight={() => 'auto'}
+                onRowClick={({ row }) => onTableRowClick(row as MessageMappingModel)}
+                autoHeight
+                hideFooter
+                disableColumnMenu
+                checkboxSelection
+                disableSelectionOnClick
+                experimentalFeatures={{ newEditingApi: true }}
+                // selectionModel={selectedIds}
+                onSelectionModelChange={onSelectedIdsChanged}
             />
-            <ContentSection sx={{ mx: -2 }}>
-                <DataGridPro
-                    rows={rows}
-                    columns={messagesDataColumns}
-                    //loading={loading}
-                    headerHeight={46}
-                    getRowHeight={() => 'auto'}
-                    onRowClick={({ row }) => onTableRowClick(row as MessageMappingModel)}
-                    autoHeight
-                    hideFooter
-                    disableColumnMenu
-                    checkboxSelection
-                    disableSelectionOnClick
-                />
-            </ContentSection>
-        </ContentContainer>
+        </ContentSection>
     );
 };
