@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Box } from '@mui/material';
+import { Box, SxProps } from '@mui/material';
 
 import { ContentDivider } from './ContentDivider';
 import { ContentHeader, ContentHeaderProps } from './ContentHeader';
@@ -14,13 +14,14 @@ export type ContentSectionProps = {
     headerProps?: Partial<ContentHeaderProps>;
     children?: React.ReactNode;
     beforeHeaderSlot?: React.ReactNode;
+    sx?: SxProps;
 };
 
-export const ContentSection = ({ title = '', hideHeader, headerProps, children, beforeHeaderSlot: beforeContentSlot }: ContentSectionProps) =>
+export const ContentSection = ({ title = '', hideHeader, headerProps, children, beforeHeaderSlot: beforeContentSlot, sx }: ContentSectionProps) =>
     <>
         <ContentDivider />
         {beforeContentSlot}
-        <Box sx={{ my: 2 }}>
+        <Box sx={{ ...{ my: 2 }, ...sx }}>
             {!hideHeader && <ContentHeader title={title} titleTextVariant='subtitle' {...headerProps} />}
             {children}
         </Box>
