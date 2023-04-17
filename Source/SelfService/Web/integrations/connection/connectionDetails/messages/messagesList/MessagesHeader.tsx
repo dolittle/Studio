@@ -3,6 +3,9 @@
 
 import React, { useMemo } from 'react';
 import { ContentHeader } from '../../../../../components/layout/Content/ContentHeader';
+import { DeployMessagesButton } from './Toolbar/DeployMessagesButton';
+import { DeleteMessagesButton } from './Toolbar/DeleteMessagesButton';
+import { CopyMessagesButton } from './Toolbar/CopyMessagesButton';
 
 export type MessagesHeadeProps = {
     selectedMessageTypeIds: string[];
@@ -10,30 +13,14 @@ export type MessagesHeadeProps = {
 
 export const MessagesHeader = (props: MessagesHeadeProps) => {
 
-    const hasSelectedMessages = props.selectedMessageTypeIds.length > 0;
-
-    const messagesToolbarButtons = useMemo(() => [
-        {
-            label: 'Delete messages',
-            startWithIcon: 'DeleteRounded',
-            disabled: true,
-        } as const,
-        {
-            label: 'Copy Messages to...',
-            startWithIcon: 'CopyAllRounded',
-            disabled: true,
-        } as const,
-        {
-            label: 'Deploy message(s)...',
-            startWithIcon: 'RocketLaunch',
-            disabled: !hasSelectedMessages,
-        } as const,
-    ], [hasSelectedMessages]);
-
     return (
         <ContentHeader
             title='Your Messages'
-            buttons={messagesToolbarButtons}
+            buttonsSlot={<>
+                <DeleteMessagesButton selectedIds={props.selectedMessageTypeIds} />
+                <CopyMessagesButton selectedIds={props.selectedMessageTypeIds} />
+                <DeployMessagesButton selectedIds={props.selectedMessageTypeIds} />
+            </>}
             titleTextVariant='subtitle'
             sx={{ minHeight: 64 }}
         />
