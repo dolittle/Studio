@@ -1,3 +1,8 @@
+# [3.4.18] - 2023-4-17 [PR: #373](https://github.com/dolittle/Studio/pull/373)
+- Show '-' for dates without deployedAt set or set to minValue
+- Add sorting to the mapped message type rows so fields that aren't deployed are at the bottom
+
+
 # [3.4.17] - 2023-4-17 [PR: #372](https://github.com/dolittle/Studio/pull/372)
 - Move the Form component around the entire component so it is available to all sub-components
 - Extract MessageMappingForm to its own component
