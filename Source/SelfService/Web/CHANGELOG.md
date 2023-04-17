@@ -1,3 +1,15 @@
+# [3.4.17] - 2023-4-17 [PR: #372](https://github.com/dolittle/Studio/pull/372)
+- Move the Form component around the entire component so it is available to all sub-components
+- Extract MessageMappingForm to its own component
+- Move the form contents to separate component
+- Wire up the cancel button logic to not prompt if there are no changes
+- Remove the need for the mutation from within the ChangeMessageView
+- Hoist query and params into the props so the component doesn't need to reach outside
+- Add support for passing in custom components into the header as a slot
+- Move logic for cancel/discard into a separate component
+- Move <Content/> components into shared layout folder
+
+
 # [3.4.16] - 2023-4-14 [PR: #371](https://github.com/dolittle/Studio/pull/371)
 ## Summary
 
