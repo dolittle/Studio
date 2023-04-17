@@ -56,7 +56,7 @@ const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
 export type MessagesTableProps = {
     rows: any[];
     loading?: boolean;
-    onSelectedIdsChanged: (newSelectedIds: GridSelectionModel) => void;
+    onSelectedIdsChanged: (newSelectedIds: string[]) => void;
 };
 
 export const MessagesTable = ({ rows, onSelectedIdsChanged }: MessagesTableProps) => {
@@ -83,7 +83,7 @@ export const MessagesTable = ({ rows, onSelectedIdsChanged }: MessagesTableProps
                 disableSelectionOnClick
                 experimentalFeatures={{ newEditingApi: true }}
                 // selectionModel={selectedIds}
-                onSelectionModelChange={onSelectedIdsChanged}
+                onSelectionModelChange={(selectionModel) => onSelectedIdsChanged(selectionModel as string[])}
             />
         </ContentSection>
     );
