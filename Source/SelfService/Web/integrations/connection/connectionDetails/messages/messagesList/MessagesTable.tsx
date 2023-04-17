@@ -10,9 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import { DataTableToolbar } from '@dolittle/design-system';
 import { MessageMappingModel } from '../../../../../apis/integrations/generated';
 
-import { formatStartingDate, formatDate } from '../../../../../utils/helpers/dates';
-
-const defaultEmptyDate = new Date('0001-01-01T00:00:00+00:00');
+import { formatDate } from '../../../../../utils/helpers/dates';
+import { defaultEmptyDate } from './helpers';
 
 const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
     {
