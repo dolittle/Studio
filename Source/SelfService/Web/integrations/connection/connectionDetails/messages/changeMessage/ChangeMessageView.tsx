@@ -6,11 +6,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AlertBox, AlertDialog } from '@dolittle/design-system';
+import { ContentHeader } from '../../../../../components/layout/Content/ContentHeader';
 
 import { MessageMappingModel } from '../../../../../apis/integrations/generated';
 
 import { ViewMode } from './ViewMode';
-import { ContentHeader } from './components/ContentHeader';
 import { TableSearchSection } from './components/TableSearchSection';
 import { MessageDetailsSection } from './components/MessageDetailsSection';
 import { TableSection } from './components/TableSection';
