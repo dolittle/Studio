@@ -2,20 +2,22 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useMemo, useState } from 'react';
+import { MessageMappingModel } from '../../../../..//apis/integrations/generated';
 import { ContentHeader } from '../../../../../components/layout/Content/ContentHeader';
+
 import { DeployMessagesButton } from './Toolbar/DeployMessagesButton';
 import { DeleteMessagesButton } from './Toolbar/DeleteMessagesButton';
 import { CopyMessagesButton } from './Toolbar/CopyMessagesButton';
 
 export type MessagesHeadeProps = {
-    selectedMessageTypeIds: string[];
+    connectionId: string;
+    selectedMessageTypes: MessageMappingModel[];
     onActionSuccess: () => void
 };
 
 export const MessagesHeader = (props: MessagesHeadeProps) => {
 
     const [isActionExecuting, setIsActionExecuting] = useState<boolean>(false);
-
 
     const handleSuccess = () => {
         props.onActionSuccess();
@@ -32,19 +34,22 @@ export const MessagesHeader = (props: MessagesHeadeProps) => {
             buttonsSlot={
                 <>
                     <DeleteMessagesButton
-                        selectedIds={props.selectedMessageTypeIds}
+                        connectionId={props.connectionId}
+                        selectedMessageTypes={props.selectedMessageTypes}
                         onSuccess={handleSuccess}
                         onActionExecuting={handleExecuting}
                         isButtonActionExecuting={isActionExecuting}
                     />
                     <CopyMessagesButton
-                        selectedIds={props.selectedMessageTypeIds}
+                        connectionId={props.connectionId}
+                        selectedMessageTypes={props.selectedMessageTypes}
                         onSuccess={handleSuccess}
                         onActionExecuting={handleExecuting}
                         isButtonActionExecuting={isActionExecuting}
                     />
                     <DeployMessagesButton
-                        selectedIds={props.selectedMessageTypeIds}
+                        connectionId={props.connectionId}
+                        selectedMessageTypes={props.selectedMessageTypes}
                         onSuccess={handleSuccess}
                         onActionExecuting={handleExecuting}
                         isButtonActionExecuting={isActionExecuting}

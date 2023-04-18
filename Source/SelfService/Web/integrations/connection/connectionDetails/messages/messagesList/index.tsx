@@ -44,6 +44,14 @@ export const MessagesListView = () => {
         return sortedRows;
     }, [data?.value]);
 
+    const selectedMessageTypeRows = useMemo(() =>
+        messageTypesRows.filter(row => selectedMessageTypeIds.includes(row.id!))
+        , [messageTypesRows, selectedMessageTypeIds]);
+
+    const handleActionCompleted = () => {
+        setSelectedMessageTypeIds([]);
+    };
+
     if (isLoading) return <LoadingSpinner />;
     if (isError) return <AlertBox />;
 
@@ -52,10 +60,9 @@ export const MessagesListView = () => {
             <>
                 <ContentContainer>
                     <MessagesHeader
-                        selectedMessageTypeIds={selectedMessageTypeIds}
-                        onActionSuccess={() => {
-                            setSelectedMessageTypeIds([]);
-                        }}
+                        connectionId={connectionId!}
+                        selectedMessageTypes={selectedMessageTypeRows}
+                        onActionSuccess={handleActionCompleted}
                     />
                     <MessagesTable
                         rows={messageTypesRows}

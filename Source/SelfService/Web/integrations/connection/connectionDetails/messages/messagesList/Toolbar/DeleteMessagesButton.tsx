@@ -13,8 +13,8 @@ export type DeleteMessagesProps = TableToolbarButton & {
 export const DeleteMessagesButton = (props: DeleteMessagesProps) => {
     const [isLoading, setIsLoading] = useState(false);
 
-    const hasSelectedMessages = props.selectedIds.length > 0;
-    const hasMany = props.selectedIds.length > 1;
+    const hasSelectedMessages = props.selectedMessageTypes.length > 0;
+    const hasMany = props.selectedMessageTypes.length > 1;
 
     const handleDeleteMessages = () => {
         setIsLoading(true);
