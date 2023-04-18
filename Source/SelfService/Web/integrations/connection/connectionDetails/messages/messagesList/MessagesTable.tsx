@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { DataGridPro, GridColDef, GridSelectionModel } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridInputSelectionModel } from '@mui/x-data-grid-pro';
 import { useNavigate } from 'react-router-dom';
 import { ContentSection } from '../../../../../components/layout/Content/ContentSection';
 
@@ -56,10 +56,11 @@ const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
 export type MessagesTableProps = {
     rows: any[];
     loading?: boolean;
+    initialSelectedIds: GridInputSelectionModel;
     onSelectedIdsChanged: (newSelectedIds: string[]) => void;
 };
 
-export const MessagesTable = ({ rows, onSelectedIdsChanged }: MessagesTableProps) => {
+export const MessagesTable = ({ rows, onSelectedIdsChanged, initialSelectedIds }: MessagesTableProps) => {
     const navigate = useNavigate();
 
     const onTableRowClick = (row: MessageMappingModel): void => {
@@ -82,7 +83,7 @@ export const MessagesTable = ({ rows, onSelectedIdsChanged }: MessagesTableProps
                 checkboxSelection
                 disableSelectionOnClick
                 experimentalFeatures={{ newEditingApi: true }}
-                // selectionModel={selectedIds}
+                selectionModel={initialSelectedIds}
                 onSelectionModelChange={(selectionModel) => onSelectedIdsChanged(selectionModel as string[])}
             />
         </ContentSection>

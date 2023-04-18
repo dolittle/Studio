@@ -5,4 +5,6 @@
 export type TableToolbarButton = {
     selectedIds: string[];
     isButtonActionExecuting?: boolean
+    onSuccess: () => void;
+    onActionExecuting: () => void;
 };
