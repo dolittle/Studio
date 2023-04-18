@@ -1,6 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './ColumnMetadata';
+export * from './ColumnRecommendation';
+export * from './ColumnRecommendations';
 export * from './ConnectionConfiguration';
 export * from './ConnectionConfigurationResult';
 export * from './ConnectionId';
@@ -9,6 +11,7 @@ export * from './ConnectionModelArrayResult';
 export * from './ConnectionModelResult';
 export * from './ConnectionStatus';
 export * from './ConnectionWithinOrgId';
+export * from './DeployMapping';
 export * from './EnvironmentType';
 export * from './FieldMapping';
 export * from './FieldType';
@@ -47,3 +50,4 @@ export * from './TableDto';
 export * from './TableKind';
 export * from './TableListingEntry';
 export * from './TableListingEntryIEnumerableResult';
+export * from './TableSummaryDto';

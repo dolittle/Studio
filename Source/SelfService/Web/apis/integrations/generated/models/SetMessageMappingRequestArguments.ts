@@ -21,7 +21,7 @@ import {
 } from './FieldMapping';
 
 /**
- * 
+ * Body of a request to set a message mapping.
  * @export
  * @interface SetMessageMappingRequestArguments
  */

@@ -14,7 +14,7 @@
 
 import { exists, mapValues } from '../runtime';
 /**
- * 
+ * The mapping of a column in a table to a field in a message.
  * @export
  * @interface FieldMapping
  */

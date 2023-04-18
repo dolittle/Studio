@@ -4,6 +4,7 @@ apis/BaseMetadataApi.ts
 apis/ConnectionConfigurationApi.ts
 apis/ConnectionsApi.ts
 apis/DeploymentApi.ts
+apis/EnrichmentApi.ts
 apis/EnvironmentApi.ts
 apis/LoginApi.ts
 apis/MappableTablesApi.ts
@@ -14,6 +15,8 @@ apis/TableMetadataApi.ts
 apis/index.ts
 index.ts
 models/ColumnMetadata.ts
+models/ColumnRecommendation.ts
+models/ColumnRecommendations.ts
 models/ConnectionConfiguration.ts
 models/ConnectionConfigurationResult.ts
 models/ConnectionId.ts
@@ -22,6 +25,7 @@ models/ConnectionModelArrayResult.ts
 models/ConnectionModelResult.ts
 models/ConnectionStatus.ts
 models/ConnectionWithinOrgId.ts
+models/DeployMapping.ts
 models/EnvironmentType.ts
 models/FieldMapping.ts
 models/FieldType.ts
@@ -60,5 +64,6 @@ models/TableDto.ts
 models/TableKind.ts
 models/TableListingEntry.ts
 models/TableListingEntryIEnumerableResult.ts
+models/TableSummaryDto.ts
 models/index.ts
 runtime.ts
