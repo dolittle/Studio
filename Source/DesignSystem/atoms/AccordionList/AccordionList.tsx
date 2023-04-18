@@ -54,6 +54,8 @@ export const AccordionList = ({ singleExpandMode, items, initialId = '' }: Accor
                     title={item.title}
                     expanded={singleExpandMode ? expanded === item.id : undefined}
                     onExpanded={(event, isExpanded) => handleExpanded(item.id, isExpanded)}
+                    progressStatus={item.progressStatus}
+                    progressMessage={item.progressMessage}
                     sx={{ ...item.sx }}
                 >
                     {item.children}

@@ -66,3 +66,32 @@ InitialExpanded.parameters = {
 export const SingleExpandMode = createStory({
     singleExpandMode: true,
 });
+
+export const WithStatusMessage = createStory({
+    items: [
+        {
+            id: '1',
+            title: 'Accordion 1',
+            progressStatus: 'connected',
+            children: <DummyChildrenContent />,
+        },
+        {
+            id: '2',
+            title: 'Accordion 2',
+            progressStatus: 'waiting',
+            children: <DummyChildrenContent />,
+        },
+        {
+            id: '3',
+            title: 'Accordion 3',
+            progressStatus: 'pending',
+            children: <DummyChildrenContent />,
+        },
+        {
+            id: '4',
+            title: 'Accordion 4',
+            progressStatus: 'failing',
+            children: <DummyChildrenContent />,
+        },
+    ],
+});
