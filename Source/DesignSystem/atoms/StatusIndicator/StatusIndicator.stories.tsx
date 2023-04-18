@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Grid } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import { componentStories, StatusIndicator } from '@dolittle/design-system';
 
@@ -41,26 +41,26 @@ export const Default = createStory();
 export const DefaultVariants = createStory();
 DefaultVariants.decorators = [
     () => (
-        <Grid container gap={3}>
+        <Stack direction='row' gap={3}>
             <StatusIndicator status='connected' />
             <StatusIndicator status='waiting' />
             <StatusIndicator status='pending' />
             <StatusIndicator status='failing' />
             <StatusIndicator status='unknown' />
-        </Grid>
+        </Stack>
     )
 ];
 
 export const FilledVariants = createStory();
 FilledVariants.decorators = [
     () => (
-        <Grid container gap={3}>
+        <Stack direction='row' gap={3}>
             <StatusIndicator status='connected' variantFilled />
             <StatusIndicator status='waiting' variantFilled />
             <StatusIndicator status='pending' variantFilled />
             <StatusIndicator status='failing' variantFilled />
             <StatusIndicator status='unknown' variantFilled />
-        </Grid>
+        </Stack>
     )
 ];
 
