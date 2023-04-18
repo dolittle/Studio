@@ -14,8 +14,8 @@ export const CopyMessagesButton = (props: CopyMessagesProps) => {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const hasSelectedMessages = props.selectedIds.length > 0;
-    const hasMany = props.selectedIds.length > 1;
+    const hasSelectedMessages = props.selectedMessageTypes.length > 0;
+    const hasMany = props.selectedMessageTypes.length > 1;
 
     const handleCopyMessages = () => {
         setIsLoading(true);

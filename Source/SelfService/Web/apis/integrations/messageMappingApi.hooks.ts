@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, UseMutationOptions } from '@tanstack/react-query';
 
 import { API_CONFIGURATION } from './api';
 import { CACHE_KEYS } from './CacheKeys';
@@ -9,7 +9,8 @@ import {
     MessageMappingApi,
     ConnectionsIdMessageMappingsGetRequest,
     ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest,
-    ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest
+    ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest,
+    ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest
 } from './generated';
 
 let apiInstance: MessageMappingApi | undefined;
@@ -47,3 +48,14 @@ export const useConnectionsIdMessageMappingsTablesTableMessagesMessagePost = () 
             api.connectionsIdMessageMappingsTablesTableMessagesMessagePost(params),
     });
 };
+
+export const useConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPost =
+    (options?: UseMutationOptions<void, unknown, ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest, unknown>) => {
+        const api = getOrCreateApi();
+        return useMutation({
+            ...{
+                mutationFn: (params: ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest) =>
+                    api.connectionsIdMessageMappingsTablesTableMessagesMessageDeployPost(params),
+            }, ...options
+        });
+    };
