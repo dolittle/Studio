@@ -1,3 +1,17 @@
+# [3.4.19] - 2023-4-18 [PR: #374](https://github.com/dolittle/Studio/pull/374)
+- Remove local reference to defaultEmptyDate
+- Replace Table Header with Content components
+- Move Container outside Table component and wire up selected
+- Move header section to separate component and pass in selectedIds
+- Separate message buttons into separate components
+- Show status indictor while copying messages
+- Disable other toolbar buttons when an action is executing
+- Wire up the DeployButton functionality
+- Remove table sorting
+- Fix issue where Tablename was not persisted at the Form level
+- Disable Delete and Copy to buttons
+
+
 # [3.4.18] - 2023-4-17 [PR: #373](https://github.com/dolittle/Studio/pull/373)
 - Show '-' for dates without deployedAt set or set to minValue
 - Add sorting to the mapped message type rows so fields that aren't deployed are at the bottom
