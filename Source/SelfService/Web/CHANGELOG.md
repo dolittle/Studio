@@ -1,3 +1,15 @@
+# [3.4.20] - 2023-4-18 [PR: #375](https://github.com/dolittle/Studio/pull/375)
+## Summary
+
+Fix new workspace layout on smaller screens.
+
+### Fixed
+
+- Page title and status info alignment on smaller screens
+- Main layout break in smaller screens
+- ExposeData responsivnes
+
+
 # [3.4.19] - 2023-4-18 [PR: #374](https://github.com/dolittle/Studio/pull/374)
 - Remove local reference to defaultEmptyDate
 - Replace Table Header with Content components
