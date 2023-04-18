@@ -15,6 +15,7 @@
 
 import * as runtime from '../runtime';
 import type {
+  DeployMapping,
   MessageMappingModelIEnumerableResult,
   MessageMappingModelResult,
   NoSuchReadModelResult,
@@ -22,6 +23,8 @@ import type {
   SetMessageMappingRequestArguments,
 } from '../models';
 import {
+    DeployMappingFromJSON,
+    DeployMappingToJSON,
     MessageMappingModelIEnumerableResultFromJSON,
     MessageMappingModelIEnumerableResultToJSON,
     MessageMappingModelResultFromJSON,
@@ -33,6 +36,11 @@ import {
     SetMessageMappingRequestArgumentsFromJSON,
     SetMessageMappingRequestArgumentsToJSON,
 } from '../models';
+
+export interface ConnectionsIdMessageMappingsDeployPostRequest {
+    id: string;
+    deployMapping?: Array<DeployMapping>;
+}
 
 export interface ConnectionsIdMessageMappingsGetRequest {
     id: string;
@@ -63,6 +71,42 @@ export interface ConnectionsIdMessageMappingsTablesTableMessagesMessagePostReque
  * 
  */
 export class MessageMappingApi extends runtime.BaseAPI {
+
+    /**
+     * Deploy multiple mappings. Each of the mappings must exist. If any of the  deployments fail a 400 is returned with the list of failures. If all  succeed a 200 is returned with the list of successes.
+     */
+    async connectionsIdMessageMappingsDeployPostRaw(requestParameters: ConnectionsIdMessageMappingsDeployPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsDeployPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        const response = await this.request({
+            path: `/connections/{id}/message-mappings/deploy`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.deployMapping.map(DeployMappingToJSON),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deploy multiple mappings. Each of the mappings must exist. If any of the  deployments fail a 400 is returned with the list of failures. If all  succeed a 200 is returned with the list of successes.
+     */
+    async connectionsIdMessageMappingsDeployPost(requestParameters: ConnectionsIdMessageMappingsDeployPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.connectionsIdMessageMappingsDeployPostRaw(requestParameters, initOverrides);
+    }
 
     /**
      */
@@ -105,6 +149,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
     }
 
     /**
+     * Deploy a mapping of a table to a message.
      */
     async connectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -138,6 +183,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
     }
 
     /**
+     * Deploy a mapping of a table to a message.
      */
     async connectionsIdMessageMappingsTablesTableMessagesMessageDeployPost(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.connectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRaw(requestParameters, initOverrides);
@@ -184,6 +230,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
     }
 
     /**
+     * Sets the mapping of a table to a message to the mapping described  in the body of the request.
      */
     async connectionsIdMessageMappingsTablesTableMessagesMessagePostRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -220,6 +267,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
     }
 
     /**
+     * Sets the mapping of a table to a message to the mapping described  in the body of the request.
      */
     async connectionsIdMessageMappingsTablesTableMessagesMessagePost(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.connectionsIdMessageMappingsTablesTableMessagesMessagePostRaw(requestParameters, initOverrides);

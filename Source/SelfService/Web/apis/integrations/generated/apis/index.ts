@@ -5,6 +5,7 @@ export * from './BaseMetadataApi';
 export * from './ConnectionConfigurationApi';
 export * from './ConnectionsApi';
 export * from './DeploymentApi';
+export * from './EnrichmentApi';
 export * from './EnvironmentApi';
 export * from './LoginApi';
 export * from './MappableTablesApi';
