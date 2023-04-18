@@ -35,7 +35,8 @@ export const CopyMessagesButton = (props: CopyMessagesProps) => {
                     label={`Copy message${hasMany ? 's' : ''} to...`}
                     startWithIcon='CopyAllRounded'
                     onClick={handleCopyMessages}
-                    disabled={!hasSelectedMessages || props.isButtonActionExecuting}
+                    disabled={true}
+                    // disabled={!hasSelectedMessages || props.isButtonActionExecuting}
                 />
                 :
                 <StatusIndicator
