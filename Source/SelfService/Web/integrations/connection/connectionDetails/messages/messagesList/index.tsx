@@ -36,12 +36,12 @@ export const MessagesListView = () => {
             ...mapping
         })) || [];
 
-        const sortedRows = mappedRows.sort((a, b) => {
-            return a.deployedAt?.toISOString() === defaultEmptyDate.toISOString()
-                ? 1
-                : -1;
-        });
-        return sortedRows;
+        // const sortedRows = mappedRows.sort((a, b) => {
+        //     return a.deployedAt?.toISOString() === defaultEmptyDate.toISOString()
+        //         ? 1
+        //         : -1;
+        // });
+        return mappedRows;
     }, [data?.value]);
 
     const selectedMessageTypeRows = useMemo(() =>
