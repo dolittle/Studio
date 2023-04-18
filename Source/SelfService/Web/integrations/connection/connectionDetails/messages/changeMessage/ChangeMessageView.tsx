@@ -21,6 +21,7 @@ import { CancelOrDiscardButton } from './components/CancelOrDiscardButton';
 export type ChangeMessageViewProps = {
     mode: ViewMode;
     table: string,
+    onTableSelected: (table: string) => void;
     messageId: string,
     isSubmitting: boolean;
     messageType: MessageMappingModel | undefined;
@@ -32,6 +33,7 @@ export type ChangeMessageViewProps = {
 export const ChangeMessageView = ({
     mode,
     table,
+    onTableSelected,
     messageId,
     isSubmitting,
     messageType,
@@ -41,16 +43,12 @@ export const ChangeMessageView = ({
     const navigate = useNavigate();
 
     const [searchInput, setSearchInput] = useState('');
-    const [selectedTableName, setSelectedTableName] = useState('');
     const [showDiscardChangesDialog, setShowDiscardChangesDialog] = useState(false);
 
-    const showTable = !!selectedTableName || mode === 'edit';
+    const showTable = !!table || mode === 'edit';
     const title = mode === 'new' ? 'Create New Message Type' : `Edit Message Type - ${messageId}`;
 
 
-    if (mode === 'edit' && table && !selectedTableName) {
-        setSelectedTableName(table);
-    }
 
     // TODO: Implement this.
     // Prevent the user from accidentally closing the browser tab if they have unsaved changes.
@@ -68,7 +66,7 @@ export const ChangeMessageView = ({
     };
 
 
-    const removeSelectedTable = () => setSelectedTableName('');
+    const removeSelectedTable = () => onTableSelected('');
 
     return (
         <>
@@ -106,7 +104,7 @@ export const ChangeMessageView = ({
                                     ? <>
                                         <TableSection
                                             mode={mode}
-                                            selectedTableName={selectedTableName}
+                                            selectedTableName={table}
                                             initialSelectedFields={messageType?.fieldMappings ?? []}
                                             onBackToSearchResultsClicked={() => removeSelectedTable()}
                                         />
@@ -116,7 +114,7 @@ export const ChangeMessageView = ({
                                         />
                                     </> : <TableSearchSection
                                         mode={mode}
-                                        onTableSelected={setSelectedTableName}
+                                        onTableSelected={onTableSelected}
                                         searchInput={searchInput}
                                         setSearchInput={setSearchInput}
                                     />
