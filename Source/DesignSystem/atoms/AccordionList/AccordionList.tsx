@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 
-import { Accordion, AccordionProps } from '../Accordion/Accordion';
+import { Accordion, AccordionProps } from '@dolittle/design-system';
 
 /**
  * The props for a {@link AccordionList} component.
