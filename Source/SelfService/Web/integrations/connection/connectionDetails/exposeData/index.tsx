@@ -5,19 +5,17 @@ import React, { useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { Box, Collapse, Divider, Grid, FormGroup, FormControlLabel, FormHelperText, Paper, Switch, TextField, Typography } from '@mui/material';
+import { Box, Collapse, Divider, FormGroup, FormControlLabel, FormHelperText, Grid, Paper, Switch, TextField, Typography } from '@mui/material';
 
 import { Button, IconButton, Link } from '@dolittle/design-system';
 
 const styles = {
-    content: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexDirection: { xs: 'column', sm: 'row' },
-        my: 3,
-        gap: 2,
-    },
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: { xs: 'column', sm: 'row' },
+    my: 3,
+    gap: 2,
 };
 
 const restApiUrl = 'https://ec456365-3784-4871-a39f-2dfed993e5bb.dolittle.cloud/mym3connector/';
@@ -45,8 +43,8 @@ export const ExposeDataView = () => {
     };
 
     return (
-        <Paper sx={{ px: 2, maxWidth: 1200 }}>
-            <Box sx={styles.content}>
+        <Paper sx={{ px: 2 }}>
+            <Box sx={styles}>
                 <Typography variant='subtitle1'>Exposing your data</Typography>
 
                 <FormGroup>
@@ -96,13 +94,13 @@ export const ExposeDataView = () => {
 
             <Divider sx={{ borderColor: 'outlineborder' }} />
 
-            <Box sx={styles.content}>
+            <Box sx={styles}>
                 <Typography variant='subtitle2'>Credentials</Typography>
                 <Button label='Generate New Credentials' variant='outlined' onClick={() => setOpenCredentials(true)} />
             </Box>
 
             <Collapse in={openCredentials}>
-                <Grid container xs sx={{ my: 3, pb: 2, justifyContent: 'space-around' }}>
+                <Grid container spacing={3} sx={{ pb: 5 }}>
                     <Grid item>
                         <Typography sx={{ mb: 2 }}>Who or what are these credentials for?</Typography>
                         <TextField id='credentialsName' label='Name' size='small' />
@@ -122,22 +120,14 @@ export const ExposeDataView = () => {
                         <FormHelperText>This bearer token should be used in the request header.</FormHelperText>
                     </Grid>
 
-                    <Grid item>
-                        <Button
-                            label='Copy Token'
-                            startWithIcon='CopyAllRounded'
-                            onClick={handleTokenCopy}
-                            sx={{ mt: 4.5 }}
-                        />
-                    </Grid>
+                    <Grid container item spacing={3} xs={6} sx={{ alignItems: 'center', mt: 0 }}>
+                        <Grid item>
+                            <Button label='Copy Token' startWithIcon='CopyAllRounded' onClick={handleTokenCopy} />
+                        </Grid>
 
-                    <Grid item>
-                        <Button
-                            label='Delete credentials'
-                            startWithIcon='DeleteRounded'
-                            onClick={() => setOpenCredentials(false)}
-                            sx={{ mt: 4.5 }}
-                        />
+                        <Grid item>
+                            <Button label='Delete credentials' startWithIcon='DeleteRounded' onClick={() => setOpenCredentials(false)} />
+                        </Grid>
                     </Grid>
                 </Grid>
             </Collapse>

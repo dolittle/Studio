@@ -9,6 +9,13 @@ import { StatusIndicator } from '@dolittle/design-system';
 
 import { usePageTitle } from '../../utils/usePageTitle';
 
+const styles = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: { xs: 'center', sm: 'flex-start' },
+    my: 1,
+};
+
 export type PageProps = {
     title: string;
     healthStatus?: string;
@@ -21,7 +28,7 @@ export const Page = ({ title, healthStatus, children, sx }: PageProps) => {
 
     return (
         <>
-            <Box sx={{ display: 'flex', alignItems: 'center', my: 1, ...sx }}>
+            <Box sx={{ ...styles, ...sx }}>
                 <Typography variant='h1' sx={{ mr: healthStatus ? 3 : 0 }}>{title}</Typography>
                 {healthStatus && <StatusIndicator status={healthStatus} variantFilled />}
             </Box>

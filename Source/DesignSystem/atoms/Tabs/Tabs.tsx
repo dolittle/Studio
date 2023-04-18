@@ -72,7 +72,6 @@ export type TabsProps = {
      * Create a tab by providing a `label` and a react element to `render`.
      */
     tabs: Tab[];
-
 };
 
 /**
