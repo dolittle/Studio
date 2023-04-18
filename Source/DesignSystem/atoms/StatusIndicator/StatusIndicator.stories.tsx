@@ -26,6 +26,7 @@ metadata.argTypes = {
             options: ['connected', 'waiting', 'pending', 'failed', 'unknown'],
         },
     },
+    sx: { control: false },
 };
 
 metadata.args = {
