@@ -3,29 +3,25 @@
 
 import React from 'react';
 
-import { componentStories, AccordionProps, AccordionList, MaxWidthTextBlock } from '@dolittle/design-system';
+import { componentStories, AccordionProps, AccordionList } from '@dolittle/design-system';
 
-const DummyChildrenContent = () =>
-    <MaxWidthTextBlock>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa illo similique consequuntur dolores natus ex
-        sunt esse mollitia id atque. Atque molestiae cum magnam eligendi maxime id sapiente quaerat suscipit?
-    </MaxWidthTextBlock>;
+import { DummyChildrenContent } from '@dolittle/design-system/helpers/dummyContent';
 
 const dummyAccordionList: AccordionProps[] = [
     {
         id: '1',
         title: 'Accordion 1',
-        children: <DummyChildrenContent />
+        children: <DummyChildrenContent />,
     },
     {
         id: '2',
         title: 'Accordion 2',
-        children: <DummyChildrenContent />
+        children: <DummyChildrenContent />,
     },
     {
         id: '3',
         title: 'Accordion 3',
-        children: <DummyChildrenContent />
+        children: <DummyChildrenContent />,
     },
 ];
 
