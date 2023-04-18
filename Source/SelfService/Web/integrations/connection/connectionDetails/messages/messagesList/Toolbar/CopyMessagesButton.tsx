@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
+import { enqueueSnackbar} from 'notistack';
 import { Button, StatusIndicator } from '@dolittle/design-system';
 import { TableToolbarButton } from './TableToolbarButton';
 
@@ -18,9 +19,12 @@ export const CopyMessagesButton = (props: CopyMessagesProps) => {
 
     const handleCopyMessages = () => {
         setIsLoading(true);
+        props.onActionExecuting();
         // eslint-disable-next-line no-restricted-globals
         setTimeout(() => {
             setIsLoading(false);
+            enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully copied`, { variant: 'success' });
+            props.onSuccess();
         }, 2000);
     };
 
@@ -31,7 +35,7 @@ export const CopyMessagesButton = (props: CopyMessagesProps) => {
                     label={`Copy message${hasMany ? 's' : ''} to...`}
                     startWithIcon='CopyAllRounded'
                     onClick={handleCopyMessages}
-                    disabled={!hasSelectedMessages}
+                    disabled={!hasSelectedMessages || props.isButtonActionExecuting}
                 />
                 :
                 <StatusIndicator

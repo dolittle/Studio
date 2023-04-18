@@ -51,9 +51,15 @@ export const MessagesListView = () => {
         messageTypesRows.length ?
             <>
                 <ContentContainer>
-                    <MessagesHeader selectedMessageTypeIds={selectedMessageTypeIds} />
+                    <MessagesHeader
+                        selectedMessageTypeIds={selectedMessageTypeIds}
+                        onActionSuccess={() => {
+                            setSelectedMessageTypeIds([]);
+                        }}
+                    />
                     <MessagesTable
                         rows={messageTypesRows}
+                        initialSelectedIds={selectedMessageTypeIds}
                         onSelectedIdsChanged={setSelectedMessageTypeIds}
                     />
                 </ContentContainer>
