@@ -61,7 +61,8 @@ export const Index = () => {
                 >
                     <ChangeMessageView
                         mode={mode}
-                        table={table!}
+                        table={selectedTableName}
+                        onTableSelected={setSelectedTableName}
                         messageId={messageId!}
                         isSubmitting={saveMessageMappingMutation.isLoading}
                         messageType={messageType}
