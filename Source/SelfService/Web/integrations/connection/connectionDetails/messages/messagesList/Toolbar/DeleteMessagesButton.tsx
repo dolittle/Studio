@@ -23,6 +23,6 @@ export const DeleteMessagesButton = (props: DeleteMessagesProps) => {
         label={`Delete message${hasMany ? 's' : ''}...`}
         startWithIcon='DeleteRounded'
         onClick={() => handleDeleteMessages}
-        disabled={!hasSelectedMessages}
+        disabled={true}
     />;
 };

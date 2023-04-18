@@ -13,14 +13,18 @@ export type MessagesHeadeProps = {
 
 export const MessagesHeader = (props: MessagesHeadeProps) => {
 
+
+
     return (
         <ContentHeader
             title='Your Messages'
-            buttonsSlot={<>
-                <DeleteMessagesButton selectedIds={props.selectedMessageTypeIds} />
-                <CopyMessagesButton selectedIds={props.selectedMessageTypeIds} />
-                <DeployMessagesButton selectedIds={props.selectedMessageTypeIds} />
-            </>}
+            buttonsSlot={
+                <>
+                    <DeleteMessagesButton selectedIds={props.selectedMessageTypeIds} />
+                    <CopyMessagesButton selectedIds={props.selectedMessageTypeIds} />
+                    <DeployMessagesButton selectedIds={props.selectedMessageTypeIds} />
+                </>
+            }
             titleTextVariant='subtitle'
             sx={{ minHeight: 64 }}
         />
