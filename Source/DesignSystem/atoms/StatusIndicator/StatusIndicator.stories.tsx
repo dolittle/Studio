@@ -23,7 +23,7 @@ metadata.argTypes = {
     status: {
         control: {
             type: 'select',
-            options: ['connected', 'waiting', 'pending', 'failed', 'unknown'],
+            options: ['connected', 'waiting', 'pending', 'failing', 'string'],
         },
     },
     sx: { control: false },
@@ -45,7 +45,7 @@ DefaultVariants.decorators = [
             <StatusIndicator status='connected' />
             <StatusIndicator status='waiting' />
             <StatusIndicator status='pending' />
-            <StatusIndicator status='failed' />
+            <StatusIndicator status='failing' />
             <StatusIndicator status='unknown' />
         </Grid>
     )
@@ -58,7 +58,7 @@ FilledVariants.decorators = [
             <StatusIndicator status='connected' variantFilled />
             <StatusIndicator status='waiting' variantFilled />
             <StatusIndicator status='pending' variantFilled />
-            <StatusIndicator status='failed' variantFilled />
+            <StatusIndicator status='failing' variantFilled />
             <StatusIndicator status='unknown' variantFilled />
         </Grid>
     )

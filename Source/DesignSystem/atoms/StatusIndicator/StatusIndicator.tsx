@@ -13,13 +13,13 @@ type ConnectionStatusCondition = {
 };
 
 const connectionStatusCondition = (status: string): ConnectionStatusCondition => {
-    if (status === 'running' || status === 'connected') {
+    if (status === 'connected') {
         return { color: 'success.main', icon: 'CheckCircleRounded' };
     } else if (status === 'pending') {
         return { color: 'warning.main', icon: 'WarningRounded' };
     } else if (status === 'waiting') {
         return { color: 'text.secondary', icon: null };
-    } else if (status === 'failed' || status === 'failing') {
+    } else if (status === 'failing') {
         return { color: 'error.main', icon: 'ErrorRounded' };
     }
 
@@ -31,14 +31,14 @@ const connectionStatusCondition = (status: string): ConnectionStatusCondition =>
  */
 export type StatusIndicatorProps = {
     /**
-     * The status to show.
+     * The `status` to show.
      */
-    status: string;
+    status: 'connected' | 'pending' | 'waiting' | 'failing' | string;
 
     /**
-     * The label to show.
+     * The `label` to show.
      *
-     * If not provided, the status will be used as the label.
+     * If not provided, the `status` will be used as the `label`.
      * @default status
      */
     label?: string;
