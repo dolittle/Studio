@@ -56,12 +56,13 @@ export const Default = createStory();
 
 export const InitialExpanded = createStory({
     items: dummyAccordionList,
+    singleExpandMode: true,
     initialId: '2',
 });
 InitialExpanded.parameters = {
     docs: {
         description: {
-            story: `In this example, you can see the second accordion item is pre-expanded`,
+            story: 'In this example, you can see the second accordion item is pre-expanded.',
         },
     },
 };
