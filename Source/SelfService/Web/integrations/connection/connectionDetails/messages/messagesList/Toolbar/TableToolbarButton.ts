@@ -4,4 +4,5 @@
 
 export type TableToolbarButton = {
     selectedIds: string[];
+    isButtonActionExecuting?: boolean
 };
