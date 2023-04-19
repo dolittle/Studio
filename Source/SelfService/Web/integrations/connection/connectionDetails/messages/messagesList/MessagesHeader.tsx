@@ -17,15 +17,15 @@ export type MessagesHeadeProps = {
 
 export const MessagesHeader = (props: MessagesHeadeProps) => {
 
-    const [isActionExecuting, setIsActionExecuting] = useState<boolean>(false);
+    const [isAnyActionExecuting, setIsAnyActionExecuting] = useState<boolean>(false);
 
     const handleSuccess = () => {
         props.onActionSuccess();
-        setIsActionExecuting(false);
+        setIsAnyActionExecuting(false);
     };
 
     const handleExecuting = () => {
-        setIsActionExecuting(true);
+        setIsAnyActionExecuting(true);
     };
 
     return (
@@ -38,21 +38,21 @@ export const MessagesHeader = (props: MessagesHeadeProps) => {
                         selectedMessageTypes={props.selectedMessageTypes}
                         onSuccess={handleSuccess}
                         onActionExecuting={handleExecuting}
-                        isButtonActionExecuting={isActionExecuting}
+                        disable={true}
                     />
                     <CopyMessagesButton
                         connectionId={props.connectionId}
                         selectedMessageTypes={props.selectedMessageTypes}
                         onSuccess={handleSuccess}
                         onActionExecuting={handleExecuting}
-                        isButtonActionExecuting={isActionExecuting}
+                        disable={true}
                     />
                     <DeployMessagesButton
                         connectionId={props.connectionId}
                         selectedMessageTypes={props.selectedMessageTypes}
                         onSuccess={handleSuccess}
                         onActionExecuting={handleExecuting}
-                        isButtonActionExecuting={isActionExecuting}
+                        disable={isAnyActionExecuting}
                     />
                 </>
             }
