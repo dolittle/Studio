@@ -16,7 +16,7 @@ const styles = {
         letterSpacing: '0.17px',
         minHeight: 5.75,
         p: 1.25,
-        borderBottom: '1px solid rgba(14, 13, 16, 1)',
+        borderBottom: '1px solid rgba(226, 255, 97, 0.05)',
     },
     dataTableWrapper: {
         'width': 1,
