@@ -15,26 +15,30 @@ const styles = {
         letterSpacing: '0.17px',
         minHeight: 5.75,
         p: 1.25,
-        borderBottom: '1px solid rgba(14, 13, 16, 1)'
+        borderBottom: '1px solid rgba(14, 13, 16, 1)',
     },
     dataTableWrapper: {
+        'width': 1,
         'mb': 3,
-        // Moves the Container-column header left, so that it covers the "detail expand icon" column as well
-        '& .move-container-header-left': {
-            left: -50, // The default column with for the DataGrid (used for the detail expand icon colum)
-        },
+        // Moves the Container-column header left, so that it covers the "detail expand icon" column as well.
+        '& .move-container-header-left': { left: -50 },
     },
     dataTable: {
-        '& .MuiDataGrid-row': {
-            cursor: 'default'
-        }
-    }
+        '& .MuiDataGrid-row': { cursor: 'default' },
+        '& .MuiDataGrid-cell:focus-within': { outline: 'none' },
+    },
 };
 
 const DetailPanelExpandIcon = () => <ExpandMore fontSize='medium' />;
 const DetailPanelCollapseIcon = () => <ExpandLess fontSize='medium' />;
+
 const CustomToolbar = (rows: HealthStatusTableRow[]) =>
     <Typography variant='body2' sx={styles.podTitle}>{`Pod: ${rows[0]?.podName || 'N/A'}`}</Typography>;
+
+const DetailPanelContent = ({ row }: { row: HealthStatusTableRow }) =>
+    <Paper>
+        <PodLogScreen applicationId={row.application} podName={row.podName} containerName={row.containerName} />
+    </Paper>;
 
 export type HealthStatusTableStats = {
     average: number;
@@ -73,15 +77,10 @@ export const HealthStatusTable = ({ rows }: HealthStatusTableProps) => {
         }
     };
 
-    const DetailPanelContent = ({ row }: { row: HealthStatusTableRow }) =>
-        <Paper>
-            <PodLogScreen applicationId={row.application} podName={row.podName} containerName={row.containerName} />
-        </Paper>;
-
     const getDetailPanelHeight = useCallback(() => 'auto', []);
 
     return (
-        <Paper sx={{ width: 1, ...styles.dataTableWrapper }}>
+        <Paper sx={styles.dataTableWrapper}>
             <DataGridPro
                 rows={rows}
                 columns={columns}

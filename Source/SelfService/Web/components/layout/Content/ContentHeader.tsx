@@ -22,7 +22,9 @@ const styles = {
 
 export type ContentHeaderProps = {
     title: string;
-    titleTextVariant?: 'title' | 'subtitle'
+
+    titleTextVariant?: 'title' | 'subtitle';
+
     /**
      * Render buttons as an array of {@link ButtonProps} as part of the {@link ContentHeader}
      */
@@ -35,6 +37,7 @@ export type ContentHeaderProps = {
      * {@override buttons}
      */
     buttonsSlot?: React.ReactNode;
+
     sx?: SxProps;
 };
 
