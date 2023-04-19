@@ -14,8 +14,7 @@ import { useConnectionsIdMessageMappingsGet } from '../../../../../apis/integrat
 import { MessagesTable } from './MessagesTable';
 import { CreateMessagesButton } from './CreateMessagesButton';
 import { NoMessages } from './NoMessages';
-import { defaultEmptyDate } from './helpers';
-import { GridSelectionModel } from '@mui/x-data-grid-pro';
+import { isDefaultEmptyDate } from './helpers';
 import { MessagesHeader } from './MessagesHeader';
 
 
@@ -36,11 +35,21 @@ export const MessagesListView = () => {
             ...mapping
         })) || [];
 
-        // const sortedRows = mappedRows.sort((a, b) => {
-        //     return a.deployedAt?.toISOString() === defaultEmptyDate.toISOString()
-        //         ? 1
-        //         : -1;
-        // });
+        mappedRows.sort((a, b) => {
+            if (isDefaultEmptyDate(a.deployedAt)) {
+                // If both are not deployed, sort by created date, newest first
+                // otherwise, a is not deployed and b is, so a should be first
+                return isDefaultEmptyDate(b.deployedAt)
+                    ? b.metadata?.created!.getTime()! - a.metadata?.created!.getTime()!
+                    : -1;
+            } else {
+                // If a is deployed and b is not, then a should be first
+                // Otherwise if both are deployed, sort by deployed date, newest first
+                return isDefaultEmptyDate(b.deployedAt)
+                    ? 1
+                    : b.deployedAt?.getTime()! - a.deployedAt?.getTime()!;
+            };
+        });
         return mappedRows;
     }, [data?.value]);
 
