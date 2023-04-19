@@ -4,8 +4,9 @@
 import React, { useCallback, useState } from 'react';
 
 import { Paper, Typography } from '@mui/material';
-import { ExpandMore, ExpandLess } from '@mui/icons-material';
 import { DataGridPro, GridRowId, GridRowParams } from '@mui/x-data-grid-pro';
+
+import { Icon } from '@dolittle/design-system';
 
 import { PodLogScreen } from '../../podLogScreen';
 import { columns } from './healthStatusTableColumns';
@@ -29,8 +30,8 @@ const styles = {
     },
 };
 
-const DetailPanelExpandIcon = () => <ExpandMore fontSize='medium' />;
-const DetailPanelCollapseIcon = () => <ExpandLess fontSize='medium' />;
+const DetailPanelExpandIcon = () => <Icon icon='ExpandMore' size='medium' />;
+const DetailPanelCollapseIcon = () => <Icon icon='ExpandLess' size='medium' />;
 
 const CustomToolbar = (rows: HealthStatusTableRow[]) =>
     <Typography variant='body2' sx={styles.podTitle}>{`Pod: ${rows[0]?.podName || 'N/A'}`}</Typography>;
