@@ -19,7 +19,7 @@ export const DeployMessagesButton = ({
     selectedMessageTypes,
     onActionExecuting,
     onSuccess,
-    isButtonActionExecuting,
+    disable,
 }: DeployMessagesButtonProps) => {
 
     const [numberOfRequests, setNumberOfRequests] = useState(0);
@@ -80,7 +80,7 @@ export const DeployMessagesButton = ({
                     label={`Deploy message types${hasMany ? 's' : ''}...`}
                     startWithIcon='RocketLaunch'
                     onClick={handleDeployMessages}
-                    disabled={!hasSelectedMessages || isButtonActionExecuting}
+                    disabled={!hasSelectedMessages|| disable}
                 />
                 : <StatusIndicator
                     label={`Deploying message type${hasMany ? 's' : ''}...`}

@@ -35,8 +35,7 @@ export const DeleteMessagesButton = (props: DeleteMessagesProps) => {
                     label={`Delete message type${hasMany ? 's' : ''}...`}
                     startWithIcon='DeleteRounded'
                     onClick={handleDeleteMessages}
-                    disabled={true}
-                    // disabled={!hasSelectedMessages || props.isButtonActionExecuting}
+                    disabled={!hasSelectedMessages || props.disable}
                 />
                 :
                 <StatusIndicator

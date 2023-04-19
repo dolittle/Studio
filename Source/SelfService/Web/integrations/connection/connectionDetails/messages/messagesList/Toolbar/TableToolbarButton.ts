@@ -7,7 +7,7 @@ import { MessageMappingModel } from '../../../../../../apis/integrations/generat
 export type TableToolbarButton = {
     connectionId: string;
     selectedMessageTypes: MessageMappingModel[];
-    isButtonActionExecuting?: boolean
+    disable?: boolean
     onSuccess: () => void;
     onActionExecuting: () => void;
 };
