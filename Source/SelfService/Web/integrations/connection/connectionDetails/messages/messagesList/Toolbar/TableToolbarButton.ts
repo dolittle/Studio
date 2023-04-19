@@ -8,6 +8,6 @@ export type TableToolbarButton = {
     connectionId: string;
     selectedMessageTypes: MessageMappingModel[];
     disable?: boolean
-    onSuccess: () => void;
+    onActionCompleted: () => void;
     onActionExecuting: () => void;
 };
