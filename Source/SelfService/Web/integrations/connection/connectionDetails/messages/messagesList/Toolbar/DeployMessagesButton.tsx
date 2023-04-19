@@ -1,13 +1,12 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect } from 'react';
+import React, {  } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { Button, StatusIndicator } from '@dolittle/design-system';
-import { UseMutationResult, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { CACHE_KEYS } from '../../../../../../apis/integrations/CacheKeys';
-import { useConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPost, useConnectionsIdMessageMappingsDeployPost } from '../../../../../../apis/integrations/messageMappingApi.hooks';
-import { ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest } from '../../../../../../apis/integrations/generated';
+import { useConnectionsIdMessageMappingsDeployPost } from '../../../../../../apis/integrations/messageMappingApi.hooks';
 import { TableToolbarButton } from './TableToolbarButton';
 
 export type DeployMessagesButtonProps = TableToolbarButton & {
