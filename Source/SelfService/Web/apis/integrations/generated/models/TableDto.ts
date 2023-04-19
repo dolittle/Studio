@@ -37,31 +37,31 @@ export interface TableDto {
      * @type {string}
      * @memberof TableDto
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof TableDto
      */
-    description?: string | null;
+    description?: string;
     /**
      * 
      * @type {string}
      * @memberof TableDto
      */
-    category?: string | null;
+    category?: string;
     /**
      * 
      * @type {string}
      * @memberof TableDto
      */
-    component?: string | null;
+    component?: string;
     /**
      * 
      * @type {Array<ColumnMetadata>}
      * @memberof TableDto
      */
-    columns?: Array<ColumnMetadata> | null;
+    columns?: Array<ColumnMetadata>;
     /**
      * 
      * @type {ModelIndex}
@@ -105,7 +105,7 @@ export function TableDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'description': !exists(json, 'description') ? undefined : json['description'],
         'category': !exists(json, 'category') ? undefined : json['category'],
         'component': !exists(json, 'component') ? undefined : json['component'],
-        'columns': !exists(json, 'columns') ? undefined : (json['columns'] === null ? null : (json['columns'] as Array<any>).map(ColumnMetadataFromJSON)),
+        'columns': !exists(json, 'columns') ? undefined : ((json['columns'] as Array<any>).map(ColumnMetadataFromJSON)),
         'primaryKey': !exists(json, 'primaryKey') ? undefined : ModelIndexFromJSON(json['primaryKey']),
         'indexCount': !exists(json, 'indexCount') ? undefined : json['indexCount'],
         'foreignKeyCount': !exists(json, 'foreignKeyCount') ? undefined : json['foreignKeyCount'],
@@ -125,7 +125,7 @@ export function TableDtoToJSON(value?: TableDto | null): any {
         'description': value.description,
         'category': value.category,
         'component': value.component,
-        'columns': value.columns === undefined ? undefined : (value.columns === null ? null : (value.columns as Array<any>).map(ColumnMetadataToJSON)),
+        'columns': value.columns === undefined ? undefined : ((value.columns as Array<any>).map(ColumnMetadataToJSON)),
         'primaryKey': ModelIndexToJSON(value.primaryKey),
         'indexCount': value.indexCount,
         'foreignKeyCount': value.foreignKeyCount,

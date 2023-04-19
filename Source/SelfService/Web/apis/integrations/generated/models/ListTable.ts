@@ -37,25 +37,25 @@ export interface ListTable {
      * @type {string}
      * @memberof ListTable
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof ListTable
      */
-    description?: string | null;
+    description?: string;
     /**
      * 
      * @type {string}
      * @memberof ListTable
      */
-    category?: string | null;
+    category?: string;
     /**
      * 
      * @type {string}
      * @memberof ListTable
      */
-    component?: string | null;
+    component?: string;
     /**
      * 
      * @type {TableKind}

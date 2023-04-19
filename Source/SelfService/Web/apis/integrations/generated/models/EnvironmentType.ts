@@ -24,7 +24,7 @@ export interface EnvironmentType {
      * @type {string}
      * @memberof EnvironmentType
      */
-    value?: string | null;
+    value?: string;
 }
 
 /**

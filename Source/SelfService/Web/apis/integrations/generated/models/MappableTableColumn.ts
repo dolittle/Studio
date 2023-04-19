@@ -31,13 +31,13 @@ export interface MappableTableColumn {
      * @type {string}
      * @memberof MappableTableColumn
      */
-    m3ColumnName?: string | null;
+    m3ColumnName?: string;
     /**
      * 
      * @type {string}
      * @memberof MappableTableColumn
      */
-    m3Description?: string | null;
+    m3Description?: string;
     /**
      * 
      * @type {FieldType}

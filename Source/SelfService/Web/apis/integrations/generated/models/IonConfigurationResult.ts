@@ -44,7 +44,7 @@ export interface IonConfigurationResult {
      * @type {Array<Link>}
      * @memberof IonConfigurationResult
      */
-    links?: Array<Link> | null;
+    links?: Array<Link>;
 }
 
 /**
@@ -67,7 +67,7 @@ export function IonConfigurationResultFromJSONTyped(json: any, ignoreDiscriminat
     return {
         
         'value': !exists(json, 'value') ? undefined : IonConfigurationFromJSON(json['value']),
-        'links': !exists(json, 'links') ? undefined : (json['links'] === null ? null : (json['links'] as Array<any>).map(LinkFromJSON)),
+        'links': !exists(json, 'links') ? undefined : ((json['links'] as Array<any>).map(LinkFromJSON)),
     };
 }
 
@@ -81,7 +81,7 @@ export function IonConfigurationResultToJSON(value?: IonConfigurationResult | nu
     return {
         
         'value': IonConfigurationToJSON(value.value),
-        'links': value.links === undefined ? undefined : (value.links === null ? null : (value.links as Array<any>).map(LinkToJSON)),
+        'links': value.links === undefined ? undefined : ((value.links as Array<any>).map(LinkToJSON)),
     };
 }
 

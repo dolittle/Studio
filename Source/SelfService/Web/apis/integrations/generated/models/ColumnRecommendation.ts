@@ -24,13 +24,13 @@ export interface ColumnRecommendation {
      * @type {string}
      * @memberof ColumnRecommendation
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof ColumnRecommendation
      */
-    why?: string | null;
+    why?: string;
 }
 
 /**

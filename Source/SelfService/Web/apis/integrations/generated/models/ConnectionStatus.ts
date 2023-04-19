@@ -24,13 +24,13 @@ export interface ConnectionStatus {
      * @type {string}
      * @memberof ConnectionStatus
      */
-    readonly name?: string | null;
+    readonly name?: string;
     /**
      * 
      * @type {string}
      * @memberof ConnectionStatus
      */
-    readonly description?: string | null;
+    readonly description?: string;
 }
 
 /**

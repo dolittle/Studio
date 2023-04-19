@@ -31,19 +31,19 @@ export interface ColumnMetadata {
      * @type {string}
      * @memberof ColumnMetadata
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof ColumnMetadata
      */
-    key?: string | null;
+    key?: string;
     /**
      * 
      * @type {string}
      * @memberof ColumnMetadata
      */
-    description?: string | null;
+    description?: string;
     /**
      * 
      * @type {FieldType}

@@ -49,7 +49,7 @@ export interface MessageMappingModel {
      * @type {string}
      * @memberof MessageMappingModel
      */
-    id?: string | null;
+    id?: string;
     /**
      * 
      * @type {ReadModelMetadata}
@@ -61,7 +61,7 @@ export interface MessageMappingModel {
      * @type {string}
      * @memberof MessageMappingModel
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {ConnectionId}
@@ -73,7 +73,7 @@ export interface MessageMappingModel {
      * @type {string}
      * @memberof MessageMappingModel
      */
-    description?: string | null;
+    description?: string;
     /**
      * 
      * @type {MappableTable}
@@ -85,7 +85,7 @@ export interface MessageMappingModel {
      * @type {Array<MappedField>}
      * @memberof MessageMappingModel
      */
-    fieldMappings?: Array<MappedField> | null;
+    fieldMappings?: Array<MappedField>;
     /**
      * 
      * @type {Date}
@@ -131,7 +131,7 @@ export function MessageMappingModelFromJSONTyped(json: any, ignoreDiscriminator:
         'connection': !exists(json, 'connection') ? undefined : ConnectionIdFromJSON(json['connection']),
         'description': !exists(json, 'description') ? undefined : json['description'],
         'fromTable': !exists(json, 'fromTable') ? undefined : MappableTableFromJSON(json['fromTable']),
-        'fieldMappings': !exists(json, 'fieldMappings') ? undefined : (json['fieldMappings'] === null ? null : (json['fieldMappings'] as Array<any>).map(MappedFieldFromJSON)),
+        'fieldMappings': !exists(json, 'fieldMappings') ? undefined : ((json['fieldMappings'] as Array<any>).map(MappedFieldFromJSON)),
         'deployedAt': !exists(json, 'deployedAt') ? undefined : (new Date(json['deployedAt'])),
         'deployedVersion': !exists(json, 'deployedVersion') ? undefined : json['deployedVersion'],
         'confirmedDeployedVersion': !exists(json, 'confirmedDeployedVersion') ? undefined : json['confirmedDeployedVersion'],
@@ -153,7 +153,7 @@ export function MessageMappingModelToJSON(value?: MessageMappingModel | null): a
         'connection': ConnectionIdToJSON(value.connection),
         'description': value.description,
         'fromTable': MappableTableToJSON(value.fromTable),
-        'fieldMappings': value.fieldMappings === undefined ? undefined : (value.fieldMappings === null ? null : (value.fieldMappings as Array<any>).map(MappedFieldToJSON)),
+        'fieldMappings': value.fieldMappings === undefined ? undefined : ((value.fieldMappings as Array<any>).map(MappedFieldToJSON)),
         'deployedAt': value.deployedAt === undefined ? undefined : (value.deployedAt.toISOString()),
         'deployedVersion': value.deployedVersion,
         'confirmedDeployedVersion': value.confirmedDeployedVersion,

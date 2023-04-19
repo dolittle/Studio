@@ -39,7 +39,7 @@ import {
 
 export interface ConnectionsIdMessageMappingsDeployPostRequest {
     id: string;
-    deployMapping?: Array<DeployMapping>;
+    deployMapping: Array<DeployMapping>;
 }
 
 export interface ConnectionsIdMessageMappingsGetRequest {
@@ -78,6 +78,10 @@ export class MessageMappingApi extends runtime.BaseAPI {
     async connectionsIdMessageMappingsDeployPostRaw(requestParameters: ConnectionsIdMessageMappingsDeployPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsDeployPost.');
+        }
+
+        if (requestParameters.deployMapping === null || requestParameters.deployMapping === undefined) {
+            throw new runtime.RequiredError('deployMapping','Required parameter requestParameters.deployMapping was null or undefined when calling connectionsIdMessageMappingsDeployPost.');
         }
 
         const queryParameters: any = {};

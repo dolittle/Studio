@@ -26,14 +26,14 @@ export interface Link {
      * @type {string}
      * @memberof Link
      */
-    rel?: string | null;
+    rel?: string;
     /**
      * * The href of the link. This is the URI to the resource.
      * *
      * @type {string}
      * @memberof Link
      */
-    href?: string | null;
+    href?: string;
     /**
      * The title of the link. This is a human readable description of the link.
      * Used for display purposes, and to distinguish between links with the same

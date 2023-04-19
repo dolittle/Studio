@@ -37,7 +37,7 @@ export interface ConnectionId {
      * @type {string}
      * @memberof ConnectionId
      */
-    value?: string | null;
+    value?: string;
     /**
      * 
      * @type {Organization}

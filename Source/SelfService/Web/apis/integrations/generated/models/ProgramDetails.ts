@@ -31,25 +31,25 @@ export interface ProgramDetails {
      * @type {string}
      * @memberof ProgramDetails
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof ProgramDetails
      */
-    description?: string | null;
+    description?: string;
     /**
      * 
      * @type {string}
      * @memberof ProgramDetails
      */
-    component?: string | null;
+    component?: string;
     /**
      * 
      * @type {Array<Table>}
      * @memberof ProgramDetails
      */
-    tables?: Array<Table> | null;
+    tables?: Array<Table>;
 }
 
 /**
@@ -74,7 +74,7 @@ export function ProgramDetailsFromJSONTyped(json: any, ignoreDiscriminator: bool
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'component': !exists(json, 'component') ? undefined : json['component'],
-        'tables': !exists(json, 'tables') ? undefined : (json['tables'] === null ? null : (json['tables'] as Array<any>).map(TableFromJSON)),
+        'tables': !exists(json, 'tables') ? undefined : ((json['tables'] as Array<any>).map(TableFromJSON)),
     };
 }
 
@@ -90,7 +90,7 @@ export function ProgramDetailsToJSON(value?: ProgramDetails | null): any {
         'name': value.name,
         'description': value.description,
         'component': value.component,
-        'tables': value.tables === undefined ? undefined : (value.tables === null ? null : (value.tables as Array<any>).map(TableToJSON)),
+        'tables': value.tables === undefined ? undefined : ((value.tables as Array<any>).map(TableToJSON)),
     };
 }
 

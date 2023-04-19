@@ -54,7 +54,7 @@ export interface ReadModelMetadata {
      * @type {Array<number>}
      * @memberof ReadModelMetadata
      */
-    eventSequenceNumbers?: Array<number> | null;
+    eventSequenceNumbers?: Array<number>;
 }
 
 /**

@@ -31,25 +31,25 @@ export interface MappableTable {
      * @type {string}
      * @memberof MappableTable
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof MappableTable
      */
-    description?: string | null;
+    description?: string;
     /**
      * 
      * @type {Array<MappableTableColumn>}
      * @memberof MappableTable
      */
-    columns?: Array<MappableTableColumn> | null;
+    columns?: Array<MappableTableColumn>;
     /**
      * 
      * @type {Array<MappableTableColumn>}
      * @memberof MappableTable
      */
-    required?: Array<MappableTableColumn> | null;
+    required?: Array<MappableTableColumn>;
 }
 
 /**
@@ -73,8 +73,8 @@ export function MappableTableFromJSONTyped(json: any, ignoreDiscriminator: boole
         
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'columns': !exists(json, 'columns') ? undefined : (json['columns'] === null ? null : (json['columns'] as Array<any>).map(MappableTableColumnFromJSON)),
-        'required': !exists(json, 'required') ? undefined : (json['required'] === null ? null : (json['required'] as Array<any>).map(MappableTableColumnFromJSON)),
+        'columns': !exists(json, 'columns') ? undefined : ((json['columns'] as Array<any>).map(MappableTableColumnFromJSON)),
+        'required': !exists(json, 'required') ? undefined : ((json['required'] as Array<any>).map(MappableTableColumnFromJSON)),
     };
 }
 
@@ -89,8 +89,8 @@ export function MappableTableToJSON(value?: MappableTable | null): any {
         
         'name': value.name,
         'description': value.description,
-        'columns': value.columns === undefined ? undefined : (value.columns === null ? null : (value.columns as Array<any>).map(MappableTableColumnToJSON)),
-        'required': value.required === undefined ? undefined : (value.required === null ? null : (value.required as Array<any>).map(MappableTableColumnToJSON)),
+        'columns': value.columns === undefined ? undefined : ((value.columns as Array<any>).map(MappableTableColumnToJSON)),
+        'required': value.required === undefined ? undefined : ((value.required as Array<any>).map(MappableTableColumnToJSON)),
     };
 }
 
