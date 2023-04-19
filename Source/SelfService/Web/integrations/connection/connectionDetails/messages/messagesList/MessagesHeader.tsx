@@ -36,21 +36,21 @@ export const MessagesHeader = (props: MessagesHeadeProps) => {
                     <DeleteMessagesButton
                         connectionId={props.connectionId}
                         selectedMessageTypes={props.selectedMessageTypes}
-                        onSuccess={handleSuccess}
+                        onActionCompleted={handleSuccess}
                         onActionExecuting={handleExecuting}
                         disable={true}
                     />
                     <CopyMessagesButton
                         connectionId={props.connectionId}
                         selectedMessageTypes={props.selectedMessageTypes}
-                        onSuccess={handleSuccess}
+                        onActionCompleted={handleSuccess}
                         onActionExecuting={handleExecuting}
                         disable={true}
                     />
                     <DeployMessagesButton
                         connectionId={props.connectionId}
                         selectedMessageTypes={props.selectedMessageTypes}
-                        onSuccess={handleSuccess}
+                        onActionCompleted={handleSuccess}
                         onActionExecuting={handleExecuting}
                         disable={isAnyActionExecuting}
                     />

@@ -24,7 +24,7 @@ export const CopyMessagesButton = (props: CopyMessagesProps) => {
         setTimeout(() => {
             setIsLoading(false);
             enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully copied`, { variant: 'success' });
-            props.onSuccess();
+            props.onActionCompleted();
         }, 2000);
     };
 

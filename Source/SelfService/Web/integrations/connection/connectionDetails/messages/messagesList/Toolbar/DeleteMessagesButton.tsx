@@ -23,7 +23,7 @@ export const DeleteMessagesButton = (props: DeleteMessagesProps) => {
         setTimeout(() => {
             setIsLoading(false);
             enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully deleted`, { variant: 'success' });
-            props.onSuccess();
+            props.onActionCompleted();
         }, 2000);
     };
 

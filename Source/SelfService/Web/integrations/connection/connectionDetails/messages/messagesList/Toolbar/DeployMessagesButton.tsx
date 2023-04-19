@@ -17,7 +17,7 @@ export const DeployMessagesButton = ({
     connectionId,
     selectedMessageTypes,
     onActionExecuting,
-    onSuccess,
+    onActionCompleted,
     disable,
 }: DeployMessagesButtonProps) => {
     const deployMappingsMutation = useConnectionsIdMessageMappingsDeployPost();
@@ -41,8 +41,10 @@ export const DeployMessagesButton = ({
             },
             onSuccess(data, variables, context) {
                 enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully deployed`, { variant: 'success' });
-                onSuccess();
                 queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.ConnectionMessageMappings_GET, connectionId] });
+            },
+            onSettled() {
+                onActionCompleted();
             }
         });
     };
