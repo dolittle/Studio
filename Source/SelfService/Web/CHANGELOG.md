@@ -1,3 +1,7 @@
+# [3.4.22] - 2023-4-19 [PR: #377](https://github.com/dolittle/Studio/pull/377)
+<img width="1649" alt="image" src="https://user-images.githubusercontent.com/102054/233118227-de9d60a2-045d-4a62-a164-0418f64ccab3.png">
+
+
 # [3.4.21] - 2023-4-19 [PR: #376](https://github.com/dolittle/Studio/pull/376)
 - Update generated API based on latest
 - Update generated API without nullable, and required deploymapping
