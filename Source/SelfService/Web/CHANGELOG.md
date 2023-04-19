@@ -1,3 +1,12 @@
+# [3.4.21] - 2023-4-19 [PR: #376](https://github.com/dolittle/Studio/pull/376)
+- Update generated API based on latest
+- Update generated API without nullable, and required deploymapping
+- Improve code a little bit
+- Use the batch api-method to deploy message types
+- Remove unused imports
+- Rename prop to better describe intent
+
+
 # [3.4.20] - 2023-4-18 [PR: #375](https://github.com/dolittle/Studio/pull/375)
 ## Summary
 
