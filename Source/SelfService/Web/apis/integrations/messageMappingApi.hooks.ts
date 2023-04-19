@@ -10,7 +10,8 @@ import {
     ConnectionsIdMessageMappingsGetRequest,
     ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest,
     ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest,
-    ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest
+    ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest,
+    ConnectionsIdMessageMappingsDeployPostRequest
 } from './generated';
 
 let apiInstance: MessageMappingApi | undefined;
@@ -56,6 +57,17 @@ export const useConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPost
             ...{
                 mutationFn: (params: ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest) =>
                     api.connectionsIdMessageMappingsTablesTableMessagesMessageDeployPost(params),
+            }, ...options
+        });
+    };
+
+    export const useConnectionsIdMessageMappingsDeployPost =
+    (options?: UseMutationOptions<void, unknown, ConnectionsIdMessageMappingsDeployPostRequest, unknown>) => {
+        const api = getOrCreateApi();
+        return useMutation({
+            ...{
+                mutationFn: (params: ConnectionsIdMessageMappingsDeployPostRequest) =>
+                    api.connectionsIdMessageMappingsDeployPost(params),
             }, ...options
         });
     };
