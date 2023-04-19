@@ -24,43 +24,43 @@ export interface IonConfiguration {
      * @type {string}
      * @memberof IonConfiguration
      */
-    gatewayUrl?: string | null;
+    gatewayUrl?: string;
     /**
      * 
      * @type {string}
      * @memberof IonConfiguration
      */
-    username?: string | null;
+    username?: string;
     /**
      * 
      * @type {string}
      * @memberof IonConfiguration
      */
-    password?: string | null;
+    password?: string;
     /**
      * 
      * @type {string}
      * @memberof IonConfiguration
      */
-    clientId?: string | null;
+    clientId?: string;
     /**
      * 
      * @type {string}
      * @memberof IonConfiguration
      */
-    clientSecret?: string | null;
+    clientSecret?: string;
     /**
      * 
      * @type {string}
      * @memberof IonConfiguration
      */
-    oauthTokenUrl?: string | null;
+    oauthTokenUrl?: string;
     /**
      * 
      * @type {string}
      * @memberof IonConfiguration
      */
-    byUser?: string | null;
+    byUser?: string;
 }
 
 /**

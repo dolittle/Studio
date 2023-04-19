@@ -44,7 +44,7 @@ export interface TableListingEntryIEnumerableResult {
      * @type {Array<Link>}
      * @memberof TableListingEntryIEnumerableResult
      */
-    links?: Array<Link> | null;
+    links?: Array<Link>;
 }
 
 /**
@@ -67,7 +67,7 @@ export function TableListingEntryIEnumerableResultFromJSONTyped(json: any, ignor
     return {
         
         'value': !exists(json, 'value') ? undefined : (json['value'] === null ? null : (json['value'] as Array<any>).map(TableListingEntryFromJSON)),
-        'links': !exists(json, 'links') ? undefined : (json['links'] === null ? null : (json['links'] as Array<any>).map(LinkFromJSON)),
+        'links': !exists(json, 'links') ? undefined : ((json['links'] as Array<any>).map(LinkFromJSON)),
     };
 }
 
@@ -81,7 +81,7 @@ export function TableListingEntryIEnumerableResultToJSON(value?: TableListingEnt
     return {
         
         'value': value.value === undefined ? undefined : (value.value === null ? null : (value.value as Array<any>).map(TableListingEntryToJSON)),
-        'links': value.links === undefined ? undefined : (value.links === null ? null : (value.links as Array<any>).map(LinkToJSON)),
+        'links': value.links === undefined ? undefined : ((value.links as Array<any>).map(LinkToJSON)),
     };
 }
 

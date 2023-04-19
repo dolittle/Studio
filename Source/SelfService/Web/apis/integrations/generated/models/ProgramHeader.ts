@@ -24,19 +24,19 @@ export interface ProgramHeader {
      * @type {string}
      * @memberof ProgramHeader
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof ProgramHeader
      */
-    description?: string | null;
+    description?: string;
     /**
      * 
      * @type {string}
      * @memberof ProgramHeader
      */
-    component?: string | null;
+    component?: string;
     /**
      * 
      * @type {boolean}

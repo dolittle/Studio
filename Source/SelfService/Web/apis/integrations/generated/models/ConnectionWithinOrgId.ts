@@ -24,7 +24,7 @@ export interface ConnectionWithinOrgId {
      * @type {string}
      * @memberof ConnectionWithinOrgId
      */
-    value?: string | null;
+    value?: string;
 }
 
 /**

@@ -37,13 +37,13 @@ export interface MappedField {
      * @type {string}
      * @memberof MappedField
      */
-    mappedName?: string | null;
+    mappedName?: string;
     /**
      * 
      * @type {string}
      * @memberof MappedField
      */
-    mappedDescription?: string | null;
+    mappedDescription?: string;
 }
 
 /**

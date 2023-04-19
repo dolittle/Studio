@@ -55,7 +55,7 @@ export interface ConnectionModel {
      * @type {string}
      * @memberof ConnectionModel
      */
-    id?: string | null;
+    id?: string;
     /**
      * 
      * @type {ReadModelMetadata}
@@ -67,19 +67,19 @@ export interface ConnectionModel {
      * @type {string}
      * @memberof ConnectionModel
      */
-    readonly connectionId?: string | null;
+    readonly connectionId?: string;
     /**
      * 
      * @type {string}
      * @memberof ConnectionModel
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof ConnectionModel
      */
-    description?: string | null;
+    description?: string;
     /**
      * 
      * @type {EnvironmentType}

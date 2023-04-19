@@ -31,7 +31,7 @@ export interface IndexColumn {
      * @type {string}
      * @memberof IndexColumn
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {SortDirection}

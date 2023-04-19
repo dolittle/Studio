@@ -25,13 +25,13 @@ export interface DeployMapping {
      * @type {string}
      * @memberof DeployMapping
      */
-    table?: string | null;
+    table?: string;
     /**
      * 
      * @type {string}
      * @memberof DeployMapping
      */
-    message?: string | null;
+    message?: string;
 }
 
 /**

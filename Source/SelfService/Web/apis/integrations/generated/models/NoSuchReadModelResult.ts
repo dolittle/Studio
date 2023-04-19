@@ -38,7 +38,7 @@ export interface NoSuchReadModelResult {
      * @type {Array<Link>}
      * @memberof NoSuchReadModelResult
      */
-    links?: Array<Link> | null;
+    links?: Array<Link>;
 }
 
 /**
@@ -61,7 +61,7 @@ export function NoSuchReadModelResultFromJSONTyped(json: any, ignoreDiscriminato
     return {
         
         'value': !exists(json, 'value') ? undefined : json['value'],
-        'links': !exists(json, 'links') ? undefined : (json['links'] === null ? null : (json['links'] as Array<any>).map(LinkFromJSON)),
+        'links': !exists(json, 'links') ? undefined : ((json['links'] as Array<any>).map(LinkFromJSON)),
     };
 }
 
@@ -75,7 +75,7 @@ export function NoSuchReadModelResultToJSON(value?: NoSuchReadModelResult | null
     return {
         
         'value': value.value,
-        'links': value.links === undefined ? undefined : (value.links === null ? null : (value.links as Array<any>).map(LinkToJSON)),
+        'links': value.links === undefined ? undefined : ((value.links as Array<any>).map(LinkToJSON)),
     };
 }
 

@@ -31,13 +31,13 @@ export interface ModelIndex {
      * @type {string}
      * @memberof ModelIndex
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {Array<IndexColumn>}
      * @memberof ModelIndex
      */
-    indexColumns?: Array<IndexColumn> | null;
+    indexColumns?: Array<IndexColumn>;
     /**
      * 
      * @type {boolean}
@@ -66,7 +66,7 @@ export function ModelIndexFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'indexColumns': !exists(json, 'indexColumns') ? undefined : (json['indexColumns'] === null ? null : (json['indexColumns'] as Array<any>).map(IndexColumnFromJSON)),
+        'indexColumns': !exists(json, 'indexColumns') ? undefined : ((json['indexColumns'] as Array<any>).map(IndexColumnFromJSON)),
         'unique': !exists(json, 'unique') ? undefined : json['unique'],
     };
 }
@@ -81,7 +81,7 @@ export function ModelIndexToJSON(value?: ModelIndex | null): any {
     return {
         
         'name': value.name,
-        'indexColumns': value.indexColumns === undefined ? undefined : (value.indexColumns === null ? null : (value.indexColumns as Array<any>).map(IndexColumnToJSON)),
+        'indexColumns': value.indexColumns === undefined ? undefined : ((value.indexColumns as Array<any>).map(IndexColumnToJSON)),
         'unique': value.unique,
     };
 }

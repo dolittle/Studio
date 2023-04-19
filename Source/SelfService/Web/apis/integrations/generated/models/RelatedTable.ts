@@ -24,25 +24,25 @@ export interface RelatedTable {
      * @type {string}
      * @memberof RelatedTable
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof RelatedTable
      */
-    description?: string | null;
+    description?: string;
     /**
      * 
      * @type {string}
      * @memberof RelatedTable
      */
-    category?: string | null;
+    category?: string;
     /**
      * 
      * @type {string}
      * @memberof RelatedTable
      */
-    component?: string | null;
+    component?: string;
     /**
      * 
      * @type {number}

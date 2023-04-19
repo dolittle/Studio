@@ -24,13 +24,13 @@ export interface MdpConfiguration {
      * @type {string}
      * @memberof MdpConfiguration
      */
-    url?: string | null;
+    url?: string;
     /**
      * 
      * @type {string}
      * @memberof MdpConfiguration
      */
-    password?: string | null;
+    password?: string;
     /**
      * 
      * @type {boolean}
@@ -42,7 +42,7 @@ export interface MdpConfiguration {
      * @type {string}
      * @memberof MdpConfiguration
      */
-    updatedBy?: string | null;
+    updatedBy?: string;
 }
 
 /**

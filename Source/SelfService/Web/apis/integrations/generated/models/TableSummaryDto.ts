@@ -24,13 +24,13 @@ export interface TableSummaryDto {
      * @type {string}
      * @memberof TableSummaryDto
      */
-    tableName?: string | null;
+    tableName?: string;
     /**
      * 
      * @type {string}
      * @memberof TableSummaryDto
      */
-    summary?: string | null;
+    summary?: string;
 }
 
 /**

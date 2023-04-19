@@ -44,7 +44,7 @@ export interface MdpConfigurationResult {
      * @type {Array<Link>}
      * @memberof MdpConfigurationResult
      */
-    links?: Array<Link> | null;
+    links?: Array<Link>;
 }
 
 /**
@@ -67,7 +67,7 @@ export function MdpConfigurationResultFromJSONTyped(json: any, ignoreDiscriminat
     return {
         
         'value': !exists(json, 'value') ? undefined : MdpConfigurationFromJSON(json['value']),
-        'links': !exists(json, 'links') ? undefined : (json['links'] === null ? null : (json['links'] as Array<any>).map(LinkFromJSON)),
+        'links': !exists(json, 'links') ? undefined : ((json['links'] as Array<any>).map(LinkFromJSON)),
     };
 }
 
@@ -81,7 +81,7 @@ export function MdpConfigurationResultToJSON(value?: MdpConfigurationResult | nu
     return {
         
         'value': MdpConfigurationToJSON(value.value),
-        'links': value.links === undefined ? undefined : (value.links === null ? null : (value.links as Array<any>).map(LinkToJSON)),
+        'links': value.links === undefined ? undefined : ((value.links as Array<any>).map(LinkToJSON)),
     };
 }
 

@@ -31,7 +31,7 @@ export interface ColumnRecommendations {
      * @type {Array<ColumnRecommendation>}
      * @memberof ColumnRecommendations
      */
-    recommendations?: Array<ColumnRecommendation> | null;
+    recommendations?: Array<ColumnRecommendation>;
 }
 
 /**
@@ -53,7 +53,7 @@ export function ColumnRecommendationsFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'recommendations': !exists(json, 'recommendations') ? undefined : (json['recommendations'] === null ? null : (json['recommendations'] as Array<any>).map(ColumnRecommendationFromJSON)),
+        'recommendations': !exists(json, 'recommendations') ? undefined : ((json['recommendations'] as Array<any>).map(ColumnRecommendationFromJSON)),
     };
 }
 
@@ -66,7 +66,7 @@ export function ColumnRecommendationsToJSON(value?: ColumnRecommendations | null
     }
     return {
         
-        'recommendations': value.recommendations === undefined ? undefined : (value.recommendations === null ? null : (value.recommendations as Array<any>).map(ColumnRecommendationToJSON)),
+        'recommendations': value.recommendations === undefined ? undefined : ((value.recommendations as Array<any>).map(ColumnRecommendationToJSON)),
     };
 }
 

@@ -24,13 +24,13 @@ export interface FieldMapping {
      * @type {string}
      * @memberof FieldMapping
      */
-    columnName?: string | null;
+    columnName?: string;
     /**
      * 
      * @type {string}
      * @memberof FieldMapping
      */
-    fieldName?: string | null;
+    fieldName?: string;
     /**
      * 
      * @type {string}

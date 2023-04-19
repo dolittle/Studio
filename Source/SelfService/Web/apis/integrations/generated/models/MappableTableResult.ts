@@ -44,7 +44,7 @@ export interface MappableTableResult {
      * @type {Array<Link>}
      * @memberof MappableTableResult
      */
-    links?: Array<Link> | null;
+    links?: Array<Link>;
 }
 
 /**
@@ -67,7 +67,7 @@ export function MappableTableResultFromJSONTyped(json: any, ignoreDiscriminator:
     return {
         
         'value': !exists(json, 'value') ? undefined : MappableTableFromJSON(json['value']),
-        'links': !exists(json, 'links') ? undefined : (json['links'] === null ? null : (json['links'] as Array<any>).map(LinkFromJSON)),
+        'links': !exists(json, 'links') ? undefined : ((json['links'] as Array<any>).map(LinkFromJSON)),
     };
 }
 
@@ -81,7 +81,7 @@ export function MappableTableResultToJSON(value?: MappableTableResult | null): a
     return {
         
         'value': MappableTableToJSON(value.value),
-        'links': value.links === undefined ? undefined : (value.links === null ? null : (value.links as Array<any>).map(LinkToJSON)),
+        'links': value.links === undefined ? undefined : ((value.links as Array<any>).map(LinkToJSON)),
     };
 }
 

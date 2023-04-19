@@ -24,13 +24,13 @@ export interface RemoteServiceStatus {
      * @type {string}
      * @memberof RemoteServiceStatus
      */
-    readonly name?: string | null;
+    readonly name?: string;
     /**
      * 
      * @type {string}
      * @memberof RemoteServiceStatus
      */
-    readonly description?: string | null;
+    readonly description?: string;
 }
 
 /**

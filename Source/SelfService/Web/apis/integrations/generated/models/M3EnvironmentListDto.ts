@@ -24,13 +24,13 @@ export interface M3EnvironmentListDto {
      * @type {string}
      * @memberof M3EnvironmentListDto
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof M3EnvironmentListDto
      */
-    description?: string | null;
+    description?: string;
     /**
      * 
      * @type {boolean}
@@ -48,13 +48,13 @@ export interface M3EnvironmentListDto {
      * @type {string}
      * @memberof M3EnvironmentListDto
      */
-    baseVersion?: string | null;
+    baseVersion?: string;
     /**
      * 
      * @type {string}
      * @memberof M3EnvironmentListDto
      */
-    components?: string | null;
+    components?: string;
 }
 
 /**

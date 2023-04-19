@@ -24,19 +24,19 @@ export interface TableListingEntry {
      * @type {string}
      * @memberof TableListingEntry
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof TableListingEntry
      */
-    description?: string | null;
+    description?: string;
     /**
      * 
      * @type {string}
      * @memberof TableListingEntry
      */
-    summary?: string | null;
+    summary?: string;
     /**
      * 
      * @type {number}
