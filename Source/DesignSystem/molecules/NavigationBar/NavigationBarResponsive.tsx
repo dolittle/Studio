@@ -5,14 +5,14 @@ import React from 'react';
 
 import { Box, Divider, Drawer, List, Toolbar } from '@mui/material';
 
-type NavigationBarMobileProps = {
+type NavigationBarResponsiveProps = {
     isOpen: boolean;
     onClose: () => void;
-    mobileMainLinks?: JSX.Element;
-    mobileSecondaryLinks?: JSX.Element;
+    responsiveMainLinks?: JSX.Element;
+    responsiveSecondaryLinks?: JSX.Element;
 };
 
-export const NavigationBarMobile = ({ isOpen, onClose, mobileMainLinks, mobileSecondaryLinks }: NavigationBarMobileProps) =>
+export const NavigationBarResponsive = ({ isOpen, onClose, responsiveMainLinks, responsiveSecondaryLinks }: NavigationBarResponsiveProps) =>
     <Box component='nav'>
         <Drawer
             variant='temporary'
@@ -26,13 +26,13 @@ export const NavigationBarMobile = ({ isOpen, onClose, mobileMainLinks, mobileSe
 
             <List sx={{ height: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <Box>
-                    {mobileMainLinks}
+                    {responsiveMainLinks}
                     <Divider />
                 </Box>
 
                 <Box>
                     <Divider />
-                    {mobileSecondaryLinks}
+                    {responsiveSecondaryLinks}
                 </Box>
             </List>
         </Drawer>

@@ -7,7 +7,7 @@ import { AppBar, Box, List, Toolbar } from '@mui/material';
 
 import { IconButton, Icon } from '@dolittle/design-system';
 
-import { NavigationBarMobile } from './NavigationBarMobile';
+import { NavigationBarResponsive } from './NavigationBarResponsive';
 
 const linkStyles = {
     'display': { xs: 'none', md: 'flex' },
@@ -34,16 +34,16 @@ type NavigationBarProps = {
     secondaryLinks?: JSX.Element;
 
     /**
-     * A mobile drop-down menu that appears in the bottom navigation bar next to the menu-toggle icon.
+     * A responsive drop-down menu that appears in the bottom navigation bar next to the menu-toggle icon.
      * @default undefined
      */
-    mobileDropdownMenu?: JSX.Element;
+    responsiveDropdownMenu?: JSX.Element;
 
     /**
-     * Secondary links that appear at the bottom of the mobile navigation bar.
+     * Secondary links that appear at the bottom of the responsive navigation bar.
      * @default undefined
      */
-    mobileSecondaryLinks?: JSX.Element;
+    responsiveSecondaryLinks?: JSX.Element;
 };
 
 /**
@@ -51,17 +51,17 @@ type NavigationBarProps = {
  * @param {NavigationBarProps} props - The {@link NavigationBarProps} that contains the properties for the main top navigation bar.
  * @returns A {@link NavigationBar} component.
  */
-export const NavigationBar = ({ mainLinks, secondaryLinks, mobileDropdownMenu, mobileSecondaryLinks }: NavigationBarProps) => {
-    const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+export const NavigationBar = ({ mainLinks, secondaryLinks, responsiveDropdownMenu, responsiveSecondaryLinks }: NavigationBarProps) => {
+    const [isResponsiveNavOpen, setIsResponsiveNavOpen] = useState(false);
 
     return (
         <AppBar component='nav' sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-            {isMobileNavOpen &&
-                <NavigationBarMobile
-                    isOpen={isMobileNavOpen}
-                    onClose={() => setIsMobileNavOpen(false)}
-                    mobileMainLinks={mainLinks}
-                    mobileSecondaryLinks={mobileSecondaryLinks}
+            {isResponsiveNavOpen &&
+                <NavigationBarResponsive
+                    isOpen={isResponsiveNavOpen}
+                    onClose={() => setIsResponsiveNavOpen(false)}
+                    responsiveMainLinks={mainLinks}
+                    responsiveSecondaryLinks={responsiveSecondaryLinks}
                 />
             }
 
@@ -71,10 +71,10 @@ export const NavigationBar = ({ mainLinks, secondaryLinks, mobileDropdownMenu, m
                         tooltipText='Toggle navigation menu'
                         icon='MenuRounded'
                         edge='start'
-                        onClick={() => setIsMobileNavOpen(prevState => !prevState)}
+                        onClick={() => setIsResponsiveNavOpen(prevState => !prevState)}
                     />
 
-                    {mobileDropdownMenu}
+                    {responsiveDropdownMenu}
                 </Box>
 
                 <Box sx={{ ...linkStyles, flexGrow: 1 }}>

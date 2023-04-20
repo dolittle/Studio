@@ -9,7 +9,7 @@ import { Toolbar } from '@mui/material';
 
 import { componentStories, NavigationBar } from '@dolittle/design-system';
 
-import { MainLinks, SecondaryLinks, SelectionMenu, MobileSecondaryLinks } from '../../helpers/dummyContent';
+import { MainLinks, SecondaryLinks, SelectionMenu, ResponsiveSecondaryLinks } from '../../helpers/dummyContent';
 import { Content, Router } from '../../helpers/ReactRouter';
 
 const { metadata, createStory } = componentStories(NavigationBar, {
@@ -29,14 +29,14 @@ metadata.parameters = {
     controls: { include: [] },
     docs: {
         description: {
-            component: `The top navigation bar is always positioned at the top of the page and puts high priority destinations within reach on large screens. 
+            component: `The top navigation bar is always positioned at the top of the page and puts high priority destinations within reach on large screens.
         The top navigation bar uses a background and elevation of 4. ` },
         source: {
             code: `
  <NavigationBar
    mainLinks={<MainLinks />}
-   mobileDropdownMenu={<SelectionMenu />}
-   mobileSecondaryLinks={<MobileSecondaryLinks />}
+   responsiveDropdownMenu={<SelectionMenu />}
+   responsiveSecondaryLinks={<ResponsiveSecondaryLinks />}
    secondaryLinks={<SecondaryLinks />}
  />`,
         },
@@ -46,8 +46,8 @@ metadata.parameters = {
 metadata.args = {
     mainLinks: <MainLinks />,
     secondaryLinks: <SecondaryLinks />,
-    mobileDropdownMenu: <SelectionMenu />,
-    mobileSecondaryLinks: <MobileSecondaryLinks />,
+    responsiveDropdownMenu: <SelectionMenu />,
+    responsiveSecondaryLinks: <ResponsiveSecondaryLinks />,
 };
 
 export default metadata;

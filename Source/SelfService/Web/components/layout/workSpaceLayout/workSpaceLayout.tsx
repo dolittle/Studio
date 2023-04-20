@@ -28,8 +28,8 @@ export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
         <NavigationBar
             mainLinks={<MainLinks />}
             secondaryLinks={<SecondaryLinks />}
-            mobileDropdownMenu={<SpaceSelectionMenu />}
-            mobileSecondaryLinks={<MoreOptions />}
+            responsiveDropdownMenu={<SpaceSelectionMenu />}
+            responsiveSecondaryLinks={<MoreOptions />}
         />
 
         <SideBar

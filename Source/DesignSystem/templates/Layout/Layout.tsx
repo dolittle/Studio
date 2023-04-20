@@ -7,7 +7,7 @@ import { Box, Toolbar } from '@mui/material';
 
 import { NavigationBar, SideBar } from '@dolittle/design-system';
 
-import { MainLinks, SecondaryLinks, SelectionMenu, MobileSecondaryLinks, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/dummyContent';
+import { MainLinks, SecondaryLinks, SelectionMenu, ResponsiveSecondaryLinks, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/dummyContent';
 
 /**
  * The props for a {@link Layout} component.
@@ -30,8 +30,8 @@ export const Layout = ({ children }: LayoutProps) =>
         <NavigationBar
             mainLinks={<MainLinks />}
             secondaryLinks={<SecondaryLinks />}
-            mobileDropdownMenu={<SelectionMenu />}
-            mobileSecondaryLinks={<MobileSecondaryLinks />}
+            responsiveDropdownMenu={<SelectionMenu />}
+            responsiveSecondaryLinks={<ResponsiveSecondaryLinks />}
         />
 
         <SideBar
