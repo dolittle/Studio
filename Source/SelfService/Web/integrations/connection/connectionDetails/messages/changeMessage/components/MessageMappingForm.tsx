@@ -56,19 +56,24 @@ export const MessageMappingForm = ({
     };
 
     return (
-        <Form<NewMessageMappingParameters>
-            initialValues={{
-                name: messageId ?? '',
-                description: messageType?.description ?? '',
-                fields: messageType?.fieldMappings?.map(field => ({
-                    columnName: field.mappedColumn?.m3ColumnName!,
-                    fieldName: field.mappedName,
-                    fieldDescription: field.mappedDescription,
-                })) || [],
-            }}
-            onSubmit={handleNewMessageSave}
-        >
-            {children}
-        </Form>
+        <>
+            {!messageType
+                ? <>{children}</>
+                : <Form<NewMessageMappingParameters>
+                    initialValues={{
+                        name: messageType?.name ?? '',
+                        description: messageType?.description ?? '',
+                        fields: messageType?.fieldMappings?.map(field => ({
+                            columnName: field.mappedColumn?.m3ColumnName!,
+                            fieldName: field.mappedName,
+                            fieldDescription: field.mappedDescription,
+                        })) || [],
+                    }}
+                    onSubmit={handleNewMessageSave}
+                >
+                    {children}
+                </Form>
+            }
+        </>
     );
 };
