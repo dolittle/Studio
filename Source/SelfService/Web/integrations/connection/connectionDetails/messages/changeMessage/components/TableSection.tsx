@@ -17,6 +17,7 @@ import { useConnectionId } from '../../../../../routes.hooks';
 
 import { ViewModeProps } from '../ViewMode';
 import { DataGridTableListingEntry, MessageMappingTable } from './MessageMappingTable';
+import { generateMappedFieldNameFrom } from '../generateMappedFieldNameFrom';
 
 export type TableSectionProps = ViewModeProps & {
     selectedTableName: string;
@@ -73,6 +74,8 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
         [allMappableTableColumns, selectedIds]
     );
 
+    const uniqueMappedNames = useMemo(() => [...new Set(gridMappableTableColumns.map(column => column.fieldName))], [gridMappableTableColumns])
+
     useEffect(() => {
         const fields: FieldMapping[] = selectedTableColumns.map(column => ({
             columnName: column.m3ColumnName!,
@@ -80,6 +83,13 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
             fieldDescription: '',
         }));
         setFormValue('fields', fields);
+
+        selectedTableColumns
+            .filter(column => !column.fieldName)
+            .forEach(column => {
+                let generated = generateMappedFieldNameFrom(column.m3ColumnName!, column.m3Description!);
+                column.fieldName = generated;
+            });
     }, [selectedTableColumns]);
 
     const onFieldMapped = (m3Field: string, mappedFieldName: any) => {
