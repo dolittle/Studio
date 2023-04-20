@@ -22,7 +22,6 @@ const columns: GridColDef<DataGridTableListingEntry>[] = [
     {
         field: 'm3Description',
         headerName: 'M3 Description',
-        editable: true,
         minWidth: 270,
     },
     {
