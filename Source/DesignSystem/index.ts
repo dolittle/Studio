@@ -35,3 +35,4 @@ export { Stepper } from './molecules/Stepper';
 
 // Templates
 export { ContentContainer } from './templates/Layout/ContentContainer';
+export { Layout } from './templates/Layout/Layout';

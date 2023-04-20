@@ -3,16 +3,26 @@
 
 import React from 'react';
 
-import { Box, Toolbar } from '@mui/material';
+import { Box, Toolbar, Grid, SxProps } from '@mui/material';
 
 import { NavigationBar, SideBar } from '@dolittle/design-system';
 
 import { MainLinks, SecondaryLinks, SelectionMenu, ResponsiveSecondaryLinks, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/dummyContent';
 
+const styles: SxProps = {
+    'minHeight': 'calc(100vh - 96px)',
+    'display': 'flex',
+    'flexDirection': 'column',
+    'flexGrow': 1,
+    'm': 4,
+    'mt': 8,
+    '& .MuiToolbar-root': { p: 0 },
+};
+
 /**
  * The props for a {@link Layout} component.
  */
-type LayoutProps = {
+export type LayoutProps = {
     /**
      * The main content of the layout.
      * @default undefined
@@ -26,7 +36,8 @@ type LayoutProps = {
  * @returns A {@link Layout} component.
  */
 export const Layout = ({ children }: LayoutProps) =>
-    <Box sx={{ display: 'flex' }}>
+    <Grid container sx={{ flexFlow: 'nowrap' }}>
+
         <NavigationBar
             mainLinks={<MainLinks />}
             secondaryLinks={<SecondaryLinks />}
@@ -39,9 +50,9 @@ export const Layout = ({ children }: LayoutProps) =>
             secondaryLinks={<SideBarSecondaryLinks />}
         />
 
-        <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+        <Box component='main' sx={styles}>
             <Toolbar />
 
             {children}
         </Box>
-    </Box>;
+    </Grid>;

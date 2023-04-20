@@ -7,13 +7,12 @@ import { useRoutes, useParams } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { Typography, Toolbar } from '@mui/material';
+import { Layout } from '@dolittle/design-system';
 
 import { buildQueryClient } from '../apis/integrations/queryClient';
 
 import { routes } from './routes';
 
-import { WorkSpaceLayout } from '../components/layout/workSpaceLayout/workSpaceLayout';
 import { DebugRouter } from '../components/debugRouter';
 
 export const IntegrationsIndex = () => {
@@ -22,13 +21,13 @@ export const IntegrationsIndex = () => {
     const { applicationId } = useParams();
 
     return (
-        <WorkSpaceLayout>
+        <Layout>
             <QueryClientProvider client={queryClient}>
                 <DebugRouter>
                     {routesElement}
                 </DebugRouter>
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
-        </WorkSpaceLayout>
+        </Layout>
     );
 };
