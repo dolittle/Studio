@@ -1,3 +1,14 @@
+# [3.4.24] - 2023-4-21 [PR: #379](https://github.com/dolittle/Studio/pull/379)
+- No longer allow the Description to be editable
+- Automatically add a remapped fieldName
+- Refactor for clarity
+- only select the row if it isn't already selected
+- Generated the column name based on m3 description, not the m3 column
+- Set unique mapped names based on what is actually selected in the table
+- When removing the remapped text, unselect the field
+- Remove fieldnames for any previously mapped fields when they are deselected
+
+
 # [3.4.22] - 2023-4-19 [PR: #377](https://github.com/dolittle/Studio/pull/377)
 <img width="1649" alt="image" src="https://user-images.githubusercontent.com/102054/233118227-de9d60a2-045d-4a62-a164-0418f64ccab3.png">
 
