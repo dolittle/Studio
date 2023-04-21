@@ -5,7 +5,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 
 import { useFormContext } from 'react-hook-form';
 
-import { Grid, LinearProgress } from '@mui/material';
+import { Grid, LinearProgress, Box } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { AlertBox, Button, MaxWidthTextBlock, Switch } from '@dolittle/design-system/';
@@ -145,11 +145,11 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                 >
                     {!mappableTableResult?.value ? <AlertBox /> : (
                         <>
-                            <Grid container gap={2} sx={{ py: 3, justifyContent: 'space-between', alignContent: 'flex-start' }}>
-                                <MaxWidthTextBlock>
-                                    {`You can edit the field descriptions and add a remapped name to provide appropriate semantics that make sense for your
-                                        organization's business logic.`}
-                                </MaxWidthTextBlock>
+                            <Box sx={{ py: 3 }}>
+                                {`This displays all the M3 fields available for this table. Primary fields are necessary for the message type and have already been selected.
+                                You can remap the M3 Description by adding a remapped name that makes sense for your organization’s business logic. `}
+                            </Box>
+                            <Grid container gap={2} sx={{ py: 3, justifyContent: 'flex-end', alignContent: 'flex-end' }}>
                                 <Switch id='hideUnselectedRows' label='Hide Unselected Rows' onChange={() => setHideUnselectedRows(!hideUnselectedRows)} />
                             </Grid>
                             <MessageMappingTable
