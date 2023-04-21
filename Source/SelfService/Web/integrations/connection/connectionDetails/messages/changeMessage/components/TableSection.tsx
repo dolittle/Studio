@@ -14,10 +14,11 @@ import { ContentSection } from '../../../../../../components/layout/Content/Cont
 import { FieldMapping, MappedField } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
 import { useConnectionId } from '../../../../../routes.hooks';
+import { toPascalCase } from '../../../../../../utils/helpers/strings';
 
 import { ViewModeProps } from '../ViewMode';
 import { DataGridTableListingEntry, MessageMappingTable } from './MessageMappingTable';
-import { generateMappedFieldNameFrom } from '../generateMappedFieldNameFrom';
+
 
 export type TableSectionProps = ViewModeProps & {
     selectedTableName: string;
@@ -71,10 +72,29 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
 
     const selectedTableColumns = useMemo(
         () => gridMappableTableColumns.filter(column => selectedIds.includes(column.m3ColumnName!)),
-        [allMappableTableColumns, selectedIds]
+        [gridMappableTableColumns, selectedIds]
     );
 
-    const uniqueMappedNames = useMemo(() => [...new Set(gridMappableTableColumns.map(column => column.fieldName))], [gridMappableTableColumns])
+    const uniqueMappedNames = useMemo(() => [...new Set(gridMappableTableColumns.map(column => column.fieldName))], [gridMappableTableColumns]);
+    const generateMappedFieldNameFrom = (columnDescription: string) => {
+
+        let generated = toPascalCase(columnDescription);
+        let isUnique = true;
+        let suffixNumber = 0;
+
+        while (isUnique) {
+            if (uniqueMappedNames.includes(generated + (suffixNumber > 0 ? suffixNumber.toString() : ''))) {
+                suffixNumber++;
+            } else {
+                if (suffixNumber > 0) {
+                    generated = generated + suffixNumber;
+                }
+                isUnique = false;
+            }
+        }
+        return generated;
+    };
+
 
     useEffect(() => {
         const fields: FieldMapping[] = selectedTableColumns.map(column => ({
@@ -86,10 +106,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
 
         selectedTableColumns
             .filter(column => !column.fieldName)
-            .forEach(column => {
-                let generated = generateMappedFieldNameFrom(column.m3ColumnName!, column.m3Description!);
-                column.fieldName = generated;
-            });
+            .forEach(column => column.fieldName = generateMappedFieldNameFrom(column.m3ColumnName!));
     }, [selectedTableColumns]);
 
     const onFieldMapped = (m3Field: string, mappedFieldName: any) => {
