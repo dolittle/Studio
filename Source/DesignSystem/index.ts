@@ -11,7 +11,7 @@ export { AccordionList, AccordionListProps } from './atoms/AccordionList';
 export { AlertDialog, AlertDialogProps } from './atoms/AlertDialog';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
 export { Button, ButtonProps } from './atoms/Button';
-export { Checkbox, Form, Input, Select, SelectProps, SelectPropsOptions, Switch } from './atoms/Forms';
+export * from './atoms/Forms';
 export { DataTableToolbar, DataTableToolbarProps } from './atoms/DataTablePro/DataTableToolbar';
 //export { DropdownMenu } from './atoms/DropdownMenu';
 export { Icon } from './atoms/Icon';
