@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 import { Form } from '@dolittle/design-system';
@@ -34,6 +34,29 @@ export const MessageMappingForm = ({
 }: MessageMappingFormProps) => {
     const navigate = useNavigate();
 
+    const [initialValues, setInitialValues] = useState<NewMessageMappingParameters>({
+        name: '',
+        description: '',
+        fields: [],
+    });
+
+    useEffect(() => {
+        if (!messageType) {
+            return;
+        }
+        setInitialValues(
+            {
+                name: messageType?.name ?? '',
+                description: messageType?.description ?? '',
+                fields: messageType?.fieldMappings?.map(field => ({
+                    columnName: field.mappedColumn?.m3ColumnName!,
+                    fieldName: field.mappedName,
+                    fieldDescription: field.mappedDescription,
+                })) || [],
+            });
+    }, [messageType]);
+
+
     const handleNewMessageSave = (values: NewMessageMappingParameters) => {
         saveMessageMappingMutation.mutate({
             id: connectionId!,
@@ -56,24 +79,12 @@ export const MessageMappingForm = ({
     };
 
     return (
-        <>
-            {!messageType
-                ? <>{children}</>
-                : <Form<NewMessageMappingParameters>
-                    initialValues={{
-                        name: messageType?.name ?? '',
-                        description: messageType?.description ?? '',
-                        fields: messageType?.fieldMappings?.map(field => ({
-                            columnName: field.mappedColumn?.m3ColumnName!,
-                            fieldName: field.mappedName,
-                            fieldDescription: field.mappedDescription,
-                        })) || [],
-                    }}
-                    onSubmit={handleNewMessageSave}
-                >
-                    {children}
-                </Form>
-            }
-        </>
+        <Form<NewMessageMappingParameters>
+            initialValues={initialValues}
+            onSubmit={handleNewMessageSave}
+        >
+            {children}
+        </Form>
+
     );
 };
