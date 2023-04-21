@@ -106,6 +106,11 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
         selectedTableColumns
             .filter(column => !column.fieldName)
             .forEach(column => column.fieldName = generateMappedFieldNameFrom(column.m3Description!));
+
+        gridMappableTableColumns
+            .filter(column => column.fieldName)
+            .filter(column => !selectedTableColumns.map(c => c.m3ColumnName!).includes(column.m3ColumnName!))
+            .forEach(column => column.fieldName = '');
     }, [selectedTableColumns]);
 
     const onFieldMapped = (m3Field: string, mappedFieldName: any) => {
