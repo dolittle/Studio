@@ -62,11 +62,9 @@ export const MessageMappingTable = ({
         }
         onFieldMapped(newRow.id, newRow.fieldName);
 
-        const shouldDeselect = newRow.fieldName === '' && gridApiRef.current.isRowSelected(newRow.id);
         const shouldSelect = !gridApiRef.current.isRowSelected(newRow.id);
-        const shouldChangeSelectionState = shouldDeselect || shouldSelect;
-        if (shouldChangeSelectionState) {
-            gridApiRef.current.selectRow(newRow.id, !gridApiRef.current.isRowSelected(newRow.id));
+        if (shouldSelect) {
+            gridApiRef.current.selectRow(newRow.id, true);
         }
         return newRow;
     };
