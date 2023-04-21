@@ -30,3 +30,10 @@ export function trimSuffix(str: string, suffix: string): string {
     if (str.endsWith(suffix)) return str.slice(0, -(suffix.length));
     else return str;
 };
+
+/**
+ * Converts any string to PascalCase. Source: https://quickref.me/convert-a-string-to-pascal-case
+ * @param str String to convert to PascalCase
+ * @returns PascalCased string
+ */
+export const toPascalCase = str => (str.match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join('');
