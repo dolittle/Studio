@@ -57,9 +57,16 @@ export const MessageMappingTable = ({
         newRow: DataGridTableListingEntry,
         oldRow: DataGridTableListingEntry
     ): DataGridTableListingEntry | Promise<DataGridTableListingEntry> => {
+        if (newRow.fieldName === oldRow.fieldName) {
+            return newRow;
+        }
         onFieldMapped(newRow.id, newRow.fieldName);
-        if (!gridApiRef.current.isRowSelected(newRow.id)) {
-            gridApiRef.current.selectRow(newRow.id, true);
+
+        const shouldDeselect = newRow.fieldName === '' && gridApiRef.current.isRowSelected(newRow.id);
+        const shouldSelect = !gridApiRef.current.isRowSelected(newRow.id);
+        const shouldChangeSelectionState = shouldDeselect || shouldSelect;
+        if (shouldChangeSelectionState) {
+            gridApiRef.current.selectRow(newRow.id, !gridApiRef.current.isRowSelected(newRow.id));
         }
         return newRow;
     };
