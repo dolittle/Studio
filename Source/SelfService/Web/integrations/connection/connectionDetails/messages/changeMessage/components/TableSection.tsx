@@ -96,13 +96,6 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
     };
 
     useEffect(() => {
-        const fields: FieldMapping[] = selectedTableColumns.map(column => ({
-            columnName: column.m3ColumnName!,
-            fieldName: column.fieldName,
-            fieldDescription: '',
-        }));
-        setFormValue('fields', fields);
-
         selectedTableColumns
             .filter(column => !column.fieldName)
             .forEach(column => column.fieldName = generateMappedFieldNameFrom(column.m3Description!));
@@ -111,6 +104,13 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
             .filter(column => column.fieldName)
             .filter(column => !selectedTableColumns.map(c => c.m3ColumnName!).includes(column.m3ColumnName!))
             .forEach(column => column.fieldName = '');
+
+        const fields: FieldMapping[] = selectedTableColumns.map(column => ({
+            columnName: column.m3ColumnName!,
+            fieldName: column.fieldName,
+            fieldDescription: '',
+        }));
+        setFormValue('fields', fields);
     }, [selectedTableColumns]);
 
     const onFieldMapped = (m3Field: string, mappedFieldName: any) => {
