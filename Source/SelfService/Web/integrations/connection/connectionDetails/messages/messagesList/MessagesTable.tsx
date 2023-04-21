@@ -50,15 +50,15 @@ const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
                 : '-';
         }
     },
-    {
-        field: 'createdAt',
-        headerName: 'Created at',
-        //minWidth: 270,
-        flex: 1,
-        valueGetter: (params) => {
-            return params.row.metadata?.created ? params.row.metadata?.created.toUTCString() : '-';
-        },
-    },
+    // {
+    //     field: 'createdAt',
+    //     headerName: 'Created at',
+    //     //minWidth: 270,
+    //     flex: 1,
+    //     valueGetter: (params) => {
+    //         return params.row.metadata?.created ? params.row.metadata?.created.toUTCString() : '-';
+    //     },
+    // },
 ];
 
 
