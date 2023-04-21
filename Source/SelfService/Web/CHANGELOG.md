@@ -1,3 +1,7 @@
+# [3.4.28] - 2023-4-21 [PR: #383](https://github.com/dolittle/Studio/pull/383)
+Dummy PR to force build
+
+
 # [3.4.26] - 2023-4-21 [PR: #381](https://github.com/dolittle/Studio/pull/381)
 - No longer deselect a mapped row automatically
 - Update copy based on Figma
