@@ -49,16 +49,7 @@ const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
                 ? formatDate(params.row.deployedAt)
                 : '-';
         }
-    },
-    // {
-    //     field: 'createdAt',
-    //     headerName: 'Created at',
-    //     //minWidth: 270,
-    //     flex: 1,
-    //     valueGetter: (params) => {
-    //         return params.row.metadata?.created ? params.row.metadata?.created.toUTCString() : '-';
-    //     },
-    // },
+    }
 ];
 
 
