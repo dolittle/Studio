@@ -58,7 +58,9 @@ export const MessageMappingTable = ({
         oldRow: DataGridTableListingEntry
     ): DataGridTableListingEntry | Promise<DataGridTableListingEntry> => {
         onFieldMapped(newRow.id, newRow.fieldName);
-        gridApiRef.current.selectRow(newRow.id, true);
+        if (!gridApiRef.current.isRowSelected(newRow.id)) {
+            gridApiRef.current.selectRow(newRow.id, true);
+        }
         return newRow;
     };
 
