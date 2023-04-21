@@ -1,3 +1,9 @@
+# [3.4.25] - 2023-4-21 [PR: #380](https://github.com/dolittle/Studio/pull/380)
+- Extend Form with a ref that returns the hook methods
+- Use secondary option by passing in ref as props without forwardRef
+- Set the form values after request has returned data
+
+
 # [3.4.24] - 2023-4-21 [PR: #379](https://github.com/dolittle/Studio/pull/379)
 - No longer allow the Description to be editable
 - Automatically add a remapped fieldName
