@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
-import { Form } from '@dolittle/design-system';
+import { Form, FormRef } from '@dolittle/design-system';
 
 
 import { ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, MessageMappingModel, SetMessageMappingRequestArguments } from '../../../../../../apis/integrations/generated';
@@ -33,27 +33,22 @@ export const MessageMappingForm = ({
     saveMessageMappingMutation
 }: MessageMappingFormProps) => {
     const navigate = useNavigate();
-
-    const [initialValues, setInitialValues] = useState<NewMessageMappingParameters>({
-        name: '',
-        description: '',
-        fields: [],
-    });
+    const formRef = useRef<FormRef<NewMessageMappingParameters>>(null);
 
     useEffect(() => {
         if (!messageType) {
             return;
         }
-        setInitialValues(
-            {
-                name: messageType?.name ?? '',
-                description: messageType?.description ?? '',
-                fields: messageType?.fieldMappings?.map(field => ({
-                    columnName: field.mappedColumn?.m3ColumnName!,
-                    fieldName: field.mappedName,
-                    fieldDescription: field.mappedDescription,
-                })) || [],
-            });
+
+        formRef.current?.reset({
+            name: messageType?.name ?? '',
+            description: messageType?.description ?? '',
+            fields: messageType?.fieldMappings?.map(field => ({
+                columnName: field.mappedColumn?.m3ColumnName!,
+                fieldName: field.mappedName,
+                fieldDescription: field.mappedDescription,
+            })) || [],
+        });
     }, [messageType]);
 
 
@@ -80,8 +75,17 @@ export const MessageMappingForm = ({
 
     return (
         <Form<NewMessageMappingParameters>
-            initialValues={initialValues}
+            initialValues={{
+                name: messageType?.name ?? '',
+                description: messageType?.description ?? '',
+                fields: messageType?.fieldMappings?.map(field => ({
+                    columnName: field.mappedColumn?.m3ColumnName!,
+                    fieldName: field.mappedName,
+                    fieldDescription: field.mappedDescription,
+                })) || [],
+            }}
             onSubmit={handleNewMessageSave}
+            fRef={formRef}
         >
             {children}
         </Form>
