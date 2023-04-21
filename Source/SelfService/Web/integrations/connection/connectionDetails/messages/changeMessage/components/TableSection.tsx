@@ -75,7 +75,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
         [gridMappableTableColumns, selectedIds]
     );
 
-    const uniqueMappedNames = useMemo(() => [...new Set(gridMappableTableColumns.map(column => column.fieldName))], [gridMappableTableColumns]);
+    const uniqueMappedNames = useMemo(() => [...new Set(selectedTableColumns.map(column => column.fieldName))], [selectedTableColumns]);
     const generateMappedFieldNameFrom = (columnDescription: string) => {
 
         let generated = toPascalCase(columnDescription);
@@ -94,7 +94,6 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
         }
         return generated;
     };
-
 
     useEffect(() => {
         const fields: FieldMapping[] = selectedTableColumns.map(column => ({
