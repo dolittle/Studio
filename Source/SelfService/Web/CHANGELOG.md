@@ -1,3 +1,8 @@
+# [3.4.26] - 2023-4-21 [PR: #381](https://github.com/dolittle/Studio/pull/381)
+- No longer deselect a mapped row automatically
+- Update copy based on Figma
+
+
 # [3.4.25] - 2023-4-21 [PR: #380](https://github.com/dolittle/Studio/pull/380)
 - Extend Form with a ref that returns the hook methods
 - Use secondary option by passing in ref as props without forwardRef
