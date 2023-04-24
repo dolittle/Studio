@@ -40,6 +40,12 @@ export interface MessageMappingModel {
      */
     id: string;
     /**
+     * 
+     * @type {Date}
+     * @memberof MessageMappingModel
+     */
+    createdAt: Date;
+    /**
      * The name of the message-type this mapping describes
      * @type {string}
      * @memberof MessageMappingModel
@@ -98,6 +104,7 @@ export interface MessageMappingModel {
 export function instanceOfMessageMappingModel(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "id" in value;
+    isInstance = isInstance && "createdAt" in value;
     isInstance = isInstance && "name" in value;
     isInstance = isInstance && "connection" in value;
     isInstance = isInstance && "fromTable" in value;
@@ -117,6 +124,7 @@ export function MessageMappingModelFromJSONTyped(json: any, ignoreDiscriminator:
     return {
         
         'id': json['id'],
+        'createdAt': (new Date(json['createdAt'])),
         'name': json['name'],
         'connection': json['connection'],
         'description': !exists(json, 'description') ? undefined : json['description'],
@@ -138,6 +146,7 @@ export function MessageMappingModelToJSON(value?: MessageMappingModel | null): a
     return {
         
         'id': value.id,
+        'createdAt': (value.createdAt.toISOString()),
         'name': value.name,
         'connection': value.connection,
         'description': value.description,
