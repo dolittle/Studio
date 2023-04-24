@@ -8,7 +8,6 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"os"
-	"strings"
 	"text/template"
 	"time"
 
@@ -174,15 +173,13 @@ func (s backend) Proxy(pattern, host string) func(http.ResponseWriter, *http.Req
 				var val bytes.Buffer
 				if err := tmpl.Execute(&val, r); err == nil {
 					r.Header.Set(hdr, val.String())
-					if !strings.Contains(hdr, "Bearer") {
-						s.logContext.Info(`The value of SET_HEADERS, is valid. The value is:`, r.Header.Get(hdr))
-					}
 				} else {
 					s.logContext.Errorf(`The value of SET_HEADERS, is not valid, for "%s". Template could not execute. Ignoring!`, hdr, err)
 				}
 			}
 		}
 
+		s.logContext.Info(`The value of X-ORGANIZATION-ID is:`, r.Header.Get(`X-ORGANIZATION-ID`))
 		proxyURL, _ := url.Parse("/")
 		proxyURL.Host = host
 		proxyURL.Scheme = "http"
