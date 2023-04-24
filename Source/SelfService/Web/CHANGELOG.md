@@ -1,3 +1,12 @@
+# [3.4.29] - 2023-4-24 [PR: #384](https://github.com/dolittle/Studio/pull/384)
+- Update generated API
+- Update syntax based on updated return types
+- Remove non-null assertion operator for properties that are no longer marked optional
+- Handle possible undefined route paramaters
+- Update generated API
+- Use new createdAt, now that metadata has been removed
+
+
 # [3.4.28] - 2023-4-21 [PR: #383](https://github.com/dolittle/Studio/pull/383)
 Dummy PR to force build
 
