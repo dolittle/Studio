@@ -11,7 +11,9 @@ import {
     ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest,
     ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest,
     ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest,
-    ConnectionsIdMessageMappingsDeployPostRequest
+    ConnectionsIdMessageMappingsDeployPostRequest,
+    MessageMappingModelIEnumerableResult,
+    ApiResponse
 } from './generated';
 
 let apiInstance: MessageMappingApi | undefined;
@@ -62,7 +64,7 @@ export const useConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPost
     };
 
     export const useConnectionsIdMessageMappingsDeployPost =
-    (options?: UseMutationOptions<void, unknown, ConnectionsIdMessageMappingsDeployPostRequest, unknown>) => {
+    (options?: UseMutationOptions<string[], unknown, ConnectionsIdMessageMappingsDeployPostRequest, unknown>) => {
         const api = getOrCreateApi();
         return useMutation({
             ...{
