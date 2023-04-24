@@ -37,7 +37,7 @@ export const MessagesListView = () => {
                 // If both are not deployed, sort by created date, newest first
                 // otherwise, a is not deployed and b is, so a should be first
                 return isDefaultEmptyDate(b.deployedAt)
-                    ? b.metadata?.created!.getTime()! - a.metadata?.created!.getTime()!
+                    ? b.createdAt.getTime()! - a.createdAt.getTime()!
                     : -1;
             } else {
                 // If a is deployed and b is not, then a should be first
