@@ -26,14 +26,13 @@ export interface Link {
      * @type {string}
      * @memberof Link
      */
-    rel?: string;
+    rel: string;
     /**
-     * * The href of the link. This is the URI to the resource.
-     * *
+     * The href of the link. This is the URI to the resource.
      * @type {string}
      * @memberof Link
      */
-    href?: string;
+    href: string;
     /**
      * The title of the link. This is a human readable description of the link.
      * Used for display purposes, and to distinguish between links with the same
@@ -49,6 +48,8 @@ export interface Link {
  */
 export function instanceOfLink(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "rel" in value;
+    isInstance = isInstance && "href" in value;
 
     return isInstance;
 }
@@ -63,8 +64,8 @@ export function LinkFromJSONTyped(json: any, ignoreDiscriminator: boolean): Link
     }
     return {
         
-        'rel': !exists(json, 'rel') ? undefined : json['rel'],
-        'href': !exists(json, 'href') ? undefined : json['href'],
+        'rel': json['rel'],
+        'href': json['href'],
         'title': !exists(json, 'title') ? undefined : json['title'],
     };
 }

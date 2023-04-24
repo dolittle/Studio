@@ -16,41 +16,41 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface ConnectionWithinOrgId
+ * @interface NotFoundResult
  */
-export interface ConnectionWithinOrgId {
+export interface NotFoundResult {
     /**
      * 
-     * @type {string}
-     * @memberof ConnectionWithinOrgId
+     * @type {number}
+     * @memberof NotFoundResult
      */
-    value?: string;
+    statusCode?: number;
 }
 
 /**
- * Check if a given object implements the ConnectionWithinOrgId interface.
+ * Check if a given object implements the NotFoundResult interface.
  */
-export function instanceOfConnectionWithinOrgId(value: object): boolean {
+export function instanceOfNotFoundResult(value: object): boolean {
     let isInstance = true;
 
     return isInstance;
 }
 
-export function ConnectionWithinOrgIdFromJSON(json: any): ConnectionWithinOrgId {
-    return ConnectionWithinOrgIdFromJSONTyped(json, false);
+export function NotFoundResultFromJSON(json: any): NotFoundResult {
+    return NotFoundResultFromJSONTyped(json, false);
 }
 
-export function ConnectionWithinOrgIdFromJSONTyped(json: any, ignoreDiscriminator: boolean): ConnectionWithinOrgId {
+export function NotFoundResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): NotFoundResult {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'value': !exists(json, 'value') ? undefined : json['value'],
+        'statusCode': !exists(json, 'statusCode') ? undefined : json['statusCode'],
     };
 }
 
-export function ConnectionWithinOrgIdToJSON(value?: ConnectionWithinOrgId | null): any {
+export function NotFoundResultToJSON(value?: NotFoundResult | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -59,7 +59,7 @@ export function ConnectionWithinOrgIdToJSON(value?: ConnectionWithinOrgId | null
     }
     return {
         
-        'value': value.value,
+        'statusCode': value.statusCode,
     };
 }
 

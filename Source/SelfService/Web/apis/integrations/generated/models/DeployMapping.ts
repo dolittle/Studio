@@ -21,17 +21,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface DeployMapping {
     /**
-     * 
+     * The name of the table in M3 that the message-type maps from
      * @type {string}
      * @memberof DeployMapping
      */
-    table?: string;
+    table: string;
     /**
-     * 
+     * The name of the message-type that the table maps to
      * @type {string}
      * @memberof DeployMapping
      */
-    message?: string;
+    message: string;
 }
 
 /**
@@ -39,6 +39,8 @@ export interface DeployMapping {
  */
 export function instanceOfDeployMapping(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "table" in value;
+    isInstance = isInstance && "message" in value;
 
     return isInstance;
 }
@@ -53,8 +55,8 @@ export function DeployMappingFromJSONTyped(json: any, ignoreDiscriminator: boole
     }
     return {
         
-        'table': !exists(json, 'table') ? undefined : json['table'],
-        'message': !exists(json, 'message') ? undefined : json['message'],
+        'table': json['table'],
+        'message': json['message'],
     };
 }
 

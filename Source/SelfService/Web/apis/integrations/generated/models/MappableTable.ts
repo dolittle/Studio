@@ -21,35 +21,36 @@ import {
 } from './MappableTableColumn';
 
 /**
- * 
+ * Represents a table in M3 that can be mapped into message-types
  * @export
  * @interface MappableTable
  */
 export interface MappableTable {
     /**
-     * 
+     * The name of the table in M3
      * @type {string}
      * @memberof MappableTable
      */
-    name?: string;
+    name: string;
     /**
-     * 
+     * Description of the table, from the M3 metadata
      * @type {string}
      * @memberof MappableTable
      */
-    description?: string;
+    description: string;
     /**
-     * 
+     * The columns in the table.
      * @type {Array<MappableTableColumn>}
      * @memberof MappableTable
      */
-    columns?: Array<MappableTableColumn>;
+    columns: Array<MappableTableColumn>;
     /**
-     * 
+     * The columns that are required in any mapping from the table (i.e. the
+     * primary key of the table)
      * @type {Array<MappableTableColumn>}
      * @memberof MappableTable
      */
-    required?: Array<MappableTableColumn>;
+    required: Array<MappableTableColumn>;
 }
 
 /**
@@ -57,6 +58,10 @@ export interface MappableTable {
  */
 export function instanceOfMappableTable(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "description" in value;
+    isInstance = isInstance && "columns" in value;
+    isInstance = isInstance && "required" in value;
 
     return isInstance;
 }
@@ -71,10 +76,10 @@ export function MappableTableFromJSONTyped(json: any, ignoreDiscriminator: boole
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'columns': !exists(json, 'columns') ? undefined : ((json['columns'] as Array<any>).map(MappableTableColumnFromJSON)),
-        'required': !exists(json, 'required') ? undefined : ((json['required'] as Array<any>).map(MappableTableColumnFromJSON)),
+        'name': json['name'],
+        'description': json['description'],
+        'columns': ((json['columns'] as Array<any>).map(MappableTableColumnFromJSON)),
+        'required': ((json['required'] as Array<any>).map(MappableTableColumnFromJSON)),
     };
 }
 
@@ -89,8 +94,8 @@ export function MappableTableToJSON(value?: MappableTable | null): any {
         
         'name': value.name,
         'description': value.description,
-        'columns': value.columns === undefined ? undefined : ((value.columns as Array<any>).map(MappableTableColumnToJSON)),
-        'required': value.required === undefined ? undefined : ((value.required as Array<any>).map(MappableTableColumnToJSON)),
+        'columns': ((value.columns as Array<any>).map(MappableTableColumnToJSON)),
+        'required': ((value.required as Array<any>).map(MappableTableColumnToJSON)),
     };
 }
 

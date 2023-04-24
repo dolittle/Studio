@@ -24,13 +24,13 @@ export interface FieldMapping {
      * @type {string}
      * @memberof FieldMapping
      */
-    columnName?: string;
+    columnName: string;
     /**
      * 
      * @type {string}
      * @memberof FieldMapping
      */
-    fieldName?: string;
+    fieldName: string;
     /**
      * 
      * @type {string}
@@ -44,6 +44,8 @@ export interface FieldMapping {
  */
 export function instanceOfFieldMapping(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "columnName" in value;
+    isInstance = isInstance && "fieldName" in value;
 
     return isInstance;
 }
@@ -58,8 +60,8 @@ export function FieldMappingFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
-        'columnName': !exists(json, 'columnName') ? undefined : json['columnName'],
-        'fieldName': !exists(json, 'fieldName') ? undefined : json['fieldName'],
+        'columnName': json['columnName'],
+        'fieldName': json['fieldName'],
         'fieldDescription': !exists(json, 'fieldDescription') ? undefined : json['fieldDescription'],
     };
 }

@@ -13,12 +13,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { ConnectionId } from './ConnectionId';
-import {
-    ConnectionIdFromJSON,
-    ConnectionIdFromJSONTyped,
-    ConnectionIdToJSON,
-} from './ConnectionId';
 import type { MappableTable } from './MappableTable';
 import {
     MappableTableFromJSON,
@@ -31,45 +25,34 @@ import {
     MappedFieldFromJSONTyped,
     MappedFieldToJSON,
 } from './MappedField';
-import type { ReadModelMetadata } from './ReadModelMetadata';
-import {
-    ReadModelMetadataFromJSON,
-    ReadModelMetadataFromJSONTyped,
-    ReadModelMetadataToJSON,
-} from './ReadModelMetadata';
 
 /**
- * 
+ * Represents a message mapping that describes the table to convert from and
+ * how to map a change into a message
  * @export
  * @interface MessageMappingModel
  */
 export interface MessageMappingModel {
     /**
-     * 
+     * The id of the message mapping within the context of the connection
      * @type {string}
      * @memberof MessageMappingModel
      */
-    id?: string;
+    id: string;
     /**
-     * 
-     * @type {ReadModelMetadata}
-     * @memberof MessageMappingModel
-     */
-    metadata?: ReadModelMetadata;
-    /**
-     * 
+     * The name of the message-type this mapping describes
      * @type {string}
      * @memberof MessageMappingModel
      */
-    name?: string;
+    name: string;
     /**
-     * 
-     * @type {ConnectionId}
+     * The connection this message mapping belongs to
+     * @type {string}
      * @memberof MessageMappingModel
      */
-    connection?: ConnectionId;
+    connection: string;
     /**
-     * 
+     * Optional description of the message mapping
      * @type {string}
      * @memberof MessageMappingModel
      */
@@ -79,27 +62,30 @@ export interface MessageMappingModel {
      * @type {MappableTable}
      * @memberof MessageMappingModel
      */
-    fromTable?: MappableTable;
+    fromTable: MappableTable;
     /**
-     * 
+     * The fields that are mapped from the table in this mapping.
      * @type {Array<MappedField>}
      * @memberof MessageMappingModel
      */
-    fieldMappings?: Array<MappedField>;
+    fieldMappings: Array<MappedField>;
     /**
-     * 
+     * The last time (if any) the message mapping was deployed. May be null if
+     * it has never been deployed
      * @type {Date}
      * @memberof MessageMappingModel
      */
-    deployedAt?: Date;
+    deployedAt?: Date | null;
     /**
-     * 
+     * The last deployed version, if any. May be null if it has never been
+     * deployed
      * @type {number}
      * @memberof MessageMappingModel
      */
     deployedVersion?: number | null;
     /**
-     * 
+     * The last deployed version that has been confirmed by the remote service.
+     * May be null if it has never been confirmed or if it has been deployed.
      * @type {number}
      * @memberof MessageMappingModel
      */
@@ -111,6 +97,11 @@ export interface MessageMappingModel {
  */
 export function instanceOfMessageMappingModel(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "id" in value;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "connection" in value;
+    isInstance = isInstance && "fromTable" in value;
+    isInstance = isInstance && "fieldMappings" in value;
 
     return isInstance;
 }
@@ -125,14 +116,13 @@ export function MessageMappingModelFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'metadata': !exists(json, 'metadata') ? undefined : ReadModelMetadataFromJSON(json['metadata']),
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'connection': !exists(json, 'connection') ? undefined : ConnectionIdFromJSON(json['connection']),
+        'id': json['id'],
+        'name': json['name'],
+        'connection': json['connection'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'fromTable': !exists(json, 'fromTable') ? undefined : MappableTableFromJSON(json['fromTable']),
-        'fieldMappings': !exists(json, 'fieldMappings') ? undefined : ((json['fieldMappings'] as Array<any>).map(MappedFieldFromJSON)),
-        'deployedAt': !exists(json, 'deployedAt') ? undefined : (new Date(json['deployedAt'])),
+        'fromTable': MappableTableFromJSON(json['fromTable']),
+        'fieldMappings': ((json['fieldMappings'] as Array<any>).map(MappedFieldFromJSON)),
+        'deployedAt': !exists(json, 'deployedAt') ? undefined : (json['deployedAt'] === null ? null : new Date(json['deployedAt'])),
         'deployedVersion': !exists(json, 'deployedVersion') ? undefined : json['deployedVersion'],
         'confirmedDeployedVersion': !exists(json, 'confirmedDeployedVersion') ? undefined : json['confirmedDeployedVersion'],
     };
@@ -148,13 +138,12 @@ export function MessageMappingModelToJSON(value?: MessageMappingModel | null): a
     return {
         
         'id': value.id,
-        'metadata': ReadModelMetadataToJSON(value.metadata),
         'name': value.name,
-        'connection': ConnectionIdToJSON(value.connection),
+        'connection': value.connection,
         'description': value.description,
         'fromTable': MappableTableToJSON(value.fromTable),
-        'fieldMappings': value.fieldMappings === undefined ? undefined : ((value.fieldMappings as Array<any>).map(MappedFieldToJSON)),
-        'deployedAt': value.deployedAt === undefined ? undefined : (value.deployedAt.toISOString()),
+        'fieldMappings': ((value.fieldMappings as Array<any>).map(MappedFieldToJSON)),
+        'deployedAt': value.deployedAt === undefined ? undefined : (value.deployedAt === null ? null : value.deployedAt.toISOString()),
         'deployedVersion': value.deployedVersion,
         'confirmedDeployedVersion': value.confirmedDeployedVersion,
     };

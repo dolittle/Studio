@@ -19,12 +19,10 @@ models/ColumnRecommendation.ts
 models/ColumnRecommendations.ts
 models/ConnectionConfiguration.ts
 models/ConnectionConfigurationResult.ts
-models/ConnectionId.ts
 models/ConnectionModel.ts
 models/ConnectionModelArrayResult.ts
 models/ConnectionModelResult.ts
 models/ConnectionStatus.ts
-models/ConnectionWithinOrgId.ts
 models/DeployMapping.ts
 models/EnvironmentType.ts
 models/FieldMapping.ts
@@ -49,7 +47,7 @@ models/MessageMappingModelResult.ts
 models/MetadataPublisherConfigRequest.ts
 models/ModelIndex.ts
 models/NoSuchReadModelResult.ts
-models/Organization.ts
+models/NotFoundResult.ts
 models/ProblemDetails.ts
 models/ProgramDetails.ts
 models/ProgramHeader.ts
