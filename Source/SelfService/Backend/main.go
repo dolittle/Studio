@@ -173,6 +173,7 @@ func (s backend) Proxy(pattern, host string) func(http.ResponseWriter, *http.Req
 				var val bytes.Buffer
 				if err := tmpl.Execute(&val, r); err == nil {
 					r.Header.Set(hdr, val.String())
+					s.logContext.Debug(`The value of SET_HEADERS, is valid. The value is:`, r.Header.Get(hdr))
 				} else {
 					s.logContext.Errorf(`The value of SET_HEADERS, is not valid, for "%s". Template could not execute. Ignoring!`, hdr, err)
 				}
