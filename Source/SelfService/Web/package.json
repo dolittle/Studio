@@ -6,7 +6,7 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "build": "webpack --mode=production",
+        "build": "webpack --mode=development",
         "build:dev": "webpack --mode=development",
         "start:dev": "webpack serve --mode=development --progress --hot",
         "clean": "tsc -b --clean",
