@@ -30,10 +30,7 @@ export const MessagesListView = () => {
     };
 
     const messageTypesRows = useMemo(() => {
-        const mappedRows = data?.value?.map(mapping => ({
-            id: mapping.id!,
-            ...mapping
-        })) || [];
+        const mappedRows = data?.value || [];
 
         mappedRows.sort((a, b) => {
             if (isDefaultEmptyDate(a.deployedAt)) {
@@ -54,7 +51,7 @@ export const MessagesListView = () => {
     }, [data?.value]);
 
     const selectedMessageTypeRows = useMemo(() =>
-        messageTypesRows.filter(row => selectedMessageTypeIds.includes(row.id!))
+        messageTypesRows.filter(row => selectedMessageTypeIds.includes(row.id))
         , [messageTypesRows, selectedMessageTypeIds]);
 
     const handleActionCompleted = () => {
