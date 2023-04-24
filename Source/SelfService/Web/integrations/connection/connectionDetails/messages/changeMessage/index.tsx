@@ -21,12 +21,18 @@ import { ChangeMessageView } from './ChangeMessageView';
 export const Index = () => {
 
     const location = useLocation();
-    const { table, messageId } = useParams();
     const connectionId = useConnectionId();
+    const { table, messageId } = useParams();
+    const navigate = useNavigate();
+
+    if(!connectionId || !table || !messageId) {
+        navigate('..');
+        return null;
+    }
 
     const [selectedTableName, setSelectedTableName] = useState('');
 
-    const messageQuery = useConnectionsIdMessageMappingsTablesTableMessagesMessageGet({ id: connectionId!, table: table!, message: messageId! });
+    const messageQuery = useConnectionsIdMessageMappingsTablesTableMessagesMessageGet({ id: connectionId, table, message: messageId });
     const saveMessageMappingMutation = useConnectionsIdMessageMappingsTablesTableMessagesMessagePost();
 
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
@@ -53,9 +59,9 @@ export const Index = () => {
         <>
             <ContentContainer>
                 <MessageMappingForm
-                    connectionId={connectionId!}
+                    connectionId={connectionId}
                     selectedTableName={selectedTableName}
-                    messageId={messageId!}
+                    messageId={messageId}
                     messageType={messageType!}
                     saveMessageMappingMutation={saveMessageMappingMutation}
                 >
@@ -63,7 +69,7 @@ export const Index = () => {
                         mode={mode}
                         table={selectedTableName}
                         onTableSelected={setSelectedTableName}
-                        messageId={messageId!}
+                        messageId={messageId}
                         isSubmitting={saveMessageMappingMutation.isLoading}
                         messageType={messageType}
                         queryIsError={messageQuery.isError}

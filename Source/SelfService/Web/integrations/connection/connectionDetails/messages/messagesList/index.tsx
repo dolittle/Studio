@@ -59,14 +59,14 @@ export const MessagesListView = () => {
     };
 
     if (isLoading) return <LoadingSpinner />;
-    if (isError) return <AlertBox />;
+    if (isError || !connectionId) return <AlertBox />;
 
     return (
         messageTypesRows.length ?
             <>
                 <ContentContainer>
                     <MessagesHeader
-                        connectionId={connectionId!}
+                        connectionId={connectionId}
                         selectedMessageTypes={selectedMessageTypeRows}
                         onActionSuccess={handleActionCompleted}
                     />
