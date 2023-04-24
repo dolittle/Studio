@@ -64,7 +64,7 @@ export const MessagesTable = ({ rows, onSelectedIdsChanged, initialSelectedIds }
     const navigate = useNavigate();
 
     const onTableRowClick = (row: MessageMappingModel): void => {
-        navigate(`edit/${row.fromTable?.name!}/${row.name}`);
+        navigate(`edit/${row.fromTable?.name}/${row.name}`);
     };
 
     return (

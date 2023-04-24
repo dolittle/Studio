@@ -44,7 +44,7 @@ export const MessageMappingForm = ({
             name: messageType?.name ?? '',
             description: messageType?.description ?? '',
             fields: messageType?.fieldMappings?.map(field => ({
-                columnName: field.mappedColumn?.m3ColumnName!,
+                columnName: field.mappedColumn?.m3ColumnName,
                 fieldName: field.mappedName,
                 fieldDescription: field.mappedDescription,
             })) || [],
@@ -54,12 +54,12 @@ export const MessageMappingForm = ({
 
     const handleNewMessageSave = (values: NewMessageMappingParameters) => {
         saveMessageMappingMutation.mutate({
-            id: connectionId!,
+            id: connectionId,
             message: values.name,
-            table: selectedTableName!,
+            table: selectedTableName,
             setMessageMappingRequestArguments: {
-                description: values.description!,
-                fields: values.fields!,
+                description: values.description,
+                fields: values.fields,
             },
         }, {
             onSuccess(data, variables, context) {
@@ -79,7 +79,7 @@ export const MessageMappingForm = ({
                 name: messageType?.name ?? '',
                 description: messageType?.description ?? '',
                 fields: messageType?.fieldMappings?.map(field => ({
-                    columnName: field.mappedColumn?.m3ColumnName!,
+                    columnName: field.mappedColumn?.m3ColumnName,
                     fieldName: field.mappedName,
                     fieldDescription: field.mappedDescription,
                 })) || [],

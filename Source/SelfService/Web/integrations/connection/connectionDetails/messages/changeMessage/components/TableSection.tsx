@@ -29,7 +29,7 @@ export type TableSectionProps = ViewModeProps & {
 export const TableSection = ({ selectedTableName, initialSelectedFields, onBackToSearchResultsClicked, mode }: TableSectionProps) => {
     const connectionId = useConnectionId();
     const initialSelected = useMemo(
-        () => initialSelectedFields.map(field => field.mappedColumn?.m3ColumnName!) || [],
+        () => initialSelectedFields.map(field => field.mappedColumn?.m3ColumnName) || [],
         [initialSelectedFields]
     );
 
@@ -39,8 +39,8 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
     const initialMapped: Map<string, FieldMapping> = useMemo(() => new Map(
         initialSelectedFields.map(
             field => [
-                field.mappedColumn?.m3ColumnName!, {
-                    columnName: field.mappedColumn?.m3ColumnName!,
+                field.mappedColumn?.m3ColumnName, {
+                    columnName: field.mappedColumn?.m3ColumnName,
                     fieldName: field.mappedName,
                     fieldDescription: field.mappedDescription,
                 }]) || []),
@@ -58,20 +58,20 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
 
     const allMappableTableColumns = mappableTableResult?.value?.columns || [];
     const requiredTableColumns = mappableTableResult?.value?.required || [];
-    const requiredTableColumnIds = requiredTableColumns.map(required => required.m3ColumnName!);
+    const requiredTableColumnIds = requiredTableColumns.map(required => required.m3ColumnName);
     const selectedIds = (selectedRowIds.length > 0) ? selectedRowIds : requiredTableColumnIds as GridSelectionModel;
 
     const gridMappableTableColumns: DataGridTableListingEntry[] = useMemo(
         () => allMappableTableColumns.map(column => ({
-            id: column.m3ColumnName!,
-            fieldName: mappedFields.get(column.m3ColumnName!)?.fieldName || '',
+            id: column.m3ColumnName,
+            fieldName: mappedFields.get(column.m3ColumnName)!.fieldName,
             ...column,
         })),
         [allMappableTableColumns, mappedFields]
     );
 
     const selectedTableColumns = useMemo(
-        () => gridMappableTableColumns.filter(column => selectedIds.includes(column.m3ColumnName!)),
+        () => gridMappableTableColumns.filter(column => selectedIds.includes(column.m3ColumnName)),
         [gridMappableTableColumns, selectedIds]
     );
 
@@ -98,15 +98,15 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
     useEffect(() => {
         selectedTableColumns
             .filter(column => !column.fieldName)
-            .forEach(column => column.fieldName = generateMappedFieldNameFrom(column.m3Description!));
+            .forEach(column => column.fieldName = generateMappedFieldNameFrom(column.m3Description));
 
         gridMappableTableColumns
             .filter(column => column.fieldName)
-            .filter(column => !selectedTableColumns.map(c => c.m3ColumnName!).includes(column.m3ColumnName!))
+            .filter(column => !selectedTableColumns.map(c => c.m3ColumnName).includes(column.m3ColumnName))
             .forEach(column => column.fieldName = '');
 
         const fields: FieldMapping[] = selectedTableColumns.map(column => ({
-            columnName: column.m3ColumnName!,
+            columnName: column.m3ColumnName,
             fieldName: column.fieldName,
             fieldDescription: '',
         }));
