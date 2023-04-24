@@ -64,7 +64,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
     const gridMappableTableColumns: DataGridTableListingEntry[] = useMemo(
         () => allMappableTableColumns.map(column => ({
             id: column.m3ColumnName,
-            fieldName: mappedFields.get(column.m3ColumnName)!.fieldName,
+            fieldName: mappedFields.get(column.m3ColumnName)?.fieldName || '',
             ...column,
         })),
         [allMappableTableColumns, mappedFields]
