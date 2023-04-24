@@ -28,16 +28,16 @@ import {
 export interface SetMessageMappingRequestArguments {
     /**
      * 
+     * @type {Array<FieldMapping>}
+     * @memberof SetMessageMappingRequestArguments
+     */
+    fields: Array<FieldMapping>;
+    /**
+     * 
      * @type {string}
      * @memberof SetMessageMappingRequestArguments
      */
     description?: string | null;
-    /**
-     * 
-     * @type {Array<FieldMapping>}
-     * @memberof SetMessageMappingRequestArguments
-     */
-    fields?: Array<FieldMapping>;
 }
 
 /**
@@ -45,6 +45,7 @@ export interface SetMessageMappingRequestArguments {
  */
 export function instanceOfSetMessageMappingRequestArguments(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "fields" in value;
 
     return isInstance;
 }
@@ -59,8 +60,8 @@ export function SetMessageMappingRequestArgumentsFromJSONTyped(json: any, ignore
     }
     return {
         
+        'fields': ((json['fields'] as Array<any>).map(FieldMappingFromJSON)),
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'fields': !exists(json, 'fields') ? undefined : ((json['fields'] as Array<any>).map(FieldMappingFromJSON)),
     };
 }
 
@@ -73,8 +74,8 @@ export function SetMessageMappingRequestArgumentsToJSON(value?: SetMessageMappin
     }
     return {
         
+        'fields': ((value.fields as Array<any>).map(FieldMappingToJSON)),
         'description': value.description,
-        'fields': value.fields === undefined ? undefined : ((value.fields as Array<any>).map(FieldMappingToJSON)),
     };
 }
 

@@ -21,7 +21,7 @@ import {
 } from './MappableTableColumn';
 
 /**
- * 
+ * Represents a mapping from a column on an M3 table to a field on a message-type
  * @export
  * @interface MappedField
  */
@@ -31,19 +31,19 @@ export interface MappedField {
      * @type {MappableTableColumn}
      * @memberof MappedField
      */
-    mappedColumn?: MappableTableColumn;
+    mappedColumn: MappableTableColumn;
     /**
-     * 
+     * The name of the field in the message-type
      * @type {string}
      * @memberof MappedField
      */
-    mappedName?: string;
+    mappedName: string;
     /**
-     * 
+     * Description of the field, from the M3 metadata. May be empty.
      * @type {string}
      * @memberof MappedField
      */
-    mappedDescription?: string;
+    mappedDescription: string;
 }
 
 /**
@@ -51,6 +51,9 @@ export interface MappedField {
  */
 export function instanceOfMappedField(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "mappedColumn" in value;
+    isInstance = isInstance && "mappedName" in value;
+    isInstance = isInstance && "mappedDescription" in value;
 
     return isInstance;
 }
@@ -65,9 +68,9 @@ export function MappedFieldFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'mappedColumn': !exists(json, 'mappedColumn') ? undefined : MappableTableColumnFromJSON(json['mappedColumn']),
-        'mappedName': !exists(json, 'mappedName') ? undefined : json['mappedName'],
-        'mappedDescription': !exists(json, 'mappedDescription') ? undefined : json['mappedDescription'],
+        'mappedColumn': MappableTableColumnFromJSON(json['mappedColumn']),
+        'mappedName': json['mappedName'],
+        'mappedDescription': json['mappedDescription'],
     };
 }
 

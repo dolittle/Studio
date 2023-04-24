@@ -75,7 +75,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
     /**
      * Deploy multiple mappings. Each of the mappings must exist. If any of the  deployments fail a 400 is returned with the list of failures. If all  succeed a 200 is returned with the list of successes.
      */
-    async connectionsIdMessageMappingsDeployPostRaw(requestParameters: ConnectionsIdMessageMappingsDeployPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async connectionsIdMessageMappingsDeployPostRaw(requestParameters: ConnectionsIdMessageMappingsDeployPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<string>>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsDeployPost.');
         }
@@ -102,17 +102,19 @@ export class MessageMappingApi extends runtime.BaseAPI {
             body: requestParameters.deployMapping.map(DeployMappingToJSON),
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
      * Deploy multiple mappings. Each of the mappings must exist. If any of the  deployments fail a 400 is returned with the list of failures. If all  succeed a 200 is returned with the list of successes.
      */
-    async connectionsIdMessageMappingsDeployPost(requestParameters: ConnectionsIdMessageMappingsDeployPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.connectionsIdMessageMappingsDeployPostRaw(requestParameters, initOverrides);
+    async connectionsIdMessageMappingsDeployPost(requestParameters: ConnectionsIdMessageMappingsDeployPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<string>> {
+        const response = await this.connectionsIdMessageMappingsDeployPostRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
+     * Get all message mappings of table to message(s) for a connection
      */
     async connectionsIdMessageMappingsGetRaw(requestParameters: ConnectionsIdMessageMappingsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageMappingModelIEnumerableResult>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -146,6 +148,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
     }
 
     /**
+     * Get all message mappings of table to message(s) for a connection
      */
     async connectionsIdMessageMappingsGet(requestParameters: ConnectionsIdMessageMappingsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageMappingModelIEnumerableResult> {
         const response = await this.connectionsIdMessageMappingsGetRaw(requestParameters, initOverrides);
@@ -194,6 +197,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
     }
 
     /**
+     * Get a message mapping of table to a named message for a connection
      */
     async connectionsIdMessageMappingsTablesTableMessagesMessageGetRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageMappingModelResult>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -227,6 +231,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
     }
 
     /**
+     * Get a message mapping of table to a named message for a connection
      */
     async connectionsIdMessageMappingsTablesTableMessagesMessageGet(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageMappingModelResult> {
         const response = await this.connectionsIdMessageMappingsTablesTableMessagesMessageGetRaw(requestParameters, initOverrides);

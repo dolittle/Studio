@@ -21,35 +21,36 @@ import {
 } from './FieldType';
 
 /**
- * 
+ * Represents a column in a table in M3 that can be mapped to a field in a
+ * message-type
  * @export
  * @interface MappableTableColumn
  */
 export interface MappableTableColumn {
     /**
-     * 
+     * The name of the column in M3
      * @type {string}
      * @memberof MappableTableColumn
      */
-    m3ColumnName?: string;
+    m3ColumnName: string;
     /**
-     * 
+     * Description of the column, from the M3 metadata
      * @type {string}
      * @memberof MappableTableColumn
      */
-    m3Description?: string;
+    m3Description: string;
     /**
      * 
      * @type {FieldType}
      * @memberof MappableTableColumn
      */
-    type?: FieldType;
+    type: FieldType;
     /**
-     * 
+     * The length of the column
      * @type {number}
      * @memberof MappableTableColumn
      */
-    fieldLength?: number;
+    fieldLength: number;
 }
 
 /**
@@ -57,6 +58,10 @@ export interface MappableTableColumn {
  */
 export function instanceOfMappableTableColumn(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "m3ColumnName" in value;
+    isInstance = isInstance && "m3Description" in value;
+    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "fieldLength" in value;
 
     return isInstance;
 }
@@ -71,10 +76,10 @@ export function MappableTableColumnFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'm3ColumnName': !exists(json, 'm3ColumnName') ? undefined : json['m3ColumnName'],
-        'm3Description': !exists(json, 'm3Description') ? undefined : json['m3Description'],
-        'type': !exists(json, 'type') ? undefined : FieldTypeFromJSON(json['type']),
-        'fieldLength': !exists(json, 'fieldLength') ? undefined : json['fieldLength'],
+        'm3ColumnName': json['m3ColumnName'],
+        'm3Description': json['m3Description'],
+        'type': FieldTypeFromJSON(json['type']),
+        'fieldLength': json['fieldLength'],
     };
 }
 

@@ -16,12 +16,15 @@
 import * as runtime from '../runtime';
 import type {
   MappableTableResult,
+  NotFoundResult,
   ProblemDetails,
   TableListingEntryIEnumerableResult,
 } from '../models';
 import {
     MappableTableResultFromJSON,
     MappableTableResultToJSON,
+    NotFoundResultFromJSON,
+    NotFoundResultToJSON,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
     TableListingEntryIEnumerableResultFromJSON,
@@ -52,6 +55,7 @@ export interface ConnectionsIdMessageMappingsTablesTableGetRequest {
 export class MappableTablesApi extends runtime.BaseAPI {
 
     /**
+     * GET a list of tables for a connection. Allows paging, and defaults to  10 items per page. Returns a 404 if the connection does not exist.  If there are no known tables for the connection, an empty list will be  returned.
      */
     async connectionsIdMessageMappingsTablesGetRaw(requestParameters: ConnectionsIdMessageMappingsTablesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TableListingEntryIEnumerableResult>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -85,6 +89,7 @@ export class MappableTablesApi extends runtime.BaseAPI {
     }
 
     /**
+     * GET a list of tables for a connection. Allows paging, and defaults to  10 items per page. Returns a 404 if the connection does not exist.  If there are no known tables for the connection, an empty list will be  returned.
      */
     async connectionsIdMessageMappingsTablesGet(requestParameters: ConnectionsIdMessageMappingsTablesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TableListingEntryIEnumerableResult> {
         const response = await this.connectionsIdMessageMappingsTablesGetRaw(requestParameters, initOverrides);
@@ -92,6 +97,7 @@ export class MappableTablesApi extends runtime.BaseAPI {
     }
 
     /**
+     * GET a list of tables for a connection that match the search-string.  Allows paging, and defaults to 10 items per page. Returns a 404 if the  connection does not exist. If there are no known tables for the  connection, an empty list will be returned.
      */
     async connectionsIdMessageMappingsTablesSearchGetRaw(requestParameters: ConnectionsIdMessageMappingsTablesSearchGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TableListingEntryIEnumerableResult>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -129,6 +135,7 @@ export class MappableTablesApi extends runtime.BaseAPI {
     }
 
     /**
+     * GET a list of tables for a connection that match the search-string.  Allows paging, and defaults to 10 items per page. Returns a 404 if the  connection does not exist. If there are no known tables for the  connection, an empty list will be returned.
      */
     async connectionsIdMessageMappingsTablesSearchGet(requestParameters: ConnectionsIdMessageMappingsTablesSearchGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TableListingEntryIEnumerableResult> {
         const response = await this.connectionsIdMessageMappingsTablesSearchGetRaw(requestParameters, initOverrides);
@@ -136,6 +143,7 @@ export class MappableTablesApi extends runtime.BaseAPI {
     }
 
     /**
+     * GET a specific table by name. The table must be known to exist on the  connection. Will return a 404 if the connection does not exist or the   table is not known to exist on the connection.
      */
     async connectionsIdMessageMappingsTablesTableGetRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MappableTableResult>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -165,6 +173,7 @@ export class MappableTablesApi extends runtime.BaseAPI {
     }
 
     /**
+     * GET a specific table by name. The table must be known to exist on the  connection. Will return a 404 if the connection does not exist or the   table is not known to exist on the connection.
      */
     async connectionsIdMessageMappingsTablesTableGet(requestParameters: ConnectionsIdMessageMappingsTablesTableGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MappableTableResult> {
         const response = await this.connectionsIdMessageMappingsTablesTableGetRaw(requestParameters, initOverrides);
