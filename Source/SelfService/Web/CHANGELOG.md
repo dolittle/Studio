@@ -1,3 +1,14 @@
+# [3.4.31] - 2023-4-25 [PR: #388](https://github.com/dolittle/Studio/pull/388)
+- Update generated integrations API
+- Update renamed field after api update
+- Update generated API and usage to match
+- Wire up the Delete Multiple messages Button
+- Add TODO and removed uneeded optional chaining operator
+- Fix typo in button text
+- Enable the Delete Message Types button
+- Add error-handling for when params aren't set for the ChangeMesage page
+
+
 # [3.4.29] - 2023-4-24 [PR: #384](https://github.com/dolittle/Studio/pull/384)
 - Update generated API
 - Update syntax based on updated return types
