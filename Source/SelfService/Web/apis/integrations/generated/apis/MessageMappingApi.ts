@@ -15,7 +15,7 @@
 
 import * as runtime from '../runtime';
 import type {
-  DeployMapping,
+  MappingReference,
   MessageMappingModelIEnumerableResult,
   MessageMappingModelResult,
   NoSuchReadModelResult,
@@ -23,8 +23,8 @@ import type {
   SetMessageMappingRequestArguments,
 } from '../models';
 import {
-    DeployMappingFromJSON,
-    DeployMappingToJSON,
+    MappingReferenceFromJSON,
+    MappingReferenceToJSON,
     MessageMappingModelIEnumerableResultFromJSON,
     MessageMappingModelIEnumerableResultToJSON,
     MessageMappingModelResultFromJSON,
@@ -39,13 +39,26 @@ import {
 
 export interface ConnectionsIdMessageMappingsDeployPostRequest {
     id: string;
-    deployMapping: Array<DeployMapping>;
+    mappingReference: Array<MappingReference>;
 }
 
 export interface ConnectionsIdMessageMappingsGetRequest {
     id: string;
     startIndex?: number;
     pageSize?: number;
+}
+
+export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageDeleteRequest {
+    id: string;
+    table: string;
+    message: string;
+}
+
+export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageDeleteMultiplePostRequest {
+    id: string;
+    table: string;
+    message: string;
+    mappingReference: Array<MappingReference>;
 }
 
 export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest {
@@ -80,8 +93,8 @@ export class MessageMappingApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsDeployPost.');
         }
 
-        if (requestParameters.deployMapping === null || requestParameters.deployMapping === undefined) {
-            throw new runtime.RequiredError('deployMapping','Required parameter requestParameters.deployMapping was null or undefined when calling connectionsIdMessageMappingsDeployPost.');
+        if (requestParameters.mappingReference === null || requestParameters.mappingReference === undefined) {
+            throw new runtime.RequiredError('mappingReference','Required parameter requestParameters.mappingReference was null or undefined when calling connectionsIdMessageMappingsDeployPost.');
         }
 
         const queryParameters: any = {};
@@ -99,7 +112,7 @@ export class MessageMappingApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.deployMapping.map(DeployMappingToJSON),
+            body: requestParameters.mappingReference.map(MappingReferenceToJSON),
         }, initOverrides);
 
         return new runtime.JSONApiResponse<any>(response);
@@ -152,6 +165,96 @@ export class MessageMappingApi extends runtime.BaseAPI {
      */
     async connectionsIdMessageMappingsGet(requestParameters: ConnectionsIdMessageMappingsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageMappingModelIEnumerableResult> {
         const response = await this.connectionsIdMessageMappingsGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * DELETE the mapping of a table to a message.
+     */
+    async connectionsIdMessageMappingsTablesTableMessagesMessageDeleteRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageDelete.');
+        }
+
+        if (requestParameters.table === null || requestParameters.table === undefined) {
+            throw new runtime.RequiredError('table','Required parameter requestParameters.table was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageDelete.');
+        }
+
+        if (requestParameters.message === null || requestParameters.message === undefined) {
+            throw new runtime.RequiredError('message','Required parameter requestParameters.message was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageDelete.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        const response = await this.request({
+            path: `/connections/{id}/message-mappings/tables/{table}/messages/{message}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"table"}}`, encodeURIComponent(String(requestParameters.table))).replace(`{${"message"}}`, encodeURIComponent(String(requestParameters.message))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * DELETE the mapping of a table to a message.
+     */
+    async connectionsIdMessageMappingsTablesTableMessagesMessageDelete(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.connectionsIdMessageMappingsTablesTableMessagesMessageDeleteRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Delete multiple message mappings. Each of the mappings must exist.  If any of the deletions fail a 400 is returned with the list of failures.  If all succeed a 200 is returned with the list of successes.
+     */
+    async connectionsIdMessageMappingsTablesTableMessagesMessageDeleteMultiplePostRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageDeleteMultiplePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<string>>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageDeleteMultiplePost.');
+        }
+
+        if (requestParameters.table === null || requestParameters.table === undefined) {
+            throw new runtime.RequiredError('table','Required parameter requestParameters.table was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageDeleteMultiplePost.');
+        }
+
+        if (requestParameters.message === null || requestParameters.message === undefined) {
+            throw new runtime.RequiredError('message','Required parameter requestParameters.message was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageDeleteMultiplePost.');
+        }
+
+        if (requestParameters.mappingReference === null || requestParameters.mappingReference === undefined) {
+            throw new runtime.RequiredError('mappingReference','Required parameter requestParameters.mappingReference was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageDeleteMultiplePost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        const response = await this.request({
+            path: `/connections/{id}/message-mappings/tables/{table}/messages/{message}/delete-multiple`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"table"}}`, encodeURIComponent(String(requestParameters.table))).replace(`{${"message"}}`, encodeURIComponent(String(requestParameters.message))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.mappingReference.map(MappingReferenceToJSON),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Delete multiple message mappings. Each of the mappings must exist.  If any of the deletions fail a 400 is returned with the list of failures.  If all succeed a 200 is returned with the list of successes.
+     */
+    async connectionsIdMessageMappingsTablesTableMessagesMessageDeleteMultiplePost(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageDeleteMultiplePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<string>> {
+        const response = await this.connectionsIdMessageMappingsTablesTableMessagesMessageDeleteMultiplePostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

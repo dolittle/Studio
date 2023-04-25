@@ -24,31 +24,31 @@ export interface RelatedTable {
      * @type {string}
      * @memberof RelatedTable
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof RelatedTable
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {string}
      * @memberof RelatedTable
      */
-    category?: string;
+    category: string;
     /**
      * 
      * @type {string}
      * @memberof RelatedTable
      */
-    component?: string;
+    component: string;
     /**
      * 
      * @type {number}
      * @memberof RelatedTable
      */
-    importance?: number;
+    importance: number;
 }
 
 /**
@@ -56,6 +56,11 @@ export interface RelatedTable {
  */
 export function instanceOfRelatedTable(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "description" in value;
+    isInstance = isInstance && "category" in value;
+    isInstance = isInstance && "component" in value;
+    isInstance = isInstance && "importance" in value;
 
     return isInstance;
 }
@@ -70,11 +75,11 @@ export function RelatedTableFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'category': !exists(json, 'category') ? undefined : json['category'],
-        'component': !exists(json, 'component') ? undefined : json['component'],
-        'importance': !exists(json, 'importance') ? undefined : json['importance'],
+        'name': json['name'],
+        'description': json['description'],
+        'category': json['category'],
+        'component': json['component'],
+        'importance': json['importance'],
     };
 }
 

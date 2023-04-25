@@ -44,7 +44,7 @@ export interface MappableTableResult {
      * @type {Array<Link>}
      * @memberof MappableTableResult
      */
-    links?: Array<Link>;
+    links: Array<Link>;
 }
 
 /**
@@ -52,6 +52,7 @@ export interface MappableTableResult {
  */
 export function instanceOfMappableTableResult(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "links" in value;
 
     return isInstance;
 }
@@ -67,7 +68,7 @@ export function MappableTableResultFromJSONTyped(json: any, ignoreDiscriminator:
     return {
         
         'value': !exists(json, 'value') ? undefined : MappableTableFromJSON(json['value']),
-        'links': !exists(json, 'links') ? undefined : ((json['links'] as Array<any>).map(LinkFromJSON)),
+        'links': ((json['links'] as Array<any>).map(LinkFromJSON)),
     };
 }
 
@@ -81,7 +82,7 @@ export function MappableTableResultToJSON(value?: MappableTableResult | null): a
     return {
         
         'value': MappableTableToJSON(value.value),
-        'links': value.links === undefined ? undefined : ((value.links as Array<any>).map(LinkToJSON)),
+        'links': ((value.links as Array<any>).map(LinkToJSON)),
     };
 }
 

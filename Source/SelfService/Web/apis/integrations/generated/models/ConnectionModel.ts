@@ -31,12 +31,6 @@ import {
     EnvironmentTypeFromJSONTyped,
     EnvironmentTypeToJSON,
 } from './EnvironmentType';
-import type { ReadModelMetadata } from './ReadModelMetadata';
-import {
-    ReadModelMetadataFromJSON,
-    ReadModelMetadataFromJSONTyped,
-    ReadModelMetadataToJSON,
-} from './ReadModelMetadata';
 import type { RemoteServiceStatus } from './RemoteServiceStatus';
 import {
     RemoteServiceStatusFromJSON,
@@ -55,61 +49,55 @@ export interface ConnectionModel {
      * @type {string}
      * @memberof ConnectionModel
      */
-    id?: string;
-    /**
-     * 
-     * @type {ReadModelMetadata}
-     * @memberof ConnectionModel
-     */
-    metadata?: ReadModelMetadata;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof ConnectionModel
      */
-    readonly connectionId?: string;
+    connectionId: string;
     /**
      * 
      * @type {string}
      * @memberof ConnectionModel
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof ConnectionModel
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {EnvironmentType}
      * @memberof ConnectionModel
      */
-    chosenEnvironment?: EnvironmentType;
+    chosenEnvironment: EnvironmentType;
     /**
      * 
      * @type {ConnectionConfiguration}
      * @memberof ConnectionModel
      */
-    _configuration?: ConnectionConfiguration;
+    _configuration: ConnectionConfiguration;
     /**
      * 
      * @type {ConnectionStatus}
      * @memberof ConnectionModel
      */
-    status?: ConnectionStatus;
+    status: ConnectionStatus;
     /**
      * 
      * @type {RemoteServiceStatus}
      * @memberof ConnectionModel
      */
-    mdpStatus?: RemoteServiceStatus;
+    mdpStatus: RemoteServiceStatus;
     /**
      * 
      * @type {RemoteServiceStatus}
      * @memberof ConnectionModel
      */
-    ionStatus?: RemoteServiceStatus;
+    ionStatus: RemoteServiceStatus;
 }
 
 /**
@@ -117,6 +105,15 @@ export interface ConnectionModel {
  */
 export function instanceOfConnectionModel(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "id" in value;
+    isInstance = isInstance && "connectionId" in value;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "description" in value;
+    isInstance = isInstance && "chosenEnvironment" in value;
+    isInstance = isInstance && "_configuration" in value;
+    isInstance = isInstance && "status" in value;
+    isInstance = isInstance && "mdpStatus" in value;
+    isInstance = isInstance && "ionStatus" in value;
 
     return isInstance;
 }
@@ -131,16 +128,15 @@ export function ConnectionModelFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'metadata': !exists(json, 'metadata') ? undefined : ReadModelMetadataFromJSON(json['metadata']),
-        'connectionId': !exists(json, 'connectionId') ? undefined : json['connectionId'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'chosenEnvironment': !exists(json, 'chosenEnvironment') ? undefined : EnvironmentTypeFromJSON(json['chosenEnvironment']),
-        '_configuration': !exists(json, 'configuration') ? undefined : ConnectionConfigurationFromJSON(json['configuration']),
-        'status': !exists(json, 'status') ? undefined : ConnectionStatusFromJSON(json['status']),
-        'mdpStatus': !exists(json, 'mdpStatus') ? undefined : RemoteServiceStatusFromJSON(json['mdpStatus']),
-        'ionStatus': !exists(json, 'ionStatus') ? undefined : RemoteServiceStatusFromJSON(json['ionStatus']),
+        'id': json['id'],
+        'connectionId': json['connectionId'],
+        'name': json['name'],
+        'description': json['description'],
+        'chosenEnvironment': EnvironmentTypeFromJSON(json['chosenEnvironment']),
+        '_configuration': ConnectionConfigurationFromJSON(json['configuration']),
+        'status': ConnectionStatusFromJSON(json['status']),
+        'mdpStatus': RemoteServiceStatusFromJSON(json['mdpStatus']),
+        'ionStatus': RemoteServiceStatusFromJSON(json['ionStatus']),
     };
 }
 
@@ -154,7 +150,7 @@ export function ConnectionModelToJSON(value?: ConnectionModel | null): any {
     return {
         
         'id': value.id,
-        'metadata': ReadModelMetadataToJSON(value.metadata),
+        'connectionId': value.connectionId,
         'name': value.name,
         'description': value.description,
         'chosenEnvironment': EnvironmentTypeToJSON(value.chosenEnvironment),

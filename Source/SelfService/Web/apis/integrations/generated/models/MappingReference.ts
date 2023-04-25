@@ -14,30 +14,29 @@
 
 import { exists, mapValues } from '../runtime';
 /**
- * An entry in the body of a request to deploy multiple mappings. All mappings
- * from Table to Message must exist and be deployable.
+ * A reference to a message-mapping within the context of a connection..
  * @export
- * @interface DeployMapping
+ * @interface MappingReference
  */
-export interface DeployMapping {
+export interface MappingReference {
     /**
      * The name of the table in M3 that the message-type maps from
      * @type {string}
-     * @memberof DeployMapping
+     * @memberof MappingReference
      */
     table: string;
     /**
      * The name of the message-type that the table maps to
      * @type {string}
-     * @memberof DeployMapping
+     * @memberof MappingReference
      */
     message: string;
 }
 
 /**
- * Check if a given object implements the DeployMapping interface.
+ * Check if a given object implements the MappingReference interface.
  */
-export function instanceOfDeployMapping(value: object): boolean {
+export function instanceOfMappingReference(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "table" in value;
     isInstance = isInstance && "message" in value;
@@ -45,11 +44,11 @@ export function instanceOfDeployMapping(value: object): boolean {
     return isInstance;
 }
 
-export function DeployMappingFromJSON(json: any): DeployMapping {
-    return DeployMappingFromJSONTyped(json, false);
+export function MappingReferenceFromJSON(json: any): MappingReference {
+    return MappingReferenceFromJSONTyped(json, false);
 }
 
-export function DeployMappingFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeployMapping {
+export function MappingReferenceFromJSONTyped(json: any, ignoreDiscriminator: boolean): MappingReference {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -60,7 +59,7 @@ export function DeployMappingFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function DeployMappingToJSON(value?: DeployMapping | null): any {
+export function MappingReferenceToJSON(value?: MappingReference | null): any {
     if (value === undefined) {
         return undefined;
     }

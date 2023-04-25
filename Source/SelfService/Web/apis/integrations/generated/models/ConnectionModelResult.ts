@@ -44,7 +44,7 @@ export interface ConnectionModelResult {
      * @type {Array<Link>}
      * @memberof ConnectionModelResult
      */
-    links?: Array<Link>;
+    links: Array<Link>;
 }
 
 /**
@@ -52,6 +52,7 @@ export interface ConnectionModelResult {
  */
 export function instanceOfConnectionModelResult(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "links" in value;
 
     return isInstance;
 }
@@ -67,7 +68,7 @@ export function ConnectionModelResultFromJSONTyped(json: any, ignoreDiscriminato
     return {
         
         'value': !exists(json, 'value') ? undefined : ConnectionModelFromJSON(json['value']),
-        'links': !exists(json, 'links') ? undefined : ((json['links'] as Array<any>).map(LinkFromJSON)),
+        'links': ((json['links'] as Array<any>).map(LinkFromJSON)),
     };
 }
 
@@ -81,7 +82,7 @@ export function ConnectionModelResultToJSON(value?: ConnectionModelResult | null
     return {
         
         'value': ConnectionModelToJSON(value.value),
-        'links': value.links === undefined ? undefined : ((value.links as Array<any>).map(LinkToJSON)),
+        'links': ((value.links as Array<any>).map(LinkToJSON)),
     };
 }
 

@@ -37,43 +37,43 @@ export interface ListTable {
      * @type {string}
      * @memberof ListTable
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof ListTable
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {string}
      * @memberof ListTable
      */
-    category?: string;
+    category: string;
     /**
      * 
      * @type {string}
      * @memberof ListTable
      */
-    component?: string;
+    component: string;
     /**
      * 
      * @type {TableKind}
      * @memberof ListTable
      */
-    kind?: TableKind;
+    kind: TableKind;
     /**
      * 
      * @type {ImportState}
      * @memberof ListTable
      */
-    loaded?: ImportState;
+    loaded: ImportState;
     /**
      * 
      * @type {number}
      * @memberof ListTable
      */
-    importance?: number;
+    importance: number;
 }
 
 /**
@@ -81,6 +81,13 @@ export interface ListTable {
  */
 export function instanceOfListTable(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "description" in value;
+    isInstance = isInstance && "category" in value;
+    isInstance = isInstance && "component" in value;
+    isInstance = isInstance && "kind" in value;
+    isInstance = isInstance && "loaded" in value;
+    isInstance = isInstance && "importance" in value;
 
     return isInstance;
 }
@@ -95,13 +102,13 @@ export function ListTableFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'category': !exists(json, 'category') ? undefined : json['category'],
-        'component': !exists(json, 'component') ? undefined : json['component'],
-        'kind': !exists(json, 'kind') ? undefined : TableKindFromJSON(json['kind']),
-        'loaded': !exists(json, 'loaded') ? undefined : ImportStateFromJSON(json['loaded']),
-        'importance': !exists(json, 'importance') ? undefined : json['importance'],
+        'name': json['name'],
+        'description': json['description'],
+        'category': json['category'],
+        'component': json['component'],
+        'kind': TableKindFromJSON(json['kind']),
+        'loaded': ImportStateFromJSON(json['loaded']),
+        'importance': json['importance'],
     };
 }
 

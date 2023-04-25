@@ -24,43 +24,43 @@ export interface IonConfiguration {
      * @type {string}
      * @memberof IonConfiguration
      */
-    gatewayUrl?: string;
+    gatewayUrl: string;
     /**
      * 
      * @type {string}
      * @memberof IonConfiguration
      */
-    username?: string;
+    username: string;
     /**
      * 
      * @type {string}
      * @memberof IonConfiguration
      */
-    password?: string;
+    password: string;
     /**
      * 
      * @type {string}
      * @memberof IonConfiguration
      */
-    clientId?: string;
+    clientId: string;
     /**
      * 
      * @type {string}
      * @memberof IonConfiguration
      */
-    clientSecret?: string;
+    clientSecret: string;
     /**
      * 
      * @type {string}
      * @memberof IonConfiguration
      */
-    oauthTokenUrl?: string;
+    oauthTokenUrl: string;
     /**
      * 
      * @type {string}
      * @memberof IonConfiguration
      */
-    byUser?: string;
+    byUser: string;
 }
 
 /**
@@ -68,6 +68,13 @@ export interface IonConfiguration {
  */
 export function instanceOfIonConfiguration(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "gatewayUrl" in value;
+    isInstance = isInstance && "username" in value;
+    isInstance = isInstance && "password" in value;
+    isInstance = isInstance && "clientId" in value;
+    isInstance = isInstance && "clientSecret" in value;
+    isInstance = isInstance && "oauthTokenUrl" in value;
+    isInstance = isInstance && "byUser" in value;
 
     return isInstance;
 }
@@ -82,13 +89,13 @@ export function IonConfigurationFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'gatewayUrl': !exists(json, 'gatewayUrl') ? undefined : json['gatewayUrl'],
-        'username': !exists(json, 'username') ? undefined : json['username'],
-        'password': !exists(json, 'password') ? undefined : json['password'],
-        'clientId': !exists(json, 'clientId') ? undefined : json['clientId'],
-        'clientSecret': !exists(json, 'clientSecret') ? undefined : json['clientSecret'],
-        'oauthTokenUrl': !exists(json, 'oauthTokenUrl') ? undefined : json['oauthTokenUrl'],
-        'byUser': !exists(json, 'byUser') ? undefined : json['byUser'],
+        'gatewayUrl': json['gatewayUrl'],
+        'username': json['username'],
+        'password': json['password'],
+        'clientId': json['clientId'],
+        'clientSecret': json['clientSecret'],
+        'oauthTokenUrl': json['oauthTokenUrl'],
+        'byUser': json['byUser'],
     };
 }
 

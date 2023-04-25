@@ -24,37 +24,37 @@ export interface M3EnvironmentListDto {
      * @type {string}
      * @memberof M3EnvironmentListDto
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof M3EnvironmentListDto
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {boolean}
      * @memberof M3EnvironmentListDto
      */
-    baseEnvironment?: boolean;
+    baseEnvironment: boolean;
     /**
      * 
      * @type {number}
      * @memberof M3EnvironmentListDto
      */
-    tableCount?: number;
+    tableCount: number;
     /**
      * 
      * @type {string}
      * @memberof M3EnvironmentListDto
      */
-    baseVersion?: string;
+    baseVersion: string;
     /**
      * 
      * @type {string}
      * @memberof M3EnvironmentListDto
      */
-    components?: string;
+    components: string;
 }
 
 /**
@@ -62,6 +62,12 @@ export interface M3EnvironmentListDto {
  */
 export function instanceOfM3EnvironmentListDto(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "description" in value;
+    isInstance = isInstance && "baseEnvironment" in value;
+    isInstance = isInstance && "tableCount" in value;
+    isInstance = isInstance && "baseVersion" in value;
+    isInstance = isInstance && "components" in value;
 
     return isInstance;
 }
@@ -76,12 +82,12 @@ export function M3EnvironmentListDtoFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'baseEnvironment': !exists(json, 'baseEnvironment') ? undefined : json['baseEnvironment'],
-        'tableCount': !exists(json, 'tableCount') ? undefined : json['tableCount'],
-        'baseVersion': !exists(json, 'baseVersion') ? undefined : json['baseVersion'],
-        'components': !exists(json, 'components') ? undefined : json['components'],
+        'name': json['name'],
+        'description': json['description'],
+        'baseEnvironment': json['baseEnvironment'],
+        'tableCount': json['tableCount'],
+        'baseVersion': json['baseVersion'],
+        'components': json['components'],
     };
 }
 

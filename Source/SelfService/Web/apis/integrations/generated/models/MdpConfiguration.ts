@@ -24,25 +24,25 @@ export interface MdpConfiguration {
      * @type {string}
      * @memberof MdpConfiguration
      */
-    url?: string;
+    url: string;
     /**
      * 
      * @type {string}
      * @memberof MdpConfiguration
      */
-    password?: string;
+    password: string;
     /**
      * 
      * @type {boolean}
      * @memberof MdpConfiguration
      */
-    allowInsecureHttps?: boolean;
+    allowInsecureHttps: boolean;
     /**
      * 
      * @type {string}
      * @memberof MdpConfiguration
      */
-    updatedBy?: string;
+    updatedBy: string;
 }
 
 /**
@@ -50,6 +50,10 @@ export interface MdpConfiguration {
  */
 export function instanceOfMdpConfiguration(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "url" in value;
+    isInstance = isInstance && "password" in value;
+    isInstance = isInstance && "allowInsecureHttps" in value;
+    isInstance = isInstance && "updatedBy" in value;
 
     return isInstance;
 }
@@ -64,10 +68,10 @@ export function MdpConfigurationFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'url': !exists(json, 'url') ? undefined : json['url'],
-        'password': !exists(json, 'password') ? undefined : json['password'],
-        'allowInsecureHttps': !exists(json, 'allowInsecureHttps') ? undefined : json['allowInsecureHttps'],
-        'updatedBy': !exists(json, 'updatedBy') ? undefined : json['updatedBy'],
+        'url': json['url'],
+        'password': json['password'],
+        'allowInsecureHttps': json['allowInsecureHttps'],
+        'updatedBy': json['updatedBy'],
     };
 }
 

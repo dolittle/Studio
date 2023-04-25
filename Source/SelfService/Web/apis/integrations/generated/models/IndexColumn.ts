@@ -31,13 +31,13 @@ export interface IndexColumn {
      * @type {string}
      * @memberof IndexColumn
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {SortDirection}
      * @memberof IndexColumn
      */
-    sortDirection?: SortDirection;
+    sortDirection: SortDirection;
 }
 
 /**
@@ -45,6 +45,8 @@ export interface IndexColumn {
  */
 export function instanceOfIndexColumn(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "sortDirection" in value;
 
     return isInstance;
 }
@@ -59,8 +61,8 @@ export function IndexColumnFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'sortDirection': !exists(json, 'sortDirection') ? undefined : SortDirectionFromJSON(json['sortDirection']),
+        'name': json['name'],
+        'sortDirection': SortDirectionFromJSON(json['sortDirection']),
     };
 }
 

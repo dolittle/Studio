@@ -38,7 +38,7 @@ export interface StringResult {
      * @type {Array<Link>}
      * @memberof StringResult
      */
-    links?: Array<Link>;
+    links: Array<Link>;
 }
 
 /**
@@ -46,6 +46,7 @@ export interface StringResult {
  */
 export function instanceOfStringResult(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "links" in value;
 
     return isInstance;
 }
@@ -61,7 +62,7 @@ export function StringResultFromJSONTyped(json: any, ignoreDiscriminator: boolea
     return {
         
         'value': !exists(json, 'value') ? undefined : json['value'],
-        'links': !exists(json, 'links') ? undefined : ((json['links'] as Array<any>).map(LinkFromJSON)),
+        'links': ((json['links'] as Array<any>).map(LinkFromJSON)),
     };
 }
 
@@ -75,7 +76,7 @@ export function StringResultToJSON(value?: StringResult | null): any {
     return {
         
         'value': value.value,
-        'links': value.links === undefined ? undefined : ((value.links as Array<any>).map(LinkToJSON)),
+        'links': ((value.links as Array<any>).map(LinkToJSON)),
     };
 }
 

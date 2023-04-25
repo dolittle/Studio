@@ -24,13 +24,13 @@ export interface TableSummaryDto {
      * @type {string}
      * @memberof TableSummaryDto
      */
-    tableName?: string;
+    tableName: string;
     /**
      * 
      * @type {string}
      * @memberof TableSummaryDto
      */
-    summary?: string;
+    summary: string;
 }
 
 /**
@@ -38,6 +38,8 @@ export interface TableSummaryDto {
  */
 export function instanceOfTableSummaryDto(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "tableName" in value;
+    isInstance = isInstance && "summary" in value;
 
     return isInstance;
 }
@@ -52,8 +54,8 @@ export function TableSummaryDtoFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'tableName': !exists(json, 'tableName') ? undefined : json['tableName'],
-        'summary': !exists(json, 'summary') ? undefined : json['summary'],
+        'tableName': json['tableName'],
+        'summary': json['summary'],
     };
 }
 

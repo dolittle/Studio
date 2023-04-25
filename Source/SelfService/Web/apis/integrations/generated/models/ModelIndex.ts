@@ -31,19 +31,19 @@ export interface ModelIndex {
      * @type {string}
      * @memberof ModelIndex
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {Array<IndexColumn>}
      * @memberof ModelIndex
      */
-    indexColumns?: Array<IndexColumn>;
+    indexColumns: Array<IndexColumn>;
     /**
      * 
      * @type {boolean}
      * @memberof ModelIndex
      */
-    unique?: boolean;
+    unique: boolean;
 }
 
 /**
@@ -51,6 +51,9 @@ export interface ModelIndex {
  */
 export function instanceOfModelIndex(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "indexColumns" in value;
+    isInstance = isInstance && "unique" in value;
 
     return isInstance;
 }
@@ -65,9 +68,9 @@ export function ModelIndexFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'indexColumns': !exists(json, 'indexColumns') ? undefined : ((json['indexColumns'] as Array<any>).map(IndexColumnFromJSON)),
-        'unique': !exists(json, 'unique') ? undefined : json['unique'],
+        'name': json['name'],
+        'indexColumns': ((json['indexColumns'] as Array<any>).map(IndexColumnFromJSON)),
+        'unique': json['unique'],
     };
 }
 
@@ -81,7 +84,7 @@ export function ModelIndexToJSON(value?: ModelIndex | null): any {
     return {
         
         'name': value.name,
-        'indexColumns': value.indexColumns === undefined ? undefined : ((value.indexColumns as Array<any>).map(IndexColumnToJSON)),
+        'indexColumns': ((value.indexColumns as Array<any>).map(IndexColumnToJSON)),
         'unique': value.unique,
     };
 }

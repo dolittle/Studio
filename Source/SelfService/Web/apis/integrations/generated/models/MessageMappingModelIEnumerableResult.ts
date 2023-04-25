@@ -44,7 +44,7 @@ export interface MessageMappingModelIEnumerableResult {
      * @type {Array<Link>}
      * @memberof MessageMappingModelIEnumerableResult
      */
-    links?: Array<Link>;
+    links: Array<Link>;
 }
 
 /**
@@ -52,6 +52,7 @@ export interface MessageMappingModelIEnumerableResult {
  */
 export function instanceOfMessageMappingModelIEnumerableResult(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "links" in value;
 
     return isInstance;
 }
@@ -67,7 +68,7 @@ export function MessageMappingModelIEnumerableResultFromJSONTyped(json: any, ign
     return {
         
         'value': !exists(json, 'value') ? undefined : (json['value'] === null ? null : (json['value'] as Array<any>).map(MessageMappingModelFromJSON)),
-        'links': !exists(json, 'links') ? undefined : ((json['links'] as Array<any>).map(LinkFromJSON)),
+        'links': ((json['links'] as Array<any>).map(LinkFromJSON)),
     };
 }
 
@@ -81,7 +82,7 @@ export function MessageMappingModelIEnumerableResultToJSON(value?: MessageMappin
     return {
         
         'value': value.value === undefined ? undefined : (value.value === null ? null : (value.value as Array<any>).map(MessageMappingModelToJSON)),
-        'links': value.links === undefined ? undefined : ((value.links as Array<any>).map(LinkToJSON)),
+        'links': ((value.links as Array<any>).map(LinkToJSON)),
     };
 }
 
