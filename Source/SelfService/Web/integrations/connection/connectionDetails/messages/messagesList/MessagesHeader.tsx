@@ -38,7 +38,7 @@ export const MessagesHeader = (props: MessagesHeadeProps) => {
                         selectedMessageTypes={props.selectedMessageTypes}
                         onActionCompleted={handleSuccess}
                         onActionExecuting={handleExecuting}
-                        disable={true}
+                        disable={isAnyActionExecuting}
                     />
                     <CopyMessagesButton
                         connectionId={props.connectionId}
