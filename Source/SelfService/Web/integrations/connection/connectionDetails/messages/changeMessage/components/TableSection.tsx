@@ -95,11 +95,13 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
 
 
     useEffect(() => {
+        const uniqueMappedNames = new Set(selectedTableColumns.map(column => column.fieldName));
         selectedTableColumns
             .filter(column => !column.fieldName)
             .forEach(column => {
-                const uniqueMappedNames = [...new Set(selectedTableColumns.map(column => column.fieldName))];
-                column.fieldName = generateMappedFieldNameFrom(column.m3Description, uniqueMappedNames);
+                const fieldName = generateMappedFieldNameFrom(column.m3Description, [...uniqueMappedNames]);
+                uniqueMappedNames.add(fieldName);
+                column.fieldName = fieldName;
             });
 
         gridMappableTableColumns
