@@ -12,8 +12,7 @@ import {
     ConnectionsIdMessageMappingsTablesTableMessagesMessageGetRequest,
     ConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPostRequest,
     ConnectionsIdMessageMappingsDeployPostRequest,
-    MessageMappingModelIEnumerableResult,
-    ApiResponse
+    ConnectionsIdMessageMappingsDeleteMultiplePostRequest
 } from './generated';
 
 let apiInstance: MessageMappingApi | undefined;
@@ -70,6 +69,22 @@ export const useConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPost
             ...{
                 mutationFn: (params: ConnectionsIdMessageMappingsDeployPostRequest) =>
                     api.connectionsIdMessageMappingsDeployPost(params),
+            }, ...options
+        });
+    };
+
+    /**
+     * Hook to Delete multiple message mappings.
+     * @param options Options for the mutation
+     * @returns UseMutationResult for the query
+     */
+    export const useConnectionsIdMessageMappingsDeleteMultiplePost =
+    (options?: UseMutationOptions<string[], unknown, ConnectionsIdMessageMappingsDeleteMultiplePostRequest, unknown>) => {
+        const api = getOrCreateApi();
+        return useMutation({
+            ...{
+                mutationFn: (params: ConnectionsIdMessageMappingsDeleteMultiplePostRequest) =>
+                    api.connectionsIdMessageMappingsDeleteMultiplePost(params),
             }, ...options
         });
     };
