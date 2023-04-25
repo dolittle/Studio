@@ -10,18 +10,21 @@ import { AlertBox, LoadingSpinner } from '@dolittle/design-system';
 import { ContentContainer } from '../../../../../components/layout/Content/ContentContainer';
 
 import { useConnectionsIdMessageMappingsGet } from '../../../../../apis/integrations/messageMappingApi.hooks';
+import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 
 import { MessagesTable } from './MessagesTable';
 import { CreateMessagesButton } from './CreateMessagesButton';
 import { NoMessages } from './NoMessages';
 import { isDefaultEmptyDate } from './helpers';
 import { MessagesHeader } from './MessagesHeader';
+import { useQueryClient } from '@tanstack/react-query';
 
 
 export const MessagesListView = () => {
     const connectionId = useConnectionId();
     const navigate = useNavigate();
     const [selectedMessageTypeIds, setSelectedMessageTypeIds] = useState<string[]>([]);
+    const queryClient = useQueryClient();
 
     const { data, isError, isLoading } = useConnectionsIdMessageMappingsGet({ id: connectionId || '' });
 
@@ -56,6 +59,7 @@ export const MessagesListView = () => {
 
     const handleActionCompleted = () => {
         setSelectedMessageTypeIds([]);
+        queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.ConnectionMessageMappings_GET, connectionId] });
     };
 
     if (isLoading) return <LoadingSpinner />;

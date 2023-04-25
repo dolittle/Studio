@@ -1,12 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React from 'react';
 import { enqueueSnackbar } from 'notistack';
-import { useQueryClient } from '@tanstack/react-query';
 import { Button, StatusIndicator } from '@dolittle/design-system';
 import { useConnectionsIdMessageMappingsDeleteMultiplePost } from '../../../../../../apis/integrations/messageMappingApi.hooks';
-import { CACHE_KEYS } from '../../../../../../apis/integrations/CacheKeys';
 import { TableToolbarButton } from './TableToolbarButton';
 
 export type DeleteMessagesProps = TableToolbarButton & {
@@ -21,7 +19,6 @@ export const DeleteMessagesButton = ({
     disable
 }: DeleteMessagesProps) => {
     const deleteMultipleMutation = useConnectionsIdMessageMappingsDeleteMultiplePost();
-    const queryClient = useQueryClient();
     const isLoading = deleteMultipleMutation.isLoading;
 
     const hasSelectedMessages = selectedMessageTypes.length > 0;
@@ -38,11 +35,9 @@ export const DeleteMessagesButton = ({
             onError(error, variables, context) {
                 enqueueSnackbar(`Failed to delete message types: ${error}`, { variant: 'error' });
                 //TODO: Handle error return object to mark which message types failed to delete
-                queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.ConnectionMessageMappings_GET, connectionId] });
             },
             onSuccess(data, variables, context) {
                 enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully deleted`, { variant: 'success' });
-                queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.ConnectionMessageMappings_GET, connectionId] });
             },
             onSettled() {
                 onActionCompleted();
