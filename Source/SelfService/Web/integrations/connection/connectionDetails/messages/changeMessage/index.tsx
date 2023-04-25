@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import {
     useConnectionsIdMessageMappingsTablesTableMessagesMessageGet,
@@ -22,12 +22,15 @@ export const Index = () => {
 
     const location = useLocation();
     const connectionId = useConnectionId();
-    const { table, messageId } = useParams();
-    const navigate = useNavigate();
+    const { table = '', messageId = '' } = useParams();
 
-    if(!connectionId || !table || !messageId) {
-        navigate('..');
-        return null;
+    const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
+    if (!connectionId) {
+        return <>Cannot create new message without connection id</>;
+    }
+
+    if (mode === 'edit' && (!table || !messageId)) {
+        return <>Cannot crete new message without table or messageId</>;
     }
 
     const [selectedTableName, setSelectedTableName] = useState('');
@@ -35,7 +38,6 @@ export const Index = () => {
     const messageQuery = useConnectionsIdMessageMappingsTablesTableMessagesMessageGet({ id: connectionId, table, message: messageId });
     const saveMessageMappingMutation = useConnectionsIdMessageMappingsTablesTableMessagesMessagePost();
 
-    const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
     const messageType = messageQuery.data?.value;
 
     if (mode === 'edit' && table && !selectedTableName) {
