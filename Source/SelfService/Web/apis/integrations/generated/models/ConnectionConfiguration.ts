@@ -37,13 +37,13 @@ export interface ConnectionConfiguration {
      * @type {IonConfiguration}
      * @memberof ConnectionConfiguration
      */
-    ion?: IonConfiguration;
+    ion: IonConfiguration;
     /**
      * 
      * @type {MdpConfiguration}
      * @memberof ConnectionConfiguration
      */
-    mdp?: MdpConfiguration;
+    mdp: MdpConfiguration;
 }
 
 /**
@@ -51,6 +51,8 @@ export interface ConnectionConfiguration {
  */
 export function instanceOfConnectionConfiguration(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "ion" in value;
+    isInstance = isInstance && "mdp" in value;
 
     return isInstance;
 }
@@ -65,8 +67,8 @@ export function ConnectionConfigurationFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'ion': !exists(json, 'ion') ? undefined : IonConfigurationFromJSON(json['ion']),
-        'mdp': !exists(json, 'mdp') ? undefined : MdpConfigurationFromJSON(json['mdp']),
+        'ion': IonConfigurationFromJSON(json['ion']),
+        'mdp': MdpConfigurationFromJSON(json['mdp']),
     };
 }
 

@@ -23,7 +23,6 @@ models/ConnectionModel.ts
 models/ConnectionModelArrayResult.ts
 models/ConnectionModelResult.ts
 models/ConnectionStatus.ts
-models/DeployMapping.ts
 models/EnvironmentType.ts
 models/FieldMapping.ts
 models/FieldType.ts
@@ -39,6 +38,7 @@ models/MappableTable.ts
 models/MappableTableColumn.ts
 models/MappableTableResult.ts
 models/MappedField.ts
+models/MappingReference.ts
 models/MdpConfiguration.ts
 models/MdpConfigurationResult.ts
 models/MessageMappingModel.ts
@@ -51,7 +51,6 @@ models/NotFoundResult.ts
 models/ProblemDetails.ts
 models/ProgramDetails.ts
 models/ProgramHeader.ts
-models/ReadModelMetadata.ts
 models/RelatedTable.ts
 models/RemoteServiceStatus.ts
 models/SetMessageMappingRequestArguments.ts

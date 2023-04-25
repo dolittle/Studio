@@ -31,37 +31,37 @@ export interface ColumnMetadata {
      * @type {string}
      * @memberof ColumnMetadata
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof ColumnMetadata
      */
-    key?: string;
+    key: string;
     /**
      * 
      * @type {string}
      * @memberof ColumnMetadata
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {FieldType}
      * @memberof ColumnMetadata
      */
-    type?: FieldType;
+    type: FieldType;
     /**
      * 
      * @type {number}
      * @memberof ColumnMetadata
      */
-    fieldLength?: number;
+    fieldLength: number;
     /**
      * 
      * @type {number}
      * @memberof ColumnMetadata
      */
-    decimalPlaces?: number;
+    decimalPlaces: number;
 }
 
 /**
@@ -69,6 +69,12 @@ export interface ColumnMetadata {
  */
 export function instanceOfColumnMetadata(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "key" in value;
+    isInstance = isInstance && "description" in value;
+    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "fieldLength" in value;
+    isInstance = isInstance && "decimalPlaces" in value;
 
     return isInstance;
 }
@@ -83,12 +89,12 @@ export function ColumnMetadataFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'key': !exists(json, 'key') ? undefined : json['key'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'type': !exists(json, 'type') ? undefined : FieldTypeFromJSON(json['type']),
-        'fieldLength': !exists(json, 'fieldLength') ? undefined : json['fieldLength'],
-        'decimalPlaces': !exists(json, 'decimalPlaces') ? undefined : json['decimalPlaces'],
+        'name': json['name'],
+        'key': json['key'],
+        'description': json['description'],
+        'type': FieldTypeFromJSON(json['type']),
+        'fieldLength': json['fieldLength'],
+        'decimalPlaces': json['decimalPlaces'],
     };
 }
 

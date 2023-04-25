@@ -44,7 +44,7 @@ export interface MessageMappingModelResult {
      * @type {Array<Link>}
      * @memberof MessageMappingModelResult
      */
-    links?: Array<Link>;
+    links: Array<Link>;
 }
 
 /**
@@ -52,6 +52,7 @@ export interface MessageMappingModelResult {
  */
 export function instanceOfMessageMappingModelResult(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "links" in value;
 
     return isInstance;
 }
@@ -67,7 +68,7 @@ export function MessageMappingModelResultFromJSONTyped(json: any, ignoreDiscrimi
     return {
         
         'value': !exists(json, 'value') ? undefined : MessageMappingModelFromJSON(json['value']),
-        'links': !exists(json, 'links') ? undefined : ((json['links'] as Array<any>).map(LinkFromJSON)),
+        'links': ((json['links'] as Array<any>).map(LinkFromJSON)),
     };
 }
 
@@ -81,7 +82,7 @@ export function MessageMappingModelResultToJSON(value?: MessageMappingModelResul
     return {
         
         'value': MessageMappingModelToJSON(value.value),
-        'links': value.links === undefined ? undefined : ((value.links as Array<any>).map(LinkToJSON)),
+        'links': ((value.links as Array<any>).map(LinkToJSON)),
     };
 }
 

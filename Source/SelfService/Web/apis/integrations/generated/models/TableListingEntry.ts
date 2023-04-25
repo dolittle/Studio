@@ -24,25 +24,25 @@ export interface TableListingEntry {
      * @type {string}
      * @memberof TableListingEntry
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof TableListingEntry
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {string}
      * @memberof TableListingEntry
      */
-    summary?: string;
+    summary: string;
     /**
      * 
      * @type {number}
      * @memberof TableListingEntry
      */
-    numberOfColumns?: number;
+    numberOfColumns: number;
     /**
      * 
      * @type {Date}
@@ -54,7 +54,7 @@ export interface TableListingEntry {
      * @type {boolean}
      * @memberof TableListingEntry
      */
-    webhookConnected?: boolean;
+    webhookConnected: boolean;
 }
 
 /**
@@ -62,6 +62,11 @@ export interface TableListingEntry {
  */
 export function instanceOfTableListingEntry(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "description" in value;
+    isInstance = isInstance && "summary" in value;
+    isInstance = isInstance && "numberOfColumns" in value;
+    isInstance = isInstance && "webhookConnected" in value;
 
     return isInstance;
 }
@@ -76,12 +81,12 @@ export function TableListingEntryFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'summary': !exists(json, 'summary') ? undefined : json['summary'],
-        'numberOfColumns': !exists(json, 'numberOfColumns') ? undefined : json['numberOfColumns'],
+        'name': json['name'],
+        'description': json['description'],
+        'summary': json['summary'],
+        'numberOfColumns': json['numberOfColumns'],
         'lastUsed': !exists(json, 'lastUsed') ? undefined : (json['lastUsed'] === null ? null : new Date(json['lastUsed'])),
-        'webhookConnected': !exists(json, 'webhookConnected') ? undefined : json['webhookConnected'],
+        'webhookConnected': json['webhookConnected'],
     };
 }
 

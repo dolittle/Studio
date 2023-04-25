@@ -37,31 +37,31 @@ export interface TableDto {
      * @type {string}
      * @memberof TableDto
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof TableDto
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {string}
      * @memberof TableDto
      */
-    category?: string;
+    category: string;
     /**
      * 
      * @type {string}
      * @memberof TableDto
      */
-    component?: string;
+    component: string;
     /**
      * 
      * @type {Array<ColumnMetadata>}
      * @memberof TableDto
      */
-    columns?: Array<ColumnMetadata>;
+    columns: Array<ColumnMetadata>;
     /**
      * 
      * @type {ModelIndex}
@@ -73,13 +73,13 @@ export interface TableDto {
      * @type {number}
      * @memberof TableDto
      */
-    indexCount?: number;
+    indexCount: number;
     /**
      * 
      * @type {number}
      * @memberof TableDto
      */
-    foreignKeyCount?: number;
+    foreignKeyCount: number;
 }
 
 /**
@@ -87,6 +87,13 @@ export interface TableDto {
  */
 export function instanceOfTableDto(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "description" in value;
+    isInstance = isInstance && "category" in value;
+    isInstance = isInstance && "component" in value;
+    isInstance = isInstance && "columns" in value;
+    isInstance = isInstance && "indexCount" in value;
+    isInstance = isInstance && "foreignKeyCount" in value;
 
     return isInstance;
 }
@@ -101,14 +108,14 @@ export function TableDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'category': !exists(json, 'category') ? undefined : json['category'],
-        'component': !exists(json, 'component') ? undefined : json['component'],
-        'columns': !exists(json, 'columns') ? undefined : ((json['columns'] as Array<any>).map(ColumnMetadataFromJSON)),
+        'name': json['name'],
+        'description': json['description'],
+        'category': json['category'],
+        'component': json['component'],
+        'columns': ((json['columns'] as Array<any>).map(ColumnMetadataFromJSON)),
         'primaryKey': !exists(json, 'primaryKey') ? undefined : ModelIndexFromJSON(json['primaryKey']),
-        'indexCount': !exists(json, 'indexCount') ? undefined : json['indexCount'],
-        'foreignKeyCount': !exists(json, 'foreignKeyCount') ? undefined : json['foreignKeyCount'],
+        'indexCount': json['indexCount'],
+        'foreignKeyCount': json['foreignKeyCount'],
     };
 }
 
@@ -125,7 +132,7 @@ export function TableDtoToJSON(value?: TableDto | null): any {
         'description': value.description,
         'category': value.category,
         'component': value.component,
-        'columns': value.columns === undefined ? undefined : ((value.columns as Array<any>).map(ColumnMetadataToJSON)),
+        'columns': ((value.columns as Array<any>).map(ColumnMetadataToJSON)),
         'primaryKey': ModelIndexToJSON(value.primaryKey),
         'indexCount': value.indexCount,
         'foreignKeyCount': value.foreignKeyCount,
