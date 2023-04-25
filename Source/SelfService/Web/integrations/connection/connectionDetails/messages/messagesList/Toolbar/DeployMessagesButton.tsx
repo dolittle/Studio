@@ -4,8 +4,6 @@
 import React, {  } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { Button, StatusIndicator } from '@dolittle/design-system';
-import { useQueryClient } from '@tanstack/react-query';
-import { CACHE_KEYS } from '../../../../../../apis/integrations/CacheKeys';
 import { useConnectionsIdMessageMappingsDeployPost } from '../../../../../../apis/integrations/messageMappingApi.hooks';
 import { TableToolbarButton } from './TableToolbarButton';
 
@@ -21,7 +19,6 @@ export const DeployMessagesButton = ({
     disable,
 }: DeployMessagesButtonProps) => {
     const deployMappingsMutation = useConnectionsIdMessageMappingsDeployPost();
-    const queryClient = useQueryClient();
     const hasSelectedMessages = selectedMessageTypes.length > 0;
     const hasMany = selectedMessageTypes.length > 1;
     const isLoading = deployMappingsMutation.isLoading;
@@ -38,11 +35,9 @@ export const DeployMessagesButton = ({
             onError(error, variables, context) {
                 enqueueSnackbar(`Failed to deploy message types: ${error}`, { variant: 'error' });
                 //TODO: Handle error return object to mark which message types failed to deploy
-                queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.ConnectionMessageMappings_GET, connectionId] });
             },
             onSuccess(data, variables, context) {
                 enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully deployed`, { variant: 'success' });
-                queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.ConnectionMessageMappings_GET, connectionId] });
             },
             onSettled() {
                 onActionCompleted();
