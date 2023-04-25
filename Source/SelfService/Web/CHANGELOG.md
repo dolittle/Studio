@@ -1,3 +1,8 @@
+# [3.4.32] - 2023-4-25 [PR: #389](https://github.com/dolittle/Studio/pull/389)
+- Generate unique fieldname when mass-selecting a table
+- Optimize the unique creation slightly by not needing to create a new Set for each loop
+
+
 # [3.4.31] - 2023-4-25 [PR: #388](https://github.com/dolittle/Studio/pull/388)
 - Update generated integrations API
 - Update renamed field after api update
