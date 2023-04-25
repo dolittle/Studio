@@ -31,7 +31,7 @@ export const DeployMessagesButton = ({
         onActionExecuting();
         deployMappingsMutation.mutate({
             id: connectionId,
-            deployMapping: selectedMessageTypes.map(
+            mappingReference: selectedMessageTypes.map(
                 (messageType) => ({ message: messageType.name, table: messageType.fromTable?.name })
             )
         }, {
