@@ -28,6 +28,11 @@ export type TableSectionProps = ViewModeProps & {
 
 export const TableSection = ({ selectedTableName, initialSelectedFields, onBackToSearchResultsClicked, mode }: TableSectionProps) => {
     const connectionId = useConnectionId();
+
+    if (!connectionId || !selectedTableName) {
+        return <AlertBox />;
+    }
+
     const initialSelected = useMemo(
         () => initialSelectedFields.map(field => field.mappedColumn?.m3ColumnName) || [],
         [initialSelectedFields]
@@ -47,9 +52,8 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
         [initialSelectedFields]);
 
     const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(initialMapped);
-    const { setValue: setFormValue, getValues: getFormValues } = useFormContext();
+    const { setValue: setFormValue } = useFormContext();
 
-    if (!connectionId || !selectedTableName) return <AlertBox />;
 
     const { data: mappableTableResult, isLoading, isInitialLoading } = useConnectionsIdMessageMappingsTablesTableGet({
         id: connectionId,
@@ -117,7 +121,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
         setFormValue('fields', fields);
     }, [selectedTableColumns]);
 
-    const onFieldMapped = (m3Field: string, mappedFieldName: any) => {
+    const updateMappedFields = (m3Field: string, mappedFieldName: any) => {
         setMappedFields(prevMappedFields => {
             const newMappedFields = new Map(prevMappedFields);
 
@@ -162,7 +166,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                                 selectedIds={selectedIds}
                                 disabledRows={requiredTableColumnIds}
                                 onSelectedIdsChanged={setSelectedRowIds}
-                                onFieldMapped={onFieldMapped}
+                                onFieldMapped={updateMappedFields}
                             />
                         </>
                     )}
