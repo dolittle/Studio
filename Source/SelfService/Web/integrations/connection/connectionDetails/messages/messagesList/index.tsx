@@ -59,7 +59,9 @@ export const MessagesListView = () => {
 
     const handleActionCompleted = () => {
         setSelectedMessageTypeIds([]);
-        queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.ConnectionMessageMappings_GET, connectionId] });
+        window.setTimeout(() => {
+            queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.ConnectionMessageMappings_GET, connectionId] });
+        }, 300);
     };
 
     if (isLoading) return <LoadingSpinner />;
