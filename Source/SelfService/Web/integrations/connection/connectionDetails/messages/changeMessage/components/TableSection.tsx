@@ -8,7 +8,7 @@ import { useFormContext } from 'react-hook-form';
 import { Grid, LinearProgress, Box } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
-import { AlertBox, Button, MaxWidthTextBlock, Switch } from '@dolittle/design-system/';
+import { AlertBox, Button, Switch } from '@dolittle/design-system/';
 import { ContentSection } from '../../../../../../components/layout/Content/ContentSection';
 
 import { FieldMapping, MappedField } from '../../../../../../apis/integrations/generated';
@@ -75,9 +75,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
         [gridMappableTableColumns, selectedIds]
     );
 
-    const uniqueMappedNames = useMemo(() => [...new Set(selectedTableColumns.map(column => column.fieldName))], [selectedTableColumns]);
-    const generateMappedFieldNameFrom = (columnDescription: string) => {
-
+    const generateMappedFieldNameFrom = (columnDescription: string, uniqueMappedNames: string[]) => {
         let generated = toPascalCase(columnDescription);
         let isUnique = true;
         let suffixNumber = 0;
@@ -95,10 +93,14 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
         return generated;
     };
 
+
     useEffect(() => {
         selectedTableColumns
             .filter(column => !column.fieldName)
-            .forEach(column => column.fieldName = generateMappedFieldNameFrom(column.m3Description));
+            .forEach(column => {
+                const uniqueMappedNames = [...new Set(selectedTableColumns.map(column => column.fieldName))];
+                column.fieldName = generateMappedFieldNameFrom(column.m3Description, uniqueMappedNames);
+            });
 
         gridMappableTableColumns
             .filter(column => column.fieldName)
