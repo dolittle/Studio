@@ -32,11 +32,12 @@ export const DeployMessagesButton = ({
         deployMappingsMutation.mutate({
             id: connectionId,
             mappingReference: selectedMessageTypes.map(
-                (messageType) => ({ message: messageType.name, table: messageType.fromTable?.name })
+                (messageType) => ({ message: messageType.name, table: messageType.fromTable.name })
             )
         }, {
             onError(error, variables, context) {
                 enqueueSnackbar(`Failed to deploy message types: ${error}`, { variant: 'error' });
+                //TODO: Handle error return object to mark which message types failed to deploy
                 queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.ConnectionMessageMappings_GET, connectionId] });
             },
             onSuccess(data, variables, context) {
