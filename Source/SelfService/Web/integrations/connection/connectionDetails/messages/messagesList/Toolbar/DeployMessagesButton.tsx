@@ -54,7 +54,7 @@ export const DeployMessagesButton = ({
         <>
             {!isLoading
                 ? <Button
-                    label={`Deploy message types${hasMany ? 's' : ''}...`}
+                    label={`Deploy message type${hasMany ? 's' : ''}...`}
                     startWithIcon='RocketLaunch'
                     onClick={handleDeployMessages}
                     disabled={!hasSelectedMessages || disable}
