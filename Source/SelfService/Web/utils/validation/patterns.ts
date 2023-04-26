@@ -14,5 +14,5 @@ export const alphaNumericCharsRegex = /^([a-z0-9]+)$/;
 /**
  * Regular expression for matching non-whitespace characters
  */
-export const nonWhitespaceRegex = /\S+$/;
+export const nonWhitespaceRegex = /^\S+$/;
 
