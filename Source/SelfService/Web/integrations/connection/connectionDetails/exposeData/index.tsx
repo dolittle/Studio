@@ -48,7 +48,7 @@ export const ExposeDataView = () => {
                 <Typography variant='subtitle1'>Exposing your data</Typography>
 
                 <FormGroup>
-                    <FormControlLabel control={<Switch />} label='Deploy service' sx={{ mx: 0 }} />
+                    <FormControlLabel control={<Switch defaultChecked disabled />} label='Deploy service' sx={{ mx: 0 }} />
                 </FormGroup>
             </Box>
 
