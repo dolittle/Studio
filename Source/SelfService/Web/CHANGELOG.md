@@ -1,3 +1,8 @@
+# [3.4.33] - 2023-4-26 [PR: #390](https://github.com/dolittle/Studio/pull/390)
+- Enable deploy service and disable
+- Link to live running swagger service
+
+
 # [3.4.32] - 2023-4-25 [PR: #389](https://github.com/dolittle/Studio/pull/389)
 - Generate unique fieldname when mass-selecting a table
 - Optimize the unique creation slightly by not needing to create a new Set for each loop
