@@ -9,7 +9,7 @@ export const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(
 /**
  * Regular expression for matching alpha characters
  */
-export const alphaCharsRegex = /^([a-z0-9]+)$/;
+export const alphaNumericCharsRegex = /^([a-z0-9]+)$/;
 
 /**
  * Regular expression for matching non-whitespace characters

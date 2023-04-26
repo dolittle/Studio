@@ -8,8 +8,9 @@ import { Box, SxProps, Typography } from '@mui/material';
 import { Input, Link, Tooltip } from '@dolittle/design-system';
 
 import { HeadArguments } from '../components/form/headArguments';
+import { alphaNumericCharsRegex } from '../../../utils/validation/patterns';
 
-const portDescription = `By default, your mircroservice will be hosted on port 80 within the secure Dolittle cluster, 
+const portDescription = `By default, your mircroservice will be hosted on port 80 within the secure Dolittle cluster,
 but this can be overridden if your image requires it.`;
 
 const EntrypointDescription = () =>
@@ -47,7 +48,7 @@ export const ContainerImageFields = ({ sx }: ContainerImageFieldsProps) =>
                 label='Port'
                 required='Provide a port. Default is 80.'
                 pattern={{
-                    value: /^[0-9]+$/,
+                    value: alphaNumericCharsRegex,
                     message: 'Please enter a valid port number.'
                 }}
             />

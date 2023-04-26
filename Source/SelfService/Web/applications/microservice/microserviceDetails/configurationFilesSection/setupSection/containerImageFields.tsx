@@ -8,6 +8,7 @@ import { Box, SxProps, Typography } from '@mui/material';
 import { Input } from '@dolittle/design-system';
 
 import { HeadArguments } from '../../../components/form/headArguments';
+import { alphaNumericCharsRegex } from '../../../../../utils/validation/patterns';
 
 type ContainerImageFieldsProps = {
     disabled: boolean;
@@ -33,7 +34,7 @@ export const ContainerImageFields = ({ disabled, sx }: ContainerImageFieldsProps
             disabled={disabled}
             required
             pattern={{
-                value: /^[0-9]+$/,
+                value: alphaNumericCharsRegex,
                 message: 'Please enter a valid port number.'
             }}
             dashedBorder
