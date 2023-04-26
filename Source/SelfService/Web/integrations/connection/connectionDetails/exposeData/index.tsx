@@ -18,9 +18,9 @@ const styles = {
     gap: 2,
 };
 
-const restApiUrl = 'https://ec456365-3784-4871-a39f-2dfed993e5bb.dolittle.cloud/mym3connector/';
-const openApiDocumentationUrl = 'https://supplierstuff.swagger.io/v2/swagger.json';
-const credetialToken = 'n$H8rAp3mDJGiR7Adn4@paAzQ7J$cNJSEkzqPDYi';
+const restApiUrl = 'https://inspiring-ritchie.dolittle.cloud/erpreadmodels/swagger/index.html';
+const openApiDocumentationUrl = 'https://inspiring-ritchie.dolittle.cloud/erpreadmodels/swagger/v1/swagger.json';
+const credentialToken = 'n$H8rAp3mDJGiR7Adn4@paAzQ7J$cNJSEkzqPDYi';
 
 export const ExposeDataView = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -38,7 +38,7 @@ export const ExposeDataView = () => {
     };
 
     const handleTokenCopy = () => {
-        navigator.clipboard.writeText(credetialToken);
+        navigator.clipboard.writeText(credentialToken);
         enqueueSnackbar('Token copied to clipboard.');
     };
 
@@ -60,7 +60,7 @@ export const ExposeDataView = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
                     <Link
                         target
-                        href='#'
+                        href={restApiUrl}
                         message={restApiUrl}
                     />
                     <IconButton
@@ -113,7 +113,7 @@ export const ExposeDataView = () => {
                             label='Token'
                             size='small'
                             type='password'
-                            value={credetialToken}
+                            value={credentialToken}
                             disabled
                             sx={{ width: 400 }}
                         />
