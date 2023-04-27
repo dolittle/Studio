@@ -7,6 +7,7 @@ import { Paper } from '@mui/material';
 import { DataGridPro, GridColDef, GridSelectionModel, GridRowId, useGridApiRef } from '@mui/x-data-grid-pro';
 
 import { MappableTableColumn } from '../../../../../../apis/integrations/generated';
+import { toPascalCase } from '../../../../../../utils/helpers/strings';
 
 export type DataGridTableListingEntry = MappableTableColumn & {
     id: string;
@@ -29,6 +30,9 @@ const columns: GridColDef<DataGridTableListingEntry>[] = [
         headerName: 'Remapped Name',
         editable: true,
         minWidth: 270,
+        valueSetter: (params) => {
+            return {...params.row, fieldName: toPascalCase(params.value || '')};
+        }
     },
 ];
 
