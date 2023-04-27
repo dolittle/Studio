@@ -14,10 +14,10 @@ import { ContentSection } from '../../../../../../components/layout/Content/Cont
 import { FieldMapping, MappedField } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
 import { useConnectionId } from '../../../../../routes.hooks';
-import { toPascalCase } from '../../../../../../utils/helpers/strings';
 
 import { ViewModeProps } from '../ViewMode';
 import { DataGridTableListingEntry, MessageMappingTable } from './MessageMappingTable';
+import { generateMappedFieldNameFrom } from './generateMappedFieldNameFrom';
 
 
 export type TableSectionProps = ViewModeProps & {
@@ -79,31 +79,13 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
         [gridMappableTableColumns, selectedIds]
     );
 
-    const generateMappedFieldNameFrom = (columnDescription: string, uniqueMappedNames: string[]) => {
-        let generated = toPascalCase(columnDescription);
-        let isUnique = true;
-        let suffixNumber = 0;
-
-        while (isUnique) {
-            if (uniqueMappedNames.includes(generated + (suffixNumber > 0 ? suffixNumber.toString() : ''))) {
-                suffixNumber++;
-            } else {
-                if (suffixNumber > 0) {
-                    generated = generated + suffixNumber;
-                }
-                isUnique = false;
-            }
-        }
-        return generated;
-    };
-
 
     useEffect(() => {
         const uniqueMappedNames = new Set(selectedTableColumns.map(column => column.fieldName));
         selectedTableColumns
             .filter(column => !column.fieldName)
             .forEach(column => {
-                const fieldName = generateMappedFieldNameFrom(column.m3Description, [...uniqueMappedNames]);
+                const fieldName = generateMappedFieldNameFrom(column.m3Description, column.m3ColumnName, [...uniqueMappedNames]);
                 uniqueMappedNames.add(fieldName);
                 column.fieldName = fieldName;
             });
