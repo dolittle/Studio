@@ -49,7 +49,6 @@ export type InputProps = {
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, startAdornment, placeholder, dashedBorder, sx, ...fieldProps }, ref) => {
     const { field, hasError, errorMessage } = useController(fieldProps);
-    const formProps = fieldProps.withoutForm ? {} : field;
 
     return (
         <FormControl
@@ -65,7 +64,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, star
                 htmlFor={fieldProps.id}
                 required={isRequired(fieldProps.required)}
                 disabled={fieldProps.disabled}
-                error={fieldProps.withoutForm ? false : hasError}
+                error={hasError}
                 sx={{ display: 'flex' }}
             >
                 <Typography variant='body2'>{fieldProps.label}</Typography>
@@ -73,7 +72,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, star
 
             <OutlinedInput
                 {...fieldProps as OutlinedInputProps}
-                {...formProps}
+                {...field}
                 ref={ref}
                 id={fieldProps.id}
                 autoFocus={autoFocus}
