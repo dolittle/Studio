@@ -3,7 +3,6 @@
 
 import React, { useState, useMemo } from 'react';
 
-import { useFormContext } from 'react-hook-form';
 
 import { Grid, LinearProgress, Box } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
@@ -17,6 +16,7 @@ import { useConnectionId } from '../../../../../routes.hooks';
 
 import { ViewModeProps } from '../ViewMode';
 import { DataGridTableListingEntry, MessageMappingTable } from './MessageMappingTable';
+import { useUpdateMappedFieldsInForm } from './useUpdateMappedFieldsInForm';
 
 
 export type TableSectionProps = ViewModeProps & {
@@ -27,7 +27,7 @@ export type TableSectionProps = ViewModeProps & {
 
 export const TableSection = ({ selectedTableName, initialSelectedFields, onBackToSearchResultsClicked, mode }: TableSectionProps) => {
     const connectionId = useConnectionId();
-    const { setValue: setFormValue } = useFormContext();
+    const setMappedFieldsForm = useUpdateMappedFieldsInForm();
 
     if (!connectionId || !selectedTableName) {
         return <AlertBox />;
@@ -52,7 +52,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
     const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(initialMappedFields);
     const [hasSetInitialState, setHasSetInitialState] = useState(false);
     if (!hasSetInitialState && initialSelectedFields.length) {
-        setFormValue('fields', mappedFields.values());
+        setMappedFieldsForm(Array.from(mappedFields.values()));
         setHasSetInitialState(true);
     }
 
@@ -90,7 +90,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
             mappedFieldName
                 ? newMappedFields.set(m3Field, { columnName: m3Field, fieldName: mappedFieldName })
                 : newMappedFields.delete(m3Field);
-            setFormValue('fields', newMappedFields);
+            setMappedFieldsForm(Array.from(newMappedFields.values()));
             return newMappedFields;
         });
     };
