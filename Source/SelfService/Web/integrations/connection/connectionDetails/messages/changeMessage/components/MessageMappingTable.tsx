@@ -8,10 +8,22 @@ import { DataGridPro, GridColDef, GridSelectionModel, GridRowId, useGridApiRef }
 
 import { MappableTableColumn } from '../../../../../../apis/integrations/generated';
 import { toPascalCase } from '../../../../../../utils/helpers/strings';
+import { generateMappedFieldNameFrom } from './generateMappedFieldNameFrom';
 
 export type DataGridTableListingEntry = MappableTableColumn & {
     id: string;
     fieldName: string;
+};
+
+
+export type MessageMappingTableProps = {
+    dataGridListing: DataGridTableListingEntry[];
+    selectedIds: GridSelectionModel;
+    onSelectedIdsChanged: (newSelectedIds: GridSelectionModel) => void;
+    disabledRows?: GridRowId[];
+    isLoading: boolean;
+    hideUnselectedRows?: boolean;
+    onFieldMapped: (m3Field: string, mappedFieldName) => void;
 };
 
 const columns: GridColDef<DataGridTableListingEntry>[] = [
@@ -30,21 +42,8 @@ const columns: GridColDef<DataGridTableListingEntry>[] = [
         headerName: 'Remapped Name',
         editable: true,
         minWidth: 270,
-        valueSetter: (params) => {
-            return {...params.row, fieldName: toPascalCase(params.value || '')};
-        }
     },
 ];
-
-export type MessageMappingTableProps = {
-    dataGridListing: DataGridTableListingEntry[];
-    selectedIds: GridSelectionModel;
-    onSelectedIdsChanged: (newSelectedIds: GridSelectionModel) => void;
-    disabledRows?: GridRowId[];
-    isLoading: boolean;
-    hideUnselectedRows?: boolean;
-    onFieldMapped: (m3Field: string, mappedFieldName) => void;
-};
 
 export const MessageMappingTable = ({
     dataGridListing,
@@ -57,6 +56,44 @@ export const MessageMappingTable = ({
 
     const gridApiRef = useGridApiRef();
 
+    const generateUniqueFieldName = (gridApiRef, fieldName: string, m3ColumnName: string) => {
+        const existingMappedFields = Array
+            .from(gridApiRef.current?.getSelectedRows() as Map<GridRowId, DataGridTableListingEntry>)
+            .map(([, row]) => row.fieldName) || [];
+        const machineReadableFieldName = generateMappedFieldNameFrom(toPascalCase(fieldName), m3ColumnName, existingMappedFields);
+        return machineReadableFieldName;
+    };
+
+    /**
+     * Callback for when the user changes the selection in the grid.
+     * Updates based on previous selection state, and notifies parent of field mapping changes.
+     * Generates a unique field name for the newly selected rows.
+     * @param newSelectedModel List of selected row ids for every selection change made
+     */
+    const onSelectedModelChanged = (newSelectedModel: GridSelectionModel) => {
+        const newlySelectedIds = newSelectedModel.filter(id => !selectedIds.includes(id));
+        newlySelectedIds.forEach(id => {
+            const row = gridApiRef.current.getRow(id) as DataGridTableListingEntry;
+            const fieldName = generateUniqueFieldName(gridApiRef, row.m3Description, row.m3ColumnName);
+            row.fieldName = fieldName;
+            onFieldMapped(id as string, fieldName);
+        });
+        const removedIds = selectedIds.filter(id => !newSelectedModel.includes(id));
+        removedIds.forEach(id => {
+            const row = gridApiRef.current.getRow(id) as DataGridTableListingEntry;
+            row.fieldName = '';
+            onFieldMapped(id as string, '');
+        });
+        onSelectedIdsChanged(newSelectedModel);
+    };
+
+    /**
+     * Process row update after user has edited the Remapped name column.
+     * Sanitizes the fieldName, and checks if it is unique, selects the row if it is not and notifies parent that field has been mapped
+     * @param newRow New row data
+     * @param oldRow Old row data
+     * @returns new row data
+     */
     const processRowUpdate = (
         newRow: DataGridTableListingEntry,
         oldRow: DataGridTableListingEntry
@@ -64,13 +101,14 @@ export const MessageMappingTable = ({
         if (newRow.fieldName === oldRow.fieldName) {
             return newRow;
         }
-        onFieldMapped(newRow.id, newRow.fieldName);
+        const machineReadableFieldName = generateUniqueFieldName(gridApiRef, newRow.fieldName, newRow.m3ColumnName);
+        onFieldMapped(newRow.id, machineReadableFieldName);
 
         const shouldSelect = !gridApiRef.current.isRowSelected(newRow.id);
         if (shouldSelect) {
             gridApiRef.current.selectRow(newRow.id, true);
         }
-        return newRow;
+        return { ...newRow, fieldName: machineReadableFieldName };
     };
 
     return (
@@ -83,7 +121,7 @@ export const MessageMappingTable = ({
                 autoHeight
                 headerHeight={46}
                 checkboxSelection
-                onSelectionModelChange={onSelectedIdsChanged}
+                onSelectionModelChange={onSelectedModelChanged}
                 selectionModel={selectedIds}
                 isRowSelectable={row => !disabledRows?.includes(row.id) || false}
                 loading={isLoading}
@@ -102,3 +140,5 @@ export const MessageMappingTable = ({
         </Paper>
     );
 };
+
+
