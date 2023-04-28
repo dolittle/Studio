@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { FormControl, FormControlLabel, Switch as MuiSwitch } from '@mui/material';
+import { FormControl, FormControlLabel, Switch as MuiSwitch, SwitchProps as MuiSwitchProps } from '@mui/material';
 
 import { useController, FieldProps } from './helpers';
 import type { Form } from './Form';
@@ -22,25 +22,20 @@ const styles = {
     },
 };
 
-/**
- * Creates a switch field to be used in a {@link Form}.
- * @param props - The {@link FieldProps}.
- * @returns A {@link Switch} component.
- */
-export const Switch = (props: FieldProps) => {
-    const { field } = useController(props);
-    const formProps = props.withoutForm ? {} : field;
+
+export type SwitchProps = {
+    id: string;
+    label: string;
+} & MuiSwitchProps;
+
+const SwitchUI = (props: SwitchProps) => {
     return (
         <FormControl size='small'>
             <FormControlLabel
                 control={
                     <MuiSwitch
-                        {...formProps }
-                        id={`${props.id}-switch`}
-                        checked={!!field.value}
-                        disabled={props.disabled}
-                        size='small'
                         sx={styles.switch}
+                        {...props}
                     />
                 }
                 label={props.label}
@@ -49,3 +44,23 @@ export const Switch = (props: FieldProps) => {
         </FormControl>
     );
 };
+
+/**
+ * Creates a switch field to be used in a {@link Form}.
+ * @param props - The {@link FieldProps}.
+ * @returns A {@link Switch} component.
+ */
+export const Switch = (props: FieldProps) => {
+    const { field } = useController(props);
+    return (
+        <SwitchUI
+            {...field}
+            id={`${props.id}-switch`}
+            checked={!!field.value}
+            disabled={props.disabled}
+            label={props.label}
+        />
+    );
+};
+
+Switch.UI = SwitchUI;
