@@ -18,6 +18,7 @@ export type SubmitButtonSectionProps = ViewModeProps & {
 export const SubmitButtonSection = (props: SubmitButtonSectionProps) => {
 
     const { isValid, isDirty } = useFormState();
+    console.log('isValid from submit button', isValid);
     const buttonText = props.mode === 'new' ? 'Add Message and close' : 'Save Message and close';
 
     return (
@@ -27,7 +28,7 @@ export const SubmitButtonSection = (props: SubmitButtonSectionProps) => {
                 variant='fullwidth'
                 type='submit'
                 sx={{ mt: 2.125 }}
-                disabled={!isValid || props.isSubmitting || props.disabled  }
+                disabled={!isValid || !isDirty || props.isSubmitting || props.disabled  }
             />
         </ContentSection>
     );
