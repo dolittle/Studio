@@ -23,6 +23,12 @@ type InputProps = {
      * An optional boolean to indicate whether or not the field should be editable.
      */
     disabled?: boolean;
+
+    /**
+     * An optional boolean to indicate whether or not the field should include form props.
+     * @default false - Includes the form props
+     */
+    withoutForm?: boolean;
 };
 
 /**
