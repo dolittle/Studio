@@ -35,6 +35,7 @@ const SwitchUI = (props: SwitchProps) => {
                 control={
                     <MuiSwitch
                         sx={styles.switch}
+                        size='small'
                         {...props}
                     />
                 }
