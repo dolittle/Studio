@@ -36,7 +36,6 @@ export type SelectProps<T = string> = {
  */
 export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onOpen, sx, ...selectProps }, ref) => {
     const { field } = useController(selectProps);
-    const formProps = selectProps.withoutForm ? {} : field;
 
     return (
         <FormControl size='small' sx={{ width: 220, ...sx }}>
@@ -51,7 +50,7 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
             </InputLabel>
 
             <MuiSelect
-                {...formProps}
+                {...field}
                 {...selectProps as MuiSelectProps}
                 ref={ref}
                 labelId={`${selectProps.id}-select`}
