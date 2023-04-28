@@ -119,11 +119,11 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                                 You can remap the M3 Description by adding a remapped name that makes sense for your organization’s business logic. `}
                             </Box>
                             <Grid container gap={2} sx={{ py: 3, justifyContent: 'flex-end', alignContent: 'flex-end' }}>
-                                <Switch
+                                <Switch.UI
                                     id='hideUnselectedRows'
                                     label='Hide Unselected Rows'
+                                    checked={hideUnselectedRows}
                                     onChange={() => setHideUnselectedRows(!hideUnselectedRows)}
-                                    withoutForm
                                 />
                             </Grid>
                             <MessageMappingTable
