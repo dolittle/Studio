@@ -29,13 +29,13 @@ const styles = {
  */
 export const Switch = (props: FieldProps) => {
     const { field } = useController(props);
-
+    const formProps = props.withoutForm ? {} : field;
     return (
         <FormControl size='small'>
             <FormControlLabel
                 control={
                     <MuiSwitch
-                        {...field}
+                        {...formProps }
                         id={`${props.id}-switch`}
                         checked={!!field.value}
                         disabled={props.disabled}

@@ -15,11 +15,11 @@ import type { Form } from './Form';
  */
 export const Checkbox = (props: FieldProps) => {
     const { field, hasError, errorMessage } = useController(props);
-
+    const formProps = props.withoutForm ? {} : field;
     return (
         <FormControl error={hasError} required={isRequired(props.required)}>
             <FormControlLabel
-                control={<MuiCheckbox {...field} id={`${props.id}-checkbox`} checked={!!field.value} disabled={props.disabled} sx={{ mr: 0.5 }} />}
+                control={<MuiCheckbox {...formProps} id={`${props.id}-checkbox`} checked={!!field.value} disabled={props.disabled} sx={{ mr: 0.5 }} />}
                 label={props.label}
                 sx={{ mr: 0 }}
             />
