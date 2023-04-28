@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import { useFormContext } from 'react-hook-form';
 
@@ -17,7 +17,6 @@ import { useConnectionId } from '../../../../../routes.hooks';
 
 import { ViewModeProps } from '../ViewMode';
 import { DataGridTableListingEntry, MessageMappingTable } from './MessageMappingTable';
-import { generateMappedFieldNameFrom } from './generateMappedFieldNameFrom';
 
 
 export type TableSectionProps = ViewModeProps & {
@@ -28,20 +27,18 @@ export type TableSectionProps = ViewModeProps & {
 
 export const TableSection = ({ selectedTableName, initialSelectedFields, onBackToSearchResultsClicked, mode }: TableSectionProps) => {
     const connectionId = useConnectionId();
+    const { setValue: setFormValue } = useFormContext();
 
     if (!connectionId || !selectedTableName) {
         return <AlertBox />;
     }
 
-    const initialSelected = useMemo(
+    const initialSelectedRowIds = useMemo(
         () => initialSelectedFields.map(field => field.mappedColumn?.m3ColumnName) || [],
         [initialSelectedFields]
     );
 
-    const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>(initialSelected);
-    const [hideUnselectedRows, setHideUnselectedRows] = useState(mode === 'edit');
-
-    const initialMapped: Map<string, FieldMapping> = useMemo(() => new Map(
+    const initialMappedFields: Map<string, FieldMapping> = useMemo(() => new Map(
         initialSelectedFields.map(
             field => [
                 field.mappedColumn?.m3ColumnName, {
@@ -49,11 +46,18 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                     fieldName: field.mappedName,
                     fieldDescription: field.mappedDescription,
                 }]) || []),
-        [initialSelectedFields]);
+        [initialSelectedFields]
+    );
 
-    const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(initialMapped);
-    const { setValue: setFormValue } = useFormContext();
+    const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(initialMappedFields);
+    const [hasSetInitialState, setHasSetInitialState] = useState(false);
+    if (!hasSetInitialState && initialSelectedFields.length) {
+        setFormValue('fields', mappedFields.values());
+        setHasSetInitialState(true);
+    }
 
+    const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>(initialSelectedRowIds);
+    const [hideUnselectedRows, setHideUnselectedRows] = useState(mode === 'edit');
 
     const { data: mappableTableResult, isLoading, isInitialLoading } = useConnectionsIdMessageMappingsTablesTableGet({
         id: connectionId,
@@ -79,39 +83,14 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
         [gridMappableTableColumns, selectedIds]
     );
 
-
-    useEffect(() => {
-        const uniqueMappedNames = new Set(selectedTableColumns.map(column => column.fieldName));
-        selectedTableColumns
-            .filter(column => !column.fieldName)
-            .forEach(column => {
-                const fieldName = generateMappedFieldNameFrom(column.m3Description, column.m3ColumnName, [...uniqueMappedNames]);
-                uniqueMappedNames.add(fieldName);
-                column.fieldName = fieldName;
-            });
-
-        gridMappableTableColumns
-            .filter(column => column.fieldName)
-            .filter(column => !selectedTableColumns.map(c => c.m3ColumnName).includes(column.m3ColumnName))
-            .forEach(column => column.fieldName = '');
-
-        const fields: FieldMapping[] = selectedTableColumns.map(column => ({
-            columnName: column.m3ColumnName,
-            fieldName: column.fieldName,
-            fieldDescription: '',
-        }));
-        setFormValue('fields', fields);
-    }, [selectedTableColumns]);
-
-    const updateMappedFields = (m3Field: string, mappedFieldName: any) => {
+    const updateMappedFieldsAndUpdateFormValue = (m3Field: string, mappedFieldName: any) => {
         setMappedFields(prevMappedFields => {
             const newMappedFields = new Map(prevMappedFields);
 
-            if (mappedFieldName) {
-                newMappedFields.set(m3Field, { columnName: m3Field, fieldName: mappedFieldName });
-            } else {
-                newMappedFields.delete(m3Field);
-            }
+            mappedFieldName
+                ? newMappedFields.set(m3Field, { columnName: m3Field, fieldName: mappedFieldName })
+                : newMappedFields.delete(m3Field);
+            setFormValue('fields', newMappedFields);
             return newMappedFields;
         });
     };
@@ -148,7 +127,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                                 selectedIds={selectedIds}
                                 disabledRows={requiredTableColumnIds}
                                 onSelectedIdsChanged={setSelectedRowIds}
-                                onFieldMapped={updateMappedFields}
+                                onFieldMapped={updateMappedFieldsAndUpdateFormValue}
                             />
                         </>
                     )}
@@ -157,3 +136,4 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
         </>
     );
 };
+
