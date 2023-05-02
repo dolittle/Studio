@@ -103,11 +103,17 @@ export const MessageMappingTable = ({
         }
         const machineReadableFieldName = generateUniqueFieldName(gridApiRef, newRow.fieldName, newRow.m3ColumnName);
         onFieldMapped(newRow.id, machineReadableFieldName);
+        const isSelected = gridApiRef.current.isRowSelected(oldRow.id);
 
-        const shouldSelect = !gridApiRef.current.isRowSelected(newRow.id);
+        const shouldDeselect = isSelected && !machineReadableFieldName;
+        const shouldSelect = !isSelected && !!machineReadableFieldName;
         if (shouldSelect) {
             gridApiRef.current.selectRow(newRow.id, true);
         }
+        if (shouldDeselect) {
+            gridApiRef.current.selectRow(newRow.id, false);
+        }
+
         return { ...newRow, fieldName: machineReadableFieldName };
     };
 
