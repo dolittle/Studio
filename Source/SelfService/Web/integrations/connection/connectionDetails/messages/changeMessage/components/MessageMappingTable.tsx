@@ -72,12 +72,14 @@ export const MessageMappingTable = ({
      */
     const onSelectedModelChanged = (newSelectedModel: GridSelectionModel) => {
         const newlySelectedIds = newSelectedModel.filter(id => !selectedIds.includes(id));
-        newlySelectedIds.forEach(id => {
-            const row = gridApiRef.current.getRow(id) as DataGridTableListingEntry;
-            const fieldName = generateUniqueFieldName(gridApiRef, row.m3Description, row.m3ColumnName);
-            row.fieldName = fieldName;
-            onFieldMapped(id as string, fieldName);
-        });
+        newlySelectedIds
+            .filter(id => gridApiRef.current.getCellMode(id, 'fieldName') !== 'edit')
+            .forEach(id => {
+                const row = gridApiRef.current.getRow(id) as DataGridTableListingEntry;
+                const fieldName = generateUniqueFieldName(gridApiRef, row.m3Description, row.m3ColumnName);
+                row.fieldName = fieldName;
+                onFieldMapped(id as string, fieldName);
+            });
         const removedIds = selectedIds.filter(id => !newSelectedModel.includes(id));
         removedIds.forEach(id => {
             const row = gridApiRef.current.getRow(id) as DataGridTableListingEntry;
