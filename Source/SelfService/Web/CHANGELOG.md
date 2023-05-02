@@ -1,3 +1,34 @@
+# [3.4.34] - 2023-5-2 [PR: #391](https://github.com/dolittle/Studio/pull/391)
+Rules when mapping fields:
+✅ When you check the box, we map a value for you based on description
+✅ When you map a value, we sanitise it and ensure it's PascalCased, then check the row.
+✅ If you remove a check, then the mapping is removed
+✅ If you remove the contents of a mapped field, the checkmark is removed
+✅ If you go into an unselected field to edit it and don't make a change then it is not selected
+
+
+
+Commits: 
+- Add validation to the message type name field
+- Update other uses of the pattern to lean on shared regex
+- Update nonWhitespace regex to apply to full line
+- Automatically PascalCase the value of the mapped field cell
+- Generate unique table names with field name for uniqueness, when needed
+- Move all logic around naming and selection into the MessageMappingTable
+- Remove selection magic using useEffect, and explicitly set form values in table section
+- Move the form updating into a separate hook for clarity
+- Add a simple mechanism allow opting out of the form props on an input
+- Mark switch as not part of the Form so it isn't marked as dirty after use
+- Extend Switch with a Switch.UI subcomponent, making it possible to use without a form
+- Revert introducing withoutForm as a baseprop on InputProps
+- Verify if mappedFields in form is set initially, and mark dirty for subsequent sets
+- Make submit button now listen to isDirty, as this respects the mappableFields
+- Put the size='small', which got lost in the refactor
+- Explicitly select or deselect the row
+- Don't try to remap the selected field name if the cell is in edit mode. It means the user is manually updating
+- Remove console.log
+
+
 # [3.4.33] - 2023-4-26 [PR: #390](https://github.com/dolittle/Studio/pull/390)
 - Enable deploy service and disable
 - Link to live running swagger service
