@@ -23,7 +23,7 @@ metadata.argTypes = {
     status: {
         control: {
             type: 'select',
-            options: ['success', 'table-success', 'waiting', 'warning', 'error', 'string'],
+            options: ['success', 'table-success', 'waiting', 'warning', 'error', 'unknown'],
         },
     },
     sx: { control: false },
