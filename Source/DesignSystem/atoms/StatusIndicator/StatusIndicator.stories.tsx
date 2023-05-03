@@ -23,14 +23,14 @@ metadata.argTypes = {
     status: {
         control: {
             type: 'select',
-            options: ['connected', 'waiting', 'pending', 'failing', 'string'],
+            options: ['success', 'table-success', 'waiting', 'warning', 'error', 'string'],
         },
     },
     sx: { control: false },
 };
 
 metadata.args = {
-    status: 'connected',
+    status: 'success',
     variantFilled: false,
 };
 
@@ -42,10 +42,11 @@ export const DefaultVariants = createStory();
 DefaultVariants.decorators = [
     () => (
         <Stack direction='row' gap={3}>
-            <StatusIndicator status='connected' />
+            <StatusIndicator status='success' />
+            <StatusIndicator status='table-success' />
             <StatusIndicator status='waiting' />
-            <StatusIndicator status='pending' />
-            <StatusIndicator status='failing' />
+            <StatusIndicator status='warning' />
+            <StatusIndicator status='error' />
             <StatusIndicator status='unknown' />
         </Stack>
     )
@@ -55,10 +56,11 @@ export const FilledVariants = createStory();
 FilledVariants.decorators = [
     () => (
         <Stack direction='row' gap={3}>
-            <StatusIndicator status='connected' variantFilled />
+            <StatusIndicator status='success' variantFilled />
+            <StatusIndicator status='table-success' variantFilled />
             <StatusIndicator status='waiting' variantFilled />
-            <StatusIndicator status='pending' variantFilled />
-            <StatusIndicator status='failing' variantFilled />
+            <StatusIndicator status='warning' variantFilled />
+            <StatusIndicator status='error' variantFilled />
             <StatusIndicator status='unknown' variantFilled />
         </Stack>
     )
