@@ -9,7 +9,7 @@ import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.h
 
 import { useConnectionId } from '../../routes.hooks';
 
-import { Tabs } from '@dolittle/design-system';
+import { StatusIndicatorProps, Tabs } from '@dolittle/design-system';
 
 import { Page } from '../../../components/layout/page';
 
@@ -48,24 +48,46 @@ const tabs = [
     },
 ];
 
-const pageHealthStatus = (status: string) => {
-    if (status === 'registered' || status === 'pending') return 'pending';
-    return status;
+const connectionHealthStatus = (status: string): StatusIndicatorProps => {
+    if (status === 'connected') {
+        return {
+            status: 'success',
+            label: 'connected',
+        };
+    } else if (status === 'registered' || status === 'pending') {
+        return {
+            status: 'warning',
+            label: 'pending',
+        };
+    } else if (status === 'failing') {
+        return {
+            status: 'error',
+            label: 'failing',
+        };
+    }
+
+    return { status: 'unknown' };
 };
 
 export const ConnectionDetails = () => {
     const location = useLocation();
     const connectionId = useConnectionId();
     const query = useConnectionsIdGet({ id: connectionId || '' });
+    const data = query.data?.value;
 
     if (query.isLoading) return <>Loading</>;
-    if (!query.data?.value || !connectionId) return null;
+    if (!data || !connectionId) return null;
 
-    const pageTitle = query.data.value.name || 'Connection Details';
-    const status = query.data.value.status?.name?.toLocaleLowerCase() || 'N/A';
+    const pageTitle = data.name || 'Connection Details';
+    const status = data.status?.name?.toLocaleLowerCase() || 'unknown';
 
     return (
-        <Page title={pageTitle} healthStatus={pageHealthStatus(status)} sx={{ mb: 4 }}>
+        <Page
+            title={pageTitle}
+            healthStatus={connectionHealthStatus(status).status}
+            healthStatusLabel={connectionHealthStatus(status).label}
+            sx={{ mb: 4 }}
+        >
             <Tabs selectedTab={getCurrentTab(location)} tabs={tabs} />
             <Outlet />
         </Page>
