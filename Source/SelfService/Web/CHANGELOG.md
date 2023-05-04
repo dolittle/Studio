@@ -1,3 +1,9 @@
+# [3.4.35] - 2023-5-4 [PR: #392](https://github.com/dolittle/Studio/pull/392)
+- Update current alpha numeric regex pattern to include it's for lower case only
+- Use any cased alpha numeric regex for input validation of message type name
+- Trigger form validation after initial values have been set
+
+
 # [3.4.34] - 2023-5-2 [PR: #391](https://github.com/dolittle/Studio/pull/391)
 Rules when mapping fields:
 ✅ When you check the box, we map a value for you based on description
