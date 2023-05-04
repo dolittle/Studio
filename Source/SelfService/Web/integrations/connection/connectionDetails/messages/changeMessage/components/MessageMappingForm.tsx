@@ -34,6 +34,7 @@ export const MessageMappingForm = ({
 }: MessageMappingFormProps) => {
     const navigate = useNavigate();
     const formRef = useRef<FormRef<NewMessageMappingParameters>>(null);
+    const [hasBeenReset, setHasBeenReset] = useState(false);
 
     useEffect(() => {
         if (!messageType) {
@@ -49,7 +50,14 @@ export const MessageMappingForm = ({
                 fieldDescription: field.mappedDescription,
             })) || [],
         });
-    }, [messageType]);
+        setHasBeenReset(true);
+    }, [messageType, formRef.current?.reset]);
+
+    useEffect(() => {
+        if (hasBeenReset) {
+            formRef.current?.trigger();
+        }
+    }, [formRef.current?.trigger, hasBeenReset]);
 
 
     const handleNewMessageSave = (values: NewMessageMappingParameters) => {
