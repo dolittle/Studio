@@ -10,6 +10,7 @@
         "build:dev": "webpack --mode=development",
         "start:dev": "webpack serve --mode=development --progress --hot",
         "clean": "tsc -b --clean",
+        "test": "jest",
         "lint": "eslint '**/*.{js,ts,tsx}' --no-error-on-unmatched-pattern --quiet --fix",
         "lint:ci": "eslint '**/*.{js,ts,tsx}' --no-error-on-unmatched-pattern --quiet",
         "ci": "yarn clean && yarn lint:ci && yarn build"
