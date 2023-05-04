@@ -6,7 +6,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 
 import { Input } from '@dolittle/design-system';
-import { alphaNumericCharsRegex, emailRegex } from '../../../utils/validation/patterns';
+import { alphaNumericLowerCasedCharsRegex, emailRegex } from '../../../utils/validation/patterns';
 
 const styles = {
     formFieldsWrapper: {
@@ -36,7 +36,7 @@ export const InputFields = ({ nameId, contactId, emailId }: InputFieldsProps) =>
             label='Application Name'
             required='Application name required.'
             pattern={{
-                value: alphaNumericCharsRegex,
+                value: alphaNumericLowerCasedCharsRegex,
                 message: 'Name can only contain lowercase alphanumeric characters.'
             }}
             sx={{ display: 'flex' }}
