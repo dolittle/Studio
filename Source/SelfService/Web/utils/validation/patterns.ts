@@ -12,6 +12,11 @@ export const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(
 export const alphaNumericLowerCasedCharsRegex = /^([a-z0-9]+)$/;
 
 /**
+ * Regular expression for matching any cased alpha numeric characters
+ */
+export const alphaNumericCharsRegex = /^[a-zA-Z0-9]*$/;
+
+/**
  * Regular expression for matching non-whitespace characters
  */
 export const nonWhitespaceRegex = /^\S+$/;

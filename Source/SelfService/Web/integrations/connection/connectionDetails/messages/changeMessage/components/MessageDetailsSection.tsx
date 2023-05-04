@@ -9,7 +9,7 @@ import { Input } from '@dolittle/design-system';
 
 import { ViewModeProps } from '../ViewMode';
 import { ContentSection } from '../../../../../../components/layout/Content/ContentSection';
-import { nonWhitespaceRegex } from '../../../../../../utils/validation/patterns';
+import { alphaNumericCharsRegex } from '../../../../../../utils/validation/patterns';
 
 
 export type MessageDetailsSectionProps = ViewModeProps & {};
@@ -19,7 +19,7 @@ export const MessageDetailsSection = (props: MessageDetailsSectionProps) =>
         <Grid container gap={4}>
             <Stack spacing={3}>
                 <Typography variant='subtitle2'>Provide a name for your message type</Typography>
-                <Input id='name' label='Message Type Name' required pattern={{value: nonWhitespaceRegex, message: 'Cannot contain spaces'}}/>
+                <Input id='name' label='Message Type Name' required pattern={{value: alphaNumericCharsRegex, message: 'Can only contain characters or numbers'}}/>
             </Stack>
 
             <Stack spacing={3}>
