@@ -7,9 +7,9 @@
 export const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 /**
- * Regular expression for matching alpha characters
+ * Regular expression for matching lower-cased alpha numeric characters
  */
-export const alphaNumericCharsRegex = /^([a-z0-9]+)$/;
+export const alphaNumericLowerCasedCharsRegex = /^([a-z0-9]+)$/;
 
 /**
  * Regular expression for matching non-whitespace characters
