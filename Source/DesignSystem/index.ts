@@ -34,4 +34,4 @@ export { SideBar } from './molecules/SideBar';
 export { Stepper } from './molecules/Stepper';
 
 // Templates
-export { ContentContainer } from './templates/Layout/ContentContainer';
+export * from './templates/Layout';
