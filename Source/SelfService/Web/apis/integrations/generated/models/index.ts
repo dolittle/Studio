@@ -9,6 +9,7 @@ export * from './ConnectionModel';
 export * from './ConnectionModelArrayResult';
 export * from './ConnectionModelResult';
 export * from './ConnectionStatus';
+export * from './DescribedJqDto';
 export * from './EnvironmentType';
 export * from './FieldMapping';
 export * from './FieldType';

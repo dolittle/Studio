@@ -27,7 +27,6 @@ import {
 
 export interface ConnectionsIdServiceAccountsGetRequest {
     id: string;
-    body: string;
 }
 
 export interface ConnectionsIdServiceAccountsServiceAccountNameDeleteRequest {
@@ -38,7 +37,7 @@ export interface ConnectionsIdServiceAccountsServiceAccountNameDeleteRequest {
 export interface ConnectionsIdServiceAccountsServiceAccountNamePostRequest {
     id: string;
     serviceAccountName: string;
-    body?: string;
+    description?: string;
 }
 
 /**
@@ -54,15 +53,9 @@ export class ServiceAccountApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdServiceAccountsGet.');
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling connectionsIdServiceAccountsGet.');
-        }
-
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
@@ -73,7 +66,6 @@ export class ServiceAccountApi extends runtime.BaseAPI {
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ServiceAccountListDtoFromJSON));
@@ -139,9 +131,11 @@ export class ServiceAccountApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {};
+        if (requestParameters.description !== undefined) {
+            queryParameters['description'] = requestParameters.description;
+        }
 
-        headerParameters['Content-Type'] = 'application/json';
+        const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
@@ -152,7 +146,6 @@ export class ServiceAccountApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ServiceAccountCreatedDtoFromJSON(jsonValue));

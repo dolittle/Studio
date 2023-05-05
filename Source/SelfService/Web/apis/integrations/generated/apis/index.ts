@@ -7,6 +7,7 @@ export * from './ConnectionsApi';
 export * from './DeploymentApi';
 export * from './EnrichmentApi';
 export * from './EnvironmentApi';
+export * from './JqAssistantApi';
 export * from './LoginApi';
 export * from './MappableTablesApi';
 export * from './MessageMappingApi';

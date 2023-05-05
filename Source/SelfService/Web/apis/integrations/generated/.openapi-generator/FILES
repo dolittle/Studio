@@ -6,6 +6,7 @@ apis/ConnectionsApi.ts
 apis/DeploymentApi.ts
 apis/EnrichmentApi.ts
 apis/EnvironmentApi.ts
+apis/JqAssistantApi.ts
 apis/LoginApi.ts
 apis/MappableTablesApi.ts
 apis/MessageMappingApi.ts
@@ -24,6 +25,7 @@ models/ConnectionModel.ts
 models/ConnectionModelArrayResult.ts
 models/ConnectionModelResult.ts
 models/ConnectionStatus.ts
+models/DescribedJqDto.ts
 models/EnvironmentType.ts
 models/FieldMapping.ts
 models/FieldType.ts
