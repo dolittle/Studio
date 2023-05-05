@@ -21,7 +21,7 @@ metadata.argTypes = {
     progressStatus: {
         control: {
             type: 'select',
-            options: ['success', 'table-success', 'waiting', 'warning', 'error', 'unknown'],
+            options: ['success', 'waiting', 'warning', 'error', 'unknown'],
         },
     },
     children: { control: false },
@@ -53,9 +53,10 @@ WithStatusMessage.decorators = [
         const [status, setStatus] = useState<StatusIndicatorProps['status']>('waiting');
 
         // eslint-disable-next-line no-restricted-globals
-        setInterval(() => {
-            if (status !== 'waiting') setStatus('waiting');
-            else {
+        setTimeout(() => {
+            if (status !== 'waiting') {
+                setStatus('waiting');
+            } else {
                 const random = Math.random();
 
                 if (random < 0.2) setStatus('success');
