@@ -6,10 +6,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { getPodStatus, MicroserviceInfo } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
-import { StatusFieldCell, customStatusFieldSort } from '../components/microserviceStatus';
+import { customStatusFieldSort, healthStatus } from '../components/microserviceStatus';
 
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Paper, Tooltip } from '@mui/material';
+
+import { StatusIndicator } from '@dolittle/design-system';
 
 import { getRuntimeNumberFromString } from '../../../utils/helpers';
 
@@ -26,6 +28,17 @@ const PublicUrlCell = (params: GridRenderCellParams) => {
                 }
             </span>
         </Tooltip>
+    );
+};
+
+const StatusCell = (params: GridRenderCellParams) => {
+    const status = params.value.toLowerCase();
+
+    return (
+        <StatusIndicator
+            status={healthStatus(status)?.status}
+            label={healthStatus(status)?.label}
+        />
     );
 };
 
@@ -126,7 +139,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             headerName: 'Status',
             minWidth: 270,
             flex: 1,
-            renderCell: StatusFieldCell,
+            renderCell: StatusCell,
             sortComparator: customStatusFieldSort
         }
     ];

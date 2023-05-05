@@ -6,40 +6,20 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 
-import { StatusIndicator, StatusIndicatorProps, Summary } from '@dolittle/design-system';
+import { StatusIndicator, Summary } from '@dolittle/design-system';
 
 import { DownloadLogs, formatTime, formatStartingDate } from '../../../../utils/helpers';
 
 import { HealthStatusTableRow } from './healthStatusTable';
+import { healthStatus } from '../../components/microserviceStatus';
 
-const containerHealthStatus = (status: string): StatusIndicatorProps => {
-    if (status === 'running') {
-        return {
-            status: 'table-success',
-            label: 'running',
-        };
-    } else if (status === 'waiting' || status === 'pending') {
-        return {
-            status: 'warning',
-            label: 'pending',
-        };
-    } else if (status === 'failed') {
-        return {
-            status: 'error',
-            label: 'failing',
-        };
-    }
-
-    return { status: 'unknown' };
-};
-
-const HealthStatus = (params: GridRenderCellParams<any, HealthStatusTableRow>) => {
+const StatusCell = (params: GridRenderCellParams<any, HealthStatusTableRow>) => {
     const status = params.row.state.toLowerCase();
 
     return (
         <StatusIndicator
-            status={containerHealthStatus(status)?.status}
-            label={containerHealthStatus(status)?.label}
+            status={healthStatus(status)?.status}
+            label={healthStatus(status)?.label}
         />
     );
 };
@@ -119,7 +99,7 @@ export const columns: GridColDef[] = [
         sortable: false,
         minWidth: 200,
         flex: 1,
-        renderCell: HealthStatus,
+        renderCell: StatusCell,
     },
     {
         field: 'download',

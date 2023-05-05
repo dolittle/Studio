@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Button, SvgIconsDefinition } from '@dolittle/design-system';
+import { Button, StatusIndicatorProps, SvgIconsDefinition } from '@dolittle/design-system';
 
 enum MicroserviceStatus {
     Running = 0,
@@ -62,6 +62,27 @@ const statusInfo = (status: string) => {
     return { color, icon, label } as StatusInfo;
 };
 
+export const healthStatus = (status: string): StatusIndicatorProps => {
+    if (status === 'running') {
+        return {
+            status: 'table-success',
+            label: 'running',
+        };
+    } else if (status === 'waiting' || status === 'pending') {
+        return {
+            status: 'warning',
+            label: 'pending',
+        };
+    } else if (status === 'failed') {
+        return {
+            status: 'error',
+            label: 'failing',
+        };
+    }
+
+    return { status: 'unknown' };
+};
+
 export const ContainerHealthStatus = ({ status }: { status: string[] }) => {
     const { color, icon, label } = statusInfo(status.join(' '));
 
@@ -82,19 +103,4 @@ export const customStatusFieldSort = (_, __, left, right) => {
     const leftStatus = getMicroserviceState(left.value);
     const rightStatus = getMicroserviceState(right.value);
     return leftStatus - rightStatus;
-};
-
-export const StatusFieldCell = ({ value }: any) => {
-    const { color, icon, label } = statusInfo(value);
-
-    return (
-        <Button
-            label={label}
-            startWithIcon={icon}
-            color={color}
-            component='span'
-            role='none'
-            sx={{ pointerEvents: 'none' }}
-        />
-    );
 };
