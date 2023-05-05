@@ -5,18 +5,29 @@ import React, { useState } from 'react';
 import { useSnackbar } from 'notistack';
 
 import { Collapse, FormHelperText, Grid, TextField, Typography } from '@mui/material';
-import { Button, ContentSection } from '@dolittle/design-system';
+import { AlertBox, Button, ContentSection } from '@dolittle/design-system';
+import { useConnectionsIdServiceAccountsGet } from '../../../../../apis/integrations/serviceAccountApi.hooks';
+import { useConnectionId } from '../../../../../integrations/routes.hooks';
+import { CredentialsList } from './CredentialsList';
 
 export type CredentialsSectionProps = {};
+
 export const CredentialsSection = (props: CredentialsSectionProps) => {
     const [openCredentials, setOpenCredentials] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
+    const connectionId = useConnectionId();
+
+    if (!connectionId) {
+        return <AlertBox />;
+    }
+
+    const { data, isLoading } = useConnectionsIdServiceAccountsGet({ id: connectionId, body: 'body' });
     const credentialToken = 'n$H8rAp3mDJGiR7Adn4@paAzQ7J$cNJSEkzqPDYi';
 
-const handleTokenCopy = () => {
-    navigator.clipboard.writeText(credentialToken);
-    enqueueSnackbar('Token copied to clipboard.');
-};
+    const handleTokenCopy = () => {
+        navigator.clipboard.writeText(credentialToken);
+        enqueueSnackbar('Token copied to clipboard.');
+    };
 
 
     return (
@@ -55,6 +66,7 @@ const handleTokenCopy = () => {
                         </Grid>
                     </Grid>
                 </Grid>
+                <CredentialsList credentials={data || []} />
             </Collapse>
         </ContentSection>
     );
