@@ -5,9 +5,9 @@ import React, { useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { Box, Collapse, Divider, FormGroup, FormControlLabel, FormHelperText, Grid, Paper, Switch, TextField, Typography } from '@mui/material';
+import { Box, Collapse, FormHelperText, Grid, TextField, Typography } from '@mui/material';
 
-import { Button, IconButton, Link } from '@dolittle/design-system';
+import { Button, ContentContainer, ContentHeader, ContentSection, IconButton, Link, Switch } from '@dolittle/design-system';
 
 const styles = {
     display: 'flex',
@@ -43,20 +43,13 @@ export const ExposeDataView = () => {
     };
 
     return (
-        <Paper sx={{ px: 2 }}>
-            <Box sx={styles}>
-                <Typography variant='subtitle1'>Exposing your data</Typography>
-
-                <FormGroup>
-                    <FormControlLabel control={<Switch defaultChecked disabled />} label='Deploy service' sx={{ mx: 0 }} />
-                </FormGroup>
-            </Box>
-
-            <Divider sx={{ borderColor: 'outlineborder' }} />
-
-            <Box sx={{ my: 3 }}>
-                <Typography variant='subtitle2'>Rest API URL</Typography>
-
+        <ContentContainer>
+            <ContentHeader
+                title='Exposing your data'
+                buttonsSlot={<Switch.UI id='deploy-switch' label='Deploy service' defaultChecked sx={{ mx: 0 }} />}
+                sx={{ my: 2 }}
+            />
+            <ContentSection title='Rest API URL'>
                 <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
                     <Link
                         target
@@ -70,10 +63,8 @@ export const ExposeDataView = () => {
                         onClick={handleRestApiLinkCopy}
                     />
                 </Box>
-            </Box>
-
-            <Box sx={{ my: 3 }}>
-                <Typography variant='subtitle2'>Rest API Documentation</Typography>
+            </ContentSection>
+            <ContentSection hideDivider title='Rest API Documentation'>
                 <Typography sx={{ pt: 1.5 }}>Our rest API is documented using OpenAPI.</Typography>
 
                 <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
@@ -90,47 +81,44 @@ export const ExposeDataView = () => {
                         onClick={handleOpenApiDocumentationLinkCopy}
                     />
                 </Box>
-            </Box>
-
-            <Divider sx={{ borderColor: 'outlineborder' }} />
-
-            <Box sx={styles}>
-                <Typography variant='subtitle2'>Credentials</Typography>
-                <Button label='Generate New Credentials' variant='outlined' onClick={() => setOpenCredentials(true)} />
-            </Box>
-
-            <Collapse in={openCredentials}>
-                <Grid container spacing={3} sx={{ pb: 5 }}>
-                    <Grid item>
-                        <Typography sx={{ mb: 2 }}>Who or what are these credentials for?</Typography>
-                        <TextField id='credentialsName' label='Name' size='small' />
-                    </Grid>
-
-                    <Grid item>
-                        <Typography sx={{ mb: 2 }}>Credential Token</Typography>
-                        <TextField
-                            id='credentialsToken'
-                            label='Token'
-                            size='small'
-                            type='password'
-                            value={credentialToken}
-                            disabled
-                            sx={{ width: 400 }}
-                        />
-                        <FormHelperText>This bearer token should be used in the request header.</FormHelperText>
-                    </Grid>
-
-                    <Grid container item spacing={3} xs={6} sx={{ alignItems: 'center', mt: 0 }}>
+            </ContentSection>
+            <ContentSection
+                title='Credentials'
+                headerProps={{ buttons: [{ label: 'Generate New Credentials', variant: 'outlined', onClick: () => setOpenCredentials(true) }] }}
+            >
+                <Collapse in={openCredentials}>
+                    <Grid container spacing={3} sx={{ pb: 5 }}>
                         <Grid item>
-                            <Button label='Copy Token' startWithIcon='CopyAllRounded' onClick={handleTokenCopy} />
+                            <Typography sx={{ mb: 2 }}>Who or what are these credentials for?</Typography>
+                            <TextField id='credentialsName' label='Name' size='small' />
                         </Grid>
 
                         <Grid item>
-                            <Button label='Delete credentials' startWithIcon='DeleteRounded' onClick={() => setOpenCredentials(false)} />
+                            <Typography sx={{ mb: 2 }}>Credential Token</Typography>
+                            <TextField
+                                id='credentialsToken'
+                                label='Token'
+                                size='small'
+                                type='password'
+                                value={credentialToken}
+                                disabled
+                                sx={{ width: 400 }}
+                            />
+                            <FormHelperText>This bearer token should be used in the request header.</FormHelperText>
+                        </Grid>
+
+                        <Grid container item spacing={3} xs={6} sx={{ alignItems: 'center', mt: 0 }}>
+                            <Grid item>
+                                <Button label='Copy Token' startWithIcon='CopyAllRounded' onClick={handleTokenCopy} />
+                            </Grid>
+
+                            <Grid item>
+                                <Button label='Delete credentials' startWithIcon='DeleteRounded' onClick={() => setOpenCredentials(false)} />
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </Collapse>
-        </Paper>
+                </Collapse>
+            </ContentSection>
+        </ContentContainer>
     );
 };
