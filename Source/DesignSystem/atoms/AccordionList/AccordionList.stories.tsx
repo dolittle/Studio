@@ -4,7 +4,6 @@
 import React from 'react';
 
 import { componentStories, AccordionProps, AccordionList } from '@dolittle/design-system';
-
 import { DummyChildrenContent } from '@dolittle/design-system/helpers/dummyContent';
 
 const dummyAccordionList: AccordionProps[] = [
@@ -21,6 +20,39 @@ const dummyAccordionList: AccordionProps[] = [
     {
         id: '3',
         title: 'Accordion 3',
+        children: <DummyChildrenContent />,
+    },
+];
+
+const dummyAccordionListWithStatus: AccordionProps[] = [
+    {
+        id: '1',
+        title: 'Accordion 1',
+        progressStatus: 'success',
+        children: <DummyChildrenContent />,
+    },
+    {
+        id: '2',
+        title: 'Accordion 2',
+        progressStatus: 'waiting',
+        children: <DummyChildrenContent />,
+    },
+    {
+        id: '3',
+        title: 'Accordion 3',
+        progressStatus: 'warning',
+        children: <DummyChildrenContent />,
+    },
+    {
+        id: '4',
+        title: 'Accordion 4',
+        progressStatus: 'error',
+        children: <DummyChildrenContent />,
+    },
+    {
+        id: '5',
+        title: 'Accordion 5',
+        progressStatus: 'unknown',
         children: <DummyChildrenContent />,
     },
 ];
@@ -68,42 +100,5 @@ export const SingleExpandMode = createStory({
 });
 
 export const WithStatusMessage = createStory({
-    items: [
-        {
-            id: '1',
-            title: 'Accordion 1',
-            progressStatus: 'success',
-            children: <DummyChildrenContent />,
-        },
-        {
-            id: '2',
-            title: 'Accordion 2',
-            progressStatus: 'table-success',
-            children: <DummyChildrenContent />,
-        },
-        {
-            id: '3',
-            title: 'Accordion 3',
-            progressStatus: 'waiting',
-            children: <DummyChildrenContent />,
-        },
-        {
-            id: '4',
-            title: 'Accordion 4',
-            progressStatus: 'warning',
-            children: <DummyChildrenContent />,
-        },
-        {
-            id: '5',
-            title: 'Accordion 5',
-            progressStatus: 'error',
-            children: <DummyChildrenContent />,
-        },
-        {
-            id: '6',
-            title: 'Accordion 6',
-            progressStatus: 'unknown',
-            children: <DummyChildrenContent />,
-        },
-    ],
+    items: dummyAccordionListWithStatus,
 });
