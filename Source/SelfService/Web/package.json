@@ -51,6 +51,7 @@
         "jest-canvas-mock": "^2.5.0",
         "jest-environment-jsdom": "^29.5.0",
         "mini-css-extract-plugin": "2.6.1",
+        "resize-observer-polyfill": "^1.5.1",
         "sass": "1.54.4",
         "sass-loader": "12.1.0",
         "style-loader": "3.3.1",
