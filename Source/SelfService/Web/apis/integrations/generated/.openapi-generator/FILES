@@ -11,6 +11,7 @@ apis/MappableTablesApi.ts
 apis/MessageMappingApi.ts
 apis/MetadataAdminApi.ts
 apis/ProgramMetadataApi.ts
+apis/ServiceAccountApi.ts
 apis/TableMetadataApi.ts
 apis/index.ts
 index.ts
@@ -53,6 +54,8 @@ models/ProgramDetails.ts
 models/ProgramHeader.ts
 models/RelatedTable.ts
 models/RemoteServiceStatus.ts
+models/ServiceAccountCreatedDto.ts
+models/ServiceAccountListDto.ts
 models/SetMessageMappingRequestArguments.ts
 models/SortDirection.ts
 models/StringResult.ts

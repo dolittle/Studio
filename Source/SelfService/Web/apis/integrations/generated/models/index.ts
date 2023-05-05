@@ -39,6 +39,8 @@ export * from './ProgramDetails';
 export * from './ProgramHeader';
 export * from './RelatedTable';
 export * from './RemoteServiceStatus';
+export * from './ServiceAccountCreatedDto';
+export * from './ServiceAccountListDto';
 export * from './SetMessageMappingRequestArguments';
 export * from './SortDirection';
 export * from './StringResult';

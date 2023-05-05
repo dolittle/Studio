@@ -12,4 +12,5 @@ export * from './MappableTablesApi';
 export * from './MessageMappingApi';
 export * from './MetadataAdminApi';
 export * from './ProgramMetadataApi';
+export * from './ServiceAccountApi';
 export * from './TableMetadataApi';
