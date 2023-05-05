@@ -62,7 +62,7 @@ export type AccordionProps = {
     /**
      * The status text of the accordion. Displayed in the header.
      *
-     * If not provided, the status will be used as the label.
+     * If not provided, the `progressStatus` will be used as the label.
      */
     progressLabel?: StatusIndicatorProps['label'];
 
@@ -93,7 +93,7 @@ export type AccordionProps = {
     children: React.ReactNode;
 
     /**
-     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     * The `sx` prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
 };
