@@ -116,7 +116,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             minWidth: 270,
             flex: 1,
             valueGetter: ({ row }: GridValueGetterParams) =>
-                `${row.edit?.extra?.headImage || 'N/A'}`
+                `${row.edit?.extra?.headImage || 'N/A'}`,
         },
         {
             field: 'runtime',
@@ -124,7 +124,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             minWidth: 270,
             flex: 1,
             valueGetter: ({ row }: GridValueGetterParams) =>
-                getRuntimeNumberFromString(row.edit?.extra?.runtimeImage)
+                getRuntimeNumberFromString(row.edit?.extra?.runtimeImage),
         },
         {
             field: 'isPublic',
@@ -132,7 +132,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             minWidth: 270,
             flex: 1,
             renderCell: PublicUrlCell,
-            sortComparator: customUrlFieldSort
+            sortComparator: customUrlFieldSort,
         },
         {
             field: 'phase',
@@ -140,8 +140,8 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             minWidth: 270,
             flex: 1,
             renderCell: StatusCell,
-            sortComparator: customStatusFieldSort
-        }
+            sortComparator: customStatusFieldSort,
+        },
     ];
 
     const onTableRowClick = (microserviceId: string) => {
