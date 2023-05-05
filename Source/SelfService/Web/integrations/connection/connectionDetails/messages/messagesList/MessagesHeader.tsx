@@ -2,8 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useMemo, useState } from 'react';
-import { MessageMappingModel } from '../../../../..//apis/integrations/generated';
-import { ContentHeader } from '../../../../../components/layout/Content/ContentHeader';
+import { ContentHeader } from '@dolittle/design-system';
+import { MessageMappingModel } from '../../../../../apis/integrations/generated';
 
 import { DeployMessagesButton } from './Toolbar/DeployMessagesButton';
 import { DeleteMessagesButton } from './Toolbar/DeleteMessagesButton';

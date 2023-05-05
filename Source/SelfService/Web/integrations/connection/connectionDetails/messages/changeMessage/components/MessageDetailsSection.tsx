@@ -5,10 +5,9 @@ import React from 'react';
 
 import { Grid, Stack, Typography } from '@mui/material';
 
-import { Input } from '@dolittle/design-system';
+import { ContentSection, Input } from '@dolittle/design-system';
 
 import { ViewModeProps } from '../ViewMode';
-import { ContentSection } from '../../../../../../components/layout/Content/ContentSection';
 import { alphaNumericCharsRegex } from '../../../../../../utils/validation/patterns';
 
 

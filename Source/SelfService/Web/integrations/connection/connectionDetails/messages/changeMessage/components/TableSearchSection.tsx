@@ -7,8 +7,7 @@ import { useDebounce } from 'use-debounce';
 
 import { InputAdornment, TextField, Typography } from '@mui/material';
 
-import { Icon } from '@dolittle/design-system';
-import { ContentSection } from '../../../../../../components/layout/Content/ContentSection';
+import { Icon, ContentSection } from '@dolittle/design-system';
 
 import { useConnectionsIdMessageMappingsTablesSearchGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
 import { useConnectionId } from '../../../../../routes.hooks';

@@ -6,8 +6,7 @@ import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useConnectionId } from '../../../../routes.hooks';
 
-import { AlertBox, LoadingSpinner } from '@dolittle/design-system';
-import { ContentContainer } from '../../../../../components/layout/Content/ContentContainer';
+import { AlertBox, ContentContainer, LoadingSpinner } from '@dolittle/design-system';
 
 import { useConnectionsIdMessageMappingsGet } from '../../../../../apis/integrations/messageMappingApi.hooks';
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
