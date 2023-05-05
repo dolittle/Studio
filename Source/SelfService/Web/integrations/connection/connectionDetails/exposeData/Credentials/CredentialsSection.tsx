@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 
 import { Collapse, FormHelperText, Grid, TextField, Typography } from '@mui/material';
@@ -15,13 +15,16 @@ export type CredentialsSectionProps = {};
 export const CredentialsSection = (props: CredentialsSectionProps) => {
     const [openCredentials, setOpenCredentials] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
-    const connectionId = useConnectionId();
-
+    const connectionId = useConnectionId()!;
     if (!connectionId) {
         return <AlertBox />;
     }
 
-    const { data, isLoading } = useConnectionsIdServiceAccountsGet({ id: connectionId, body: 'body' });
+    const { data, isLoading, isError, error } = useConnectionsIdServiceAccountsGet({ id: connectionId });
+
+    if (isError) {
+        return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
+    }
     const credentialToken = 'n$H8rAp3mDJGiR7Adn4@paAzQ7J$cNJSEkzqPDYi';
 
     const handleTokenCopy = () => {
