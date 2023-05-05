@@ -11,15 +11,16 @@ import { ContentHeader, ContentHeaderProps } from './ContentHeader';
 export type ContentSectionProps = {
     title?: string;
     hideHeader?: boolean;
+    hideDivider?: boolean;
     headerProps?: Partial<ContentHeaderProps>;
     children?: React.ReactNode;
     beforeHeaderSlot?: React.ReactNode;
     sx?: SxProps;
 };
 
-export const ContentSection = ({ title = '', hideHeader, headerProps, children, beforeHeaderSlot: beforeContentSlot, sx }: ContentSectionProps) =>
+export const ContentSection = ({ title = '', hideDivider, hideHeader, headerProps, children, beforeHeaderSlot: beforeContentSlot, sx }: ContentSectionProps) =>
     <>
-        <ContentDivider />
+        {!hideDivider && <ContentDivider />}
         {beforeContentSlot}
         <Box sx={{ ...{ my: 2 }, ...sx }}>
             {!hideHeader && <ContentHeader title={title} titleTextVariant='subtitle' {...headerProps} />}
