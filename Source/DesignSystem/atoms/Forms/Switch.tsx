@@ -22,7 +22,6 @@ const styles = {
     },
 };
 
-
 export type SwitchProps = {
     id: string;
     label: string;
@@ -53,6 +52,7 @@ const SwitchUI = (props: SwitchProps) => {
  */
 export const Switch = (props: FieldProps) => {
     const { field } = useController(props);
+
     return (
         <SwitchUI
             {...field}
