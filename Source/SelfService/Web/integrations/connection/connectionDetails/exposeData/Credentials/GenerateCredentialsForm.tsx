@@ -1,58 +1,113 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSnackbar } from 'notistack';
 
 
-import { Collapse, FormHelperText, Grid, TextField, Typography } from '@mui/material';
-import { AlertBox, Button, ContentSection } from '@dolittle/design-system';
+import { Collapse, FormHelperText, Grid, TextField, Typography, Paper } from '@mui/material';
+import { AlertBox, Button, ContentSection, Form, FormRef, Input } from '@dolittle/design-system';
+import { useConnectionsIdServiceAccountsServiceAccountNamePost } from '../../../../../apis/integrations/serviceAccountApi.hooks';
+import { ResponseError, ServiceAccountCreatedDto } from '../../../../../apis/integrations/generated';
+
+export type GenerateCredentialsFormParameters = {
+    name: string;
+    description?: string;
+    token?: string;
+};
 
 export type GenerateCredentialsFormProps = {
-    onFormComplete: () => void;
+    connectionId: string;
+    onFormComplete: (tokenName: string) => void;
 };
 
 export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => {
     const { enqueueSnackbar } = useSnackbar();
-    const credentialToken = 'n$H8rAp3mDJGiR7Adn4@paAzQ7J$cNJSEkzqPDYi';
+    const [token, setToken] = useState<string | undefined>(undefined);
+    const [formSubmitError, setFormSubmitError] = useState<string | undefined>(undefined);
+    const formRef = useRef<FormRef<GenerateCredentialsFormParameters>>(null);
+
+    const generateTokenMutation = useConnectionsIdServiceAccountsServiceAccountNamePost();
+    const hasResult = !!token;
 
     const handleTokenCopy = () => {
-        navigator.clipboard.writeText(credentialToken);
+        navigator.clipboard.writeText(token || '');
         enqueueSnackbar('Token copied to clipboard.');
+    };
+
+    const handleGenerate = (fieldValues: GenerateCredentialsFormParameters) => {
+        generateTokenMutation.mutate({
+            id: props.connectionId,
+            serviceAccountName: fieldValues.name,
+            description: fieldValues.description
+        }, {
+            onSuccess: (data: ServiceAccountCreatedDto) => {
+                setToken(data.token);
+                formRef.current?.setValue('token', data.token);
+            },
+            onError: async (error) => {
+                let message = `Error while generating token.`;
+                if (error instanceof ResponseError) {
+                    if (error.response.body) {
+                        const body = await error.response.text();
+                        message = `${message} error: ${body}`;
+                    }
+                }
+                setFormSubmitError(message);
+            }
+        });
+        props.onFormComplete(fieldValues.name);
     };
 
     return (
         <>
-            <Grid container spacing={3} sx={{ pb: 5 }}>
-                <Grid item>
-                    <Typography sx={{ mb: 2 }}>Who or what are these credentials for?</Typography>
-                    <TextField id='credentialsName' label='Name' size='small' />
-                </Grid>
+            <Form<GenerateCredentialsFormParameters>
+                initialValues={{
+                    name: '',
+                    description: '',
+                    token: ''
+                }}
+                onSubmit={handleGenerate}
+                fRef={formRef}
+            >
 
-                <Grid item>
-                    <Typography sx={{ mb: 2 }}>Credential Token</Typography>
-                    <TextField
-                        id='credentialsToken'
-                        label='Token'
-                        size='small'
-                        type='password'
-                        value={credentialToken}
-                        disabled
-                        sx={{ width: 400 }}
-                    />
-                    <FormHelperText>This bearer token should be used in the request header.</FormHelperText>
-                </Grid>
+                <Paper elevation={3}>
+                    <Grid container spacing={3} sx={{ pb: 5 }}>
+                        <Grid item>
+                            <Typography sx={{ mb: 2 }}>Who or what are these credentials for?</Typography>
+                            <Input id='name' label='Name' required disabled={hasResult && !formSubmitError} />
+                            <Input id='description' label='Description' disabled={hasResult && !formSubmitError} />
+                        </Grid>
 
-                <Grid container item spacing={3} xs={6} sx={{ alignItems: 'center', mt: 0 }}>
-                    <Grid item>
-                        <Button label='Copy Token' startWithIcon='CopyAllRounded' onClick={handleTokenCopy} />
+                        {!hasResult || formSubmitError
+                            ? (
+                                <>
+                                    <Grid item>
+                                        {formSubmitError && (<AlertBox message={`${formSubmitError}`} />)}
+                                        <Button label='Generate Token' type='submit' />
+                                    </Grid>
+                                </>
+                            )
+                            : (
+                                <>
+                                    <Grid item>
+                                        <Typography sx={{ mb: 2 }}>Credential Token</Typography>
+                                        <Input
+                                            id='token'
+                                            label='Token'
+                                            disabled
+                                            sx={{ width: 400 }}
+                                        />
+                                        <FormHelperText>This bearer token should be used in the request header.</FormHelperText>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button label='Copy Token' startWithIcon='CopyAllRounded' onClick={handleTokenCopy} />
+                                    </Grid>
+                                </>
+                            )}
                     </Grid>
-
-                    <Grid item>
-                        <Button label='Delete credentials' startWithIcon='DeleteRounded' onClick={() => props.onFormComplete()} />
-                    </Grid>
-                </Grid>
-            </Grid>
+                </Paper >
+            </Form >
         </>
     );
 };
