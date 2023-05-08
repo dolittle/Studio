@@ -1,8 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-
-import React, { useMemo, ReactNode, forwardRef, useImperativeHandle, ForwardedRef } from 'react';
+import React, { useMemo, ReactNode, useImperativeHandle, ForwardedRef } from 'react';
 import { useForm, FieldValues, FormProvider, SubmitHandler, SubmitErrorHandler, UseFormReturn } from 'react-hook-form';
 
 import { Box, SxProps } from '@mui/material';
@@ -73,4 +72,3 @@ export const Form = <T extends FieldValues>({ initialValues, onSubmit, onSubmitI
         </Box>
     );
 };
-

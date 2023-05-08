@@ -3,29 +3,57 @@
 
 import React from 'react';
 
-import { componentStories, AccordionProps, AccordionList, MaxWidthTextBlock } from '@dolittle/design-system';
-
-const DummyChildrenContent = () =>
-    <MaxWidthTextBlock>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa illo similique consequuntur dolores natus ex
-        sunt esse mollitia id atque. Atque molestiae cum magnam eligendi maxime id sapiente quaerat suscipit?
-    </MaxWidthTextBlock>;
+import { componentStories, AccordionProps, AccordionList } from '@dolittle/design-system';
+import { DummyChildrenContent } from '@dolittle/design-system/helpers/dummyContent';
 
 const dummyAccordionList: AccordionProps[] = [
     {
         id: '1',
         title: 'Accordion 1',
-        children: <DummyChildrenContent />
+        children: <DummyChildrenContent />,
     },
     {
         id: '2',
         title: 'Accordion 2',
-        children: <DummyChildrenContent />
+        children: <DummyChildrenContent />,
     },
     {
         id: '3',
         title: 'Accordion 3',
-        children: <DummyChildrenContent />
+        children: <DummyChildrenContent />,
+    },
+];
+
+const dummyAccordionListWithStatus: AccordionProps[] = [
+    {
+        id: '1',
+        title: 'Accordion 1',
+        progressStatus: 'success',
+        children: <DummyChildrenContent />,
+    },
+    {
+        id: '2',
+        title: 'Accordion 2',
+        progressStatus: 'waiting',
+        children: <DummyChildrenContent />,
+    },
+    {
+        id: '3',
+        title: 'Accordion 3',
+        progressStatus: 'warning',
+        children: <DummyChildrenContent />,
+    },
+    {
+        id: '4',
+        title: 'Accordion 4',
+        progressStatus: 'error',
+        children: <DummyChildrenContent />,
+    },
+    {
+        id: '5',
+        title: 'Accordion 5',
+        progressStatus: 'unknown',
+        children: <DummyChildrenContent />,
     },
 ];
 
@@ -56,16 +84,21 @@ export const Default = createStory();
 
 export const InitialExpanded = createStory({
     items: dummyAccordionList,
+    singleExpandMode: true,
     initialId: '2',
 });
 InitialExpanded.parameters = {
     docs: {
         description: {
-            story: `In this example, you can see the second accordion item is pre-expanded`,
+            story: 'In this example, you can see the second accordion item is pre-expanded.',
         },
     },
 };
 
 export const SingleExpandMode = createStory({
     singleExpandMode: true,
+});
+
+export const WithStatusMessage = createStory({
+    items: dummyAccordionListWithStatus,
 });

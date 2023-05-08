@@ -6,12 +6,23 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 
-import { Summary } from '@dolittle/design-system';
+import { StatusIndicator, Summary } from '@dolittle/design-system';
 
 import { DownloadLogs, formatTime, formatStartingDate } from '../../../../utils/helpers';
 
-import { StatusFieldCell } from '../../components/microserviceStatus';
 import { HealthStatusTableRow } from './healthStatusTable';
+import { healthStatus } from '../../components/microserviceStatus';
+
+const StatusCell = (params: GridRenderCellParams<any, HealthStatusTableRow>) => {
+    const status = params.row.state.toLowerCase();
+
+    return (
+        <StatusIndicator
+            status={healthStatus(status)?.status}
+            label={healthStatus(status)?.label}
+        />
+    );
+};
 
 export const columns: GridColDef[] = [
     {
@@ -29,7 +40,7 @@ export const columns: GridColDef[] = [
         minWidth: 100,
         flex: 1,
         headerAlign: 'right',
-        align: 'right'
+        align: 'right',
     },
     {
         field: 'age',
@@ -40,7 +51,7 @@ export const columns: GridColDef[] = [
         headerAlign: 'right',
         align: 'right',
         valueGetter: (params: GridValueGetterParams<any, HealthStatusTableRow>) =>
-            formatTime(params.row?.age)
+            formatTime(params.row?.age),
     },
     {
         field: 'started',
@@ -51,7 +62,7 @@ export const columns: GridColDef[] = [
         headerAlign: 'right',
         align: 'right',
         valueGetter: (params: GridValueGetterParams<any, HealthStatusTableRow>) =>
-            formatStartingDate(params.row?.started)
+            formatStartingDate(params.row?.started),
     },
     {
         field: 'CPU',
@@ -61,7 +72,7 @@ export const columns: GridColDef[] = [
         headerAlign: 'right',
         align: 'right',
         renderHeader: () =>
-            <Box className='MuiDataGrid-columnHeaderTitle'>
+            <Box>
                 CPU <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
             </Box>,
         renderCell: (params: GridRenderCellParams<any, HealthStatusTableRow>) =>
@@ -76,7 +87,7 @@ export const columns: GridColDef[] = [
         headerAlign: 'right',
         align: 'right',
         renderHeader: () =>
-            <Box className='MuiDataGrid-columnHeaderTitle'>
+            <Box>
                 Memory <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
             </Box>,
         renderCell: (params: GridRenderCellParams<any, HealthStatusTableRow>) =>
@@ -88,7 +99,7 @@ export const columns: GridColDef[] = [
         sortable: false,
         minWidth: 200,
         flex: 1,
-        renderCell: StatusFieldCell
+        renderCell: StatusCell,
     },
     {
         field: 'download',
@@ -98,6 +109,6 @@ export const columns: GridColDef[] = [
         flex: 1,
         headerAlign: 'center',
         align: 'center',
-        renderCell: DownloadLogs
+        renderCell: DownloadLogs,
     },
 ];

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Grid } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import { componentStories, StatusIndicator } from '@dolittle/design-system';
 
@@ -23,13 +23,14 @@ metadata.argTypes = {
     status: {
         control: {
             type: 'select',
-            options: ['connected', 'waiting', 'pending', 'failed', 'unknown'],
+            options: ['success', 'table-success', 'waiting', 'warning', 'error', 'unknown'],
         },
     },
+    sx: { control: false },
 };
 
 metadata.args = {
-    status: 'connected',
+    status: 'success',
     variantFilled: false,
 };
 
@@ -40,26 +41,28 @@ export const Default = createStory();
 export const DefaultVariants = createStory();
 DefaultVariants.decorators = [
     () => (
-        <Grid container gap={3}>
-            <StatusIndicator status='connected' />
+        <Stack direction='row' gap={3}>
+            <StatusIndicator status='success' />
+            <StatusIndicator status='table-success' />
             <StatusIndicator status='waiting' />
-            <StatusIndicator status='pending' />
-            <StatusIndicator status='failed' />
+            <StatusIndicator status='warning' />
+            <StatusIndicator status='error' />
             <StatusIndicator status='unknown' />
-        </Grid>
+        </Stack>
     )
 ];
 
 export const FilledVariants = createStory();
 FilledVariants.decorators = [
     () => (
-        <Grid container gap={3}>
-            <StatusIndicator status='connected' variantFilled />
+        <Stack direction='row' gap={3}>
+            <StatusIndicator status='success' variantFilled />
+            <StatusIndicator status='table-success' variantFilled />
             <StatusIndicator status='waiting' variantFilled />
-            <StatusIndicator status='pending' variantFilled />
-            <StatusIndicator status='failed' variantFilled />
+            <StatusIndicator status='warning' variantFilled />
+            <StatusIndicator status='error' variantFilled />
             <StatusIndicator status='unknown' variantFilled />
-        </Grid>
+        </Stack>
     )
 ];
 

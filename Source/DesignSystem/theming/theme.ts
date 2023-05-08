@@ -203,6 +203,9 @@ const components: Components & DataGridProComponents = {
             columnHeader: {
                 ':focus': { outline: 'none' },
                 ':focus-within': { outline: 'none' },
+                '& .MuiIconButton-root': {
+                    marginLeft: 8,
+                },
             },
             columnHeaders: {
                 borderColor: 'rgba(226, 255, 97, 0.05)',
@@ -238,9 +241,6 @@ const components: Components & DataGridProComponents = {
             },
             root: {
                 'border': 'none',
-                '& .MuiIconButton-root': {
-                    marginLeft: 8,
-                },
                 '& .MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted) .MuiDataGrid-sortIcon': {
                     opacity: 1,
                 },

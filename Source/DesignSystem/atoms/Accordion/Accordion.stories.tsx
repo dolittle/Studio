@@ -3,15 +3,11 @@
 
 import React, { useState } from 'react';
 
-import { componentStories, Accordion, MaxWidthTextBlock } from '@dolittle/design-system';
+import { componentStories, Accordion, StatusIndicatorProps } from '@dolittle/design-system';
+
+import { DummyChildrenContent } from '@dolittle/design-system/helpers/dummyContent';
 
 const { metadata, createStory } = componentStories(Accordion);
-
-const DummyChildrenContent = () =>
-    <MaxWidthTextBlock>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa illo similique consequuntur dolores natus ex
-        sunt esse mollitia id atque. Atque molestiae cum magnam eligendi maxime id sapiente quaerat suscipit?
-    </MaxWidthTextBlock>;
 
 metadata.parameters = {
     docs: {
@@ -25,7 +21,7 @@ metadata.argTypes = {
     progressStatus: {
         control: {
             type: 'select',
-            options: ['connected', 'waiting', 'pending', 'failed', 'unknown'],
+            options: ['success', 'waiting', 'warning', 'error', 'unknown'],
         },
     },
     children: { control: false },
@@ -54,17 +50,19 @@ export const DefaultExpanded = createStory({
 export const WithStatusMessage = createStory();
 WithStatusMessage.decorators = [
     () => {
-        const [status, setStatus] = useState('waiting');
+        const [status, setStatus] = useState<StatusIndicatorProps['status']>('waiting');
 
         // eslint-disable-next-line no-restricted-globals
-        setInterval(() => {
-            if (status !== 'waiting') setStatus('waiting');
-            else {
+        setTimeout(() => {
+            if (status !== 'waiting') {
+                setStatus('waiting');
+            } else {
                 const random = Math.random();
 
-                if (random < 0.2) setStatus('failed');
-                else if (random < 0.4) setStatus('pending');
-                else if (random < 0.8) setStatus('connected');
+                if (random < 0.2) setStatus('success');
+                else if (random < 0.4) setStatus('table-success');
+                else if (random < 0.6) setStatus('warning');
+                else if (random < 0.8) setStatus('error');
                 else setStatus('unknown');
             }
         }, 4000);
@@ -74,7 +72,7 @@ WithStatusMessage.decorators = [
                 id='with-status-message'
                 title='With Status Message'
                 progressStatus={status}
-                progressMessage={status === 'waiting' ? 'Waiting for something to happen...' : undefined}
+                progressLabel={status === 'waiting' ? 'Waiting for something to happen...' : status}
             >
                 <DummyChildrenContent />
             </Accordion>

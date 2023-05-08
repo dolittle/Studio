@@ -38,6 +38,9 @@ export type ContentHeaderProps = {
      */
     buttonsSlot?: React.ReactNode;
 
+    /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
     sx?: SxProps;
 };
 
