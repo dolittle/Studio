@@ -18,7 +18,7 @@ export type ACTIONTYPE =
     | { type: 'open'; payload?: void }
     | { type: 'close'; payload?: void }
     | { type: 'setCredential'; payload: string }
-    | { type: 'clearCredential'; payload: void }
+    | { type: 'clearCredential'; payload?: void }
     | { type: 'setLoading'; payload: boolean };
 
 export const deleteCredentialDialogReducer = (state: DeleteCredentialDialogState, action: ACTIONTYPE) => {
@@ -44,6 +44,11 @@ export type DeleteCredentialDialogProps = {
 
 export const DeleteCredentialDialog = ({dialogState, dispatch, handleDelete }: DeleteCredentialDialogProps) => {
 
+    const handleCancel = () => {
+        dispatch({ type: 'clearCredential' });
+        dispatch({ type: 'close' });
+    };
+
     return (
         <AlertDialog
             id='delete-credential'
@@ -55,7 +60,7 @@ export const DeleteCredentialDialog = ({dialogState, dispatch, handleDelete }: D
             confirmBtnColor='error'
             confirmBtnText='Delete'
             isOpen={dialogState.open}
-            onCancel={() => dispatch({ type: 'close' })}
+            onCancel={handleCancel}
             onConfirm={() => handleDelete(dialogState.credentialName)}
         />
     );
