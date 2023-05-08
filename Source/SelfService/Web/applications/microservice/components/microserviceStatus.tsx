@@ -1,15 +1,19 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
-
-import { Button, StatusIndicatorProps, SvgIconsDefinition } from '@dolittle/design-system';
+import { StatusIndicatorProps } from '@dolittle/design-system';
 
 enum MicroserviceStatus {
     Running = 0,
     Pending = 1,
     Failing = 2,
     Unknown = 3,
+};
+
+export const customStatusFieldSort = (_, __, left, right) => {
+    const leftStatus = getMicroserviceState(left.value);
+    const rightStatus = getMicroserviceState(right.value);
+    return leftStatus - rightStatus;
 };
 
 const getMicroserviceState = (phase?: string): MicroserviceStatus => {
@@ -27,39 +31,6 @@ const getMicroserviceState = (phase?: string): MicroserviceStatus => {
     }
 
     return MicroserviceStatus.Unknown;
-};
-
-type StatusInfo = {
-    color: 'subtle' | 'error' | 'info' | 'success' | 'warning';
-    icon: SvgIconsDefinition;
-    label: string
-};
-
-const statusInfo = (status: string) => {
-    let color = 'subtle';
-    let icon = 'QuestionMark';
-    let label = 'n/a';
-
-    switch (getMicroserviceState(status)) {
-        case MicroserviceStatus.Running:
-            icon = 'CheckCircleRounded';
-            label = 'running';
-            break;
-        case MicroserviceStatus.Pending:
-            color = 'warning';
-            icon = 'WarningRounded';
-            label = 'pending';
-            break;
-        case MicroserviceStatus.Failing:
-            color = 'error';
-            icon = 'ErrorRounded';
-            label = 'failed';
-            break;
-        case MicroserviceStatus.Unknown:
-            color = 'info';
-    }
-
-    return { color, icon, label } as StatusInfo;
 };
 
 export const healthStatus = (status: string): StatusIndicatorProps => {
@@ -83,24 +54,23 @@ export const healthStatus = (status: string): StatusIndicatorProps => {
     return { status: 'unknown' };
 };
 
-export const ContainerHealthStatus = ({ status }: { status: string[] }) => {
-    const { color, icon, label } = statusInfo(status.join(' '));
+export const getContainerHealthStatus = (status: string[]): StatusIndicatorProps => {
+    if (status.includes('failed')) {
+        return {
+            status: 'error',
+            label: 'failing',
+        };
+    } else if (status.includes('waiting') || status.includes('pending')) {
+        return {
+            status: 'warning',
+            label: 'pending',
+        };
+    } else if (status.includes('running')) {
+        return {
+            status: 'success',
+            label: 'running',
+        };
+    }
 
-    return (
-        <Button
-            label={label}
-            variant='filled'
-            color={label === 'running' ? 'success' : color}
-            startWithIcon={icon}
-            component='span'
-            role='none'
-            sx={{ pointerEvents: 'none' }}
-        />
-    );
-};
-
-export const customStatusFieldSort = (_, __, left, right) => {
-    const leftStatus = getMicroserviceState(left.value);
-    const rightStatus = getMicroserviceState(right.value);
-    return leftStatus - rightStatus;
+    return { status: 'unknown' };
 };
