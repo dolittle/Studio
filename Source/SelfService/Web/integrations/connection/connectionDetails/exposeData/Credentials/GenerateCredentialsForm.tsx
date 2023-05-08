@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { useSnackbar } from 'notistack';
-import { QueryClient, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { Collapse, FormHelperText, Grid, TextField, Typography, Paper } from '@mui/material';
 import { AlertBox, Button, ContentSection, Form, FormRef, Input } from '@dolittle/design-system';
