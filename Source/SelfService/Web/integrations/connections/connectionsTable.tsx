@@ -41,7 +41,7 @@ const getConnectionsHealthStatus = (status: string): StatusIndicatorProps => {
     } else if (status === 'failing') {
         return {
             status: 'error',
-            label: 'failing',
+            label: 'Not connected',
         };
     }
 
