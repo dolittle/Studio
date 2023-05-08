@@ -48,7 +48,7 @@ const tabs = [
     },
 ];
 
-const connectionHealthStatus = (status: string): StatusIndicatorProps => {
+const getConnectionHealthStatus = (status: string): StatusIndicatorProps => {
     if (status === 'connected') {
         return {
             status: 'success',
@@ -84,8 +84,8 @@ export const ConnectionDetails = () => {
     return (
         <Page
             title={pageTitle}
-            healthStatus={connectionHealthStatus(status).status}
-            healthStatusLabel={connectionHealthStatus(status).label}
+            healthStatus={getConnectionHealthStatus(status)?.status}
+            healthStatusLabel={getConnectionHealthStatus(status)?.label}
             sx={{ mb: 4 }}
         >
             <Tabs selectedTab={getCurrentTab(location)} tabs={tabs} />
