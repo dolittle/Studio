@@ -39,7 +39,16 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
     return (
         <ContentSection
             title='Credentials'
-            headerProps={{ buttons: [{ label: 'Generate New Credentials', variant: 'outlined', onClick: () => setOpenCredentials(true) }] }}
+            headerProps={{
+                buttons: [
+                    {
+                        label: 'Generate New Credentials',
+                        variant: 'outlined',
+                        onClick: () => setOpenCredentials(true),
+                        disabled: openCredentials
+                    }
+                ]
+            }}
         >
             <Collapse in={openCredentials}>
                 <GenerateCredentialsForm connectionId={connectionId} onFormComplete={handleTokenGenerated} />
