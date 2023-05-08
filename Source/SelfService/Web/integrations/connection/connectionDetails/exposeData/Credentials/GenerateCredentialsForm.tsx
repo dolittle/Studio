@@ -3,12 +3,13 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { useSnackbar } from 'notistack';
-
+import { QueryClient, useQueryClient } from '@tanstack/react-query';
 
 import { Collapse, FormHelperText, Grid, TextField, Typography, Paper } from '@mui/material';
 import { AlertBox, Button, ContentSection, Form, FormRef, Input } from '@dolittle/design-system';
 import { useConnectionsIdServiceAccountsServiceAccountNamePost } from '../../../../../apis/integrations/serviceAccountApi.hooks';
 import { ResponseError, ServiceAccountCreatedDto } from '../../../../../apis/integrations/generated';
+import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 
 export type GenerateCredentialsFormParameters = {
     name: string;
@@ -26,6 +27,7 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
     const { enqueueSnackbar } = useSnackbar();
     const [token, setToken] = useState<string | undefined>(undefined);
     const [formSubmitError, setFormSubmitError] = useState<string | undefined>(undefined);
+    const queryClient = useQueryClient();
     const formRef = useRef<FormRef<GenerateCredentialsFormParameters>>(null);
 
     const generateTokenMutation = useConnectionsIdServiceAccountsServiceAccountNamePost();
@@ -46,6 +48,7 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
             onSuccess: (data: ServiceAccountCreatedDto) => {
                 setToken(data.token);
                 formRef.current?.setValue('token', data.token);
+                queryClient.invalidateQueries([CACHE_KEYS.ConnectionServiceAccounts_GET, props.connectionId]);
             },
             onError: async (error) => {
                 let message = `Error while generating token.`;

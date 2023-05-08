@@ -26,7 +26,10 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
 
     const { data, isLoading, isError, error } = useConnectionsIdServiceAccountsGet({ id: connectionId });
 
-    const credentials = useMemo(() => data?.filter(credential => credential.serviceAccountName !== activeCredential) || [], [data]);
+    const credentials = useMemo(
+        () => data?.filter(credential => credential.serviceAccountName !== activeCredential) || [],
+        [data, activeCredential]
+    );
 
     const handleTokenGenerated = (tokenName: string) => {
         setActiveCredential(tokenName);
@@ -34,6 +37,7 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
     };
 
     const handleGenerateNewCredentials = () => {
+        setActiveCredential(undefined);
         setAllowGenerateNewCredentials(false);
         setOpenCredentials(true);
         setResetForm(true);
