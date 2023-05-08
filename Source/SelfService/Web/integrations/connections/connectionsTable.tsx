@@ -17,7 +17,7 @@ import { CACHE_KEYS } from '../../apis/integrations/CacheKeys';
 import { useConnectionsIdDelete } from '../../apis/integrations/connectionsApi.hooks';
 
 const StatusCell = (params: GridRenderCellParams<any, ConnectionModel>) => {
-    const status = params.row.status?.name.toLowerCase();
+    const status = params.row.status.name.toLowerCase();
 
     return (
         <StatusIndicator
@@ -90,9 +90,8 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
             headerName: 'Actions',
             minWidth: 100,
             flex: 1,
-            renderCell({ row }) {
-                return <IconButton tooltipText='Delete connection' icon='DeleteRounded' onClick={() => deleteConnection(row)} />;
-            },
+            renderCell: ({ row }) =>
+                <IconButton tooltipText='Delete connection' icon='DeleteRounded' onClick={() => deleteConnection(row)} />,
             valueGetter: ({ row }) => row?.status?.name,
         },
     ];
