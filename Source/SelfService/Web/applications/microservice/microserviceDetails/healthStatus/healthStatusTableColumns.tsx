@@ -14,12 +14,12 @@ import { HealthStatusTableRow } from './healthStatusTable';
 import { healthStatus } from '../../components/microserviceStatus';
 
 const StatusCell = (params: GridRenderCellParams<any, HealthStatusTableRow>) => {
-    const status = params.row.state.toLowerCase();
+    const status = params.row?.state?.toLowerCase();
 
     return (
         <StatusIndicator
-            status={healthStatus(status)?.status}
-            label={healthStatus(status)?.label}
+            status={healthStatus(status).status}
+            label={healthStatus(status).label}
         />
     );
 };

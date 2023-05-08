@@ -32,12 +32,12 @@ const PublicUrlCell = (params: GridRenderCellParams) => {
 };
 
 const StatusCell = (params: GridRenderCellParams) => {
-    const status = params.value.toLowerCase();
+    const status = params.value?.toLowerCase();
 
     return (
         <StatusIndicator
-            status={healthStatus(status)?.status}
-            label={healthStatus(status)?.label}
+            status={healthStatus(status).status}
+            label={healthStatus(status).label}
         />
     );
 };
@@ -79,7 +79,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
 
             return {
                 ...microservice,
-                phase: status[0]?.phase
+                phase: status[0]?.phase,
             } as MicroserviceObject;
         })).then(data => {
             setMicroserviceRows(data);
