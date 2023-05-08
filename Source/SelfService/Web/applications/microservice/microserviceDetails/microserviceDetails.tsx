@@ -136,8 +136,8 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                 <Typography variant='h1' sx={{ mr: 3 }}>{currentMicroservice.name}</Typography>
                 <StatusIndicator
                     variantFilled
-                    status={getContainerHealthStatus(containerStatuses())?.status}
-                    label={getContainerHealthStatus(containerStatuses())?.label}
+                    status={getContainerHealthStatus(containerStatuses()).status}
+                    label={getContainerHealthStatus(containerStatuses()).label}
                 />
             </Box>
 
