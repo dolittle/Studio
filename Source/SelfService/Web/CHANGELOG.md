@@ -1,3 +1,34 @@
+# [3.4.36] - 2023-5-8 [PR: #393](https://github.com/dolittle/Studio/pull/393)
+## Summary
+
+Replaced MS statuses with Design System 'StatusIndicator'.
+Added ConnectionsTable statuses.
+
+### Added
+
+- Status types and variants
+- Statuses to ConnectionsTable
+- Correct statuses to Accordion and AccordionList
+
+### Changed
+
+- Status in StatusIndicator.stories so it would show updated status variants
+- MS status display from 'Button' component to 'StatusIndicator'
+- Accordion status display from 'setInterval' to 'setTimeout' as this is more correct use case
+- Overall code cleanup
+
+### Fixed
+
+- Initialy expanded AccordionList accordion was not expanded
+- Add margin to DataTable header icon only. Before margin was added to all DataTable icons.
+- MS HealthStatus DataTable border color
+- Improved wording
+
+### Removed
+
+- SX control from StatusIndicator.sories as it is hard to add styles like this in Storybook
+
+
 # [3.4.35] - 2023-5-4 [PR: #392](https://github.com/dolittle/Studio/pull/392)
 - Update current alpha numeric regex pattern to include it's for lower case only
 - Use any cased alpha numeric regex for input validation of message type name
