@@ -12,17 +12,6 @@ type ConnectionStatusCondition = {
     icon: SvgIconsDefinition | null;
 };
 
-// const containerHealthStatus = (status: string) => {
-//     if (status === 'waiting') {
-//         return {
-//             status: 'warning',
-//             label: 'pending',
-//         };
-//     }
-
-//     return status;
-// };
-
 const connectionStatusCondition = (status: string): ConnectionStatusCondition => {
     if (status === 'success') {
         return { color: 'success.main', icon: 'CheckCircleRounded' };
