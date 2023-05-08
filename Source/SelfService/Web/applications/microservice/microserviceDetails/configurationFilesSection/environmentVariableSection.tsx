@@ -31,13 +31,14 @@ const envVariableColumns: GridColDef<EnvironmentVariableTableRow>[] = [
     {
         field: 'isSecret',
         headerName: 'Secret',
+        headerAlign: 'center',
         type: 'singleSelect',
         valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
         editable: true,
         renderCell: ({ value }) => (
             <Button label={value ? 'Yes' : 'No'} color='subtle' endWithIcon='ArrowDropDownRounded' sx={{ width: 1, height: 1 }} />
         ),
-        width: 90,
+        width: 120,
     },
 ];
 
@@ -53,9 +54,10 @@ const styles = {
             '&:last-of-type': { mr: 0 },
         },
     },
-    isSecretCell: {
+    dataTable: {
         'mb': 8,
         '& .MuiOutlinedInput-root': {
+            // Hack for secret cell active state. Otherwise size is going to be different.
             '& .MuiSelect-select': { p: '10px 15px' },
             '& fieldset': { border: 'none' },
         },
@@ -288,7 +290,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                             processRowUpdate={processRowUpdate}
                             onProcessRowUpdateError={error => console.log(error)}
                             experimentalFeatures={{ newEditingApi: true }}
-                            sx={styles.isSecretCell}
+                            sx={styles.dataTable}
                         />
                     </Paper>
                 }
