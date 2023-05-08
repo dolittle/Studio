@@ -16,6 +16,8 @@ export type CredentialsSectionProps = {};
 export const CredentialsSection = (props: CredentialsSectionProps) => {
     const [openCredentials, setOpenCredentials] = useState(false);
     const [activeCredential, setActiveCredential] = useState<string | undefined>(undefined);
+    const [allowGenerateNewCredentials, setAllowGenerateNewCredentials] = useState(true);
+    const [resetForm, setResetForm] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const connectionId = useConnectionId();
     if (!connectionId) {
@@ -28,7 +30,21 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
 
     const handleTokenGenerated = (tokenName: string) => {
         setActiveCredential(tokenName);
+        setAllowGenerateNewCredentials(true);
     };
+
+    const handleGenerateNewCredentials = () => {
+        setAllowGenerateNewCredentials(false);
+        setOpenCredentials(true);
+        setResetForm(true);
+    };
+
+    useEffect(() => {
+        //TODO: Pav - no like this
+        if (resetForm) {
+            setResetForm(false);
+        }
+    }, [resetForm]);
 
 
     if (isError) {
@@ -44,14 +60,14 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
                     {
                         label: 'Generate New Credentials',
                         variant: 'outlined',
-                        onClick: () => setOpenCredentials(true),
-                        disabled: openCredentials
+                        onClick: handleGenerateNewCredentials,
+                        disabled: !allowGenerateNewCredentials
                     }
                 ]
             }}
         >
             <Collapse in={openCredentials}>
-                <GenerateCredentialsForm connectionId={connectionId} onFormComplete={handleTokenGenerated} />
+                <GenerateCredentialsForm resetForm={resetForm} connectionId={connectionId} onFormComplete={handleTokenGenerated} />
             </Collapse>
             <CredentialsList credentials={credentials} />
         </ContentSection>

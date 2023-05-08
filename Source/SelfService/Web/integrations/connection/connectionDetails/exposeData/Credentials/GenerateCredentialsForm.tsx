@@ -17,6 +17,7 @@ export type GenerateCredentialsFormParameters = {
 };
 
 export type GenerateCredentialsFormProps = {
+    resetForm: boolean;
     connectionId: string;
     onFormComplete: (tokenName: string) => void;
 };
@@ -36,6 +37,7 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
     };
 
     const handleGenerate = (fieldValues: GenerateCredentialsFormParameters) => {
+        setFormSubmitError(undefined);
         generateTokenMutation.mutate({
             id: props.connectionId,
             serviceAccountName: fieldValues.name,
@@ -58,6 +60,17 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
         });
         props.onFormComplete(fieldValues.name);
     };
+    const resetForm = () => {
+        setFormSubmitError(undefined);
+        setToken(undefined);
+        formRef.current?.reset();
+    };
+
+    useEffect(() => {
+        if (props.resetForm) {
+            resetForm();
+        }
+    }, [props.resetForm]);
 
     return (
         <>
