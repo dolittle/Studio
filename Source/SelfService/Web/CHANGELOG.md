@@ -1,3 +1,11 @@
+# [3.4.37] - 2023-5-8 [PR: #394](https://github.com/dolittle/Studio/pull/394)
+### Fixed
+
+- Empty podStatus gave error to entire MS DataTable. Added 'undefined' as possible PodStatus that returns 'unknown' as status.
+
+![MicrosoftTeams-image](https://user-images.githubusercontent.com/19160439/236857129-1e4baf3d-bbc1-4253-9618-722535784ee7.png)
+
+
 # [3.4.36] - 2023-5-8 [PR: #393](https://github.com/dolittle/Studio/pull/393)
 ## Summary
 
