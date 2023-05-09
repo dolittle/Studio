@@ -17,12 +17,12 @@ import { CACHE_KEYS } from '../../apis/integrations/CacheKeys';
 import { useConnectionsIdDelete } from '../../apis/integrations/connectionsApi.hooks';
 
 const StatusCell = (params: GridRenderCellParams<any, ConnectionModel>) => {
-    const status = params.row.status.name.toLowerCase();
+    const status = params.row?.status?.name?.toLowerCase();
 
     return (
         <StatusIndicator
             status={getConnectionsHealthStatus(status).status}
-            label={getConnectionsHealthStatus(status)?.label}
+            label={getConnectionsHealthStatus(status).label}
         />
     );
 };
