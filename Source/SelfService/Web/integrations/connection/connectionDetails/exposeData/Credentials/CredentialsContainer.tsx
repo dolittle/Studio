@@ -6,21 +6,21 @@ import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { Collapse, FormHelperText, Grid, TextField, Typography } from '@mui/material';
-import { AlertBox, Button, ContentSection } from '@dolittle/design-system';
+import { AlertBox, Button, ContentContainer, ContentHeader, ContentSection } from '@dolittle/design-system';
 import {
     useConnectionsIdServiceAccountsGet,
     useConnectionsIdServiceAccountsServiceAccountNameDelete
 } from '../../../../../apis/integrations/serviceAccountApi.hooks';
-import { useConnectionId } from '../../../../../integrations/routes.hooks';
+import { useConnectionId } from '../../../../routes.hooks';
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 import { CredentialsList } from './CredentialsList';
 import { GenerateCredentialsForm } from './GenerateCredentialsForm';
 import { DeleteCredentialDialog, DeleteCredentialDialogState, deleteCredentialDialogReducer } from './DeleteCredentialDialog';
 
-export type CredentialsSectionProps = {};
+export type CredentialsContainerProps = {};
 
-export const CredentialsSection = (props: CredentialsSectionProps) => {
-    const [openCredentials, setOpenCredentials] = useState(false);
+export const CredentialsContainer = (props: CredentialsContainerProps) => {
+    const [openCredentials, setOpenCredentials] = useState(true);
     const [activeCredential, setActiveCredential] = useState<string | undefined>(undefined);
     const [allowGenerateNewCredentials, setAllowGenerateNewCredentials] = useState(true);
     const [resetForm, setResetForm] = useState(false);
@@ -83,21 +83,20 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
     }
 
     return (
-        <>
-            <ContentSection
+        <ContentContainer>
+            <ContentHeader
                 title='Credentials'
-                headerProps={{
-                    buttons: [
-                        {
-                            label: 'Generate New Credentials',
-                            variant: 'outlined',
-                            onClick: handleGenerateNewCredentials,
-                            disabled: !allowGenerateNewCredentials
-                        }
-                    ]
-                }}
-                hideDivider
-            >
+                buttons={[
+                    {
+                        label: 'Generate New Credentials',
+                        variant: 'outlined',
+                        onClick: handleGenerateNewCredentials,
+                        disabled: !allowGenerateNewCredentials
+                    }
+                ]}
+                sx={{ my: 2 }}
+            />
+            <ContentSection>
                 <DeleteCredentialDialog
                     dialogState={deleteDialogState}
                     dispatch={deleteDialogDispatch}
@@ -107,9 +106,9 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
                     <GenerateCredentialsForm resetForm={resetForm} connectionId={connectionId} onFormComplete={handleTokenGenerated} />
                 </Collapse>
             </ContentSection>
-            <ContentSection hideDivider title='Credentials Created'>
+            <ContentSection hideDivider title='Credentials Created' headerProps={{ sx: { mb: 3.5 } }}>
                 <CredentialsList credentials={credentials} onDelete={onDelete} />
             </ContentSection>
-        </>
+        </ContentContainer>
     );
 };

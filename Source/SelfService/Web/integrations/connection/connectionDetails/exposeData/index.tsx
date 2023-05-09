@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import { Box, Typography } from '@mui/material';
 
 import { ContentContainer, ContentHeader, ContentSection, IconButton, Link, Switch } from '@dolittle/design-system';
-import { CredentialsSection } from './Credentials/CredentialsSection';
+import { CredentialsContainer } from './Credentials/CredentialsContainer';
 
 const styles = {
     display: 'flex',
@@ -78,9 +78,7 @@ export const ExposeDataView = () => {
                     </Box>
                 </ContentSection>
             </ContentContainer>
-            <ContentContainer>
-                <CredentialsSection />
-            </ContentContainer>
+            <CredentialsContainer />
         </>
     );
 };

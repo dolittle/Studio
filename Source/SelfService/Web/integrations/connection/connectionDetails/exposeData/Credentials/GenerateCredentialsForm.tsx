@@ -87,7 +87,7 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
                 fRef={formRef}
             >
 
-                <Paper elevation={3}>
+                <Paper elevation={3} sx={{ py: 3, px: 1.25 }}>
                     <Grid container spacing={3} sx={{ pb: 5 }}>
                         <Grid item>
                             <Typography sx={{ mb: 2 }}>Who or what are these credentials for?</Typography>
