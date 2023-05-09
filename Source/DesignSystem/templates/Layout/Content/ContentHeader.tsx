@@ -13,6 +13,7 @@ const styles = {
         justifyContent: 'space-between',
         alignItems: 'center',
         gap: 4,
+        my: 2
     },
     buttonGroup: {
         display: 'flex',

@@ -94,7 +94,6 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
                         disabled: !allowGenerateNewCredentials
                     }
                 ]}
-                sx={{ my: 2 }}
             />
             <ContentSection>
                 <DeleteCredentialDialog

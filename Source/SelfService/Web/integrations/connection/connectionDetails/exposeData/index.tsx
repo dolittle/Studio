@@ -43,7 +43,6 @@ export const ExposeDataView = () => {
                 <ContentHeader
                     title='Exposing your data'
                     buttonsSlot={<Switch.UI id='deploy-switch' label='Deploy service' defaultChecked sx={{ mx: 0 }} />}
-                    sx={{ my: 2 }}
                 />
                 <ContentSection title='Rest API URL'>
                     <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
