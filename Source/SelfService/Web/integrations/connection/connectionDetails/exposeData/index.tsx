@@ -38,46 +38,49 @@ export const ExposeDataView = () => {
 
 
     return (
-        <ContentContainer>
-            <ContentHeader
-                title='Exposing your data'
-                buttonsSlot={<Switch.UI id='deploy-switch' label='Deploy service' defaultChecked sx={{ mx: 0 }} />}
-                sx={{ my: 2 }}
-            />
-            <ContentSection title='Rest API URL'>
-                <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
-                    <Link
-                        target
-                        href={restApiUrl}
-                        message={restApiUrl}
-                    />
-                    <IconButton
-                        tooltipText='Copy rest API URL link to clipboard'
-                        icon='CopyAllRounded'
-                        color='primary'
-                        onClick={handleRestApiLinkCopy}
-                    />
-                </Box>
-            </ContentSection>
-            <ContentSection hideDivider title='Rest API Documentation'>
-                <Typography sx={{ pt: 1.5 }}>Our rest API is documented using OpenAPI.</Typography>
-
-                <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
-                    <Link
-                        target
-                        ariaLabel='OpenAPI documentation'
-                        href={openApiDocumentationUrl}
-                        message={openApiDocumentationUrl}
-                    />
-                    <IconButton
-                        tooltipText='Copy OpenAPI documentation link to clipboard'
-                        icon='CopyAllRounded'
-                        color='primary'
-                        onClick={handleOpenApiDocumentationLinkCopy}
-                    />
-                </Box>
-            </ContentSection>
-            <CredentialsSection />
-        </ContentContainer>
+        <>
+            <ContentContainer>
+                <ContentHeader
+                    title='Exposing your data'
+                    buttonsSlot={<Switch.UI id='deploy-switch' label='Deploy service' defaultChecked sx={{ mx: 0 }} />}
+                    sx={{ my: 2 }}
+                />
+                <ContentSection title='Rest API URL'>
+                    <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
+                        <Link
+                            target
+                            href={restApiUrl}
+                            message={restApiUrl}
+                        />
+                        <IconButton
+                            tooltipText='Copy rest API URL link to clipboard'
+                            icon='CopyAllRounded'
+                            color='primary'
+                            onClick={handleRestApiLinkCopy}
+                        />
+                    </Box>
+                </ContentSection>
+                <ContentSection hideDivider title='Rest API Documentation'>
+                    <Typography sx={{ pt: 1.5 }}>Our rest API is documented using OpenAPI.</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
+                        <Link
+                            target
+                            ariaLabel='OpenAPI documentation'
+                            href={openApiDocumentationUrl}
+                            message={openApiDocumentationUrl}
+                        />
+                        <IconButton
+                            tooltipText='Copy OpenAPI documentation link to clipboard'
+                            icon='CopyAllRounded'
+                            color='primary'
+                            onClick={handleOpenApiDocumentationLinkCopy}
+                        />
+                    </Box>
+                </ContentSection>
+            </ContentContainer>
+            <ContentContainer>
+                <CredentialsSection />
+            </ContentContainer>
+        </>
     );
 };

@@ -82,31 +82,34 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
         return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
     }
 
-
-
     return (
-        <ContentSection
-            title='Credentials'
-            headerProps={{
-                buttons: [
-                    {
-                        label: 'Generate New Credentials',
-                        variant: 'outlined',
-                        onClick: handleGenerateNewCredentials,
-                        disabled: !allowGenerateNewCredentials
-                    }
-                ]
-            }}
-        >
-            <DeleteCredentialDialog
-                dialogState={deleteDialogState}
-                dispatch={deleteDialogDispatch}
-                handleDelete={handleDelete}
-            />
-            <Collapse in={openCredentials}>
-                <GenerateCredentialsForm resetForm={resetForm} connectionId={connectionId} onFormComplete={handleTokenGenerated} />
-            </Collapse>
-            <CredentialsList credentials={credentials} onDelete={onDelete} />
-        </ContentSection>
+        <>
+            <ContentSection
+                title='Credentials'
+                headerProps={{
+                    buttons: [
+                        {
+                            label: 'Generate New Credentials',
+                            variant: 'outlined',
+                            onClick: handleGenerateNewCredentials,
+                            disabled: !allowGenerateNewCredentials
+                        }
+                    ]
+                }}
+                hideDivider
+            >
+                <DeleteCredentialDialog
+                    dialogState={deleteDialogState}
+                    dispatch={deleteDialogDispatch}
+                    handleDelete={handleDelete}
+                />
+                <Collapse in={openCredentials}>
+                    <GenerateCredentialsForm resetForm={resetForm} connectionId={connectionId} onFormComplete={handleTokenGenerated} />
+                </Collapse>
+            </ContentSection>
+            <ContentSection hideDivider title='Credentials Created'>
+                <CredentialsList credentials={credentials} onDelete={onDelete} />
+            </ContentSection>
+        </>
     );
 };
