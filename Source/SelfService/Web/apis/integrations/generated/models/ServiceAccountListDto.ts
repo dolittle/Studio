@@ -30,12 +30,6 @@ export interface ServiceAccountListDto {
      * @type {string}
      * @memberof ServiceAccountListDto
      */
-    description?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ServiceAccountListDto
-     */
     createdBy?: string;
     /**
      * 
@@ -43,6 +37,12 @@ export interface ServiceAccountListDto {
      * @memberof ServiceAccountListDto
      */
     createdAt?: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceAccountListDto
+     */
+    description?: string | null;
 }
 
 /**
@@ -65,9 +65,9 @@ export function ServiceAccountListDtoFromJSONTyped(json: any, ignoreDiscriminato
     return {
         
         'serviceAccountName': !exists(json, 'serviceAccountName') ? undefined : json['serviceAccountName'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
         'createdBy': !exists(json, 'createdBy') ? undefined : json['createdBy'],
         'createdAt': !exists(json, 'createdAt') ? undefined : (new Date(json['createdAt'])),
+        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -81,9 +81,9 @@ export function ServiceAccountListDtoToJSON(value?: ServiceAccountListDto | null
     return {
         
         'serviceAccountName': value.serviceAccountName,
-        'description': value.description,
         'createdBy': value.createdBy,
         'createdAt': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
+        'description': value.description,
     };
 }
 

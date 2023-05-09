@@ -30,12 +30,6 @@ export interface ServiceAccountCreatedDto {
      * @type {string}
      * @memberof ServiceAccountCreatedDto
      */
-    description?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ServiceAccountCreatedDto
-     */
     token?: string;
     /**
      * 
@@ -49,6 +43,12 @@ export interface ServiceAccountCreatedDto {
      * @memberof ServiceAccountCreatedDto
      */
     createdAt?: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceAccountCreatedDto
+     */
+    description?: string | null;
 }
 
 /**
@@ -71,10 +71,10 @@ export function ServiceAccountCreatedDtoFromJSONTyped(json: any, ignoreDiscrimin
     return {
         
         'serviceAccountName': !exists(json, 'serviceAccountName') ? undefined : json['serviceAccountName'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
         'token': !exists(json, 'token') ? undefined : json['token'],
         'createdBy': !exists(json, 'createdBy') ? undefined : json['createdBy'],
         'createdAt': !exists(json, 'createdAt') ? undefined : (new Date(json['createdAt'])),
+        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -88,10 +88,10 @@ export function ServiceAccountCreatedDtoToJSON(value?: ServiceAccountCreatedDto 
     return {
         
         'serviceAccountName': value.serviceAccountName,
-        'description': value.description,
         'token': value.token,
         'createdBy': value.createdBy,
         'createdAt': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
+        'description': value.description,
     };
 }
 

@@ -82,7 +82,7 @@ export class ServiceAccountApi extends runtime.BaseAPI {
     /**
      * Delete a given service account for a connection
      */
-    async connectionsIdServiceAccountsServiceAccountNameDeleteRaw(requestParameters: ConnectionsIdServiceAccountsServiceAccountNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ServiceAccountCreatedDto>> {
+    async connectionsIdServiceAccountsServiceAccountNameDeleteRaw(requestParameters: ConnectionsIdServiceAccountsServiceAccountNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdServiceAccountsServiceAccountNameDelete.');
         }
@@ -106,15 +106,14 @@ export class ServiceAccountApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ServiceAccountCreatedDtoFromJSON(jsonValue));
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * Delete a given service account for a connection
      */
-    async connectionsIdServiceAccountsServiceAccountNameDelete(requestParameters: ConnectionsIdServiceAccountsServiceAccountNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ServiceAccountCreatedDto> {
-        const response = await this.connectionsIdServiceAccountsServiceAccountNameDeleteRaw(requestParameters, initOverrides);
-        return await response.value();
+    async connectionsIdServiceAccountsServiceAccountNameDelete(requestParameters: ConnectionsIdServiceAccountsServiceAccountNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.connectionsIdServiceAccountsServiceAccountNameDeleteRaw(requestParameters, initOverrides);
     }
 
     /**
