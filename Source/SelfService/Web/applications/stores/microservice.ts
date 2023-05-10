@@ -7,6 +7,7 @@ import {
     deleteMicroservice as apiDeleteMicroservice,
     saveMicroservice as apiSaveMicroservice,
     MicroserviceInfo,
+    MicroserviceExtra,
     getMicroservices,
     HttpResponseMicroservices,
 } from '../../apis/solutions/api';
@@ -15,21 +16,20 @@ import { MicroserviceSimple, MicroserviceDolittle, MicroserviceRawDataLogIngesto
 import { getApplication, HttpInputApplicationEnvironment } from '../../apis/solutions/application';
 
 export type MicroserviceStore = {
-    edit: any;
-    live: MicroserviceInfo;
     id: string;
-    kind: string;
     name: string;
+    kind: string;
     environment: string;
+    live: MicroserviceInfo;
+    edit: any; // MicroserviceExtra
 };
 
 const data = {
     microservices: [] as MicroserviceInfo[],
-    isLoaded: false
+    isLoaded: false,
 };
 
-// We do not use the same information from view to edit
-
+// We do not use the same information from view to edit.
 export const microservices = writable(data.microservices);
 export const isLoaded = writable(data.isLoaded);
 
@@ -78,6 +78,7 @@ export const mergeMicroservicesFromGit = items => {
         storeItem.live = data[index].live;
         data = [...data.slice(0, index), storeItem, ...data.slice(index + 1)];
     });
+
     microservices.set(data);
 };
 
@@ -106,6 +107,7 @@ export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
         storeItem.kind = storeItem.edit.kind ? storeItem.edit.kind : '';
         data = [...data.slice(0, index), storeItem, ...data.slice(index + 1)];
     });
+
     microservices.set(data);
 };
 
@@ -115,6 +117,7 @@ export async function deleteMicroservice(applicationId: string, environment: str
     if (!response) return response;
 
     let data = get(microservices);
+
     // I dont think we need to care about environment etc, if we trigger reload between
     data = data.filter(ms => ms.id !== microserviceId);
     microservices.set(data);
@@ -142,6 +145,7 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
     const liveMicroservices = await getMicroservices(applicationId);
     //const filteredMicroservices = liveMicroservices.microservices.filter(microservice => microservice.environment === environment);
     mergeMicroservicesFromK8s(liveMicroservices.microservices);
+
     // TODO change to microserviceID
     return true;
 };
