@@ -87,77 +87,49 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
                 onSubmit={handleGenerate}
                 fRef={formRef}
             >
-
-                <Paper elevation={3} sx={{ py: 3, px: 1.25 }}>
-                    <Box>
-                        <MaxWidthTextBlock sx={{ mb: 3 }}>
-                            The token will only be visible one time after you generate it, so please make sure to copy it. Who or what are these credentials for?
-                        </MaxWidthTextBlock>
-                        <Box
-                            display='flex'
-                            gap={1}
-                            sx={{ mb: 6 }}
-                        >
-                            <Input id='name' label='Name' required disabled={hasResult && !formSubmitError} sx={{ mr: 10 }} />
-                            <Input id='description' label='Description' disabled={hasResult && !formSubmitError} />
-                        </Box>
-                        <Box display='flex' justifyContent='flex-end'>
-                            <Button label='Cancel' sx={{mr: 6}}/>
-                            <Button label='Generate Token' type='submit' variant='outlined'/>
-                        </Box>
-
-                        {/* <Typography>Credential Token</Typography>
-                        <Box sx={{ mt: 2 }}>
-                            <Input
-                                id='token'
-                                label='Token'
-                                // disabled
-                                sx={{ width: 375 }}
-                            />
-                            <Button
-                                label='Copy Token'
-                                startWithIcon='CopyAllRounded'
-                                onClick={handleTokenCopy}
-                                sx={{ ml: 3 }}
-                            />
-                        </Box>
-                        <FormHelperText sx={{ ml: 1.75 }}>This bearer token should be used in the request header.</FormHelperText> */}
+                <Box>
+                    <MaxWidthTextBlock sx={{ mb: 3 }}>
+                        The token will only be visible one time after you generate it, so please make sure to copy it. Who or what are these credentials for?
+                    </MaxWidthTextBlock>
+                    <Box
+                        display='flex'
+                        gap={1}
+                        sx={{ mb: 6 }}
+                    >
+                        <Input id='name' label='Name' required disabled={hasResult && !formSubmitError} sx={{ mr: 10 }} />
+                        <Input id='description' label='Description' disabled={hasResult && !formSubmitError} />
                     </Box>
-                    {/* <Grid container spacing={3} sx={{ pb: 5 }}>
-                        <Grid item>
-                            <Typography sx={{ mb: 2 }}>Who or what are these credentials for?</Typography>
-                            <Input id='name' label='Name' required disabled={hasResult && !formSubmitError} />
-                            <Input id='description' label='Description' disabled={hasResult && !formSubmitError} />
-                        </Grid>
-
-                        {!hasResult || formSubmitError
-                            ? (
-                                <>
-                                    <Grid item>
-                                        {formSubmitError && (<AlertBox message={`${formSubmitError}`} />)}
-                                        <Button label='Generate Token' type='submit' />
-                                    </Grid>
-                                </>
-                            )
-                            : (
-                                <>
-                                    <Grid item>
-                                        <Typography sx={{ mb: 2 }}>Credential Token</Typography>
-                                        <Input
-                                            id='token'
-                                            label='Token'
-                                            disabled
-                                            sx={{ width: 400 }}
-                                        />
-                                        <FormHelperText>This bearer token should be used in the request header.</FormHelperText>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button label='Copy Token' startWithIcon='CopyAllRounded' onClick={handleTokenCopy} />
-                                    </Grid>
-                                </>
-                            )}
-                    </Grid> */}
-                </Paper >
+                    {!hasResult || formSubmitError
+                        ? (
+                            <>
+                                <Box display='flex' justifyContent='flex-end'>
+                                    {formSubmitError && (<AlertBox message={`${formSubmitError}`} />)}
+                                    <Button label='Cancel' sx={{ mr: 6 }} />
+                                    <Button label='Generate Token' type='submit' variant='outlined' />
+                                </Box>
+                            </>
+                        )
+                        : (
+                            <>
+                                <Typography>Credential Token</Typography>
+                                <Box sx={{ mt: 2 }}>
+                                    <Input
+                                        id='token'
+                                        label='Token'
+                                        disabled
+                                        sx={{ width: 375 }}
+                                    />
+                                    <Button
+                                        label='Copy Token'
+                                        startWithIcon='CopyAllRounded'
+                                        onClick={handleTokenCopy}
+                                        sx={{ ml: 3 }}
+                                    />
+                                </Box>
+                                <FormHelperText sx={{ ml: 1.75 }}>This bearer token should be used in the request header.</FormHelperText>
+                            </>
+                        )}
+                </Box>
             </Form >
         </>
     );
