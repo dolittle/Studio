@@ -33,10 +33,10 @@ metadata.args = {
     subtitle: '',
     description: 'Here is a description of the card. It can be a bit longer than the title, but not too long.',
     actions: (
-        <div>
-            <Button label='Secondary button' color='subtle' href='#' target />
+        <>
+            <Button label='Secondary button' color='subtle' onClick={action('clicked')} />
             <Button label='Primary button' onClick={action('clicked')} />
-        </div>
+        </>
     ),
     actionsAlignment: 'left',
 };
