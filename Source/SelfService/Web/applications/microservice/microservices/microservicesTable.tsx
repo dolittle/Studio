@@ -4,19 +4,23 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getPodStatus, MicroserviceInfo } from '../../../apis/solutions/api';
+import { getPodStatus, MicroserviceObject } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
-import { customStatusFieldSort, healthStatus } from '../components/microserviceStatus';
+import { customStatusFieldSort } from '../components/microserviceStatus';
 
-import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import { Paper, Tooltip } from '@mui/material';
 
 import { StatusIndicator } from '@dolittle/design-system';
 
-import { getRuntimeNumberFromString } from '../../../utils/helpers';
+import { getPodHealthStatus, getRuntimeNumberFromString } from '../../../utils/helpers';
 
-const PublicUrlCell = (params: GridRenderCellParams) => {
-    const hasPublicUrl = params.row.edit?.extra?.isPublic;
+type HealthStatusTableRowProps = {
+    row: MicroserviceObject & { value: string };
+};
+
+const PublicUrlCell = ({ row }: HealthStatusTableRowProps) => {
+    const hasPublicUrl = row.edit?.extra?.isPublic;
 
     return (
         // TODO: Tooltip needs public urls. Map them into title.
@@ -31,29 +35,12 @@ const PublicUrlCell = (params: GridRenderCellParams) => {
     );
 };
 
-const StatusCell = (params: GridRenderCellParams) => {
-    const status = params.value?.toLowerCase();
+const StatusCell = ({ row }: HealthStatusTableRowProps) => {
+    const status = row.value?.toLowerCase();
 
     return (
-        <StatusIndicator
-            status={healthStatus(status).status}
-            label={healthStatus(status).label}
-        />
+        <StatusIndicator status={getPodHealthStatus(status).status} label={getPodHealthStatus(status).label} />
     );
-};
-
-export type MicroserviceObject = {
-    id: string;
-    name: string;
-    kind: string;
-    environment: string;
-    live: MicroserviceInfo;
-    edit: {
-        extra?: {
-            isPublic: boolean;
-        };
-    };
-    phase?: string;
 };
 
 type MicroserviceTableProps = {
@@ -115,7 +102,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             headerName: 'Container Image',
             minWidth: 270,
             flex: 1,
-            valueGetter: ({ row }: GridValueGetterParams) =>
+            valueGetter: ({ row }: HealthStatusTableRowProps) =>
                 `${row.edit?.extra?.headImage || 'N/A'}`,
         },
         {
@@ -123,8 +110,8 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             headerName: 'Runtime',
             minWidth: 270,
             flex: 1,
-            valueGetter: ({ row }: GridValueGetterParams) =>
-                getRuntimeNumberFromString(row.edit?.extra?.runtimeImage),
+            valueGetter: ({ row }: HealthStatusTableRowProps) =>
+                getRuntimeNumberFromString(row.edit?.extra?.runtimeImage || 'N/A'),
         },
         {
             field: 'isPublic',

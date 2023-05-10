@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
+import { MicroserviceObject } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
 import { useReadable } from 'use-svelte-store';
@@ -16,7 +17,7 @@ import { Typography } from '@mui/material';
 import { Button, LoadingSpinner } from '@dolittle/design-system';
 
 import { NoMicroservices } from './noMicroservices';
-import { MicroserviceTable, MicroserviceObject } from './microservicesTable';
+import { MicroserviceTable } from './microservicesTable';
 
 type MicroserviceProps = {
     environment: string;
