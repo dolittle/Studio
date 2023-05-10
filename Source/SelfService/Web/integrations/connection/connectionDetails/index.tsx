@@ -9,16 +9,17 @@ import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.h
 
 import { useConnectionId } from '../../routes.hooks';
 
-import { StatusIndicatorProps, Tabs } from '@dolittle/design-system';
+import { Tabs } from '@dolittle/design-system';
+
+import { getConnectionHealthStatus } from '../../../utils/helpers/connectionStatuses';
 
 import { Page } from '../../../components/layout/page';
 
 const getCurrentTab = (location: Location) => {
     if (location.pathname.includes('configuration')) return 0;
-    if (location.pathname.includes('messages')) return 1;
-    if (location.pathname.includes('expose')) return 2;
-
-    return 0;
+    else if (location.pathname.includes('messages')) return 1;
+    else if (location.pathname.includes('expose')) return 2;
+    else return 0;
 };
 
 const tabs = [
@@ -48,27 +49,6 @@ const tabs = [
     },
 ];
 
-const getConnectionHealthStatus = (status: string): StatusIndicatorProps => {
-    if (status === 'connected') {
-        return {
-            status: 'success',
-            label: 'connected',
-        };
-    } else if (status === 'registered' || status === 'pending') {
-        return {
-            status: 'warning',
-            label: 'pending',
-        };
-    } else if (status === 'failing') {
-        return {
-            status: 'error',
-            label: 'failing',
-        };
-    }
-
-    return { status: 'unknown' };
-};
-
 export const ConnectionDetails = () => {
     const location = useLocation();
     const connectionId = useConnectionId();
@@ -84,8 +64,8 @@ export const ConnectionDetails = () => {
     return (
         <Page
             title={pageTitle}
-            healthStatus={getConnectionHealthStatus(status)?.status}
-            healthStatusLabel={getConnectionHealthStatus(status)?.label}
+            healthStatus={getConnectionHealthStatus(status).status}
+            healthStatusLabel={getConnectionHealthStatus(status).label}
             sx={{ mb: 4 }}
         >
             <Tabs selectedTab={getCurrentTab(location)} tabs={tabs} />
