@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import { Box } from '@mui/material';
-import { GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
+import { Stack, Typography } from '@mui/material';
+import { GridColDef } from '@mui/x-data-grid-pro';
 
 import { StatusIndicator, Summary } from '@dolittle/design-system';
 
@@ -13,14 +13,33 @@ import { DownloadLogs, formatTime, formatStartingDate } from '../../../../utils/
 import { HealthStatusTableRow } from './healthStatusTable';
 import { healthStatus } from '../../components/microserviceStatus';
 
-const StatusCell = (params: GridRenderCellParams<any, HealthStatusTableRow>) => {
-    const status = params.row?.state?.toLowerCase();
+type HealthStatusTableRowProps = {
+    row: HealthStatusTableRow;
+};
+
+const CpuFieldHeader = () =>
+    <Stack sx={{ textAlign: 'center' }}>
+        <Typography variant='body2' sx={{ fontWeight: '500', pb: 0.5 }}>CPU</Typography>
+        <Typography variant='caption'>Avg | Max | Now</Typography>
+    </Stack>;
+
+const CpuCell = ({ row }: HealthStatusTableRowProps) =>
+    <Summary now={row.cpu?.current} avg={row.cpu?.average} max={row.cpu?.maximum} unit='%' description='CPU usage' period='last 24h' digits={0} />;
+
+const SummaryFieldHeader = () =>
+    <Stack sx={{ textAlign: 'center' }}>
+        <Typography variant='body2' sx={{ fontWeight: '500', pb: 0.5 }}>Memory</Typography>
+        <Typography variant='caption'>Avg | Max | Now</Typography>
+    </Stack>;
+
+const SummaryCell = ({ row }: HealthStatusTableRowProps) =>
+    <Summary now={row.memory?.current} avg={row.memory?.average} max={row.memory?.maximum} unit='MiB' description='Memory usage' period='last 24h' digits={0} />;
+
+const StatusCell = ({ row }: HealthStatusTableRowProps) => {
+    const status = row.state?.toLowerCase();
 
     return (
-        <StatusIndicator
-            status={healthStatus(status).status}
-            label={healthStatus(status).label}
-        />
+        <StatusIndicator status={healthStatus(status).status} label={healthStatus(status).label} />
     );
 };
 
@@ -50,8 +69,7 @@ export const columns: GridColDef[] = [
         flex: 1,
         headerAlign: 'right',
         align: 'right',
-        valueGetter: (params: GridValueGetterParams<any, HealthStatusTableRow>) =>
-            formatTime(params.row?.age),
+        valueGetter: ({ row }: HealthStatusTableRowProps) => formatTime(row.age),
     },
     {
         field: 'started',
@@ -61,8 +79,7 @@ export const columns: GridColDef[] = [
         flex: 1,
         headerAlign: 'right',
         align: 'right',
-        valueGetter: (params: GridValueGetterParams<any, HealthStatusTableRow>) =>
-            formatStartingDate(params.row?.started),
+        valueGetter: ({ row }: HealthStatusTableRowProps) => formatStartingDate(row.started),
     },
     {
         field: 'CPU',
@@ -71,12 +88,8 @@ export const columns: GridColDef[] = [
         flex: 1,
         headerAlign: 'right',
         align: 'right',
-        renderHeader: () =>
-            <Box>
-                CPU <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
-            </Box>,
-        renderCell: (params: GridRenderCellParams<any, HealthStatusTableRow>) =>
-            <Summary now={params.row.cpu?.current} avg={params.row.cpu?.average} max={params.row.cpu?.maximum} unit='%' description='CPU usage' period='last 24h' digits={0} />,
+        renderHeader: CpuFieldHeader,
+        renderCell: CpuCell,
     },
     {
         field: 'memory',
@@ -86,12 +99,8 @@ export const columns: GridColDef[] = [
         flex: 1,
         headerAlign: 'right',
         align: 'right',
-        renderHeader: () =>
-            <Box>
-                Memory <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
-            </Box>,
-        renderCell: (params: GridRenderCellParams<any, HealthStatusTableRow>) =>
-            <Summary now={params.row.memory?.current} avg={params.row.memory?.average} max={params.row.memory?.maximum} unit='MiB' description='Memory usage' period='last 24h' digits={0} />,
+        renderHeader: SummaryFieldHeader,
+        renderCell: SummaryCell,
     },
     {
         field: 'state',
