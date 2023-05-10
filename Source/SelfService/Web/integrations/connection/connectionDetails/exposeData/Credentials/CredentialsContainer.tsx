@@ -105,7 +105,7 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
                     <GenerateCredentialsForm resetForm={resetForm} connectionId={connectionId} onFormComplete={handleTokenGenerated} />
                 </Collapse>
             </ContentSection>
-            <ContentSection hideDivider title='Credentials Created' headerProps={{ sx: { mb: 3.5 } }}>
+            <ContentSection title='Credentials Created' headerProps={{ sx: { mb: 3.5 } }}>
                 <CredentialsList credentials={credentials} onDelete={onDelete} />
             </ContentSection>
         </ContentContainer>
