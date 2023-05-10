@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 
-import { DataGridPro, GridColDef, GridRenderCellParams } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import { Paper } from '@mui/material';
 
 import { IconButton, StatusIndicator } from '@dolittle/design-system';
@@ -18,14 +18,15 @@ import { useConnectionsIdDelete } from '../../apis/integrations/connectionsApi.h
 
 import { getConnectionStatus } from '../../utils/helpers/connectionStatuses';
 
-const StatusCell = (params: GridRenderCellParams<any, ConnectionModel>) => {
-    const status = params.row?.status?.name?.toLowerCase();
+type ConnectionsTableRowProps = {
+    row: ConnectionModel;
+};
+
+const StatusCell = ({ row }: ConnectionsTableRowProps) => {
+    const status = row.status?.name?.toLowerCase();
 
     return (
-        <StatusIndicator
-            status={getConnectionStatus(status).status}
-            label={getConnectionStatus(status).label}
-        />
+        <StatusIndicator status={getConnectionStatus(status).status} label={getConnectionStatus(status).label} />
     );
 };
 
@@ -57,7 +58,7 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
             headerName: 'Source',
             minWidth: 270,
             flex: 1,
-            valueGetter: ({ row }) => 'M3',
+            valueGetter: ({ row }: ConnectionsTableRowProps) => 'M3',
         },
         {
             field: 'status',
@@ -71,9 +72,9 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
             headerName: 'Actions',
             minWidth: 100,
             flex: 1,
-            renderCell: ({ row }) =>
+            renderCell: ({ row }: ConnectionsTableRowProps) =>
                 <IconButton tooltipText='Delete connection' icon='DeleteRounded' onClick={() => deleteConnection(row)} />,
-            valueGetter: ({ row }) => row?.status?.name,
+            valueGetter: ({ row }: ConnectionsTableRowProps) => row?.status?.name,
         },
     ];
 
