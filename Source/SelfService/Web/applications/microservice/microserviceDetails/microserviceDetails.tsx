@@ -16,9 +16,10 @@ import { StatusIndicator, Tabs } from '@dolittle/design-system';
 
 import { ConfigurationFilesSection } from './configurationFilesSection/configurationFilesSection';
 import { HealthStatus } from './healthStatus/healthStatus';
-import { getContainerHealthStatus } from '../components/microserviceStatus';
 import { useTerminalAvailable } from './terminal/useTerminal';
 import { TerminalView } from './terminal/terminalView';
+
+import { getContainerStatus } from '../../../utils/helpers';
 
 type MicroserviceViewProps = {
     application: HttpResponseApplication;
@@ -38,8 +39,9 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         }
     }, []);
 
-    const containerStatuses = () => podsData.pods.flatMap(pod =>
-        pod.containers.map(container => container.state));
+    const podsStatuses = () => podsData.pods.flatMap(pod => pod.containers.map(container => container.state));
+
+    const microserviceHealthStatus = getContainerStatus(podsStatuses());
     const applicationId = application.id;
     const canEdit = canEditMicroservice(application.environments, environment, currentMicroservice.id);
     const getLastOpenTab = parseInt(sessionStorage.getItem('microservice-details-tabs') || '0');
@@ -134,11 +136,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         <>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 3.25 }}>
                 <Typography variant='h1' sx={{ mr: 3 }}>{currentMicroservice.name}</Typography>
-                <StatusIndicator
-                    variantFilled
-                    status={getContainerHealthStatus(containerStatuses()).status}
-                    label={getContainerHealthStatus(containerStatuses()).label}
-                />
+                <StatusIndicator variantFilled status={microserviceHealthStatus.status} label={microserviceHealthStatus.label} />
             </Box>
 
             <Tabs id='microservice-details-tabs' selectedTab={getLastOpenTab} tabs={tabs} />
