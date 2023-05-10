@@ -18,8 +18,8 @@ type HealthStatusTableRowProps = {
 
 const CpuFieldHeader = () =>
     <Stack sx={{ textAlign: 'center' }}>
-        <Typography variant='body2' sx={{ fontWeight: 500, pb: 0.5 }}>CPU</Typography>
-        <Typography variant='caption'>Avg | Max | Now</Typography>
+        <Typography variant='body2' sx={{ fontWeight: 500 }}>CPU</Typography>
+        <Typography variant='caption' sx={{ py: 0.5 }}>Avg | Max | Now</Typography>
     </Stack>;
 
 const CpuCell = ({ row }: HealthStatusTableRowProps) =>
@@ -27,8 +27,8 @@ const CpuCell = ({ row }: HealthStatusTableRowProps) =>
 
 const SummaryFieldHeader = () =>
     <Stack sx={{ textAlign: 'center' }}>
-        <Typography variant='body2' sx={{ fontWeight: 500, pb: 0.5 }}>Memory</Typography>
-        <Typography variant='caption'>Avg | Max | Now</Typography>
+        <Typography variant='body2' sx={{ fontWeight: 500 }}>Memory</Typography>
+        <Typography variant='caption' sx={{ py: 0.5 }}>Avg | Max | Now</Typography>
     </Stack>;
 
 const SummaryCell = ({ row }: HealthStatusTableRowProps) =>
