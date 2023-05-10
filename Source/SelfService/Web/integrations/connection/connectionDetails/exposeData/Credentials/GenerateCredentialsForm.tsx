@@ -5,8 +5,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Collapse, FormHelperText, Grid, TextField, Typography, Paper } from '@mui/material';
-import { AlertBox, Button, ContentSection, Form, FormRef, Input } from '@dolittle/design-system';
+import { Box, Collapse, FormHelperText, Grid, TextField, Typography, Paper } from '@mui/material';
+import { AlertBox, Button, ContentSection, Form, FormRef, Input, MaxWidthTextBlock } from '@dolittle/design-system';
 import { useConnectionsIdServiceAccountsServiceAccountNamePost } from '../../../../../apis/integrations/serviceAccountApi.hooks';
 import { ResponseError, ServiceAccountCreatedDto } from '../../../../../apis/integrations/generated';
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
@@ -58,6 +58,7 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
                         message = `${message} error: ${body}`;
                     }
                 }
+                //TODO: Pav - use a snack bar instead of an alert box
                 setFormSubmitError(message);
             }
         });
@@ -88,7 +89,41 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
             >
 
                 <Paper elevation={3} sx={{ py: 3, px: 1.25 }}>
-                    <Grid container spacing={3} sx={{ pb: 5 }}>
+                    <Box>
+                        <MaxWidthTextBlock sx={{ mb: 3 }}>
+                            The token will only be visible one time after you generate it, so please make sure to copy it. Who or what are these credentials for?
+                        </MaxWidthTextBlock>
+                        <Box
+                            display='flex'
+                            gap={1}
+                            sx={{ mb: 6 }}
+                        >
+                            <Input id='name' label='Name' required disabled={hasResult && !formSubmitError} sx={{ mr: 10 }} />
+                            <Input id='description' label='Description' disabled={hasResult && !formSubmitError} />
+                        </Box>
+                        <Box display='flex' justifyContent='flex-end'>
+                            <Button label='Cancel' sx={{mr: 6}}/>
+                            <Button label='Generate Token' type='submit' variant='outlined'/>
+                        </Box>
+
+                        {/* <Typography>Credential Token</Typography>
+                        <Box sx={{ mt: 2 }}>
+                            <Input
+                                id='token'
+                                label='Token'
+                                // disabled
+                                sx={{ width: 375 }}
+                            />
+                            <Button
+                                label='Copy Token'
+                                startWithIcon='CopyAllRounded'
+                                onClick={handleTokenCopy}
+                                sx={{ ml: 3 }}
+                            />
+                        </Box>
+                        <FormHelperText sx={{ ml: 1.75 }}>This bearer token should be used in the request header.</FormHelperText> */}
+                    </Box>
+                    {/* <Grid container spacing={3} sx={{ pb: 5 }}>
                         <Grid item>
                             <Typography sx={{ mb: 2 }}>Who or what are these credentials for?</Typography>
                             <Input id='name' label='Name' required disabled={hasResult && !formSubmitError} />
@@ -121,7 +156,7 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
                                     </Grid>
                                 </>
                             )}
-                    </Grid>
+                    </Grid> */}
                 </Paper >
             </Form >
         </>
