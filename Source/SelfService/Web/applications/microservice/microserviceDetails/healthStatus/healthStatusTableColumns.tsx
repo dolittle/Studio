@@ -8,10 +8,9 @@ import { GridColDef } from '@mui/x-data-grid-pro';
 
 import { StatusIndicator, Summary } from '@dolittle/design-system';
 
-import { DownloadLogs, formatTime, formatStartingDate } from '../../../../utils/helpers';
+import { DownloadLogs, getPodHealthStatus, formatTime, formatStartingDate } from '../../../../utils/helpers';
 
 import { HealthStatusTableRow } from './healthStatusTable';
-import { healthStatus } from '../../components/microserviceStatus';
 
 type HealthStatusTableRowProps = {
     row: HealthStatusTableRow;
@@ -19,7 +18,7 @@ type HealthStatusTableRowProps = {
 
 const CpuFieldHeader = () =>
     <Stack sx={{ textAlign: 'center' }}>
-        <Typography variant='body2' sx={{ fontWeight: '500', pb: 0.5 }}>CPU</Typography>
+        <Typography variant='body2' sx={{ fontWeight: 500, pb: 0.5 }}>CPU</Typography>
         <Typography variant='caption'>Avg | Max | Now</Typography>
     </Stack>;
 
@@ -28,7 +27,7 @@ const CpuCell = ({ row }: HealthStatusTableRowProps) =>
 
 const SummaryFieldHeader = () =>
     <Stack sx={{ textAlign: 'center' }}>
-        <Typography variant='body2' sx={{ fontWeight: '500', pb: 0.5 }}>Memory</Typography>
+        <Typography variant='body2' sx={{ fontWeight: 500, pb: 0.5 }}>Memory</Typography>
         <Typography variant='caption'>Avg | Max | Now</Typography>
     </Stack>;
 
@@ -39,7 +38,7 @@ const StatusCell = ({ row }: HealthStatusTableRowProps) => {
     const status = row.state?.toLowerCase();
 
     return (
-        <StatusIndicator status={healthStatus(status).status} label={healthStatus(status).label} />
+        <StatusIndicator status={getPodHealthStatus(status).status} label={getPodHealthStatus(status).label} />
     );
 };
 

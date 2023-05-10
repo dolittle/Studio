@@ -45,7 +45,7 @@ export const getConnectionsStatus = (status: string): StatusIndicatorProps => {
     return { status: 'unknown' };
 };
 
-export const healthStatus = (status: string): StatusIndicatorProps => {
+export const getPodHealthStatus = (status: string): StatusIndicatorProps => {
     if (status === 'running') {
         return {
             status: 'table-success',

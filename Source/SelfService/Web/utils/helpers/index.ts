@@ -3,7 +3,7 @@
 
 export * from './strings';
 export { formatTime, formatStartingDate } from './dates';
-export { getConnectionStatus } from './connectionStatuses';
+export { getConnectionStatus, getPodHealthStatus } from './connectionStatuses';
 export { DownloadLogs } from './downloads';
 export { formatBytes } from './numbers';
 export { isAlphaNumeric } from './regex';
