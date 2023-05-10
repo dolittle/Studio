@@ -10,42 +10,23 @@ import { enqueueSnackbar } from 'notistack';
 import { DataGridPro, GridColDef, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Paper } from '@mui/material';
 
-import { IconButton, StatusIndicator, StatusIndicatorProps } from '@dolittle/design-system';
+import { IconButton, StatusIndicator } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../apis/integrations/generated';
 import { CACHE_KEYS } from '../../apis/integrations/CacheKeys';
 import { useConnectionsIdDelete } from '../../apis/integrations/connectionsApi.hooks';
+
+import { getConnectionStatus } from '../../utils/helpers/connectionStatuses';
 
 const StatusCell = (params: GridRenderCellParams<any, ConnectionModel>) => {
     const status = params.row?.status?.name?.toLowerCase();
 
     return (
         <StatusIndicator
-            status={getConnectionsHealthStatus(status).status}
-            label={getConnectionsHealthStatus(status).label}
+            status={getConnectionStatus(status).status}
+            label={getConnectionStatus(status).label}
         />
     );
-};
-
-const getConnectionsHealthStatus = (status: string): StatusIndicatorProps => {
-    if (status === 'connected') {
-        return {
-            status: 'table-success',
-            label: 'connected',
-        };
-    } else if (status === 'registered' || status === 'pending') {
-        return {
-            status: 'warning',
-            label: 'pending',
-        };
-    } else if (status === 'failing') {
-        return {
-            status: 'error',
-            label: 'Not connected',
-        };
-    }
-
-    return { status: 'unknown' };
 };
 
 export type ConnectionsTableProps = {

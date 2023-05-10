@@ -11,7 +11,7 @@ import { useConnectionId } from '../../routes.hooks';
 
 import { Tabs } from '@dolittle/design-system';
 
-import { getConnectionHealthStatus } from '../../../utils/helpers/connectionStatuses';
+import { getConnectionStatus } from '../../../utils/helpers/connectionStatuses';
 
 import { Page } from '../../../components/layout/page';
 
@@ -59,13 +59,13 @@ export const ConnectionDetails = () => {
     if (!data || !connectionId) return null;
 
     const pageTitle = data.name || 'Connection Details';
-    const status = data.status?.name?.toLocaleLowerCase() || 'unknown';
+    const status = data.status?.name?.toLocaleLowerCase();
 
     return (
         <Page
             title={pageTitle}
-            healthStatus={getConnectionHealthStatus(status).status}
-            healthStatusLabel={getConnectionHealthStatus(status).label}
+            healthStatus={getConnectionStatus(status).status}
+            healthStatusLabel={getConnectionStatus(status).label}
             sx={{ mb: 4 }}
         >
             <Tabs selectedTab={getCurrentTab(location)} tabs={tabs} />
