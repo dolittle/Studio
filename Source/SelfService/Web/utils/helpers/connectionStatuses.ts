@@ -66,8 +66,8 @@ export const getPodHealthStatus = (status: string): StatusIndicatorProps => {
     return { status: 'unknown' };
 };
 
-export const getContainerHealthStatus = (status: string[]): StatusIndicatorProps => {
-    if (status.includes('unknown')) {
+export const getContainerStatus = (status: string[]): StatusIndicatorProps => {
+    if (!status && typeof status !== 'string') {
         return { status: 'unknown' };
     } else if (status.includes('failed')) {
         return {
