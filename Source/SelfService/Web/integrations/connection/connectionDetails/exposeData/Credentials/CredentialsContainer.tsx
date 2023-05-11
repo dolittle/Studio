@@ -99,21 +99,21 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
                     }
                 ]}
             />
-            <ContentSection hideDivider={!openCredentials}>
-                <DeleteCredentialDialog
-                    dialogState={deleteDialogState}
-                    dispatch={deleteDialogDispatch}
-                    handleDelete={handleDelete}
-                />
-                <Collapse in={openCredentials}>
+            <DeleteCredentialDialog
+                dialogState={deleteDialogState}
+                dispatch={deleteDialogDispatch}
+                handleDelete={handleDelete}
+            />
+            <Collapse in={openCredentials}>
+                <ContentSection hideDivider={!openCredentials}>
                     <GenerateCredentialsForm
                         resetForm={resetForm}
                         connectionId={connectionId}
                         onFormComplete={handleTokenGenerated}
                         onFormCancelled={handleFormCancelled}
                     />
-                </Collapse>
-            </ContentSection>
+                </ContentSection>
+            </Collapse>
             <ContentSection title='Credentials Created' headerProps={{ sx: { mb: 3.5 } }}>
                 <CredentialsList credentials={credentials} onDelete={onDelete} />
             </ContentSection>
