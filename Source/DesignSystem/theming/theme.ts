@@ -203,9 +203,7 @@ const components: Components & DataGridProComponents = {
             columnHeader: {
                 ':focus': { outline: 'none' },
                 ':focus-within': { outline: 'none' },
-                '& .MuiIconButton-root': {
-                    marginLeft: 8,
-                },
+                '& .MuiIconButton-root': { marginLeft: 8 },
             },
             columnHeaders: {
                 borderColor: 'rgba(226, 255, 97, 0.05)',
