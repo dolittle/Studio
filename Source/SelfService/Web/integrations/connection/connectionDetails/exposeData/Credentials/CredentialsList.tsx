@@ -30,7 +30,7 @@ export const CredentialsList = (props: CredentialsListProps) => {
                                 </>
                             )}
                         </Box>
-                        <Typography variant='body2' color='text.secondary'>These credentials were created on {formatDateFriendly(credential.createdAt!)}</Typography>
+                        <Typography variant='body2' color='text.secondary'>These credentials were created on <span title={credential.createdAt!.toISOString()}>{formatDateFriendly(credential.createdAt!)}</span></Typography>
                         <Button
                             label='Delete credentials'
                             variant='outlined'
