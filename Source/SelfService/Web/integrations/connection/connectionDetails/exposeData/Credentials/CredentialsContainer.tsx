@@ -22,7 +22,6 @@ export type CredentialsContainerProps = {};
 export const CredentialsContainer = (props: CredentialsContainerProps) => {
     const [openCredentials, setOpenCredentials] = useState(true);
     const [activeCredential, setActiveCredential] = useState<string | undefined>(undefined);
-    const [allowGenerateNewCredentials, setAllowGenerateNewCredentials] = useState(true);
     const [resetForm, setResetForm] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const connectionId = useConnectionId();
@@ -40,19 +39,18 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
         [data, activeCredential]
     );
 
+    const allowGenerateNewCredentials = !openCredentials || (openCredentials && !!activeCredential);
+
     const handleTokenGenerated = (tokenName: string) => {
         setActiveCredential(tokenName);
-        setAllowGenerateNewCredentials(true);
     };
 
     const handleGenerateNewCredentials = () => {
         setActiveCredential(undefined);
-        setAllowGenerateNewCredentials(false);
         setOpenCredentials(true);
         setResetForm(true);
     };
     const handleFormCancelled = () => {
-        setAllowGenerateNewCredentials(true);
         setOpenCredentials(false);
         setResetForm(true);
     };
@@ -61,6 +59,7 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
         deleteDialogDispatch({ type: 'setCredential', payload: serviceAccountName });
         deleteDialogDispatch({ type: 'open' });
     };
+
     const handleDelete = (serviceAccountName: string) => {
         deleteMutation.mutate(
             { id: connectionId, serviceAccountName },
