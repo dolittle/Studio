@@ -18,6 +18,7 @@ type HealthStatusTableRowProps = {
     row: MicroserviceObject;
 };
 
+// TODO: Add this when I know how to get the public urls.
 const PublicUrlCell = (params: GridRenderCellParams<any, HealthStatusTableRowProps['row']>) => {
     const hasPublicUrl = params.row.edit?.extra?.isPublic;
     const publicUrl = params.row.edit?.extra?.ingress?.path || '';
@@ -102,7 +103,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             headerName: 'Public URL',
             minWidth: 270,
             flex: 1,
-            renderCell: PublicUrlCell,
+            //renderCell: PublicUrlCell,
             valueGetter: ({ row }: HealthStatusTableRowProps) => {
                 const hasPublicUrl = row.edit?.extra?.isPublic;
                 return hasPublicUrl === true ? 'Available' : hasPublicUrl === false ? 'None' : 'N/A';
