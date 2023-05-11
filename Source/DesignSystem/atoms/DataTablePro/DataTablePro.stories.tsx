@@ -1,101 +1,88 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import React from 'react';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { DataGridPro, DataGridProProps, GridColDef } from '@mui/x-data-grid-pro';
 import { Paper } from '@mui/material';
 
-import { Button } from '@dolittle/design-system';
+import { Button, IconButton } from '@dolittle/design-system';
 
-import { dataTableDescription, columns, rows, toolbarButtons } from './helpers';
-import { DataTableToolbar } from './DataTableToolbar';
+import { dataTableDescription, dummyDataTableColumns, dummyIconColumns, dummyDataTableRows, dummyDataTableRowsWithIcons } from './helpers';
 
-export default {
-    decorators: [
-        (Story) => (
-            <Paper sx={{ width: 1, height: 1, minHeight: 250, boxShadow: 'none' }}>
-                {Story()}
-            </Paper>
-        )
-    ],
+import { DataTablePro } from './DataTablePro';
+
+const meta: Meta<typeof DataTablePro> = {
+    title: 'Data Grid',
+    component: DataTablePro,
+    argTypes: {
+
+    },
     parameters: {
         docs: {
             description: { component: dataTableDescription },
         },
+        controls: {
+            include: [],
+        },
     },
 };
 
-// const Template: ComponentStory<typeof DataGridPro> = () => {
-//     const [selectedRowIds, setSelectedRowIds] = useState<any[]>([]);
-//     const [rows, setRows] = useState(initialRows);
+export default meta;
 
-//     return (
-//         <Box>
-//             <Button
-//                 label='Reset'
-//                 startWithIcon={<RefreshRounded />}
-//                 disabled={rows.length === 3}
-//                 onClick={() => setRows(initialRows)}
-//             />
+type Story = StoryObj<DataGridProProps>;
 
-//             <Button
-//                 label='Delete selected'
-//                 startWithIcon={<DeleteRounded />}
-//                 disabled={selectedRowIds.length === 0}
-//                 onClick={() => setRows(rows.filter(row => !selectedRowIds.includes(row.id)))}
-//             />
+export const Primary: Story = {
+    args: {
+        rows: dummyDataTableRows,
+        columns: dummyDataTableColumns,
+        headerHeight: 46,
+        getRowHeight: () => 'auto',
+        autoHeight: true,
+        checkboxSelection: true,
+        hideFooter: true,
+        disableColumnMenu: true,
+    },
+};
 
-//         </Box>
-//     );
-// };
+export const WithIcons: Story = {
+    args: {
+        ...Primary.args,
+        rows: dummyDataTableRowsWithIcons,
+        columns: dummyIconColumns,
+        checkboxSelection: false,
+        disableSelectionOnClick: true,
+    },
+};
 
-// const Template = (args: DataGridProProps) =>
+// export const EditableCells = () => {};
+// export const WithStatuses = () => {};:?
+// export const CustomToolbar = () => {};
+// export const EmptyDataTable = () => {};
+// export const WithLoading = () => {};
+// export const WithCheckboxSelection = () => {};
+// export const SortableColumns = () => {};
+
+
+// export const WithCustomToolbar = () =>
 //     <DataGridPro
 //         rows={rows}
 //         columns={columns}
-//         //loading={loadingRows}
 //         headerHeight={46}
 //         getRowHeight={() => 'auto'}
+//         disableSelectionOnClick
 //         autoHeight
 //         hideFooter
 //         disableColumnMenu
-//         checkboxSelection
+//         disableColumnReorder
+//         disableColumnResize
+//         disableColumnSelector
+//         components={{
+//             Toolbar: () => <DataTableToolbar title='Toolbar title' buttons={toolbarButtons} />,
+//         }}
 //     />;
-
-export const Default = () =>
-    <DataGridPro
-        rows={rows}
-        columns={columns}
-        headerHeight={46}
-        getRowHeight={() => 'auto'}
-        disableSelectionOnClick
-        autoHeight
-        hideFooter
-        disableColumnMenu
-        disableColumnReorder
-        disableColumnResize
-        disableColumnSelector
-    />;
-
-export const WithCustomToolbar = () =>
-    <DataGridPro
-        rows={rows}
-        columns={columns}
-        headerHeight={46}
-        getRowHeight={() => 'auto'}
-        disableSelectionOnClick
-        autoHeight
-        hideFooter
-        disableColumnMenu
-        disableColumnReorder
-        disableColumnResize
-        disableColumnSelector
-        components={{
-            Toolbar: () => <DataTableToolbar title='Toolbar title' buttons={toolbarButtons} />,
-        }}
-    />;
 
 // export const EmptyDataTable = () => {
 //     return (
@@ -133,45 +120,41 @@ export const WithCustomToolbar = () =>
 //     );
 // };
 
-// export const WithIcons = () => {};
-
-//export const EditableCells = () => {};
-
-export const WithCheckboxSelection = () =>
-    <DataGridPro
-        rows={rows}
-        columns={columns}
-        headerHeight={46}
-        getRowHeight={() => 'auto'}
-        autoHeight
-        checkboxSelection
-        //onSelectionModelChange={onSelectedIdsChanged}
-        //selectionModel={selectedIds}
-        hideFooter
-        disableColumnMenu
-        disableColumnReorder
-        disableColumnResize
-        disableColumnSelector
-        disableSelectionOnClick
-    />;
+// export const WithCheckboxSelection = () =>
+//     <DataGridPro
+//         rows={rows}
+//         columns={columns}
+//         headerHeight={46}
+//         getRowHeight={() => 'auto'}
+//         autoHeight
+//         checkboxSelection
+//         //onSelectionModelChange={onSelectedIdsChanged}
+//         //selectionModel={selectedIds}
+//         hideFooter
+//         disableColumnMenu
+//         disableColumnReorder
+//         disableColumnResize
+//         disableColumnSelector
+//         disableSelectionOnClick
+//     />;
 
 //export const ExpandableRows = () => {};
 
-export const Pagination = () =>
-    <DataGridPro
-        rows={rows}
-        columns={columns}
-        headerHeight={46}
-        getRowHeight={() => 'auto'}
-        autoHeight
-        pagination
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        disableColumnMenu
-        disableColumnReorder
-        disableColumnResize
-        disableColumnSelector
-        disableSelectionOnClick
-    />;
+// export const Pagination = () =>
+//     <DataGridPro
+//         rows={rows}
+//         columns={columns}
+//         headerHeight={46}
+//         getRowHeight={() => 'auto'}
+//         autoHeight
+//         pagination
+//         pageSize={10}
+//         rowsPerPageOptions={[10]}
+//         disableColumnMenu
+//         disableColumnReorder
+//         disableColumnResize
+//         disableColumnSelector
+//         disableSelectionOnClick
+//     />;
 
 //getRowClassName={row => selectedIds?.includes(row.id) ? '' : 'hide-row'}

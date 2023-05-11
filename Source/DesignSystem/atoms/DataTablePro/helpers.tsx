@@ -1,19 +1,134 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import React from 'react';
+
 import { GridColDef } from '@mui/x-data-grid-pro';
 
-export const rows = [
-    { id: 1, col1: 'Row 1', col2: 'Row 1', col3: 'Row 1' },
-    { id: 2, col1: 'Row 2', col2: 'Row 2', col3: 'Row 2' },
-    { id: 3, col1: 'Row 3', col2: 'Row 3', col3: 'Row 3' },
+import { IconButton, StatusIndicator } from '@dolittle/design-system';
+
+type DummyDataTableRowsProps = {
+    id?: string;
+    col1?: string;
+    col2?: string;
+    col3?: string;
+    download?: any;
+};
+
+export const dummyDataTableRows: any[] = [
+    {
+        id: '1',
+        col1: 'Row 1',
+        col2: 'Row 1',
+        col3: 'Row 1',
+    },
+    {
+        id: '2',
+        col1: 'Row 2',
+        col2: 'Row 2',
+        col3: 'Row 2',
+    },
+    {
+        id: '3',
+        col1: 'Row 3',
+        col2: 'Row 3',
+        col3: 'Row 3',
+    },
 ];
 
-export const columns: GridColDef[] = [
-    { field: 'col1', headerName: 'Column 1', headerAlign: 'center', flex: 1, width: 150 },
-    { field: 'col2', headerName: 'Column 2', flex: 1, width: 150 },
-    { field: 'col3', headerName: 'Column 3', flex: 1, width: 150 },
+export const dummyDataTableColumns: GridColDef[] = [
+    {
+        field: 'col1',
+        headerName: 'Column 1',
+        //sortable: false,
+        minWidth: 150,
+        flex: 1,
+    },
+    {
+        field: 'col2',
+        headerName: 'Column 2',
+        //sortable: false,
+        minWidth: 150,
+        flex: 1,
+    },
+    {
+        field: 'col3',
+        headerName: 'Column 3',
+        //sortable: false,
+        minWidth: 150,
+        flex: 1,
+    },
 ];
+
+
+export const dummyDataTableRowsWithIcons = [
+    {
+        id: '1',
+        success: 'success',
+    },
+];
+
+export const dummyIconColumns: GridColDef[] = [
+    {
+        field: 'success',
+        headerName: 'Success-Status',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        headerAlign: 'center',
+        align: 'center',
+        renderCell: () => <StatusIndicator status='table-success' />,
+    },
+    {
+        field: 'warning',
+        headerName: 'Status',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        headerAlign: 'center',
+        align: 'center',
+        renderCell: () => <StatusIndicator status='warning' />,
+    },
+    {
+        field: 'error',
+        headerName: 'Status',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        headerAlign: 'center',
+        align: 'center',
+        renderCell: () => <StatusIndicator status='error' />,
+    },
+    {
+        field: 'unknown',
+        headerName: 'Status',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        headerAlign: 'center',
+        align: 'center',
+        renderCell: () => <StatusIndicator status='unknown' />,
+    },
+    {
+        field: 'download',
+        headerName: 'Download',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        headerAlign: 'center',
+        align: 'center',
+        renderCell: () => (
+            <IconButton
+                tooltipText='Download'
+                icon='DownloadRounded'
+                href={URL.createObjectURL(new Blob([], { type: 'text/plain' }))}
+                download='sample.log'
+            />
+        ),
+    },
+];
+
+//export const dummyColumnsWithIcons = dummyDataTableColumns.concat(dummyIconsColumn);
 
 export const toolbarButtons = [
     {
