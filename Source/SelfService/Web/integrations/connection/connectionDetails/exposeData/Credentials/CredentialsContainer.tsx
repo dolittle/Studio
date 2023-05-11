@@ -125,6 +125,7 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
                         connectionId={connectionId}
                         onFormComplete={handleTokenGenerated}
                         onFormCancelled={handleFormCancelled}
+                        canCancel={credentials.length > 0}
                     />
                 </ContentSection>
             </Collapse>
