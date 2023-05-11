@@ -86,7 +86,7 @@ export const HealthStatusTable = ({ rows }: HealthStatusTableProps) => {
                 rows={rows}
                 columns={columns}
                 getRowHeight={() => 'auto'}
-                autoHeight={true}
+                autoHeight
                 headerHeight={46}
                 disableColumnMenu
                 hideFooter
@@ -99,7 +99,7 @@ export const HealthStatusTable = ({ rows }: HealthStatusTableProps) => {
                 components={{
                     DetailPanelExpandIcon,
                     DetailPanelCollapseIcon,
-                    Toolbar: () => CustomToolbar(rows)
+                    Toolbar: () => CustomToolbar(rows),
                 }}
             />
         </Paper>
