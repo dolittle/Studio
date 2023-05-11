@@ -5,11 +5,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Box, Collapse, FormHelperText, Grid, TextField, Typography, Paper } from '@mui/material';
-import { AlertBox, Button, ContentSection, Form, FormRef, Input, MaxWidthTextBlock } from '@dolittle/design-system';
+import { Box, FormHelperText, Typography } from '@mui/material';
+import { AlertBox, Button, Form, FormRef, Input, MaxWidthTextBlock } from '@dolittle/design-system';
 import { useConnectionsIdServiceAccountsServiceAccountNamePost } from '../../../../../apis/integrations/serviceAccountApi.hooks';
 import { ResponseError, ServiceAccountCreatedDto } from '../../../../../apis/integrations/generated';
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
+import { GenerateCredentialsFormSubmitButton } from './GenerateCredentialsFormSubmitButton';
 
 export type GenerateCredentialsFormParameters = {
     name: string;
@@ -105,8 +106,12 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
                             <>
                                 <Box display='flex' justifyContent='flex-end'>
                                     {formSubmitError && (<AlertBox message={`${formSubmitError}`} />)}
-                                    <Button label='Cancel' sx={{ mr: 6 }} onClick={() => props.onFormCancelled()} />
-                                    <Button label='Generate Token' type='submit' variant='outlined' />
+                                    <Button
+                                        label='Cancel'
+                                        sx={{ mr: 6 }}
+                                        onClick={() => props.onFormCancelled()}
+                                    />
+                                    <GenerateCredentialsFormSubmitButton />
                                 </Box>
                             </>
                         )
