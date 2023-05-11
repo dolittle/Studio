@@ -5,7 +5,7 @@ import { Box, Typography } from '@mui/material';
 import { Button, ContentDivider } from '@dolittle/design-system';
 
 import { ServiceAccountListDto } from '../../../../../apis/integrations/generated';
-import { formatDate } from '../../../../../utils/helpers/dates';
+import { formatDateFriendly } from '../../../../../utils/helpers/dates';
 
 export type CredentialsListProps = {
     credentials: ServiceAccountListDto[];
@@ -30,7 +30,7 @@ export const CredentialsList = (props: CredentialsListProps) => {
                                 </>
                             )}
                         </Box>
-                        <Typography variant='body2' color='text.secondary'>These credentials were created on {formatDate(credential.createdAt!)}</Typography>
+                        <Typography variant='body2' color='text.secondary'>These credentials were created on {formatDateFriendly(credential.createdAt!)}</Typography>
                         <Button
                             label='Delete credentials'
                             variant='outlined'

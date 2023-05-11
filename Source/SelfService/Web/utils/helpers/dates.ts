@@ -69,3 +69,7 @@ export const formatStartingDate = (initialDate: string) => {
 export const formatDate = (date: Date): string => {
     return format(date, 'yyyy/MM/dd');
 };
+
+export const formatDateFriendly = (date: Date): string => {
+    return format(date, 'd MMMM yyyy');
+};
