@@ -1,3 +1,57 @@
+# [3.4.39] - 2023-5-11 [PR: #396](https://github.com/dolittle/Studio/pull/396)
+## Credentials generation and management
+<img width="819" alt="image" src="https://github.com/dolittle/Studio/assets/102054/5eef7bb4-a31d-4394-8ff2-484a95674132">
+
+This PR introduces the capability for managing credentials for an exposed API.
+
+### Commits: 
+- Generate integrations API with ServiceAccount API objects
+- Add hooks to wrap the ServiceAccountApi
+- Add rest of Content components into the design system
+- Remove Content-components from SelfService and update imports
+- Add support to hide divider to ContentSection
+- Add Content*-components to expose API page
+- Separate out the CredentialsSection
+- Wired up a functional-first credentials list component
+- Update the generated API with latest ServerAccounts + JqAssistant experimental api
+- Show error message if there's an errro
+- Separate CredentialsForm to separate component
+- Flesh out the functionality for creating a credential token
+- Disable generate new credentials button when form is open
+- Allow generating subsequent tokens by resetting the form
+- Show the previously active credential in the credential list
+- Implement Delete Dialog functionality with a reducer
+- Clean up when canceling the delte dialog so nothing is deleted by accident
+- Update generated API with fix to ServiceAccountDelete and some new things from LinqAssistant
+- Separate Credentials to another ContentContainer and add separators
+- Move CredentialsContainer to own component and introduce header
+- Add sane-default my-spacing for content header. can be overridden as needed
+- Don't override the MaxWidthTextBlock maxWidth value on the sx prop
+- harcode and style the credentials form components
+- Apply styling to proper form state and remove Paper
+- Add divider between form and credentials list
+- Hide form when credential form is cancelled
+- Derive state of new credential button instead of setting it explicitly
+- Move the collapsible content around the entire Form Section to hide margins and whitespace
+- Add default spacing to ContentSection and ability to remove spacing with compact mode
+- Only show credentials list when there are items to list
+- Allow styling divider without accidentally overriding the default style
+- Style CredentialListItems
+- Only show description when set
+- Show credential name as part of dialog title
+- Add title to generate credentials section
+- Adjust credentials list divider to be more subtle
+- Format the date in a human-readable way
+- Show title-tooltip when a user hovers over the date
+- Disable Generate Token button when form is not valid
+- Sort credentials by date
+- Add single quotes to delete credential title
+- Compare active token by lower case, as this is changed when submitting
+- Expand & collapse the credential form state correctly
+- Don't allow cancelling credentials form when there are no credentials
+- Fix typo in deployed messages snackbar
+
+
 # [3.4.38] - 2023-5-11 [PR: #395](https://github.com/dolittle/Studio/pull/395)
 ## Summary
 
