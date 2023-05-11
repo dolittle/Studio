@@ -114,9 +114,9 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
                     />
                 </ContentSection>
             </Collapse>
-            <ContentSection title='Credentials Created' headerProps={{ sx: { mb: 3.5 } }}>
-                <CredentialsList credentials={credentials} onDelete={onDelete} />
-            </ContentSection>
+                <ContentSection title='Credentials Created'>
+                    <CredentialsList credentials={credentials} onDelete={onDelete} />
+                </ContentSection>
         </ContentContainer>
     );
 };

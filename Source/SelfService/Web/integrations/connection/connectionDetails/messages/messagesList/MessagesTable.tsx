@@ -69,7 +69,7 @@ export const MessagesTable = ({ rows, onSelectedIdsChanged, initialSelectedIds }
 
     return (
 
-        <ContentSection sx={{ mx: -2 }}>
+        <ContentSection noSpace sx={{ mx: -2 }}>
             <DataGridPro
                 rows={rows}
                 columns={messagesDataColumns}

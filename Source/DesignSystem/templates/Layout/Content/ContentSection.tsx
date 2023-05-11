@@ -15,15 +15,16 @@ export type ContentSectionProps = {
     headerProps?: Partial<ContentHeaderProps>;
     children?: React.ReactNode;
     beforeHeaderSlot?: React.ReactNode;
+    noSpace?: boolean;
     sx?: SxProps;
 };
 
-export const ContentSection = ({ title = '', hideDivider, hideHeader, headerProps, children, beforeHeaderSlot: beforeContentSlot, sx }: ContentSectionProps) =>
+export const ContentSection = ({ title = '', hideDivider, hideHeader, headerProps, children, beforeHeaderSlot, noSpace = false, sx }: ContentSectionProps) =>
     <>
         {!hideDivider && <ContentDivider />}
-        {beforeContentSlot}
-        <Box sx={{ ...{ my: 2 }, ...sx }}>
-            {!hideHeader && <ContentHeader title={title} titleTextVariant='subtitle' {...headerProps} />}
+        {beforeHeaderSlot}
+        <Box sx={{ ...{ my: noSpace ? 0 : 3 }, ...sx }}>
+            {!hideHeader && <ContentHeader title={title} titleTextVariant='subtitle' {...headerProps} sx={{ mb: noSpace ? 0 : 2 }} />}
             {children}
         </Box>
     </>;
