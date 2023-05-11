@@ -122,22 +122,27 @@ export const MessageMappingTable = ({
     };
 
     return (
-        <Paper elevation={0} sx={{ width: 1, boxShadow: 'none' }}>
+        <Paper elevation={0} sx={{ width: 1, height: 400, boxShadow: 'none' }}>
             <DataGridPro
                 apiRef={gridApiRef}
                 rows={dataGridListing}
                 columns={columns}
                 getRowHeight={() => 'auto'}
-                autoHeight
                 headerHeight={46}
                 checkboxSelection
                 onSelectionModelChange={onSelectedModelChanged}
                 selectionModel={selectedIds}
                 isRowSelectable={row => !disabledRows?.includes(row.id) || false}
                 loading={isLoading}
-                pagination
-                pageSize={10}
-                rowsPerPageOptions={[10]}
+                initialState={{
+                    pagination: {
+                        //@ts-ignore
+                        paginationModel: {
+                            pageSize: 25,
+                            page: 0,
+                        },
+                    },
+                }}
                 processRowUpdate={processRowUpdate}
                 onProcessRowUpdateError={error => console.log(error)}
                 experimentalFeatures={{ newEditingApi: true }}
