@@ -17,4 +17,7 @@ export enum CACHE_KEYS {
     ConnectionMappableTables_GET = 'connection_mappable_tables_get',
     ConnectionMappableTablesSearch_GET = 'connection_mappable_tables_search_get',
     ConnectionMappableTablesTable_GET = 'connection_mappable_tables_table_get',
+
+    //ServiceAccountsApi
+    ConnectionServiceAccounts_GET = 'connection_service_accounts_get',
 };

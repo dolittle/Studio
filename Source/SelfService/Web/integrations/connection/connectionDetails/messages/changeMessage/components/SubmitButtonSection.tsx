@@ -4,8 +4,7 @@
 import React from 'react';
 
 import { useFormState } from 'react-hook-form';
-import { Button } from '@dolittle/design-system';
-import { ContentSection } from '../../../../../../components/layout/Content/ContentSection';
+import { Button, ContentSection } from '@dolittle/design-system';
 
 import { ViewModeProps } from '../ViewMode';
 

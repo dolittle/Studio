@@ -53,6 +53,13 @@ export interface ConnectionsIdMessageMappingsGetRequest {
     pageSize?: number;
 }
 
+export interface ConnectionsIdMessageMappingsTablesTableMessagesGetRequest {
+    id: string;
+    table: string;
+    startIndex?: number;
+    pageSize?: number;
+}
+
 export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageDeleteRequest {
     id: string;
     table: string;
@@ -204,6 +211,52 @@ export class MessageMappingApi extends runtime.BaseAPI {
      */
     async connectionsIdMessageMappingsGet(requestParameters: ConnectionsIdMessageMappingsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageMappingModelIEnumerableResult> {
         const response = await this.connectionsIdMessageMappingsGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get all message mappings of table to message(s) for a connection. Will  also give a create-form -link to create new message-mappings.
+     */
+    async connectionsIdMessageMappingsTablesTableMessagesGetRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageMappingModelIEnumerableResult>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesGet.');
+        }
+
+        if (requestParameters.table === null || requestParameters.table === undefined) {
+            throw new runtime.RequiredError('table','Required parameter requestParameters.table was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesGet.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.startIndex !== undefined) {
+            queryParameters['startIndex'] = requestParameters.startIndex;
+        }
+
+        if (requestParameters.pageSize !== undefined) {
+            queryParameters['pageSize'] = requestParameters.pageSize;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        const response = await this.request({
+            path: `/connections/{id}/message-mappings/tables/{table}/messages`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"table"}}`, encodeURIComponent(String(requestParameters.table))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MessageMappingModelIEnumerableResultFromJSON(jsonValue));
+    }
+
+    /**
+     * Get all message mappings of table to message(s) for a connection. Will  also give a create-form -link to create new message-mappings.
+     */
+    async connectionsIdMessageMappingsTablesTableMessagesGet(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageMappingModelIEnumerableResult> {
+        const response = await this.connectionsIdMessageMappingsTablesTableMessagesGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

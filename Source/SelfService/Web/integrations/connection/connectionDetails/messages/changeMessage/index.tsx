@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 
 import { useLocation, useParams } from 'react-router-dom';
+import { ContentContainer } from '@dolittle/design-system';
 
 import {
     useConnectionsIdMessageMappingsTablesTableMessagesMessageGet,
@@ -12,7 +13,6 @@ import {
 import { useConnectionId } from '../../../../routes.hooks';
 
 import { ViewMode } from './ViewMode';
-import { ContentContainer } from '../../../../../components/layout/Content/ContentContainer';
 import { MessageMappingForm } from './components/MessageMappingForm';
 import { ChangeMessageView } from './ChangeMessageView';
 

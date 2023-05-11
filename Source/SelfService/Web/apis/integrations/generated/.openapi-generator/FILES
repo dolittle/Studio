@@ -6,11 +6,14 @@ apis/ConnectionsApi.ts
 apis/DeploymentApi.ts
 apis/EnrichmentApi.ts
 apis/EnvironmentApi.ts
+apis/JqAssistantApi.ts
+apis/LinqAssistantApi.ts
 apis/LoginApi.ts
 apis/MappableTablesApi.ts
 apis/MessageMappingApi.ts
 apis/MetadataAdminApi.ts
 apis/ProgramMetadataApi.ts
+apis/ServiceAccountApi.ts
 apis/TableMetadataApi.ts
 apis/index.ts
 index.ts
@@ -23,6 +26,8 @@ models/ConnectionModel.ts
 models/ConnectionModelArrayResult.ts
 models/ConnectionModelResult.ts
 models/ConnectionStatus.ts
+models/DescribedJqDto.ts
+models/DescribedLinqDto.ts
 models/EnvironmentType.ts
 models/FieldMapping.ts
 models/FieldType.ts
@@ -53,6 +58,8 @@ models/ProgramDetails.ts
 models/ProgramHeader.ts
 models/RelatedTable.ts
 models/RemoteServiceStatus.ts
+models/ServiceAccountCreatedDto.ts
+models/ServiceAccountListDto.ts
 models/SetMessageMappingRequestArguments.ts
 models/SortDirection.ts
 models/StringResult.ts

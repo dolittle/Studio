@@ -13,6 +13,7 @@ const styles = {
         justifyContent: 'space-between',
         alignItems: 'center',
         gap: 4,
+        my: 2
     },
     buttonGroup: {
         display: 'flex',
@@ -38,9 +39,6 @@ export type ContentHeaderProps = {
      */
     buttonsSlot?: React.ReactNode;
 
-    /**
-     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
-     */
     sx?: SxProps;
 };
 

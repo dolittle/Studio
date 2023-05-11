@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import { DataGridPro, GridColDef, GridInputSelectionModel } from '@mui/x-data-grid-pro';
 import { useNavigate } from 'react-router-dom';
-import { ContentSection } from '../../../../../components/layout/Content/ContentSection';
+import { DataGridPro, GridColDef, GridInputSelectionModel } from '@mui/x-data-grid-pro';
+import { ContentSection } from '@dolittle/design-system';
 
 import { MessageMappingModel } from '../../../../../apis/integrations/generated';
 
@@ -63,7 +63,8 @@ export const MessagesTable = ({ rows, onSelectedIdsChanged, initialSelectedIds }
     };
 
     return (
-        <ContentSection sx={{ mx: -2 }}>
+
+        <ContentSection noSpace sx={{ mx: -2 }}>
             <DataGridPro
                 rows={rows}
                 columns={messagesDataColumns}

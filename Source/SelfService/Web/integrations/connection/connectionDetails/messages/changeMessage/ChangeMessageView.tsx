@@ -5,8 +5,7 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { AlertBox, AlertDialog } from '@dolittle/design-system';
-import { ContentHeader } from '../../../../../components/layout/Content/ContentHeader';
+import { AlertBox, AlertDialog, ContentHeader } from '@dolittle/design-system';
 
 import { MessageMappingModel } from '../../../../../apis/integrations/generated';
 

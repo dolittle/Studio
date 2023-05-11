@@ -7,5 +7,5 @@ import { Typography, TypographyProps } from '@mui/material';
 
 export type MaxWidthTextBlockProps = Partial<TypographyProps>;
 
-export const MaxWidthTextBlock = (props: MaxWidthTextBlockProps) =>
-    <Typography sx={{ maxWidth: 660 }} {...props} />;
+export const MaxWidthTextBlock = ({sx, ...props}: MaxWidthTextBlockProps) =>
+    <Typography sx={{ maxWidth: 660, ...sx }} {...props} />;

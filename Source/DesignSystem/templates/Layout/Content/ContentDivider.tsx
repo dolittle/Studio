@@ -5,5 +5,7 @@ import React from 'react';
 
 import { Divider, DividerProps } from '@mui/material';
 
-export const ContentDivider = (props: DividerProps) =>
-    <Divider sx={{ borderColor: 'outlineborder' }} {...props} />;
+export type ContentDividerProps = DividerProps;
+
+export const ContentDivider = ({ sx, ...props }: ContentDividerProps) =>
+    <Divider sx={{ borderColor: 'outlineborder', ...sx }} {...props} />;
