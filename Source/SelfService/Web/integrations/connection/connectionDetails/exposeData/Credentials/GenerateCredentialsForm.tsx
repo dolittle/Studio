@@ -61,8 +61,8 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
                         message = `${message} error: ${body}`;
                     }
                 }
-                //TODO: Pav - use a snack bar instead of an alert box
                 setFormSubmitError(message);
+                enqueueSnackbar(message, { variant: 'error' });
             }
         });
         props.onFormComplete(fieldValues.name);
@@ -106,7 +106,6 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
                         ? (
                             <>
                                 <Box display='flex' justifyContent='flex-end'>
-                                    {formSubmitError && (<AlertBox message={`${formSubmitError}`} />)}
                                     {props.canCancel && <Button
                                         label='Cancel'
                                         sx={{ mr: 6 }}
