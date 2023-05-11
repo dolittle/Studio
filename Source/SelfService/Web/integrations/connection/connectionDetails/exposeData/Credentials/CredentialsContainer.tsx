@@ -20,7 +20,7 @@ import { DeleteCredentialDialog, DeleteCredentialDialogState, deleteCredentialDi
 export type CredentialsContainerProps = {};
 
 export const CredentialsContainer = (props: CredentialsContainerProps) => {
-    const [openCredentials, setOpenCredentials] = useState(true);
+    const [expandCredentials, setExpandCredentials] = useState(false);
     const [activeCredential, setActiveCredential] = useState<string | undefined>(undefined);
     const [resetForm, setResetForm] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
@@ -40,7 +40,7 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
         [data, activeCredential]
     );
 
-    const allowGenerateNewCredentials = !openCredentials || (openCredentials && !!activeCredential);
+    const allowGenerateNewCredentials = !expandCredentials || (expandCredentials && !!activeCredential);
 
     const handleTokenGenerated = (tokenName: string) => {
         setActiveCredential(tokenName);
@@ -48,13 +48,25 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
 
     const handleGenerateNewCredentials = () => {
         setActiveCredential(undefined);
-        setOpenCredentials(true);
         setResetForm(true);
+        setExpandCredentials(true);
     };
     const handleFormCancelled = () => {
-        setOpenCredentials(false);
+        if (credentials.length) {
+            setExpandCredentials(false);
+        }
         setResetForm(true);
     };
+
+    useEffect(() => {
+        if(expandCredentials && !isLoading) {
+            setExpandCredentials(true);
+        } else {
+            const shouldExpand = !isLoading && (credentials.length === 0 || activeCredential !== undefined);
+            setExpandCredentials(shouldExpand);
+        }
+
+    }, [credentials, activeCredential, expandCredentials, isLoading]);
 
     const onDelete = (serviceAccountName: string) => {
         deleteDialogDispatch({ type: 'setCredential', payload: serviceAccountName });
@@ -83,6 +95,7 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
         }
     }, [resetForm]);
 
+
     if (isError) {
         return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
     }
@@ -105,8 +118,8 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
                 dispatch={deleteDialogDispatch}
                 handleDelete={handleDelete}
             />
-            <Collapse in={openCredentials}>
-                <ContentSection hideDivider={!openCredentials} title='Generate New Credentials'>
+            <Collapse in={expandCredentials}>
+                <ContentSection hideDivider={!expandCredentials} title='Generate New Credentials'>
                     <GenerateCredentialsForm
                         resetForm={resetForm}
                         connectionId={connectionId}
