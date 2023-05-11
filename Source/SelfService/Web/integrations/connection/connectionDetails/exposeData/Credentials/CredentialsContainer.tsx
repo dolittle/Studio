@@ -105,7 +105,7 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
                 handleDelete={handleDelete}
             />
             <Collapse in={openCredentials}>
-                <ContentSection hideDivider={!openCredentials}>
+                <ContentSection hideDivider={!openCredentials} title='Generate New Credentials'>
                     <GenerateCredentialsForm
                         resetForm={resetForm}
                         connectionId={connectionId}
