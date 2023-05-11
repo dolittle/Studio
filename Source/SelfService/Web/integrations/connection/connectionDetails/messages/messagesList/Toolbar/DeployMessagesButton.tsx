@@ -37,7 +37,7 @@ export const DeployMessagesButton = ({
                 //TODO: Handle error return object to mark which message types failed to deploy
             },
             onSuccess(data, variables, context) {
-                enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully deployed`, { variant: 'success' });
+                enqueueSnackbar(`Message type${hasMany ? 's' : ''} successfully deployed`, { variant: 'success' });
             },
             onSettled() {
                 onActionCompleted();
