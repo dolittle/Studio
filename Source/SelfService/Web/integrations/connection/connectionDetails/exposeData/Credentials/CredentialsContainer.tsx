@@ -51,6 +51,11 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
         setOpenCredentials(true);
         setResetForm(true);
     };
+    const handleFormCancelled = () => {
+        setAllowGenerateNewCredentials(true);
+        setOpenCredentials(false);
+        setResetForm(true);
+    };
 
     const onDelete = (serviceAccountName: string) => {
         deleteDialogDispatch({ type: 'setCredential', payload: serviceAccountName });
@@ -95,14 +100,19 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
                     }
                 ]}
             />
-            <ContentSection>
+            <ContentSection hideDivider={!openCredentials}>
                 <DeleteCredentialDialog
                     dialogState={deleteDialogState}
                     dispatch={deleteDialogDispatch}
                     handleDelete={handleDelete}
                 />
                 <Collapse in={openCredentials}>
-                    <GenerateCredentialsForm resetForm={resetForm} connectionId={connectionId} onFormComplete={handleTokenGenerated} />
+                    <GenerateCredentialsForm
+                        resetForm={resetForm}
+                        connectionId={connectionId}
+                        onFormComplete={handleTokenGenerated}
+                        onFormCancelled={handleFormCancelled}
+                    />
                 </Collapse>
             </ContentSection>
             <ContentSection title='Credentials Created' headerProps={{ sx: { mb: 3.5 } }}>

@@ -20,7 +20,8 @@ export type GenerateCredentialsFormParameters = {
 export type GenerateCredentialsFormProps = {
     resetForm: boolean;
     connectionId: string;
-    onFormComplete: (tokenName: string) => void;
+    onFormComplete(tokenName: string): void;
+    onFormCancelled(): void;
 };
 
 export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => {
@@ -104,7 +105,7 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
                             <>
                                 <Box display='flex' justifyContent='flex-end'>
                                     {formSubmitError && (<AlertBox message={`${formSubmitError}`} />)}
-                                    <Button label='Cancel' sx={{ mr: 6 }} />
+                                    <Button label='Cancel' sx={{ mr: 6 }} onClick={() => props.onFormCancelled()} />
                                     <Button label='Generate Token' type='submit' variant='outlined' />
                                 </Box>
                             </>
