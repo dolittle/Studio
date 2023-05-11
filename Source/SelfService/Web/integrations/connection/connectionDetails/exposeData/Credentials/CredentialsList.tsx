@@ -19,7 +19,7 @@ export const CredentialsList = (props: CredentialsListProps) => {
         <>
             {props.credentials.map((credential, index) => (
                 <React.Fragment key={credential.serviceAccountName}>
-                    {index > 0 ? <ContentDivider sx={{ my: 2 }} /> : null}
+                    {index > 0 ? <ContentDivider sx={{ my: 2, mx: 3, borderStyle: 'dashed' }} /> : null}
                     <Box display='flex' flexDirection='column' gap={3} alignItems='flex-start'>
                         <Box>
                             Name: {credential.serviceAccountName}
