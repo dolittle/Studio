@@ -15,7 +15,6 @@ export type DataGridTableListingEntry = MappableTableColumn & {
     fieldName: string;
 };
 
-
 export type MessageMappingTableProps = {
     dataGridListing: DataGridTableListingEntry[];
     selectedIds: GridSelectionModel;
@@ -51,7 +50,7 @@ export const MessageMappingTable = ({
     onSelectedIdsChanged,
     disabledRows,
     isLoading,
-    onFieldMapped
+    onFieldMapped,
 }: MessageMappingTableProps) => {
 
     const gridApiRef = useGridApiRef();
@@ -98,20 +97,23 @@ export const MessageMappingTable = ({
      */
     const processRowUpdate = (
         newRow: DataGridTableListingEntry,
-        oldRow: DataGridTableListingEntry
+        oldRow: DataGridTableListingEntry,
     ): DataGridTableListingEntry | Promise<DataGridTableListingEntry> => {
         if (newRow.fieldName === oldRow.fieldName) {
             return newRow;
         }
+
         const machineReadableFieldName = generateUniqueFieldName(gridApiRef, newRow.fieldName, newRow.m3ColumnName);
         onFieldMapped(newRow.id, machineReadableFieldName);
-        const isSelected = gridApiRef.current.isRowSelected(oldRow.id);
 
+        const isSelected = gridApiRef.current.isRowSelected(oldRow.id);
         const shouldDeselect = isSelected && !machineReadableFieldName;
         const shouldSelect = !isSelected && !!machineReadableFieldName;
+
         if (shouldSelect) {
             gridApiRef.current.selectRow(newRow.id, true);
         }
+
         if (shouldDeselect) {
             gridApiRef.current.selectRow(newRow.id, false);
         }
@@ -148,5 +150,3 @@ export const MessageMappingTable = ({
         </Paper>
     );
 };
-
-

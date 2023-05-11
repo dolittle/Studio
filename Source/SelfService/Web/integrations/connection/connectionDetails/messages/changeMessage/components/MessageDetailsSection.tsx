@@ -11,7 +11,6 @@ import { ViewModeProps } from '../ViewMode';
 import { ContentSection } from '../../../../../../components/layout/Content/ContentSection';
 import { alphaNumericCharsRegex } from '../../../../../../utils/validation/patterns';
 
-
 export type MessageDetailsSectionProps = ViewModeProps & {};
 
 export const MessageDetailsSection = (props: MessageDetailsSectionProps) =>

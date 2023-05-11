@@ -16,33 +16,28 @@ const messagesDataColumns: GridColDef<MessageMappingModel>[] = [
     {
         field: 'name',
         headerName: 'Message Type',
-        // minWidth: 270,
         flex: 1,
     },
     {
         field: 'description',
         headerName: 'Description',
-        // minWidth: 270,
         flex: 1,
     },
     {
         field: 'fromTable.name',
         headerName: 'Table Name',
-        // minWidth: 270,
         flex: 1,
         valueGetter: (params) => params.row.fromTable?.name,
     },
     {
         field: 'fieldMappings',
         headerName: 'No. of Mapped Fields',
-        // minWidth: 270,
         flex: 1,
         valueGetter: (params) => params.row.fieldMappings?.length,
     },
     {
         field: 'deployedAt',
         headerName: 'Last Deployed',
-        //minWidth: 270,
         flex: 1,
         valueGetter: (params) => {
             return params.row.deployedAt && params.row.deployedAt.toISOString() !== defaultEmptyDate.toISOString()
@@ -68,7 +63,6 @@ export const MessagesTable = ({ rows, onSelectedIdsChanged, initialSelectedIds }
     };
 
     return (
-
         <ContentSection sx={{ mx: -2 }}>
             <DataGridPro
                 rows={rows}
