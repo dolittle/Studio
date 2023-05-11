@@ -6,9 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { getPodStatus, MicroserviceObject } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
-import { customStatusFieldSort } from '../components/microserviceStatus';
 
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Paper, Tooltip } from '@mui/material';
 
 import { StatusIndicator } from '@dolittle/design-system';
@@ -16,27 +15,26 @@ import { StatusIndicator } from '@dolittle/design-system';
 import { getPodHealthStatus, getRuntimeNumberFromString } from '../../../utils/helpers';
 
 type HealthStatusTableRowProps = {
-    row: MicroserviceObject & { value: string };
+    row: MicroserviceObject;
 };
 
-const PublicUrlCell = ({ row }: HealthStatusTableRowProps) => {
-    const hasPublicUrl = row.edit?.extra?.isPublic;
+const PublicUrlCell = (params: GridRenderCellParams<any, HealthStatusTableRowProps['row']>) => {
+    const hasPublicUrl = params.row.edit?.extra?.isPublic;
+    const publicUrl = params.row.edit?.extra?.ingress?.path || '';
 
-    return (
-        // TODO: Tooltip needs public urls. Map them into title.
-        <Tooltip title={``} arrow>
-            <span>
-                {hasPublicUrl === true ? 'Available' :
-                    hasPublicUrl === false ? 'None' :
-                        'N/A'
-                }
-            </span>
-        </Tooltip>
-    );
+    if (hasPublicUrl) {
+        return (
+            <Tooltip title={publicUrl}>
+                <span>{params.value}</span>
+            </Tooltip>
+        );
+    } else {
+        return <span>{params.value}</span>;
+    }
 };
 
-const StatusCell = ({ row }: HealthStatusTableRowProps) => {
-    const status = row.value?.toLowerCase();
+const StatusCell = (params: GridRenderCellParams<any, HealthStatusTableRowProps['row']>) => {
+    const status = params.value?.toLowerCase();
 
     return (
         <StatusIndicator status={getPodHealthStatus(status).status} label={getPodHealthStatus(status).label} />
@@ -76,20 +74,6 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
 
     }, [microservices]);
 
-    // TODO: This is a hack to get the sorting to work. We need to fix this.
-    const customUrlFieldSort = (v1, v2, param1, param2) => {
-        const firstObject = microserviceRows.filter(row => row?.id === param1.id);
-        const secondObject = microserviceRows.filter(row => row?.id === param2.id);
-
-        const isFirstPublic = firstObject[0]?.edit?.extra?.isPublic;
-        const isSecondPublic = secondObject[0]?.edit?.extra?.isPublic;
-
-        const compareFirst = isFirstPublic ? 'Available' : 'None';
-        const compareSecond = isSecondPublic ? 'Available' : 'None';
-
-        return compareFirst.localeCompare(compareSecond);
-    };
-
     const microserviceColumns: GridColDef[] = [
         {
             field: 'name',
@@ -119,7 +103,10 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             minWidth: 270,
             flex: 1,
             renderCell: PublicUrlCell,
-            sortComparator: customUrlFieldSort,
+            valueGetter: ({ row }: HealthStatusTableRowProps) => {
+                const hasPublicUrl = row.edit?.extra?.isPublic;
+                return hasPublicUrl === true ? 'Available' : hasPublicUrl === false ? 'None' : 'N/A';
+            },
         },
         {
             field: 'phase',
@@ -127,7 +114,6 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             minWidth: 270,
             flex: 1,
             renderCell: StatusCell,
-            sortComparator: customStatusFieldSort,
         },
     ];
 
