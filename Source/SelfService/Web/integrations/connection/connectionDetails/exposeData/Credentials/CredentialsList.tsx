@@ -23,8 +23,12 @@ export const CredentialsList = (props: CredentialsListProps) => {
                     <Box display='flex' flexDirection='column' gap={3} alignItems='flex-start'>
                         <Box>
                             Name: {credential.serviceAccountName}
-                            <br />
-                            Description: {credential.description}
+                            {credential.description && (
+                                <>
+                                    <br />
+                                    Description: {credential.description}
+                                </>
+                            )}
                         </Box>
                         <Typography variant='body2' color='text.secondary'>These credentials were created on {formatDate(credential.createdAt!)}</Typography>
                         <Button
