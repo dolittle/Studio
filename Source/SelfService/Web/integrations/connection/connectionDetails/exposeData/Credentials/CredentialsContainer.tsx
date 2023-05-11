@@ -35,7 +35,7 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
     const deleteMutation = useConnectionsIdServiceAccountsServiceAccountNameDelete();
 
     const credentials = useMemo(
-        () => data?.filter(credential => credential.serviceAccountName !== activeCredential)
+        () => data?.filter(credential => credential.serviceAccountName?.toLowerCase() !== activeCredential?.toLowerCase() || '')
             .sort((a, b) => b.createdAt! > a.createdAt! ? 1 : -1) || [],
         [data, activeCredential]
     );
