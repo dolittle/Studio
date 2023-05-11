@@ -52,7 +52,7 @@ export const DeleteCredentialDialog = ({dialogState, dispatch, handleDelete }: D
     return (
         <AlertDialog
             id='delete-credential'
-            title={`Delete credentials - ${dialogState.credentialName}`}
+            title={`Delete credentials - '${dialogState.credentialName}'`}
             description={`
                 Are you sure you want to delete the credentials for '${dialogState.credentialName}'?
                 This action cannot be undone and will impact any applications currently using these credentials.
