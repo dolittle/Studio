@@ -1,3 +1,11 @@
+# [3.4.38] - 2023-5-11 [PR: #395](https://github.com/dolittle/Studio/pull/395)
+## Summary
+
+Make MessageMappingTable scrollable instead of using pagination.
+
+<img width="1024" alt="Screenshot 2023-05-11 at 13 37 28" src="https://github.com/dolittle/Studio/assets/19160439/206feee7-42dd-43ad-a103-a440afc4672e">
+
+
 # [3.4.37] - 2023-5-8 [PR: #394](https://github.com/dolittle/Studio/pull/394)
 ### Fixed
 
