@@ -12,11 +12,11 @@ import { HttpResponseApplication } from '../../../apis/solutions/application';
 
 import { Box, Typography } from '@mui/material';
 
-import { Tabs } from '@dolittle/design-system';
+import { StatusIndicator, Tabs } from '@dolittle/design-system';
 
 import { ConfigurationFilesSection } from './configurationFilesSection/configurationFilesSection';
 import { HealthStatus } from './healthStatus/healthStatus';
-import { ContainerHealthStatus } from '../components/microserviceStatus';
+import { getContainerHealthStatus } from '../components/microserviceStatus';
 import { useTerminalAvailable } from './terminal/useTerminal';
 import { TerminalView } from './terminal/terminalView';
 
@@ -38,7 +38,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         }
     }, []);
 
-    const getContainerStatuses = () => podsData.pods.flatMap(pod =>
+    const containerStatuses = () => podsData.pods.flatMap(pod =>
         pod.containers.map(container => container.state));
     const applicationId = application.id;
     const canEdit = canEditMicroservice(application.environments, environment, currentMicroservice.id);
@@ -62,7 +62,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
 
         const headCommand = {
             command: [],
-            args: []
+            args: [],
         };
 
         const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
@@ -134,7 +134,11 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         <>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 3.25 }}>
                 <Typography variant='h1' sx={{ mr: 3 }}>{currentMicroservice.name}</Typography>
-                <ContainerHealthStatus status={getContainerStatuses()} />
+                <StatusIndicator
+                    variantFilled
+                    status={getContainerHealthStatus(containerStatuses()).status}
+                    label={getContainerHealthStatus(containerStatuses()).label}
+                />
             </Box>
 
             <Tabs id='microservice-details-tabs' selectedTab={getLastOpenTab} tabs={tabs} />

@@ -62,7 +62,7 @@ export const ConfigurationView = () => {
                 <Accordion
                     id='ConnectorBundleConfiguration'
                     title='Host Your Connector Bundle'
-                    progressStatus='connected'
+                    progressStatus='success'
                     sx={{ mt: 8 }}
                 >
                     <Typography variant='subtitle2' gutterBottom>Download connector bundle</Typography>
@@ -89,7 +89,7 @@ export const ConfigurationView = () => {
                 <Accordion
                     id=''
                     title='Metadata Publisher Credentials'
-                    progressStatus='connected'
+                    progressStatus='success'
                     sx={{ mt: 8 }}
                 >
                     <MaxWidthTextBlock>
@@ -110,7 +110,7 @@ export const ConfigurationView = () => {
                 <Accordion
                     id=''
                     title='ION Service Account Credentials'
-                    progressStatus='connected'
+                    progressStatus='success'
                     sx={{ mt: 8 }}
                 >
                     <MaxWidthTextBlock sx={{ mb: 2 }}>

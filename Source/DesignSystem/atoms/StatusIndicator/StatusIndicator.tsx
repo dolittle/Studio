@@ -8,18 +8,20 @@ import { Box, CircularProgress, SxProps, Typography } from '@mui/material';
 import { Icon, SvgIconsDefinition } from '@dolittle/design-system';
 
 type ConnectionStatusCondition = {
-    color: 'text.secondary' | 'success.main' | 'warning.main' | 'error.main' | 'info.main';
+    color: 'text.primary' | 'text.secondary' | 'success.main' | 'warning.main' | 'error.main' | 'info.main';
     icon: SvgIconsDefinition | null;
 };
 
 const connectionStatusCondition = (status: string): ConnectionStatusCondition => {
-    if (status === 'running' || status === 'connected') {
+    if (status === 'success') {
         return { color: 'success.main', icon: 'CheckCircleRounded' };
-    } else if (status === 'pending') {
-        return { color: 'warning.main', icon: 'WarningRounded' };
+    } else if (status === 'table-success') {
+        return { color: 'text.primary', icon: 'CheckCircleRounded' };
     } else if (status === 'waiting') {
         return { color: 'text.secondary', icon: null };
-    } else if (status === 'failed' || status === 'failing') {
+    } else if (status === 'warning') {
+        return { color: 'warning.main', icon: 'WarningRounded' };
+    } else if (status === 'error') {
         return { color: 'error.main', icon: 'ErrorRounded' };
     }
 
@@ -31,14 +33,14 @@ const connectionStatusCondition = (status: string): ConnectionStatusCondition =>
  */
 export type StatusIndicatorProps = {
     /**
-     * The status to show.
+     * The `status` to show.
      */
-    status: string;
+    status: 'success' | 'table-success' | 'waiting' | 'warning' | 'error' | 'unknown';
 
     /**
-     * The label to show.
+     * The `label` to show.
      *
-     * If not provided, the status will be used as the label.
+     * If not provided, the `status` will be used as the `label`.
      * @default status
      */
     label?: string;
@@ -61,7 +63,7 @@ export type StatusIndicatorProps = {
  * @returns A {@link StatusIndicator} component.
  */
 export const StatusIndicator = ({ label, status, variantFilled, sx }: StatusIndicatorProps) => {
-    const { color, icon } = connectionStatusCondition(status.toLowerCase());
+    const { color, icon } = connectionStatusCondition(status);
 
     const styles = {
         variantText: {

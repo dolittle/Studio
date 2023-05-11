@@ -6,10 +6,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { getPodStatus, MicroserviceInfo } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
-import { StatusFieldCell, customStatusFieldSort } from '../components/microserviceStatus';
+import { customStatusFieldSort, healthStatus } from '../components/microserviceStatus';
 
 import { DataGridPro, GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Paper, Tooltip } from '@mui/material';
+
+import { StatusIndicator } from '@dolittle/design-system';
 
 import { getRuntimeNumberFromString } from '../../../utils/helpers';
 
@@ -26,6 +28,17 @@ const PublicUrlCell = (params: GridRenderCellParams) => {
                 }
             </span>
         </Tooltip>
+    );
+};
+
+const StatusCell = (params: GridRenderCellParams) => {
+    const status = params.value?.toLowerCase();
+
+    return (
+        <StatusIndicator
+            status={healthStatus(status).status}
+            label={healthStatus(status).label}
+        />
     );
 };
 
@@ -66,7 +79,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
 
             return {
                 ...microservice,
-                phase: status[0]?.phase
+                phase: status[0]?.phase,
             } as MicroserviceObject;
         })).then(data => {
             setMicroserviceRows(data);
@@ -103,7 +116,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             minWidth: 270,
             flex: 1,
             valueGetter: ({ row }: GridValueGetterParams) =>
-                `${row.edit?.extra?.headImage || 'N/A'}`
+                `${row.edit?.extra?.headImage || 'N/A'}`,
         },
         {
             field: 'runtime',
@@ -111,7 +124,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             minWidth: 270,
             flex: 1,
             valueGetter: ({ row }: GridValueGetterParams) =>
-                getRuntimeNumberFromString(row.edit?.extra?.runtimeImage)
+                getRuntimeNumberFromString(row.edit?.extra?.runtimeImage),
         },
         {
             field: 'isPublic',
@@ -119,16 +132,16 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             minWidth: 270,
             flex: 1,
             renderCell: PublicUrlCell,
-            sortComparator: customUrlFieldSort
+            sortComparator: customUrlFieldSort,
         },
         {
             field: 'phase',
             headerName: 'Status',
             minWidth: 270,
             flex: 1,
-            renderCell: StatusFieldCell,
-            sortComparator: customStatusFieldSort
-        }
+            renderCell: StatusCell,
+            sortComparator: customStatusFieldSort,
+        },
     ];
 
     const onTableRowClick = (microserviceId: string) => {

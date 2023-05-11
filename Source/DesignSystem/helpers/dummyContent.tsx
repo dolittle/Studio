@@ -7,7 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Menu, Typography } from '@mui/material';
 
-import { Button, IconButton, Icon } from '@dolittle/design-system';
+import { Button, IconButton, Icon, MaxWidthTextBlock } from '@dolittle/design-system';
 
 import { Content, RouterLinkListItem } from './ReactRouter';
 
@@ -151,3 +151,9 @@ export const DummyMainContent = () =>
             dolores sunt inventore perferendis, aut sapiente modi nesciunt.
         </Typography>
     </>;
+
+export const DummyChildrenContent = () =>
+    <MaxWidthTextBlock>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa illo similique consequuntur dolores natus ex
+        sunt esse mollitia id atque. Atque molestiae cum magnam eligendi maxime id sapiente quaerat suscipit?
+    </MaxWidthTextBlock>;

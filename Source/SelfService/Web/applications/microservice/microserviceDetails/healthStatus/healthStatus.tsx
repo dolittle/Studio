@@ -12,9 +12,7 @@ import { HealthStatusTable, HealthStatusTableStats } from './healthStatusTable';
 import { RestartMicroserviceDialog } from '../../components/restartMicroserviceDialog';
 
 const computeStats = (metric: Metric | undefined, scale: number): HealthStatusTableStats | undefined => {
-    if (metric === undefined) {
-        return undefined;
-    }
+    if (metric === undefined) return undefined;
 
     const current = metric.values[metric.values.length - 1].value * scale;
     const maximum = metric.values.reduce((max, datapoint) => datapoint.value > max ? datapoint.value : max, 0) * scale;
@@ -23,7 +21,7 @@ const computeStats = (metric: Metric | undefined, scale: number): HealthStatusTa
     return { average, maximum, current };
 };
 
-type HealthStatusProps = {
+export type HealthStatusProps = {
     applicationId: string;
     environment: string;
     microserviceId: string;
@@ -68,16 +66,14 @@ export const HealthStatus = ({ applicationId, environment, microserviceId, msNam
             group: metric.labels.container,
             name: 'CPU Usage',
             values: metric.values,
-        }))
-        , [cpu.metrics]);
+        })), [cpu.metrics]);
 
     const memoryGraphData = useMemo(() =>
         memory.metrics.map(metric => ({
             group: metric.labels.container,
             name: 'Memory Usage',
             values: metric.values.map(({ time, value }) => ({ time, value: value / 1_048_576 })),
-        }))
-        , [memory.metrics]);
+        })), [memory.metrics]);
 
     return (
         <>

@@ -16,7 +16,6 @@ import { TableSection } from './components/TableSection';
 import { SubmitButtonSection } from './components/SubmitButtonSection';
 import { CancelOrDiscardButton } from './components/CancelOrDiscardButton';
 
-
 export type ChangeMessageViewProps = {
     mode: ViewMode;
     table: string,
@@ -27,7 +26,6 @@ export type ChangeMessageViewProps = {
     queryIsError: boolean;
     queryIsSuccess: boolean;
 };
-
 
 export const ChangeMessageView = ({
     mode,
@@ -47,8 +45,6 @@ export const ChangeMessageView = ({
     const showTable = !!table || mode === 'edit';
     const title = mode === 'new' ? 'Create New Message Type' : `Edit Message Type - ${messageId}`;
 
-
-
     // TODO: Implement this.
     // Prevent the user from accidentally closing the browser tab if they have unsaved changes.
 
@@ -63,7 +59,6 @@ export const ChangeMessageView = ({
 
         navigate('..');
     };
-
 
     const removeSelectedTable = () => onTableSelected('');
 
@@ -118,7 +113,6 @@ export const ChangeMessageView = ({
                                         setSearchInput={setSearchInput}
                                     />
                                 }
-
                             </>
                         )}
                     </>

@@ -10,7 +10,6 @@ import { ContentSection, Input } from '@dolittle/design-system';
 import { ViewModeProps } from '../ViewMode';
 import { alphaNumericCharsRegex } from '../../../../../../utils/validation/patterns';
 
-
 export type MessageDetailsSectionProps = ViewModeProps & {};
 
 export const MessageDetailsSection = (props: MessageDetailsSectionProps) =>

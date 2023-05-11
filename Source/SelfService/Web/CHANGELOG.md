@@ -1,3 +1,50 @@
+# [3.4.38] - 2023-5-11 [PR: #395](https://github.com/dolittle/Studio/pull/395)
+## Summary
+
+Make MessageMappingTable scrollable instead of using pagination.
+
+<img width="1024" alt="Screenshot 2023-05-11 at 13 37 28" src="https://github.com/dolittle/Studio/assets/19160439/206feee7-42dd-43ad-a103-a440afc4672e">
+
+
+# [3.4.37] - 2023-5-8 [PR: #394](https://github.com/dolittle/Studio/pull/394)
+### Fixed
+
+- Empty podStatus gave error to entire MS DataTable. Added 'undefined' as possible PodStatus that returns 'unknown' as status.
+
+![MicrosoftTeams-image](https://user-images.githubusercontent.com/19160439/236857129-1e4baf3d-bbc1-4253-9618-722535784ee7.png)
+
+
+# [3.4.36] - 2023-5-8 [PR: #393](https://github.com/dolittle/Studio/pull/393)
+## Summary
+
+Replaced MS statuses with Design System 'StatusIndicator'.
+Added ConnectionsTable statuses.
+
+### Added
+
+- Status types and variants
+- Statuses to ConnectionsTable
+- Correct statuses to Accordion and AccordionList
+
+### Changed
+
+- Status in StatusIndicator.stories so it would show updated status variants
+- MS status display from 'Button' component to 'StatusIndicator'
+- Accordion status display from 'setInterval' to 'setTimeout' as this is more correct use case
+- Overall code cleanup
+
+### Fixed
+
+- Initialy expanded AccordionList accordion was not expanded
+- Add margin to DataTable header icon only. Before margin was added to all DataTable icons.
+- MS HealthStatus DataTable border color
+- Improved wording
+
+### Removed
+
+- SX control from StatusIndicator.sories as it is hard to add styles like this in Storybook
+
+
 # [3.4.35] - 2023-5-4 [PR: #392](https://github.com/dolittle/Studio/pull/392)
 - Update current alpha numeric regex pattern to include it's for lower case only
 - Use any cased alpha numeric regex for input validation of message type name

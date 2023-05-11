@@ -7,14 +7,46 @@ import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { Paper } from '@mui/material';
 
-import { IconButton } from '@dolittle/design-system';
+import { IconButton, StatusIndicator, StatusIndicatorProps } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../apis/integrations/generated';
 import { CACHE_KEYS } from '../../apis/integrations/CacheKeys';
 import { useConnectionsIdDelete } from '../../apis/integrations/connectionsApi.hooks';
+
+const StatusCell = (params: GridRenderCellParams<any, ConnectionModel>) => {
+    const status = params.row.status.name.toLowerCase();
+
+    return (
+        <StatusIndicator
+            status={getConnectionsHealthStatus(status).status}
+            label={getConnectionsHealthStatus(status)?.label}
+        />
+    );
+};
+
+const getConnectionsHealthStatus = (status: string): StatusIndicatorProps => {
+    if (status === 'connected') {
+        return {
+            status: 'table-success',
+            label: 'connected',
+        };
+    } else if (status === 'registered' || status === 'pending') {
+        return {
+            status: 'warning',
+            label: 'pending',
+        };
+    } else if (status === 'failing') {
+        return {
+            status: 'error',
+            label: 'failing',
+        };
+    }
+
+    return { status: 'unknown' };
+};
 
 export type ConnectionsTableProps = {
     connections: ConnectionModel[];
@@ -51,16 +83,15 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
             headerName: 'Connection Status',
             minWidth: 270,
             flex: 1,
-            valueGetter: ({ row }) => row?.status?.name,
+            renderCell: StatusCell,
         },
         {
             field: 'actions',
             headerName: 'Actions',
             minWidth: 100,
             flex: 1,
-            renderCell({ row }) {
-                return <IconButton tooltipText='Delete connection' icon='DeleteRounded' onClick={() => deleteConnection(row)} />;
-            },
+            renderCell: ({ row }) =>
+                <IconButton tooltipText='Delete connection' icon='DeleteRounded' onClick={() => deleteConnection(row)} />,
             valueGetter: ({ row }) => row?.status?.name,
         },
     ];
