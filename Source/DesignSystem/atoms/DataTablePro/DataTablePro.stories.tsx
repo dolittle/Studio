@@ -6,13 +6,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { DataGridProProps } from '@mui/x-data-grid-pro';
 
-import { dataTableDescription, dummyColumns, dummyIconColumns, dummyIconRows, dummyRows } from './helpers';
+import { dataTableDescription, dummyColumns, dummyIconColumns, dummyIconRows, dummyRows, dummyEditCellsColumns } from './helpers';
 
 import { DataTablePro } from './DataTablePro';
-
-// TODO: Add into description what is needed in every Data Table.
-// TODO: Add sorting guidance.
-// TODO: Add alignment guidance.
 
 const meta: Meta<typeof DataTablePro> = {
     title: 'Data Table Pro',
@@ -67,6 +63,7 @@ export const Default: Story = {
         headerHeight: 46,
         getRowHeight: () => 'auto',
         onRowClick: () => action('onRowClick'),
+        onCellClick: () => action('onCellClick'),
         checkboxSelection: false,
         loading: false,
         hideFooter: true,
@@ -75,10 +72,6 @@ export const Default: Story = {
         disableColumnReorder: true,
         disableColumnResize: true,
         disableColumnSelector: true,
-        // onCellClick: () => action('onCellClick'),
-        // processRowUpdate: (params) => {console.log(params);},
-        // onProcessRowUpdateError: (params) => {console.log(params);},
-        // experimentalFeatures: {newEditingApi: true,},
     },
 };
 
@@ -87,11 +80,19 @@ export const IconCells: Story = {
         ...Default.args,
         rows: dummyIconRows,
         columns: dummyIconColumns,
-        checkboxSelection: false,
-        disableSelectionOnClick: true,
     },
 };
 
+export const EditableCells: Story = {
+    args: {
+        ...Default.args,
+        rows: dummyRows,
+        columns: dummyEditCellsColumns,
+        experimentalFeatures: { newEditingApi: true },
+    },
+};
+
+// TODO: Add more stories.
 // export const EditableCells = () => {};
 // export const CustomToolbar = () => {};// Not related with Data Table! With FilterableColumns.
 // export const FilterableColumns = () => {};
@@ -99,3 +100,18 @@ export const IconCells: Story = {
 // export const ExpandableRows = () => {};
 // export const DisabledRows = () => {};
 // export const ScrollableTable = () => {};
+
+// TODOS:
+// Add into description what is needed in every Data Table.
+// Add sorting guidance.
+// Add alignment guidance.
+// Handle selected rows/cells.
+
+// TODO: To we need these...
+// selectionModel = { selectedRowIds }
+// onSelectionModelChange = { setSelectedRowIds }
+// processRowUpdate: (params) => { console.log(params); },
+// onProcessRowUpdateError: (params) => { console.log(params); },
+// experimentalFeatures: { newEditingApi: true },
+// rowModesModel = { rowMode }
+// onRowModesModelChange = { setRowMode }

@@ -105,7 +105,7 @@ export const dummyIconRows: DummyRowsProps[] = [{ id: '1' }];
 export const dummyIconColumns: GridColDef[] = [
     {
         field: 'success',
-        headerName: 'success',
+        headerName: 'Status success',
         sortable: false,
         minWidth: 150,
         flex: 1,
@@ -115,7 +115,7 @@ export const dummyIconColumns: GridColDef[] = [
     },
     {
         field: 'warning',
-        headerName: 'Warning',
+        headerName: 'Status warning',
         sortable: false,
         minWidth: 150,
         flex: 1,
@@ -125,7 +125,7 @@ export const dummyIconColumns: GridColDef[] = [
     },
     {
         field: 'error',
-        headerName: 'Error',
+        headerName: 'Status error',
         sortable: false,
         minWidth: 150,
         flex: 1,
@@ -135,7 +135,7 @@ export const dummyIconColumns: GridColDef[] = [
     },
     {
         field: 'unknown',
-        headerName: 'Unknown',
+        headerName: 'Status unknown',
         sortable: false,
         minWidth: 150,
         flex: 1,
@@ -145,7 +145,7 @@ export const dummyIconColumns: GridColDef[] = [
     },
     {
         field: 'download',
-        headerName: 'Download',
+        headerName: 'Download file',
         sortable: false,
         minWidth: 150,
         flex: 1,
@@ -162,7 +162,50 @@ export const dummyIconColumns: GridColDef[] = [
     },
 ];
 
-// TODO: Don't know yet if these are correct.
+export const dummyEditCellsColumns: GridColDef[] = [
+    {
+        field: 'col1',
+        headerName: 'Column 1',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        editable: true,
+    },
+    {
+        field: 'col2',
+        headerName: 'Column 2',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        editable: true,
+    },
+    {
+        field: 'col3',
+        headerName: 'Column 3',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        editable: true,
+    },
+    {
+        field: 'col4',
+        headerName: 'Column 4',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        editable: true,
+        renderCell: () => (
+            <IconButton
+                tooltipText='Download'
+                icon='DownloadRounded'
+                href={URL.createObjectURL(new Blob([], { type: 'text/plain' }))}
+                download='sample.log'
+            />
+        ),
+    },
+];
+
+// TODO: Don't know yet if these are correct or necessary.
 
 // * Header: Header columns should be adjustable in width size.If a column width must be reduced to a width smaller than the column name, use the appropriate abbreviation for the column label
 // and a tooltip upon hover to indicate the actual name.If abbreviation is not known, truncate the label.
