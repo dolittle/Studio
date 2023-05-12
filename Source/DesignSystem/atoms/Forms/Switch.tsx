@@ -27,23 +27,14 @@ export type SwitchProps = {
     label: string;
 } & MuiSwitchProps;
 
-const SwitchUI = (props: SwitchProps) => {
-    return (
-        <FormControl size='small'>
-            <FormControlLabel
-                control={
-                    <MuiSwitch
-                        sx={styles.switch}
-                        size='small'
-                        {...props}
-                    />
-                }
-                label={props.label}
-                sx={styles.formControl}
-            />
-        </FormControl>
-    );
-};
+const SwitchUI = (props: SwitchProps) =>
+    <FormControl size='small'>
+        <FormControlLabel
+            control={<MuiSwitch size='small' sx={styles.switch} {...props} />}
+            label={props.label}
+            sx={styles.formControl}
+        />
+    </FormControl>;
 
 /**
  * Creates a switch field to be used in a {@link Form}.
