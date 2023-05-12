@@ -1,31 +1,56 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
-
+import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { DataGridPro, DataGridProProps, GridColDef } from '@mui/x-data-grid-pro';
-import { Paper } from '@mui/material';
+import { DataGridProProps } from '@mui/x-data-grid-pro';
 
-import { Button, IconButton } from '@dolittle/design-system';
-
-import { dataTableDescription, dummyDataTableColumns, dummyIconColumns, dummyDataTableRows, dummyDataTableRowsWithIcons } from './helpers';
+import { dataTableDescription, dummyColumns, dummyIconColumns, dummyIconRows, dummyRows } from './helpers';
 
 import { DataTablePro } from './DataTablePro';
 
-const meta: Meta<typeof DataTablePro> = {
-    title: 'Data Grid',
-    component: DataTablePro,
-    argTypes: {
+// TODO: Add into description what is needed in every Data Table.
+// TODO: Add sorting guidance.
+// TODO: Add alignment guidance.
 
-    },
+const meta: Meta<typeof DataTablePro> = {
+    title: 'Data Table Pro',
+    component: DataTablePro,
     parameters: {
         docs: {
             description: { component: dataTableDescription },
         },
         controls: {
-            include: [],
+            include: ['rows', 'columns', 'checkboxSelection', 'onRowClick', 'loading', 'hideFooter', 'disableSelectionOnClick'],
+        },
+    },
+    argTypes: {
+        rows: {
+            description: `Rows to display in the table. <br/> <br/>
+            Rows need to be an array of objects. Each object should have a unique id property.`
+        },
+        columns: {
+            description: `Columns to display in the table. <br/> <br/>
+            Columns need to be an array of objects. Each object should have a field property.`
+        },
+        checkboxSelection: {
+            description: `If true, a checkbox is rendered in the first column.`
+        },
+        onRowClick: {
+            description: `Callback fired when a row is clicked. <br/> <br/>
+            Signature: function(params: RowParams) => void)`
+        },
+        loading: {
+            description: `If true, the loading overlay is displayed. <br/> <br/>
+            Manage the loading state yourself by using the loading prop.`
+        },
+        hideFooter: {
+            description: `If true, the footer component is hidden. <br/> <br/>
+            The footer component displays the total number of rows and the selected number of rows.`
+        },
+        disableSelectionOnClick: {
+            description: `If true, clicking on a cell will not select the row.`
         },
     },
 };
@@ -34,23 +59,33 @@ export default meta;
 
 type Story = StoryObj<DataGridProProps>;
 
-export const Primary: Story = {
+export const Default: Story = {
     args: {
-        rows: dummyDataTableRows,
-        columns: dummyDataTableColumns,
+        rows: dummyRows,
+        columns: dummyColumns,
+        autoHeight: true,
         headerHeight: 46,
         getRowHeight: () => 'auto',
-        autoHeight: true,
-        checkboxSelection: true,
+        onRowClick: () => action('onRowClick'),
+        checkboxSelection: false,
+        loading: false,
         hideFooter: true,
+        disableSelectionOnClick: true,
         disableColumnMenu: true,
+        disableColumnReorder: true,
+        disableColumnResize: true,
+        disableColumnSelector: true,
+        // onCellClick: () => action('onCellClick'),
+        // processRowUpdate: (params) => {console.log(params);},
+        // onProcessRowUpdateError: (params) => {console.log(params);},
+        // experimentalFeatures: {newEditingApi: true,},
     },
 };
 
-export const WithIcons: Story = {
+export const IconCells: Story = {
     args: {
-        ...Primary.args,
-        rows: dummyDataTableRowsWithIcons,
+        ...Default.args,
+        rows: dummyIconRows,
         columns: dummyIconColumns,
         checkboxSelection: false,
         disableSelectionOnClick: true,
@@ -58,103 +93,9 @@ export const WithIcons: Story = {
 };
 
 // export const EditableCells = () => {};
-// export const WithStatuses = () => {};:?
-// export const CustomToolbar = () => {};
+// export const CustomToolbar = () => {};// Not related with Data Table! With FilterableColumns.
+// export const FilterableColumns = () => {};
 // export const EmptyDataTable = () => {};
-// export const WithLoading = () => {};
-// export const WithCheckboxSelection = () => {};
-// export const SortableColumns = () => {};
-
-
-// export const WithCustomToolbar = () =>
-//     <DataGridPro
-//         rows={rows}
-//         columns={columns}
-//         headerHeight={46}
-//         getRowHeight={() => 'auto'}
-//         disableSelectionOnClick
-//         autoHeight
-//         hideFooter
-//         disableColumnMenu
-//         disableColumnReorder
-//         disableColumnResize
-//         disableColumnSelector
-//         components={{
-//             Toolbar: () => <DataTableToolbar title='Toolbar title' buttons={toolbarButtons} />,
-//         }}
-//     />;
-
-// export const EmptyDataTable = () => {
-//     return (
-//         <DataGridPro
-//             rows={rows}
-//             columns={columns}
-//             headerHeight={46}
-//             getRowHeight={() => 'auto'}
-//             autoHeight
-//             hideFooter
-//             disableColumnMenu
-//             checkboxSelection
-//         // components={{
-//         //     NoRowsOverlay: () => <EmptyDataTable />,
-//         // }}
-//         />
-//     );
-// };
-
-// export const WithLoading = () => {
-//     const [loadingRows, setLoadingRows] = useState(true);
-
-//     return (
-//         <DataGridPro
-//             rows={rows}
-//             columns={columns}
-//             loading={loadingRows}
-//             headerHeight={46}
-//             getRowHeight={() => 'auto'}
-//             autoHeight
-//             hideFooter
-//             disableColumnMenu
-//             checkboxSelection
-//         />
-//     );
-// };
-
-// export const WithCheckboxSelection = () =>
-//     <DataGridPro
-//         rows={rows}
-//         columns={columns}
-//         headerHeight={46}
-//         getRowHeight={() => 'auto'}
-//         autoHeight
-//         checkboxSelection
-//         //onSelectionModelChange={onSelectedIdsChanged}
-//         //selectionModel={selectedIds}
-//         hideFooter
-//         disableColumnMenu
-//         disableColumnReorder
-//         disableColumnResize
-//         disableColumnSelector
-//         disableSelectionOnClick
-//     />;
-
-//export const ExpandableRows = () => {};
-
-// export const Pagination = () =>
-//     <DataGridPro
-//         rows={rows}
-//         columns={columns}
-//         headerHeight={46}
-//         getRowHeight={() => 'auto'}
-//         autoHeight
-//         pagination
-//         pageSize={10}
-//         rowsPerPageOptions={[10]}
-//         disableColumnMenu
-//         disableColumnReorder
-//         disableColumnResize
-//         disableColumnSelector
-//         disableSelectionOnClick
-//     />;
-
-//getRowClassName={row => selectedIds?.includes(row.id) ? '' : 'hide-row'}
+// export const ExpandableRows = () => {};
+// export const DisabledRows = () => {};
+// export const ScrollableTable = () => {};
