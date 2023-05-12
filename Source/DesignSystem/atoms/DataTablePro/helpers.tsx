@@ -5,7 +5,7 @@ import React from 'react';
 
 import { GridColDef } from '@mui/x-data-grid-pro';
 
-import { IconButton, StatusIndicator } from '@dolittle/design-system';
+import { EditCell, IconButton, StatusIndicator } from '@dolittle/design-system';
 
 export const dataTableDescription = `Data tables are an excellent way to organize vast amounts of data. Data tables should be easy to scan, 
             allowing the user to look for patterns and develop insights.
@@ -194,14 +194,7 @@ export const dummyEditCellsColumns: GridColDef[] = [
         minWidth: 150,
         flex: 1,
         editable: true,
-        renderCell: () => (
-            <IconButton
-                tooltipText='Download'
-                icon='DownloadRounded'
-                href={URL.createObjectURL(new Blob([], { type: 'text/plain' }))}
-                download='sample.log'
-            />
-        ),
+        renderCell: EditCell,
     },
 ];
 
