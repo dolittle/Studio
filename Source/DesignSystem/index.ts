@@ -13,6 +13,7 @@ export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } fr
 export { Button, ButtonProps } from './atoms/Button';
 export * from './atoms/Forms';
 export { DataTableToolbar, DataTableToolbarProps } from './atoms/DataTablePro/DataTableToolbar';
+export { EditCell } from './atoms/DataTablePro';
 //export { DropdownMenu } from './atoms/DropdownMenu';
 export { Icon } from './atoms/Icon';
 export { IconButton } from './atoms/IconButton';
@@ -24,6 +25,7 @@ export { Tabs } from './atoms/Tabs';
 export { MaxWidthTextBlock } from './atoms/Typography/MaxWidthTextBlock';
 export { Terminal, TerminalConnect, TerminalStreams, InputMessages, OutputMessages } from './atoms/Terminal';
 export { Tooltip } from './atoms/Tooltip';
+export { TextField } from './atoms/TextField';
 
 // Molecules
 export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecules/FileUploadForm';
