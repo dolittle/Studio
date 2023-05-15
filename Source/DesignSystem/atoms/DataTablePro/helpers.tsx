@@ -5,7 +5,7 @@ import React from 'react';
 
 import { GridColDef } from '@mui/x-data-grid-pro';
 
-import { EditCell, IconButton, StatusIndicator } from '@dolittle/design-system';
+import { EditCell, EditTextFieldCell, IconButton, StatusIndicator } from '@dolittle/design-system';
 
 export const dataTableDescription = `Data tables are an excellent way to organize vast amounts of data. Data tables should be easy to scan, 
             allowing the user to look for patterns and develop insights.
@@ -39,36 +39,11 @@ type DummyRowsProps = {
 };
 
 export const dummyRows: DummyRowsProps[] = [
-    {
-        id: '1',
-        col1: 'Row 1',
-        col2: 'Row 1',
-        col3: 'Row 1',
-        col4: 'Row 1',
-    },
-    {
-        id: '2',
-        col1: 'Row 2',
-        col2: 'Row 2',
-        col3: 'Row 2',
-        col4: 'Row 2',
-    },
-    {
-        id: '3',
-        col1: 'Row 3',
-        col2: 'Row 3',
-        col3: 'Row 3',
-        col4: 'Row 3',
-    },
-    {
-        id: '4',
-        col1: 'Row 4',
-        col2: 'Row 4',
-        col3: 'Row 4',
-        col4: 'Row 4',
-    },
+    { id: '1', col1: 'Row 1', col2: 'Row 1', col3: 'Row 1', col4: 'Row 1' },
+    { id: '2', col1: 'Row 2', col2: 'Row 2', col3: 'Row 2', col4: 'Row 2' },
+    { id: '3', col1: 'Row 3', col2: 'Row 3', col3: 'Row 3', col4: 'Row 3' },
+    { id: '4', col1: 'Row 4', col2: 'Row 4', col3: 'Row 4', col4: 'Row 4' },
 ];
-
 export const dummyColumns: GridColDef[] = [
     {
         field: 'col1',
@@ -101,7 +76,6 @@ export const dummyColumns: GridColDef[] = [
 ];
 
 export const dummyIconRows: DummyRowsProps[] = [{ id: '1' }];
-
 export const dummyIconColumns: GridColDef[] = [
     {
         field: 'success',
@@ -195,6 +169,7 @@ export const dummyEditCellsColumns: GridColDef[] = [
         flex: 1,
         editable: true,
         renderCell: EditCell,
+        renderEditCell: EditTextFieldCell,
     },
 ];
 
