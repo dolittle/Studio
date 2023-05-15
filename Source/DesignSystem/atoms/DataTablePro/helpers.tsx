@@ -198,7 +198,7 @@ export const dummyEditCellsColumns: GridColDef[] = [
     },
 ];
 
-// TODO: Don't know yet if these are correct or necessary.
+// TODO: Don't know yet if these are correct or necessary guidelines:
 
 // * Header: Header columns should be adjustable in width size.If a column width must be reduced to a width smaller than the column name, use the appropriate abbreviation for the column label
 // and a tooltip upon hover to indicate the actual name.If abbreviation is not known, truncate the label.
