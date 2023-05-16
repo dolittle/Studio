@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { DataGridProProps } from '@mui/x-data-grid-pro';
 
-import { dataTableDescription, dummyColumns, dummyIconColumns, dummyIconRows, dummyRows, dummyEditCellsColumns } from './helpers';
+import { dataTableDescription, dummyColumns, dummyEditCellsColumns, dummyIconColumns, dummyIconRows, dummyRows } from './helpers';
 
 import { DataGrid } from './DataGrid';
 

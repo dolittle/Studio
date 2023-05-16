@@ -7,7 +7,7 @@ import { GridRenderCellParams, useGridApiContext } from '@mui/x-data-grid-pro';
 
 import { TextField } from '@dolittle/design-system';
 
-const styles = {
+const textFieldBorderStyles = {
     '& .MuiOutlinedInput-root': {
         '& fieldset': {
             borderColor: 'transparent',
@@ -31,8 +31,18 @@ export const EditTextFieldCell = (params: GridRenderCellParams<HTMLInputElement>
     };
 
     return (
-        <TextField value={value} onValueChange={handleValueChange} sx={styles} />
+        <TextField
+            value={value}
+            startIcon='EditRounded'
+            onValueChange={handleValueChange}
+            sx={textFieldBorderStyles}
+        />
     );
 };
 
-export const EditCell = (params: GridRenderCellParams) => <TextField value={params.value} sx={styles} />;
+export const EditCell = (params: GridRenderCellParams) =>
+    <TextField
+        value={params.value}
+        startIcon='EditRounded'
+        sx={textFieldBorderStyles}
+    />;
