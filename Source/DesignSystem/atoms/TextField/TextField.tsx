@@ -7,20 +7,6 @@ import { InputAdornment, SxProps, TextField as MuiTextField } from '@mui/materia
 
 import { Icon } from '../Icon';
 
-const styles = {
-    '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-            borderColor: 'transparent',
-        },
-        '&:hover fieldset': {
-            borderColor: 'transparent',
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: 'transparent',
-        },
-    },
-};
-
 const SearchFieldAdornment = () =>
     <InputAdornment position='start'>
         <Icon icon='Search' size='medium' />
@@ -92,5 +78,5 @@ export const TextField = ({ id, label, value, onValueChange, placeholder, isFull
         type='text'
         variant='outlined'
         autoComplete='off'
-        sx={{ ...styles, ...sx }}
+        sx={sx}
     />;
