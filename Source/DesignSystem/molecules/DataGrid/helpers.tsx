@@ -144,6 +144,8 @@ export const dummyEditCellsColumns: GridColDef[] = [
         minWidth: 150,
         flex: 1,
         editable: true,
+        renderCell: EditCell,
+        renderEditCell: EditTextFieldCell,
     },
     {
         field: 'col2',
@@ -152,6 +154,8 @@ export const dummyEditCellsColumns: GridColDef[] = [
         minWidth: 150,
         flex: 1,
         editable: true,
+        renderCell: EditCell,
+        renderEditCell: EditTextFieldCell,
     },
     {
         field: 'col3',
@@ -160,6 +164,8 @@ export const dummyEditCellsColumns: GridColDef[] = [
         minWidth: 150,
         flex: 1,
         editable: true,
+        renderCell: EditCell,
+        renderEditCell: EditTextFieldCell,
     },
     {
         field: 'col4',
