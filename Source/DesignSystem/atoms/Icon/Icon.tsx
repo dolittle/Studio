@@ -8,7 +8,7 @@ import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
 /**
  * The props for a {@link Icon} component.
  */
-type IconProps = {
+export type IconProps = {
     /**
      * Usual MUI icon writen as a `string`. Must be a valid `SvgIconsDefinition`.
      */

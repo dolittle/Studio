@@ -13,7 +13,7 @@ export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } fr
 export { Button, ButtonProps } from './atoms/Button';
 export * from './atoms/Forms';
 //export { DropdownMenu } from './atoms/DropdownMenu';
-export { Icon } from './atoms/Icon';
+export { Icon, IconProps } from './atoms/Icon';
 export { IconButton } from './atoms/IconButton';
 export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
