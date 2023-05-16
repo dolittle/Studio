@@ -12,7 +12,6 @@ export { AlertDialog, AlertDialogProps } from './atoms/AlertDialog';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
 export { Button, ButtonProps } from './atoms/Button';
 export * from './atoms/Forms';
-export { EditCell, EditTextFieldCell } from './atoms/DataTablePro';
 //export { DropdownMenu } from './atoms/DropdownMenu';
 export { Icon } from './atoms/Icon';
 export { IconButton } from './atoms/IconButton';
@@ -27,6 +26,7 @@ export { Tooltip } from './atoms/Tooltip';
 export { TextField, TextFieldProps } from './atoms/TextField';
 
 // Molecules
+export { EditCell, EditTextFieldCell } from './molecules/DataTablePro';
 export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecules/FileUploadForm';
 export { Graph } from './molecules/Metrics/Graph';
 export { NavigationBar } from './molecules/NavigationBar';
