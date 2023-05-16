@@ -8,11 +8,11 @@ import { DataGridProProps } from '@mui/x-data-grid-pro';
 
 import { dataTableDescription, dummyColumns, dummyIconColumns, dummyIconRows, dummyRows, dummyEditCellsColumns } from './helpers';
 
-import { DataTablePro } from './DataTablePro';
+import { DataGrid } from './DataGrid';
 
-const meta: Meta<typeof DataTablePro> = {
-    title: 'Data Table Pro',
-    component: DataTablePro,
+const meta: Meta<typeof DataGrid> = {
+    title: 'Data Grid',
+    component: DataGrid,
     parameters: {
         docs: {
             description: { component: dataTableDescription },
@@ -96,10 +96,10 @@ export const EditableCells: Story = {
 // export const EditableCells = () => {};
 // export const CustomToolbar = () => {};// Not related with Data Table! With FilterableColumns.
 // export const FilterableColumns = () => {};
-// export const EmptyDataTable = () => {};
+// export const EmptyDataGrid = () => {};
 // export const ExpandableRows = () => {};
 // export const DisabledRows = () => {};
-// export const ScrollableTable = () => {};
+// export const ScrollableDataGrid = () => {};
 
 // TODOS:
 // Add into description what is needed in every Data Table.

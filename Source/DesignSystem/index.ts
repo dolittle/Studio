@@ -26,7 +26,7 @@ export { Tooltip } from './atoms/Tooltip';
 export { TextField, TextFieldProps } from './atoms/TextField';
 
 // Molecules
-export { EditCell, EditTextFieldCell } from './molecules/DataTablePro';
+export { EditCell, EditTextFieldCell } from './molecules/DataGrid';
 export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecules/FileUploadForm';
 export { Graph } from './molecules/Metrics/Graph';
 export { NavigationBar } from './molecules/NavigationBar';
