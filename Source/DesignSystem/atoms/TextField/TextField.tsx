@@ -3,101 +3,95 @@
 
 import React from 'react';
 
-import { InputAdornment, SxProps, TextField as MuiTextField, TextFieldProps as MuiTextFieldProps } from '@mui/material';
+import { InputAdornment, SxProps, TextField as MuiTextField } from '@mui/material';
 
 import { Icon, IconProps, SvgIconsDefinition } from '@dolittle/design-system';
 
-export type TextFieldAdornmentProps = IconProps & {
+type TextFieldAdornmentProps = IconProps & {
     /**
-     * The position this adornment should appear relative to the `text field` element.
-     * @default start
+     * The location of the InputAdornment depends on adding the icon as 'startIcon' or 'endIcon'.
      */
-    position?: 'start' | 'end';
+    position: 'start' | 'end';
 };
 
 const TextFieldAdornment = ({ icon, color, size, position }: TextFieldAdornmentProps) =>
-    <InputAdornment position={position ?? 'start'}>
-        <Icon icon={icon} color={color ?? 'inherit'} size={size ?? 'medium'} />
+    <InputAdornment position={position}>
+        <Icon icon={icon} color={color} size={size} />
     </InputAdornment>;
 
 export type TextFieldProps = {
     /**
-     * The id of the `text field` element.
-     */
-    id?: string;
-
-    /**
-     * The label content displayed above the `text field`.
+     * The label content displayed above the `TextField`.
      */
     label?: string;
 
     /**
-     * The value of the `text field` element.
+     * The value of the `TextField` element.
      */
-    value?: HTMLInputElement;
+    value?: string | HTMLInputElement;
 
     /**
-     * The size of the `text field`.
+     * The size of the `TextField`.
      * @default small
      */
     size?: 'small' | 'medium';
 
     /**
-     * The short hint displayed in the `text field` before the user enters a value.
+     * The short hint displayed in the `TextField` before the user enters a value.
      * @default ''
      */
     placeholder?: string;
 
     /**
-     * The helper text content displayed under the `text field`.
+     * The helper text content displayed under the `TextField`.
      * @default undefined
      */
     helperText?: React.ReactNode;
 
     /**
-     * If `true`, the `text field` element will be disabled.
+     * If true, the `TextField` element will be disabled.
      * @default false
      */
     isDisabled?: boolean;
 
     /**
-     * If `true`, the `text field` element will take up the full width of its container.
+     * If true, the `TextField` element will take up the full width of its container.
      * @default false
      */
     isFullWidth?: boolean;
 
     /**
-     * If `true`, the `text field` element will be focused.
+     * If true, the `TextField` element will be focused.
      * @default false
      */
     autoFocus?: boolean;
 
     /**
-     * The icon to display at the start of the `text field`. Must be a valid `SvgIconsDefinition`.
+     * The icon to display at the start of the `TextField`. Must be a valid `SvgIconsDefinition`.
      * @default undefined
      */
     startIcon?: SvgIconsDefinition;
 
     /**
-     * The icon to display at the end of the `text field`. Must be a valid `SvgIconsDefinition`.
+     * The icon to display at the end of the `TextField`. Must be a valid `SvgIconsDefinition`.
      * @default undefined
      */
     endIcon?: SvgIconsDefinition;
 
     /**
-     * The color of the icon.
+     * The color of the `startIcon` or `endIcon`.
      * @default inherit
      */
     iconColor?: IconProps['color'];
 
     /**
-     * The size of the icon.
+     * The size of the `startIcon` or `endIcon`.
      * @default medium
      */
     iconSize?: IconProps['size'];
 
     /**
-     * Callback fired when the value is changed.
+     * Callback fired when the `value` is changed.
      * @param {React.ChangeEvent} event - The event source of the callback.
      * @default undefined
      */
@@ -109,9 +103,8 @@ export type TextFieldProps = {
     sx?: SxProps;
 };
 
-export const TextField = ({ id, label, value, size, placeholder, helperText, isDisabled, isFullWidth, startIcon, endIcon, iconColor, iconSize, onValueChange, sx }: TextFieldProps) =>
+export const TextField = ({ label, value, size, placeholder, helperText, isDisabled, isFullWidth, startIcon, endIcon, iconColor, iconSize, onValueChange, sx }: TextFieldProps) =>
     <MuiTextField
-        id={id}
         label={label}
         value={value}
         size={size ?? 'small'}
@@ -121,12 +114,23 @@ export const TextField = ({ id, label, value, size, placeholder, helperText, isD
         fullWidth={isFullWidth}
         onChange={onValueChange}
         InputProps={{
-            startAdornment: startIcon && <TextFieldAdornment icon={startIcon} color={iconColor} size={iconSize} />,
-            endAdornment: endIcon && <TextFieldAdornment icon={endIcon} color={iconColor} size={iconSize} />,
+            startAdornment: startIcon &&
+                <TextFieldAdornment
+                    position='start'
+                    icon={startIcon}
+                    color={iconColor ?? 'inherit'}
+                    size={iconSize ?? 'medium'}
+                />,
+            endAdornment: endIcon &&
+                <TextFieldAdornment
+                    position='end'
+                    icon={endIcon}
+                    color={iconColor ?? 'inherit'}
+                    size={iconSize ?? 'medium'}
+                />,
         }}
-        aria-describedby={`${id}-helper-text`}
-        type='text'
         variant='outlined'
+        type='text'
         autoComplete='off'
         sx={sx}
     />;
