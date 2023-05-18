@@ -67,10 +67,12 @@ export const MessageMappingTable = ({
      * Callback for when the user changes the selection in the grid.
      * Updates based on previous selection state, and notifies parent of field mapping changes.
      * Generates a unique field name for the newly selected rows.
-     * @param newSelectedModel List of selected row ids for every selection change made
+     * @param newSelectedModel List of selected row ids for every selection change made.
      */
     const onSelectedModelChanged = (newSelectedModel: GridSelectionModel) => {
         const newlySelectedIds = newSelectedModel.filter(id => !selectedIds.includes(id));
+        const removedIds = selectedIds.filter(id => !newSelectedModel.includes(id));
+
         newlySelectedIds
             .filter(id => gridApiRef.current.getCellMode(id, 'fieldName') !== 'edit')
             .forEach(id => {
@@ -79,21 +81,22 @@ export const MessageMappingTable = ({
                 row.fieldName = fieldName;
                 onFieldMapped(id as string, fieldName);
             });
-        const removedIds = selectedIds.filter(id => !newSelectedModel.includes(id));
+
         removedIds.forEach(id => {
             const row = gridApiRef.current.getRow(id) as DataGridTableListingEntry;
             row.fieldName = '';
             onFieldMapped(id as string, '');
         });
+
         onSelectedIdsChanged(newSelectedModel);
     };
 
     /**
      * Process row update after user has edited the Remapped name column.
-     * Sanitizes the fieldName, and checks if it is unique, selects the row if it is not and notifies parent that field has been mapped
-     * @param newRow New row data
-     * @param oldRow Old row data
-     * @returns new row data
+     * Sanitizes the fieldName, and checks if it is unique, selects the row if it is not and notifies parent that field has been mapped.
+     * @param newRow New row data.
+     * @param oldRow Old row data.
+     * @returns new row data.
      */
     const processRowUpdate = (
         newRow: DataGridTableListingEntry,
