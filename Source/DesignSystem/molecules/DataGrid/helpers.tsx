@@ -8,12 +8,10 @@ export const dataTableDescription = `Data tables are an excellent way to organiz
 * Checkboxes: When data in a table can support many interactions such as removing, editing, restarting, syncing, etc… checkboxes are helpful in
 allowing the user to select the data and manipulate it with a button or toolbar outside of the data table, instead of using an action icon in the data table itself.
 This frees up space for more columns and, therefore, data. Always include a checkbox in the header row to allow for quick selection of all items within a data table.
-* Action icons: These are icon buttons found inside their own column in the table that cause a specific action to a specific row of data.
-Do not mix data table interactions by using both action icons inside the data table and tool bars or buttons outside the data table. Stick to one format. 
+ 
 * Clickable rows: If a user can see a more detailed view or page of the individual data sets, make the rows clickable, leading the user to a new view with more information.
 If rows are clickable, then they should display a hover state change. Always provide a way for the user to return to the data table with either a back button or via a breadcrumb.
-* Editable cells: If a particular data field can be changed by the user, make the cell editable. Only use this when the user does not need to see a more detailed view to edit the data.
-Cells should not be editable by default, only when required.
+
 * Sorting columns: Sorting is a helpful function for manipulating data to better understand it. Include header sorters by default and remove when not necessary,
 such as in columns that contain action icons. Sorting icons should always be displayed to the right of the column label.
 * Expandable rows: Data rows can be expandable by utilizing the arrow icon button component. Expanded rows should show additional data as it pertains to the row above.

@@ -84,6 +84,14 @@ export const IconCells: Story = {
         columns: dummyIconColumns,
     },
 };
+IconCells.parameters = {
+    docs: {
+        description: {
+            story: `Icon buttons is found inside their own column in the table that cause a specific action to a specific row of data.<br/>
+            Use Icon to display a specific icon in the table.`
+        },
+    },
+};
 
 export const EditableCells: Story = {
     args: {
@@ -93,9 +101,17 @@ export const EditableCells: Story = {
         experimentalFeatures: { newEditingApi: true },
     },
 };
+EditableCells.parameters = {
+    docs: {
+        description: {
+            story: `If a particular data field can be changed by the user, make the cell editable.<br/>
+            Only use this when the user does not need to see a more detailed view to edit the data.<br/>
+            Cells should not be editable by default, only when required.`
+        },
+    },
+};
 
 // TODO: Add more stories.
-// export const EditableCells = () => {};
 // export const CustomToolbar = () => {};// Not related with Data Table! With FilterableColumns.
 // export const FilterableColumns = () => {};
 // export const EmptyDataGrid = () => {};
