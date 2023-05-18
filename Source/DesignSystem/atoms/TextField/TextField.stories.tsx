@@ -16,7 +16,7 @@ metadata.parameters = {
         },
     },
     controls: {
-        exlude: ['onValueChange', 'value', 'sx']
+        exclude: ['onValueChange', 'value', 'sx'],
     },
 };
 
