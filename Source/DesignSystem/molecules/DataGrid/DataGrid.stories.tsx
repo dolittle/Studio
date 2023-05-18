@@ -6,7 +6,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { DataGridProProps } from '@mui/x-data-grid-pro';
 
-import { dataTableDescription, dummyColumns, dummyEditCellsColumns, dummyIconColumns, dummyIconRows, dummyRows } from './helpers';
+import { dataTableDescription } from './helpers';
+import { dummyColumns, dummyEditCellsColumns, dummyIconColumns, dummyIconRows, dummyRows } from '../../helpers/DummyContents';
 
 import { DataGrid } from './DataGrid';
 
@@ -62,6 +63,7 @@ export const Default: Story = {
         autoHeight: true,
         headerHeight: 46,
         getRowHeight: () => 'auto',
+        getEstimatedRowHeight: () => 40,
         onRowClick: () => action('onRowClick'),
         onCellClick: () => action('onCellClick'),
         checkboxSelection: false,

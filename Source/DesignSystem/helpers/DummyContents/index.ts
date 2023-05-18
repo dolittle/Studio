@@ -3,4 +3,5 @@
 
 export * from './DummyAccordionsContent';
 export * from './DummyArray';
+export * from './DummyDataGridContent';
 export * from './DummyText';
