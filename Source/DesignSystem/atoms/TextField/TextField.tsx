@@ -7,15 +7,8 @@ import { InputAdornment, SxProps, TextField as MuiTextField } from '@mui/materia
 
 import { Icon, IconProps, SvgIconsDefinition } from '@dolittle/design-system';
 
-type TextFieldAdornmentProps = IconProps & {
-    /**
-     * The location of the InputAdornment depends on adding the icon as 'startIcon' or 'endIcon'.
-     */
-    position: 'start' | 'end';
-};
-
-const TextFieldAdornment = ({ icon, color, size, position }: TextFieldAdornmentProps) =>
-    <InputAdornment position={position}>
+const TextFieldAdornment = ({ icon, color, size }: IconProps) =>
+    <InputAdornment position='start'>
         <Icon icon={icon} color={color} size={size} />
     </InputAdornment>;
 
@@ -26,7 +19,7 @@ export type TextFieldProps = {
     label?: string;
 
     /**
-     * The value of the `TextField` element.
+     * The value of the `TextField` element, required for a controlled component.
      */
     value?: string | HTMLInputElement;
 
@@ -44,9 +37,9 @@ export type TextFieldProps = {
 
     /**
      * The helper text content displayed under the `TextField`.
-     * @default undefined
+     * @default ''
      */
-    helperText?: React.ReactNode;
+    helperText?: string;
 
     /**
      * If true, the `TextField` element will be disabled.
@@ -61,22 +54,10 @@ export type TextFieldProps = {
     isFullWidth?: boolean;
 
     /**
-     * If true, the `TextField` element will be focused.
-     * @default false
-     */
-    autoFocus?: boolean;
-
-    /**
      * The icon to display at the start of the `TextField`. Must be a valid `SvgIconsDefinition`.
      * @default undefined
      */
     startIcon?: SvgIconsDefinition;
-
-    /**
-     * The icon to display at the end of the `TextField`. Must be a valid `SvgIconsDefinition`.
-     * @default undefined
-     */
-    endIcon?: SvgIconsDefinition;
 
     /**
      * The color of the `startIcon` or `endIcon`.
@@ -86,7 +67,7 @@ export type TextFieldProps = {
 
     /**
      * The size of the `startIcon` or `endIcon`.
-     * @default medium
+     * @default small
      */
     iconSize?: IconProps['size'];
 
@@ -103,7 +84,7 @@ export type TextFieldProps = {
     sx?: SxProps;
 };
 
-export const TextField = ({ label, value, size, placeholder, helperText, isDisabled, isFullWidth, startIcon, endIcon, iconColor, iconSize, onValueChange, sx }: TextFieldProps) =>
+export const TextField = ({ label, value, size, placeholder, helperText, isDisabled, isFullWidth, startIcon, iconColor, iconSize, onValueChange, sx }: TextFieldProps) =>
     <MuiTextField
         label={label}
         value={value}
@@ -112,23 +93,11 @@ export const TextField = ({ label, value, size, placeholder, helperText, isDisab
         helperText={helperText}
         disabled={isDisabled}
         fullWidth={isFullWidth}
-        onChange={onValueChange}
         InputProps={{
             startAdornment: startIcon &&
-                <TextFieldAdornment
-                    position='start'
-                    icon={startIcon}
-                    color={iconColor ?? 'inherit'}
-                    size={iconSize ?? 'medium'}
-                />,
-            endAdornment: endIcon &&
-                <TextFieldAdornment
-                    position='end'
-                    icon={endIcon}
-                    color={iconColor ?? 'inherit'}
-                    size={iconSize ?? 'medium'}
-                />,
+                <TextFieldAdornment icon={startIcon} color={iconColor ?? 'inherit'} size={iconSize ?? 'small'} />
         }}
+        onChange={onValueChange}
         variant='outlined'
         type='text'
         autoComplete='off'
