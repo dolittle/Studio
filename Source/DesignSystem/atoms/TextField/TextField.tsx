@@ -64,12 +64,6 @@ export type TextFieldProps = {
     iconColor?: IconProps['color'];
 
     /**
-     * The size of the `startIcon`.
-     * @default small
-     */
-    iconSize?: IconProps['size'];
-
-    /**
      * Callback fired when the `value` is changed.
      * @param {React.ChangeEvent} event - The event source of the callback.
      * @default undefined
@@ -82,18 +76,18 @@ export type TextFieldProps = {
     sx?: SxProps;
 };
 
-export const TextField = ({ label, value, size, placeholder, helperText, isDisabled, isFullWidth, startIcon, iconColor, iconSize, onValueChange, sx }: TextFieldProps) =>
+export const TextField = ({ label, value, size = 'small', placeholder, helperText, isDisabled, isFullWidth, startIcon, iconColor, onValueChange, sx }: TextFieldProps) =>
     <MuiTextField
         label={label}
         value={value}
-        size={size ?? 'small'}
+        size={size}
         placeholder={placeholder}
         helperText={helperText}
         disabled={isDisabled}
         fullWidth={isFullWidth}
         InputProps={{
             startAdornment: startIcon &&
-                <TextFieldAdornment icon={startIcon} color={iconColor ?? 'inherit'} size={iconSize ?? 'small'} />
+                <TextFieldAdornment icon={startIcon} color={iconColor ?? 'inherit'} size={size} />
         }}
         onChange={onValueChange}
         variant='outlined'

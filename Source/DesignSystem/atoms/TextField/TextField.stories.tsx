@@ -29,7 +29,6 @@ metadata.args = {
     isFullWidth: false,
     startIcon: undefined,
     iconColor: undefined,
-    iconSize: undefined,
     onValueChange: () => { },
 };
 
