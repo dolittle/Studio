@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import { DataGridPro, GridColDef, GridRowId, GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
 import { Box, Paper } from '@mui/material';
 
-import { Accordion, Button } from '@dolittle/design-system';
+import { Accordion, Button, EditCell, EditTextFieldCell } from '@dolittle/design-system';
 
 import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../apis/solutions/api';
 
@@ -21,12 +21,18 @@ const envVariableColumns: GridColDef<EnvironmentVariableTableRow>[] = [
         headerName: 'Name',
         width: 330,
         editable: true,
+        headerAlign: 'center',
+        renderCell: EditCell,
+        renderEditCell: EditTextFieldCell,
     },
     {
         field: 'value',
         headerName: 'Value',
         width: 330,
         editable: true,
+        headerAlign: 'center',
+        renderCell: EditCell,
+        renderEditCell: EditTextFieldCell,
     },
     {
         field: 'isSecret',
@@ -38,6 +44,8 @@ const envVariableColumns: GridColDef<EnvironmentVariableTableRow>[] = [
         renderCell: ({ value }) => (
             <Button label={value ? 'Yes' : 'No'} color='subtle' endWithIcon='ArrowDropDownRounded' sx={{ width: 1, height: 1 }} />
         ),
+        // TODO: Implement this.
+        //renderEditCell: ({ id, value, api }) => ();
         width: 120,
     },
 ];
