@@ -18,7 +18,7 @@ export type IconProps = {
      * Most icons will use the default `inherit` color.
      * @default inherit
      */
-    color?: 'inherit' | 'primary' | 'secondary' | 'action' | 'disabled' | 'error';
+    color?: 'inherit' | 'primary' | 'secondary' | 'disabled' | 'error';
 
     /**
      * You can change icon size to be `medium`.
