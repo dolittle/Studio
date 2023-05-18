@@ -5,50 +5,16 @@ import React, { useEffect, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { DataGridPro, GridColDef, GridRowId, GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridRowId, GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
 import { Box, Paper } from '@mui/material';
 
-import { Accordion, Button, EditCell, EditTextFieldCell } from '@dolittle/design-system';
+import { Accordion, Button } from '@dolittle/design-system';
 
-import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../apis/solutions/api';
+import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../../apis/solutions/api';
 
-import { RestartInfoBox } from '../../components/restartInfoBox';
-import { EmptyDataTable } from '../../components/emptyDataTable';
-
-const envVariableColumns: GridColDef<EnvironmentVariableTableRow>[] = [
-    {
-        field: 'name',
-        headerName: 'Name',
-        width: 330,
-        editable: true,
-        headerAlign: 'center',
-        renderCell: EditCell,
-        renderEditCell: EditTextFieldCell,
-    },
-    {
-        field: 'value',
-        headerName: 'Value',
-        width: 330,
-        editable: true,
-        headerAlign: 'center',
-        renderCell: EditCell,
-        renderEditCell: EditTextFieldCell,
-    },
-    {
-        field: 'isSecret',
-        headerName: 'Secret',
-        headerAlign: 'center',
-        type: 'singleSelect',
-        valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
-        editable: true,
-        renderCell: ({ value }) => (
-            <Button label={value ? 'Yes' : 'No'} color='subtle' endWithIcon='ArrowDropDownRounded' sx={{ width: 1, height: 1 }} />
-        ),
-        // TODO: Implement this.
-        //renderEditCell: ({ id, value, api }) => ();
-        width: 120,
-    },
-];
+import { RestartInfoBox } from '../../../components/restartInfoBox';
+import { EmptyDataTable } from '../../../components/emptyDataTable';
+import { envVariableColumns } from './tableColumns';
 
 const styles = {
     buttonWrapper: {
@@ -72,12 +38,12 @@ const styles = {
     },
 };
 
-type EnvironmentVariableTableRow = InputEnvironmentVariable & {
+export type EnvironmentVariableTableRow = InputEnvironmentVariable & {
     id: GridRowId;
     isNew: boolean;
 };
 
-type EnvironmentVariablesProps = {
+export type EnvironmentVariablesProps = {
     applicationId: string;
     environment: string;
     microserviceName: string;
