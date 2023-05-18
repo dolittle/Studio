@@ -6,6 +6,8 @@ import React from 'react';
 import { Paper } from '@mui/material';
 import { DataGridPro, GridColDef, GridSelectionModel, GridRowId, useGridApiRef } from '@mui/x-data-grid-pro';
 
+import { EditCell, EditTextFieldCell } from '@dolittle/design-system';
+
 import { MappableTableColumn } from '../../../../../../apis/integrations/generated';
 import { toPascalCase } from '../../../../../../utils/helpers/strings';
 import { generateMappedFieldNameFrom } from './generateMappedFieldNameFrom';
@@ -41,6 +43,8 @@ const columns: GridColDef<DataGridTableListingEntry>[] = [
         headerName: 'Remapped Name',
         editable: true,
         minWidth: 270,
+        renderCell: EditCell,
+        renderEditCell: EditTextFieldCell,
     },
 ];
 
