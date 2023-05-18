@@ -5,20 +5,15 @@ import React from 'react';
 
 import { useDebounce } from 'use-debounce';
 
-import { InputAdornment, TextField, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
-import { Icon, ContentSection } from '@dolittle/design-system';
+import { ContentSection, TextField } from '@dolittle/design-system';
 
 import { useConnectionsIdMessageMappingsTablesSearchGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
 import { useConnectionId } from '../../../../../routes.hooks';
 
 import { ViewModeProps } from '../ViewMode';
 import { TableSearchResults } from './TableSearchResults';
-
-const SearchFieldAdornment =
-    <InputAdornment position='start'>
-        <Icon icon='Search' size='medium' />
-    </InputAdornment>;
 
 export type TableSearchSectionProps = ViewModeProps & {
     onTableSelected: (tableName: string) => void;
@@ -36,12 +31,13 @@ export const TableSearchSection = ({ onTableSelected, searchInput, setSearchInpu
     return (
         <ContentSection title='Browse M3 Tables'>
             <TextField
-                fullWidth
-                InputProps={{ startAdornment: SearchFieldAdornment }}
-                placeholder='Search'
-                sx={{ my: 3 }}
                 value={searchInput}
-                onChange={e => setSearchInput(e.target.value)}
+                size='medium'
+                placeholder='Search'
+                isFullWidth
+                startIcon='Search'
+                onValueChange={e => setSearchInput(e.target.value)}
+                sx={{ my: 3 }}
             />
 
             {!!searchResults.length &&
