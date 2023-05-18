@@ -3,19 +3,19 @@
 
 import React from 'react';
 
-import { Link as RouterLink, LinkProps as RouterLinkProps, MemoryRouter, useLocation } from 'react-router-dom';
+import { Link as RouterLink, LinkProps as RouterLinkProps, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { StaticRouter } from 'react-router-dom/server';
 
 import { ListItem, ListItemButton, ListItemIcon, ListItemText, SxProps, Typography } from '@mui/material';
 
-type RouterLinkListItemProps = {
+export type RouterLinkListItemProps = {
     to: string;
     icon?: React.ReactElement;
     text?: string;
     inset?: boolean;
     selected?: boolean;
-    sx?: SxProps;
     variantButton?: boolean;
+    sx?: SxProps;
 };
 
 export const Router = ({ children }: { children?: React.ReactNode }) => {
@@ -25,6 +25,14 @@ export const Router = ({ children }: { children?: React.ReactNode }) => {
 
     return (
         <MemoryRouter initialEntries={['/main3']} initialIndex={0}>{children}</MemoryRouter>
+    );
+};
+
+export const CurrentPath = () => {
+    return (
+        <Routes>
+            <Route path='*' element={<Content />} />
+        </Routes>
     );
 };
 

@@ -7,7 +7,7 @@ import { Box, Toolbar } from '@mui/material';
 
 import { NavigationBar, SideBar } from '@dolittle/design-system';
 
-import { MainLinks, SecondaryLinks, SelectionMenu, MobileSecondaryLinks, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/dummyContent';
+import { MainLinks, MobileSecondaryLinks, SecondaryLinks, SelectionMenu, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/ReactRouter';
 
 /**
  * The props for a {@link Layout} component.

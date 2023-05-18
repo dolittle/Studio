@@ -7,8 +7,8 @@ import { componentStories } from '@dolittle/design-system';
 
 import { Layout } from './Layout';
 
-import { DummyMainContent } from '../../helpers/dummyContent';
-import { Router } from '../../helpers/ReactRouter';
+import { DummyText } from '../../helpers/DummyContents';
+import { Router, CurrentPath } from '../../helpers/ReactRouter';
 
 const { metadata, createStory } = componentStories(Layout, {
     decorator: (Story) => (
@@ -23,7 +23,12 @@ metadata.parameters = {
 };
 
 metadata.args = {
-    children: <DummyMainContent />,
+    children: (
+        <>
+            <CurrentPath />
+            <DummyText />
+        </>
+    ),
 };
 
 export default metadata;
