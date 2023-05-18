@@ -118,6 +118,7 @@ EditableCells.parameters = {
 // export const ExpandableRows = () => {};
 // export const DisabledRows = () => {};
 // export const ScrollableDataGrid = () => {};
+// export const RowEditMode = () => {};
 
 // TODOS:
 // Add into description what is needed in every Data Table.
