@@ -34,6 +34,8 @@ export const EditTextFieldCell = (params: GridRenderCellParams<HTMLInputElement>
         <TextField
             value={value}
             startIcon='EditRounded'
+            iconSize='small'
+            iconColor='primary'
             onValueChange={handleValueChange}
             sx={textFieldBorderStyles}
         />
@@ -44,5 +46,6 @@ export const EditCell = (params: GridRenderCellParams) =>
     <TextField
         value={params.value}
         startIcon='EditRounded'
+        iconSize='small'
         sx={textFieldBorderStyles}
     />;
