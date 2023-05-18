@@ -31,13 +31,11 @@ export type TextFieldProps = {
 
     /**
      * The short hint displayed in the `TextField` before the user enters a value.
-     * @default ''
      */
     placeholder?: string;
 
     /**
      * The helper text content displayed under the `TextField`.
-     * @default ''
      */
     helperText?: string;
 
@@ -60,13 +58,13 @@ export type TextFieldProps = {
     startIcon?: SvgIconsDefinition;
 
     /**
-     * The color of the `startIcon` or `endIcon`.
+     * The color of the `startIcon`.
      * @default inherit
      */
     iconColor?: IconProps['color'];
 
     /**
-     * The size of the `startIcon` or `endIcon`.
+     * The size of the `startIcon`.
      * @default small
      */
     iconSize?: IconProps['size'];
