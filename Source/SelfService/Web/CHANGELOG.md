@@ -1,3 +1,33 @@
+# [3.4.40] - 2023-5-19 [PR: #397](https://github.com/dolittle/Studio/pull/397)
+## Summary
+
+Improve DataGrid usage.
+  - Add proper use cases into Design System and improve the documentation.
+  - Add in components, that we use in DataGrids (EditCell, SelectCell, DataGridWrapper).
+
+### Added
+
+- TextField component to Design System.
+- EditCell component to Design System.
+- EditCell to MessageMappingTable DataGrid.
+- EditCell to EnvironmentVariables DataGrid.
+
+### Changed
+
+- Aligned HealthStatusTable columns text to center.
+- Aligned EnvironmentVariables columns header text to center.
+- Rename DataTablePro component to DataGrid.
+- Move DataGrid in Design System from Atoms to Molecules.
+- Replace Integrations TableSearchSection 'search' field with Design System one.
+- Move Design System 'dummy content' into helpers folder.
+- Overall code refactoring and wording improvements.
+
+### Fixed
+
+- MS EnvironmentVariables DataGrid 'secret' cell width and styles wording.
+- Status for ConnectionsTable. Added 'undefined' as possible status.
+
+
 # [3.4.39] - 2023-5-11 [PR: #396](https://github.com/dolittle/Studio/pull/396)
 ## Credentials generation and management
 <img width="819" alt="image" src="https://github.com/dolittle/Studio/assets/102054/5eef7bb4-a31d-4394-8ff2-484a95674132">
