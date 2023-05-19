@@ -7,45 +7,27 @@ import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 
-import { DataGridPro, GridColDef, GridRenderCellParams } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import { Paper } from '@mui/material';
 
-import { IconButton, StatusIndicator, StatusIndicatorProps } from '@dolittle/design-system';
+import { IconButton, StatusIndicator } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../apis/integrations/generated';
 import { CACHE_KEYS } from '../../apis/integrations/CacheKeys';
 import { useConnectionsIdDelete } from '../../apis/integrations/connectionsApi.hooks';
 
-const StatusCell = (params: GridRenderCellParams<any, ConnectionModel>) => {
-    const status = params.row.status.name.toLowerCase();
+import { getConnectionStatus } from '../../utils/helpers/connectionStatuses';
 
-    return (
-        <StatusIndicator
-            status={getConnectionsHealthStatus(status).status}
-            label={getConnectionsHealthStatus(status)?.label}
-        />
-    );
+type ConnectionsTableRowProps = {
+    row: ConnectionModel;
 };
 
-const getConnectionsHealthStatus = (status: string): StatusIndicatorProps => {
-    if (status === 'connected') {
-        return {
-            status: 'table-success',
-            label: 'connected',
-        };
-    } else if (status === 'registered' || status === 'pending') {
-        return {
-            status: 'warning',
-            label: 'pending',
-        };
-    } else if (status === 'failing') {
-        return {
-            status: 'error',
-            label: 'failing',
-        };
-    }
+const StatusCell = ({ row }: ConnectionsTableRowProps) => {
+    const status = row.status?.name?.toLowerCase();
 
-    return { status: 'unknown' };
+    return (
+        <StatusIndicator status={getConnectionStatus(status).status} label={getConnectionStatus(status).label} />
+    );
 };
 
 export type ConnectionsTableProps = {
@@ -76,7 +58,7 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
             headerName: 'Source',
             minWidth: 270,
             flex: 1,
-            valueGetter: ({ row }) => 'M3',
+            valueGetter: ({ row }: ConnectionsTableRowProps) => 'M3',
         },
         {
             field: 'status',
@@ -90,9 +72,9 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
             headerName: 'Actions',
             minWidth: 100,
             flex: 1,
-            renderCell: ({ row }) =>
+            renderCell: ({ row }: ConnectionsTableRowProps) =>
                 <IconButton tooltipText='Delete connection' icon='DeleteRounded' onClick={() => deleteConnection(row)} />,
-            valueGetter: ({ row }) => row?.status?.name,
+            valueGetter: ({ row }: ConnectionsTableRowProps) => row?.status?.name,
         },
     ];
 

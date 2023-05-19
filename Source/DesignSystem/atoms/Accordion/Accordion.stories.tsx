@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { componentStories, Accordion, StatusIndicatorProps } from '@dolittle/design-system';
 
-import { DummyChildrenContent } from '@dolittle/design-system/helpers/dummyContent';
+import { DummyChildrenContent } from '../../helpers/DummyContents';
 
 const { metadata, createStory } = componentStories(Accordion);
 

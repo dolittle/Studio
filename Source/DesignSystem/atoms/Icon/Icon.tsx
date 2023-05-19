@@ -8,7 +8,7 @@ import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
 /**
  * The props for a {@link Icon} component.
  */
-type IconProps = {
+export type IconProps = {
     /**
      * Usual MUI icon writen as a `string`. Must be a valid `SvgIconsDefinition`.
      */
@@ -18,7 +18,7 @@ type IconProps = {
      * Most icons will use the default `inherit` color.
      * @default inherit
      */
-    color?: 'inherit' | 'primary' | 'secondary' | 'action' | 'disabled' | 'error';
+    color?: 'inherit' | 'primary' | 'secondary' | 'disabled' | 'error';
 
     /**
      * You can change icon size to be `medium`.

@@ -10,29 +10,29 @@ import { Card, CardActions, CardActionArea, CardContent, CardHeader, Typography 
  */
 type SimpleCardProps = {
     /**
-     * The title of the card.
+     * The `title` of the card.
      */
     title: string;
 
     /**
-     * The subtitle of the card.
+     * The `subtitle` of the card.
      */
     subtitle?: string;
 
     /**
-     * The description of the card.
+     * The `description` of the card.
      */
     description: string;
 
     /**
-     * The actions of the card.
+     * The `actions` of the card.
      *
      * Add a {@link Button} or {@link IconButton} component.
      */
     actions: React.ReactNode;
 
     /**
-     * The alignment of the actions.
+     * Set alignment to `right` to align actions to the right.
      *
      * @default left
      */

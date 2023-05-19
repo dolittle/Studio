@@ -1,39 +1,75 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-export const capitalize = (s: string) => {
-    if (typeof s !== 'string') return '';
-    return s.charAt(0).toUpperCase() + s.slice(1);
+import { alphanumericCharacter } from './regex';
+
+/**
+ * Capitalizes the first letter of a string.
+ * @param str String to capitalize.
+ * @returns Capitalized string.
+ */
+export const capitalize = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-export const removeStringPattern = (s: string, remove: RegExp) => {
-    if (typeof s !== 'string') return '';
-    return s.replace(remove, '');
+/**
+ * Removes pattern from string.
+ * @param str String to remove pattern from.
+ * @param remove Pattern to remove.
+ * @returns String without pattern.
+ */
+export const removeStringPattern = (str: string, remove: RegExp) => {
+    return str.replace(remove, '');
 };
 
-export const removeStringPatternAndCapitalize = (s: string, remove: RegExp) => {
-    return capitalize(removeStringPattern(s, remove));
+/**
+ * Removes pattern from string and capitalizes the first letter.
+ * @param str String to remove pattern from.
+ * @param remove Pattern to remove.
+ * @returns String without pattern and with first letter capitalized.
+ */
+export const removeStringPatternAndCapitalize = (str: string, remove: RegExp) => {
+    return capitalize(removeStringPattern(str, remove));
 };
 
-// Return only microservice runtime image number from: dolittle/runtime:8.6.0
-export const getRuntimeNumberFromString = (s: string) => {
-    if (typeof s !== 'string') return 'N/A';
-    return removeStringPatternAndCapitalize(s, /dolittle\/runtime:/gi);
+/**
+ * Gets the runtime number from a string.
+ * @param str String to get runtime number from.
+ * @returns Runtime number.
+ */
+export const getRuntimeNumberFromString = (str: string) => {
+    return removeStringPatternAndCapitalize(str, /dolittle\/runtime:/gi);
 };
 
-export function trimPrefix(str: string, prefix: string): string {
+/**
+ * Remove a specified prefix from the beginning of a string, if it is present.
+ *
+ * If the string does not start with the prefix, the function returns the original string unchanged.
+ * @param str String to trim prefix from.
+ * @param prefix Prefix to trim.
+ */
+export const trimPrefix = (str: string, prefix: string) => {
     if (str.startsWith(prefix)) return str.slice(prefix.length);
     else return str;
 };
 
-export function trimSuffix(str: string, suffix: string): string {
+/**
+ * Remove a specified suffix from the end of a string, if it is present.
+ *
+ * If the string does not end with the suffix, the function returns the original string unchanged.
+ * @param str String to trim suffix from.
+ * @param suffix Suffix to trim.
+ */
+export const trimSuffix = (str: string, suffix: string) => {
     if (str.endsWith(suffix)) return str.slice(0, -(suffix.length));
     else return str;
 };
 
 /**
  * Converts any string to PascalCase. Source: https://quickref.me/convert-a-string-to-pascal-case
- * @param str String to convert to PascalCase
- * @returns PascalCased string
+ * @param str String to convert to PascalCase.
+ * @returns PascalCased string.
  */
-export const toPascalCase = str => (str.match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join('');
+export const toPascalCase = (str: string) => {
+    return (str.match(alphanumericCharacter) || []).map((word: string) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`).join('');
+};

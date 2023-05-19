@@ -5,41 +5,16 @@ import React, { useEffect, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { DataGridPro, GridColDef, GridRowId, GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridRowId, GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
 import { Box, Paper } from '@mui/material';
 
 import { Accordion, Button } from '@dolittle/design-system';
 
-import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../apis/solutions/api';
+import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../../apis/solutions/api';
 
-import { RestartInfoBox } from '../../components/restartInfoBox';
-import { EmptyDataTable } from '../../components/emptyDataTable';
-
-const envVariableColumns: GridColDef<EnvironmentVariableTableRow>[] = [
-    {
-        field: 'name',
-        headerName: 'Name',
-        width: 330,
-        editable: true,
-    },
-    {
-        field: 'value',
-        headerName: 'Value',
-        width: 330,
-        editable: true,
-    },
-    {
-        field: 'isSecret',
-        headerName: 'Secret',
-        type: 'singleSelect',
-        valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
-        editable: true,
-        renderCell: ({ value }) => (
-            <Button label={value ? 'Yes' : 'No'} color='subtle' endWithIcon='ArrowDropDownRounded' sx={{ width: 1, height: 1 }} />
-        ),
-        width: 90,
-    },
-];
+import { RestartInfoBox } from '../../../components/restartInfoBox';
+import { EmptyDataTable } from '../../../components/emptyDataTable';
+import { envVariableColumns } from './tableColumns';
 
 const styles = {
     buttonWrapper: {
@@ -53,21 +28,22 @@ const styles = {
             '&:last-of-type': { mr: 0 },
         },
     },
-    isSecretCell: {
+    dataTable: {
         'mb': 8,
         '& .MuiOutlinedInput-root': {
+            // Hack for secret cell active state. Otherwise size is going to be different.
             '& .MuiSelect-select': { p: '10px 15px' },
             '& fieldset': { border: 'none' },
         },
     },
 };
 
-type EnvironmentVariableTableRow = InputEnvironmentVariable & {
+export type EnvironmentVariableTableRow = InputEnvironmentVariable & {
     id: GridRowId;
     isNew: boolean;
 };
 
-type EnvironmentVariablesProps = {
+export type EnvironmentVariablesProps = {
     applicationId: string;
     environment: string;
     microserviceName: string;
@@ -288,7 +264,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                             processRowUpdate={processRowUpdate}
                             onProcessRowUpdateError={error => console.log(error)}
                             experimentalFeatures={{ newEditingApi: true }}
-                            sx={styles.isSecretCell}
+                            sx={styles.dataTable}
                         />
                     </Paper>
                 }

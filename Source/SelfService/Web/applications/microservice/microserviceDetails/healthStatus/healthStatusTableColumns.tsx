@@ -3,24 +3,42 @@
 
 import React from 'react';
 
-import { Box } from '@mui/material';
-import { GridColDef, GridValueGetterParams, GridRenderCellParams } from '@mui/x-data-grid-pro';
+import { Stack, Typography } from '@mui/material';
+import { GridColDef } from '@mui/x-data-grid-pro';
 
 import { StatusIndicator, Summary } from '@dolittle/design-system';
 
-import { DownloadLogs, formatTime, formatStartingDate } from '../../../../utils/helpers';
+import { DownloadLogs, getPodHealthStatus, formatTime, formatStartingDate } from '../../../../utils/helpers';
 
 import { HealthStatusTableRow } from './healthStatusTable';
-import { healthStatus } from '../../components/microserviceStatus';
 
-const StatusCell = (params: GridRenderCellParams<any, HealthStatusTableRow>) => {
-    const status = params.row?.state?.toLowerCase();
+type HealthStatusTableRowProps = {
+    row: HealthStatusTableRow;
+};
+
+const CpuFieldHeader = () =>
+    <Stack sx={{ textAlign: 'center' }}>
+        <Typography variant='body2' sx={{ fontWeight: 500 }}>CPU</Typography>
+        <Typography variant='caption' sx={{ py: 0.5 }}>Avg | Max | Now</Typography>
+    </Stack>;
+
+const CpuCell = ({ row }: HealthStatusTableRowProps) =>
+    <Summary now={row.cpu?.current} avg={row.cpu?.average} max={row.cpu?.maximum} unit='%' description='CPU usage' period='last 24h' digits={0} />;
+
+const SummaryFieldHeader = () =>
+    <Stack sx={{ textAlign: 'center' }}>
+        <Typography variant='body2' sx={{ fontWeight: 500 }}>Memory</Typography>
+        <Typography variant='caption' sx={{ py: 0.5 }}>Avg | Max | Now</Typography>
+    </Stack>;
+
+const SummaryCell = ({ row }: HealthStatusTableRowProps) =>
+    <Summary now={row.memory?.current} avg={row.memory?.average} max={row.memory?.maximum} unit='MiB' description='Memory usage' period='last 24h' digits={0} />;
+
+const StatusCell = ({ row }: HealthStatusTableRowProps) => {
+    const status = row.state?.toLowerCase();
 
     return (
-        <StatusIndicator
-            status={healthStatus(status).status}
-            label={healthStatus(status).label}
-        />
+        <StatusIndicator status={getPodHealthStatus(status).status} label={getPodHealthStatus(status).label} />
     );
 };
 
@@ -39,8 +57,8 @@ export const columns: GridColDef[] = [
         sortable: false,
         minWidth: 100,
         flex: 1,
-        headerAlign: 'right',
-        align: 'right',
+        headerAlign: 'center',
+        align: 'center',
     },
     {
         field: 'age',
@@ -48,10 +66,9 @@ export const columns: GridColDef[] = [
         sortable: false,
         minWidth: 180,
         flex: 1,
-        headerAlign: 'right',
-        align: 'right',
-        valueGetter: (params: GridValueGetterParams<any, HealthStatusTableRow>) =>
-            formatTime(params.row?.age),
+        headerAlign: 'center',
+        align: 'center',
+        valueGetter: ({ row }: HealthStatusTableRowProps) => formatTime(row.age),
     },
     {
         field: 'started',
@@ -59,24 +76,19 @@ export const columns: GridColDef[] = [
         sortable: false,
         minWidth: 216,
         flex: 1,
-        headerAlign: 'right',
-        align: 'right',
-        valueGetter: (params: GridValueGetterParams<any, HealthStatusTableRow>) =>
-            formatStartingDate(params.row?.started),
+        headerAlign: 'center',
+        align: 'center',
+        valueGetter: ({ row }: HealthStatusTableRowProps) => formatStartingDate(row.started),
     },
     {
         field: 'CPU',
         sortable: false,
         minWidth: 250,
         flex: 1,
-        headerAlign: 'right',
-        align: 'right',
-        renderHeader: () =>
-            <Box>
-                CPU <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
-            </Box>,
-        renderCell: (params: GridRenderCellParams<any, HealthStatusTableRow>) =>
-            <Summary now={params.row.cpu?.current} avg={params.row.cpu?.average} max={params.row.cpu?.maximum} unit='%' description='CPU usage' period='last 24h' digits={0} />,
+        headerAlign: 'center',
+        align: 'center',
+        renderHeader: CpuFieldHeader,
+        renderCell: CpuCell,
     },
     {
         field: 'memory',
@@ -84,14 +96,10 @@ export const columns: GridColDef[] = [
         sortable: false,
         minWidth: 250,
         flex: 1,
-        headerAlign: 'right',
-        align: 'right',
-        renderHeader: () =>
-            <Box>
-                Memory <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: '400' }}>Avg | Max | Now</Box>
-            </Box>,
-        renderCell: (params: GridRenderCellParams<any, HealthStatusTableRow>) =>
-            <Summary now={params.row.memory?.current} avg={params.row.memory?.average} max={params.row.memory?.maximum} unit='MiB' description='Memory usage' period='last 24h' digits={0} />,
+        headerAlign: 'center',
+        align: 'center',
+        renderHeader: SummaryFieldHeader,
+        renderCell: SummaryCell,
     },
     {
         field: 'state',
@@ -99,6 +107,8 @@ export const columns: GridColDef[] = [
         sortable: false,
         minWidth: 200,
         flex: 1,
+        headerAlign: 'center',
+        align: 'center',
         renderCell: StatusCell,
     },
     {

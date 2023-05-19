@@ -3,14 +3,11 @@
 
 import React from 'react';
 
-import { Route, Routes } from 'react-router-dom';
-
 import { Box } from '@mui/material';
 
 import { componentStories, SideBar } from '@dolittle/design-system';
 
-import { SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/dummyContent';
-import { Content, Router } from '../../helpers/ReactRouter';
+import { CurrentPath, Router, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/ReactRouter';
 
 const { metadata, createStory } = componentStories(SideBar, {
     decorator: (Story) => (
@@ -19,9 +16,7 @@ const { metadata, createStory } = componentStories(SideBar, {
                 {Story()}
 
                 <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-                    <Routes>
-                        <Route path='*' element={<Content />} />
-                    </Routes>
+                    <CurrentPath />
                 </Box>
             </Box>
         </Router>

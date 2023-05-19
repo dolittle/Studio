@@ -9,7 +9,8 @@ import { Divider, List, ListItem } from '@mui/material';
 
 import { Button, AlertDialog } from '@dolittle/design-system';
 
-import { alertDialogDescription, listArray } from './helpers';
+import { alertDialogDescription } from './helpers';
+import { dummyArray } from '../../helpers/DummyContents';
 
 export default {
     title: 'Alert Dialog',
@@ -58,10 +59,10 @@ WithChildrenContent.args = {
     description: 'This dialog displays list items as children. It can be used to display a list of items that the user can cancel or confirm.',
     children: (
         <List>
-            {listArray.map((item, index) =>
+            {dummyArray.map((item, index) =>
                 <Fragment key={index}>
                     <ListItem>{item}</ListItem>
-                    {listArray.length - 1 !== index && <Divider />}
+                    {dummyArray.length - 1 !== index && <Divider />}
                 </Fragment>
             )}
         </List>

@@ -10,39 +10,39 @@ import { Link as MuiLink } from '@mui/material';
  */
 export type LinkProps = {
     /**
-     * The URL to link to.
+     * Required. The URL to link to.
      */
     href: string;
 
     /**
+     * Required. `link` text to display.
+     */
+    message: string;
+
+    /**
      * Mark this as `true` if the link opens in a new window or browser tab.
      *
-     * Also add an aria-label to inform screen reader users.
+     * Add also an `ariaLabel` to inform screen reader users.
      * @default false
      */
     target?: boolean;
 
     /**
-     *  If the link opens in a new window or browser tab, add an `ariaLabel` to inform screen reader users.
+     * If the link opens in a new window or browser tab, add an `ariaLabel` to inform screen reader users.
      * @default undefined
      */
     ariaLabel?: string;
 
     /**
-     * The color of the link.
+     * The color of the `link`.
      * @default primary
      */
     color?: 'primary' | 'subtle' | 'secondary';
-
-    /**
-     * Link text to display.
-     */
-    message: string;
 };
 
 /**
  * The link component is used to navigate to a different page or to a different part of the current page.
- * @param {LinkProps} props - The {@link LinkProps} that contains the properties for the link component.
+ * @param {LinkProps} props - The {@link LinkProps}.
  * @returns A {@link Link} component.
  */
 export const Link = ({ href, ariaLabel, target, color, message }: LinkProps) =>

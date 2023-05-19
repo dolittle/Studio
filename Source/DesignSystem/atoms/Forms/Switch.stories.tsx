@@ -9,7 +9,10 @@ const { metadata, createStory } = componentStories(Switch, {
     actions: { onChange: 'Changed' },
     decorator: (Story) => (
         <Form<{ default: string }>
-            initialValues={{ default: '' }}>
+            initialValues={{
+                default: '',
+            }}
+        >
             {Story()}
         </Form>
     ),
@@ -17,7 +20,8 @@ const { metadata, createStory } = componentStories(Switch, {
 
 metadata.parameters = {
     docs: {
-        description: { component: `Switches toggle the state of a single setting on or off. They are the preferred way to adjust settings on mobile. If the user has several items to select on or off for, consider
+        description: {
+            component: `Switches toggle the state of a single setting on or off. They are the preferred way to adjust settings on mobile. If the user has several items to select on or off for, consider
 using checkboxes on desktop. Clearly indicate with the label what will happen when the user toggles it on or off. On switches should always use the primary color. Off switches should use the inherit color.` },
     },
     controls: { include: ['id', 'label', 'defaultValue', 'disabled'] },

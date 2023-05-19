@@ -13,12 +13,19 @@ import { NoConnections } from './noConnections';
 import { ConnectionsTable } from './connectionsTable';
 import { CreateConnectionButton } from './createConnectionButton';
 
+const getSuggestedIdFromRelHref = (href: string | null | undefined) => {
+    if (!href) return href;
+
+    const id = href.split('/').pop();
+    return id;
+};
+
 export const Connections = () => {
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
 
-    const { applicationId } = useParams();
-    const { data, isLoading, isFetching, isError, error } = useConnectionsGet();
+    //const { applicationId } = useParams();
+    const { data, isLoading, isError } = useConnectionsGet();
     const mutation = useConnectionsIdPost();
 
     const connections = data?.value || [];
@@ -31,7 +38,7 @@ export const Connections = () => {
 
     const handleCreateNew = () => {
         if (!newConnectionId) {
-            enqueueSnackbar('Could not create new connection at this time', { variant: 'error' });
+            enqueueSnackbar('Could not create new connection at this time.', { variant: 'error' });
             return;
         }
 
@@ -39,15 +46,15 @@ export const Connections = () => {
 
         mutation.mutate(
             { id: newConnectionId }, {
-            onSuccess: (result) => {
-                //TODO: Move the generating of this url to a "well-known" place
-                const href = `${newConnectionId}`;
-                enqueueSnackbar('Connection created', { variant: 'success' });
+            onSuccess: () => {
+                //TODO: Move the generating of this url to a "well-known" place.
+                const href = `${newConnectionId}/messages`;
+                enqueueSnackbar('Connection created.', { variant: 'success' });
                 navigate(href);
             },
             onError: (error) => {
-                enqueueSnackbar('Could not create new connection at this time', { variant: 'error' });
-                console.log('Error creating connection', error);
+                enqueueSnackbar('Could not create new connection at this time.', { variant: 'error' });
+                console.log('Error creating connection.', error);
             },
         });
     };
@@ -68,11 +75,4 @@ export const Connections = () => {
             }
         </Page>
     );
-};
-
-function getSuggestedIdFromRelHref(href: string | null | undefined) {
-    if (!href) return href;
-
-    const id = href.split('/').pop();
-    return id;
 };
