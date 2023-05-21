@@ -7,8 +7,15 @@ import { InputAdornment, SxProps, TextField as MuiTextField } from '@mui/materia
 
 import { Icon, IconProps, SvgIconsDefinition } from '@dolittle/design-system';
 
-const TextFieldAdornment = ({ icon, color, size }: IconProps) =>
-    <InputAdornment position='start'>
+type TextFieldAdornmentProps = IconProps & {
+    /**
+     * The position this adornment should be placed.
+     */
+    position: 'start' | 'end';
+};
+
+const TextFieldAdornment = ({ icon, color, size, position }: TextFieldAdornmentProps) =>
+    <InputAdornment position={position}>
         <Icon icon={icon} color={color} size={size} />
     </InputAdornment>;
 
@@ -58,7 +65,13 @@ export type TextFieldProps = {
     startIcon?: SvgIconsDefinition;
 
     /**
-     * The color of the `startIcon`.
+     * The icon to display at the end of the `TextField`. Must be a valid `SvgIconsDefinition`.
+     * @default undefined
+     */
+    endIcon?: SvgIconsDefinition;
+
+    /**
+     * The color of the `startIcon` or `endIcon`.
      * @default inherit
      */
     iconColor?: IconProps['color'];
@@ -76,7 +89,7 @@ export type TextFieldProps = {
     sx?: SxProps;
 };
 
-export const TextField = ({ label, value, size = 'small', placeholder, helperText, isDisabled, isFullWidth, startIcon, iconColor, onValueChange, sx }: TextFieldProps) =>
+export const TextField = ({ label, value, size = 'small', placeholder, helperText, isDisabled, isFullWidth, startIcon, endIcon, iconColor, onValueChange, sx }: TextFieldProps) =>
     <MuiTextField
         label={label}
         value={value}
@@ -87,11 +100,13 @@ export const TextField = ({ label, value, size = 'small', placeholder, helperTex
         fullWidth={isFullWidth}
         InputProps={{
             startAdornment: startIcon &&
-                <TextFieldAdornment icon={startIcon} color={iconColor ?? 'inherit'} size={size} />
+                <TextFieldAdornment position='start' icon={startIcon} color={iconColor ?? 'inherit'} size={size} />,
+            endAdornment: endIcon &&
+                <TextFieldAdornment position='end' icon={endIcon} color={iconColor ?? 'inherit'} size={size} />
         }}
         onChange={onValueChange}
         variant='outlined'
         type='text'
         autoComplete='off'
-        sx={sx}
+        sx={{ '.MuiOutlinedInput-root': { fontSize: 'inherit' }, ...sx }}
     />;

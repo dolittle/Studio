@@ -9,6 +9,7 @@ import { alphanumericCharacter } from './regex';
  * @returns Capitalized string.
  */
 export const capitalize = (str: string) => {
+    if (typeof str !== 'string') return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
@@ -19,6 +20,7 @@ export const capitalize = (str: string) => {
  * @returns String without pattern.
  */
 export const removeStringPattern = (str: string, remove: RegExp) => {
+    if (typeof str !== 'string') return '';
     return str.replace(remove, '');
 };
 
@@ -29,6 +31,7 @@ export const removeStringPattern = (str: string, remove: RegExp) => {
  * @returns String without pattern and with first letter capitalized.
  */
 export const removeStringPatternAndCapitalize = (str: string, remove: RegExp) => {
+    if (typeof str !== 'string') return '';
     return capitalize(removeStringPattern(str, remove));
 };
 
@@ -38,6 +41,7 @@ export const removeStringPatternAndCapitalize = (str: string, remove: RegExp) =>
  * @returns Runtime number.
  */
 export const getRuntimeNumberFromString = (str: string) => {
+    if (typeof str !== 'string') return 'N/A';
     return removeStringPatternAndCapitalize(str, /dolittle\/runtime:/gi);
 };
 
@@ -71,5 +75,6 @@ export const trimSuffix = (str: string, suffix: string) => {
  * @returns PascalCased string.
  */
 export const toPascalCase = (str: string) => {
+    if (typeof str !== 'string') return '';
     return (str.match(alphanumericCharacter) || []).map((word: string) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`).join('');
 };
