@@ -108,5 +108,5 @@ export const TextField = ({ label, value, size = 'small', placeholder, helperTex
         variant='outlined'
         type='text'
         autoComplete='off'
-        sx={sx}
+        sx={{ '.MuiOutlinedInput-root': { fontSize: 'inherit' }, ...sx }}
     />;
