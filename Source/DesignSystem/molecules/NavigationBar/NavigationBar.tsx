@@ -79,7 +79,7 @@ export const NavigationBar = ({ mainLinks, secondaryLinks, mobileDropdownMenu, m
 
                 <Box sx={{ ...linkStyles, flexGrow: 1 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', mr: 4 }}>
-                        <Icon icon='Dolittle' />
+                        <Icon icon='AigonixLightCube' />
                     </Box>
 
                     <List sx={{ display: 'flex', gap: 2 }}>
