@@ -1,3 +1,28 @@
+# [3.4.41] - 2023-5-21 [PR: #398](https://github.com/dolittle/Studio/pull/398)
+## Summary
+
+Small fixes to improve our appearance.
+
+<img width="584" alt="Screenshot 2023-05-21 at 18 13 37" src="https://github.com/dolittle/Studio/assets/19160439/ae44cbde-53cb-4abd-864b-b879a679a78d">
+
+### Added
+
+- Aigonix light logo icon as svg.
+- TextField endIcon props.
+- EditField placeholder text.
+
+### Changed
+
+- Page title order.
+- Dolittle logo in Inegrations to Aigonix light cube.
+- Moved EditField icon from start to the end.
+
+### Fixed
+
+- Regex string helper functions return statements if there is no value.
+- TextField font-size to 'inherit'.
+
+
 # [3.4.40] - 2023-5-19 [PR: #397](https://github.com/dolittle/Studio/pull/397)
 ## Summary
 
