@@ -28,6 +28,7 @@ metadata.args = {
     isDisabled: false,
     isFullWidth: false,
     startIcon: undefined,
+    endIcon: undefined,
     iconColor: undefined,
     onValueChange: () => { },
 };
@@ -48,4 +49,8 @@ export const WithHelperText = createStory({
 
 export const WithStartIcon = createStory({
     startIcon: 'Search',
+});
+
+export const WithEndIcon = createStory({
+    endIcon: 'EditRounded',
 });
