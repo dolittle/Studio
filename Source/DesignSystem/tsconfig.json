@@ -1,15 +1,17 @@
 {
     "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "outDir": "./wwwroot",
+        "outDir": "./dist",
         "lib": [
             "es2019",
             "DOM"
         ],
+        "rootDir": "./",
     },
     "references": [
         { "path": "../Shared/Web"},
         { "path": "../Shared/Styling"},
     ],
-    "include": [ "**/*.ts", "**/*.tsx", "**/*.json" ]
+    "include": [ "**/*.ts", "**/*.tsx" ],
+    "exclude": ["**/*.stories.tsx", "**/*.stories.ts", "./dist/**/*", "./wwwroot/**/*"],
 }

@@ -5,8 +5,12 @@
     "author": "Dolittle",
     "license": "MIT",
     "private": true,
+    "exports": {
+        ".": "./index.ts",
+    },
     "scripts": {
-        "build": "build-storybook --output-dir wwwroot",
+        "build": "tsc -b",
+        "build:storybook": "build-storybook --output-dir wwwroot",
         "start:dev": "start-storybook -p 6006",
         "clean": "tsc -b --clean",
         "lint": "eslint '**/*.{js,ts,tsx}' --no-error-on-unmatched-pattern --quiet --fix",
@@ -18,6 +22,7 @@
         "@fontsource/rubik": "4.5.11",
         "@react-hook/resize-observer": "1.2.6",
         "@shared/styling": "1.0.0",
+        "@shared/web": "1.0.0",
         "react-draggable": "4.4.5",
         "react-hook-form": "7.37.0",
         "react-vega": "7.6.0",
