@@ -11,6 +11,7 @@
     },
     "scripts": {
         "build": "tsc -b",
+        "build:watch": "tsc -w",
         "build:storybook": "build-storybook --output-dir wwwroot",
         "start:dev": "start-storybook -p 6006",
         "clean": "tsc -b --clean",
