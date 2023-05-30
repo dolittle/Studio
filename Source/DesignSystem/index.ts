@@ -21,6 +21,7 @@ export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
 export { StatusIndicator, StatusIndicatorProps } from './atoms/StatusIndicator';
 export { Summary } from './atoms/Metrics';
+export { Snackbar } from './atoms/Snackbar/Snackbar';
 export { Tabs } from './atoms/Tabs';
 export { MaxWidthTextBlock } from './atoms/Typography/MaxWidthTextBlock';
 export { Terminal, TerminalConnect, TerminalStreams, InputMessages, OutputMessages } from './atoms/Terminal';
