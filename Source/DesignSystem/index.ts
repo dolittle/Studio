@@ -1,9 +1,11 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+// Storybook - this should not be exported as part of design system
 export { componentStories, type ComponentStories } from './componentStories';
-export { availableIcons, SvgIcons, SvgIconsDefinition } from './theming/Icons/Icons';
-export { themeDark } from './theming/theme';
+
+//theming
+export * from './theming';
 
 // Atoms
 export { Accordion, AccordionProps } from './atoms/Accordion';
