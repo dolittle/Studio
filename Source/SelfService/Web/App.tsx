@@ -13,8 +13,7 @@ import { Box, Slide, SlideProps } from '@mui/material';
 import { ErrorRounded } from '@mui/icons-material';
 
 import '@dolittle/design-system/theming/fonts';
-import { themeDark } from '@dolittle/design-system';
-import { Snackbar } from '@dolittle/design-system/atoms/Snackbar/Snackbar';
+import { themeDark, Snackbar } from '@dolittle/design-system';
 
 import { useViewportResize } from './utils/useViewportResize';
 
