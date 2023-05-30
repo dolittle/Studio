@@ -5,8 +5,7 @@ import React from 'react';
 
 import { Box, SxProps } from '@mui/material';
 
-import { ContentDivider } from './ContentDivider';
-import { ContentHeader, ContentHeaderProps } from './ContentHeader';
+import { ContentDivider, ContentHeader, ContentHeaderProps } from '@dolittle/design-system';
 
 export type ContentSectionProps = {
     title?: string;
