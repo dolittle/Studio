@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Button, ButtonProps } from '@dolittle/design-system/';
+import { Button, ButtonProps } from '@dolittle/design-system';
 
 export type CreateConnectionButtonProps = {
     onClick: () => void;
