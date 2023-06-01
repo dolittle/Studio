@@ -7,7 +7,7 @@ import React, { useState, useMemo } from 'react';
 import { Grid, LinearProgress, Box } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
-import { AlertBox, Button, ContentSection, Switch } from '@dolittle/design-system/';
+import { AlertBox, Button, ContentSection, Switch } from '@dolittle/design-system';
 
 import { FieldMapping, MappedField } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
