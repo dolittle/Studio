@@ -1,9 +1,40 @@
 {
     "name": "@dolittle/design-system",
     "version": "1.0.0",
-    "description": "",
-    "author": "Dolittle",
+    "description": "Dolittle Design System - built by Aigonix",
+    "keywords":[
+        "Dolittle",
+        "Aigonix",
+        "React",
+        "MUI",
+        "Event Sourcing",
+        "ES",
+        "Domain Driven Design",
+        "DDD",
+        "Event Driven Architecture",
+        "EDA",
+        "Line of Business",
+        "LOB"
+    ],
+    "author": "Aigonix",
     "license": "MIT",
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dolittle/Studio.git"
+    },
+    "bugs": {
+        "url": "https://github.com/dolittle/Studio/issues"
+    },
+    "homepage": "https://design.dolittle.io",
+    "files": [
+        "dist",
+        "**/*.ts[x]"
+    ],
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "private": true,
     "exports": {
         ".": "./index.ts",
@@ -17,7 +48,7 @@
         "clean": "tsc -b --clean",
         "lint": "eslint '**/*.{js,ts,tsx}' --no-error-on-unmatched-pattern --quiet --fix",
         "lint:ci": "eslint '**/*.{js,ts,tsx}' --no-error-on-unmatched-pattern --quiet",
-        "ci": "yarn clean && yarn lint:ci && yarn build"
+        "ci": "yarn clean && yarn lint:ci && yarn build && yarn build:storybook"
     },
     "dependencies": {
         "@fontsource/roboto-mono": "4.5.8",

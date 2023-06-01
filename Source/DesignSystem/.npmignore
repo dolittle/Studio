@@ -1,0 +1,5 @@
+.storybook
+node_modules
+wwwroot
+storybook-static
+**/*.stories.*
