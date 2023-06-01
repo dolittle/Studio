@@ -1,7 +1,7 @@
 {
     "name": "@dolittle/design-system",
     "version": "1.0.0",
-    "description": "Dolittle Design System - built by Aigonix",
+    "description": "Dolittle Design System - by Aigonix",
     "keywords":[
         "Dolittle",
         "Aigonix",
@@ -35,7 +35,7 @@
     ],
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
-    "private": true,
+    "private": false,
     "exports": {
         ".": "./index.ts",
         "./theming/fonts": "./theming/fonts.ts"
