@@ -30,8 +30,7 @@
     },
     "homepage": "https://design.dolittle.io",
     "files": [
-        "dist",
-        "**/*.ts[x]"
+        "dist"
     ],
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
