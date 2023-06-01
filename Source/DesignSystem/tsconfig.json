@@ -7,12 +7,12 @@
             "DOM"
         ],
         "rootDir": "./",
-        "declaration": true,
+        "moduleResolution": "node16"
     },
     "references": [
         { "path": "../Shared/Web"},
         { "path": "../Shared/Styling"},
     ],
     "include": [ "**/*.ts", "**/*.tsx" ],
-    "exclude": ["**/*.stories.tsx", "**/*.stories.ts", "./dist/**/*", "./wwwroot/**/*"],
+    "exclude": ["**/*.stories.tsx", "**/*.stories.ts", "dist/**/*.*", "wwwroot/**/*.*"],
 }

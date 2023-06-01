@@ -2,7 +2,7 @@
     "name": "@dolittle/design-system",
     "version": "1.0.0",
     "description": "Dolittle Design System - by Aigonix",
-    "keywords":[
+    "keywords": [
         "Dolittle",
         "Aigonix",
         "React",
@@ -29,15 +29,11 @@
         "url": "https://github.com/dolittle/Studio/issues"
     },
     "homepage": "https://design.dolittle.io",
-    "files": [
-        "dist"
-    ],
-    "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "private": false,
     "exports": {
-        ".": "./index.ts",
-        "./theming/fonts": "./theming/fonts.ts"
+        ".": "./dist/index.js",
+        "./theming/fonts": "./dist/theming/fonts.js"
     },
     "scripts": {
         "build": "tsc -b",
