@@ -30,10 +30,10 @@
     },
     "homepage": "https://design.dolittle.io",
     "types": "dist/index.d.ts",
-    "private": false,
+    "private": true,
     "exports": {
-        ".": "./dist/index.js",
-        "./theming/fonts": "./dist/theming/fonts.js"
+        ".": "./index.ts",
+        "./theming/fonts": "./theming/fonts.ts"
     },
     "scripts": {
         "build": "tsc -b",

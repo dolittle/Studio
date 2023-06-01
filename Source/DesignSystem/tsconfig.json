@@ -7,7 +7,6 @@
             "DOM"
         ],
         "rootDir": "./",
-        "moduleResolution": "node16"
     },
     "references": [
         { "path": "../Shared/Web"},
