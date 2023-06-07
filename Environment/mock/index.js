@@ -5,7 +5,7 @@ const express = require('express');
 
 const { logging, notImplemented } = require('./middlewares');
 
-const applications = require('./api/solutions/applications');
+const applications = require('./api/applications');
 const proxy = require('./proxy');
 const logs = require('./monitoring/logs');
 const metrics = require('./monitoring/metrics');
