@@ -1,19 +1,20 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { Box, Typography } from '@mui/material';
 
-import { AccordionList, AccordionListProps, Form } from '@dolittle/design-system';
+import { AccordionList, AccordionListProps, Form, StatusIndicatorProps } from '@dolittle/design-system';
 
 import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
 import { useConnectionsIdGet, useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
 import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
+import { ConnectionStatus, RemoteServiceStatus } from '../../../apis/integrations/generated';
 
 import { useConnectionId } from '../../routes.hooks';
 
@@ -24,35 +25,44 @@ import { MetadataPublisherCredentials } from './components/MetadataPublisherCred
 import { IonServiceAccountCredentials } from './components/IonServiceAccountCredentials';
 import { ActionButtons } from './components/ActionButtons';
 
-const accordionListProps: AccordionListProps = {
-    singleExpandMode: true,
-    items: [
-        {
-            id: 'hostConnectorBundle',
-            title: 'Host Your Connector Bundle',
-            children: <ConnectorBundleConfiguration />,
-            sx: { mt: 8 },
-        },
-        {
-            id: 'metadataPublisherCredentials',
-            title: 'Metadata Publisher Credentials',
-            children: <MetadataPublisherCredentials />,
-            sx: { mt: 8 },
-        },
-        {
-            id: 'ionCredentials',
-            title: 'ION Service Account Credentials',
-            children: <IonServiceAccountCredentials />,
-            sx: { mt: 8 },
-        },
-    ],
-};
 
 export type M3ConnectionParameters = {
     connectorName: string;
     selectHosting: string;
     metadataPublisherUrl: string;
     metadataPublisherPassword: string;
+};
+
+const resolveConnectorBundleStatus = (connectionStatus?: ConnectionStatus): [StatusIndicatorProps['status'], StatusIndicatorProps['label']] => {
+    switch (connectionStatus?.name) {
+        case 'Pending':
+        case 'Connected':
+        case 'Failing':
+        case 'Deleted':
+            return ['success', 'Connected'];
+        case 'Registered':
+        default:
+            return ['waiting', 'Waiting for access'];
+    }
+};
+
+const resolveServiceCredentialsStatus = (serviceStatus?: RemoteServiceStatus | undefined): [StatusIndicatorProps['status'], StatusIndicatorProps['label']] => {
+    switch (serviceStatus?.name) {
+        case 'Unresponsive':
+        case 'Inactive':
+        case 'Disconnected':
+        case 'ServiceFailing':
+            return ['error', 'Failed'];
+        case 'Active':
+            return ['success', 'Connected'];
+        case 'Configured':
+            return ['waiting', 'Configured'];
+        case 'Alive':
+        case 'Undeployed':
+        case 'DeploymentChosen':
+        default:
+            return ['waiting', 'Waiting for credential verification'];
+    }
 };
 
 export const NewConnectionView = () => {
@@ -67,12 +77,48 @@ export const NewConnectionView = () => {
     const onCloudConfigurationMutation = useConnectionsIdDeployCloudPost();
     const ionConfigurationMutation = useConnectionsIdConfigurationIonPost();
     const mdpConfigurationMutation = useConnectionsIdConfigurationMdpPost();
+    const connection = query.data?.value;
+
+    const accordionListProps: AccordionListProps = useMemo(() => {
+        const connectorBundleStatus = resolveConnectorBundleStatus(connection?.status);
+        const metadataPublisherCredentialsStatus = resolveServiceCredentialsStatus(connection?.mdpStatus);
+        const iONServiceAccountCredentialsStatus = resolveServiceCredentialsStatus(connection?.ionStatus);
+
+        return {
+            singleExpandMode: true,
+            items: [
+                {
+                    id: 'hostConnectorBundle',
+                    title: 'Host Your Connector Bundle',
+                    children: <ConnectorBundleConfiguration />,
+                    progressStatus: connectorBundleStatus[0],
+                    progressLabel: connectorBundleStatus[1],
+                    sx: { mt: 8 },
+                },
+                {
+                    id: 'metadataPublisherCredentials',
+                    title: 'Metadata Publisher Credentials',
+                    children: <MetadataPublisherCredentials />,
+                    progressStatus: metadataPublisherCredentialsStatus[0],
+                    progressLabel: metadataPublisherCredentialsStatus[1],
+                    sx: { mt: 8 },
+                },
+                {
+                    id: 'ionCredentials',
+                    title: 'ION Service Account Credentials',
+                    children: <IonServiceAccountCredentials />,
+                    progressStatus: iONServiceAccountCredentialsStatus[0],
+                    progressLabel: iONServiceAccountCredentialsStatus[1],
+                    sx: { mt: 8 },
+                },
+            ],
+        };
+    }, [connection?.status, connection?.ionStatus, connection?.mdpStatus]);
 
     if (query.isLoading) return <>Loading</>;
-    if (!query.data?.value || !connectionId) return null;
+    if (!connection || !connectionId) return null;
 
-    const connection = query.data.value;
-    const links = query.data.links;
+    const links = query.data?.links || [];
 
     const deploymentType = connection.chosenEnvironment?.value;
     const hasSelectedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
