@@ -1,3 +1,13 @@
+# [3.4.42] - 2023-6-7 [PR: #400](https://github.com/dolittle/Studio/pull/400)
+## Summary
+
+Make health status metrics dynamic based on data, instead of hardcoding y-axis. This to cater to some pods having hight limits than the presets. We don't necessarily know what the pod resource limits are. These can be re-introduced at a later time when the API returns the exact resource limit information.
+
+### Changed
+
+- Dynamic y-axis on health metrics graphs, instead of fixed limits.
+
+
 # [3.4.41] - 2023-5-21 [PR: #398](https://github.com/dolittle/Studio/pull/398)
 ## Summary
 
