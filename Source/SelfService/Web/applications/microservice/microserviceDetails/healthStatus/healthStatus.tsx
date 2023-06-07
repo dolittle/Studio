@@ -104,11 +104,11 @@ export const HealthStatus = ({ applicationId, environment, microserviceId, msNam
 
             {cpu.loading
                 ? null
-                : <Graph title='CPU Usage' unit='CPUs' subtitle='Last 24 hours' range={[0, 2]} domain={timeRange} sx={{ mt: 3 }} data={cpuGraphData} />
+                : <Graph title='CPU Usage' unit='CPUs' subtitle='Last 24 hours' domain={timeRange} sx={{ mt: 3 }} data={cpuGraphData} />
             }
             {memory.loading
                 ? null
-                : <Graph title='Memory Usage' unit='MiB' subtitle='Last 24 hours' range={[0, 2048]} domain={timeRange} sx={{ mt: 3 }} data={memoryGraphData} />
+                : <Graph title='Memory Usage' unit='MiB' subtitle='Last 24 hours' domain={timeRange} sx={{ mt: 3 }} data={memoryGraphData} />
             }
         </>
     );
