@@ -22,11 +22,11 @@ export const configurationStatusFromConnectionStatus = (connectionStatus?: Conne
 };
 
 export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStatus, ionStatus?: RemoteServiceStatus): StatusMessage => {
-    if (ionStatus?.name !== ('DeploymentChosen' && 'Undeployed') &&
-        mdpStatus?.name !== ('DeploymentChosen' && 'Undeployed')) {
-        return ['success', 'Connected'];
+    const nonSuccessStatuses = ['DeploymentChosen', 'Undeployed'];
+    if ([ionStatus, mdpStatus].every(status => status && nonSuccessStatuses.includes(status.name))) {
+        return ['waiting', 'Waiting for access'];
     }
-    return ['waiting', 'Waiting for access'];
+    return ['success', 'Connected'];
 };
 
 
