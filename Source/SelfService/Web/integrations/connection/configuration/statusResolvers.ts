@@ -12,8 +12,8 @@ export const configurationStatusFromConnectionStatus = (connectionStatus?: Conne
             return ['success', 'Connected'];
         case 'Failing':
             return ['error', 'Failing'];
-            case 'Deleted':
-        return ['unknown', 'Deleted'];
+        case 'Deleted':
+            return ['unknown', 'Deleted'];
         case 'Registered':
         case 'Pending':
         default:
@@ -22,7 +22,8 @@ export const configurationStatusFromConnectionStatus = (connectionStatus?: Conne
 };
 
 export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStatus, ionStatus?: RemoteServiceStatus): StatusMessage => {
-    if (ionStatus?.name !== 'DeploymentChosen' && mdpStatus?.name !== 'DeploymentChosen') {
+    if (ionStatus?.name !== ('DeploymentChosen' && 'Undeployed') &&
+        mdpStatus?.name !== ('DeploymentChosen' && 'Undeployed')) {
         return ['success', 'Connected'];
     }
     return ['waiting', 'Waiting for access'];
