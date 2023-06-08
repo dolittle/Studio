@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Stack } from '@mui/material';
 
@@ -21,36 +21,37 @@ const ConnectorNameTooltipText = () =>
 const hostingTooltipText = `Currently, you can only setup the connection with on premise hosting. Soon, we will support setup in the
                     cloud where Dolittle takes care of hosting, establishing backups and making sure the connector is running.`;
 
-const getSelectValues = (links: Link[] | null, hasSelectedDeploymentType: boolean) => {
-    const shouldUseOnPrem = links?.some(link => link.rel === 'deploy-on-premises') || false;
-    const shouldUseCloud = links?.some(link => link.rel === 'deploy-to-cloud') || false;
-
-    const selectValues: SelectPropsOptions = [
-        { value: 'On premises', displayValue: 'On Premises' },
-        { value: 'Cloud', displayValue: 'In the Dolittle Cloud' },
-    ];
-
-    if (hasSelectedDeploymentType) {
-        return selectValues;
-    }
-
-    if (!shouldUseOnPrem) {
-        selectValues.splice(selectValues.findIndex(select => select.value === 'On premises'), 1);
-    }
-    if (!shouldUseCloud) {
-        selectValues.splice(selectValues.findIndex(value => value.value === 'Cloud'), 1);
-    }
-
-    return selectValues;
-};
 
 export type MainM3ConnectionInfoProps = {
     hasSelectedDeploymentType: boolean;
     connectionIdLinks?: Link[] | null;
 };
 
-export const MainM3ConnectionInfo = (props: MainM3ConnectionInfoProps) => {
-    const hasSelectedDeploymentType = props.hasSelectedDeploymentType;
+export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentType }: MainM3ConnectionInfoProps) => {
+
+    const selectValues = useMemo(() => {
+        const shouldUseOnPrem = connectionIdLinks?.some(link => link.rel === 'deploy-on-premises') || false;
+        const shouldUseCloud = connectionIdLinks?.some(link => link.rel === 'deploy-to-cloud') || false;
+
+        const selectValues: SelectPropsOptions = [
+            { value: 'On premises', displayValue: 'On Premises' },
+            { value: 'Cloud', displayValue: 'In the Dolittle Cloud' },
+        ];
+
+        if (hasSelectedDeploymentType) {
+            return selectValues;
+        }
+
+        if (!shouldUseOnPrem) {
+            selectValues.splice(selectValues.findIndex(select => select.value === 'On premises'), 1);
+        }
+        if (!shouldUseCloud) {
+            selectValues.splice(selectValues.findIndex(value => value.value === 'Cloud'), 1);
+        }
+
+        return selectValues;
+    }, [connectionIdLinks, hasSelectedDeploymentType]);
+
 
     return (
         <Stack spacing={3.5} sx={{ mt: 3, ml: 3 }}>
@@ -64,7 +65,7 @@ export const MainM3ConnectionInfo = (props: MainM3ConnectionInfoProps) => {
                 <Select
                     id='selectHosting'
                     label='Hosting *'
-                    options={getSelectValues(props.connectionIdLinks || [], hasSelectedDeploymentType)} disabled={hasSelectedDeploymentType}
+                    options={selectValues} disabled={hasSelectedDeploymentType}
                 />
             </Tooltip>
         </Stack>
