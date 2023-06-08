@@ -54,6 +54,7 @@ export const NewConnectionView = () => {
         const connectorBundleStatus = hostBundleStatusFromServicesStatus(connection?.mdpStatus, connection?.ionStatus);
         const metadataPublisherCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.mdpStatus);
         const iONServiceAccountCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.ionStatus);
+        const disabled = connection?.status?.name === 'Registered';
 
         return {
             singleExpandMode: true,
@@ -64,6 +65,7 @@ export const NewConnectionView = () => {
                     children: <ConnectorBundleConfiguration />,
                     progressStatus: connectorBundleStatus[0],
                     progressLabel: connectorBundleStatus[1],
+                    disabled,
                     sx: { mt: 8 },
                 },
                 {
@@ -72,6 +74,7 @@ export const NewConnectionView = () => {
                     children: <MetadataPublisherCredentials />,
                     progressStatus: metadataPublisherCredentialsStatus[0],
                     progressLabel: metadataPublisherCredentialsStatus[1],
+                    disabled,
                     sx: { mt: 8 },
                 },
                 {
@@ -80,6 +83,7 @@ export const NewConnectionView = () => {
                     children: <IonServiceAccountCredentials />,
                     progressStatus: iONServiceAccountCredentialsStatus[0],
                     progressLabel: iONServiceAccountCredentialsStatus[1],
+                    disabled,
                     sx: { mt: 8 },
                 },
             ],
