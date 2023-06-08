@@ -8,13 +8,12 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { Box, Typography } from '@mui/material';
 
-import { AccordionList, AccordionListProps, Form, StatusIndicatorProps } from '@dolittle/design-system';
+import { AccordionList, AccordionListProps, Form } from '@dolittle/design-system';
 
 import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
 import { useConnectionsIdGet, useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
 import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
-import { ConnectionStatus, RemoteServiceStatus } from '../../../apis/integrations/generated';
 
 import { useConnectionId } from '../../routes.hooks';
 
@@ -24,6 +23,7 @@ import { ConnectorBundleConfiguration } from './components/ConnectorBundleConfig
 import { MetadataPublisherCredentials } from './components/MetadataPublisherCredentials';
 import { IonServiceAccountCredentials } from './components/IonServiceAccountCredentials';
 import { ActionButtons } from './components/ActionButtons';
+import { configurationStatusFromConnectionStatus, configurationStatusFromServiceCredentialsStatus } from '../configuration/statusResolvers';
 
 
 export type M3ConnectionParameters = {
@@ -31,38 +31,6 @@ export type M3ConnectionParameters = {
     selectHosting: string;
     metadataPublisherUrl: string;
     metadataPublisherPassword: string;
-};
-
-const resolveConnectorBundleStatus = (connectionStatus?: ConnectionStatus): [StatusIndicatorProps['status'], StatusIndicatorProps['label']] => {
-    switch (connectionStatus?.name) {
-        case 'Pending':
-        case 'Connected':
-        case 'Failing':
-        case 'Deleted':
-            return ['success', 'Connected'];
-        case 'Registered':
-        default:
-            return ['waiting', 'Waiting for access'];
-    }
-};
-
-const resolveServiceCredentialsStatus = (serviceStatus?: RemoteServiceStatus | undefined): [StatusIndicatorProps['status'], StatusIndicatorProps['label']] => {
-    switch (serviceStatus?.name) {
-        case 'Unresponsive':
-        case 'Inactive':
-        case 'Disconnected':
-        case 'ServiceFailing':
-            return ['error', 'Failed'];
-        case 'Active':
-            return ['success', 'Connected'];
-        case 'Configured':
-            return ['waiting', 'Configured'];
-        case 'Alive':
-        case 'Undeployed':
-        case 'DeploymentChosen':
-        default:
-            return ['waiting', 'Waiting for credential verification'];
-    }
 };
 
 export const NewConnectionView = () => {
@@ -80,9 +48,9 @@ export const NewConnectionView = () => {
     const connection = query.data?.value;
 
     const accordionListProps: AccordionListProps = useMemo(() => {
-        const connectorBundleStatus = resolveConnectorBundleStatus(connection?.status);
-        const metadataPublisherCredentialsStatus = resolveServiceCredentialsStatus(connection?.mdpStatus);
-        const iONServiceAccountCredentialsStatus = resolveServiceCredentialsStatus(connection?.ionStatus);
+        const connectorBundleStatus = configurationStatusFromConnectionStatus(connection?.status);
+        const metadataPublisherCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.mdpStatus);
+        const iONServiceAccountCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.ionStatus);
 
         return {
             singleExpandMode: true,
