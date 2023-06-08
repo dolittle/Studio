@@ -2,13 +2,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { DragEvent, FormEvent, useImperativeHandle, useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 import { alpha, Box, Typography } from '@mui/material';
 
 import { Button, Icon, IconButton } from '@dolittle/design-system';
 
 const styles = {
-    form: {
+    dropArea: {
         width: 1,
         height: 132,
         justifyContent: 'center',
@@ -23,7 +24,7 @@ const styles = {
         alignItems: 'center',
         gap: 1,
     },
-    dropArea: {
+    dropOverlay: {
         position: 'absolute',
         top: 0,
         right: 0,
@@ -71,7 +72,7 @@ export type FileUploadFormProps = {
      * Set to true if you want to use the component as a button.
      * @default false
      */
-    hideForm?: boolean;
+    hideDropArea?: boolean;
 
     /**
      * The valid file extensions.
@@ -88,7 +89,7 @@ export type FileUploadFormProps = {
  * @returns A {@link FileUploadForm} component.
  */
 export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadFormProps>(function FileUploadForm({
-    onSelected, onConfirmed, allowMultipleFiles = false, hideForm = false, validFileExtensions = [] }:
+    onSelected, onConfirmed, allowMultipleFiles = false, hideDropArea = false, validFileExtensions = [] }:
     FileUploadFormProps, ref: React.ForwardedRef<FileUploadFormRef>) {
 
     const [dragActive, setDragActive] = useState(false);
@@ -157,7 +158,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
 
         const files = event.dataTransfer.files;
         if (!files || files.length === 0) return;
-        if (!hideForm) showFileNameInBox(files);
+        if (!hideDropArea) showFileNameInBox(files);
         onSelected(files[0], event);
     };
 
@@ -168,7 +169,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
     const onFileSelect = (event: FormEvent<HTMLInputElement>) => {
         const files = (event?.target as HTMLInputElement)?.files;
         if (!files || files.length === 0) return;
-        if (!hideForm) showFileNameInBox(files);
+        if (!hideDropArea) showFileNameInBox(files);
         onSelected(allowMultipleFiles ? files : files[0], event);
     };
 
@@ -182,61 +183,66 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
     };
 
     return (
-        <Box
-            component='form'
-            ref={formRef}
-            method='put'
-            id='form-file-upload'
-            onDragEnter={handleFileDrag}
-            onSubmit={onFileSubmitted}
-            sx={{
-                display: hideForm ? 'none' : 'flex',
-                ...styles.form,
-            }}
-        >
-            <input
-                ref={fileInputRef}
-                id='input-file-upload'
-                type='file'
-                name='file'
-                hidden
-                multiple={allowMultipleFiles}
-                onChange={onFileSelect}
-            />
-
-            <Box sx={styles.alignment}>
-                <Button
-                    label='Choose file'
-                    type='submit'
-                    startWithIcon='UploadRounded'
-                    onClick={() => fileInputRef.current?.click()}
-                />
-                <Typography>or drag it here</Typography>
+        <>
+            <Box
+                onDragEnter={handleFileDrag}
+                sx={{
+                    display: hideDropArea ? 'none' : 'flex',
+                    ...styles.dropArea,
+                }}
+            >
+                <Box sx={styles.alignment}>
+                    <Button
+                        label='Choose file'
+                        type='submit'
+                        startWithIcon='UploadRounded'
+                        onClick={() => fileInputRef.current?.click()}
+                    />
+                    <Typography>or drag it here</Typography>
+                </Box>
+                {fileFormatError && !fileName &&
+                    <Box sx={{ ...styles.alignment, mt: 1, color: 'error.main', }}>
+                        <Icon icon='ErrorRounded' />
+                        <Typography variant='body2'>{`Wrong file type. Please upload a ${listValidFileExtensions()} file.`}</Typography>
+                    </Box>
+                }
+                {!fileFormatError && fileName &&
+                    <Box sx={{ ...styles.alignment, mt: 1 }}>
+                        <Typography>{fileName}</Typography>
+                        <IconButton icon='CancelRounded' color='primary' tooltipText='Delete file' onClick={handleFileDelete} />
+                    </Box>
+                }
+                {dragActive &&
+                    <Box
+                        onDragEnter={handleFileDrag}
+                        onDragLeave={handleFileDrag}
+                        onDragOver={handleFileDrag}
+                        onDrop={onFileDrop}
+                        sx={styles.dropOverlay}
+                    />
+                }
             </Box>
-
-            {fileFormatError && !fileName &&
-                <Box sx={{ ...styles.alignment, mt: 1, color: 'error.main', }}>
-                    <Icon icon='ErrorRounded' />
-                    <Typography variant='body2'>{`Wrong file type. Please upload a ${listValidFileExtensions()} file.`}</Typography>
-                </Box>
-            }
-
-            {!fileFormatError && fileName &&
-                <Box sx={{ ...styles.alignment, mt: 1 }}>
-                    <Typography>{fileName}</Typography>
-                    <IconButton icon='CancelRounded' color='primary' tooltipText='Delete file' onClick={handleFileDelete} />
-                </Box>
-            }
-
-            {dragActive &&
+            {createPortal(
                 <Box
-                    onDragEnter={handleFileDrag}
-                    onDragLeave={handleFileDrag}
-                    onDragOver={handleFileDrag}
-                    onDrop={onFileDrop}
-                    sx={styles.dropArea}
-                />
-            }
-        </Box>
+                    component='form'
+                    ref={formRef}
+                    method='put'
+                    id='form-file-upload'
+                    onSubmit={onFileSubmitted}
+                    sx={{ display: 'none' }}
+                >
+                    <input
+                        ref={fileInputRef}
+                        id='input-file-upload'
+                        type='file'
+                        name='file'
+                        hidden
+                        multiple={allowMultipleFiles}
+                        onChange={onFileSelect}
+                    />
+                </Box>,
+                document.body
+            )}
+        </>
     );
 });

@@ -173,7 +173,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                     handleDownload={handleConfigFileDownload}
                 />
 
-                <FileUploadForm ref={fileUploadRef} onSelected={handleFileSelect} allowMultipleFiles hideForm />
+                <FileUploadForm ref={fileUploadRef} onSelected={handleFileSelect} allowMultipleFiles hideDropArea />
 
                 <RestartInfoBox microserviceName={microserviceName} isOpen={restartInfoBoxIsOpen} onDismissed={() => setRestartInfoBoxIsOpen(false)} />
 
