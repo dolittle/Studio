@@ -38,7 +38,10 @@ export const NewConnectionView = () => {
 
     const connectionId = useConnectionId();
     const queryClient = useQueryClient();
-    const query = useConnectionsIdGet({ id: connectionId || '' });
+    const query = useConnectionsIdGet(
+        { id: connectionId || '' },
+        { refetchInterval: (data) => data?.value?.status.name !== 'Connected' ? 5000 : false }
+    );
 
     const nameMutation = useConnectionsIdNamePost();
     const onPremisesConfigurationMutation = useConnectionsIdDeployOnPremisesPost();
