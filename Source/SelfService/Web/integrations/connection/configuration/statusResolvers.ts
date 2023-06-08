@@ -4,21 +4,32 @@
 import { StatusIndicatorProps } from '@dolittle/design-system';
 import { ConnectionStatus, RemoteServiceStatus } from '../../../apis/integrations/generated';
 
+export type StatusMessage = [StatusIndicatorProps['status'], StatusIndicatorProps['label']];
 
-export const configurationStatusFromConnectionStatus = (connectionStatus?: ConnectionStatus): [StatusIndicatorProps['status'], StatusIndicatorProps['label']] => {
+export const configurationStatusFromConnectionStatus = (connectionStatus?: ConnectionStatus): StatusMessage => {
     switch (connectionStatus?.name) {
         case 'Connected':
-        case 'Failing':
-        case 'Deleted':
             return ['success', 'Connected'];
-        case 'Pending':
+        case 'Failing':
+            return ['error', 'Failing'];
+            case 'Deleted':
+        return ['unknown', 'Deleted'];
         case 'Registered':
+        case 'Pending':
         default:
             return ['waiting', 'Waiting for access'];
     }
 };
 
-export const configurationStatusFromServiceCredentialsStatus = (serviceStatus?: RemoteServiceStatus | undefined): [StatusIndicatorProps['status'], StatusIndicatorProps['label']] => {
+export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStatus, ionStatus?: RemoteServiceStatus): StatusMessage => {
+    if (ionStatus?.name !== 'DeploymentChosen' && mdpStatus?.name !== 'DeploymentChosen') {
+        return ['success', 'Connected'];
+    }
+    return ['waiting', 'Waiting for access'];
+};
+
+
+export const configurationStatusFromServiceCredentialsStatus = (serviceStatus?: RemoteServiceStatus | undefined): StatusMessage => {
     switch (serviceStatus?.name) {
         case 'Unresponsive':
         case 'Inactive':
@@ -28,7 +39,7 @@ export const configurationStatusFromServiceCredentialsStatus = (serviceStatus?: 
         case 'Active':
             return ['success', 'Connected'];
         case 'Configured':
-            return ['waiting', 'Configured'];
+            return ['waiting', 'Configured - Waiting for credential verification'];
         case 'Alive':
         case 'Undeployed':
         case 'DeploymentChosen':

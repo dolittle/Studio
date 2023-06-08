@@ -23,7 +23,7 @@ import { ConnectorBundleConfiguration } from './components/ConnectorBundleConfig
 import { MetadataPublisherCredentials } from './components/MetadataPublisherCredentials';
 import { IonServiceAccountCredentials } from './components/IonServiceAccountCredentials';
 import { ActionButtons } from './components/ActionButtons';
-import { configurationStatusFromConnectionStatus, configurationStatusFromServiceCredentialsStatus } from '../configuration/statusResolvers';
+import { configurationStatusFromServiceCredentialsStatus, hostBundleStatusFromServicesStatus } from '../configuration/statusResolvers';
 
 
 export type M3ConnectionParameters = {
@@ -48,7 +48,7 @@ export const NewConnectionView = () => {
     const connection = query.data?.value;
 
     const accordionListProps: AccordionListProps = useMemo(() => {
-        const connectorBundleStatus = configurationStatusFromConnectionStatus(connection?.status);
+        const connectorBundleStatus = hostBundleStatusFromServicesStatus(connection?.mdpStatus, connection?.ionStatus);
         const metadataPublisherCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.mdpStatus);
         const iONServiceAccountCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.ionStatus);
 
