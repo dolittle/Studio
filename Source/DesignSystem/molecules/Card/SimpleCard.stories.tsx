@@ -25,20 +25,23 @@ way to visually organize various types of information or categories.`,
 };
 
 metadata.argTypes = {
-    actions: { control: false },
+    actionButtons: {
+        control: false,
+        description: 'The actions of the card. Use `Button` or `IconButton` component for that.',
+    },
 };
 
 metadata.args = {
     title: 'Card Title',
     subtitle: '',
     description: 'Here is a description of the card. It can be a bit longer than the title, but not too long.',
-    actions: (
+    actionButtons: (
         <>
             <Button label='Secondary button' color='subtle' onClick={action('clicked')} />
             <Button label='Primary button' onClick={action('clicked')} />
         </>
     ),
-    actionsAlignment: 'left',
+    actionButtonsAlignment: 'left',
 };
 
 export default metadata;
@@ -59,8 +62,8 @@ WithSubtitle.parameters = {
 };
 
 export const RightAlignedButton = createStory({
-    actions: <Button label='Right aligned button' onClick={action('clicked')} />,
-    actionsAlignment: 'right',
+    actionButtons: <Button label='Right aligned button' onClick={action('clicked')} />,
+    actionButtonsAlignment: 'right',
 });
 RightAlignedButton.parameters = {
     docs: {
