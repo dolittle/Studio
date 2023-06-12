@@ -15,37 +15,53 @@ export type BackupLink = {
     expire: string;
 };
 
+export type BackupLinkWithName = BackupLink & {
+    environment: string;
+    name: string;
+};
+
 export type BackupLinkShareInput = {
     applicationId: string;
     environment: string;
     file_path: string;
 };
 
-export async function getLatestBackupLinkByApplication(applicationID: string, environment: string): Promise<string> {
-    const backups = await getBackupsByApplication(applicationID, environment);
+export async function getLatestBackupLinkByApplication(applicationId: string, environment: string): Promise<BackupLinkWithName> {
+    const backups = await getBackupsByApplication(applicationId, environment);
 
     if (!backups.files[0]) {
-        return '';
+        return {
+            applicationId,
+            environment,
+            name: '',
+            url: '',
+            expire: ''
+        };
     }
 
     const input: BackupLinkShareInput = {
         environment,
-        applicationId: applicationID,
-        file_path: backups.files[0]
+        applicationId,
+        file_path: backups.files[0],
     };
 
     const shareLink = await getLink(input);
-    return shareLink.url;
+
+    return {
+        ...shareLink,
+        environment,
+        name: backups.files[0],
+    };
 };
 
-export async function getBackupsByApplication(applicationID: string, environment: string): Promise<BackupsForApplication> {
-    const url = `${getServerUrlPrefix()}/backups/logs/latest/by/app/${applicationID}/${environment}`;
+export async function getBackupsByApplication(applicationId: string, environment: string): Promise<BackupsForApplication> {
+    const url = `${getServerUrlPrefix()}/backups/logs/latest/by/app/${applicationId}/${environment}`;
 
     const response = await fetch(
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
 
     const body: any = await response.json() as BackupsForApplication;
@@ -63,12 +79,10 @@ export async function getLink(input: BackupLinkShareInput): Promise<BackupLink> 
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(input)
+            body: JSON.stringify(input),
         });
 
     if (!response.ok) {
-        console.log(input);
-        console.log(response);
         return {} as BackupLink;
     }
 
