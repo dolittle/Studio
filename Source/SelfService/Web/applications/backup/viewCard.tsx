@@ -2,21 +2,19 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
-import {
-    DocumentCard,
-    IContextualMenuItem
-} from '@fluentui/react';
-
+import { DocumentCard, IContextualMenuItem } from '@fluentui/react';
 import { mergeStyles } from '@fluentui/react/lib/Styling';
+
+import { Typography } from '@mui/material';
+
 import { HttpResponseApplication } from '../../apis/solutions/application';
 import { cardStyles, commandTileClass, buttonStyles } from '../../components/theme-legacy/viewCard';
 import { getLatestBackupLinkByApplication } from '../../apis/solutions/backups';
 import { useGlobalContext } from '../../context/globalContext';
-import { Typography } from '@mui/material';
-
 
 type Props = {
     application: HttpResponseApplication
