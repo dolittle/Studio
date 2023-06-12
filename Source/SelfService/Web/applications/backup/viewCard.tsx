@@ -39,7 +39,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             onClick: async (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): Promise<void> => {
                 ev!.stopPropagation();
                 const url = await getLatestBackupLinkByApplication(_props.application.id, _props.environment);
-                window.open(url, '_blank');
+                window.open(url.url, '_blank');
             }
         },
         {
