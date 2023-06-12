@@ -3,6 +3,12 @@
 
 import React, { useState, useEffect } from 'react';
 
+import { useSnackbar } from 'notistack';
+
+import { DataGridPro, GridColDef, GridRowId, GridRowParams } from '@mui/x-data-grid-pro';
+
+import { IconButton } from '@dolittle/design-system';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -21,6 +27,10 @@ import { BackupLink, getLink, BackupsForApplication, getBackupsByApplication, Ba
 
 import { useGlobalContext } from '../../context/globalContext';
 
+import { DownloadIconButton } from '../../components/downloadIconButton';
+
+//import { backupsDataGridColumns } from './backupsDataGridColumns';
+
 type BackupsDetailsList = {
     environment: string;
     application: ShortInfo;
@@ -35,6 +45,7 @@ export type ListViewProps = {
 
 export const ListView = ({ application, environment }: ListViewProps) => {
     const { setNotification } = useGlobalContext();
+    const { enqueueSnackbar } = useSnackbar();
 
     const [data, setData] = useState({} as BackupsForApplication);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -53,7 +64,7 @@ export const ListView = ({ application, environment }: ListViewProps) => {
 
     if (!isLoaded) return null;
 
-    const backups: BackupsDetailsList[] = data.files.map<BackupsDetailsList>(file => {
+    const backupsDataGridRows: BackupsDetailsList[] = data.files.map<BackupsDetailsList>(file => {
         const parts = file.split('/');
         const when: string = parts[parts.length - 1].replace('.gz.mongodump', '');
 
@@ -64,6 +75,81 @@ export const ListView = ({ application, environment }: ListViewProps) => {
             when,
         };
     });
+
+    const handleLinkCopy = async (params) => {
+        const input: BackupLinkShareInput = {
+            applicationId: application.id,
+            environment: params.row.environment,
+            file_path: params.row.file,
+        };
+
+        const share: BackupLink = await getLink(input);
+        await navigator.clipboard.writeText(share.url);
+        enqueueSnackbar(`${share.url} copied to clipboard.`);
+    };
+
+    const handleDownload = async (params) => {
+        const input: BackupLinkShareInput = {
+            applicationId: application.id,
+            environment: params.row.environment,
+            file_path: params.row.file,
+        };
+
+        const share: BackupLink = await getLink(input);
+        window.open(share.url, '_blank');
+        enqueueSnackbar(`${share.url} has been downloaded.`);
+    };
+
+    const backupsDataGridColumns: GridColDef[] = [
+        {
+            field: 'name',
+            headerName: 'Name',
+            minWidth: 300,
+            flex: 1,
+        },
+        {
+            field: 'date & time',
+            headerName: 'Date & Time',
+            minWidth: 100,
+            flex: 1,
+            headerAlign: 'right',
+            align: 'right',
+        },
+        {
+            field: 'download',
+            headerName: 'Download',
+            //sortable: false,
+            minWidth: 180,
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            renderCell: (params) => (
+                <DownloadIconButton
+                    tooltipText='Download backup file'
+                    icon='DownloadRounded'
+                    snackbarMessage={`Test`}
+                    onClick={() => handleDownload(params)}
+                />
+            ),
+        },
+        {
+            field: 'copy',
+            headerName: 'Copy',
+            //sortable: false,
+            minWidth: 216,
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            renderCell: (params) => (
+                <DownloadIconButton
+                    tooltipText='Copy link'
+                    icon='CopyAllRounded'
+                    snackbarMessage={`Test`}
+                    onClick={() => handleLinkCopy(params)}
+                />
+            ),
+        },
+    ];
 
     return (
         <Box component={Paper} m={2}>
@@ -79,7 +165,7 @@ export const ListView = ({ application, environment }: ListViewProps) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {backups.map((item) => (
+                        {backupsDataGridRows.map(item => (
                             <TableRow key={item.file}>
                                 <TableCell align="left">
                                     {item.file}
@@ -114,6 +200,20 @@ export const ListView = ({ application, environment }: ListViewProps) => {
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            <Paper sx={{ width: 1, height: 1, boxShadow: 'none' }}>
+                <DataGridPro
+                    rows={backupsDataGridRows}
+                    columns={backupsDataGridColumns}
+                    getRowHeight={() => 'auto'}
+                    headerHeight={46}
+                    disableColumnMenu
+                    disableColumnReorder
+                    disableColumnResize
+                    disableColumnSelector
+                    disableSelectionOnClick
+                />
+            </Paper>
         </Box>
     );
 };
