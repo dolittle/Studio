@@ -11,6 +11,7 @@ import { Box, Typography } from '@mui/material';
 import { AccordionList, AccordionListProps, Form } from '@dolittle/design-system';
 
 import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
+import { IonConfigRequest } from '../../../apis/integrations/generated';
 import { useConnectionsIdGet, useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
 import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
@@ -31,6 +32,7 @@ export type M3ConnectionParameters = {
     selectHosting: string;
     metadataPublisherUrl: string;
     metadataPublisherPassword: string;
+    ionConfiguration: IonConfigRequest;
 };
 
 export const NewConnectionView = () => {
@@ -99,6 +101,7 @@ export const NewConnectionView = () => {
     const hasSelectedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
     const metadataPublisherUrl = connection._configuration?.mdp?.url;
     const metadataPublisherPassword = connection._configuration?.mdp?.password;
+    const ionConfiguration = connection._configuration?.ion;
 
     const handleSuccessfulSave = (message: string) => {
         enqueueSnackbar(message);
@@ -106,6 +109,7 @@ export const NewConnectionView = () => {
     };
 
     const handleM3ConnectionSave = (values: M3ConnectionParameters) => {
+        //lean on isDirty information from react-hook-form for this to evaluate.
         if (connection.name !== values.connectorName) {
             nameMutation.mutate(
                 {
@@ -160,6 +164,19 @@ export const NewConnectionView = () => {
                 },
             );
         }
+
+        if (values.ionConfiguration) {
+            ionConfigurationMutation.mutate(
+                {
+                    id: connectionId,
+                    ionConfigRequest: values.ionConfiguration,
+                },
+                {
+                    onSuccess: () => { handleSuccessfulSave('Saved ION Configuration'); },
+                    onError: () => console.log('Error'),
+                },
+            );
+        }
     };
 
     return (
@@ -173,6 +190,15 @@ export const NewConnectionView = () => {
                         selectHosting: hasSelectedDeploymentType ? deploymentType || '' : '',
                         metadataPublisherUrl: metadataPublisherUrl || '',
                         metadataPublisherPassword: metadataPublisherPassword || '',
+                        ionConfiguration: {
+                            iu: ionConfiguration.gatewayUrl,
+                            pu: ionConfiguration.oauthTokenUrl,
+                            ot: ionConfiguration.byUser,
+                            saak: ionConfiguration.username,
+                            sask:ionConfiguration.password,
+                            ci: ionConfiguration.clientId,
+                            cs: ionConfiguration.clientSecret,
+                         },
                     }}
                     onSubmit={handleM3ConnectionSave}
                     sx={{ ml: 3 }}

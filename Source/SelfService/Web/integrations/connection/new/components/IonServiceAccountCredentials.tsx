@@ -4,8 +4,11 @@
 import React from 'react';
 
 import { Box } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
+import { enqueueSnackbar } from 'notistack';
 
 import { FileUploadForm, MaxWidthTextBlock } from '@dolittle/design-system';
+import { IonConfigRequest, IonConfigRequestFromJSON } from '../../../../apis/integrations/generated';
 
 export const instructions = [
     `1. Open Infor ION API. Open the menu from the upper left corner and select 'Infor ION API'.`,
@@ -27,13 +30,52 @@ const InstructionsListItems = () =>
         ))}
     </Box>;
 
-export const IonServiceAccountCredentials = () =>
-    <>
+export const IonServiceAccountCredentials = () => {
+    const { setValue, getValues } = useFormContext();
+
+    /**
+     * Simple type guard to check if the object is of type IonConfigRequest
+     * Other approaches found here: https://stackoverflow.com/a/62438143/115303
+     * @param o The object to check
+     * @returns o as an IonConfigRequest
+     */
+    const isIonConfigRequest = (o: any): o is IonConfigRequest => {
+        return 'iu' in o &&
+            'pu' in o &&
+            'ot' in o &&
+            'saak' in o &&
+            'sask' in o &&
+            'ci' in o &&
+            'cs' in o;
+    };
+
+    const handleFileUploaded = (file: File | FileList) => {
+        file = file as File;
+        const fileReader = new FileReader();
+        fileReader.onload = (event) => {
+            const contents = event.target?.result as string;
+            try {
+                const json = JSON.parse(contents);
+                if (isIonConfigRequest(json)) {
+                    setValue('ionConfiguration', json);
+                    return;
+                }
+            } catch (error) {
+                console.error('Error uploading ION Configuration', error);
+            }
+            enqueueSnackbar('Error uploading ION Configuration', { variant: 'error' });
+        };
+
+        fileReader.readAsText(file);
+    };
+    return <>
         <MaxWidthTextBlock>
             Follow the steps below then upload your credentials. If you already have an ION service account setup, skip to step 8 to access your credentials.
         </MaxWidthTextBlock>
 
         <InstructionsListItems />
 
-        <FileUploadForm onSelected={file => console.log(file)} validFileExtensions={['json']} />
+        <FileUploadForm onSelected={handleFileUploaded} validFileExtensions={['json']} />
     </>;
+};
+
