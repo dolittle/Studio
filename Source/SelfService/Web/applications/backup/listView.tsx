@@ -1,5 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import React, { useState, useEffect } from 'react';
 
 import Table from '@mui/material/Table';
@@ -10,14 +11,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+
 import GetAppIcon from '@mui/icons-material/GetApp';
 import ShareIcon from '@mui/icons-material/Share';
 
 import { ShortInfo } from '../../apis/solutions/api';
 import { HttpResponseApplication } from '../../apis/solutions/application';
-
-
 import { BackupLink, getLink, BackupsForApplication, getBackupsByApplication, BackupLinkShareInput } from '../../apis/solutions/backups';
+
 import { useGlobalContext } from '../../context/globalContext';
 
 type BackupsDetailsList = {
@@ -27,21 +28,16 @@ type BackupsDetailsList = {
     when: string;
 };
 
-type Props = {
-    application: HttpResponseApplication
-    environment: string
+export type ListViewProps = {
+    application: HttpResponseApplication;
+    environment: string;
 };
 
-
-export const ListView: React.FunctionComponent<Props> = (props) => {
-    const _props = props!;
-    const application = _props.application;
-    const environment = _props.environment;
+export const ListView = ({ application, environment }: ListViewProps) => {
     const { setNotification } = useGlobalContext();
 
     const [data, setData] = useState({} as BackupsForApplication);
-    const [loaded, setLoaded] = useState(false);
-
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
         Promise.all([
@@ -51,15 +47,11 @@ export const ListView: React.FunctionComponent<Props> = (props) => {
             // TODO this should be unique
             // TODO also when we have more than one application and more than one environment we should default to something.
             setData(_data);
-            setLoaded(true);
+            setIsLoaded(true);
         });
     }, []);
 
-    if (!loaded) {
-        return null;
-    }
-
-
+    if (!isLoaded) return null;
 
     const backups: BackupsDetailsList[] = data.files.map<BackupsDetailsList>(file => {
         const parts = file.split('/');
@@ -72,7 +64,6 @@ export const ListView: React.FunctionComponent<Props> = (props) => {
             when,
         };
     });
-
 
     return (
         <Box component={Paper} m={2}>
