@@ -6,13 +6,17 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, generatePath } from 'react-router-dom';
 import { useGlobalContext } from '../context/globalContext';
 
-import { List, Typography } from '@mui/material';
+import { Grid, List, Typography } from '@mui/material';
+
+import { Button, SimpleCard } from '@dolittle/design-system';
 
 import { useRouteApplicationParams } from '../utils/route';
 import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
+import { getLatestBackupLinkByApplication } from '../apis/solutions/backups';
 
 import { ViewCard } from './backup/viewCard';
 import { ListView } from './backup/listView';
+
 import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 
@@ -21,16 +25,19 @@ export const BackupsScreen = () => {
     const { currentEnvironment, hasOneCustomer } = useGlobalContext();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
-    const [loaded, setLoaded] = useState(false);
+    const [backupLinksForEnvironment, setBackupLinksForEnvironment] = useState<any[]>([]);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const routeApplicationProps = useRouteApplicationParams();
     const applicationId = routeApplicationProps.applicationId;
+    const environments = application.environments;
 
     useEffect(() => {
         Promise.all([
             getApplication(applicationId),
         ]).then(values => {
             const applicationData = values[0];
+
             if (!applicationData?.id) {
                 const href = `/problem`;
                 navigate(href);
@@ -38,17 +45,25 @@ export const BackupsScreen = () => {
             }
 
             setApplication(applicationData);
-            setLoaded(true);
+            setIsLoaded(true);
         });
     }, []);
 
-    if (!loaded) return null;
+    useEffect(() => {
+        if (!environments) return;
+
+        Promise.all(environments.map(environment =>
+            getLatestBackupLinkByApplication(application.id, environment.name)))
+            .then(values => {
+                setBackupLinksForEnvironment(values);
+            });
+    }, [application, environments]);
+
+    if (!isLoaded) return null;
 
     if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application with this environment not found</Typography>;
+        return <Typography variant='h1' my={2}>Application with this environment not found.</Typography>;
     }
-
-    const environments = application.environments;
 
     const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
 
@@ -79,14 +94,11 @@ export const BackupsScreen = () => {
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <div id="topNavBar" className="nav flex-container">
-                <div className="left flex-start">
-                    <BreadCrumbContainer routes={routes} />
-                </div>
-            </div>
+            <BreadCrumbContainer routes={routes} />
+
             <Routes>
                 <Route path="/overview" element={
-                    <div className="serv">
+                    <Grid mt={4}>
                         <List>
                             {environments.map(environment => (
                                 <li key={environment.name}>
@@ -94,11 +106,23 @@ export const BackupsScreen = () => {
                                 </li>
                             ))}
                         </List>
-                    </div>
-                } />
 
+                        {backupLinksForEnvironment.map(environment => {
+                            if (!environment.url) return null;
+
+                            return (<SimpleCard
+                                key={environment.name}
+                                title={application.name}
+                                subtitle={environment.name}
+                                description={environment.url}
+                                actionButtons={<Button label='dkd' />}
+                            />
+                            );
+                        })}
+                    </Grid>
+                } />
                 <Route path="/:environment/list" element={<ListView application={application} environment={currentEnvironment} />} />
-                <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups</Typography>} />
+                <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups.</Typography>} />
             </Routes>
         </LayoutWithSidebar>
     );
