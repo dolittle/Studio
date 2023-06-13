@@ -171,6 +171,9 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
         if (!files || files.length === 0) return;
         if (!hideDropArea) showFileNameInBox(files);
         onSelected(allowMultipleFiles ? files : files[0], event);
+        if(event && event.target) {
+            (event.target as HTMLInputElement).value = '';
+        }
     };
 
     /**
