@@ -7,7 +7,27 @@ import { DataGridPro, DataGridProProps } from '@mui/x-data-grid-pro';
 
 import { Paper } from '@mui/material';
 
+const stylesJustForStorybook = {
+    'minHeight': 250,
+    '& .MuiFormControl-root': {
+        width: 1,
+    },
+};
+
+// Use these props and styles on every DataGrid in the application.
 export const DataGrid = (args: DataGridProProps) =>
-    <Paper sx={{ width: 1, height: 1, minHeight: 250, boxShadow: 'none' }}>
-        <DataGridPro {...args} />
+    <Paper sx={{ width: 1, height: 1, boxShadow: 'none', ...stylesJustForStorybook }}>
+        <DataGridPro
+            autoHeight
+            headerHeight={46}
+            getRowHeight={() => 'auto'}
+            getEstimatedRowHeight={() => 40}
+            hideFooter
+            disableSelectionOnClick
+            disableColumnMenu
+            disableColumnReorder
+            disableColumnResize
+            disableColumnSelector
+            {...args}
+        />
     </Paper>;
