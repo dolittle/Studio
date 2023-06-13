@@ -31,7 +31,7 @@ const InstructionsListItems = () =>
     </Box>;
 
 export const IonServiceAccountCredentials = () => {
-    const { setValue, getValues } = useFormContext();
+    const { setValue } = useFormContext();
 
     /**
      * Simple type guard to check if the object is of type IonConfigRequest
@@ -57,7 +57,7 @@ export const IonServiceAccountCredentials = () => {
             try {
                 const json = JSON.parse(contents);
                 if (isIonConfigRequest(json)) {
-                    setValue('ionConfiguration', json);
+                    setValue('ionConfiguration', json, { shouldDirty: true });
                     return;
                 }
             } catch (error) {
