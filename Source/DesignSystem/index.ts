@@ -36,3 +36,6 @@ export { Stepper } from './molecules/Stepper';
 
 // Templates
 export * from './templates/Layout';
+
+// Theming
+export * from './theming/vectors';
