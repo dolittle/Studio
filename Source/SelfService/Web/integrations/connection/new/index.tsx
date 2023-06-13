@@ -1,14 +1,15 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo } from 'react';
+import React, { useRef, useMemo } from 'react';
 
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
+import { SubmitHandler } from 'react-hook-form';
 
 import { Box, Typography } from '@mui/material';
 
-import { AccordionList, AccordionListProps, Form } from '@dolittle/design-system';
+import { AccordionList, AccordionListProps, Form, FormRef } from '@dolittle/design-system';
 
 import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
 import { IonConfigRequest } from '../../../apis/integrations/generated';
@@ -50,6 +51,7 @@ export const NewConnectionView = () => {
     const onCloudConfigurationMutation = useConnectionsIdDeployCloudPost();
     const ionConfigurationMutation = useConnectionsIdConfigurationIonPost();
     const mdpConfigurationMutation = useConnectionsIdConfigurationMdpPost();
+    const formRef = useRef<FormRef<M3ConnectionParameters>>(null);
     const connection = query.data?.value;
 
     const accordionListProps: AccordionListProps = useMemo(() => {
@@ -108,13 +110,14 @@ export const NewConnectionView = () => {
         queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
     };
 
-    const handleM3ConnectionSave = (values: M3ConnectionParameters) => {
-        //lean on isDirty information from react-hook-form for this to evaluate.
-        if (connection.name !== values.connectorName) {
+    const handleM3ConnectionSave: SubmitHandler<M3ConnectionParameters> = (data) => {
+        const getFieldState = formRef.current?.getFieldState;
+
+        if (getFieldState?.('connectorName').isDirty) {
             nameMutation.mutate(
                 {
                     id: connectionId,
-                    body: values.connectorName,
+                    body: data.connectorName,
                 },
                 {
                     onSuccess: () => { handleSuccessfulSave('Saved Name'); },
@@ -123,8 +126,8 @@ export const NewConnectionView = () => {
             );
         }
 
-        if (!hasSelectedDeploymentType && values.selectHosting) {
-            if (values.selectHosting === 'On premises') {
+        if (!hasSelectedDeploymentType && getFieldState?.('selectHosting').isDirty) {
+            if (data.selectHosting === 'On premises') {
                 onPremisesConfigurationMutation.mutate(
                     {
                         id: connectionId,
@@ -136,7 +139,7 @@ export const NewConnectionView = () => {
                 );
             }
 
-            if (values.selectHosting === 'Cloud') {
+            if (data.selectHosting === 'Cloud') {
                 onCloudConfigurationMutation.mutate(
                     {
                         id: connectionId,
@@ -149,13 +152,13 @@ export const NewConnectionView = () => {
             }
         }
 
-        if (metadataPublisherUrl !== values.metadataPublisherUrl || metadataPublisherPassword !== values.metadataPublisherPassword) {
+        if (getFieldState?.('metadataPublisherUrl').isDirty || getFieldState?.('metadataPublisherPassword').isDirty) {
             mdpConfigurationMutation.mutate(
                 {
                     id: connectionId,
                     metadataPublisherConfigRequest: {
-                        url: values.metadataPublisherUrl,
-                        password: values.metadataPublisherPassword,
+                        url: data.metadataPublisherUrl,
+                        password: data.metadataPublisherPassword,
                     },
                 },
                 {
@@ -165,11 +168,11 @@ export const NewConnectionView = () => {
             );
         }
 
-        if (values.ionConfiguration) {
+        if (getFieldState?.('ionConfiguration').isDirty) {
             ionConfigurationMutation.mutate(
                 {
                     id: connectionId,
-                    ionConfigRequest: values.ionConfiguration,
+                    ionConfigRequest: data.ionConfiguration,
                 },
                 {
                     onSuccess: () => { handleSuccessfulSave('Saved ION Configuration'); },
@@ -202,6 +205,7 @@ export const NewConnectionView = () => {
                     }}
                     onSubmit={handleM3ConnectionSave}
                     sx={{ ml: 3 }}
+                    fRef={formRef}
                 >
                     <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} />
 
