@@ -128,7 +128,7 @@ export const BackupsScreen = () => {
             <Building />
             <Grid container spacing={4} sx={{ mt: 4 }}>
                 {backupLinksForEnvironment.map(environment =>
-                    <Grid key={`${application.name}-${environment.name}`} item xs={12} md={6}>
+                    <Grid key={`${application.name}-${environment.name}`} item>
                         <SimpleCard
                             title={application.name}
                             subtitle={`${environment.environment} - Environment`}//TODO: Fix this
