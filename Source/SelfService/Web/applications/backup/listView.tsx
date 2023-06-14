@@ -113,25 +113,25 @@ export const ListView = ({ application, environment }: ListViewProps) => {
         {
             field: 'file',
             headerName: 'Name',
-            minWidth: 300,
+            minWidth: 687,
             flex: 1,
         },
         {
             field: 'when',
             headerName: 'Date & Time',
-            minWidth: 100,
-            flex: 1,
             headerAlign: 'right',
             align: 'right',
+            minWidth: 277,
+            flex: 1,
         },
         {
             field: 'download',
             headerName: 'Download',
-            //sortable: false,
-            minWidth: 180,
-            flex: 1,
+            sortable: false,
             headerAlign: 'center',
             align: 'center',
+            minWidth: 104,
+            flex: 1,
             renderCell: (params) => (
                 <DownloadIconButton
                     tooltipText='Download backup file'
@@ -144,11 +144,11 @@ export const ListView = ({ application, environment }: ListViewProps) => {
         {
             field: 'copy',
             headerName: 'Copy',
-            //sortable: false,
-            minWidth: 216,
-            flex: 1,
+            sortable: false,
             headerAlign: 'center',
             align: 'center',
+            minWidth: 104,
+            flex: 1,
             renderCell: (params) => (
                 <DownloadIconButton
                     tooltipText='Copy link'
