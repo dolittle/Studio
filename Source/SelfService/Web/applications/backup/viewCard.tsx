@@ -38,7 +38,7 @@ export const ViewCard: React.FunctionComponent<Props> = (props) => {
             text: 'Download Latest Backup',
             onClick: async (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): Promise<void> => {
                 ev!.stopPropagation();
-                const url = await getLatestBackupLinkByApplication(_props.application.id, _props.environment);
+                const url = await getLatestBackupLinkByApplication(_props.application.id, environment); //_props.
                 window.open(url.url, '_blank');
             }
         },

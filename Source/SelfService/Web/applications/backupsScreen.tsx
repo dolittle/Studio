@@ -75,9 +75,13 @@ export const BackupsScreen = () => {
         Promise.all(environments.map(environment =>
             getLatestBackupLinkByApplication(application.id, environment.name)))
             .then(values => {
+
+                console.log('values', values);
                 setBackupLinksForEnvironment(values);
             });
     }, [environments]);
+
+    //console.log('backupLinksForEnvironment', backupLinksForEnvironment);
 
     if (!isLoaded) return null;
 
@@ -112,15 +116,15 @@ export const BackupsScreen = () => {
         },
     ];
 
-    const SimpleCardGrid = ({ data, applicationName }: SimpleCardGridProps) =>
+    const SimpleCardGrid = () =>
         <Box sx={{ maxWidth: 920 }}>
             <Building />
             <Grid container spacing={4} sx={{ mt: 4 }}>
-                {data.map(environment =>
-                    <Grid key={`${applicationName}-${environment.name}`} item xs={12} md={6}>
+                {backupLinksForEnvironment.map(environment =>
+                    <Grid key={`${application.name}-${environment.name}`} item xs={12} md={6}>
                         <SimpleCard
-                            title={applicationName}
-                            subtitle={`${environment.name} - Environment`}//TODO: Fix this
+                            title={application.name}
+                            subtitle={`${environment.environment} - Environment`}//TODO: Fix this
                             description={environment.name}
                             actionButtons={
                                 <>
@@ -131,7 +135,7 @@ export const BackupsScreen = () => {
                                             setCurrentApplicationId(application.id);
                                             setCurrentEnvironment(environment);
 
-                                            const href = `/backups/application/${application.id}/${environment}/list`;
+                                            const href = `/backups/application/${application.id}/${environment.name}/list`;
                                             navigate(href);
                                         }}
                                     />
@@ -140,7 +144,7 @@ export const BackupsScreen = () => {
                                         onClick={async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): Promise<void> => {
                                             event.stopPropagation();
 
-                                            const url = await getLatestBackupLinkByApplication(application.id, environment);
+                                            const url = await getLatestBackupLinkByApplication(application.id, environment.name);
                                             window.open(url.url, '_blank');
                                         }}
                                     />
@@ -164,7 +168,7 @@ export const BackupsScreen = () => {
         <LayoutWithSidebar navigation={nav}>
             <BreadCrumbContainer routes={routes} />
             <Routes>
-                <Route path="/overview" element={<SimpleCardGrid data={backupLinksForEnvironment} applicationName={application.name} />} />
+                <Route path="/overview" element={<SimpleCardGrid />} />
                 <Route path="/:environment/list" element={<ListView application={application} environment={currentEnvironment} />} />
                 <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups.</Typography>} />
             </Routes>
