@@ -116,6 +116,13 @@ export const BackupsScreen = () => {
         },
     ];
 
+    // onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
+    //     setCurrentApplicationId(application.id);
+    //     setCurrentEnvironment(environment);
+    //     const href = `/backups/application/${application.id}/${environment}/list`;
+    //     navigate(href);
+    // }
+
     const SimpleCardGrid = () =>
         <Box sx={{ maxWidth: 920 }}>
             <Building />
@@ -133,7 +140,7 @@ export const BackupsScreen = () => {
                                         color='subtle'
                                         onClick={() => {
                                             setCurrentApplicationId(application.id);
-                                            setCurrentEnvironment(environment);
+                                            setCurrentEnvironment(environment.environment);
 
                                             const href = `/backups/application/${application.id}/${environment.environment}/list`;
                                             navigate(href);
