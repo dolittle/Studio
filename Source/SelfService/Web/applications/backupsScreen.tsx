@@ -20,6 +20,32 @@ import { ListView } from './backup/listView';
 import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 
+const getFullEnvironmentName = (str: string) => {
+    if (typeof str !== 'string') return;
+    if (str === 'Prod') return 'Production';
+    if (str === 'Dev') return 'Development';
+
+    return;
+};
+
+const TestBackup = ({ application, backup }: any) => {
+    return (
+        <Grid key={`${application.name}-${backup.name}`} item>
+            <SimpleCard
+                title={application.name}
+                subtitle={`${getFullEnvironmentName(backup.environment)} - Environment`}
+                description={backup.name}
+                actionButtons={
+                    <>
+                        {/* <Button label='View all backups' color='subtle' onClick={() => handleBackupLinkClick(backup)} />
+                        <Button label='Download latest Backup' onClick={event => handleBackupDownload(event, backup)} /> */}
+                    </>
+                }
+            />
+        </Grid>
+    );
+};
+
 export const BackupsScreen = () => {
     const navigate = useNavigate();
     const { currentEnvironment, hasOneCustomer, setCurrentEnvironment, setCurrentApplicationId } = useGlobalContext();
@@ -108,19 +134,23 @@ export const BackupsScreen = () => {
             <Building />
             <Grid container spacing={4} sx={{ mt: 4 }}>
                 {backupLinksForEnvironment.map(backup =>
-                    <Grid key={`${application.name}-${backup.name}`} item>
-                        <SimpleCard
-                            title={application.name}
-                            subtitle={`${backup.environment} - Environment`}//TODO: Fix this
-                            description={backup.name}
-                            actionButtons={
-                                <>
-                                    <Button label='View all backups' color='subtle' onClick={() => handleBackupLinkClick(backup)} />
-                                    <Button label='Download latest Backup' onClick={event => handleBackupDownload(event, backup)} />
-                                </>
-                            }
-                        />
-                    </Grid>
+                    <>
+                        <Grid key={`${application.name}-${backup.name}`} item>
+                            <SimpleCard
+                                title={application.name}
+                                subtitle={`${getFullEnvironmentName(backup.environment)} - Environment`}
+                                description={backup.name}
+                                actionButtons={
+                                    <>
+                                        <Button label='View all backups' color='subtle' onClick={() => handleBackupLinkClick(backup)} />
+                                        <Button label='Download latest Backup' onClick={event => handleBackupDownload(event, backup)} />
+                                    </>
+                                }
+                            />
+                        </Grid>
+
+                        <TestBackup application={application} backup={backup} />
+                    </>
                 )}
 
                 <List>

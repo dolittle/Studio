@@ -62,22 +62,24 @@ export const ListView = ({ application, environment }: ListViewProps) => {
         });
     }, []);
 
-    console.log('data', data);
+    //console.log('data', data);
+    //https://1c7a24ffb4204f4fb02c415d.file.core.windows.net/petripoint-dev-backup/mongo/petripoint-dev-2023-06-13_13-29-13.gz.mongodump?se=2023-06-16T09%3A11%3A53Z&sig=SWNzYxF2zIYi%2Ft5Me974JdLeACLUrQwXIUCdvtHAwds%3D&sp=r&spr=https&sr=f&sv=2019-02-02
+    //https://1c7a24ffb4204f4fb02c415d.file.core.windows.net/petripoint-dev-backup/mongo/petripoint-dev-2023-06-13_13-29-13.gz.mongodump?se=2023-06-16T09%3A12%3A18Z&sig=J1kG1EY4VpZx7T62xg20NIsjjkKCnUkTtfG8R8XT34s%3D&sp=r&spr=https&sr=f&sv=2019-02-02
 
     // TODO: Add loading indicator
     if (!isLoaded) return null;
 
     const backupsDataGridRows: BackupsDetailsList[] = data.files.map<BackupsDetailsList>(file => {
-        console.log('file', file);
+        //console.log('file', file);
         const parts = file.split('/');
         const when: string = parts[parts.length - 1].replace('.gz.mongodump', '');
 
         return {
             id: `${application.id}-${environment}`,
-            application: data.application,
-            environment,
             file,
             when,
+            application: data.application,
+            environment,
         };
     });
 
@@ -104,6 +106,8 @@ export const ListView = ({ application, environment }: ListViewProps) => {
         window.open(share.url, '_blank');
         enqueueSnackbar(`${share.url} has been downloaded.`);
     };
+
+    console.log('backupsDataGridRows', backupsDataGridRows);
 
     const backupsDataGridColumns: GridColDef[] = [
         {
