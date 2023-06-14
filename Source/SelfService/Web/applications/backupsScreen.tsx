@@ -12,7 +12,7 @@ import { Button, Building, SimpleCard } from '@dolittle/design-system';
 
 import { useRouteApplicationParams } from '../utils/route';
 import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
-import { getLatestBackupLinkByApplication } from '../apis/solutions/backups';
+import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../apis/solutions/backups';
 
 import { ViewCard } from './backup/viewCard';
 import { ListView } from './backup/listView';
@@ -25,7 +25,7 @@ export const BackupsScreen = () => {
     const { currentEnvironment, hasOneCustomer, setCurrentEnvironment, setCurrentApplicationId } = useGlobalContext();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
-    const [backupLinksForEnvironment, setBackupLinksForEnvironment] = useState<any[]>([]);
+    const [backupLinksForEnvironment, setBackupLinksForEnvironment] = useState<BackupLinkWithName[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
 
     const routeApplicationProps = useRouteApplicationParams();
@@ -51,12 +51,9 @@ export const BackupsScreen = () => {
 
     useEffect(() => {
         if (!environments) return;
-
         Promise.all(environments.map(environment =>
             getLatestBackupLinkByApplication(application.id, environment.name)))
-            .then(values => {
-                setBackupLinksForEnvironment(values);
-            });
+            .then(values => setBackupLinksForEnvironment(values));
     }, [environments]);
 
     if (!isLoaded) return null;
@@ -92,38 +89,34 @@ export const BackupsScreen = () => {
         },
     ];
 
+    const handleBackupLinkClick = async (backup: BackupLinkWithName) => {
+        setCurrentApplicationId(application.id);
+        setCurrentEnvironment(backup.environment);
+
+        const href = `/backups/application/${application.id}/${backup.environment}/list`;
+        navigate(href);
+    };
+
+    const handleBackupDownload = async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, backup: BackupLinkWithName) => {
+        event.stopPropagation();
+        const url = await getLatestBackupLinkByApplication(application.id, backup.environment);
+        window.open(url.url, '_blank');
+    };
+
     const SimpleCardGrid = () =>
-        <Box sx={{ maxWidth: 920 }}>
+        <Box sx={{ width: 1, maxWidth: 920 }}>
             <Building />
             <Grid container spacing={4} sx={{ mt: 4 }}>
-                {backupLinksForEnvironment.map(environment =>
-                    <Grid key={`${application.name}-${environment.name}`} item>
+                {backupLinksForEnvironment.map(backup =>
+                    <Grid key={`${application.name}-${backup.name}`} item>
                         <SimpleCard
                             title={application.name}
-                            subtitle={`${environment.environment} - Environment`}//TODO: Fix this
-                            description={environment.name}
+                            subtitle={`${backup.environment} - Environment`}//TODO: Fix this
+                            description={backup.name}
                             actionButtons={
                                 <>
-                                    <Button
-                                        label='View all backups'
-                                        color='subtle'
-                                        onClick={() => {
-                                            setCurrentApplicationId(application.id);
-                                            setCurrentEnvironment(environment.environment);
-
-                                            const href = `/backups/application/${application.id}/${environment.environment}/list`;
-                                            navigate(href);
-                                        }}
-                                    />
-                                    <Button
-                                        label='Download latest Backup'
-                                        onClick={async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): Promise<void> => {
-                                            event.stopPropagation();
-
-                                            const url = await getLatestBackupLinkByApplication(application.id, environment.environment);
-                                            window.open(url.url, '_blank');
-                                        }}
-                                    />
+                                    <Button label='View all backups' color='subtle' onClick={() => handleBackupLinkClick(backup)} />
+                                    <Button label='Download latest Backup' onClick={event => handleBackupDownload(event, backup)} />
                                 </>
                             }
                         />
