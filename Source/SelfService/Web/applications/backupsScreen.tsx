@@ -20,26 +20,6 @@ import { ListView } from './backup/listView';
 import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 
-// const dummy = [
-//     {
-//         name: 'Dev',
-//     },
-//     {
-//         name: 'Prod',
-//     },
-//     {
-//         name: 'Dev',
-//     },
-//     {
-//         name: 'Prod',
-//     },
-// ];
-
-type SimpleCardGridProps = {
-    data: any[];
-    applicationName: string;
-};
-
 export const BackupsScreen = () => {
     const navigate = useNavigate();
     const { currentEnvironment, hasOneCustomer, setCurrentEnvironment, setCurrentApplicationId } = useGlobalContext();
@@ -75,13 +55,9 @@ export const BackupsScreen = () => {
         Promise.all(environments.map(environment =>
             getLatestBackupLinkByApplication(application.id, environment.name)))
             .then(values => {
-
-                console.log('values', values);
                 setBackupLinksForEnvironment(values);
             });
     }, [environments]);
-
-    //console.log('backupLinksForEnvironment', backupLinksForEnvironment);
 
     if (!isLoaded) return null;
 
@@ -115,13 +91,6 @@ export const BackupsScreen = () => {
             name: currentEnvironment,
         },
     ];
-
-    // onClick: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-    //     setCurrentApplicationId(application.id);
-    //     setCurrentEnvironment(environment);
-    //     const href = `/backups/application/${application.id}/${environment}/list`;
-    //     navigate(href);
-    // }
 
     const SimpleCardGrid = () =>
         <Box sx={{ maxWidth: 920 }}>
