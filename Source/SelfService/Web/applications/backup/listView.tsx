@@ -62,13 +62,18 @@ export const ListView = ({ application, environment }: ListViewProps) => {
         });
     }, []);
 
+    console.log('data', data);
+
+    // TODO: Add loading indicator
     if (!isLoaded) return null;
 
     const backupsDataGridRows: BackupsDetailsList[] = data.files.map<BackupsDetailsList>(file => {
+        console.log('file', file);
         const parts = file.split('/');
         const when: string = parts[parts.length - 1].replace('.gz.mongodump', '');
 
         return {
+            id: `${application.id}-${environment}`,
             application: data.application,
             environment,
             file,
@@ -102,13 +107,13 @@ export const ListView = ({ application, environment }: ListViewProps) => {
 
     const backupsDataGridColumns: GridColDef[] = [
         {
-            field: 'name',
+            field: 'file',
             headerName: 'Name',
             minWidth: 300,
             flex: 1,
         },
         {
-            field: 'date & time',
+            field: 'when',
             headerName: 'Date & Time',
             minWidth: 100,
             flex: 1,
