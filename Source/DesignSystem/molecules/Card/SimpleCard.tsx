@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Card, CardActions, CardActionArea, CardContent, CardHeader, Typography } from '@mui/material';
+import { Card, CardActions, CardContent, CardHeader, Typography } from '@mui/material';
 
 /**
  * The props for a {@link SimpleCard} component.
@@ -47,15 +47,13 @@ export type SimpleCardProps = {
  */
 export const SimpleCard = ({ title, subtitle, description, actionButtonsAlignment, actionButtons }: SimpleCardProps) =>
     <Card elevation={4} sx={{ maxWidth: 440 }}>
-        <CardActionArea disableRipple sx={{ cursor: 'default' }}>
-            <CardHeader title={<Typography variant='h4'>{title}</Typography>} subheader={subtitle} />
+        <CardHeader title={<Typography variant='h4'>{title}</Typography>} subheader={subtitle} />
 
-            <CardContent>
-                <Typography variant='body1' color='text.secondary'>{description}</Typography>
-            </CardContent>
+        <CardContent>
+            <Typography variant='body1' color='text.secondary'>{description}</Typography>
+        </CardContent>
 
-            <CardActions sx={{ gap: 1, justifyContent: actionButtonsAlignment === 'right' ? 'flex-end' : 'flex-start' }}>
-                {actionButtons}
-            </CardActions>
-        </CardActionArea>
+        <CardActions sx={{ gap: 1, justifyContent: actionButtonsAlignment === 'right' ? 'flex-end' : 'flex-start' }}>
+            {actionButtons}
+        </CardActions>
     </Card>;
