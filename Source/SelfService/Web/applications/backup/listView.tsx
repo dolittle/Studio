@@ -75,7 +75,7 @@ export const ListView = ({ application, environment }: ListViewProps) => {
         const when: string = parts[parts.length - 1].replace('.gz.mongodump', '');
 
         return {
-            id: `${application.id}-${environment}`,
+            id: file,
             file,
             when,
             application: data.application,
