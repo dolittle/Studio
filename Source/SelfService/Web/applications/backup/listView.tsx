@@ -67,7 +67,7 @@ export const ListView = ({ application, environment }: ListViewProps) => {
 
     const backupsDataGridRows: BackupsDetailsList[] = data.files.map<BackupsDetailsList>(file => {
         const parts = file.split('/');
-        const when: string = parts[parts.length - 1].replace('.gz.mongodump', '');
+        const when = parts[parts.length - 1].replace('.gz.mongodump', ''); // TODO: Add string helper
 
         return {
             id: file,
@@ -90,19 +90,59 @@ export const ListView = ({ application, environment }: ListViewProps) => {
         enqueueSnackbar(`${share.url} copied to clipboard.`);
     };
 
-    const handleDownload = async (params) => {
-        const input: BackupLinkShareInput = {
-            applicationId: application.id,
-            environment: params.row.environment,
-            file_path: params.row.file,
+    // const handleDownload = async (params) => {
+    //     const input: BackupLinkShareInput = {
+    //         applicationId: application.id,
+    //         environment: params.row.environment,
+    //         file_path: params.row.file,
+    //     };
+
+    //     const share: BackupLink = await getLink(input);
+
+    //     window.open(share.url, '_blank');
+    //     enqueueSnackbar(`${share.url} has been downloaded.`);
+    // };
+    //https://1c7a24ffb4204f4fb02c415d.file.core.windows.net/petripoint-dev-backup/mongo/petripoint-dev-2023-06-13_15-29-06.gz.mongodump?se=2023-06-16T10%3A50%3A14Z&sig=bAJzzBG%2BbYYrx7jBM%2FkglrQtJAKcdHvCYnIj1WEosjg%3D&sp=r&spr=https&sr=f&sv=2019-02-02
+    //https://1c7a24ffb4204f4fb02c415d.file.core.windows.net/petripoint-dev-backup/mongo/petripoint-dev-2023-06-13_15-29-06.gz.mongodump?se=2023-06-16T10%3A49%3A10Z&sig=iCL6E12Znihc1Zyjgg1KIHE0ytFlLw6L063VW5fT3tQ%3D&sp=r&spr=https&sr=f&sv=2019-02-02
+    //https://1c7a24ffb4204f4fb02c415d.file.core.windows.net/petripoint-dev-backup/mongo/petripoint-dev-2023-06-13_15-29-06.gz.mongodump?se=2023-06-16T10%3A49%3A24Z&sig=anXWRHqAG9bcwi8JxVWUFMmVqZ8DPhuP5VTibp0i%2Fak%3D&sp=r&spr=https&sr=f&sv=2019-02-02
+    console.log('backupsDataGridRows', backupsDataGridRows);
+
+    const Download = ({ row }: { row: BackupsDetailsList }) => {
+        const handleDownload = async () => {
+            const input: BackupLinkShareInput = {
+                applicationId: application.id,
+                environment: row?.environment,
+                file_path: row?.file,
+            };
+
+            const share: BackupLink = await getLink(input);
+
+            window.open(share.url, '_blank');
+            enqueueSnackbar(`${share.url} has been downloaded.`);
         };
 
-        const share: BackupLink = await getLink(input);
-        window.open(share.url, '_blank');
-        enqueueSnackbar(`${share.url} has been downloaded.`);
+        return (
+            <DownloadIconButton
+                tooltipText='Download backup file'
+                icon='DownloadRounded'
+                snackbarMessage={`Test`}
+                onClick={handleDownload}
+            //onClick={() => handleDownload(params)}
+            />
+        );
     };
 
-    console.log('backupsDataGridRows', backupsDataGridRows);
+    // const StatusCell = ({ row }: HealthStatusTableRowProps) => {
+    //     const status = row.state?.toLowerCase();
+
+    //     return (
+    //         <StatusIndicator status={getPodHealthStatus(status).status} label={getPodHealthStatus(status).label} />
+    //     );
+    // };
+
+    // type HealthStatusTableRowProps = {
+    //     row: HealthStatusTableRow;
+    // };
 
     const backupsDataGridColumns: GridColDef[] = [
         {
@@ -127,14 +167,15 @@ export const ListView = ({ application, environment }: ListViewProps) => {
             align: 'center',
             minWidth: 104,
             flex: 1,
-            renderCell: (params) => (
-                <DownloadIconButton
-                    tooltipText='Download backup file'
-                    icon='DownloadRounded'
-                    snackbarMessage={`Test`}
-                    onClick={() => handleDownload(params)}
-                />
-            ),
+            renderCell: Download,
+            // renderCell: (params) => (
+            //     <DownloadIconButton
+            //         tooltipText='Download backup file'
+            //         icon='DownloadRounded'
+            //         snackbarMessage={`Test`}
+            //         onClick={() => handleDownload(params)}
+            //     />
+            // ),
         },
         {
             field: 'copy',

@@ -11,7 +11,7 @@ export type DownloadIconButtonProps = {
     tooltipText: string;
     icon: IconButtonProps['icon'];
     snackbarMessage: string;
-    onClick: () => Promise<void>;
+    onClick: any;
 };
 
 // Not in use!
