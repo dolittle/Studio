@@ -135,7 +135,7 @@ export const BackupsScreen = () => {
                                             setCurrentApplicationId(application.id);
                                             setCurrentEnvironment(environment);
 
-                                            const href = `/backups/application/${application.id}/${environment.name}/list`;
+                                            const href = `/backups/application/${application.id}/${environment.environment}/list`;
                                             navigate(href);
                                         }}
                                     />
@@ -144,7 +144,7 @@ export const BackupsScreen = () => {
                                         onClick={async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): Promise<void> => {
                                             event.stopPropagation();
 
-                                            const url = await getLatestBackupLinkByApplication(application.id, environment.name);
+                                            const url = await getLatestBackupLinkByApplication(application.id, environment.environment);
                                             window.open(url.url, '_blank');
                                         }}
                                     />
