@@ -2,4 +2,4 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 export { SelectCard } from './SelectCard';
-export { SimpleCard } from './SimpleCard';
+export { SimpleCard, SimpleCardProps } from './SimpleCard';

@@ -31,7 +31,7 @@ export { EditCell, EditTextFieldCell } from './molecules/DataGrid';
 export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecules/FileUploadForm';
 export { Graph } from './molecules/Metrics/Graph';
 export { NavigationBar } from './molecules/NavigationBar';
-export { SelectCard, SimpleCard } from './molecules/Card';
+export { SelectCard, SimpleCard, SimpleCardProps } from './molecules/Card';
 export { SideBar } from './molecules/SideBar';
 export { Stepper } from './molecules/Stepper';
 
