@@ -84,6 +84,7 @@ export const BackupsScreen = () => {
 
     if (!isLoaded) return null;
 
+    // TODO: Add sad_aigon if application is not found.
     if (application.id === '') {
         return <Typography variant='h1' my={2}>Application with this environment not found.</Typography>;
     }
