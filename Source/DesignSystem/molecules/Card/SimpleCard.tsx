@@ -5,6 +5,13 @@ import React from 'react';
 
 import { Card, CardActions, CardContent, CardHeader, Typography } from '@mui/material';
 
+const styles = {
+    'maxWidth': 440,
+    ':hover': {
+        background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%), #191A21',
+    },
+};
+
 /**
  * The props for a {@link SimpleCard} component.
  */
@@ -45,7 +52,7 @@ export type SimpleCardProps = {
  * @returns A {@link SimpleCard} component.
  */
 export const SimpleCard = ({ title, subtitle, description, actionButtonsAlignment, actionButtons }: SimpleCardProps) =>
-    <Card elevation={4} sx={{ maxWidth: 440 }}>
+    <Card elevation={4} sx={styles}>
         <CardHeader title={<Typography variant='h4'>{title}</Typography>} subheader={subtitle} />
 
         <CardContent>
