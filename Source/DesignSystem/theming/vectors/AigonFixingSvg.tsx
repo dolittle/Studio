@@ -3,8 +3,10 @@
 
 import React from 'react';
 
-export const AigonFixing = () =>
-    <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 165.56 180">
+import { SvgIcon, SvgIconProps } from '@mui/material';
+
+export const AigonFixingSvg = (props: SvgIconProps) =>
+    <SvgIcon id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 165.56 180" {...props}>
         <path
             d="m111.53,135.37c12.8.64,12.09-14.47,12.09-14.47,2.15-1.83,2.64-8.21,2.64-8.21l2.21-25.01c-2.39-7.29-11.29-9.88-11.29-9.88l-3.94,3.42"
             fill="#fafafa" />
@@ -276,4 +278,4 @@ export const AigonFixing = () =>
                 d="m113.5,56.77h-.01c-1.38,0-2.5-1.29-2.49-2.85,0-.82.31-1.59.85-2.13.45-.45,1.03-.7,1.64-.7h.01c1.38,0,2.5,1.29,2.49,2.85,0,.82-.31,1.59-.85,2.13-.45.45-1.03.7-1.64.7Zm-.02-5.27c-.49,0-.97.21-1.35.58-.46.46-.73,1.13-.73,1.84h0c0,1.34.93,2.44,2.09,2.45.5-.01.98-.2,1.36-.58.46-.46.73-1.13.73-1.84,0-1.34-.93-2.44-2.09-2.45h-.01Z"
                 fill="#191a21" />
         </g>
-    </svg>;
+    </SvgIcon>;
