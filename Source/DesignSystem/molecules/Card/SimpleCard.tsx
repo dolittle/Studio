@@ -24,17 +24,16 @@ export type SimpleCardProps = {
      */
     description: string;
 
+    // TODO: Can I require this to be a Button or IconButton?
     /**
      * The actions of the card.
      *
      * Use {@link Button} or {@link IconButton} component for that.
      */
-
-    // TODO: Can I require this to be a Button or IconButton?
     actionButtons: React.ReactNode;
 
     /**
-     * Set alignment to `right` to align actions to the right.
+     * Set alignment of the action buttons.
      * @default left
      */
     actionButtonsAlignment?: 'left' | 'right';
