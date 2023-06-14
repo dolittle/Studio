@@ -210,13 +210,16 @@ export const ListView = ({ application, environment }: ListViewProps) => {
                 <DataGridPro
                     rows={backupsDataGridRows}
                     columns={backupsDataGridColumns}
-                    getRowHeight={() => 'auto'}
+                    autoHeight
                     headerHeight={46}
+                    getRowHeight={() => 'auto'}
+                    getEstimatedRowHeight={() => 40}
                     disableColumnMenu
                     disableColumnReorder
                     disableColumnResize
                     disableColumnSelector
                     disableSelectionOnClick
+                    hideFooter
                 />
             </Paper>
         </Box>
