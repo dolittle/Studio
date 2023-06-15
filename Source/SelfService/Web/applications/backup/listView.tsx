@@ -31,11 +31,29 @@ import { DownloadIconButton } from '../../components/downloadIconButton';
 
 //import { backupsDataGridColumns } from './backupsDataGridColumns';
 
+const getDateFromFileName = (fileName: string) => {
+    // Remove from string all characters that are not digits, underscores or dashes.
+    // From 'petripoint-dev-2023-06-14_05-29-14' to '----2023-06-14_05-29-14'.
+    const cleanedFileName = fileName.replace(/[^\d_-]/g, '');
+
+    // From '----2023-06-14_05-29-14' to ['----2023-06-14', '05-29-14'].
+    const seperateDateTime = cleanedFileName.split('_');
+
+    // Remove dashes from start of string.
+    // From '['----2023-06-14', '05-29-14']' to '2023-06-14'.
+    const date = seperateDateTime[0].replace(/^\-+/gm, '');
+
+    // From '['----2023-06-14', '05-29-14']' to '05:29:14'.
+    const time = seperateDateTime[1].replace(/-/g, ':');
+
+    return `${date} at ${time}`;
+};
+
 type BackupsDetailsList = {
     environment: string;
     application: ShortInfo;
     file: string;
-    when: string;
+    createdAt: string;
 };
 
 export type ListViewProps = {
@@ -64,16 +82,10 @@ export const ListView = ({ application, environment }: ListViewProps) => {
     if (!isLoaded) return null;
 
     const backupsDataGridRows: BackupsDetailsList[] = data.files.map<BackupsDetailsList>(file => {
-        const parts = file.split('/');
-        // TODO: Needs backend fix. Time/when needs conversion.
-        // From: petripoint-dev-2023-06-14_11-29-10
-        // To: 2023-01-18 at 07:35:12
-        const when = parts[parts.length - 1].replace('.gz.mongodump', '');
-
         return {
             id: file,
             file,
-            when,
+            createdAt: getDateFromFileName(file),
             application: data.application,
             environment,
         };
@@ -146,13 +158,15 @@ export const ListView = ({ application, environment }: ListViewProps) => {
             flex: 1,
         },
         {
-            field: 'when',
+            field: 'createdAt',
             headerName: 'Date & Time',
             headerAlign: 'center',
             align: 'center',
             minWidth: 277,
             flex: 1,
+            // TODO: Needed for sorting.
             //valueGetter: ({ value }) => value && new Date(value),
+            //valueGetter: ({ row }: BackupsDetailsList) => formatTime(row.age),
         },
         {
             field: 'download',
@@ -211,7 +225,7 @@ export const ListView = ({ application, environment }: ListViewProps) => {
                                     {item.file}
                                 </TableCell>
                                 <TableCell align="right">{application.name}</TableCell>
-                                <TableCell align="right">{item.when}</TableCell>
+                                <TableCell align="right">{item.createdAt}</TableCell>
 
                                 <TableCell align="right"><GetAppIcon onClick={async () => {
                                     const input: BackupLinkShareInput = {
