@@ -6,6 +6,7 @@ import React from 'react';
 import { Card, CardActions, CardContent, CardHeader, Typography } from '@mui/material';
 
 const styles = {
+    'maxWidth': 440,
     'display': 'flex',
     'flexDirection': 'column',
     'justifyContent': 'space-between',
