@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 import { HttpResponseApplication } from '../../apis/solutions/application';
 import { BackupLinkWithName } from '../../apis/solutions/backups';
@@ -16,10 +16,14 @@ export type BackupsListProps = {
 };
 
 export const BackupsList = ({ data, application }: BackupsListProps) =>
-    <Grid container spacing={4} sx={{ mt: 4, maxWidth: 950 }}>
-        {data.map(file =>
-            <Grid key={file.name} item>
-                <BackupsListItems {...file} application={application} />
-            </Grid>
-        )}
-    </Grid>;
+    <>
+        <Typography variant='h1' sx={{ mt: 3 }}>Backups</Typography>
+
+        <Grid container spacing={4} sx={{ mt: 4, maxWidth: 950 }}>
+            {data.map(file =>
+                <Grid key={file.name} item>
+                    <BackupsListItems {...file} application={application} />
+                </Grid>
+            )}
+        </Grid>
+    </>;
