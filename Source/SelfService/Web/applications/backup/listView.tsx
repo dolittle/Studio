@@ -11,7 +11,6 @@ import { Paper } from '@mui/material';
 
 import { IconButton } from '@dolittle/design-system';
 
-import { ShortInfo } from '../../apis/solutions/api';
 import { HttpResponseApplication } from '../../apis/solutions/application';
 import { BackupLink, getLink, BackupsForApplication, getBackupsByApplication, BackupLinkShareInput } from '../../apis/solutions/backups';
 
@@ -47,7 +46,6 @@ const getBackupShareLink = async (row: BackupsDetailsList, applicationId) => {
 
 type BackupsDetailsList = {
     environment: string;
-    application: ShortInfo;
     file: string;
     createdOn: string;
 };
@@ -85,7 +83,6 @@ export const ListView = ({ application, environment }: ListViewProps) => {
             id: file,
             file,
             createdOn: getDateFromFileName(file),
-            application: data.application,
             environment,
         };
     });
