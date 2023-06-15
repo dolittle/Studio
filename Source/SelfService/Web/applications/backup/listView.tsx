@@ -137,7 +137,7 @@ export const ListView = ({ application, environment }: ListViewProps) => {
             flex: 1,
         },
         {
-            field: 'createdAt',
+            field: 'createdOn',
             headerName: 'Date & Time',
             headerAlign: 'center',
             align: 'center',
