@@ -59,7 +59,7 @@ export const SimpleCard = ({ title, subtitle, description, actionButtonsAlignmen
             <Typography variant='body1' color='text.secondary'>{description}</Typography>
         </CardContent>
 
-        <CardActions sx={{ gap: 1, justifyContent: actionButtonsAlignment === 'right' ? 'flex-end' : 'flex-start' }}>
+        <CardActions sx={{ flexWrap: 'wrap', justifyContent: actionButtonsAlignment === 'right' ? 'flex-end' : 'flex-start' }}>
             {actionButtons}
         </CardActions>
     </Card>;
