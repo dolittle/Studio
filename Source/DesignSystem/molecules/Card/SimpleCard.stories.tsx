@@ -62,7 +62,6 @@ WithSubtitle.parameters = {
 };
 
 export const RightAlignedButton = createStory({
-    actionButtons: <Button label='Right aligned button' onClick={action('clicked')} />,
     actionButtonsAlignment: 'right',
 });
 RightAlignedButton.parameters = {
