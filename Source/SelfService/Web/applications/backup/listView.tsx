@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 
-import { Paper } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 
 import { IconButton } from '@dolittle/design-system';
 
@@ -32,7 +32,7 @@ const getDateFromFileName = (fileName: string) => {
     return `${date} at ${time}`;
 };
 
-const getBackupShareLink = async (row: BackupsDetailsList, applicationId) => {
+const getBackupShareLink = async (row: BackupsDetailsList, applicationId: string) => {
     const input: BackupLinkShareInput = {
         applicationId,
         environment: row?.environment,
@@ -149,21 +149,26 @@ export const ListView = ({ application, environment }: ListViewProps) => {
     ];
 
     return (
-        <Paper sx={{ width: 1, height: 1, boxShadow: 'none' }}>
-            <DataGridPro
-                rows={backupsDataGridRows}
-                columns={backupsDataGridColumns}
-                autoHeight
-                headerHeight={46}
-                getRowHeight={() => 'auto'}
-                getEstimatedRowHeight={() => 40}
-                disableColumnMenu
-                disableColumnReorder
-                disableColumnResize
-                disableColumnSelector
-                disableSelectionOnClick
-                hideFooter
-            />
-        </Paper>
+        <>
+            <Typography variant='h1' sx={{ mt: 3 }}>{application.name}</Typography>
+            <Typography variant='subtitle1' sx={{ my: 2 }}>{`${environment} Environment`}</Typography>
+
+            <Paper sx={{ width: 1, height: 1, boxShadow: 'none' }}>
+                <DataGridPro
+                    rows={backupsDataGridRows}
+                    columns={backupsDataGridColumns}
+                    autoHeight
+                    headerHeight={46}
+                    getRowHeight={() => 'auto'}
+                    getEstimatedRowHeight={() => 40}
+                    disableColumnMenu
+                    disableColumnReorder
+                    disableColumnResize
+                    disableColumnSelector
+                    disableSelectionOnClick
+                    hideFooter
+                />
+            </Paper>
+        </>
     );
 };
