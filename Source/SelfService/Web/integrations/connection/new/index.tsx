@@ -35,6 +35,12 @@ export type M3ConnectionParameters = {
 };
 
 export const NewConnectionView = () => {
+    const [currentForm, setCurrentForm] = useState<FormRef<M3ConnectionParameters>>();
+    const formRef = useCallback((ref) => {
+        if (ref) {
+            setCurrentForm(ref);
+        }
+    }, []);
     const { enqueueSnackbar } = useSnackbar();
 
     const connectionId = useConnectionId();
@@ -49,7 +55,6 @@ export const NewConnectionView = () => {
     const onCloudConfigurationMutation = useConnectionsIdDeployCloudPost();
     const ionConfigurationMutation = useConnectionsIdConfigurationIonPost();
     const mdpConfigurationMutation = useConnectionsIdConfigurationMdpPost();
-    const formRef = useRef<FormRef<M3ConnectionParameters>>(null);
     const fileUploadRef = useRef<FileUploadFormRef>(null);
     const connection = query.data?.value;
 
@@ -69,6 +74,13 @@ export const NewConnectionView = () => {
         queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
     };
     const accordionListProps: AccordionListProps = useBuildConfigurationAccordionList(connection, fileUploadRef);
+
+    useEffect(() => {
+        if (currentForm) {
+            console.log('Subscribing to ionConfiguration field state');
+            const { isDirty } = currentForm?.getFieldState('ionConfiguration', currentForm.formState);
+        }
+    }, [currentForm]);
 
 
     const handleM3ConnectionSave: SubmitHandler<M3ConnectionParameters> = (data) => {
