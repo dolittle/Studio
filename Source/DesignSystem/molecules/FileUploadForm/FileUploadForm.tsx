@@ -42,6 +42,7 @@ export type OnFileSelectCallback = (file: File | FileList, event?) => void;
 export type FileUploadFormRef = {
     showPrompt: () => void;
     confirmSelected: () => void;
+    clearSelected: () => void;
 };
 
 /**
@@ -106,7 +107,8 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
             const event = new Event('submit', { bubbles: true, cancelable: true });
             formRef?.current?.dispatchEvent(event);
         },
-    }));
+        clearSelected: () => { handleFileDelete(); },
+    }),[formRef, fileInputRef]);
 
     const handleFileDrag = (event: DragEvent) => {
         event.preventDefault();
@@ -171,7 +173,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
         if (!files || files.length === 0) return;
         if (!hideDropArea) showFileNameInBox(files);
         onSelected(allowMultipleFiles ? files : files[0], event);
-        if(event && event.target) {
+        if (event && event.target) {
             (event.target as HTMLInputElement).value = '';
         }
     };
