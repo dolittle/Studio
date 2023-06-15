@@ -60,7 +60,9 @@ export const SimpleCard = ({ title, subtitle, description, actionButtonsAlignmen
         <CardHeader title={<Typography variant='h4'>{title}</Typography>} subheader={subtitle} />
 
         <CardContent>
-            <Typography variant='body1' color='text.secondary'>{description}</Typography>
+            <Typography variant='body1' color='text.secondary' sx={{ wordWrap: 'break-word' }}>
+                {description}
+            </Typography>
         </CardContent>
 
         <CardActions sx={{ flexWrap: 'wrap', justifyContent: actionButtonsAlignment === 'right' ? 'flex-end' : 'flex-start' }}>
