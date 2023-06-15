@@ -7,25 +7,13 @@ import { useSnackbar } from 'notistack';
 
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 
+import { Paper } from '@mui/material';
+
 import { IconButton } from '@dolittle/design-system';
-
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-
-import GetAppIcon from '@mui/icons-material/GetApp';
-import ShareIcon from '@mui/icons-material/Share';
 
 import { ShortInfo } from '../../apis/solutions/api';
 import { HttpResponseApplication } from '../../apis/solutions/application';
 import { BackupLink, getLink, BackupsForApplication, getBackupsByApplication, BackupLinkShareInput } from '../../apis/solutions/backups';
-
-import { useGlobalContext } from '../../context/globalContext';
 
 const getDateFromFileName = (fileName: string) => {
     // Remove from string all characters that are not digits, underscores or dashes.
@@ -35,7 +23,7 @@ const getDateFromFileName = (fileName: string) => {
     // From '----2023-06-14_05-29-14' to ['----2023-06-14', '05-29-14'].
     const seperateDateTime = cleanedFileName.split('_');
 
-    // Remove dashes from start of string.
+    // Remove dashes from the beginning of the string.
     // From '['----2023-06-14', '05-29-14']' to '2023-06-14'.
     const date = seperateDateTime[0].replace(/^\-+/gm, '');
 
@@ -74,7 +62,6 @@ export type ListViewProps = {
 };
 
 export const ListView = ({ application, environment }: ListViewProps) => {
-    const { setNotification } = useGlobalContext();
     const { enqueueSnackbar } = useSnackbar();
 
     const [data, setData] = useState({} as BackupsForApplication);
@@ -102,8 +89,6 @@ export const ListView = ({ application, environment }: ListViewProps) => {
             environment,
         };
     });
-
-    console.log('backupsDataGridRows', backupsDataGridRows);
 
     const DownloadCell = ({ row }: BackupsTableRows) => {
         const handleDownload = async () => {
@@ -167,71 +152,21 @@ export const ListView = ({ application, environment }: ListViewProps) => {
     ];
 
     return (
-        <Box component={Paper} m={2}>
-            <TableContainer>
-                <Table size="small" aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="left">Name</TableCell>
-                            <TableCell align="right">Application</TableCell>
-                            <TableCell align="right">Date</TableCell>
-                            <TableCell align="right">Download</TableCell>
-                            <TableCell align="right">Clipboard</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {backupsDataGridRows.map(item => (
-                            <TableRow key={item.file}>
-                                <TableCell align="left">
-                                    {item.file}
-                                </TableCell>
-                                <TableCell align="right">{application.name}</TableCell>
-                                <TableCell align="right">{item.createdOn}</TableCell>
-
-                                <TableCell align="right"><GetAppIcon onClick={async () => {
-                                    const input: BackupLinkShareInput = {
-                                        applicationId: application.id,
-                                        environment: item.environment,
-                                        file_path: item.file,
-                                    };
-
-                                    const share: BackupLink = await getLink(input);
-                                    window.open(share.url, '_blank');
-                                }} /></TableCell>
-
-                                <TableCell align="right"><ShareIcon onClick={async () => {
-                                    const input: BackupLinkShareInput = {
-                                        applicationId: application.id,
-                                        environment: item.environment,
-                                        file_path: item.file,
-                                    };
-
-                                    const share: BackupLink = await getLink(input);
-                                    await navigator.clipboard.writeText(share.url);
-                                    setNotification('The download link is now in your clipboard', 'info');
-                                }} /></TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-
-            <Paper sx={{ width: 1, height: 1, boxShadow: 'none' }}>
-                <DataGridPro
-                    rows={backupsDataGridRows}
-                    columns={backupsDataGridColumns}
-                    autoHeight
-                    headerHeight={46}
-                    getRowHeight={() => 'auto'}
-                    getEstimatedRowHeight={() => 40}
-                    disableColumnMenu
-                    disableColumnReorder
-                    disableColumnResize
-                    disableColumnSelector
-                    disableSelectionOnClick
-                    hideFooter
-                />
-            </Paper>
-        </Box>
+        <Paper sx={{ width: 1, height: 1, boxShadow: 'none' }}>
+            <DataGridPro
+                rows={backupsDataGridRows}
+                columns={backupsDataGridColumns}
+                autoHeight
+                headerHeight={46}
+                getRowHeight={() => 'auto'}
+                getEstimatedRowHeight={() => 40}
+                disableColumnMenu
+                disableColumnReorder
+                disableColumnResize
+                disableColumnSelector
+                disableSelectionOnClick
+                hideFooter
+            />
+        </Paper>
     );
 };

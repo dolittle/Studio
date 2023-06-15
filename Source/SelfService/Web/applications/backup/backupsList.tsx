@@ -3,9 +3,7 @@
 
 import React from 'react';
 
-import { Box, Grid } from '@mui/material';
-
-import { Building } from '@dolittle/design-system';
+import { Grid } from '@mui/material';
 
 import { HttpResponseApplication } from '../../apis/solutions/application';
 import { BackupLinkWithName } from '../../apis/solutions/backups';
@@ -17,17 +15,11 @@ export type BackupsListProps = {
     application: HttpResponseApplication;
 };
 
-export const BackupsList = ({ data, application }: BackupsListProps) => {
-    return (
-        <Box sx={{ width: 1, maxWidth: 950 }}>
-            <Building />
-            <Grid container spacing={4} sx={{ mt: 4, maxWidth: 950 }}>
-                {data.map(file =>
-                    <Grid key={file.name} item>
-                        <BackupsListItems {...file} application={application} />
-                    </Grid>
-                )}
+export const BackupsList = ({ data, application }: BackupsListProps) =>
+    <Grid container spacing={4} sx={{ mt: 4, maxWidth: 950 }}>
+        {data.map(file =>
+            <Grid key={file.name} item>
+                <BackupsListItems {...file} application={application} />
             </Grid>
-        </Box>
-    );
-};
+        )}
+    </Grid>;
