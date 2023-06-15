@@ -53,7 +53,7 @@ type BackupsDetailsList = {
     environment: string;
     application: ShortInfo;
     file: string;
-    createdAt: string;
+    createdOn: string;
 };
 
 export type ListViewProps = {
@@ -85,7 +85,7 @@ export const ListView = ({ application, environment }: ListViewProps) => {
         return {
             id: file,
             file,
-            createdAt: getDateFromFileName(file),
+            createdOn: getDateFromFileName(file),
             application: data.application,
             environment,
         };
@@ -225,7 +225,7 @@ export const ListView = ({ application, environment }: ListViewProps) => {
                                     {item.file}
                                 </TableCell>
                                 <TableCell align="right">{application.name}</TableCell>
-                                <TableCell align="right">{item.createdAt}</TableCell>
+                                <TableCell align="right">{item.createdOn}</TableCell>
 
                                 <TableCell align="right"><GetAppIcon onClick={async () => {
                                     const input: BackupLinkShareInput = {
