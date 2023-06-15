@@ -20,12 +20,10 @@ import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonP
 import { useConnectionId } from '../../routes.hooks';
 
 import { Page } from '../../../components/layout/page';
+
 import { MainM3ConnectionInfo } from './components/MainM3ConnectionInfo';
-import { ConnectorBundleConfiguration } from './components/ConnectorBundleConfiguration';
-import { MetadataPublisherCredentials } from './components/MetadataPublisherCredentials';
-import { IonServiceAccountCredentials } from './components/IonServiceAccountCredentials';
 import { ActionButtons } from './components/ActionButtons';
-import { configurationStatusFromServiceCredentialsStatus, hostBundleStatusFromServicesStatus } from '../configuration/statusResolvers';
+import { useBuildConfigurationAccordionList } from './useBuildConfigurationAccordionList';
 
 
 export type M3ConnectionParameters = {
@@ -54,46 +52,6 @@ export const NewConnectionView = () => {
     const formRef = useRef<FormRef<M3ConnectionParameters>>(null);
     const connection = query.data?.value;
 
-    const accordionListProps: AccordionListProps = useMemo(() => {
-        const connectorBundleStatus = hostBundleStatusFromServicesStatus(connection?.mdpStatus, connection?.ionStatus);
-        const metadataPublisherCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.mdpStatus);
-        const iONServiceAccountCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.ionStatus);
-        const disabled = connection?.status?.name === 'Registered';
-
-        return {
-            singleExpandMode: true,
-            items: [
-                {
-                    id: 'hostConnectorBundle',
-                    title: 'Host Your Connector Bundle',
-                    children: <ConnectorBundleConfiguration />,
-                    progressStatus: connectorBundleStatus[0],
-                    progressLabel: connectorBundleStatus[1],
-                    disabled,
-                    sx: { mt: 8 },
-                },
-                {
-                    id: 'metadataPublisherCredentials',
-                    title: 'Metadata Publisher Credentials',
-                    children: <MetadataPublisherCredentials />,
-                    progressStatus: metadataPublisherCredentialsStatus[0],
-                    progressLabel: metadataPublisherCredentialsStatus[1],
-                    disabled,
-                    sx: { mt: 8 },
-                },
-                {
-                    id: 'ionCredentials',
-                    title: 'ION Service Account Credentials',
-                    children: <IonServiceAccountCredentials />,
-                    progressStatus: iONServiceAccountCredentialsStatus[0],
-                    progressLabel: iONServiceAccountCredentialsStatus[1],
-                    disabled,
-                    sx: { mt: 8 },
-                },
-            ],
-        };
-    }, [connection?.status, connection?.ionStatus, connection?.mdpStatus]);
-
     if (query.isLoading) return <>Loading</>;
     if (!connection || !connectionId) return null;
 
@@ -109,6 +67,8 @@ export const NewConnectionView = () => {
         enqueueSnackbar(message);
         queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
     };
+    const accordionListProps: AccordionListProps = useBuildConfigurationAccordionList(connection, fileUploadRef);
+
 
     const handleM3ConnectionSave: SubmitHandler<M3ConnectionParameters> = (data) => {
         const getFieldState = formRef.current?.getFieldState;
