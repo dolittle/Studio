@@ -94,7 +94,7 @@ RightAlignedButton.parameters = {
     },
 };
 
-export const CardGrid = () =>
+export const UseInGrid = () =>
     <Grid container spacing={4} sx={{ maxWidth: 950 }}>
         {dummyData.map(item =>
             <Grid key={item.id} item xs={12} md={6}>
@@ -107,3 +107,12 @@ export const CardGrid = () =>
             </Grid>
         )}
     </Grid>;
+UseInGrid.parameters = {
+    docs: {
+        description: {
+            story: `A card can be used in a grid. The grid should have a maximum width of 950px.
+            The cards should be placed in a grid with a spacing of 4.
+            Grid items should have a width of 12 on mobile and 6 on tablet and above.`,
+        },
+    },
+};
