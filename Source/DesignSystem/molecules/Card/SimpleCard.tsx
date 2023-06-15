@@ -6,7 +6,10 @@ import React from 'react';
 import { Card, CardActions, CardContent, CardHeader, Typography } from '@mui/material';
 
 const styles = {
-    'maxWidth': 440,
+    'display': 'flex',
+    'flexDirection': 'column',
+    'justifyContent': 'space-between',
+    'height': 1,
     ':hover': {
         background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%), #191A21',
     },
