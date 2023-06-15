@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
@@ -9,7 +9,7 @@ import { SubmitHandler } from 'react-hook-form';
 
 import { Box, Typography } from '@mui/material';
 
-import { AccordionList, AccordionListProps, Form, FormRef } from '@dolittle/design-system';
+import { AccordionList, AccordionListProps, FileUploadFormRef, Form, FormRef } from '@dolittle/design-system';
 
 import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
 import { IonConfigRequest } from '../../../apis/integrations/generated';
@@ -18,7 +18,6 @@ import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost }
 import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
 
 import { useConnectionId } from '../../routes.hooks';
-
 import { Page } from '../../../components/layout/page';
 
 import { MainM3ConnectionInfo } from './components/MainM3ConnectionInfo';
@@ -57,36 +56,31 @@ export const NewConnectionView = () => {
     const mdpConfigurationMutation = useConnectionsIdConfigurationMdpPost();
     const fileUploadRef = useRef<FileUploadFormRef>(null);
     const connection = query.data?.value;
-
-    if (query.isLoading) return <>Loading</>;
-    if (!connection || !connectionId) return null;
-
     const links = query.data?.links || [];
 
-    const deploymentType = connection.chosenEnvironment?.value;
+    const deploymentType = connection?.chosenEnvironment?.value;
     const hasSelectedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
-    const metadataPublisherUrl = connection._configuration?.mdp?.url;
-    const metadataPublisherPassword = connection._configuration?.mdp?.password;
-    const ionConfiguration = connection._configuration?.ion;
+    const metadataPublisherUrl = connection?._configuration?.mdp?.url;
+    const metadataPublisherPassword = connection?._configuration?.mdp?.password;
+    const ionConfiguration = connection?._configuration?.ion;
 
-    const handleSuccessfulSave = (message: string) => {
-        enqueueSnackbar(message);
-        queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
-    };
     const accordionListProps: AccordionListProps = useBuildConfigurationAccordionList(connection, fileUploadRef);
 
     useEffect(() => {
         if (currentForm) {
-            console.log('Subscribing to ionConfiguration field state');
             const { isDirty } = currentForm?.getFieldState('ionConfiguration', currentForm.formState);
         }
     }, [currentForm]);
 
+    const handleM3ConnectionSave: SubmitHandler<M3ConnectionParameters> = useCallback((data) => {
+        if (!connectionId || !currentForm) {
+            return;
+        }
 
-    const handleM3ConnectionSave: SubmitHandler<M3ConnectionParameters> = (data) => {
-        const getFieldState = formRef.current?.getFieldState;
+        const getFieldState = (field) => currentForm.getFieldState(field, currentForm.formState);
 
-        if (getFieldState?.('connectorName').isDirty) {
+        const connectorNameFieldState = getFieldState('connectorName');
+        if (connectorNameFieldState.isDirty) {
             nameMutation.mutate(
                 {
                     id: connectionId,
@@ -99,7 +93,8 @@ export const NewConnectionView = () => {
             );
         }
 
-        if (!hasSelectedDeploymentType && getFieldState?.('selectHosting').isDirty) {
+        const selectHostingFieldState = getFieldState('selectHosting');
+        if (!hasSelectedDeploymentType && selectHostingFieldState.isDirty) {
             if (data.selectHosting === 'On premises') {
                 onPremisesConfigurationMutation.mutate(
                     {
@@ -113,6 +108,7 @@ export const NewConnectionView = () => {
             }
 
             if (data.selectHosting === 'Cloud') {
+
                 onCloudConfigurationMutation.mutate(
                     {
                         id: connectionId,
@@ -125,7 +121,11 @@ export const NewConnectionView = () => {
             }
         }
 
-        if (getFieldState?.('metadataPublisherUrl').isDirty || getFieldState?.('metadataPublisherPassword').isDirty) {
+        const metadataPublisherUrlFieldState = getFieldState('metadataPublisherUrl');
+        const metadataPublisherPasswordFieldState = getFieldState('metadataPublisherPassword');
+
+        if ((metadataPublisherUrlFieldState.isDirty || metadataPublisherPasswordFieldState.isDirty) &&
+            (data.metadataPublisherUrl && data.metadataPublisherPassword)) {
             mdpConfigurationMutation.mutate(
                 {
                     id: connectionId,
@@ -140,8 +140,8 @@ export const NewConnectionView = () => {
                 },
             );
         }
-
-        if (getFieldState?.('ionConfiguration').isDirty) {
+        const ionConfigurationFieldState = getFieldState('ionConfiguration');
+        if (ionConfigurationFieldState.isDirty) {
             ionConfigurationMutation.mutate(
                 {
                     id: connectionId,
@@ -156,6 +156,23 @@ export const NewConnectionView = () => {
                 },
             );
         }
+    }, [
+        currentForm,
+        connectionId,
+        nameMutation,
+        onPremisesConfigurationMutation,
+        onCloudConfigurationMutation,
+        mdpConfigurationMutation, ionConfigurationMutation,
+        fileUploadRef
+    ]);
+
+    if (query.isLoading) return <>Loading</>;
+    if (!connection || !connectionId) return null;
+
+
+    const handleSuccessfulSave = (message: string) => {
+        enqueueSnackbar(message);
+        queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
     };
 
     return (
@@ -170,19 +187,20 @@ export const NewConnectionView = () => {
                         metadataPublisherUrl: metadataPublisherUrl || '',
                         metadataPublisherPassword: metadataPublisherPassword || '',
                         ionConfiguration: {
-                            iu: ionConfiguration.gatewayUrl,
-                            pu: ionConfiguration.oauthTokenUrl,
-                            ot: ionConfiguration.byUser,
-                            saak: ionConfiguration.username,
-                            sask:ionConfiguration.password,
-                            ci: ionConfiguration.clientId,
-                            cs: ionConfiguration.clientSecret,
-                         },
+                            iu: ionConfiguration?.gatewayUrl || '',
+                            pu: ionConfiguration?.oauthTokenUrl || '',
+                            ot: ionConfiguration?.byUser || '',
+                            saak: ionConfiguration?.username || '',
+                            sask: ionConfiguration?.password || '',
+                            ci: ionConfiguration?.clientId || '',
+                            cs: ionConfiguration?.clientSecret || '',
+                        },
                     }}
-                    onSubmit={handleM3ConnectionSave}
+                    onSubmit={(data, event) => handleM3ConnectionSave(data, event)}
                     sx={{ ml: 3 }}
                     fRef={formRef}
                 >
+
                     <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} />
 
                     <AccordionList  {...accordionListProps} />
