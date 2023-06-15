@@ -14,19 +14,19 @@ const { metadata, createStory } = componentStories(SimpleCard);
 const dummyData = [
     {
         id: '1',
-        title: 'Backup 1',
+        title: 'Title 1',
         description: 'Here is a description of the card.',
     },
     {
         id: '2',
-        title: 'Backup 2',
+        title: 'Title 2',
         subtitle: 'This is with a subtitle',
         description: 'Here is a description of the card. It can be a bit longer than the title, but not too long.',
     },
     {
         id: '3',
-        title: 'Backup 3',
-        description: 'Here is a description of the card. It can be a bit longer than the title, but not too long.',
+        title: 'Title 3',
+        description: 'Here is a description of the card.',
     },
 ];
 
