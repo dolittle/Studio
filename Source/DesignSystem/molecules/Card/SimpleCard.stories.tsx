@@ -5,9 +5,30 @@ import React from 'react';
 
 import { action } from '@storybook/addon-actions';
 
+import { Grid } from '@mui/material';
+
 import { componentStories, Button, SimpleCard } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(SimpleCard);
+
+const dummyData = [
+    {
+        id: '1',
+        title: 'Backup 1',
+        description: 'Here is a description of the card.',
+    },
+    {
+        id: '2',
+        title: 'Backup 2',
+        subtitle: 'This is with a subtitle',
+        description: 'Here is a description of the card. It can be a bit longer than the title, but not too long.',
+    },
+    {
+        id: '3',
+        title: 'Backup 3',
+        description: 'Here is a description of the card. It can be a bit longer than the title, but not too long.',
+    },
+];
 
 metadata.title = 'Card/Simple Card';
 
@@ -70,4 +91,28 @@ RightAlignedButton.parameters = {
             story: 'A card with a right aligned button.',
         },
     },
+};
+
+export const CardGrid = () => {
+    return (
+        <>
+            <Grid container spacing={4} sx={{ maxWidth: 950 }}>
+                {dummyData.map(item =>
+                    <Grid key={item.id} item xs={12} md={6}>
+                        <SimpleCard
+                            title={item.title}
+                            subtitle={item.subtitle}
+                            description={item.description}
+                            actionButtons={
+                                <>
+                                    <Button label='Secondary button' color='subtle' onClick={action('clicked')} />
+                                    <Button label='Primary button' onClick={action('clicked')} />
+                                </>
+                            }
+                        />
+                    </Grid>
+                )}
+            </Grid>
+        </>
+    );
 };
