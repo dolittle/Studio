@@ -7,8 +7,25 @@ import { Box } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 import { enqueueSnackbar } from 'notistack';
 
-import { FileUploadForm, MaxWidthTextBlock } from '@dolittle/design-system';
+import { FileUploadForm, FileUploadFormRef, MaxWidthTextBlock } from '@dolittle/design-system';
 import { IonConfigRequest, IonConfigRequestFromJSON } from '../../../../apis/integrations/generated';
+
+
+/**
+ * Simple type guard to check if the object is of type IonConfigRequest
+ * Other approaches found here: https://stackoverflow.com/a/62438143/115303
+ * @param o The object to check
+ * @returns o as an IonConfigRequest
+ */
+function isIonConfigRequest(o: any): o is IonConfigRequest {
+    return 'iu' in o &&
+        'pu' in o &&
+        'ot' in o &&
+        'saak' in o &&
+        'sask' in o &&
+        'ci' in o &&
+        'cs' in o;
+}
 
 export const instructions = [
     `1. Open Infor ION API. Open the menu from the upper left corner and select 'Infor ION API'.`,
@@ -23,6 +40,7 @@ export const instructions = [
     `10. Last, click 'Download'. Upload the files below.`,
 ];
 
+
 const InstructionsListItems = () =>
     <Box sx={{ pl: 3, pt: 3 }}>
         {instructions.map((item, index) => (
@@ -30,24 +48,14 @@ const InstructionsListItems = () =>
         ))}
     </Box>;
 
-export const IonServiceAccountCredentials = () => {
-    const { setValue } = useFormContext();
+export type IonServiceAccountCredentialsProps = {};
 
-    /**
-     * Simple type guard to check if the object is of type IonConfigRequest
-     * Other approaches found here: https://stackoverflow.com/a/62438143/115303
-     * @param o The object to check
-     * @returns o as an IonConfigRequest
-     */
-    const isIonConfigRequest = (o: any): o is IonConfigRequest => {
-        return 'iu' in o &&
-            'pu' in o &&
-            'ot' in o &&
-            'saak' in o &&
-            'sask' in o &&
-            'ci' in o &&
-            'cs' in o;
-    };
+export const IonServiceAccountCredentials = React.forwardRef<FileUploadFormRef, IonServiceAccountCredentialsProps>(function (
+    props: IonServiceAccountCredentialsProps,
+    ref: React.ForwardedRef<FileUploadFormRef>
+) {
+
+    const { setValue } = useFormContext();
 
     const handleFileUploaded = (file: File | FileList) => {
         file = file as File;
@@ -75,7 +83,9 @@ export const IonServiceAccountCredentials = () => {
 
         <InstructionsListItems />
 
-        <FileUploadForm onSelected={handleFileUploaded} validFileExtensions={['json']} />
+        <FileUploadForm onSelected={handleFileUploaded} validFileExtensions={['json']} ref={ref} />
     </>;
-};
+});
+
+IonServiceAccountCredentials.displayName = 'IonServiceAccountCredentials';
 

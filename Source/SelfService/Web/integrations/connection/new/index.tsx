@@ -50,6 +50,7 @@ export const NewConnectionView = () => {
     const ionConfigurationMutation = useConnectionsIdConfigurationIonPost();
     const mdpConfigurationMutation = useConnectionsIdConfigurationMdpPost();
     const formRef = useRef<FormRef<M3ConnectionParameters>>(null);
+    const fileUploadRef = useRef<FileUploadFormRef>(null);
     const connection = query.data?.value;
 
     if (query.isLoading) return <>Loading</>;
@@ -135,7 +136,10 @@ export const NewConnectionView = () => {
                     ionConfigRequest: data.ionConfiguration,
                 },
                 {
-                    onSuccess: () => { handleSuccessfulSave('Saved ION Configuration'); },
+                    onSuccess: () => {
+                        handleSuccessfulSave('Saved ION Configuration');
+                        fileUploadRef.current?.clearSelected();
+                    },
                     onError: () => console.log('Error'),
                 },
             );
