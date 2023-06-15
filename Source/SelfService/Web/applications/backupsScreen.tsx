@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, generatePath } from 'react-router-dom';
 import { useGlobalContext } from '../context/globalContext';
 
-import { Box, Grid, List, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 
 import { Button, Building, SimpleCard } from '@dolittle/design-system';
 
@@ -14,41 +14,80 @@ import { useRouteApplicationParams } from '../utils/route';
 import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
 import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../apis/solutions/backups';
 
-import { ViewCard } from './backup/viewCard';
 import { ListView } from './backup/listView';
 
 import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 
-const getFullEnvironmentName = (str: string) => {
-    if (typeof str !== 'string') return;
-    if (str === 'Prod') return 'Production';
-    if (str === 'Dev') return 'Development';
-
-    return;
+type BackupsCardGridProps = {
+    data: BackupLinkWithName[];
+    application: HttpResponseApplication;
 };
 
-const TestBackup = ({ application, backup }: any) => {
+const BackupsCardGrid = ({ data, application }: BackupsCardGridProps) => {
     return (
-        <Grid key={`${application.name}-${backup.name}`} item>
-            <SimpleCard
-                title={application.name}
-                subtitle={`${getFullEnvironmentName(backup.environment)} - Environment`}
-                description={backup.name}
-                actionButtons={
-                    <>
-                        {/* <Button label='View all backups' color='subtle' onClick={() => handleBackupLinkClick(backup)} />
-                        <Button label='Download latest Backup' onClick={event => handleBackupDownload(event, backup)} /> */}
-                    </>
-                }
-            />
-        </Grid>
+        <Box sx={{ width: 1, maxWidth: 950 }}>
+            <Building />
+            <Grid container spacing={4} sx={{ mt: 4, maxWidth: 950 }}>
+                {data.map(file =>
+                    <Grid key={`${application.name}-${file.name}`} item>
+                        <BackupsCardGridItem  {...file} application={application} />
+                    </Grid>
+                )}
+            </Grid>
+        </Box>
+    );
+};
+
+type BackupsCardGridItemProps = {
+    application: HttpResponseApplication;
+    environment: string;
+    url: string;
+};
+
+const BackupsCardGridItem = ({ application, environment, url }: BackupsCardGridItemProps) => {
+    const navigate = useNavigate();
+    const { setCurrentEnvironment, setCurrentApplicationId } = useGlobalContext();
+
+    const getFullEnvironmentName = (str: string) => {
+        if (str === 'Prod') return 'Production';
+        if (str === 'Dev') return 'Development';
+
+        return 'N/A';
+    };
+
+    const handleBackupsView = async () => {
+        setCurrentApplicationId(application.id);
+        setCurrentEnvironment(environment);
+
+        const href = `/backups/application/${application.id}/${environment}/list`;
+        navigate(href);
+    };
+
+    const handleBackupDownload = async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
+        event.stopPropagation();
+        const url = await getLatestBackupLinkByApplication(application.id, environment);
+        window.open(url.url, '_blank');
+    };
+
+    return (
+        <SimpleCard
+            title={application.name}
+            subtitle={`${getFullEnvironmentName(environment)} - Environment`}
+            description={url}
+            actionButtons={
+                <>
+                    <Button label='View all backups' color='subtle' onClick={handleBackupsView} />
+                    <Button label='Download latest Backup' onClick={handleBackupDownload} />
+                </>
+            }
+        />
     );
 };
 
 export const BackupsScreen = () => {
     const navigate = useNavigate();
-    const { currentEnvironment, hasOneCustomer, setCurrentEnvironment, setCurrentApplicationId } = useGlobalContext();
+    const { currentEnvironment, hasOneCustomer } = useGlobalContext();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [backupLinksForEnvironment, setBackupLinksForEnvironment] = useState<BackupLinkWithName[]>([]);
@@ -84,7 +123,7 @@ export const BackupsScreen = () => {
 
     if (!isLoaded) return null;
 
-    // TODO: Add sad_aigon if application is not found.
+    // TODO: Add sad_aigon_svg and back button if application is not found.
     if (application.id === '') {
         return <Typography variant='h1' my={2}>Application with this environment not found.</Typography>;
     }
@@ -116,59 +155,11 @@ export const BackupsScreen = () => {
         },
     ];
 
-    const handleBackupLinkClick = async (backup: BackupLinkWithName) => {
-        setCurrentApplicationId(application.id);
-        setCurrentEnvironment(backup.environment);
-
-        const href = `/backups/application/${application.id}/${backup.environment}/list`;
-        navigate(href);
-    };
-
-    const handleBackupDownload = async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, backup: BackupLinkWithName) => {
-        event.stopPropagation();
-        const url = await getLatestBackupLinkByApplication(application.id, backup.environment);
-        window.open(url.url, '_blank');
-    };
-
-    const SimpleCardGrid = () =>
-        <Box sx={{ width: 1, maxWidth: 920 }}>
-            <Building />
-            <Grid container spacing={4} sx={{ mt: 4 }}>
-                {backupLinksForEnvironment.map(backup =>
-                    <>
-                        <Grid key={`${application.name}-${backup.name}`} item>
-                            <SimpleCard
-                                title={application.name}
-                                subtitle={`${getFullEnvironmentName(backup.environment)} - Environment`}
-                                description={backup.name}
-                                actionButtons={
-                                    <>
-                                        <Button label='View all backups' color='subtle' onClick={() => handleBackupLinkClick(backup)} />
-                                        <Button label='Download latest Backup' onClick={event => handleBackupDownload(event, backup)} />
-                                    </>
-                                }
-                            />
-                        </Grid>
-
-                        <TestBackup application={application} backup={backup} />
-                    </>
-                )}
-
-                <List>
-                    {environments.map(environment => (
-                        <li key={environment.name}>
-                            <ViewCard application={application} environment={environment.name} />
-                        </li>
-                    ))}
-                </List>
-            </Grid>
-        </Box>;
-
     return (
         <LayoutWithSidebar navigation={nav}>
             <BreadCrumbContainer routes={routes} />
             <Routes>
-                <Route path="/overview" element={<SimpleCardGrid />} />
+                <Route path="/overview" element={<BackupsCardGrid data={backupLinksForEnvironment} application={application} />} />
                 <Route path="/:environment/list" element={<ListView application={application} environment={currentEnvironment} />} />
                 <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups.</Typography>} />
             </Routes>
