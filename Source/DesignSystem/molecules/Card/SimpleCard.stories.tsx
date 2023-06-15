@@ -30,6 +30,12 @@ const dummyData = [
     },
 ];
 
+const ActionButtons = () =>
+    <>
+        <Button label='Secondary button' color='subtle' onClick={action('clicked')} />
+        <Button label='Primary button' onClick={action('clicked')} />
+    </>;
+
 metadata.title = 'Card/Simple Card';
 
 metadata.parameters = {
@@ -56,12 +62,7 @@ metadata.args = {
     title: 'Card Title',
     subtitle: '',
     description: 'Here is a description of the card. It can be a bit longer than the title, but not too long.',
-    actionButtons: (
-        <>
-            <Button label='Secondary button' color='subtle' onClick={action('clicked')} />
-            <Button label='Primary button' onClick={action('clicked')} />
-        </>
-    ),
+    actionButtons: <ActionButtons />,
     actionButtonsAlignment: 'left',
 };
 
@@ -93,26 +94,16 @@ RightAlignedButton.parameters = {
     },
 };
 
-export const CardGrid = () => {
-    return (
-        <>
-            <Grid container spacing={4} sx={{ maxWidth: 950 }}>
-                {dummyData.map(item =>
-                    <Grid key={item.id} item xs={12} md={6}>
-                        <SimpleCard
-                            title={item.title}
-                            subtitle={item.subtitle}
-                            description={item.description}
-                            actionButtons={
-                                <>
-                                    <Button label='Secondary button' color='subtle' onClick={action('clicked')} />
-                                    <Button label='Primary button' onClick={action('clicked')} />
-                                </>
-                            }
-                        />
-                    </Grid>
-                )}
+export const CardGrid = () =>
+    <Grid container spacing={4} sx={{ maxWidth: 950 }}>
+        {dummyData.map(item =>
+            <Grid key={item.id} item xs={12} md={6}>
+                <SimpleCard
+                    title={item.title}
+                    subtitle={item.subtitle}
+                    description={item.description}
+                    actionButtons={<ActionButtons />}
+                />
             </Grid>
-        </>
-    );
-};
+        )}
+    </Grid>;
