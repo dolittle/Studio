@@ -245,6 +245,9 @@ const components: Components & DataGridProComponents = {
                 '& .MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted):hover .MuiDataGrid-sortIcon': {
                     opacity: 1,
                 },
+                '& .MuiFormControl-root': {
+                    width: '100%',
+                },
             },
         },
     },

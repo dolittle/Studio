@@ -8,10 +8,7 @@ import { DataGridPro, DataGridProProps } from '@mui/x-data-grid-pro';
 import { Paper } from '@mui/material';
 
 const stylesJustForStorybook = {
-    'minHeight': 250,
-    '& .MuiFormControl-root': {
-        width: 1,
-    },
+    minHeight: 250,
 };
 
 // Use these props and styles on every DataGrid in the application.
