@@ -6,9 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, generatePath } from 'react-router-dom';
 import { useGlobalContext } from '../context/globalContext';
 
-import { Box, Grid, Typography } from '@mui/material';
-
-import { Button, Building, SimpleCard } from '@dolittle/design-system';
+import { Typography } from '@mui/material';
 
 import { useRouteApplicationParams } from '../utils/route';
 import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
@@ -18,72 +16,7 @@ import { ListView } from './backup/listView';
 
 import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
-
-type BackupsCardGridProps = {
-    data: BackupLinkWithName[];
-    application: HttpResponseApplication;
-};
-
-const BackupsCardGrid = ({ data, application }: BackupsCardGridProps) => {
-    return (
-        <Box sx={{ width: 1, maxWidth: 950 }}>
-            <Building />
-            <Grid container spacing={4} sx={{ mt: 4, maxWidth: 950 }}>
-                {data.map(file =>
-                    <Grid key={`${application.name}-${file.name}`} item>
-                        <BackupsCardGridItem  {...file} application={application} />
-                    </Grid>
-                )}
-            </Grid>
-        </Box>
-    );
-};
-
-type BackupsCardGridItemProps = {
-    application: HttpResponseApplication;
-    environment: string;
-    url: string;
-};
-
-const BackupsCardGridItem = ({ application, environment, url }: BackupsCardGridItemProps) => {
-    const navigate = useNavigate();
-    const { setCurrentEnvironment, setCurrentApplicationId } = useGlobalContext();
-
-    const getFullEnvironmentName = (str: string) => {
-        if (str === 'Prod') return 'Production';
-        if (str === 'Dev') return 'Development';
-
-        return 'N/A';
-    };
-
-    const handleBackupsView = async () => {
-        setCurrentApplicationId(application.id);
-        setCurrentEnvironment(environment);
-
-        const href = `/backups/application/${application.id}/${environment}/list`;
-        navigate(href);
-    };
-
-    const handleBackupDownload = async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
-        event.stopPropagation();
-        const url = await getLatestBackupLinkByApplication(application.id, environment);
-        window.open(url.url, '_blank');
-    };
-
-    return (
-        <SimpleCard
-            title={application.name}
-            subtitle={`${getFullEnvironmentName(environment)} - Environment`}
-            description={url}
-            actionButtons={
-                <>
-                    <Button label='View all backups' color='subtle' onClick={handleBackupsView} />
-                    <Button label='Download latest Backup' onClick={handleBackupDownload} />
-                </>
-            }
-        />
-    );
-};
+import { BackupsList } from './backup/backupsList';
 
 export const BackupsScreen = () => {
     const navigate = useNavigate();
@@ -99,7 +32,7 @@ export const BackupsScreen = () => {
 
     useEffect(() => {
         Promise.all([
-            getApplication(applicationId),
+            getApplication(applicationId)
         ]).then(values => {
             const applicationData = values[0];
 
@@ -159,7 +92,7 @@ export const BackupsScreen = () => {
         <LayoutWithSidebar navigation={nav}>
             <BreadCrumbContainer routes={routes} />
             <Routes>
-                <Route path="/overview" element={<BackupsCardGrid data={backupLinksForEnvironment} application={application} />} />
+                <Route path="/overview" element={<BackupsList data={backupLinksForEnvironment} application={application} />} />
                 <Route path="/:environment/list" element={<ListView application={application} environment={currentEnvironment} />} />
                 <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups.</Typography>} />
             </Routes>
