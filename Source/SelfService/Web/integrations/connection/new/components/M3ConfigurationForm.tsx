@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
 import { SubmitHandler } from 'react-hook-form';
 
-import { FileUploadFormRef, Form, FormRef } from '@dolittle/design-system';
+import { Form, FormRef } from '@dolittle/design-system';
 
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
 import { ConnectionModel, IonConfigRequest } from '../../../../apis/integrations/generated';
@@ -27,10 +27,14 @@ export type M3ConfigurationFormProps = {
     connectionId: string;
     connection: ConnectionModel
     hasSelectedDeploymentType: boolean;
+    onNameSaved?: () => void;
+    onSelectHostingSaved?: () => void;
+    onMdpConfigurationSaved?: () => void;
+    onIonConfigurationSaved?: () => void;
     children?: React.ReactNode;
 };
 
-export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeploymentType, children }: M3ConfigurationFormProps) => {
+export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeploymentType, onNameSaved, onSelectHostingSaved, onMdpConfigurationSaved, onIonConfigurationSaved, children }: M3ConfigurationFormProps) => {
     const [currentForm, setCurrentForm] = useState<FormRef<M3ConnectionParameters>>();
     const formRef = useCallback((ref) => {
         if (ref) {
@@ -46,7 +50,6 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
     const onCloudConfigurationMutation = useConnectionsIdDeployCloudPost();
     const ionConfigurationMutation = useConnectionsIdConfigurationIonPost();
     const mdpConfigurationMutation = useConnectionsIdConfigurationMdpPost();
-    const fileUploadRef = useRef<FileUploadFormRef>(null);
 
     const deploymentType = connection.chosenEnvironment?.value;
     const metadataPublisherUrl = connection._configuration?.mdp?.url;
@@ -75,7 +78,10 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                     body: data.connectorName,
                 },
                 {
-                    onSuccess: () => { handleSuccessfulSave('Saved Name'); },
+                    onSuccess: () => {
+                        handleSuccessfulSave('Saved Name');
+                        onNameSaved?.();
+                    },
                     onError: () => console.log('Error'),
                 },
             );
@@ -89,7 +95,10 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                         id: connectionId,
                     },
                     {
-                        onSuccess: () => { handleSuccessfulSave('Saved Hosting Type'); },
+                        onSuccess: () => {
+                            handleSuccessfulSave('Saved Hosting Type');
+                            onSelectHostingSaved?.();
+                        },
                         onError: () => console.log('Error'),
                     },
                 );
@@ -102,7 +111,10 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                         id: connectionId,
                     },
                     {
-                        onSuccess: () => { handleSuccessfulSave('Saved Hosting Type'); },
+                        onSuccess: () => {
+                            handleSuccessfulSave('Saved Hosting Type');
+                            onSelectHostingSaved?.();
+                        },
                         onError: () => console.log('Error'),
                     },
                 );
@@ -123,7 +135,10 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                     },
                 },
                 {
-                    onSuccess: () => { handleSuccessfulSave('Saved MDP Configuration'); },
+                    onSuccess: () => {
+                        handleSuccessfulSave('Saved MDP Configuration');
+                        onMdpConfigurationSaved?.();
+                    },
                     onError: () => console.log('Error'),
                 },
             );
@@ -138,7 +153,7 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                 {
                     onSuccess: () => {
                         handleSuccessfulSave('Saved ION Configuration');
-                        fileUploadRef.current?.clearSelected();
+                        onIonConfigurationSaved?.();
                     },
                     onError: () => console.log('Error'),
                 },
@@ -151,7 +166,6 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
         onPremisesConfigurationMutation,
         onCloudConfigurationMutation,
         mdpConfigurationMutation, ionConfigurationMutation,
-        fileUploadRef
     ]);
 
 

@@ -2,15 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useRef } from 'react';
-
-
 import { Box, Typography } from '@mui/material';
-
 import { AccordionList, AccordionListProps, FileUploadFormRef } from '@dolittle/design-system';
 
-import { IonConfigRequest } from '../../../apis/integrations/generated';
 import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
-
 import { useConnectionId } from '../../routes.hooks';
 import { Page } from '../../../components/layout/page';
 
@@ -18,15 +13,6 @@ import { MainM3ConnectionInfo } from './components/MainM3ConnectionInfo';
 import { ActionButtons } from './components/ActionButtons';
 import { useBuildConfigurationAccordionList } from './useBuildConfigurationAccordionList';
 import { M3ConfigurationForm } from './components/M3ConfigurationForm';
-
-
-export type M3ConnectionParameters = {
-    connectorName: string;
-    selectHosting: string;
-    metadataPublisherUrl: string;
-    metadataPublisherPassword: string;
-    ionConfiguration: IonConfigRequest;
-};
 
 export const NewConnectionView = () => {
     const connectionId = useConnectionId();
@@ -56,6 +42,7 @@ export const NewConnectionView = () => {
                     connectionId={connectionId}
                     connection={connection}
                     hasSelectedDeploymentType={hasSelectedDeploymentType}
+                    onIonConfigurationSaved={() => fileUploadRef.current?.clearSelected()}
                 >
                     <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} />
 
