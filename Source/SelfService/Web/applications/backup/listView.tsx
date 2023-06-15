@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { DataGridPro, GridColDef, GridRowId, GridRowParams } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 
 import { IconButton } from '@dolittle/design-system';
 
@@ -27,10 +27,6 @@ import { BackupLink, getLink, BackupsForApplication, getBackupsByApplication, Ba
 
 import { useGlobalContext } from '../../context/globalContext';
 
-import { DownloadIconButton } from '../../components/downloadIconButton';
-
-//import { backupsDataGridColumns } from './backupsDataGridColumns';
-
 const getDateFromFileName = (fileName: string) => {
     // Remove from string all characters that are not digits, underscores or dashes.
     // From 'petripoint-dev-2023-06-14_05-29-14' to '----2023-06-14_05-29-14'.
@@ -49,11 +45,27 @@ const getDateFromFileName = (fileName: string) => {
     return `${date} at ${time}`;
 };
 
+const getBackupShareLink = async (row: BackupsDetailsList, applicationId) => {
+    const input: BackupLinkShareInput = {
+        applicationId,
+        environment: row?.environment,
+        file_path: row?.file,
+    };
+
+    const share: BackupLink = await getLink(input);
+
+    return share.url;
+};
+
 type BackupsDetailsList = {
     environment: string;
     application: ShortInfo;
     file: string;
     createdOn: string;
+};
+
+type BackupsTableRows = {
+    row: BackupsDetailsList;
 };
 
 export type ListViewProps = {
@@ -91,64 +103,31 @@ export const ListView = ({ application, environment }: ListViewProps) => {
         };
     });
 
-    const handleLinkCopy = async (params) => {
-        const input: BackupLinkShareInput = {
-            applicationId: application.id,
-            environment: params.row.environment,
-            file_path: params.row.file,
-        };
-
-        const share: BackupLink = await getLink(input);
-        await navigator.clipboard.writeText(share.url);
-        enqueueSnackbar(`${share.url} copied to clipboard.`);
-    };
-
-    // const handleDownload = async (params) => {
-    //     const input: BackupLinkShareInput = {
-    //         applicationId: application.id,
-    //         environment: params.row.environment,
-    //         file_path: params.row.file,
-    //     };
-
-    //     const share: BackupLink = await getLink(input);
-
-    //     window.open(share.url, '_blank');
-    //     enqueueSnackbar(`${share.url} has been downloaded.`);
-    // };
     console.log('backupsDataGridRows', backupsDataGridRows);
 
-    const Download = ({ row }: { row: BackupsDetailsList }) => {
+    const DownloadCell = ({ row }: BackupsTableRows) => {
         const handleDownload = async () => {
-            const input: BackupLinkShareInput = {
-                applicationId: application.id,
-                environment: row?.environment,
-                file_path: row?.file,
-            };
-
-            const share: BackupLink = await getLink(input);
-
-            window.open(share.url, '_blank');
-            enqueueSnackbar(`${share.url} has been downloaded.`);
+            const url = await getBackupShareLink(row, application.id);
+            window.open(url, '_blank');
+            enqueueSnackbar(`${row?.file} has been downloaded.`);
         };
 
         return (
-            <DownloadIconButton
-                tooltipText='Download backup file'
-                icon='DownloadRounded'
-                snackbarMessage={`Test`}
-                onClick={handleDownload}
-            //onClick={() => handleDownload(params)}
-            />
+            <IconButton tooltipText='Download backup file' icon='DownloadRounded' onClick={handleDownload} />
         );
     };
 
-    // const StatusCell = ({ row }: HealthStatusTableRowProps) => {
-    //     const status = row.state?.toLowerCase();
+    const CopyLinkCell = ({ row }: BackupsTableRows) => {
+        const handleLinkCopy = async () => {
+            const url = await getBackupShareLink(row, application.id);
+            await navigator.clipboard.writeText(url);
+            enqueueSnackbar(`${row?.file} copied to clipboard.`);
+        };
 
-    //     return (
-    //         <StatusIndicator status={getPodHealthStatus(status).status} label={getPodHealthStatus(status).label} />
-    //     );
-    // };
+        return (
+            <IconButton tooltipText='Copy link' icon='CopyAllRounded' onClick={handleLinkCopy} />
+        );
+    };
 
     const backupsDataGridColumns: GridColDef[] = [
         {
@@ -164,9 +143,6 @@ export const ListView = ({ application, environment }: ListViewProps) => {
             align: 'center',
             minWidth: 277,
             flex: 1,
-            // TODO: Needed for sorting.
-            //valueGetter: ({ value }) => value && new Date(value),
-            //valueGetter: ({ row }: BackupsDetailsList) => formatTime(row.age),
         },
         {
             field: 'download',
@@ -176,15 +152,7 @@ export const ListView = ({ application, environment }: ListViewProps) => {
             align: 'center',
             minWidth: 104,
             flex: 1,
-            renderCell: Download,
-            // renderCell: (params) => (
-            //     <DownloadIconButton
-            //         tooltipText='Download backup file'
-            //         icon='DownloadRounded'
-            //         snackbarMessage={`Test`}
-            //         onClick={() => handleDownload(params)}
-            //     />
-            // ),
+            renderCell: DownloadCell,
         },
         {
             field: 'copy',
@@ -194,14 +162,7 @@ export const ListView = ({ application, environment }: ListViewProps) => {
             align: 'center',
             minWidth: 104,
             flex: 1,
-            renderCell: (params) => (
-                <DownloadIconButton
-                    tooltipText='Copy link'
-                    icon='CopyAllRounded'
-                    snackbarMessage={`Test`}
-                    onClick={() => handleLinkCopy(params)}
-                />
-            ),
+            renderCell: CopyLinkCell,
         },
     ];
 
