@@ -13,7 +13,7 @@ const stylesJustForStorybook = {
 
 // Use these props and styles on every DataGrid in the application.
 export const DataGrid = (args: DataGridProProps) =>
-    <Paper sx={{ width: 1, height: 1, boxShadow: 'none', ...stylesJustForStorybook }}>
+    <Paper sx={{ width: 1, boxShadow: 'none', ...stylesJustForStorybook }}>
         <DataGridPro
             autoHeight
             headerHeight={46}
