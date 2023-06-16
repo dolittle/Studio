@@ -112,6 +112,7 @@ EditableCells.parameters = {
 };
 
 // TODO: Add more stories.
+// export const SelectCells = () => {};
 // export const CustomToolbar = () => {};// Not related with Data Table! With FilterableColumns.
 // export const FilterableColumns = () => {};
 // export const EmptyDataGrid = () => {};
