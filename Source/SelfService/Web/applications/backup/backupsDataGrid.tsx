@@ -59,7 +59,7 @@ export const BackupsDataGrid = ({ applicationId, backupsDataGridRows }: BackupsD
         const handleLinkCopy = async () => {
             const url = await getBackupShareLink(row, applicationId);
             await navigator.clipboard.writeText(url);
-            enqueueSnackbar(`${row?.file} copied to clipboard.`);
+            enqueueSnackbar(`${row?.file} has been copied to clipboard.`);
         };
 
         return (
