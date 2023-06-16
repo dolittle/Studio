@@ -38,12 +38,12 @@ const getDateFromFileName = (fileName: string) => {
     return `${date} at ${time}`;
 };
 
-export type ListViewProps = {
+export type BackupsListViewProps = {
     application: HttpResponseApplication;
     environment: string;
 };
 
-export const ListView = ({ application, environment }: ListViewProps) => {
+export const BackupsListView = ({ application, environment }: BackupsListViewProps) => {
     const [data, setData] = useState({} as BackupsForApplication);
     const [isLoaded, setIsLoaded] = useState(false);
 

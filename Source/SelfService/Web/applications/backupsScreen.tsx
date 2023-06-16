@@ -12,7 +12,7 @@ import { useRouteApplicationParams } from '../utils/route';
 import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
 import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../apis/solutions/backups';
 
-import { ListView } from './backup/listView';
+import { BackupsListView } from './backup/backupsListView';
 
 import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
@@ -93,7 +93,7 @@ export const BackupsScreen = () => {
             <BreadCrumbContainer routes={routes} />
             <Routes>
                 <Route path="/overview" element={<BackupsList data={backupLinksForEnvironment} application={application} />} />
-                <Route path="/:environment/list" element={<ListView application={application} environment={currentEnvironment} />} />
+                <Route path="/:environment/list" element={<BackupsListView application={application} environment={currentEnvironment} />} />
                 <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups.</Typography>} />
             </Routes>
         </LayoutWithSidebar>
