@@ -80,9 +80,10 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                 {
                     onSuccess: () => {
                         handleSuccessfulSave('Saved Name');
+                        currentForm.resetField('connectorName', { defaultValue: data.connectorName });
                         onNameSaved?.();
                     },
-                        onError: (error) => handleErrorWhenSaving('Error saving Name', error),
+                    onError: (error) => handleErrorWhenSaving('Error saving Name', error),
                 },
             );
         }
@@ -97,6 +98,7 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                     {
                         onSuccess: () => {
                             handleSuccessfulSave('Saved Hosting Type');
+                            currentForm.resetField('selectHosting', { defaultValue: data.selectHosting });
                             onSelectHostingSaved?.();
                         },
                         onError: (error) => handleErrorWhenSaving('Error saving Hosting Type', error),
@@ -113,10 +115,11 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                     {
                         onSuccess: () => {
                             handleSuccessfulSave('Saved Hosting Type');
+                            currentForm.resetField('selectHosting', { defaultValue: data.selectHosting });
                             onSelectHostingSaved?.();
                         },
                         onError: (error) => handleErrorWhenSaving('Error saving Hosting Type', error),
-                },
+                    },
                 );
             }
         }
@@ -137,6 +140,8 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                 {
                     onSuccess: () => {
                         handleSuccessfulSave('Saved MDP Configuration');
+                        currentForm.resetField('metadataPublisherUrl', { defaultValue: data.metadataPublisherUrl });
+                        currentForm.resetField('metadataPublisherPassword', { defaultValue: data.metadataPublisherPassword });
                         onMdpConfigurationSaved?.();
                     },
                     onError: (error) => handleErrorWhenSaving('Error saving MDP Configuration', error),
@@ -153,6 +158,7 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                 {
                     onSuccess: () => {
                         handleSuccessfulSave('Saved ION Configuration');
+                        currentForm.resetField('ionConfiguration', { defaultValue: data.ionConfiguration, keepDirty: false });
                         onIonConfigurationSaved?.();
                     },
                     onError: (error) => handleErrorWhenSaving('Error saving ION Configuration', error),
