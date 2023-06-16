@@ -153,7 +153,7 @@ export const ListView = ({ application, environment }: ListViewProps) => {
             <Typography variant='h1' sx={{ mt: 3 }}>{application.name}</Typography>
             <Typography variant='subtitle1' sx={{ my: 2 }}>{`${environment} Environment`}</Typography>
 
-            <Paper sx={{ width: 1, height: 1, boxShadow: 'none' }}>
+            <Paper elevation={1} sx={{ width: 1, boxShadow: 'none' }}>
                 <DataGridPro
                     rows={backupsDataGridRows}
                     columns={backupsDataGridColumns}
