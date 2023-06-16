@@ -1,3 +1,21 @@
+# [3.4.44] - 2023-6-16 [PR: #401](https://github.com/dolittle/Studio/pull/401)
+## Summary
+
+ - Show correct status indicators for each step of wizard
+ - Add ability to save upload and save ION Configuration 
+
+### Added
+
+- [Accordion]: Added `disabled` option to the Accordion
+- [FileUploadForm]: Added `clearSelected` to the `fileUploadRef` as a way to programmatically remove the selected files in the form. 
+
+
+### Changed
+
+- [FileUploadForm]: Changed the form to be appended to `document.body` so as not to interfere with other active forms.
+- [FileUploadForm]: Changed `hideForm` prop to `hideDropArea`
+
+
 # [3.4.43] - 2023-6-16 [PR: #402](https://github.com/dolittle/Studio/pull/402)
 ## Summary
 
