@@ -5,7 +5,7 @@ import React, { useRef, useState } from 'react';
 
 import { ComponentMeta } from '@storybook/react';
 
-import { List } from '@mui/material';
+import { Box, List } from '@mui/material';
 
 import { Button, FileUploadForm, FileUploadFormProps } from '@dolittle/design-system';
 
@@ -91,6 +91,36 @@ WithValidation.parameters = {
     docs: {
         description: {
             story: 'The files uploaded should be validated. If they are incorrect (wrong file type or too many), then an error message should display inside the upload form.',
+        },
+    },
+};
+
+export const WithClearingFiles = () => {
+    const [files, setFiles] = useState<File | FileList>();
+    const fileUploadRef = useRef<FileUploadFormRef>(null);
+
+    return (
+        <Box>
+            <Button
+                label='Reset Files'
+                onClick={() => {
+                    fileUploadRef.current?.clearSelected();
+                    setFiles(undefined);
+                }}
+                disabled={!files}
+            ></Button>
+            <FileUploadForm
+                ref={fileUploadRef}
+                onSelected={selected => setFiles(selected)}
+                validFileExtensions={['json', 'yaml', 'yml']}
+            />
+        </Box>
+    );
+};
+WithClearingFiles.parameters = {
+    docs: {
+        description: {
+            story: `It's possible to clear the files that have been selected by calling the \`clearSelected\` method on the ref. This can be practical when successfully submitting a form.`,
         },
     },
 };
