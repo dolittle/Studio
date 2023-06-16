@@ -82,7 +82,7 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                         handleSuccessfulSave('Saved Name');
                         onNameSaved?.();
                     },
-                    onError: () => console.log('Error'),
+                        onError: (error) => handleErrorWhenSaving('Error saving Name', error),
                 },
             );
         }
@@ -99,7 +99,7 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                             handleSuccessfulSave('Saved Hosting Type');
                             onSelectHostingSaved?.();
                         },
-                        onError: () => console.log('Error'),
+                        onError: (error) => handleErrorWhenSaving('Error saving Hosting Type', error),
                     },
                 );
             }
@@ -115,8 +115,8 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                             handleSuccessfulSave('Saved Hosting Type');
                             onSelectHostingSaved?.();
                         },
-                        onError: () => console.log('Error'),
-                    },
+                        onError: (error) => handleErrorWhenSaving('Error saving Hosting Type', error),
+                },
                 );
             }
         }
@@ -139,7 +139,7 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                         handleSuccessfulSave('Saved MDP Configuration');
                         onMdpConfigurationSaved?.();
                     },
-                    onError: () => console.log('Error'),
+                    onError: (error) => handleErrorWhenSaving('Error saving MDP Configuration', error),
                 },
             );
         }
@@ -155,7 +155,7 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                         handleSuccessfulSave('Saved ION Configuration');
                         onIonConfigurationSaved?.();
                     },
-                    onError: () => console.log('Error'),
+                    onError: (error) => handleErrorWhenSaving('Error saving ION Configuration', error),
                 },
             );
         }
@@ -172,6 +172,11 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
     const handleSuccessfulSave = (message: string) => {
         enqueueSnackbar(message);
         queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
+    };
+
+    const handleErrorWhenSaving = (message: string, error: unknown) => {
+        console.log(message, error);
+        enqueueSnackbar(message);
     };
 
     return (
