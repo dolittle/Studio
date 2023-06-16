@@ -11,13 +11,6 @@ import { Button, SimpleCard } from '@dolittle/design-system';
 import { HttpResponseApplication } from '../../apis/solutions/application';
 import { getLatestBackupLinkByApplication } from '../../apis/solutions/backups';
 
-const getFullEnvironmentName = (str: string) => {
-    if (str === 'Prod') return 'Production';
-    if (str === 'Dev') return 'Development';
-
-    return 'N/A';
-};
-
 export type BackupsListItemsProps = {
     application: HttpResponseApplication;
     environment: string;
@@ -45,7 +38,7 @@ export const BackupsListItems = ({ application, environment, name }: BackupsList
     return (
         <SimpleCard
             title={application.name}
-            subtitle={`${getFullEnvironmentName(environment)} Environment`}
+            subtitle={`${environment} Environment`}
             description={name}
             actionButtons={
                 <>
