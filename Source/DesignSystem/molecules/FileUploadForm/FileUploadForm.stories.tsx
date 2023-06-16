@@ -5,7 +5,7 @@ import React, { useRef, useState } from 'react';
 
 import { ComponentMeta } from '@storybook/react';
 
-import { List } from '@mui/material';
+import { Box, List } from '@mui/material';
 
 import { Button, FileUploadForm, FileUploadFormProps } from '@dolittle/design-system';
 
@@ -18,8 +18,8 @@ export default {
         controls: { include: [] },
         docs: {
             description: {
-                component: `A file upload box is a component that allows the user to upload files to the system via a button click or the drag and drop functionality. 
-                The container of the upload box should fill its parent container and expand in height as needed when validating or displaying files that have been uploaded. 
+                component: `A file upload box is a component that allows the user to upload files to the system via a button click or the drag and drop functionality.
+                The container of the upload box should fill its parent container and expand in height as needed when validating or displaying files that have been uploaded.
                 Upload forms are preferred to the standard upload button when space permits as they offer two convenient ways to upload a file.`,
             },
         },
@@ -57,7 +57,7 @@ export const HiddenForm = () => {
                 ref={fileUploadRef}
                 onSelected={handleFileUpload}
                 allowMultipleFiles
-                hideForm
+                hideDropArea
             />
 
             {files &&
@@ -91,6 +91,36 @@ WithValidation.parameters = {
     docs: {
         description: {
             story: 'The files uploaded should be validated. If they are incorrect (wrong file type or too many), then an error message should display inside the upload form.',
+        },
+    },
+};
+
+export const WithClearingFiles = () => {
+    const [files, setFiles] = useState<File | FileList>();
+    const fileUploadRef = useRef<FileUploadFormRef>(null);
+
+    return (
+        <Box>
+            <Button
+                label='Reset Files'
+                onClick={() => {
+                    fileUploadRef.current?.clearSelected();
+                    setFiles(undefined);
+                }}
+                disabled={!files}
+            ></Button>
+            <FileUploadForm
+                ref={fileUploadRef}
+                onSelected={selected => setFiles(selected)}
+                validFileExtensions={['json', 'yaml', 'yml']}
+            />
+        </Box>
+    );
+};
+WithClearingFiles.parameters = {
+    docs: {
+        description: {
+            story: `It's possible to clear the files that have been selected by calling the \`clearSelected\` method on the ref. This can be practical when successfully submitting a form.`,
         },
     },
 };

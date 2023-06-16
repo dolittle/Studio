@@ -47,6 +47,14 @@ export const DefaultExpanded = createStory({
     children: <DummyChildrenContent />,
 });
 
+export const Disabled = createStory({
+    id: 'disabled-1',
+    title: 'Disabled and expanded by default',
+    defaultExpanded: true,
+    disabled: true,
+    children: <DummyChildrenContent />,
+});
+
 export const WithStatusMessage = createStory();
 WithStatusMessage.decorators = [
     () => {

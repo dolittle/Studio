@@ -14,6 +14,15 @@ const styles = {
         'backgroundImage': 'none',
         'boxShadow': 'none',
         '::before': { display: 'none' },
+        '&.Mui-disabled': {
+            'backgroundColor': 'inherit',
+            '& h6': {
+                pointerEvents: 'none',
+            },
+            '& .MuiAccordionSummary-expandIconWrapper .MuiSvgIcon-root': {
+                pointerEvents: 'none',
+            }
+        }
     },
     accordionSummary: {
         'p': 0,
@@ -30,13 +39,13 @@ const styles = {
         },
         '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
             transform: 'rotate(0deg)',
-        },
+        }
     },
     expandIcon: {
         color: 'text.secondary',
         // Enable 'expand' click on icon.
-        pointerEvents: 'auto',
-    },
+        pointerEvents: 'auto'
+    }
 };
 
 /**
@@ -86,6 +95,11 @@ export type AccordionProps = {
     onExpanded?: (event: React.SyntheticEvent, isExpanded: boolean) => void;
 
     /**
+     * Disable the accordion button. This will prevent the accordion from being expanded or collapsed, and instead will be shown in whatever state it is currently in.
+     */
+    disabled?: boolean;
+
+    /**
      * The content of the accordion.
      *
      * This is the content that is displayed when the accordion is expanded.
@@ -103,17 +117,19 @@ export type AccordionProps = {
  * @param {AccordionProps} props - The {@link AccordionProps}.
  * @returns A {@link Accordion} component.
  */
-export const Accordion = ({ id, title, progressStatus, progressLabel, defaultExpanded, expanded, onExpanded, children, sx }: AccordionProps) =>
+export const Accordion = ({ id, title, progressStatus, progressLabel, defaultExpanded, expanded, onExpanded, disabled, children, sx }: AccordionProps) =>
     <MuiAccordion
         defaultExpanded={defaultExpanded}
         expanded={expanded}
         onChange={onExpanded}
+        disabled={disabled}
         sx={{ ...styles.accordion, ...sx }}
     >
         <AccordionSummary
             expandIcon={<ExpandCircleDownRounded sx={styles.expandIcon} />}
             aria-controls={`${id}-content`}
             id={`${id}-header`}
+            disabled={disabled}
             sx={styles.accordionSummary}
         >
             <Typography variant='subtitle1' sx={{ ml: 1.25, mr: 3 }}>{title}</Typography>
