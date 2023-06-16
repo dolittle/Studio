@@ -1,3 +1,21 @@
+# [3.4.43] - 2023-6-16 [PR: #402](https://github.com/dolittle/Studio/pull/402)
+## Summary
+
+Packup page appearance update.
+
+### Added
+
+- DataGridPro to Backups page
+
+### Changed
+
+- Packup page Cards from FluentUI to Design System one
+
+### Removed
+
+-
+
+
 # [3.4.42] - 2023-6-7 [PR: #400](https://github.com/dolittle/Studio/pull/400)
 ## Summary
 
