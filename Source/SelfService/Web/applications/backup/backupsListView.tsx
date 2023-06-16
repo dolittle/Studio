@@ -59,7 +59,7 @@ export const BackupsListView = ({ application, environment }: BackupsListViewPro
         });
     }, []);
 
-    if (!isLoading) return <LoadingSpinner />;
+    if (isLoading) return <LoadingSpinner />;
 
     const backups: BackupsDetailsList[] = data.files.map<BackupsDetailsList>(file => {
         return {
