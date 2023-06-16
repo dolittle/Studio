@@ -5,6 +5,8 @@ import React, { useState, useEffect } from 'react';
 
 import { Typography } from '@mui/material';
 
+import { LoadingSpinner } from '@dolittle/design-system';
+
 import { HttpResponseApplication } from '../../apis/solutions/application';
 import { BackupsForApplication, getBackupsByApplication } from '../../apis/solutions/backups';
 
@@ -45,7 +47,7 @@ export type BackupsListViewProps = {
 
 export const BackupsListView = ({ application, environment }: BackupsListViewProps) => {
     const [data, setData] = useState({} as BackupsForApplication);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         Promise.all([
@@ -53,12 +55,11 @@ export const BackupsListView = ({ application, environment }: BackupsListViewPro
         ]).then(values => {
             const _data = values[0];
             setData(_data);
-            setIsLoaded(true);
+            setIsLoading(false);
         });
     }, []);
 
-    // TODO: Add loading indicator
-    if (!isLoaded) return null;
+    if (!isLoading) return <LoadingSpinner />;
 
     const backups: BackupsDetailsList[] = data.files.map<BackupsDetailsList>(file => {
         return {

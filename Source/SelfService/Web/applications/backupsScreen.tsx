@@ -8,6 +8,8 @@ import { useGlobalContext } from '../context/globalContext';
 
 import { Typography } from '@mui/material';
 
+import { LoadingSpinner } from '@dolittle/design-system';
+
 import { useRouteApplicationParams } from '../utils/route';
 import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
 import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../apis/solutions/backups';
@@ -24,7 +26,7 @@ export const BackupsScreen = () => {
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [backupLinksForEnvironment, setBackupLinksForEnvironment] = useState<BackupLinkWithName[]>([]);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const routeApplicationProps = useRouteApplicationParams();
     const applicationId = routeApplicationProps.applicationId;
@@ -43,7 +45,7 @@ export const BackupsScreen = () => {
             }
 
             setApplication(applicationData);
-            setIsLoaded(true);
+            setIsLoading(false);
         });
     }, []);
 
@@ -54,7 +56,7 @@ export const BackupsScreen = () => {
             .then(values => setBackupLinksForEnvironment(values));
     }, [environments]);
 
-    if (!isLoaded) return null;
+    if (isLoading) return <LoadingSpinner />;
 
     // TODO: Add sad_aigon_svg and back button if application is not found.
     if (application.id === '') {
