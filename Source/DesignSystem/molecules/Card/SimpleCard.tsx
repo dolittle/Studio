@@ -3,40 +3,51 @@
 
 import React from 'react';
 
-import { Card, CardActions, CardActionArea, CardContent, CardHeader, Typography } from '@mui/material';
+import { Card, CardActions, CardContent, CardHeader, Typography } from '@mui/material';
+
+const styles = {
+    'maxWidth': 440,
+    'display': 'flex',
+    'flexDirection': 'column',
+    'justifyContent': 'space-between',
+    'height': 1,
+    ':hover': {
+        background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%), #191A21',
+    },
+};
 
 /**
  * The props for a {@link SimpleCard} component.
  */
-type SimpleCardProps = {
+export type SimpleCardProps = {
     /**
-     * The `title` of the card.
+     * The title of the card.
      */
     title: string;
 
     /**
-     * The `subtitle` of the card.
+     * The subtitle of the card.
      */
     subtitle?: string;
 
     /**
-     * The `description` of the card.
+     * The description of the card.
      */
     description: string;
 
+    // TODO: Can I require this to be a Button or IconButton?
     /**
-     * The `actions` of the card.
+     * The actions of the card.
      *
-     * Add a {@link Button} or {@link IconButton} component.
+     * Use {@link Button} or {@link IconButton} component for that.
      */
-    actions: React.ReactNode;
+    actionButtons: React.ReactNode;
 
     /**
-     * Set alignment to `right` to align actions to the right.
-     *
+     * Set alignment of the action buttons.
      * @default left
      */
-    actionsAlignment?: 'left' | 'right';
+    actionButtonsAlignment?: 'left' | 'right';
 };
 
 /**
@@ -44,17 +55,17 @@ type SimpleCardProps = {
  * @param {SimpleCardProps} props - The {@link SimpleCardProps}.
  * @returns A {@link SimpleCard} component.
  */
-export const SimpleCard = ({ title, subtitle, description, actionsAlignment, actions }: SimpleCardProps) =>
-    <Card elevation={4} sx={{ maxWidth: 440 }}>
-        <CardActionArea disableRipple sx={{ cursor: 'default' }}>
-            <CardHeader title={<Typography variant='h4'>{title}</Typography>} subheader={subtitle} />
+export const SimpleCard = ({ title, subtitle, description, actionButtonsAlignment, actionButtons }: SimpleCardProps) =>
+    <Card elevation={4} sx={styles}>
+        <CardHeader title={<Typography variant='h4'>{title}</Typography>} subheader={subtitle} />
 
-            <CardContent>
-                <Typography variant='body1' color='text.secondary'>{description}</Typography>
-            </CardContent>
+        <CardContent>
+            <Typography variant='body1' color='text.secondary' sx={{ wordWrap: 'break-word' }}>
+                {description}
+            </Typography>
+        </CardContent>
 
-            <CardActions sx={{ gap: 1, justifyContent: actionsAlignment === 'right' ? 'flex-end' : 'flex-start' }}>
-                {actions}
-            </CardActions>
-        </CardActionArea>
+        <CardActions sx={{ flexWrap: 'wrap', justifyContent: actionButtonsAlignment === 'right' ? 'flex-end' : 'flex-start' }}>
+            {actionButtons}
+        </CardActions>
     </Card>;

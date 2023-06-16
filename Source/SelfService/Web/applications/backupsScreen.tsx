@@ -6,31 +6,36 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, generatePath } from 'react-router-dom';
 import { useGlobalContext } from '../context/globalContext';
 
-import { List, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 import { useRouteApplicationParams } from '../utils/route';
 import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
+import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../apis/solutions/backups';
 
-import { ViewCard } from './backup/viewCard';
 import { ListView } from './backup/listView';
+
 import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
+import { BackupsList } from './backup/backupsList';
 
 export const BackupsScreen = () => {
     const navigate = useNavigate();
     const { currentEnvironment, hasOneCustomer } = useGlobalContext();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
-    const [loaded, setLoaded] = useState(false);
+    const [backupLinksForEnvironment, setBackupLinksForEnvironment] = useState<BackupLinkWithName[]>([]);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const routeApplicationProps = useRouteApplicationParams();
     const applicationId = routeApplicationProps.applicationId;
+    const environments = application.environments;
 
     useEffect(() => {
         Promise.all([
-            getApplication(applicationId),
+            getApplication(applicationId)
         ]).then(values => {
             const applicationData = values[0];
+
             if (!applicationData?.id) {
                 const href = `/problem`;
                 navigate(href);
@@ -38,17 +43,23 @@ export const BackupsScreen = () => {
             }
 
             setApplication(applicationData);
-            setLoaded(true);
+            setIsLoaded(true);
         });
     }, []);
 
-    if (!loaded) return null;
+    useEffect(() => {
+        if (!environments) return;
+        Promise.all(environments.map(environment =>
+            getLatestBackupLinkByApplication(application.id, environment.name)))
+            .then(values => setBackupLinksForEnvironment(values));
+    }, [environments]);
 
+    if (!isLoaded) return null;
+
+    // TODO: Add sad_aigon_svg and back button if application is not found.
     if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application with this environment not found</Typography>;
+        return <Typography variant='h1' my={2}>Application with this environment not found.</Typography>;
     }
-
-    const environments = application.environments;
 
     const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
 
@@ -79,26 +90,11 @@ export const BackupsScreen = () => {
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <div id="topNavBar" className="nav flex-container">
-                <div className="left flex-start">
-                    <BreadCrumbContainer routes={routes} />
-                </div>
-            </div>
+            <BreadCrumbContainer routes={routes} />
             <Routes>
-                <Route path="/overview" element={
-                    <div className="serv">
-                        <List>
-                            {environments.map(environment => (
-                                <li key={environment.name}>
-                                    <ViewCard application={application} environment={environment.name} />
-                                </li>
-                            ))}
-                        </List>
-                    </div>
-                } />
-
+                <Route path="/overview" element={<BackupsList data={backupLinksForEnvironment} application={application} />} />
                 <Route path="/:environment/list" element={<ListView application={application} environment={currentEnvironment} />} />
-                <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups</Typography>} />
+                <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups.</Typography>} />
             </Routes>
         </LayoutWithSidebar>
     );
