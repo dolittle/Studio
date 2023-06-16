@@ -1,3 +1,15 @@
+# [3.4.45] - 2023-6-16 [PR: #403](https://github.com/dolittle/Studio/pull/403)
+## Summary
+
+BackupsListItems displayed only limited hardcoded environment values. If the value was not listed, 'N/A' was displayed.
+
+<img width="935" alt="Screenshot 2023-06-16 at 12 46 41" src="https://github.com/dolittle/Studio/assets/19160439/4ca56d57-d79f-4117-8e2b-1b54d5ec3620">
+
+### Fixed
+
+- Removed fixed environment values from BackupsListItems.
+
+
 # [3.4.44] - 2023-6-16 [PR: #401](https://github.com/dolittle/Studio/pull/401)
 ## Summary
 
