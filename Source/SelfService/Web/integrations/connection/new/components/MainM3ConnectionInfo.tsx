@@ -65,7 +65,8 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentT
                 <Select
                     id='selectHosting'
                     label='Hosting'
-                    options={selectValues} disabled={hasSelectedDeploymentType}
+                    options={selectValues}
+                    disabled={hasSelectedDeploymentType}
                     required='Please select the hosting type'
                 />
             </Tooltip>
