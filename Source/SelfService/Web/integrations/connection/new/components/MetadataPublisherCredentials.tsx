@@ -4,11 +4,17 @@
 import React from 'react';
 
 import { Stack } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
 
 import { Input, MaxWidthTextBlock } from '@dolittle/design-system';
 
-export const MetadataPublisherCredentials = () =>
-    <>
+export const MetadataPublisherCredentials = () => {
+    const { watch } = useFormContext();
+    const [ metadataPublisherUrl, metadataPublisherPassword ] = watch(['metadataPublisherUrl', 'metadataPublisherPassword']);
+
+    const required = !!metadataPublisherUrl || !!metadataPublisherPassword;
+
+    return <>
         <MaxWidthTextBlock>
             This will allow us to access your service and provide the data, including custom data fields, needed to configure your application logic.
         </MaxWidthTextBlock>
@@ -16,10 +22,17 @@ export const MetadataPublisherCredentials = () =>
         <Stack spacing={3.5} sx={{ mt: 3 }}>
             <Input
                 id='metadataPublisherUrl'
-                label='Your Metadata Publisher URL *'
+                label='Your Metadata Publisher URL'
                 placeholder='Your metadata publisher URL goes here...'
                 sx={{ width: 1, maxWidth: 500 }}
+                required={{ value: required, message: 'Please enter your metadata publisher URL' }}
             />
-            <Input id='metadataPublisherPassword' label='Password *' placeholder='Your password' />
+            <Input
+                id='metadataPublisherPassword'
+                label='Password'
+                placeholder='Your password'
+                required={{ value: required, message: 'Please enter the metadata publisher password' }}
+            />
         </Stack>
     </>;
+};
