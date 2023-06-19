@@ -48,7 +48,7 @@ export const NewConnectionView = () => {
 
                     <AccordionList  {...accordionListProps} />
 
-                    <ActionButtons />
+                    <ActionButtons connection={connection} />
                 </M3ConfigurationForm>
             </Box>
         </Page>
