@@ -66,10 +66,6 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const [showM3ConnectorInfo, setShowM3ConnectorInfo] = useState(false);
 
     const handleMicroserviceDelete = async () => {
-        setDeleteDialogIsOpen(false);
-
-        // TODO: Add loading spinner.
-
         if (!canDelete) {
             enqueueSnackbar('Deleting microservice is disabled.', { variant: 'error' });
             return;
