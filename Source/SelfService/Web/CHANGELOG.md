@@ -1,3 +1,25 @@
+# [3.4.46] - 2023-6-19 [PR: #404](https://github.com/dolittle/Studio/pull/404)
+## Summary
+
+This pull request introduces several enhancements and fixes to the Backups page functionality.
+
+### Added
+
+- Elevation to DataGrid.
+- Backups page DataGrid date column check to ensure the date is valid. Otherwise, it returns 'N/A'
+- Loading spinner to Backups page while data is fetching.
+
+### Changed
+
+- Refactored code.
+
+### Fixed
+
+- Removed the DataGrid wrapper height from 100% as it was causing empty space below the DataGrid.
+- Updated Backups DataGrid styles.
+- Fixed the issue where the 'Delete Microservice' dialog was closing prematurely.
+
+
 # [3.4.45] - 2023-6-16 [PR: #403](https://github.com/dolittle/Studio/pull/403)
 ## Summary
 
