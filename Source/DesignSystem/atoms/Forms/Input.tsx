@@ -37,6 +37,12 @@ export type InputProps = {
     dashedBorder?: boolean;
 
     /**
+     * The type of the input.
+     * @default 'text'
+     */
+    type?: string;
+
+    /**
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
@@ -47,7 +53,7 @@ export type InputProps = {
  * @param props - The {@link InputProps} for the input.
  * @returns A {@link Input} component.
  */
-export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, startAdornment, placeholder, dashedBorder, sx, ...fieldProps }, ref) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, startAdornment, placeholder, dashedBorder, type, sx, ...fieldProps }, ref) => {
     const { field, hasError, errorMessage } = useController(fieldProps);
 
     return (
@@ -82,7 +88,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, star
                 required={isRequired(fieldProps.required)}
                 placeholder={placeholder}
                 aria-describedby={`${fieldProps.id}-helper-text`}
-                type='text'
+                type={type ?? 'text'}
                 size='small'
                 sx={{ typography: 'body2' }}
                 startAdornment={startAdornment ?
