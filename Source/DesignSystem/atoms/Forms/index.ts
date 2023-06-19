@@ -4,5 +4,6 @@
 export { Checkbox } from './Checkbox';
 export { Form, FormProps, FormRef } from './Form';
 export { Input, InputProps } from './Input';
+export { PasswordInput, PasswordInputProps } from './PasswordInput';
 export { Select, SelectProps, SelectPropsOptions } from './Select';
 export { Switch } from './Switch';
