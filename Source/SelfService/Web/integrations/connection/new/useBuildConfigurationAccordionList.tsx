@@ -16,7 +16,6 @@ export function useBuildConfigurationAccordionList(connection: ConnectionModel |
         const connectorBundleStatus = hostBundleStatusFromServicesStatus(connection?.mdpStatus, connection?.ionStatus);
         const metadataPublisherCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.mdpStatus);
         const iONServiceAccountCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.ionStatus);
-        const disabled = connection?.status?.name === 'Registered';
 
         return {
             singleExpandMode: true,
@@ -27,7 +26,6 @@ export function useBuildConfigurationAccordionList(connection: ConnectionModel |
                     children: <ConnectorBundleConfiguration />,
                     progressStatus: connectorBundleStatus[0],
                     progressLabel: connectorBundleStatus[1],
-                    disabled,
                     sx: { mt: 8 },
                 },
                 {
@@ -36,7 +34,6 @@ export function useBuildConfigurationAccordionList(connection: ConnectionModel |
                     children: <MetadataPublisherCredentials />,
                     progressStatus: metadataPublisherCredentialsStatus[0],
                     progressLabel: metadataPublisherCredentialsStatus[1],
-                    disabled,
                     sx: { mt: 8 },
                 },
                 {
@@ -45,7 +42,6 @@ export function useBuildConfigurationAccordionList(connection: ConnectionModel |
                     children: <IonServiceAccountCredentials ref={fileUploadRef} />,
                     progressStatus: iONServiceAccountCredentialsStatus[0],
                     progressLabel: iONServiceAccountCredentialsStatus[1],
-                    disabled,
                     sx: { mt: 8 },
                 },
             ],

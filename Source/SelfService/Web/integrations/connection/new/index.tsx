@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useRef } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Collapse } from '@mui/material';
 import { AccordionList, AccordionListProps, FileUploadFormRef } from '@dolittle/design-system';
 
 import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
@@ -29,6 +29,7 @@ export const NewConnectionView = () => {
     const hasSelectedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
 
     const accordionListProps: AccordionListProps = useBuildConfigurationAccordionList(connection, fileUploadRef);
+    const canConfigureConnection = connection?.status?.name !== 'Registered';
 
 
     if (query.isLoading) return <>Loading</>;
@@ -46,7 +47,10 @@ export const NewConnectionView = () => {
                 >
                     <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} />
 
-                    <AccordionList  {...accordionListProps} />
+                    <Collapse in={canConfigureConnection}>
+                        <AccordionList  {...accordionListProps} />
+                    </Collapse>
+
 
                     <ActionButtons connection={connection} />
                 </M3ConfigurationForm>
