@@ -15,6 +15,15 @@ import { useConnectionsIdNamePost } from '../../../../apis/integrations/connecti
 import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../../apis/integrations/deploymentApi.hooks';
 import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../../apis/integrations/connectionConfigurationApi.hooks';
 
+
+const useForceSubscribeToIonConfigurationStateChanges = (currentForm: FormRef<M3ConnectionParameters> | undefined) => {
+    useEffect(() => {
+        if (currentForm) {
+            const { isDirty } = currentForm.getFieldState('ionConfiguration', currentForm.formState);
+        }
+    }, [currentForm]);
+};
+
 export type M3ConnectionParameters = {
     connectorName: string;
     selectHosting: string;
@@ -57,11 +66,7 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
     const ionConfiguration = connection._configuration?.ion;
 
 
-    useEffect(() => {
-        if (currentForm) {
-            const { isDirty } = currentForm?.getFieldState('ionConfiguration', currentForm.formState);
-        }
-    }, [currentForm]);
+    useForceSubscribeToIonConfigurationStateChanges(currentForm);
 
     const handleM3ConnectionSave: SubmitHandler<M3ConnectionParameters> = useCallback((data) => {
         if (!connectionId || !currentForm) {
@@ -211,3 +216,4 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
         </Form>
     );
 };
+
