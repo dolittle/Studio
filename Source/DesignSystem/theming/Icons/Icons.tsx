@@ -48,6 +48,8 @@ import {
     SupervisedUserCircleRounded,
     TextSnippetRounded,
     UploadRounded,
+    Visibility,
+    VisibilityOff,
     WarningRounded,
 } from '@mui/icons-material';
 
@@ -104,6 +106,8 @@ export const SvgIcons = {
     SupervisedUserCircleRounded: <SupervisedUserCircleRounded />,
     TextSnippetRounded: <TextSnippetRounded />,
     UploadRounded: <UploadRounded />,
+    Visibility: <Visibility />,
+    VisibilityOff: <VisibilityOff />,
     WarningRounded: <WarningRounded />,
 };
 
