@@ -163,6 +163,7 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
                 {
                     onSuccess: () => {
                         handleSuccessfulSave('Saved ION Configuration');
+                        //TODO: This doesn't reset the field of the current form!
                         currentForm.resetField('ionConfiguration', { defaultValue: data.ionConfiguration, keepDirty: false });
                         onIonConfigurationSaved?.();
                     },
