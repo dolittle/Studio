@@ -6,7 +6,7 @@ import React from 'react';
 import { Stack } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 
-import { Input, MaxWidthTextBlock } from '@dolittle/design-system';
+import { Input, PasswordInput, MaxWidthTextBlock } from '@dolittle/design-system';
 
 export const MetadataPublisherCredentials = () => {
     const { watch } = useFormContext();
@@ -27,7 +27,7 @@ export const MetadataPublisherCredentials = () => {
                 sx={{ width: 1, maxWidth: 500 }}
                 required={{ value: required, message: 'Please enter your metadata publisher URL' }}
             />
-            <Input
+            <PasswordInput
                 id='metadataPublisherPassword'
                 label='Password'
                 placeholder='Your password'
