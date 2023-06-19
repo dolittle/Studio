@@ -30,7 +30,7 @@ export const ActionButtons = ({ connection }: ActionButtonsProps) => {
         <Button
             label='Start Mapping Data'
             variant='filled'
-            disabled={isConnected}
+            disabled={!isConnected}
             href={messageHref} />
     </Box>;
 };
