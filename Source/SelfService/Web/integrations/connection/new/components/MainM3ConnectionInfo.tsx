@@ -58,7 +58,7 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentT
             <MaxWidthTextBlock>{newConnectionDescription}</MaxWidthTextBlock>
 
             <Tooltip tooltipTitle='Connector Name' tooltipText={<ConnectorNameTooltipText />} sx={{ top: 16 }}>
-                <Input id='connectorName' label='Connector Name' required='Please enter the connector name'/>
+                <Input id='connectorName' label='Connector Name' placeholder='M3 Connector Test' required='Please enter the connector name'/>
             </Tooltip>
 
             <Tooltip tooltipTitle='Hosting' tooltipText={hostingTooltipText} displayOnHover={hasSelectedDeploymentType} sx={{ top: 38 }}>
