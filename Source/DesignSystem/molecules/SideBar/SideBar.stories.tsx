@@ -10,7 +10,7 @@ import { componentStories, SideBar } from '@dolittle/design-system';
 import { CurrentPath, Router, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/ReactRouter';
 
 const { metadata, createStory } = componentStories(SideBar, {
-    decorator: (Story) => (
+    decorator: Story => (
         <Router>
             <Box sx={{ display: 'flex', minHeight: 400 }}>
                 {Story()}
