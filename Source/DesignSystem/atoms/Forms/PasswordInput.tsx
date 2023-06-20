@@ -29,7 +29,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(({
             type={showPassword ? 'text' : 'password'}
             startAdornment={
                 <IconButton
-                    icon={showPassword ? 'VisibilityOff' : 'Visibility'}
+                    icon={showPassword ? 'Visibility' : 'VisibilityOff'}
                     tooltipText={showPassword ? 'Hide password' : 'Show password'}
                     onClick={() => setShowPassword(!showPassword)}
                 />
