@@ -9,10 +9,10 @@ import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.h
 import { useConnectionId } from '../../routes.hooks';
 import { Page } from '../../../components/layout/page';
 
-import { MainM3ConnectionInfo } from './components/MainM3ConnectionInfo';
-import { ActionButtons } from './components/ActionButtons';
-import { useBuildConfigurationAccordionList } from './useBuildConfigurationAccordionList';
-import { M3ConfigurationForm } from './components/M3ConfigurationForm';
+import { MainM3ConnectionInfo } from '../configuration/MainM3ConnectionInfo';
+import { ActionButtons } from '../configuration/ActionButtons';
+import { useBuildConfigurationAccordionList } from '../configuration/useBuildConfigurationAccordionList';
+import { M3ConfigurationForm } from '../configuration/M3ConfigurationForm';
 
 export const NewConnectionView = () => {
     const connectionId = useConnectionId();
@@ -50,7 +50,6 @@ export const NewConnectionView = () => {
                     <Collapse in={canConfigureConnection}>
                         <AccordionList  {...accordionListProps} />
                     </Collapse>
-
 
                     <ActionButtons connection={connection} />
                 </M3ConfigurationForm>

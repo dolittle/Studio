@@ -6,10 +6,10 @@ import { AccordionListProps, FileUploadFormRef } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../../apis/integrations/generated';
 
-import { ConnectorBundleConfiguration } from './components/ConnectorBundleConfiguration';
-import { MetadataPublisherCredentials } from './components/MetadataPublisherCredentials';
-import { IonServiceAccountCredentials } from './components/IonServiceAccountCredentials';
-import { configurationStatusFromServiceCredentialsStatus, hostBundleStatusFromServicesStatus } from '../configuration/statusResolvers';
+import { ConnectorBundleConfiguration } from './ConnectorBundleConfiguration';
+import { MetadataPublisherCredentials } from './MetadataPublisherCredentials';
+import { IonServiceAccountCredentials } from './IonServiceAccountCredentials';
+import { configurationStatusFromServiceCredentialsStatus, hostBundleStatusFromServicesStatus } from './statusResolvers';
 
 export function useBuildConfigurationAccordionList(connection: ConnectionModel | undefined, fileUploadRef: React.RefObject<FileUploadFormRef>): AccordionListProps {
     return useMemo(() => {
