@@ -28,8 +28,8 @@ type LayoutProps = {
 export const Layout = ({ children }: LayoutProps) =>
     <Box sx={{ display: 'flex' }}>
         <NavigationBar
-            mainLinks={<MainLinks />}
-            secondaryLinks={<SecondaryLinks />}
+            primaryLinks={<MainLinks />}
+            optionsMenu={<SecondaryLinks />}
             mobileDropdownMenu={<SelectionMenu />}
             mobileSecondaryLinks={<MobileSecondaryLinks />}
         />

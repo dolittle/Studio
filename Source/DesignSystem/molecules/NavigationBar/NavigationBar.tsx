@@ -24,12 +24,12 @@ export type NavigationBarProps = {
     /**
      * Primary links that appear to the left of the navigation bar.
      */
-    mainLinks?: JSX.Element;
+    primaryLinks?: JSX.Element;
 
     /**
      * More options drop-down menu that appears to the right of the navigation bar.
      */
-    secondaryLinks?: JSX.Element;
+    optionsMenu?: JSX.Element;
 
     /**
      * A mobile drop-down menu that appears in the bottom navigation bar next to the menu-toggle icon.
@@ -49,7 +49,7 @@ export type NavigationBarProps = {
  * @param {NavigationBarProps} props - The {@link NavigationBarProps}.
  * @returns A {@link NavigationBar} component.
  */
-export const NavigationBar = ({ mainLinks, secondaryLinks, mobileDropdownMenu, mobileSecondaryLinks }: NavigationBarProps) => {
+export const NavigationBar = ({ primaryLinks, optionsMenu, mobileDropdownMenu, mobileSecondaryLinks }: NavigationBarProps) => {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
     return (
@@ -58,7 +58,7 @@ export const NavigationBar = ({ mainLinks, secondaryLinks, mobileDropdownMenu, m
                 <NavigationBarMobile
                     isOpen={isMobileNavOpen}
                     onClose={() => setIsMobileNavOpen(false)}
-                    mobileMainLinks={mainLinks}
+                    mobileMainLinks={primaryLinks}
                     mobileSecondaryLinks={mobileSecondaryLinks}
                 />
             }
@@ -81,12 +81,12 @@ export const NavigationBar = ({ mainLinks, secondaryLinks, mobileDropdownMenu, m
                     </Box>
 
                     <List sx={{ display: 'flex', gap: 2 }}>
-                        {mainLinks}
+                        {primaryLinks}
                     </List>
                 </Box>
 
                 <List sx={{ ...linkStyles, gap: 2 }}>
-                    {secondaryLinks}
+                    {optionsMenu}
                 </List>
             </Toolbar>
         </AppBar>

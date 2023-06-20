@@ -38,8 +38,8 @@ metadata.parameters = {
 };
 
 metadata.args = {
-    mainLinks: <MainLinks />,
-    secondaryLinks: <SecondaryLinks />,
+    primaryLinks: <MainLinks />,
+    optionsMenu: <SecondaryLinks />,
     mobileDropdownMenu: <SelectionMenu />,
     mobileSecondaryLinks: <MobileSecondaryLinks />,
 };
