@@ -11,7 +11,6 @@ import { useConnectionsIdGet } from '../../../../apis/integrations/connectionsAp
 import { useConnectionId } from '../../../routes.hooks';
 
 import { M3ConfigurationForm } from '../../configuration/M3ConfigurationForm';
-import { ActionButtons } from '../../configuration/ActionButtons';
 import { MainM3ConnectionInfo } from '../../configuration/MainM3ConnectionInfo';
 import { useBuildConfigurationAccordionList } from '../../configuration/useBuildConfigurationAccordionList';
 
@@ -57,8 +56,6 @@ export const ConfigurationView = () => {
                 <Collapse in={canConfigureConnection}>
                     <AccordionList  {...accordionListProps} />
                 </Collapse>
-
-                <ActionButtons connection={connection} />
             </M3ConfigurationForm>
         </Box>
     );
