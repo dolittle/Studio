@@ -17,6 +17,7 @@ export type ConnectorBundleConfigurationProps = {
 export const ConnectorBundleConfiguration = ({ connectionId }: ConnectorBundleConfigurationProps) => {
     const apiPrefix = getBridgeServerUrlPrefix();
     const downloadUrl = `${apiPrefix}/connections/${connectionId}/connector-deployment`;
+
     return <>
         <Typography variant='subtitle2' gutterBottom>Download connector bundle</Typography>
         <MaxWidthTextBlock>
