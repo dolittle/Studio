@@ -1,3 +1,22 @@
+# [3.4.47] - 2023-6-20 [PR: #405](https://github.com/dolittle/Studio/pull/405)
+## Summary
+
+Improvements to the new connector page that supports better validation and flow of the form
+
+## Added 
+ - PasswordInput: Add PasswordInput component with show/hide password functionality
+ - New Connector:  Validation and enabling save button when configuring new connector
+   - Enable save button when there are changes and valid
+   - Reset fields after successfully saving
+   - Make connector name and deployment type required
+   - Required metadata password/url to be required if one of them is set
+- Enable "Start Message Mapping" button when conneciton is Connected
+
+## Changed
+- New Connector: Expand configuration sections when user has selected deployment typw
+- Input: Extend Input to accept "type" as a string prop that defaults to text
+
+
 # [3.4.46] - 2023-6-19 [PR: #404](https://github.com/dolittle/Studio/pull/404)
 ## Summary
 
