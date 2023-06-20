@@ -56,8 +56,8 @@ export const ConfigurationView = () => {
                         if (resetForm) {
                             setResetForm(false);
                         }
+                        setResetForm(true);
                         setEditMode(false);
-                        setResetForm(false);
                     }}
                 />
                 <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} />
