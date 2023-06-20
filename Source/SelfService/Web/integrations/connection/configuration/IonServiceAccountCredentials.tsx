@@ -8,7 +8,7 @@ import { useFormContext } from 'react-hook-form';
 import { enqueueSnackbar } from 'notistack';
 
 import { FileUploadForm, FileUploadFormRef, MaxWidthTextBlock } from '@dolittle/design-system';
-import { IonConfigRequest, IonConfigRequestFromJSON } from '../../../../apis/integrations/generated';
+import { IonConfigRequest, IonConfigRequestFromJSON } from '../../../apis/integrations/generated';
 
 
 /**

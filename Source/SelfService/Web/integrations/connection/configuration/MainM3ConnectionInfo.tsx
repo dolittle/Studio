@@ -7,7 +7,7 @@ import { Stack } from '@mui/material';
 
 import { Input, MaxWidthTextBlock, Select, SelectPropsOptions, Tooltip } from '@dolittle/design-system';
 
-import { Link } from '../../../../apis/integrations/generated';
+import { Link } from '../../../apis/integrations/generated';
 
 const newConnectionDescription = `This process might take some time depending on access rights and working knowledge of
                     your organization's firewall and M3 system. You can always save and create the connection setup details then come back at a later time to finish.`;

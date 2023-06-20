@@ -9,11 +9,11 @@ import { SubmitHandler } from 'react-hook-form';
 
 import { Form, FormRef } from '@dolittle/design-system';
 
-import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
-import { ConnectionModel, IonConfigRequest } from '../../../../apis/integrations/generated';
-import { useConnectionsIdNamePost } from '../../../../apis/integrations/connectionsApi.hooks';
-import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../../apis/integrations/deploymentApi.hooks';
-import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../../apis/integrations/connectionConfigurationApi.hooks';
+import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
+import { ConnectionModel, IonConfigRequest } from '../../../apis/integrations/generated';
+import { useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
+import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
+import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
 
 
 const useForceSubscribeToIonConfigurationStateChanges = (currentForm: FormRef<M3ConnectionParameters> | undefined) => {
