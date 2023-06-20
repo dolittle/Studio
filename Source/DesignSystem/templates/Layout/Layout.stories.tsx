@@ -7,28 +7,22 @@ import { componentStories } from '@dolittle/design-system';
 
 import { Layout } from './Layout';
 
-import { DummyText } from '../../helpers/DummyContents';
 import { Router, CurrentPath } from '../../helpers/ReactRouter';
 
 const { metadata, createStory } = componentStories(Layout, {
-    decorator: (Story) => (
+    decorator: Story =>
         <Router>
             {Story()}
         </Router>
-    ),
 });
 
 metadata.parameters = {
+    // Don't show controls for the router.
     controls: { include: [] },
 };
 
 metadata.args = {
-    children: (
-        <>
-            <CurrentPath />
-            <DummyText />
-        </>
-    ),
+    children: <CurrentPath />,
 };
 
 export default metadata;
