@@ -1,3 +1,7 @@
+# [3.4.49] - 2023-6-20 [PR: #408](https://github.com/dolittle/Studio/pull/408)
+Force deploy. Again.
+
+
 # [3.4.47] - 2023-6-20 [PR: #405](https://github.com/dolittle/Studio/pull/405)
 ## Summary
 
