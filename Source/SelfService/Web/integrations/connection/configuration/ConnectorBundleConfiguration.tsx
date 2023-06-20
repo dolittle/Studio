@@ -5,7 +5,7 @@ import React from 'react';
 import { Typography } from '@mui/material';
 
 import { Button, MaxWidthTextBlock } from '@dolittle/design-system';
-import { getBridgeServerUrlPrefix } from '../../../../apis/integrations/api';
+import { getBridgeServerUrlPrefix } from '../../../apis/integrations/api';
 
 import { TextCopyBox } from './TextCopyBox';
 

@@ -7,7 +7,7 @@ import { Box } from '@mui/material';
 import { useHref } from 'react-router-dom';
 import { useFormState } from 'react-hook-form';
 import { Button } from '@dolittle/design-system';
-import { ConnectionModel } from '../../../../apis/integrations/generated';
+import { ConnectionModel } from '../../../apis/integrations/generated';
 
 export type ActionButtonsProps = {
     connection: ConnectionModel;
