@@ -10,7 +10,7 @@ import { useConnectionId } from '../../routes.hooks';
 import { Page } from '../../../components/layout/page';
 
 import { MainM3ConnectionInfo } from '../configuration/MainM3ConnectionInfo';
-import { ActionButtons } from '../configuration/ActionButtons';
+import { ActionButtons } from './ActionButtons';
 import { useBuildConfigurationAccordionList } from '../configuration/useBuildConfigurationAccordionList';
 import { M3ConfigurationForm } from '../configuration/M3ConfigurationForm';
 
