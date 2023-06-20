@@ -20,16 +20,14 @@ const linkStyles = {
 /**
  * The props for a {@link NavigationBar} component.
  */
-type NavigationBarProps = {
+export type NavigationBarProps = {
     /**
-     * The main links that will be displayed in the navigation bar.
-     * @default undefined
+     * Primary links that appear to the left of the navigation bar.
      */
     mainLinks?: JSX.Element;
 
     /**
-     * The secondary links that will be displayed in the navigation bar.
-     * @default undefined
+     * More options drop-down menu that appears to the right of the navigation bar.
      */
     secondaryLinks?: JSX.Element;
 
@@ -47,8 +45,8 @@ type NavigationBarProps = {
 };
 
 /**
- * The navigation bar is the top bar that contains the main navigation links and the secondary links.
- * @param {NavigationBarProps} props - The {@link NavigationBarProps} that contains the properties for the main top navigation bar.
+ * The navigation bar displays information and actions relating to the current screen.
+ * @param {NavigationBarProps} props - The {@link NavigationBarProps}.
  * @returns A {@link NavigationBar} component.
  */
 export const NavigationBar = ({ mainLinks, secondaryLinks, mobileDropdownMenu, mobileSecondaryLinks }: NavigationBarProps) => {
