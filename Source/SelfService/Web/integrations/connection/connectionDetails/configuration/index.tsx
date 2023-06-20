@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { Box, Collapse, Typography } from '@mui/material';
 
@@ -13,9 +13,12 @@ import { useConnectionId } from '../../../routes.hooks';
 import { M3ConfigurationForm } from '../../configuration/M3ConfigurationForm';
 import { MainM3ConnectionInfo } from '../../configuration/MainM3ConnectionInfo';
 import { useBuildConfigurationAccordionList } from '../../configuration/useBuildConfigurationAccordionList';
+import { ActionToolbar } from './ActionToolbar';
 
 
 export const ConfigurationView = () => {
+    const [canEdit, setEditMode] = useState(false);
+    const [resetForm, setResetForm] = useState(false);
     const connectionId = useConnectionId();
     const query = useConnectionsIdGet(
         { id: connectionId || '' },
@@ -39,18 +42,24 @@ export const ConfigurationView = () => {
         <Box sx={{ mt: 6, ml: 2 }}>
             <Typography variant='subtitle1'>Configuration Setup</Typography>
 
-            <Box sx={{ display: 'flex', mt: 4, gap: 2 }}>
-                <Button label='Edit' startWithIcon='EditRounded' />
-                <Button label='Save' startWithIcon='SaveRounded' disabled />
-                <Button label='Delete Connection' startWithIcon='DeleteRounded' />
-            </Box>
-
             <M3ConfigurationForm
                 connectionId={connectionId}
                 connection={connection}
                 hasSelectedDeploymentType={hasSelectedDeploymentType}
                 onIonConfigurationSaved={() => fileUploadRef.current?.clearSelected()}
             >
+                <ActionToolbar
+                    canEdit={canEdit}
+                    onEdit={() => setEditMode(true)}
+                    onDelete={() => { }}
+                    onCancel={() => {
+                        if (resetForm) {
+                            setResetForm(false);
+                        }
+                        setEditMode(false);
+                        setResetForm(false);
+                    }}
+                />
                 <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} />
 
                 <Collapse in={canConfigureConnection}>

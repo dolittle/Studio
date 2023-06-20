@@ -40,10 +40,11 @@ export type M3ConfigurationFormProps = {
     onSelectHostingSaved?: () => void;
     onMdpConfigurationSaved?: () => void;
     onIonConfigurationSaved?: () => void;
+    resetForm?: boolean;
     children?: React.ReactNode;
 };
 
-export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeploymentType, onNameSaved, onSelectHostingSaved, onMdpConfigurationSaved, onIonConfigurationSaved, children }: M3ConfigurationFormProps) => {
+export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeploymentType, onNameSaved, onSelectHostingSaved, onMdpConfigurationSaved, onIonConfigurationSaved, resetForm = false, children }: M3ConfigurationFormProps) => {
     const [currentForm, setCurrentForm] = useState<FormRef<M3ConnectionParameters>>();
     const formRef = useCallback((ref) => {
         if (ref) {
@@ -65,8 +66,13 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
     const metadataPublisherPassword = connection._configuration?.mdp?.password;
     const ionConfiguration = connection._configuration?.ion;
 
-
     useForceSubscribeToIonConfigurationStateChanges(currentForm);
+
+    useEffect(() => {
+        if(resetForm) {
+            currentForm?.reset();
+        }
+    },[resetForm]);
 
     const handleM3ConnectionSave: SubmitHandler<M3ConnectionParameters> = useCallback((data) => {
         if (!connectionId || !currentForm) {
