@@ -6,11 +6,18 @@ import React from 'react';
 import { Typography } from '@mui/material';
 
 import { Button, MaxWidthTextBlock } from '@dolittle/design-system';
+import { getBridgeServerUrlPrefix } from '../../../../apis/integrations/api';
 
 import { TextCopyBox } from './TextCopyBox';
 
-export const ConnectorBundleConfiguration = () =>
-    <>
+export type ConnectorBundleConfigurationProps = {
+    connectionId: string;
+};
+
+export const ConnectorBundleConfiguration = ({ connectionId }: ConnectorBundleConfigurationProps) => {
+    const apiPrefix = getBridgeServerUrlPrefix();
+    const downloadUrl = `${apiPrefix}/connections/${connectionId}/connector-deployment`;
+    return <>
         <Typography variant='subtitle2' gutterBottom>Download connector bundle</Typography>
         <MaxWidthTextBlock>
             Download the connector bundle and run it. The bundle consists of a Docker compose file, shell file and README file with instructions.
@@ -19,8 +26,11 @@ export const ConnectorBundleConfiguration = () =>
         <Button
             label='Download Connector Bundle'
             startWithIcon='DownloadRounded'
-            onClick={() => { }}
+            href={downloadUrl}
             sx={{ my: 3.5 }}
+            overrides={{
+                download: `connector-bundle-${connectionId}.zip`
+            }}
         />
 
         <Typography variant='subtitle2' gutterBottom>Network firewall configuration</Typography>
@@ -31,3 +41,4 @@ export const ConnectorBundleConfiguration = () =>
 
         <TextCopyBox />
     </>;
+};

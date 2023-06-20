@@ -23,7 +23,7 @@ export function useBuildConfigurationAccordionList(connection: ConnectionModel |
                 {
                     id: 'hostConnectorBundle',
                     title: 'Host Your Connector Bundle',
-                    children: <ConnectorBundleConfiguration />,
+                    children: <ConnectorBundleConfiguration connectionId={connection?.connectionId || ''} />,
                     progressStatus: connectorBundleStatus[0],
                     progressLabel: connectorBundleStatus[1],
                     sx: { mt: 8 },
