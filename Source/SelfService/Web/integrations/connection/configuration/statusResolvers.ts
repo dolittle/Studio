@@ -30,7 +30,7 @@ export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStat
 };
 
 
-export const configurationStatusFromServiceCredentialsStatus = (serviceStatus?: RemoteServiceStatus | undefined): StatusMessage => {
+export const configurationStatusFromServiceCredentialsStatus = (serviceStatus?: RemoteServiceStatus): StatusMessage | undefined => {
     switch (serviceStatus?.name) {
         case 'Unresponsive':
         case 'Inactive':
@@ -40,11 +40,11 @@ export const configurationStatusFromServiceCredentialsStatus = (serviceStatus?: 
         case 'Active':
             return ['success', 'Connected'];
         case 'Configured':
-            return ['waiting', 'Configured - Waiting for credential verification'];
+            return ['waiting', 'Waiting for credential verification'];
         case 'Alive':
         case 'Undeployed':
         case 'DeploymentChosen':
         default:
-            return ['waiting', 'Waiting for credential verification'];
+            return undefined;
     }
 };
