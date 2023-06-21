@@ -3,18 +3,38 @@
 
 import React, { useState } from 'react';
 
-import { AppBar, Box, List, Toolbar } from '@mui/material';
+import { AppBar, Box, Toolbar, Theme } from '@mui/material';
 
-import { IconButton, Icon } from '@dolittle/design-system';
+import { Button, Icon, IconProps } from '@dolittle/design-system';
 
 import { NavigationBarMobile } from './NavigationBarMobile';
 
-const linkStyles = {
-    'display': { xs: 'none', md: 'flex' },
-    '.MuiListItemButton-root.Mui-selected': {
-        color: 'primary.main',
-        backgroundColor: 'transparent',
-    },
+const styles = {
+    nav: { zIndex: (theme: Theme) => theme.zIndex.drawer + 1 },
+    hideOnMobile: { display: { xs: 'none', sm: 'flex' } },
+    // mobileMenu: {
+    //     width: 1,
+    //     justifyContent: 'space-between',
+    //     display: { xs: 'flex', md: 'none' },
+    // },
+    // 'display': { xs: 'none', md: 'flex' },
+    // '.MuiListItemButton-root.Mui-selected': {
+    //     color: 'primary.main',
+    //     backgroundColor: 'transparent',
+    // },
+};
+
+type PrimaryNavigationItemButtonProps = {
+    href: string;
+    name: string;
+};
+
+const PrimaryNavigationItemButton = ({ name, href }: PrimaryNavigationItemButtonProps) => {
+    const selected = window.location.href.includes(href);
+
+    return (
+        <Button label={name} href={href} sx={{ color: selected ? 'primary.light' : 'text.primary' }} />
+    );
 };
 
 /**
@@ -22,9 +42,14 @@ const linkStyles = {
  */
 export type NavigationBarProps = {
     /**
+     * The logo to display in the navigation bar.
+     */
+    logo?: IconProps['icon'];
+
+    /**
      * Primary links that appear to the left of the navigation bar.
      */
-    primaryLinks?: JSX.Element;
+    primaryNavigationItems?: PrimaryNavigationItemButtonProps[];
 
     /**
      * More options drop-down menu that appears to the right of the navigation bar.
@@ -49,45 +74,41 @@ export type NavigationBarProps = {
  * @param {NavigationBarProps} props - The {@link NavigationBarProps}.
  * @returns A {@link NavigationBar} component.
  */
-export const NavigationBar = ({ primaryLinks, optionsMenu, mobileDropdownMenu, mobileSecondaryLinks }: NavigationBarProps) => {
+export const NavigationBar = ({ logo, primaryNavigationItems, optionsMenu, mobileDropdownMenu, mobileSecondaryLinks }: NavigationBarProps) => {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
     return (
-        <AppBar component='nav' sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-            {isMobileNavOpen &&
+        <AppBar elevation={4} component='nav' sx={styles.nav}>
+            {/* {isMobileNavOpen &&
                 <NavigationBarMobile
                     isOpen={isMobileNavOpen}
                     onClose={() => setIsMobileNavOpen(false)}
                     mobileMainLinks={primaryLinks}
                     mobileSecondaryLinks={mobileSecondaryLinks}
                 />
-            }
+            } */}
 
             <Toolbar>
-                <Box sx={{ display: { xs: 'flex', md: 'none' }, width: 1, justifyContent: 'space-between' }}>
-                    <IconButton
-                        tooltipText='Toggle navigation menu'
-                        icon='MenuRounded'
-                        edge='start'
-                        onClick={() => setIsMobileNavOpen(prevState => !prevState)}
-                    />
+                {/* <IconButton
+                    tooltipText='Toggle navigation menu'
+                    icon='MenuRounded'
+                    edge='start'
+                    onClick={() => setIsMobileNavOpen(prevState => !prevState)}
+                /> */}
 
-                    {mobileDropdownMenu}
+                {/* {mobileDropdownMenu} */}
+
+                <Box sx={{ ...styles.hideOnMobile, flexGrow: 1, alignItems: 'center', gap: 3 }}>
+                    {logo && <Icon icon={logo} />}
+
+                    {primaryNavigationItems?.map(navigationItem =>
+                        <PrimaryNavigationItemButton key={navigationItem.name} {...navigationItem} />
+                    )}
                 </Box>
 
-                <Box sx={{ ...linkStyles, flexGrow: 1 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mr: 4 }}>
-                        <Icon icon='AigonixLightCube' />
-                    </Box>
-
-                    <List sx={{ display: 'flex', gap: 2 }}>
-                        {primaryLinks}
-                    </List>
-                </Box>
-
-                <List sx={{ ...linkStyles, gap: 2 }}>
+                <Box sx={{ ...styles.hideOnMobile }}>
                     {optionsMenu}
-                </List>
+                </Box>
             </Toolbar>
         </AppBar>
     );

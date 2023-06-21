@@ -7,16 +7,30 @@ import { Toolbar } from '@mui/material';
 
 import { componentStories, NavigationBar } from '@dolittle/design-system';
 
-import { CurrentPath, MainLinks, MobileSecondaryLinks, Router, SecondaryLinks, SelectionMenu } from '../../helpers/ReactRouter';
+import { CurrentPath, MobileSecondaryLinks, Router, SecondaryLinks, SelectionMenu } from '../../helpers/ReactRouter';
+
+const primaryNavigationItems = [
+    {
+        href: '#',
+        name: 'Primary 1',
+    },
+    {
+        href: '#',
+        name: 'Primary 2',
+    },
+    {
+        href: '#',
+        name: 'Primary 3',
+    },
+];
 
 const { metadata, createStory } = componentStories(NavigationBar, {
-    decorator: (Story) => (
+    decorator: Story =>
         <Router>
             <Toolbar />
             <CurrentPath />
             {Story()}
         </Router>
-    ),
 });
 
 metadata.parameters = {
@@ -38,10 +52,11 @@ metadata.parameters = {
 };
 
 metadata.args = {
-    primaryLinks: <MainLinks />,
+    logo: 'AigonixLightCube',
+    primaryNavigationItems,
     optionsMenu: <SecondaryLinks />,
-    mobileDropdownMenu: <SelectionMenu />,
-    mobileSecondaryLinks: <MobileSecondaryLinks />,
+    //mobileDropdownMenu: <SelectionMenu />,
+    //mobileSecondaryLinks: <MobileSecondaryLinks />,
 };
 
 export default metadata;
