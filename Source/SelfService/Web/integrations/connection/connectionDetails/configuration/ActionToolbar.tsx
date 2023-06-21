@@ -14,17 +14,24 @@ export type ActionToolbarProps = {
     onEdit: () => void;
     onDelete: () => void;
     onCancel: () => void;
+    onSave: () => void;
 };
 
-export const ActionToolbar = ({ onEdit, onDelete, onCancel, canEdit = false }: ActionToolbarProps) => {
+export const ActionToolbar = ({ onEdit, onDelete, onCancel, onSave, canEdit = false }: ActionToolbarProps) => {
     const { isValid, isDirty } = useFormState();
 
     return (
         <Box sx={{ display: 'flex', mt: 4, gap: 2 }}>
             {canEdit
-                ? <Button label={isDirty ? 'Cancel' : 'Done'} startWithIcon='CancelRounded' onClick={onCancel} />
-                : <Button label='Edit' startWithIcon='EditRounded' onClick={onEdit} /> }
-            <Button label='Save' startWithIcon='SaveRounded' disabled={!canEdit || !isDirty || !isValid} type='submit' />
+                ? <Button label={'Cancel'} startWithIcon='CancelRounded' onClick={onCancel} />
+                : <Button label='Edit' startWithIcon='EditRounded' onClick={onEdit} />}
+            <Button
+                label='Save'
+                startWithIcon='SaveRounded'
+                disabled={!canEdit || !isDirty || !isValid}
+                type='submit'
+                onClick={onSave}
+            />
             <Button label='Delete Connection' startWithIcon='DeleteRounded' onClick={onDelete} />
         </Box>
     );
