@@ -33,7 +33,7 @@ export { Graph } from './molecules/Metrics/Graph';
 export { DropdownMenu, DropdownMenuProps } from './molecules/DropdownMenu';
 export { NavigationBar, NavigationBarProps } from './molecules/NavigationBar';
 export { SelectCard, SimpleCard, SimpleCardProps } from './molecules/Card';
-export { SideBar } from './molecules/SideBar';
+export { SideBar, SideBarProps } from './molecules/SideBar';
 export { Stepper } from './molecules/Stepper';
 
 // Templates

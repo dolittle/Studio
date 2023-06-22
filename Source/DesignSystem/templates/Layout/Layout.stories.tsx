@@ -5,7 +5,7 @@ import React from 'react';
 
 import { componentStories, Layout } from '@dolittle/design-system';
 
-import { Router, CurrentPath } from '../../helpers/ReactRouter';
+import { Router, CurrentPath, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/ReactRouter';
 import { primaryNavigationItems, secondaryNavigationItems, selectionMenuItems } from '../../helpers/DummyContents/DummyNavigationItems';
 
 const { metadata, createStory } = componentStories(Layout, {
@@ -22,10 +22,16 @@ metadata.parameters = {
 };
 
 metadata.args = {
-    logo: 'AigonixLightCube',
-    primaryNavigationItems,
-    secondaryNavigationItems,
-    selectionMenuItems,
+    navigationBar: {
+        logo: 'AigonixLightCube',
+        primaryNavigationItems,
+        secondaryNavigationItems,
+        selectionMenuItems,
+    },
+    sideBar: {
+        primaryLinks: <SideBarPrimaryLinks />,
+        secondaryLinks: <SideBarSecondaryLinks />,
+    },
     children: <CurrentPath />,
 };
 

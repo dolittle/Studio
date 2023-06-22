@@ -7,7 +7,7 @@ import { Link as RouterLink, LinkProps as RouterLinkProps, useLocation } from 'r
 
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
-import { MenuListProps } from '@dolittle/design-system';
+import { Icon, MenuListProps } from '@dolittle/design-system';
 
 type RouterLinkListItemProps = {
     to: string;
@@ -30,6 +30,20 @@ export const RouterLinkListItem = ({ to, icon, text, inset, variantButton }: Rou
             <ListItemText inset={inset} primary={text} primaryTypographyProps={{ variant: variantButton ? 'button' : 'body2' }} />
         </ListItemButton>
     </ListItem>;
+
+export const SideBarPrimaryLinks = () =>
+    <>
+        <RouterLinkListItem to='connections' text='ERP Connections' icon={<Icon icon='PolylineRounded' />} />
+        <RouterLinkListItem to='#' text='Bridge Designer' icon={<Icon icon='Bridge' />} />
+    </>;
+
+export const SideBarSecondaryLinks = () =>
+    <>
+        <RouterLinkListItem to='#' text='Microservices' icon={<Icon icon='HexagonRounded' />} />
+        <RouterLinkListItem to='#' text='Backups' icon={<Icon icon='BackupRounded' />} />
+        <RouterLinkListItem to='#' text='Container Registry' icon={<Icon icon='ContainerRegistry' />} />
+        <RouterLinkListItem to='#' text='Logs' icon={<Icon icon='TextSnippetRounded' />} />
+    </>;
 
 export const primaryNavigationItems = [
     {

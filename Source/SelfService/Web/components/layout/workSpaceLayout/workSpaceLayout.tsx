@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Layout } from '@dolittle/design-system';
 
-import { primaryNavigationItems, secondaryNavigationItems, selectionMenuItems } from './workSpaceLayoutLinks';
+import { primaryNavigationItems, secondaryNavigationItems, selectionMenuItems, SideBarPrimaryLinks, SideBarSecondaryLinks } from './workSpaceLayoutLinks';
 
 type WorkSpaceLayoutProps = {
     children: React.ReactNode;
@@ -18,6 +18,10 @@ export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
             primaryNavigationItems,
             secondaryNavigationItems,
             selectionMenuItems,
+        }}
+        sideBar={{
+            primaryLinks: <SideBarPrimaryLinks />,
+            secondaryLinks: <SideBarSecondaryLinks />,
         }}
     >
         {children}

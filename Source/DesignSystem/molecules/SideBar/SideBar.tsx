@@ -12,7 +12,7 @@ import { CustomListItem, Drawer } from './StyledCompenents';
 /**
  * The props for a {@link SideBar} component.
  */
-type SideBarProps = {
+export type SideBarProps = {
     /**
      * The main links that will be displayed in the side bar.
      * @default undefined
