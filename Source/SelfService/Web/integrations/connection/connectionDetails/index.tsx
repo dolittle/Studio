@@ -15,6 +15,7 @@ import { getConnectionStatus } from '../../../utils/helpers/connectionStatuses';
 
 import { Page } from '../../../components/layout/page';
 
+//TODO: Make this dynamic based on current url in the tab component
 const getCurrentTab = (location: Location) => {
     if (location.pathname.includes('configuration')) return 0;
     else if (location.pathname.includes('messages')) return 1;
