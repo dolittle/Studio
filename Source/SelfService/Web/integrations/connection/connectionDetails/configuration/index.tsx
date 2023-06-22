@@ -10,7 +10,7 @@ import { AccordionList, AccordionListProps, Button, FileUploadFormRef } from '@d
 import { useConnectionsIdGet } from '../../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionId } from '../../../routes.hooks';
 
-import { M3ConfigurationForm } from '../../configuration/M3ConfigurationForm';
+import { M3ConfigurationForm, M3ConfigurationFormRef } from '../../configuration/M3ConfigurationForm';
 import { MainM3ConnectionInfo } from '../../configuration/MainM3ConnectionInfo';
 import { useBuildConfigurationAccordionList } from '../../configuration/useBuildConfigurationAccordionList';
 import { ActionToolbar } from './ActionToolbar';
@@ -25,6 +25,7 @@ export const ConfigurationView = () => {
         { refetchInterval: (data) => data?.value?.status.name !== 'Connected' ? 5000 : false }
     );
 
+    const formRef = useRef<M3ConfigurationFormRef>(null);
     const fileUploadRef = useRef<FileUploadFormRef>(null);
     const connection = query.data?.value;
     const links = query.data?.links || [];
@@ -47,16 +48,14 @@ export const ConfigurationView = () => {
                 connection={connection}
                 hasSelectedDeploymentType={hasSelectedDeploymentType}
                 onIonConfigurationSaved={() => fileUploadRef.current?.clearSelected()}
+                ref={formRef}
             >
                 <ActionToolbar
                     canEdit={canEdit}
                     onEdit={() => setEditMode(true)}
                     onDelete={() => { }}
                     onCancel={() => {
-                        if (resetForm) {
-                            setResetForm(false);
-                        }
-                        setResetForm(true);
+                        formRef.current?.reset(true);
                         setEditMode(false);
                     }}
                     onSave={() => {
