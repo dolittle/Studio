@@ -1,3 +1,9 @@
+# [3.4.51] - 2023-6-22 [PR: #410](https://github.com/dolittle/Studio/pull/410)
+- Reset form state after succesful submit
+- Reset Form back to original values when pressing "Cancel"
+- More straight forward saving of form and cleaned up ActionToolbar
+
+
 # [3.4.50] - 2023-6-22 [PR: #409](https://github.com/dolittle/Studio/pull/409)
 - Move all configuration components into configuration folder
 - Replace static configuration tab with real configuration components
