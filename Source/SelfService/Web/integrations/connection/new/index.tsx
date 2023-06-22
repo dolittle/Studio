@@ -43,7 +43,7 @@ export const NewConnectionView = () => {
                     connectionId={connectionId}
                     connection={connection}
                     hasSelectedDeploymentType={hasSelectedDeploymentType}
-                    onIonConfigurationSaved={() => fileUploadRef.current?.clearSelected()}
+                    onSaved={() => fileUploadRef.current?.clearSelected()}
                 >
                     <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} canEdit />
 

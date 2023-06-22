@@ -18,7 +18,6 @@ import { ActionToolbar } from './ActionToolbar';
 
 export const ConfigurationView = () => {
     const [canEdit, setEditMode] = useState(false);
-    const [resetForm, setResetForm] = useState(false);
     const connectionId = useConnectionId();
     const query = useConnectionsIdGet(
         { id: connectionId || '' },
@@ -47,18 +46,18 @@ export const ConfigurationView = () => {
                 connectionId={connectionId}
                 connection={connection}
                 hasSelectedDeploymentType={hasSelectedDeploymentType}
-                onIonConfigurationSaved={() => fileUploadRef.current?.clearSelected()}
+                onSaved={() => {
+                    fileUploadRef.current?.clearSelected();
+                    setEditMode(false);
+                }}
                 ref={formRef}
             >
                 <ActionToolbar
                     canEdit={canEdit}
-                    onEdit={() => setEditMode(true)}
-                    onDelete={() => { }}
-                    onCancel={() => {
+                    onEditAction={() => setEditMode(true)}
+                    onDeleteAction={() => { }}
+                    onCancelAction={() => {
                         formRef.current?.reset(true);
-                        setEditMode(false);
-                    }}
-                    onSave={() => {
                         setEditMode(false);
                     }}
                 />
