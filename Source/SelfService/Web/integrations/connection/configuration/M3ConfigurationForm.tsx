@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useRef, useState, useCallback, useEffect } from 'react';
+import React, { useImperativeHandle, useRef, useState, useCallback, useEffect } from 'react';
 
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
@@ -32,6 +32,10 @@ export type M3ConnectionParameters = {
     ionConfiguration: IonConfigRequest;
 };
 
+export type M3ConfigurationFormRef = {
+    reset: (keepDefault: boolean) => void;
+};
+
 export type M3ConfigurationFormProps = {
     connectionId: string;
     connection: ConnectionModel
@@ -40,17 +44,38 @@ export type M3ConfigurationFormProps = {
     onSelectHostingSaved?: () => void;
     onMdpConfigurationSaved?: () => void;
     onIonConfigurationSaved?: () => void;
-    resetForm?: boolean;
     children?: React.ReactNode;
 };
 
-export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeploymentType, onNameSaved, onSelectHostingSaved, onMdpConfigurationSaved, onIonConfigurationSaved, resetForm = false, children }: M3ConfigurationFormProps) => {
+export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3ConfigurationFormProps>((
+    {
+        connectionId,
+        connection,
+        hasSelectedDeploymentType,
+        onNameSaved,
+        onSelectHostingSaved,
+        onMdpConfigurationSaved,
+        onIonConfigurationSaved,
+        children
+    }: M3ConfigurationFormProps,
+    ref: React.Ref<M3ConfigurationFormRef>
+) => {
     const [currentForm, setCurrentForm] = useState<FormRef<M3ConnectionParameters>>();
     const formRef = useCallback((ref) => {
         if (ref) {
             setCurrentForm(ref);
         }
     }, []);
+
+    useImperativeHandle(ref, () => ({
+        reset(keepDefault: boolean) {
+            if (currentForm) {
+                currentForm.reset(keepDefault ? currentForm.formState.defaultValues : undefined);
+            }
+        }
+    }), [currentForm]);
+
+    useForceSubscribeToIonConfigurationStateChanges(currentForm);
 
     useEffect(() => {
         if (currentForm?.formState.isSubmitSuccessful) {
@@ -73,14 +98,6 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
     const metadataPublisherUrl = connection._configuration?.mdp?.url;
     const metadataPublisherPassword = connection._configuration?.mdp?.password;
     const ionConfiguration = connection._configuration?.ion;
-
-    useForceSubscribeToIonConfigurationStateChanges(currentForm);
-
-    useEffect(() => {
-        if(resetForm) {
-            currentForm?.reset();
-        }
-    },[resetForm]);
 
     const handleM3ConnectionSave: SubmitHandler<M3ConnectionParameters> = useCallback((data) => {
         if (!connectionId || !currentForm) {
@@ -223,5 +240,6 @@ export const M3ConfigurationForm = ({ connectionId, connection, hasSelectedDeplo
             {children}
         </Form>
     );
-};
+});
 
+M3ConfigurationForm.displayName = 'M3ConfigurationForm';
