@@ -12,7 +12,7 @@ export { AlertDialog, AlertDialogProps } from './atoms/AlertDialog';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
 export { Button, ButtonProps } from './atoms/Button';
 export * from './atoms/Forms';
-//export { DropdownMenu } from './atoms/DropdownMenu';
+export { DropdownMenu, DropdownMenuProps } from './atoms/DropdownMenu';
 export { Icon, IconProps } from './atoms/Icon';
 export { IconButton, IconButtonProps } from './atoms/IconButton';
 export { Link, LinkProps } from './atoms/Link';
