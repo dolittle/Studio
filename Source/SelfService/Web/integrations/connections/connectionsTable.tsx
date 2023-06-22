@@ -80,6 +80,7 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
 
     const handleRowClick = (connectionModel: ConnectionModel) => {
         if (connectionModel.connectionId) {
+            //TODO: Redirect correctly based on status
             const href = connectionModel.connectionId + '/messages';
             navigate(href);
         }
