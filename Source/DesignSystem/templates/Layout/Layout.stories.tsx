@@ -3,11 +3,10 @@
 
 import React from 'react';
 
-import { componentStories } from '@dolittle/design-system';
-
-import { Layout } from './Layout';
+import { componentStories, Layout } from '@dolittle/design-system';
 
 import { Router, CurrentPath } from '../../helpers/ReactRouter';
+import { primaryNavigationItems, secondaryNavigationItems, selectionMenuItems } from '../../helpers/DummyContents/DummyNavigationItems';
 
 const { metadata, createStory } = componentStories(Layout, {
     decorator: Story =>
@@ -17,11 +16,16 @@ const { metadata, createStory } = componentStories(Layout, {
 });
 
 metadata.parameters = {
-    // Don't show controls for the router.
-    controls: { include: [] },
+    controls: {
+        exclude: ['children'],
+    },
 };
 
 metadata.args = {
+    logo: 'AigonixLightCube',
+    primaryNavigationItems,
+    secondaryNavigationItems,
+    selectionMenuItems,
     children: <CurrentPath />,
 };
 

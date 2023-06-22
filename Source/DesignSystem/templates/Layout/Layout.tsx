@@ -5,34 +5,28 @@ import React from 'react';
 
 import { Box, Toolbar } from '@mui/material';
 
-import { NavigationBar, SideBar } from '@dolittle/design-system';
+import { NavigationBar, NavigationBarProps, SideBar } from '@dolittle/design-system';
 
-import { MainLinks, MobileSecondaryLinks, SecondaryLinks, SelectionMenu, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/ReactRouter';
+import { SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/ReactRouter';
 
 /**
  * The props for a {@link Layout} component.
  */
-type LayoutProps = {
+export type LayoutProps = NavigationBarProps & {
     /**
      * The main content of the layout.
-     * @default undefined
      */
     children: React.ReactNode;
 };
 
 /**
  * The layout component is the main component that contains the navigation bar and the side bar.
- * @param {LayoutProps} props - The {@link LayoutProps} that contains the properties for layout component.
+ * @param {LayoutProps} props - The {@link LayoutProps}.
  * @returns A {@link Layout} component.
  */
-export const Layout = ({ children }: LayoutProps) =>
+export const Layout = ({ children, ...navigationBar }: LayoutProps) =>
     <Box sx={{ display: 'flex' }}>
-        <NavigationBar
-            primaryLinks={<MainLinks />}
-            optionsMenu={<SecondaryLinks />}
-            mobileDropdownMenu={<SelectionMenu />}
-            mobileSecondaryLinks={<MobileSecondaryLinks />}
-        />
+        <NavigationBar {...navigationBar} />
 
         <SideBar
             primaryLinks={<SideBarPrimaryLinks />}
