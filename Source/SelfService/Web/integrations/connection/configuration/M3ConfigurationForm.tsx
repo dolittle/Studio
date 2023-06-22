@@ -40,10 +40,7 @@ export type M3ConfigurationFormProps = {
     connectionId: string;
     connection: ConnectionModel
     hasSelectedDeploymentType: boolean;
-    onNameSaved?: () => void;
-    onSelectHostingSaved?: () => void;
-    onMdpConfigurationSaved?: () => void;
-    onIonConfigurationSaved?: () => void;
+    onSaved?: () => void;
     children?: React.ReactNode;
 };
 
@@ -52,10 +49,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         connectionId,
         connection,
         hasSelectedDeploymentType,
-        onNameSaved,
-        onSelectHostingSaved,
-        onMdpConfigurationSaved,
-        onIonConfigurationSaved,
+        onSaved,
         children
     }: M3ConfigurationFormProps,
     ref: React.Ref<M3ConfigurationFormRef>
@@ -80,8 +74,9 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
     useEffect(() => {
         if (currentForm?.formState.isSubmitSuccessful) {
             currentForm.reset(currentForm.getValues());
+            onSaved?.();
         }
-    }, [currentForm?.reset, currentForm?.formState.isSubmitSuccessful, currentForm?.formState.defaultValues]);
+    }, [currentForm?.reset, currentForm?.formState.isSubmitSuccessful, currentForm?.formState.defaultValues, onSaved]);
 
 
     const { enqueueSnackbar } = useSnackbar();
@@ -116,7 +111,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
                 {
                     onSuccess: () => {
                         handleSuccessfulSave('Saved Name');
-                        onNameSaved?.();
                     },
                     onError: (error) => handleErrorWhenSaving('Error saving Name', error),
                 },
@@ -133,7 +127,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
                     {
                         onSuccess: () => {
                             handleSuccessfulSave('Saved Hosting Type');
-                            onSelectHostingSaved?.();
                         },
                         onError: (error) => handleErrorWhenSaving('Error saving Hosting Type', error),
                     },
@@ -149,7 +142,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
                     {
                         onSuccess: () => {
                             handleSuccessfulSave('Saved Hosting Type');
-                            onSelectHostingSaved?.();
                         },
                         onError: (error) => handleErrorWhenSaving('Error saving Hosting Type', error),
                     },
@@ -173,7 +165,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
                 {
                     onSuccess: () => {
                         handleSuccessfulSave('Saved MDP Configuration');
-                        onMdpConfigurationSaved?.();
                     },
                     onError: (error) => handleErrorWhenSaving('Error saving MDP Configuration', error),
                 },
@@ -189,7 +180,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
                 {
                     onSuccess: () => {
                         handleSuccessfulSave('Saved ION Configuration');
-                        onIonConfigurationSaved?.();
                     },
                     onError: (error) => handleErrorWhenSaving('Error saving ION Configuration', error),
                 },
