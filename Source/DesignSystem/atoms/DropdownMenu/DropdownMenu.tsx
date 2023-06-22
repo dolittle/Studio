@@ -3,33 +3,9 @@
 
 import React, { useState } from 'react';
 
-import { ButtonTypeMap, ExtendButtonBase, Menu, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
+import { Menu } from '@mui/material';
 
-import { Button, Icon, IconProps, IconButton } from '@dolittle/design-system';
-
-type MenuItemProps = {
-    /**
-     * The label to display for the menu item.
-     */
-    label: string;
-
-    /**
-     * The icon to display for the menu item.
-     */
-    icon?: IconProps['icon'];
-
-    /**
-     * The onClick handler for the menu item.
-     */
-    onClick?: () => void;
-
-    /**
-     * The overrides prop gives you access to the underlying MuiButtonProps object, overriding the styles defined by the component and Material-UI.
-     */
-    overrides?: Partial<ExtendButtonBase<ButtonTypeMap>>;
-};
-
-// TODO: If none of the menu items have an icon then there will be weird spacing.
+import { Button, IconButton, MenuList, MenuListProps } from '@dolittle/design-system';
 
 /**
  * The props for a {@link DropdownMenu} component.
@@ -49,7 +25,7 @@ export type DropdownMenuProps = {
     /**
      * The menu items to display in the dropdown menu.
      */
-    menuItems: MenuItemProps[];
+    menuItems: MenuListProps['menuListItem'];
 };
 
 /**
@@ -101,16 +77,7 @@ export const DropdownMenu = ({ label, menuItems, iconDropdown }: DropdownMenuPro
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                {menuItems.map(item =>
-                    <li key={item.label}>
-                        <ListItemButton dense onClick={item.onClick} {...item.overrides}>
-                            <ListItemIcon sx={{ color: 'inherit' }}>
-                                {item.icon && <Icon icon={item.icon} />}
-                            </ListItemIcon>
-                            <ListItemText>{item.label}</ListItemText>
-                        </ListItemButton>
-                    </li>
-                )}
+                <MenuList menuListItem={menuItems} />
             </Menu>
         </>
     );
