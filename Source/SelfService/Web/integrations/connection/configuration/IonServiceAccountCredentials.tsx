@@ -48,7 +48,9 @@ const InstructionsListItems = () =>
         ))}
     </Box>;
 
-export type IonServiceAccountCredentialsProps = {};
+export type IonServiceAccountCredentialsProps = {
+    canEdit: boolean;
+};
 
 export const IonServiceAccountCredentials = React.forwardRef<FileUploadFormRef, IonServiceAccountCredentialsProps>(function (
     props: IonServiceAccountCredentialsProps,
@@ -83,7 +85,8 @@ export const IonServiceAccountCredentials = React.forwardRef<FileUploadFormRef, 
 
         <InstructionsListItems />
 
-        <FileUploadForm onSelected={handleFileUploaded} validFileExtensions={['json']} ref={ref} />
+        {props.canEdit && <FileUploadForm onSelected={handleFileUploaded} validFileExtensions={['json']} ref={ref} />}
+
     </>;
 });
 

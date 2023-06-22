@@ -8,9 +8,13 @@ import { useFormContext } from 'react-hook-form';
 
 import { Input, PasswordInput, MaxWidthTextBlock } from '@dolittle/design-system';
 
-export const MetadataPublisherCredentials = () => {
+export type MetadataPublisherCredentialsProps = {
+    canEdit: boolean;
+};
+
+export const MetadataPublisherCredentials = ({ canEdit }: MetadataPublisherCredentialsProps) => {
     const { watch } = useFormContext();
-    const [ metadataPublisherUrl, metadataPublisherPassword ] = watch(['metadataPublisherUrl', 'metadataPublisherPassword']);
+    const [metadataPublisherUrl, metadataPublisherPassword] = watch(['metadataPublisherUrl', 'metadataPublisherPassword']);
 
     const required = !!metadataPublisherUrl || !!metadataPublisherPassword;
 
@@ -26,12 +30,14 @@ export const MetadataPublisherCredentials = () => {
                 placeholder='Your metadata publisher URL goes here...'
                 sx={{ width: 1, maxWidth: 500 }}
                 required={{ value: required, message: 'Please enter your metadata publisher URL' }}
+                disabled={!canEdit}
             />
             <PasswordInput
                 id='metadataPublisherPassword'
                 label='Password'
                 placeholder='Your password'
                 required={{ value: required, message: 'Please enter the metadata publisher password' }}
+                disabled={!canEdit}
             />
         </Stack>
     </>;

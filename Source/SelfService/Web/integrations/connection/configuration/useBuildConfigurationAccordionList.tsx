@@ -11,7 +11,7 @@ import { MetadataPublisherCredentials } from './MetadataPublisherCredentials';
 import { IonServiceAccountCredentials } from './IonServiceAccountCredentials';
 import { configurationStatusFromServiceCredentialsStatus, hostBundleStatusFromServicesStatus } from './statusResolvers';
 
-export function useBuildConfigurationAccordionList(connection: ConnectionModel | undefined, fileUploadRef: React.RefObject<FileUploadFormRef>): AccordionListProps {
+export function useBuildConfigurationAccordionList(connection: ConnectionModel | undefined, fileUploadRef: React.RefObject<FileUploadFormRef>, canEdit: boolean = true): AccordionListProps {
     return useMemo(() => {
         const connectorBundleStatus = hostBundleStatusFromServicesStatus(connection?.mdpStatus, connection?.ionStatus);
         const metadataPublisherCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.mdpStatus);
@@ -31,7 +31,7 @@ export function useBuildConfigurationAccordionList(connection: ConnectionModel |
                 {
                     id: 'metadataPublisherCredentials',
                     title: 'Metadata Publisher Credentials',
-                    children: <MetadataPublisherCredentials />,
+                    children: <MetadataPublisherCredentials canEdit={canEdit} />,
                     progressStatus: metadataPublisherCredentialsStatus && metadataPublisherCredentialsStatus[0],
                     progressLabel: metadataPublisherCredentialsStatus && metadataPublisherCredentialsStatus[1],
                     sx: { mt: 8 },
@@ -39,12 +39,12 @@ export function useBuildConfigurationAccordionList(connection: ConnectionModel |
                 {
                     id: 'ionCredentials',
                     title: 'ION Service Account Credentials',
-                    children: <IonServiceAccountCredentials ref={fileUploadRef} />,
+                    children: <IonServiceAccountCredentials ref={fileUploadRef} canEdit={canEdit} />,
                     progressStatus: iONServiceAccountCredentialsStatus && iONServiceAccountCredentialsStatus[0],
                     progressLabel: iONServiceAccountCredentialsStatus && iONServiceAccountCredentialsStatus[1],
                     sx: { mt: 8 },
                 },
             ],
         };
-    }, [connection?.status, connection?.ionStatus, connection?.mdpStatus]);
+    }, [connection?.status, connection?.ionStatus, connection?.mdpStatus, canEdit]);
 }
