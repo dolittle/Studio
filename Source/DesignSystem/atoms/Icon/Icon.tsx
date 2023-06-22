@@ -3,6 +3,8 @@
 
 import React from 'react';
 
+import { SxProps } from '@mui/system';
+
 import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
 
 /**
@@ -25,6 +27,11 @@ export type IconProps = {
      * @default small
      */
     size?: 'small' | 'medium';
+
+    /**
+     * The sx prop lets you add custom styles to the component.
+     */
+    sx?: SxProps;
 };
 
 /**
@@ -32,8 +39,8 @@ export type IconProps = {
  * @param {IconProps} props - The {@link IconProps}.
  * @returns A {@link Icon} component.
  */
-export const Icon = ({ icon, color = 'inherit', size = 'small' }: IconProps) => {
-    const clonedIcon = React.cloneElement(SvgIcons[icon], { 'fontSize': size, color, 'aria-hidden': true });
+export const Icon = ({ icon, color = 'inherit', size = 'small', sx }: IconProps) => {
+    const clonedIcon = React.cloneElement(SvgIcons[icon], { 'fontSize': size, color, 'aria-hidden': true, sx });
 
     return <>{clonedIcon}</>;
 };
