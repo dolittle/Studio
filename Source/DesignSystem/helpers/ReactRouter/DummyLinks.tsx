@@ -98,7 +98,7 @@ export const SecondaryLinks = () =>
 
 export const SideBarPrimaryLinks = () =>
     <>
-        <RouterLinkListItem to='connections' text='ERP Connections' icon={<Icon icon='PolylineRounded' />} />
+        <RouterLinkListItem to='sidebar-primary-link-1' text='Primary link 1' icon={<Icon icon='PolylineRounded' />} />
         <RouterLinkListItem to='sidebar-primary-link-2' text='Primary link 2' icon={<Icon icon='Bridge' />} />
     </>;
 
