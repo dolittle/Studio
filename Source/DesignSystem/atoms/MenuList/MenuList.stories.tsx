@@ -7,6 +7,8 @@ import { menuItems } from '../../helpers/DummyContents/DummyNavigationItems';
 
 const { metadata, createStory } = componentStories(MenuList);
 
+metadata.title = 'Menu Items';
+
 metadata.args = {
     menuListItem: menuItems,
 };
