@@ -3,42 +3,20 @@
 
 import React from 'react';
 
-import { Grid, Box, Toolbar } from '@mui/material';
+import { Layout } from '@dolittle/design-system';
 
-import { NavigationBar, SideBar } from '@dolittle/design-system';
-
-import { MainLinks, SecondaryLinks, SpaceSelectionMenu, MoreOptions, SideBarPrimaryLinks, SideBarSecondaryLinks } from './linksHelper';
-
-const styles = {
-    'minHeight': 'calc(100vh - 96px)',
-    'display': 'flex',
-    'flexDirection': 'column',
-    'flexGrow': 1,
-    'm': 4,
-    'mt': 8,
-    '& .MuiToolbar-root': { p: 0 },
-};
+import { mainLinks, secondaryLinks, selectionMenuItems } from './workSpaceLayoutLinks';
 
 type WorkSpaceLayoutProps = {
     children: React.ReactNode;
 };
 
 export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Grid container sx={{ flexFlow: 'nowrap' }}>
-        <NavigationBar
-            primaryLinks={<MainLinks />}
-            optionsMenu={<SecondaryLinks />}
-            mobileDropdownMenu={<SpaceSelectionMenu />}
-            mobileSecondaryLinks={<MoreOptions />}
-        />
-
-        <SideBar
-            primaryLinks={<SideBarPrimaryLinks />}
-            secondaryLinks={<SideBarSecondaryLinks />}
-        />
-
-        <Box component='main' sx={styles}>
-            <Toolbar />
-            {children}
-        </Box>
-    </Grid>;
+    <Layout
+        logo='AigonixLightCube'
+        primaryNavigationItems={mainLinks}
+        secondaryNavigationItems={secondaryLinks}
+        selectionMenuItems={selectionMenuItems}
+    >
+        {children}
+    </Layout>;

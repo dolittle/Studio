@@ -7,7 +7,7 @@ import { Menu } from '@mui/material';
 
 import { Button, IconButton, Icon } from '@dolittle/design-system';
 
-import { RouterLinkListItem } from './RouterLinkListItem';
+import { RouterLinkListItem } from './workSpaceLayoutLinks';
 
 export const MainLinks = () =>
     <>

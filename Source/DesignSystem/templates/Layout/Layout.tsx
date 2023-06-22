@@ -3,11 +3,21 @@
 
 import React from 'react';
 
-import { Box, Toolbar } from '@mui/material';
+import { Box, Grid, Toolbar } from '@mui/material';
 
 import { NavigationBar, NavigationBarProps, SideBar } from '@dolittle/design-system';
 
 import { SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/ReactRouter';
+
+const styles = {
+    'minHeight': 'calc(100vh - 96px)',
+    'display': 'flex',
+    'flexDirection': 'column',
+    'flexGrow': 1,
+    'm': 4,
+    'mt': 8,
+    '& .MuiToolbar-root': { p: 0 },
+};
 
 /**
  * The props for a {@link Layout} component.
@@ -25,7 +35,7 @@ export type LayoutProps = NavigationBarProps & {
  * @returns A {@link Layout} component.
  */
 export const Layout = ({ children, ...navigationBar }: LayoutProps) =>
-    <Box sx={{ display: 'flex' }}>
+    <Grid container sx={{ flexFlow: 'nowrap' }}>
         <NavigationBar {...navigationBar} />
 
         <SideBar
@@ -33,9 +43,8 @@ export const Layout = ({ children, ...navigationBar }: LayoutProps) =>
             secondaryLinks={<SideBarSecondaryLinks />}
         />
 
-        <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+        <Box component='main' sx={styles}>
             <Toolbar />
-
             {children}
         </Box>
-    </Box>;
+    </Grid>;
