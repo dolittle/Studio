@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Layout } from '@dolittle/design-system';
 
-import { mainLinks, secondaryLinks, selectionMenuItems } from './workSpaceLayoutLinks';
+import { primaryNavigationItems, secondaryNavigationItems, selectionMenuItems } from './workSpaceLayoutLinks';
 
 type WorkSpaceLayoutProps = {
     children: React.ReactNode;
@@ -13,10 +13,12 @@ type WorkSpaceLayoutProps = {
 
 export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
     <Layout
-        logo='AigonixLightCube'
-        primaryNavigationItems={mainLinks}
-        secondaryNavigationItems={secondaryLinks}
-        selectionMenuItems={selectionMenuItems}
+        navigationBar={{
+            logo: 'AigonixLightCube',
+            primaryNavigationItems,
+            secondaryNavigationItems,
+            selectionMenuItems,
+        }}
     >
         {children}
     </Layout>;

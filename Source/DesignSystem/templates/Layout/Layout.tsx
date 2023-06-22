@@ -22,11 +22,13 @@ const styles = {
 /**
  * The props for a {@link Layout} component.
  */
-export type LayoutProps = NavigationBarProps & {
+export type LayoutProps = {
     /**
      * The main content of the layout.
      */
     children: React.ReactNode;
+
+    navigationBar: NavigationBarProps;
 };
 
 /**
@@ -34,7 +36,7 @@ export type LayoutProps = NavigationBarProps & {
  * @param {LayoutProps} props - The {@link LayoutProps}.
  * @returns A {@link Layout} component.
  */
-export const Layout = ({ children, ...navigationBar }: LayoutProps) =>
+export const Layout = ({ children, navigationBar }: LayoutProps) =>
     <Grid container sx={{ flexFlow: 'nowrap' }}>
         <NavigationBar {...navigationBar} />
 

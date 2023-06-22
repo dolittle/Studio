@@ -31,7 +31,7 @@ export const RouterLinkListItem = ({ to, icon, text, inset, variantButton }: Rou
         </ListItemButton>
     </ListItem>;
 
-export const mainLinks = [
+export const primaryNavigationItems = [
     {
         label: 'home',
     },
@@ -43,7 +43,7 @@ export const mainLinks = [
     },
 ];
 
-export const secondaryLinks: MenuListProps['menuListItem'] = [
+export const secondaryNavigationItems: MenuListProps['menuListItem'] = [
     {
         label: 'Documentation',
         icon: 'DescriptionRounded',
