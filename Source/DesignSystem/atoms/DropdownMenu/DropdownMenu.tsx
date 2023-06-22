@@ -29,6 +29,8 @@ type MenuItemProps = {
     overrides?: Partial<ExtendButtonBase<ButtonTypeMap>>;
 };
 
+// TODO: If none of the menu items have an icon then there will be weird spacing.
+
 /**
  * The props for a {@link DropdownMenu} component.
  */
@@ -57,7 +59,12 @@ export type DropdownMenuProps = {
  */
 export const DropdownMenu = ({ label, menuItems, iconDropdown }: DropdownMenuProps) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
     const open = Boolean(anchorEl);
+
+    const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
 
     const handleClose = () => setAnchorEl(null);
 
@@ -68,7 +75,7 @@ export const DropdownMenu = ({ label, menuItems, iconDropdown }: DropdownMenuPro
                     tooltipText={label}
                     icon='MoreVertRounded'
                     edge='end'
-                    onClick={e => setAnchorEl(e.currentTarget)}
+                    onClick={handleClickListItem}
                     aria-controls={open ? 'more-options' : undefined}
                     aria-haspopup='true'
                     aria-expanded={open ? 'true' : undefined}
@@ -77,7 +84,7 @@ export const DropdownMenu = ({ label, menuItems, iconDropdown }: DropdownMenuPro
                     label={label}
                     color='subtle'
                     endWithIcon={open ? 'ArrowDropUpRounded' : 'ArrowDropDownRounded'}
-                    onClick={e => setAnchorEl(e.currentTarget)}
+                    onClick={handleClickListItem}
                     aria-haspopup='true'
                     aria-controls={open ? 'select-selected' : undefined}
                     aria-expanded={open ? 'true' : undefined}
