@@ -1,26 +1,11 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { componentStories, DropdownMenu, DropdownMenuProps } from '@dolittle/design-system';
+import { componentStories, DropdownMenu } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(DropdownMenu);
 
-const menuItems: DropdownMenuProps['menuItems'] = [
-    {
-        label: 'Selected',
-        icon: 'CheckRounded',
-        overrides: {
-            selected: true,
-        },
-    },
-    {
-        label: 'Link 2',
-    },
-    {
-        label: 'Link 3',
-        icon: 'LogoutRounded',
-    },
-];
+import { menuItems } from '../../helpers/DummyContents/DummyNavigationItems';
 
 metadata.title = 'Dropdown Menu';
 
