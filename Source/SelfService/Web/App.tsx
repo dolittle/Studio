@@ -98,8 +98,11 @@ export const App = () => {
                                             <DieAndRestart />
                                         </LayoutWithSidebar>
                                     } />
+
                                     <Route path="/home" element={<HomeScreen />} />
+
                                     <Route path="/integrations/*" element={<IntegrationsIndex />} />
+
                                     <Route path='*' element={<RouteNotFound redirectUrl='/applications' auto={true} />} />
                                 </Routes>
                             </SnackbarProvider>
