@@ -1,3 +1,17 @@
+# [3.4.50] - 2023-6-22 [PR: #409](https://github.com/dolittle/Studio/pull/409)
+- Move all configuration components into configuration folder
+- Replace static configuration tab with real configuration components
+- Fix broken imports after moving files
+- Move ActionButtons component back to "new" as it's specific to the new component
+- Wire up the action toolbar to enable edit, save and cancel actions
+- Toggle "Cancel", "Done" and "Save" based on isDirty/isValid/Edit mode
+- Make saving reset the form and go back to "read" mode
+- Don't show loading spinners until an action has been taken on that configuration step
+- Trigger save on the "next tick" with a useEffect
+- Disabled inputs when in Edit mode
+- Wrap the FileIploadForm in a MaxWidthTextBlock so it doesn't use ALL THE SPACE :)
+
+
 # [3.4.49] - 2023-6-20 [PR: #408](https://github.com/dolittle/Studio/pull/408)
 Force deploy. Again.
 
