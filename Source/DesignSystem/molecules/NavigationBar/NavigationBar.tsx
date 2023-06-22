@@ -5,36 +5,18 @@ import React, { useState } from 'react';
 
 import { AppBar, Box, Toolbar, Theme } from '@mui/material';
 
-import { Button, Icon, IconProps } from '@dolittle/design-system';
+import { Button, DropdownMenu, DropdownMenuProps, Icon, IconProps, IconButton } from '@dolittle/design-system';
 
 import { NavigationBarMobile } from './NavigationBarMobile';
 
 const styles = {
     nav: { zIndex: (theme: Theme) => theme.zIndex.drawer + 1 },
-    hideOnMobile: { display: { xs: 'none', sm: 'flex' } },
-    // mobileMenu: {
-    //     width: 1,
-    //     justifyContent: 'space-between',
-    //     display: { xs: 'flex', md: 'none' },
-    // },
-    // 'display': { xs: 'none', md: 'flex' },
-    // '.MuiListItemButton-root.Mui-selected': {
-    //     color: 'primary.main',
-    //     backgroundColor: 'transparent',
-    // },
-};
-
-type PrimaryNavigationItemButtonProps = {
-    href: string;
-    name: string;
-};
-
-const PrimaryNavigationItemButton = ({ name, href }: PrimaryNavigationItemButtonProps) => {
-    const selected = window.location.href.includes(href);
-
-    return (
-        <Button label={name} href={href} sx={{ color: selected ? 'primary.light' : 'text.primary' }} />
-    );
+    hideOnMobile: { display: { xs: 'none', md: 'flex' } },
+    mobileMenu: {
+        width: 1,
+        justifyContent: 'space-between',
+        display: { xs: 'flex', md: 'none' },
+    },
 };
 
 /**
@@ -49,24 +31,17 @@ export type NavigationBarProps = {
     /**
      * Primary links that appear to the left of the navigation bar.
      */
-    primaryNavigationItems?: PrimaryNavigationItemButtonProps[];
+    primaryNavigationItems?: DropdownMenuProps['menuItems'];
 
     /**
-     * More options drop-down menu that appears to the right of the navigation bar.
+     * Secondary links that appear to the right of the navigation bar.
      */
-    optionsMenu?: JSX.Element;
+    secondaryNavigationItems?: DropdownMenuProps['menuItems'];
 
     /**
-     * A mobile drop-down menu that appears in the bottom navigation bar next to the menu-toggle icon.
-     * @default undefined
+     * A drop-down menu that appears in the right of the navigation bar.
      */
-    mobileDropdownMenu?: JSX.Element;
-
-    /**
-     * Secondary links that appear at the bottom of the mobile navigation bar.
-     * @default undefined
-     */
-    mobileSecondaryLinks?: JSX.Element;
+    selectionMenuItems?: DropdownMenuProps['menuItems'];
 };
 
 /**
@@ -74,40 +49,51 @@ export type NavigationBarProps = {
  * @param {NavigationBarProps} props - The {@link NavigationBarProps}.
  * @returns A {@link NavigationBar} component.
  */
-export const NavigationBar = ({ logo, primaryNavigationItems, optionsMenu, mobileDropdownMenu, mobileSecondaryLinks }: NavigationBarProps) => {
+export const NavigationBar = ({ logo, primaryNavigationItems, secondaryNavigationItems, selectionMenuItems }: NavigationBarProps) => {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
     return (
         <AppBar elevation={4} component='nav' sx={styles.nav}>
-            {/* {isMobileNavOpen &&
+            {isMobileNavOpen &&
                 <NavigationBarMobile
                     isOpen={isMobileNavOpen}
                     onClose={() => setIsMobileNavOpen(false)}
-                    mobileMainLinks={primaryLinks}
-                    mobileSecondaryLinks={mobileSecondaryLinks}
+                    logo={logo}
+                    mainLinks={primaryNavigationItems}
+                    secondaryLinks={secondaryNavigationItems}
                 />
-            } */}
+            }
 
             <Toolbar>
-                {/* <IconButton
-                    tooltipText='Toggle navigation menu'
-                    icon='MenuRounded'
-                    edge='start'
-                    onClick={() => setIsMobileNavOpen(prevState => !prevState)}
-                /> */}
+                <Box sx={styles.mobileMenu}>
+                    <IconButton
+                        tooltipText='Toggle navigation menu'
+                        icon='MenuRounded'
+                        edge='start'
+                        onClick={() => setIsMobileNavOpen(prevState => !prevState)}
+                    />
 
-                {/* {mobileDropdownMenu} */}
+                    {selectionMenuItems &&
+                        <DropdownMenu label='Selection menu' menuItems={selectionMenuItems} />
+                    }
+                </Box>
 
                 <Box sx={{ ...styles.hideOnMobile, flexGrow: 1, alignItems: 'center', gap: 3 }}>
-                    {logo && <Icon icon={logo} />}
+                    {logo && <Icon icon={logo} sx={{ mr: 2 }} />}
 
                     {primaryNavigationItems?.map(navigationItem =>
-                        <PrimaryNavigationItemButton key={navigationItem.name} {...navigationItem} />
+                        <Button key={navigationItem.label} label={navigationItem.label} color='subtle' />
                     )}
                 </Box>
 
-                <Box sx={{ ...styles.hideOnMobile }}>
-                    {optionsMenu}
+                <Box sx={{ ...styles.hideOnMobile, gap: 1 }}>
+                    {selectionMenuItems &&
+                        <DropdownMenu label='Selection menu' menuItems={selectionMenuItems} />
+                    }
+
+                    {secondaryNavigationItems &&
+                        <DropdownMenu label='More options' menuItems={secondaryNavigationItems} iconDropdown />
+                    }
                 </Box>
             </Toolbar>
         </AppBar>

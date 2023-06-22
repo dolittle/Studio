@@ -47,7 +47,7 @@ export const Content = () => {
 };
 
 // TUTORIAL: https://mui.com/material-ui/guides/composition/
-const Link = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function Link(itemProps, ref) {
+export const Link = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function Link(itemProps, ref) {
     return <RouterLink ref={ref} {...itemProps} role={undefined} />;
 });
 
