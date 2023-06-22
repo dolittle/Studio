@@ -25,9 +25,10 @@ const hostingTooltipText = `Currently, you can only setup the connection with on
 export type MainM3ConnectionInfoProps = {
     hasSelectedDeploymentType: boolean;
     connectionIdLinks?: Link[] | null;
+    canEdit: boolean;
 };
 
-export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentType }: MainM3ConnectionInfoProps) => {
+export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentType, canEdit }: MainM3ConnectionInfoProps) => {
 
     const selectValues = useMemo(() => {
         const shouldUseOnPrem = connectionIdLinks?.some(link => link.rel === 'deploy-on-premises') || false;
@@ -58,7 +59,7 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentT
             <MaxWidthTextBlock>{newConnectionDescription}</MaxWidthTextBlock>
 
             <Tooltip tooltipTitle='Connector Name' tooltipText={<ConnectorNameTooltipText />} sx={{ top: 16 }}>
-                <Input id='connectorName' label='Connector Name' placeholder='M3 Connector Test' required='Please enter the connector name'/>
+                <Input id='connectorName' label='Connector Name' placeholder='M3 Connector Test' required='Please enter the connector name' disabled={!canEdit}/>
             </Tooltip>
 
             <Tooltip tooltipTitle='Hosting' tooltipText={hostingTooltipText} displayOnHover={hasSelectedDeploymentType} sx={{ top: 38 }}>
@@ -66,7 +67,7 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentT
                     id='selectHosting'
                     label='Hosting'
                     options={selectValues}
-                    disabled={hasSelectedDeploymentType}
+                    disabled={!canEdit || hasSelectedDeploymentType}
                     required='Please select the hosting type'
                 />
             </Tooltip>

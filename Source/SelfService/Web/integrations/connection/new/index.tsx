@@ -45,7 +45,7 @@ export const NewConnectionView = () => {
                     hasSelectedDeploymentType={hasSelectedDeploymentType}
                     onIonConfigurationSaved={() => fileUploadRef.current?.clearSelected()}
                 >
-                    <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} />
+                    <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} canEdit />
 
                     <Collapse in={canConfigureConnection}>
                         <AccordionList  {...accordionListProps} />

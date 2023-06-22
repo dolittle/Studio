@@ -32,7 +32,7 @@ export const ConfigurationView = () => {
     const deploymentType = connection?.chosenEnvironment?.value;
     const hasSelectedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
 
-    const accordionListProps: AccordionListProps = useBuildConfigurationAccordionList(connection, fileUploadRef);
+    const accordionListProps: AccordionListProps = useBuildConfigurationAccordionList(connection, fileUploadRef, canEdit);
     const canConfigureConnection = connection?.status?.name !== 'Registered';
 
     if (query.isLoading) return <>Loading</>;
@@ -63,7 +63,7 @@ export const ConfigurationView = () => {
                         setEditMode(false);
                     }}
                 />
-                <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} />
+                <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} canEdit={canEdit} />
 
                 <Collapse in={canConfigureConnection}>
                     <AccordionList  {...accordionListProps} />
