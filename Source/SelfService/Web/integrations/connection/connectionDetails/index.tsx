@@ -12,7 +12,6 @@ import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
 
 export const childRoutePaths = ['configuration', 'messages', 'expose'];
 
-//TODO: Make this dynamic based on current url in the tab component
 const getSelectedTab = (location: Location) => {
     const pathname = location.pathname;
     const foundIndex = childRoutePaths.findIndex((path) => pathname.endsWith(path));
