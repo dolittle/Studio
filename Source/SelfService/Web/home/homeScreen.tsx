@@ -18,6 +18,10 @@ const homeCardGridItems: SimpleCardGridProps['simpleCardItems'] = [
         driven architecture. We then manage the infrastructure for you.`,
         primaryButton: {
             label: 'Deploy a microservice',
+            overrides: {
+                component: Link,
+                to: '/applications',
+            },
         },
         buttonAlignment: 'right',
     },
@@ -40,6 +44,7 @@ const homeCardGridItems: SimpleCardGridProps['simpleCardItems'] = [
         microservice or integration service using our runtime and hosting platform.`,
         primaryButton: {
             label: 'Get Started',
+            disabled: true,
         },
         buttonAlignment: 'right',
     },
