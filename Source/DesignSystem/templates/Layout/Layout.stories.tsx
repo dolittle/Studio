@@ -3,34 +3,41 @@
 
 import React from 'react';
 
-import { componentStories } from '@dolittle/design-system';
+import { componentStories, Layout } from '@dolittle/design-system';
 
-import { Layout } from './Layout';
-
-import { DummyText } from '../../helpers/DummyContents';
-import { Router, CurrentPath } from '../../helpers/ReactRouter';
+import { Router, CurrentPath, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/ReactRouter';
+import { primaryNavigationItems, secondaryNavigationItems, selectionMenuItems } from '../../helpers/DummyContents/DummyNavigationItems';
 
 const { metadata, createStory } = componentStories(Layout, {
-    decorator: (Story) => (
+    decorator: Story =>
         <Router>
             {Story()}
         </Router>
-    ),
 });
 
 metadata.parameters = {
-    controls: { include: [] },
+    controls: {
+        exclude: ['children'],
+    },
 };
 
 metadata.args = {
-    children: (
-        <>
-            <CurrentPath />
-            <DummyText />
-        </>
-    ),
+    navigationBar: {
+        logo: 'AigonixLightCube',
+        primaryNavigationItems,
+        secondaryNavigationItems,
+        selectionMenuItems,
+    },
+    children: <CurrentPath />,
 };
 
 export default metadata;
 
 export const Default = createStory();
+
+export const WithSideBar = createStory({
+    sideBar: {
+        primaryLinks: <SideBarPrimaryLinks />,
+        secondaryLinks: <SideBarSecondaryLinks />,
+    },
+});

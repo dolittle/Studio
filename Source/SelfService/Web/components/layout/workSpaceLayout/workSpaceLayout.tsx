@@ -3,20 +3,20 @@
 
 import React from 'react';
 
-import { Grid, Box, Toolbar } from '@mui/material';
+import { Layout, LayoutProps } from '@dolittle/design-system';
 
-import { NavigationBar, SideBar } from '@dolittle/design-system';
+import { primaryNavigationItems, secondaryNavigationItems, selectionMenuItems, SideBarPrimaryLinks, SideBarSecondaryLinks } from './workSpaceLayoutLinks';
 
-import { MainLinks, SecondaryLinks, SpaceSelectionMenu, MoreOptions, SideBarPrimaryLinks, SideBarSecondaryLinks } from './linksHelper';
+const mainNavigationItems: LayoutProps['navigationBar'] = {
+    logo: 'AigonixLightCube',
+    primaryNavigationItems,
+    secondaryNavigationItems,
+    //selectionMenuItems,
+};
 
-const styles = {
-    'minHeight': 'calc(100vh - 96px)',
-    'display': 'flex',
-    'flexDirection': 'column',
-    'flexGrow': 1,
-    'm': 4,
-    'mt': 8,
-    '& .MuiToolbar-root': { p: 0 },
+const sideBarNavigationItems: LayoutProps['sideBar'] = {
+    primaryLinks: <SideBarPrimaryLinks />,
+    secondaryLinks: <SideBarSecondaryLinks />,
 };
 
 type WorkSpaceLayoutProps = {
@@ -24,21 +24,11 @@ type WorkSpaceLayoutProps = {
 };
 
 export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Grid container sx={{ flexFlow: 'nowrap' }}>
-        <NavigationBar
-            mainLinks={<MainLinks />}
-            secondaryLinks={<SecondaryLinks />}
-            mobileDropdownMenu={<SpaceSelectionMenu />}
-            mobileSecondaryLinks={<MoreOptions />}
-        />
+    <Layout navigationBar={mainNavigationItems} sideBar={sideBarNavigationItems}>
+        {children}
+    </Layout>;
 
-        <SideBar
-            primaryLinks={<SideBarPrimaryLinks />}
-            secondaryLinks={<SideBarSecondaryLinks />}
-        />
-
-        <Box component='main' sx={styles}>
-            <Toolbar />
-            {children}
-        </Box>
-    </Grid>;
+export const WorkSpaceWithoutSideBarLayout = ({ children }: WorkSpaceLayoutProps) =>
+    <Layout navigationBar={mainNavigationItems}>
+        {children}
+    </Layout>;

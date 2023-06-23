@@ -6,7 +6,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../../context/globalContext';
 
-import { Button, SimpleCard } from '@dolittle/design-system';
+import { SimpleCard } from '@dolittle/design-system';
 
 import { HttpResponseApplication } from '../../apis/solutions/application';
 import { getLatestBackupLinkByApplication } from '../../apis/solutions/backups';
@@ -40,12 +40,14 @@ export const BackupsListItems = ({ application, environment, name }: BackupsList
             title={application.name}
             subtitle={`${environment} Environment`}
             description={name}
-            actionButtons={
-                <>
-                    <Button label='View all backups' color='subtle' onClick={handleBackupsView} />
-                    <Button label='Download latest Backup' onClick={handleBackupDownload} />
-                </>
-            }
+            secondaryButton={{
+                label: 'View all backups',
+                onClick: handleBackupsView,
+            }}
+            primaryButton={{
+                label: 'Download latest Backup',
+                onClick: handleBackupDownload,
+            }}
         />
     );
 };

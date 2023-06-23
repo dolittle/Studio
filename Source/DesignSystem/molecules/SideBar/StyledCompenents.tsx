@@ -46,7 +46,7 @@ export const CustomListItem = ({ icon, text, onClick }: CustomListItemProps) =>
         </ListItemButton>
     </ListItem>;
 
-export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+export const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })(
     ({ theme, open }) => ({
         width: drawerWidth,
         flexShrink: 0,

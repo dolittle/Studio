@@ -5,15 +5,13 @@ import React from 'react';
 
 import { Card, CardActions, CardContent, CardHeader, Typography } from '@mui/material';
 
+import { Button, ButtonProps } from '@dolittle/design-system';
+
 const styles = {
-    'maxWidth': 440,
-    'display': 'flex',
-    'flexDirection': 'column',
-    'justifyContent': 'space-between',
-    'height': 1,
-    ':hover': {
-        background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%), #191A21',
-    },
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: 1,
 };
 
 /**
@@ -35,19 +33,25 @@ export type SimpleCardProps = {
      */
     description: string;
 
-    // TODO: Can I require this to be a Button or IconButton?
     /**
-     * The actions of the card.
-     *
-     * Use {@link Button} or {@link IconButton} component for that.
+     * The secondary button of the card.
+     * @param {ButtonProps} props - The {@link ButtonProps}.
+     * @returns A {@link Button} component.
      */
-    actionButtons: React.ReactNode;
+    secondaryButton?: ButtonProps;
+
+    /**
+     * The primary button of the card.
+     * @param {ButtonProps} props - The {@link ButtonProps}.
+     * @returns A {@link Button} component.
+     */
+    primaryButton: ButtonProps;
 
     /**
      * Set alignment of the action buttons.
      * @default left
      */
-    actionButtonsAlignment?: 'left' | 'right';
+    buttonAlignment?: 'left' | 'right';
 };
 
 /**
@@ -55,7 +59,7 @@ export type SimpleCardProps = {
  * @param {SimpleCardProps} props - The {@link SimpleCardProps}.
  * @returns A {@link SimpleCard} component.
  */
-export const SimpleCard = ({ title, subtitle, description, actionButtonsAlignment, actionButtons }: SimpleCardProps) =>
+export const SimpleCard = ({ title, subtitle, description, buttonAlignment, secondaryButton, primaryButton }: SimpleCardProps) =>
     <Card elevation={4} sx={styles}>
         <CardHeader title={<Typography variant='h4'>{title}</Typography>} subheader={subtitle} />
 
@@ -65,7 +69,8 @@ export const SimpleCard = ({ title, subtitle, description, actionButtonsAlignmen
             </Typography>
         </CardContent>
 
-        <CardActions sx={{ flexWrap: 'wrap', justifyContent: actionButtonsAlignment === 'right' ? 'flex-end' : 'flex-start' }}>
-            {actionButtons}
+        <CardActions sx={{ flexWrap: 'wrap', justifyContent: buttonAlignment === 'right' ? 'flex-end' : 'flex-start' }}>
+            {secondaryButton && <Button color='subtle' {...secondaryButton} />}
+            {primaryButton && <Button {...primaryButton} />}
         </CardActions>
     </Card>;

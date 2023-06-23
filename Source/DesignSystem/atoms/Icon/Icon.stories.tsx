@@ -3,8 +3,6 @@
 
 import React from 'react';
 
-import { Box } from '@mui/material';
-
 import { componentStories, Icon, availableIcons, SvgIconsDefinition } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(Icon);
@@ -28,11 +26,7 @@ metadata.args = {
 
 export default metadata;
 
-export const Default = createStory({
-    icon: 'Dolittle',
-});
+export const Default = createStory();
 
 export const IconsWeUse = () =>
-    <Box sx={{ '& svg': { m: 1 } }}>
-        {availableIcons.map(key => <Icon key={key} icon={key as SvgIconsDefinition} />)}
-    </Box>;
+    availableIcons.map(key => <Icon key={key} icon={key as SvgIconsDefinition} sx={{ m: 1 }} />);

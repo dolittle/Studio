@@ -7,41 +7,32 @@ import { Toolbar } from '@mui/material';
 
 import { componentStories, NavigationBar } from '@dolittle/design-system';
 
-import { CurrentPath, MainLinks, MobileSecondaryLinks, Router, SecondaryLinks, SelectionMenu } from '../../helpers/ReactRouter';
+import { CurrentPath, Router } from '../../helpers/ReactRouter';
+import { secondaryNavigationItems, primaryNavigationItems, selectionMenuItems } from '../../helpers/DummyContents/DummyNavigationItems';
 
 const { metadata, createStory } = componentStories(NavigationBar, {
-    decorator: (Story) => (
+    decorator: Story =>
         <Router>
             <Toolbar />
             <CurrentPath />
             {Story()}
         </Router>
-    ),
 });
 
 metadata.parameters = {
-    controls: { include: [] },
     docs: {
         description: {
             component: `The top navigation bar is always positioned at the top of the page and puts high priority destinations within reach on large screens. 
-        The top navigation bar uses a background and elevation of 4. ` },
-        source: {
-            code: `
- <NavigationBar
-   mainLinks={<MainLinks />}
-   mobileDropdownMenu={<SelectionMenu />}
-   mobileSecondaryLinks={<MobileSecondaryLinks />}
-   secondaryLinks={<SecondaryLinks />}
- />`,
+                        The top navigation bar uses a background and elevation of 4.`
         },
     },
 };
 
 metadata.args = {
-    mainLinks: <MainLinks />,
-    secondaryLinks: <SecondaryLinks />,
-    mobileDropdownMenu: <SelectionMenu />,
-    mobileSecondaryLinks: <MobileSecondaryLinks />,
+    logo: 'AigonixLightCube',
+    primaryNavigationItems,
+    secondaryNavigationItems,
+    selectionMenuItems,
 };
 
 export default metadata;

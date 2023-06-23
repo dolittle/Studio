@@ -3,3 +3,4 @@
 
 export { SelectCard } from './SelectCard';
 export { SimpleCard, SimpleCardProps } from './SimpleCard';
+export { SimpleCardGrid, SimpleCardGridProps } from './SimpleCardGrid';

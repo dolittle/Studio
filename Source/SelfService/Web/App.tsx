@@ -34,6 +34,7 @@ import { ApplicationScreen } from './spaces/applications/applicationScreen';
 import { ContainerRegistryScreen } from './applications/containerRegistryScreen';
 import { M3ConnectorScreen } from './applications/m3connectorScreen';
 import { LogsScreen } from './applications/logsScreen';
+import { HomeScreen } from './home/homeScreen';
 import { IntegrationsIndex } from './integrations';
 
 // Set license info for MUI components
@@ -97,7 +98,11 @@ export const App = () => {
                                             <DieAndRestart />
                                         </LayoutWithSidebar>
                                     } />
+
+                                    <Route path="/home" element={<HomeScreen />} />
+
                                     <Route path="/integrations/*" element={<IntegrationsIndex />} />
+
                                     <Route path='*' element={<RouteNotFound redirectUrl='/applications' auto={true} />} />
                                 </Routes>
                             </SnackbarProvider>
