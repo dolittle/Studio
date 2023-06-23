@@ -12,9 +12,9 @@ export type SimpleCardGridProps = {
 };
 
 export const SimpleCardGrid = ({ simpleCardItems }: SimpleCardGridProps) =>
-    <Grid container spacing={4} sx={{ maxWidth: 950 }}>
+    <Grid container spacing={3} sx={{ maxWidth: 1536 }}>
         {simpleCardItems.map(item =>
-            <Grid key={item.title} item xs={12} md={6}>
+            <Grid key={item.title} item xs={12} md={6} xl={4}>
                 <SimpleCard {...item} />
             </Grid>
         )}
