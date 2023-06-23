@@ -1,3 +1,10 @@
+# [3.4.52] - 2023-6-23 [PR: #411](https://github.com/dolittle/Studio/pull/411)
+- WIP: Todos
+- Redirect to correct tab when loading connection screen
+- Extract redirect to logic into hook
+- Slight improvement to the active tab resolving logic - would be good to make this part of the tab component though, maybe a RouterTabs?
+
+
 # [3.4.51] - 2023-6-22 [PR: #410](https://github.com/dolittle/Studio/pull/410)
 - Reset form state after succesful submit
 - Reset Form back to original values when pressing "Cancel"
