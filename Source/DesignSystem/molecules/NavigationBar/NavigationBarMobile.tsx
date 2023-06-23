@@ -30,7 +30,11 @@ export const NavigationBarMobile = ({ isOpen, onClose, logo, mainLinks, secondar
         <Box sx={{ height: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 {mainLinks?.map(navigationItem =>
-                    <Button key={navigationItem.label} {...navigationItem} sx={{ color: navigationItem.selected ? 'primary.main' : 'text.primary' }} />
+                    <Button
+                        key={navigationItem.label}
+                        {...navigationItem}
+                        sx={{ color: window.location.href.includes(navigationItem.label) ? 'primary.main' : 'text.primary' }}
+                    />
                 )}
                 <Divider />
             </Box>

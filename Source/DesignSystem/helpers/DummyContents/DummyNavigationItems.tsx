@@ -24,8 +24,7 @@ export const menuItems: MenuListProps['menuListItem'] = [
 
 export const primaryNavigationItems: NavigationBarProps['primaryNavigationItems'] = [
     {
-        label: 'Selected',
-        selected: true,
+        label: 'default',
         overrides: {
             component: Link,
             to: '/primary-1',

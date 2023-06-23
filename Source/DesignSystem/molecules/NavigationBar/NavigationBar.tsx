@@ -19,10 +19,6 @@ const styles = {
     },
 };
 
-type PrimaryNavigationItems = ButtonProps & {
-    selected?: boolean;
-};
-
 /**
  * The props for a {@link NavigationBar} component.
  */
@@ -35,7 +31,7 @@ export type NavigationBarProps = {
     /**
      * Primary links that appear to the left of the navigation bar.
      */
-    primaryNavigationItems?: PrimaryNavigationItems[];
+    primaryNavigationItems?: ButtonProps[];
 
     /**
      * Secondary links that appear to the right of the navigation bar.
@@ -86,7 +82,11 @@ export const NavigationBar = ({ logo, primaryNavigationItems, secondaryNavigatio
                     {logo && <Icon icon={logo} sx={{ mr: 2 }} />}
 
                     {primaryNavigationItems?.map(navigationItem =>
-                        <Button key={navigationItem.label} {...navigationItem} sx={{ color: navigationItem.selected ? 'primary.main' : 'text.primary' }} />
+                        <Button
+                            key={navigationItem.label}
+                            {...navigationItem}
+                            sx={{ color: window.location.href.includes(navigationItem.label) ? 'primary.main' : 'text.primary' }}
+                        />
                     )}
                 </Box>
 
