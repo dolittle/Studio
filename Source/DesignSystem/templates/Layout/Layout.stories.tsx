@@ -28,13 +28,16 @@ metadata.args = {
         secondaryNavigationItems,
         selectionMenuItems,
     },
-    sideBar: {
-        primaryLinks: <SideBarPrimaryLinks />,
-        secondaryLinks: <SideBarSecondaryLinks />,
-    },
     children: <CurrentPath />,
 };
 
 export default metadata;
 
 export const Default = createStory();
+
+export const WithSideBar = createStory({
+    sideBar: {
+        primaryLinks: <SideBarPrimaryLinks />,
+        secondaryLinks: <SideBarSecondaryLinks />,
+    },
+});
