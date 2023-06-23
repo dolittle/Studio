@@ -13,13 +13,11 @@ import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
 export const childRoutePaths = ['configuration', 'messages', 'expose'];
 
 //TODO: Make this dynamic based on current url in the tab component
-const getCurrentTab = (location: Location) => {
-    if (location.pathname.includes('configuration')) return 0;
-    else if (location.pathname.includes('messages')) return 1;
-    else if (location.pathname.includes('expose')) return 2;
-    else return 0;
+const getSelectedTab = (location: Location) => {
+    const pathname = location.pathname;
+    const foundIndex = childRoutePaths.findIndex((path) => pathname.endsWith(path));
+    return foundIndex >= 0 ? foundIndex : 0;
 };
-
 
 const tabs = [
     {
@@ -72,7 +70,7 @@ export const ConnectionDetails = () => {
                     healthStatusLabel={getConnectionStatus(status).label}
                     sx={{ mb: 4 }}
                 >
-                    <Tabs selectedTab={getCurrentTab(location)} tabs={tabs} />
+                    <Tabs selectedTab={getSelectedTab(location)} tabs={tabs} />
                     <Outlet />
                 </Page>
             }
