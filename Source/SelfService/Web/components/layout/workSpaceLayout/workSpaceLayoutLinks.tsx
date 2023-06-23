@@ -7,7 +7,7 @@ import { Link as RouterLink, LinkProps as RouterLinkProps, useLocation } from 'r
 
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
-import { Icon, MenuListProps } from '@dolittle/design-system';
+import { Icon, NavigationBarProps } from '@dolittle/design-system';
 
 type RouterLinkListItemProps = {
     to: string;
@@ -45,7 +45,7 @@ export const SideBarSecondaryLinks = () =>
         <RouterLinkListItem to='#' text='Logs' icon={<Icon icon='TextSnippetRounded' />} />
     </>;
 
-export const primaryNavigationItems = [
+export const primaryNavigationItems: NavigationBarProps['primaryNavigationItems'] = [
     {
         label: 'home',
     },
@@ -57,7 +57,7 @@ export const primaryNavigationItems = [
     },
 ];
 
-export const secondaryNavigationItems: MenuListProps['menuListItem'] = [
+export const secondaryNavigationItems: NavigationBarProps['secondaryNavigationItems'] = [
     {
         label: 'Documentation',
         icon: 'DescriptionRounded',
@@ -81,7 +81,7 @@ export const secondaryNavigationItems: MenuListProps['menuListItem'] = [
     },
 ];
 
-export const selectionMenuItems: MenuListProps['menuListItem'] = [
+export const selectionMenuItems: NavigationBarProps['selectionMenuItems'] = [
     {
         label: 'Default space',
         icon: 'CheckRounded',
