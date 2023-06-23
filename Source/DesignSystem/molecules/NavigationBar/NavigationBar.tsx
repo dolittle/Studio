@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { AppBar, Box, Toolbar, Theme } from '@mui/material';
 
-import { Button, DropdownMenu, DropdownMenuProps, Icon, IconProps, IconButton } from '@dolittle/design-system';
+import { Button, ButtonProps, DropdownMenu, DropdownMenuProps, Icon, IconProps, IconButton } from '@dolittle/design-system';
 
 import { NavigationBarMobile } from './NavigationBarMobile';
 
@@ -17,6 +17,10 @@ const styles = {
         justifyContent: 'space-between',
         display: { xs: 'flex', md: 'none' },
     },
+};
+
+type PrimaryNavigationItems = ButtonProps & {
+    selected?: boolean;
 };
 
 /**
@@ -31,7 +35,7 @@ export type NavigationBarProps = {
     /**
      * Primary links that appear to the left of the navigation bar.
      */
-    primaryNavigationItems?: DropdownMenuProps['menuItems'];
+    primaryNavigationItems?: PrimaryNavigationItems[];
 
     /**
      * Secondary links that appear to the right of the navigation bar.
@@ -82,7 +86,7 @@ export const NavigationBar = ({ logo, primaryNavigationItems, secondaryNavigatio
                     {logo && <Icon icon={logo} sx={{ mr: 2 }} />}
 
                     {primaryNavigationItems?.map(navigationItem =>
-                        <Button key={navigationItem.label} label={navigationItem.label} color='subtle' />
+                        <Button key={navigationItem.label} {...navigationItem} sx={{ color: navigationItem.selected ? 'primary.main' : 'text.primary' }} />
                     )}
                 </Box>
 

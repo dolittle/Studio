@@ -5,12 +5,12 @@ import React from 'react';
 
 import { Box, Divider, Drawer, Toolbar } from '@mui/material';
 
-import { Button, Icon, IconProps, MenuList, NavigationBarProps } from '@dolittle/design-system';
+import { Button, Icon, MenuList, NavigationBarProps } from '@dolittle/design-system';
 
 type NavigationBarMobileProps = {
     isOpen: boolean;
     onClose: () => void;
-    logo?: IconProps['icon'];
+    logo?: NavigationBarProps['logo'];
     mainLinks?: NavigationBarProps['primaryNavigationItems'];
     secondaryLinks?: NavigationBarProps['secondaryNavigationItems'];
 };
@@ -30,7 +30,7 @@ export const NavigationBarMobile = ({ isOpen, onClose, logo, mainLinks, secondar
         <Box sx={{ height: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 {mainLinks?.map(navigationItem =>
-                    <Button key={navigationItem.label} label={navigationItem.label} color='subtle' />
+                    <Button key={navigationItem.label} {...navigationItem} sx={{ color: navigationItem.selected ? 'primary.main' : 'text.primary' }} />
                 )}
                 <Divider />
             </Box>
