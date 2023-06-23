@@ -2,12 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-
 import { useSnackbar } from 'notistack';
-import { useNavigate, useParams } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 import { useConnectionsGet, useConnectionsIdPost } from '../../apis/integrations/connectionsApi.hooks';
-
 import { Page } from '../../components/layout/page';
 import { NoConnections } from './noConnections';
 import { ConnectionsTable } from './connectionsTable';
@@ -24,7 +21,6 @@ export const Connections = () => {
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
 
-    //const { applicationId } = useParams();
     const { data, isLoading, isError } = useConnectionsGet();
     const mutation = useConnectionsIdPost();
 
@@ -42,13 +38,11 @@ export const Connections = () => {
             return;
         }
 
-        console.log('mutating', newConnectionId);
-
         mutation.mutate(
             { id: newConnectionId }, {
             onSuccess: () => {
                 //TODO: Move the generating of this url to a "well-known" place.
-                const href = `${newConnectionId}/messages`;
+                const href = `${newConnectionId}`;
                 enqueueSnackbar('Connection created.', { variant: 'success' });
                 navigate(href);
             },
