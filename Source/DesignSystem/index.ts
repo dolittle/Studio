@@ -32,7 +32,7 @@ export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecu
 export { Graph } from './molecules/Metrics/Graph';
 export { DropdownMenu, DropdownMenuProps } from './molecules/DropdownMenu';
 export { NavigationBar, NavigationBarProps } from './molecules/NavigationBar';
-export { SelectCard, SimpleCard, SimpleCardProps } from './molecules/Card';
+export { SelectCard, SimpleCard, SimpleCardProps, SimpleCardGrid, SimpleCardGridProps } from './molecules/Card';
 export { SideBar, SideBarProps } from './molecules/SideBar';
 export { Stepper } from './molecules/Stepper';
 
