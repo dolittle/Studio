@@ -7,7 +7,7 @@ import { action } from '@storybook/addon-actions';
 
 import { Grid } from '@mui/material';
 
-import { componentStories, Button, SimpleCard } from '@dolittle/design-system';
+import { componentStories, SimpleCard } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(SimpleCard);
 
@@ -30,12 +30,6 @@ const dummyData = [
     },
 ];
 
-const ActionButtons = () =>
-    <>
-        <Button label='Secondary button' color='subtle' onClick={action('clicked')} />
-        <Button label='Primary button' onClick={action('clicked')} />
-    </>;
-
 metadata.title = 'Card/Simple Card';
 
 metadata.parameters = {
@@ -51,19 +45,19 @@ way to visually organize various types of information or categories.`,
     },
 };
 
-metadata.argTypes = {
-    actionButtons: {
-        control: false,
-        description: 'The actions of the card. Use `Button` or `IconButton` component for that.',
-    },
-};
-
 metadata.args = {
     title: 'Card Title',
     subtitle: '',
     description: 'Here is a description of the card. It can be a bit longer than the title, but not too long.',
-    actionButtons: <ActionButtons />,
-    actionButtonsAlignment: 'left',
+    primaryButton: {
+        label: 'Primary button',
+        onClick: action('Primary button clicked'),
+    },
+    secondaryButton: {
+        label: 'Secondary button',
+        onClick: action('Secondary button clicked'),
+    },
+    buttonAlignment: 'left',
 };
 
 export default metadata;
@@ -84,7 +78,7 @@ WithSubtitle.parameters = {
 };
 
 export const RightAlignedButton = createStory({
-    actionButtonsAlignment: 'right',
+    buttonAlignment: 'right',
 });
 RightAlignedButton.parameters = {
     docs: {
@@ -102,7 +96,10 @@ export const UseInGrid = () =>
                     title={item.title}
                     subtitle={item.subtitle}
                     description={item.description}
-                    actionButtons={<ActionButtons />}
+                    primaryButton={{
+                        label: 'Primary button',
+                        onClick: action('Primary button clicked'),
+                    }}
                 />
             </Grid>
         )}
