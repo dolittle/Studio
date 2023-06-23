@@ -48,12 +48,20 @@ export const SideBarSecondaryLinks = () =>
 export const primaryNavigationItems: NavigationBarProps['primaryNavigationItems'] = [
     {
         label: 'home',
+        overrides: {
+            component: Link,
+            to: '/home',
+        },
     },
     {
         label: 'applications',
     },
     {
         label: 'integrations',
+        overrides: {
+            component: Link,
+            to: '/integrations',
+        },
     },
 ];
 
@@ -62,7 +70,8 @@ export const secondaryNavigationItems: NavigationBarProps['secondaryNavigationIt
         label: 'Documentation',
         icon: 'DescriptionRounded',
         overrides: {
-            //href: `/documentation/application/${applicationId}/${environment}/overview`,
+            href: 'https://dolittle.io/docs/',
+            target: '_blank',
         },
     },
     {
