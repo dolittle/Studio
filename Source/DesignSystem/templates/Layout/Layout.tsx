@@ -49,7 +49,7 @@ export const Layout = ({ children, navigationBar, sideBar }: LayoutProps) =>
         {sideBar && <SideBar {...sideBar} />}
 
         <Box component='main' sx={styles}>
-            <Toolbar />
+            {sideBar && <Toolbar />}
             {children}
         </Box>
     </Grid>;
