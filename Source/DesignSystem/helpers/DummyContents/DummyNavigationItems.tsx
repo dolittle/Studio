@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { MenuListProps } from '@dolittle/design-system';
+import { NavigationBarProps, MenuListProps } from '@dolittle/design-system';
 
 import { Link } from '../../helpers/ReactRouter';
 
@@ -22,19 +22,32 @@ export const menuItems: MenuListProps['menuListItem'] = [
     },
 ];
 
-export const primaryNavigationItems = [
+export const primaryNavigationItems: NavigationBarProps['primaryNavigationItems'] = [
     {
-        label: 'Primary 1',
+        label: 'Selected',
+        selected: true,
+        overrides: {
+            component: Link,
+            to: '/primary-1',
+        },
     },
     {
         label: 'Primary 2',
+        overrides: {
+            component: Link,
+            to: '/primary-2',
+        },
     },
     {
         label: 'Primary 3',
+        overrides: {
+            component: Link,
+            to: '/primary-3',
+        },
     },
 ];
 
-export const selectionMenuItems: MenuListProps['menuListItem'] = [
+export const selectionMenuItems: NavigationBarProps['selectionMenuItems'] = [
     {
         label: 'Selection 1',
         icon: 'CheckRounded',
@@ -60,7 +73,7 @@ export const selectionMenuItems: MenuListProps['menuListItem'] = [
     },
 ];
 
-export const secondaryNavigationItems: MenuListProps['menuListItem'] = [
+export const secondaryNavigationItems: NavigationBarProps['secondaryNavigationItems'] = [
     {
         label: 'Secondary 1',
         icon: 'DescriptionRounded',
