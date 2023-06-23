@@ -55,6 +55,10 @@ export const primaryNavigationItems: NavigationBarProps['primaryNavigationItems'
     },
     {
         label: 'applications',
+        overrides: {
+            component: Link,
+            to: '/applications',
+        },
     },
     {
         label: 'integrations',
