@@ -1,3 +1,32 @@
+# [3.4.53] - 2023-6-23 [PR: #412](https://github.com/dolittle/Studio/pull/412)
+## Summary
+
+Added landing page to Studio. Also improved the main NavigationBar so that the links are usable.
+
+Advanced Design System components as needed.
+
+<img width="1594" alt="Screenshot 2023-06-23 at 17 54 13" src="https://github.com/dolittle/Studio/assets/19160439/dcb77600-d148-4035-a658-a132145cab04">
+
+### Added
+
+- HomeScreen component.
+- MenuList component to Design System.
+- DropdownMenu component to Design System.
+
+### Changed
+
+- Make sideBar as optional in Layout.
+- SimpleCard actionButtons usage. Now it uses primaryButton and secondaryButton only.
+
+### Fixed
+
+- Improved SimpleCard styles.
+
+### Removed
+
+- Redundant dummy content.
+
+
 # [3.4.52] - 2023-6-23 [PR: #411](https://github.com/dolittle/Studio/pull/411)
 - WIP: Todos
 - Redirect to correct tab when loading connection screen
