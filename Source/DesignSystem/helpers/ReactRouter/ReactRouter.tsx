@@ -20,11 +20,11 @@ export type RouterLinkListItemProps = {
 
 export const Router = ({ children }: { children?: React.ReactNode }) => {
     if (typeof window === 'undefined') {
-        return <StaticRouter location='/main3'>{children}</StaticRouter>;
+        return <StaticRouter location='/primary-1'>{children}</StaticRouter>;
     }
 
     return (
-        <MemoryRouter initialEntries={['/main3']} initialIndex={0}>{children}</MemoryRouter>
+        <MemoryRouter initialEntries={['/primary-1']} initialIndex={0}>{children}</MemoryRouter>
     );
 };
 
