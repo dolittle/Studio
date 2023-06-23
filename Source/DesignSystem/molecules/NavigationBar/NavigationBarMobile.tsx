@@ -23,6 +23,7 @@ export const NavigationBarMobile = ({ isOpen, onClose, logo, mainLinks, secondar
         onClick={onClose}
         ModalProps={{ keepMounted: true }}
     >
+        <Toolbar />
         <Toolbar sx={{ justifyContent: 'center' }}>
             {logo && <Icon icon={logo} />}
         </Toolbar>
