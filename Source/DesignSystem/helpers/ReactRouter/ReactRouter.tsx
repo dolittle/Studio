@@ -8,6 +8,8 @@ import { StaticRouter } from 'react-router-dom/server';
 
 import { ListItem, ListItemButton, ListItemIcon, ListItemText, SxProps, Typography } from '@mui/material';
 
+import { Icon } from '@dolittle/design-system';
+
 export type RouterLinkListItemProps = {
     to: string;
     icon?: React.ReactElement;
@@ -63,3 +65,17 @@ export const RouterLinkListItem = ({ to, icon, text, inset, sx, variantButton }:
         </ListItem>
     );
 };
+
+export const SideBarPrimaryLinks = () =>
+    <>
+        <RouterLinkListItem to='sidebar-primary-link-1' text='Primary link 1' icon={<Icon icon='PolylineRounded' />} />
+        <RouterLinkListItem to='sidebar-primary-link-2' text='Primary link 2' icon={<Icon icon='Bridge' />} />
+    </>;
+
+export const SideBarSecondaryLinks = () =>
+    <>
+        <RouterLinkListItem to='sidebar-secondary-link-1' text='Secondary link 1' icon={<Icon icon='HexagonRounded' />} />
+        <RouterLinkListItem to='sidebar-secondary-link-2' text='Secondary link 2' icon={<Icon icon='BackupRounded' />} />
+        <RouterLinkListItem to='sidebar-secondary-link-3' text='Secondary link 3' icon={<Icon icon='ContainerRegistry' />} />
+        <RouterLinkListItem to='sidebar-secondary-link-4' text='Secondary link 4' icon={<Icon icon='TextSnippetRounded' />} />
+    </>;
