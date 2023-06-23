@@ -34,7 +34,7 @@ import { ApplicationScreen } from './spaces/applications/applicationScreen';
 import { ContainerRegistryScreen } from './applications/containerRegistryScreen';
 import { M3ConnectorScreen } from './applications/m3connectorScreen';
 import { LogsScreen } from './applications/logsScreen';
-import { HomeScreen } from './home';
+import { HomeScreen } from './home/homeScreen';
 import { IntegrationsIndex } from './integrations';
 
 // Set license info for MUI components
