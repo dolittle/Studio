@@ -8,6 +8,9 @@ import { useConnectionId } from '../../routes.hooks';
 import { Tabs } from '@dolittle/design-system';
 import { getConnectionStatus } from '../../../utils/helpers/connectionStatuses';
 import { Page } from '../../../components/layout/page';
+import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
+
+export const childRoutePaths = ['configuration', 'messages', 'expose'];
 
 //TODO: Make this dynamic based on current url in the tab component
 const getCurrentTab = (location: Location) => {
@@ -16,6 +19,7 @@ const getCurrentTab = (location: Location) => {
     else if (location.pathname.includes('expose')) return 2;
     else return 0;
 };
+
 
 const tabs = [
     {
@@ -44,36 +48,24 @@ const tabs = [
     },
 ];
 
-const pendingStatuses = ['registered', 'pending'];
-const childRoutePaths = ['configuration', 'messages', 'expose'];
-
 export const ConnectionDetails = () => {
     const location = useLocation();
     const connectionId = useConnectionId();
-    const query = useConnectionsIdGet({ id: connectionId || '' });
-    const data = query.data?.value;
+    const { isLoading, data } = useConnectionsIdGet({ id: connectionId || '' });
+    const connection = data?.value;
 
-    const redirectUrl = useMemo(() => {
-        if (!query.data?.value || childRoutePaths.some((path) => location.pathname.endsWith(path))) {
-            return null;
-        } else {
-            return pendingStatuses.includes(query.data.value.status?.name?.toLowerCase())
-                ? 'configuration'
-                : 'messages';
-        }
-    }, [query.data?.value, location.pathname]);
+    const redirectPath = useRedirectToTabByStatus(connection?.status);
 
-    if (query.isLoading) return <>Loading</>;
-    if (!data || !connectionId) return null;
+    if (isLoading) return <>Loading</>;
+    if (!connection || !connectionId) return null;
 
-    const pageTitle = data.name || 'Connection Details';
-    const status = data.status?.name?.toLocaleLowerCase();
-
+    const pageTitle = connection.name || 'Connection Details';
+    const status = connection.status?.name?.toLocaleLowerCase();
 
     return (
         <>
-            {redirectUrl
-                ? <Navigate to={redirectUrl} replace={true} />
+            {redirectPath
+                ? <Navigate to={redirectPath} replace={true} />
                 : <Page
                     title={pageTitle}
                     healthStatus={getConnectionStatus(status).status}
@@ -87,3 +79,4 @@ export const ConnectionDetails = () => {
         </>
     );
 };
+
