@@ -3,26 +3,32 @@
 
 import React from 'react';
 
-import { Layout } from '@dolittle/design-system';
+import { Layout, LayoutProps } from '@dolittle/design-system';
 
 import { primaryNavigationItems, secondaryNavigationItems, selectionMenuItems, SideBarPrimaryLinks, SideBarSecondaryLinks } from './workSpaceLayoutLinks';
+
+const mainNavigationItems: LayoutProps['navigationBar'] = {
+    logo: 'AigonixLightCube',
+    primaryNavigationItems,
+    secondaryNavigationItems,
+    //selectionMenuItems,
+};
+
+const sideBarNavigationItems: LayoutProps['sideBar'] = {
+    primaryLinks: <SideBarPrimaryLinks />,
+    secondaryLinks: <SideBarSecondaryLinks />,
+};
 
 type WorkSpaceLayoutProps = {
     children: React.ReactNode;
 };
 
 export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Layout
-        navigationBar={{
-            logo: 'AigonixLightCube',
-            primaryNavigationItems,
-            secondaryNavigationItems,
-            selectionMenuItems,
-        }}
-        sideBar={{
-            primaryLinks: <SideBarPrimaryLinks />,
-            secondaryLinks: <SideBarSecondaryLinks />,
-        }}
-    >
+    <Layout navigationBar={mainNavigationItems} sideBar={sideBarNavigationItems}>
+        {children}
+    </Layout>;
+
+export const WorkSpaceWithoutSideBarLayout = ({ children }: WorkSpaceLayoutProps) =>
+    <Layout navigationBar={mainNavigationItems}>
         {children}
     </Layout>;
