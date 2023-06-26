@@ -3,12 +3,14 @@
 
 import React, { useRef, useState } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
+import { enqueueSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom';
 import { Box, Collapse, Typography } from '@mui/material';
-
 import { AccordionList, AccordionListProps, Button, FileUploadFormRef } from '@dolittle/design-system';
-
-import { useConnectionsIdGet } from '../../../../apis/integrations/connectionsApi.hooks';
+import { useConnectionsIdGet, useConnectionsIdDelete } from '../../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionId } from '../../../routes.hooks';
+import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
 
 import { M3ConfigurationForm, M3ConfigurationFormRef } from '../../configuration/M3ConfigurationForm';
 import { MainM3ConnectionInfo } from '../../configuration/MainM3ConnectionInfo';
@@ -26,6 +28,11 @@ export const ConfigurationView = () => {
 
     const formRef = useRef<M3ConfigurationFormRef>(null);
     const fileUploadRef = useRef<FileUploadFormRef>(null);
+    const deleteMutation = useConnectionsIdDelete();
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+
+
     const connection = query.data?.value;
     const links = query.data?.links || [];
 
@@ -34,6 +41,22 @@ export const ConfigurationView = () => {
 
     const accordionListProps: AccordionListProps = useBuildConfigurationAccordionList(connection, fileUploadRef, canEdit);
     const canConfigureConnection = connection?.status?.name !== 'Registered';
+
+    const handleDelete = () => {
+        deleteMutation.mutate(
+            { id: connectionId! },
+            {
+                onSuccess() {
+                    queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connections_GET] });
+                    enqueueSnackbar(`Deleted connection: ${connectionId}`, { variant: 'success' });
+                    navigate('/integrations/connections');
+                },
+                onError() {
+                    enqueueSnackbar(`Error occurred when deleting connection: ${connectionId}`, { variant: 'error' });
+                },
+            },
+        );
+    };
 
     if (query.isLoading) return <>Loading</>;
     if (!connection || !connectionId) return null;
@@ -53,14 +76,17 @@ export const ConfigurationView = () => {
                 ref={formRef}
             >
                 <ActionToolbar
+                    connectionId={connectionId}
+                    connectorName={connection.name}
                     canEdit={canEdit}
                     onEditAction={() => setEditMode(true)}
-                    onDeleteAction={() => { }}
+                    onDeleteAction={handleDelete}
                     onCancelAction={() => {
                         formRef.current?.reset(true);
                         setEditMode(false);
                     }}
                 />
+
                 <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} canEdit={canEdit} />
 
                 <Collapse in={canConfigureConnection}>
