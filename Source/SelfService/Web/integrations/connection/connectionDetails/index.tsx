@@ -10,11 +10,11 @@ import { getConnectionStatus } from '../../../utils/helpers/connectionStatuses';
 import { Page } from '../../../components/layout/page';
 import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
 
-export const childRoutePaths = ['configuration', 'messages', 'expose'];
+export const childRoutePaths = ['/configuration', '/messages', '/expose'];
 
 const getSelectedTab = (location: Location) => {
     const pathname = location.pathname;
-    const foundIndex = childRoutePaths.findIndex((path) => pathname.endsWith(path));
+    const foundIndex = childRoutePaths.findIndex((path) => pathname.includes(path));
     return foundIndex >= 0 ? foundIndex : 0;
 };
 
