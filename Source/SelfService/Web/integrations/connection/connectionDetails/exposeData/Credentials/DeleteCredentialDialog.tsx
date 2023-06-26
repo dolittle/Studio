@@ -28,8 +28,10 @@ export const deleteCredentialDialogReducer = (state: DeleteCredentialDialogState
         case 'close':
             return { ...state, open: false };
         case 'setCredential':
+            //TODO: The credential payload should be part of the 'open' action.
             return { ...state, credentialName: action.payload };
         case 'clearCredential':
+            //TODO: The clearing of credential should be part of the close action.
             return { ...state, credentialName: '' };
         default:
             return state;
