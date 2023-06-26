@@ -16,7 +16,7 @@ export const pendingStatuses = ['registered', 'pending', 'failing'];
 export function useRedirectToTabByStatus(status?: ConnectionStatus) {
     const location = useLocation();
     return useMemo(() => {
-        if (!status?.name || childRoutePaths.some((path) => location.pathname.endsWith(path))) {
+        if (!status?.name || childRoutePaths.some((path) => location.pathname.includes(path))) {
             return null;
         } else {
             return pendingStatuses.includes(status.name.toLowerCase())
