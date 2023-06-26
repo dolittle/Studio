@@ -1,3 +1,9 @@
+# [3.4.54] - 2023-6-26 [PR: #413](https://github.com/dolittle/Studio/pull/413)
+## Summary
+
+Fixed an issue where clicking into creating new messages or editing an existing message took the user to the configuration tab, or stayed on the same tab.
+
+
 # [3.4.53] - 2023-6-23 [PR: #412](https://github.com/dolittle/Studio/pull/412)
 ## Summary
 
