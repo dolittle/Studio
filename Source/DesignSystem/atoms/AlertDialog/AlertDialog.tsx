@@ -103,14 +103,6 @@ export type AlertDialogProps = {
      * @default onCancel
      */
     onClose?: () => void;
-
-    /**
-     * A boolean that indicates if an action is in progress.
-     * It adds spinner to the confirm button and disables the cancel button.
-     * @default onCancel
-     */
-    //TODO: Add spinner to confirm button and disable cancel button
-    // isActionInProgress?: boolean;
 };
 
 /**
