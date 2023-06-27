@@ -66,16 +66,7 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
             minWidth: 270,
             flex: 1,
             renderCell: StatusCell,
-        },
-        {
-            field: 'actions',
-            headerName: 'Actions',
-            minWidth: 100,
-            flex: 1,
-            renderCell: ({ row }: ConnectionsTableRowProps) =>
-                <IconButton tooltipText='Delete connection' icon='DeleteRounded' onClick={() => deleteConnection(row)} />,
-            valueGetter: ({ row }: ConnectionsTableRowProps) => row?.status?.name,
-        },
+        }
     ];
 
     const handleRowClick = (connectionModel: ConnectionModel) => {
@@ -84,21 +75,6 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
             const href = connectionModel.connectionId;
             navigate(href);
         }
-    };
-
-    const deleteConnection = (connection: ConnectionModel) => {
-        deleteMutation.mutate(
-            { id: connection.connectionId! },
-            {
-                onSuccess() {
-                    queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connections_GET] });
-                    enqueueSnackbar(`Deleted connection: ${connection.connectionId}`, { variant: 'success' });
-                },
-                onError() {
-                    enqueueSnackbar(`Error occurred when deleting connection: ${connection.connectionId}`, { variant: 'error' });
-                },
-            },
-        );
     };
 
     return (
