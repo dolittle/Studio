@@ -3,12 +3,12 @@
 
 import React from 'react';
 
-import { Box } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 import { enqueueSnackbar } from 'notistack';
 
 import { FileUploadForm, FileUploadFormRef, MaxWidthTextBlock } from '@dolittle/design-system';
-import { IonConfigRequest, IonConfigRequestFromJSON } from '../../../apis/integrations/generated';
+import { IonConfigRequest } from '../../../apis/integrations/generated';
+import { TextCopyBox } from './TextCopyBox';
 
 
 /**
@@ -40,13 +40,6 @@ export const instructions = [
     `10. Last, click 'Download'. Upload the files below.`,
 ];
 
-
-const InstructionsListItems = () =>
-    <Box sx={{ pl: 3, pt: 3 }}>
-        {instructions.map((item, index) => (
-            <MaxWidthTextBlock key={index} sx={{ mb: 2 }}>{item}</MaxWidthTextBlock>
-        ))}
-    </Box>;
 
 export type IonServiceAccountCredentialsProps = {
     canEdit: boolean;
@@ -83,7 +76,10 @@ export const IonServiceAccountCredentials = React.forwardRef<FileUploadFormRef, 
             Follow the steps below then upload your credentials. If you already have an ION service account setup, skip to step 8 to access your credentials.
         </MaxWidthTextBlock>
 
-        <InstructionsListItems />
+        <MaxWidthTextBlock>
+            <TextCopyBox instructions={instructions} />
+        </MaxWidthTextBlock>
+
 
         {props.canEdit && (
             <MaxWidthTextBlock>
