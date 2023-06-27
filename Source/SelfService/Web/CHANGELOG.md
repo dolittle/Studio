@@ -1,3 +1,10 @@
+# [3.4.56] - 2023-6-27 [PR: #415](https://github.com/dolittle/Studio/pull/415)
+## Summary
+
+- Delete Connector from within the configuration page
+- Remove Delete-functionality from the connection list table
+
+
 # [3.4.55] - 2023-6-26 [PR: #414](https://github.com/dolittle/Studio/pull/414)
 Actually fix redirect logic to evaluate the subpath exists, not that it ends with the route
 
