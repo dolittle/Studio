@@ -19,9 +19,9 @@ export const BackupsList = ({ data, application }: BackupsListProps) =>
     <>
         <Typography variant='h1' sx={{ my: 3 }}>Backups</Typography>
 
-        <Grid container spacing={4} sx={{ maxWidth: 950 }}>
+        <Grid container spacing={3} sx={{ maxWidth: { sm: 930, xl: 1400 } }}>
             {data.map(file =>
-                <Grid key={file.name} item>
+                <Grid key={file.name} item xs={12} sm={6} xl={4}>
                     <BackupsListItems {...file} application={application} />
                 </Grid>
             )}
