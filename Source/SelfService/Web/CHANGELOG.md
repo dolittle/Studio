@@ -1,3 +1,13 @@
+# [3.4.59] - 2023-6-27 [PR: #418](https://github.com/dolittle/Studio/pull/418)
+## Summary
+
+Fixed SimpleCardGrid breakpoints from sm (small) to md (medium).
+
+### Fixed
+
+- SimpleCardGrid responsive layout grid
+
+
 # [3.4.58] - 2023-6-27 [PR: #417](https://github.com/dolittle/Studio/pull/417)
 - Make TextCopyBox a reusable component
 - Wrap instructions for IonServiceCredentials in a CopyBox
