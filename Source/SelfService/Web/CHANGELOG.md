@@ -1,3 +1,8 @@
+# [3.4.58] - 2023-6-27 [PR: #417](https://github.com/dolittle/Studio/pull/417)
+- Make TextCopyBox a reusable component
+- Wrap instructions for IonServiceCredentials in a CopyBox
+
+
 # [3.4.57] - 2023-6-27 [PR: #416](https://github.com/dolittle/Studio/pull/416)
 ## Summary
 
