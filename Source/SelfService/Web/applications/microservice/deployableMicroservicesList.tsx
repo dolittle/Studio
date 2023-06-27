@@ -3,24 +3,18 @@
 
 // TODO validate the data
 import React, { useEffect, useState } from 'react';
+
 import { useNavigate, useLocation } from 'react-router';
 
-import { Grid, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+
+import { SimpleCardGrid, SimpleCardGridProps } from '@dolittle/design-system';
 
 import { HttpResponseApplication } from '../../apis/solutions/application';
 
-import { SimpleCard } from './components/card';
 import { DeployMicroservice } from './deployMicroservice/deployMicroservice';
 
-const items = [
-    {
-        kind: 'dolittle-microservice',
-        name: 'Base (default)',
-        description: 'Setup a container with the Dolittle runtime ready to consume your events.'
-    }
-];
-
-type DeployableMicroservicesListProps = {
+export type DeployableMicroservicesListProps = {
     environment: string;
     application: HttpResponseApplication;
 };
@@ -31,10 +25,27 @@ export const DeployableMicroservicesList = ({ environment, application }: Deploy
 
     const searchParams = new URLSearchParams(location.search);
 
-    const kindViaParams = (): string => {
+    const deployableMicroservices: SimpleCardGridProps['simpleCardItems'] = [
+        {
+            title: 'Base (default)',
+            description: 'Setup a container with the Dolittle runtime ready to consume your events.',
+            secondaryButton: {
+                label: 'Learn more',
+                href: 'https://dolittle.io/docs/platform/requirements/',
+                target: true,
+                ariaLabel: 'Learn more about the base microservice.',
+            },
+            primaryButton: {
+                label: 'Deploy',
+                onClick: () => onCreate('dolittle-microservice'),
+            },
+        },
+    ];
+
+    const kindViaParams = () => {
         if (!searchParams.has('kind')) return '';
         const kind = searchParams.get('kind') as string;
-        if (!kind || !items.map(e => e.kind).includes(kind)) return '';
+        if (!kind || !deployableMicroservices.map(item => item.title).includes(kind)) return '';
 
         return kind;
     };
@@ -55,14 +66,7 @@ export const DeployableMicroservicesList = ({ environment, application }: Deploy
         return (
             <>
                 <Typography variant='h1' my={3}>Microservices</Typography>
-
-                <Grid container rowSpacing={4} columnSpacing={4} sx={{ maxWidth: 920 }}>
-                    {items.map(data => (
-                        <Grid key={`pick-microservice-kind-${data.kind}`} item xs={12} md={6}>
-                            <SimpleCard {...data} onCreate={onCreate} />
-                        </Grid>
-                    ))}
-                </Grid>
+                <SimpleCardGrid simpleCardItems={deployableMicroservices} />
             </>
         );
     }
