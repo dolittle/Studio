@@ -8,11 +8,15 @@ import { useNavigate, useLocation } from 'react-router';
 
 import { Typography } from '@mui/material';
 
-import { SimpleCardGrid, SimpleCardGridProps } from '@dolittle/design-system';
+import { SimpleCardGrid, SimpleCardProps } from '@dolittle/design-system';
 
 import { HttpResponseApplication } from '../../apis/solutions/application';
 
 import { DeployMicroservice } from './deployMicroservice/deployMicroservice';
+
+type DeployableMicroservices = SimpleCardProps & {
+    kind: string;
+};
 
 export type DeployableMicroservicesListProps = {
     environment: string;
@@ -25,8 +29,9 @@ export const DeployableMicroservicesList = ({ environment, application }: Deploy
 
     const searchParams = new URLSearchParams(location.search);
 
-    const deployableMicroservices: SimpleCardGridProps['simpleCardItems'] = [
+    const deployableMicroservices: DeployableMicroservices[] = [
         {
+            kind: 'dolittle-microservice',
             title: 'Base (default)',
             description: 'Setup a container with the Dolittle runtime ready to consume your events.',
             secondaryButton: {
@@ -45,7 +50,7 @@ export const DeployableMicroservicesList = ({ environment, application }: Deploy
     const kindViaParams = () => {
         if (!searchParams.has('kind')) return '';
         const kind = searchParams.get('kind') as string;
-        if (!kind || !deployableMicroservices.map(item => item.title).includes(kind)) return '';
+        if (!kind || !deployableMicroservices.map(item => item.kind).includes(kind)) return '';
 
         return kind;
     };
