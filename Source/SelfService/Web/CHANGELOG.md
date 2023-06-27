@@ -1,3 +1,13 @@
+# [3.4.57] - 2023-6-27 [PR: #416](https://github.com/dolittle/Studio/pull/416)
+## Summary
+
+Replace old Card components with Design System SimpleCardGrid ones.
+
+### Changed
+
+- Improved SimpleCardGrid width and breakpoints to improve appearance on different screen sizes.
+
+
 # [3.4.56] - 2023-6-27 [PR: #415](https://github.com/dolittle/Studio/pull/415)
 ## Summary
 
