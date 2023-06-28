@@ -71,6 +71,6 @@ export const SimpleCard = ({ title, subtitle, description, buttonAlignment, seco
 
         <CardActions sx={{ flexWrap: 'wrap', justifyContent: buttonAlignment === 'right' ? 'flex-end' : 'flex-start' }}>
             {secondaryButton && <Button color='subtle' {...secondaryButton} />}
-            {primaryButton && <Button {...primaryButton} />}
+            {primaryButton && <Button {...primaryButton} sx={secondaryButton && { ml: 1 }} />}
         </CardActions>
     </Card>;
