@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Layout, LayoutProps } from '@dolittle/design-system';
+import { usePageTitle } from '../../../utils/usePageTitle';
 
 import { primaryNavigationItems, secondaryNavigationItems, selectionMenuItems, SideBarPrimaryLinks, SideBarSecondaryLinks } from './workSpaceLayoutLinks';
 
@@ -19,8 +19,13 @@ const sideBarNavigationItems: LayoutProps['sideBar'] = {
     secondaryLinks: <SideBarSecondaryLinks />,
 };
 
-type WorkSpaceLayoutProps = {
+export type WorkSpaceLayoutProps = {
+    pageTitle: string;
     children: React.ReactNode;
+};
+
+export type WorkSpaceWithoutSideBarLayoutProps = WorkSpaceLayoutProps & {
+    pageTitle: string;
 };
 
 export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
@@ -28,7 +33,12 @@ export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
         {children}
     </Layout>;
 
-export const WorkSpaceWithoutSideBarLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Layout navigationBar={mainNavigationItems}>
-        {children}
-    </Layout>;
+export const WorkSpaceWithoutSideBarLayout = ({ pageTitle, children }: WorkSpaceWithoutSideBarLayoutProps) => {
+    usePageTitle(pageTitle);
+
+    return (
+        <Layout navigationBar={mainNavigationItems}>
+            {children}
+        </Layout>
+    );
+};
