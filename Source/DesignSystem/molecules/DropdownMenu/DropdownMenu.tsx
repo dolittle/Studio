@@ -44,6 +44,8 @@ export const DropdownMenu = ({ label, menuItems, iconDropdown }: DropdownMenuPro
 
     const handleClose = () => setAnchorEl(null);
 
+    const menuId = label.replace(' ', '-').toLowerCase();
+
     return (
         <>
             {iconDropdown ?
@@ -52,8 +54,8 @@ export const DropdownMenu = ({ label, menuItems, iconDropdown }: DropdownMenuPro
                     icon='MoreVertRounded'
                     edge='end'
                     onClick={handleClickListItem}
-                    aria-controls={open ? 'more-options' : undefined}
                     aria-haspopup='true'
+                    aria-controls={open ? menuId : undefined}
                     aria-expanded={open ? 'true' : undefined}
                 /> :
                 <Button
@@ -62,13 +64,13 @@ export const DropdownMenu = ({ label, menuItems, iconDropdown }: DropdownMenuPro
                     endWithIcon={open ? 'ArrowDropUpRounded' : 'ArrowDropDownRounded'}
                     onClick={handleClickListItem}
                     aria-haspopup='true'
-                    aria-controls={open ? 'select-selected' : undefined}
+                    aria-controls={open ? menuId : undefined}
                     aria-expanded={open ? 'true' : undefined}
                 />
             }
 
             <Menu
-                id={label.replace(' ', '-').toLowerCase()}
+                id={menuId}
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}
