@@ -8,10 +8,11 @@ import { Card, CardActions, CardContent, CardHeader, Typography } from '@mui/mat
 import { Button, ButtonProps } from '@dolittle/design-system';
 
 const styles = {
+    height: 1,
+    maxWidth: 440,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 1,
 };
 
 /**
