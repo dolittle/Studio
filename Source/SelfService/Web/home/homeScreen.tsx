@@ -51,7 +51,7 @@ const homeCardGridItems: SimpleCardGridProps['simpleCardItems'] = [
 ];
 
 export const HomeScreen = () =>
-    <WorkSpaceWithoutSideBarLayout>
+    <WorkSpaceWithoutSideBarLayout pageTitle='Home'>
         <Typography variant='h1' sx={{ my: 3 }}>Welcome to Dolittle Studio!</Typography>
 
         <Typography variant='subtitle1' sx={{ maxWidth: 1018, mb: 4 }}>
