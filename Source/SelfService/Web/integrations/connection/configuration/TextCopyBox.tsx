@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 
 import { Paper, Typography, SxProps } from '@mui/material';
 
-import { Button } from '@dolittle/design-system';
+import { Button, MaxWidthTextBlock } from '@dolittle/design-system';
 
 export type TextCopyBoxProps = {
     /**
@@ -23,12 +23,17 @@ export type TextCopyBoxProps = {
     children?: React.ReactNode;
 
     /**
+     * Should content be wrapped in a {@link MaxWidthTextBlock}?
+     */
+    withMaxWidth?: boolean;
+
+    /**
      * Style overrides applied to the root Paper component
      */
     sx?: SxProps;
 };
 
-export const TextCopyBox = ({ instructions, children, sx }: TextCopyBoxProps) => {
+export const TextCopyBox = ({ instructions, children, withMaxWidth, sx }: TextCopyBoxProps) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const handleTextCopy = useCallback(() => {
@@ -39,10 +44,13 @@ export const TextCopyBox = ({ instructions, children, sx }: TextCopyBoxProps) =>
 
     return (
         <Paper elevation={0} sx={{ 'mt': 3, 'p': 2, '& p': { mb: 3 }, ...sx }}>
-            {children
-                ? <>{children}</>
-                : <>{instructions.map((instruction, index) => <Typography key={index}>{instruction}</Typography>)}</>
+            {withMaxWidth
+                ? <MaxWidthTextBlock>
+                    <InstructionContent instructions={instructions}>{children}</InstructionContent>
+                </MaxWidthTextBlock>
+                : <InstructionContent instructions={instructions}>{children}</InstructionContent>
             }
+
             <Button
                 label='Copy content'
                 startWithIcon='CopyAllRounded'
@@ -51,3 +59,11 @@ export const TextCopyBox = ({ instructions, children, sx }: TextCopyBoxProps) =>
         </Paper>
     );
 };
+
+type RenderContentsProps = Pick<TextCopyBoxProps, 'instructions' | 'children'>;
+
+const InstructionContent = ({ instructions, children }: RenderContentsProps) => <>
+    {children
+        ? <>{children}</>
+        : <>{instructions.map((instruction, index) => <Typography component='span' key={index}>{instruction}</Typography>)}</>
+    }</>;

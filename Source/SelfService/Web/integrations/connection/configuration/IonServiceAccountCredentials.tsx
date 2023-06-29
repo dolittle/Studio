@@ -76,10 +76,7 @@ export const IonServiceAccountCredentials = React.forwardRef<FileUploadFormRef, 
             Follow the steps below then upload your credentials. If you already have an ION service account setup, skip to step 8 to access your credentials.
         </MaxWidthTextBlock>
 
-        <MaxWidthTextBlock>
-            <TextCopyBox instructions={instructions} />
-        </MaxWidthTextBlock>
-
+        <TextCopyBox instructions={instructions} withMaxWidth />
 
         {props.canEdit && (
             <MaxWidthTextBlock>
