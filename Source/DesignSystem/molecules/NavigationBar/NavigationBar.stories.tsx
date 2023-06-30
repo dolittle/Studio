@@ -5,10 +5,10 @@ import React from 'react';
 
 import { Toolbar } from '@mui/material';
 
-import { componentStories, NavigationBar } from '@dolittle/design-system';
+import { componentStories, NavigationBar } from '../../index';
 
 import { CurrentPath, Router } from '../../helpers/ReactRouter';
-import { secondaryNavigationItems, primaryNavigationItems, selectionMenuItems } from '../../helpers/DummyContents/DummyNavigationItems';
+import { PrimaryNavigation, SelectionMenu, SecondaryNavigation } from '../../helpers/DummyContents/DummyNavigationItems';
 
 const { metadata, createStory } = componentStories(NavigationBar, {
     decorator: Story =>
@@ -30,9 +30,9 @@ metadata.parameters = {
 
 metadata.args = {
     logo: 'AigonixLightCube',
-    primaryNavigationItems,
-    secondaryNavigationItems,
-    selectionMenuItems,
+    primaryNavigationItems: <PrimaryNavigation />,
+    selectionMenuItems: <SelectionMenu />,
+    secondaryNavigationItems: <SecondaryNavigation />,
 };
 
 export default metadata;

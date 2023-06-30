@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { AppBar, Box, Toolbar, Theme } from '@mui/material';
 
-import { Button, ButtonProps, DropdownMenu, DropdownMenuProps, Icon, IconProps, IconButton } from '@dolittle/design-system';
+import { Icon, IconProps, IconButton } from '../../index';
 
 import { NavigationBarMobile } from './NavigationBarMobile';
 
@@ -31,17 +31,17 @@ export type NavigationBarProps = {
     /**
      * Primary links that appear to the left of the navigation bar.
      */
-    primaryNavigationItems?: ButtonProps[];
+    primaryNavigationItems?: React.ReactNode;
 
     /**
      * Secondary links that appear to the right of the navigation bar.
      */
-    secondaryNavigationItems?: DropdownMenuProps['menuItems'];
+    secondaryNavigationItems?: React.ReactNode;
 
     /**
      * A drop-down menu that appears in the right of the navigation bar.
      */
-    selectionMenuItems?: DropdownMenuProps['menuItems'];
+    selectionMenuItems?: React.ReactNode;
 };
 
 /**
@@ -72,32 +72,17 @@ export const NavigationBar = ({ logo, primaryNavigationItems, secondaryNavigatio
                         edge='start'
                         onClick={() => setIsMobileNavOpen(prevState => !prevState)}
                     />
-
-                    {selectionMenuItems &&
-                        <DropdownMenu label='Selection menu' menuItems={selectionMenuItems} />
-                    }
+                    {selectionMenuItems}
                 </Box>
 
                 <Box sx={{ ...styles.hideOnMobile, flexGrow: 1, alignItems: 'center', gap: 3 }}>
                     {logo && <Icon icon={logo} sx={{ mr: 2 }} />}
-
-                    {primaryNavigationItems?.map(navigationItem =>
-                        <Button
-                            key={navigationItem.label}
-                            {...navigationItem}
-                            sx={{ color: window.location.href.includes(navigationItem.label) ? 'primary.main' : 'text.primary' }}
-                        />
-                    )}
+                    {primaryNavigationItems}
                 </Box>
 
                 <Box sx={{ ...styles.hideOnMobile, gap: 1 }}>
-                    {selectionMenuItems &&
-                        <DropdownMenu label='Selection menu' menuItems={selectionMenuItems} />
-                    }
-
-                    {secondaryNavigationItems &&
-                        <DropdownMenu label='More options' menuItems={secondaryNavigationItems} iconDropdown />
-                    }
+                    {selectionMenuItems}
+                    {secondaryNavigationItems}
                 </Box>
             </Toolbar>
         </AppBar>
