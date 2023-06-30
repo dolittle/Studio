@@ -7,12 +7,13 @@ import { Layout, LayoutProps } from '@dolittle/design-system';
 
 import { usePageTitle } from '../../../utils/usePageTitle';
 
-import { PrimaryNavigation, SpaceSelectionMenu, SecondaryNavigation, SideBarPrimaryLinks, SideBarSecondaryLinks } from './workSpaceLayoutLinks';
+import { PrimaryNavigation, SecondaryNavigation, SideBarPrimaryLinks, SideBarSecondaryLinks } from './workSpaceLayoutLinks';
+import { SpaceSelectMenu } from './spaceSelectMenu';
 
 const mainNavigationItems: LayoutProps['navigationBar'] = {
     logo: 'AigonixLightCube',
     primaryNavigationItems: <PrimaryNavigation />,
-    selectionMenuItems: <SpaceSelectionMenu />,
+    selectionMenuItems: <SpaceSelectMenu />,
     secondaryNavigationItems: <SecondaryNavigation />,
 };
 
