@@ -14,8 +14,6 @@ export const Connection = () => {
     const routesElement = useRoutes(routes);
     const query = useConnectionsIdGet({ id: connectionId || '' });
 
-
-
     if (query.isError) return <>Something went wrong. Could not load connection details for {connectionId}</>;
 
     return (

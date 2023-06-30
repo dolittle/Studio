@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
@@ -9,9 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Collapse, Typography } from '@mui/material';
 import { AccordionList, AccordionListProps, Button, FileUploadFormRef } from '@dolittle/design-system';
 import { useConnectionsIdGet, useConnectionsIdDelete } from '../../../../apis/integrations/connectionsApi.hooks';
-import { useConnectionId } from '../../../routes.hooks';
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
-
+import { getConnectionStatus } from '../../../../utils/helpers';
+import { useConnectionId } from '../../../routes.hooks';
 import { M3ConfigurationForm, M3ConfigurationFormRef } from '../../configuration/M3ConfigurationForm';
 import { MainM3ConnectionInfo } from '../../configuration/MainM3ConnectionInfo';
 import { useBuildConfigurationAccordionList } from '../../configuration/useBuildConfigurationAccordionList';
@@ -35,6 +35,17 @@ export const ConfigurationView = () => {
 
     const connection = query.data?.value;
     const links = query.data?.links || [];
+
+    useEffect(() => {
+        if (!connection) {
+            return;
+        }
+
+        if(getConnectionStatus(connection.status.name).label === 'pending') {
+            setEditMode(true);
+        };
+
+    }, [connection?.status.name]);
 
     const deploymentType = connection?.chosenEnvironment?.value;
     const hasSelectedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
