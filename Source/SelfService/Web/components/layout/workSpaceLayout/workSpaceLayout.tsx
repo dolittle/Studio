@@ -3,15 +3,17 @@
 
 import React from 'react';
 
+import { Layout, LayoutProps } from '@dolittle/design-system';
+
 import { usePageTitle } from '../../../utils/usePageTitle';
 
-import { primaryNavigationItems, secondaryNavigationItems, selectionMenuItems, SideBarPrimaryLinks, SideBarSecondaryLinks } from './workSpaceLayoutLinks';
+import { PrimaryNavigation, SpaceSelectionMenu, SecondaryNavigation, SideBarPrimaryLinks, SideBarSecondaryLinks } from './workSpaceLayoutLinks';
 
 const mainNavigationItems: LayoutProps['navigationBar'] = {
     logo: 'AigonixLightCube',
-    primaryNavigationItems,
-    secondaryNavigationItems,
-    //selectionMenuItems,
+    primaryNavigationItems: <PrimaryNavigation />,
+    selectionMenuItems: <SpaceSelectionMenu />,
+    secondaryNavigationItems: <SecondaryNavigation />,
 };
 
 const sideBarNavigationItems: LayoutProps['sideBar'] = {
