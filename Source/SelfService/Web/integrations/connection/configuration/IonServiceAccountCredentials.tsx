@@ -6,7 +6,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { enqueueSnackbar } from 'notistack';
 
-import { FileUploadForm, FileUploadFormRef, MaxWidthTextBlock } from '@dolittle/design-system';
+import { FileUploadForm, FileUploadFormRef, MaxWidthTextBlock, MaxWidthBlock } from '@dolittle/design-system';
 import { IonConfigRequest } from '../../../apis/integrations/generated';
 import { TextCopyBox } from './TextCopyBox';
 
@@ -79,9 +79,9 @@ export const IonServiceAccountCredentials = React.forwardRef<FileUploadFormRef, 
         <TextCopyBox instructions={instructions} withMaxWidth />
 
         {props.canEdit && (
-            <MaxWidthTextBlock>
+            <MaxWidthBlock>
                 <FileUploadForm onSelected={handleFileUploaded} validFileExtensions={['json']} ref={ref} />
-            </MaxWidthTextBlock>
+            </MaxWidthBlock>
         )}
 
     </>;
