@@ -22,7 +22,6 @@ const sideBarNavigationItems: LayoutProps['sideBar'] = {
 };
 
 export type WorkSpaceLayoutProps = {
-    pageTitle: string;
     children: React.ReactNode;
 };
 
