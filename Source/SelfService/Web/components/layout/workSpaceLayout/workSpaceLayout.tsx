@@ -35,6 +35,7 @@ export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
         {children}
     </Layout>;
 
+// TODO: Needs renaming and seperate component?
 export const WorkSpaceWithoutSideBarLayout = ({ pageTitle, children }: WorkSpaceWithoutSideBarLayoutProps) => {
     usePageTitle(pageTitle);
 
