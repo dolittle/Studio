@@ -15,7 +15,7 @@ import { CreateSpaceDialog } from './createSpaceDialog';
 
 export const SpaceSelectMenu = () => {
     const { enqueueSnackbar } = useSnackbar();
-    const { currentApplicationId, setCurrentApplicationId } = useGlobalContext();
+    const { currentEnvironment, currentApplicationId, setCurrentApplicationId } = useGlobalContext();
 
     const [applicationInfos, setApplicationInfos] = useState([] as ShortInfoWithEnvironment[]);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
@@ -39,13 +39,14 @@ export const SpaceSelectMenu = () => {
     if (isLoading) return null;
 
     const applicationMenuItems = () => {
-        const menuItems: MenuItemProps[] = applicationInfos.map(application => {
-            return {
-                id: application.id,
-                label: application.name,
-                onMenuItemSelect: (menuItem: MenuItemProps) => handleApplicationChange(menuItem),
-            };
-        });
+        const menuItems: MenuItemProps[] = applicationInfos.filter(application => application.environment === currentEnvironment)
+            .map(application => {
+                return {
+                    id: application.id,
+                    label: application.name,
+                    onMenuItemSelect: (menuItem: MenuItemProps) => handleApplicationChange(menuItem),
+                };
+            });
 
         menuItems.push({
             id: 'create-new-application',
