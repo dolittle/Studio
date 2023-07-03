@@ -4,14 +4,15 @@
 import React, { useState, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-
 import { useSnackbar } from 'notistack';
 import { useGlobalContext } from '../../../context/globalContext';
 
-import { getSelectionMenuItems, MenuItemProps } from '@dolittle/design-system';
-
 import { getApplications, HttpResponseApplications } from '../../../apis/solutions/application';
 import { ShortInfoWithEnvironment } from '../../../apis/solutions/api';
+
+import { getSelectionMenuItems, MenuItemProps } from '@dolittle/design-system';
+
+import { CreateSpaceDialog } from './createSpaceDialog';
 
 export const SpaceSelectMenu = () => {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ export const SpaceSelectMenu = () => {
     const [applicationInfos, setApplicationInfos] = useState([] as ShortInfoWithEnvironment[]);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [createSpaceDialogOpen, setCreateSpaceDialogOpen] = useState(false);
 
     const currentApplication = applicationInfos.find(application => application.id === currentApplicationId) || applicationInfos[0];
 
@@ -70,9 +72,13 @@ export const SpaceSelectMenu = () => {
             return;
         }
 
-        const href = '/application/create';
-        navigate(href);
+        setCreateSpaceDialogOpen(true);
     };
 
-    return getSelectionMenuItems(applicationMenuItems(), currentApplication?.name);
+    return (
+        <>
+            <CreateSpaceDialog isOpen={createSpaceDialogOpen} onClose={() => setCreateSpaceDialogOpen(false)} />
+            {getSelectionMenuItems(applicationMenuItems(), currentApplication?.name)}
+        </>
+    );
 };
