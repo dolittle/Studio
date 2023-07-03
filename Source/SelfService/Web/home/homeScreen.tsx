@@ -44,6 +44,7 @@ const getStartedCardGridItems = () => {
         },
         {
             title: `I'm new here!`,
+            subtitle: 'Coming soon!',
             description: `Get started by setting up your first application and the environments you need to deploy your first
         microservice or integration service using our runtime and hosting platform.`,
             primaryButton: {
