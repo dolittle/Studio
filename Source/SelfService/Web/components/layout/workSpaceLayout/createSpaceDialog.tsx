@@ -15,7 +15,12 @@ import { createApplication, HttpApplicationRequest } from '../../../apis/solutio
 
 import { alphaNumericLowerCasedCharsRegex } from '../../../utils/helpers/regex';
 
-type CreateApplicationParameters = {
+// Remove click events from the form controls and enable them for the checkboxes.
+// TODO: Maybe we should move this to the design system?
+const styles = {
+    '& .MuiFormControl-root': { pointerEvents: 'none' },
+    '& .MuiCheckbox-root': { pointerEvents: 'auto' },
+};
     name: string;
     environments: {
         Dev: boolean;
@@ -105,7 +110,7 @@ export const CreateSpaceDialog = ({ isOpen, onClose }: CreateSpaceDialogProps) =
             <Typography variant='body1' sx={{ mt: 4 }}>
                 Select the environments you would like available in your new space.
             </Typography>
-            <Stack>
+            <Stack sx={styles}>
                 <Checkbox id='environments.Dev' label='Development' />
                 <Checkbox id='environments.Test' label='Test' />
                 <Checkbox id='environments.Prod' label='Production *' disabled />
