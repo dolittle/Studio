@@ -1,13 +1,13 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Divider, List, Toolbar } from '@mui/material';
+import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
 
 import { Icon } from '@dolittle/design-system';
 
-import { CustomListItem, Drawer } from './StyledCompenents';
+import { Drawer } from './StyledCompenents';
 
 /**
  * The props for a {@link SideBar} component.
@@ -34,20 +34,22 @@ export type SideBarProps = {
 export const SideBar = ({ primaryLinks, secondaryLinks }: SideBarProps) => {
     const [isSideBarExpanded, setIsSideBarExpanded] = useState(false);
 
+    useEffect(() => {
+        if (sessionStorage.getItem('isSidebarExpanded') === 'true') {
+            setIsSideBarExpanded(true);
+        }
+    }, []);
+
+    const handleSidebarToggle = () => {
+        setIsSideBarExpanded(!isSideBarExpanded);
+        sessionStorage.setItem('isSidebarExpanded', (!isSideBarExpanded).toString());
+    };
+
     const styles = {
-        'py': 0,
-        '.MuiListItemButton-root': {
-            minHeight: 48,
-            justifyContent: isSideBarExpanded ? 'initial' : 'center',
-            px: 2.5,
-        },
-        '.MuiListItemIcon-root': {
-            minWidth: 0,
-            mr: isSideBarExpanded ? 3 : 'auto',
-            justifyContent: 'center',
-        },
-        '.MuiListItemText-root': {
-            opacity: isSideBarExpanded ? 1 : 0,
+        list: {
+            '& .MuiListItemText-root': {
+                opacity: isSideBarExpanded ? 1 : 0,
+            },
         },
     };
 
@@ -55,12 +57,16 @@ export const SideBar = ({ primaryLinks, secondaryLinks }: SideBarProps) => {
         <Drawer variant='permanent' open={isSideBarExpanded}>
             <Toolbar />
 
-            <List sx={styles}>
-                <CustomListItem
-                    icon={<Icon icon={isSideBarExpanded ? 'KeyboardDoubleArrowLeft' : 'KeyboardDoubleArrowRight'} />}
-                    text={isSideBarExpanded ? 'Collapse' : 'Expand'}
-                    onClick={() => setIsSideBarExpanded(!isSideBarExpanded)}
-                />
+            <List sx={styles.list}>
+                <ListItem disablePadding sx={{ minHeight: 64 }}>
+                    <ListItemButton onClick={handleSidebarToggle}>
+                        <ListItemIcon sx={{ color: 'text.primary' }}>
+                            <Icon icon={isSideBarExpanded ? 'KeyboardDoubleArrowLeft' : 'KeyboardDoubleArrowRight'} />
+                        </ListItemIcon>
+
+                        <ListItemText primary={isSideBarExpanded ? 'Collapse' : 'Expand'} primaryTypographyProps={{ variant: 'body2' }} />
+                    </ListItemButton>
+                </ListItem>
 
                 <Divider />
                 {primaryLinks}
