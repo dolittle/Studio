@@ -49,7 +49,7 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
 
     const handleCreateMicroservice = () => {
         if (!canEdit) {
-            enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
+            enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
             return;
         }
 
@@ -59,7 +59,7 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
     };
 
     const handleCreateEnvironment = () => {
-        // TODO How to stop this if automation disabled, currently on the environment level
+        // TODO: How to stop this if automation disabled, currently on the environment level.
         const href = `/environment/application/${application.id}/create`;
         navigate(href);
     };

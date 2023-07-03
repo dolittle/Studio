@@ -75,10 +75,10 @@ export const CreateSpaceDialog = ({ isOpen, onClose }: CreateSpaceDialogProps) =
             enqueueSnackbar(`'${form.name}' successfully created.`);
         } catch (error) {
             enqueueSnackbar('Failed to create new space. Please try again.', { variant: 'error' });
+        } finally {
+            onClose();
+            setIsLoading(false);
         }
-
-        onClose();
-        setIsLoading(false);
     };
 
     return (

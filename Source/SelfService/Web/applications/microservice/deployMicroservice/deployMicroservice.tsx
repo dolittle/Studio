@@ -4,12 +4,12 @@
 import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-
 import { useSnackbar } from 'notistack';
+
+import { Guid } from '@dolittle/rudiments';
 
 import { Typography } from '@mui/material';
 
-import { Guid } from '@dolittle/rudiments';
 import { Button, Form, LoadingSpinner } from '@dolittle/design-system';
 
 import { saveSimpleMicroservice } from '../../stores/microservice';
@@ -56,12 +56,12 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
     const runtimeNumberSelections = [
         ...getRuntimes().map(runtimeInfo => ({
             value: runtimeInfo.image,
-            displayValue: getRuntimeNumberFromString(runtimeInfo.image)
+            displayValue: getRuntimeNumberFromString(runtimeInfo.image),
         })),
         {
             value: 'none',
-            displayValue: 'None'
-        }
+            displayValue: 'None',
+        },
     ];
 
     const handleCreateMicroservice = async (values: MicroserviceFormParameters) => {
@@ -88,24 +88,24 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
                 isPublic,
                 ingress: {
                     path: '/' + ingressPath,
-                    pathType: 'Prefix'
+                    pathType: 'Prefix',
                 },
                 headCommand: {
                     command: entrypoint.length ? [entrypoint] : [],
-                    args: headArgumentValues
+                    args: headArgumentValues,
                 },
                 connections: {
-                    m3Connector: hasM3Connector
-                }
-            }
+                    m3Connector: hasM3Connector,
+                },
+            },
         };
 
         try {
             await saveSimpleMicroservice(newMicroservice);
             const href = `/microservices/application/${application.id}/${environment}/view/${newMicroservice.dolittle.microserviceId}`;
             navigate(href);
-        } catch (e: unknown) {
-            const message = (e instanceof Error) ? e.message : 'Something went wrong when saving microservice.';
+        } catch (error: unknown) {
+            const message = (error instanceof Error) ? error.message : 'Something went wrong when saving microservice.';
             enqueueSnackbar(message, { variant: 'error' });
         } finally {
             setIsLoading(false);
@@ -146,15 +146,10 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
                     />
                 }
 
-                {isLoading ? <LoadingSpinner /> : (
-                    <Button
-                        variant='filled'
-                        label='Deploy microservice'
-                        type='submit'
-                        startWithIcon='RocketLaunch'
-                        sx={{ mt: 1 }}
-                    />
-                )}
+                {isLoading ?
+                    <LoadingSpinner /> :
+                    <Button variant='filled' label='Deploy microservice' type='submit' startWithIcon='RocketLaunch' sx={{ mt: 1 }} />
+                }
             </Form>
         </>
     );

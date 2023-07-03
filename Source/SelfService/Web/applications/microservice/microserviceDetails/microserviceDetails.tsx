@@ -3,16 +3,15 @@
 
 import React, { useEffect } from 'react';
 
-import { useSnackbar } from 'notistack';
-
-import { MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
-import { HttpResponsePodStatus } from '../../../apis/solutions/api';
-import { MicroserviceSimple } from '../../../apis/solutions/index';
-import { HttpResponseApplication } from '../../../apis/solutions/application';
-
 import { Box, Typography } from '@mui/material';
 
 import { StatusIndicator, Tabs } from '@dolittle/design-system';
+
+import { MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
+
+import { HttpResponsePodStatus } from '../../../apis/solutions/api';
+import { MicroserviceSimple } from '../../../apis/solutions/index';
+import { HttpResponseApplication } from '../../../apis/solutions/application';
 
 import { ConfigurationFilesSection } from './configurationFilesSection/configurationFilesSection';
 import { HealthStatus } from './healthStatus/healthStatus';
