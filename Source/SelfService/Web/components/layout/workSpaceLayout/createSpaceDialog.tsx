@@ -69,6 +69,7 @@ export const CreateSpaceDialog = ({ isOpen, onClose }: CreateSpaceDialogProps) =
             });
         }
 
+        // TODO: Should this change current environment?
         try {
             await createApplication(request);
             enqueueSnackbar(`'${form.name}' successfully created.`);
