@@ -8,7 +8,7 @@ export { themeDark } from './theming/theme';
 // Atoms
 export { Accordion, AccordionProps } from './atoms/Accordion';
 export { AccordionList, AccordionListProps } from './atoms/AccordionList';
-export { AlertDialog, AlertDialogProps } from './atoms/AlertDialog';
+export { AlertDialog, AlertDialogProps, DialogForm } from './atoms/AlertDialog';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
 export { Button, ButtonProps } from './atoms/Button';
 export * from './atoms/Forms';
