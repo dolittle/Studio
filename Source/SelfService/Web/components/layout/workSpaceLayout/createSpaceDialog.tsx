@@ -21,6 +21,8 @@ const styles = {
     '& .MuiFormControl-root': { pointerEvents: 'none' },
     '& .MuiCheckbox-root': { pointerEvents: 'auto' },
 };
+
+type CreateSpaceParameters = {
     name: string;
     environments: {
         Dev: boolean;
@@ -46,7 +48,7 @@ export const CreateSpaceDialog = ({ isOpen, onClose }: CreateSpaceDialogProps) =
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleSpaceCreate = async (form: CreateApplicationParameters) => {
+    const handleSpaceCreate = async (form: CreateSpaceParameters) => {
         setIsLoading(true);
 
         const request: HttpApplicationRequest = {
@@ -91,7 +93,7 @@ export const CreateSpaceDialog = ({ isOpen, onClose }: CreateSpaceDialogProps) =
                     Test: false,
                     Prod: true,
                 }
-            } as CreateApplicationParameters}
+            } as CreateSpaceParameters}
             confirmBtnText='Create'
             onCancel={onClose}
             onConfirm={handleSpaceCreate}
