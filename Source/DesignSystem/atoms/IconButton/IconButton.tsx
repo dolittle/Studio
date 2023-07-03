@@ -20,6 +20,12 @@ export type IconButtonProps = {
     tooltipText: string;
 
     /**
+     * The placement of the tooltip.
+     * @default top
+     */
+    tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
+
+    /**
      * Usual MUI icon writen as a `string`. Must be a valid `SvgIconsDefinition`.
      *
      * Leave empty to use the default `'CloseRounded'` icon.
@@ -88,11 +94,11 @@ export type IconButtonProps = {
  * @param {IconButtonProps} props - The {@link IconButtonProps}.
  * @returns A {@link IconButton} component.
  */
-export const IconButton = ({ tooltipText, icon = 'CloseRounded', color, size = 'small', edge, disabled, href, download, onClick, sx }: IconButtonProps) => {
+export const IconButton = ({ tooltipText, tooltipPlacement, icon = 'CloseRounded', color, size = 'small', edge, disabled, href, download, onClick, sx }: IconButtonProps) => {
     const clonedIcon = React.cloneElement(SvgIcons[icon], { fontSize: size });
 
     return (
-        <Tooltip title={tooltipText || ''} arrow placement='top'>
+        <Tooltip title={tooltipText || ''} arrow placement={tooltipPlacement ?? 'top'}>
             <MuiIconButton
                 color={color ?? 'inherit'}
                 size={size}
