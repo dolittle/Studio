@@ -3,6 +3,8 @@
 
 import React, { useState } from 'react';
 
+import { useSnackbar } from 'notistack';
+
 import { Guid } from '@dolittle/rudiments';
 
 import { Stack, Typography } from '@mui/material';
@@ -35,7 +37,8 @@ export type CreateSpaceDialogProps = {
 };
 
 export const CreateSpaceDialog = ({ isOpen, onClose }: CreateSpaceDialogProps) => {
-    const [errorOnCreatingSpace, setErrorOnCreatingSpace] = useState(false);
+    const { enqueueSnackbar } = useSnackbar();
+
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSpaceCreate = async (form: CreateApplicationParameters) => {
@@ -61,9 +64,9 @@ export const CreateSpaceDialog = ({ isOpen, onClose }: CreateSpaceDialogProps) =
 
         try {
             await createApplication(request);
-            setErrorOnCreatingSpace(false);
+            enqueueSnackbar(`'${form.name}' successfully created.`);
         } catch (error) {
-            setErrorOnCreatingSpace(true);
+            enqueueSnackbar('Failed to create new space. Please try again.', { variant: 'error' });
         }
 
         onClose();
