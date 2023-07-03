@@ -1,6 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+// TODO: Also added to the regexes in Source/SelfService/Web/utils/helpers/regex.ts
+
 /**
  * Regular expression for matching email addresses
  */
@@ -20,4 +22,3 @@ export const alphaNumericCharsRegex = /^[a-zA-Z0-9]*$/;
  * Regular expression for matching non-whitespace characters
  */
 export const nonWhitespaceRegex = /^\S+$/;
-
