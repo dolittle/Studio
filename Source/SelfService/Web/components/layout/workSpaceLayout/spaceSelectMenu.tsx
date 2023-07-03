@@ -3,7 +3,6 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useGlobalContext } from '../../../context/globalContext';
 
@@ -15,7 +14,6 @@ import { getSelectionMenuItems, MenuItemProps } from '@dolittle/design-system';
 import { CreateSpaceDialog } from './createSpaceDialog';
 
 export const SpaceSelectMenu = () => {
-    const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const { currentApplicationId, setCurrentApplicationId } = useGlobalContext();
 
@@ -34,7 +32,8 @@ export const SpaceSelectMenu = () => {
                 setCanCreateApplication(response.canCreateApplication);
                 setApplicationInfos(response.applications);
                 setIsLoading(false);
-            }).catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }));
+            })
+            .catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }));
     }, []);
 
     if (isLoading) return null;
@@ -59,9 +58,7 @@ export const SpaceSelectMenu = () => {
     };
 
     const handleApplicationChange = (menuItem: MenuItemProps) => {
-        if (menuItem.id === currentApplicationId) {
-            return;
-        }
+        if (menuItem.id === currentApplicationId) return;
 
         setCurrentApplicationId(menuItem.id);
     };
