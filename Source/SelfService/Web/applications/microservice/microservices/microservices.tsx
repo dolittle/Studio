@@ -19,7 +19,7 @@ import { Button, LoadingSpinner } from '@dolittle/design-system';
 import { NoMicroservices } from './noMicroservices';
 import { MicroserviceTable } from './microservicesTable';
 
-type MicroserviceProps = {
+export type MicroserviceProps = {
     environment: string;
     application: HttpResponseApplication;
 };

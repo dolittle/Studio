@@ -9,7 +9,7 @@ import { AlertDialog } from '@dolittle/design-system';
 
 import { restartMicroservice } from '../../../apis/solutions/api';
 
-type MicroserviceRestartProps = {
+export type MicroserviceRestartProps = {
     applicationId: string;
     environment: string;
     microserviceId: string;

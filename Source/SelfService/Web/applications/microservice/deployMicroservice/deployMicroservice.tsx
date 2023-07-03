@@ -38,7 +38,7 @@ const styles = {
     },
 };
 
-type DeployMicroserviceProps = {
+export type DeployMicroserviceProps = {
     application: HttpResponseApplication;
     environment: string;
 };

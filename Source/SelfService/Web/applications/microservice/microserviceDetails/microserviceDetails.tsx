@@ -21,7 +21,7 @@ import { TerminalView } from './terminal/terminalView';
 
 import { getContainerStatus } from '../../../utils/helpers';
 
-type MicroserviceViewProps = {
+export type MicroserviceViewProps = {
     application: HttpResponseApplication;
     environment: string;
     microserviceId: string;
