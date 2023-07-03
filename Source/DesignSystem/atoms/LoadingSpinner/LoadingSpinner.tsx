@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, CircularProgressProps } from '@mui/material';
 
-export const LoadingSpinner = () =>
+export const LoadingSpinner = (props: CircularProgressProps) =>
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 1, p: 2 }}>
-        <CircularProgress />
+        <CircularProgress {...props} />
     </Box>;
