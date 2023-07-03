@@ -1,26 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { DropdownMenuProps, MenuListProps, getPrimaryNavigationItems, getSecondaryNavigationItems, getSelectionMenuItems } from '../../index';
+import { DropdownMenuProps, getPrimaryNavigationItems, getSecondaryNavigationItems, getSelectionMenuItems } from '../../index';
 
 import { Link } from '../../helpers/ReactRouter';
-
-export const menuItems: MenuListProps['menuListItem'] = [
-    {
-        label: 'Selected',
-        icon: 'CheckRounded',
-        overrides: {
-            selected: true,
-        },
-    },
-    {
-        label: 'Link 2',
-    },
-    {
-        label: 'Link 3',
-        icon: 'LogoutRounded',
-    },
-];
 
 export const PrimaryNavigation = () => {
     const primaryNavigationItems = [
