@@ -53,7 +53,6 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
             return;
         }
 
-        sessionStorage.setItem('microserviceCreate', 'true');
         const href = `/microservices/application/${application.id}/${environment}/create`;
         navigate(href);
     };

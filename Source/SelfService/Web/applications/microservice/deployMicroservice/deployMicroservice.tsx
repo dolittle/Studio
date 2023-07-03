@@ -102,6 +102,8 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
 
         try {
             await saveSimpleMicroservice(newMicroservice);
+
+            enqueueSnackbar(`Microservice '${microserviceName}' has been deployed.`);
             const href = `/microservices/application/${application.id}/${environment}/view/${newMicroservice.dolittle.microserviceId}`;
             navigate(href);
         } catch (error: unknown) {
