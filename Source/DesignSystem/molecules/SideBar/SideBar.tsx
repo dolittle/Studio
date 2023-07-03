@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
 
-import { Icon } from '@dolittle/design-system';
+import { Icon, IconButton } from '@dolittle/design-system';
 
 import { Drawer } from './StyledCompenents';
 
@@ -69,11 +69,43 @@ export const SideBar = ({ primaryLinks, secondaryLinks }: SideBarProps) => {
                 </ListItem>
 
                 <Divider />
-                {primaryLinks}
-
-                <Divider />
-                {secondaryLinks}
             </List>
+
+            <List sx={styles.list}>
+                <ListItem disablePadding>
+                    <ListItemButton onClick={() => { }} dense sx={{ whiteSpace: 'nowrap' }}>
+                        <ListItemIcon sx={{ color: 'text.primary' }}>
+                            <IconButton edge='start' tooltipText={isSideBarExpanded ? '' : 'test'} tooltipPlacement='right' icon='AddBoxRounded' />
+                        </ListItemIcon>
+
+                        <ListItemText primary='test' primaryTypographyProps={{ variant: 'body2' }} />
+                    </ListItemButton>
+                </ListItem>
+
+                <ListItem disablePadding>
+                    <ListItemButton onClick={() => { }} dense sx={{ whiteSpace: 'nowrap' }}>
+                        <ListItemIcon sx={{ color: 'text.primary' }}>
+                            {/* {item.icon && <Icon icon={item.icon} />} */}
+                            <Icon icon='AddBoxRounded' />
+                        </ListItemIcon>
+
+                        <ListItemText primary='dkd' primaryTypographyProps={{ variant: 'body2' }} />
+                    </ListItemButton>
+                </ListItem>
+            </List>
+
+            {primaryLinks}
+
+            <Divider />
+            {secondaryLinks}
         </Drawer>
     );
 };
+
+// export const RouterLinkListItem = ({ to, icon, text, inset, sx, variantButton }: RouterLinkListItemProps) => {
+//         <ListItem disablePadding sx={sx}>
+//             <ListItemButton component={Link} to={to} selected={location.pathname.includes(to)} dense sx={{ whiteSpace: 'nowrap' }}>
+//                 {icon ? <ListItemIcon sx={{ color: 'inherit' }}>{icon}</ListItemIcon> : null}
+//                 <ListItemText inset={inset} primary={text} primaryTypographyProps={{ variant: variantButton ? 'button' : 'body2' }} />
+//             </ListItemButton>
+//         </ListItem>
