@@ -5,7 +5,7 @@ import React, { MouseEventHandler } from 'react';
 
 import { IconButton as MuiIconButton, SxProps, Tooltip } from '@mui/material';
 
-import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
+import { Icon, SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
 
 /**
  * The props for a {@link IconButton} component.
@@ -38,8 +38,6 @@ export type IconButtonProps = {
 
     /**
      * Most icons will use the default `inherit` color.
-     *
-     * `primary` color can be used for the important actions, such as Save, Submit, or Continue.
      * @default inherit
      */
     color?: 'inherit' | 'primary';
@@ -52,9 +50,8 @@ export type IconButtonProps = {
 
     /**
      * Set icon to be in the start edge or in the end edge.
-     * @default false
      */
-    edge?: 'start' | 'end' | false;
+    edge?: 'start' | 'end';
 
     /**
      * Set to `true` if button should be disabled.
@@ -65,8 +62,7 @@ export type IconButtonProps = {
     /**
      * Use it to navigate to internal page.
      *
-     * When `href` is set, the component will render as an `a` element.
-     * @default undefined
+     * When href is set, the component will render as an `a` element.
      */
     href?: string;
 
@@ -79,12 +75,11 @@ export type IconButtonProps = {
 
     /**
      * Callback fired when the component is clicked.
-     * @default undefined
      */
     onClick?: MouseEventHandler<HTMLButtonElement>;
 
     /**
-     * The `sx` prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
 };
@@ -94,25 +89,20 @@ export type IconButtonProps = {
  * @param {IconButtonProps} props - The {@link IconButtonProps}.
  * @returns A {@link IconButton} component.
  */
-export const IconButton = ({ tooltipText, tooltipPlacement, icon = 'CloseRounded', color, size = 'small', edge, disabled, href, download, onClick, sx }: IconButtonProps) => {
-    const clonedIcon = React.cloneElement(SvgIcons[icon], { fontSize: size });
-
-    return (
-        <Tooltip title={tooltipText || ''} arrow placement={tooltipPlacement ?? 'top'}>
-            <MuiIconButton
-                color={color ?? 'inherit'}
-                size={size}
-                edge={edge ?? false}
-                disabled={disabled}
-                component={href ? 'a' : 'button'}
-                href={href}
-                download={download}
-                onClick={onClick}
-                aria-label={tooltipText}
-                sx={sx}
-            >
-                {clonedIcon}
-            </MuiIconButton>
-        </Tooltip>
-    );
-};
+export const IconButton = ({ tooltipText, tooltipPlacement, icon, color, size, edge, disabled, href, download, onClick, sx }: IconButtonProps) =>
+    <Tooltip title={tooltipText || ''} arrow placement={tooltipPlacement ?? 'top'}>
+        <MuiIconButton
+            color={color ?? 'inherit'}
+            size={size ?? 'small'}
+            edge={edge ?? false}
+            disabled={disabled}
+            component={href ? 'a' : 'button'}
+            href={href}
+            download={download}
+            onClick={onClick}
+            aria-label={tooltipText}
+            sx={sx}
+        >
+            <Icon icon={icon ?? 'CloseRounded'} />
+        </MuiIconButton>
+    </Tooltip>;
