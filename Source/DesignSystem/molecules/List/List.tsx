@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { ButtonTypeMap, ExtendButtonBase, List as MuiList, ListItem, ListItemButton, ListItemIcon, ListItemText, SxProps } from '@mui/material';
+import { ButtonTypeMap, ExtendButtonBase, Icon, IconButton, List as MuiList, ListItem, ListItemButton, ListItemIcon, ListItemText, SxProps } from '@mui/material';
 
 type ListItemProps = {
     /**
@@ -15,6 +15,8 @@ type ListItemProps = {
      * The icon to display for the list item.
      *
      * `withIcons` must be set to `true` for the icon to be displayed.
+     *
+     * Use the {@link Icon} component or {@link IconButton} to display an icon.
      */
     icon?: React.ReactNode;
 
@@ -50,6 +52,8 @@ export type ListProps = {
      */
     sx?: SxProps;
 };
+
+// TODO: Add support for checkboxes.
 
 /**
  * List is a component that displays a list of items.
