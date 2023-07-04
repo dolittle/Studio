@@ -22,8 +22,8 @@ const { metadata, createStory } = componentStories(NavigationBar, {
 metadata.parameters = {
     docs: {
         description: {
-            component: `The top navigation bar is always positioned at the top of the page and puts high priority destinations within reach on large screens. 
-                        The top navigation bar uses a background and elevation of 4.`
+            component: `The top navigation bar is always positioned at the top of the page and puts high priority destinations
+            within reach on large screens. The top navigation bar uses a background and elevation of 4.`
         },
     },
 };

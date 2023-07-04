@@ -50,7 +50,7 @@ export const WithSelection = () => {
 
     return (
         <DropdownMenu
-            id='selected-dropdown-menu'
+            id='select-dropdown-menu'
             menuItems={items.map(item => ({ ...item, onMenuItemSelect: () => setSelected(item.label) }))}
             selected={selected}
         />

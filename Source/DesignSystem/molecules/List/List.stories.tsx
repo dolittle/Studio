@@ -3,9 +3,27 @@
 
 import { action } from '@storybook/addon-actions';
 
-import { componentStories, List } from '../../index';
+import { componentStories, List, ListProps } from '../../index';
 
 const { metadata, createStory } = componentStories(List);
+
+const items: ListProps['listItems'] = [
+    {
+        label: 'Item 1',
+        icon: 'AddBoxRounded',
+        onClick: action('Item 1 clicked'),
+    },
+    {
+        label: 'Item 2',
+        icon: 'CheckRounded',
+        onClick: action('Item 2 clicked'),
+    },
+    {
+        label: 'Item 3',
+        icon: 'HelpRounded',
+        onClick: action('Item 3 clicked'),
+    },
+];
 
 metadata.title = 'List Items';
 
@@ -14,23 +32,7 @@ metadata.argTypes = {
 };
 
 metadata.args = {
-    listItems: [
-        {
-            label: 'Item 1',
-            icon: 'AddBoxRounded',
-            onClick: action('Item 1 clicked'),
-        },
-        {
-            label: 'Item 2',
-            icon: 'CheckRounded',
-            onClick: action('Item 2 clicked'),
-        },
-        {
-            label: 'Item 3',
-            icon: 'HelpRounded',
-            onClick: action('Item 3 clicked'),
-        },
-    ],
+    listItems: items,
     withIcons: false,
     dense: false,
     sx: { maxWidth: 150 },
