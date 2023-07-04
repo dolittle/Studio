@@ -10,7 +10,7 @@ import { List, ListProps } from '@dolittle/design-system';
 import { Drawer } from './StyledCompenents';
 
 export const getSidePanelItems = (sidePanelItems: ListProps['listItems']) =>
-    <List listItems={sidePanelItems} dense withIcons sx={{ py: 2 }} />;
+    <List listItems={sidePanelItems} dense withIcons />;
 
 /**
  * The props for a {@link SidePanel} component.
