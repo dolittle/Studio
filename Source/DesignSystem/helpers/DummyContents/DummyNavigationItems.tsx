@@ -137,6 +137,24 @@ export const SidePanelNavigation = () => {
                 to: '/side-panel-link-3',
             },
         },
+        {
+            label: 'Side panel link 4',
+            icon: 'EditRounded',
+            sx: { my: 1 },
+            overrides: {
+                component: Link,
+                to: '/side-panel-link-4',
+            },
+        },
+        {
+            label: 'Side panel link 5',
+            icon: 'LogoutRounded',
+            sx: { my: 1 },
+            overrides: {
+                component: Link,
+                to: '/side-panel-link-5',
+            },
+        },
     ];
 
     return getSidePanelItems(items);
