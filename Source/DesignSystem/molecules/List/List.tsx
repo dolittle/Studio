@@ -24,7 +24,7 @@ type ListItemProps = {
      * The callback function to call when a list item is selected.
      * @param {any} item - The selected list item.
      */
-    onClick: () => void;
+    onClick?: () => void;
 
     /**
      * The overrides prop gives you access to the underlying MuiButtonProps object, overriding the styles defined by the component and Material-UI.
