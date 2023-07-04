@@ -27,6 +27,11 @@ type ListItemProps = {
     onClick?: () => void;
 
     /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
+    sx?: SxProps;
+
+    /**
      * The overrides prop gives you access to the underlying MuiButtonProps object, overriding the styles defined by the component and Material-UI.
      */
     overrides?: Partial<ExtendButtonBase<ButtonTypeMap>>;
@@ -48,6 +53,12 @@ export type ListProps = {
     withIcons?: boolean;
 
     /**
+     * Whether or not the list item should be dense.
+     * @default false
+     */
+    dense?: boolean;
+
+    /**
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
@@ -60,11 +71,11 @@ export type ListProps = {
  * @param {ListProps} props - The {@link ListProps}.
  * @returns A {@link List} component.
  */
-export const List = ({ listItems, withIcons, sx }: ListProps) =>
-    <MuiList component='nav' sx={{ maxWidth: 320, ...sx }}>
+export const List = ({ listItems, withIcons, dense, sx }: ListProps) =>
+    <MuiList sx={{ maxWidth: 320, ...sx }}>
         {listItems.map(item =>
-            <ListItem key={item.label} disablePadding>
-                <ListItemButton onClick={item.onClick} dense sx={{ whiteSpace: 'nowrap' }} {...item.overrides}>
+            <ListItem key={item.label} disablePadding sx={item.sx}>
+                <ListItemButton onClick={item.onClick} dense={dense} sx={{ whiteSpace: 'nowrap' }} {...item.overrides}>
                     {withIcons &&
                         <ListItemIcon sx={{ color: 'text.primary' }}>
                             {item.icon && <Icon icon={item.icon} />}

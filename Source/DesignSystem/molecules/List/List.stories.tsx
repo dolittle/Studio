@@ -32,6 +32,7 @@ metadata.args = {
         },
     ],
     withIcons: false,
+    dense: false,
     sx: { maxWidth: 150 },
 };
 
@@ -41,6 +42,11 @@ export const Default = createStory();
 
 export const withIcons = createStory({
     withIcons: true,
+});
+
+export const dense = createStory({
+    withIcons: true,
+    dense: true,
 });
 
 // export const WithCheckbox = createStory();
