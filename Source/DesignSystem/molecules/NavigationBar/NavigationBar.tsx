@@ -67,7 +67,7 @@ export const NavigationBar = ({ logo, primaryNavigationItems, secondaryNavigatio
             <Toolbar>
                 <Box sx={styles.mobileMenu}>
                     <IconButton
-                        tooltipText='Toggle navigation menu'
+                        tooltipText={isMobileNavOpen ? 'Close' : 'Open'}
                         icon='MenuRounded'
                         edge='start'
                         onClick={() => setIsMobileNavOpen(prevState => !prevState)}

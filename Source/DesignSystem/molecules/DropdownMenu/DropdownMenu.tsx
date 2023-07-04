@@ -126,7 +126,7 @@ export const DropdownMenu = ({ id, menuItems, selected, iconDropdown }: Dropdown
                             onClick={() => menuItem.onSelect?.(menuItem)}
                             {...menuItem.overrides}
                         >
-                            <ListItemIcon sx={{ color: 'text.secondary' }}>
+                            <ListItemIcon sx={{ color: 'text.primary' }}>
                                 {menuItemIcon && <Icon icon={menuItemIcon} />}
                             </ListItemIcon>
 

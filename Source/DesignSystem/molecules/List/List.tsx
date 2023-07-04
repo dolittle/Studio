@@ -67,7 +67,7 @@ export type ListProps = {
 // TODO: Add support for checkboxes.
 
 /**
- * List is a component that displays a list of items.
+ * The list component is the main component that contains the list items.
  * @param {ListProps} props - The {@link ListProps}.
  * @returns A {@link List} component.
  */

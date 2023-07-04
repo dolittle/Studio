@@ -13,6 +13,7 @@ const items: DropdownMenuProps['menuItems'] = [
     {
         id: '1',
         label: 'Item 1',
+        icon: 'AigonixLightCube',
         onSelect: action('Clicked Item 1'),
     },
     {
@@ -23,7 +24,7 @@ const items: DropdownMenuProps['menuItems'] = [
     {
         id: '3',
         label: 'Item 3',
-        icon: 'AigonixLightCube',
+        icon: 'LogoutRounded',
         onSelect: action('Clicked Item 3'),
     },
 ];
@@ -51,7 +52,7 @@ export const WithSelection = () => {
     return (
         <DropdownMenu
             id='select-dropdown-menu'
-            menuItems={items.map(item => ({ ...item, onMenuItemSelect: () => setSelected(item.label) }))}
+            menuItems={items.map(item => ({ ...item, onSelect: () => setSelected(item.label) }))}
             selected={selected}
         />
     );

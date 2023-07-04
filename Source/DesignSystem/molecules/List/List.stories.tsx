@@ -20,7 +20,7 @@ const items: ListProps['listItems'] = [
     },
     {
         label: 'Item 3',
-        icon: 'HelpRounded',
+        icon: 'LogoutRounded',
         onClick: action('Item 3 clicked'),
     },
 ];
@@ -42,13 +42,12 @@ export default metadata;
 
 export const Default = createStory();
 
-export const withIcons = createStory({
-    withIcons: true,
+export const dense = createStory({
+    dense: true,
 });
 
-export const dense = createStory({
+export const withIcons = createStory({
     withIcons: true,
-    dense: true,
 });
 
 // export const WithCheckbox = createStory();
