@@ -3,22 +3,22 @@
 
 import React from 'react';
 
-import { ButtonTypeMap, ExtendButtonBase, Icon, IconButton, List as MuiList, ListItem, ListItemButton, ListItemIcon, ListItemText, SxProps } from '@mui/material';
+import { ButtonTypeMap, ExtendButtonBase, List as MuiList, ListItem, ListItemButton, ListItemIcon, ListItemText, SxProps } from '@mui/material';
+
+import { Icon, IconProps } from '../../index';
 
 type ListItemProps = {
     /**
      * The label to display for the list item.
      */
-    label: string;
+    label?: string;
 
     /**
      * The icon to display for the list item.
      *
-     * `withIcons` must be set to `true` for the icon to be displayed.
-     *
-     * Use the {@link Icon} component or {@link IconButton} to display an icon.
+     * Must be a valid {@link IconProps['icon']} value.
      */
-    icon?: React.ReactNode;
+    icon?: IconProps['icon'];
 
     /**
      * The callback function to call when a list item is selected.
@@ -65,7 +65,11 @@ export const List = ({ listItems, withIcons, sx }: ListProps) =>
         {listItems.map(item =>
             <ListItem key={item.label} disablePadding>
                 <ListItemButton onClick={item.onClick} dense sx={{ whiteSpace: 'nowrap' }} {...item.overrides}>
-                    {withIcons && <ListItemIcon sx={{ color: 'text.primary' }}>{item.icon && item.icon}</ListItemIcon>}
+                    {withIcons &&
+                        <ListItemIcon sx={{ color: 'text.primary' }}>
+                            {item.icon && <Icon icon={item.icon} />}
+                        </ListItemIcon>
+                    }
                     <ListItemText primary={item.label} primaryTypographyProps={{ variant: 'body2' }} />
                 </ListItemButton>
             </ListItem>
