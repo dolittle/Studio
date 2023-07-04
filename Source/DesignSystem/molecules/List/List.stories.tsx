@@ -5,7 +5,7 @@ import React from 'react';
 
 import { action } from '@storybook/addon-actions';
 
-import { componentStories, List, Icon } from '@dolittle/design-system';
+import { componentStories, List, Icon } from '../../index';
 
 const { metadata, createStory } = componentStories(List);
 

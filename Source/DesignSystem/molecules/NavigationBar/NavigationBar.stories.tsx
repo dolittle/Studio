@@ -8,7 +8,7 @@ import { Toolbar } from '@mui/material';
 import { componentStories, NavigationBar } from '../../index';
 
 import { CurrentPath, Router } from '../../helpers/ReactRouter';
-import { PrimaryNavigation, SelectionMenu, SecondaryNavigation } from '../../helpers/DummyContents/DummyNavigationItems';
+import { PrimaryNavigation, SelectionMenu, SecondaryNavigation } from '../../helpers/DummyContents';
 
 const { metadata, createStory } = componentStories(NavigationBar, {
     decorator: Story =>
