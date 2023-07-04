@@ -6,37 +6,20 @@ import React from 'react';
 import { Link as RouterLink, LinkProps as RouterLinkProps, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { StaticRouter } from 'react-router-dom/server';
 
-import { ListItem, ListItemButton, ListItemIcon, ListItemText, SxProps, Typography } from '@mui/material';
-
-import { Icon } from '@dolittle/design-system';
-
-export type RouterLinkListItemProps = {
-    to: string;
-    icon?: React.ReactElement;
-    text?: string;
-    inset?: boolean;
-    selected?: boolean;
-    variantButton?: boolean;
-    sx?: SxProps;
-};
+import { Typography } from '@mui/material';
 
 export const Router = ({ children }: { children?: React.ReactNode }) => {
     if (typeof window === 'undefined') {
         return <StaticRouter location='/primary-1'>{children}</StaticRouter>;
     }
 
-    return (
-        <MemoryRouter initialEntries={['/primary-1']} initialIndex={0}>{children}</MemoryRouter>
-    );
+    return <MemoryRouter initialEntries={['/primary-1']} initialIndex={0}>{children}</MemoryRouter>;
 };
 
-export const CurrentPath = () => {
-    return (
-        <Routes>
-            <Route path='*' element={<Content />} />
-        </Routes>
-    );
-};
+export const CurrentPath = () =>
+    <Routes>
+        <Route path='*' element={<Content />} />
+    </Routes>;
 
 export const Content = () => {
     const location = useLocation();
@@ -52,30 +35,3 @@ export const Content = () => {
 export const Link = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function Link(itemProps, ref) {
     return <RouterLink ref={ref} {...itemProps} role={undefined} />;
 });
-
-export const RouterLinkListItem = ({ to, icon, text, inset, sx, variantButton }: RouterLinkListItemProps) => {
-    const location = useLocation();
-
-    return (
-        <ListItem disablePadding sx={sx}>
-            <ListItemButton component={Link} to={to} selected={location.pathname.includes(to)} dense sx={{ whiteSpace: 'nowrap' }}>
-                {icon ? <ListItemIcon sx={{ color: 'inherit' }}>{icon}</ListItemIcon> : null}
-                <ListItemText inset={inset} primary={text} primaryTypographyProps={{ variant: variantButton ? 'button' : 'body2' }} />
-            </ListItemButton>
-        </ListItem>
-    );
-};
-
-export const SideBarPrimaryLinks = () =>
-    <>
-        <RouterLinkListItem to='sidebar-primary-link-1' text='Primary link 1' icon={<Icon icon='PolylineRounded' />} />
-        <RouterLinkListItem to='sidebar-primary-link-2' text='Primary link 2' icon={<Icon icon='Bridge' />} />
-    </>;
-
-export const SideBarSecondaryLinks = () =>
-    <>
-        <RouterLinkListItem to='sidebar-secondary-link-1' text='Secondary link 1' icon={<Icon icon='HexagonRounded' />} />
-        <RouterLinkListItem to='sidebar-secondary-link-2' text='Secondary link 2' icon={<Icon icon='BackupRounded' />} />
-        <RouterLinkListItem to='sidebar-secondary-link-3' text='Secondary link 3' icon={<Icon icon='ContainerRegistry' />} />
-        <RouterLinkListItem to='sidebar-secondary-link-4' text='Secondary link 4' icon={<Icon icon='TextSnippetRounded' />} />
-    </>;
