@@ -15,7 +15,6 @@ export type IconButtonProps = {
      * The text that will be displayed as a tooltip when the user hovers over the icon button.
      *
      * It is also used as the `aria-label` for the icon button.
-     * @default undefined
      */
     tooltipText: string;
 
@@ -49,12 +48,13 @@ export type IconButtonProps = {
     size?: 'small' | 'medium';
 
     /**
-     * Set icon to be in the start edge or in the end edge.
+     * Use it to change the position of the icon.
+     * @default false
      */
     edge?: 'start' | 'end';
 
     /**
-     * Set to `true` if button should be disabled.
+     * Use it to disable the icon button.
      * @default false
      */
     disabled?: boolean;
@@ -68,13 +68,12 @@ export type IconButtonProps = {
 
     /**
      * Use it for downloading a file as a `attr-download`.
-     * @default undefined
      * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-download for more information.
      */
     download?: string;
 
     /**
-     * Callback fired when the component is clicked.
+     * The event handler for the `onClick` event.
      */
     onClick?: MouseEventHandler<HTMLButtonElement>;
 
