@@ -13,18 +13,18 @@ const items: DropdownMenuProps['menuItems'] = [
     {
         id: '1',
         label: 'Item 1',
-        onMenuItemSelect: action('Clicked Item 1'),
+        onSelect: action('Clicked Item 1'),
     },
     {
         id: '2',
         label: 'Item 2',
-        onMenuItemSelect: action('Clicked Item 2'),
+        onSelect: action('Clicked Item 2'),
     },
     {
         id: '3',
         label: 'Item 3',
         icon: 'AigonixLightCube',
-        onMenuItemSelect: action('Clicked Item 3'),
+        onSelect: action('Clicked Item 3'),
     },
 ];
 

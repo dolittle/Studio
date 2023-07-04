@@ -29,7 +29,7 @@ export type MenuItemProps = {
      * The callback function to call when a menu item is selected.
      * @param {any} item - The selected menu item.
      */
-    onMenuItemSelect?: (menuItem: MenuItemProps) => void;
+    onSelect?: (menuItem: MenuItemProps) => void;
 
     /**
      * The overrides prop gives you access to the underlying MuiButtonProps object, overriding the styles defined by the component and Material-UI.
@@ -123,7 +123,7 @@ export const DropdownMenu = ({ id, menuItems, selected, iconDropdown }: Dropdown
                         <MenuItem
                             key={menuItem.id}
                             selected={selected ? menuItem.label === selectedItemLabel : false}
-                            onClick={() => menuItem.onMenuItemSelect?.(menuItem)}
+                            onClick={() => menuItem.onSelect?.(menuItem)}
                             {...menuItem.overrides}
                         >
                             <ListItemIcon sx={{ color: 'text.secondary' }}>
