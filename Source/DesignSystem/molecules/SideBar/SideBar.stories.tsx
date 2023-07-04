@@ -5,9 +5,11 @@ import React from 'react';
 
 import { Box } from '@mui/material';
 
-import { componentStories, SideBar } from '@dolittle/design-system';
+import { componentStories, SideBar } from '../../index';
 
-import { CurrentPath, Router, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/ReactRouter';
+import { CurrentPath, Router } from '../../helpers/ReactRouter';
+
+import { SidebarNavigation } from '../../helpers/DummyContents';
 
 const { metadata, createStory } = componentStories(SideBar, {
     decorator: Story => (
@@ -24,26 +26,25 @@ const { metadata, createStory } = componentStories(SideBar, {
 });
 
 metadata.parameters = {
-    controls: { include: [] },
-    docs: {
-        description: {
-            component: `The side navigation bar contains sub-menu navigation items linked to the top navigation bar items. It can be made collapsable, 
-            using icons only. Menu names should be revealed upon hover when in the collapsed state with a tooltip. 
-            The side navigation bar uses the default background and elevation.`
-        },
-        source: {
-            code: `
-<SideBar
-    primaryLinks={<SideBarPrimaryLinks />}
-    secondaryLinks={<SideBarSecondaryLinks />}
-/>`,
-        },
-    },
+    //     controls: { include: [] },
+    //     docs: {
+    //         description: {
+    //             component: `The side navigation bar contains sub-menu navigation items linked to the top navigation bar items. It can be made collapsable,
+    //             using icons only. Menu names should be revealed upon hover when in the collapsed state with a tooltip.
+    //             The side navigation bar uses the default background and elevation.`
+    //         },
+    //         source: {
+    //             code: `
+    // <SideBar
+    //     primaryLinks={<SideBarPrimaryLinks />}
+    //     secondaryLinks={<SideBarSecondaryLinks />}
+    // />`,
+    //         },
+    //     },
 };
 
 metadata.args = {
-    primaryLinks: <SideBarPrimaryLinks />,
-    secondaryLinks: <SideBarSecondaryLinks />,
+    sideBarNavigationItems: <SidebarNavigation />,
 };
 
 export default metadata;

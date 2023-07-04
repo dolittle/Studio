@@ -3,35 +3,31 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
+import { Divider, Toolbar } from '@mui/material';
 
-import { Icon, IconButton } from '@dolittle/design-system';
+import { List, ListProps } from '@dolittle/design-system';
 
 import { Drawer } from './StyledCompenents';
+
+export const getSidebarItems = (sidebarItems: ListProps['listItems']) =>
+    <List listItems={sidebarItems} dense withIcons sx={{ py: 2 }} />;
 
 /**
  * The props for a {@link SideBar} component.
  */
 export type SideBarProps = {
     /**
-     * The main links that will be displayed in the side bar.
-     * @default undefined
+     * The links that will be displayed in the side bar.
      */
-    primaryLinks?: React.ReactNode;
-
-    /**
-     * The secondary links that will be displayed in the side bar.
-     * @default undefined
-     */
-    secondaryLinks?: React.ReactNode;
+    sideBarNavigationItems: React.ReactNode;
 };
 
 /**
- * The side bar is the left bar that contains the main navigation links and the secondary links.
- * @param {SideBarProps} props - The {@link SideBarProps} that contains the properties for the side bar.
+ * The side bar is the left bar that contains links.
+ * @param {SideBarProps} props - The {@link SideBarProps}.
  * @returns A {@link SideBar} component.
  */
-export const SideBar = ({ primaryLinks, secondaryLinks }: SideBarProps) => {
+export const SideBar = ({ sideBarNavigationItems }: SideBarProps) => {
     const [isSideBarExpanded, setIsSideBarExpanded] = useState(false);
 
     useEffect(() => {
@@ -46,66 +42,27 @@ export const SideBar = ({ primaryLinks, secondaryLinks }: SideBarProps) => {
     };
 
     const styles = {
-        list: {
-            '& .MuiListItemText-root': {
-                opacity: isSideBarExpanded ? 1 : 0,
-            },
+        '& .MuiListItemText-root': {
+            opacity: isSideBarExpanded ? 1 : 0,
         },
     };
+
+    const expandButton: ListProps['listItems'] = [
+        {
+            label: isSideBarExpanded ? 'Collapse' : 'Expand',
+            icon: isSideBarExpanded ? 'KeyboardDoubleArrowLeft' : 'KeyboardDoubleArrowRight',
+            onClick: handleSidebarToggle,
+            sx: { minHeight: 64 }
+        },
+    ];
 
     return (
         <Drawer variant='permanent' open={isSideBarExpanded}>
             <Toolbar />
 
-            <List sx={styles.list}>
-                <ListItem disablePadding sx={{ minHeight: 64 }}>
-                    <ListItemButton onClick={handleSidebarToggle}>
-                        <ListItemIcon sx={{ color: 'text.primary' }}>
-                            <Icon icon={isSideBarExpanded ? 'KeyboardDoubleArrowLeft' : 'KeyboardDoubleArrowRight'} />
-                        </ListItemIcon>
-
-                        <ListItemText primary={isSideBarExpanded ? 'Collapse' : 'Expand'} primaryTypographyProps={{ variant: 'body2' }} />
-                    </ListItemButton>
-                </ListItem>
-
-                <Divider />
-            </List>
-
-            <List sx={styles.list}>
-                <ListItem disablePadding>
-                    <ListItemButton onClick={() => { }} dense sx={{ whiteSpace: 'nowrap' }}>
-                        <ListItemIcon sx={{ color: 'text.primary' }}>
-                            <IconButton edge='start' tooltipText={isSideBarExpanded ? '' : 'test'} tooltipPlacement='right' icon='AddBoxRounded' />
-                        </ListItemIcon>
-
-                        <ListItemText primary='test' primaryTypographyProps={{ variant: 'body2' }} />
-                    </ListItemButton>
-                </ListItem>
-
-                <ListItem disablePadding>
-                    <ListItemButton onClick={() => { }} dense sx={{ whiteSpace: 'nowrap' }}>
-                        <ListItemIcon sx={{ color: 'text.primary' }}>
-                            {/* {item.icon && <Icon icon={item.icon} />} */}
-                            <Icon icon='AddBoxRounded' />
-                        </ListItemIcon>
-
-                        <ListItemText primary='dkd' primaryTypographyProps={{ variant: 'body2' }} />
-                    </ListItemButton>
-                </ListItem>
-            </List>
-
-            {primaryLinks}
-
+            <List listItems={expandButton} withIcons sx={styles} />
             <Divider />
-            {secondaryLinks}
+            {sideBarNavigationItems}
         </Drawer>
     );
 };
-
-// export const RouterLinkListItem = ({ to, icon, text, inset, sx, variantButton }: RouterLinkListItemProps) => {
-//         <ListItem disablePadding sx={sx}>
-//             <ListItemButton component={Link} to={to} selected={location.pathname.includes(to)} dense sx={{ whiteSpace: 'nowrap' }}>
-//                 {icon ? <ListItemIcon sx={{ color: 'inherit' }}>{icon}</ListItemIcon> : null}
-//                 <ListItemText inset={inset} primary={text} primaryTypographyProps={{ variant: variantButton ? 'button' : 'body2' }} />
-//             </ListItemButton>
-//         </ListItem>

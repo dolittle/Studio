@@ -1,7 +1,14 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { DropdownMenuProps, getPrimaryNavigationItems, getSecondaryNavigationItems, getSelectionMenuItems } from '../../index';
+import {
+    DropdownMenuProps,
+    ListProps,
+    getPrimaryNavigationItems,
+    getSecondaryNavigationItems,
+    getSelectionMenuItems,
+    getSidebarItems,
+} from '../../index';
 
 import { Link } from '../../helpers/ReactRouter';
 
@@ -99,4 +106,38 @@ export const SelectionMenu = () => {
     ];
 
     return getSelectionMenuItems(selectionMenuItems, 'Selection 1');
+};
+
+export const SidebarNavigation = () => {
+    const items: ListProps['listItems'] = [
+        {
+            label: 'Sidebar link 1',
+            icon: 'CheckRounded',
+            sx: { my: 1 },
+            overrides: {
+                component: Link,
+                to: '/sidebar-link-1',
+            },
+        },
+        {
+            label: 'Sidebar link 2',
+            icon: 'SettingsRounded',
+            sx: { my: 1 },
+            overrides: {
+                component: Link,
+                to: '/sidebar-link-2',
+            },
+        },
+        {
+            label: 'Sidebar link 3',
+            icon: 'HelpRounded',
+            sx: { my: 1 },
+            overrides: {
+                component: Link,
+                to: '/sidebar-link-3',
+            },
+        },
+    ];
+
+    return getSidebarItems(items);
 };
