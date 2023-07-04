@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Box, Grid, Toolbar } from '@mui/material';
 
-import { NavigationBar, NavigationBarProps, SideBar, SideBarProps } from '@dolittle/design-system';
+import { NavigationBar, NavigationBarProps, SidePanel, SidePanelProps } from '@dolittle/design-system';
 
 const styles = {
     'minHeight': 'calc(100vh - 96px)',
@@ -29,7 +29,7 @@ export type LayoutProps = {
     /**
      * The side bar that will be displayed on the left of the layout.
      */
-    sideBar?: SideBarProps;
+    sidePanel?: SidePanelProps;
 
     /**
      * The main content of the layout.
@@ -42,14 +42,14 @@ export type LayoutProps = {
  * @param {LayoutProps} props - The {@link LayoutProps}.
  * @returns A {@link Layout} component.
  */
-export const Layout = ({ children, navigationBar, sideBar }: LayoutProps) =>
+export const Layout = ({ children, navigationBar, sidePanel }: LayoutProps) =>
     <Grid container sx={{ flexFlow: 'nowrap' }}>
         <NavigationBar {...navigationBar} />
 
-        {sideBar && <SideBar {...sideBar} />}
+        {sidePanel && <SidePanel {...sidePanel} />}
 
         <Box component='main' sx={styles}>
-            {sideBar && <Toolbar />}
+            {sidePanel && <Toolbar />}
             {children}
         </Box>
     </Grid>;

@@ -33,7 +33,7 @@ export { DropdownMenu, DropdownMenuProps, MenuItemProps } from './molecules/Drop
 export { List, ListProps } from './molecules/List';
 export { NavigationBar, NavigationBarProps, getPrimaryNavigationItems, getSecondaryNavigationItems, getSelectionMenuItems } from './molecules/NavigationBar';
 export { SelectCard, SimpleCard, SimpleCardProps, SimpleCardGrid, SimpleCardGridProps } from './molecules/Card';
-export { SideBar, SideBarProps, getSidebarItems } from './molecules/SideBar';
+export { SidePanel, SidePanelProps, getSidePanelItems } from './molecules/SidePanel';
 export { Stepper } from './molecules/Stepper';
 
 // Templates

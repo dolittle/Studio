@@ -7,7 +7,7 @@ import {
     getPrimaryNavigationItems,
     getSecondaryNavigationItems,
     getSelectionMenuItems,
-    getSidebarItems,
+    getSidePanelItems,
 } from '../../index';
 
 import { Link } from '../../helpers/ReactRouter';
@@ -108,36 +108,36 @@ export const SelectionMenu = () => {
     return getSelectionMenuItems(selectionMenuItems, 'Selection 1');
 };
 
-export const SidebarNavigation = () => {
+export const SidePanelNavigation = () => {
     const items: ListProps['listItems'] = [
         {
-            label: 'Sidebar link 1',
+            label: 'Side panel link 1',
             icon: 'CheckRounded',
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: '/sidebar-link-1',
+                to: '/side-panel-link-1',
             },
         },
         {
-            label: 'Sidebar link 2',
+            label: 'Side panel link 2',
             icon: 'SettingsRounded',
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: '/sidebar-link-2',
+                to: '/side-panel-link-2',
             },
         },
         {
-            label: 'Sidebar link 3',
+            label: 'Side panel link 3',
             icon: 'HelpRounded',
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: '/sidebar-link-3',
+                to: '/side-panel-link-3',
             },
         },
     ];
 
-    return getSidebarItems(items);
+    return getSidePanelItems(items);
 };

@@ -5,13 +5,13 @@ import React from 'react';
 
 import { Box } from '@mui/material';
 
-import { componentStories, SideBar } from '../../index';
+import { componentStories, SidePanel } from '../../index';
 
 import { CurrentPath, Router } from '../../helpers/ReactRouter';
 
-import { SidebarNavigation } from '../../helpers/DummyContents';
+import { SidePanelNavigation } from '../../helpers/DummyContents';
 
-const { metadata, createStory } = componentStories(SideBar, {
+const { metadata, createStory } = componentStories(SidePanel, {
     decorator: Story => (
         <Router>
             <Box sx={{ display: 'flex', minHeight: 400 }}>
@@ -25,13 +25,15 @@ const { metadata, createStory } = componentStories(SideBar, {
     ),
 });
 
+metadata.title = 'Side Panel';
+
 metadata.parameters = {
     //     controls: { include: [] },
     //     docs: {
     //         description: {
-    //             component: `The side navigation bar contains sub-menu navigation items linked to the top navigation bar items. It can be made collapsable,
+    //             component: `The side navigation panel contains sub-menu navigation items linked to the top navigation panel items. It can be made collapsable,
     //             using icons only. Menu names should be revealed upon hover when in the collapsed state with a tooltip.
-    //             The side navigation bar uses the default background and elevation.`
+    //             The side navigation panel uses the default background and elevation.`
     //         },
     //         source: {
     //             code: `
@@ -44,7 +46,7 @@ metadata.parameters = {
 };
 
 metadata.args = {
-    sideBarNavigationItems: <SidebarNavigation />,
+    sidePanelNavigationItems: <SidePanelNavigation />,
 };
 
 export default metadata;
