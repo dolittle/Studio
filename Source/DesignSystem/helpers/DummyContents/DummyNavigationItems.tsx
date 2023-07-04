@@ -1,6 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import { useState } from 'react';
+
 import {
     DropdownMenuProps,
     ListProps,
@@ -74,38 +76,30 @@ export const SecondaryNavigation = () => {
     return getSecondaryNavigationItems(secondaryNavigationItems);
 };
 
-// TODO: Add useState to get selected item.
 export const SelectionMenu = () => {
+    const [selected, setSelected] = useState('Selection 1');
+
     const selectionMenuItems: DropdownMenuProps['menuItems'] = [
         {
             id: 'selection-1',
             label: 'Selection 1',
-            icon: 'CheckRounded',
-            overrides: {
-                component: Link,
-                to: '/selection-1',
-            },
+            icon: 'AigonixLightCube',
+            onSelect: () => setSelected('Selection 1'),
         },
         {
             id: 'selection-2',
             label: 'Selection 2',
-            overrides: {
-                component: Link,
-                to: '/selection-2',
-            },
+            onSelect: () => setSelected('Selection 2'),
         },
         {
             id: 'selection-3',
             label: 'Selection 3',
             icon: 'AddBoxRounded',
-            overrides: {
-                component: Link,
-                to: '/selection-3',
-            },
+            onSelect: () => setSelected('Selection 3'),
         },
     ];
 
-    return getSelectionMenuItems(selectionMenuItems, 'Selection 1');
+    return getSelectionMenuItems(selectionMenuItems, selected);
 };
 
 export const SidePanelNavigation = () => {
