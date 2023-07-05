@@ -122,6 +122,7 @@ export const DropdownMenu = ({ id, menuItems, selected, iconDropdown }: Dropdown
                     return (
                         <MenuItem
                             key={menuItem.id}
+                            dense
                             selected={selected ? menuItem.label === selectedItemLabel : false}
                             onClick={() => menuItem.onSelect?.(menuItem)}
                             {...menuItem.overrides}
