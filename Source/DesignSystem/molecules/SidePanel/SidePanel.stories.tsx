@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Box, Toolbar } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { componentStories, SidePanel } from '../../index';
 
@@ -16,9 +16,7 @@ const { metadata, createStory } = componentStories(SidePanel, {
         <Router>
             <Box sx={{ display: 'flex', minHeight: 400 }}>
                 {Story()}
-
                 <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-                    <Toolbar />
                     <CurrentPath />
                 </Box>
             </Box>

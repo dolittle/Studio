@@ -10,9 +10,12 @@ import { getPrimaryNavigationItems, getSecondaryNavigationItems, getSidePanelIte
 export const PrimaryNavigation = () => {
     const { currentApplicationId } = useGlobalContext();
 
+    const applicationHref = `/microservices/application/${currentApplicationId}/Dev/overview`;
+
     const primaryNavigationItems = [
         {
             label: 'home',
+            href: '/home',
             overrides: {
                 component: Link,
                 to: '/home',
@@ -20,13 +23,15 @@ export const PrimaryNavigation = () => {
         },
         {
             label: 'applications',
+            href: applicationHref,
             overrides: {
                 component: Link,
-                to: `/microservices/application/${currentApplicationId}/Dev/overview`,
+                to: applicationHref,
             },
         },
         {
             label: 'integrations',
+            href: '/integrations',
             overrides: {
                 component: Link,
                 to: '/integrations',

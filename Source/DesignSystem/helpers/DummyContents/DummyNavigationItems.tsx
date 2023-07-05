@@ -106,7 +106,7 @@ export const SelectionMenu = () => {
 };
 
 export const SidePanelNavigation = () => {
-    const items: ListProps['listItems'] = [
+    const sidePanelItems: ListProps['listItems'] = [
         {
             label: 'Side panel link 1',
             icon: 'CheckRounded',
@@ -154,5 +154,5 @@ export const SidePanelNavigation = () => {
         },
     ];
 
-    return getSidePanelItems(items);
+    return getSidePanelItems(sidePanelItems);
 };

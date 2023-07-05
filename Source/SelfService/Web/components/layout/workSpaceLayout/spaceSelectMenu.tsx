@@ -19,8 +19,8 @@ export const SpaceSelectMenu = () => {
 
     const [applicationInfos, setApplicationInfos] = useState([] as ShortInfoWithEnvironment[]);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
     const [createSpaceDialogOpen, setCreateSpaceDialogOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const currentApplication = applicationInfos.find(application => application.id === currentApplicationId) || applicationInfos[0];
 
@@ -66,7 +66,7 @@ export const SpaceSelectMenu = () => {
 
     const handleApplicationCreate = () => {
         if (!canCreateApplication) {
-            enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
+            enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
             return;
         }
 

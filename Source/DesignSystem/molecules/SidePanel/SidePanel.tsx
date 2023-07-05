@@ -52,7 +52,7 @@ export const SidePanel = ({ sidePanelNavigationItems }: SidePanelProps) => {
             label: isSidePanelExpanded ? 'Collapse' : 'Expand',
             icon: isSidePanelExpanded ? 'KeyboardDoubleArrowLeft' : 'KeyboardDoubleArrowRight',
             onClick: handleSidePanelToggle,
-            sx: { minHeight: 64 }
+            sx: { minHeight: 64 },
         },
     ];
 
