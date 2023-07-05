@@ -9,7 +9,7 @@ import { useGlobalContext } from '../../../context/globalContext';
 import { getApplications, HttpResponseApplications } from '../../../apis/solutions/application';
 import { ShortInfoWithEnvironment } from '../../../apis/solutions/api';
 
-import { getSelectionMenuItems, MenuItemProps } from '@dolittle/design-system';
+import { getSelectionMenuItems, DropdownMenuProps, MenuItemProps } from '@dolittle/design-system';
 
 import { CreateSpaceDialog } from './createSpaceDialog';
 
@@ -39,12 +39,12 @@ export const SpaceSelectMenu = () => {
     if (isLoading) return null;
 
     const applicationMenuItems = () => {
-        const menuItems: MenuItemProps[] = applicationInfos.filter(application => application.environment === currentEnvironment)
+        const menuItems: DropdownMenuProps['menuItems'] = applicationInfos.filter(application => application.environment === currentEnvironment)
             .map(application => {
                 return {
                     id: application.id,
                     label: application.name,
-                    onMenuItemSelect: (menuItem: MenuItemProps) => handleApplicationChange(menuItem),
+                    onSelect: (menuItem: MenuItemProps) => handleApplicationChange(menuItem),
                 };
             });
 
@@ -52,7 +52,7 @@ export const SpaceSelectMenu = () => {
             id: 'create-new-application',
             label: 'Create New Space',
             icon: 'AddBoxRounded',
-            onMenuItemSelect: () => handleApplicationCreate(),
+            onSelect: () => handleApplicationCreate(),
         });
 
         return menuItems;

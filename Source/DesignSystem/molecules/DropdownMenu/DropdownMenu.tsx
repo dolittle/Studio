@@ -7,7 +7,7 @@ import { ButtonTypeMap, ExtendButtonBase, ListItemIcon, ListItemText, Menu, Menu
 
 import { Button, Icon, IconProps, IconButton } from '../../index';
 
-type MenuItemProps = {
+export type MenuItemProps = {
     /**
      * The id of the menu item.
      */

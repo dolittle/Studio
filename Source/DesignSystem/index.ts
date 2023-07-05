@@ -29,7 +29,7 @@ export { TextField, TextFieldProps } from './atoms/TextField';
 export { EditCell, EditTextFieldCell } from './molecules/DataGrid';
 export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecules/FileUploadForm';
 export { Graph } from './molecules/Metrics/Graph';
-export { DropdownMenu, DropdownMenuProps } from './molecules/DropdownMenu';
+export { DropdownMenu, DropdownMenuProps, MenuItemProps } from './molecules/DropdownMenu';
 export { List, ListProps } from './molecules/List';
 export { NavigationBar, NavigationBarProps, getPrimaryNavigationItems, getSecondaryNavigationItems, getSelectionMenuItems } from './molecules/NavigationBar';
 export { SelectCard, SimpleCard, SimpleCardProps, SimpleCardGrid, SimpleCardGridProps } from './molecules/Card';
