@@ -33,6 +33,7 @@ metadata.argTypes = {
 
 metadata.args = {
     listItems: items,
+    withSelectedItem: false,
     withIcons: false,
     dense: false,
     sx: { maxWidth: 150 },
@@ -48,6 +49,10 @@ export const dense = createStory({
 
 export const withIcons = createStory({
     withIcons: true,
+});
+
+export const WithSelectedItem = createStory({
+    withSelectedItem: true,
 });
 
 // export const WithCheckbox = createStory();

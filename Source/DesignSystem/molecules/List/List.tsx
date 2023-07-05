@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ButtonTypeMap, ExtendButtonBase, List as MuiList, ListItem, ListItemButton, ListItemIcon, ListItemText, SxProps } from '@mui/material';
 
@@ -52,6 +52,12 @@ export type ListProps = {
     listItems: ListItemProps[];
 
     /**
+     * Whether or not the list item is selectable.
+     * @default false
+     */
+    withSelectedItem?: boolean;
+
+    /**
      * Whether or not the list item should display an icon.
      * @default false
      */
@@ -76,24 +82,37 @@ export type ListProps = {
  * @param {ListProps} props - The {@link ListProps}.
  * @returns A {@link List} component.
  */
-export const List = ({ listItems, withIcons, dense, sx }: ListProps) =>
-    <MuiList sx={{ maxWidth: 320, ...sx }}>
-        {listItems.map(item =>
-            <ListItem key={item.label} disablePadding sx={item.sx}>
-                <ListItemButton
-                    dense={dense}
-                    selected={item.href && window.location.href.includes(item.href) ? true : false}
-                    onClick={item.onClick}
-                    sx={{ whiteSpace: 'nowrap' }}
-                    {...item.overrides}
-                >
-                    {withIcons &&
-                        <ListItemIcon sx={{ color: 'text.primary' }}>
-                            {item.icon && <Icon icon={item.icon} />}
-                        </ListItemIcon>
-                    }
-                    <ListItemText primary={item.label} primaryTypographyProps={{ variant: 'body2' }} />
-                </ListItemButton>
-            </ListItem>
-        )}
-    </MuiList>;
+export const List = ({ listItems, withSelectedItem, withIcons, dense, sx }: ListProps) => {
+    const [selectedItem, setSelectedItem] = useState(0);
+
+    const handleListItemClick = (item: ListItemProps, index: number) => {
+        if (withSelectedItem) {
+            setSelectedItem(index);
+        }
+
+        item.onClick?.();
+    };
+
+    return (
+        <MuiList sx={{ maxWidth: 320, ...sx }}>
+            {listItems.map((item, index) =>
+                <ListItem key={index} disablePadding sx={item.sx}>
+                    <ListItemButton
+                        dense={dense}
+                        selected={withSelectedItem && index === selectedItem}
+                        onClick={() => handleListItemClick(item, index)}
+                        sx={{ whiteSpace: 'nowrap' }}
+                        {...item.overrides}
+                    >
+                        {withIcons &&
+                            <ListItemIcon sx={{ color: 'text.primary' }}>
+                                {item.icon && <Icon icon={item.icon} />}
+                            </ListItemIcon>
+                        }
+                        <ListItemText primary={item.label} primaryTypographyProps={{ variant: 'body2' }} />
+                    </ListItemButton>
+                </ListItem>
+            )}
+        </MuiList>
+    );
+};
