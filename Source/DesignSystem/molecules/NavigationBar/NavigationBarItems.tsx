@@ -5,13 +5,18 @@ import React from 'react';
 
 import { Button, ButtonProps, DropdownMenu, DropdownMenuProps } from '../../index';
 
-export const getPrimaryNavigationItems = (primaryNavigationItems: ButtonProps[]) =>
+export type PrimaryNavigationItemsProps = ButtonProps & {
+    label: string;
+    href: string;
+};
+
+export const getPrimaryNavigationItems = (primaryNavigationItems: PrimaryNavigationItemsProps[]) =>
     <>
         {primaryNavigationItems.map(navigationItem =>
             <Button
                 key={navigationItem.label}
                 {...navigationItem}
-                sx={{ color: window.location.href.includes(navigationItem.label) ? 'primary.main' : 'text.primary' }}
+                sx={{ color: window.location.href.includes(navigationItem.href) ? 'primary.main' : 'text.primary' }}
             />
         )}
     </>;

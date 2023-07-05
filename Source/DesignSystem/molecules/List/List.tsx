@@ -14,6 +14,11 @@ type ListItemProps = {
     label?: string;
 
     /**
+     * The href to navigate to when a list item is selected.
+     */
+    href?: string;
+
+    /**
      * The icon to display for the list item.
      *
      * Must be a valid {@link IconProps['icon']} value.
@@ -75,7 +80,13 @@ export const List = ({ listItems, withIcons, dense, sx }: ListProps) =>
     <MuiList sx={{ maxWidth: 320, ...sx }}>
         {listItems.map(item =>
             <ListItem key={item.label} disablePadding sx={item.sx}>
-                <ListItemButton onClick={item.onClick} dense={dense} sx={{ whiteSpace: 'nowrap' }} {...item.overrides}>
+                <ListItemButton
+                    dense={dense}
+                    selected={item.href && window.location.href.includes(item.href) ? true : false}
+                    onClick={item.onClick}
+                    sx={{ whiteSpace: 'nowrap' }}
+                    {...item.overrides}
+                >
                     {withIcons &&
                         <ListItemIcon sx={{ color: 'text.primary' }}>
                             {item.icon && <Icon icon={item.icon} />}

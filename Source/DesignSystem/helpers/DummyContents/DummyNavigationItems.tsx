@@ -17,7 +17,8 @@ import { Link } from '../../helpers/ReactRouter';
 export const PrimaryNavigation = () => {
     const primaryNavigationItems = [
         {
-            label: 'default',
+            label: 'Primary 1',
+            href: '/primary-1',
             overrides: {
                 component: Link,
                 to: '/primary-1',
@@ -25,6 +26,7 @@ export const PrimaryNavigation = () => {
         },
         {
             label: 'Primary 2',
+            href: '/primary-2',
             overrides: {
                 component: Link,
                 to: '/primary-2',
@@ -32,6 +34,7 @@ export const PrimaryNavigation = () => {
         },
         {
             label: 'Primary 3',
+            href: '/primary-3',
             overrides: {
                 component: Link,
                 to: '/primary-3',
