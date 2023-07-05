@@ -7,7 +7,7 @@ import { Layout, LayoutProps } from '@dolittle/design-system';
 
 import { usePageTitle } from '../../../utils/usePageTitle';
 
-import { PrimaryNavigation, SecondaryNavigation, SideBarPrimaryLinks, SideBarSecondaryLinks } from './workSpaceLayoutLinks';
+import { PrimaryNavigation, SecondaryNavigation, SidePanelItems } from './workSpaceLayoutLinks';
 import { SpaceSelectMenu } from './spaceSelectMenu';
 
 const mainNavigationItems: LayoutProps['navigationBar'] = {
@@ -17,9 +17,8 @@ const mainNavigationItems: LayoutProps['navigationBar'] = {
     secondaryNavigationItems: <SecondaryNavigation />,
 };
 
-const sideBarNavigationItems: LayoutProps['sideBar'] = {
-    primaryLinks: <SideBarPrimaryLinks />,
-    secondaryLinks: <SideBarSecondaryLinks />,
+const sideBarNavigationItems: LayoutProps['sidePanel'] = {
+    sidePanelNavigationItems: <SidePanelItems />,
 };
 
 export type WorkSpaceLayoutProps = {
@@ -31,7 +30,7 @@ export type WorkSpaceWithoutSideBarLayoutProps = WorkSpaceLayoutProps & {
 };
 
 export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Layout navigationBar={mainNavigationItems} sideBar={sideBarNavigationItems}>
+    <Layout navigationBar={mainNavigationItems} sidePanel={sideBarNavigationItems}>
         {children}
     </Layout>;
 

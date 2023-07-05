@@ -5,8 +5,8 @@ import React from 'react';
 
 import { componentStories, Layout } from '@dolittle/design-system';
 
-import { Router, CurrentPath, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/ReactRouter';
-import { PrimaryNavigation, SecondaryNavigation, SelectionMenu } from '../../helpers/DummyContents/DummyNavigationItems';
+import { Router, CurrentPath } from '../../helpers/ReactRouter';
+import { PrimaryNavigation, SecondaryNavigation, SelectionMenu, SidePanelNavigation } from '../../helpers/DummyContents/DummyNavigationItems';
 
 const { metadata, createStory } = componentStories(Layout, {
     decorator: Story =>
@@ -36,8 +36,7 @@ export default metadata;
 export const Default = createStory();
 
 export const WithSideBar = createStory({
-    sideBar: {
-        primaryLinks: <SideBarPrimaryLinks />,
-        secondaryLinks: <SideBarSecondaryLinks />,
+    sidePanel: {
+        sidePanelNavigationItems: <SidePanelNavigation />,
     },
 });
