@@ -82,51 +82,62 @@ export const SecondaryNavigation = () => {
     return getSecondaryNavigationItems(secondaryNavigationItems);
 };
 
-export const SidePanelItems = () => {
+export const SidePanelApplicationItems = () => {
+    const { currentApplicationId, currentEnvironment } = useGlobalContext();
+
     const sidePanelItems: ListProps['listItems'] = [
         {
-            label: 'Side panel link 1',
-            icon: 'CheckRounded',
+            label: 'Microservices',
+            icon: 'HexagonRounded',
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: '/side-panel-link-1',
+                to: `/microservices/application/${currentApplicationId}/${currentEnvironment}/overview`,
             },
         },
         {
-            label: 'Side panel link 2',
-            icon: 'SettingsRounded',
+            label: 'Backups',
+            icon: 'BackupRounded',
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: '/side-panel-link-2',
+                to: `/backups/application/${currentApplicationId}/overview`,
             },
         },
         {
-            label: 'Side panel link 3',
-            icon: 'HelpRounded',
+            label: 'Container Registry',
+            icon: 'ContainerRegistry',
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: '/side-panel-link-3',
+                to: `/containerregistry/application/${currentApplicationId}/${currentEnvironment}/overview`,
             },
         },
         {
-            label: 'Side panel link 4',
-            icon: 'EditRounded',
+            label: 'Logs',
+            icon: 'TextSnippetRounded',
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: '/side-panel-link-4',
+                to: `/logs/application/${currentApplicationId}/${currentEnvironment}`,
             },
         },
+    ];
+
+    return getSidePanelItems(sidePanelItems);
+};
+
+export const SidePanelIntegrationItems = () => {
+    const { currentApplicationId, currentEnvironment } = useGlobalContext();
+
+    const sidePanelItems: ListProps['listItems'] = [
         {
-            label: 'Side panel link 5',
-            icon: 'LogoutRounded',
+            label: 'ERP Connections',
+            icon: 'PolylineRounded',
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: '/side-panel-link-5',
+                to: `/m3connector/application/${currentApplicationId}/${currentEnvironment}/details`,
             },
         },
     ];

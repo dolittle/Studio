@@ -7,7 +7,7 @@ import { Layout, LayoutProps } from '@dolittle/design-system';
 
 import { usePageTitle } from '../../../utils/usePageTitle';
 
-import { PrimaryNavigation, SecondaryNavigation, SidePanelItems } from './workSpaceLayoutLinks';
+import { PrimaryNavigation, SecondaryNavigation, SidePanelApplicationItems, SidePanelIntegrationItems } from './workSpaceLayoutLinks';
 import { SpaceSelectMenu } from './spaceSelectMenu';
 
 const mainNavigationItems: LayoutProps['navigationBar'] = {
@@ -17,11 +17,16 @@ const mainNavigationItems: LayoutProps['navigationBar'] = {
     secondaryNavigationItems: <SecondaryNavigation />,
 };
 
-const sideBarNavigationItems: LayoutProps['sidePanel'] = {
-    sidePanelNavigationItems: <SidePanelItems />,
+const applicationsSidePanel: LayoutProps['sidePanel'] = {
+    sidePanelNavigationItems: <SidePanelApplicationItems />,
+};
+
+const integrationsSidePanel: LayoutProps['sidePanel'] = {
+    sidePanelNavigationItems: <SidePanelIntegrationItems />,
 };
 
 export type WorkSpaceLayoutProps = {
+    sidePanelMode?: 'applications' | 'integrations';
     children: React.ReactNode;
 };
 
@@ -29,8 +34,8 @@ export type WorkSpaceWithoutSideBarLayoutProps = WorkSpaceLayoutProps & {
     pageTitle: string;
 };
 
-export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Layout navigationBar={mainNavigationItems} sidePanel={sideBarNavigationItems}>
+export const WorkSpaceLayout = ({ sidePanelMode, children }: WorkSpaceLayoutProps) =>
+    <Layout navigationBar={mainNavigationItems} sidePanel={sidePanelMode === 'applications' ? applicationsSidePanel : integrationsSidePanel}>
         {children}
     </Layout>;
 
