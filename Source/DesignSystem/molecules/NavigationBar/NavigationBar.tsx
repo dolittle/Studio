@@ -3,19 +3,23 @@
 
 import React, { useState } from 'react';
 
-import { AppBar, Box, Toolbar, Theme } from '@mui/material';
+import { AppBar, Box, Drawer, Stack, Toolbar, Theme } from '@mui/material';
 
 import { Icon, IconProps, IconButton } from '../../index';
-
-import { NavigationBarMobile } from './NavigationBarMobile';
 
 const styles = {
     nav: { zIndex: (theme: Theme) => theme.zIndex.drawer + 1 },
     hideOnMobile: { display: { xs: 'none', md: 'flex' } },
-    mobileMenu: {
+    mobileNavigationBar: {
         width: 1,
         justifyContent: 'space-between',
         display: { xs: 'flex', md: 'none' },
+    },
+    mobileMenu: {
+        '& .MuiDrawer-paper': {
+            width: 1,
+            justifyContent: 'center',
+        },
     },
 };
 
@@ -52,27 +56,36 @@ export type NavigationBarProps = {
 export const NavigationBar = ({ logo, primaryNavigationItems, secondaryNavigationItems, selectionMenuItems }: NavigationBarProps) => {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
+    const handleMobileNavClose = () => setIsMobileNavOpen(false);
+
     return (
         <AppBar elevation={4} component='nav' sx={styles.nav}>
             {isMobileNavOpen &&
-                <NavigationBarMobile
-                    isOpen={isMobileNavOpen}
-                    onClose={() => setIsMobileNavOpen(false)}
-                    logo={logo}
-                    mainLinks={primaryNavigationItems}
-                    secondaryLinks={secondaryNavigationItems}
-                />
+                <Drawer
+                    variant='temporary'
+                    open={isMobileNavOpen}
+                    onClose={handleMobileNavClose}
+                    onClick={handleMobileNavClose}
+                    sx={styles.mobileMenu}
+                >
+                    <Toolbar />
+                    <Stack gap={2}>{primaryNavigationItems}</Stack>
+                </Drawer>
             }
 
             <Toolbar>
-                <Box sx={styles.mobileMenu}>
+                <Box sx={styles.mobileNavigationBar}>
                     <IconButton
                         tooltipText={isMobileNavOpen ? 'Close' : 'Open'}
+                        tooltipPlacement='bottom'
                         icon='MenuRounded'
                         edge='start'
                         onClick={() => setIsMobileNavOpen(prevState => !prevState)}
                     />
-                    {selectionMenuItems}
+                    <Box>
+                        {selectionMenuItems}
+                        {secondaryNavigationItems}
+                    </Box>
                 </Box>
 
                 <Box sx={{ ...styles.hideOnMobile, flexGrow: 1, alignItems: 'center', gap: 3 }}>
