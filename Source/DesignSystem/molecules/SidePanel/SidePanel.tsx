@@ -57,10 +57,10 @@ export const SidePanel = ({ sidePanelNavigationItems }: SidePanelProps) => {
     ];
 
     return (
-        <Drawer variant='permanent' open={isSidePanelExpanded}>
+        <Drawer variant='permanent' open={isSidePanelExpanded} sx={styles}>
             <Toolbar />
 
-            <List listItems={expandButton} withIcons sx={styles} />
+            <List listItems={expandButton} withIcons sx={{ py: 0 }} />
             <Divider />
             {sidePanelNavigationItems}
         </Drawer>
