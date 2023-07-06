@@ -10,17 +10,17 @@ import { Link as MuiLink } from '@mui/material';
  */
 export type LinkProps = {
     /**
-     * Required. The URL to link to.
+     * The URL to link to.
      */
-    href: string;
+    href?: string;
 
     /**
-     * Required. `link` text to display.
+     * The message to display.
      */
     message: string;
 
     /**
-     * Mark this as `true` if the link opens in a new window or browser tab.
+     * Mark this as `true` if the link should open in a new browser tab.
      *
      * Add also an `ariaLabel` to inform screen reader users.
      * @default false
@@ -29,12 +29,11 @@ export type LinkProps = {
 
     /**
      * If the link opens in a new window or browser tab, add an `ariaLabel` to inform screen reader users.
-     * @default undefined
      */
     ariaLabel?: string;
 
     /**
-     * The color of the `link`.
+     * The color of the link.
      * @default primary
      */
     color?: 'primary' | 'subtle' | 'secondary';
