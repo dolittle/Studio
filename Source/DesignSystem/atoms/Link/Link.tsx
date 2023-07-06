@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Link as MuiLink } from '@mui/material';
+import { ExtendButtonBase, ButtonTypeMap, Link as MuiLink } from '@mui/material';
 
 /**
  * The props for a {@link Link} component.
@@ -37,6 +37,11 @@ export type LinkProps = {
      * @default primary
      */
     color?: 'primary' | 'subtle' | 'secondary';
+
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    overrides?: Partial<ExtendButtonBase<ButtonTypeMap>>; // TODO: How to extend the type here?
 };
 
 /**
@@ -44,7 +49,7 @@ export type LinkProps = {
  * @param {LinkProps} props - The {@link LinkProps}.
  * @returns A {@link Link} component.
  */
-export const Link = ({ href, ariaLabel, target, color, message }: LinkProps) =>
+export const Link = ({ href, ariaLabel, target, color, message, overrides }: LinkProps) =>
     <MuiLink
         color={color === 'subtle' ? 'text.primary' : color}
         href={href}
@@ -53,6 +58,7 @@ export const Link = ({ href, ariaLabel, target, color, message }: LinkProps) =>
         rel={target ? 'noopener noreferrer' : undefined}
         fontSize='inherit'
         sx={{ '&:hover': { opacity: 0.9 } }}
+        {...overrides}
     >
         {message}
     </MuiLink>;
