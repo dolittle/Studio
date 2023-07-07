@@ -34,6 +34,7 @@ metadata.argTypes = {
 metadata.args = {
     listItems: items,
     withSelectedItem: false,
+    initialySelectedItem: 0,
     withIcons: false,
     dense: false,
     sx: { maxWidth: 150 },

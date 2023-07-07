@@ -58,6 +58,16 @@ export type ListProps = {
     withSelectedItem?: boolean;
 
     /**
+     * The index of the list item to select.
+     *
+     * Selection is based on the index of the {@link listItems} array.
+     *
+     * Only used when {@link withSelectedItem} is true.
+     * @default 0
+     */
+    initialySelectedItem?: number;
+
+    /**
      * Whether or not the list item should display an icon.
      * @default false
      */
@@ -76,14 +86,15 @@ export type ListProps = {
 };
 
 // TODO: Add support for checkboxes.
+// TODO: Add style to List: width: 'fit-content'? and fullwidth prop?
 
 /**
  * The list component is the main component that contains the list items.
  * @param {ListProps} props - The {@link ListProps}.
  * @returns A {@link List} component.
  */
-export const List = ({ listItems, withSelectedItem, withIcons, dense, sx }: ListProps) => {
-    const [selectedItem, setSelectedItem] = useState(0);
+export const List = ({ listItems, withSelectedItem, initialySelectedItem = 0, withIcons, dense, sx }: ListProps) => {
+    const [selectedItem, setSelectedItem] = useState(initialySelectedItem);
 
     const handleListItemClick = (item: ListItemProps, index: number) => {
         if (withSelectedItem) {
