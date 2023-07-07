@@ -7,23 +7,7 @@ import { Layout, LayoutProps } from '@dolittle/design-system';
 
 import { usePageTitle } from '../../../utils/usePageTitle';
 
-import { PrimaryNavigation, SecondaryNavigation, SidePanelApplicationItems, SidePanelIntegrationItems } from './workSpaceLayoutLinks';
-import { SpaceSelectMenu } from './spaceSelectMenu';
-
-const mainNavigationItems: LayoutProps['navigationBar'] = {
-    logo: 'AigonixLightCube',
-    primaryNavigationItems: <PrimaryNavigation />,
-    selectionMenuItems: <SpaceSelectMenu />,
-    secondaryNavigationItems: <SecondaryNavigation />,
-};
-
-const applicationsSidePanel: LayoutProps['sidePanel'] = {
-    sidePanelNavigationItems: <SidePanelApplicationItems />,
-};
-
-const integrationsSidePanel: LayoutProps['sidePanel'] = {
-    sidePanelNavigationItems: <SidePanelIntegrationItems />,
-};
+import { mainNavigationItems, applicationsSidePanel, integrationsSidePanel } from './workSpaceLayoutLinks';
 
 export type WorkSpaceLayoutProps = {
     sidePanelMode?: 'applications' | 'integrations';

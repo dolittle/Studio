@@ -1,13 +1,17 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import React from 'react';
+
 import { Link, useLocation } from 'react-router-dom';
 
 import { useGlobalContext } from '../../../context/globalContext';
 
-import { getPrimaryNavigationItems, getSecondaryNavigationItems, getSidePanelItems, ListProps, MenuItemProps } from '@dolittle/design-system';
+import { getPrimaryNavigationItems, getSecondaryNavigationItems, getSidePanelItems, LayoutProps, ListProps, MenuItemProps } from '@dolittle/design-system';
 
-export const PrimaryNavigation = () => {
+import { SpaceSelectMenu } from './spaceSelectMenu';
+
+const PrimaryNavigation = () => {
     const location = useLocation();
     const { currentApplicationId } = useGlobalContext();
 
@@ -41,7 +45,7 @@ export const PrimaryNavigation = () => {
     return getPrimaryNavigationItems(primaryNavigationItems);
 };
 
-export const SecondaryNavigation = () => {
+const SecondaryNavigation = () => {
     const { hasOneCustomer, currentApplicationId } = useGlobalContext();
 
     const secondaryNavigationItems: MenuItemProps[] = [
@@ -81,7 +85,7 @@ export const SecondaryNavigation = () => {
     return getSecondaryNavigationItems(secondaryNavigationItems);
 };
 
-export const SidePanelApplicationItems = () => {
+const SidePanelApplicationItems = () => {
     const { currentApplicationId, currentEnvironment } = useGlobalContext();
 
     const sidePanelItems: ListProps['listItems'] = [
@@ -126,7 +130,7 @@ export const SidePanelApplicationItems = () => {
     return getSidePanelItems(sidePanelItems);
 };
 
-export const SidePanelIntegrationItems = () => {
+const SidePanelIntegrationItems = () => {
     const { currentApplicationId, currentEnvironment } = useGlobalContext();
 
     const sidePanelItems: ListProps['listItems'] = [
@@ -142,4 +146,19 @@ export const SidePanelIntegrationItems = () => {
     ];
 
     return getSidePanelItems(sidePanelItems);
+};
+
+export const mainNavigationItems: LayoutProps['navigationBar'] = {
+    logo: 'AigonixLightCube',
+    primaryNavigationItems: <PrimaryNavigation />,
+    selectionMenuItems: <SpaceSelectMenu />,
+    secondaryNavigationItems: <SecondaryNavigation />,
+};
+
+export const applicationsSidePanel: LayoutProps['sidePanel'] = {
+    sidePanelNavigationItems: <SidePanelApplicationItems />,
+};
+
+export const integrationsSidePanel: LayoutProps['sidePanel'] = {
+    sidePanelNavigationItems: <SidePanelIntegrationItems />,
 };

@@ -18,7 +18,7 @@ import {
 
 import { CurrentPath, Link } from '../../helpers/ReactRouter';
 
-export const dummyLayoutBreadcrumbsNameMap: { [key: string]: string } = {
+const dummyLayoutBreadcrumbsNameMap: { [key: string]: string } = {
     '/primary-1': 'Primary 1',
     '/primary-2': 'Primary 2',
     '/primary-3': 'Primary 3',
@@ -50,7 +50,7 @@ export const DummyLayoutBreadcrumbs = () => {
     );
 };
 
-export const PrimaryNavigation = () => {
+const PrimaryNavigation = () => {
     const location = useLocation();
 
     const primaryNavigationItems = [
@@ -83,7 +83,7 @@ export const PrimaryNavigation = () => {
     return getPrimaryNavigationItems(primaryNavigationItems);
 };
 
-export const SecondaryNavigation = () => {
+const SecondaryNavigation = () => {
     const secondaryNavigationItems: DropdownMenuProps['menuItems'] = [
         {
             id: 'secondary-1',
@@ -117,7 +117,7 @@ export const SecondaryNavigation = () => {
     return getSecondaryNavigationItems(secondaryNavigationItems);
 };
 
-export const SelectionMenu = () => {
+const SelectionMenu = () => {
     const [selected, setSelected] = useState('Selection 1');
 
     const selectionMenuItems: DropdownMenuProps['menuItems'] = [
@@ -143,7 +143,7 @@ export const SelectionMenu = () => {
     return getSelectionMenuItems(selectionMenuItems, selected);
 };
 
-export const SidePanelNavigation = () => {
+const SidePanelNavigation = () => {
     const location = useLocation();
 
     const sidePanelItems: ListProps['listItems'] = [
@@ -200,4 +200,15 @@ export const SidePanelNavigation = () => {
     ];
 
     return getSidePanelItems(sidePanelItems);
+};
+
+export const dummyNavigationBar: LayoutProps['navigationBar'] = {
+    logo: 'AigonixLightCube',
+    primaryNavigationItems: <PrimaryNavigation />,
+    secondaryNavigationItems: <SecondaryNavigation />,
+    selectionMenuItems: <SelectionMenu />,
+};
+
+export const dummySidePanel: LayoutProps['sidePanel'] = {
+    sidePanelNavigationItems: <SidePanelNavigation />,
 };

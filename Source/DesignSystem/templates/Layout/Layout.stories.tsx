@@ -18,13 +18,14 @@ const { metadata, createStory } = componentStories(Layout, {
 
 metadata.parameters = {
     controls: {
-        exclude: ['children'],
+        include: [],
     },
 };
 
 metadata.args = {
     navigationBar: dummyNavigationBar,
     children: <CurrentPath />,
+    sx: { minHeight: 'auto' },
 };
 
 export default metadata;

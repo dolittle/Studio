@@ -8,7 +8,7 @@ import { Toolbar } from '@mui/material';
 import { componentStories, NavigationBar } from '../../index';
 
 import { CurrentPath, Router } from '../../helpers/ReactRouter';
-import { PrimaryNavigation, SelectionMenu, SecondaryNavigation } from '../../helpers/DummyContents';
+import { dummyNavigationBar } from '../../helpers/DummyContents';
 
 const { metadata, createStory } = componentStories(NavigationBar, {
     decorator: Story =>
@@ -28,12 +28,7 @@ metadata.parameters = {
     },
 };
 
-metadata.args = {
-    logo: 'AigonixLightCube',
-    primaryNavigationItems: <PrimaryNavigation />,
-    selectionMenuItems: <SelectionMenu />,
-    secondaryNavigationItems: <SecondaryNavigation />,
-};
+metadata.args = dummyNavigationBar;
 
 export default metadata;
 
