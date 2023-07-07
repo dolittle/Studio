@@ -7,7 +7,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { useGlobalContext } from '../../../context/globalContext';
 
-import { getPrimaryNavigationItems, getSecondaryNavigationItems, getSidePanelItems, LayoutProps, ListProps, MenuItemProps } from '@dolittle/design-system';
+import { getPrimaryNavigationItems, getSecondaryNavigationItems, getSidePanelItems, LayoutProps, MenuListProps, MenuItemProps } from '@dolittle/design-system';
 
 import { SpaceSelectMenu } from './spaceSelectMenu';
 
@@ -88,7 +88,7 @@ const SecondaryNavigation = () => {
 const SidePanelApplicationItems = () => {
     const { currentApplicationId, currentEnvironment } = useGlobalContext();
 
-    const sidePanelItems: ListProps['listItems'] = [
+    const sidePanelItems: MenuListProps['listItems'] = [
         {
             label: 'Microservices',
             icon: 'HexagonRounded',
@@ -133,7 +133,7 @@ const SidePanelApplicationItems = () => {
 const SidePanelIntegrationItems = () => {
     const { currentApplicationId, currentEnvironment } = useGlobalContext();
 
-    const sidePanelItems: ListProps['listItems'] = [
+    const sidePanelItems: MenuListProps['listItems'] = [
         {
             label: 'ERP Connections',
             icon: 'PolylineRounded',

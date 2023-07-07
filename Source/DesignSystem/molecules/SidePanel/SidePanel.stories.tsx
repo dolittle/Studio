@@ -9,7 +9,7 @@ import { componentStories, SidePanel } from '../../index';
 
 import { CurrentPath, Router } from '../../helpers/ReactRouter';
 
-import { SidePanelNavigation } from '../../helpers/DummyContents';
+import { DummySidePanelNavigation } from '../../helpers/DummyContents';
 
 const { metadata, createStory } = componentStories(SidePanel, {
     decorator: Story =>
@@ -37,7 +37,7 @@ metadata.parameters = {
 };
 
 metadata.args = {
-    sidePanelNavigationItems: <SidePanelNavigation />,
+    sidePanelNavigationItems: <DummySidePanelNavigation />,
 };
 
 export default metadata;

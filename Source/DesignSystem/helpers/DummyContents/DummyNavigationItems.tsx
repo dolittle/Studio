@@ -50,7 +50,7 @@ export const DummyLayoutBreadcrumbs = () => {
     );
 };
 
-const PrimaryNavigation = () => {
+const DummyPrimaryNavigation = () => {
     const location = useLocation();
 
     const primaryNavigationItems = [
@@ -83,7 +83,7 @@ const PrimaryNavigation = () => {
     return getPrimaryNavigationItems(primaryNavigationItems);
 };
 
-const SecondaryNavigation = () => {
+const DummySecondaryNavigation = () => {
     const secondaryNavigationItems: DropdownMenuProps['menuItems'] = [
         {
             id: 'secondary-1',
@@ -117,7 +117,7 @@ const SecondaryNavigation = () => {
     return getSecondaryNavigationItems(secondaryNavigationItems);
 };
 
-const SelectionMenu = () => {
+const DummySelectionMenu = () => {
     const [selected, setSelected] = useState('Selection 1');
 
     const selectionMenuItems: DropdownMenuProps['menuItems'] = [
@@ -143,7 +143,7 @@ const SelectionMenu = () => {
     return getSelectionMenuItems(selectionMenuItems, selected);
 };
 
-export const SidePanelNavigation = () => {
+export const DummySidePanelNavigation = () => {
     const location = useLocation();
 
     const sidePanelItems: MenuListProps['listItems'] = [
@@ -204,11 +204,11 @@ export const SidePanelNavigation = () => {
 
 export const dummyNavigationBar: LayoutProps['navigationBar'] = {
     logo: 'AigonixLightCube',
-    primaryNavigationItems: <PrimaryNavigation />,
-    secondaryNavigationItems: <SecondaryNavigation />,
-    selectionMenuItems: <SelectionMenu />,
+    primaryNavigationItems: <DummyPrimaryNavigation />,
+    secondaryNavigationItems: <DummySecondaryNavigation />,
+    selectionMenuItems: <DummySelectionMenu />,
 };
 
 export const dummySidePanel: LayoutProps['sidePanel'] = {
-    sidePanelNavigationItems: <SidePanelNavigation />,
+    sidePanelNavigationItems: <DummySidePanelNavigation />,
 };

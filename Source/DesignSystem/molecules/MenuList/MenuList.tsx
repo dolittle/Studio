@@ -60,7 +60,7 @@ export type MenuListProps = {
     /**
      * The index of the list item to select.
      *
-     * Selection is based on the index of the {@link MenuListItemProps['listItems']} array.
+     * Selection is based on the index of the {@link MenuListItemProps} array.
      *
      * Only used when {@link withSelectedItem} is true.
      * @default 0
