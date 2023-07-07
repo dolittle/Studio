@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 
 import { useLocation, useParams } from 'react-router-dom';
+
 import { ContentContainer } from '@dolittle/design-system';
 
 import {
@@ -16,15 +17,13 @@ import { ViewMode } from './ViewMode';
 import { MessageMappingForm } from './components/MessageMappingForm';
 import { ChangeMessageView } from './ChangeMessageView';
 
-
-
 export const Index = () => {
-
     const location = useLocation();
     const connectionId = useConnectionId();
     const { table = '', messageId = '' } = useParams();
 
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
+
     if (!connectionId) {
         return <>Cannot create new message without connection id</>;
     }
@@ -44,7 +43,6 @@ export const Index = () => {
         setSelectedTableName(table);
     }
 
-
     // TODO: Implement this.
     // Prevent the user from accidentally closing the browser tab if they have unsaved changes.
 
@@ -55,30 +53,26 @@ export const Index = () => {
 
     // TODO: Implement this.
 
-
-
     return (
-        <>
-            <ContentContainer>
-                <MessageMappingForm
-                    connectionId={connectionId}
-                    selectedTableName={selectedTableName}
+        <ContentContainer>
+            <MessageMappingForm
+                connectionId={connectionId}
+                selectedTableName={selectedTableName}
+                messageId={messageId}
+                messageType={messageType!}
+                saveMessageMappingMutation={saveMessageMappingMutation}
+            >
+                <ChangeMessageView
+                    mode={mode}
+                    table={selectedTableName}
+                    onTableSelected={setSelectedTableName}
                     messageId={messageId}
-                    messageType={messageType!}
-                    saveMessageMappingMutation={saveMessageMappingMutation}
-                >
-                    <ChangeMessageView
-                        mode={mode}
-                        table={selectedTableName}
-                        onTableSelected={setSelectedTableName}
-                        messageId={messageId}
-                        isSubmitting={saveMessageMappingMutation.isLoading}
-                        messageType={messageType}
-                        queryIsError={messageQuery.isError}
-                        queryIsSuccess={messageQuery.isSuccess}
-                    />
-                </MessageMappingForm>
-            </ContentContainer>
-        </>
+                    isSubmitting={saveMessageMappingMutation.isLoading}
+                    messageType={messageType}
+                    queryIsError={messageQuery.isError}
+                    queryIsSuccess={messageQuery.isSuccess}
+                />
+            </MessageMappingForm>
+        </ContentContainer>
     );
 };

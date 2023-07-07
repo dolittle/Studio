@@ -2,11 +2,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useReducer } from 'react';
-import { Box } from '@mui/material';
-import { useFormState } from 'react-hook-form';
-import { Button } from '@dolittle/design-system';
-import { DeleteConnectorDialog, DeleteConnectorDialogState, deleteConnectorDialogReducer } from './DeleteConnectorDialog';
 
+import { useFormState } from 'react-hook-form';
+
+import { Box } from '@mui/material';
+
+import { Button } from '@dolittle/design-system';
+
+import { DeleteConnectorDialog, DeleteConnectorDialogState, deleteConnectorDialogReducer } from './DeleteConnectorDialog';
 
 export type ActionToolbarProps = {
     canEdit: boolean;
@@ -21,7 +24,6 @@ export const ActionToolbar = ({ connectionId, connectorName, onEditAction, onDel
     const { isValid, isDirty } = useFormState();
     const initialDialogState: DeleteConnectorDialogState = { open: false, connectionId, connectorName, isLoading: false };
     const [dialogState, dispatch] = useReducer(deleteConnectorDialogReducer, initialDialogState);
-
 
     return (
         <Box sx={{ display: 'flex', mt: 4, gap: 2 }}>

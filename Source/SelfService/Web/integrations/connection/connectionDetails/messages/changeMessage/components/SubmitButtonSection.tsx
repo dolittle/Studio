@@ -4,10 +4,10 @@
 import React from 'react';
 
 import { useFormState } from 'react-hook-form';
+
 import { Button, ContentSection } from '@dolittle/design-system';
 
 import { ViewModeProps } from '../ViewMode';
-
 
 export type SubmitButtonSectionProps = ViewModeProps & {
     disabled?: boolean;
@@ -15,8 +15,8 @@ export type SubmitButtonSectionProps = ViewModeProps & {
 };
 
 export const SubmitButtonSection = (props: SubmitButtonSectionProps) => {
-
     const { isValid, isDirty } = useFormState();
+
     const buttonText = props.mode === 'new' ? 'Add Message and close' : 'Save Message and close';
 
     return (
@@ -26,7 +26,7 @@ export const SubmitButtonSection = (props: SubmitButtonSectionProps) => {
                 variant='fullwidth'
                 type='submit'
                 sx={{ mt: 2.125 }}
-                disabled={!isValid || !isDirty || props.isSubmitting || props.disabled  }
+                disabled={!isValid || !isDirty || props.isSubmitting || props.disabled}
             />
         </ContentSection>
     );

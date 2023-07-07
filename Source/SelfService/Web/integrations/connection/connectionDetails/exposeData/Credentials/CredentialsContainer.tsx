@@ -5,14 +5,17 @@ import React, { useEffect, useMemo, useState, useReducer } from 'react';
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Collapse, FormHelperText, Grid, TextField, Typography } from '@mui/material';
-import { AlertBox, Button, ContentContainer, ContentHeader, ContentSection } from '@dolittle/design-system';
+import { Collapse } from '@mui/material';
+
+import { AlertBox, ContentContainer, ContentHeader, ContentSection } from '@dolittle/design-system';
+
 import {
     useConnectionsIdServiceAccountsGet,
     useConnectionsIdServiceAccountsServiceAccountNameDelete
 } from '../../../../../apis/integrations/serviceAccountApi.hooks';
-import { useConnectionId } from '../../../../routes.hooks';
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
+import { useConnectionId } from '../../../../routes.hooks';
+
 import { CredentialsList } from './CredentialsList';
 import { GenerateCredentialsForm } from './GenerateCredentialsForm';
 import { DeleteCredentialDialog, DeleteCredentialDialogState, deleteCredentialDialogReducer } from './DeleteCredentialDialog';
@@ -20,17 +23,18 @@ import { DeleteCredentialDialog, DeleteCredentialDialogState, deleteCredentialDi
 export type CredentialsContainerProps = {};
 
 export const CredentialsContainer = (props: CredentialsContainerProps) => {
+    const { enqueueSnackbar } = useSnackbar();
+    const connectionId = useConnectionId();
+    const queryClient = useQueryClient();
+
     const [expandCredentials, setExpandCredentials] = useState(false);
     const [activeCredential, setActiveCredential] = useState<string | undefined>(undefined);
     const [resetForm, setResetForm] = useState(false);
-    const { enqueueSnackbar } = useSnackbar();
-    const connectionId = useConnectionId();
-    if (!connectionId) {
-        return <AlertBox />;
-    }
+
+    if (!connectionId) return <AlertBox />;
+
     const [deleteDialogState, deleteDialogDispatch] = useReducer(deleteCredentialDialogReducer, { open: false, credentialName: '', connectionId });
 
-    const queryClient = useQueryClient();
     const { data, isLoading, isError, error } = useConnectionsIdServiceAccountsGet({ id: connectionId });
     const deleteMutation = useConnectionsIdServiceAccountsServiceAccountNameDelete();
 
@@ -51,6 +55,7 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
         setResetForm(true);
         setExpandCredentials(true);
     };
+
     const handleFormCancelled = () => {
         if (credentials.length) {
             setExpandCredentials(false);
@@ -59,7 +64,7 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
     };
 
     useEffect(() => {
-        if(expandCredentials && !isLoading) {
+        if (expandCredentials && !isLoading) {
             setExpandCredentials(true);
         } else {
             const shouldExpand = !isLoading && (credentials.length === 0 || activeCredential !== undefined);
@@ -96,9 +101,7 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
     }, [resetForm]);
 
 
-    if (isError) {
-        return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
-    }
+    if (isError) return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
 
     return (
         <ContentContainer>

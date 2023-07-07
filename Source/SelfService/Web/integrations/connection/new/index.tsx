@@ -2,13 +2,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useRef } from 'react';
+
 import { Box, Typography, Collapse } from '@mui/material';
+
 import { AccordionList, AccordionListProps, FileUploadFormRef } from '@dolittle/design-system';
 
 import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionId } from '../../routes.hooks';
-import { Page } from '../../../components/layout/page';
 
+import { Page } from '../../../components/layout/page';
 import { MainM3ConnectionInfo } from '../configuration/MainM3ConnectionInfo';
 import { ActionButtons } from './ActionButtons';
 import { useBuildConfigurationAccordionList } from '../configuration/useBuildConfigurationAccordionList';

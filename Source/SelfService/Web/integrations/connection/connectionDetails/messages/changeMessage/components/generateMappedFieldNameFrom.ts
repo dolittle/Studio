@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import { toPascalCase } from './../../../../../../utils/helpers/strings';
 
+import { toPascalCase } from './../../../../../../utils/helpers/strings';
 
 /**
  * Function generates a unique mapped name based on the column description.
@@ -14,4 +14,3 @@ export const generateMappedFieldNameFrom = (columnDescription: string, columnNam
     const generated = toPascalCase(columnDescription);
     return uniqueMappedNames.includes(generated) ? generated + columnName : generated;
 };
-

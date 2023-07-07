@@ -2,13 +2,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useEffect, useRef } from 'react';
-import { enqueueSnackbar } from 'notistack';
+
 import { useNavigate } from 'react-router-dom';
+import { UseMutationResult } from '@tanstack/react-query';
+
+import { enqueueSnackbar } from 'notistack';
+
 import { Form, FormRef } from '@dolittle/design-system';
 
-
 import { ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, MessageMappingModel, SetMessageMappingRequestArguments } from '../../../../../../apis/integrations/generated';
-import { UseMutationResult } from '@tanstack/react-query';
 
 export type NewMessageMappingParameters = SetMessageMappingRequestArguments & {
     name: string;
@@ -23,11 +25,9 @@ export type MessageMappingFormProps = {
     saveMessageMappingMutation: UseMutationResult<void, unknown, ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, unknown>
 };
 
-
 export const MessageMappingForm = ({
     connectionId,
     selectedTableName,
-    messageId,
     messageType,
     children,
     saveMessageMappingMutation
@@ -58,7 +58,6 @@ export const MessageMappingForm = ({
             formRef.current?.trigger();
         }
     }, [formRef.current?.trigger, hasBeenReset]);
-
 
     const handleNewMessageSave = (values: NewMessageMappingParameters) => {
         saveMessageMappingMutation.mutate({
@@ -97,6 +96,5 @@ export const MessageMappingForm = ({
         >
             {children}
         </Form>
-
     );
 };

@@ -1,10 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { Dispatch, Fragment } from 'react';
-
-import { GridSelectionModel } from '@mui/x-data-grid-pro';
-import { Divider, List, ListItem } from '@mui/material';
+import React, { Dispatch } from 'react';
 
 import { AlertDialog } from '@dolittle/design-system';
 
@@ -45,7 +42,6 @@ export type DeleteCredentialDialogProps = {
 };
 
 export const DeleteCredentialDialog = ({dialogState, dispatch, handleDelete }: DeleteCredentialDialogProps) => {
-
     const handleCancel = () => {
         dispatch({ type: 'clearCredential' });
         dispatch({ type: 'close' });
