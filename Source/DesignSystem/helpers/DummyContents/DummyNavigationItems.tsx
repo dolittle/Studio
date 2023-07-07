@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import {
     DropdownMenuProps,
@@ -12,13 +12,16 @@ import {
     getSidePanelItems,
 } from '../../index';
 
-import { Link } from '../../helpers/ReactRouter';
+import { CurrentPath, Link } from '../../helpers/ReactRouter';
+
 
 export const PrimaryNavigation = () => {
+    const location = useLocation();
+
     const primaryNavigationItems = [
         {
             label: 'Primary 1',
-            href: '/primary-1',
+            selected: location.pathname.includes('/primary-1'),
             overrides: {
                 component: Link,
                 to: '/primary-1',
@@ -26,7 +29,7 @@ export const PrimaryNavigation = () => {
         },
         {
             label: 'Primary 2',
-            href: '/primary-2',
+            selected: location.pathname.includes('/primary-2'),
             overrides: {
                 component: Link,
                 to: '/primary-2',
@@ -34,7 +37,7 @@ export const PrimaryNavigation = () => {
         },
         {
             label: 'Primary 3',
-            href: '/primary-3',
+            selected: location.pathname.includes('/primary-3'),
             overrides: {
                 component: Link,
                 to: '/primary-3',

@@ -1,21 +1,20 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { useGlobalContext } from '../../../context/globalContext';
 
 import { getPrimaryNavigationItems, getSecondaryNavigationItems, getSidePanelItems, ListProps, MenuItemProps } from '@dolittle/design-system';
 
 export const PrimaryNavigation = () => {
+    const location = useLocation();
     const { currentApplicationId } = useGlobalContext();
-
-    const applicationHref = `/microservices/application/${currentApplicationId}/Dev/overview`;
 
     const primaryNavigationItems = [
         {
             label: 'home',
-            href: '/home',
+            selected: location.pathname.includes('/home'),
             overrides: {
                 component: Link,
                 to: '/home',
@@ -23,15 +22,15 @@ export const PrimaryNavigation = () => {
         },
         {
             label: 'applications',
-            href: applicationHref,
+            selected: location.pathname.includes('/microservices'),
             overrides: {
                 component: Link,
-                to: applicationHref,
+                to: `/microservices/application/${currentApplicationId}/Dev/overview`,
             },
         },
         {
             label: 'integrations',
-            href: '/integrations',
+            selected: location.pathname.includes('/integrations'),
             overrides: {
                 component: Link,
                 to: '/integrations',

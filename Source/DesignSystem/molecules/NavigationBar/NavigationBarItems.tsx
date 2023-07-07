@@ -7,7 +7,7 @@ import { Button, ButtonProps, DropdownMenu, DropdownMenuProps } from '../../inde
 
 export type PrimaryNavigationItemsProps = ButtonProps & {
     label: string;
-    href: string;
+    selected: boolean;
 };
 
 export const getPrimaryNavigationItems = (primaryNavigationItems: PrimaryNavigationItemsProps[]) =>
@@ -16,7 +16,7 @@ export const getPrimaryNavigationItems = (primaryNavigationItems: PrimaryNavigat
             <Button
                 key={navigationItem.label}
                 {...navigationItem}
-                sx={{ color: window.location.href.includes(navigationItem.href) ? 'primary.main' : 'text.primary' }}
+                sx={{ color: navigationItem.selected ? 'primary.main' : 'text.primary' }}
             />
         )}
     </>;
