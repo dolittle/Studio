@@ -1,3 +1,19 @@
+# [3.4.61] - 2023-7-7 [PR: #420](https://github.com/dolittle/Studio/pull/420)
+## Summary
+
+Use new Breadcrumbs component to show current location in Integrations page.
+
+<img width="905" alt="Screenshot 2023-07-07 at 14 40 57" src="https://github.com/dolittle/Studio/assets/19160439/fac4d48b-e3ea-4dd1-a6e9-998cdd678b3d">
+
+### Added
+
+- Breadcrumbs to Integrations page
+
+### Removed
+
+- Refactored code
+
+
 # [3.4.60] - 2023-7-7 [PR: #419](https://github.com/dolittle/Studio/pull/419)
 ## Summary
 
