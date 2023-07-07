@@ -66,7 +66,7 @@ export const SecondaryNavigation = () => {
     ];
 
     if (!hasOneCustomer) {
-        // Put after documentation link if there is more than one customer.
+        // Put before log out link if there is more than one customer.
         secondaryNavigationItems.splice(secondaryNavigationItems.length - 1, 0, {
             id: 'change-organization',
             label: 'Change Organization',

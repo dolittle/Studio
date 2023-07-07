@@ -27,7 +27,7 @@ export type LayoutProps = {
     navigationBar: NavigationBarProps;
 
     /**
-     * The side bar that will be displayed on the left of the layout.
+     * The side panel that will be displayed on the left of the layout.
      */
     sidePanel?: SidePanelProps;
 
