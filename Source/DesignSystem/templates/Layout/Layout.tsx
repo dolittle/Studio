@@ -3,11 +3,11 @@
 
 import React from 'react';
 
-import { Box, Grid, Toolbar } from '@mui/material';
+import { Box, Grid, SxProps, Toolbar } from '@mui/material';
 
 import { NavigationBar, NavigationBarProps, SidePanel, SidePanelProps, Breadcrumbs, BreadcrumbsProps } from '@dolittle/design-system';
 
-const styles = {
+const styles: SxProps = {
     'minHeight': 'calc(100vh - 96px)',
     'display': 'flex',
     'flexDirection': 'column',
@@ -40,6 +40,11 @@ export type LayoutProps = {
      * The main content of the layout.
      */
     children: React.ReactNode;
+
+    /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
+    sx?: SxProps;
 };
 
 /**
@@ -53,8 +58,7 @@ export const Layout = ({ navigationBar, sidePanel, breadcrumbs, children, sx }: 
 
         {sidePanel && <SidePanel {...sidePanel} />}
 
-        <Box component='main' sx={styles}>
-            {sidePanel && <Toolbar />}
+        <Box component='main' sx={{ ...styles, ...sx }}>
             {sidePanel &&
                 <Toolbar>
                     {breadcrumbs && <Breadcrumbs {...breadcrumbs} />}
