@@ -9,7 +9,7 @@ import {
     DropdownMenuProps,
     Layout,
     LayoutProps,
-    ListProps,
+    MenuListProps,
     getPrimaryNavigationItems,
     getSecondaryNavigationItems,
     getSelectionMenuItems,
@@ -143,10 +143,10 @@ const SelectionMenu = () => {
     return getSelectionMenuItems(selectionMenuItems, selected);
 };
 
-const SidePanelNavigation = () => {
+export const SidePanelNavigation = () => {
     const location = useLocation();
 
-    const sidePanelItems: ListProps['listItems'] = [
+    const sidePanelItems: MenuListProps['listItems'] = [
         {
             label: 'Side panel link 1',
             icon: 'CheckRounded',

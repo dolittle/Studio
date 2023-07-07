@@ -3,11 +3,11 @@
 
 import { action } from '@storybook/addon-actions';
 
-import { componentStories, List, ListProps } from '../../index';
+import { componentStories, MenuList, MenuListProps } from '../../index';
 
-const { metadata, createStory } = componentStories(List);
+const { metadata, createStory } = componentStories(MenuList);
 
-const items: ListProps['listItems'] = [
+const items: MenuListProps['listItems'] = [
     {
         label: 'Item 1',
         icon: 'AddBoxRounded',
@@ -25,7 +25,7 @@ const items: ListProps['listItems'] = [
     },
 ];
 
-metadata.title = 'List Items';
+metadata.title = 'Menu List';
 
 metadata.argTypes = {
     sx: { control: false },

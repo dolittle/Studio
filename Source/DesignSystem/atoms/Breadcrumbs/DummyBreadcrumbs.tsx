@@ -5,7 +5,7 @@ import React from 'react';
 
 import { useLocation } from 'react-router-dom';
 
-import { Breadcrumbs, List, ListProps } from '../../index';
+import { Breadcrumbs, MenuList, MenuListProps } from '../../index';
 
 import { Link } from '../../helpers/ReactRouter';
 
@@ -27,7 +27,7 @@ export const DummyBreadcrumbs = () => {
 export const DummyListMenu = () => {
     const location = useLocation();
 
-    const items: ListProps['listItems'] = [
+    const items: MenuListProps['listItems'] = [
         {
             label: 'Navigate to breadcrumb 1',
             icon: 'Explore',
@@ -67,6 +67,6 @@ export const DummyListMenu = () => {
     ];
 
     return (
-        <List listItems={items} withIcons withSelectedItem initialySelectedItem={3} sx={{ width: 'fit-content', mt: 2 }} />
+        <MenuList listItems={items} withIcons withSelectedItem initialySelectedItem={3} sx={{ width: 'fit-content', mt: 2 }} />
     );
 };

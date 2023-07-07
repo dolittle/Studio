@@ -3,11 +3,11 @@
 
 import React, { useState } from 'react';
 
-import { ButtonTypeMap, ExtendButtonBase, List as MuiList, ListItem, ListItemButton, ListItemIcon, ListItemText, SxProps } from '@mui/material';
+import { ButtonTypeMap, ExtendButtonBase, List, ListItem, ListItemButton, ListItemIcon, ListItemText, SxProps } from '@mui/material';
 
 import { Icon, IconProps } from '../../index';
 
-type ListItemProps = {
+type MenuListItemProps = {
     /**
      * The label to display for the list item.
      */
@@ -43,13 +43,13 @@ type ListItemProps = {
 };
 
 /**
- * The props for a {@link List} component.
+ * The props for a {@link MenuList} component.
  */
-export type ListProps = {
+export type MenuListProps = {
     /**
      * The list items to display.
      */
-    listItems: ListItemProps[];
+    listItems: MenuListItemProps[];
 
     /**
      * Whether or not the list item is selectable.
@@ -60,7 +60,7 @@ export type ListProps = {
     /**
      * The index of the list item to select.
      *
-     * Selection is based on the index of the {@link listItems} array.
+     * Selection is based on the index of the {@link MenuListItemProps['listItems']} array.
      *
      * Only used when {@link withSelectedItem} is true.
      * @default 0
@@ -89,14 +89,14 @@ export type ListProps = {
 // TODO: Add style to List: width: 'fit-content'? and fullwidth prop?
 
 /**
- * The list component is the main component that contains the list items.
- * @param {ListProps} props - The {@link ListProps}.
- * @returns A {@link List} component.
+ * The menu list component is the main component that contains the menu list items.
+ * @param {MenuListProps} props - The {@link MenuListProps}.
+ * @returns A {@link MenuList} component.
  */
-export const List = ({ listItems, withSelectedItem, initialySelectedItem = 0, withIcons, dense, sx }: ListProps) => {
+export const MenuList = ({ listItems, withSelectedItem, initialySelectedItem = 0, withIcons, dense, sx }: MenuListProps) => {
     const [selectedItem, setSelectedItem] = useState(initialySelectedItem);
 
-    const handleListItemClick = (item: ListItemProps, index: number) => {
+    const handleListItemClick = (item: MenuListItemProps, index: number) => {
         if (withSelectedItem) {
             setSelectedItem(index);
         }
@@ -105,7 +105,7 @@ export const List = ({ listItems, withSelectedItem, initialySelectedItem = 0, wi
     };
 
     return (
-        <MuiList sx={{ maxWidth: 320, ...sx }}>
+        <List sx={{ maxWidth: 320, ...sx }}>
             {listItems.map((item, index) =>
                 <ListItem key={index} disablePadding sx={item.sx}>
                     <ListItemButton
@@ -124,6 +124,6 @@ export const List = ({ listItems, withSelectedItem, initialySelectedItem = 0, wi
                     </ListItemButton>
                 </ListItem>
             )}
-        </MuiList>
+        </List>
     );
 };

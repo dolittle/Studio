@@ -31,7 +31,7 @@ export { EditCell, EditTextFieldCell } from './molecules/DataGrid';
 export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecules/FileUploadForm';
 export { Graph } from './molecules/Metrics/Graph';
 export { DropdownMenu, DropdownMenuProps, MenuItemProps } from './molecules/DropdownMenu';
-export { List, ListProps } from './molecules/List';
+export { MenuList, MenuListProps } from './molecules/MenuList';
 export { NavigationBar, NavigationBarProps, getPrimaryNavigationItems, getSecondaryNavigationItems, getSelectionMenuItems } from './molecules/NavigationBar';
 export { SelectCard, SimpleCard, SimpleCardProps, SimpleCardGrid, SimpleCardGridProps } from './molecules/Card';
 export { SidePanel, SidePanelProps, getSidePanelItems } from './molecules/SidePanel';

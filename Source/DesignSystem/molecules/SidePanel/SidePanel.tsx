@@ -5,12 +5,12 @@ import React, { useEffect, useState } from 'react';
 
 import { Divider, Toolbar } from '@mui/material';
 
-import { List, ListProps } from '@dolittle/design-system';
+import { MenuList, MenuListProps } from '@dolittle/design-system';
 
 import { Drawer } from './StyledCompenents';
 
-export const getSidePanelItems = (sidePanelItems: ListProps['listItems']) =>
-    <List listItems={sidePanelItems} withSelectedItem dense withIcons />;
+export const getSidePanelItems = (sidePanelItems: MenuListProps['listItems']) =>
+    <MenuList listItems={sidePanelItems} withSelectedItem dense withIcons />;
 
 /**
  * The props for a {@link SidePanel} component.
@@ -47,7 +47,7 @@ export const SidePanel = ({ sidePanelNavigationItems }: SidePanelProps) => {
         },
     };
 
-    const expandButton: ListProps['listItems'] = [
+    const expandButton: MenuListProps['listItems'] = [
         {
             label: isSidePanelExpanded ? 'Collapse' : 'Expand',
             icon: isSidePanelExpanded ? 'KeyboardDoubleArrowLeft' : 'KeyboardDoubleArrowRight',
@@ -60,7 +60,7 @@ export const SidePanel = ({ sidePanelNavigationItems }: SidePanelProps) => {
         <Drawer variant='permanent' open={isSidePanelExpanded} sx={styles}>
             <Toolbar />
 
-            <List listItems={expandButton} withIcons sx={{ py: 0 }} />
+            <MenuList listItems={expandButton} withIcons sx={{ py: 0 }} />
             <Divider />
             {sidePanelNavigationItems}
         </Drawer>
