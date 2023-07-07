@@ -8,12 +8,19 @@ import { StaticRouter } from 'react-router-dom/server';
 
 import { Typography } from '@mui/material';
 
-export const Router = ({ children }: { children?: React.ReactNode }) => {
+type RouterProps = {
+    initialPath?: string;
+    children?: React.ReactNode;
+};
+
+export const Router = ({ initialPath, children }: RouterProps) => {
+    const path = initialPath ?? '/primary-1';
+
     if (typeof window === 'undefined') {
-        return <StaticRouter location='/primary-1'>{children}</StaticRouter>;
+        return <StaticRouter location={path}>{children}</StaticRouter>;
     }
 
-    return <MemoryRouter initialEntries={['/primary-1']} initialIndex={0}>{children}</MemoryRouter>;
+    return <MemoryRouter initialEntries={[path]} initialIndex={0} > {children}</MemoryRouter>;
 };
 
 export const CurrentPath = () =>
@@ -25,7 +32,7 @@ export const Content = () => {
     const location = useLocation();
 
     return (
-        <Typography variant='body2' sx={{ pb: 2 }} color='text.secondary'>
+        <Typography variant='body2' sx={{ py: 2 }} color='text.secondary'>
             Current route: {location.pathname}
         </Typography>
     );
