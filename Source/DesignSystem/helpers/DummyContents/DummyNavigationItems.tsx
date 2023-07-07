@@ -1,10 +1,14 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import React, { useState } from 'react';
+
 import { useLocation } from 'react-router-dom';
 
 import {
     DropdownMenuProps,
+    Layout,
+    LayoutProps,
     ListProps,
     getPrimaryNavigationItems,
     getSecondaryNavigationItems,
@@ -14,6 +18,37 @@ import {
 
 import { CurrentPath, Link } from '../../helpers/ReactRouter';
 
+export const dummyLayoutBreadcrumbsNameMap: { [key: string]: string } = {
+    '/primary-1': 'Primary 1',
+    '/primary-2': 'Primary 2',
+    '/primary-3': 'Primary 3',
+    '/secondary-1': 'Secondary 1',
+    '/secondary-2': 'Secondary 2',
+    '/secondary-3': 'Secondary 3',
+    '/primary-1/side-panel-link-1': 'Side panel link 1',
+    '/primary-1/side-panel-link-2': 'Side panel link 2',
+    '/primary-1/side-panel-link-3': 'Side panel link 3',
+    '/primary-1/side-panel-link-4': 'Side panel link 4',
+    '/primary-1/side-panel-link-5': 'Side panel link  5',
+};
+
+export const DummyLayoutBreadcrumbs = () => {
+    const location = useLocation();
+
+    return (
+        <Layout
+            navigationBar={dummyNavigationBar}
+            sidePanel={dummySidePanel}
+            breadcrumbs={{
+                currentPath: location.pathname,
+                breadcrumbsNameMap: dummyLayoutBreadcrumbsNameMap,
+            }}
+            sx={{ minHeight: 300 }}
+        >
+            <CurrentPath />
+        </Layout>
+    );
+};
 
 export const PrimaryNavigation = () => {
     const location = useLocation();

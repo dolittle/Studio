@@ -5,8 +5,7 @@ import React from 'react';
 
 import { componentStories, Layout } from '@dolittle/design-system';
 
-import { Router, CurrentPath } from '../../helpers/ReactRouter';
-import { PrimaryNavigation, SecondaryNavigation, SelectionMenu, SidePanelNavigation } from '../../helpers/DummyContents/DummyNavigationItems';
+import { dummyNavigationBar, dummySidePanel, DummyLayoutBreadcrumbs } from '../../helpers/DummyContents';
 
 const { metadata, createStory } = componentStories(Layout, {
     decorator: Story =>
@@ -40,3 +39,6 @@ export const WithSideBar = createStory({
         sidePanelNavigationItems: <SidePanelNavigation />,
     },
 });
+
+export const WithSideBarAndBreadcrumbs = () =>
+    <DummyLayoutBreadcrumbs />;

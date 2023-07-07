@@ -10,6 +10,7 @@ export { Accordion, AccordionProps } from './atoms/Accordion';
 export { AccordionList, AccordionListProps } from './atoms/AccordionList';
 export { AlertDialog, AlertDialogProps, DialogForm } from './atoms/AlertDialog';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
+export { Breadcrumbs, BreadcrumbsProps } from './atoms/Breadcrumbs';
 export { Button, ButtonProps } from './atoms/Button';
 export * from './atoms/Forms';
 export { Icon, IconProps } from './atoms/Icon';

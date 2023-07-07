@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Box, Grid, Toolbar } from '@mui/material';
 
-import { NavigationBar, NavigationBarProps, SidePanel, SidePanelProps } from '@dolittle/design-system';
+import { NavigationBar, NavigationBarProps, SidePanel, SidePanelProps, Breadcrumbs, BreadcrumbsProps } from '@dolittle/design-system';
 
 const styles = {
     'minHeight': 'calc(100vh - 96px)',
@@ -32,6 +32,11 @@ export type LayoutProps = {
     sidePanel?: SidePanelProps;
 
     /**
+     * The breadcrumbs items that will be displayed at the top of the layout.
+     */
+    breadcrumbs?: BreadcrumbsProps;
+
+    /**
      * The main content of the layout.
      */
     children: React.ReactNode;
@@ -42,7 +47,7 @@ export type LayoutProps = {
  * @param {LayoutProps} props - The {@link LayoutProps}.
  * @returns A {@link Layout} component.
  */
-export const Layout = ({ children, navigationBar, sidePanel }: LayoutProps) =>
+export const Layout = ({ navigationBar, sidePanel, breadcrumbs, children, sx }: LayoutProps) =>
     <Grid container sx={{ flexFlow: 'nowrap' }}>
         <NavigationBar {...navigationBar} />
 
@@ -50,6 +55,11 @@ export const Layout = ({ children, navigationBar, sidePanel }: LayoutProps) =>
 
         <Box component='main' sx={styles}>
             {sidePanel && <Toolbar />}
+            {sidePanel &&
+                <Toolbar>
+                    {breadcrumbs && <Breadcrumbs {...breadcrumbs} />}
+                </Toolbar>
+            }
             {children}
         </Box>
     </Grid>;

@@ -27,6 +27,7 @@ const integrationsSidePanel: LayoutProps['sidePanel'] = {
 
 export type WorkSpaceLayoutProps = {
     sidePanelMode?: 'applications' | 'integrations';
+    breadcrumbs?: LayoutProps['breadcrumbs'];
     children: React.ReactNode;
 };
 
@@ -34,8 +35,12 @@ export type WorkSpaceWithoutSideBarLayoutProps = WorkSpaceLayoutProps & {
     pageTitle: string;
 };
 
-export const WorkSpaceLayout = ({ sidePanelMode, children }: WorkSpaceLayoutProps) =>
-    <Layout navigationBar={mainNavigationItems} sidePanel={sidePanelMode === 'applications' ? applicationsSidePanel : integrationsSidePanel}>
+export const WorkSpaceLayout = ({ sidePanelMode, breadcrumbs, children }: WorkSpaceLayoutProps) =>
+    <Layout
+        navigationBar={mainNavigationItems}
+        sidePanel={sidePanelMode === 'applications' ? applicationsSidePanel : integrationsSidePanel}
+        breadcrumbs={breadcrumbs}
+    >
         {children}
     </Layout>;
 
