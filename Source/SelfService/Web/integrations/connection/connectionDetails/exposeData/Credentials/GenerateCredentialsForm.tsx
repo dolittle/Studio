@@ -2,14 +2,18 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState, useRef } from 'react';
+
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { Box, FormHelperText, Typography } from '@mui/material';
-import { AlertBox, Button, Form, FormRef, Input, MaxWidthTextBlock } from '@dolittle/design-system';
+
+import { Button, Form, FormRef, Input, MaxWidthTextBlock } from '@dolittle/design-system';
+
 import { useConnectionsIdServiceAccountsServiceAccountNamePost } from '../../../../../apis/integrations/serviceAccountApi.hooks';
 import { ResponseError, ServiceAccountCreatedDto } from '../../../../../apis/integrations/generated';
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
+
 import { GenerateCredentialsFormSubmitButton } from './GenerateCredentialsFormSubmitButton';
 
 export type GenerateCredentialsFormParameters = {
@@ -28,10 +32,11 @@ export type GenerateCredentialsFormProps = {
 
 export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => {
     const { enqueueSnackbar } = useSnackbar();
-    const [token, setToken] = useState<string | undefined>(undefined);
-    const [formSubmitError, setFormSubmitError] = useState<string | undefined>(undefined);
     const queryClient = useQueryClient();
     const formRef = useRef<FormRef<GenerateCredentialsFormParameters>>(null);
+
+    const [token, setToken] = useState<string | undefined>(undefined);
+    const [formSubmitError, setFormSubmitError] = useState<string | undefined>(undefined);
 
     const generateTokenMutation = useConnectionsIdServiceAccountsServiceAccountNamePost();
     const hasResult = !!token;
@@ -46,7 +51,7 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
         generateTokenMutation.mutate({
             id: props.connectionId,
             serviceAccountName: fieldValues.name,
-            description: fieldValues.description
+            description: fieldValues.description,
         }, {
             onSuccess: (data: ServiceAccountCreatedDto) => {
                 setToken(data.token);
@@ -85,7 +90,7 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
                 initialValues={{
                     name: '',
                     description: '',
-                    token: ''
+                    token: '',
                 }}
                 onSubmit={handleGenerate}
                 fRef={formRef}
@@ -136,7 +141,7 @@ export const GenerateCredentialsForm = (props: GenerateCredentialsFormProps) => 
                             </>
                         )}
                 </Box>
-            </Form >
+            </Form>
         </>
     );
 };

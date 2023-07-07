@@ -11,19 +11,19 @@ import { Button } from '@dolittle/design-system';
 
 export type TextCopyBoxProps = {
     /**
-     * The list of instructions to display
-     * This will be rendered as a list with default text styling, and be made available for copying as a multi-line string
+     * The list of instructions to display.
+     * This will be rendered as a list with default text styling, and be made available for copying as a multi-line string.
      * For more control, use the children prop.
      */
     instructions: string[];
 
     /**
-     * Pass in children if you want to have more control over the styling of the instructions
+     * Pass in children if you want to have more control over the styling of the instructions.
      */
     children?: React.ReactNode;
 
     /**
-     * Style overrides applied to the root Paper component
+     * Style overrides applied to the root Paper component.
      */
     sx?: SxProps;
 };

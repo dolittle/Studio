@@ -18,27 +18,29 @@ export const MetadataPublisherCredentials = ({ canEdit }: MetadataPublisherCrede
 
     const required = !!metadataPublisherUrl || !!metadataPublisherPassword;
 
-    return <>
-        <MaxWidthTextBlock>
-            This will allow us to access your service and provide the data, including custom data fields, needed to configure your application logic.
-        </MaxWidthTextBlock>
+    return (
+        <>
+            <MaxWidthTextBlock>
+                This will allow us to access your service and provide the data, including custom data fields, needed to configure your application logic.
+            </MaxWidthTextBlock>
 
-        <Stack spacing={3.5} sx={{ mt: 3 }}>
-            <Input
-                id='metadataPublisherUrl'
-                label='Your Metadata Publisher URL'
-                placeholder='Your metadata publisher URL goes here...'
-                sx={{ width: 1, maxWidth: 500 }}
-                required={{ value: required, message: 'Please enter your metadata publisher URL' }}
-                disabled={!canEdit}
-            />
-            <PasswordInput
-                id='metadataPublisherPassword'
-                label='Password'
-                placeholder='Your password'
-                required={{ value: required, message: 'Please enter the metadata publisher password' }}
-                disabled={!canEdit}
-            />
-        </Stack>
-    </>;
+            <Stack spacing={3.5} sx={{ mt: 3 }}>
+                <Input
+                    id='metadataPublisherUrl'
+                    label='Your Metadata Publisher URL'
+                    placeholder='Your metadata publisher URL goes here...'
+                    sx={{ width: 1, maxWidth: 500 }}
+                    required={{ value: required, message: 'Please enter your metadata publisher URL' }}
+                    disabled={!canEdit}
+                />
+                <PasswordInput
+                    id='metadataPublisherPassword'
+                    label='Password'
+                    placeholder='Your password'
+                    required={{ value: required, message: 'Please enter the metadata publisher password' }}
+                    disabled={!canEdit}
+                />
+            </Stack>
+        </>
+    );
 };

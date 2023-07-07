@@ -7,15 +7,16 @@ import { useFormContext } from 'react-hook-form';
 import { enqueueSnackbar } from 'notistack';
 
 import { FileUploadForm, FileUploadFormRef, MaxWidthTextBlock } from '@dolittle/design-system';
+
 import { IonConfigRequest } from '../../../apis/integrations/generated';
+
 import { TextCopyBox } from './TextCopyBox';
 
-
 /**
- * Simple type guard to check if the object is of type IonConfigRequest
+ * Simple type guard to check if the object is of type IonConfigRequest.
  * Other approaches found here: https://stackoverflow.com/a/62438143/115303
- * @param o The object to check
- * @returns o as an IonConfigRequest
+ * @param o The object to check.
+ * @returns o as an IonConfigRequest.
  */
 function isIonConfigRequest(o: any): o is IonConfigRequest {
     return 'iu' in o &&
@@ -25,7 +26,7 @@ function isIonConfigRequest(o: any): o is IonConfigRequest {
         'sask' in o &&
         'ci' in o &&
         'cs' in o;
-}
+};
 
 export const instructions = [
     `1. Open Infor ION API. Open the menu from the upper left corner and select 'Infor ION API'.`,
@@ -39,7 +40,6 @@ export const instructions = [
     `9. When the dialog pops up, toggle on 'Create Service Account' and provide a username from your M3 account you would like to associate with the ION service account.`,
     `10. Last, click 'Download'. Upload the files below.`,
 ];
-
 
 export type IonServiceAccountCredentialsProps = {
     canEdit: boolean;
@@ -71,24 +71,26 @@ export const IonServiceAccountCredentials = React.forwardRef<FileUploadFormRef, 
 
         fileReader.readAsText(file);
     };
-    return <>
-        <MaxWidthTextBlock>
-            Follow the steps below then upload your credentials. If you already have an ION service account setup, skip to step 8 to access your credentials.
-        </MaxWidthTextBlock>
 
-        <MaxWidthTextBlock>
-            <TextCopyBox instructions={instructions} />
-        </MaxWidthTextBlock>
-
-
-        {props.canEdit && (
+    return (
+        <>
             <MaxWidthTextBlock>
-                <FileUploadForm onSelected={handleFileUploaded} validFileExtensions={['json']} ref={ref} />
+                Follow the steps below then upload your credentials. If you already have an ION service account setup, skip to step 8 to access your credentials.
             </MaxWidthTextBlock>
-        )}
 
-    </>;
+            <MaxWidthTextBlock>
+                <TextCopyBox instructions={instructions} />
+            </MaxWidthTextBlock>
+
+
+            {props.canEdit && (
+                <MaxWidthTextBlock>
+                    <FileUploadForm onSelected={handleFileUploaded} validFileExtensions={['json']} ref={ref} />
+                </MaxWidthTextBlock>
+            )}
+
+        </>
+    );
 });
 
 IonServiceAccountCredentials.displayName = 'IonServiceAccountCredentials';
-

@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useImperativeHandle, useRef, useState, useCallback, useEffect } from 'react';
+import React, { useImperativeHandle, useState, useCallback, useEffect } from 'react';
 
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
@@ -14,7 +14,6 @@ import { ConnectionModel, IonConfigRequest } from '../../../apis/integrations/ge
 import { useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
 import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
-
 
 const useForceSubscribeToIonConfigurationStateChanges = (currentForm: FormRef<M3ConnectionParameters> | undefined) => {
     useEffect(() => {
@@ -151,7 +150,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
 
         const metadataPublisherUrlFieldState = getFieldState('metadataPublisherUrl');
         const metadataPublisherPasswordFieldState = getFieldState('metadataPublisherPassword');
-
         if ((metadataPublisherUrlFieldState.isDirty || metadataPublisherPasswordFieldState.isDirty) &&
             (data.metadataPublisherUrl && data.metadataPublisherPassword)) {
             mdpConfigurationMutation.mutate(
@@ -170,6 +168,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
                 },
             );
         }
+
         const ionConfigurationFieldState = getFieldState('ionConfiguration');
         if (ionConfigurationFieldState.isDirty) {
             ionConfigurationMutation.mutate(
@@ -194,7 +193,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         mdpConfigurationMutation, ionConfigurationMutation,
     ]);
 
-
     const handleSuccessfulSave = (message: string) => {
         enqueueSnackbar(message);
         queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
@@ -206,7 +204,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
     };
 
     return (
-
         <Form<M3ConnectionParameters>
             initialValues={{
                 connectorName: connection.name || '',

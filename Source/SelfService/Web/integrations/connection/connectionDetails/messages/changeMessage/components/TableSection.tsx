@@ -3,7 +3,6 @@
 
 import React, { useState, useMemo } from 'react';
 
-
 import { Grid, LinearProgress, Box } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
@@ -17,7 +16,6 @@ import { ViewModeProps } from '../ViewMode';
 import { DataGridTableListingEntry, MessageMappingTable } from './MessageMappingTable';
 import { useUpdateMappedFieldsInForm } from './useUpdateMappedFieldsInForm';
 
-
 export type TableSectionProps = ViewModeProps & {
     selectedTableName: string;
     initialSelectedFields: MappedField[];
@@ -28,9 +26,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
     const connectionId = useConnectionId();
     const setMappedFieldsInForm = useUpdateMappedFieldsInForm();
 
-    if (!connectionId || !selectedTableName) {
-        return <AlertBox />;
-    }
+    if (!connectionId || !selectedTableName) return <AlertBox />;
 
     const initialSelectedRowIds = useMemo(
         () => initialSelectedFields.map(field => field.mappedColumn?.m3ColumnName) || [],
