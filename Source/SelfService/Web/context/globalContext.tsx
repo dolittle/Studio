@@ -18,17 +18,17 @@ type GlobalContextProviderProps = {
 
 export type GlobalContextType = {
     messages: any[];
+    errors: any[];
     lastMessage: NotificationItem;
     lastError: any;
-    errors: any[];
     hasOneCustomer: boolean;
-    setNotification: (message: string, level: string) => void;
+    currentEnvironment: string;
+    currentApplicationId: string;
     setError: (obj: any) => void;
+    setNotification: (message: string, level: string) => void;
     clearNotification: () => void;
     setCurrentEnvironment: (environment: string) => void;
     setCurrentApplicationId: (applicationId: string) => void;
-    currentEnvironment: string;
-    currentApplicationId: string;
     clearGlobalState: () => void;
 };
 
@@ -45,12 +45,12 @@ export const GlobalContext = createContext<GlobalContextType>({
     lastMessage: newNotification('', ''),
     lastError: undefined,
     hasOneCustomer: false,
+    currentEnvironment: '',
+    currentApplicationId: '',
     setError: (obj) => console.warn('setError function not set'),
     setNotification: (message, level) => { console.log(message, level); },
     clearNotification: () => console.warn('clearNotification function not set'),
-    currentEnvironment: '',
     setCurrentEnvironment: (environment: string) => console.warn('setCurrentEnvironment function not set'),
-    currentApplicationId: '',
     setCurrentApplicationId: (applicationId: string) => console.warn('setCurrentApplicationId function not set'),
     clearGlobalState: () => console.warn('clearGlobalState function not set'),
 });
@@ -80,13 +80,13 @@ export const GlobalContextProvider = ({ children }: GlobalContextProviderProps) 
     const initCurrentApplicationId = getFromLocalStorage('currentApplicationId', '');
     const initCurrentEnvironment = getFromLocalStorage('currentEnvironment', '');
 
-    const [errors, setErrors] = useState(initErrors as any[]);
     const [messages, setMessages] = useState([] as any[]);
+    const [errors, setErrors] = useState(initErrors as any[]);
+    const [lastMessage, setLastMessage] = useState(newNotification('', ''));
     const [lastError, setLastError] = useState({} as any);
+    const [hasOneCustomer, setHasOneCustomer] = useState(false);
     const [currentApplicationId, _setCurrentApplicationId] = useState(initCurrentApplicationId);
     const [currentEnvironment, _setCurrentEnvironment] = useState(initCurrentEnvironment);
-    const [hasOneCustomer, setHasOneCustomer] = useState(false);
-    const [lastMessage, setLastMessage] = useState(newNotification('', ''));
 
     useEffect(() => {
         getAllCustomers().then(customers =>
@@ -140,17 +140,17 @@ export const GlobalContextProvider = ({ children }: GlobalContextProviderProps) 
 
     return (
         <GlobalContext.Provider value={{
-            lastMessage,
-            lastError,
             messages,
             errors,
+            lastMessage,
+            lastError,
             hasOneCustomer,
+            currentEnvironment,
+            currentApplicationId,
             setError,
             setNotification,
             clearNotification,
-            currentEnvironment,
             setCurrentEnvironment,
-            currentApplicationId,
             setCurrentApplicationId,
             clearGlobalState,
         }}>

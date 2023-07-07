@@ -8,10 +8,11 @@ import { Card, CardActions, CardContent, CardHeader, Typography } from '@mui/mat
 import { Button, ButtonProps } from '@dolittle/design-system';
 
 const styles = {
+    height: 1,
+    maxWidth: 440,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 1,
 };
 
 /**
@@ -71,6 +72,6 @@ export const SimpleCard = ({ title, subtitle, description, buttonAlignment, seco
 
         <CardActions sx={{ flexWrap: 'wrap', justifyContent: buttonAlignment === 'right' ? 'flex-end' : 'flex-start' }}>
             {secondaryButton && <Button color='subtle' {...secondaryButton} />}
-            {primaryButton && <Button {...primaryButton} />}
+            {primaryButton && <Button {...primaryButton} sx={secondaryButton && { ml: 1 }} />}
         </CardActions>
     </Card>;

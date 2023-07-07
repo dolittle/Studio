@@ -3,111 +3,162 @@
 
 import React from 'react';
 
-import { Link as RouterLink, LinkProps as RouterLinkProps, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { useGlobalContext } from '../../../context/globalContext';
 
-import { Icon, NavigationBarProps } from '@dolittle/design-system';
+import { getPrimaryNavigationItems, getSecondaryNavigationItems, getSidePanelItems, LayoutProps, MenuListProps, MenuItemProps } from '@dolittle/design-system';
 
-type RouterLinkListItemProps = {
-    to: string;
-    icon?: React.ReactElement;
-    text?: string;
-    inset?: boolean;
-    variantButton?: boolean;
+import { SpaceSelectMenu } from './spaceSelectMenu';
+
+const PrimaryNavigation = () => {
+    const location = useLocation();
+    const { currentApplicationId } = useGlobalContext();
+
+    const primaryNavigationItems = [
+        {
+            label: 'home',
+            selected: location.pathname.includes('/home'),
+            overrides: {
+                component: Link,
+                to: '/home',
+            },
+        },
+        {
+            label: 'applications',
+            selected: location.pathname.includes('/microservices'),
+            overrides: {
+                component: Link,
+                to: `/microservices/application/${currentApplicationId}/Dev/overview`,
+            },
+        },
+        {
+            label: 'integrations',
+            selected: location.pathname.includes('/integrations'),
+            overrides: {
+                component: Link,
+                to: '/integrations',
+            },
+        },
+    ];
+
+    return getPrimaryNavigationItems(primaryNavigationItems);
 };
 
-// TUTORIAL: https://mui.com/material-ui/guides/composition/
-const Link = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function Link(itemProps, ref) {
-    return <RouterLink ref={ref} {...itemProps} role={undefined} />;
-});
+const SecondaryNavigation = () => {
+    const { hasOneCustomer, currentApplicationId } = useGlobalContext();
 
-export const RouterLinkListItem = ({ to, icon, text, inset, variantButton }: RouterLinkListItemProps) =>
-    <ListItem disablePadding>
-        <ListItemButton component={Link} to={to} selected={window.location.href.includes(to)} dense sx={{ whiteSpace: 'nowrap' }}>
-            {icon ? <ListItemIcon sx={{ color: 'inherit' }}>{icon}</ListItemIcon> : null}
+    const secondaryNavigationItems: MenuItemProps[] = [
+        {
+            id: 'documentation',
+            label: 'Documentation',
+            icon: 'DescriptionRounded',
+            overrides: {
+                component: Link,
+                to: `/documentation/application/${currentApplicationId}/Dev/overview`,
+            },
+        },
+        {
+            id: 'log-out',
+            label: 'Log out',
+            icon: 'LogoutRounded',
+            overrides: {
+                component: 'a',
+                href: '/.auth/cookies/logout',
+            },
+        },
+    ];
 
-            <ListItemText inset={inset} primary={text} primaryTypographyProps={{ variant: variantButton ? 'button' : 'body2' }} />
-        </ListItemButton>
-    </ListItem>;
+    if (!hasOneCustomer) {
+        // Put before log out link if there is more than one customer.
+        secondaryNavigationItems.splice(secondaryNavigationItems.length - 1, 0, {
+            id: 'change-organization',
+            label: 'Change Organization',
+            icon: 'SupervisedUserCircleRounded',
+            overrides: {
+                component: 'a',
+                href: '/.auth/cookies/initiate',
+            },
+        });
+    }
 
-export const SideBarPrimaryLinks = () =>
-    <>
-        <RouterLinkListItem to='connections' text='ERP Connections' icon={<Icon icon='PolylineRounded' />} />
-        <RouterLinkListItem to='#' text='Bridge Designer' icon={<Icon icon='Bridge' />} />
-    </>;
+    return getSecondaryNavigationItems(secondaryNavigationItems);
+};
 
-export const SideBarSecondaryLinks = () =>
-    <>
-        <RouterLinkListItem to='#' text='Microservices' icon={<Icon icon='HexagonRounded' />} />
-        <RouterLinkListItem to='#' text='Backups' icon={<Icon icon='BackupRounded' />} />
-        <RouterLinkListItem to='#' text='Container Registry' icon={<Icon icon='ContainerRegistry' />} />
-        <RouterLinkListItem to='#' text='Logs' icon={<Icon icon='TextSnippetRounded' />} />
-    </>;
+const SidePanelApplicationItems = () => {
+    const { currentApplicationId, currentEnvironment } = useGlobalContext();
 
-export const primaryNavigationItems: NavigationBarProps['primaryNavigationItems'] = [
-    {
-        label: 'home',
-        overrides: {
-            component: Link,
-            to: '/home',
+    const sidePanelItems: MenuListProps['listItems'] = [
+        {
+            label: 'Microservices',
+            icon: 'HexagonRounded',
+            sx: { my: 1 },
+            overrides: {
+                component: Link,
+                to: `/microservices/application/${currentApplicationId}/${currentEnvironment}/overview`,
+            },
         },
-    },
-    {
-        label: 'applications',
-        overrides: {
-            component: Link,
-            to: '/applications',
+        {
+            label: 'Backups',
+            icon: 'BackupRounded',
+            sx: { my: 1 },
+            overrides: {
+                component: Link,
+                to: `/backups/application/${currentApplicationId}/overview`,
+            },
         },
-    },
-    {
-        label: 'integrations',
-        overrides: {
-            component: Link,
-            to: '/integrations',
+        {
+            label: 'Container Registry',
+            icon: 'ContainerRegistry',
+            sx: { my: 1 },
+            overrides: {
+                component: Link,
+                to: `/containerregistry/application/${currentApplicationId}/${currentEnvironment}/overview`,
+            },
         },
-    },
-];
+        {
+            label: 'Logs',
+            icon: 'TextSnippetRounded',
+            sx: { my: 1 },
+            overrides: {
+                component: Link,
+                to: `/logs/application/${currentApplicationId}/${currentEnvironment}`,
+            },
+        },
+    ];
 
-export const secondaryNavigationItems: NavigationBarProps['secondaryNavigationItems'] = [
-    {
-        label: 'Documentation',
-        icon: 'DescriptionRounded',
-        overrides: {
-            href: 'https://dolittle.io/docs/',
-            target: '_blank',
-        },
-    },
-    {
-        label: 'Change Organization',
-        icon: 'SupervisedUserCircleRounded',
-        overrides: {
-            href: '/.auth/cookies/initiate',
-        },
-    },
-    {
-        label: 'Log out',
-        icon: 'LogoutRounded',
-        overrides: {
-            href: '/.auth/cookies/logout',
-        },
-    },
-];
+    return getSidePanelItems(sidePanelItems);
+};
 
-export const selectionMenuItems: NavigationBarProps['selectionMenuItems'] = [
-    {
-        label: 'Default space',
-        icon: 'CheckRounded',
-    },
-    {
-        label: 'Space 2',
-    },
-    {
-        label: 'Create New Space',
-        icon: 'AddBoxRounded',
-        overrides: {
-            component: Link,
-            to: '/application/create',
+const SidePanelIntegrationItems = () => {
+    const { currentApplicationId, currentEnvironment } = useGlobalContext();
+
+    const sidePanelItems: MenuListProps['listItems'] = [
+        {
+            label: 'ERP Connections',
+            icon: 'PolylineRounded',
+            sx: { my: 1 },
+            overrides: {
+                component: Link,
+                to: `/m3connector/application/${currentApplicationId}/${currentEnvironment}/details`,
+            },
         },
-    },
-];
+    ];
+
+    return getSidePanelItems(sidePanelItems);
+};
+
+export const mainNavigationItems: LayoutProps['navigationBar'] = {
+    logo: 'AigonixLightCube',
+    primaryNavigationItems: <PrimaryNavigation />,
+    selectionMenuItems: <SpaceSelectMenu />,
+    secondaryNavigationItems: <SecondaryNavigation />,
+};
+
+export const applicationsSidePanel: LayoutProps['sidePanel'] = {
+    sidePanelNavigationItems: <SidePanelApplicationItems />,
+};
+
+export const integrationsSidePanel: LayoutProps['sidePanel'] = {
+    sidePanelNavigationItems: <SidePanelIntegrationItems />,
+};

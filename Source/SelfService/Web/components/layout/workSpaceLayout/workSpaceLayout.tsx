@@ -5,30 +5,36 @@ import React from 'react';
 
 import { Layout, LayoutProps } from '@dolittle/design-system';
 
-import { primaryNavigationItems, secondaryNavigationItems, selectionMenuItems, SideBarPrimaryLinks, SideBarSecondaryLinks } from './workSpaceLayoutLinks';
+import { usePageTitle } from '../../../utils/usePageTitle';
 
-const mainNavigationItems: LayoutProps['navigationBar'] = {
-    logo: 'AigonixLightCube',
-    primaryNavigationItems,
-    secondaryNavigationItems,
-    //selectionMenuItems,
-};
+import { mainNavigationItems, applicationsSidePanel, integrationsSidePanel } from './workSpaceLayoutLinks';
 
-const sideBarNavigationItems: LayoutProps['sideBar'] = {
-    primaryLinks: <SideBarPrimaryLinks />,
-    secondaryLinks: <SideBarSecondaryLinks />,
-};
-
-type WorkSpaceLayoutProps = {
+export type WorkSpaceLayoutProps = {
+    sidePanelMode?: 'applications' | 'integrations';
+    breadcrumbs?: LayoutProps['breadcrumbs'];
     children: React.ReactNode;
 };
 
-export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Layout navigationBar={mainNavigationItems} sideBar={sideBarNavigationItems}>
+export type WorkSpaceWithoutSideBarLayoutProps = WorkSpaceLayoutProps & {
+    pageTitle: string;
+};
+
+export const WorkSpaceLayout = ({ sidePanelMode, breadcrumbs, children }: WorkSpaceLayoutProps) =>
+    <Layout
+        navigationBar={mainNavigationItems}
+        sidePanel={sidePanelMode === 'applications' ? applicationsSidePanel : integrationsSidePanel}
+        breadcrumbs={breadcrumbs}
+    >
         {children}
     </Layout>;
 
-export const WorkSpaceWithoutSideBarLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Layout navigationBar={mainNavigationItems}>
-        {children}
-    </Layout>;
+// TODO: Needs renaming and seperate component?
+export const WorkSpaceWithoutSideBarLayout = ({ pageTitle, children }: WorkSpaceWithoutSideBarLayoutProps) => {
+    usePageTitle(pageTitle);
+
+    return (
+        <Layout navigationBar={mainNavigationItems}>
+            {children}
+        </Layout>
+    );
+};

@@ -8,8 +8,9 @@ export { themeDark } from './theming/theme';
 // Atoms
 export { Accordion, AccordionProps } from './atoms/Accordion';
 export { AccordionList, AccordionListProps } from './atoms/AccordionList';
-export { AlertDialog, AlertDialogProps } from './atoms/AlertDialog';
+export { AlertDialog, AlertDialogProps, DialogForm } from './atoms/AlertDialog';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
+export { Breadcrumbs, BreadcrumbsProps } from './atoms/Breadcrumbs';
 export { Button, ButtonProps } from './atoms/Button';
 export * from './atoms/Forms';
 export { Icon, IconProps } from './atoms/Icon';
@@ -17,7 +18,6 @@ export { IconButton, IconButtonProps } from './atoms/IconButton';
 export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
 export { MaintenanceMessageBuilding } from './atoms/MaintenanceMessage';
-export { MenuList, MenuListProps } from './atoms/MenuList';
 export { StatusIndicator, StatusIndicatorProps } from './atoms/StatusIndicator';
 export { Summary } from './atoms/Metrics';
 export { Tabs } from './atoms/Tabs';
@@ -30,10 +30,11 @@ export { TextField, TextFieldProps } from './atoms/TextField';
 export { EditCell, EditTextFieldCell } from './molecules/DataGrid';
 export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecules/FileUploadForm';
 export { Graph } from './molecules/Metrics/Graph';
-export { DropdownMenu, DropdownMenuProps } from './molecules/DropdownMenu';
-export { NavigationBar, NavigationBarProps } from './molecules/NavigationBar';
+export { DropdownMenu, DropdownMenuProps, MenuItemProps } from './molecules/DropdownMenu';
+export { MenuList, MenuListProps } from './molecules/MenuList';
+export { NavigationBar, NavigationBarProps, getPrimaryNavigationItems, getSecondaryNavigationItems, getSelectionMenuItems } from './molecules/NavigationBar';
 export { SelectCard, SimpleCard, SimpleCardProps, SimpleCardGrid, SimpleCardGridProps } from './molecules/Card';
-export { SideBar, SideBarProps } from './molecules/SideBar';
+export { SidePanel, SidePanelProps, getSidePanelItems } from './molecules/SidePanel';
 export { Stepper } from './molecules/Stepper';
 
 // Templates

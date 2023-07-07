@@ -19,7 +19,7 @@ import { Button, LoadingSpinner } from '@dolittle/design-system';
 import { NoMicroservices } from './noMicroservices';
 import { MicroserviceTable } from './microservicesTable';
 
-type MicroserviceProps = {
+export type MicroserviceProps = {
     environment: string;
     application: HttpResponseApplication;
 };
@@ -49,17 +49,16 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
 
     const handleCreateMicroservice = () => {
         if (!canEdit) {
-            enqueueSnackbar('Currently disabled, please reach out via freshdesk or teams.', { variant: 'error' });
+            enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
             return;
         }
 
-        sessionStorage.setItem('microserviceCreate', 'true');
         const href = `/microservices/application/${application.id}/${environment}/create`;
         navigate(href);
     };
 
     const handleCreateEnvironment = () => {
-        // TODO How to stop this if automation disabled, currently on the environment level
+        // TODO: How to stop this if automation disabled, currently on the environment level.
         const href = `/environment/application/${application.id}/create`;
         navigate(href);
     };

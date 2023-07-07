@@ -3,24 +3,24 @@
 
 import React from 'react';
 
-import { Link as MuiLink } from '@mui/material';
+import { ExtendButtonBase, ButtonTypeMap, Link as MuiLink } from '@mui/material';
 
 /**
  * The props for a {@link Link} component.
  */
 export type LinkProps = {
     /**
-     * Required. The URL to link to.
+     * The URL to link to.
      */
-    href: string;
+    href?: string;
 
     /**
-     * Required. `link` text to display.
+     * The message to display.
      */
     message: string;
 
     /**
-     * Mark this as `true` if the link opens in a new window or browser tab.
+     * Mark this as `true` if the link should open in a new browser tab.
      *
      * Add also an `ariaLabel` to inform screen reader users.
      * @default false
@@ -29,15 +29,19 @@ export type LinkProps = {
 
     /**
      * If the link opens in a new window or browser tab, add an `ariaLabel` to inform screen reader users.
-     * @default undefined
      */
     ariaLabel?: string;
 
     /**
-     * The color of the `link`.
+     * The color of the link.
      * @default primary
      */
     color?: 'primary' | 'subtle' | 'secondary';
+
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    overrides?: Partial<ExtendButtonBase<ButtonTypeMap>>; // TODO: How to extend the type here?
 };
 
 /**
@@ -45,7 +49,7 @@ export type LinkProps = {
  * @param {LinkProps} props - The {@link LinkProps}.
  * @returns A {@link Link} component.
  */
-export const Link = ({ href, ariaLabel, target, color, message }: LinkProps) =>
+export const Link = ({ href, ariaLabel, target, color, message, overrides }: LinkProps) =>
     <MuiLink
         color={color === 'subtle' ? 'text.primary' : color}
         href={href}
@@ -54,6 +58,7 @@ export const Link = ({ href, ariaLabel, target, color, message }: LinkProps) =>
         rel={target ? 'noopener noreferrer' : undefined}
         fontSize='inherit'
         sx={{ '&:hover': { opacity: 0.9 } }}
+        {...overrides}
     >
         {message}
     </MuiLink>;

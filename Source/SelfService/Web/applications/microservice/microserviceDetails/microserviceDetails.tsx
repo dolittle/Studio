@@ -1,18 +1,17 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect } from 'react';
-
-import { useSnackbar } from 'notistack';
-
-import { MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
-import { HttpResponsePodStatus } from '../../../apis/solutions/api';
-import { MicroserviceSimple } from '../../../apis/solutions/index';
-import { HttpResponseApplication } from '../../../apis/solutions/application';
+import React from 'react';
 
 import { Box, Typography } from '@mui/material';
 
 import { StatusIndicator, Tabs } from '@dolittle/design-system';
+
+import { MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
+
+import { HttpResponsePodStatus } from '../../../apis/solutions/api';
+import { MicroserviceSimple } from '../../../apis/solutions/index';
+import { HttpResponseApplication } from '../../../apis/solutions/application';
 
 import { ConfigurationFilesSection } from './configurationFilesSection/configurationFilesSection';
 import { HealthStatus } from './healthStatus/healthStatus';
@@ -21,7 +20,7 @@ import { TerminalView } from './terminal/terminalView';
 
 import { getContainerStatus } from '../../../utils/helpers';
 
-type MicroserviceViewProps = {
+export type MicroserviceViewProps = {
     application: HttpResponseApplication;
     environment: string;
     microserviceId: string;
@@ -30,15 +29,6 @@ type MicroserviceViewProps = {
 };
 
 export const MicroserviceView = ({ application, microserviceId, environment, podsData, currentMicroservice }: MicroserviceViewProps) => {
-    const { enqueueSnackbar } = useSnackbar();
-
-    useEffect(() => {
-        if (sessionStorage.getItem('microserviceCreate') === 'true') {
-            enqueueSnackbar(`Microservice '${currentMicroservice.name}' has been deployed.`);
-            sessionStorage.setItem('microserviceCreate', 'false');
-        }
-    }, []);
-
     const podsStatuses = () => podsData.pods.flatMap(pod => pod.containers.map(container => container.state));
 
     const microserviceHealthStatus = getContainerStatus(podsStatuses());

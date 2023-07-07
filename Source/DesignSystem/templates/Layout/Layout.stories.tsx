@@ -5,8 +5,9 @@ import React from 'react';
 
 import { componentStories, Layout } from '@dolittle/design-system';
 
-import { Router, CurrentPath, SideBarPrimaryLinks, SideBarSecondaryLinks } from '../../helpers/ReactRouter';
-import { primaryNavigationItems, secondaryNavigationItems, selectionMenuItems } from '../../helpers/DummyContents/DummyNavigationItems';
+import { CurrentPath, Router } from '../../helpers/ReactRouter';
+
+import { dummyNavigationBar, dummySidePanel, DummyLayoutBreadcrumbs } from '../../helpers/DummyContents';
 
 const { metadata, createStory } = componentStories(Layout, {
     decorator: Story =>
@@ -17,18 +18,14 @@ const { metadata, createStory } = componentStories(Layout, {
 
 metadata.parameters = {
     controls: {
-        exclude: ['children'],
+        include: [],
     },
 };
 
 metadata.args = {
-    navigationBar: {
-        logo: 'AigonixLightCube',
-        primaryNavigationItems,
-        secondaryNavigationItems,
-        selectionMenuItems,
-    },
+    navigationBar: dummyNavigationBar,
     children: <CurrentPath />,
+    sx: { minHeight: 'auto' },
 };
 
 export default metadata;
@@ -36,8 +33,8 @@ export default metadata;
 export const Default = createStory();
 
 export const WithSideBar = createStory({
-    sideBar: {
-        primaryLinks: <SideBarPrimaryLinks />,
-        secondaryLinks: <SideBarSecondaryLinks />,
-    },
+    sidePanel: dummySidePanel,
 });
+
+export const WithSideBarAndBreadcrumbs = () =>
+    <DummyLayoutBreadcrumbs />;
