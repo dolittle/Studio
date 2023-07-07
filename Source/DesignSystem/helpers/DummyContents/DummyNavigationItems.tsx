@@ -144,6 +144,8 @@ export const SelectionMenu = () => {
 };
 
 export const SidePanelNavigation = () => {
+    const location = useLocation();
+
     const sidePanelItems: ListProps['listItems'] = [
         {
             label: 'Side panel link 1',
@@ -151,7 +153,8 @@ export const SidePanelNavigation = () => {
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: '/side-panel-link-1',
+                to: '/primary-1/side-panel-link-1',
+                selected: location.pathname === '/primary-1/side-panel-link-1',
             },
         },
         {
@@ -160,7 +163,8 @@ export const SidePanelNavigation = () => {
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: '/side-panel-link-2',
+                to: '/primary-1/side-panel-link-2',
+                selected: location.pathname === '/primary-1/side-panel-link-2',
             },
         },
         {
@@ -169,7 +173,8 @@ export const SidePanelNavigation = () => {
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: '/side-panel-link-3',
+                to: '/primary-1/side-panel-link-3',
+                selected: location.pathname === '/primary-1/side-panel-link-3',
             },
         },
         {
@@ -178,7 +183,8 @@ export const SidePanelNavigation = () => {
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: '/side-panel-link-4',
+                to: '/primary-1/side-panel-link-4',
+                selected: location.pathname === '/primary-1/side-panel-link-4',
             },
         },
         {
@@ -187,7 +193,8 @@ export const SidePanelNavigation = () => {
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: '/side-panel-link-5',
+                to: '/primary-1/side-panel-link-5',
+                selected: location.pathname === '/primary-1/side-panel-link-5',
             },
         },
     ];
