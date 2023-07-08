@@ -107,6 +107,7 @@ export const SpaceCreateDialog = ({ isOpen, onClose }: SpaceCreateDialogProps) =
                 id='name'
                 label='Space Name'
                 required='Space name required.'
+                autoFocus
                 pattern={{
                     value: alphaNumericLowerCasedCharsRegex,
                     message: 'Name can only contain lowercase alphanumeric characters.'
