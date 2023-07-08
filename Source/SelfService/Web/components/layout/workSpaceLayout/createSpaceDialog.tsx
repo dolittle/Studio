@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 
 import { useSnackbar } from 'notistack';
+import { useGlobalContext } from '../../../context/globalContext';
 
 import { Guid } from '@dolittle/rudiments';
 
@@ -45,6 +46,7 @@ export type CreateSpaceDialogProps = {
 
 export const CreateSpaceDialog = ({ isOpen, onClose }: CreateSpaceDialogProps) => {
     const { enqueueSnackbar } = useSnackbar();
+    const { setCurrentApplicationId } = useGlobalContext();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -72,6 +74,7 @@ export const CreateSpaceDialog = ({ isOpen, onClose }: CreateSpaceDialogProps) =
         // TODO: Should this change current environment?
         try {
             await createApplication(request);
+            setCurrentApplicationId(request.id);
             enqueueSnackbar(`'${form.name}' successfully created.`);
         } catch (error) {
             enqueueSnackbar('Failed to create new space. Please try again.', { variant: 'error' });

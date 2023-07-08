@@ -34,7 +34,7 @@ export const SpaceSelectMenu = () => {
                 setIsLoading(false);
             })
             .catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }));
-    }, []);
+    }, [currentApplicationId]);
 
     if (isLoading) return null;
 
