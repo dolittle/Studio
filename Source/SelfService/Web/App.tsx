@@ -2,37 +2,36 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
 
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
+import { GlobalContextProvider } from './context/globalContext';
 
 import { LicenseInfo } from '@mui/x-license-pro';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { Slide, SlideProps } from '@mui/material';
-import { ErrorRounded } from '@mui/icons-material';
 
 import '@dolittle/design-system/theming/fonts';
-import { themeDark } from '@dolittle/design-system';
+import { themeDark, Icon } from '@dolittle/design-system';
 
 import { useViewportResize } from './utils/useViewportResize';
 
-import { GlobalContextProvider } from './context/globalContext';
-
 import { RouteNotFound } from './components/notfound';
 import { DieAndRestart } from './components/dieAndRestart';
-
 import { LayoutWithSidebar } from './components/layout/layoutWithSidebar';
 
 import { BackupsScreen } from './applications/backupsScreen';
 import { DocumentationScreen } from './applications/documentationScreen';
 import { MicroservicesScreen } from './applications/microservicesScreen';
-import { Screen as AdminScreen } from './admin/adminScreen';
+import { ContainerRegistryScreen } from './applications/containerRegistryScreen';
+import { LogsScreen } from './applications/logsScreen';
+import { M3ConnectorScreen } from './applications/m3connectorScreen';
+
 import { ApplicationsScreen } from './spaces/applications/applicationsScreen';
 import { ApplicationScreen } from './spaces/applications/applicationScreen';
-import { ContainerRegistryScreen } from './applications/containerRegistryScreen';
-import { M3ConnectorScreen } from './applications/m3connectorScreen';
-import { LogsScreen } from './applications/logsScreen';
+
+import { Screen as AdminScreen } from './admin/adminScreen';
 import { HomeScreen } from './home/homeScreen';
 import { IntegrationsIndex } from './integrations';
 
@@ -53,7 +52,7 @@ export const App = () => {
                             autoHideDuration={4000}
                             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                             TransitionComponent={(props: SlideProps) => <Slide {...props} direction='up' />}
-                            iconVariant={{ error: <ErrorRounded fontSize='small' sx={{ mr: 1 }} /> }}
+                            iconVariant={{ error: <Icon icon='ErrorRounded' sx={{ mr: 1 }} /> }}
                         >
                             <Routes>
                                 <Route path='/' element={<Navigate to='/applications' />} />
