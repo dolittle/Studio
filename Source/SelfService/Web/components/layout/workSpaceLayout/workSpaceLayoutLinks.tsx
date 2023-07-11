@@ -140,7 +140,7 @@ const SidePanelIntegrationItems = () => {
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: `/m3connector/application/${currentApplicationId}/${currentEnvironment}/details`,
+                to: '/integrations/connections',
             },
         },
     ];
