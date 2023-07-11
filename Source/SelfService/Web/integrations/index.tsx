@@ -21,10 +21,10 @@ export const IntegrationsIndex = () => {
 
     return (
         <WorkSpaceLayout
-            breadcrumbs={{
-                currentPath: location.pathname,
-                breadcrumbsNameMap: integrationsBreadcrumbsNameMap,
-            }}
+        // breadcrumbs={{
+        //     currentPath: location.pathname,
+        //     breadcrumbsNameMap: integrationsBreadcrumbsNameMap,
+        // }}
         >
             <QueryClientProvider client={queryClient}>
                 <DebugRouter>
