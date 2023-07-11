@@ -46,12 +46,11 @@ export const Connections = () => {
             onSuccess: () => {
                 //TODO: Move the generating of this url to a "well-known" place.
                 const href = `${newConnectionId}`;
-                enqueueSnackbar('Connection created.');
+                enqueueSnackbar(`Connection '${newConnectionId}' created.`);
                 navigate(href);
             },
-            onError: (error) => {
+            onError: () => {
                 enqueueSnackbar('Could not create new connection at this time.', { variant: 'error' });
-                console.log('Error creating connection.', error);
             },
         });
     };
