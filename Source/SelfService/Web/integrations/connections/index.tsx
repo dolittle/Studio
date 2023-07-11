@@ -46,7 +46,7 @@ export const Connections = () => {
             onSuccess: () => {
                 //TODO: Move the generating of this url to a "well-known" place.
                 const href = `${newConnectionId}`;
-                enqueueSnackbar('Connection created.', { variant: 'success' });
+                enqueueSnackbar('Connection created.');
                 navigate(href);
             },
             onError: (error) => {
