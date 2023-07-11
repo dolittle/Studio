@@ -16,7 +16,17 @@ export type WorkSpaceLayoutProps = {
     children: React.ReactNode;
 };
 
-export const WorkSpaceLayout = ({ pageTitle, sidePanelMode, breadcrumbs, children }: WorkSpaceLayoutProps) => {
+export const WorkSpaceLayout = ({ pageTitle, children }: WorkSpaceLayoutProps) => {
+    usePageTitle(pageTitle);
+
+    return (
+        <Layout navigationBar={mainNavigationItems}>
+            {children}
+        </Layout>
+    );
+};
+
+export const WorkSpaceLayoutWithSidePanel = ({ pageTitle, sidePanelMode, breadcrumbs, children }: WorkSpaceLayoutProps) => {
     usePageTitle(pageTitle);
 
     return (
@@ -25,17 +35,6 @@ export const WorkSpaceLayout = ({ pageTitle, sidePanelMode, breadcrumbs, childre
             sidePanel={sidePanelMode === 'applications' ? applicationsSidePanel : integrationsSidePanel}
             breadcrumbs={breadcrumbs}
         >
-            {children}
-        </Layout>
-    );
-};
-
-// TODO: Needs renaming and seperate component?
-export const WorkSpaceWithoutSideBarLayout = ({ pageTitle, children }: WorkSpaceLayoutProps) => {
-    usePageTitle(pageTitle);
-
-    return (
-        <Layout navigationBar={mainNavigationItems}>
             {children}
         </Layout>
     );

@@ -5,11 +5,11 @@ import React from 'react';
 
 import { Typography } from '@mui/material';
 
-import { WorkSpaceWithoutSideBarLayout } from '../components/layout/workSpaceLayout/workSpaceLayout';
+import { WorkSpaceLayout } from '../components/layout/workSpaceLayout/workSpaceLayout';
 import { HomeScreenCardGridItems } from './homeScreenCardGridItems';
 
 export const HomeScreen = () =>
-    <WorkSpaceWithoutSideBarLayout pageTitle='Home'>
+    <WorkSpaceLayout pageTitle='Home'>
         <Typography variant='h1' sx={{ my: 3 }}>Welcome to Aigonix!</Typography>
 
         <Typography variant='subtitle1' sx={{ maxWidth: 1018, mb: 4 }}>
@@ -19,4 +19,4 @@ export const HomeScreen = () =>
         </Typography>
 
         <HomeScreenCardGridItems />
-    </WorkSpaceWithoutSideBarLayout>;
+    </WorkSpaceLayout>;
