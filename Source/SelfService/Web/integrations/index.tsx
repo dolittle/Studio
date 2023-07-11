@@ -21,6 +21,7 @@ export const IntegrationsIndex = () => {
 
     return (
         <WorkSpaceLayout
+            pageTitle='Integrations'
         // breadcrumbs={{
         //     currentPath: location.pathname,
         //     breadcrumbsNameMap: integrationsBreadcrumbsNameMap,
