@@ -10,30 +10,31 @@ import { usePageTitle } from '../../../utils/usePageTitle';
 import { mainNavigationItems, applicationsSidePanel, integrationsSidePanel } from './workSpaceLayoutLinks';
 
 export type WorkSpaceLayoutProps = {
+    pageTitle: string;
     sidePanelMode?: 'applications' | 'integrations';
     breadcrumbs?: LayoutProps['breadcrumbs'];
     children: React.ReactNode;
 };
 
-export type WorkSpaceWithoutSideBarLayoutProps = WorkSpaceLayoutProps & {
-    pageTitle: string;
-};
-
-export const WorkSpaceLayout = ({ sidePanelMode, breadcrumbs, children }: WorkSpaceLayoutProps) =>
-    <Layout
-        navigationBar={mainNavigationItems}
-        sidePanel={sidePanelMode === 'applications' ? applicationsSidePanel : integrationsSidePanel}
-        breadcrumbs={breadcrumbs}
-    >
-        {children}
-    </Layout>;
-
-// TODO: Needs renaming and seperate component?
-export const WorkSpaceWithoutSideBarLayout = ({ pageTitle, children }: WorkSpaceWithoutSideBarLayoutProps) => {
+export const WorkSpaceLayout = ({ pageTitle, children }: WorkSpaceLayoutProps) => {
     usePageTitle(pageTitle);
 
     return (
         <Layout navigationBar={mainNavigationItems}>
+            {children}
+        </Layout>
+    );
+};
+
+export const WorkSpaceLayoutWithSidePanel = ({ pageTitle, sidePanelMode, breadcrumbs, children }: WorkSpaceLayoutProps) => {
+    usePageTitle(pageTitle);
+
+    return (
+        <Layout
+            navigationBar={mainNavigationItems}
+            sidePanel={sidePanelMode === 'applications' ? applicationsSidePanel : integrationsSidePanel}
+            breadcrumbs={breadcrumbs}
+        >
             {children}
         </Layout>
     );

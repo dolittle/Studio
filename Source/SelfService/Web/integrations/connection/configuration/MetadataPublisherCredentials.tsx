@@ -16,6 +16,7 @@ export const MetadataPublisherCredentials = ({ canEdit }: MetadataPublisherCrede
     const { watch } = useFormContext();
     const [metadataPublisherUrl, metadataPublisherPassword] = watch(['metadataPublisherUrl', 'metadataPublisherPassword']);
 
+    // TODO: Run again when input loses focus.
     const required = !!metadataPublisherUrl || !!metadataPublisherPassword;
 
     return (
@@ -30,14 +31,14 @@ export const MetadataPublisherCredentials = ({ canEdit }: MetadataPublisherCrede
                     label='Your Metadata Publisher URL'
                     placeholder='Your metadata publisher URL goes here...'
                     sx={{ width: 1, maxWidth: 500 }}
-                    required={{ value: required, message: 'Please enter your metadata publisher URL' }}
+                    required={required}
                     disabled={!canEdit}
                 />
                 <PasswordInput
                     id='metadataPublisherPassword'
                     label='Password'
                     placeholder='Your password'
-                    required={{ value: required, message: 'Please enter the metadata publisher password' }}
+                    required={required}
                     disabled={!canEdit}
                 />
             </Stack>

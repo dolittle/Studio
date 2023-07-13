@@ -56,7 +56,13 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentT
             <MaxWidthTextBlock>{newConnectionDescription}</MaxWidthTextBlock>
 
             <Tooltip tooltipTitle='Connector Name' tooltipText={<ConnectorNameTooltipText />} sx={{ top: 16 }}>
-                <Input id='connectorName' label='Connector Name' placeholder='M3 Connector Test' required='Please enter the connector name' disabled={!canEdit} />
+                <Input
+                    id='connectorName'
+                    label='Connector Name'
+                    placeholder='M3 Connector Test'
+                    required='Please enter the connector name.'
+                    disabled={!canEdit}
+                />
             </Tooltip>
 
             <Tooltip tooltipTitle='Hosting' tooltipText={hostingTooltipText} displayOnHover={hasSelectedDeploymentType} sx={{ top: 38 }}>
@@ -65,7 +71,7 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentT
                     label='Hosting'
                     options={selectValues}
                     disabled={!canEdit || hasSelectedDeploymentType}
-                    required='Please select the hosting type'
+                    required='Please select the hosting type.'
                 />
             </Tooltip>
         </Stack>

@@ -11,7 +11,7 @@ import { buildQueryClient } from '../apis/integrations/queryClient';
 
 import { integrationsBreadcrumbsNameMap, routes } from './routes';
 
-import { WorkSpaceLayout } from '../components/layout/workSpaceLayout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout/workSpaceLayout';
 import { DebugRouter } from '../components/debugRouter';
 
 export const IntegrationsIndex = () => {
@@ -20,11 +20,12 @@ export const IntegrationsIndex = () => {
     const routesElement = useRoutes(routes);
 
     return (
-        <WorkSpaceLayout
-            breadcrumbs={{
-                currentPath: location.pathname,
-                breadcrumbsNameMap: integrationsBreadcrumbsNameMap,
-            }}
+        <WorkSpaceLayoutWithSidePanel
+            pageTitle='Integrations'
+        // breadcrumbs={{
+        //     currentPath: location.pathname,
+        //     breadcrumbsNameMap: integrationsBreadcrumbsNameMap,
+        // }}
         >
             <QueryClientProvider client={queryClient}>
                 <DebugRouter>
@@ -32,6 +33,6 @@ export const IntegrationsIndex = () => {
                 </DebugRouter>
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
-        </WorkSpaceLayout>
+        </WorkSpaceLayoutWithSidePanel>
     );
 };
