@@ -10,7 +10,8 @@
 		"ghcr.io/devcontainers/features/github-cli:1": {},
 		"ghcr.io/eitsupi/devcontainer-features/jq-likes:1": {},
 		"ghcr.io/rio/features/k3d:1": {},
-		"ghcr.io/devcontainers-contrib/features/kubectl-asdf:2": {}
+		"ghcr.io/devcontainers-contrib/features/kubectl-asdf:2": {},
+        "ghcr.io/devcontainers/features/go:1": {}
 	},
 	"customizations": {
 		"vscode": {

@@ -39,5 +39,5 @@ loki.use(notImplemented);
 
 // Start servers
 backend.listen(3007, () => console.log('SelfService Backend mock listening on http://localhost:3007'));
-prometheus.listen(8801, () => console.log('Prometheus mock listening on http://localhost:8801'));
-loki.listen(8802, () => console.log('Loki mock listening on http://localhost:8802'));
+//prometheus.listen(8801, () => console.log('Prometheus mock listening on http://localhost:8801'));
+//loki.listen(8802, () => console.log('Loki mock listening on http://localhost:8802'));
