@@ -1,3 +1,31 @@
+# [3.4.62] - 2023-7-13 [PR: #423](https://github.com/dolittle/Studio/pull/423)
+## Summary
+
+Few fixes and code refactoring for new layout.
+
+### Added
+
+- Auto focus on SpaceCreateDialog input field
+- Required 'pageTitle' prop to WorkSpaceLayout
+
+### Changed
+
+- Replaced HomeScreen 'Dolittle' text with 'Aigonix'
+- Renamed CreateSpaceDialog to SpaceCreateDialog
+- Added WorkSpaceLayoutWithSidePanel and changed naming on them
+
+### Fixed
+
+- Select new space after creating it
+- Comment out the 'Breadcrumbs' as they are not working correctly at the moment
+- SidePanel 'ErpConnections' link path so it would take to main Integrations page
+- Connections Form errors from required prop
+
+### Removed
+
+- Variant 'success' from Integrations Snackbar
+
+
 # [3.4.61] - 2023-7-7 [PR: #420](https://github.com/dolittle/Studio/pull/420)
 ## Summary
 
