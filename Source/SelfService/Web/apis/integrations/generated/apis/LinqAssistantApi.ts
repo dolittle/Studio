@@ -18,7 +18,7 @@ import type {
   DescribedLinqDto,
   NoSuchReadModelResult,
   ProblemDetails,
-} from '../models';
+} from '../models/index';
 import {
     DescribedLinqDtoFromJSON,
     DescribedLinqDtoToJSON,
@@ -26,7 +26,7 @@ import {
     NoSuchReadModelResultToJSON,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageLinqAssistantCreateDescriptionPostRequest {
     id: string;

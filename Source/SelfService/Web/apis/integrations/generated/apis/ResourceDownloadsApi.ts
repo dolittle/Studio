@@ -14,22 +14,16 @@
 
 
 import * as runtime from '../runtime';
-import type {
-  M3EnvironmentListDto,
-} from '../models/index';
-import {
-    M3EnvironmentListDtoFromJSON,
-    M3EnvironmentListDtoToJSON,
-} from '../models/index';
 
 /**
  * 
  */
-export class BaseMetadataApi extends runtime.BaseAPI {
+export class ResourceDownloadsApi extends runtime.BaseAPI {
 
     /**
+     * Download Certificate Authority pem-file for kafka
      */
-    async metadataEnvironmentsGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<M3EnvironmentListDto>>> {
+    async resourcesKafkaCaPemGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -39,20 +33,20 @@ export class BaseMetadataApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/metadata/environments`,
+            path: `/resources/kafka/ca.pem`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(M3EnvironmentListDtoFromJSON));
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
+     * Download Certificate Authority pem-file for kafka
      */
-    async metadataEnvironmentsGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<M3EnvironmentListDto>> {
-        const response = await this.metadataEnvironmentsGetRaw(initOverrides);
-        return await response.value();
+    async resourcesKafkaCaPemGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.resourcesKafkaCaPemGetRaw(initOverrides);
     }
 
 }

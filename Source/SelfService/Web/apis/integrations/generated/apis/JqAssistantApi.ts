@@ -18,7 +18,7 @@ import type {
   DescribedJqDto,
   NoSuchReadModelResult,
   ProblemDetails,
-} from '../models';
+} from '../models/index';
 import {
     DescribedJqDtoFromJSON,
     DescribedJqDtoToJSON,
@@ -26,7 +26,7 @@ import {
     NoSuchReadModelResultToJSON,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageAssistantCreateDescriptionPostRequest {
     id: string;

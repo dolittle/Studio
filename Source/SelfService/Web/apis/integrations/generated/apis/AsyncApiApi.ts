@@ -14,6 +14,13 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  ProblemDetails,
+} from '../models/index';
+import {
+    ProblemDetailsFromJSON,
+    ProblemDetailsToJSON,
+} from '../models/index';
 
 export interface ConnectionsIdAsyncapiSpecJsonGetRequest {
     id: string;

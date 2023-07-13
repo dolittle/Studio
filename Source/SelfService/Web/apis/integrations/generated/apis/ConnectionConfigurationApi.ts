@@ -22,7 +22,7 @@ import type {
   MdpConfigurationResult,
   MetadataPublisherConfigRequest,
   ProblemDetails,
-} from '../models';
+} from '../models/index';
 import {
     ConnectionConfigurationResultFromJSON,
     ConnectionConfigurationResultToJSON,
@@ -38,7 +38,7 @@ import {
     MetadataPublisherConfigRequestToJSON,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface ConnectionsIdConfigurationGetRequest {
     id: string;
