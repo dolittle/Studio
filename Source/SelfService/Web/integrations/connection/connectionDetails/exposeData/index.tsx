@@ -31,7 +31,7 @@ const openApiDocumentationUrl = 'https://inspiring-ritchie.dolittle.cloud/erprea
    users. The prod bridge-api won't be available anyway, so we need to proxy this
    to allow access.
  */
-const asyncApiSpecificationUrlTemplate = 'https://{bridgeApiHost}/connections/{id}/asyncapi/spec.json'
+const asyncApiSpecificationUrlTemplate = 'https://{bridgeApiHost}/connections/{id}/asyncapi/spec.json';
 
 export const ExposeDataView = () => {
     const bridgeApiHost = 'inspiring-ritchie.dolittle.cloud';
