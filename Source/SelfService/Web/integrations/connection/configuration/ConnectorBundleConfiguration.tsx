@@ -19,6 +19,18 @@ This includes the following IPs:`,
     '165.22.83.2:14691 (outgoing)',
     '134.122.94.197:14691 (outgoing)',
 ];
+const instructions = [
+    `Please make sure your organization's firewall rules allow the M3 connector to connect to Kafka in order to communicate with our API. The Kafka cluster is reachable as:`,
+    <><b>kafka-test-env-dolittle-test-env.aivencloud.com</b>, and is using <b>port 14691</b>.</>,
+    <>
+        All IPs for that address need to be available for outgoing traffic on port 14691. <br />
+        This includes the following IPs:
+    </>,
+    'For example, the following IP addresses are reachable:',
+    '134.122.86.202:14691 (outgoing)',
+    '165.22.83.2:14691 (outgoing)',
+    '134.122.94.197:14691 (outgoing)',
+];
 
 export type ConnectorBundleConfigurationProps = {
     connectionId: string;
@@ -50,27 +62,7 @@ export const ConnectorBundleConfiguration = ({ connectionId }: ConnectorBundleCo
                 responsible for firewall access, please share the information below with the responsible party:`}
         </MaxWidthTextBlock>
 
-        <TextCopyBox instructions={copyInstructions} withMaxWidth>
-            <Typography component='span'>
-                Please make sure your organization’s firewall rules allow the M3 connector to connect to Kafka in order
-                to communicate with our API. The Kafka cluster is reachable as:
-            </Typography>
-
-            <Typography component='span'>
-                <b>kafka-test-env-dolittle-test-env.aivencloud.com</b>, and is using <b>port 14691</b>.
-            </Typography>
-
-            <Typography component='span'>
-                All IPs for that address need to be available for outgoing traffic on port 14691. <br />
-                This includes the following IPs:
-            </Typography>
-
-            <Typography component='span'>For example, the following IP addresses are reachable:</Typography>
-
-            <Typography component='span'>134.122.86.202:14691 (outgoing)</Typography>
-            <Typography component='span'>165.22.83.2:14691 (outgoing)</Typography>
-            <Typography component='span'>134.122.94.197:14691 (outgoing)</Typography>
-        </TextCopyBox>
+        <TextCopyBox instructions={instructions} instructionsToCopy={copyInstructions}  withMaxWidth />
 
     </>;
 };
