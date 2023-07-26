@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useGlobalContext } from '../../context/globalContext';
 
-import { Box, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
-import { Button } from '@dolittle/design-system';
+import { Button, Link } from '@dolittle/design-system';
 
 import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
 import { HttpResponseApplications, getApplications } from '../../apis/solutions/application';
@@ -72,12 +72,21 @@ export const ApplicationsScreen = () => {
 
             <ApplicationsList data={applicationInfos} onChoose={onEnvironmentChoose} />
 
-            <Box sx={{ mt: 12.5, display: 'flex', justifyContent: 'space-around' }}>
+            <Stack sx={{ mt: 12, gap: 4 }}>
                 {!hasOneCustomer &&
-                    <Button label='Back to Customers' color='subtle' startWithIcon='ArrowBack' href='/.auth/cookies/initiate' />
+                    <Box>
+                        <Button label='Back to Customers' color='subtle' startWithIcon='ArrowBack' href='/.auth/cookies/initiate' />
+                    </Box>
                 }
-                <Button label='Log out' color='subtle' href='/.auth/cookies/logout' />
-            </Box>
+
+                <Typography>
+                    Don’t have access to a applications? <Link message='Contact us' href='mailto: support@dolittle.com' /> to get started.
+                </Typography>
+
+                <Box>
+                    <Button label='Log out' color='subtle' href='/.auth/cookies/logout' />
+                </Box>
+            </Stack>
         </LoginWrapper>
     );
 };
