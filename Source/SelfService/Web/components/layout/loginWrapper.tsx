@@ -39,7 +39,7 @@ export const LoginWrapper = ({ children }: LoginWrapperProps) =>
             {children}
 
             <Box sx={{ mt: 18 }}>
-                <Icon icon='AigonixLightLogo' />
+                <Icon icon='AigonixLightLogo' sx={{ width: 166, height: 28 }} />
             </Box>
         </Box>
     </Box>;
