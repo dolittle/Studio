@@ -31,14 +31,14 @@ export const MetadataPublisherCredentials = ({ canEdit }: MetadataPublisherCrede
                     label='Your Metadata Publisher URL'
                     placeholder='Your metadata publisher URL goes here...'
                     sx={{ width: 1, maxWidth: 500 }}
-                    required={required}
+                    required={{ value: required, message: 'Please enter your metadata publisher URL.' }}
                     disabled={!canEdit}
                 />
                 <PasswordInput
                     id='metadataPublisherPassword'
                     label='Password'
                     placeholder='Your password'
-                    required={required}
+                    required={{ value: required, message: 'Please enter the metadata publisher password.' }}
                     disabled={!canEdit}
                 />
             </Stack>
