@@ -120,7 +120,7 @@ export const getMenuWithApplication = (
         },
         {
             href: `/documentation/application/${applicationId}/${environment}/overview`,
-            name: 'Documentation',
+            name: 'Setup',
             icon: <Icon icon='FindInPageRounded' size='medium' />,
         },
     ];
