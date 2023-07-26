@@ -5,8 +5,9 @@ import React from 'react';
 
 import { Box } from '@mui/material';
 
+import { Icon } from '@dolittle/design-system';
+
 import Symbol from '../../assets/logos/symbol.svg?url';
-import Logo from '../../assets/logos/logo.svg';
 
 const styles = {
     backgroundSymbol: {
@@ -28,11 +29,6 @@ const styles = {
         'p': '1.25rem',
         'pt': '12.5rem'
     },
-    logo: {
-        width: 166,
-        height: 39,
-        mt: 18.5
-    }
 };
 
 export type LoginWrapperProps = {
@@ -43,6 +39,9 @@ export const LoginWrapper = ({ children }: LoginWrapperProps) =>
     <Box sx={styles.backgroundSymbol}>
         <Box sx={styles.mainContent}>
             {children}
-            <Logo sx={styles.logo} />
+
+            <Box sx={{ mt: 18 }}>
+                <Icon icon='AigonixLightLogo' />
+            </Box>
         </Box>
     </Box>;

@@ -53,7 +53,7 @@ import {
     WarningRounded,
 } from '@mui/icons-material';
 
-import { AigonixLightCube, Bridge, Dolittle, ContainerRegistry } from './CustomIcons';
+import { AigonixLightCube, AigonixLightLogo, Bridge, Dolittle, ContainerRegistry } from './CustomIcons';
 
 export type SvgIconsDefinition = keyof typeof SvgIcons;
 
@@ -61,6 +61,7 @@ export const SvgIcons = {
     AddBoxRounded: <AddBoxRounded />,
     AddCircle: <AddCircle />,
     AigonixLightCube: <AigonixLightCube />,
+    AigonixLightLogo: <AigonixLightLogo />,
     AppsRounded: <AppsRounded />,
     ArrowBack: <ArrowBack />,
     ArrowDropDownRounded: <ArrowDropDownRounded />,
