@@ -13,7 +13,7 @@ import CopyPlugin from 'copy-webpack-plugin';
 type Args = { [key: string]: string };
 
 const basePath = '/selfservice/';
-const title = 'Dolittle Studio';
+const title = 'Aigonix Studio';
 const defaultPort = 9007;
 
 function webpack(env: Args, argv: Args) {
