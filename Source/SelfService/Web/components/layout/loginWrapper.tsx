@@ -11,12 +11,10 @@ import Symbol from '../../assets/logos/symbol.svg?url';
 
 const styles = {
     backgroundSymbol: {
-        textAlign: 'right',
         minHeight: '100vh',
         backgroundImage: `url(${Symbol})`,
         backgroundRepeat: 'no-repeat',
-        backgroundSize: 'auto 142vh',
-        backgroundPosition: '-60vh -25vh'
+        backgroundSize: 'auto 100vh',
     },
     mainContent: {
         'textAlign': 'center',
@@ -24,10 +22,10 @@ const styles = {
         'maxWidth': '33.8125rem',
         'ml': 'auto',
         '@media (min-width: 33.8125rem)': {
-            mr: 'calc((100vw - 33.8125rem)*0.233)'
+            mr: 'calc((100vw - 33.8125rem)*0.233)',
         },
         'p': '1.25rem',
-        'pt': '12.5rem'
+        'pt': '12.5rem',
     },
 };
 
