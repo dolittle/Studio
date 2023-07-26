@@ -1,3 +1,11 @@
+# [3.4.64] - 2023-7-26 [PR: #427](https://github.com/dolittle/Studio/pull/427)
+- Introduce a MaxWidthBlock to be used as a Div
+- Fix correct rendering of contents within CopyTextBox to respect semantic HTML rules (no nested p's), and ensure it respects the max readable width
+- Set to edit mode by default if the status is pending
+- Support ValidationRule<boolean> in the isRequired check, and also apply to Select fields
+- Show error snackbars as error variant
+
+
 # [3.4.63] - 2023-7-26 [PR: #426](https://github.com/dolittle/Studio/pull/426)
 ## Summary
 
