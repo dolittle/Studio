@@ -43,4 +43,5 @@ export const ApplicationsList = ({ data, onChoose }: ApplicationsListProps) =>
                 />
             ))
         }
+        <Button label='Create new Application' variant='outlined' isFullWidth />
     </List>;
