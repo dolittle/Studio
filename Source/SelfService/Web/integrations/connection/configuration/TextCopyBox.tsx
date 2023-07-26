@@ -49,22 +49,31 @@ export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMa
     }, [instructions]);
 
     return (
-        <Paper elevation={0} sx={{ 'mt': 3, 'p': 2, '& p': { mb: 3 }, ...sx }}>
-            {withMaxWidth
-                ? <MaxWidthTextBlock>
-                    <InstructionContent instructions={instructions}>{children}</InstructionContent>
-                </MaxWidthTextBlock>
-                : <InstructionContent instructions={instructions}>{children}</InstructionContent>
-            }
-
-            <Button
-                label='Copy content'
-                startWithIcon='CopyAllRounded'
-                onClick={handleTextCopy}
-            />
-        </Paper>
+        <>{withMaxWidth
+            ? <MaxWidthTextBlock>
+                <TextCopyContent instructions={instructions} sx={sx} handleTextCopy={handleTextCopy}>{children}</TextCopyContent>
+            </MaxWidthTextBlock>
+            : <TextCopyContent instructions={instructions} sx={sx} handleTextCopy={handleTextCopy}>{children}</TextCopyContent>
+        }
+        </>
     );
 };
+
+type TextCopyContentProps = TextCopyBoxProps & {
+    handleTextCopy: () => void;
+};
+
+const TextCopyContent = ({ instructions, children, sx, handleTextCopy }: TextCopyContentProps) => <>
+    <Paper elevation={0} sx={{ 'mt': 3, 'p': 2, '& p': { mb: 3 }, ...sx }}>
+        <InstructionContent instructions={instructions}>{children}</InstructionContent>
+        <Button
+            label='Copy content'
+            startWithIcon='CopyAllRounded'
+            onClick={handleTextCopy}
+        />
+    </Paper>
+
+</>;
 
 type RenderContentsProps = Pick<TextCopyBoxProps, 'instructions' | 'children'>;
 
