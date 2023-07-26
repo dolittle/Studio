@@ -10,6 +10,7 @@ import { EditCell, EditTextFieldCell } from '@dolittle/design-system';
 
 import { MappableTableColumn } from '../../../../../../apis/integrations/generated';
 import { toPascalCase } from '../../../../../../utils/helpers/strings';
+
 import { generateMappedFieldNameFrom } from './generateMappedFieldNameFrom';
 
 export type DataGridTableListingEntry = MappableTableColumn & {

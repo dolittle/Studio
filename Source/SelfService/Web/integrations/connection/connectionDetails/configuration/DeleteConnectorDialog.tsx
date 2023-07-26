@@ -58,7 +58,6 @@ export type DeleteConnectorDialogProps = {
 };
 
 export const DeleteConnectorDialog = ({ dialogState, dispatch, handleDelete }: DeleteConnectorDialogProps) => {
-
     const handleCancel = () => {
         dispatch({ type: 'close' });
     };

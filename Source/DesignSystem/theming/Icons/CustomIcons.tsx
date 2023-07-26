@@ -6,8 +6,8 @@ import React from 'react';
 import { SvgIcon, SvgIconProps } from '@mui/material';
 
 export const AigonixLightCube = (props: SvgIconProps) =>
-    <SvgIcon {...props} viewBox="0 0 392.84 453.6" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="m392.84,113.4h0,0S196.44,0,196.44,0l-.02.03-.02-.03L0,113.4h0s0,0,0,0v226.79h0l196.41,113.4v-.03s.03.02.03.02l196.41-113.4h0s0,0,0,0V113.4Zm-195.9,99.67l-131.75-76.06L196.42,61.24l131.75,76.06-131.23,75.76Zm-143.9-46.13l128.4,74.13v142.63l-128.4-74.13v-142.63Zm160.4,73.55l126.36-72.96v142.03l-126.36,72.96v-142.03Z" />
+    <SvgIcon {...props} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="m22.39,6h0,0s-1.4-.81-1.4-.81h0s0,0,0,0L12,0h0s0,0,0,0L1.61,6h0s0,0,0,0v12h0l10.39,6h0s0,0,0,0l10.39-6h0s0,0,0,0V6Zm-17.98,3.25l6.2,3.58v7.13l-6.2-3.58v-7.13Zm9.01,3.55l6.16-3.56v7.14l-6.16,3.56v-7.14Zm-1.43-2.41l-6.18-3.57,6.19-3.57,6.18,3.57-6.19,3.57Z" fill="#fafafa" />
     </SvgIcon>;
 
 export const Dolittle = (props: SvgIconProps) =>

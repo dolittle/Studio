@@ -4,17 +4,13 @@
 import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
-import { enqueueSnackbar } from 'notistack';
 
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import { Paper } from '@mui/material';
 
-import { IconButton, StatusIndicator } from '@dolittle/design-system';
+import { StatusIndicator } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../apis/integrations/generated';
-import { CACHE_KEYS } from '../../apis/integrations/CacheKeys';
-import { useConnectionsIdDelete } from '../../apis/integrations/connectionsApi.hooks';
 
 import { getConnectionStatus } from '../../utils/helpers/connectionStatuses';
 
@@ -37,8 +33,6 @@ export type ConnectionsTableProps = {
 
 export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTableProps) => {
     const navigate = useNavigate();
-    const deleteMutation = useConnectionsIdDelete();
-    const queryClient = useQueryClient();
 
     const connectionsColumns: GridColDef<ConnectionModel>[] = [
         {

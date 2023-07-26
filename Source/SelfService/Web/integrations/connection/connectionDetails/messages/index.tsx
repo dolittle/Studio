@@ -5,8 +5,4 @@ import React from 'react';
 
 import { Outlet } from 'react-router-dom';
 
-export const MessagesViewRoot = () => {
-    return (
-        <Outlet />
-    );
-};
+export const MessagesViewRoot = () => <Outlet />;

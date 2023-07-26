@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useMemo } from 'react';
+
 import { AccordionListProps, FileUploadFormRef } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../../apis/integrations/generated';
@@ -47,4 +48,4 @@ export function useBuildConfigurationAccordionList(connection: ConnectionModel |
             ],
         };
     }, [connection?.status, connection?.ionStatus, connection?.mdpStatus, canEdit]);
-}
+};

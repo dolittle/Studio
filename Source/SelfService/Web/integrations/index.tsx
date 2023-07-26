@@ -3,32 +3,36 @@
 
 import React from 'react';
 
-import { useRoutes, useParams } from 'react-router-dom';
+import { useLocation, useRoutes } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { Typography, Toolbar } from '@mui/material';
-
 import { buildQueryClient } from '../apis/integrations/queryClient';
 
-import { routes } from './routes';
+import { integrationsBreadcrumbsNameMap, routes } from './routes';
 
-import { WorkSpaceLayout } from '../components/layout/workSpaceLayout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout/workSpaceLayout';
 import { DebugRouter } from '../components/debugRouter';
 
 export const IntegrationsIndex = () => {
+    const location = useLocation();
     const queryClient = buildQueryClient();
     const routesElement = useRoutes(routes);
-    const { applicationId } = useParams();
 
     return (
-        <WorkSpaceLayout>
+        <WorkSpaceLayoutWithSidePanel
+            pageTitle='Integrations'
+        // breadcrumbs={{
+        //     currentPath: location.pathname,
+        //     breadcrumbsNameMap: integrationsBreadcrumbsNameMap,
+        // }}
+        >
             <QueryClientProvider client={queryClient}>
                 <DebugRouter>
                     {routesElement}
                 </DebugRouter>
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
-        </WorkSpaceLayout>
+        </WorkSpaceLayoutWithSidePanel>
     );
 };

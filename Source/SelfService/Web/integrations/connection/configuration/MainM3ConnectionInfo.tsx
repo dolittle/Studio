@@ -21,7 +21,6 @@ const ConnectorNameTooltipText = () =>
 const hostingTooltipText = `Currently, you can only setup the connection with on premise hosting. Soon, we will support setup in the
                     cloud where Dolittle takes care of hosting, establishing backups and making sure the connector is running.`;
 
-
 export type MainM3ConnectionInfoProps = {
     hasSelectedDeploymentType: boolean;
     connectionIdLinks?: Link[] | null;
@@ -29,7 +28,6 @@ export type MainM3ConnectionInfoProps = {
 };
 
 export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentType, canEdit }: MainM3ConnectionInfoProps) => {
-
     const selectValues = useMemo(() => {
         const shouldUseOnPrem = connectionIdLinks?.some(link => link.rel === 'deploy-on-premises') || false;
         const shouldUseCloud = connectionIdLinks?.some(link => link.rel === 'deploy-to-cloud') || false;
@@ -53,13 +51,18 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentT
         return selectValues;
     }, [connectionIdLinks, hasSelectedDeploymentType]);
 
-
     return (
         <Stack spacing={3.5} sx={{ mt: 3, ml: 3 }}>
             <MaxWidthTextBlock>{newConnectionDescription}</MaxWidthTextBlock>
 
             <Tooltip tooltipTitle='Connector Name' tooltipText={<ConnectorNameTooltipText />} sx={{ top: 16 }}>
-                <Input id='connectorName' label='Connector Name' placeholder='M3 Connector Test' required='Please enter the connector name' disabled={!canEdit}/>
+                <Input
+                    id='connectorName'
+                    label='Connector Name'
+                    placeholder='M3 Connector Test'
+                    required='Please enter the connector name.'
+                    disabled={!canEdit}
+                />
             </Tooltip>
 
             <Tooltip tooltipTitle='Hosting' tooltipText={hostingTooltipText} displayOnHover={hasSelectedDeploymentType} sx={{ top: 38 }}>
@@ -68,7 +71,7 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentT
                     label='Hosting'
                     options={selectValues}
                     disabled={!canEdit || hasSelectedDeploymentType}
-                    required='Please select the hosting type'
+                    required='Please select the hosting type.'
                 />
             </Tooltip>
         </Stack>

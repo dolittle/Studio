@@ -1,7 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import React from 'react';
+
 import { Box, Typography } from '@mui/material';
+
 import { Button, ContentDivider } from '@dolittle/design-system';
 
 import { ServiceAccountListDto } from '../../../../../apis/integrations/generated';
@@ -13,8 +16,6 @@ export type CredentialsListProps = {
 };
 
 export const CredentialsList = (props: CredentialsListProps) => {
-
-
     return (
         <>
             {props.credentials.map((credential, index) => (
@@ -30,7 +31,9 @@ export const CredentialsList = (props: CredentialsListProps) => {
                                 </>
                             )}
                         </Box>
+
                         <Typography variant='body2' color='text.secondary'>These credentials were created on <span title={credential.createdAt!.toISOString()}>{formatDateFriendly(credential.createdAt!)}</span></Typography>
+
                         <Button
                             label='Delete credentials'
                             variant='outlined'
@@ -41,6 +44,4 @@ export const CredentialsList = (props: CredentialsListProps) => {
             ))}
         </>
     );
-
 };
-

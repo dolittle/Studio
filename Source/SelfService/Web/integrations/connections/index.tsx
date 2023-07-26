@@ -2,9 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
+
 import { useConnectionsGet, useConnectionsIdPost } from '../../apis/integrations/connectionsApi.hooks';
+
 import { Page } from '../../components/layout/page';
 import { NoConnections } from './noConnections';
 import { ConnectionsTable } from './connectionsTable';
@@ -43,12 +46,11 @@ export const Connections = () => {
             onSuccess: () => {
                 //TODO: Move the generating of this url to a "well-known" place.
                 const href = `${newConnectionId}`;
-                enqueueSnackbar('Connection created.', { variant: 'success' });
+                enqueueSnackbar(`Connection '${newConnectionId}' created.`);
                 navigate(href);
             },
-            onError: (error) => {
+            onError: () => {
                 enqueueSnackbar('Could not create new connection at this time.', { variant: 'error' });
-                console.log('Error creating connection.', error);
             },
         });
     };

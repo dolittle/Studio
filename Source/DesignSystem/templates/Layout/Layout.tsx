@@ -3,11 +3,11 @@
 
 import React from 'react';
 
-import { Box, Grid, Toolbar } from '@mui/material';
+import { Box, Grid, SxProps, Toolbar } from '@mui/material';
 
-import { NavigationBar, NavigationBarProps, SideBar, SideBarProps } from '@dolittle/design-system';
+import { NavigationBar, NavigationBarProps, SidePanel, SidePanelProps, Breadcrumbs, BreadcrumbsProps } from '@dolittle/design-system';
 
-const styles = {
+const styles: SxProps = {
     'minHeight': 'calc(100vh - 96px)',
     'display': 'flex',
     'flexDirection': 'column',
@@ -27,14 +27,24 @@ export type LayoutProps = {
     navigationBar: NavigationBarProps;
 
     /**
-     * The side bar that will be displayed on the left of the layout.
+     * The side panel that will be displayed on the left of the layout.
      */
-    sideBar?: SideBarProps;
+    sidePanel?: SidePanelProps;
+
+    /**
+     * The breadcrumbs items that will be displayed at the top of the layout.
+     */
+    breadcrumbs?: BreadcrumbsProps;
 
     /**
      * The main content of the layout.
      */
     children: React.ReactNode;
+
+    /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
+    sx?: SxProps;
 };
 
 /**
@@ -42,14 +52,18 @@ export type LayoutProps = {
  * @param {LayoutProps} props - The {@link LayoutProps}.
  * @returns A {@link Layout} component.
  */
-export const Layout = ({ children, navigationBar, sideBar }: LayoutProps) =>
+export const Layout = ({ navigationBar, sidePanel, breadcrumbs, children, sx }: LayoutProps) =>
     <Grid container sx={{ flexFlow: 'nowrap' }}>
         <NavigationBar {...navigationBar} />
 
-        {sideBar && <SideBar {...sideBar} />}
+        {sidePanel && <SidePanel {...sidePanel} />}
 
-        <Box component='main' sx={styles}>
-            {sideBar && <Toolbar />}
+        <Box component='main' sx={{ ...styles, ...sx }}>
+            {sidePanel &&
+                <Toolbar>
+                    {breadcrumbs && <Breadcrumbs {...breadcrumbs} />}
+                </Toolbar>
+            }
             {children}
         </Box>
     </Grid>;

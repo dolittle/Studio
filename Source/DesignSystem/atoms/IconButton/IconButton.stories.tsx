@@ -34,7 +34,6 @@ metadata.args = {
     icon: 'CloseRounded',
     color: 'inherit',
     size: 'small',
-    edge: false,
     disabled: false,
 };
 

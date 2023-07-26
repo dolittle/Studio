@@ -7,7 +7,7 @@ import Draggable from 'react-draggable';
 
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, PaperProps } from '@mui/material';
 
-import { Button, IconButton } from '@dolittle/design-system';
+import { Button, Form, IconButton, LoadingSpinner } from '@dolittle/design-system';
 
 const styles = {
     title: {
@@ -41,6 +41,11 @@ export type AlertDialogProps = {
     id: string;
 
     /**
+     * The initial values for the form.
+     */
+    formInitialValues?: any;
+
+    /**
      * The title should capture the essence of the description. It should be short and to the point.
      *
      * Do not repeat description information in the title of the dialog.
@@ -50,7 +55,7 @@ export type AlertDialogProps = {
     /**
      * The description should provide more information about the action that is going to be made.
      */
-    description: string;
+    description?: string;
 
     /**
      * The children can be used to provide a list of items that will be affected by the action.
@@ -89,6 +94,11 @@ export type AlertDialogProps = {
     isOpen?: boolean;
 
     /**
+     * Whether or not the dialog is loading.
+     */
+    isLoading?: boolean;
+
+    /**
      * The callback that is called when the dialog is dismissed.
      */
     onCancel: () => void;
@@ -96,7 +106,7 @@ export type AlertDialogProps = {
     /**
      * The callback that is called when the dialog is confirmed.
      */
-    onConfirm: () => void;
+    onConfirm: ((values: any) => Promise<void>) | (() => void);
 
     /**
      * The callback that is called when the dialog is closed.
@@ -136,4 +146,38 @@ export const AlertDialog = ({ id, title, description, children, confirmBtnColor,
             <Button onClick={onCancel} label={cancelBtnText ?? 'Cancel'} color='subtle' />
             <Button onClick={onConfirm} label={confirmBtnText} color={confirmBtnColor ?? 'primary'} />
         </DialogActions>
+    </Dialog>;
+
+// TODO: Hack for now, remove when we have a better solution. Also add to stories.
+export const DialogForm = ({ id, formInitialValues, title, description, children, confirmBtnText, isOpen, isLoading, onCancel, onConfirm, onClose }: AlertDialogProps) =>
+    <Dialog
+        open={isOpen ?? false}
+        onClose={onClose ?? onCancel}
+        aria-labelledby={`${id}-dialog-title`}
+        aria-describedby={`${id}-dialog-description`}
+        PaperComponent={(props: PaperProps) =>
+            <Draggable handle={`#${id}-dialog-title`} cancel={'[class*="MuiDialogContent-root"]'}>
+                <Paper {...props} />
+            </Draggable>
+        }
+    >
+        <Form initialValues={formInitialValues} onSubmit={onConfirm}>
+            <DialogTitle id={`${id}-dialog-title`} sx={styles.title}>
+                {title}
+                <IconButton tooltipText='Close dialog' edge='end' onClick={onClose ?? onCancel} />
+            </DialogTitle>
+
+            <DialogContent sx={{ typography: 'body2' }}>
+                <DialogContentText id={`${id}-dialog-description`} sx={styles.description}>{description}</DialogContentText>
+                {children}
+            </DialogContent>
+
+            {isLoading ?
+                <LoadingSpinner size={20} /> :
+                <DialogActions sx={{ mr: 1 }}>
+                    <Button label='Cancel' color='subtle' onClick={onCancel} />
+                    <Button label={confirmBtnText} type='submit' />
+                </DialogActions>
+            }
+        </Form>
     </Dialog>;

@@ -5,30 +5,37 @@ import React from 'react';
 
 import { Layout, LayoutProps } from '@dolittle/design-system';
 
-import { primaryNavigationItems, secondaryNavigationItems, selectionMenuItems, SideBarPrimaryLinks, SideBarSecondaryLinks } from './workSpaceLayoutLinks';
+import { usePageTitle } from '../../../utils/usePageTitle';
 
-const mainNavigationItems: LayoutProps['navigationBar'] = {
-    logo: 'AigonixLightCube',
-    primaryNavigationItems,
-    secondaryNavigationItems,
-    //selectionMenuItems,
-};
+import { mainNavigationItems, applicationsSidePanel, integrationsSidePanel } from './workSpaceLayoutLinks';
 
-const sideBarNavigationItems: LayoutProps['sideBar'] = {
-    primaryLinks: <SideBarPrimaryLinks />,
-    secondaryLinks: <SideBarSecondaryLinks />,
-};
-
-type WorkSpaceLayoutProps = {
+export type WorkSpaceLayoutProps = {
+    pageTitle: string;
+    sidePanelMode?: 'applications' | 'integrations';
+    breadcrumbs?: LayoutProps['breadcrumbs'];
     children: React.ReactNode;
 };
 
-export const WorkSpaceLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Layout navigationBar={mainNavigationItems} sideBar={sideBarNavigationItems}>
-        {children}
-    </Layout>;
+export const WorkSpaceLayout = ({ pageTitle, children }: WorkSpaceLayoutProps) => {
+    usePageTitle(pageTitle);
 
-export const WorkSpaceWithoutSideBarLayout = ({ children }: WorkSpaceLayoutProps) =>
-    <Layout navigationBar={mainNavigationItems}>
-        {children}
-    </Layout>;
+    return (
+        <Layout navigationBar={mainNavigationItems}>
+            {children}
+        </Layout>
+    );
+};
+
+export const WorkSpaceLayoutWithSidePanel = ({ pageTitle, sidePanelMode, breadcrumbs, children }: WorkSpaceLayoutProps) => {
+    usePageTitle(pageTitle);
+
+    return (
+        <Layout
+            navigationBar={mainNavigationItems}
+            sidePanel={sidePanelMode === 'applications' ? applicationsSidePanel : integrationsSidePanel}
+            breadcrumbs={breadcrumbs}
+        >
+            {children}
+        </Layout>
+    );
+};

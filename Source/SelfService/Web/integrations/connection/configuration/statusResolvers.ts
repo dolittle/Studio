@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { StatusIndicatorProps } from '@dolittle/design-system';
+
 import { ConnectionStatus, RemoteServiceStatus } from '../../../apis/integrations/generated';
 
 export type StatusMessage = [StatusIndicatorProps['status'], StatusIndicatorProps['label']];
@@ -28,7 +29,6 @@ export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStat
     }
     return ['success', 'Connected'];
 };
-
 
 export const configurationStatusFromServiceCredentialsStatus = (serviceStatus?: RemoteServiceStatus): StatusMessage | undefined => {
     switch (serviceStatus?.name) {

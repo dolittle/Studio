@@ -1,12 +1,16 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo } from 'react';
-import { Link, Location, Outlet, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+
+import { Link, Location, Outlet, Navigate, useLocation } from 'react-router-dom';
+
+import { Tabs } from '@dolittle/design-system';
+
 import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionId } from '../../routes.hooks';
-import { Tabs } from '@dolittle/design-system';
 import { getConnectionStatus } from '../../../utils/helpers/connectionStatuses';
+
 import { Page } from '../../../components/layout/page';
 import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
 
@@ -49,8 +53,8 @@ export const ConnectionDetails = () => {
     const location = useLocation();
     const connectionId = useConnectionId();
     const { isLoading, data } = useConnectionsIdGet({ id: connectionId || '' });
-    const connection = data?.value;
 
+    const connection = data?.value;
     const redirectPath = useRedirectToTabByStatus(connection?.status);
 
     if (isLoading) return <>Loading</>;
@@ -76,4 +80,3 @@ export const ConnectionDetails = () => {
         </>
     );
 };
-

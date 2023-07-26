@@ -1,5 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { getServerUrlPrefix, JobInfo, parseJSONResponse, ShortInfoWithEnvironment, HttpResponseMessage } from './api';
 
 export type HttpInputApplicationAccess = {
@@ -67,8 +68,9 @@ export async function getPersonalisedInfo(applicationId: string): Promise<any> {
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
+
     const jsonResult = await result.json() as any;
     return jsonResult;
 };
@@ -76,6 +78,7 @@ export async function getPersonalisedInfo(applicationId: string): Promise<any> {
 
 export async function createApplication(input: HttpApplicationRequest): Promise<JobInfo | any> {
     const url = `${getServerUrlPrefix()}/application`;
+
     const response = await fetch(
         url,
         {
@@ -83,8 +86,8 @@ export async function createApplication(input: HttpApplicationRequest): Promise<
             body: JSON.stringify(input),
             mode: 'cors',
             headers: {
-                'content-type': 'application/json'
-            }
+                'content-type': 'application/json',
+            },
         });
 
     const data = await parseJSONResponse(response);
@@ -93,6 +96,7 @@ export async function createApplication(input: HttpApplicationRequest): Promise<
 
 export async function isApplicationOnline(applicationID: string): Promise<ApplicationBuildState | any> {
     const url = `${getServerUrlPrefix()}/application/${applicationID}/check/isonline`;
+
     const response = await fetch(
         url,
         {
@@ -105,24 +109,28 @@ export async function isApplicationOnline(applicationID: string): Promise<Applic
 
 export async function getLiveApplications(): Promise<any> {
     const url = `${getServerUrlPrefix()}/live/applications`;
+
     const result = await fetch(
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
+
     const jsonResult = await result.json();
     return jsonResult;
 };
 
 export async function getApplications(): Promise<HttpResponseApplications> {
     const url = `${getServerUrlPrefix()}/applications`;
+
     const result = await fetch(
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
+
     const jsonResult: HttpResponseApplications = await result.json();
     jsonResult.applications = jsonResult.applications || [];
     return jsonResult;
@@ -135,7 +143,7 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
 
     const jsonResult: HttpResponseApplication = await result.json();
@@ -148,6 +156,7 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
 
         return environment;
     });
+
     return jsonResult;
 };
 
@@ -159,7 +168,7 @@ export async function getAdminApplicationAccess(customerId: string, applicationI
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
 
     const data = await parseJSONResponse(response);
@@ -176,8 +185,8 @@ export async function adminApplicationAccessAddUser(customerId: string, applicat
             body: JSON.stringify(input),
             mode: 'cors',
             headers: {
-                'content-type': 'application/json'
-            }
+                'content-type': 'application/json',
+            },
         });
 
     const data = await parseJSONResponse(response);
@@ -194,8 +203,8 @@ export async function adminApplicationAccessRemoveUser(customerId: string, appli
             body: JSON.stringify(input),
             mode: 'cors',
             headers: {
-                'content-type': 'application/json'
-            }
+                'content-type': 'application/json',
+            },
         });
 
     const data = await parseJSONResponse(response);

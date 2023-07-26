@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 
 import { Paper, Typography, SxProps } from '@mui/material';
 
-import { Button, MaxWidthBlock } from '@dolittle/design-system';
+import { Button, MaxWidthBlock, MaxWidthTextBlock } from '@dolittle/design-system';
 
 export type TextCopyBoxProps = {
     /**
@@ -24,7 +24,7 @@ export type TextCopyBoxProps = {
     instructionsToCopy?: string[];
 
     /**
-     * Pass in children if you want to have more control over the styling of the instructions
+     * Pass in children if you want to have more control over the styling of the instructions.
      */
     children?: React.ReactNode;
 
@@ -51,9 +51,9 @@ export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMa
     return (
         <Paper elevation={0} sx={{ 'mt': 3, 'p': 2, '& p': { mb: 3 }, ...sx }}>
             {withMaxWidth
-                ? <MaxWidthBlock>
+                ? <MaxWidthTextBlock>
                     <InstructionContent instructions={instructions}>{children}</InstructionContent>
-                </MaxWidthBlock>
+                </MaxWidthTextBlock>
                 : <InstructionContent instructions={instructions}>{children}</InstructionContent>
             }
 

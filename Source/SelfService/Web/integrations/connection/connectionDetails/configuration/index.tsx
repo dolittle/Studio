@@ -6,8 +6,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
+
 import { Box, Collapse, Typography } from '@mui/material';
-import { AccordionList, AccordionListProps, Button, FileUploadFormRef } from '@dolittle/design-system';
+
+import { AccordionList, AccordionListProps, FileUploadFormRef } from '@dolittle/design-system';
+
 import { useConnectionsIdGet, useConnectionsIdDelete } from '../../../../apis/integrations/connectionsApi.hooks';
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
 import { getConnectionStatus } from '../../../../utils/helpers';
@@ -16,7 +19,6 @@ import { M3ConfigurationForm, M3ConfigurationFormRef } from '../../configuration
 import { MainM3ConnectionInfo } from '../../configuration/MainM3ConnectionInfo';
 import { useBuildConfigurationAccordionList } from '../../configuration/useBuildConfigurationAccordionList';
 import { ActionToolbar } from './ActionToolbar';
-
 
 export const ConfigurationView = () => {
     const [canEdit, setEditMode] = useState(false);
@@ -31,7 +33,6 @@ export const ConfigurationView = () => {
     const deleteMutation = useConnectionsIdDelete();
     const queryClient = useQueryClient();
     const navigate = useNavigate();
-
 
     const connection = query.data?.value;
     const links = query.data?.links || [];

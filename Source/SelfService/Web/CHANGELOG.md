@@ -1,3 +1,96 @@
+# [3.4.62] - 2023-7-13 [PR: #423](https://github.com/dolittle/Studio/pull/423)
+## Summary
+
+Few fixes and code refactoring for new layout.
+
+### Added
+
+- Auto focus on SpaceCreateDialog input field
+- Required 'pageTitle' prop to WorkSpaceLayout
+
+### Changed
+
+- Replaced HomeScreen 'Dolittle' text with 'Aigonix'
+- Renamed CreateSpaceDialog to SpaceCreateDialog
+- Added WorkSpaceLayoutWithSidePanel and changed naming on them
+
+### Fixed
+
+- Select new space after creating it
+- Comment out the 'Breadcrumbs' as they are not working correctly at the moment
+- SidePanel 'ErpConnections' link path so it would take to main Integrations page
+- Connections Form errors from required prop
+
+### Removed
+
+- Variant 'success' from Integrations Snackbar
+
+
+# [3.4.61] - 2023-7-7 [PR: #420](https://github.com/dolittle/Studio/pull/420)
+## Summary
+
+Use new Breadcrumbs component to show current location in Integrations page.
+
+<img width="905" alt="Screenshot 2023-07-07 at 14 40 57" src="https://github.com/dolittle/Studio/assets/19160439/fac4d48b-e3ea-4dd1-a6e9-998cdd678b3d">
+
+### Added
+
+- Breadcrumbs to Integrations page
+
+### Removed
+
+- Refactored code
+
+
+# [3.4.60] - 2023-7-7 [PR: #419](https://github.com/dolittle/Studio/pull/419)
+## Summary
+
+Change WorkSpaceLayout with adding in working links. Use a different SidePanel MenuList for each model (applications, integrations).
+
+Also create the Design System components accordingly and add them to the Storybook with JsDocs.
+
+They still need to be improved as we create a new login flow.
+
+<img width="965" alt="Screenshot 2023-07-07 at 13 24 16" src="https://github.com/dolittle/Studio/assets/19160439/b7463c42-034d-4098-84bb-8f1416e3f7c8">
+
+### Added
+
+- Breadcrumbs component to Design System
+- DialogForm component to Design System
+- MenuList component to Design System
+- Stories with documentation into Storybook
+- Different SidePanel MenuList for each module
+- `PageTitle` props to WorkSpaceLayout component
+- `CircularProgress` props to LoadingSpinner component
+- `tooltipPlacement` props for the IconButton to change where the Tooltip is displayed
+- Save SidePanel open state in sessionStorage so after page refreshes, it stays the same mode (expanded or collapsed)
+- WorkPlaceNavigations component links
+- Dummy links for Design System
+
+### Changed
+
+- Updated NavigationBar logo to the new one
+- Updated SimpleCard styles
+- Updated DropdownMenu component
+- Updated other components as needed
+- Navigation links improvements
+- Navigation links appearance in smaller screens
+- SidePanel styles and links
+- Combined regex helper files from different places
+- Rename SideBar component to SidePanel as this is more accurate
+
+### Fixed
+
+- When navigating to Microservices, a Snackbar appears as a new Microservice was created. Removed localStorage from Microservises.
+- Snackbars in App. They are no longer imported from Design System as it was not neccessary.
+
+### Removed
+
+- Deleted dublicated ApplicationsList component
+- Snackbars from Design System
+- Old unused code
+
+
 # [3.4.59] - 2023-6-27 [PR: #418](https://github.com/dolittle/Studio/pull/418)
 ## Summary
 
