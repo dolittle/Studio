@@ -136,19 +136,14 @@ function webpack(env: Args, argv: Args) {
                         to: './assets/favicons/',
                     },
                     {
-                        from: './assets/favicons/google-touch-icon.png',
+                        from: './assets/favicons/favicon-32x32.png',
                         to: './assets/favicons/',
                     },
                     {
-                        from: './assets/favicons/favicon.svg',
-                        to: './assets/favicons/',
+                        from: 'favicon.ico',
+                        to: './',
                     },
-                    {
-                        from: './assets/favicons/safary-mask-icon.svg',
-                        to: './assets/favicons/',
-                    },
-                    { from: 'favicon.ico' },
-                ]
+                ],
             }),
             new MiniCssExtractPlugin({
                 filename: './styles.css',
