@@ -1,3 +1,14 @@
+# [3.4.65] - 2023-7-26 [PR: #428](https://github.com/dolittle/Studio/pull/428)
+## Summary
+
+Made links clearer to improve UX.
+
+### Changed
+
+- LayoutWithSidebar 'Documentation' link label to 'Setup'
+- WorkSpaceLayout SelectMenu 'Documentation' Link href to open 'https://dolittle.io/docs/' in new tab
+
+
 # [3.4.64] - 2023-7-26 [PR: #427](https://github.com/dolittle/Studio/pull/427)
 - Introduce a MaxWidthBlock to be used as a Div
 - Fix correct rendering of contents within CopyTextBox to respect semantic HTML rules (no nested p's), and ensure it respects the max readable width
