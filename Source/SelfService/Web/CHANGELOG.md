@@ -1,3 +1,19 @@
+# [3.4.63] - 2023-7-26 [PR: #426](https://github.com/dolittle/Studio/pull/426)
+## Summary
+
+Updated branding from Dolittle to Aigonix.
+
+<img width="397" alt="Screenshot 2023-07-26 at 13 32 26" src="https://github.com/dolittle/Studio/assets/19160439/3a9909f8-15a4-4b45-a459-c58775c707d9">
+
+### Changed
+
+- Replaced Dolittle logo with Aigonix in LoginWrapper
+- Replaced Dolittle logo with Aigonix in LayoutWithSidebar
+- Replaced Dolittle background gradient symbol with Aigonix cube symbol
+- Replaced Dolittle favicons with Aigonix
+- Page meta title from Dolittle Studio to Aigonix Studio
+
+
 # [3.4.62] - 2023-7-13 [PR: #423](https://github.com/dolittle/Studio/pull/423)
 ## Summary
 
