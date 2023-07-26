@@ -17,15 +17,15 @@ const styles = {
         backgroundSize: 'auto 100vh',
     },
     mainContent: {
-        'textAlign': 'center',
         'width': '100vw',
         'maxWidth': '33.8125rem',
+        'p': 3,
+        'pt': 25,
         'ml': 'auto',
+        'textAlign': 'center',
         '@media (min-width: 33.8125rem)': {
             mr: 'calc((100vw - 33.8125rem)*0.233)',
         },
-        'p': '1.25rem',
-        'pt': '12.5rem',
     },
 };
 
