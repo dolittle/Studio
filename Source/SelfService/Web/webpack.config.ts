@@ -35,10 +35,10 @@ function webpack(env: Args, argv: Args) {
                 ? '[name].[chunkhash].chunk.js'
                 : '[name].[contenthash].chunk.js',
             path: path.resolve(process.cwd(), 'wwwroot'),
-            publicPath: basePath
+            publicPath: basePath,
         },
         resolve: {
-            extensions: ['.js', '.json', '.ts', '.tsx']
+            extensions: ['.js', '.json', '.ts', '.tsx'],
         },
         module: {
             rules: [
@@ -49,8 +49,8 @@ function webpack(env: Args, argv: Args) {
                     options: {
                         transpileOnly: false,
                         projectReferences: true,
-                        allowTsInNodeModules: true
-                    }
+                        allowTsInNodeModules: true,
+                    },
                 },
                 {
                     test: /\.(png|gif|jpg|cur)$/i,
@@ -91,34 +91,34 @@ function webpack(env: Args, argv: Args) {
                     target: 'http://localhost:8801',
                     pathRewrite: { '^/api/system/monitoring/metrics/v1/': '/prometheus/api/v1/' },
                     headers: {
-                        'x-scope-orgid': 'tenant-453e04a7-4f9d-42f2-b36c-d51fa2c83fa3'
-                    }
+                        'x-scope-orgid': 'tenant-453e04a7-4f9d-42f2-b36c-d51fa2c83fa3',
+                    },
                 },
                 '/api/system/monitoring/logs/v1/': {
                     target: 'http://localhost:8802',
                     pathRewrite: { '^/api/system/monitoring/logs/v1/': '/loki/api/v1/' },
                     headers: {
-                        'x-scope-orgid': 'tenant-453e04a7-4f9d-42f2-b36c-d51fa2c83fa3'
+                        'x-scope-orgid': 'tenant-453e04a7-4f9d-42f2-b36c-d51fa2c83fa3',
                     },
                     ws: true,
                 },
                 '/proxy': {
                     target: 'http://localhost:3007',
                     ws: true,
-                }
+                },
             },
             before: (app, server, compiler) => {
                 app.get(['/', '/.auth/*'], function (req, res) {
                     res.redirect(basePath);
                 });
-            }
+            },
         },
         plugins: [
             new CleanWebpackPlugin({
                 dangerouslyAllowCleanPatternsOutsideProject: true,
                 dry: false,
                 cleanStaleWebpackAssets: false,
-                cleanOnceBeforeBuildPatterns: ['**/*.*']
+                cleanOnceBeforeBuildPatterns: ['**/*.*'],
             }),
             new HtmlWebpackPlugin({
                 template: path.resolve(process.cwd(), 'index.ejs'),
@@ -126,28 +126,28 @@ function webpack(env: Args, argv: Args) {
                 publicPath: basePath,
                 metadata: {
                     title,
-                    baseUrl: basePath
+                    baseUrl: basePath,
                 },
             }),
             new CopyPlugin({
                 patterns: [
                     {
                         from: './assets/favicons/apple-touch-icon.png',
-                        to: './assets/favicons/'
+                        to: './assets/favicons/',
                     },
                     {
                         from: './assets/favicons/google-touch-icon.png',
-                        to: './assets/favicons/'
+                        to: './assets/favicons/',
                     },
                     {
                         from: './assets/favicons/favicon.svg',
-                        to: './assets/favicons/'
+                        to: './assets/favicons/',
                     },
                     {
                         from: './assets/favicons/safary-mask-icon.svg',
-                        to: './assets/favicons/'
+                        to: './assets/favicons/',
                     },
-                    { from: 'favicon.ico', },
+                    { from: 'favicon.ico' },
                 ]
             }),
             new MiniCssExtractPlugin({
@@ -164,9 +164,9 @@ function webpack(env: Args, argv: Args) {
                         sourceMap: false,
                         // We want the class names and function names to be there for the IoC to work its magic
                         keep_classnames: true,
-                        keep_fnames: true
-                    }
-                })
+                        keep_fnames: true,
+                    },
+                }),
             ],
             runtimeChunk: true,
             splitChunks: {
@@ -182,7 +182,7 @@ function webpack(env: Args, argv: Args) {
                         name: 'vendors',
                         priority: 19,
                         enforce: true, // Causes maxInitialRequests to be ignored, minSize still respected if specified in cacheGroup
-                        minSize: 30000 // Use the default minSize
+                        minSize: 30000, // Use the default minSize
                     },
                     vendorsAsync: {
                         // Vendors async chunk, remaining asynchronously used node modules as single chunk file
@@ -191,7 +191,7 @@ function webpack(env: Args, argv: Args) {
                         chunks: 'async',
                         priority: 9,
                         reuseExistingChunk: true,
-                        minSize: 10000 // Use smaller minSize to avoid too much potential bundle bloat due to module duplication.
+                        minSize: 10000, // Use smaller minSize to avoid too much potential bundle bloat due to module duplication.
                     },
                     commonsAsync: {
                         // Commons async chunk, remaining asynchronously used modules as single chunk file
@@ -200,12 +200,12 @@ function webpack(env: Args, argv: Args) {
                         chunks: 'async',
                         priority: 0,
                         reuseExistingChunk: true,
-                        minSize: 10000 // Use smaller minSize to avoid too much potential bundle bloat due to module duplication.
-                    }
-                }
-            }
+                        minSize: 10000, // Use smaller minSize to avoid too much potential bundle bloat due to module duplication.
+                    },
+                },
+            },
         },
     };
-}
+};
 
 export default webpack;
