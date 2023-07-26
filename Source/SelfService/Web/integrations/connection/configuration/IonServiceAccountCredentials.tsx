@@ -6,8 +6,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { enqueueSnackbar } from 'notistack';
 
-import { FileUploadForm, FileUploadFormRef, MaxWidthTextBlock } from '@dolittle/design-system';
-
+import { FileUploadForm, FileUploadFormRef, MaxWidthTextBlock, MaxWidthBlock } from '@dolittle/design-system';
 import { IonConfigRequest } from '../../../apis/integrations/generated';
 
 import { TextCopyBox } from './TextCopyBox';
@@ -72,25 +71,15 @@ export const IonServiceAccountCredentials = React.forwardRef<FileUploadFormRef, 
         fileReader.readAsText(file);
     };
 
-    return (
-        <>
-            <MaxWidthTextBlock>
-                Follow the steps below then upload your credentials. If you already have an ION service account setup, skip to step 8 to access your credentials.
-            </MaxWidthTextBlock>
+    return <>
+        <TextCopyBox instructions={instructions} withMaxWidth/>
 
-            <MaxWidthTextBlock>
-                <TextCopyBox instructions={instructions} />
-            </MaxWidthTextBlock>
-
-
-            {props.canEdit && (
-                <MaxWidthTextBlock>
-                    <FileUploadForm onSelected={handleFileUploaded} validFileExtensions={['json']} ref={ref} />
-                </MaxWidthTextBlock>
-            )}
-
-        </>
-    );
+        {props.canEdit && (
+            <MaxWidthBlock>
+                <FileUploadForm onSelected={handleFileUploaded} validFileExtensions={['json']} ref={ref} />
+            </MaxWidthBlock>
+        )}
+    </>;
 });
 
 IonServiceAccountCredentials.displayName = 'IonServiceAccountCredentials';

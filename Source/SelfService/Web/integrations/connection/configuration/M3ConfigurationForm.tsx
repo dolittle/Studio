@@ -200,7 +200,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
 
     const handleErrorWhenSaving = (message: string, error: unknown) => {
         console.log(message, error);
-        enqueueSnackbar(message);
+        enqueueSnackbar(message, { variant: 'error' });
     };
 
     return (

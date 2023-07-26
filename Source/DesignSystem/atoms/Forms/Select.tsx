@@ -52,12 +52,12 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
             <MuiSelect
                 {...field}
                 {...selectProps as MuiSelectProps}
+                required={isRequired(selectProps.required)}
                 ref={ref}
                 labelId={`${selectProps.id}-select`}
                 onOpen={onOpen}
                 value={field.value}
                 disabled={selectProps.disabled}
-                required={isRequired(selectProps.required)}
                 size='small'
                 sx={{ typography: 'body2' }}
                 autoWidth
