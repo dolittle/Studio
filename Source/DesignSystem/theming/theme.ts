@@ -184,7 +184,6 @@ const components: Components & DataGridProComponents = {
                     'backgroundColor': 'rgba(140, 154, 248, 0.08)',
                     'color': '#8C9AF8',
                     'width': '100%',
-                    'minHeight': 30,
                     '&:hover': { backgroundColor: 'rgba(140, 154, 248, 0.15)' },
                 },
             },
