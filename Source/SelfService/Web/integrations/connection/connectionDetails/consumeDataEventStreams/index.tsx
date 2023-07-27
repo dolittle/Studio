@@ -7,6 +7,7 @@ import { Box, Typography } from '@mui/material';
 import { useHref, generatePath } from 'react-router-dom';
 import { ContentContainer, ContentHeader, ContentSection, IconButton, Link } from '@dolittle/design-system';
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
+import { ServiceAccountsSection } from './serviceAccounts/ServiceAccountsSection';
 
 const asyncApiSpecificationUrlTemplate = '/api/bridge/connections/:id/asyncapi/spec.json';
 
@@ -44,6 +45,7 @@ export const ConsumeDataEventStreamsView = () => {
                         />
                     </Box>
                 </ContentSection>
+                <ServiceAccountsSection />
             </ContentContainer>
         </>
     );
