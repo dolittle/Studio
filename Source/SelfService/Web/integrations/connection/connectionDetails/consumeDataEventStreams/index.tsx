@@ -8,12 +8,6 @@ import { useHref, generatePath } from 'react-router-dom';
 import { ContentContainer, ContentHeader, ContentSection, IconButton, Link } from '@dolittle/design-system';
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
 
-
-/* this is hard-coded to inspiring-ritchie, which is bridge-api -dev
-   since it requires an X-Organization-ID header it won't really work for "real"
-   users. The prod bridge-api won't be available anyway, so we need to proxy this
-   to allow access.
- */
 const asyncApiSpecificationUrlTemplate = '/api/bridge/connections/:id/asyncapi/spec.json';
 
 export const ConsumeDataEventStreamsView = () => {
