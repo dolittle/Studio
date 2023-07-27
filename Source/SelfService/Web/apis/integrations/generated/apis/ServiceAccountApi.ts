@@ -17,13 +17,13 @@ import * as runtime from '../runtime';
 import type {
   ServiceAccountCreatedDto,
   ServiceAccountListDto,
-} from '../models';
+} from '../models/index';
 import {
     ServiceAccountCreatedDtoFromJSON,
     ServiceAccountCreatedDtoToJSON,
     ServiceAccountListDtoFromJSON,
     ServiceAccountListDtoToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface ConnectionsIdServiceAccountsGetRequest {
     id: string;
@@ -46,7 +46,7 @@ export interface ConnectionsIdServiceAccountsServiceAccountNamePostRequest {
 export class ServiceAccountApi extends runtime.BaseAPI {
 
     /**
-     * List all service accounts for a connection.
+     * List all read-model -service-accounts for a connection.
      */
     async connectionsIdServiceAccountsGetRaw(requestParameters: ConnectionsIdServiceAccountsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ServiceAccountListDto>>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -72,7 +72,7 @@ export class ServiceAccountApi extends runtime.BaseAPI {
     }
 
     /**
-     * List all service accounts for a connection.
+     * List all read-model -service-accounts for a connection.
      */
     async connectionsIdServiceAccountsGet(requestParameters: ConnectionsIdServiceAccountsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ServiceAccountListDto>> {
         const response = await this.connectionsIdServiceAccountsGetRaw(requestParameters, initOverrides);
@@ -117,7 +117,7 @@ export class ServiceAccountApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a service account for a connection and return the token  Ensure to save the token, as it will not be retrievable later
+     * Create a service account for a connection to allow users and services to  use the read-model -service, and return the token.  Ensure to save the token, as it will not be retrievable later
      */
     async connectionsIdServiceAccountsServiceAccountNamePostRaw(requestParameters: ConnectionsIdServiceAccountsServiceAccountNamePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ServiceAccountCreatedDto>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -151,7 +151,7 @@ export class ServiceAccountApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a service account for a connection and return the token  Ensure to save the token, as it will not be retrievable later
+     * Create a service account for a connection to allow users and services to  use the read-model -service, and return the token.  Ensure to save the token, as it will not be retrievable later
      */
     async connectionsIdServiceAccountsServiceAccountNamePost(requestParameters: ConnectionsIdServiceAccountsServiceAccountNamePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ServiceAccountCreatedDto> {
         const response = await this.connectionsIdServiceAccountsServiceAccountNamePostRaw(requestParameters, initOverrides);

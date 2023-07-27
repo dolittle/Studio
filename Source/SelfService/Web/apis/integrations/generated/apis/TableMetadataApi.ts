@@ -18,7 +18,7 @@ import type {
   ListTable,
   RelatedTable,
   TableDto,
-} from '../models';
+} from '../models/index';
 import {
     ListTableFromJSON,
     ListTableToJSON,
@@ -26,7 +26,7 @@ import {
     RelatedTableToJSON,
     TableDtoFromJSON,
     TableDtoToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface ConnectionsIdMetadataEnvironmentsEnvironmentTablesGetRequest {
     id: string;

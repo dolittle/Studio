@@ -1,0 +1,99 @@
+#!/bin/bash
+
+echo "Resetting local k3d cluster"
+ROOT_PWD=$(git rev-parse --show-toplevel)
+cd $ROOT_PWD
+
+k3d cluster delete dolittle-dev
+
+echo "Deleted dolittle-dev k3d cluster"
+
+rm -rf /tmp/dolittle-local-dev
+mkdir -p /tmp/dolittle-local-dev
+cd /tmp/dolittle-local-dev
+git init
+cd -
+
+echo "Creating dolittle-dev k3d cluster"
+# Make k3d usage backwards compatiable with the API used in e.g. v4
+K3D_MAJOR_VERSION=$(k3d --version | head -n 1 | sed 's#.*v\([0-9]\)\.[0-9]\.[0-9].*#\1#')
+if [ "$K3D_MAJOR_VERSION" -lt "5" ]; then
+     k3d cluster create dolittle-dev \
+        --servers 1 \
+        --agents 1 \
+        --wait \
+        --port 8080:80@loadbalancer \
+        --port 8443:443@loadbalancer \
+        --port 8801:31001@loadbalancer \
+        --port 8802:31002@loadbalancer \
+        --k3s-server-arg '--no-deploy=traefik' \
+        --registry-create \
+        --kubeconfig-switch-context \
+        -v /tmp/k3dvolume:/tmp/k3dvolume
+else
+    k3d cluster create dolittle-dev \
+        --servers 1 \
+        --agents 1 \
+        --wait \
+        --port 8080:80@loadbalancer \
+        --port 8443:443@loadbalancer \
+        --port 8801:31001@loadbalancer \
+        --port 8802:31002@loadbalancer \
+        --registry-create k3d-dolittle-dev-registry \
+        --kubeconfig-switch-context \
+        -v /tmp/k3dvolume:/tmp/k3dvolume
+fi
+
+CREATE_EXIT_CODE=$?
+if [ $CREATE_EXIT_CODE -ne 0 ]; then
+    cat <<_EOF_
+
+Error switching to the k3d context
+You might need to clean up docker
+
+docker network rm k3d-dolittle-dev
+docker rm k3d-dolittle-dev-registry
+_EOF_
+
+    exit $CREATE_EXIT_CODE
+fi
+
+kubectl config use-context k3d-dolittle-dev
+CONTEXT_EXIT_CODE=$?
+if [ $CONTEXT_EXIT_CODE -ne 0 ]; then
+
+    echo "Error switching to the k3d context"
+    exit $CONTEXT_EXIT_CODE
+fi
+
+cp -r Environment/k3d/git/* /tmp/dolittle-local-dev
+
+cd Environment/k3d/k8s/
+#kubectl apply -f 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/baremetal/deploy.yaml'
+kubectl apply -f ingress.yaml
+kubectl patch -n ingress-nginx service ingress-nginx-controller -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl -n ingress-nginx patch deployments.apps ingress-nginx-controller -p '{
+    "spec": {
+        "template": {
+            "metadata": {
+                "labels": {
+                    "system": "Ingress",
+                    "ingress": "Nginx"
+                }
+            }
+        }
+    }
+}'
+
+kubectl apply -f namespace.yml
+kubectl apply -f .
+
+kubectl apply -f ./Authentication/rbac-impersonator.yml
+
+cd Monitoring/
+kubectl apply -f Grafana/namespace.yml -f Logs/namespace.yml -f Metrics/namespace.yml
+kubectl apply -f Grafana/
+kubectl apply -f Logs/
+kubectl apply -f Metrics/
+
+cd $ROOT_PWD

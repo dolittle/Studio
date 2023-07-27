@@ -19,7 +19,7 @@ import type {
   ConnectionModelResult,
   ProblemDetails,
   StringResult,
-} from '../models';
+} from '../models/index';
 import {
     ConnectionModelArrayResultFromJSON,
     ConnectionModelArrayResultToJSON,
@@ -29,7 +29,7 @@ import {
     ProblemDetailsToJSON,
     StringResultFromJSON,
     StringResultToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface ConnectionsIdConnectorDeploymentGetRequest {
     id: string;

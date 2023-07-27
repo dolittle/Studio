@@ -10,7 +10,7 @@ import { AlertBox, Button, ContentSection, Switch } from '@dolittle/design-syste
 
 import { FieldMapping, MappedField } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
-import { useConnectionId } from '../../../../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
 
 import { ViewModeProps } from '../ViewMode';
 import { DataGridTableListingEntry, MessageMappingTable } from './MessageMappingTable';
@@ -23,7 +23,7 @@ export type TableSectionProps = ViewModeProps & {
 };
 
 export const TableSection = ({ selectedTableName, initialSelectedFields, onBackToSearchResultsClicked, mode }: TableSectionProps) => {
-    const connectionId = useConnectionId();
+    const connectionId = useConnectionIdFromRoute();
     const setMappedFieldsInForm = useUpdateMappedFieldsInForm();
 
     if (!connectionId || !selectedTableName) return <AlertBox />;

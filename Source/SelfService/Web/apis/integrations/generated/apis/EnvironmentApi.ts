@@ -16,11 +16,11 @@
 import * as runtime from '../runtime';
 import type {
   M3EnvironmentListDto,
-} from '../models';
+} from '../models/index';
 import {
     M3EnvironmentListDtoFromJSON,
     M3EnvironmentListDtoToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface ConnectionsIdMetadataEnvironmentsGetRequest {
     id: string;

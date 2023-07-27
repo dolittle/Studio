@@ -17,13 +17,13 @@ import * as runtime from '../runtime';
 import type {
   ColumnRecommendations,
   TableSummaryDto,
-} from '../models';
+} from '../models/index';
 import {
     ColumnRecommendationsFromJSON,
     ColumnRecommendationsToJSON,
     TableSummaryDtoFromJSON,
     TableSummaryDtoToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface ConnectionsIdMetadataEnvironmentsEnvironmentRichTablesTableNamePostRequest {
     id: string;
@@ -48,7 +48,7 @@ export interface ConnectionsIdMetadataEnvironmentsEnvironmentRichTablesTableName
 /**
  * 
  */
-export class EnrichmentApi extends runtime.BaseAPI {
+export class MetadataAssistantApi extends runtime.BaseAPI {
 
     /**
      */

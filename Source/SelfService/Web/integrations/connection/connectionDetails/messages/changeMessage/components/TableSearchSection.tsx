@@ -10,7 +10,7 @@ import { Typography } from '@mui/material';
 import { ContentSection, TextField } from '@dolittle/design-system';
 
 import { useConnectionsIdMessageMappingsTablesSearchGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
-import { useConnectionId } from '../../../../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
 
 import { ViewModeProps } from '../ViewMode';
 import { TableSearchResults } from './TableSearchResults';
@@ -22,7 +22,7 @@ export type TableSearchSectionProps = ViewModeProps & {
 };
 
 export const TableSearchSection = ({ onTableSelected, searchInput, setSearchInput }: TableSearchSectionProps) => {
-    const connectionId = useConnectionId();
+    const connectionId = useConnectionIdFromRoute();
     const [debouncedSearchTerm] = useDebounce(searchInput, 500);
     const query = useConnectionsIdMessageMappingsTablesSearchGet({ id: connectionId || '', search: debouncedSearchTerm });
 

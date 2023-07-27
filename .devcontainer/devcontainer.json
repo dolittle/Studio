@@ -8,28 +8,24 @@
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
 		"ghcr.io/devcontainers/features/git:1": {},
 		"ghcr.io/devcontainers/features/github-cli:1": {},
-		"ghcr.io/eitsupi/devcontainer-features/jq-likes:1": {}
+		"ghcr.io/eitsupi/devcontainer-features/jq-likes:1": {},
+		"ghcr.io/rio/features/k3d:1": {},
+		"ghcr.io/devcontainers-contrib/features/kubectl-asdf:2": {},
+        "ghcr.io/devcontainers/features/go:1": {}
 	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"EditorConfig.EditorConfig",
 				"dbaeumer.vscode-eslint",
-				"GraphQL.vscode-graphql",
-				"GabrielNordeborn.vscode-graphiql-explorer",
 				"heaths.vscode-guid",
 				"pmneo.tsimporter",
 				"nsoult.typescript-imports-sort",
 				"DSKWRK.vscode-generate-getter-setter",
 				"aeschli.vscode-css-formatter",
-				"GitHub.vscode-pull-request-github",
-				"waderyan.gitblame",
 				"mhutchie.git-graph",
-				"hoovercj.vscode-power-mode",
-				"Gruntfuggly.todo-tree",
-				"GitHub.copilot",
 				"GitHub.copilot-nightly",
-				"cweijan.vscode-redis-client",
+				"GitHub.copilot-chat",
 				"kahole.magit",
 				"streetsidesoftware.code-spell-checker"
 			]

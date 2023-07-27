@@ -21,7 +21,7 @@ import type {
   NoSuchReadModelResult,
   ProblemDetails,
   SetMessageMappingRequestArguments,
-} from '../models';
+} from '../models/index';
 import {
     MappingReferenceFromJSON,
     MappingReferenceToJSON,
@@ -35,7 +35,7 @@ import {
     ProblemDetailsToJSON,
     SetMessageMappingRequestArgumentsFromJSON,
     SetMessageMappingRequestArgumentsToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface ConnectionsIdMessageMappingsDeleteMultiplePostRequest {
     id: string;

@@ -16,11 +16,11 @@
 import * as runtime from '../runtime';
 import type {
   ConnectionModelResult,
-} from '../models';
+} from '../models/index';
 import {
     ConnectionModelResultFromJSON,
     ConnectionModelResultToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface ConnectionsIdDeployCloudPostRequest {
     id: string;

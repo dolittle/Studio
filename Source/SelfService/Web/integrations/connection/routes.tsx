@@ -7,12 +7,13 @@ import { RouteObject } from 'react-router-dom';
 
 import { ConnectionDetails } from './connectionDetails';
 import { ConfigurationView } from './connectionDetails/configuration';
-import { ExposeDataView } from './connectionDetails/exposeData';
+import { ConsumeDataRestAPIView } from './connectionDetails/consumeDataRestAPI';
 import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { MessagesViewRoot } from './connectionDetails/messages';
 import { Index as ChangeMessageView } from './connectionDetails/messages/changeMessage';
-
 import { NewConnectionView } from './new';
+import { ConsumeDataEventStreamsView } from './connectionDetails/consumeDataEventStreams';
+
 
 export const routes: RouteObject[] = [
     {
@@ -42,8 +43,12 @@ export const routes: RouteObject[] = [
                 ]
             },
             {
-                path: 'expose',
-                element: <ExposeDataView />,
+                path: 'consume-data-rest-api',
+                element: <ConsumeDataRestAPIView />,
+            },
+            {
+                path: 'consume-data-event-streams',
+                element: <ConsumeDataEventStreamsView />,
             },
         ],
     },

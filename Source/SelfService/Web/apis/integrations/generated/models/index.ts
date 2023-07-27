@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './AccountAccess';
 export * from './ColumnMetadata';
 export * from './ColumnRecommendation';
 export * from './ColumnRecommendations';
@@ -19,6 +20,9 @@ export * from './IndexColumn';
 export * from './IonConfigRequest';
 export * from './IonConfiguration';
 export * from './IonConfigurationResult';
+export * from './KafkaServiceAccountCreatedDto';
+export * from './KafkaServiceAccountCredentialsDto';
+export * from './KafkaServiceAccountListDto';
 export * from './Link';
 export * from './ListTable';
 export * from './M3EnvironmentListDto';
@@ -52,3 +56,5 @@ export * from './TableKind';
 export * from './TableListingEntry';
 export * from './TableListingEntryIEnumerableResult';
 export * from './TableSummaryDto';
+export * from './TopicAccess';
+export * from './TopicAccessDto';

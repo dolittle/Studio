@@ -17,13 +17,13 @@ import * as runtime from '../runtime';
 import type {
   ProgramDetails,
   ProgramHeader,
-} from '../models';
+} from '../models/index';
 import {
     ProgramDetailsFromJSON,
     ProgramDetailsToJSON,
     ProgramHeaderFromJSON,
     ProgramHeaderToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface ConnectionsIdMetadataEnvironmentsEnvironmentProgramsGetRequest {
     id: string;

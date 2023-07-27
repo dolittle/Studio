@@ -19,7 +19,7 @@ import type {
   NotFoundResult,
   ProblemDetails,
   TableListingEntryIEnumerableResult,
-} from '../models';
+} from '../models/index';
 import {
     MappableTableResultFromJSON,
     MappableTableResultToJSON,
@@ -29,7 +29,7 @@ import {
     ProblemDetailsToJSON,
     TableListingEntryIEnumerableResultFromJSON,
     TableListingEntryIEnumerableResultToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface ConnectionsIdMessageMappingsTablesGetRequest {
     id: string;

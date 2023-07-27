@@ -8,13 +8,13 @@ import { Link, Location, Outlet, Navigate, useLocation } from 'react-router-dom'
 import { Tabs } from '@dolittle/design-system';
 
 import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
-import { useConnectionId } from '../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../routes.hooks';
 import { getConnectionStatus } from '../../../utils/helpers/connectionStatuses';
 
 import { Page } from '../../../components/layout/page';
 import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
 
-export const childRoutePaths = ['/configuration', '/messages', '/expose'];
+export const childRoutePaths = ['/configuration', '/messages', '/consume-data-rest-api', '/consume-data-event-streams'];
 
 const getSelectedTab = (location: Location) => {
     const pathname = location.pathname;
@@ -40,18 +40,26 @@ const tabs = [
         },
     },
     {
-        label: 'expose data',
+        label: 'Consume Data (Rest API)',
         render: () => <></>,
         overrides: {
             component: Link,
-            to: 'expose',
+            to: 'consume-data-rest-api',
+        },
+    },
+    {
+        label: 'Consume Data (Event Streams)',
+        render: () => <></>,
+        overrides: {
+            component: Link,
+            to: 'consume-data-event-streams',
         },
     },
 ];
 
 export const ConnectionDetails = () => {
     const location = useLocation();
-    const connectionId = useConnectionId();
+    const connectionId = useConnectionIdFromRoute();
     const { isLoading, data } = useConnectionsIdGet({ id: connectionId || '' });
 
     const connection = data?.value;

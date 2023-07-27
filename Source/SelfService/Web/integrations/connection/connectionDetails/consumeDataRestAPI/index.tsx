@@ -10,20 +10,14 @@ import { Box, Typography } from '@mui/material';
 import { ContentContainer, ContentHeader, ContentSection, IconButton, Link, Switch } from '@dolittle/design-system';
 import { CredentialsContainer } from './Credentials/CredentialsContainer';
 
-// const styles = {
-//     display: 'flex',
-//     justifyContent: 'space-between',
-//     alignItems: 'center',
-//     flexDirection: { xs: 'column', sm: 'row' },
-//     my: 3,
-//     gap: 2,
-// };
-
+/* The ERP ReadModels -service must be specific to the connection, so we need
+    to generate the URL dynamically. */
 const restApiUrl = 'https://inspiring-ritchie.dolittle.cloud/erpreadmodels/swagger/index.html';
 const openApiDocumentationUrl = 'https://inspiring-ritchie.dolittle.cloud/erpreadmodels/swagger/v1/swagger.json';
 
-export const ExposeDataView = () => {
-    const { enqueueSnackbar } = useSnackbar();
+
+export const ConsumeDataRestAPIView = () => {
+    const { enqueueSnackbar } = useSnackbar()   ;
 
     const handleRestApiLinkCopy = () => {
         navigator.clipboard.writeText(restApiUrl);
@@ -34,6 +28,7 @@ export const ExposeDataView = () => {
         navigator.clipboard.writeText(openApiDocumentationUrl);
         enqueueSnackbar('OpenAPI documentation copied to clipboard.');
     };
+
 
     return (
         <>
@@ -77,6 +72,7 @@ export const ExposeDataView = () => {
                     </Box>
                 </ContentSection>
             </ContentContainer>
+
             <CredentialsContainer />
         </>
     );
