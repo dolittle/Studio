@@ -2,14 +2,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-
-import { useConnectionIdFromRoute } from '../../../routes.hooks';
-
 import { useSnackbar } from 'notistack';
-
 import { Box, Typography } from '@mui/material';
-
-import { ContentContainer, ContentHeader, ContentSection, IconButton, Link, Switch } from '@dolittle/design-system';
+import { useHref, generatePath } from 'react-router-dom';
+import { ContentContainer, ContentHeader, ContentSection, IconButton, Link } from '@dolittle/design-system';
+import { useConnectionIdFromRoute } from '../../../routes.hooks';
 
 
 /* this is hard-coded to inspiring-ritchie, which is bridge-api -dev
@@ -17,16 +14,15 @@ import { ContentContainer, ContentHeader, ContentSection, IconButton, Link, Swit
    users. The prod bridge-api won't be available anyway, so we need to proxy this
    to allow access.
  */
-const asyncApiSpecificationUrlTemplate = 'https://{bridgeApiHost}/connections/{id}/asyncapi/spec.json';
+const asyncApiSpecificationUrlTemplate = '/api/bridge/connections/:id/asyncapi/spec.json';
 
 export const ConsumeDataEventStreamsView = () => {
-    const bridgeApiHost = 'inspiring-ritchie.dolittle.cloud';
     const connectionId = useConnectionIdFromRoute();
-    const asyncApiSpecificationUrl = asyncApiSpecificationUrlTemplate
-        .replace('{bridgeApiHost}', bridgeApiHost)
-        .replace('{id}', connectionId || '');
+    const generatedPath = generatePath(asyncApiSpecificationUrlTemplate, { id: connectionId || '' });
+    const resolvedPathWithBasename = useHref(generatedPath);
+    const asyncApiSpecificationUrl = `${window.location.origin}${resolvedPathWithBasename}`;
 
-    const { enqueueSnackbar } = useSnackbar()   ;
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleAsyncApiSpecificationLinkCopy = () => {
         navigator.clipboard.writeText(asyncApiSpecificationUrl);
