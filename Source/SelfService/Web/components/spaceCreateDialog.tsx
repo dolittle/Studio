@@ -16,13 +16,6 @@ import { createApplication, HttpApplicationRequest } from '../apis/solutions/app
 
 import { alphaNumericLowerCasedCharsRegex } from '../utils/helpers/regex';
 
-// Remove click events from the form controls and enable them for the checkboxes.
-// TODO: Maybe we should move this to the design system?
-const styles = {
-    '& .MuiFormControl-root': { pointerEvents: 'none' },
-    '& .MuiCheckbox-root': { pointerEvents: 'auto' },
-};
-
 type SpaceCreateParameters = {
     name: string;
     environments: {
@@ -106,7 +99,6 @@ export const SpaceCreateDialog = ({ isOpen, onClose }: SpaceCreateDialogProps) =
                 id='name'
                 label='Space Name'
                 required='Space name required.'
-                autoFocus
                 pattern={{
                     value: alphaNumericLowerCasedCharsRegex,
                     message: 'Name can only contain lowercase alphanumeric characters.'
@@ -116,7 +108,7 @@ export const SpaceCreateDialog = ({ isOpen, onClose }: SpaceCreateDialogProps) =
             <Typography variant='body1' sx={{ mt: 4 }}>
                 Select the environments you would like available in your new space.
             </Typography>
-            <Stack sx={styles}>
+            <Stack sx={{ '& .MuiFormControl-root': { display: 'inline' } }}>
                 <Checkbox id='environments.Dev' label='Development' />
                 <Checkbox id='environments.Test' label='Test' />
                 <Checkbox id='environments.Prod' label='Production *' disabled />
