@@ -7,7 +7,7 @@ import { RouteObject } from 'react-router-dom';
 
 import { ConnectionDetails } from './connectionDetails';
 import { ConfigurationView } from './connectionDetails/configuration';
-import { ExposeDataView } from './connectionDetails/exposeData';
+import { ConsumeDataRestAPIView } from './connectionDetails/consumeDataRestAPI';
 import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { MessagesViewRoot } from './connectionDetails/messages';
 import { Index as ChangeMessageView } from './connectionDetails/messages/changeMessage';
@@ -43,7 +43,7 @@ export const routes: RouteObject[] = [
             },
             {
                 path: 'expose',
-                element: <ExposeDataView />,
+                element: <ConsumeDataRestAPIView />,
             },
         ],
     },

@@ -24,14 +24,14 @@ const openApiDocumentationUrl = 'https://inspiring-ritchie.dolittle.cloud/erprea
  */
 const asyncApiSpecificationUrlTemplate = 'https://{bridgeApiHost}/connections/{id}/asyncapi/spec.json';
 
-export const ExposeDataView = () => {
+export const ConsumeDataRestAPIView = () => {
     const bridgeApiHost = 'inspiring-ritchie.dolittle.cloud';
     const connectionId = useConnectionIdFromRoute();
     const asyncApiSpecificationUrl = asyncApiSpecificationUrlTemplate
         .replace('{bridgeApiHost}', bridgeApiHost)
         .replace('{id}', connectionId || '');
 
-    const { enqueueSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar()   ;
 
     const handleRestApiLinkCopy = () => {
         navigator.clipboard.writeText(restApiUrl);
