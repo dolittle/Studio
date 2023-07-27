@@ -42,7 +42,7 @@ export const ApplicationsScreen = () => {
 
     if (!isLoaded) return null;
 
-    const onEnvironmentChoose = (application: ShortInfoWithEnvironment) => {
+    const onApplicationSelect = (application: ShortInfoWithEnvironment) => {
         const { environment, id } = application;
         setCurrentEnvironment(environment);
         const href = `/microservices/application/${id}/${environment}/overview`;
@@ -67,7 +67,7 @@ export const ApplicationsScreen = () => {
             </Typography>
 
             <Box sx={{ display: 'inline-block' }}>
-                <ApplicationsList data={applicationInfos} onChoose={onEnvironmentChoose} />
+                <ApplicationsList data={applicationInfos} onSelect={onApplicationSelect} />
 
                 <Button
                     label='Create new Application'

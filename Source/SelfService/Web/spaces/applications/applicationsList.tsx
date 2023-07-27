@@ -11,16 +11,16 @@ import { ApplicationsListItem } from './applicationsListItem';
 
 export type ApplicationsListProps = {
     data: ShortInfoWithEnvironment[];
-    onChoose: (application: ShortInfoWithEnvironment) => void;
+    onSelect: (application: ShortInfoWithEnvironment) => void;
 };
 
-export const ApplicationsList = ({ data, onChoose }: ApplicationsListProps) =>
+export const ApplicationsList = ({ data, onSelect }: ApplicationsListProps) =>
     <List>
         {data.map(application =>
             <ApplicationsListItem
                 key={`${application.id}-${application.environment}`}
                 application={application}
-                onChoose={() => onChoose(application)}
+                onClick={() => onSelect(application)}
             />
         )}
     </List>;

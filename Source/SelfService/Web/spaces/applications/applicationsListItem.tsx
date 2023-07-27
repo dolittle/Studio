@@ -19,16 +19,16 @@ const styles = {
 
 export type ApplicationsListItemProps = {
     application: ShortInfoWithEnvironment;
-    onChoose: () => void;
+    onClick: () => void;
 };
 
-export const ApplicationsListItem = ({ application, onChoose }: ApplicationsListItemProps) =>
+export const ApplicationsListItem = ({ application, onClick }: ApplicationsListItemProps) =>
     <ListItem sx={{ p: 0 }}>
         <Button
             variant='filled'
             label={`${application.name}-${application.environment}`}
             isFullWidth
-            onClick={onChoose}
+            onClick={onClick}
             sx={styles}
         />
     </ListItem>;
