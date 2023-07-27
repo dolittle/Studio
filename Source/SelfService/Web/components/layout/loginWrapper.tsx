@@ -5,34 +5,28 @@ import React from 'react';
 
 import { Box } from '@mui/material';
 
+import { Icon } from '@dolittle/design-system';
+
 import Symbol from '../../assets/logos/symbol.svg?url';
-import Logo from '../../assets/logos/logo.svg';
 
 const styles = {
     backgroundSymbol: {
-        textAlign: 'right',
         minHeight: '100vh',
         backgroundImage: `url(${Symbol})`,
         backgroundRepeat: 'no-repeat',
-        backgroundSize: 'auto 142vh',
-        backgroundPosition: '-60vh -25vh'
+        backgroundSize: 'auto 100vh',
     },
     mainContent: {
-        'textAlign': 'center',
         'width': '100vw',
         'maxWidth': '33.8125rem',
+        'p': 3,
+        'pt': 25,
         'ml': 'auto',
+        'textAlign': 'center',
         '@media (min-width: 33.8125rem)': {
-            mr: 'calc((100vw - 33.8125rem)*0.233)'
+            mr: 'calc((100vw - 33.8125rem)*0.233)',
         },
-        'p': '1.25rem',
-        'pt': '12.5rem'
     },
-    logo: {
-        width: 166,
-        height: 39,
-        mt: 18.5
-    }
 };
 
 export type LoginWrapperProps = {
@@ -43,6 +37,9 @@ export const LoginWrapper = ({ children }: LoginWrapperProps) =>
     <Box sx={styles.backgroundSymbol}>
         <Box sx={styles.mainContent}>
             {children}
-            <Logo sx={styles.logo} />
+
+            <Box sx={{ mt: 18 }}>
+                <Icon icon='AigonixLightLogo' sx={{ width: 166, height: 28 }} />
+            </Box>
         </Box>
     </Box>;

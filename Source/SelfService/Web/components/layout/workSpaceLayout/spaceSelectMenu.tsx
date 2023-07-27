@@ -11,7 +11,7 @@ import { ShortInfoWithEnvironment } from '../../../apis/solutions/api';
 
 import { getSelectionMenuItems, DropdownMenuProps, MenuItemProps } from '@dolittle/design-system';
 
-import { CreateSpaceDialog } from './createSpaceDialog';
+import { SpaceCreateDialog } from './spaceCreateDialog';
 
 export const SpaceSelectMenu = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -34,7 +34,7 @@ export const SpaceSelectMenu = () => {
                 setIsLoading(false);
             })
             .catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }));
-    }, []);
+    }, [currentApplicationId]);
 
     if (isLoading) return null;
 
@@ -75,7 +75,7 @@ export const SpaceSelectMenu = () => {
 
     return (
         <>
-            <CreateSpaceDialog isOpen={createSpaceDialogOpen} onClose={() => setCreateSpaceDialogOpen(false)} />
+            <SpaceCreateDialog isOpen={createSpaceDialogOpen} onClose={() => setCreateSpaceDialogOpen(false)} />
             {getSelectionMenuItems(applicationMenuItems(), currentApplication?.name)}
         </>
     );

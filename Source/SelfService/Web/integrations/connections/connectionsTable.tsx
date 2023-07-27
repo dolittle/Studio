@@ -19,7 +19,7 @@ type ConnectionsTableRowProps = {
 };
 
 const StatusCell = ({ row }: ConnectionsTableRowProps) => {
-    const status = row.status?.name?.toLowerCase();
+    const status = row.status?.name;
 
     return (
         <StatusIndicator status={getConnectionStatus(status).status} label={getConnectionStatus(status).label} />

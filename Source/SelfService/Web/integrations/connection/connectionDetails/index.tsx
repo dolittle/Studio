@@ -69,7 +69,7 @@ export const ConnectionDetails = () => {
     if (!connection || !connectionId) return null;
 
     const pageTitle = connection.name || 'Connection Details';
-    const status = connection.status?.name?.toLocaleLowerCase();
+    const status = connection.status?.name;
 
     return (
         <>

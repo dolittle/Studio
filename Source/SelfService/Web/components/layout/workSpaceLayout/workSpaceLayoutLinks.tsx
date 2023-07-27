@@ -46,7 +46,7 @@ const PrimaryNavigation = () => {
 };
 
 const SecondaryNavigation = () => {
-    const { hasOneCustomer, currentApplicationId } = useGlobalContext();
+    const { hasOneCustomer } = useGlobalContext();
 
     const secondaryNavigationItems: MenuItemProps[] = [
         {
@@ -54,8 +54,9 @@ const SecondaryNavigation = () => {
             label: 'Documentation',
             icon: 'DescriptionRounded',
             overrides: {
-                component: Link,
-                to: `/documentation/application/${currentApplicationId}/Dev/overview`,
+                component: 'a',
+                href: 'https://dolittle.io/docs/',
+                target: '_blank',
             },
         },
         {
@@ -140,7 +141,7 @@ const SidePanelIntegrationItems = () => {
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: `/m3connector/application/${currentApplicationId}/${currentEnvironment}/details`,
+                to: '/integrations/connections',
             },
         },
     ];

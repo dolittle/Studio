@@ -3,18 +3,21 @@
 
 import { StatusIndicatorProps } from '@dolittle/design-system';
 
-export const getConnectionStatus = (status: string): StatusIndicatorProps => {
-    if (status === 'connected') {
+export type StatusIndicatorStatus = Pick<StatusIndicatorProps, 'status' | 'label'>;
+
+export const getConnectionStatus = (status: string): StatusIndicatorStatus => {
+    const compareStatus = status.toLowerCase();
+    if (compareStatus === 'connected') {
         return {
             status: 'success',
             label: 'connected',
         };
-    } else if (status === 'registered' || status === 'pending') {
+    } else if (compareStatus === 'registered' || compareStatus === 'pending') {
         return {
             status: 'warning',
             label: 'pending',
         };
-    } else if (status === 'failing') {
+    } else if (compareStatus === 'failing') {
         return {
             status: 'error',
             label: 'failing',
@@ -24,39 +27,41 @@ export const getConnectionStatus = (status: string): StatusIndicatorProps => {
     return { status: 'unknown' };
 };
 
-export const getConnectionsStatus = (status: string): StatusIndicatorProps => {
-    if (status === 'connected') {
-        return {
-            status: 'table-success',
-            label: 'connected',
-        };
-    } else if (status === 'registered' || status === 'pending') {
-        return {
-            status: 'warning',
-            label: 'pending',
-        };
-    } else if (status === 'failing') {
-        return {
-            status: 'error',
-            label: 'Not connected',
-        };
-    }
+    export const getConnectionsStatus = (status: string): StatusIndicatorStatus => {
+        const compareStatus = status.toLowerCase();
+        if (compareStatus === 'connected') {
+            return {
+                status: 'table-success',
+                label: 'connected',
+            };
+        } else if (compareStatus === 'registered' || compareStatus === 'pending') {
+            return {
+                status: 'warning',
+                label: 'pending',
+            };
+        } else if (compareStatus === 'failing') {
+            return {
+                status: 'error',
+                label: 'Not connected',
+            };
+        }
 
-    return { status: 'unknown' };
-};
+        return { status: 'unknown' };
+    };
 
-export const getPodHealthStatus = (status: string): StatusIndicatorProps => {
-    if (status === 'running') {
+export const getPodHealthStatus = (status: string): StatusIndicatorStatus => {
+    const compareStatus = status.toLowerCase();
+    if (compareStatus === 'running') {
         return {
             status: 'table-success',
             label: 'running',
         };
-    } else if (status === 'waiting' || status === 'pending') {
+    } else if (compareStatus === 'waiting' || compareStatus === 'pending') {
         return {
             status: 'warning',
             label: 'pending',
         };
-    } else if (status === 'failed') {
+    } else if (compareStatus === 'failed') {
         return {
             status: 'error',
             label: 'failing',
@@ -66,7 +71,7 @@ export const getPodHealthStatus = (status: string): StatusIndicatorProps => {
     return { status: 'unknown' };
 };
 
-export const getContainerStatus = (status: string[]): StatusIndicatorProps => {
+export const getContainerStatus = (status: string[]): StatusIndicatorStatus => {
     if (!status && typeof status !== 'string') {
         return { status: 'unknown' };
     } else if (status.includes('failed')) {

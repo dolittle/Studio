@@ -5,7 +5,7 @@ import React, { ReactNode } from 'react';
 
 import { NavigateFunction } from 'react-router-dom';
 
-import { List, ListItemButton, ListItemButtonBaseProps, ListItemIcon, ListItemText, Paper } from '@mui/material';
+import { Box, List, ListItemButton, ListItemButtonBaseProps, ListItemIcon, ListItemText, Paper } from '@mui/material';
 
 import { Icon } from '@dolittle/design-system';
 
@@ -13,7 +13,6 @@ import './layout.scss';
 
 import { HttpResponseApplication } from '../../apis/solutions/application';
 
-import { DolittleLogoMedium } from '../../assets/logos';
 import { AlertBox } from '../alertBox';
 
 type LayoutWithSidebarProps = {
@@ -23,7 +22,7 @@ type LayoutWithSidebarProps = {
 
 export type NavigationMenuItem = {
     href: string;
-    name: string
+    name: string;
     icon: JSX.Element;
     forceReload?: boolean;
 };
@@ -37,7 +36,12 @@ export const LayoutWithSidebar = ({ navigation, children }: LayoutWithSidebarPro
     <div className='with-sidebar'>
         <div>
             <Paper elevation={4} className='sidebar'>
-                <div className="logo"><DolittleLogoMedium /></div>
+                <Box
+                    sx={{ mb: 4, color: 'text.secondary', textAlign: 'center', cursor: 'pointer' }}
+                    onClick={() => window.location.pathname = '/selfservice/'}
+                >
+                    <Icon icon='AigonixLightLogo' sx={{ width: 100 }} />
+                </Box>
                 {navigation}
             </Paper>
             <div className='not-sidebar'>
@@ -116,7 +120,7 @@ export const getMenuWithApplication = (
         },
         {
             href: `/documentation/application/${applicationId}/${environment}/overview`,
-            name: 'Documentation',
+            name: 'Setup',
             icon: <Icon icon='FindInPageRounded' size='medium' />,
         },
     ];

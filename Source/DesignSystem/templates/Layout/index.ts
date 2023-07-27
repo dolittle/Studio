@@ -7,3 +7,4 @@ export { ContentContainer, ContentContainerProps } from './Content/ContentContai
 export { ContentHeader, ContentHeaderProps } from './Content/ContentHeader';
 export { ContentSection, ContentSectionProps } from './Content/ContentSection';
 export { ContentDivider, ContentDividerProps } from './Content/ContentDivider';
+export * from './MaxWidthBlock';

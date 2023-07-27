@@ -96,5 +96,9 @@ export const isRequired = (required?: Message | ValidationRule<boolean>): boolea
         return true;
     }
 
+    if (typeof required === 'object' && typeof required.value === 'boolean') {
+        return required.value;
+    }
+
     return required.value;
 };

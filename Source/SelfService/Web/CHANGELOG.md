@@ -1,3 +1,66 @@
+# [3.4.65] - 2023-7-26 [PR: #428](https://github.com/dolittle/Studio/pull/428)
+## Summary
+
+Made links clearer to improve UX.
+
+### Changed
+
+- LayoutWithSidebar 'Documentation' link label to 'Setup'
+- WorkSpaceLayout SelectMenu 'Documentation' Link href to open 'https://dolittle.io/docs/' in new tab
+
+
+# [3.4.64] - 2023-7-26 [PR: #427](https://github.com/dolittle/Studio/pull/427)
+- Introduce a MaxWidthBlock to be used as a Div
+- Fix correct rendering of contents within CopyTextBox to respect semantic HTML rules (no nested p's), and ensure it respects the max readable width
+- Set to edit mode by default if the status is pending
+- Support ValidationRule<boolean> in the isRequired check, and also apply to Select fields
+- Show error snackbars as error variant
+
+
+# [3.4.63] - 2023-7-26 [PR: #426](https://github.com/dolittle/Studio/pull/426)
+## Summary
+
+Updated branding from Dolittle to Aigonix.
+
+<img width="397" alt="Screenshot 2023-07-26 at 13 32 26" src="https://github.com/dolittle/Studio/assets/19160439/3a9909f8-15a4-4b45-a459-c58775c707d9">
+
+### Changed
+
+- Replaced Dolittle logo with Aigonix in LoginWrapper
+- Replaced Dolittle logo with Aigonix in LayoutWithSidebar
+- Replaced Dolittle background gradient symbol with Aigonix cube symbol
+- Replaced Dolittle favicons with Aigonix
+- Page meta title from Dolittle Studio to Aigonix Studio
+
+
+# [3.4.62] - 2023-7-13 [PR: #423](https://github.com/dolittle/Studio/pull/423)
+## Summary
+
+Few fixes and code refactoring for new layout.
+
+### Added
+
+- Auto focus on SpaceCreateDialog input field
+- Required 'pageTitle' prop to WorkSpaceLayout
+
+### Changed
+
+- Replaced HomeScreen 'Dolittle' text with 'Aigonix'
+- Renamed CreateSpaceDialog to SpaceCreateDialog
+- Added WorkSpaceLayoutWithSidePanel and changed naming on them
+
+### Fixed
+
+- Select new space after creating it
+- Comment out the 'Breadcrumbs' as they are not working correctly at the moment
+- SidePanel 'ErpConnections' link path so it would take to main Integrations page
+- Connections Form errors from required prop
+
+### Removed
+
+- Variant 'success' from Integrations Snackbar
+
+
 # [3.4.61] - 2023-7-7 [PR: #420](https://github.com/dolittle/Studio/pull/420)
 ## Summary
 
