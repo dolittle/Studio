@@ -14,7 +14,7 @@ import { getConnectionStatus } from '../../../utils/helpers/connectionStatuses';
 import { Page } from '../../../components/layout/page';
 import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
 
-export const childRoutePaths = ['/configuration', '/messages', '/expose'];
+export const childRoutePaths = ['/configuration', '/messages', '/consume-data-rest-api'];
 
 const getSelectedTab = (location: Location) => {
     const pathname = location.pathname;
@@ -40,11 +40,11 @@ const tabs = [
         },
     },
     {
-        label: 'expose data',
+        label: 'Consume Data (Rest API)',
         render: () => <></>,
         overrides: {
             component: Link,
-            to: 'expose',
+            to: 'consume-data-rest-api',
         },
     },
 ];

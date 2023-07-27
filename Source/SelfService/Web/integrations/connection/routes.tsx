@@ -42,7 +42,7 @@ export const routes: RouteObject[] = [
                 ]
             },
             {
-                path: 'expose',
+                path: 'consume-data-rest-api',
                 element: <ConsumeDataRestAPIView />,
             },
         ],
