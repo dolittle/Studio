@@ -14,7 +14,7 @@ import { getConnectionStatus } from '../../../utils/helpers/connectionStatuses';
 import { Page } from '../../../components/layout/page';
 import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
 
-export const childRoutePaths = ['/configuration', '/messages', '/consume-data-rest-api'];
+export const childRoutePaths = ['/configuration', '/messages', '/consume-data-rest-api', '/consume-data-event-streams'];
 
 const getSelectedTab = (location: Location) => {
     const pathname = location.pathname;
@@ -45,6 +45,14 @@ const tabs = [
         overrides: {
             component: Link,
             to: 'consume-data-rest-api',
+        },
+    },
+    {
+        label: 'Consume Data (Event Streams)',
+        render: () => <></>,
+        overrides: {
+            component: Link,
+            to: 'consume-data-event-streams',
         },
     },
 ];

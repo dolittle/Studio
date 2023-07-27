@@ -3,8 +3,6 @@
 
 import React from 'react';
 
-import { useConnectionIdFromRoute } from '../../../routes.hooks';
-
 import { useSnackbar } from 'notistack';
 
 import { Box, Typography } from '@mui/material';
@@ -17,20 +15,8 @@ import { CredentialsContainer } from './Credentials/CredentialsContainer';
 const restApiUrl = 'https://inspiring-ritchie.dolittle.cloud/erpreadmodels/swagger/index.html';
 const openApiDocumentationUrl = 'https://inspiring-ritchie.dolittle.cloud/erpreadmodels/swagger/v1/swagger.json';
 
-/* this is hard-coded to inspiring-ritchie, which is bridge-api -dev
-   since it requires an X-Organization-ID header it won't really work for "real"
-   users. The prod bridge-api won't be available anyway, so we need to proxy this
-   to allow access.
- */
-const asyncApiSpecificationUrlTemplate = 'https://{bridgeApiHost}/connections/{id}/asyncapi/spec.json';
 
 export const ConsumeDataRestAPIView = () => {
-    const bridgeApiHost = 'inspiring-ritchie.dolittle.cloud';
-    const connectionId = useConnectionIdFromRoute();
-    const asyncApiSpecificationUrl = asyncApiSpecificationUrlTemplate
-        .replace('{bridgeApiHost}', bridgeApiHost)
-        .replace('{id}', connectionId || '');
-
     const { enqueueSnackbar } = useSnackbar()   ;
 
     const handleRestApiLinkCopy = () => {
@@ -43,10 +29,6 @@ export const ConsumeDataRestAPIView = () => {
         enqueueSnackbar('OpenAPI documentation copied to clipboard.');
     };
 
-    const handleAsyncApiSpecificationLinkCopy = () => {
-        navigator.clipboard.writeText(asyncApiSpecificationUrl);
-        enqueueSnackbar('AsyncAPI specification copied to clipboard.');
-    };
 
     return (
         <>
@@ -92,27 +74,6 @@ export const ConsumeDataRestAPIView = () => {
             </ContentContainer>
 
             <CredentialsContainer />
-
-            <ContentContainer>
-                <ContentHeader title='Async API Specification' />
-                <ContentSection hideDivider title='Async API Specification'>
-                    <Typography sx={{ pt: 1.5 }}>Our async API is documented using AsyncAPI.</Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
-                        <Link
-                            target
-                            ariaLabel='AsyncAPI specification'
-                            href={asyncApiSpecificationUrl}
-                            message={asyncApiSpecificationUrl}
-                        />
-                        <IconButton
-                            tooltipText='Copy AsyncAPI specification link to clipboard'
-                            icon='CopyAllRounded'
-                            color='primary'
-                            onClick={handleAsyncApiSpecificationLinkCopy}
-                        />
-                    </Box>
-                </ContentSection>
-            </ContentContainer>
         </>
     );
 };
