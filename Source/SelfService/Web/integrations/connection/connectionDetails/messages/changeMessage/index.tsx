@@ -24,10 +24,6 @@ export const Index = () => {
 
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
 
-    if (!connectionId) {
-        return <>Cannot create new message without connection id</>;
-    }
-
     if (mode === 'edit' && (!table || !messageId)) {
         return <>Cannot crete new message without table or messageId</>;
     }

@@ -24,7 +24,7 @@ export type TableSearchSectionProps = ViewModeProps & {
 export const TableSearchSection = ({ onTableSelected, searchInput, setSearchInput }: TableSearchSectionProps) => {
     const connectionId = useConnectionIdFromRoute();
     const [debouncedSearchTerm] = useDebounce(searchInput, 500);
-    const query = useConnectionsIdMessageMappingsTablesSearchGet({ id: connectionId || '', search: debouncedSearchTerm });
+    const query = useConnectionsIdMessageMappingsTablesSearchGet({ id: connectionId, search: debouncedSearchTerm });
 
     const searchResults = query.data?.value || [];
 

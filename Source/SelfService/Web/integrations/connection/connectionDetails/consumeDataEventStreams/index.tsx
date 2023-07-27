@@ -12,7 +12,7 @@ const asyncApiSpecificationUrlTemplate = '/api/bridge/connections/:id/asyncapi/s
 
 export const ConsumeDataEventStreamsView = () => {
     const connectionId = useConnectionIdFromRoute();
-    const generatedPath = generatePath(asyncApiSpecificationUrlTemplate, { id: connectionId || '' });
+    const generatedPath = generatePath(asyncApiSpecificationUrlTemplate, { id: connectionId });
     const resolvedPathWithBasename = useHref(generatedPath);
     const asyncApiSpecificationUrl = `${window.location.origin}${resolvedPathWithBasename}`;
 

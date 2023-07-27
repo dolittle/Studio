@@ -60,13 +60,13 @@ const tabs = [
 export const ConnectionDetails = () => {
     const location = useLocation();
     const connectionId = useConnectionIdFromRoute();
-    const { isLoading, data } = useConnectionsIdGet({ id: connectionId || '' });
+    const { isLoading, data } = useConnectionsIdGet({ id: connectionId });
 
     const connection = data?.value;
     const redirectPath = useRedirectToTabByStatus(connection?.status);
 
     if (isLoading) return <>Loading</>;
-    if (!connection || !connectionId) return null;
+    if (!connection) return null;
 
     const pageTitle = connection.name || 'Connection Details';
     const status = connection.status?.name;
