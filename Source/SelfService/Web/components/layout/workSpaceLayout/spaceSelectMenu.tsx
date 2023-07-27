@@ -11,7 +11,7 @@ import { ShortInfoWithEnvironment } from '../../../apis/solutions/api';
 
 import { getSelectionMenuItems, DropdownMenuProps, MenuItemProps } from '@dolittle/design-system';
 
-import { SpaceCreateDialog } from './spaceCreateDialog';
+import { SpaceCreateDialog } from '../../spaceCreateDialog';
 
 export const SpaceSelectMenu = () => {
     const { enqueueSnackbar } = useSnackbar();

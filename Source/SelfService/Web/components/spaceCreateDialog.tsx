@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 
 import { useSnackbar } from 'notistack';
-import { useGlobalContext } from '../../../context/globalContext';
+import { useGlobalContext } from '../context/globalContext';
 
 import { Guid } from '@dolittle/rudiments';
 
@@ -12,9 +12,9 @@ import { Stack, Typography } from '@mui/material';
 
 import { DialogForm, Checkbox, Input } from '@dolittle/design-system';
 
-import { createApplication, HttpApplicationRequest } from '../../../apis/solutions/application';
+import { createApplication, HttpApplicationRequest } from '../apis/solutions/application';
 
-import { alphaNumericLowerCasedCharsRegex } from '../../../utils/helpers/regex';
+import { alphaNumericLowerCasedCharsRegex } from '../utils/helpers/regex';
 
 // Remove click events from the form controls and enable them for the checkboxes.
 // TODO: Maybe we should move this to the design system?
