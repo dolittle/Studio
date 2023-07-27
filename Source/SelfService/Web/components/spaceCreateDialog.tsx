@@ -71,7 +71,6 @@ export const SpaceCreateDialog = ({ isOpen, onClose }: SpaceCreateDialogProps) =
             });
         }
 
-        // TODO: Should this change current environment?
         try {
             await createApplication(request);
             setCurrentApplicationId(request.id);
