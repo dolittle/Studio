@@ -4,7 +4,7 @@
 import React, { useMemo, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { useConnectionId } from '../../../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 import { AlertBox, ContentContainer, LoadingSpinner } from '@dolittle/design-system';
 
@@ -20,7 +20,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 
 export const MessagesListView = () => {
-    const connectionId = useConnectionId();
+    const connectionId = useConnectionIdFromRoute();
     const navigate = useNavigate();
     const [selectedMessageTypeIds, setSelectedMessageTypeIds] = useState<string[]>([]);
     const queryClient = useQueryClient();

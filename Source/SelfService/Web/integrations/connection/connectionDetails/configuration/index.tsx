@@ -13,7 +13,7 @@ import { AccordionList, AccordionListProps, FileUploadFormRef } from '@dolittle/
 
 import { useConnectionsIdGet, useConnectionsIdDelete } from '../../../../apis/integrations/connectionsApi.hooks';
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
-import { useConnectionId } from '../../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../../routes.hooks';
 
 import { M3ConfigurationForm, M3ConfigurationFormRef } from '../../configuration/M3ConfigurationForm';
 import { MainM3ConnectionInfo } from '../../configuration/MainM3ConnectionInfo';
@@ -22,7 +22,7 @@ import { ActionToolbar } from './ActionToolbar';
 
 export const ConfigurationView = () => {
     const [canEdit, setEditMode] = useState(false);
-    const connectionId = useConnectionId();
+    const connectionId = useConnectionIdFromRoute();
     const query = useConnectionsIdGet(
         { id: connectionId || '' },
         { refetchInterval: (data) => data?.value?.status.name !== 'Connected' ? 5000 : false }

@@ -8,12 +8,12 @@ import { useRoutes } from 'react-router-dom';
 import { useConnectionsIdGet } from '../../apis/integrations/connectionsApi.hooks';
 
 import { routes } from './routes';
-import { useConnectionId } from '../routes.hooks';
+import { useConnectionIdFromRoute } from '../routes.hooks';
 
 import { DebugRouter } from '../../components/debugRouter';
 
 export const Connection = () => {
-    const connectionId = useConnectionId();
+    const connectionId = useConnectionIdFromRoute();
     const routesElement = useRoutes(routes);
     const query = useConnectionsIdGet({ id: connectionId || '' });
 

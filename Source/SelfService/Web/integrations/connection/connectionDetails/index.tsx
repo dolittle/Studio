@@ -8,7 +8,7 @@ import { Link, Location, Outlet, Navigate, useLocation } from 'react-router-dom'
 import { Tabs } from '@dolittle/design-system';
 
 import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
-import { useConnectionId } from '../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../routes.hooks';
 import { getConnectionStatus } from '../../../utils/helpers/connectionStatuses';
 
 import { Page } from '../../../components/layout/page';
@@ -51,7 +51,7 @@ const tabs = [
 
 export const ConnectionDetails = () => {
     const location = useLocation();
-    const connectionId = useConnectionId();
+    const connectionId = useConnectionIdFromRoute();
     const { isLoading, data } = useConnectionsIdGet({ id: connectionId || '' });
 
     const connection = data?.value;

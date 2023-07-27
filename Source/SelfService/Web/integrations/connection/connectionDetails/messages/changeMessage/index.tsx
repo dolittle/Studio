@@ -11,7 +11,7 @@ import {
     useConnectionsIdMessageMappingsTablesTableMessagesMessageGet,
     useConnectionsIdMessageMappingsTablesTableMessagesMessagePost
 } from '../../../../../apis/integrations/messageMappingApi.hooks';
-import { useConnectionId } from '../../../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 import { ViewMode } from './ViewMode';
 import { MessageMappingForm } from './components/MessageMappingForm';
@@ -19,7 +19,7 @@ import { ChangeMessageView } from './ChangeMessageView';
 
 export const Index = () => {
     const location = useLocation();
-    const connectionId = useConnectionId();
+    const connectionId = useConnectionIdFromRoute();
     const { table = '', messageId = '' } = useParams();
 
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';

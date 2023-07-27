@@ -8,7 +8,7 @@ import { Box, Typography, Collapse } from '@mui/material';
 import { AccordionList, AccordionListProps, FileUploadFormRef } from '@dolittle/design-system';
 
 import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
-import { useConnectionId } from '../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../routes.hooks';
 
 import { Page } from '../../../components/layout/page';
 import { MainM3ConnectionInfo } from '../configuration/MainM3ConnectionInfo';
@@ -17,7 +17,7 @@ import { useBuildConfigurationAccordionList } from '../configuration/useBuildCon
 import { M3ConfigurationForm } from '../configuration/M3ConfigurationForm';
 
 export const NewConnectionView = () => {
-    const connectionId = useConnectionId();
+    const connectionId = useConnectionIdFromRoute();
     const query = useConnectionsIdGet(
         { id: connectionId || '' },
         { refetchInterval: (data) => data?.value?.status.name !== 'Connected' ? 5000 : false }

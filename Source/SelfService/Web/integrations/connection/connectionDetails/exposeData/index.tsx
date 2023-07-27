@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { useConnectionId } from '../../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../../routes.hooks';
 
 import { useSnackbar } from 'notistack';
 
@@ -35,8 +35,7 @@ const asyncApiSpecificationUrlTemplate = 'https://{bridgeApiHost}/connections/{i
 
 export const ExposeDataView = () => {
     const bridgeApiHost = 'inspiring-ritchie.dolittle.cloud';
-    // get connectionId from the route
-    const connectionId = useConnectionId();
+    const connectionId = useConnectionIdFromRoute();
     const asyncApiSpecificationUrl = asyncApiSpecificationUrlTemplate
         .replace('{bridgeApiHost}', bridgeApiHost)
         .replace('{id}', connectionId || '');

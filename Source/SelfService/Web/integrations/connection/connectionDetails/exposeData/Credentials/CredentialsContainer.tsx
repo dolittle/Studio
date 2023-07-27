@@ -14,7 +14,7 @@ import {
     useConnectionsIdServiceAccountsServiceAccountNameDelete
 } from '../../../../../apis/integrations/serviceAccountApi.hooks';
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
-import { useConnectionId } from '../../../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 import { CredentialsList } from './CredentialsList';
 import { GenerateCredentialsForm } from './GenerateCredentialsForm';
@@ -24,7 +24,7 @@ export type CredentialsContainerProps = {};
 
 export const CredentialsContainer = (props: CredentialsContainerProps) => {
     const { enqueueSnackbar } = useSnackbar();
-    const connectionId = useConnectionId();
+    const connectionId = useConnectionIdFromRoute();
     const queryClient = useQueryClient();
 
     const [expandCredentials, setExpandCredentials] = useState(false);

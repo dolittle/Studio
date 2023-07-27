@@ -3,7 +3,7 @@
 
 import { useParams } from 'react-router-dom';
 
-export const useConnectionId = () => {
+export const useConnectionIdFromRoute = () => {
     const { connectionId } = useParams();
     return connectionId;
 };
