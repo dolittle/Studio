@@ -7,6 +7,7 @@ import { Collapse, Box, Typography } from '@mui/material';
 import { AlertBox, ContentSection } from '@dolittle/design-system';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { GenerateServiceAccountForm } from './GenerateServiceAccountForm';
+import { ServiceAccountsTable } from './ServiceAccountsTable';
 
 export type ServiceAccountsSectionProps = {};
 
@@ -86,6 +87,11 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
                     />
                 </ContentSection>
             </Collapse>
+            {items.length > 0 && (
+                <ContentSection>
+                    <ServiceAccountsTable items={items} isLoading={isLoading} />
+                </ContentSection>
+            )}
 
 
         </ContentSection>
