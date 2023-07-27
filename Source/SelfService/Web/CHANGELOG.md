@@ -1,3 +1,14 @@
+# [3.5.0] - 2023-7-27 [PR: #424](https://github.com/dolittle/Studio/pull/424)
+## Summary
+
+Adds a new sub-page for consuming event streams that link to the async-api -specification for the connection.
+
+### additional
+
+- sets up k3d in the devcontainer and adds a new version of the reset-local-k3d -script (which works with recent versions of k3d)
+- re-generated code from the bridge-api open-api -spec (swagger) to one that includes the KafkaServiceAccount -models
+
+
 # [3.4.65] - 2023-7-26 [PR: #428](https://github.com/dolittle/Studio/pull/428)
 ## Summary
 
