@@ -14,17 +14,17 @@ const styles = {
     list: {
         p: 0,
         mt: 2.5,
-        display: 'inline-block'
+        display: 'inline-block',
     },
     button: {
         mb: 2,
         minWidth: 155,
         minHeight: 36,
-        display: 'block'
-    }
+        display: 'block',
+    },
 };
 
-type ApplicationsListProps = {
+export type ApplicationsListProps = {
     data: ShortInfoWithEnvironment[];
     onChoose: (application: ShortInfoWithEnvironment) => void;
 };

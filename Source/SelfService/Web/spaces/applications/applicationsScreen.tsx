@@ -37,7 +37,7 @@ export const ApplicationsScreen = () => {
             setLoaded(true);
         }).catch(error => {
             console.log(error);
-            enqueueSnackbar('Failed getting data from the server', { variant: 'error' });
+            enqueueSnackbar('Failed getting data from the server.', { variant: 'error' });
         });
     }, []);
 
