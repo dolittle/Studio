@@ -36,9 +36,9 @@ export const ConsumeDataEventStreamsView = () => {
     return (
         <>
             <ContentContainer>
-                <ContentHeader title='Async API Specification' />
-                <ContentSection hideDivider title='Async API Specification'>
-                    <Typography sx={{ pt: 1.5 }}>Our async API is documented using AsyncAPI.</Typography>
+                <ContentHeader title='Consuming your data' />
+                <ContentSection title='Async API Specification'>
+                    <Typography sx={{ pt: 1.5 }}>Our API for consuming event streams are defined using AsyncAPI.</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
                         <Link
                             target
