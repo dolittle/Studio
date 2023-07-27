@@ -19,7 +19,7 @@ import { M3ConfigurationForm } from '../configuration/M3ConfigurationForm';
 export const NewConnectionView = () => {
     const connectionId = useConnectionIdFromRoute();
     const query = useConnectionsIdGet(
-        { id: connectionId || '' },
+        { id: connectionId },
         { refetchInterval: (data) => data?.value?.status.name !== 'Connected' ? 5000 : false }
     );
 
@@ -35,7 +35,7 @@ export const NewConnectionView = () => {
 
 
     if (query.isLoading) return <>Loading</>;
-    if (!connection || !connectionId) return null;
+    if (!connection) return null;
 
     return (
         <Page title='New M3 Connection'>

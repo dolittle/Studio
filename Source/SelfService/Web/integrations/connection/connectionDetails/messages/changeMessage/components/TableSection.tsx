@@ -26,7 +26,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
     const connectionId = useConnectionIdFromRoute();
     const setMappedFieldsInForm = useUpdateMappedFieldsInForm();
 
-    if (!connectionId || !selectedTableName) return <AlertBox />;
+    if (!selectedTableName) return <AlertBox />;
 
     const initialSelectedRowIds = useMemo(
         () => initialSelectedFields.map(field => field.mappedColumn?.m3ColumnName) || [],

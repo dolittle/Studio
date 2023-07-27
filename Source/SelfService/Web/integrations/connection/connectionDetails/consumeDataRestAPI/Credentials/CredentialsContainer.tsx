@@ -31,8 +31,6 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
     const [activeCredential, setActiveCredential] = useState<string | undefined>(undefined);
     const [resetForm, setResetForm] = useState(false);
 
-    if (!connectionId) return <AlertBox />;
-
     const [deleteDialogState, deleteDialogDispatch] = useReducer(deleteCredentialDialogReducer, { open: false, credentialName: '', connectionId });
 
     const { data, isLoading, isError, error } = useConnectionsIdServiceAccountsGet({ id: connectionId });

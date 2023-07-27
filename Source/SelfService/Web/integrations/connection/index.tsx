@@ -15,7 +15,7 @@ import { DebugRouter } from '../../components/debugRouter';
 export const Connection = () => {
     const connectionId = useConnectionIdFromRoute();
     const routesElement = useRoutes(routes);
-    const query = useConnectionsIdGet({ id: connectionId || '' });
+    const query = useConnectionsIdGet({ id: connectionId });
 
     if (query.isError) return <>Something went wrong. Could not load connection details for {connectionId}</>;
 

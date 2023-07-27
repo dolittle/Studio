@@ -25,7 +25,7 @@ export const MessagesListView = () => {
     const [selectedMessageTypeIds, setSelectedMessageTypeIds] = useState<string[]>([]);
     const queryClient = useQueryClient();
 
-    const { data, isError, isLoading } = useConnectionsIdMessageMappingsGet({ id: connectionId || '' });
+    const { data, isError, isLoading } = useConnectionsIdMessageMappingsGet({ id: connectionId });
 
     const handleCreateNewMessage = () => {
         navigate('new');
@@ -64,7 +64,7 @@ export const MessagesListView = () => {
     };
 
     if (isLoading) return <LoadingSpinner />;
-    if (isError || !connectionId) return <AlertBox />;
+    if (isError) return <AlertBox />;
 
     return (
         messageTypesRows.length ?

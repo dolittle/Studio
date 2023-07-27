@@ -24,7 +24,7 @@ export const ConfigurationView = () => {
     const [canEdit, setEditMode] = useState(false);
     const connectionId = useConnectionIdFromRoute();
     const query = useConnectionsIdGet(
-        { id: connectionId || '' },
+        { id: connectionId },
         { refetchInterval: (data) => data?.value?.status.name !== 'Connected' ? 5000 : false }
     );
 
@@ -71,7 +71,7 @@ export const ConfigurationView = () => {
     };
 
     if (query.isLoading) return <>Loading</>;
-    if (!connection || !connectionId) return null;
+    if (!connection) return null;
 
     return (
         <Box sx={{ mt: 6, ml: 2 }}>
