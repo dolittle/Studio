@@ -69,7 +69,7 @@ export const SpaceCreateDialog = ({ isOpen, onClose }: SpaceCreateDialogProps) =
             setCurrentApplicationId(request.id);
             enqueueSnackbar(`'${form.name}' successfully created.`);
         } catch (error) {
-            enqueueSnackbar('Failed to create new space. Please try again.', { variant: 'error' });
+            enqueueSnackbar('Failed to create new application. Please try again.', { variant: 'error' });
         } finally {
             onClose();
             setIsLoading(false);
@@ -81,7 +81,7 @@ export const SpaceCreateDialog = ({ isOpen, onClose }: SpaceCreateDialogProps) =
             id='create-space'
             isOpen={isOpen}
             isLoading={isLoading}
-            title='Create new Space'
+            title='Create new Application'
             formInitialValues={{
                 name: '',
                 environments: {
@@ -94,11 +94,11 @@ export const SpaceCreateDialog = ({ isOpen, onClose }: SpaceCreateDialogProps) =
             onCancel={onClose}
             onConfirm={handleSpaceCreate}
         >
-            <Typography variant='body1' sx={{ my: 2 }}>Provide a name for your new space.</Typography>
+            <Typography variant='body1' sx={{ my: 2 }}>Provide a name for your new application.</Typography>
             <Input
                 id='name'
-                label='Space Name'
-                required='Space name required.'
+                label='Application name'
+                required
                 pattern={{
                     value: alphaNumericLowerCasedCharsRegex,
                     message: 'Name can only contain lowercase alphanumeric characters.'
@@ -106,7 +106,7 @@ export const SpaceCreateDialog = ({ isOpen, onClose }: SpaceCreateDialogProps) =
             />
 
             <Typography variant='body1' sx={{ mt: 4 }}>
-                Select the environments you would like available in your new space.
+                Select the environments you would like available in your new application.
             </Typography>
             <Stack sx={{ '& .MuiFormControl-root': { display: 'inline' } }}>
                 <Checkbox id='environments.Dev' label='Development' />
