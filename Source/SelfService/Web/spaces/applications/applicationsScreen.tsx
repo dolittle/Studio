@@ -3,9 +3,9 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 import { useGlobalContext } from '../../context/globalContext';
+import { useSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom';
 
 import { Box, Stack, Typography } from '@mui/material';
 
@@ -14,9 +14,9 @@ import { Button, Link } from '@dolittle/design-system';
 import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
 import { HttpResponseApplications, getApplications } from '../../apis/solutions/application';
 
+import { ApplicationsList } from './applicationsList';
 import { LoginWrapper } from '../../components/layout/loginWrapper';
 import { SpaceCreateDialog } from '../../components/spaceCreateDialog';
-import { ApplicationsList } from './applicationsList';
 
 export const ApplicationsScreen = () => {
     const navigate = useNavigate();

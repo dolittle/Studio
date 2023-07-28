@@ -3,11 +3,11 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { useSnackbar } from 'notistack';
 import { useGlobalContext } from '../../../context/globalContext';
+import { useSnackbar } from 'notistack';
 
-import { getApplications, HttpResponseApplications } from '../../../apis/solutions/application';
 import { ShortInfoWithEnvironment } from '../../../apis/solutions/api';
+import { getApplications, HttpResponseApplications } from '../../../apis/solutions/application';
 
 import { getSelectionMenuItems, DropdownMenuProps, MenuItemProps } from '@dolittle/design-system';
 
@@ -22,8 +22,6 @@ export const SpaceSelectMenu = () => {
     const [createSpaceDialogOpen, setCreateSpaceDialogOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
-    const currentApplication = applicationInfos.find(application => application.id === currentApplicationId) || applicationInfos[0];
-
     useEffect(() => {
         Promise.all([getApplications()])
             .then(values => {
@@ -37,6 +35,8 @@ export const SpaceSelectMenu = () => {
     }, [currentApplicationId]);
 
     if (isLoading) return null;
+
+    const currentApplication = applicationInfos.find(application => application.id === currentApplicationId) || applicationInfos[0];
 
     const applicationMenuItems = () => {
         const menuItems: DropdownMenuProps['menuItems'] = applicationInfos.filter(application => application.environment === currentEnvironment)
