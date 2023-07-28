@@ -1,11 +1,12 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
 import { Collapse, Box, Typography } from '@mui/material';
 import { AlertBox, ContentSection } from '@dolittle/design-system';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
+import { useConnectionsIdKafkaServiceAccountsGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 import { GenerateServiceAccountForm } from './GenerateServiceAccountForm';
 import { ServiceAccountsTable } from './ServiceAccountsTable';
 
@@ -17,11 +18,11 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
     const [expandForm, setExpandForm] = useState(false);
     const [resetForm, setResetForm] = useState(false);
 
-    const isLoading = false;
-    const isError = false;
-    const error = '';
+    const { data, isLoading, isError, error } = useConnectionsIdKafkaServiceAccountsGet({ id: connectionId });
 
-    const items = [];
+    const items = useMemo(
+        () => data?.sort((a, b) => b.createdAt! > a.createdAt! ? 1 : -1) || [], [data]
+    );
 
     const allowGenerateNew = !expandForm;
 
@@ -64,7 +65,7 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
         <ContentSection
             title='Service Accounts'
             headerProps={{
-                buttons:[
+                buttons: [
                     {
                         label: 'Generate new service account',
                         variant: 'outlined',
@@ -74,7 +75,7 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
                 ]
             }}
         >
-             <Collapse in={expandForm}>
+            <Collapse in={expandForm}>
                 <ContentSection hideDivider={!expandForm} title='Generate New Credentials'>
                     <GenerateServiceAccountForm
                         resetForm={resetForm}
