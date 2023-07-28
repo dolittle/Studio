@@ -33,7 +33,7 @@ export const useConnectionsIdKafkaServiceAccountsGet = (params: ConnectionsIdKaf
 export const useConnectionsIdKafkaServiceAccountsServiceAccountNameGet = (params: ConnectionsIdKafkaServiceAccountsServiceAccountNameGetRequest) => {
     const api = getOrCreateApi();
     return useQuery({
-        queryKey: [CACHE_KEYS.ConnectionKafkaServiceAccountsName_GET, params.id],
+        queryKey: [CACHE_KEYS.ConnectionKafkaServiceAccounts_GET, params.id, CACHE_KEYS.ConnectionKafkaServiceAccountsName_GET],
         queryFn: api.connectionsIdKafkaServiceAccountsServiceAccountNameGet.bind(api, params)
     });
 };
