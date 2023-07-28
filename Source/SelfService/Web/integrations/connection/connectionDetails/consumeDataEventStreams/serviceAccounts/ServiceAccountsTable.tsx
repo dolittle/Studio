@@ -31,11 +31,14 @@ export const ServiceAccountsTable = ({ items, isLoading }: ServiceAccountsTableP
             flex: 1,
         },
         {
-            field: 'createdAd',
+            field: 'createdAt',
             headerName: 'Created at',
             minWidth: 270,
             flex: 1,
-            valueGetter: (params) => params.row.createdAt ? formatDate(params.row.createdAt) : '-'
+            valueFormatter: (params) => params.value ? formatDate(params.value) : '-',
+            renderCell: (params) => {
+                return <span title={params.value?.toISOString()}>{params.formattedValue}</span>;
+            },
         },
     ];
 
