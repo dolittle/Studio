@@ -27,6 +27,10 @@ export const SpaceSelectMenu = () => {
             .then(values => {
                 const response = values[0] as HttpResponseApplications;
 
+                if (!currentApplicationId) {
+                    setCurrentApplicationId(response.applications[0].id);
+                }
+
                 setCanCreateApplication(response.canCreateApplication);
                 setApplicationInfos(response.applications);
                 setIsLoading(false);
