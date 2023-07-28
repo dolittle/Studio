@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
 import { GlobalContextProvider } from './context/globalContext';
 
@@ -19,6 +19,7 @@ import { useViewportResize } from './utils/useViewportResize';
 
 import { RouteNotFound } from './components/notfound';
 import { DieAndRestart } from './components/dieAndRestart';
+import { LandingPageDesider } from './components/layout/landingPageDesider';
 import { LayoutWithSidebar } from './components/layout/layoutWithSidebar';
 
 import { BackupsScreen } from './applications/backupsScreen';
@@ -55,7 +56,7 @@ export const App = () => {
                             iconVariant={{ error: <Icon icon='ErrorRounded' sx={{ mr: 1 }} /> }}
                         >
                             <Routes>
-                                <Route path='/' element={<Navigate to='/applications' />} />
+                                <Route path='/' element={<LandingPageDesider />} />
 
                                 <Route path='/applications' element={<ApplicationsScreen />} />
 
