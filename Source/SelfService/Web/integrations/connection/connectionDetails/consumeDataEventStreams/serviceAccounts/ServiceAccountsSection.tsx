@@ -15,7 +15,6 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
     const { enqueueSnackbar } = useSnackbar();
     const connectionId = useConnectionIdFromRoute();
     const [expandForm, setExpandForm] = useState(false);
-    const [activeEntry, setActiveEntry] = useState<string | undefined>(undefined);
     const [resetForm, setResetForm] = useState(false);
 
     const isLoading = false;
@@ -24,14 +23,13 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
 
     const items = [];
 
-    const allowGenerateNew = !expandForm || (expandForm && !!activeEntry);
+    const allowGenerateNew = !expandForm;
 
     const handleNewGenerated = (tokenName: string) => {
-        setActiveEntry(tokenName);
+        setExpandForm(false);
     };
 
     const handleGenerateNewEntry = () => {
-        setActiveEntry(undefined);
         setResetForm(true);
         setExpandForm(true);
     };
@@ -47,11 +45,11 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
         if (expandForm && !isLoading) {
             setExpandForm(true);
         } else {
-            const shouldExpand = !isLoading && (items.length === 0 || activeEntry !== undefined);
+            const shouldExpand = !isLoading && (items.length === 0);
             setExpandForm(shouldExpand);
         }
 
-    }, [items, activeEntry, expandForm, isLoading]);
+    }, [items, expandForm, isLoading]);
 
     useEffect(() => {
         //TODO: Pav - no like this
