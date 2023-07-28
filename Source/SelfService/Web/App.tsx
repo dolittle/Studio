@@ -86,7 +86,7 @@ export const App = () => {
 
                                 <Route path='/integrations/*' element={<IntegrationsIndex />} />
 
-                                <Route path='*' element={<RouteNotFound redirectUrl='/applications' auto={true} />} />
+                                <Route path='*' element={<RouteNotFound redirectUrl='/' auto={true} />} />
                             </Routes>
                         </SnackbarProvider>
                     </GlobalContextProvider>
