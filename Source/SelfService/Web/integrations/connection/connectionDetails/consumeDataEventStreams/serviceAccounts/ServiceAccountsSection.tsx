@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
-import { Collapse, Box, Typography } from '@mui/material';
+import { Collapse } from '@mui/material';
 import { AlertBox, ContentSection } from '@dolittle/design-system';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { useConnectionsIdKafkaServiceAccountsGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
@@ -65,18 +65,18 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
         <ContentSection
             title='Service Accounts'
             headerProps={{
-                buttons: [
+                buttons: allowGenerateNew ? [
                     {
                         label: 'Generate new service account',
                         variant: 'outlined',
                         onClick: handleGenerateNewEntry,
                         disabled: !allowGenerateNew
                     }
-                ]
+                ] : []
             }}
         >
             <Collapse in={expandForm}>
-                <ContentSection hideDivider={!expandForm} title='Generate New Credentials'>
+                <ContentSection hideDivider title='Generate New Service Account'>
                     <GenerateServiceAccountForm
                         resetForm={resetForm}
                         connectionId={connectionId}
