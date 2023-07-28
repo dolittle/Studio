@@ -1,3 +1,13 @@
+# [3.6.0] - 2023-7-28 [PR: #429](https://github.com/dolittle/Studio/pull/429)
+## Summary
+
+- Ability to create Kafka Service Accounts from the Consume Data (Event Streams) page for a connection
+- Listing out of existing Kafka Service Accounts
+- UX details
+  - Hide Generate button from header when form is visible
+  - Show the ISODate time on hover over the created at column for a service account
+
+
 # [3.5.0] - 2023-7-27 [PR: #424](https://github.com/dolittle/Studio/pull/424)
 ## Summary
 
