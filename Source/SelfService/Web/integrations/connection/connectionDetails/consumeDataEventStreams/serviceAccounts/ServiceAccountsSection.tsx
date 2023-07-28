@@ -86,11 +86,9 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
                     />
                 </ContentSection>
             </Collapse>
-            {items.length > 0 && (
-                <ContentSection>
-                    <ServiceAccountsTable items={items} isLoading={isLoading} />
-                </ContentSection>
-            )}
+            <ContentSection>
+                <ServiceAccountsTable items={items} isLoading={isLoading} />
+            </ContentSection>
 
 
         </ContentSection>
