@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { Box, FormHelperText, Typography } from '@mui/material';
 
-import { Button, Form, FormRef, Input, MaxWidthTextBlock } from '@dolittle/design-system';
+import { Button, Form, FormRef, Input, MaxWidthTextBlock, Select } from '@dolittle/design-system';
 
 import { useConnectionsIdKafkaServiceAccountsServiceAccountNamePost } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 import { AccountAccess, KafkaServiceAccountCreatedDto, ResponseError, ServiceAccountCreatedDto } from '../../../../../apis/integrations/generated';
@@ -47,7 +47,7 @@ export const GenerateServiceAccountForm = (props: GenerateServiceAccountFormProp
             id: props.connectionId,
             serviceAccountName: fieldValues.name,
             description: fieldValues.description,
-            access: fieldValues.access
+            access: fieldValues.access ?? undefined
         }, {
             onSuccess: (data: KafkaServiceAccountCreatedDto) => {
                 props.onFormComplete(data.serviceAccountName!);
@@ -79,6 +79,13 @@ export const GenerateServiceAccountForm = (props: GenerateServiceAccountFormProp
         }
     }, [props.resetForm]);
 
+    const accessOptions = [
+        { displayValue: 'Default', value: ''},
+        { displayValue: 'Read', value: AccountAccess.Read},
+        { displayValue: 'Read & Write', value: AccountAccess.ReadWrite},
+        { displayValue: 'Debug', value: AccountAccess.Debug}
+    ];
+
     return (
         <>
             <Form<GenerateKafkaServiceAccountFormParameters>
@@ -98,7 +105,8 @@ export const GenerateServiceAccountForm = (props: GenerateServiceAccountFormProp
                         sx={{ mb: 6 }}
                     >
                         <Input id='name' label='Name' required disabled={hasResult && !formSubmitError} sx={{ mr: 10 }} />
-                        <Input id='description' label='Description' disabled={hasResult && !formSubmitError} />
+                        <Input id='description' label='Description' disabled={hasResult && !formSubmitError} sx={{ mr: 10 }}/>
+                        <Select id='access' label='Access' options={accessOptions} />
                     </Box>
                     <Box display='flex' justifyContent='flex-end'>
                         {props.canCancel && <Button
