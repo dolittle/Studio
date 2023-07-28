@@ -20,4 +20,8 @@ export enum CACHE_KEYS {
 
     //ServiceAccountsApi
     ConnectionServiceAccounts_GET = 'connection_service_accounts_get',
+
+    //KafkaServiceAccountsApi
+    ConnectionKafkaServiceAccounts_GET = 'connection_kafka_service_accounts_get',
+    ConnectionKafkaServiceAccountsName_GET = 'connection_kafka_service_accounts_name_get',
 };
