@@ -41,11 +41,6 @@ export const GenerateServiceAccountForm = (props: GenerateServiceAccountFormProp
     const generateServiceAccountMutation = useConnectionsIdKafkaServiceAccountsServiceAccountNamePost();
     const hasResult = !!token;
 
-    const handleTokenCopy = () => {
-        navigator.clipboard.writeText(token || '');
-        enqueueSnackbar('Token copied to clipboard.');
-    };
-
     const handleGenerate = (fieldValues: GenerateKafkaServiceAccountFormParameters) => {
         setFormSubmitError(undefined);
         generateServiceAccountMutation.mutate({
@@ -57,6 +52,7 @@ export const GenerateServiceAccountForm = (props: GenerateServiceAccountFormProp
             onSuccess: (data: KafkaServiceAccountCreatedDto) => {
                 props.onFormComplete(data.serviceAccountName!);
                 queryClient.invalidateQueries([CACHE_KEYS.ConnectionKafkaServiceAccounts_GET, props.connectionId]);
+                enqueueSnackbar(`Service account ${data.serviceAccountName} created`);
             },
             onError: async (error) => {
                 let message = `Error while generating service account.`;
