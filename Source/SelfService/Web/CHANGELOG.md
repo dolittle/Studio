@@ -1,3 +1,24 @@
+# [3.6.4] - 2023-7-31 [PR: #433](https://github.com/dolittle/Studio/pull/433)
+## Summary
+
+Display error page when error 500 appears.
+
+<img width="921" alt="Screenshot 2023-07-31 at 23 08 18" src="https://github.com/dolittle/Studio/assets/19160439/c609e4fe-4e96-404e-8e43-d164b8010740">
+
+### Added
+
+- AigonIsLostSvg for graphic
+
+### Changed
+
+- Renamed 'DieAndRestart' to 'Problem' as this is more suitable
+- Refactored code
+
+### Removed
+
+- FluentUI from PickEnvironment
+
+
 # [3.6.3] - 2023-7-31 [PR: #432](https://github.com/dolittle/Studio/pull/432)
 ## Summary
 
