@@ -39,7 +39,8 @@ export const LandingPageDecider = () => {
 
     return (
         hasOneApplication ? (
-            <Navigate to={`/microservices/application/${currentApplicationId}/${currentEnvironment}/overview`} />) : (
+            <Navigate to={`/microservices/application/${currentApplicationId}/${currentEnvironment}/overview`} />
+        ) : (
             <Navigate to='/applications' />
         )
     );
