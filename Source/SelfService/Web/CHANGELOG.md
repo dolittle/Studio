@@ -1,3 +1,28 @@
+# [3.6.1] - 2023-7-31 [PR: #430](https://github.com/dolittle/Studio/pull/430)
+## Summary
+
+Improved log in pages appearance.
+
+Create new applications in a Dialog, not on a separate page.
+
+If the user has only one application, navigate directly to the Microservices page, otherwise navigate to the Applications page.
+
+<img width="956" alt="Screenshot 2023-07-28 at 12 05 18" src="https://github.com/dolittle/Studio/assets/19160439/eff17a7d-8839-4632-baf4-abac0660d8bb">
+
+### Added
+
+- LandingPageDesider that navigates to the starting page
+
+### Changed
+
+- ApplicationsScreen 'create new application' appearance
+
+### Fixed
+
+- Style fixes
+- Add currentApplicationId to store if navigated directly to Home page and application is not selected yet
+
+
 # [3.6.0] - 2023-7-28 [PR: #429](https://github.com/dolittle/Studio/pull/429)
 ## Summary
 
