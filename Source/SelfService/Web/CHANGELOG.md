@@ -1,3 +1,20 @@
+# [3.6.3] - 2023-7-31 [PR: #432](https://github.com/dolittle/Studio/pull/432)
+## Summary
+
+Fix LandingPageDecider errors.
+
+![MicrosoftTeams-image (1)](https://github.com/dolittle/Studio/assets/19160439/ba8f4fc2-bede-4be5-b30f-5c1ccef05223)
+
+### Changed
+
+- Rename create new 'Space' to 'application' in NavigationBar
+
+### Fixed
+
+- Get current application ID from GlobalContext
+- Typo in 'LandingPageDecider'
+
+
 # [3.6.2] - 2023-7-31 [PR: #431](https://github.com/dolittle/Studio/pull/431)
 ## Summary
 
