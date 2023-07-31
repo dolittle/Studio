@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useReducer } from 'react';
 import { useSnackbar } from 'notistack';
 import { Collapse } from '@mui/material';
 import { AlertBox, ContentSection } from '@dolittle/design-system';
@@ -9,6 +9,7 @@ import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { useConnectionsIdKafkaServiceAccountsGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 import { GenerateServiceAccountForm } from './GenerateServiceAccountForm';
 import { ServiceAccountsTable } from './ServiceAccountsTable';
+import { ViewAccessDialog, viewAccessDialogReducer } from './ViewAccessDialog';
 
 export type ServiceAccountsSectionProps = {};
 
@@ -23,6 +24,8 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
     const items = useMemo(
         () => data?.sort((a, b) => b.createdAt! > a.createdAt! ? 1 : -1) || [], [data]
     );
+    const [viewAccessDialogState, viewAccessDialogDispatch] = useReducer(viewAccessDialogReducer, { isOpen: false, connectionId });
+
 
     const allowGenerateNew = !expandForm;
 
@@ -59,6 +62,7 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
         }
     }, [resetForm]);
 
+
     if (isError) return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
 
     return (
@@ -87,7 +91,15 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
                 </ContentSection>
             </Collapse>
             <ContentSection>
-                <ServiceAccountsTable items={items} isLoading={isLoading} />
+                <ViewAccessDialog dialogState={viewAccessDialogState} dispatch={viewAccessDialogDispatch} />
+                <ServiceAccountsTable
+                    items={items}
+                    isLoading={isLoading}
+                    onViewAccessCertificate={
+                        (account) => {
+                            viewAccessDialogDispatch({ type: 'open', payload: { serviceAccountName: account.serviceAccountName! } });
+                        }
+                    } />
             </ContentSection>
 
 

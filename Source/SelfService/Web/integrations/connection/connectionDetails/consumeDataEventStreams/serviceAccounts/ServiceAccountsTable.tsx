@@ -5,6 +5,7 @@ import React from 'react';
 
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import { Paper } from '@mui/material';
+import { Button } from '@dolittle/design-system';
 
 import { KafkaServiceAccountListDto } from '../../../../../apis/integrations/generated';
 import { formatDate } from '../../../../../utils/helpers/dates';
@@ -13,9 +14,10 @@ import { formatDate } from '../../../../../utils/helpers/dates';
 export type ServiceAccountsTableProps = {
     items: KafkaServiceAccountListDto[];
     isLoading: boolean;
+    onViewAccessCertificate: (serviceAccount: KafkaServiceAccountListDto) => void;
 };
 
-export const ServiceAccountsTable = ({ items, isLoading }: ServiceAccountsTableProps) => {
+export const ServiceAccountsTable = ({ items, isLoading, onViewAccessCertificate }: ServiceAccountsTableProps) => {
 
     const columns: GridColDef<KafkaServiceAccountListDto>[] = [
         {
@@ -29,6 +31,16 @@ export const ServiceAccountsTable = ({ items, isLoading }: ServiceAccountsTableP
             headerName: 'Description',
             minWidth: 270,
             flex: 1,
+        },
+        {
+            field: 'certificates',
+            headerName: 'Certificates',
+            minWidth: 350,
+            sortable: false,
+            flex: 1,
+            renderCell: (params) => {
+                return <><Button variant='outlined' label='View Access Certificate' onClick={() => onViewAccessCertificate(params.row)} /></>;
+            }
         },
         {
             field: 'createdAt',
