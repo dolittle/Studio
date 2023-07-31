@@ -54,7 +54,7 @@ export const SpaceSelectMenu = () => {
 
         menuItems.push({
             id: 'create-new-application',
-            label: 'Create New Space',
+            label: 'Create New application',
             icon: 'AddBoxRounded',
             onSelect: () => handleApplicationCreate(),
         });
