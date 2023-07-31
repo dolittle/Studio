@@ -13,7 +13,7 @@ import { HttpResponseApplication, getApplications, getApplication, HttpResponseA
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
 import { LayoutWithSidebar, getMenuWithApplication } from '../components/layout/layoutWithSidebar';
-import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
+import { isEnvironmentValidFromUrl, PickEnvironment } from '../components/pickEnvironment';
 import { TopNavBar } from '../components/layout/topNavBar';
 
 import { LogFilterMicroservice, LogFilterPanel } from './logging/logFilter/logFilterPanel';
@@ -90,7 +90,7 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
         return <Typography variant='h1' my={2}>Application with this environment not found</Typography>;
     }
 
-    if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
+    if (!isEnvironmentValidFromUrl(applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}

@@ -19,22 +19,22 @@ import { Microservice } from './microservice/microservices/microservices';
 import { MicroserviceNewScreen } from './microservice/microserviceNewScreen';
 import { MicroserviceViewScreen } from './microservice/microserviceViewScreen';
 import { LayoutWithSidebar, getMenuWithApplication } from '../components/layout/layoutWithSidebar';
-import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
+import { isEnvironmentValidFromUrl, PickEnvironment } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
 import { TopNavBar } from '../components/layout/topNavBar';
 
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
 export const MicroservicesScreen = withRouteApplicationState(({ routeApplicationParams }) => {
-    const navigate = useNavigate();
     const { hasOneCustomer } = useGlobalContext();
+    const navigate = useNavigate();
 
     const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
-    const [loaded, setLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const href = `/problem`;
 
@@ -63,21 +63,21 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
             const microservicesData = values[2] as HttpResponseMicroservices;
             const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
             mergeMicroservicesFromK8s(microservices);
-            setLoaded(true);
+            setIsLoaded(true);
         }).catch(() => {
             navigate(href);
             return;
         });
     }, [currentEnvironment, currentApplicationId]);
 
-    if (!loaded) return null;
+    if (!isLoaded) return null;
 
     if (application.id === '') {
         navigate(href);
         return null;
     }
 
-    if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
+    if (!isEnvironmentValidFromUrl(applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}

@@ -47,7 +47,7 @@ type Props = {
     openModal: boolean
 };
 
-export const isEnvironmentValidFromUri = (applications: ShortInfoWithEnvironment[], currentApplicationId: string, currentEnvironment: string): boolean => {
+export const isEnvironmentValidFromUrl = (applications: ShortInfoWithEnvironment[], currentApplicationId: string, currentEnvironment: string): boolean => {
     return applications.some((info) => {
         return currentApplicationId === info.id && currentEnvironment === info.environment;
     });
