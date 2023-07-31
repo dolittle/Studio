@@ -6,8 +6,6 @@ import React, { useEffect, useState } from 'react';
 import { Route, useNavigate, Routes, generatePath } from 'react-router-dom';
 import { useGlobalContext } from '../context/globalContext';
 
-import { Typography } from '@mui/material';
-
 // I wonder if scss is scoped like svelte. I hope so!
 // Not scoped like svelte
 import '../spaces/applications/applicationScreen.scss';
@@ -18,20 +16,22 @@ import { HttpResponseApplication, getApplications, getApplication, HttpResponseA
 import { TopNavBar } from '../components/layout/topNavBar';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 import { DocumentationContainerScreen } from './documentation/container';
-import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
+import { PickEnvironment, isEnvironmentValidFromUrl } from '../components/pickEnvironment';
 
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
 export const DocumentationScreen = withRouteApplicationState(({ routeApplicationParams }) => {
+    const { hasOneCustomer } = useGlobalContext();
     const navigate = useNavigate();
-    const { hasOneCustomer, setNotification } = useGlobalContext();
 
     const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
-    const [loaded, setLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    const href = `/problem`;
 
     useEffect(() => {
         if (!currentEnvironment || !currentApplicationId) {
@@ -44,8 +44,8 @@ export const DocumentationScreen = withRouteApplicationState(({ routeApplication
         ]).then(values => {
             const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
+
             if (!applicationData?.id) {
-                const href = `/problem`;
                 navigate(href);
                 return;
             }
@@ -54,20 +54,21 @@ export const DocumentationScreen = withRouteApplicationState(({ routeApplication
             // TODO also when we have more than one application and more than one environment we should default to something.
             setApplications(applicationsData.applications);
             setApplication(applicationData);
-            setLoaded(true);
-        }).catch(error => {
-            console.log(error);
-            setNotification('Failed getting data from the server', 'error');
+            setIsLoaded(true);
+        }).catch(() => {
+            navigate(href);
+            return;
         });
     }, [currentApplicationId, currentEnvironment]);
 
-    if (!loaded) return null;
+    if (!isLoaded) return null;
 
     if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application with this environment not found</Typography>;
+        navigate(href);
+        return null;
     }
 
-    if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
+    if (!isEnvironmentValidFromUrl(applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}

@@ -14,7 +14,7 @@ import { getApplication, getApplications, HttpResponseApplication, HttpResponseA
 import { RouteNotFound } from '../components/notfound';
 import { TopNavBar } from '../components/layout/topNavBar';
 import { ContainerRegistryContainer } from './containerregistry/container';
-import { PickEnvironment, isEnvironmentValidFromUri } from '../components/pickEnvironment';
+import { PickEnvironment, isEnvironmentValidFromUrl } from '../components/pickEnvironment';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
@@ -63,7 +63,7 @@ export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplica
         return <Typography variant='h1' my={2}>Application with this environment not found</Typography>;
     }
 
-    if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
+    if (!isEnvironmentValidFromUrl(applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}

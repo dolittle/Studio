@@ -18,9 +18,8 @@ import '@dolittle/design-system/theming/fonts';
 import { useViewportResize } from './utils/useViewportResize';
 
 import { RouteNotFound } from './components/notfound';
-import { DieAndRestart } from './components/dieAndRestart';
+import { Problem } from './components/problem';
 import { LandingPageDecider } from './components/layout/landingPageDecider';
-import { LayoutWithSidebar } from './components/layout/layoutWithSidebar';
 
 import { BackupsScreen } from './applications/backupsScreen';
 import { DocumentationScreen } from './applications/documentationScreen';
@@ -43,55 +42,49 @@ export const App = () => {
     useViewportResize();
 
     return (
-        <>
-            <StyledEngineProvider injectFirst>
-                <ThemeProvider theme={themeDark}>
-                    <CssBaseline />
-                    <GlobalContextProvider>
-                        <SnackbarProvider
-                            maxSnack={6}
-                            autoHideDuration={4000}
-                            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                            TransitionComponent={(props: SlideProps) => <Slide {...props} direction='up' />}
-                            iconVariant={{ error: <Icon icon='ErrorRounded' sx={{ mr: 1 }} /> }}
-                        >
-                            <Routes>
-                                <Route path='/' element={<LandingPageDecider />} />
+        <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={themeDark}>
+                <CssBaseline />
+                <GlobalContextProvider>
+                    <SnackbarProvider
+                        maxSnack={6}
+                        autoHideDuration={4000}
+                        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                        TransitionComponent={(props: SlideProps) => <Slide {...props} direction='up' />}
+                        iconVariant={{ error: <Icon icon='ErrorRounded' sx={{ mr: 1 }} /> }}
+                    >
+                        <Routes>
+                            <Route path='/' element={<LandingPageDecider />} />
 
-                                <Route path='/applications' element={<ApplicationsScreen />} />
+                            <Route path='/applications' element={<ApplicationsScreen />} />
 
-                                <Route path='/application/*' element={<ApplicationScreen />} />
+                            <Route path='/application/*' element={<ApplicationScreen />} />
 
-                                <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
+                            <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
 
-                                <Route path='/microservices/application/:applicationId/:environment/*' element={<MicroservicesScreen />} />
+                            <Route path='/microservices/application/:applicationId/:environment/*' element={<MicroservicesScreen />} />
 
-                                <Route path='/documentation/application/:applicationId/:environment/*' element={<DocumentationScreen />} />
+                            <Route path='/documentation/application/:applicationId/:environment/*' element={<DocumentationScreen />} />
 
-                                <Route path='/containerregistry/application/:applicationId/:environment/*' element={<ContainerRegistryScreen />} />
+                            <Route path='/containerregistry/application/:applicationId/:environment/*' element={<ContainerRegistryScreen />} />
 
-                                <Route path='/m3connector/application/:applicationId/*' element={<M3ConnectorScreen />} />
+                            <Route path='/m3connector/application/:applicationId/*' element={<M3ConnectorScreen />} />
 
-                                <Route path='/logs/application/:applicationId/:environment' element={<LogsScreen />} />
+                            <Route path='/logs/application/:applicationId/:environment' element={<LogsScreen />} />
 
-                                <Route path='/admin/*' element={<AdminScreen />} />
+                            <Route path='/admin/*' element={<AdminScreen />} />
 
-                                <Route path='/problem' element={
-                                    <LayoutWithSidebar navigation={[]}>
-                                        <DieAndRestart />
-                                    </LayoutWithSidebar>
-                                } />
+                            <Route path='/problem' element={<Problem />} />
 
-                                <Route path='/home' element={<HomeScreen />} />
+                            <Route path='/home' element={<HomeScreen />} />
 
-                                <Route path='/integrations/*' element={<IntegrationsIndex />} />
+                            <Route path='/integrations/*' element={<IntegrationsIndex />} />
 
-                                <Route path='*' element={<RouteNotFound redirectUrl='/' auto={true} />} />
-                            </Routes>
-                        </SnackbarProvider>
-                    </GlobalContextProvider>
-                </ThemeProvider>
-            </StyledEngineProvider>
-        </>
+                            <Route path='*' element={<RouteNotFound redirectUrl='/' auto={true} />} />
+                        </Routes>
+                    </SnackbarProvider>
+                </GlobalContextProvider>
+            </ThemeProvider>
+        </StyledEngineProvider>
     );
 };

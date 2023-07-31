@@ -2,3 +2,4 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 export { AigonFixingSvg } from './AigonFixingSvg';
+export { AigonIsLostSvg } from './AigonIsLostSvg';

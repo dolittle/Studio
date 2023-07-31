@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import { Route, useNavigate, Routes, generatePath } from 'react-router-dom';
 import { useGlobalContext } from '../context/globalContext';
 
-import { Typography } from '@mui/material';
 // I wonder if scss is scoped like svelte. I hope so!
 // Not scoped like svelte
 import '../spaces/applications/applicationScreen.scss';
@@ -20,22 +19,24 @@ import { Microservice } from './microservice/microservices/microservices';
 import { MicroserviceNewScreen } from './microservice/microserviceNewScreen';
 import { MicroserviceViewScreen } from './microservice/microserviceViewScreen';
 import { LayoutWithSidebar, getMenuWithApplication } from '../components/layout/layoutWithSidebar';
-import { isEnvironmentValidFromUri, PickEnvironment } from '../components/pickEnvironment';
+import { isEnvironmentValidFromUrl, PickEnvironment } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
 import { TopNavBar } from '../components/layout/topNavBar';
 
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
 export const MicroservicesScreen = withRouteApplicationState(({ routeApplicationParams }) => {
+    const { hasOneCustomer } = useGlobalContext();
     const navigate = useNavigate();
-    const { hasOneCustomer, setNotification } = useGlobalContext();
 
     const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
-    const [loaded, setLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    const href = `/problem`;
 
     useEffect(() => {
         if (!currentEnvironment || !currentApplicationId) {
@@ -51,7 +52,6 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
             const applicationData = values[1];
 
             if (!applicationData?.id) {
-                const href = `/problem`;
                 navigate(href);
                 return;
             }
@@ -63,20 +63,21 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
             const microservicesData = values[2] as HttpResponseMicroservices;
             const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
             mergeMicroservicesFromK8s(microservices);
-            setLoaded(true);
-        }).catch(error => {
-            console.log(error);
-            setNotification('Failed getting data from the server', 'error');
+            setIsLoaded(true);
+        }).catch(() => {
+            navigate(href);
+            return;
         });
     }, [currentEnvironment, currentApplicationId]);
 
-    if (!loaded) return null;
+    if (!isLoaded) return null;
 
     if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application with this environment not found</Typography>;
+        navigate(href);
+        return null;
     }
 
-    if (!isEnvironmentValidFromUri(applications, currentApplicationId, currentEnvironment)) {
+    if (!isEnvironmentValidFromUrl(applications, currentApplicationId, currentEnvironment)) {
         return (
             <PickEnvironment
                 applications={applications}
