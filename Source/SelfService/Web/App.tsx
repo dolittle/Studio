@@ -19,7 +19,7 @@ import { useViewportResize } from './utils/useViewportResize';
 
 import { RouteNotFound } from './components/notfound';
 import { DieAndRestart } from './components/dieAndRestart';
-import { LandingPageDesider } from './components/layout/landingPageDesider';
+import { LandingPageDecider } from './components/layout/landingPageDecider';
 import { LayoutWithSidebar } from './components/layout/layoutWithSidebar';
 
 import { BackupsScreen } from './applications/backupsScreen';
@@ -56,7 +56,7 @@ export const App = () => {
                             iconVariant={{ error: <Icon icon='ErrorRounded' sx={{ mr: 1 }} /> }}
                         >
                             <Routes>
-                                <Route path='/' element={<LandingPageDesider />} />
+                                <Route path='/' element={<LandingPageDecider />} />
 
                                 <Route path='/applications' element={<ApplicationsScreen />} />
 

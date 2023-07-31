@@ -9,7 +9,7 @@ import { Navigate } from 'react-router-dom';
 
 import { getApplications, HttpResponseApplications } from '../../apis/solutions/application';
 
-export const LandingPageDesider = () => {
+export const LandingPageDecider = () => {
     const { currentApplicationId, currentEnvironment, setCurrentApplicationId, setCurrentEnvironment } = useGlobalContext();
     const { enqueueSnackbar } = useSnackbar();
 
