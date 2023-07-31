@@ -5,7 +5,7 @@ import React, { Dispatch } from 'react';
 
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Paper } from '@mui/material';
 import { AlertDialog, Button, ContentContainer, ContentDivider, ContentSection, IconButton } from '@dolittle/design-system';
-import { TextCopyBox } from '../../../configuration/TextCopyBox';
+import { TextCopyBox } from '../../../../../components/TextCopyBox';
 
 const styles = {
     title: {
