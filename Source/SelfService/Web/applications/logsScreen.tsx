@@ -31,14 +31,16 @@ const DAY = 86_400_000_000_000n;
 
 export const LogsScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
-    const { hasOneCustomer, setNotification } = useGlobalContext();
+    const { hasOneCustomer } = useGlobalContext();
 
     const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
-    const [loaded, setLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    const href = `/problem`;
 
     const availableMicroservices: LogFilterMicroservice[] = application?.microservices !== undefined
         ? application.microservices
@@ -65,7 +67,6 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
             const applicationData = values[1];
 
             if (!applicationData?.id) {
-                const href = `/problem`;
                 navigate(href);
                 return;
             }
@@ -77,17 +78,18 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
             const microservicesData = values[2] as HttpResponseMicroservices;
             const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
             mergeMicroservicesFromK8s(microservices);
-            setLoaded(true);
-        }).catch((error) => {
-            console.log(error);
-            setNotification('Failed getting data from the server', 'error');
+            setIsLoaded(true);
+        }).catch(() => {
+            navigate(href);
+            return;
         });
     }, [currentEnvironment, currentApplicationId]);
 
-    if (!loaded) return null;
+    if (!isLoaded) return null;
 
     if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application with this environment not found</Typography>;
+        navigate(href);
+        return null;
     }
 
     if (!isEnvironmentValidFromUrl(applications, currentApplicationId, currentEnvironment)) {
