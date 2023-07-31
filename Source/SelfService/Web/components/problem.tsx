@@ -7,6 +7,7 @@ import { Box, Stack, Typography } from '@mui/material';
 
 import { AigonIsLostSvg, Button, Icon } from '@dolittle/design-system';
 
+// TODO: Add to Design System and combine with MaintenanceMessage.
 export const Problem = () => {
     // Dunno, I leave this just in case from old code.
     useEffect(() => {
