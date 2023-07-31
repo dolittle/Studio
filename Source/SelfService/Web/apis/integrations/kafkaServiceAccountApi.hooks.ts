@@ -34,7 +34,9 @@ export const useConnectionsIdKafkaServiceAccountsServiceAccountNameGet = (params
     const api = getOrCreateApi();
     return useQuery({
         queryKey: [CACHE_KEYS.ConnectionKafkaServiceAccounts_GET, params.id, CACHE_KEYS.ConnectionKafkaServiceAccountsName_GET],
-        queryFn: api.connectionsIdKafkaServiceAccountsServiceAccountNameGet.bind(api, params)
+        queryFn: api.connectionsIdKafkaServiceAccountsServiceAccountNameGet.bind(api, params),
+        enabled: params.serviceAccountName !== undefined && params.serviceAccountName !== '',
+        staleTime: 1000 * 60 * 2
     });
 };
 
