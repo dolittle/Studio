@@ -37,10 +37,10 @@ export const LayoutWithSidebar = ({ navigation, children }: LayoutWithSidebarPro
         <div>
             <Paper elevation={4} className='sidebar'>
                 <Box
-                    sx={{ mb: 4, color: 'text.secondary', textAlign: 'center', cursor: 'pointer' }}
+                    sx={{ my: 2, color: 'text.secondary', textAlign: 'center', cursor: 'pointer' }}
                     onClick={() => window.location.pathname = '/selfservice/'}
                 >
-                    <Icon icon='AigonixLightLogo' sx={{ width: 100 }} />
+                    <Icon icon='AigonixLightLogo' sx={{ width: 150 }} />
                 </Box>
                 {navigation}
             </Paper>

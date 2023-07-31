@@ -3,47 +3,46 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 import { useGlobalContext } from '../../context/globalContext';
+import { useSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom';
 
-import { Box, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
-import { Button } from '@dolittle/design-system';
+import { Button, Link } from '@dolittle/design-system';
 
 import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
 import { HttpResponseApplications, getApplications } from '../../apis/solutions/application';
 
-import { LoginWrapper } from '../../components/layout/loginWrapper';
 import { ApplicationsList } from './applicationsList';
+import { LoginWrapper } from '../../components/layout/loginWrapper';
+import { SpaceCreateDialog } from '../../components/spaceCreateDialog';
 
 export const ApplicationsScreen = () => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
-    const { hasOneCustomer, setCurrentEnvironment } = useGlobalContext();
+    const { currentApplicationId, hasOneCustomer, setCurrentEnvironment } = useGlobalContext();
 
     const [applicationInfos, setApplicationInfos] = useState([] as ShortInfoWithEnvironment[]);
-    const [loaded, setLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
+    const [createSpaceDialogOpen, setCreateSpaceDialogOpen] = useState(false);
 
     // TODO handle when not 200!
     useEffect(() => {
-        Promise.all([
-            getApplications(),
-        ]).then(values => {
-            const response = values[0] as HttpResponseApplications;
-            setCanCreateApplication(response.canCreateApplication);
-            setApplicationInfos(response.applications);
-            setLoaded(true);
-        }).catch(error => {
-            console.log(error);
-            enqueueSnackbar('Failed getting data from the server', { variant: 'error' });
-        });
-    }, []);
+        Promise.all([getApplications()])
+            .then(values => {
+                const response = values[0] as HttpResponseApplications;
+                setCanCreateApplication(response.canCreateApplication);
+                setApplicationInfos(response.applications);
+                setIsLoaded(true);
+            })
+            .catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }));
+    }, [currentApplicationId]);
 
-    if (!loaded) return null;
+    if (!isLoaded) return null;
 
-    const onEnvironmentChoose = (application: ShortInfoWithEnvironment) => {
+    const onApplicationSelect = (application: ShortInfoWithEnvironment) => {
         const { environment, id } = application;
         setCurrentEnvironment(environment);
         const href = `/microservices/application/${id}/${environment}/overview`;
@@ -56,28 +55,44 @@ export const ApplicationsScreen = () => {
             return;
         }
 
-        const href = '/application/create';
-        navigate(href);
+        setCreateSpaceDialogOpen(true);
     };
 
     return (
         <LoginWrapper>
-            <Typography variant='h2' sx={{ my: 2, mb: 5 }}>
+            <SpaceCreateDialog isOpen={createSpaceDialogOpen} onClose={() => setCreateSpaceDialogOpen(false)} />
+
+            <Typography variant='h2' sx={{ mb: 4 }}>
                 {applicationInfos.length > 0 ? 'Select Your Application & Environment' : 'There are no Applications'}
             </Typography>
 
-            <Box sx={{ width: 1 }}>
-                <Button label='Create new Application' startWithIcon='AddCircle' onClick={handleApplicationCreate} />
+            <Box sx={{ display: 'inline-block' }}>
+                <ApplicationsList data={applicationInfos} onSelect={onApplicationSelect} />
+
+                <Button
+                    label='Create new Application'
+                    variant='outlined'
+                    isFullWidth
+                    onClick={handleApplicationCreate}
+                    sx={{ minWidth: 155, display: 'block' }}
+                />
             </Box>
 
-            <ApplicationsList data={applicationInfos} onChoose={onEnvironmentChoose} />
-
-            <Box sx={{ mt: 12.5, display: 'flex', justifyContent: 'space-around' }}>
+            <Stack sx={{ mt: 12, gap: 4 }}>
                 {!hasOneCustomer &&
-                    <Button label='Back to Customers' color='subtle' startWithIcon='ArrowBack' href='/.auth/cookies/initiate' />
+                    <Box>
+                        <Button label='Back to Customers' color='subtle' startWithIcon='ArrowBack' href='/.auth/cookies/initiate' />
+                    </Box>
                 }
-                <Button label='Log out' color='subtle' href='/.auth/cookies/logout' />
-            </Box>
+
+                <Typography>
+                    Don’t have access to a applications? <Link message='Contact us' href='mailto:support@dolittle.com' /> to get started.
+                </Typography>
+
+                <Box>
+                    <Button label='Log out' color='subtle' href='/.auth/cookies/logout' />
+                </Box>
+            </Stack>
         </LoginWrapper>
     );
 };

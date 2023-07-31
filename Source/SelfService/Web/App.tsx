@@ -3,22 +3,23 @@
 
 import React from 'react';
 
-import { Route, Routes, Navigate } from 'react-router-dom';
-import { SnackbarProvider } from 'notistack';
 import { GlobalContextProvider } from './context/globalContext';
+import { SnackbarProvider } from 'notistack';
+import { Route, Routes } from 'react-router-dom';
 
-import { LicenseInfo } from '@mui/x-license-pro';
+import { Slide, SlideProps } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
-import { Slide, SlideProps } from '@mui/material';
+import { LicenseInfo } from '@mui/x-license-pro';
 
-import '@dolittle/design-system/theming/fonts';
 import { themeDark, Icon } from '@dolittle/design-system';
+import '@dolittle/design-system/theming/fonts';
 
 import { useViewportResize } from './utils/useViewportResize';
 
 import { RouteNotFound } from './components/notfound';
 import { DieAndRestart } from './components/dieAndRestart';
+import { LandingPageDesider } from './components/layout/landingPageDesider';
 import { LayoutWithSidebar } from './components/layout/layoutWithSidebar';
 
 import { BackupsScreen } from './applications/backupsScreen';
@@ -55,7 +56,7 @@ export const App = () => {
                             iconVariant={{ error: <Icon icon='ErrorRounded' sx={{ mr: 1 }} /> }}
                         >
                             <Routes>
-                                <Route path='/' element={<Navigate to='/applications' />} />
+                                <Route path='/' element={<LandingPageDesider />} />
 
                                 <Route path='/applications' element={<ApplicationsScreen />} />
 
@@ -81,11 +82,11 @@ export const App = () => {
                                     </LayoutWithSidebar>
                                 } />
 
-                                <Route path="/home" element={<HomeScreen />} />
+                                <Route path='/home' element={<HomeScreen />} />
 
-                                <Route path="/integrations/*" element={<IntegrationsIndex />} />
+                                <Route path='/integrations/*' element={<IntegrationsIndex />} />
 
-                                <Route path='*' element={<RouteNotFound redirectUrl='/applications' auto={true} />} />
+                                <Route path='*' element={<RouteNotFound redirectUrl='/' auto={true} />} />
                             </Routes>
                         </SnackbarProvider>
                     </GlobalContextProvider>
