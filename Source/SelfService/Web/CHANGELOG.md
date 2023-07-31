@@ -1,3 +1,9 @@
+# [3.6.2] - 2023-7-31 [PR: #431](https://github.com/dolittle/Studio/pull/431)
+## Summary
+
+Fix rendering of pod status where it can be undefined from the server.
+
+
 # [3.6.1] - 2023-7-31 [PR: #430](https://github.com/dolittle/Studio/pull/430)
 ## Summary
 
