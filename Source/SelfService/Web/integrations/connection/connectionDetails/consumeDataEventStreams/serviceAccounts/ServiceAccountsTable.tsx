@@ -39,7 +39,7 @@ export const ServiceAccountsTable = ({ items, isLoading, onViewAccessCertificate
             sortable: false,
             flex: 1,
             renderCell: (params) => {
-                return <><Button variant='outlined' label='View Access Certificate' onClick={() => onViewAccessCertificate(params.row)} /></>;
+                return <><Button variant='outlined' label='View Access Credentials' onClick={() => onViewAccessCertificate(params.row)} /></>;
             }
         },
         {
