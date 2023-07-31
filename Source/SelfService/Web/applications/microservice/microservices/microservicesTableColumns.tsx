@@ -35,7 +35,7 @@ const PublicUrlCell = (params: GridRenderCellParams<any, HealthStatusTableRowPro
 };
 
 const StatusCell = (params: GridRenderCellParams<any, HealthStatusTableRowProps['row']>) => {
-    const status = params.value?.toLowerCase();
+    const status = params.value;
 
     return (
         <StatusIndicator status={getPodHealthStatus(status).status} label={getPodHealthStatus(status).label} />

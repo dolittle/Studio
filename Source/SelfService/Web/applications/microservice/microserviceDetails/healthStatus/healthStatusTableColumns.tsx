@@ -35,7 +35,7 @@ const SummaryCell = ({ row }: HealthStatusTableRowProps) =>
     <Summary now={row.memory?.current} avg={row.memory?.average} max={row.memory?.maximum} unit='MiB' description='Memory usage' period='last 24h' digits={0} />;
 
 const StatusCell = ({ row }: HealthStatusTableRowProps) => {
-    const status = row.state?.toLowerCase();
+    const status = row.state;
 
     return (
         <StatusIndicator status={getPodHealthStatus(status).status} label={getPodHealthStatus(status).label} />
