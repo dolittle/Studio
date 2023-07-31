@@ -4,7 +4,8 @@
 import React, { Dispatch } from 'react';
 
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Paper } from '@mui/material';
-import { AlertDialog, Button, ContentContainer, ContentDivider, ContentSection, IconButton } from '@dolittle/design-system';
+import { AlertDialog, Button, ContentContainer, ContentDivider, ContentSection, IconButton, LoadingSpinner } from '@dolittle/design-system';
+import { useConnectionsIdKafkaServiceAccountsServiceAccountNameGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 import { TextCopyBox } from '../../../../../components/TextCopyBox';
 
 const styles = {
@@ -55,10 +56,12 @@ export const ViewAccessDialog = ({
     dialogState,
     dispatch,
 }: ViewAccessDialogProps) => {
+    const { data, isFetching } = useConnectionsIdKafkaServiceAccountsServiceAccountNameGet({ id: dialogState.connectionId, serviceAccountName: dialogState.serviceAccountName || '' });
 
     const handleClose = () => {
         dispatch({ type: 'close' });
     };
+
 
     return (
         <>
@@ -76,10 +79,14 @@ export const ViewAccessDialog = ({
                     <IconButton tooltipText='Close dialog' edge='end' onClick={handleClose} />
                 </DialogTitle>
 
-                <DialogContent sx={{ typography: 'body2' }}>
-                    <ViewAccessDialogContent certificate='123' accessKey='1234' />
-
-                </DialogContent>
+                {isFetching
+                    ? <LoadingSpinner />
+                    : (
+                        <DialogContent sx={{ typography: 'body2' }}>
+                            <ViewAccessDialogContent certificate={data?.certificate!} accessKey={data?.key!} />
+                        </DialogContent>
+                    )
+                }
 
                 <DialogActions sx={{ mr: 1 }}>
                     <Button label={'Close'} onClick={handleClose} color='subtle' />
