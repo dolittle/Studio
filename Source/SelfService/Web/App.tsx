@@ -18,9 +18,8 @@ import '@dolittle/design-system/theming/fonts';
 import { useViewportResize } from './utils/useViewportResize';
 
 import { RouteNotFound } from './components/notfound';
-import { DieAndRestart } from './components/dieAndRestart';
+import { Problem } from './components/problem';
 import { LandingPageDecider } from './components/layout/landingPageDecider';
-import { LayoutWithSidebar } from './components/layout/layoutWithSidebar';
 
 import { BackupsScreen } from './applications/backupsScreen';
 import { DocumentationScreen } from './applications/documentationScreen';
@@ -76,11 +75,7 @@ export const App = () => {
 
                                 <Route path='/admin/*' element={<AdminScreen />} />
 
-                                <Route path='/problem' element={
-                                    <LayoutWithSidebar navigation={[]}>
-                                        <DieAndRestart />
-                                    </LayoutWithSidebar>
-                                } />
+                                <Route path='/problem' element={<Problem />} />
 
                                 <Route path='/home' element={<HomeScreen />} />
 
