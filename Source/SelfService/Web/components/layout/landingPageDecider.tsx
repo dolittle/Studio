@@ -7,14 +7,13 @@ import { useGlobalContext } from '../../context/globalContext';
 import { useSnackbar } from 'notistack';
 import { Navigate } from 'react-router-dom';
 
-import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
 import { getApplications, HttpResponseApplications } from '../../apis/solutions/application';
 
-export const LandingPageDesider = () => {
-    const { setCurrentApplicationId, setCurrentEnvironment } = useGlobalContext();
+export const LandingPageDecider = () => {
+    const { currentApplicationId, currentEnvironment, setCurrentApplicationId, setCurrentEnvironment } = useGlobalContext();
     const { enqueueSnackbar } = useSnackbar();
 
-    const [applicationInfos, setApplicationInfos] = useState([] as ShortInfoWithEnvironment[]);
+    const [hasOneApplication, setHasOneApplication] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
     // TODO handle when not 200!
@@ -28,7 +27,7 @@ export const LandingPageDesider = () => {
 
                     setCurrentApplicationId(id);
                     setCurrentEnvironment(environment);
-                    setApplicationInfos(response.applications);
+                    setHasOneApplication(true);
                 }
 
                 setIsLoaded(true);
@@ -38,10 +37,11 @@ export const LandingPageDesider = () => {
 
     if (!isLoaded) return null;
 
-    // Should be '/home'.
-    const href = `/microservices/application/${applicationInfos[0].id}/${applicationInfos[0].environment}/overview`;
-
     return (
-        applicationInfos.length === 1 ? <Navigate to={href} /> : <Navigate to='/applications' />
+        hasOneApplication ? (
+            <Navigate to={`/microservices/application/${currentApplicationId}/${currentEnvironment}/overview`} />
+        ) : (
+            <Navigate to='/applications' />
+        )
     );
 };
