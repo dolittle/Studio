@@ -3,8 +3,9 @@
 
 import React, { Dispatch } from 'react';
 
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
-import { AlertDialog, Button, IconButton } from '@dolittle/design-system';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Paper } from '@mui/material';
+import { AlertDialog, Button, ContentContainer, ContentDivider, ContentSection, IconButton } from '@dolittle/design-system';
+import { TextCopyBox } from '../../../configuration/TextCopyBox';
 
 const styles = {
     title: {
@@ -76,7 +77,7 @@ export const ViewAccessDialog = ({
                 </DialogTitle>
 
                 <DialogContent sx={{ typography: 'body2' }}>
-                    <DialogContentText id={`${id}-dialog-description`} sx={styles.description}>Some description here</DialogContentText>
+                    <ViewAccessDialogContent certificate='123' accessKey='1234' />
 
                 </DialogContent>
 
@@ -97,5 +98,23 @@ export const ViewAccessDialog = ({
         //     isOpen={dialogState.open}
         //     onCancel={handleCancel}}
         // />
+    );
+};
+
+export type ViewAccessDialogContentProps = {
+    certificate: string;
+    accessKey: string;
+};
+
+export const ViewAccessDialogContent = ({ certificate, accessKey }: ViewAccessDialogContentProps) => {
+    return (
+        <>
+            <ContentSection hideDivider title='Access Certificate'>
+                <TextCopyBox instructions={certificate} />
+            </ContentSection>
+            <ContentSection title='Access Key'>
+                <TextCopyBox instructions={accessKey} />
+            </ContentSection>
+        </>
     );
 };
