@@ -7,7 +7,10 @@ import { Box, SxProps, Typography } from '@mui/material';
 
 import { Input, Select } from '@dolittle/design-system';
 
-type SetupFieldsProps = {
+const environmentOptions = [
+    { value: 'Dev', displayValue: 'Development' },
+    { value: 'Prod', displayValue: 'Production' },
+];
     disabled: boolean;
     options: {
         value: string;
@@ -21,7 +24,14 @@ export const SetupFields = ({ disabled, options, sx }: SetupFieldsProps) =>
         <Typography variant='subtitle2' sx={{ mb: 2 }}>Configuration Setup</Typography>
 
         <Input id='microserviceName' label='Microservice Name' required disabled dashedBorder />
-        <Input id='developmentEnvironment' label='Development Environment' disabled dashedBorder />
+        <Select
+            id='developmentEnvironment'
+            label='Development Environment'
+            options={environmentOptions}
+            required
+            disabled
+            sx={{ '& fieldset': { borderStyle: 'dashed' } }}
+        />
 
         <Select
             id='runtimeVersion'
