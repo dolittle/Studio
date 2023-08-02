@@ -17,7 +17,7 @@ import { Typography } from '@mui/material';
 import { Button, LoadingSpinner } from '@dolittle/design-system';
 
 import { NoMicroservices } from './noMicroservices';
-import { MicroserviceTable } from './microservicesTable';
+import { MicroservicesDataGrid } from './microservicesDataGrid';
 
 export type MicroserviceProps = {
     environment: string;
@@ -72,7 +72,7 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
             <Typography variant='h1' sx={{ my: 2 }}>Microservices</Typography>
 
             {hasMicroservices ?
-                <MicroserviceTable application={application} environment={environment} microservices={filteredMicroservices} /> :
+                <MicroservicesDataGrid application={application} environment={environment} microservices={filteredMicroservices} /> :
                 <NoMicroservices onCreate={() => handleCreateMicroservice()} />
             }
 

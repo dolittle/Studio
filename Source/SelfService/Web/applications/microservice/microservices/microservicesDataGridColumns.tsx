@@ -42,7 +42,7 @@ const StatusCell = (params: GridRenderCellParams<any, HealthStatusTableRowProps[
     );
 };
 
-export const microservicesTableColumns: GridColDef[] = [
+export const microservicesDataGridColumns: GridColDef[] = [
     {
         field: 'name',
         headerName: 'Name',

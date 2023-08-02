@@ -12,15 +12,15 @@ import { DataGridPro } from '@mui/x-data-grid-pro';
 
 import { DataGridWrapper, dataGridDefaultProps } from '@dolittle/design-system';
 
-import { microservicesTableColumns } from './microservicesTableColumns';
+import { microservicesDataGridColumns } from './microservicesDataGridColumns';
 
-export type MicroserviceTableProps = {
+export type MicroservicesDataGridProps = {
     environment: string;
     application: HttpResponseApplication;
     microservices: MicroserviceObject[];
 };
 
-export const MicroserviceTable = ({ application, environment, microservices }: MicroserviceTableProps) => {
+export const MicroservicesDataGrid = ({ application, environment, microservices }: MicroservicesDataGridProps) => {
     const navigate = useNavigate();
 
     const [microserviceRows, setMicroserviceRows] = useState<(MicroserviceObject | undefined)[]>([]);
@@ -54,7 +54,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
             <DataGridPro
                 {...dataGridDefaultProps}
                 rows={microserviceRows}
-                columns={microservicesTableColumns}
+                columns={microservicesDataGridColumns}
                 loading={loadingRows}
                 onRowClick={({ row }) => handleTableRowClick(row.id)}
             />
