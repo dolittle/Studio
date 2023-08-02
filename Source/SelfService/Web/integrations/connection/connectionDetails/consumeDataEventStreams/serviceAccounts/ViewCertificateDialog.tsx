@@ -35,7 +35,7 @@ export const ViewCertificateDialog = ({
     dialogState,
     dispatch,
 }: ViewCertificateDialogProps) => {
-    const { data, isFetching } = useConnectionsIdKafkaServiceAccountsServiceAccountNameGet({ id: dialogState.connectionId, serviceAccountName: dialogState.serviceAccountName || '' });
+    const { data, isLoading } = useConnectionsIdKafkaServiceAccountsServiceAccountNameGet({ id: dialogState.connectionId, serviceAccountName: dialogState.serviceAccountName || '' });
 
     const handleClose = () => {
         dispatch({ type: 'close' });
@@ -58,7 +58,7 @@ export const ViewCertificateDialog = ({
                     <IconButton tooltipText='Close dialog' edge='end' onClick={handleClose} />
                 </DialogTitle>
 
-                {isFetching
+                {isLoading
                     ? <LoadingSpinner />
                     : <ViewCredentialsDialogContent
                         content={data?.certificate!}
