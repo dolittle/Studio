@@ -9,7 +9,8 @@ import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { useConnectionsIdKafkaServiceAccountsGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 import { GenerateServiceAccountForm } from './GenerateServiceAccountForm';
 import { ServiceAccountsTable } from './ServiceAccountsTable';
-import { ViewAccessDialog, viewAccessDialogReducer } from './ViewAccessDialog';
+import { ViewCertificateDialog, ViewCertificateDialogProps } from './ViewCertificateDialog';
+import { viewCredentialsDialogReducer } from './viewCredentialsDialogReducer';
 
 export type ServiceAccountsSectionProps = {};
 
@@ -24,7 +25,7 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
     const items = useMemo(
         () => data?.sort((a, b) => b.createdAt! > a.createdAt! ? 1 : -1) || [], [data]
     );
-    const [viewAccessDialogState, viewAccessDialogDispatch] = useReducer(viewAccessDialogReducer, { isOpen: false, connectionId });
+    const [viewAccessDialogState, viewAccessDialogDispatch] = useReducer(viewCredentialsDialogReducer, { isOpen: false, connectionId });
 
 
     const allowGenerateNew = !expandForm;
@@ -91,11 +92,11 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
                 </ContentSection>
             </Collapse>
             <ContentSection>
-                <ViewAccessDialog dialogState={viewAccessDialogState} dispatch={viewAccessDialogDispatch} />
+                <ViewCertificateDialog dialogState={viewAccessDialogState} dispatch={viewAccessDialogDispatch} />
                 <ServiceAccountsTable
                     items={items}
                     isLoading={isLoading}
-                    onViewAccessCertificate={
+                    onViewCertificate={
                         (account) => {
                             viewAccessDialogDispatch({ type: 'open', payload: { serviceAccountName: account.serviceAccountName! } });
                         }

@@ -14,10 +14,10 @@ import { formatDate } from '../../../../../utils/helpers/dates';
 export type ServiceAccountsTableProps = {
     items: KafkaServiceAccountListDto[];
     isLoading: boolean;
-    onViewAccessCertificate: (serviceAccount: KafkaServiceAccountListDto) => void;
+    onViewCertificate: (serviceAccount: KafkaServiceAccountListDto) => void;
 };
 
-export const ServiceAccountsTable = ({ items, isLoading, onViewAccessCertificate }: ServiceAccountsTableProps) => {
+export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate }: ServiceAccountsTableProps) => {
 
     const columns: GridColDef<KafkaServiceAccountListDto>[] = [
         {
@@ -39,7 +39,7 @@ export const ServiceAccountsTable = ({ items, isLoading, onViewAccessCertificate
             sortable: false,
             flex: 1,
             renderCell: (params) => {
-                return <><Button variant='outlined' label='View Access Credentials' onClick={() => onViewAccessCertificate(params.row)} /></>;
+                return <><Button variant='outlined' label='View Certificate' onClick={() => onViewCertificate(params.row)} /></>;
             }
         },
         {
