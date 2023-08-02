@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import { Paper } from '@mui/material';
@@ -15,11 +15,12 @@ export type ServiceAccountsTableProps = {
     items: KafkaServiceAccountListDto[];
     isLoading: boolean;
     onViewCertificate: (serviceAccount: KafkaServiceAccountListDto) => void;
+    onViewKey: (serviceAccount: KafkaServiceAccountListDto) => void;
 };
 
-export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate }: ServiceAccountsTableProps) => {
+export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onViewKey }: ServiceAccountsTableProps) => {
 
-    const columns: GridColDef<KafkaServiceAccountListDto>[] = [
+    const columns: GridColDef<KafkaServiceAccountListDto>[] = useMemo(() => [
         {
             field: 'serviceAccountName',
             headerName: 'Name',
@@ -39,7 +40,10 @@ export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate }: Se
             sortable: false,
             flex: 1,
             renderCell: (params) => {
-                return <><Button variant='outlined' label='View Certificate' onClick={() => onViewCertificate(params.row)} /></>;
+                return <>
+                    <Button variant='outlined' label='View Certificate' onClick={() => onViewCertificate(params.row)} sx={{mr: 2}}/>
+                    <Button variant='outlined' label='View Key' onClick={() => onViewKey(params.row)} />
+                </>;
             }
         },
         {
@@ -52,7 +56,7 @@ export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate }: Se
                 return <span title={params.value?.toISOString()}>{params.formattedValue}</span>;
             },
         },
-    ];
+    ], [onViewCertificate, onViewKey]);
 
     return (
         <Paper sx={{ width: 1 }}>

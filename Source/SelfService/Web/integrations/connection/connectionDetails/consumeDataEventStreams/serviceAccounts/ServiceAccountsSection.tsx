@@ -9,7 +9,8 @@ import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { useConnectionsIdKafkaServiceAccountsGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 import { GenerateServiceAccountForm } from './GenerateServiceAccountForm';
 import { ServiceAccountsTable } from './ServiceAccountsTable';
-import { ViewCertificateDialog, ViewCertificateDialogProps } from './ViewCertificateDialog';
+import { ViewCertificateDialog } from './ViewCertificateDialog';
+import { ViewKeyDialog } from './ViewKeyDialog';
 import { viewCredentialsDialogReducer } from './viewCredentialsDialogReducer';
 
 export type ServiceAccountsSectionProps = {};
@@ -25,7 +26,8 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
     const items = useMemo(
         () => data?.sort((a, b) => b.createdAt! > a.createdAt! ? 1 : -1) || [], [data]
     );
-    const [viewAccessDialogState, viewAccessDialogDispatch] = useReducer(viewCredentialsDialogReducer, { isOpen: false, connectionId });
+    const [viewCertificateDialogState, viewCertificateDialogDispatch] = useReducer(viewCredentialsDialogReducer, { isOpen: false, connectionId });
+    const [viewKeyDialogState, viewKeyDialogDispatch] = useReducer(viewCredentialsDialogReducer, { isOpen: false, connectionId });
 
 
     const allowGenerateNew = !expandForm;
@@ -92,15 +94,22 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
                 </ContentSection>
             </Collapse>
             <ContentSection>
-                <ViewCertificateDialog dialogState={viewAccessDialogState} dispatch={viewAccessDialogDispatch} />
+                <ViewCertificateDialog dialogState={viewCertificateDialogState} dispatch={viewCertificateDialogDispatch} />
+                <ViewKeyDialog dialogState={viewKeyDialogState} dispatch={viewKeyDialogDispatch} />
                 <ServiceAccountsTable
                     items={items}
                     isLoading={isLoading}
                     onViewCertificate={
                         (account) => {
-                            viewAccessDialogDispatch({ type: 'open', payload: { serviceAccountName: account.serviceAccountName! } });
+                            viewCertificateDialogDispatch({ type: 'open', payload: { serviceAccountName: account.serviceAccountName! } });
                         }
-                    } />
+                    }
+                    onViewKey={
+                        (account) => {
+                            viewKeyDialogDispatch({ type: 'open', payload: { serviceAccountName: account.serviceAccountName! } });
+                        }
+                    }
+                />
             </ContentSection>
 
 
