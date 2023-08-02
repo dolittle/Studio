@@ -33,7 +33,7 @@ const styles = {
     },
 };
 
-type SetupSectionProps = {
+export type SetupSectionProps = {
     application: HttpResponseApplication;
     applicationId: string;
     environment: string;
@@ -42,8 +42,8 @@ type SetupSectionProps = {
 };
 
 export const SetupSection = ({ application, applicationId, environment, microserviceId, currentMicroservice }: SetupSectionProps) => {
-    const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
 
     const microserviceInfo = currentMicroservice.edit?.extra;
     const environmentInfo = application.environments.find(env => env.name === environment)!;
@@ -53,6 +53,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
         value: microserviceInfo?.runtimeImage,
         displayValue: getRuntimeNumberFromString(microserviceInfo?.runtimeImage)
     };
+
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
     // Remove extra slash from ingress path as it is there already with startAdornment.
     const cleanedIngressPath = microserviceInfo?.ingress?.path?.replace(/\//, '') || '';
@@ -128,7 +129,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
                     }}
                     sx={styles.form}
                 >
-                    <SetupFields disabled={formIsNotEditable} options={[currentRuntimeImageNumber]} sx={styles.formSections} />
+                    <SetupFields disabled={formIsNotEditable} sx={styles.formSections} />
 
                     <ContainerImageFields disabled={formIsNotEditable} sx={styles.formSections} />
 
