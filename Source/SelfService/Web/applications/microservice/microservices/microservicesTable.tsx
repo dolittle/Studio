@@ -2,13 +2,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useCallback, useEffect, useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 import { getPodStatus, MicroserviceObject } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
 import { DataGridPro } from '@mui/x-data-grid-pro';
-import { Paper } from '@mui/material';
+
+import { DataGridWrapper, dataGridDefaultProps } from '@dolittle/design-system';
 
 import { microservicesTableColumns } from './microservicesTableColumns';
 
@@ -48,19 +50,14 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
     };
 
     return (
-        <Paper sx={{ width: 1 }}>
+        <DataGridWrapper>
             <DataGridPro
+                {...dataGridDefaultProps}
                 rows={microserviceRows}
                 columns={microservicesTableColumns}
-                getRowHeight={() => 'auto'}
-                autoHeight
-                headerHeight={46}
-                disableColumnMenu
-                hideFooter
-                disableSelectionOnClick
                 loading={loadingRows}
                 onRowClick={({ row }) => handleTableRowClick(row.id)}
             />
-        </Paper>
+        </DataGridWrapper>
     );
 };
