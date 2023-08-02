@@ -15,13 +15,11 @@ export type ShimmeringLogLinesProps = {
 };
 
 export const ShimmeringLogLines = (props: ShimmeringLogLinesProps) =>
-    <>
-        <LogLine
-            loading
-            showContextButton={props.showContextButton}
-            onClickShowLineContext={noopClickHandler}
-            labels={shimmerLabels}
-            timestamp={shimmerTimestamp}
-            line={shimmerLine}
-        />
-    </>;
+    <LogLine
+        loading
+        showContextButton={props.showContextButton}
+        onClickShowLineContext={noopClickHandler}
+        labels={shimmerLabels}
+        timestamp={shimmerTimestamp}
+        line={shimmerLine}
+    />;

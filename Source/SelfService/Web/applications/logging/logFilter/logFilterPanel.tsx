@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import { Grid } from '@mui/material';
 
 import { ActiveFilters } from './activeFilters';
@@ -13,6 +14,7 @@ export type LogFilterDateRange = 'live' | {
     start: bigint;
     stop: bigint;
 };
+
 export type LogFilterMicroservice = {
     name: string;
     id: string;
@@ -23,7 +25,6 @@ export type LogFilterObject = {
     dateRange: LogFilterDateRange;
     microservice?: LogFilterMicroservice[];
 };
-
 
 export type LogFilterPanelProps = {
     microservices: LogFilterMicroservice[];
@@ -64,15 +65,18 @@ export const LogFilterPanel = ({ microservices, filters, setSearchFilters }: Log
                 <Grid item xs={12} lg={4}>
                     <SearchFilter onSearch={onSearched} />
                 </Grid>
+
                 <Grid item xs={12} lg={8} sx={{ '& > *': { ml: 2, py: 0.5 } }}>
                     <MicroserviceFilter
                         availableMicroservices={microservices}
                         selectedMicroservices={filters.microservice}
                         onSelectMicroservices={onSelectMicroservices} />
+
                     <DateRangeFilter
                         range={filters.dateRange}
                         onSetDateRange={onSetDateRange} />
                 </Grid>
+
                 <Grid item xs={12}>
                     <ActiveFilters filters={filters} updateFilters={onUpdateFilters} />
                 </Grid>
@@ -80,4 +84,3 @@ export const LogFilterPanel = ({ microservices, filters, setSearchFilters }: Log
         </>
     );
 };
-
