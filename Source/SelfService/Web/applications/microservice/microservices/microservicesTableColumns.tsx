@@ -50,6 +50,16 @@ export const microservicesTableColumns: GridColDef[] = [
         flex: 1,
     },
     {
+        field: 'environment',
+        headerName: 'Environment',
+        minWidth: 170,
+        flex: 1,
+        valueGetter: ({ row }: HealthStatusTableRowProps) => {
+            const environment = row.environment;
+            return environment === 'Prod' ? 'Production' : environment === 'Dev' ? 'Development' : environment;
+        },
+    },
+    {
         field: 'image',
         headerName: 'Container Image',
         minWidth: 270,
