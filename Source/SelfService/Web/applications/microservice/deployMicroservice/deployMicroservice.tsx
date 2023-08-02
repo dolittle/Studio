@@ -15,14 +15,13 @@ import { Button, Form, LoadingSpinner } from '@dolittle/design-system';
 import { saveSimpleMicroservice } from '../../stores/microservice';
 
 import { MicroserviceSimple, MicroserviceFormParameters } from '../../../apis/solutions/index';
-import { getLatestRuntimeInfo, getRuntimes } from '../../../apis/solutions/api';
+import { getLatestRuntimeInfo } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
 import { HasM3ConnectorField } from '../components/form/hasM3ConnectorField';
 import { SetupFields } from './setupFields';
 import { ContainerImageFields } from './containerImageFields';
 import { PublicUrlFields } from './publicUrlFields';
-import { getRuntimeNumberFromString } from '../../../utils/helpers';
 
 const styles = {
     form: {
@@ -53,17 +52,6 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
     const environmentInfo = application.environments.find(env => env.name === environment)!;
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
     const latestRuntimeVersion = getLatestRuntimeInfo().image;
-
-    const runtimeNumberSelections = [
-        ...getRuntimes().map(runtimeInfo => ({
-            value: runtimeInfo.image,
-            displayValue: getRuntimeNumberFromString(runtimeInfo.image),
-        })),
-        {
-            value: 'none',
-            displayValue: 'None',
-        },
-    ];
 
     const handleCreateMicroservice = async (values: MicroserviceFormParameters) => {
         setIsLoading(true);
@@ -135,7 +123,7 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
                 sx={styles.form}
                 onSubmit={handleCreateMicroservice}
             >
-                <SetupFields runtimeOptions={runtimeNumberSelections} sx={styles.formSections} />
+                <SetupFields sx={styles.formSections} />
 
                 <ContainerImageFields sx={styles.formSections} />
 

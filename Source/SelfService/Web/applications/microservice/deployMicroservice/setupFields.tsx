@@ -7,25 +7,34 @@ import { Box, SxProps, Typography } from '@mui/material';
 
 import { Input, Select, Tooltip } from '@dolittle/design-system';
 
+import { getRuntimes } from '../../../apis/solutions/api';
+
+import { getRuntimeNumberFromString } from '../../../utils/helpers';
+
 const environmentOptions = [
     { value: 'Dev', displayValue: 'Development' },
     { value: 'Prod', displayValue: 'Production' },
 ];
 
-const runtimeDescription = `By using the Dolittle runtime you'll have access to storage through event sourcing and be able to 
-communicate with other microservices through the event horizon with the Dolittle SDK.`;
+const runtimeNumberOptions = [
+    ...getRuntimes().map(runtimeInfo => ({
+        value: runtimeInfo.image,
+        displayValue: getRuntimeNumberFromString(runtimeInfo.image),
+    })),
+    {
+        value: 'none',
+        displayValue: 'None',
+    },
+];
 
-type SelectField = {
-    value: string;
-    displayValue: string;
-}[];
+const runtimeDescription = `By using the Dolittle runtime you'll have access to storage through event sourcing and be able to 
+                            communicate with other microservices through the event horizon with the Dolittle SDK.`;
 
 export type SetupFieldsProps = {
-    runtimeOptions: SelectField;
-    sx?: SxProps;
+    sx: SxProps;
 };
 
-export const SetupFields = ({ runtimeOptions, sx }: SetupFieldsProps) => {
+export const SetupFields = ({ sx }: SetupFieldsProps) => {
     const [showEnvironmentInfo, setShowEnvironmentInfo] = useState(false);
     const [showEntrypointInfo, setShowEntrypointInfo] = useState(false);
 
@@ -62,7 +71,7 @@ export const SetupFields = ({ runtimeOptions, sx }: SetupFieldsProps) => {
                 <Select
                     id='runtimeVersion'
                     label='Runtime Version'
-                    options={runtimeOptions}
+                    options={runtimeNumberOptions}
                     onOpen={() => setShowEntrypointInfo(true)}
                     required
                 />
