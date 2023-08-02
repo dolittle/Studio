@@ -34,12 +34,17 @@ export type TextCopyBoxProps = {
     withMaxWidth?: boolean;
 
     /**
+     * The filename the content should be downloadable as {@link MaxWidthBlock}?
+     */
+    downloadableFileName?: string;
+
+    /**
      * Style overrides applied to the root Paper component
      */
     sx?: SxProps;
 };
 
-export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMaxWidth, sx }: TextCopyBoxProps) => {
+export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMaxWidth, downloadableFileName, sx }: TextCopyBoxProps) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const handleTextCopy = useCallback(() => {
@@ -48,12 +53,38 @@ export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMa
         enqueueSnackbar('Copied to clipboard');
     }, [instructions]);
 
+    const handleTextDownload = useCallback(() => {
+        const textToDownload = !!instructionsToCopy
+            ? instructionsToCopy
+            : Array.isArray(instructions)
+                ? instructions
+                : [instructions];
+        const logsBlob = new Blob(textToDownload.map(t => t?.toString() || ''), { type: 'text/plain' });
+        return URL.createObjectURL(logsBlob);
+    }, [instructions]);
+
     return (
         <>{withMaxWidth
             ? <MaxWidthTextBlock>
-                <TextCopyContent instructions={instructions} sx={sx} handleTextCopy={handleTextCopy}>{children}</TextCopyContent>
+                <TextCopyContent
+                    instructions={instructions}
+                    sx={sx}
+                    handleTextCopy={handleTextCopy}
+                    handleTextDownload={handleTextDownload}
+                    downloadableFileName={downloadableFileName}
+                >
+                    {children}
+                </TextCopyContent>
             </MaxWidthTextBlock>
-            : <TextCopyContent instructions={instructions} sx={sx} handleTextCopy={handleTextCopy}>{children}</TextCopyContent>
+            : <TextCopyContent
+                instructions={instructions}
+                sx={sx}
+                handleTextCopy={handleTextCopy}
+                handleTextDownload={handleTextDownload}
+                downloadableFileName={downloadableFileName}
+            >
+                {children}
+            </TextCopyContent>
         }
         </>
     );
@@ -61,15 +92,22 @@ export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMa
 
 type TextCopyContentProps = TextCopyBoxProps & {
     handleTextCopy: () => void;
+    handleTextDownload: () => string;
 };
 
-const TextCopyContent = ({ instructions, children, sx, handleTextCopy }: TextCopyContentProps) => <>
+const TextCopyContent = ({ instructions, children, sx, downloadableFileName, handleTextCopy, handleTextDownload }: TextCopyContentProps) => <>
     <Paper elevation={0} sx={{ 'mt': 3, 'p': 2, '& p': { mb: 3 }, ...sx }}>
         <InstructionContent instructions={instructions}>{children}</InstructionContent>
         <Button
             label='Copy content'
             startWithIcon='CopyAllRounded'
             onClick={handleTextCopy}
+        />
+        <Button
+            label={`Download ${downloadableFileName}`}
+            startWithIcon='DownloadRounded'
+            href={handleTextDownload()}
+            overrides={{ download: downloadableFileName }}
         />
     </Paper>
 
