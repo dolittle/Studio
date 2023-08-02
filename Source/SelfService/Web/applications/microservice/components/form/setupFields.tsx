@@ -3,13 +3,13 @@
 
 import React, { useState } from 'react';
 
-import { Box, SxProps, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 import { Input, Select, Tooltip } from '@dolittle/design-system';
 
-import { getRuntimes } from '../../../apis/solutions/api';
+import { getRuntimes } from '../../../../apis/solutions/api';
 
-import { getRuntimeNumberFromString } from '../../../utils/helpers';
+import { getRuntimeNumberFromString } from '../../../../utils/helpers';
 
 const environmentOptions = [
     { value: 'Dev', displayValue: 'Development' },
@@ -31,18 +31,25 @@ const runtimeDescription = `By using the Dolittle runtime you'll have access to 
                             communicate with other microservices through the event horizon with the Dolittle SDK.`;
 
 export type SetupFieldsProps = {
-    sx: SxProps;
+    hasDashedBorder?: boolean;
+    isDisabled?: boolean;
 };
 
-export const SetupFields = ({ sx }: SetupFieldsProps) => {
+export const SetupFields = ({ hasDashedBorder, isDisabled }: SetupFieldsProps) => {
     const [showEnvironmentInfo, setShowEnvironmentInfo] = useState(false);
     const [showEntrypointInfo, setShowEntrypointInfo] = useState(false);
 
     return (
-        <Box sx={sx}>
+        <Stack sx={{ mb: 4 }}>
             <Typography variant='subtitle2' sx={{ mb: 2 }}>Configuration Setup</Typography>
 
-            <Input id='microserviceName' label='Microservice Name' required='Provide a microservice name.' />
+            <Input
+                id='microserviceName'
+                label='Microservice Name'
+                dashedBorder={hasDashedBorder}
+                disabled={isDisabled}
+                required='Provide a microservice name.'
+            />
 
             <Tooltip
                 tooltipTitle='Development Environment'
@@ -58,6 +65,7 @@ export const SetupFields = ({ sx }: SetupFieldsProps) => {
                     onOpen={() => setShowEnvironmentInfo(true)}
                     required
                     disabled
+                    sx={hasDashedBorder ? { '& fieldset': { borderStyle: 'dashed' } } : {}}
                 />
             </Tooltip>
 
@@ -74,8 +82,10 @@ export const SetupFields = ({ sx }: SetupFieldsProps) => {
                     options={runtimeNumberOptions}
                     onOpen={() => setShowEntrypointInfo(true)}
                     required
+                    disabled={isDisabled}
+                    sx={hasDashedBorder ? { '& fieldset': { borderStyle: 'dashed' } } : {}}
                 />
             </Tooltip>
-        </Box>
+        </Stack>
     );
 };

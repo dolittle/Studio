@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 
-import { Box, SxProps, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 import { Input, Link, Switch, Tooltip } from '@dolittle/design-system';
 
@@ -14,20 +14,23 @@ const PublicUrlFieldDescription = () =>
         out to <Link href='mailto: support@dolittle.com' message='Dolittle support' color='secondary' /> after you&#39;ve deployed the service.
     </>;
 
-type PublicUrlFieldsProps = {
-    sx?: SxProps;
+export type PublicUrlFieldsProps = {
+    hasDashedBorder?: boolean;
+    hasPublicUrl?: boolean;
+    isDisabled?: boolean;
 };
 
-export const PublicUrlFields = ({ sx }: PublicUrlFieldsProps) => {
-    const [showPublicUrlInfo, setShowPublicUrlInfo] = useState(false);
+export const PublicUrlFields = ({ hasDashedBorder, hasPublicUrl, isDisabled, }: PublicUrlFieldsProps) => {
+    const [showPublicUrlInfo, setShowPublicUrlInfo] = useState(hasPublicUrl);
 
     return (
-        <Box sx={sx}>
+        <Stack sx={{ mb: 4 }}>
             <Typography variant='subtitle2'>Public Microservice</Typography>
 
             <Switch
                 id='isPublic'
                 label='Expose to a public URL'
+                disabled={isDisabled}
                 onChange={() => setShowPublicUrlInfo(!showPublicUrlInfo)}
             />
 
@@ -38,10 +41,12 @@ export const PublicUrlFields = ({ sx }: PublicUrlFieldsProps) => {
                         label='Path'
                         startAdornment='/'
                         placeholder='leave blank for default path'
+                        disabled={isDisabled}
+                        dashedBorder={hasDashedBorder}
                         sx={{ width: 226 }}
                     />
                 </Tooltip>
             }
-        </Box>
+        </Stack>
     );
 };

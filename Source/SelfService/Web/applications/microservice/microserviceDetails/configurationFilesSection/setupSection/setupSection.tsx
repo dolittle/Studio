@@ -2,9 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom';
 
 import { Accordion, AlertDialog, Form } from '@dolittle/design-system';
 
@@ -13,35 +13,24 @@ import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '..
 import { HttpResponseApplication } from '../../../../../apis/solutions/application';
 import { MicroserviceFormParameters } from '../../../../../apis/solutions/index';
 
+import { ContainerImageFields } from '../../../components/form/containerImageFields';
 import { HasM3ConnectorField } from '../../../components/form/hasM3ConnectorField';
+import { PublicUrlFields } from '../../../components/form/publicUrlFields';
 import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
-import { HeaderButtons } from './headerButtons';
-import { SetupFields } from './setupFields';
-import { ContainerImageFields } from './containerImageFields';
-import { PublicUrlFields } from './publicUrlFields';
-import { getRuntimeNumberFromString } from '../../../../../utils/helpers';
+import { SetupFields } from '../../../components/form/setupFields';
 
-const styles = {
-    form: {
-        '& .MuiFormControl-root': { my: 1 },
-    },
-    formSections: {
-        'mb': 4,
-        'display': 'flex',
-        'flexDirection': 'column',
-        '&:last-child': { mb: 0 },
-    },
-};
+import { HeaderButtons } from './headerButtons';
+import { getRuntimeNumberFromString } from '../../../../../utils/helpers';
 
 export type SetupSectionProps = {
     application: HttpResponseApplication;
     applicationId: string;
+    currentMicroservice: MicroserviceStore;
     environment: string;
     microserviceId: string;
-    currentMicroservice: MicroserviceStore;
 };
 
-export const SetupSection = ({ application, applicationId, environment, microserviceId, currentMicroservice }: SetupSectionProps) => {
+export const SetupSection = ({ application, applicationId, currentMicroservice, environment, microserviceId }: SetupSectionProps) => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -54,6 +43,7 @@ export const SetupSection = ({ application, applicationId, environment, microser
         displayValue: getRuntimeNumberFromString(microserviceInfo?.runtimeImage)
     };
 
+    const hasPublicUrl = microserviceInfo?.isPublic || false;
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
     // Remove extra slash from ingress path as it is there already with startAdornment.
     const cleanedIngressPath = microserviceInfo?.ingress?.path?.replace(/\//, '') || '';
@@ -63,8 +53,6 @@ export const SetupSection = ({ application, applicationId, environment, microser
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
-    const [showPublicUrlInfo, setShowPublicUrlInfo] = useState(microserviceInfo?.isPublic || false);
-    const [showM3ConnectorInfo, setShowM3ConnectorInfo] = useState(false);
 
     const handleMicroserviceDelete = async () => {
         if (!canDelete) {
@@ -122,32 +110,20 @@ export const SetupSection = ({ application, applicationId, environment, microser
                         headImage: microserviceInfo?.headImage,
                         headPort: microserviceInfo?.headPort,
                         entrypoint: '',
-                        isPublic: showPublicUrlInfo,
+                        isPublic: microserviceInfo?.isPublic,
                         headArguments: headArgumentValues,
                         ingressPath: cleanedIngressPath,
-                        hasM3Connector: hasM3ConnectorOption
+                        hasM3Connector: hasM3ConnectorOption,
                     }}
-                    sx={styles.form}
+                    sx={{ '& .MuiFormControl-root': { my: 1 } }}
                 >
-                    <SetupFields disabled={formIsNotEditable} sx={styles.formSections} />
+                    <SetupFields hasDashedBorder isDisabled={formIsNotEditable} />
 
-                    <ContainerImageFields disabled={formIsNotEditable} sx={styles.formSections} />
+                    <ContainerImageFields hasDashedBorder isDisabled={formIsNotEditable} />
 
-                    <PublicUrlFields
-                        disabled={formIsNotEditable}
-                        showPublicUrlInfo={showPublicUrlInfo}
-                        onChange={() => !setShowPublicUrlInfo}
-                        sx={styles.formSections}
-                    />
+                    <PublicUrlFields hasDashedBorder hasPublicUrl={hasPublicUrl} isDisabled={formIsNotEditable} />
 
-                    {hasM3ConnectorOption &&
-                        <HasM3ConnectorField
-                            hasM3Connector={showM3ConnectorInfo}
-                            setHasM3Connector={() => !setShowM3ConnectorInfo}
-                            disabled={formIsNotEditable}
-                            sx={styles.formSections}
-                        />
-                    }
+                    {hasM3ConnectorOption && <HasM3ConnectorField isDisabled={formIsNotEditable} />}
                 </Form>
             </Accordion>
         </>
