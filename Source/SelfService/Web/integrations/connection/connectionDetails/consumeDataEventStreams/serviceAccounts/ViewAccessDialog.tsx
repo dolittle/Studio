@@ -83,7 +83,11 @@ export const ViewAccessDialog = ({
                     ? <LoadingSpinner />
                     : (
                         <DialogContent sx={{ typography: 'body2' }}>
-                            <ViewAccessDialogContent certificate={data?.certificate!} accessKey={data?.key!} />
+                            <ViewAccessDialogContent
+                                certificate={data?.certificate!}
+                                accessKey={data?.key!}
+                                serviceAccountName={dialogState.serviceAccountName!}
+                            />
                         </DialogContent>
                     )
                 }
@@ -93,34 +97,23 @@ export const ViewAccessDialog = ({
                 </DialogActions>
             </Dialog>
         </>
-        // <AlertDialog
-        //     id='view-credentials'
-        //     title={`View Credentials - '${dialogState.serviceAccountName}'`}
-        //     description={`
-        //         Are you sure you want to delete the credentials for '${dialogState.serviceAccountName}'?
-        //         This action cannot be undone and will impact any applications currently using these credentials.
-        //     `}
-        //     confirmBtnColor='error'
-        //     confirmBtnText='Delete'
-        //     isOpen={dialogState.open}
-        //     onCancel={handleCancel}}
-        // />
     );
 };
 
 export type ViewAccessDialogContentProps = {
     certificate: string;
     accessKey: string;
+    serviceAccountName: string;
 };
 
-export const ViewAccessDialogContent = ({ certificate, accessKey }: ViewAccessDialogContentProps) => {
+export const ViewAccessDialogContent = ({ certificate, accessKey, serviceAccountName }: ViewAccessDialogContentProps) => {
     return (
         <>
             <ContentSection hideDivider title='Access Certificate'>
-                <TextCopyBox instructions={certificate} />
+                <TextCopyBox instructions={certificate} downloadableFileName={`service-${serviceAccountName}.cert`} />
             </ContentSection>
             <ContentSection title='Access Key'>
-                <TextCopyBox instructions={accessKey} />
+                <TextCopyBox instructions={accessKey} downloadableFileName={`service-${serviceAccountName}.key`} />
             </ContentSection>
         </>
     );
