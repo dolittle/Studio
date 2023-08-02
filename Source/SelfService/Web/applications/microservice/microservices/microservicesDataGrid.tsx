@@ -24,7 +24,7 @@ export const MicroservicesDataGrid = ({ application, environment, microservices 
     const navigate = useNavigate();
 
     const [microserviceRows, setMicroserviceRows] = useState<(MicroserviceObject | undefined)[]>([]);
-    const [loadingRows, setLoadingRows] = useState(true);
+    const [isLoadingRows, setIsLoadingRows] = useState(true);
 
     const getMicroserviceStatus = useCallback(async (microserviceId: string) => {
         const status = await getPodStatus(application.id, environment, microserviceId);
@@ -32,7 +32,7 @@ export const MicroservicesDataGrid = ({ application, environment, microservices 
     }, [application.id, environment]);
 
     useEffect(() => {
-        setLoadingRows(true);
+        setIsLoadingRows(true);
         Promise.all(microservices.map(async microservice => {
             const status = await getMicroserviceStatus(microservice.id);
 
@@ -41,7 +41,7 @@ export const MicroservicesDataGrid = ({ application, environment, microservices 
                 phase: status[0]?.phase,
             } as MicroserviceObject;
         })).then(data => setMicroserviceRows(data))
-            .finally(() => setLoadingRows(false));
+            .finally(() => setIsLoadingRows(false));
     }, [microservices]);
 
     const handleTableRowClick = (microserviceId: string) => {
@@ -55,7 +55,7 @@ export const MicroservicesDataGrid = ({ application, environment, microservices 
                 {...dataGridDefaultProps}
                 rows={microserviceRows}
                 columns={microservicesDataGridColumns}
-                loading={loadingRows}
+                loading={isLoadingRows}
                 onRowClick={({ row }) => handleTableRowClick(row.id)}
             />
         </DataGridWrapper>
