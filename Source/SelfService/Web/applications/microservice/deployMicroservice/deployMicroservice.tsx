@@ -53,6 +53,7 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
     const environmentInfo = application.environments.find(env => env.name === environment)!;
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
     const latestRuntimeVersion = getLatestRuntimeInfo().image;
+
     const runtimeNumberSelections = [
         ...getRuntimes().map(runtimeInfo => ({
             value: runtimeInfo.image,
@@ -68,7 +69,7 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
         setIsLoading(true);
 
         const microserviceId = Guid.create().toString();
-        const { microserviceName, headArguments, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
+        const { microserviceName, developmentEnvironment, headArguments, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
         // Convert the head arguments to the format that the form expects.
         const headArgumentValues = headArguments.map(arg => arg.value);
 
@@ -76,11 +77,11 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
             dolittle: {
                 applicationId: application.id,
                 customerId: application.customerId,
-                microserviceId
+                microserviceId,
             },
             name: microserviceName,
             kind: 'simple',
-            environment,
+            environment: developmentEnvironment,
             extra: {
                 headImage,
                 headPort: parseInt(headPort.toString(), 10),
@@ -134,7 +135,7 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
                 sx={styles.form}
                 onSubmit={handleCreateMicroservice}
             >
-                <SetupFields options={runtimeNumberSelections} sx={styles.formSections} />
+                <SetupFields runtimeOptions={runtimeNumberSelections} sx={styles.formSections} />
 
                 <ContainerImageFields sx={styles.formSections} />
 
