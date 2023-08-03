@@ -3,7 +3,7 @@
 
 import React, { useMemo } from 'react';
 
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridSelectionModel } from '@mui/x-data-grid-pro';
 import { Paper } from '@mui/material';
 import { Button } from '@dolittle/design-system';
 
@@ -16,9 +16,10 @@ export type ServiceAccountsTableProps = {
     isLoading: boolean;
     onViewCertificate: (serviceAccount: KafkaServiceAccountListDto) => void;
     onViewKey: (serviceAccount: KafkaServiceAccountListDto) => void;
+    onSelectionChanged: (selection: string[]) => void;
 };
 
-export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onViewKey }: ServiceAccountsTableProps) => {
+export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onViewKey, onSelectionChanged }: ServiceAccountsTableProps) => {
 
     const columns: GridColDef<KafkaServiceAccountListDto>[] = useMemo(() => [
         {
@@ -41,7 +42,7 @@ export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onVi
             flex: 1,
             renderCell: (params) => {
                 return <>
-                    <Button variant='outlined' label='View Certificate' onClick={() => onViewCertificate(params.row)} sx={{mr: 2}}/>
+                    <Button variant='outlined' label='View Certificate' onClick={() => onViewCertificate(params.row)} sx={{ mr: 2 }} />
                     <Button variant='outlined' label='View Key' onClick={() => onViewKey(params.row)} />
                 </>;
             }
@@ -69,11 +70,14 @@ export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onVi
                 disableColumnReorder
                 disableColumnResize
                 disableColumnSelector
+                disableMultipleSelection
                 getRowHeight={() => 'auto'}
                 headerHeight={46}
                 hideFooter
                 loading={isLoading}
                 getRowId={(row) => row.serviceAccountName!}
+                checkboxSelection
+                onSelectionModelChange={(model) => onSelectionChanged(model as string[])}
             />
         </Paper>
     );
