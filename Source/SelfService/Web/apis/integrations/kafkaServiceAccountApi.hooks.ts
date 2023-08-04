@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, QueryOptions, UseQueryOptions } from '@tanstack/react-query';
 
 import { API_CONFIGURATION } from './api';
 import { CACHE_KEYS } from './CacheKeys';
@@ -11,6 +11,7 @@ import {
     ConnectionsIdKafkaServiceAccountsServiceAccountNameGetRequest,
     ConnectionsIdKafkaServiceAccountsServiceAccountNamePostRequest,
     ConnectionsIdKafkaServiceAccountsServiceAccountNameDeleteRequest,
+    KafkaServiceAccountListDto,
 } from './generated';
 
 let apiInstance: KafkaServiceAccountApi | undefined;
@@ -22,11 +23,15 @@ const getOrCreateApi = () => {
     return apiInstance;
 };
 
-export const useConnectionsIdKafkaServiceAccountsGet = (params: ConnectionsIdKafkaServiceAccountsGetRequest) => {
+export const useConnectionsIdKafkaServiceAccountsGet = (
+    params: ConnectionsIdKafkaServiceAccountsGetRequest,
+    options?: UseQueryOptions<KafkaServiceAccountListDto[], unknown, KafkaServiceAccountListDto[], string[]>
+    ) => {
     const api = getOrCreateApi();
     return useQuery({
         queryKey: [CACHE_KEYS.ConnectionKafkaServiceAccounts_GET, params.id],
-        queryFn: api.connectionsIdKafkaServiceAccountsGet.bind(api, params)
+        queryFn: api.connectionsIdKafkaServiceAccountsGet.bind(api, params),
+        ...options
     });
 };
 
