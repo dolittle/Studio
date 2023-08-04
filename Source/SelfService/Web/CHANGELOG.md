@@ -1,3 +1,8 @@
+# [3.6.6] - 2023-8-4 [PR: #436](https://github.com/dolittle/Studio/pull/436)
+- Rename before fixing casing
+- Fix casing
+
+
 # [3.6.5] - 2023-8-4 [PR: #435](https://github.com/dolittle/Studio/pull/435)
 - View Access Certificate & Key
 - Download Access Certificate & Key
