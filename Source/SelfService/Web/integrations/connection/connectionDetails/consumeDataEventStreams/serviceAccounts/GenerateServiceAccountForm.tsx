@@ -10,7 +10,7 @@ import { Box, FormHelperText, Typography } from '@mui/material';
 
 import { Button, Form, FormRef, Input, MaxWidthTextBlock, Select } from '@dolittle/design-system';
 
-import { useConnectionsIdKafkaServiceAccountsServiceAccountNamePost } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
+import { useConnectionsIdKafkaServiceAccountsGet, useConnectionsIdKafkaServiceAccountsServiceAccountNamePost } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 import { AccountAccess, KafkaServiceAccountCreatedDto, ResponseError, ServiceAccountCreatedDto } from '../../../../../apis/integrations/generated';
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 
@@ -38,6 +38,7 @@ export const GenerateServiceAccountForm = (props: GenerateServiceAccountFormProp
     const [token, setToken] = useState<string | undefined>(undefined);
     const [formSubmitError, setFormSubmitError] = useState<string | undefined>(undefined);
 
+    const serviceAccountsQuery = useConnectionsIdKafkaServiceAccountsGet({ id: props.connectionId });
     const generateServiceAccountMutation = useConnectionsIdKafkaServiceAccountsServiceAccountNamePost();
     const hasResult = !!token;
 
@@ -50,9 +51,11 @@ export const GenerateServiceAccountForm = (props: GenerateServiceAccountFormProp
             access: fieldValues.access ?? undefined
         }, {
             onSuccess: (data: KafkaServiceAccountCreatedDto) => {
-                props.onFormComplete(data.serviceAccountName!);
-                queryClient.invalidateQueries([CACHE_KEYS.ConnectionKafkaServiceAccounts_GET, props.connectionId]);
-                enqueueSnackbar(`Service account ${data.serviceAccountName} created`);
+                window.setTimeout(() => {
+                    props.onFormComplete(data.serviceAccountName!);
+                    queryClient.invalidateQueries([CACHE_KEYS.ConnectionKafkaServiceAccounts_GET, props.connectionId]);
+                    enqueueSnackbar(`Service account ${data.serviceAccountName} created`);
+                }, 200);
             },
             onError: async (error) => {
                 let message = `Error while generating service account.`;
@@ -80,10 +83,10 @@ export const GenerateServiceAccountForm = (props: GenerateServiceAccountFormProp
     }, [props.resetForm]);
 
     const accessOptions = [
-        { displayValue: 'Default', value: ''},
-        { displayValue: 'Read', value: AccountAccess.Read},
-        { displayValue: 'Read & Write', value: AccountAccess.ReadWrite},
-        { displayValue: 'Debug', value: AccountAccess.Debug}
+        { displayValue: 'Default', value: '' },
+        { displayValue: 'Read', value: AccountAccess.Read },
+        { displayValue: 'Read & Write', value: AccountAccess.ReadWrite },
+        { displayValue: 'Debug', value: AccountAccess.Debug }
     ];
 
     return (
@@ -105,7 +108,7 @@ export const GenerateServiceAccountForm = (props: GenerateServiceAccountFormProp
                         sx={{ mb: 6 }}
                     >
                         <Input id='name' label='Name' required disabled={hasResult && !formSubmitError} sx={{ mr: 10 }} />
-                        <Input id='description' label='Description' disabled={hasResult && !formSubmitError} sx={{ mr: 10 }}/>
+                        <Input id='description' label='Description' disabled={hasResult && !formSubmitError} sx={{ mr: 10 }} />
                         <Select id='access' label='Access' options={accessOptions} />
                     </Box>
                     <Box display='flex' justifyContent='flex-end'>
