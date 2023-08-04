@@ -27,28 +27,30 @@ export const ServiceAccountsTableSection = ({ items, isLoading, connectionId }: 
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const [viewCertificateDialogState, viewCertificateDialogDispatch] = useReducer(viewCredentialsDialogReducer, { isOpen: false, connectionId });
     const [viewKeyDialogState, viewKeyDialogDispatch] = useReducer(viewCredentialsDialogReducer, { isOpen: false, connectionId });
-    const [deleteDialogState, deleteDialogDispatch] = useReducer(deleteServiceAccountDialogReducer, { open: false, serviceAccount: '', connectionId, isLoading: false });
+    const [deleteDialogState, deleteDialogDispatch] = useReducer(deleteServiceAccountDialogReducer, { open: false, serviceAccounts: [], connectionId, isLoading: false });
 
     const deleteMutation = useConnectionsIdKafkaServiceAccountsServiceAccountNameDelete();
 
     const tableActionEnabled = selectedIds.length > 0;
 
-    const handleDelete = () => {
+    const handleDelete = (serviceAccounts: string[]) => {
         deleteDialogDispatch({ type: 'loading', payload: { isLoading: true } });
-        selectedIds.forEach(id => {
-            deleteMutation
-                .mutate(
-                    { id: connectionId, serviceAccountName: id },
-                    {
-                        onSuccess: () => {
-                            enqueueSnackbar(`Successfully deleted service account ${id}`, { variant: 'success' });
-                            queryClient.invalidateQueries([CACHE_KEYS.ConnectionKafkaServiceAccounts_GET, connectionId]);
-                        },
-                        onError: (error) => enqueueSnackbar(`Failed to delete service account ${id}: ${error}`, { variant: 'error' }),
-                        onSettled: () => deleteDialogDispatch({ type: 'close' })
+        const deleteMutations = serviceAccounts.map(id => deleteMutation.mutateAsync({ id: connectionId, serviceAccountName: id }));
+        Promise.allSettled(deleteMutations)
+            .then((results) => {
+                console.log(results);
+                results.forEach((result, index) => {
+                    const id = serviceAccounts[index];
+                    if (result.status === 'fulfilled') {
+                        enqueueSnackbar(`Successfully deleted service account ${id}`);
+                    } else {
+                        enqueueSnackbar(`Failed to delete service account ${id}: ${result.reason}`, { variant: 'error' });
                     }
-                );
-        });
+                });
+                queryClient.invalidateQueries([CACHE_KEYS.ConnectionKafkaServiceAccounts_GET, connectionId]);
+            }).finally(() => {
+                deleteDialogDispatch({ type: 'close' });
+            });
     };
 
     return (
@@ -59,7 +61,7 @@ export const ServiceAccountsTableSection = ({ items, isLoading, connectionId }: 
                         label: 'Delete',
                         startWithIcon: 'DeleteRounded',
                         disabled: !tableActionEnabled,
-                        onClick: () => deleteDialogDispatch({ type: 'open', payload: { serviceAccount: selectedIds[0] } })
+                        onClick: () => deleteDialogDispatch({ type: 'open', payload: { serviceAccounts: selectedIds } })
                     }
                 ]
             }}
