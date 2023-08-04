@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Dolittle.Bridge.M3
+ * Aigonix.Bridge.M3
  * Bridge API - made for Dolittle Studio
  *
  * The version of the OpenAPI document: 1.0.0.0
