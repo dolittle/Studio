@@ -65,7 +65,6 @@ export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onVi
             renderCell: (params) => {
 
                 const isValid = params.value > Date.now();
-                debugger;
                 return <>{params.value
                     ? <span title={params.value.toISOString()}><StatusIndicator status={isValid ? 'success' : 'error'} label={isValid ? 'Up to date' : 'Expired'} /></span>
                     : '-'
