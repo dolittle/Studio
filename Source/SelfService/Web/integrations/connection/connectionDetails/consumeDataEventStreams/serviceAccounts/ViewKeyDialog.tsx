@@ -7,7 +7,7 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, P
 import { AlertDialog, Button, ContentContainer, ContentDivider, ContentSection, IconButton, LoadingSpinner } from '@dolittle/design-system';
 import { useConnectionsIdKafkaServiceAccountsServiceAccountNameGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 import { TextCopyBox } from '../../../../../components/TextCopyBox';
-import { ACTIONTYPE, ViewCredentialsDialogState } from './ViewCredentialsDialogReducers';
+import { ACTIONTYPE, ViewCredentialsDialogState } from './viewCredentialsDialogReducer';
 import { ViewCredentialsDialogContent } from './ViewCredentialsDialogContent';
 
 const styles = {
