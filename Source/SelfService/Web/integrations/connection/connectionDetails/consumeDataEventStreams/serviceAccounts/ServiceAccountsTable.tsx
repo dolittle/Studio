@@ -85,12 +85,12 @@ export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onVi
                 disableColumnResize
                 disableColumnSelector
                 disableMultipleSelection
+                checkboxSelection
                 getRowHeight={() => 'auto'}
                 headerHeight={46}
                 hideFooter
                 loading={isLoading}
                 getRowId={(row) => row.serviceAccountName!}
-                checkboxSelection
                 onSelectionModelChange={(model) => onSelectionChanged(model as string[])}
             />
         </Paper>

@@ -18,7 +18,12 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
     const [expandForm, setExpandForm] = useState(false);
     const [resetForm, setResetForm] = useState(false);
 
-    const { data, isLoading, isError, error } = useConnectionsIdKafkaServiceAccountsGet({ id: connectionId });
+    const { data, isLoading, isError, error } = useConnectionsIdKafkaServiceAccountsGet({ id: connectionId }, {
+        refetchInterval(data, query) {
+            const hasEntriesWithoutCertificateData = data?.some((item) => item.certificateExpiry === null || item.certificateExpiry === undefined);
+            return hasEntriesWithoutCertificateData ? 1000 : false;
+        },
+    });
 
     const items = useMemo(
         () => data?.sort((a, b) => b.createdAt! > a.createdAt! ? 1 : -1) || [], [data]
