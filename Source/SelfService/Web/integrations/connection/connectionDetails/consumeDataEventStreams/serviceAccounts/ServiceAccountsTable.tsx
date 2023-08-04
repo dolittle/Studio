@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 
 import { DataGridPro, GridColDef, GridSelectionModel } from '@mui/x-data-grid-pro';
 import { Paper } from '@mui/material';
-import { Button } from '@dolittle/design-system';
+import { Button, StatusIndicator } from '@dolittle/design-system';
 
 import { KafkaServiceAccountListDto } from '../../../../../apis/integrations/generated';
 import { formatDate } from '../../../../../utils/helpers/dates';
@@ -25,19 +25,19 @@ export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onVi
         {
             field: 'serviceAccountName',
             headerName: 'Name',
-            minWidth: 270,
+            minWidth: 120,
             flex: 1,
         },
         {
             field: 'description',
             headerName: 'Description',
-            minWidth: 270,
+            minWidth: 250,
             flex: 1,
         },
         {
             field: 'certificates',
             headerName: 'Certificates',
-            minWidth: 350,
+            minWidth: 300,
             sortable: false,
             flex: 1,
             renderCell: (params) => {
@@ -50,11 +50,26 @@ export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onVi
         {
             field: 'createdAt',
             headerName: 'Created at',
-            minWidth: 270,
+            minWidth: 100,
             flex: 1,
             valueFormatter: (params) => params.value ? formatDate(params.value) : '-',
             renderCell: (params) => {
                 return <span title={params.value?.toISOString()}>{params.formattedValue}</span>;
+            },
+        },
+        {
+            field: 'certificateExpiry',
+            headerName: 'Certificate Validity',
+            minWidth: 100,
+            flex: 1,
+            renderCell: (params) => {
+
+                const isValid = params.value > Date.now();
+                debugger;
+                return <>{params.value
+                    ? <span title={params.value.toISOString()}><StatusIndicator status={isValid ? 'success' : 'error'} label={isValid ? 'Up to date' : 'Expired'} /></span>
+                    : '-'
+                }</>;
             },
         },
     ], [onViewCertificate, onViewKey]);
