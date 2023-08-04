@@ -6,7 +6,7 @@ import React, { Dispatch } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Paper } from '@mui/material';
 import { AlertDialog, Button, ContentContainer, ContentDivider, ContentSection, IconButton, LoadingSpinner } from '@dolittle/design-system';
 import { useConnectionsIdKafkaServiceAccountsServiceAccountNameGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
-import { ACTIONTYPE, ViewCredentialsDialogState } from './viewCredentialsDialogReducer';
+import { ACTIONTYPE, ViewCredentialsDialogState } from './ViewCredentialsDialogReducers';
 import { ViewCredentialsDialogContent } from './ViewCredentialsDialogContent';
 
 const styles = {

@@ -11,7 +11,7 @@ import { useConnectionsIdKafkaServiceAccountsServiceAccountNameDelete } from '..
 import { ServiceAccountsTable } from './ServiceAccountsTable';
 import { ViewCertificateDialog } from './ViewCertificateDialog';
 import { ViewKeyDialog } from './ViewKeyDialog';
-import { viewCredentialsDialogReducer } from './viewCredentialsDialogReducer';
+import { viewCredentialsDialogReducer } from './ViewCredentialsDialogReducers';
 import { DeleteServiceAccountDialog, deleteServiceAccountDialogReducer } from './DeleteServiceAccountDialog';
 
 
