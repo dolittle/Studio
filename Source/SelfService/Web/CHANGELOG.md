@@ -1,3 +1,9 @@
+# [3.6.5] - 2023-8-4 [PR: #435](https://github.com/dolittle/Studio/pull/435)
+- View Access Certificate & Key
+- Download Access Certificate & Key
+- Delete multiple Kafka Service Accounts
+
+
 # [3.6.4] - 2023-7-31 [PR: #433](https://github.com/dolittle/Studio/pull/433)
 ## Summary
 
