@@ -12,14 +12,14 @@ export type GenerateServiceAccountFormSubmitButtonProps =  {
 };
 
 export const GenerateServiceAccountFormSubmitButton = ({ disabled }: GenerateServiceAccountFormSubmitButtonProps) => {
-    const { isValid } = useFormState();
+    const { isValid, isSubmitting } = useFormState();
 
     return (
         <Button
             label='Generate Service Account'
             type='submit'
             variant='outlined'
-            disabled={disabled || !isValid}
+            disabled={disabled || !isValid || isSubmitting}
         />
     );
 };
