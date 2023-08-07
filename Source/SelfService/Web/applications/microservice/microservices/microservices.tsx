@@ -20,14 +20,14 @@ import { NoMicroservices } from './noMicroservices';
 import { MicroservicesDataGrid } from './microservicesDataGrid';
 
 export type MicroserviceProps = {
-    environment: string;
     application: HttpResponseApplication;
+    environment: string;
 };
 
-export const Microservice = ({ environment, application }: MicroserviceProps) => {
+export const Microservice = ({ application, environment }: MicroserviceProps) => {
     const navigate = useNavigate();
-    const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as MicroserviceObject[];
+    const { enqueueSnackbar } = useSnackbar();
 
     let tempEnvironments = application.environments.map(e => e.name);
     tempEnvironments = [...tempEnvironments, ...$microservices.map(item => item.environment)];
@@ -55,7 +55,7 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
 
             {filteredMicroservices.length > 0 ?
                 <MicroservicesDataGrid application={application} environment={environment} microservices={filteredMicroservices} /> :
-                <NoMicroservices onCreate={() => handleCreateMicroservice()} />
+                <NoMicroservices onCreate={handleCreateMicroservice} />
             }
 
             {hasEnvironments && filteredMicroservices.length > 0 &&
