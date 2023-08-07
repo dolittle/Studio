@@ -8,6 +8,7 @@ import { FormControl, FormControlLabel, Switch as MuiSwitch, SwitchProps as MuiS
 import { useController, FieldProps } from './helpers';
 import type { Form } from './Form';
 
+// TODO: Remove these styles
 const styles = {
     formControl: {
         mt: 1.5,
@@ -25,16 +26,16 @@ const styles = {
 export type SwitchProps = {
     id: string;
     label: string;
+    size?: 'small' | 'medium';
 } & MuiSwitchProps;
 
+// TODO: Import from NewSwitch.tsx
 const SwitchUI = (props: SwitchProps) =>
-    <FormControl size='small'>
-        <FormControlLabel
-            control={<MuiSwitch size='small' sx={styles.switch} {...props} />}
-            label={props.label}
-            sx={styles.formControl}
-        />
-    </FormControl>;
+    <FormControlLabel
+        control={<MuiSwitch size={props.size ? props.size : 'small'} sx={styles.switch} {...props} />}
+        label={props.label}
+        sx={styles.formControl}
+    />;
 
 /**
  * Creates a switch field to be used in a {@link Form}.
@@ -45,13 +46,15 @@ export const Switch = (props: FieldProps) => {
     const { field } = useController(props);
 
     return (
-        <SwitchUI
-            {...field}
-            id={`${props.id}-switch`}
-            checked={!!field.value}
-            disabled={props.disabled}
-            label={props.label}
-        />
+        <FormControl>
+            <SwitchUI
+                {...field}
+                id={`${props.id}-switch`}
+                checked={!!field.value}
+                disabled={props.disabled}
+                label={props.label}
+            />
+        </FormControl>
     );
 };
 
