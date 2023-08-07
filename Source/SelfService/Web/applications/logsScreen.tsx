@@ -109,7 +109,7 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
             <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
             <Typography variant='h1'>Logs</Typography>
 
-            <Box mt={3}>
+            <Box sx={{ minWidth: 640, mt: 3 }}>
                 <LogFilterPanel microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
                 {
                     filters.dateRange === 'live'
