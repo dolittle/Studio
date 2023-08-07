@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { InView } from 'react-intersection-observer';
 
 import { Divider, Grid, Paper, Typography, } from '@mui/material';
@@ -138,10 +138,11 @@ export const LogPanel = (props: LogPanelProps) => {
                 <Grid item xs={12}>
                     <Paper elevation={1} sx={{ p: 2 }}>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} md={10}>
+                            <Grid item xs={12} lg={8}>
                                 {title}
                             </Grid>
 
+                            <Grid item xs={12} lg={4} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                                 <NewSwitch
                                     label='Timestamp'
                                     size='medium'
