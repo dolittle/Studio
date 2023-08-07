@@ -3,7 +3,8 @@
 
 import React from 'react';
 
-import { componentStories, Form, Switch } from '@dolittle/design-system';
+import { componentStories } from '../../componentStories';
+import { Form, Switch } from './';
 
 const { metadata, createStory } = componentStories(Switch, {
     actions: { onChange: 'Changed' },
