@@ -4,9 +4,9 @@
 import React, { useState, useCallback } from 'react';
 import { InView } from 'react-intersection-observer';
 
-import { Box, Divider, FormControlLabel, FormGroup, Grid, Paper, Switch, Typography, } from '@mui/material';
+import { Box, Divider, FormControlLabel, FormGroup, Grid, Paper, Switch as MuiSwitch, Typography, } from '@mui/material';
 
-import { AlertBox, AlertBoxErrorMessage } from '@dolittle/design-system';
+import { AlertBox, AlertBoxErrorMessage, Switch } from '@dolittle/design-system';
 
 import { ObservableLogLines, ObservablePartialLogLines } from './loki/logLines';
 import { DataLabels } from './loki/types';
@@ -94,11 +94,7 @@ export const LogPanel = (props: LogPanelProps) => {
 
     if (props.logs.failed) {
         return (
-            <AlertBox
-                title='Something went wrong'
-                message={<AlertBoxErrorMessage />}
-                sx={{ mt: 2 }}
-            />
+            <AlertBox title='Something went wrong' message={<AlertBoxErrorMessage />} sx={{ mt: 2 }} />
         );
     }
 
@@ -137,6 +133,7 @@ export const LogPanel = (props: LogPanelProps) => {
     return (
         <>
             {dialog}
+
             <Grid container spacing={2} sx={{ pt: 2 }}>
                 <Grid item xs={12}>
                     <Paper elevation={1} sx={{ p: 2 }}>
@@ -144,13 +141,14 @@ export const LogPanel = (props: LogPanelProps) => {
                             <Grid item xs={12} md={10}>
                                 {title}
                             </Grid>
+
                             <Grid item xs={12} md={2}>
                                 <Box display='flex' justifyContent='flex-end'>
                                     <FormGroup>
                                         <FormControlLabel
                                             label='Timestamp'
                                             control={
-                                                <Switch
+                                                <MuiSwitch
                                                     checked={showTimestamp}
                                                     onChange={(event) =>
                                                         setShowTimestamp(
@@ -161,11 +159,12 @@ export const LogPanel = (props: LogPanelProps) => {
                                             }
                                         />
                                     </FormGroup>
+
                                     <FormGroup>
                                         <FormControlLabel
                                             label='Microservice'
                                             control={
-                                                <Switch
+                                                <MuiSwitch
                                                     checked={showMicroservice}
                                                     onChange={(event) =>
                                                         setShowMicroservice(
@@ -179,22 +178,20 @@ export const LogPanel = (props: LogPanelProps) => {
                                 </Box>
                             </Grid>
                         </Grid>
+
                         <Divider sx={{ borderColor: 'background.paper', m: 1 }} />
+
                         <LogLines
                             logs={props.logs}
                             showContextButton
                             showTimestamp={showTimestamp}
                             showMicroservice={showMicroservice}
-                            showDateRangeHeaderAndFooter={
-                                props.filters.dateRange !== 'live'
-                            }
+                            showDateRangeHeaderAndFooter={props.filters.dateRange !== 'live'}
                             onClickShowContextButton={handleOnClickShowLineContext}
                         />
-                        <InView
-                            onChange={handleInViewChange}
-                            // TODO: We can set the rootMargin to trigger earlier than reaching the actual bottom
-                            fallbackInView={false}
-                        />
+
+                        {/* TODO: We can set the rootMargin to trigger earlier than reaching the actual bottom */}
+                        <InView onChange={handleInViewChange} fallbackInView={false} />
                     </Paper>
                 </Grid>
             </Grid>
