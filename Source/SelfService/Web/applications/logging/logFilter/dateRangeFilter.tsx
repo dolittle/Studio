@@ -113,12 +113,7 @@ export const DateRangeFilter = (props: DateRangeFilterProps) => {
             {props.range !== 'live' &&
                 <Box sx={{ mt: 1 }}>
                     <DateTimePicker
-                        renderInput={(props) =>
-                            <TextField
-                                sx={{ mr: { xs: 0, md: 1 }, mb: { xs: 2, md: 0 } }}
-                                {...props}
-                                variant='outlined'
-                            />}
+                        renderInput={props => <TextField variant='outlined' sx={{ mr: 1 }} {...props} />}
                         InputProps={dateTimePickerInputProps}
                         label='Start'
                         mask='__.__.____ __:__'
