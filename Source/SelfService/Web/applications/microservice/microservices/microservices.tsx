@@ -37,6 +37,8 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
     const newEnvironments = [...new Set(tempEnvironments)];
     const hasEnvironments = newEnvironments.length > 0;
 
+    const filteredMicroservices = $microservices.filter(microservice => microservice.environment === environment);
+
     const handleCreateMicroservice = () => {
         if (!canEdit) {
             enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
@@ -51,12 +53,12 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
         <>
             <Typography variant='h1' sx={{ my: 2 }}>Microservices</Typography>
 
-            {$microservices.length > 0 ?
-                <MicroservicesDataGrid application={application} environment={environment} microservices={$microservices} /> :
+            {filteredMicroservices.length > 0 ?
+                <MicroservicesDataGrid application={application} environment={environment} microservices={filteredMicroservices} /> :
                 <NoMicroservices onCreate={() => handleCreateMicroservice()} />
             }
 
-            {hasEnvironments && $microservices.length > 0 &&
+            {hasEnvironments && filteredMicroservices.length > 0 &&
                 <Button
                     label='Deploy New Microservice'
                     variant='fullwidth'
