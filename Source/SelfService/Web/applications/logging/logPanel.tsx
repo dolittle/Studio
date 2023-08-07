@@ -4,9 +4,9 @@
 import React, { useState, useCallback } from 'react';
 import { InView } from 'react-intersection-observer';
 
-import { Box, Divider, FormControlLabel, FormGroup, Grid, Paper, Switch as MuiSwitch, Typography, } from '@mui/material';
+import { Divider, Grid, Paper, Typography, } from '@mui/material';
 
-import { AlertBox, AlertBoxErrorMessage, Switch } from '@dolittle/design-system';
+import { AlertBox, AlertBoxErrorMessage, NewSwitch } from '@dolittle/design-system';
 
 import { ObservableLogLines, ObservablePartialLogLines } from './loki/logLines';
 import { DataLabels } from './loki/types';
@@ -142,40 +142,18 @@ export const LogPanel = (props: LogPanelProps) => {
                                 {title}
                             </Grid>
 
-                            <Grid item xs={12} md={2}>
-                                <Box display='flex' justifyContent='flex-end'>
-                                    <FormGroup>
-                                        <FormControlLabel
-                                            label='Timestamp'
-                                            control={
-                                                <MuiSwitch
-                                                    checked={showTimestamp}
-                                                    onChange={(event) =>
-                                                        setShowTimestamp(
-                                                            event.target.checked
-                                                        )
-                                                    }
-                                                />
-                                            }
-                                        />
-                                    </FormGroup>
+                                <NewSwitch
+                                    label='Timestamp'
+                                    size='medium'
+                                    checked={showTimestamp}
+                                    onChange={event => setShowTimestamp(event.target.checked)}
+                                />
 
-                                    <FormGroup>
-                                        <FormControlLabel
-                                            label='Microservice'
-                                            control={
-                                                <MuiSwitch
-                                                    checked={showMicroservice}
-                                                    onChange={(event) =>
-                                                        setShowMicroservice(
-                                                            event.target.checked
-                                                        )
-                                                    }
-                                                />
-                                            }
-                                        />
-                                    </FormGroup>
-                                </Box>
+                                <NewSwitch
+                                    label='Microservice'
+                                    size='medium'
+                                    onChange={event => setShowMicroservice(event.target.checked)}
+                                />
                             </Grid>
                         </Grid>
 
