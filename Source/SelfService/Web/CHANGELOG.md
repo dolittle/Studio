@@ -1,3 +1,8 @@
+# [3.6.7] - 2023-8-7 [PR: #437](https://github.com/dolittle/Studio/pull/437)
+## Summary
+Add Certificate Authority file for a user to download from the Consume Event Streams tab
+
+
 # [3.6.6] - 2023-8-4 [PR: #436](https://github.com/dolittle/Studio/pull/436)
 - Rename before fixing casing
 - Fix casing
