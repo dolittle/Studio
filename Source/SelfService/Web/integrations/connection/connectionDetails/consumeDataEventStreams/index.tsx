@@ -10,18 +10,26 @@ import { useConnectionIdFromRoute } from '../../../routes.hooks';
 import { ServiceAccountsSection } from './serviceAccounts/ServiceAccountsSection';
 
 const asyncApiSpecificationUrlTemplate = '/api/bridge/connections/:id/asyncapi/spec.json';
+const caFileUrlTemplate = '/api/bridge/resources/kafka/ca.pem';
 
 export const ConsumeDataEventStreamsView = () => {
     const connectionId = useConnectionIdFromRoute();
-    const generatedPath = generatePath(asyncApiSpecificationUrlTemplate, { id: connectionId });
-    const resolvedPathWithBasename = useHref(generatedPath);
-    const asyncApiSpecificationUrl = `${window.location.origin}${resolvedPathWithBasename}`;
+    const resolvedAsyncApiSpecificationUrlWithBasename = useHref(generatePath(asyncApiSpecificationUrlTemplate, { id: connectionId }));
+    const asyncApiSpecificationUrl = `${window.location.origin}${resolvedAsyncApiSpecificationUrlWithBasename}`;
+
+    const resolvedCAFileUrlWithBasename = useHref(generatePath(caFileUrlTemplate));
+    const caFileUrl = `${window.location.origin}${resolvedCAFileUrlWithBasename}`;
 
     const { enqueueSnackbar } = useSnackbar();
 
     const handleAsyncApiSpecificationLinkCopy = () => {
         navigator.clipboard.writeText(asyncApiSpecificationUrl);
         enqueueSnackbar('AsyncAPI specification copied to clipboard.');
+    };
+
+    const handleCAFileLinkCopy = () => {
+        navigator.clipboard.writeText(caFileUrl);
+        enqueueSnackbar('Certificate authority pem-file for kafka copied to clipboard.');
     };
 
     return (
@@ -42,6 +50,23 @@ export const ConsumeDataEventStreamsView = () => {
                             icon='CopyAllRounded'
                             color='primary'
                             onClick={handleAsyncApiSpecificationLinkCopy}
+                        />
+                    </Box>
+                </ContentSection>
+                <ContentSection title='Resources'>
+                    <Typography>Download the Certificate Authority file for Kafka. You will need this to connect your application to consume messages.</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
+                        <Link
+                            target
+                            ariaLabel='Certificate Authority file'
+                            href={caFileUrl}
+                            message={caFileUrl}
+                        />
+                        <IconButton
+                            tooltipText='Copy Certificate Authority file to clipboard'
+                            icon='CopyAllRounded'
+                            color='primary'
+                            onClick={handleCAFileLinkCopy}
                         />
                     </Box>
                 </ContentSection>
