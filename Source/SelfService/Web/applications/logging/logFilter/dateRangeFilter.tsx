@@ -2,9 +2,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useEffect } from 'react';
+
 import { Box, InputProps, MenuItem, SelectChangeEvent, TextField } from '@mui/material';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+
 import { nb } from 'date-fns/locale';
 
 import { LogFilterDateRange } from './logFilterPanel';
@@ -103,22 +105,13 @@ export const DateRangeFilter = (props: DateRangeFilterProps) => {
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={nb}>
-            <FilterSelect
-                value={selectValue}
-                onChange={handleOnChange}
-            >
+            <FilterSelect value={selectValue} onChange={handleOnChange}>
                 <MenuItem value='live'>Live logs</MenuItem>
                 <MenuItem value='daterange'>Date range...</MenuItem>
             </FilterSelect>
-            {
-                props.range !== 'live' &&
-                <Box sx={{
-                    mt: 1.5,
-                    display: {
-                        lg: 'block',
-                        xl: 'inline',
-                    },
-                }}>
+
+            {props.range !== 'live' &&
+                <Box sx={{ mt: 1 }}>
                     <DateTimePicker
                         renderInput={(props) =>
                             <TextField
@@ -132,10 +125,10 @@ export const DateRangeFilter = (props: DateRangeFilterProps) => {
                         value={startDate}
                         onChange={handleOnStartDateChange}
                         maxDateTime={stopDate === null ? undefined : stopDate}
-
                     />
+
                     <DateTimePicker
-                        renderInput={(props) => <TextField {...props} variant='outlined' />}
+                        renderInput={props => <TextField variant='outlined' {...props} />}
                         InputProps={dateTimePickerInputProps}
                         mask='__.__.____ __:__'
                         label='End'

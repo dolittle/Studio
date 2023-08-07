@@ -60,27 +60,25 @@ export const LogFilterPanel = ({ microservices, filters, setSearchFilters }: Log
     };
 
     return (
-        <>
-            <Grid container spacing={2}>
-                <Grid item xs={12} lg={4}>
-                    <SearchFilter onSearch={onSearched} />
-                </Grid>
-
-                <Grid item xs={12} lg={8} sx={{ '& > *': { ml: 2, py: 0.5 } }}>
-                    <MicroserviceFilter
-                        availableMicroservices={microservices}
-                        selectedMicroservices={filters.microservice}
-                        onSelectMicroservices={onSelectMicroservices} />
-
-                    <DateRangeFilter
-                        range={filters.dateRange}
-                        onSetDateRange={onSetDateRange} />
-                </Grid>
-
-                <Grid item xs={12}>
-                    <ActiveFilters filters={filters} updateFilters={onUpdateFilters} />
-                </Grid>
+        <Grid container spacing={2}>
+            <Grid item xs={12} lg={4}>
+                <SearchFilter onSearch={onSearched} />
             </Grid>
-        </>
+
+            <Grid item xs={12} lg={8} sx={{ '& > *': { ml: 2, py: 0.5 } }}>
+                <MicroserviceFilter
+                    availableMicroservices={microservices}
+                    selectedMicroservices={filters.microservice}
+                    onSelectMicroservices={onSelectMicroservices} />
+
+                <DateRangeFilter
+                    range={filters.dateRange}
+                    onSetDateRange={onSetDateRange} />
+            </Grid>
+
+            <Grid item xs={12}>
+                <ActiveFilters filters={filters} updateFilters={onUpdateFilters} />
+            </Grid>
+        </Grid>
     );
 };
