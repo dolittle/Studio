@@ -3,14 +3,15 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { Box, InputProps, MenuItem, SelectChangeEvent, TextField } from '@mui/material';
+import { Box, InputProps, TextField } from '@mui/material';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+
+import { DropdownMenu } from '@dolittle/design-system';
 
 import { nb } from 'date-fns/locale';
 
 import { LogFilterDateRange } from './logFilterPanel';
-import { FilterSelect } from './filterSelect';
 
 export type DateRangeFilterProps = {
     range: LogFilterDateRange;
@@ -33,8 +34,6 @@ export const DateRangeFilter = (props: DateRangeFilterProps) => {
     const [startDate, setStartDate] = useState<Date | null>(beginningOfToday);
     const [stopDate, setStopDate] = useState<Date | null>(endOfToday);
 
-    const selectValue = props.range === 'live' ? 'live' : 'daterange';
-
     useEffect(() => {
         if (props.range === 'live') return;
 
@@ -50,8 +49,8 @@ export const DateRangeFilter = (props: DateRangeFilterProps) => {
 
     }, [props.range]);
 
-    const handleOnChange = (event: SelectChangeEvent<string>) => {
-        if (event.target.value === 'daterange') {
+    const handleOnChange = (value: string) => {
+        if (value === 'date-range') {
             let start = startDate, stop = stopDate;
 
             if (start === null) {
@@ -105,10 +104,22 @@ export const DateRangeFilter = (props: DateRangeFilterProps) => {
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={nb}>
-            <FilterSelect value={selectValue} onChange={handleOnChange}>
-                <MenuItem value='live'>Live logs</MenuItem>
-                <MenuItem value='daterange'>Date range...</MenuItem>
-            </FilterSelect>
+            <DropdownMenu
+                id='date-filter-panel'
+                selected={props.range === 'live' ? 'Live logs' : 'Date range...'}
+                menuItems={[
+                    {
+                        id: 'live-logs',
+                        label: 'Live logs',
+                        onSelect: () => handleOnChange('live'),
+                    },
+                    {
+                        id: 'date-range',
+                        label: 'Date range...',
+                        onSelect: () => handleOnChange('date-range'),
+                    },
+                ]}
+            />
 
             {props.range !== 'live' &&
                 <Box sx={{ mt: 1 }}>
