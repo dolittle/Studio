@@ -111,6 +111,7 @@ export const DropdownMenu = ({ id, menuItems, iconDropdown, selected, withIcons 
                     aria-haspopup='true'
                     aria-controls={open ? id : undefined}
                     aria-expanded={open ? 'true' : undefined}
+                    sx={{ '& .MuiButton-endIcon .MuiSvgIcon-root': { fontSize: 24 } }}
                 />
             }
 
