@@ -4,6 +4,7 @@
 import React from 'react';
 
 import { MenuItem, SelectChangeEvent } from '@mui/material';
+import { ArrowDropDownRounded } from '@mui/icons-material';
 
 import { LogFilterMicroservice } from './logFilterPanel';
 import { FilterSelect } from './filterSelect';
@@ -46,6 +47,7 @@ export const MicroserviceFilter = ({ availableMicroservices, selectedMicroservic
             value={selectedMicroserviceIds}
             renderValue={renderValue}
             onChange={handleOnChange}
+            IconComponent={ArrowDropDownRounded}
         >
             {availableMicroservices.map(microservice =>
                 // TODO: Add checkboxes here
