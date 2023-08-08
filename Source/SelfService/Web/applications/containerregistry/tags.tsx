@@ -70,28 +70,28 @@ export const View: React.FunctionComponent<Props> = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {containerRegistryTags.tags.map(row => (
-                            <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                        {containerRegistryTags.tags.map(tag => (
+                            <TableRow key={tag.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell component="td" scope="row">
                                     <Link component={RouterLink}
-                                        to={`${msCreatePath}'#head-image=${imagePath}:${row.name}`}>
-                                        {row.name}
+                                        to={`${msCreatePath}#head-image=${imagePath}:${tag.name}`}>
+                                        {tag.name}
                                     </Link>
                                 </TableCell>
                                 <TableCell component="td" scope="row">
-                                    {row.createdTime.toLocaleString()}
+                                    {tag.createdTime.toLocaleString()}
                                 </TableCell>
                                 <TableCell component="td" scope="row">
-                                    {row.lastUpdateTime.toLocaleString()}
+                                    {tag.lastUpdateTime.toLocaleString()}
                                 </TableCell>
                                 <TableCell component="td" scope="row">
                                     <Link component={RouterLink}
-                                        to={`${msCreatePath}'#head-image=${imagePath}:${row.name}@${row.digest}`}>
-                                        {row.digest}
+                                        to={`${msCreatePath}#head-image=${imagePath}:${tag.name}@${tag.digest}`}>
+                                        {tag.digest}
                                     </Link>
                                 </TableCell>
                                 <TableCell component="td" scope="row">
-                                    {row.signed ? 'true' : 'false'}
+                                    {tag.signed ? 'true' : 'false'}
                                 </TableCell>
                             </TableRow>
                         ))}
