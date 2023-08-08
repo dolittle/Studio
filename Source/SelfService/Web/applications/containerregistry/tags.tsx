@@ -26,12 +26,13 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const _props = props!;
     const { image } = useParams<ViewParams>();
 
-    if(!image) {
+    if (!image) {
         return null;
     }
 
     const applicationId = _props.applicationId;
     const environment = _props.environment;
+    const imagePath = `${_props.url}/${image}`;
 
     const [loaded, setLoaded] = useState(false);
     const [containerRegistryTags, setContainerRegistryTags] = useState({
@@ -56,7 +57,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <p>{_props.url}/{image}</p>
+            <p>{imagePath}</p>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 480 }} aria-label="Docker images" size="small">
                     <TableHead>
@@ -73,7 +74,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                             <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell component="td" scope="row">
                                     <Link component={RouterLink}
-                                          to={msCreatePath + '#head-image='+image+':'+row.name}>
+                                        to={`${msCreatePath}'#head-image=${imagePath}:${row.name}`}>
                                         {row.name}
                                     </Link>
                                 </TableCell>
@@ -85,12 +86,12 @@ export const View: React.FunctionComponent<Props> = (props) => {
                                 </TableCell>
                                 <TableCell component="td" scope="row">
                                     <Link component={RouterLink}
-                                          to={msCreatePath + '#head-image='+image+'@'+row.digest}>
+                                        to={`${msCreatePath}'#head-image=${imagePath}:${row.name}@${row.digest}`}>
                                         {row.digest}
                                     </Link>
                                 </TableCell>
                                 <TableCell component="td" scope="row">
-                                    {row.signed ? 'true' : 'false' }
+                                    {row.signed ? 'true' : 'false'}
                                 </TableCell>
                             </TableRow>
                         ))}
