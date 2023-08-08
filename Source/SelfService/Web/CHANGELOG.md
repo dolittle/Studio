@@ -1,3 +1,25 @@
+# [3.7.0] - 2023-8-8 [PR: #234](https://github.com/dolittle/Studio/pull/234)
+### Summary
+
+This changes the tag list to use the new image-tags endpoint in platform-api, to get a list of
+tags (sorted by creation date), with additional meta data.
+It also adds linking between the tags list and the create microservice
+screen, where it prefills the head image field with the value found in
+the URI fragment identifier.
+
+### Added
+
+- Mechanism for adding prefilled image name to the head image field in the create new microservice screen
+- New metadata to the tags list
+- Links from the tags list to the create new microservice screen
+
+### Changed
+
+- The tags api to use the `image-tags` endpoint instead of `tags`
+- The tags list
+- The create new microservice screen (to be able to get an optional image name from the URI fragment identifier for the head image field)
+
+
 # [3.6.7] - 2023-8-7 [PR: #437](https://github.com/dolittle/Studio/pull/437)
 ## Summary
 Add Certificate Authority file for a user to download from the Consume Event Streams tab
