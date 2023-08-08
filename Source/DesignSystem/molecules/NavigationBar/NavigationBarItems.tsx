@@ -22,7 +22,7 @@ export const getPrimaryNavigationItems = (primaryNavigationItems: PrimaryNavigat
     </>;
 
 export const getSelectionMenuItems = (selectionMenuItems: DropdownMenuProps['menuItems'], selected: string) =>
-    <DropdownMenu id='navigation-bar-select' menuItems={selectionMenuItems} selected={selected} />;
+    <DropdownMenu id='navigation-bar-select' menuItems={selectionMenuItems} selected={selected} withIcons />;
 
 export const getSecondaryNavigationItems = (secondaryNavigationItems: DropdownMenuProps['menuItems']) =>
-    <DropdownMenu id='more-options' menuItems={secondaryNavigationItems} iconDropdown />;
+    <DropdownMenu id='more-options' menuItems={secondaryNavigationItems} iconDropdown withIcons />;

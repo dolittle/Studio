@@ -52,15 +52,22 @@ export type DropdownMenuProps = {
     menuItems: MenuItemProps[];
 
     /**
+     * Whether or not the dropdown menu is displayed as an icon button.
+     * @default false
+     */
+    iconDropdown?: boolean;
+
+    /**
      * The selected menu item label.
+     * @default 'Menu'
      */
     selected?: string;
 
     /**
-     * Whether or not the dropdown menu is an icon dropdown.
+     * Whether or not to display icons for the menu items.
      * @default false
      */
-    iconDropdown?: boolean;
+    withIcons?: boolean;
 };
 
 /**
@@ -68,7 +75,7 @@ export type DropdownMenuProps = {
  * @param {DropdownMenuProps} props - The {@link DropdownMenuProps}.
  * @returns A {@link DropdownMenu} component.
  */
-export const DropdownMenu = ({ id, menuItems, selected, iconDropdown }: DropdownMenuProps) => {
+export const DropdownMenu = ({ id, menuItems, iconDropdown, selected, withIcons }: DropdownMenuProps) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [selectedItemLabel, setSelectedItemLabel] = useState('');
 
@@ -127,9 +134,11 @@ export const DropdownMenu = ({ id, menuItems, selected, iconDropdown }: Dropdown
                             onClick={() => menuItem.onSelect?.(menuItem)}
                             {...menuItem.overrides}
                         >
-                            <ListItemIcon sx={{ color: 'text.primary' }}>
-                                {menuItemIcon && <Icon icon={menuItemIcon} />}
-                            </ListItemIcon>
+                            {withIcons &&
+                                <ListItemIcon sx={{ color: 'text.primary' }}>
+                                    {menuItemIcon && <Icon icon={menuItemIcon} />}
+                                </ListItemIcon>
+                            }
 
                             <ListItemText>
                                 {menuItem.label}
