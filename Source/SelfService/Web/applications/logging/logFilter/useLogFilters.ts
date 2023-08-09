@@ -35,20 +35,20 @@ export const useLogFilters = (
 
     let searchTerms: string[] = [];
     if (query) {
-        searchTerms = query.search.filter(_ => _ !== null && _.length > 0) as string[];
+        searchTerms = query.search.filter(term => term !== null && term.length > 0) as string[];
     }
 
     let environment: string[] | undefined;
     if (query.environment !== undefined && query.environment !== null) {
         environment = query.environment
-            .filter(_ => _ !== null && _.length > 0 && availableEnvironments.some(env => env === _))
-            .map(env => availableEnvironments.find(env => env === env)!);
+            .filter(environment => environment !== null && environment.length > 0 && availableEnvironments.some(env => env === environment))
+            .map(environment => availableEnvironments.find(env => env === environment)!);
     }
 
     let microservice: LogFilterMicroservice[] | undefined;
     if (query.microservice !== undefined && query.microservice !== null) {
         microservice = query.microservice
-            .filter(_ => _ !== null && _.length > 0 && availableMicroservices.some(ms => ms.id === _))
+            .filter(microservice => microservice !== null && microservice.length > 0 && availableMicroservices.some(ms => ms.id === microservice))
             .map(id => availableMicroservices.find(ms => ms.id === id)!);
     }
 

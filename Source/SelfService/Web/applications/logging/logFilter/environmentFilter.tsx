@@ -15,7 +15,7 @@ export type EnvironmentFilterProps = {
 };
 
 export const EnvironmentFilter = ({ availableEnvironments, selectedEnvironments, onSelectEnvironments }: EnvironmentFilterProps) => {
-    const selectedEnvironments2 = selectedEnvironments === undefined ? [] : selectedEnvironments.map(env => env);
+    const selectedEnvs = selectedEnvironments === undefined ? [] : selectedEnvironments.map(env => env);
 
     const handleOnChange = (event: SelectChangeEvent<string[]>): void => {
         const envs = Array.isArray(event.target.value) ? event.target.value : [event.target.value];
@@ -43,7 +43,7 @@ export const EnvironmentFilter = ({ availableEnvironments, selectedEnvironments,
         <FilterSelect
             multiple={true}
             displayEmpty
-            value={selectedEnvironments2}
+            value={selectedEnvs}
             renderValue={renderValue}
             onChange={handleOnChange}
             IconComponent={ArrowDropDownRounded}
