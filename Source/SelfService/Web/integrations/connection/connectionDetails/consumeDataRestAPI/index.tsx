@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 
 import { Box, Typography } from '@mui/material';
 
-import { Button, ContentContainer, ContentHeader, ContentSection, IconButton, Link, Switch } from '@dolittle/design-system';
+import { Button, ContentContainer, ContentHeader, ContentParagraph, ContentSection, IconButton, Link, Switch } from '@dolittle/design-system';
 import { useConnectionsIdRestApiStatusGet } from '../../../../apis/integrations/connectionRestApiApi.hooks';
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
 import { CredentialsContainer } from './Credentials/CredentialsContainer';
@@ -15,8 +15,6 @@ import { EnableRestApiSection } from './EnableRestApiSection';
 
 /* The ERP ReadModels -service must be specific to the connection, so we need
     to generate the URL dynamically. */
-const restApiUrl = 'https://inspiring-ritchie.dolittle.cloud/erpreadmodels/swagger/index.html';
-const openApiDocumentationUrl = 'https://inspiring-ritchie.dolittle.cloud/erpreadmodels/swagger/v1/swagger.json';
 
 
 export const ConsumeDataRestAPIView = () => {
@@ -38,6 +36,10 @@ export const ConsumeDataRestAPIView = () => {
     const showEnableSection = (apiStatus?.target === 'Disabled') || forceShowEnable;
     const showInfoSection = (apiStatus?.target === 'Enabled') && !forceShowEnable;
 
+    const restApiUrl = `${apiStatus?.basePath}swagger/index.html`;
+    const openApiDocumentationUrl = `${apiStatus?.basePath}swagger/v1/swagger.json`;
+
+
     return (
         <>
             <ContentContainer>
@@ -52,6 +54,14 @@ export const ConsumeDataRestAPIView = () => {
                             onChange={() => setForceShowEnable(!forceShowEnable)}
                         />}
                 />
+                <ContentParagraph>
+                    You can consume data through a Rest API service.
+                </ContentParagraph>
+
+                <ContentParagraph>
+                    The Rest API service is a dedicated service for your connector that exposes the message types you have set up.
+                    The API is fully documented and will reflect the message types set up for the connector.
+                </ContentParagraph>
                 {showEnableSection &&
                     <EnableRestApiSection
                         onEnableRestApi={() => setForceShowEnable(false)}
@@ -76,7 +86,7 @@ export const ConsumeDataRestAPIView = () => {
                             </Box>
                         </ContentSection>
 
-                        <ContentSection hideDivider title='Rest API Documentation'>
+                        <ContentSection title='Rest API Documentation'>
                             <Typography sx={{ pt: 1.5 }}>Our rest API is documented using OpenAPI.</Typography>
                             <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
                                 <Link
@@ -94,12 +104,10 @@ export const ConsumeDataRestAPIView = () => {
                             </Box>
                         </ContentSection>
                     </>
-                )
-                }
-
+                )}
+                <CredentialsContainer />
             </ContentContainer>
 
-            <CredentialsContainer />
         </>
     );
 };

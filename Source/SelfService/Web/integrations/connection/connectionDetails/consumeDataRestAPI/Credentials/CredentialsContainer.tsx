@@ -102,18 +102,19 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
     if (isError) return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
 
     return (
-        <ContentContainer>
-            <ContentHeader
-                title='Credentials'
-                buttons={[
+        <ContentSection
+            title='Credentials'
+            headerProps={{
+                buttons: [
                     {
                         label: 'Generate New Credentials',
                         variant: 'outlined',
                         onClick: handleGenerateNewCredentials,
                         disabled: !allowGenerateNewCredentials
                     }
-                ]}
-            />
+                ]
+            }}
+        >
             <DeleteCredentialDialog
                 dialogState={deleteDialogState}
                 dispatch={deleteDialogDispatch}
@@ -135,6 +136,6 @@ export const CredentialsContainer = (props: CredentialsContainerProps) => {
                     <CredentialsList credentials={credentials} onDelete={onDelete} />
                 </ContentSection>
             )}
-        </ContentContainer>
+        </ContentSection>
     );
 };
