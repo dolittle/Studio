@@ -123,7 +123,7 @@ export const LogLine = ({ line, showContextButton, loading, onClickShowLineConte
     const leadingEmSpace = `${leadingWhitespace * 0.6}em`;
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', mb: 1 }}>
             {showContextButton === true && (
                 <Box sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
                     <SkeletonWhenLoading loading={loading}>
