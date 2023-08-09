@@ -111,39 +111,39 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
 
             <Box sx={{ minWidth: 640, mt: 3 }}>
                 <LogFilterPanel microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
-                {
-                    filters.dateRange === 'live'
-                        ? <LogsFromLast
-                            applicationId={currentApplicationId}
-                            environment={currentEnvironment}
-                            filters={filters}
-                            last={DAY}
-                            render={logs => (
-                                <LogPanel
-                                    application={application.name}
-                                    environment={currentEnvironment}
-                                    filters={filters}
-                                    logs={logs}
-                                />
-                            )}
-                        />
-                        : <LogsInRange
-                            applicationId={currentApplicationId}
-                            environment={currentEnvironment}
-                            filters={filters}
-                            from={filters.dateRange.start}
-                            to={filters.dateRange.stop}
-                            render={(logs, loadMoreLogs) => (
-                                <LogPanel
-                                    application={application.name}
-                                    environment={currentEnvironment}
-                                    filters={filters}
-                                    logs={logs}
-                                    autoLoadMoreLogs
-                                    loadMoreLogs={loadMoreLogs}
-                                />
-                            )}
-                        />
+
+                {filters.dateRange === 'live' ?
+                    <LogsFromLast
+                        applicationId={currentApplicationId}
+                        environment={currentEnvironment}
+                        filters={filters}
+                        last={DAY}
+                        render={logs => (
+                            <LogPanel
+                                application={application.name}
+                                environment={currentEnvironment}
+                                filters={filters}
+                                logs={logs}
+                            />
+                        )}
+                    /> :
+                    <LogsInRange
+                        applicationId={currentApplicationId}
+                        environment={currentEnvironment}
+                        filters={filters}
+                        from={filters.dateRange.start}
+                        to={filters.dateRange.stop}
+                        render={(logs, loadMoreLogs) => (
+                            <LogPanel
+                                application={application.name}
+                                environment={currentEnvironment}
+                                filters={filters}
+                                logs={logs}
+                                autoLoadMoreLogs
+                                loadMoreLogs={loadMoreLogs}
+                            />
+                        )}
+                    />
                 }
             </Box>
         </LayoutWithSidebar>
