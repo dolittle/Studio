@@ -12,11 +12,15 @@ import { Button } from '@dolittle/design-system';
 
 const styles = {
     timestampCell: {
+        display: 'flex',
+        alignItems: 'center',
         whiteSpace: 'nowrap',
         pr: 2,
         flexShrink: 0
     },
     microserviceCell: {
+        display: 'flex',
+        alignItems: 'center',
         whiteSpace: 'nowrap',
         pr: 2,
         width: '7em',
