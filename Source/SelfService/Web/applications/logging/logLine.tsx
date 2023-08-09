@@ -10,6 +10,22 @@ import { DataLabels } from './loki/types';
 
 import { Button } from '@dolittle/design-system';
 
+const styles = {
+    timestampCell: {
+        whiteSpace: 'nowrap',
+        pr: 2,
+        flexShrink: 0
+    },
+    microserviceCell: {
+        whiteSpace: 'nowrap',
+        pr: 2,
+        width: '7em',
+        flexShrink: 0,
+        textOverflow: 'ellipsis',
+        overflow: 'hidden'
+    },
+};
+
 const coloredLineSectionCss = (section: ColoredLineSection): React.CSSProperties => {
     let color = 'inherit',
         backgroundColor = 'inherit';
@@ -118,28 +134,25 @@ export const LogLine = ({ line, showContextButton, loading, onClickShowLineConte
                     </SkeletonWhenLoading>
                 </Box>
             )}
-            <Box className='log-line-timestamp' sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
+
+            <Box className='log-line-timestamp' sx={styles.timestampCell}>
                 <SkeletonWhenLoading loading={loading}>
                     <span>[{formatTimestamp(timestamp)}]</span>
                 </SkeletonWhenLoading>
             </Box>
-            <Box
-                className='log-line-microservice'
-                sx={{ whiteSpace: 'nowrap', pr: 2, width: '7em', flexShrink: 0, textOverflow: 'ellipsis', overflow: 'hidden' }}
-                title={labels.microservice}
-            >
+
+            <Box className='log-line-microservice' sx={styles.microserviceCell} title={labels.microservice}>
                 <SkeletonWhenLoading loading={loading}>
                     <span>{labels.microservice}</span>
                 </SkeletonWhenLoading>
             </Box>
-            <Box
-                sx={{ flexGrow: 1 }}
+
+            <Box sx={{ flexGrow: 1 }}
                 style={
                     leadingWhitespace > 0 ? {
                         paddingLeft: leadingEmSpace,
                         textIndent: `-${leadingEmSpace}`
-                    } :
-                        undefined
+                    } : undefined
                 }
             >
                 {loading === true ? (
