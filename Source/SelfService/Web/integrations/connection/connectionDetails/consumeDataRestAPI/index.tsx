@@ -8,6 +8,7 @@ import { useSnackbar } from 'notistack';
 import { Box, Typography, Select, MenuItem } from '@mui/material';
 
 import { Button, ContentContainer, ContentHeader, ContentParagraph, ContentSection, IconButton, Link, StatusIndicator, StatusIndicatorProps, Switch } from '@dolittle/design-system';
+import { RestApiServiceStatus } from '../../../../apis/integrations/generated';
 import { useConnectionsIdRestApiStatusGet } from '../../../../apis/integrations/connectionRestApiApi.hooks';
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
 import { CredentialsContainer } from './Credentials/CredentialsContainer';
@@ -16,10 +17,9 @@ import { EnableRestApiSection } from './EnableRestApiSection';
 /* The ERP ReadModels -service must be specific to the connection, so we need
     to generate the URL dynamically. */
 
-
 export const ConsumeDataRestAPIView = () => {
     const [forceShowEnable, setForceShowEnable] = React.useState(true);
-    const [forcedServiceStatus, setForcedServiceStatus] = React.useState<string>('');
+    const [forcedServiceStatus, setForcedServiceStatus] = React.useState<RestApiServiceStatus | ''>('');
     const { enqueueSnackbar } = useSnackbar();
     const connectionId = useConnectionIdFromRoute();
     const { data: apiStatus } = useConnectionsIdRestApiStatusGet({ id: connectionId });
@@ -34,14 +34,14 @@ export const ConsumeDataRestAPIView = () => {
         enqueueSnackbar('OpenAPI documentation copied to clipboard.');
     };
 
-    const showEnableSection = (apiStatus?.target === 'Disabled') || forceShowEnable;
-    const showInfoSection = (apiStatus?.target === 'Enabled') && !forceShowEnable;
     const serviceStatus = forcedServiceStatus || apiStatus?.service;
+    const showEnableSection = (apiStatus?.target === 'Disabled') || serviceStatus === 'Deploying'|| forceShowEnable;
+    const showInfoSection = (apiStatus?.target === 'Enabled') && serviceStatus !== 'Deploying'&&  !forceShowEnable;
 
     const restApiUrl = `${apiStatus?.basePath}swagger/index.html`;
     const openApiDocumentationUrl = `${apiStatus?.basePath}swagger/v1/swagger.json`;
 
-    const statusIndicatorFromServiceStatus = (status: string | undefined): StatusIndicatorProps['status'] => {
+    const statusIndicatorFromServiceStatus = (status: RestApiServiceStatus | ''): StatusIndicatorProps['status'] => {
         switch (status?.toLocaleLowerCase()) {
             case 'off':
                 return 'error';
@@ -75,15 +75,15 @@ export const ConsumeDataRestAPIView = () => {
                             <Select
                                 id='service-status'
                                 label='Simulated Service Status'
-                                onChange={(event) => setForcedServiceStatus(event.target.value as string)}>
-                                    <MenuItem value=''>None</MenuItem>
-                                    <MenuItem value='Off'>Off</MenuItem>
-                                    <MenuItem value='Deploying'>Deploying</MenuItem>
-                                    <MenuItem value='Active'>Active</MenuItem>
-                                    <MenuItem value='Unhealthy'>Unhealthy</MenuItem>
-                                    <MenuItem value='Terminating'>Terminating</MenuItem>
-                                </Select>
-                            <StatusIndicator status={statusIndicatorFromServiceStatus(serviceStatus)} label={serviceStatus} />
+                                onChange={(event) => setForcedServiceStatus(event.target.value as RestApiServiceStatus | '')}>
+                                <MenuItem value=''>None</MenuItem>
+                                <MenuItem value='Off'>Off</MenuItem>
+                                <MenuItem value='Deploying'>Deploying</MenuItem>
+                                <MenuItem value='Active'>Active</MenuItem>
+                                <MenuItem value='Unhealthy'>Unhealthy</MenuItem>
+                                <MenuItem value='Terminating'>Terminating</MenuItem>
+                            </Select>
+                            <StatusIndicator status={statusIndicatorFromServiceStatus(serviceStatus || '')} label={serviceStatus} />
                         </>}
                 />
                 <ContentParagraph>
@@ -97,6 +97,7 @@ export const ConsumeDataRestAPIView = () => {
                 {showEnableSection &&
                     <EnableRestApiSection
                         onEnableRestApi={() => setForceShowEnable(false)}
+                        status={serviceStatus || 'Off'}
                     />
                 }
 
