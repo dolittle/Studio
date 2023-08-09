@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 
 import { Box, Typography } from '@mui/material';
 
-import { ContentContainer, ContentHeader, ContentSection, IconButton, Link, Switch } from '@dolittle/design-system';
+import { Button, ContentContainer, ContentHeader, ContentSection, IconButton, Link } from '@dolittle/design-system';
 import { CredentialsContainer } from './Credentials/CredentialsContainer';
 
 /* The ERP ReadModels -service must be specific to the connection, so we need
@@ -17,7 +17,7 @@ const openApiDocumentationUrl = 'https://inspiring-ritchie.dolittle.cloud/erprea
 
 
 export const ConsumeDataRestAPIView = () => {
-    const { enqueueSnackbar } = useSnackbar()   ;
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleRestApiLinkCopy = () => {
         navigator.clipboard.writeText(restApiUrl);
@@ -34,9 +34,10 @@ export const ConsumeDataRestAPIView = () => {
         <>
             <ContentContainer>
                 <ContentHeader
-                    title='Exposing your data'
-                    buttonsSlot={<Switch.UI id='deploy-switch' label='Deploy service' defaultChecked sx={{ mx: 0 }} />}
+                    title='Consume data over a REST API'
+                // buttonsSlot={<Switch.UI id='deploy-switch' label='Deploy service' defaultChecked sx={{ mx: 0 }} />}
                 />
+                <EnableRestApiSection />
 
                 <ContentSection title='Rest API URL'>
                     <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
@@ -75,5 +76,28 @@ export const ConsumeDataRestAPIView = () => {
 
             <CredentialsContainer />
         </>
+    );
+};
+
+export type EnableRestApiSectionProps = {};
+
+export const EnableRestApiSection = (props: EnableRestApiSectionProps) => {
+    return (
+        <ContentSection title='Enable Rest API'>
+            <Typography my={2}>
+                The Bridge can let you consume data from the messages you have set up through a Rest API service.
+            </Typography>
+
+            <Typography my={2}>
+                The Rest API service is a dedicated service for your connector that exposes the message types you have set up.
+                The API is fully documented and will reflect the message types set up for the connector.
+            </Typography>
+
+            <Typography my={2}>
+                The first time you enable the Rest API may take a few minutes to set up and deploy your dedicated service.
+                To enable this, press the Deploy service button.
+            </Typography>
+            <Button label='Enable Rest Api' variant='fullwidth' startWithIcon='RocketLaunch' />
+        </ContentSection>
     );
 };
