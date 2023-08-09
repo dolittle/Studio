@@ -157,7 +157,7 @@ export const LogLine = ({ line, showContextButton, loading, onClickShowLineConte
                 </SkeletonWhenLoading>
             </Box>
 
-            <Box sx={{ flexGrow: 1 }}
+            <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}
                 style={
                     leadingWhitespace > 0 ? {
                         paddingLeft: leadingEmSpace,
