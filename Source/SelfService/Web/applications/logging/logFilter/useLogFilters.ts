@@ -6,12 +6,18 @@ import { useQueryParams, ArrayParam, StringParam, withDefault } from 'use-query-
 
 import { LogFilterDateRange, LogFilterMicroservice, LogFilterObject } from './logFilterPanel';
 
-export const useLogFilters = (initialFilters: LogFilterObject, availableMicroservices: LogFilterMicroservice[]): [LogFilterObject, React.Dispatch<React.SetStateAction<LogFilterObject>>] => {
+export const useLogFilters = (
+    initialFilters: LogFilterObject,
+    availableMicroservices: LogFilterMicroservice[],
+    availableEnvironments: string[],
+): [LogFilterObject, React.Dispatch<React.SetStateAction<LogFilterObject>>] => {
+
     const [query, setQuery] = useQueryParams({
         range: withDefault(StringParam, initialFilters.dateRange === 'live' ? 'live' : 'daterange'),
         from: withDefault(StringParam, initialFilters.dateRange === 'live' ? undefined : initialFilters.dateRange.start.toString()),
         to: withDefault(StringParam, initialFilters.dateRange === 'live' ? undefined : initialFilters.dateRange.stop.toString()),
         search: withDefault(ArrayParam, initialFilters.searchTerms),
+        environment: withDefault(ArrayParam, initialFilters.environment?.map(env => env)),
         microservice: withDefault(ArrayParam, initialFilters.microservice?.map(_ => _.id)),
     });
 
@@ -32,6 +38,13 @@ export const useLogFilters = (initialFilters: LogFilterObject, availableMicroser
         searchTerms = query.search.filter(_ => _ !== null && _.length > 0) as string[];
     }
 
+    let environment: string[] | undefined;
+    if (query.environment !== undefined && query.environment !== null) {
+        environment = query.environment
+            .filter(_ => _ !== null && _.length > 0 && availableEnvironments.some(env => env === _))
+            .map(env => availableEnvironments.find(env => env === env)!);
+    }
+
     let microservice: LogFilterMicroservice[] | undefined;
     if (query.microservice !== undefined && query.microservice !== null) {
         microservice = query.microservice
@@ -39,15 +52,16 @@ export const useLogFilters = (initialFilters: LogFilterObject, availableMicroser
             .map(id => availableMicroservices.find(ms => ms.id === id)!);
     }
 
-    const filters: LogFilterObject = { dateRange, searchTerms, microservice };
+    const filters: LogFilterObject = { dateRange, searchTerms, environment, microservice };
 
     const setFilters = (action: React.SetStateAction<LogFilterObject>) => {
-        const { dateRange, searchTerms, microservice } = typeof action === 'function' ? action(filters) : action;
+        const { dateRange, searchTerms, environment, microservice } = typeof action === 'function' ? action(filters) : action;
         setQuery({
             range: dateRange === 'live' ? 'live' : 'daterange',
             from: dateRange === 'live' ? undefined : dateRange.start.toString(),
             to: dateRange === 'live' ? undefined : dateRange.stop.toString(),
             search: searchTerms.length > 0 ? searchTerms : undefined,
+            environment: environment !== undefined && environment.length > 0 ? environment.map(env => env) : undefined,
             microservice: microservice !== undefined && microservice.length > 0 ? microservice.map(_ => _.id) : undefined,
         }, 'replace');
     };

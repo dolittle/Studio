@@ -7,6 +7,7 @@ import { Grid } from '@mui/material';
 
 import { ActiveFilters } from './activeFilters';
 import { SearchFilter } from './searchFilter';
+import { EnvironmentFilter } from './environmentFilter';
 import { MicroserviceFilter } from './microserviceFilter';
 import { DateRangeFilter } from './dateRangeFilter';
 
@@ -22,17 +23,19 @@ export type LogFilterMicroservice = {
 
 export type LogFilterObject = {
     searchTerms: string[];
-    dateRange: LogFilterDateRange;
+    environment?: string[];
     microservice?: LogFilterMicroservice[];
+    dateRange: LogFilterDateRange;
 };
 
 export type LogFilterPanelProps = {
+    environments: string[];
     microservices: LogFilterMicroservice[];
     filters: LogFilterObject;
     setSearchFilters: (filter: LogFilterObject) => void;
 };
 
-export const LogFilterPanel = ({ microservices, filters, setSearchFilters }: LogFilterPanelProps) => {
+export const LogFilterPanel = ({ environments, microservices, filters, setSearchFilters }: LogFilterPanelProps) => {
 
     const onUpdateFilters = (filters: LogFilterObject) => {
         setSearchFilters(filters);
@@ -42,6 +45,13 @@ export const LogFilterPanel = ({ microservices, filters, setSearchFilters }: Log
         setSearchFilters({
             ...filters,
             searchTerms: filters.searchTerms.concat(query)
+        });
+    };
+
+    const onSelectEnvironments = (selection: string[]) => {
+        setSearchFilters({
+            ...filters,
+            environment: selection,
         });
     };
 
@@ -66,6 +76,15 @@ export const LogFilterPanel = ({ microservices, filters, setSearchFilters }: Log
             </Grid>
 
             <Grid item xs={12} lg={8} sx={{ '& > *': { py: 0.5 } }}>
+                <EnvironmentFilter
+                    availableEnvironments={environments}
+                    selectedEnvironments={filters.environment}
+                    onSelectEnvironments={onSelectEnvironments}
+                //availableMicroservices={microservices}
+                //selectedMicroservices={filters.microservice}
+                //onSelectMicroservices={onSelectMicroservices}
+                />
+
                 <MicroserviceFilter
                     availableMicroservices={microservices}
                     selectedMicroservices={filters.microservice}

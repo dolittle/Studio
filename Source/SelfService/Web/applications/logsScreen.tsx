@@ -51,7 +51,13 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
             }))
         : [];
 
-    const [filters, setFilters] = useLogFilters({ dateRange: 'live', searchTerms: [] }, availableMicroservices);
+    const availableEnvironments = application?.environments !== undefined ? application.environments.map(env => env.name) : [];
+
+    const [filters, setFilters] = useLogFilters(
+        { dateRange: 'live', searchTerms: [] },
+        availableMicroservices,
+        availableEnvironments,
+    );
 
     useEffect(() => {
         if (!currentEnvironment || !currentApplicationId) {
@@ -110,7 +116,7 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
             <Typography variant='h1'>Logs</Typography>
 
             <Box sx={{ minWidth: 640, mt: 3 }}>
-                <LogFilterPanel microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
+                <LogFilterPanel environments={availableEnvironments} microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
 
                 {filters.dateRange === 'live' ?
                     <LogsFromLast
