@@ -35,8 +35,7 @@ export const ConsumeDataRestAPIView = () => {
     };
 
     const serviceStatus = forcedServiceStatus || apiStatus?.service;
-    const showEnableSection = (apiStatus?.target === 'Disabled') || serviceStatus === 'Deploying'|| forceShowEnable;
-    const showInfoSection = (apiStatus?.target === 'Enabled') && serviceStatus !== 'Deploying'&&  !forceShowEnable;
+    const showEnableSection = (apiStatus?.target === 'Disabled') || serviceStatus === 'Deploying' || forceShowEnable;
 
     const restApiUrl = `${apiStatus?.basePath}swagger/index.html`;
     const openApiDocumentationUrl = `${apiStatus?.basePath}swagger/v1/swagger.json`;
@@ -94,15 +93,12 @@ export const ConsumeDataRestAPIView = () => {
                     The Rest API service is a dedicated service for your connector that exposes the message types you have set up.
                     The API is fully documented and will reflect the message types set up for the connector.
                 </ContentParagraph>
-                {showEnableSection &&
-                    <EnableRestApiSection
+                {showEnableSection
+                    ? <EnableRestApiSection
                         onEnableRestApi={() => setForceShowEnable(false)}
                         status={serviceStatus || 'Off'}
                     />
-                }
-
-                {showInfoSection && (
-                    <>
+                    : <>
                         <ContentSection title='Rest API URL'>
                             <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
                                 <Link
@@ -137,7 +133,7 @@ export const ConsumeDataRestAPIView = () => {
                             </Box>
                         </ContentSection>
                     </>
-                )}
+                }
                 <CredentialsContainer />
             </ContentContainer>
 
