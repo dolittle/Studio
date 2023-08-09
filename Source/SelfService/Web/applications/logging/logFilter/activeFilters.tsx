@@ -28,6 +28,16 @@ export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) =>
             searchTerms: terms
         });
     };
+    const removeEnvironment = (environment: string, index: number) => {
+        if (filters.environment === undefined) return;
+
+        const environments = [...filters.environment];
+        environments.splice(index, 1);
+        updateFilters({
+            ...filters,
+            environment: environments,
+        });
+    };
 
     const removeMicroservice = (microservice: LogFilterMicroservice, index: number) => {
         if (filters.microservice === undefined) return;
@@ -55,7 +65,16 @@ export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) =>
                 />
             )}
 
-            <Typography variant='body1' component='span' sx={{ mx: 2 }}>|</Typography>
+            {filters.environment?.map((environment, index) =>
+                <Chip
+                    key={index}
+                    label={environment}
+                    onDelete={() => removeEnvironment(environment, index)}
+                    color='primary'
+                    size='small'
+                    sx={{ mr: 1 }}
+                />
+            )}
 
             {filters.microservice?.map((microservice, index) =>
                 <Chip
