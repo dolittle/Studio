@@ -2,6 +2,7 @@
 apis/AsyncApiApi.ts
 apis/BaseMetadataApi.ts
 apis/ConnectionConfigurationApi.ts
+apis/ConnectionRestApiApi.ts
 apis/ConnectionsApi.ts
 apis/DeploymentApi.ts
 apis/EnvironmentApi.ts
@@ -65,6 +66,9 @@ models/ProgramDetails.ts
 models/ProgramHeader.ts
 models/RelatedTable.ts
 models/RemoteServiceStatus.ts
+models/RestApiServiceStatus.ts
+models/RestApiStatusDto.ts
+models/RestApiTargetStatus.ts
 models/ServiceAccountCreatedDto.ts
 models/ServiceAccountListDto.ts
 models/SetMessageMappingRequestArguments.ts

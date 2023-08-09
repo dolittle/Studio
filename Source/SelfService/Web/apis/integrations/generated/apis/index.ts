@@ -3,6 +3,7 @@
 export * from './AsyncApiApi';
 export * from './BaseMetadataApi';
 export * from './ConnectionConfigurationApi';
+export * from './ConnectionRestApiApi';
 export * from './ConnectionsApi';
 export * from './DeploymentApi';
 export * from './EnvironmentApi';
