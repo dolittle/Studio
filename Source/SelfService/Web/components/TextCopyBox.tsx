@@ -103,12 +103,14 @@ const TextCopyContent = ({ instructions, children, sx, downloadableFileName, han
             startWithIcon='CopyAllRounded'
             onClick={handleTextCopy}
         />
-        <Button
-            label={`Download ${downloadableFileName}`}
-            startWithIcon='DownloadRounded'
-            href={handleTextDownload()}
-            overrides={{ download: downloadableFileName }}
-        />
+        {downloadableFileName &&
+            <Button
+                label={`Download ${downloadableFileName}`}
+                startWithIcon='DownloadRounded'
+                href={handleTextDownload()}
+                overrides={{ download: downloadableFileName }}
+            />
+        }
     </Paper>
 
 </>;
