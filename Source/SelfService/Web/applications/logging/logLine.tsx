@@ -11,12 +11,18 @@ import { DataLabels } from './loki/types';
 import { Button } from '@dolittle/design-system';
 
 const styles = {
+    showCell: {
+        display: 'flex',
+        whiteSpace: 'nowrap',
+        pr: 2,
+        flexShrink: 0
+    },
     timestampCell: {
         display: 'flex',
         alignItems: 'center',
         whiteSpace: 'nowrap',
         pr: 2,
-        flexShrink: 0
+        flexShrink: 0,
     },
     microserviceCell: {
         display: 'flex',
@@ -26,7 +32,7 @@ const styles = {
         width: '7em',
         flexShrink: 0,
         textOverflow: 'ellipsis',
-        overflow: 'hidden'
+        overflow: 'hidden',
     },
 };
 
@@ -125,7 +131,7 @@ export const LogLine = ({ line, showContextButton, loading, onClickShowLineConte
     return (
         <Box sx={{ display: 'flex', mb: 1 }}>
             {showContextButton === true && (
-                <Box sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
+                <Box sx={styles.showCell}>
                     <SkeletonWhenLoading loading={loading}>
                         <Button
                             label='Show'
