@@ -119,11 +119,22 @@ export const LogPanel = (props: LogPanelProps) => {
                     ?.map((_) => _.name)
                     .join(', ')} Microservices`;
 
+    const environments =
+        props.filters.environment === undefined ||
+            props.filters.environment?.length === 0
+            ? 'all Environments'
+            : props.filters.environment?.length === 1
+                ? `${props.filters.environment?.[0]} Environment`
+                : `${props.filters.environment
+                    ?.map((_) => _)
+                    .join(', ')} Environments`;
+
     const title = (
         <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>
             Displaying{' '}
             <b>{props.filters.dateRange === 'live' ? 'live logs' : 'date range logs'}</b>{' '}
-            for {props.application} Application, {props.environment} Environment,{' '}
+            for {props.application} Application,{' '}
+            {environments}, and{' '}
             {microservices}
         </Typography>
     );
