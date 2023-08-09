@@ -9,6 +9,9 @@ export enum CACHE_KEYS {
     //ConnectionApi
     Connection_GET = 'connection_get',
 
+    //ConnectionRestApiApi
+    ConnectionRestApiStatus_GET = 'connection_rest_api_status_get',
+
     //MessageMappingApi
     ConnectionMessageMappings_GET = 'connection_messages_get',
     ConnectionMessageMapping_GET = 'connection_message_get',
