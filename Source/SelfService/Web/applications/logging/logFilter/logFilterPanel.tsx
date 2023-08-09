@@ -80,9 +80,6 @@ export const LogFilterPanel = ({ environments, microservices, filters, setSearch
                     availableEnvironments={environments}
                     selectedEnvironments={filters.environment}
                     onSelectEnvironments={onSelectEnvironments}
-                //availableMicroservices={microservices}
-                //selectedMicroservices={filters.microservice}
-                //onSelectMicroservices={onSelectMicroservices}
                 />
 
                 <MicroserviceFilter
