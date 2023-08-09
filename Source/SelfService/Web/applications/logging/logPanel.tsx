@@ -145,14 +145,12 @@ export const LogPanel = (props: LogPanelProps) => {
                             <Grid item xs={12} lg={4} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                                 <NewSwitch
                                     label='Timestamp'
-                                    size='medium'
                                     checked={showTimestamp}
                                     onChange={event => setShowTimestamp(event.target.checked)}
                                 />
 
                                 <NewSwitch
                                     label='Microservice'
-                                    size='medium'
                                     onChange={event => setShowMicroservice(event.target.checked)}
                                 />
                             </Grid>
