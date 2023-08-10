@@ -62,7 +62,7 @@ export const App = () => {
 
                             <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
 
-                            <Route path='/microservices/application/:applicationId/:environment/*' element={<MicroservicesScreen />} />
+                            <Route path='/microservices/application/:applicationId/*' element={<MicroservicesScreen />} />
 
                             <Route path='/documentation/application/:applicationId/:environment/*' element={<DocumentationScreen />} />
 
