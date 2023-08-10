@@ -32,3 +32,8 @@ export const Subtitle = createStory({
 export const WithToolbar = createStory({
     buttonsSlot: <Switch.UI id='switch' label='Switch' value={true} />
 });
+
+export const WithStatusAndToolbar = createStory({
+    status: { status: 'waiting', label: 'Loading' },
+    buttonsSlot: <Switch.UI id='switch' label='Switch' value={true} />
+});

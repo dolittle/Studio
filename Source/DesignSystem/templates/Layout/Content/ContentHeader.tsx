@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Box, SxProps, Typography } from '@mui/material';
 
-import { Button, ButtonProps } from '@dolittle/design-system';
+import { Button, ButtonProps, StatusIndicator, StatusIndicatorProps } from '@dolittle/design-system';
 
 const styles = {
     wrapper: {
@@ -27,6 +27,11 @@ export type ContentHeaderProps = {
     titleTextVariant?: 'title' | 'subtitle';
 
     /**
+     *  Show a status indeicator as part of the {@link ContentHeader}
+     */
+    status?: Pick<StatusIndicatorProps, 'status' | 'label'>;
+
+    /**
      * Render buttons as an array of {@link ButtonProps} as part of the {@link ContentHeader}
      */
     buttons?: ButtonProps[];
@@ -42,9 +47,12 @@ export type ContentHeaderProps = {
     sx?: SxProps;
 };
 
-export const ContentHeader = ({ title, buttons, buttonsSlot, titleTextVariant = 'title', sx }: ContentHeaderProps) =>
+export const ContentHeader = ({ title, buttons, buttonsSlot, titleTextVariant = 'title', sx, status }: ContentHeaderProps) =>
     <Box sx={{ ...styles.wrapper, ...sx }}>
-        <Typography variant={titleTextVariant === 'title' ? 'subtitle1' : 'subtitle2'} noWrap>{title}</Typography>
+        <Box display='flex' flexDirection='row' alignItems='center'>
+            <Typography variant={titleTextVariant === 'title' ? 'subtitle1' : 'subtitle2'} noWrap>{title}</Typography>
+            {status && <StatusIndicator {...status} sx={{ ml: 2 }} />}
+        </Box>
         <Box sx={styles.buttonGroup}>
             {buttonsSlot
                 ? <>{buttonsSlot}</>
