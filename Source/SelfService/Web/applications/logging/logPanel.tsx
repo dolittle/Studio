@@ -134,7 +134,7 @@ export const LogPanel = (props: LogPanelProps) => {
             Displaying{' '}
             <b>{props.filters.dateRange === 'live' ? 'live logs' : 'date range logs'}</b>{' '}
             for {props.application} Application,{' '}
-            {environments}, and{' '}
+            {/* {environments}, and{' '} */}
             {microservices}
         </Typography>
     );
