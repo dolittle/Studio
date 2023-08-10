@@ -3,24 +3,22 @@
 
 import React from 'react';
 
-import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
+import { ShortInfo } from '../../apis/solutions/api';
 
 import { List } from '@mui/material';
 
 import { ApplicationsListItem } from './applicationsListItem';
 
 export type ApplicationsListProps = {
-    data: ShortInfoWithEnvironment[];
-    onSelect: (application: ShortInfoWithEnvironment) => void;
+    data: ShortInfo[];
 };
 
-export const ApplicationsList = ({ data, onSelect }: ApplicationsListProps) =>
+export const ApplicationsList = ({ data }: ApplicationsListProps) =>
     <List>
         {data.map(application =>
             <ApplicationsListItem
-                key={`${application.id}-${application.environment}`}
+                key={`${application.id}`}
                 application={application}
-                onClick={() => onSelect(application)}
             />
         )}
     </List>;
