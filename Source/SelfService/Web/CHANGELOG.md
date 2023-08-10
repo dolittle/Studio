@@ -1,3 +1,27 @@
+# [3.7.1] - 2023-8-10 [PR: #434](https://github.com/dolittle/Studio/pull/434)
+## Summary
+
+Add environment selections and display environment column in MicroservicesDataGrid.
+
+### Added
+
+- Environment selection dropdown to DeployMicroservice
+- Environment selection dropdown to Microservice Configuration page
+- DataGrid default props to Design System
+- DataGridWrapper component to Design System
+- Environment column to MicroservicesDataGrid
+- (New)Switch component to Design System
+
+### Fixed
+
+- Logs page layout on smaller screens
+- Logs line elements alignment
+
+### Removed
+
+- Redundant code
+
+
 # [3.7.0] - 2023-8-8 [PR: #234](https://github.com/dolittle/Studio/pull/234)
 ### Summary
 
