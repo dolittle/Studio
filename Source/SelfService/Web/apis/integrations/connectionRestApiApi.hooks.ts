@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, UseQueryOptions } from '@tanstack/react-query';
 
 import { API_CONFIGURATION } from './api';
 import { CACHE_KEYS } from './CacheKeys';
@@ -10,6 +10,7 @@ import {
     ConnectionsIdRestApiStatusGetRequest,
     ConnectionsIdRestApiEnablePostRequest,
     ConnectionsIdRestApiDisablePostRequest,
+    RestApiStatusDto,
 } from './generated';
 
 let apiInstance: ConnectionRestApiApi | undefined;
@@ -21,11 +22,12 @@ const getOrCreateApi = () => {
     return apiInstance;
 };
 
-export const useConnectionsIdRestApiStatusGet = (params: ConnectionsIdRestApiStatusGetRequest) => {
+export const useConnectionsIdRestApiStatusGet = (params: ConnectionsIdRestApiStatusGetRequest, options?: UseQueryOptions<RestApiStatusDto, unknown, RestApiStatusDto, string[]>) => {
     const api = getOrCreateApi();
     return useQuery({
         queryKey: [CACHE_KEYS.ConnectionRestApiStatus_GET, params.id],
-        queryFn: api.connectionsIdRestApiStatusGet.bind(api, params)
+        queryFn: api.connectionsIdRestApiStatusGet.bind(api, params),
+        ...options
     });
 };
 
