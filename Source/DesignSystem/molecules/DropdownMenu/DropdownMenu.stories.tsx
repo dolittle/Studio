@@ -34,19 +34,24 @@ metadata.title = 'Dropdown Menu';
 metadata.args = {
     id: 'default-dropdown-menu',
     menuItems: items,
-    iconDropdown: false,
     selected: '',
+    iconDropdown: false,
+    withIcons: false,
 };
 
 export default metadata;
 
 export const Default = createStory();
 
+export const WithIcons = createStory({
+    withIcons: true,
+});
+
 export const IconDropdownMenu = createStory({
     iconDropdown: true,
 });
 
-export const WithSelection = () => {
+export const Selected = () => {
     const [selected, setSelected] = useState('Item 1');
 
     return (
@@ -54,6 +59,19 @@ export const WithSelection = () => {
             id='select-dropdown-menu'
             menuItems={items.map(item => ({ ...item, onSelect: () => setSelected(item.label) }))}
             selected={selected}
+        />
+    );
+};
+
+export const SelectedWithIcons = () => {
+    const [selected, setSelected] = useState('Item 1');
+
+    return (
+        <DropdownMenu
+            id='select-dropdown-menu'
+            menuItems={items.map(item => ({ ...item, onSelect: () => setSelected(item.label) }))}
+            selected={selected}
+            withIcons
         />
     );
 };

@@ -1,19 +1,17 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect } from 'react';
-import { Box, InputProps, MenuItem, SelectChangeEvent, TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+
+import { Box, TextField } from '@mui/material';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+
+import { DropdownMenu } from '@dolittle/design-system';
+
 import { nb } from 'date-fns/locale';
 
 import { LogFilterDateRange } from './logFilterPanel';
-import { FilterSelect } from './filterSelect';
-
-export type DateRangeFilterProps = {
-    range: LogFilterDateRange;
-    onSetDateRange: (range: LogFilterDateRange) => void;
-};
 
 const beginningOfToday = () => {
     const date = new Date();
@@ -27,29 +25,34 @@ const endOfToday = () => {
     return date;
 };
 
-export const DateRangeFilter = (props: DateRangeFilterProps) => {
+export type DateRangeFilterProps = {
+    range: LogFilterDateRange;
+    onSetDateRange: (range: LogFilterDateRange) => void;
+};
+
+export const DateRangeFilter = ({ range, onSetDateRange }: DateRangeFilterProps) => {
     const [startDate, setStartDate] = useState<Date | null>(beginningOfToday);
     const [stopDate, setStopDate] = useState<Date | null>(endOfToday);
 
-    const selectValue = props.range === 'live' ? 'live' : 'daterange';
+    const isValidDate = (date: Date | null): boolean => date?.toString().toLowerCase() !== 'invalid date';
 
     useEffect(() => {
-        if (props.range === 'live') return;
+        if (range === 'live') return;
 
-        const start = Number(props.range.start / 1_000_000n);
+        const start = Number(range.start / 1_000_000n);
         if (startDate === null || startDate.valueOf() !== start) {
             setStartDate(new Date(start));
         }
 
-        const stop = Number(props.range.stop / 1_000_000n);
+        const stop = Number(range.stop / 1_000_000n);
         if (stopDate === null || stopDate.valueOf() !== stop) {
             setStopDate(new Date(stop));
         }
 
-    }, [props.range]);
+    }, [range]);
 
-    const handleOnChange = (event: SelectChangeEvent<string>) => {
-        if (event.target.value === 'daterange') {
+    const handleOnChange = (value: string) => {
+        if (value === 'date-range') {
             let start = startDate, stop = stopDate;
 
             if (start === null) {
@@ -62,23 +65,23 @@ export const DateRangeFilter = (props: DateRangeFilterProps) => {
                 setStopDate(stop);
             }
 
-            props.onSetDateRange({
+            onSetDateRange({
                 start: BigInt(start.valueOf()) * 1_000_000n,
                 stop: BigInt(stop.valueOf()) * 1_000_000n,
             });
 
         } else {
-            props.onSetDateRange('live');
+            onSetDateRange('live');
         }
     };
 
     const handleOnStartDateChange = (value: Date | null) => {
         setStartDate(value);
 
-        if (props.range !== 'live' && value && isValidDate(value) && BigInt(value.valueOf()) * 1_000_000n < props.range.stop) {
-            props.onSetDateRange({
+        if (range !== 'live' && value && isValidDate(value) && BigInt(value.valueOf()) * 1_000_000n < range.stop) {
+            onSetDateRange({
                 start: BigInt(value.valueOf()) * 1_000_000n,
-                stop: props.range.stop,
+                stop: range.stop,
             });
         }
     };
@@ -87,56 +90,46 @@ export const DateRangeFilter = (props: DateRangeFilterProps) => {
 
         setStopDate(value);
 
-        if (props.range !== 'live' && value && isValidDate(value) && BigInt(value.valueOf()) * 1_000_000n > props.range.start) {
-            props.onSetDateRange({
-                start: props.range.start,
+        if (range !== 'live' && value && isValidDate(value) && BigInt(value.valueOf()) * 1_000_000n > range.start) {
+            onSetDateRange({
+                start: range.start,
                 stop: BigInt(value.valueOf()) * 1_000_000n,
             });
         }
     };
 
-    const isValidDate = (date: Date | null): boolean => date?.toString().toLowerCase() !== 'invalid date';
-
-    const dateTimePickerInputProps: Partial<InputProps> = {
-        size: 'small',
-    };
-
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={nb}>
-            <FilterSelect
-                value={selectValue}
-                onChange={handleOnChange}
-            >
-                <MenuItem value='live'>Live logs</MenuItem>
-                <MenuItem value='daterange'>Date range...</MenuItem>
-            </FilterSelect>
-            {
-                props.range !== 'live' &&
-                <Box sx={{
-                    mt: 1.5,
-                    display: {
-                        lg: 'block',
-                        xl: 'inline',
+            <DropdownMenu
+                id='logs-filter-panel'
+                selected={range === 'live' ? 'Live logs' : 'Date range...'}
+                menuItems={[
+                    {
+                        id: 'live-logs',
+                        label: 'Live logs',
+                        onSelect: () => handleOnChange('live'),
                     },
-                }}>
+                    {
+                        id: 'date-range',
+                        label: 'Date range...',
+                        onSelect: () => handleOnChange('date-range'),
+                    },
+                ]}
+            />
+
+            {range !== 'live' &&
+                <Box sx={{ mt: 1 }}>
                     <DateTimePicker
-                        renderInput={(props) =>
-                            <TextField
-                                sx={{ mr: { xs: 0, md: 1 }, mb: { xs: 2, md: 0 } }}
-                                {...props}
-                                variant='outlined'
-                            />}
-                        InputProps={dateTimePickerInputProps}
+                        renderInput={props => <TextField variant='outlined' size='small' sx={{ mr: 1 }} {...props} />}
                         label='Start'
                         mask='__.__.____ __:__'
                         value={startDate}
                         onChange={handleOnStartDateChange}
                         maxDateTime={stopDate === null ? undefined : stopDate}
-
                     />
+
                     <DateTimePicker
-                        renderInput={(props) => <TextField {...props} variant='outlined' />}
-                        InputProps={dateTimePickerInputProps}
+                        renderInput={props => <TextField variant='outlined' size='small' {...props} />}
                         mask='__.__.____ __:__'
                         label='End'
                         value={stopDate}

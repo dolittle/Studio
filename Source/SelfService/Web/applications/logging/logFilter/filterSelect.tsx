@@ -3,25 +3,27 @@
 
 import React from 'react';
 
-import { Select, SelectProps } from '@mui/material';
+import { InputBase, MenuItem, Select, SelectProps } from '@mui/material';
+
+const styles = {
+    menuItem: {
+        minHeight: '36px',
+        pl: 1,
+        pr: 0,
+        mr: 1,
+        display: 'inline-flex',
+        borderRadius: 0.5,
+    },
+    select: {
+        'typography': 'button',
+        '& .MuiInputBase-input.MuiSelect-select': { minHeight: 'unset' },
+        '& .MuiSelect-icon': { color: 'inherit' },
+    },
+};
 
 export type FilterSelectProps<T> = SelectProps<T>;
 
 export const FilterSelect = <T,>(props: FilterSelectProps<T>) =>
-    <Select
-        {...props}
-        variant='filled'
-        disableUnderline
-        sx={{
-            //'p': 0,
-            //'ml': 0,
-            'typography': 'button',
-            'mr': 1,
-            'lineHeight': '1.4375em',
-            'backgroundColor': 'transparent',
-            '&:hover': { backgroundColor: 'background.paper' },
-            '& .MuiSelect-icon': { color: 'inherit' },
-            '& .MuiInputBase-input.MuiSelect-select': { py: 0.80 },
-            '& .MuiInputBase-input.MuiSelect-select:focus': { backgroundColor: 'background.paper' },
-        }}
-    />;
+    <MenuItem dense sx={styles.menuItem}>
+        <Select {...props} input={<InputBase />} sx={styles.select} />
+    </MenuItem>;

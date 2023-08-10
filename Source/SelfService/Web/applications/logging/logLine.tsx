@@ -10,6 +10,32 @@ import { DataLabels } from './loki/types';
 
 import { Button } from '@dolittle/design-system';
 
+const styles = {
+    showCell: {
+        display: 'flex',
+        whiteSpace: 'nowrap',
+        pr: 2,
+        flexShrink: 0
+    },
+    timestampCell: {
+        display: 'flex',
+        alignItems: 'center',
+        whiteSpace: 'nowrap',
+        pr: 2,
+        flexShrink: 0,
+    },
+    microserviceCell: {
+        display: 'flex',
+        alignItems: 'center',
+        whiteSpace: 'nowrap',
+        pr: 2,
+        width: '7em',
+        flexShrink: 0,
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+    },
+};
+
 const coloredLineSectionCss = (section: ColoredLineSection): React.CSSProperties => {
     let color = 'inherit',
         backgroundColor = 'inherit';
@@ -103,43 +129,40 @@ export const LogLine = ({ line, showContextButton, loading, onClickShowLineConte
     const leadingEmSpace = `${leadingWhitespace * 0.6}em`;
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
             {showContextButton === true && (
-                <Box sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
+                <Box sx={styles.showCell}>
                     <SkeletonWhenLoading loading={loading}>
                         <Button
                             label='Show'
                             color='subtle'
                             component='span'
                             role='none'
-                            sx={{ p: 0 }}
+                            sx={{ p: 0, height: 36 }}
                             onClick={event => onClickShowLineContext?.(timestamp, labels, event)}
                         />
                     </SkeletonWhenLoading>
                 </Box>
             )}
-            <Box className='log-line-timestamp' sx={{ whiteSpace: 'nowrap', pr: 2, flexShrink: 0 }}>
+
+            <Box className='log-line-timestamp' sx={styles.timestampCell}>
                 <SkeletonWhenLoading loading={loading}>
                     <span>[{formatTimestamp(timestamp)}]</span>
                 </SkeletonWhenLoading>
             </Box>
-            <Box
-                className='log-line-microservice'
-                sx={{ whiteSpace: 'nowrap', pr: 2, width: '7em', flexShrink: 0, textOverflow: 'ellipsis', overflow: 'hidden' }}
-                title={labels.microservice}
-            >
+
+            <Box className='log-line-microservice' sx={styles.microserviceCell} title={labels.microservice}>
                 <SkeletonWhenLoading loading={loading}>
                     <span>{labels.microservice}</span>
                 </SkeletonWhenLoading>
             </Box>
-            <Box
-                sx={{ flexGrow: 1 }}
+
+            <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}
                 style={
                     leadingWhitespace > 0 ? {
                         paddingLeft: leadingEmSpace,
                         textIndent: `-${leadingEmSpace}`
-                    } :
-                        undefined
+                    } : undefined
                 }
             >
                 {loading === true ? (

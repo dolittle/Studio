@@ -1,12 +1,12 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { InView } from 'react-intersection-observer';
 
-import { Box, Divider, FormControlLabel, FormGroup, Grid, Paper, Switch, Typography, } from '@mui/material';
+import { Divider, Grid, Paper, Typography, } from '@mui/material';
 
-import { AlertBox, AlertBoxErrorMessage } from '@dolittle/design-system';
+import { AlertBox, AlertBoxErrorMessage, NewSwitch } from '@dolittle/design-system';
 
 import { ObservableLogLines, ObservablePartialLogLines } from './loki/logLines';
 import { DataLabels } from './loki/types';
@@ -94,11 +94,7 @@ export const LogPanel = (props: LogPanelProps) => {
 
     if (props.logs.failed) {
         return (
-            <AlertBox
-                title='Something went wrong'
-                message={<AlertBoxErrorMessage />}
-                sx={{ mt: 2 }}
-            />
+            <AlertBox title='Something went wrong' message={<AlertBoxErrorMessage />} sx={{ mt: 2 }} />
         );
     }
 
@@ -123,11 +119,22 @@ export const LogPanel = (props: LogPanelProps) => {
                     ?.map((_) => _.name)
                     .join(', ')} Microservices`;
 
+    const environments =
+        props.filters.environment === undefined ||
+            props.filters.environment?.length === 0
+            ? 'all Environments'
+            : props.filters.environment?.length === 1
+                ? `${props.filters.environment?.[0]} Environment`
+                : `${props.filters.environment
+                    ?.map((_) => _)
+                    .join(', ')} Environments`;
+
     const title = (
         <Typography variant='body2' color='textSecondary' fontStyle='italic' mt={1}>
             Displaying{' '}
             <b>{props.filters.dateRange === 'live' ? 'live logs' : 'date range logs'}</b>{' '}
-            for {props.application} Application, {props.environment} Environment,{' '}
+            for {props.application} Application,{' '}
+            {/* {environments}, and{' '} */}
             {microservices}
         </Typography>
     );
@@ -137,64 +144,42 @@ export const LogPanel = (props: LogPanelProps) => {
     return (
         <>
             {dialog}
+
             <Grid container spacing={2} sx={{ pt: 2 }}>
                 <Grid item xs={12}>
                     <Paper elevation={1} sx={{ p: 2 }}>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} md={10}>
+                            <Grid item xs={12} lg={8}>
                                 {title}
                             </Grid>
-                            <Grid item xs={12} md={2}>
-                                <Box display='flex' justifyContent='flex-end'>
-                                    <FormGroup>
-                                        <FormControlLabel
-                                            label='Timestamp'
-                                            control={
-                                                <Switch
-                                                    checked={showTimestamp}
-                                                    onChange={(event) =>
-                                                        setShowTimestamp(
-                                                            event.target.checked
-                                                        )
-                                                    }
-                                                />
-                                            }
-                                        />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <FormControlLabel
-                                            label='Microservice'
-                                            control={
-                                                <Switch
-                                                    checked={showMicroservice}
-                                                    onChange={(event) =>
-                                                        setShowMicroservice(
-                                                            event.target.checked
-                                                        )
-                                                    }
-                                                />
-                                            }
-                                        />
-                                    </FormGroup>
-                                </Box>
+
+                            <Grid item xs={12} lg={4} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <NewSwitch
+                                    label='Timestamp'
+                                    checked={showTimestamp}
+                                    onChange={event => setShowTimestamp(event.target.checked)}
+                                />
+
+                                <NewSwitch
+                                    label='Microservice'
+                                    onChange={event => setShowMicroservice(event.target.checked)}
+                                />
                             </Grid>
                         </Grid>
+
                         <Divider sx={{ borderColor: 'background.paper', m: 1 }} />
+
                         <LogLines
                             logs={props.logs}
                             showContextButton
                             showTimestamp={showTimestamp}
                             showMicroservice={showMicroservice}
-                            showDateRangeHeaderAndFooter={
-                                props.filters.dateRange !== 'live'
-                            }
+                            showDateRangeHeaderAndFooter={props.filters.dateRange !== 'live'}
                             onClickShowContextButton={handleOnClickShowLineContext}
                         />
-                        <InView
-                            onChange={handleInViewChange}
-                            // TODO: We can set the rootMargin to trigger earlier than reaching the actual bottom
-                            fallbackInView={false}
-                        />
+
+                        {/* TODO: We can set the rootMargin to trigger earlier than reaching the actual bottom */}
+                        <InView onChange={handleInViewChange} fallbackInView={false} />
                     </Paper>
                 </Grid>
             </Grid>

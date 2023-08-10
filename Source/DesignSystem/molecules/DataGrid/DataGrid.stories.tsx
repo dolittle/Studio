@@ -9,7 +9,7 @@ import { DataGridProProps } from '@mui/x-data-grid-pro';
 import { dataTableDescription } from './helpers';
 import { dummyColumns, dummyEditCellsColumns, dummyIconColumns, dummyIconRows, dummyRows } from '../../helpers/DummyContents';
 
-import { DataGrid } from './DataGrid';
+import { DataGrid, dataGridDefaultProps } from './DataGrid';
 
 const meta: Meta<typeof DataGrid> = {
     title: 'Data Grid',
@@ -58,22 +58,13 @@ type Story = StoryObj<DataGridProProps>;
 
 export const Default: Story = {
     args: {
+        ...dataGridDefaultProps,
         rows: dummyRows,
         columns: dummyColumns,
-        autoHeight: true,
-        headerHeight: 46,
-        getRowHeight: () => 'auto',
-        getEstimatedRowHeight: () => 40,
-        onRowClick: () => action('onRowClick'),
-        onCellClick: () => action('onCellClick'),
         checkboxSelection: false,
         loading: false,
-        hideFooter: true,
-        disableSelectionOnClick: true,
-        disableColumnMenu: true,
-        disableColumnReorder: true,
-        disableColumnResize: true,
-        disableColumnSelector: true,
+        onRowClick: () => action('onRowClick'),
+        onCellClick: () => action('onCellClick'),
     },
 };
 

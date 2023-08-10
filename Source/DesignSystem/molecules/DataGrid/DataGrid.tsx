@@ -5,26 +5,25 @@ import React from 'react';
 
 import { DataGridPro, DataGridProProps } from '@mui/x-data-grid-pro';
 
-import { Paper } from '@mui/material';
+import { DataGridWrapper } from './DataGridWrapper';
 
-const stylesJustForStorybook = {
-    minHeight: 250,
+// Use these props on every DataGrid in the application.
+export const dataGridDefaultProps: DataGridProProps = {
+    columns: [],
+    rows: [],
+    autoHeight: true,
+    headerHeight: 46,
+    getRowHeight: () => 'auto',
+    getEstimatedRowHeight: () => 40,
+    hideFooter: true,
+    disableSelectionOnClick: true,
+    disableColumnMenu: true,
+    disableColumnReorder: true,
+    disableColumnResize: true,
+    disableColumnSelector: true,
 };
 
-// Use these props and styles on every DataGrid in the application.
 export const DataGrid = (args: DataGridProProps) =>
-    <Paper elevation={1} sx={{ width: 1, boxShadow: 'none', ...stylesJustForStorybook }}>
-        <DataGridPro
-            autoHeight
-            headerHeight={46}
-            getRowHeight={() => 'auto'}
-            getEstimatedRowHeight={() => 40}
-            hideFooter
-            disableSelectionOnClick
-            disableColumnMenu
-            disableColumnReorder
-            disableColumnResize
-            disableColumnSelector
-            {...args}
-        />
-    </Paper>;
+    <DataGridWrapper sx={{ minHeight: 250 }}>
+        <DataGridPro {...dataGridDefaultProps} {...args} />
+    </DataGridWrapper>;

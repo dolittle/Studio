@@ -2,7 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import { MenuItem, SelectChangeEvent } from '@mui/material';
+import { ArrowDropDownRounded } from '@mui/icons-material';
 
 import { LogFilterMicroservice } from './logFilterPanel';
 import { FilterSelect } from './filterSelect';
@@ -13,16 +15,13 @@ export type MicroserviceFilterProps = {
     onSelectMicroservices: (selection: LogFilterMicroservice[]) => void;
 };
 
-export const MicroserviceFilter = (props: MicroserviceFilterProps) => {
-
-    const selectedMicroserviceIds = props.selectedMicroservices === undefined
-        ? []
-        : props.selectedMicroservices.map(_ => _.id);
+export const MicroserviceFilter = ({ availableMicroservices, selectedMicroservices, onSelectMicroservices }: MicroserviceFilterProps) => {
+    const selectedMicroserviceIds = selectedMicroservices === undefined ? [] : selectedMicroservices.map(_ => _.id);
 
     const handleOnChange = (event: SelectChangeEvent<string[]>): void => {
         const ids = Array.isArray(event.target.value) ? event.target.value : [event.target.value];
-        const microservices = props.availableMicroservices.filter(_ => ids.includes(_.id));
-        props.onSelectMicroservices(microservices);
+        const microservices = availableMicroservices.filter(_ => ids.includes(_.id));
+        onSelectMicroservices(microservices);
     };
 
     const renderValue = (selectedIds: string[]) => {
@@ -31,7 +30,8 @@ export const MicroserviceFilter = (props: MicroserviceFilterProps) => {
         }
 
         if (selectedIds.length === 1) {
-            const selectedMicroservice = props.availableMicroservices.find(_ => _.id === selectedIds[0]);
+            const selectedMicroservice = availableMicroservices.find(_ => _.id === selectedIds[0]);
+
             if (selectedMicroservice !== undefined) {
                 return selectedMicroservice.name;
             }
@@ -47,11 +47,12 @@ export const MicroserviceFilter = (props: MicroserviceFilterProps) => {
             value={selectedMicroserviceIds}
             renderValue={renderValue}
             onChange={handleOnChange}
+            IconComponent={ArrowDropDownRounded}
         >
-            {props.availableMicroservices.map((microservice, i) => (
+            {availableMicroservices.map(microservice =>
                 // TODO: Add checkboxes here
-                <MenuItem key={i} value={microservice.id}>{microservice.name}</MenuItem>
-            ))}
+                <MenuItem key={microservice.id} value={microservice.id}>{microservice.name}</MenuItem>
+            )}
         </FilterSelect>
     );
 };

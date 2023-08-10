@@ -51,7 +51,13 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
             }))
         : [];
 
-    const [filters, setFilters] = useLogFilters({ dateRange: 'live', searchTerms: [] }, availableMicroservices);
+    const availableEnvironments = application?.environments !== undefined ? application.environments.map(env => env.name) : [];
+
+    const [filters, setFilters] = useLogFilters(
+        { dateRange: 'live', searchTerms: [] },
+        availableMicroservices,
+        availableEnvironments,
+    );
 
     useEffect(() => {
         if (!currentEnvironment || !currentApplicationId) {
@@ -109,41 +115,41 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
             <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
             <Typography variant='h1'>Logs</Typography>
 
-            <Box mt={3}>
-                <LogFilterPanel microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
-                {
-                    filters.dateRange === 'live'
-                        ? <LogsFromLast
-                            applicationId={currentApplicationId}
-                            environment={currentEnvironment}
-                            filters={filters}
-                            last={DAY}
-                            render={logs => (
-                                <LogPanel
-                                    application={application.name}
-                                    environment={currentEnvironment}
-                                    filters={filters}
-                                    logs={logs}
-                                />
-                            )}
-                        />
-                        : <LogsInRange
-                            applicationId={currentApplicationId}
-                            environment={currentEnvironment}
-                            filters={filters}
-                            from={filters.dateRange.start}
-                            to={filters.dateRange.stop}
-                            render={(logs, loadMoreLogs) => (
-                                <LogPanel
-                                    application={application.name}
-                                    environment={currentEnvironment}
-                                    filters={filters}
-                                    logs={logs}
-                                    autoLoadMoreLogs
-                                    loadMoreLogs={loadMoreLogs}
-                                />
-                            )}
-                        />
+            <Box sx={{ minWidth: 640, mt: 3 }}>
+                <LogFilterPanel environments={availableEnvironments} microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
+
+                {filters.dateRange === 'live' ?
+                    <LogsFromLast
+                        applicationId={currentApplicationId}
+                        environment={currentEnvironment}
+                        filters={filters}
+                        last={DAY}
+                        render={logs => (
+                            <LogPanel
+                                application={application.name}
+                                environment={currentEnvironment}
+                                filters={filters}
+                                logs={logs}
+                            />
+                        )}
+                    /> :
+                    <LogsInRange
+                        applicationId={currentApplicationId}
+                        environment={currentEnvironment}
+                        filters={filters}
+                        from={filters.dateRange.start}
+                        to={filters.dateRange.stop}
+                        render={(logs, loadMoreLogs) => (
+                            <LogPanel
+                                application={application.name}
+                                environment={currentEnvironment}
+                                filters={filters}
+                                logs={logs}
+                                autoLoadMoreLogs
+                                loadMoreLogs={loadMoreLogs}
+                            />
+                        )}
+                    />
                 }
             </Box>
         </LayoutWithSidebar>

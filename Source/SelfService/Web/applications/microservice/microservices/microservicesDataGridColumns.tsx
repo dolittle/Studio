@@ -12,7 +12,7 @@ import { StatusIndicator } from '@dolittle/design-system';
 
 import { getPodHealthStatus, getRuntimeNumberFromString } from '../../../utils/helpers';
 
-type HealthStatusTableRowProps = {
+export type HealthStatusTableRowProps = {
     row: MicroserviceObject;
 };
 
@@ -42,11 +42,17 @@ const StatusCell = (params: GridRenderCellParams<any, HealthStatusTableRowProps[
     );
 };
 
-export const microservicesTableColumns: GridColDef[] = [
+export const microservicesDataGridColumns: GridColDef[] = [
     {
         field: 'name',
         headerName: 'Name',
-        minWidth: 270,
+        minWidth: 200,
+        flex: 1,
+    },
+    {
+        field: 'environment',
+        headerName: 'Environment',
+        minWidth: 170,
         flex: 1,
     },
     {
@@ -60,7 +66,7 @@ export const microservicesTableColumns: GridColDef[] = [
     {
         field: 'runtime',
         headerName: 'Runtime',
-        minWidth: 270,
+        minWidth: 150,
         flex: 1,
         valueGetter: ({ row }: HealthStatusTableRowProps) =>
             getRuntimeNumberFromString(row.edit?.extra?.runtimeImage || 'N/A'),
@@ -68,7 +74,7 @@ export const microservicesTableColumns: GridColDef[] = [
     {
         field: 'isPublic',
         headerName: 'Public URL',
-        minWidth: 270,
+        minWidth: 150,
         flex: 1,
         //renderCell: PublicUrlCell,
         valueGetter: ({ row }: HealthStatusTableRowProps) => {
@@ -79,7 +85,7 @@ export const microservicesTableColumns: GridColDef[] = [
     {
         field: 'phase',
         headerName: 'Status',
-        minWidth: 270,
+        minWidth: 150,
         flex: 1,
         renderCell: StatusCell,
     },

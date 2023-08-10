@@ -2,27 +2,29 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useCallback, useEffect, useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 import { getPodStatus, MicroserviceObject } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
 import { DataGridPro } from '@mui/x-data-grid-pro';
-import { Paper } from '@mui/material';
 
-import { microservicesTableColumns } from './microservicesTableColumns';
+import { DataGridWrapper, dataGridDefaultProps } from '@dolittle/design-system';
 
-export type MicroserviceTableProps = {
+import { microservicesDataGridColumns } from './microservicesDataGridColumns';
+
+export type MicroservicesDataGridProps = {
     environment: string;
     application: HttpResponseApplication;
     microservices: MicroserviceObject[];
 };
 
-export const MicroserviceTable = ({ application, environment, microservices }: MicroserviceTableProps) => {
+export const MicroservicesDataGrid = ({ application, environment, microservices }: MicroservicesDataGridProps) => {
     const navigate = useNavigate();
 
     const [microserviceRows, setMicroserviceRows] = useState<(MicroserviceObject | undefined)[]>([]);
-    const [loadingRows, setLoadingRows] = useState(true);
+    const [isLoadingRows, setIsLoadingRows] = useState(true);
 
     const getMicroserviceStatus = useCallback(async (microserviceId: string) => {
         const status = await getPodStatus(application.id, environment, microserviceId);
@@ -30,7 +32,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
     }, [application.id, environment]);
 
     useEffect(() => {
-        setLoadingRows(true);
+        setIsLoadingRows(true);
         Promise.all(microservices.map(async microservice => {
             const status = await getMicroserviceStatus(microservice.id);
 
@@ -39,7 +41,7 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
                 phase: status[0]?.phase,
             } as MicroserviceObject;
         })).then(data => setMicroserviceRows(data))
-            .finally(() => setLoadingRows(false));
+            .finally(() => setIsLoadingRows(false));
     }, [microservices]);
 
     const handleTableRowClick = (microserviceId: string) => {
@@ -48,19 +50,14 @@ export const MicroserviceTable = ({ application, environment, microservices }: M
     };
 
     return (
-        <Paper sx={{ width: 1 }}>
+        <DataGridWrapper>
             <DataGridPro
+                {...dataGridDefaultProps}
                 rows={microserviceRows}
-                columns={microservicesTableColumns}
-                getRowHeight={() => 'auto'}
-                autoHeight
-                headerHeight={46}
-                disableColumnMenu
-                hideFooter
-                disableSelectionOnClick
-                loading={loadingRows}
+                columns={microservicesDataGridColumns}
+                loading={isLoadingRows}
                 onRowClick={({ row }) => handleTableRowClick(row.id)}
             />
-        </Paper>
+        </DataGridWrapper>
     );
 };

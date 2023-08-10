@@ -15,7 +15,6 @@ export type ActiveFiltersProps = {
 };
 
 export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) => {
-
     const clearFilters = () => {
         updateFilters({ ...filters, searchTerms: [] });
     };
@@ -26,6 +25,17 @@ export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) =>
         updateFilters({
             ...filters,
             searchTerms: terms
+        });
+    };
+
+    const removeEnvironment = (environment: string, index: number) => {
+        if (filters.environment === undefined) return;
+
+        const environments = [...filters.environment];
+        environments.splice(index, 1);
+        updateFilters({
+            ...filters,
+            environment: environments,
         });
     };
 
@@ -55,7 +65,24 @@ export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) =>
                 />
             )}
 
-            <Typography variant='body1' component='span' sx={{ mx: 2 }}>|</Typography>
+            {filters.environment?.length &&
+                <Typography component='span' sx={{ mx: 2 }}>|</Typography>
+            }
+
+            {filters.environment?.map((environment, index) =>
+                <Chip
+                    key={index}
+                    label={environment}
+                    onDelete={() => removeEnvironment(environment, index)}
+                    color='primary'
+                    size='small'
+                    sx={{ mr: 1 }}
+                />
+            )}
+
+            {filters.microservice?.length &&
+                <Typography component='span' sx={{ mx: 2 }}>|</Typography>
+            }
 
             {filters.microservice?.map((microservice, index) =>
                 <Chip
@@ -67,6 +94,8 @@ export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) =>
                     sx={{ mr: 1 }}
                 />
             )}
+
+            <Typography component='span' sx={{ mx: 2 }}>|</Typography>
 
             <Chip
                 label={filters.dateRange === 'live' ? 'Live logs' : 'Date range'}

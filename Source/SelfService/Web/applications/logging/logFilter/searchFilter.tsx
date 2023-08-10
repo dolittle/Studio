@@ -2,20 +2,17 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
+
+import { InputAdornment, TextField } from '@mui/material';
 import { Search } from '@mui/icons-material';
-import { InputAdornment, SxProps, TextField } from '@mui/material';
 
 const styles = {
     '& .MuiOutlinedInput-root': {
         'backgroundColor': 'rgba(140, 154, 248, 0.08)',
-        '& ::placeholder': {
-            fontStyle: 'italic'
-        },
-        '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'transparent'
-        },
+        '& ::placeholder': { fontStyle: 'italic' },
+        '& .MuiOutlinedInput-notchedOutline': { borderColor: 'transparent' },
     },
-} as SxProps;
+};
 
 export type SearchFilterProps = {
     onSearch: (query: string) => void;
@@ -23,6 +20,7 @@ export type SearchFilterProps = {
 
 export const SearchFilter = (props: SearchFilterProps) => {
     const [query, setQuery] = useState('');
+
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value);
     };
@@ -31,19 +29,19 @@ export const SearchFilter = (props: SearchFilterProps) => {
         if (event.key.toLowerCase() === 'enter') {
             submitQuery();
         }
-
     };
+
     const submitQuery = () => {
         if (!query) {
             return;
         }
+
         props.onSearch(query);
         setQuery('');
     };
 
-    return <div>
+    return (
         <TextField
-            sx={styles}
             onKeyDown={handleKeypress}
             onChange={handleOnChange}
             fullWidth
@@ -54,13 +52,11 @@ export const SearchFilter = (props: SearchFilterProps) => {
             placeholder='Search...'
             InputProps={{
                 startAdornment:
-                    <InputAdornment
-                        position='start'
-                        onClick={submitQuery}
-                    >
+                    <InputAdornment position='start' onClick={submitQuery}>
                         <Search />
                     </InputAdornment>
             }}
+            sx={styles}
         />
-    </div>;
+    );
 };

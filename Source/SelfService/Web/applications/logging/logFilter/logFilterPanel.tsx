@@ -2,10 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import { Grid } from '@mui/material';
 
 import { ActiveFilters } from './activeFilters';
 import { SearchFilter } from './searchFilter';
+import { EnvironmentFilter } from './environmentFilter';
 import { MicroserviceFilter } from './microserviceFilter';
 import { DateRangeFilter } from './dateRangeFilter';
 
@@ -13,6 +15,7 @@ export type LogFilterDateRange = 'live' | {
     start: bigint;
     stop: bigint;
 };
+
 export type LogFilterMicroservice = {
     name: string;
     id: string;
@@ -20,18 +23,19 @@ export type LogFilterMicroservice = {
 
 export type LogFilterObject = {
     searchTerms: string[];
-    dateRange: LogFilterDateRange;
+    environment?: string[];
     microservice?: LogFilterMicroservice[];
+    dateRange: LogFilterDateRange;
 };
 
-
 export type LogFilterPanelProps = {
+    environments: string[];
     microservices: LogFilterMicroservice[];
     filters: LogFilterObject;
     setSearchFilters: (filter: LogFilterObject) => void;
 };
 
-export const LogFilterPanel = ({ microservices, filters, setSearchFilters }: LogFilterPanelProps) => {
+export const LogFilterPanel = ({ environments, microservices, filters, setSearchFilters }: LogFilterPanelProps) => {
 
     const onUpdateFilters = (filters: LogFilterObject) => {
         setSearchFilters(filters);
@@ -41,6 +45,13 @@ export const LogFilterPanel = ({ microservices, filters, setSearchFilters }: Log
         setSearchFilters({
             ...filters,
             searchTerms: filters.searchTerms.concat(query)
+        });
+    };
+
+    const onSelectEnvironments = (selection: string[]) => {
+        setSearchFilters({
+            ...filters,
+            environment: selection,
         });
     };
 
@@ -59,25 +70,30 @@ export const LogFilterPanel = ({ microservices, filters, setSearchFilters }: Log
     };
 
     return (
-        <>
-            <Grid container spacing={2}>
-                <Grid item xs={12} lg={4}>
-                    <SearchFilter onSearch={onSearched} />
-                </Grid>
-                <Grid item xs={12} lg={8} sx={{ '& > *': { ml: 2, py: 0.5 } }}>
-                    <MicroserviceFilter
-                        availableMicroservices={microservices}
-                        selectedMicroservices={filters.microservice}
-                        onSelectMicroservices={onSelectMicroservices} />
-                    <DateRangeFilter
-                        range={filters.dateRange}
-                        onSetDateRange={onSetDateRange} />
-                </Grid>
-                <Grid item xs={12}>
-                    <ActiveFilters filters={filters} updateFilters={onUpdateFilters} />
-                </Grid>
+        <Grid container spacing={2}>
+            <Grid item xs={12} lg={4}>
+                <SearchFilter onSearch={onSearched} />
             </Grid>
-        </>
+
+            <Grid item xs={12} lg={8} sx={{ '& > *': { py: 0.5 } }}>
+                {/* <EnvironmentFilter
+                    availableEnvironments={environments}
+                    selectedEnvironments={filters.environment}
+                    onSelectEnvironments={onSelectEnvironments} /> */}
+
+                <MicroserviceFilter
+                    availableMicroservices={microservices}
+                    selectedMicroservices={filters.microservice}
+                    onSelectMicroservices={onSelectMicroservices} />
+
+                <DateRangeFilter
+                    range={filters.dateRange}
+                    onSetDateRange={onSetDateRange} />
+            </Grid>
+
+            <Grid item xs={12}>
+                <ActiveFilters filters={filters} updateFilters={onUpdateFilters} />
+            </Grid>
+        </Grid>
     );
 };
-

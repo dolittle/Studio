@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom';
 
 import { MicroserviceObject } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
@@ -14,23 +14,20 @@ import { canEditMicroservices, microservices } from '../../stores/microservice';
 
 import { Typography } from '@mui/material';
 
-import { Button, LoadingSpinner } from '@dolittle/design-system';
+import { Button } from '@dolittle/design-system';
 
 import { NoMicroservices } from './noMicroservices';
-import { MicroserviceTable } from './microservicesTable';
+import { MicroservicesDataGrid } from './microservicesDataGrid';
 
 export type MicroserviceProps = {
-    environment: string;
     application: HttpResponseApplication;
+    environment: string;
 };
 
-export const Microservice = ({ environment, application }: MicroserviceProps) => {
+export const Microservice = ({ application, environment }: MicroserviceProps) => {
     const navigate = useNavigate();
-    const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as MicroserviceObject[];
-
-    const [hasMicroservices, setHasMicroservices] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const { enqueueSnackbar } = useSnackbar();
 
     let tempEnvironments = application.environments.map(e => e.name);
     tempEnvironments = [...tempEnvironments, ...$microservices.map(item => item.environment)];
@@ -42,11 +39,6 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
 
     const filteredMicroservices = $microservices.filter(microservice => microservice.environment === environment);
 
-    useEffect(() => {
-        setHasMicroservices(filteredMicroservices.length > 0);
-        setLoading(false);
-    }, [filteredMicroservices]);
-
     const handleCreateMicroservice = () => {
         if (!canEdit) {
             enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
@@ -57,26 +49,16 @@ export const Microservice = ({ environment, application }: MicroserviceProps) =>
         navigate(href);
     };
 
-    const handleCreateEnvironment = () => {
-        // TODO: How to stop this if automation disabled, currently on the environment level.
-        const href = `/environment/application/${application.id}/create`;
-        navigate(href);
-    };
-
-    if (loading) return <LoadingSpinner />;
-
     return (
         <>
-            {!hasEnvironments && <Button label='Create New Environment' onClick={handleCreateEnvironment} />}
-
             <Typography variant='h1' sx={{ my: 2 }}>Microservices</Typography>
 
-            {hasMicroservices ?
-                <MicroserviceTable application={application} environment={environment} microservices={filteredMicroservices} /> :
-                <NoMicroservices onCreate={() => handleCreateMicroservice()} />
+            {filteredMicroservices.length > 0 ?
+                <MicroservicesDataGrid application={application} environment={environment} microservices={filteredMicroservices} /> :
+                <NoMicroservices onCreate={handleCreateMicroservice} />
             }
 
-            {hasEnvironments && hasMicroservices &&
+            {hasEnvironments && filteredMicroservices.length > 0 &&
                 <Button
                     label='Deploy New Microservice'
                     variant='fullwidth'

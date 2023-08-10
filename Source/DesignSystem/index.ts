@@ -22,12 +22,13 @@ export { StatusIndicator, StatusIndicatorProps } from './atoms/StatusIndicator';
 export { Summary } from './atoms/Metrics';
 export { Tabs } from './atoms/Tabs';
 export { MaxWidthTextBlock } from './atoms/Typography/MaxWidthTextBlock';
+export { NewSwitch } from './atoms/Switch';
 export { Terminal, TerminalConnect, TerminalStreams, InputMessages, OutputMessages } from './atoms/Terminal';
 export { Tooltip } from './atoms/Tooltip';
 export { TextField, TextFieldProps } from './atoms/TextField';
 
 // Molecules
-export { EditCell, EditTextFieldCell } from './molecules/DataGrid';
+export { dataGridDefaultProps, DataGridWrapper, EditCell, EditTextFieldCell } from './molecules/DataGrid';
 export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecules/FileUploadForm';
 export { Graph } from './molecules/Metrics/Graph';
 export { DropdownMenu, DropdownMenuProps, MenuItemProps } from './molecules/DropdownMenu';

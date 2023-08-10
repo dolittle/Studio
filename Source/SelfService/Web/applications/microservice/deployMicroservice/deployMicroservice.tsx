@@ -15,28 +15,13 @@ import { Button, Form, LoadingSpinner } from '@dolittle/design-system';
 import { saveSimpleMicroservice } from '../../stores/microservice';
 
 import { MicroserviceSimple, MicroserviceFormParameters } from '../../../apis/solutions/index';
-import { getLatestRuntimeInfo, getRuntimes } from '../../../apis/solutions/api';
+import { getLatestRuntimeInfo } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
+import { ContainerImageFields } from '../components/form/containerImageFields';
 import { HasM3ConnectorField } from '../components/form/hasM3ConnectorField';
-import { SetupFields } from './setupFields';
-import { ContainerImageFields } from './containerImageFields';
-import { PublicUrlFields } from './publicUrlFields';
-import { getRuntimeNumberFromString } from '../../../utils/helpers';
-
-const styles = {
-    form: {
-        'mt': 4.5,
-        'ml': 3,
-        '& .MuiFormControl-root': { my: 1 },
-    },
-    formSections: {
-        'mb': 4,
-        'display': 'flex',
-        'flexDirection': 'column',
-        '&:last-child': { mb: 0 },
-    },
-};
+import { PublicUrlFields } from '../components/form/publicUrlFields';
+import { SetupFields } from '../components/form/setupFields';
 
 export type DeployMicroserviceProps = {
     application: HttpResponseApplication;
@@ -44,33 +29,22 @@ export type DeployMicroserviceProps = {
 };
 
 export const DeployMicroservice = ({ application, environment }: DeployMicroserviceProps) => {
-    const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
     const location = useLocation();
 
     const [isLoading, setIsLoading] = useState(false);
-    const [showM3ConnectorInfo, setShowM3ConnectorInfo] = useState(false);
 
     const environmentInfo = application.environments.find(env => env.name === environment)!;
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
     const latestRuntimeVersion = getLatestRuntimeInfo().image;
-    const runtimeNumberSelections = [
-        ...getRuntimes().map(runtimeInfo => ({
-            value: runtimeInfo.image,
-            displayValue: getRuntimeNumberFromString(runtimeInfo.image),
-        })),
-        {
-            value: 'none',
-            displayValue: 'None',
-        },
-    ];
 
     const frag = new URLSearchParams(location.hash.slice(1));
     const handleCreateMicroservice = async (values: MicroserviceFormParameters) => {
         setIsLoading(true);
 
         const microserviceId = Guid.create().toString();
-        const { microserviceName, headArguments, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
+        const { microserviceName, developmentEnvironment, headArguments, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
         // Convert the head arguments to the format that the form expects.
         const headArgumentValues = headArguments.map(arg => arg.value);
 
@@ -78,11 +52,11 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
             dolittle: {
                 applicationId: application.id,
                 customerId: application.customerId,
-                microserviceId
+                microserviceId,
             },
             name: microserviceName,
             kind: 'simple',
-            environment,
+            environment: developmentEnvironment,
             extra: {
                 headImage,
                 headPort: parseInt(headPort.toString(), 10),
@@ -133,22 +107,16 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
                     ingressPath: '',
                     hasM3Connector: false
                 }}
-                sx={styles.form}
+                sx={{ 'mt': 4.5, 'ml': 3, '& .MuiFormControl-root': { my: 1 } }}
                 onSubmit={handleCreateMicroservice}
             >
-                <SetupFields options={runtimeNumberSelections} sx={styles.formSections} />
+                <SetupFields />
 
-                <ContainerImageFields sx={styles.formSections} />
+                <ContainerImageFields />
 
-                <PublicUrlFields sx={styles.formSections} />
+                <PublicUrlFields />
 
-                {hasM3ConnectorOption &&
-                    <HasM3ConnectorField
-                        hasM3Connector={showM3ConnectorInfo}
-                        setHasM3Connector={() => setShowM3ConnectorInfo(!showM3ConnectorInfo)}
-                        sx={styles.formSections}
-                    />
-                }
+                {hasM3ConnectorOption && <HasM3ConnectorField />}
 
                 {isLoading ?
                     <LoadingSpinner /> :
