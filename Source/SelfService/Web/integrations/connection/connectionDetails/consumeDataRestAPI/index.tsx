@@ -24,7 +24,14 @@ export const ConsumeDataRestAPIView = () => {
     const [forcedServiceStatus, setForcedServiceStatus] = React.useState<RestApiServiceStatus | ''>('');
     const { enqueueSnackbar } = useSnackbar();
     const connectionId = useConnectionIdFromRoute();
-    const { data: apiStatus } = useConnectionsIdRestApiStatusGet({ id: connectionId });
+    const { data: apiStatus } = useConnectionsIdRestApiStatusGet(
+        { id: connectionId },
+        {
+            refetchInterval: (data) => {
+                return data?.service === 'Deploying' ? 1000 : 4000;
+            }
+        }
+    );
     const enableMutation = useConnectionsIdRestApiEnablePost();
     const disableMutation = useConnectionsIdRestApiDisablePost();
     const queryClient = useQueryClient();
