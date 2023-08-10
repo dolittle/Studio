@@ -129,7 +129,7 @@ export const LogLine = ({ line, showContextButton, loading, onClickShowLineConte
     const leadingEmSpace = `${leadingWhitespace * 0.6}em`;
 
     return (
-        <Box sx={{ display: 'flex', mb: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
             {showContextButton === true && (
                 <Box sx={styles.showCell}>
                     <SkeletonWhenLoading loading={loading}>
@@ -138,7 +138,7 @@ export const LogLine = ({ line, showContextButton, loading, onClickShowLineConte
                             color='subtle'
                             component='span'
                             role='none'
-                            sx={{ p: 0 }}
+                            sx={{ p: 0, height: 36 }}
                             onClick={event => onClickShowLineContext?.(timestamp, labels, event)}
                         />
                     </SkeletonWhenLoading>
