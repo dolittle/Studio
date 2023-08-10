@@ -4,12 +4,14 @@
 import React from 'react';
 
 import { useSnackbar } from 'notistack';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { Box, Typography, Select, MenuItem } from '@mui/material';
 
 import { Button, ContentContainer, ContentHeader, ContentParagraph, ContentSection, IconButton, Link, StatusIndicator, StatusIndicatorProps, Switch } from '@dolittle/design-system';
 import { RestApiServiceStatus } from '../../../../apis/integrations/generated';
-import { useConnectionsIdRestApiStatusGet } from '../../../../apis/integrations/connectionRestApiApi.hooks';
+import { useConnectionsIdRestApiStatusGet, useConnectionsIdRestApiEnablePost, useConnectionsIdRestApiDisablePost } from '../../../../apis/integrations/connectionRestApiApi.hooks';
+import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
 import { CredentialsContainer } from './Credentials/CredentialsContainer';
 import { EnableRestApiSection } from './EnableRestApiSection';
@@ -23,6 +25,10 @@ export const ConsumeDataRestAPIView = () => {
     const { enqueueSnackbar } = useSnackbar();
     const connectionId = useConnectionIdFromRoute();
     const { data: apiStatus } = useConnectionsIdRestApiStatusGet({ id: connectionId });
+    const enableMutation = useConnectionsIdRestApiEnablePost();
+    const disableMutation = useConnectionsIdRestApiDisablePost();
+    const queryClient = useQueryClient();
+
 
     const handleRestApiLinkCopy = () => {
         navigator.clipboard.writeText(restApiUrl);
@@ -54,6 +60,19 @@ export const ConsumeDataRestAPIView = () => {
                 return 'waiting';
         }
         return 'unknown';
+    };
+
+    const handleEnableRestApi = () => {
+        setForceShowEnable(false);
+        enableMutation.mutate({ id: connectionId }, {
+            onSuccess: () => {
+                queryClient.invalidateQueries([CACHE_KEYS.ConnectionRestApiStatus_GET, connectionId]);
+                enqueueSnackbar('Rest API service is being deployed. You will be able to access it in a few minutes.');
+            },
+            onError: (error) => {
+                enqueueSnackbar('Something went wrong deploying the Rest API service. Error: ' + error, { variant: 'error' });
+            }
+        });
     };
 
 
@@ -95,8 +114,9 @@ export const ConsumeDataRestAPIView = () => {
                 </ContentParagraph>
                 {showEnableSection
                     ? <EnableRestApiSection
-                        onEnableRestApi={() => setForceShowEnable(false)}
+                        onEnableRestApi={() => handleEnableRestApi()}
                         status={serviceStatus || 'Off'}
+                        isEnabling={enableMutation.isLoading}
                     />
                     : <>
                         <ContentSection title='Rest API URL'>
