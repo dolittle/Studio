@@ -82,34 +82,60 @@ export const ConsumeDataRestAPIView = () => {
         });
     };
 
+    const handleDisableRestApi = () => {
+        setForceShowEnable(true);
+        disableMutation.mutate({ id: connectionId }, {
+            onSuccess: () => {
+                queryClient.invalidateQueries([CACHE_KEYS.ConnectionRestApiStatus_GET, connectionId]);
+                enqueueSnackbar('Rest API service has been disabled.');
+            },
+            onError: (error) => {
+                enqueueSnackbar('Something went wrong while disabling the Rest API service. Error: ' + error, { variant: 'error' });
+            }
+        });
+    };
+
 
     return (
         <>
+            <Switch.UI
+                id='deploy-switch'
+                label='Force deployed'
+                checked={!forceShowEnable}
+                sx={{ mx: 0 }}
+                onChange={() => setForceShowEnable(!forceShowEnable)}
+            />
+            <Select
+                id='service-status'
+                label='Simulated Service Status'
+                onChange={(event) => setForcedServiceStatus(event.target.value as RestApiServiceStatus | '')}>
+                <MenuItem value=''>None</MenuItem>
+                <MenuItem value='Off'>Off</MenuItem>
+                <MenuItem value='Deploying'>Deploying</MenuItem>
+                <MenuItem value='Active'>Active</MenuItem>
+                <MenuItem value='Unhealthy'>Unhealthy</MenuItem>
+                <MenuItem value='Terminating'>Terminating</MenuItem>
+            </Select>
             <ContentContainer>
                 <ContentHeader
                     title='Consume data over a REST API'
+                    status={{
+                        status: statusIndicatorFromServiceStatus(serviceStatus || ''),
+                        label: serviceStatus
+                    }}
                     buttonsSlot={
                         <>
-                            <Switch.UI
-                                id='deploy-switch'
-                                label='Force deployed'
-                                checked={!forceShowEnable}
-                                sx={{ mx: 0 }}
-                                onChange={() => setForceShowEnable(!forceShowEnable)}
-                            />
-                            <Select
-                                id='service-status'
-                                label='Simulated Service Status'
-                                onChange={(event) => setForcedServiceStatus(event.target.value as RestApiServiceStatus | '')}>
-                                <MenuItem value=''>None</MenuItem>
-                                <MenuItem value='Off'>Off</MenuItem>
-                                <MenuItem value='Deploying'>Deploying</MenuItem>
-                                <MenuItem value='Active'>Active</MenuItem>
-                                <MenuItem value='Unhealthy'>Unhealthy</MenuItem>
-                                <MenuItem value='Terminating'>Terminating</MenuItem>
-                            </Select>
-                            <StatusIndicator status={statusIndicatorFromServiceStatus(serviceStatus || '')} label={serviceStatus} />
-                        </>}
+                            {(!forceShowEnable) &&
+                                <Button
+                                    label='Disable Rest API'
+                                    variant='outlined'
+                                    color='error'
+                                    disabled={serviceStatus && (serviceStatus === 'Off' || serviceStatus === 'Terminating' || serviceStatus === 'Deploying')}
+                                    onClick={() => handleDisableRestApi()}
+                                />
+                            }
+                        </>
+                    }
                 />
                 <ContentParagraph>
                     You can consume data through a Rest API service.
