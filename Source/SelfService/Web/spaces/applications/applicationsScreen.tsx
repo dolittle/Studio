@@ -19,7 +19,7 @@ import { SpaceCreateDialog } from '../../components/spaceCreateDialog';
 
 export const ApplicationsScreen = () => {
     const { enqueueSnackbar } = useSnackbar();
-    const { currentApplicationId, hasOneCustomer, setCurrentEnvironment } = useGlobalContext();
+    const { currentApplicationId, hasOneCustomer } = useGlobalContext();
 
     const [applicationInfos, setApplicationInfos] = useState([] as ShortInfo[]);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -54,7 +54,7 @@ export const ApplicationsScreen = () => {
             <SpaceCreateDialog isOpen={createSpaceDialogOpen} onClose={() => setCreateSpaceDialogOpen(false)} />
 
             <Typography variant='h2' sx={{ mb: 4 }}>
-                {applicationInfos.length > 0 ? 'Select Your Application & Environment' : 'There are no Applications'}
+                {applicationInfos.length > 0 ? 'Select Your Application' : 'There are no Applications'}
             </Typography>
 
             <Box sx={{ display: 'inline-block' }}>
