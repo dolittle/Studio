@@ -138,12 +138,8 @@ export const ConsumeDataRestAPIView = () => {
                     }
                 />
                 <ContentParagraph>
-                    You can consume data through a Rest API service.
-                </ContentParagraph>
-
-                <ContentParagraph>
                     The Rest API service is a dedicated service for your connector that exposes the message types you have set up.
-                    The API is fully documented and will reflect the message types set up for the connector.
+                    The API is fully documented using OpenAPI specifications and will reflect the message types set up for the connector.
                 </ContentParagraph>
                 {showEnableSection
                     ? <EnableRestApiSection
