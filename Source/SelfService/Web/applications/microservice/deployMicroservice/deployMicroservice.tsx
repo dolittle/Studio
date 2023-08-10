@@ -3,8 +3,8 @@
 
 import React, { useState } from 'react';
 
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { useNavigate } from 'react-router-dom';
 
 import { Guid } from '@dolittle/rudiments';
 
@@ -31,6 +31,7 @@ export type DeployMicroserviceProps = {
 export const DeployMicroservice = ({ application, environment }: DeployMicroserviceProps) => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
+    const location = useLocation();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -38,6 +39,7 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
     const latestRuntimeVersion = getLatestRuntimeInfo().image;
 
+    const frag = new URLSearchParams(location.hash.slice(1));
     const handleCreateMicroservice = async (values: MicroserviceFormParameters) => {
         setIsLoading(true);
 
@@ -97,7 +99,7 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
                     microserviceName: '',
                     developmentEnvironment: environment,
                     runtimeVersion: latestRuntimeVersion,
-                    headImage: '', // nginxdemos/hello:latest
+                    headImage: frag.get('head-image') || '', //nginxdemos/hello:latest
                     headPort: 80,
                     entrypoint: '',
                     isPublic: false,

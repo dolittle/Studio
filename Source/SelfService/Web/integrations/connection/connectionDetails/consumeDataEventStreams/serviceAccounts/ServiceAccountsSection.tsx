@@ -1,14 +1,14 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useReducer } from 'react';
 import { useSnackbar } from 'notistack';
 import { Collapse } from '@mui/material';
 import { AlertBox, ContentSection } from '@dolittle/design-system';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { useConnectionsIdKafkaServiceAccountsGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 import { GenerateServiceAccountForm } from './GenerateServiceAccountForm';
-import { ServiceAccountsTable } from './ServiceAccountsTable';
+import { ServiceAccountsTableSection } from './ServiceAccountsTableSection';
 
 export type ServiceAccountsSectionProps = {};
 
@@ -18,7 +18,12 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
     const [expandForm, setExpandForm] = useState(false);
     const [resetForm, setResetForm] = useState(false);
 
-    const { data, isLoading, isError, error } = useConnectionsIdKafkaServiceAccountsGet({ id: connectionId });
+    const { data, isLoading, isError, error } = useConnectionsIdKafkaServiceAccountsGet({ id: connectionId }, {
+        refetchInterval(data, query) {
+            const hasEntriesWithoutCertificateData = data?.some((item) => item.certificateExpiry === null || item.certificateExpiry === undefined);
+            return hasEntriesWithoutCertificateData ? 1000 : false;
+        },
+    });
 
     const items = useMemo(
         () => data?.sort((a, b) => b.createdAt! > a.createdAt! ? 1 : -1) || [], [data]
@@ -59,6 +64,7 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
         }
     }, [resetForm]);
 
+
     if (isError) return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
 
     return (
@@ -86,11 +92,7 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
                     />
                 </ContentSection>
             </Collapse>
-            <ContentSection>
-                <ServiceAccountsTable items={items} isLoading={isLoading} />
-            </ContentSection>
-
-
+            <ServiceAccountsTableSection items={items} isLoading={isLoading} connectionId={connectionId} />
         </ContentSection>
     );
 };

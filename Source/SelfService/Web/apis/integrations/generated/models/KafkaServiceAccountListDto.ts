@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Dolittle.Bridge.M3
+ * Aigonix.Bridge.M3
  * Bridge API - made for Dolittle Studio
  *
  * The version of the OpenAPI document: 1.0.0.0
@@ -62,6 +62,12 @@ export interface KafkaServiceAccountListDto {
      * @memberof KafkaServiceAccountListDto
      */
     topics?: Array<TopicAccessDto> | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof KafkaServiceAccountListDto
+     */
+    certificateExpiry?: Date | null;
 }
 
 /**
@@ -89,6 +95,7 @@ export function KafkaServiceAccountListDtoFromJSONTyped(json: any, ignoreDiscrim
         'createdAt': !exists(json, 'createdAt') ? undefined : (new Date(json['createdAt'])),
         'description': !exists(json, 'description') ? undefined : json['description'],
         'topics': !exists(json, 'topics') ? undefined : (json['topics'] === null ? null : (json['topics'] as Array<any>).map(TopicAccessDtoFromJSON)),
+        'certificateExpiry': !exists(json, 'certificateExpiry') ? undefined : (json['certificateExpiry'] === null ? null : new Date(json['certificateExpiry'])),
     };
 }
 
@@ -107,6 +114,7 @@ export function KafkaServiceAccountListDtoToJSON(value?: KafkaServiceAccountList
         'createdAt': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
         'description': value.description,
         'topics': value.topics === undefined ? undefined : (value.topics === null ? null : (value.topics as Array<any>).map(TopicAccessDtoToJSON)),
+        'certificateExpiry': value.certificateExpiry === undefined ? undefined : (value.certificateExpiry === null ? null : value.certificateExpiry.toISOString()),
     };
 }
 
