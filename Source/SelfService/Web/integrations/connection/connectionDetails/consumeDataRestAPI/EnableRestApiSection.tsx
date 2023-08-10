@@ -11,7 +11,7 @@ export type EnableRestApiSectionProps = {
     isEnabling: boolean;
 };
 
-export const EnableRestApiSection = ({ status, onEnableRestApi, isEnabling}: EnableRestApiSectionProps) => {
+export const EnableRestApiSection = ({ status, onEnableRestApi, isEnabling }: EnableRestApiSectionProps) => {
     return (
         <ContentSection title='Enable Rest API'>
             <ContentParagraph>
