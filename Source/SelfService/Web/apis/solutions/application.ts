@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { getServerUrlPrefix, JobInfo, parseJSONResponse, ShortInfoWithEnvironment, HttpResponseMessage } from './api';
+import { getServerUrlPrefix, JobInfo, parseJSONResponse, ShortInfoWithEnvironment, HttpResponseMessage, ShortInfo } from './api';
 
 export type HttpInputApplicationAccess = {
     email: string;
@@ -33,6 +33,11 @@ export type ApplicationBuildState = {
 export type HttpResponseApplications = {
     canCreateApplication: boolean;
     applications: ShortInfoWithEnvironment[];
+};
+
+export type HttpResponseApplicationsListing = {
+    canCreateApplication: boolean;
+    applications: ShortInfo[];
 };
 
 export type HttpInputApplicationEnvironment = {
@@ -135,6 +140,20 @@ export async function getApplications(): Promise<HttpResponseApplications> {
     jsonResult.applications = jsonResult.applications || [];
     return jsonResult;
 };
+
+
+export async function getApplicationsListing(): Promise<HttpResponseApplicationsListing> {
+    const applicationsWithEnvironment = await getApplications();
+
+    const applicationListing = applicationsWithEnvironment.applications.map((app) => ({ id: app.id, name: app.name }));
+    const uniqueApplications = new Map<string, ShortInfo>();
+    applicationListing.forEach(appListing => uniqueApplications.set(appListing.id, appListing));
+
+    return {
+        canCreateApplication: applicationsWithEnvironment.canCreateApplication,
+        applications: Array.from(uniqueApplications.values()),
+    };
+}
 
 export async function getApplication(applicationId: string): Promise<HttpResponseApplication> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}`;
