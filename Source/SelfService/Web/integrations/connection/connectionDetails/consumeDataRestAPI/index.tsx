@@ -13,7 +13,7 @@ import { RestApiServiceStatus } from '../../../../apis/integrations/generated';
 import { useConnectionsIdRestApiStatusGet, useConnectionsIdRestApiEnablePost, useConnectionsIdRestApiDisablePost } from '../../../../apis/integrations/connectionRestApiApi.hooks';
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
-import { CredentialsContainer } from './Credentials/CredentialsContainer';
+import { CredentialsSection } from './Credentials/CredentialsSection';
 import { EnableRestApiSection } from './EnableRestApiSection';
 import { DisableRestApiDialog, disableRestApiDialogReducer } from './DisableRestApiDialog';
 import { RestApiDescriptionSection } from './RestApiDescriptionSection';
@@ -142,7 +142,7 @@ export const ConsumeDataRestAPIView = () => {
                     />
                     : <RestApiDescriptionSection restApiBaseUrl={apiStatus?.basePath || ''} />
                 }
-                <CredentialsContainer />
+                <CredentialsSection />
             </ContentContainer>
 
         </>
