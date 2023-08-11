@@ -38,7 +38,6 @@ export const ServiceAccountsTableSection = ({ items, isLoading, connectionId }: 
         const deleteMutations = serviceAccounts.map(id => deleteMutation.mutateAsync({ id: connectionId, serviceAccountName: id }));
         Promise.allSettled(deleteMutations)
             .then((results) => {
-                console.log(results);
                 results.forEach((result, index) => {
                     const id = serviceAccounts[index];
                     if (result.status === 'fulfilled') {
