@@ -5,7 +5,7 @@ import React from 'react';
 import { useSnackbar } from 'notistack';
 import { Box, Typography } from '@mui/material';
 import { useHref, generatePath } from 'react-router-dom';
-import { ContentContainer, ContentHeader, ContentSection, IconButton, Link } from '@dolittle/design-system';
+import { ContentContainer, ContentHeader, ContentParagraph, ContentSection, IconButton, Link } from '@dolittle/design-system';
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
 import { ServiceAccountsSection } from './serviceAccounts/ServiceAccountsSection';
 
@@ -35,9 +35,13 @@ export const ConsumeDataEventStreamsView = () => {
     return (
         <>
             <ContentContainer>
-                <ContentHeader title='Consuming your data' />
+                <ContentHeader title='Async API' />
+                <ContentParagraph>
+                    Event streams expose message types for the connector to be consumed in external applications and services over Kafka.
+                    The event streams are fully documented using Async API specifications and will reflect the message types set up for the connector.
+                </ContentParagraph>
                 <ContentSection title='Async API Specification'>
-                    <Typography>Our API for consuming event streams are defined using AsyncAPI.</Typography>
+                    <Typography>The API for consuming event streams are defined using AsyncAPI.</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
                         <Link
                             target
