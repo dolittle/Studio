@@ -1,40 +1,27 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useMemo, useState, useReducer } from 'react';
-import { useSnackbar } from 'notistack';
-import { useQueryClient } from '@tanstack/react-query';
-
+import React, { useEffect, useMemo, useState } from 'react';
 import { Collapse } from '@mui/material';
 
 import { AlertBox, ContentParagraph, ContentSection } from '@dolittle/design-system';
 
-import {
-    useConnectionsIdServiceAccountsGet,
-    useConnectionsIdServiceAccountsServiceAccountNameDelete
-} from '../../../../../apis/integrations/serviceAccountApi.hooks';
-import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
+import { useConnectionsIdServiceAccountsGet, } from '../../../../../apis/integrations/serviceAccountApi.hooks';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
-import { CredentialsList } from './CredentialsList';
 import { GenerateCredentialsForm } from './GenerateCredentialsForm';
-import { DeleteCredentialDialog, deleteCredentialDialogReducer } from './DeleteCredentialDialog';
+import { CredentialsTableSection } from './CredentialsTableSection';
 
 export type CredentialsSectionProps = {};
 
 export const CredentialsSection = (props: CredentialsSectionProps) => {
-    const { enqueueSnackbar } = useSnackbar();
     const connectionId = useConnectionIdFromRoute();
-    const queryClient = useQueryClient();
 
     const [expandCredentials, setExpandCredentials] = useState(false);
     const [activeCredential, setActiveCredential] = useState<string | undefined>(undefined);
     const [resetForm, setResetForm] = useState(false);
 
-    const [deleteDialogState, deleteDialogDispatch] = useReducer(deleteCredentialDialogReducer, { open: false, credentialName: '', connectionId });
-
     const { data, isLoading, isError, error } = useConnectionsIdServiceAccountsGet({ id: connectionId });
-    const deleteMutation = useConnectionsIdServiceAccountsServiceAccountNameDelete();
 
     const credentials = useMemo(
         () => data?.filter(credential => credential.serviceAccountName?.toLowerCase() !== activeCredential?.toLowerCase() || '')
@@ -71,26 +58,6 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
 
     }, [credentials, activeCredential, expandCredentials, isLoading]);
 
-    const onDelete = (serviceAccountName: string) => {
-        deleteDialogDispatch({ type: 'setCredential', payload: serviceAccountName });
-        deleteDialogDispatch({ type: 'open' });
-    };
-
-    const handleDelete = (serviceAccountName: string) => {
-        deleteMutation.mutate(
-            { id: connectionId, serviceAccountName },
-            {
-                onSuccess: () => {
-                    queryClient.invalidateQueries([CACHE_KEYS.ConnectionServiceAccounts_GET, connectionId]);
-                    deleteDialogDispatch({ type: 'close' });
-                    enqueueSnackbar('Credentials successfully deleted', { variant: 'success' });
-                }, onError: (error) => {
-                    enqueueSnackbar('Credentials failed to delete', { variant: 'error' });
-                }
-            }
-        );
-    };
-
     useEffect(() => {
         //TODO: Pav - no like this
         if (resetForm) {
@@ -116,11 +83,6 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
                 ]
             }}
         >
-            <DeleteCredentialDialog
-                dialogState={deleteDialogState}
-                dispatch={deleteDialogDispatch}
-                handleDelete={handleDelete}
-            />
             <ContentParagraph>
                 Manage access tokens to be used as credentials in apps connecting to the Rest API service
             </ContentParagraph>
@@ -135,11 +97,7 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
                     />
                 </ContentSection>
             </Collapse>
-            {credentials.length > 0 && (
-                <ContentSection title='Credentials Created'>
-                    <CredentialsList credentials={credentials} onDelete={onDelete} />
-                </ContentSection>
-            )}
+            <CredentialsTableSection credentials={credentials} isLoading={isLoading} connectionId={connectionId} />
         </ContentSection>
     );
 };
