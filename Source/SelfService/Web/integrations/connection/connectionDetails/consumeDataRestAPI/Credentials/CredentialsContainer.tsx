@@ -7,7 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { Collapse } from '@mui/material';
 
-import { AlertBox, ContentContainer, ContentHeader, ContentSection } from '@dolittle/design-system';
+import { AlertBox, ContentSection } from '@dolittle/design-system';
 
 import {
     useConnectionsIdServiceAccountsGet,
@@ -18,11 +18,11 @@ import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 import { CredentialsList } from './CredentialsList';
 import { GenerateCredentialsForm } from './GenerateCredentialsForm';
-import { DeleteCredentialDialog, DeleteCredentialDialogState, deleteCredentialDialogReducer } from './DeleteCredentialDialog';
+import { DeleteCredentialDialog, deleteCredentialDialogReducer } from './DeleteCredentialDialog';
 
-export type CredentialsContainerProps = {};
+export type CredentialsSectionProps = {};
 
-export const CredentialsContainer = (props: CredentialsContainerProps) => {
+export const CredentialsSection = (props: CredentialsSectionProps) => {
     const { enqueueSnackbar } = useSnackbar();
     const connectionId = useConnectionIdFromRoute();
     const queryClient = useQueryClient();
