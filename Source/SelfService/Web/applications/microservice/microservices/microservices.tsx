@@ -3,8 +3,8 @@
 
 import React from 'react';
 
+import { useHref, useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { useNavigate } from 'react-router-dom';
 
 import { MicroserviceObject } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
@@ -28,37 +28,32 @@ export const Microservice = ({ application }: MicroserviceProps) => {
     const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as MicroserviceObject[];
 
-    //const canEdit = canEditMicroservices(application.environments, environment);
+    // TODO ENV: How to handle this?
+    // const canEdit = canEditMicroservices(application.environments, environment);
+    // const handleCreateMicroservice = () => {
+    //     // if (!canEdit) {
+    //     //     enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
+    //     //     return;
+    //     // }
 
-    const handleCreateMicroservice = () => {
-        // TODO ENV: How to handle this?
-        // if (!canEdit) {
-        //     enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
-        //     return;
-        // }
+    //     const href = `/microservices/application/${application.id}/create`;
+    //     navigate(href);
+    // };
 
-        const href = `/microservices/application/${application.id}/create`;
-        navigate(href);
-    };
+    const createMicroserviceHref = useHref(`/microservices/application/${application.id}/create`);
 
     return (
         <>
             <Typography variant='h1' sx={{ my: 2 }}>Microservices</Typography>
 
-            {$microservices.length > 0 ?
-                <MicroservicesDataGrid application={application} microservices={$microservices} /> :
-                <NoMicroservices onCreate={handleCreateMicroservice} />
-            }
-
-            {$microservices.length > 0 &&
-                <Button
-                    label='Deploy New Microservice'
-                    variant='fullwidth'
-                    startWithIcon='RocketLaunch'
-                    onClick={() => handleCreateMicroservice()}
-                    sx={{ mt: 2.125 }}
-                />
-            }
+            {$microservices.length > 0 ? (
+                <>
+                    <MicroservicesDataGrid application={application} microservices={$microservices} />
+                    <Button label='Deploy New Microservice' variant='fullwidth' startWithIcon='RocketLaunch' href={createMicroserviceHref} sx={{ mt: 2.125 }} />
+                </>
+            ) : (
+                <NoMicroservices onCreate={() => navigate(createMicroserviceHref)} />
+            )}
         </>
     );
 };
