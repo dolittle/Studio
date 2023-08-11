@@ -74,7 +74,7 @@ export const MicroserviceDetails = ({ application, microserviceId, currentMicros
             args: [],
         };
 
-        const environmentInfo = application.environments.find(_environment => _environment.name === 'Dev')!;
+        const environmentInfo = application.environments.find(_environment => _environment.name === currentMicroservice.environment)!;
 
         // TODO currently we don't use the ms.extra.ingress in the view
         // Look to "liveIngressView" for how we "set" the data to uniq paths
@@ -108,7 +108,6 @@ export const MicroserviceDetails = ({ application, microserviceId, currentMicros
             render: () => <ConfigurationFilesSection
                 application={application}
                 applicationId={applicationId}
-                environment={'Dev'}
                 microserviceId={microserviceId}
                 currentMicroservice={currentMicroservice}
             />

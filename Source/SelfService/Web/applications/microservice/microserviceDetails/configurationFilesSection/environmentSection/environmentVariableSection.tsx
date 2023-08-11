@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
+import { MicroserviceStore } from '../../../../stores/microservice';
+
 import { DataGridPro, GridRowId, GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
 import { Box, Paper } from '@mui/material';
 
@@ -45,12 +47,11 @@ export type EnvironmentVariableTableRow = InputEnvironmentVariable & {
 
 export type EnvironmentVariablesProps = {
     applicationId: string;
-    environment: string;
-    microserviceName: string;
+    currentMicroservice: MicroserviceStore;
     microserviceId: string;
 };
 
-export const EnvironmentVariablesSection = ({ applicationId, environment, microserviceName, microserviceId }: EnvironmentVariablesProps) => {
+export const EnvironmentVariablesSection = ({ applicationId, currentMicroservice, microserviceId }: EnvironmentVariablesProps) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const [envVariableTableRows, setEnvVariableTableRows] = useState<EnvironmentVariableTableRow[]>([]);
@@ -65,7 +66,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
 
     const fetchAndUpdateEnvVariableList = async () => {
         try {
-            const result = await getEnvironmentVariables(applicationId, environment, microserviceId);
+            const result = await getEnvironmentVariables(applicationId, currentMicroservice.environment, microserviceId);
             createDataTableObj(result.data);
         } catch (error) {
             enqueueSnackbar(`Could not fetch environment variables. ${error}`, { variant: 'error' });
@@ -130,7 +131,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
 
         const updatedEnvVariable = envVariableTableRows.map(row => (row.id === newRow.id ? updatedRow : row));
 
-        const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, updatedEnvVariable);
+        const result = await updateEnvironmentVariables(applicationId, currentMicroservice.environment, microserviceId, updatedEnvVariable);
 
         if (result) {
             setEnvVariableTableRows(updatedEnvVariable);
@@ -169,7 +170,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     const handleEnvVariableDelete = async () => {
         const remainingEnvVariables = envVariableTableRows.filter(envVariable => !selectedRowIds.includes(envVariable.id));
 
-        const result = await updateEnvironmentVariables(applicationId, environment, microserviceId, remainingEnvVariables);
+        const result = await updateEnvironmentVariables(applicationId, currentMicroservice.environment, microserviceId, remainingEnvVariables);
 
         if (result) {
             envVariableTableRows.filter(envVariable => {
@@ -185,7 +186,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
     };
 
     // TODO: This is reused. consider moving
-    const configMapPrefix = `${environment.toLowerCase()}-${microserviceName.toLowerCase()}`;
+    const configMapPrefix = `${currentMicroservice.environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
 
     const handleSecretEnvVariableDownload = () => {
         const secretName = `${configMapPrefix}-secret-env-variables`;
@@ -235,7 +236,7 @@ export const EnvironmentVariablesSection = ({ applicationId, environment, micros
                     />
                 </Box>
 
-                <RestartInfoBox microserviceName={microserviceName} isOpen={restartInfoBoxIsOpen} onDismissed={() => setRestartInfoBoxIsOpen(false)} />
+                <RestartInfoBox microserviceName={currentMicroservice.name} isOpen={restartInfoBoxIsOpen} onDismissed={() => setRestartInfoBoxIsOpen(false)} />
 
                 {noEnvVariables ?
                     <EmptyDataTable

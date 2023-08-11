@@ -11,36 +11,31 @@ import { SetupSection } from './setupSection/setupSection';
 import { FilesSection } from './filesSection/filesSection';
 import { EnvironmentVariablesSection } from './environmentSection/environmentVariableSection';
 
-type ConfigurationFilesSectionProps = {
+export type ConfigurationFilesSectionProps = {
     application: HttpResponseApplication;
     applicationId: string;
-    environment: string;
     microserviceId: string;
     currentMicroservice: MicroserviceStore;
 };
 
-export const ConfigurationFilesSection = (
-    { application, applicationId, environment, microserviceId, currentMicroservice }: ConfigurationFilesSectionProps) => (
+export const ConfigurationFilesSection = ({ application, applicationId, microserviceId, currentMicroservice }: ConfigurationFilesSectionProps) => (
     <>
         <SetupSection
             application={application}
             applicationId={applicationId}
-            environment={environment}
             currentMicroservice={currentMicroservice}
             microserviceId={microserviceId}
         />
 
         <FilesSection
             applicationId={applicationId}
-            environment={environment}
-            microserviceName={currentMicroservice.name}
+            currentMicroservice={currentMicroservice}
             microserviceId={microserviceId}
         />
 
         <EnvironmentVariablesSection
             applicationId={applicationId}
-            environment={environment}
-            microserviceName={currentMicroservice.name}
+            currentMicroservice={currentMicroservice}
             microserviceId={microserviceId}
         />
     </>

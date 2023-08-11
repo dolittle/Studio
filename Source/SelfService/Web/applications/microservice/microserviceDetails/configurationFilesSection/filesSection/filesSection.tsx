@@ -9,6 +9,8 @@ import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { Accordion, FileUploadForm, FileUploadFormRef } from '@dolittle/design-system';
 
+import { MicroserviceStore } from '../../../../stores/microservice';
+
 import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../../apis/solutions/api';
 
 import { isAlphaNumeric } from '../../../../../utils/helpers';
@@ -26,12 +28,11 @@ const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 type FilesSectionProps = {
     applicationId: string;
-    environment: string;
-    microserviceName: string;
+    currentMicroservice: MicroserviceStore;
     microserviceId: string;
 };
 
-export const FilesSection = ({ applicationId, environment, microserviceName, microserviceId }: FilesSectionProps) => {
+export const FilesSection = ({ applicationId, currentMicroservice, microserviceId }: FilesSectionProps) => {
     const fileUploadRef = useRef<FileUploadFormRef>(null);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -47,7 +48,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     }, []);
 
     const fetchAndUpdateConfigFileNamesList = async (): Promise<void> => {
-        const result = await getConfigFilesNamesList(applicationId, environment, microserviceId);
+        const result = await getConfigFilesNamesList(applicationId, currentMicroservice.environment, microserviceId);
         createDataTableObj(result.data ?? []);
     };
 
@@ -83,7 +84,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         const formData = new FormData();
         formData.set('file', file);
 
-        const result = await updateConfigFile(applicationId, environment, microserviceId, formData);
+        const result = await updateConfigFile(applicationId, currentMicroservice.environment, microserviceId, formData);
 
         if (result.success) {
             enqueueSnackbar(`'${file.name}' successfully added.`);
@@ -98,7 +99,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     const handleConfigFileDelete = async (): Promise<void> => {
         for (const filename of selectedRowIds) {
             const fileName = filename.toString();
-            const response = await deleteConfigFile(applicationId, environment, microserviceId, fileName);
+            const response = await deleteConfigFile(applicationId, currentMicroservice.environment, microserviceId, fileName);
 
             if (response) {
                 enqueueSnackbar(`'${fileName}' deleted from configuration files.`);
@@ -115,7 +116,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     };
 
     // This is reused. consider moving
-    const configMapPrefix = `${environment.toLowerCase()}-${microserviceName.toLowerCase()}`;
+    const configMapPrefix = `${currentMicroservice.environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
 
     // TODO: Should be able to download multiple selected files
     const handleConfigFileDownload = (): void => {
@@ -136,9 +137,9 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         <>
             <RestartMicroserviceDialog
                 applicationId={applicationId}
-                environment={environment}
+                environment={currentMicroservice.environment}
                 microserviceId={microserviceId}
-                msName={microserviceName}
+                msName={currentMicroservice.name}
                 open={restartMicroserviceDialogIsOpen}
                 setOpen={() => setRestartMicroserviceDialogIsOpen(true)}
                 handleSuccess={() => {
@@ -175,7 +176,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
 
                 <FileUploadForm ref={fileUploadRef} onSelected={handleFileSelect} allowMultipleFiles hideDropArea />
 
-                <RestartInfoBox microserviceName={microserviceName} isOpen={restartInfoBoxIsOpen} onDismissed={() => setRestartInfoBoxIsOpen(false)} />
+                <RestartInfoBox microserviceName={currentMicroservice.name} isOpen={restartInfoBoxIsOpen} onDismissed={() => setRestartInfoBoxIsOpen(false)} />
 
                 {configFileTableRows.length > 0 ?
                     <ConfigFilesTable rows={configFileTableRows} selectionModel={selectedRowIds} handleSelectionModelChange={setSelectedRowIds} /> :

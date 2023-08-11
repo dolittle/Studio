@@ -26,17 +26,17 @@ export type SetupSectionProps = {
     application: HttpResponseApplication;
     applicationId: string;
     currentMicroservice: MicroserviceStore;
-    environment: string;
     microserviceId: string;
 };
 
-export const SetupSection = ({ application, applicationId, currentMicroservice, environment, microserviceId }: SetupSectionProps) => {
+export const SetupSection = ({ application, applicationId, currentMicroservice, microserviceId }: SetupSectionProps) => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
     const microserviceInfo = currentMicroservice.edit?.extra;
-    const environmentInfo = application.environments.find(env => env.name === environment)!;
-    const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
+    // TODO ENV: Not sure that I can use currentMicroservice.environment here?
+    const environmentInfo = application.environments.find(env => env.name === currentMicroservice.environment)!;
+    const canDelete = canDeleteMicroservice(application.environments, currentMicroservice.environment, microserviceId);
 
     const currentRuntimeImageNumber = {
         value: microserviceInfo?.runtimeImage,
@@ -60,7 +60,7 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
             return;
         }
 
-        const success = await deleteMicroservice(applicationId, environment, microserviceId);
+        const success = await deleteMicroservice(applicationId, currentMicroservice.environment, microserviceId);
 
         if (!success) {
             enqueueSnackbar(`Failed to delete microservice '${currentMicroservice.name}'.`, { variant: 'error' });
@@ -68,7 +68,7 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
         }
 
         enqueueSnackbar(`Microservice '${currentMicroservice.name}' has been deleted.`);
-        const href = `/microservices/application/${applicationId}/${environment}/overview`;
+        const href = `/microservices/application/${applicationId}/overview`;
         navigate(href);
     };
 
@@ -87,7 +87,7 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
 
             <RestartMicroserviceDialog
                 applicationId={applicationId}
-                environment={environment}
+                environment={currentMicroservice.environment}
                 microserviceId={microserviceId}
                 msName={currentMicroservice.name}
                 open={restartDialogIsOpen}
@@ -105,7 +105,7 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
                 <Form<MicroserviceFormParameters>
                     initialValues={{
                         microserviceName: currentMicroservice.name,
-                        developmentEnvironment: environment,
+                        developmentEnvironment: currentMicroservice.environment,
                         runtimeVersion: currentRuntimeImageNumber.value,
                         headImage: microserviceInfo?.headImage,
                         headPort: microserviceInfo?.headPort,
