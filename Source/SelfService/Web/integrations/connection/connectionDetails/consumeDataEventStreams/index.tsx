@@ -35,7 +35,7 @@ export const ConsumeDataEventStreamsView = () => {
     return (
         <>
             <ContentContainer>
-                <ContentHeader title='Async API' />
+                <ContentHeader title='Async API' status={{status: 'success', label: 'Active'}}/>
                 <ContentParagraph>
                     Event streams expose message types for the connector to be consumed in external applications and services over Kafka.
                     The event streams are fully documented using Async API specifications and will reflect the message types set up for the connector.
