@@ -1,3 +1,15 @@
+# [3.7.2] - 2023-8-11 [PR: #438](https://github.com/dolittle/Studio/pull/438)
+## Summary
+
+- Wires up the user experience around enabling & disabling the Rest API for a connector.
+- Updates the credentials table to resemble what has been introduced for event streams service accounts
+- Added more words to make the consuming of Rest API & Event Streams to be a little more understandable (not good enough yet)
+
+Design System:
+- ContentHeader: Add status indicator
+- Introduce ContentParagraph for text blocks within ContentSection's
+
+
 # [3.7.1] - 2023-8-10 [PR: #434](https://github.com/dolittle/Studio/pull/434)
 ## Summary
 
