@@ -92,7 +92,7 @@ export const ConsumeDataRestAPIView = () => {
             <ContentContainer>
                 <DisableRestApiDialog dispatch={disableServiceDialogDispatch} state={disableServiceDialogState} onConfirm={handleDisableRestApi} />
                 <ContentHeader
-                    title='Consume data over a REST API'
+                    title='REST API'
                     status={{
                         status: statusIndicatorFromServiceStatus(serviceStatus || ''),
                         label: serviceStatus
@@ -112,7 +112,7 @@ export const ConsumeDataRestAPIView = () => {
                     }
                 />
                 <ContentParagraph>
-                    The Rest API service is a dedicated service for your connector that exposes the message types you have set up.
+                    The Rest API service exposes the message types for the connector to be consumed in external applications and services.
                     The API is fully documented using OpenAPI specifications and will reflect the message types set up for the connector.
                 </ContentParagraph>
                 {showEnableSection
