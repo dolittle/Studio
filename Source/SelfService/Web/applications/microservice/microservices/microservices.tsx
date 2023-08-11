@@ -21,31 +21,23 @@ import { MicroservicesDataGrid } from './microservicesDataGrid';
 
 export type MicroserviceProps = {
     application: HttpResponseApplication;
-    environment: string;
 };
 
-export const Microservice = ({ application, environment }: MicroserviceProps) => {
+export const Microservice = ({ application }: MicroserviceProps) => {
     const navigate = useNavigate();
-    const $microservices = useReadable(microservices) as MicroserviceObject[];
     const { enqueueSnackbar } = useSnackbar();
+    const $microservices = useReadable(microservices) as MicroserviceObject[];
 
-    let tempEnvironments = application.environments.map(e => e.name);
-    tempEnvironments = [...tempEnvironments, ...$microservices.map(item => item.environment)];
-
-    const canEdit = canEditMicroservices(application.environments, environment);
-
-    const newEnvironments = [...new Set(tempEnvironments)];
-    const hasEnvironments = newEnvironments.length > 0;
-
-    const filteredMicroservices = $microservices.filter(microservice => microservice.environment === environment);
+    //const canEdit = canEditMicroservices(application.environments, environment);
 
     const handleCreateMicroservice = () => {
-        if (!canEdit) {
-            enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
-            return;
-        }
+        // TODO ENV: How to handle this?
+        // if (!canEdit) {
+        //     enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
+        //     return;
+        // }
 
-        const href = `/microservices/application/${application.id}/${environment}/create`;
+        const href = `/microservices/application/${application.id}/create`;
         navigate(href);
     };
 
@@ -53,12 +45,12 @@ export const Microservice = ({ application, environment }: MicroserviceProps) =>
         <>
             <Typography variant='h1' sx={{ my: 2 }}>Microservices</Typography>
 
-            {filteredMicroservices.length > 0 ?
-                <MicroservicesDataGrid application={application} environment={environment} microservices={filteredMicroservices} /> :
+            {$microservices.length > 0 ?
+                <MicroservicesDataGrid application={application} microservices={$microservices} /> :
                 <NoMicroservices onCreate={handleCreateMicroservice} />
             }
 
-            {hasEnvironments && filteredMicroservices.length > 0 &&
+            {$microservices.length > 0 &&
                 <Button
                     label='Deploy New Microservice'
                     variant='fullwidth'
