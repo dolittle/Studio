@@ -15,26 +15,26 @@ import { DataGridWrapper, dataGridDefaultProps } from '@dolittle/design-system';
 import { microservicesDataGridColumns } from './microservicesDataGridColumns';
 
 export type MicroservicesDataGridProps = {
-    environment: string;
     application: HttpResponseApplication;
     microservices: MicroserviceObject[];
 };
 
-export const MicroservicesDataGrid = ({ application, environment, microservices }: MicroservicesDataGridProps) => {
+export const MicroservicesDataGrid = ({ application, microservices }: MicroservicesDataGridProps) => {
     const navigate = useNavigate();
 
     const [microserviceRows, setMicroserviceRows] = useState<(MicroserviceObject | undefined)[]>([]);
     const [isLoadingRows, setIsLoadingRows] = useState(true);
 
-    const getMicroserviceStatus = useCallback(async (microserviceId: string) => {
+    const getMicroserviceStatus = useCallback(async (microserviceId: string, environment: string) => {
         const status = await getPodStatus(application.id, environment, microserviceId);
         return status.pods;
-    }, [application.id, environment]);
+    }, [application.id]);
 
     useEffect(() => {
         setIsLoadingRows(true);
+
         Promise.all(microservices.map(async microservice => {
-            const status = await getMicroserviceStatus(microservice.id);
+            const status = await getMicroserviceStatus(microservice.id, microservice.environment);
 
             return {
                 ...microservice,
@@ -45,7 +45,7 @@ export const MicroservicesDataGrid = ({ application, environment, microservices 
     }, [microservices]);
 
     const handleTableRowClick = (microserviceId: string) => {
-        const href = `/microservices/application/${application.id}/${environment}/view/${microserviceId}`;
+        const href = `/microservices/application/${application.id}/view/${microserviceId}`;
         navigate(href);
     };
 
