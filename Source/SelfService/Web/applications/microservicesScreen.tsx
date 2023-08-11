@@ -12,14 +12,13 @@ import '../spaces/applications/applicationScreen.scss';
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
 
-import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../apis/solutions/api';
-import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../apis/solutions/application';
+import { ShortInfo, getMicroservices } from '../apis/solutions/api';
+import { HttpResponseApplication, getApplicationsListing, getApplication, HttpResponseApplications } from '../apis/solutions/application';
 
 import { Microservice } from './microservice/microservices/microservices';
 import { MicroserviceNewScreen } from './microservice/microserviceNewScreen';
 import { MicroserviceViewScreen } from './microservice/microserviceViewScreen';
 import { LayoutWithSidebar, getMenuWithApplication } from '../components/layout/layoutWithSidebar';
-import { isEnvironmentValidFromUrl, PickEnvironment } from '../components/pickEnvironment';
 import { RouteNotFound } from '../components/notfound';
 import { TopNavBar } from '../components/layout/topNavBar';
 
@@ -29,22 +28,18 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
     const { hasOneCustomer } = useGlobalContext();
     const navigate = useNavigate();
 
-    const currentEnvironment = routeApplicationParams.environment;
-    const currentApplicationId = routeApplicationParams.applicationId;
-
+    const [applications, setApplications] = useState({} as ShortInfo[]);
     const [application, setApplication] = useState({} as HttpResponseApplication);
-    const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [isLoaded, setIsLoaded] = useState(false);
 
+    const currentApplicationId = routeApplicationParams.applicationId;
     const href = `/problem`;
 
     useEffect(() => {
-        if (!currentEnvironment || !currentApplicationId) {
-            return;
-        }
+        if (!currentApplicationId) return;
 
         Promise.all([
-            getApplications(),
+            getApplicationsListing(),
             getApplication(currentApplicationId),
             getMicroservices(currentApplicationId),
         ]).then(values => {
@@ -58,80 +53,66 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
 
             setApplications(applicationsData.applications);
             setApplication(applicationData);
-            mergeMicroservicesFromGit(applicationData.microservices);
 
-            const microservicesData = values[2] as HttpResponseMicroservices;
-            const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
-            mergeMicroservicesFromK8s(microservices);
+            mergeMicroservicesFromGit(applicationData.microservices);
+            mergeMicroservicesFromK8s(values[2].microservices);
+
             setIsLoaded(true);
         }).catch(() => {
+            // TODO DEV: Remove
             navigate(href);
             return;
         });
-    }, [currentEnvironment, currentApplicationId]);
+    }, [currentApplicationId]);
 
     if (!isLoaded) return null;
 
+    // TODO DEV: Remove
     if (application.id === '') {
         navigate(href);
         return null;
     }
 
-    if (!isEnvironmentValidFromUrl(applications, currentApplicationId, currentEnvironment)) {
-        return (
-            <PickEnvironment
-                applications={applications}
-                application={application}
-                redirectTo={'/microservices/application/:applicationId/:environment/overview'}
-                openModal={true} />
-        );
-    }
+    // TODO DEV: Remove
+    const tempEnv = 'Dev';
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
+    // TODO DEV: Remove
+    const nav = getMenuWithApplication(navigate, application, tempEnv, hasOneCustomer);
 
+    // TODO DEV: This is used by breadcrumbs?
     const routes = [
         {
-            path: '/microservices/application/:applicationId/:environment',
-            to: generatePath(
-                '/microservices/application/:applicationId/:environment/overview', {
+            path: '/microservices/application/:applicationId/',
+            to: generatePath('/microservices/application/:applicationId/overview', {
                 applicationId: application.id,
-                environment: currentEnvironment,
             }),
             name: 'Microservices',
         },
         {
-            path: '/microservices/application/:applicationId/:environment/overview',
-            to: generatePath(
-                '/microservices/application/:applicationId/:environment/overview', {
+            path: '/microservices/application/:applicationId/overview',
+            to: generatePath('/microservices/application/:applicationId/overview', {
                 applicationId: application.id,
-                environment: currentEnvironment,
             }),
             name: 'Overview',
         },
         {
-            path: '/microservices/application/:applicationId/:environment/create',
-            to: generatePath(
-                '/microservices/application/:applicationId/:environment/create', {
+            path: '/microservices/application/:applicationId/create',
+            to: generatePath('/microservices/application/:applicationId/create', {
                 applicationId: application.id,
-                environment: currentEnvironment,
             }),
             name: 'Create',
         },
         {
-            path: '/microservices/application/:applicationId/:environment/edit',
-            to: generatePath(
-                '/microservices/application/:applicationId/:environment/edit', {
+            path: '/microservices/application/:applicationId/edit',
+            to: generatePath('/microservices/application/:applicationId/edit', {
                 applicationId: application.id,
-                environment: currentEnvironment,
             }),
             name: 'Edit',
         },
         {
-            path: '/microservices/application/:applicationId/:environment/view',
-            to: generatePath(
-                '/microservices/application/:applicationId/:environment/view', {
+            path: '/microservices/application/:applicationId/view',
+            to: generatePath('/microservices/application/:applicationId/view', {
                 applicationId: application.id,
-                environment: currentEnvironment,
             }),
             name: 'View',
         },
@@ -139,12 +120,12 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
+            {/* <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} /> */}
 
             <Routes>
-                <Route path="/overview" element={<Microservice application={application} environment={currentEnvironment} />} />
-                <Route path="/create" element={<MicroserviceNewScreen application={application} environment={currentEnvironment} />} />
-                <Route path="/view/:microserviceId" element={<MicroserviceViewScreen application={application} environment={currentEnvironment} />} />
+                <Route path="/overview" element={<Microservice application={application} environment='Dev' />} />
+                <Route path="/create" element={<MicroserviceNewScreen application={application} environment='Dev' />} />
+                <Route path="/view/:microserviceId" element={<MicroserviceViewScreen application={application} environment='Dev' />} />
                 <Route path='*' element={<RouteNotFound redirectUrl={'overview'} auto={true} />} />
             </Routes>
         </LayoutWithSidebar>

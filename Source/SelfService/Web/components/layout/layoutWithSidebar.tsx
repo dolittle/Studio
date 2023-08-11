@@ -104,7 +104,7 @@ export const getMenuWithApplication = (
             icon: <Icon icon='BackupRounded' size='medium' />,
         },
         {
-            href: `/microservices/application/${applicationId}/${environment}/overview`,
+            href: `/microservices/application/${applicationId}/overview`,
             name: 'Microservices',
             icon: <Icon icon='HexagonRounded' size='medium' />,
         },
