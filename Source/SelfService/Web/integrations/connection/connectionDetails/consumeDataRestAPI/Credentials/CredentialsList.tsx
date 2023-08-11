@@ -35,7 +35,7 @@ export const CredentialsList = (props: CredentialsListProps) => {
                         <Typography variant='body2' color='text.secondary'>These credentials were created on <span title={credential.createdAt!.toISOString()}>{formatDateFriendly(credential.createdAt!)}</span></Typography>
 
                         <Button
-                            label='Delete credentials'
+                            label='Delete credential'
                             variant='outlined'
                             onClick={() => props.onDelete(credential.serviceAccountName!)}
                         />

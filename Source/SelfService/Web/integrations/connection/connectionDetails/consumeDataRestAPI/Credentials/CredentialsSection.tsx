@@ -7,7 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { Collapse } from '@mui/material';
 
-import { AlertBox, ContentSection } from '@dolittle/design-system';
+import { AlertBox, ContentParagraph, ContentSection } from '@dolittle/design-system';
 
 import {
     useConnectionsIdServiceAccountsGet,
@@ -121,6 +121,9 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
                 dispatch={deleteDialogDispatch}
                 handleDelete={handleDelete}
             />
+            <ContentParagraph>
+                Manage access tokens to be used as credentials in apps connecting to the Rest API service
+            </ContentParagraph>
             <Collapse in={expandCredentials}>
                 <ContentSection hideDivider={!expandCredentials} title='Generate New Credentials'>
                     <GenerateCredentialsForm
