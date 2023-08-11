@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box, Typography } from '@mui/material';
 
@@ -9,7 +9,7 @@ import { StatusIndicator, Tabs } from '@dolittle/design-system';
 
 import { MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
 
-import { HttpResponsePodStatus } from '../../../apis/solutions/api';
+import { getPodStatus, HttpResponsePodStatus } from '../../../apis/solutions/api';
 import { MicroserviceSimple } from '../../../apis/solutions/index';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
@@ -20,21 +20,39 @@ import { TerminalView } from './terminal/terminalView';
 
 import { getContainerStatus } from '../../../utils/helpers';
 
+const initialPodsData = {
+    namespace: '',
+    microservice: {
+        name: '',
+        id: '',
+    },
+    pods: [],
+} as HttpResponsePodStatus;
+
 export type MicroserviceViewProps = {
     application: HttpResponseApplication;
-    environment: string;
     microserviceId: string;
-    podsData: HttpResponsePodStatus;
     currentMicroservice: MicroserviceStore;
 };
 
-export const MicroserviceView = ({ application, microserviceId, environment, podsData, currentMicroservice }: MicroserviceViewProps) => {
-    const podsStatuses = () => podsData.pods.flatMap(pod => pod.containers.map(container => container.state));
-
-    const microserviceHealthStatus = getContainerStatus(podsStatuses());
+export const MicroserviceView = ({ application, microserviceId, currentMicroservice }: MicroserviceViewProps) => {
     const applicationId = application.id;
-    const canEdit = canEditMicroservice(application.environments, environment, currentMicroservice.id);
+
+    const [podsData, setPodsData] = useState(initialPodsData);
+
+    useEffect(() => {
+        Promise.all([getPodStatus(application.id, currentMicroservice.environment, microserviceId)])
+            .then(values => {
+                setPodsData(values[0]);
+                //setLoaded(true);
+            });
+    }, []);
+
     const getLastOpenTab = parseInt(sessionStorage.getItem('microservice-details-tabs') || '0');
+    const canEdit = canEditMicroservice(application.environments, currentMicroservice.environment, currentMicroservice.id);
+
+    const podsStatuses = () => podsData.pods.flatMap(pod => pod.containers.map(container => container.state));
+    const microserviceHealthStatus = getContainerStatus(podsStatuses());
 
     // What is the purpose of this??
     let ms = {} as MicroserviceSimple;
@@ -57,7 +75,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
             args: [],
         };
 
-        const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
+        const environmentInfo = application.environments.find(_environment => _environment.name === 'Dev')!;
 
         // TODO currently we don't use the ms.extra.ingress in the view
         // Look to "liveIngressView" for how we "set" the data to uniq paths
@@ -69,7 +87,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
             },
             name: currentMicroservice.name,
             kind: 'unknown',
-            environment,
+            environment: currentMicroservice.environment,
             extra: {
                 ingress: {
                     path: '',
@@ -91,7 +109,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
             render: () => <ConfigurationFilesSection
                 application={application}
                 applicationId={applicationId}
-                environment={environment}
+                environment={'Dev'}
                 microserviceId={microserviceId}
                 currentMicroservice={currentMicroservice}
             />
@@ -100,7 +118,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
             label: 'Health Status',
             render: () => <HealthStatus
                 applicationId={applicationId}
-                environment={environment}
+                environment={'Dev'}
                 microserviceId={microserviceId}
                 msName={currentMicroservice.name}
                 data={podsData}
@@ -108,14 +126,14 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
         },
     ];
 
-    const terminalAvailable = useTerminalAvailable(applicationId, environment, microserviceId);
+    const terminalAvailable = useTerminalAvailable(applicationId, 'Dev', microserviceId);
     if (terminalAvailable) {
         tabs.push(
             {
                 label: 'Terminal',
                 render: () => <TerminalView
                     applicationId={applicationId}
-                    environment={environment}
+                    environment={'Dev'}
                     microserviceId={microserviceId}
                 />
             },
