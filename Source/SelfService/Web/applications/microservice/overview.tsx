@@ -12,7 +12,7 @@ import { HttpResponseApplication } from '../../apis/solutions/application';
 
 import { microservices, MicroserviceStore } from '../stores/microservice';
 
-import { MicroserviceView as BaseView } from './microserviceDetails/microserviceDetails';
+import { MicroserviceDetails } from './microserviceDetails/microserviceDetails';
 
 export type OverviewProps = {
     application: HttpResponseApplication;
@@ -36,7 +36,7 @@ export const Overview = ({ application, microserviceId }: OverviewProps) => {
     switch (subView) {
         case 'simple':
             return (
-                <BaseView application={application} microserviceId={microserviceId} currentMicroservice={currentMicroservice} />
+                <MicroserviceDetails application={application} microserviceId={microserviceId} currentMicroservice={currentMicroservice} />
             );
         default:
             return (

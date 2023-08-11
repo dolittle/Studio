@@ -29,13 +29,13 @@ const initialPodsData = {
     pods: [],
 } as HttpResponsePodStatus;
 
-export type MicroserviceViewProps = {
+export type MicroserviceDetailsProps = {
     application: HttpResponseApplication;
     microserviceId: string;
     currentMicroservice: MicroserviceStore;
 };
 
-export const MicroserviceView = ({ application, microserviceId, currentMicroservice }: MicroserviceViewProps) => {
+export const MicroserviceDetails = ({ application, microserviceId, currentMicroservice }: MicroserviceDetailsProps) => {
     const applicationId = application.id;
 
     const [podsData, setPodsData] = useState(initialPodsData);
