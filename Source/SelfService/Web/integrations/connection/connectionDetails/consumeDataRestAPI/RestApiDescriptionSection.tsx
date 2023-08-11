@@ -16,11 +16,9 @@ export type RestApiDescriptionSectionProps = {
 
 export const RestApiDescriptionSection = ({ restApiBaseUrl }: RestApiDescriptionSectionProps) => {
     const { enqueueSnackbar } = useSnackbar();
-
-    const restApiUrl = `${restApiBaseUrl}swagger/index.html`;
-    const openApiDocumentationUrl = `${restApiBaseUrl}swagger/v1/swagger.json`;
-
-
+    const baseApiUrlWithTrailingSlash = restApiBaseUrl.endsWith('/') ? restApiBaseUrl : `${restApiBaseUrl}/`;
+    const restApiUrl = `${baseApiUrlWithTrailingSlash}swagger/index.html`;
+    const openApiDocumentationUrl = `${baseApiUrlWithTrailingSlash}swagger/v1/swagger.json`;
 
     const handleRestApiLinkCopy = () => {
         navigator.clipboard.writeText(restApiUrl);
