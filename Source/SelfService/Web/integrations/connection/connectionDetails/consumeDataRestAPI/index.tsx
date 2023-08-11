@@ -26,7 +26,7 @@ export const ConsumeDataRestAPIView = () => {
     // const [forcedServiceStatus, setForcedServiceStatus] = React.useState<RestApiServiceStatus | ''>('');
     const { enqueueSnackbar } = useSnackbar();
     const connectionId = useConnectionIdFromRoute();
-    const { data: apiStatus } = useConnectionsIdRestApiStatusGet(
+    const { data: apiStatus, isLoading } = useConnectionsIdRestApiStatusGet(
         { id: connectionId },
         {
             refetchInterval: (data) => {
@@ -93,10 +93,13 @@ export const ConsumeDataRestAPIView = () => {
                 <DisableRestApiDialog dispatch={disableServiceDialogDispatch} state={disableServiceDialogState} onConfirm={handleDisableRestApi} />
                 <ContentHeader
                     title='REST API'
-                    status={{
-                        status: statusIndicatorFromServiceStatus(serviceStatus || ''),
-                        label: serviceStatus
-                    }}
+                    status={!isLoading
+                        ? {
+                            status: statusIndicatorFromServiceStatus(serviceStatus || ''),
+                            label: serviceStatus
+                        }
+                        : undefined
+                    }
                     buttonsSlot={
                         <>
                             {(!showEnableSection) &&
@@ -115,13 +118,17 @@ export const ConsumeDataRestAPIView = () => {
                     The Rest API service exposes the message types for the connector to be consumed in external applications and services.
                     The API is fully documented using OpenAPI specifications and will reflect the message types set up for the connector.
                 </ContentParagraph>
-                {showEnableSection
-                    ? <EnableRestApiSection
-                        onEnableRestApi={() => handleEnableRestApi()}
-                        status={serviceStatus || 'Off'}
-                        isEnabling={enableMutation.isLoading}
-                    />
-                    : <RestApiDescriptionSection restApiBaseUrl={apiStatus?.basePath || ''} />
+                {!isLoading &&
+                    <>
+                        {showEnableSection
+                            ? <EnableRestApiSection
+                                onEnableRestApi={() => handleEnableRestApi()}
+                                status={serviceStatus || 'Off'}
+                                isEnabling={enableMutation.isLoading}
+                            />
+                            : <RestApiDescriptionSection restApiBaseUrl={apiStatus?.basePath || ''} />
+                        }
+                    </>
                 }
                 <CredentialsSection />
             </ContentContainer>
