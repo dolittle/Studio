@@ -125,7 +125,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
             <Routes>
                 <Route path="/overview" element={<Microservice application={application} />} />
                 <Route path="/create" element={<MicroserviceNewScreen application={application} />} />
-                <Route path="/view/:microserviceId" element={<MicroserviceViewScreen application={application} environment='Dev' />} />
+                <Route path="/view/:microserviceId" element={<MicroserviceViewScreen application={application} />} />
                 <Route path='*' element={<RouteNotFound redirectUrl={'overview'} auto={true} />} />
             </Routes>
         </LayoutWithSidebar>
