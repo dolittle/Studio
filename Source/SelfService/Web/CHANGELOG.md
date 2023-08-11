@@ -1,3 +1,9 @@
+# [3.7.4] - 2023-8-11 [PR: #440](https://github.com/dolittle/Studio/pull/440)
+## Summary
+
+- Only show the download bundle section for on premises deployment
+
+
 # [3.7.2] - 2023-8-11 [PR: #438](https://github.com/dolittle/Studio/pull/438)
 ## Summary
 
