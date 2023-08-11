@@ -8,9 +8,8 @@ import { DeployableMicroservicesList } from './deployableMicroservicesList';
 import { HttpResponseApplication } from '../../apis/solutions/application';
 
 type MicroserviceNewScreenProps = {
-    environment: string;
     application: HttpResponseApplication;
 };
 
-export const MicroserviceNewScreen = ({ application, environment }: MicroserviceNewScreenProps) =>
-    <DeployableMicroservicesList application={application} environment={environment} />;
+export const MicroserviceNewScreen = ({ application }: MicroserviceNewScreenProps) =>
+    <DeployableMicroservicesList application={application} />;

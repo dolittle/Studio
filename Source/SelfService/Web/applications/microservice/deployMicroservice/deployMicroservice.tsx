@@ -25,18 +25,19 @@ import { SetupFields } from '../components/form/setupFields';
 
 export type DeployMicroserviceProps = {
     application: HttpResponseApplication;
-    environment: string;
 };
 
-export const DeployMicroservice = ({ application, environment }: DeployMicroserviceProps) => {
+export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => {
     const navigate = useNavigate();
-    const { enqueueSnackbar } = useSnackbar();
     const location = useLocation();
+    const { enqueueSnackbar } = useSnackbar();
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const environmentInfo = application.environments.find(env => env.name === environment)!;
-    const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
+    // TODO ENV: Show always as 'false' while deploying and display options later in configuration?
+    //const environmentInfo = application.environments.find(env => env.name === 'Dev')!;
+    const hasM3ConnectorOption = false; // environmentInfo?.connections?.m3Connector || false;
+
     const latestRuntimeVersion = getLatestRuntimeInfo().image;
 
     const frag = new URLSearchParams(location.hash.slice(1));
@@ -80,7 +81,7 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
             await saveSimpleMicroservice(newMicroservice);
 
             enqueueSnackbar(`Microservice '${microserviceName}' has been deployed.`);
-            const href = `/microservices/application/${application.id}/${environment}/view/${newMicroservice.dolittle.microserviceId}`;
+            const href = `/microservices/application/${application.id}/view/${newMicroservice.dolittle.microserviceId}`;
             navigate(href);
         } catch (error: unknown) {
             const message = (error instanceof Error) ? error.message : 'Something went wrong when saving microservice.';
@@ -97,7 +98,7 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
             <Form<MicroserviceFormParameters>
                 initialValues={{
                     microserviceName: '',
-                    developmentEnvironment: environment,
+                    developmentEnvironment: '',
                     runtimeVersion: latestRuntimeVersion,
                     headImage: frag.get('head-image') || '', //nginxdemos/hello:latest
                     headPort: 80,

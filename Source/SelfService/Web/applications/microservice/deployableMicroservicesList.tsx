@@ -19,11 +19,10 @@ type DeployableMicroservices = SimpleCardProps & {
 };
 
 export type DeployableMicroservicesListProps = {
-    environment: string;
     application: HttpResponseApplication;
 };
 
-export const DeployableMicroservicesList = ({ environment, application }: DeployableMicroservicesListProps) => {
+export const DeployableMicroservicesList = ({ application }: DeployableMicroservicesListProps) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -78,7 +77,7 @@ export const DeployableMicroservicesList = ({ environment, application }: Deploy
 
     return (
         <>
-            {microserviceTypeState === 'dolittle-microservice' && <DeployMicroservice application={application} environment={environment} />}
+            {microserviceTypeState === 'dolittle-microservice' && <DeployMicroservice application={application} />}
         </>
     );
 };
