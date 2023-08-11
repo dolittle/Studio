@@ -3,7 +3,7 @@
 
 import React, { useMemo } from 'react';
 
-import { AccordionListProps, FileUploadFormRef } from '@dolittle/design-system';
+import { AccordionListProps, AccordionProps, FileUploadFormRef } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../../apis/integrations/generated';
 
@@ -18,9 +18,9 @@ export function useBuildConfigurationAccordionList(connection: ConnectionModel |
         const metadataPublisherCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.mdpStatus);
         const iONServiceAccountCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.ionStatus);
 
-        return {
-            singleExpandMode: true,
-            items: [
+        const items: AccordionProps[] = [];
+        if (connection?.chosenEnvironment.value?.toLocaleLowerCase() === 'on premises') {
+            items.push(
                 {
                     id: 'hostConnectorBundle',
                     title: 'Host Your Connector Bundle',
@@ -28,24 +28,29 @@ export function useBuildConfigurationAccordionList(connection: ConnectionModel |
                     progressStatus: connectorBundleStatus[0],
                     progressLabel: connectorBundleStatus[1],
                     sx: { mt: 8 },
-                },
-                {
-                    id: 'metadataPublisherCredentials',
-                    title: 'Metadata Publisher Credentials',
-                    children: <MetadataPublisherCredentials canEdit={canEdit} />,
-                    progressStatus: metadataPublisherCredentialsStatus && metadataPublisherCredentialsStatus[0],
-                    progressLabel: metadataPublisherCredentialsStatus && metadataPublisherCredentialsStatus[1],
-                    sx: { mt: 8 },
-                },
-                {
-                    id: 'ionCredentials',
-                    title: 'ION Service Account Credentials',
-                    children: <IonServiceAccountCredentials ref={fileUploadRef} canEdit={canEdit} />,
-                    progressStatus: iONServiceAccountCredentialsStatus && iONServiceAccountCredentialsStatus[0],
-                    progressLabel: iONServiceAccountCredentialsStatus && iONServiceAccountCredentialsStatus[1],
-                    sx: { mt: 8 },
-                },
-            ],
+                }
+            );
+        }
+        items.push(...[
+            {
+                id: 'metadataPublisherCredentials',
+                title: 'Metadata Publisher Credentials',
+                children: <MetadataPublisherCredentials canEdit={canEdit} />,
+                progressStatus: metadataPublisherCredentialsStatus && metadataPublisherCredentialsStatus[0],
+                progressLabel: metadataPublisherCredentialsStatus && metadataPublisherCredentialsStatus[1],
+                sx: { mt: 8 },
+            },
+            {
+                id: 'ionCredentials',
+                title: 'ION Service Account Credentials',
+                children: <IonServiceAccountCredentials ref={fileUploadRef} canEdit={canEdit} />,
+                progressStatus: iONServiceAccountCredentialsStatus && iONServiceAccountCredentialsStatus[0],
+                progressLabel: iONServiceAccountCredentialsStatus && iONServiceAccountCredentialsStatus[1],
+                sx: { mt: 8 },
+            },]);
+        return {
+            singleExpandMode: true,
+            items
         };
     }, [connection?.status, connection?.ionStatus, connection?.mdpStatus, canEdit]);
 };
