@@ -44,17 +44,16 @@ export const MicroserviceDetails = ({ application, microserviceId, currentMicros
         Promise.all([getPodStatus(application.id, currentMicroservice.environment, microserviceId)])
             .then(values => {
                 setPodsData(values[0]);
-                //setLoaded(true);
             });
     }, []);
 
     const getLastOpenTab = parseInt(sessionStorage.getItem('microservice-details-tabs') || '0');
-    const canEdit = canEditMicroservice(application.environments, currentMicroservice.environment, currentMicroservice.id);
 
     const podsStatuses = () => podsData.pods.flatMap(pod => pod.containers.map(container => container.state));
     const microserviceHealthStatus = getContainerStatus(podsStatuses());
 
     // What is the purpose of this??
+    const canEdit = canEditMicroservice(application.environments, currentMicroservice.environment, currentMicroservice.id);
     let ms = {} as MicroserviceSimple;
     let hasEditData = false;
     if (canEdit) {
