@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo, useReducer, useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
-import { AlertDialog, ContentSection } from '@dolittle/design-system';
+import { ContentSection } from '@dolittle/design-system';
 import { KafkaServiceAccountListDto } from '../../../../../apis/integrations/generated';
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 import { useConnectionsIdKafkaServiceAccountsServiceAccountNameDelete } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';

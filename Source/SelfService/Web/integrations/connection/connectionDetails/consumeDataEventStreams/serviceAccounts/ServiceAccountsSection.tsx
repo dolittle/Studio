@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect, useMemo, useReducer } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
 import { Collapse } from '@mui/material';
-import { AlertBox, ContentSection } from '@dolittle/design-system';
+import { AlertBox, ContentParagraph, ContentSection } from '@dolittle/design-system';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { useConnectionsIdKafkaServiceAccountsGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 import { GenerateServiceAccountForm } from './GenerateServiceAccountForm';
@@ -71,6 +71,7 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
         <ContentSection
             title='Service Accounts'
             headerProps={{
+                titleTextVariant: 'title',
                 buttons: allowGenerateNew ? [
                     {
                         label: 'Generate new service account',
@@ -81,6 +82,9 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
                 ] : []
             }}
         >
+            <ContentParagraph>
+                Manage service accounts to be used in apps connecting to the Async API
+            </ContentParagraph>
             <Collapse in={expandForm}>
                 <ContentSection hideDivider title='Generate New Service Account'>
                     <GenerateServiceAccountForm
