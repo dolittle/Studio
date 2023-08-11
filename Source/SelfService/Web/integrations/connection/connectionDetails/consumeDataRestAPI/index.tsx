@@ -22,8 +22,8 @@ import { RestApiDescriptionSection } from './RestApiDescriptionSection';
     to generate the URL dynamically. */
 
 export const ConsumeDataRestAPIView = () => {
-    const [forceShowEnable, setForceShowEnable] = React.useState(true);
-    const [forcedServiceStatus, setForcedServiceStatus] = React.useState<RestApiServiceStatus | ''>('');
+    // const [forceShowEnable, setForceShowEnable] = React.useState(true);
+    // const [forcedServiceStatus, setForcedServiceStatus] = React.useState<RestApiServiceStatus | ''>('');
     const { enqueueSnackbar } = useSnackbar();
     const connectionId = useConnectionIdFromRoute();
     const { data: apiStatus } = useConnectionsIdRestApiStatusGet(
@@ -40,8 +40,9 @@ export const ConsumeDataRestAPIView = () => {
     const [disableServiceDialogState, disableServiceDialogDispatch] = useReducer(disableRestApiDialogReducer, { isOpen: false });
 
 
-    const serviceStatus = forcedServiceStatus || apiStatus?.service;
-    const showEnableSection = (apiStatus?.target === 'Disabled') || serviceStatus === 'Deploying' || forceShowEnable;
+    const serviceStatus = apiStatus?.service || 'Off';
+    const showEnableSection = (apiStatus?.target === 'Disabled') || serviceStatus === 'Deploying';
+    const shouldDisableDisableButton = serviceStatus === 'Off' || serviceStatus === 'Deploying' || serviceStatus === 'Terminating';
 
 
     const statusIndicatorFromServiceStatus = (status: RestApiServiceStatus | ''): StatusIndicatorProps['status'] => {
@@ -61,7 +62,6 @@ export const ConsumeDataRestAPIView = () => {
     };
 
     const handleEnableRestApi = () => {
-        setForceShowEnable(false);
         enableMutation.mutate({ id: connectionId }, {
             onSuccess: () => {
                 queryClient.invalidateQueries([CACHE_KEYS.ConnectionRestApiStatus_GET, connectionId]);
@@ -74,7 +74,6 @@ export const ConsumeDataRestAPIView = () => {
     };
 
     const handleDisableRestApi = () => {
-        setForceShowEnable(true);
         disableServiceDialogDispatch({ type: 'close' });
         disableMutation.mutate({ id: connectionId }, {
             onSuccess: () => {
@@ -90,24 +89,6 @@ export const ConsumeDataRestAPIView = () => {
 
     return (
         <>
-            <Switch.UI
-                id='deploy-switch'
-                label='Force deployed'
-                checked={!forceShowEnable}
-                sx={{ mx: 0 }}
-                onChange={() => setForceShowEnable(!forceShowEnable)}
-            />
-            <Select
-                id='service-status'
-                label='Simulated Service Status'
-                onChange={(event) => setForcedServiceStatus(event.target.value as RestApiServiceStatus | '')}>
-                <MenuItem value=''>None</MenuItem>
-                <MenuItem value='Off'>Off</MenuItem>
-                <MenuItem value='Deploying'>Deploying</MenuItem>
-                <MenuItem value='Active'>Active</MenuItem>
-                <MenuItem value='Unhealthy'>Unhealthy</MenuItem>
-                <MenuItem value='Terminating'>Terminating</MenuItem>
-            </Select>
             <ContentContainer>
                 <DisableRestApiDialog dispatch={disableServiceDialogDispatch} state={disableServiceDialogState} onConfirm={handleDisableRestApi} />
                 <ContentHeader
@@ -118,12 +99,12 @@ export const ConsumeDataRestAPIView = () => {
                     }}
                     buttonsSlot={
                         <>
-                            {(!forceShowEnable) &&
+                            {(!showEnableSection) &&
                                 <Button
                                     label='Disable Rest API'
                                     variant='outlined'
                                     color='error'
-                                    disabled={serviceStatus && (serviceStatus === 'Off' || serviceStatus === 'Terminating' || serviceStatus === 'Deploying')}
+                                    disabled={shouldDisableDisableButton}
                                     onClick={() => disableServiceDialogDispatch({ type: 'open' })}
                                 />
                             }
