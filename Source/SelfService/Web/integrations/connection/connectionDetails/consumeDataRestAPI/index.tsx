@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useReducer } from 'react';
 
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
@@ -15,6 +15,7 @@ import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
 import { CredentialsContainer } from './Credentials/CredentialsContainer';
 import { EnableRestApiSection } from './EnableRestApiSection';
+import { DisableRestApiDialog, disableRestApiDialogReducer } from './DisableRestApiDialog';
 
 /* The ERP ReadModels -service must be specific to the connection, so we need
     to generate the URL dynamically. */
@@ -35,6 +36,7 @@ export const ConsumeDataRestAPIView = () => {
     const enableMutation = useConnectionsIdRestApiEnablePost();
     const disableMutation = useConnectionsIdRestApiDisablePost();
     const queryClient = useQueryClient();
+    const [disableServiceDialogState, disableServiceDialogDispatch] = useReducer(disableRestApiDialogReducer, { isOpen: false });
 
 
     const handleRestApiLinkCopy = () => {
@@ -84,6 +86,7 @@ export const ConsumeDataRestAPIView = () => {
 
     const handleDisableRestApi = () => {
         setForceShowEnable(true);
+        disableServiceDialogDispatch({ type: 'close' });
         disableMutation.mutate({ id: connectionId }, {
             onSuccess: () => {
                 queryClient.invalidateQueries([CACHE_KEYS.ConnectionRestApiStatus_GET, connectionId]);
@@ -117,6 +120,7 @@ export const ConsumeDataRestAPIView = () => {
                 <MenuItem value='Terminating'>Terminating</MenuItem>
             </Select>
             <ContentContainer>
+                <DisableRestApiDialog dispatch={disableServiceDialogDispatch} state={disableServiceDialogState} onConfirm={handleDisableRestApi} />
                 <ContentHeader
                     title='Consume data over a REST API'
                     status={{
@@ -131,7 +135,7 @@ export const ConsumeDataRestAPIView = () => {
                                     variant='outlined'
                                     color='error'
                                     disabled={serviceStatus && (serviceStatus === 'Off' || serviceStatus === 'Terminating' || serviceStatus === 'Deploying')}
-                                    onClick={() => handleDisableRestApi()}
+                                    onClick={() => disableServiceDialogDispatch({ type: 'open' })}
                                 />
                             }
                         </>
