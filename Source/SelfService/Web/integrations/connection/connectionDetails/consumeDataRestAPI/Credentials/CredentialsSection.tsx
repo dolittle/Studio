@@ -105,6 +105,7 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
         <ContentSection
             title='Credentials'
             headerProps={{
+                titleTextVariant: 'title',
                 buttons: [
                     {
                         label: 'Generate New Credentials',
