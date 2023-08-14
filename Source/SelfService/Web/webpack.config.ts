@@ -15,10 +15,14 @@ type Args = { [key: string]: string };
 const basePath = '/selfservice/';
 const title = 'Aigonix Studio';
 const defaultPort = 9007;
+const defaultTenantId = '1c7a24ff-b420-4f4f-b02c-415d0d69ace2';
+const defaultUserId = 'local-dev';
 
 function webpack(env: Args, argv: Args) {
     const isProduction = argv.mode === 'production';
     const port = process.env.port || argv.port || defaultPort;
+    const tenantId = env.tenantId || argv.tenantId || defaultTenantId; //Can be overridden by passing --env tenantId=xxx
+    const userId = env.userId || argv.userId || defaultUserId; //Can be overridden by passing --env userId=xxx
 
     return {
         mode: isProduction ? 'production' : 'development',
@@ -86,6 +90,10 @@ function webpack(env: Args, argv: Args) {
                 '/selfservice/api': {
                     target: 'http://localhost:3007',
                     pathRewrite: { '^/selfservice/api': '' },
+                    headers: {
+                        'tenant-id': tenantId,
+                        'user-id': userId,
+                    }
                 },
                 '/api/system/monitoring/metrics/v1/': {
                     target: 'http://localhost:8801',
