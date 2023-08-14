@@ -78,7 +78,7 @@ export const DocumentationScreen = withRouteApplicationState(({ routeApplication
         );
     }
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
+    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
 
     const routes = [
         {

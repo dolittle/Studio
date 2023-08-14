@@ -92,7 +92,7 @@ const NavigationListItemButton = ({ navigationMenuItem, navigate, ...props }: Na
 };
 
 export const getMenuWithApplication = (
-    navigate: NavigateFunction, application: HttpResponseApplication, environment: string, hasOneCustomer: boolean) => {
+    navigate: NavigateFunction, application: HttpResponseApplication, hasOneCustomer: boolean) => {
 
     const applicationId = application.id;
     const hasConnector = application.environments.find(_environment => _environment.connections.m3Connector);
@@ -109,17 +109,17 @@ export const getMenuWithApplication = (
             icon: <Icon icon='HexagonRounded' size='medium' />,
         },
         {
-            href: `/containerregistry/application/${applicationId}/${environment}/overview`,
+            href: `/containerregistry/application/${applicationId}/overview`,
             name: 'Container Registry',
             icon: <Icon icon='ContainerRegistry' size='medium' />,
         },
         {
-            href: `/logs/application/${applicationId}/${environment}`,
+            href: `/logs/application/${applicationId}`,
             name: 'Logs',
             icon: <Icon icon='TextSnippetRounded' size='medium' />,
         },
         {
-            href: `/documentation/application/${applicationId}/${environment}/overview`,
+            href: `/documentation/application/${applicationId}/overview`,
             name: 'Setup',
             icon: <Icon icon='FindInPageRounded' size='medium' />,
         },
@@ -137,7 +137,7 @@ export const getMenuWithApplication = (
     if (hasConnector) {
         // Put before documentation link
         mainNavigationItems.splice(mainNavigationItems.length - 2, 0, {
-            href: `/m3connector/application/${applicationId}/${environment}/details`,
+            href: `/m3connector/application/${applicationId}/details`,
             name: 'M3 Connector',
             icon: <Icon icon='PolylineRounded' size='medium' />,
         });

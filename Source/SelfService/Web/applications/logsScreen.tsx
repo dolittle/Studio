@@ -108,7 +108,7 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
         );
     }
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
+    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
 
     return (
         <LayoutWithSidebar navigation={nav}>

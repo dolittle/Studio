@@ -73,7 +73,7 @@ export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplica
         );
     }
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
+    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
 
     const routes = [];
 

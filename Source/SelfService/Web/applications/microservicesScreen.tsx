@@ -73,8 +73,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
         return null;
     }
 
-    // TODO DEV
-    const nav = getMenuWithApplication(navigate, application, 'Dev', hasOneCustomer);
+    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
 
     // TODO DEV: This is used by breadcrumbs?
     // const routes = [

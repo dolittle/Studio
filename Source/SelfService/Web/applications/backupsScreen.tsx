@@ -63,7 +63,7 @@ export const BackupsScreen = () => {
         return <Typography variant='h1' my={2}>Application with this environment not found.</Typography>;
     }
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
+    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
 
     const routes = [
         {
