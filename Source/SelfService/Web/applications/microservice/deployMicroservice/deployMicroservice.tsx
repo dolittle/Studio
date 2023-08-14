@@ -34,19 +34,21 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
 
     const [isLoading, setIsLoading] = useState(false);
 
-    // TODO ENV: Show always as 'false' while deploying and display options later in configuration?
+    // TODO ENV: Show always as 'false' while deploying and display option later in configuration?
     //const environmentInfo = application.environments.find(env => env.name === 'Dev')!;
-    const availableEnvironments = application.environments.map(env => env.name);
     const hasM3ConnectorOption = false; // environmentInfo?.connections?.m3Connector || false;
+
+    const availableEnvironments = application.environments.map(env => env.name);
     const latestRuntimeVersion = getLatestRuntimeInfo().image;
+
     const frag = new URLSearchParams(location.hash.slice(1));
 
     const handleCreateMicroservice = async (values: MicroserviceFormParameters) => {
         setIsLoading(true);
 
-        const microserviceId = Guid.create().toString();
         // Values from data grid table.
         const { microserviceName, developmentEnvironment, headArguments, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
+        const microserviceId = Guid.create().toString();
         // Convert the head arguments to the format that the form expects.
         const headArgumentValues = headArguments.map(arg => arg.value);
 
