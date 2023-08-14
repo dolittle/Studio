@@ -12,7 +12,6 @@ type Vars = {
     subscriptionId: string
     applicationId: string
     subjectRulesReviewStatus: SubjectRulesReviewStatus
-    environment: string
 };
 
 
@@ -35,10 +34,8 @@ function template(vars: Vars): string {
                 namespace,
                 resource: 'secrets',
                 resourceName,
-                environment: vars.environment,
             };
         }))
-        .filter(o => o.resourceName.includes(o.environment.toLowerCase()))
         .map(o => templateResource(o.namespace, o.resource, o.resourceName));
 
     const configMaps = vars.subjectRulesReviewStatus.resourceRules
@@ -48,10 +45,8 @@ function template(vars: Vars): string {
                 namespace,
                 resource: 'configmaps',
                 resourceName,
-                environment: vars.environment,
             };
         }))
-        .filter(o => o.resourceName.includes(o.environment.toLowerCase()))
         .map(o => templateResource(o.namespace, o.resource, o.resourceName));
 
     const markdown = `
@@ -134,7 +129,6 @@ ${secrets.join('\n')}
 
 type Props = {
     info: Info
-    environment: string
 };
 
 export const Doc: React.FunctionComponent<Props> = (props) => {
@@ -147,7 +141,6 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         subscriptionId: info.subscriptionId,
         applicationId: info.applicationId,
         subjectRulesReviewStatus: info.subjectRulesReviewStatus,
-        environment: _props.environment,
     } as Vars;
 
 

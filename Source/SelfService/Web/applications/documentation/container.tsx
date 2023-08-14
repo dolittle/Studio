@@ -17,7 +17,6 @@ import { Typography } from '@mui/material';
 import { RouteNotFound } from '../../components/notfound';
 
 type Props = {
-    environment: string
     application: HttpResponseApplication
 };
 
@@ -26,7 +25,6 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
     const _props = props!;
     const application = _props.application;
     const applicationId = application.id;
-    const environment = _props.environment;
 
     const $info = useReadable(info) as any;
     const $isLoaded = useReadable(isLoaded) as boolean;
@@ -64,7 +62,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                             <li>
                                 <a href="#" onClick={(event) => {
                                     event.preventDefault();
-                                    const href = `/documentation/application/${applicationId}/${environment}/container-registry-info`;
+                                    const href = `/documentation/application/${applicationId}/container-registry-info`;
                                     navigate(href);
                                 }}>
                                     Container Registry Info
@@ -73,7 +71,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                             <li>
                                 <a href="#" onClick={(event) => {
                                     event.preventDefault();
-                                    const href = `/documentation/application/${applicationId}/${environment}/verify-kubernetes-access`;
+                                    const href = `/documentation/application/${applicationId}/verify-kubernetes-access`;
                                     navigate(href);
                                 }}>
                                     Verify access to kubernetes
@@ -82,7 +80,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                             <li>
                                 <a href="#" onClick={(event) => {
                                     event.preventDefault();
-                                    const href = `/documentation/application/${applicationId}/${environment}/ci-cd/azure-pipelines`;
+                                    const href = `/documentation/application/${applicationId}/ci-cd/azure-pipelines`;
                                     navigate(href);
                                 }}>
                                     Setup Azure Pipelines
@@ -94,7 +92,7 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                     <Route path="/container-registry-info" element={
                         <>
                             <Link onClick={() => {
-                                const href = `/documentation/application/${applicationId}/${environment}/overview`;
+                                const href = `/documentation/application/${applicationId}/overview`;
                                 navigate(href);
                             }}>
                                 Back
@@ -105,18 +103,18 @@ export const DocumentationContainerScreen: React.FunctionComponent<Props> = (pro
                     <Route path="/verify-kubernetes-access" element={
                         <>
                             <Link onClick={() => {
-                                const href = `/documentation/application/${applicationId}/${environment}/overview`;
+                                const href = `/documentation/application/${applicationId}/overview`;
                                 navigate(href);
                             }}>
                                 Back
-                            </Link><Typography variant='h1' my={2}>Verify access to kubernetes</Typography><VerifyKubernetesAccess info={$info} environment={environment} />
+                            </Link><Typography variant='h1' my={2}>Verify access to kubernetes</Typography><VerifyKubernetesAccess info={$info} />
                         </>
                     } />
 
                     <Route path="/ci-cd/azure-pipelines" element={
                         <>
                             <Link onClick={() => {
-                                const href = `/documentation/application/${applicationId}/${environment}/overview`;
+                                const href = `/documentation/application/${applicationId}/overview`;
                                 navigate(href);
                             }}>
                                 Back
