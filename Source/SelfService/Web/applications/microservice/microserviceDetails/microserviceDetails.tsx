@@ -118,16 +118,12 @@ export const MicroserviceDetails = ({ application, currentMicroservice, microser
         },
     ];
 
-    const terminalAvailable = useTerminalAvailable(applicationId, 'Dev', microserviceId);
+    const terminalAvailable = useTerminalAvailable(applicationId, microserviceEnvironment, microserviceId);
     if (terminalAvailable) {
         tabs.push(
             {
                 label: 'Terminal',
-                render: () => <TerminalView
-                    applicationId={applicationId}
-                    environment={'Dev'}
-                    microserviceId={microserviceId}
-                />
+                render: () => <TerminalView applicationId={applicationId} environment={microserviceEnvironment} microserviceId={microserviceId} />
             },
         );
     }
