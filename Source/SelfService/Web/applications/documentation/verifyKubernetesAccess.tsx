@@ -124,7 +124,7 @@ command again.
 kubectl -n ${namespace} get pods
 ~~~
 
-# Resources you have access too
+# Resources you have access to
 ${configMaps.join('\n')}
 ${secrets.join('\n')}
 
