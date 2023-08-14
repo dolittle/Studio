@@ -13,17 +13,17 @@ import { Box, Link, List, Typography } from '@mui/material';
 
 import { HttpResponseApplication } from '../../apis/solutions/application';
 
-import { Doc as VerifyKubernetesAccess } from './verifyKubernetesAccess';
-import { Doc as AccessContainerRegistry } from './accessContainerRegistry';
-import { Doc as SetupAzurePipelines } from './cicd/setupAzurePipelines';
+import { VerifyKubernetesAccess } from './verifyKubernetesAccess';
+import { AccessContainerRegistry } from './accessContainerRegistry';
+import { SetupAzurePipelines } from './cicd/setupAzurePipelines';
 
 import { RouteNotFound } from '../../components/notfound';
 
-export type DocumentationContainerScreenProps = {
+export type SetupContainerScreenProps = {
     application: HttpResponseApplication;
 };
 
-export const DocumentationContainerScreen = ({ application }: DocumentationContainerScreenProps) => {
+export const SetupContainerScreen = ({ application }: SetupContainerScreenProps) => {
     const navigate = useNavigate();
     const $info = useReadable(info) as any;
     const $isLoaded = useReadable(isLoaded) as boolean;

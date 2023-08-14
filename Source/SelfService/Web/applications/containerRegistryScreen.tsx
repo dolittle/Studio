@@ -16,6 +16,7 @@ import { TopNavBar } from '../components/layout/topNavBar';
 import { ContainerRegistryContainer } from './containerregistry/container';
 import { PickEnvironment, isEnvironmentValidFromUrl } from '../components/pickEnvironment';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
+import { RegistryContainer } from './containerregistry/registryContainer';
 
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
@@ -82,7 +83,7 @@ export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplica
             <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
 
             <Routes>
-                <Route path="/overview/*" element={<ContainerRegistryContainer application={application} environment={currentEnvironment} />} />
+                <Route path='/overview/*' element={<RegistryContainer application={application} />} />
                 <Route path='*' element={<RouteNotFound redirectUrl={'overview'} auto={true} />} />
             </Routes>
         </LayoutWithSidebar>

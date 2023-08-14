@@ -10,16 +10,16 @@ import { Typography } from '@mui/material';
 import { HttpResponseApplication } from '../../apis/solutions/application';
 import { getReposInContainerRegistry, ContainerRegistryImages } from '../../apis/solutions/containerregistry';
 
-import { View as Tags } from './tags';
-import { View as Images } from './images';
-import { View as Welcome } from './welcome';
+import { RegistryImages } from './registryImages';
+import { RegistryWelcome } from './registryWelcome';
+import { RegistryTags } from './registryTags';
 
-export type ContainerRegistryContainerProps = {
+export type RegistryContainerProps = {
     environment: string;
     application: HttpResponseApplication;
 };
 
-export const ContainerRegistryContainer = ({ environment, application }: ContainerRegistryContainerProps) => {
+export const RegistryContainer = ({ environment, application }: RegistryContainerProps) => {
     const navigate = useNavigate();
 
     const applicationId = application.id;
@@ -58,9 +58,9 @@ export const ContainerRegistryContainer = ({ environment, application }: Contain
 
             <div>
                 <Routes>
-                    <Route path='/' element={<Images applicationId={applicationId} environment={environment} data={containerRegistryImages} />} />
-                    <Route path='/welcome' element={<Welcome applicationId={applicationId} />} />
-                    <Route path='/tags/:image' element={<Tags url={containerRegistryImages.url} applicationId={applicationId} environment={environment} />} />
+                    <Route path='/' element={<RegistryImages applicationId={applicationId} environment={environment} data={containerRegistryImages} />} />
+                    <Route path='/welcome' element={<RegistryWelcome applicationId={applicationId} />} />
+                    <Route path='/tags/:image' element={<RegistryTags url={containerRegistryImages.url} applicationId={applicationId} environment={environment} />} />
                 </Routes>
             </div>
         </>

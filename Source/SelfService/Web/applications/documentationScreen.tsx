@@ -15,7 +15,7 @@ import { HttpResponseApplication, getApplicationsListing, getApplication } from 
 
 import { TopNavBar } from '../components/layout/topNavBar';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
-import { DocumentationContainerScreen } from './documentation/container';
+import { SetupContainerScreen } from './setup/setupContainerScreen';
 
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
@@ -107,7 +107,7 @@ export const DocumentationScreen = withRouteApplicationState(({ routeApplication
             {/* <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} /> */}
 
             <Routes>
-                <Route path='/*' element={<DocumentationContainerScreen application={application} />} />
+                <Route path='/*' element={<SetupContainerScreen application={application} />} />
             </Routes>
         </LayoutWithSidebar>
     );

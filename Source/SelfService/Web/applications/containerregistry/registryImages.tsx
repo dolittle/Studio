@@ -9,13 +9,13 @@ import { Paper, Table, TableContainer, TableHead, TableRow, TableCell, TableBody
 
 import { ContainerRegistryImages } from '../../apis/solutions/containerregistry';
 
-export type ViewProps = {
+export type RegistryImagesProps = {
     applicationId: string;
     environment: string;
     data: ContainerRegistryImages;
 };
 
-export const View = ({ applicationId, environment, data }: ViewProps) => {
+export const RegistryImages = ({ applicationId, environment, data }: RegistryImagesProps) => {
     const navigate = useNavigate();
 
     return (

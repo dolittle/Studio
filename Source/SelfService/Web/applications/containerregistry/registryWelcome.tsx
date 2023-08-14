@@ -7,13 +7,13 @@ import { Typography } from '@mui/material';
 
 import { getPersonalisedInfo } from '../../apis/solutions/application';
 
-import { Doc as AccessContainerRegistry } from '../documentation/accessContainerRegistry';
+import { AccessContainerRegistry } from '../setup/accessContainerRegistry';
 
-export type ViewProps = {
+export type RegistryWelcomeProps = {
     applicationId: string;
 };
 
-export const View = ({ applicationId }: ViewProps) => {
+export const RegistryWelcome = ({ applicationId }: RegistryWelcomeProps) => {
     const [info, setInfo] = useState({} as any);
     const [isLoaded, setIsLoaded] = useState(false);
 

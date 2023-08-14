@@ -12,11 +12,11 @@ import { Button } from '@dolittle/design-system';
 import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../../apis/solutions/cicd';
 import { Info } from '../../stores/documentationInfo';
 
-export type DocProps = {
+export type SetupAzurePipelinesProps = {
     info: Info;
 };
 
-export const Doc = ({ info }: DocProps) => {
+export const SetupAzurePipelines = ({ info }: SetupAzurePipelinesProps) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const applicationID = info.applicationId;

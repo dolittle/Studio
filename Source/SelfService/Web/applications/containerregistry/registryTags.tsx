@@ -13,13 +13,13 @@ type ViewParams = {
     image: string;
 };
 
-export type ViewProps = {
+export type RegistryTagsProps = {
     url: string;
     environment: string;
     applicationId: string;
 };
 
-export const View = ({ url, environment, applicationId }: ViewProps) => {
+export const RegistryTags = ({ url, environment, applicationId }: RegistryTagsProps) => {
     const { image } = useParams<ViewParams>();
     if (!image) return null;
 

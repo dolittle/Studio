@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import ReactMarkdown from 'react-markdown';
 
 import gfm from 'remark-gfm';
@@ -128,11 +129,11 @@ ${secrets.join('\n')}
     return markdown.trim();
 };
 
-export type DocProps = {
+export type VerifyKubernetesAccessProps = {
     info: Info;
 };
 
-export const Doc = ({ info }: DocProps) => {
+export const VerifyKubernetesAccess = ({ info }: VerifyKubernetesAccessProps) => {
     const vars = {
         clusterName: info.clusterName,
         resourceGroup: info.resourceGroup,
