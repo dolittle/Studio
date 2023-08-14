@@ -18,8 +18,7 @@ const ConnectorNameTooltipText = () =>
         We recommend naming your connector based on its intended use. For example, <i>M3 Connector Test</i> or <i>M3 Connector Production</i>.
     </>;
 
-const hostingTooltipText = `Currently, you can only setup the connection with on premise hosting. Soon, we will support setup in the
-                    cloud where Dolittle takes care of hosting, establishing backups and making sure the connector is running.`;
+const hostingTooltipText = `Select between hosting the connector bundle on premise or allowing a platform-managed solution in the cloud. The cloud setup takes care of hosting, establishing backups and making sure the connector is running.`;
 
 export type MainM3ConnectionInfoProps = {
     hasSelectedDeploymentType: boolean;
