@@ -49,6 +49,7 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
         displayValue: getRuntimeNumberFromString(microserviceInfo?.runtimeImage)
     };
 
+    const availableEnvironments = application.environments.map(env => env.name);
     const hasPublicUrl = microserviceInfo?.isPublic || false;
     const hasM3ConnectorOption = application.environments.find(env => env.name === microserviceEnvironment)?.connections?.m3Connector || false;
     // Remove extra slash from ingress path as it is there already with startAdornment.
@@ -119,10 +120,8 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
                     }}
                     sx={{ '& .MuiFormControl-root': { my: 1 } }}
                 >
-                    <SetupFields hasDashedBorder isDisabled={formIsNotEditable} />
-
+                    <SetupFields environments={availableEnvironments} hasDashedBorder isDisabled={formIsNotEditable} />
                     <ContainerImageFields hasDashedBorder isDisabled={formIsNotEditable} />
-
                     <PublicUrlFields hasDashedBorder hasPublicUrl={hasPublicUrl} isDisabled={formIsNotEditable} />
 
                     {hasM3ConnectorOption && <HasM3ConnectorField isDisabled={formIsNotEditable} />}

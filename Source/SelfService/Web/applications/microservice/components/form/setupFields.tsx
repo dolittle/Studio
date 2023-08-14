@@ -11,11 +11,6 @@ import { getRuntimes } from '../../../../apis/solutions/api';
 
 import { getRuntimeNumberFromString } from '../../../../utils/helpers';
 
-const environmentOptions = [
-    { value: 'Dev', displayValue: 'Development' },
-    { value: 'Prod', displayValue: 'Production' },
-];
-
 const runtimeNumberOptions = [
     ...getRuntimes().map(runtimeInfo => ({
         value: runtimeInfo.image,
@@ -31,11 +26,12 @@ const runtimeDescription = `By using the Dolittle runtime you'll have access to 
                             communicate with other microservices through the event horizon with the Dolittle SDK.`;
 
 export type SetupFieldsProps = {
+    environments: string[];
     hasDashedBorder?: boolean;
     isDisabled?: boolean;
 };
 
-export const SetupFields = ({ hasDashedBorder, isDisabled }: SetupFieldsProps) => {
+export const SetupFields = ({ environments, hasDashedBorder, isDisabled }: SetupFieldsProps) => {
     const [showEnvironmentInfo, setShowEnvironmentInfo] = useState(false);
     const [showEntrypointInfo, setShowEntrypointInfo] = useState(false);
 
@@ -61,10 +57,10 @@ export const SetupFields = ({ hasDashedBorder, isDisabled }: SetupFieldsProps) =
                 <Select
                     id='developmentEnvironment'
                     label='Development Environment'
-                    options={environmentOptions}
+                    options={environments?.map(env => ({ value: env, displayValue: env })) || []}
                     onOpen={() => setShowEnvironmentInfo(true)}
+                    disabled={isDisabled}
                     required
-                    disabled
                     sx={hasDashedBorder ? { '& fieldset': { borderStyle: 'dashed' } } : {}}
                 />
             </Tooltip>

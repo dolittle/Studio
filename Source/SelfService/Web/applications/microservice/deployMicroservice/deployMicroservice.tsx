@@ -36,6 +36,7 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
 
     // TODO ENV: Show always as 'false' while deploying and display options later in configuration?
     //const environmentInfo = application.environments.find(env => env.name === 'Dev')!;
+    const availableEnvironments = application.environments.map(env => env.name);
     const hasM3ConnectorOption = false; // environmentInfo?.connections?.m3Connector || false;
     const latestRuntimeVersion = getLatestRuntimeInfo().image;
     const frag = new URLSearchParams(location.hash.slice(1));
@@ -97,8 +98,7 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
             <Form<MicroserviceFormParameters>
                 initialValues={{
                     microserviceName: '',
-                    // TODO ENV: Get environments.
-                    developmentEnvironment: 'Dev',
+                    developmentEnvironment: availableEnvironments[0] || '',
                     runtimeVersion: latestRuntimeVersion,
                     headImage: frag.get('head-image') || '', // nginxdemos/hello:latest
                     headPort: 80,
@@ -111,7 +111,7 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
                 sx={{ 'mt': 4.5, 'ml': 3, '& .MuiFormControl-root': { my: 1 } }}
                 onSubmit={handleCreateMicroservice}
             >
-                <SetupFields />
+                <SetupFields environments={availableEnvironments} />
                 <ContainerImageFields />
                 <PublicUrlFields />
 
