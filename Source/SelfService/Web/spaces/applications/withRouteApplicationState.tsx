@@ -21,9 +21,9 @@ export function withRouteApplicationState<ComponentProps>(wrapped: ComponentType
                 setCurrentApplicationId(routeApplicationParams.applicationId);
             }
 
-            if (routeApplicationParams.environment && currentEnvironment !== routeApplicationParams.environment) {
-                setCurrentEnvironment(routeApplicationParams.environment);
-            }
+            // if (routeApplicationParams.environment && currentEnvironment !== routeApplicationParams.environment) {
+            //     setCurrentEnvironment(routeApplicationParams.environment);
+            // }
         }, []);
 
         const WrappedComponent = wrapped;

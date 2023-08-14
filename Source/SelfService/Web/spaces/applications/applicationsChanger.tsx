@@ -85,7 +85,7 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
 
         //setCurrentApplicationAndEnvironment(newApplicationId, newEnvironment);
         setCurrentApplicationId(newApplicationId);
-        setCurrentEnvironment(newEnvironment);
+        //setCurrentEnvironment(newEnvironment);
 
         const parts = window.location.pathname.split(`/${currentApplicationEnvironment}`);
         // TODO: We just slap on any search querystring here, so it will be reused after the environment switch. We might want to do this more properly later?

@@ -26,7 +26,7 @@ export const LandingPageDecider = () => {
                     const { environment, id } = response.applications[0];
 
                     setCurrentApplicationId(id);
-                    setCurrentEnvironment(environment);
+                    //setCurrentEnvironment(environment);
                     setHasOneApplication(true);
                 }
 
@@ -38,8 +38,8 @@ export const LandingPageDecider = () => {
     if (!isLoaded) return null;
 
     return (
-        hasOneApplication ? (
-            <Navigate to={`/microservices/application/${currentApplicationId}/${currentEnvironment}/overview`} />
+        !hasOneApplication ? (
+            <Navigate to={`/microservices/application/${currentApplicationId}/overview`} />
         ) : (
             <Navigate to='/applications' />
         )
