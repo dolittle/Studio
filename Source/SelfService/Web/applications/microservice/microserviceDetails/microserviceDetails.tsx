@@ -114,13 +114,7 @@ export const MicroserviceDetails = ({ application, currentMicroservice, microser
         },
         {
             label: 'Health Status',
-            render: () => <HealthStatus
-                applicationId={applicationId}
-                environment={'Dev'}
-                microserviceId={microserviceId}
-                msName={microserviceName}
-                data={podsData}
-            />
+            render: () => <HealthStatus applicationId={applicationId} currentMicroservice={currentMicroservice} data={podsData} />
         },
     ];
 
