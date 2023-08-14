@@ -3,17 +3,18 @@
 
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+
 import gfm from 'remark-gfm';
+
 import { Info, SubjectRulesReviewStatus } from '../stores/documentationInfo';
 
-type Vars = {
-    clusterName: string
-    resourceGroup: string
-    subscriptionId: string
-    applicationId: string
-    subjectRulesReviewStatus: SubjectRulesReviewStatus
+export type Vars = {
+    clusterName: string;
+    resourceGroup: string;
+    subscriptionId: string;
+    applicationId: string;
+    subjectRulesReviewStatus: SubjectRulesReviewStatus;
 };
-
 
 function templateResource(namespace: string, resource: string, name: string): string {
     const markdown = `
@@ -22,7 +23,7 @@ kubectl -n ${namespace} get ${resource} ${name}
 ~~~
 `;
     return markdown.trim();
-}
+};
 
 function template(vars: Vars): string {
     const namespace = `application-${vars.applicationId}`;
@@ -127,14 +128,11 @@ ${secrets.join('\n')}
     return markdown.trim();
 };
 
-type Props = {
-    info: Info
+export type DocProps = {
+    info: Info;
 };
 
-export const Doc: React.FunctionComponent<Props> = (props) => {
-    const _props = props!;
-    const info = _props.info;
-
+export const Doc = ({ info }: DocProps) => {
     const vars = {
         clusterName: info.clusterName,
         resourceGroup: info.resourceGroup,
@@ -143,13 +141,11 @@ export const Doc: React.FunctionComponent<Props> = (props) => {
         subjectRulesReviewStatus: info.subjectRulesReviewStatus,
     } as Vars;
 
-
     const data = template(vars);
 
     return (
-        <ReactMarkdown remarkPlugins={[gfm]} >
+        <ReactMarkdown remarkPlugins={[gfm]}>
             {data}
         </ReactMarkdown>
     );
 };
-
