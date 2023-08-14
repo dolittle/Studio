@@ -20,7 +20,7 @@ import { MicroserviceNewScreen } from './microservice/microserviceNewScreen';
 import { MicroserviceViewScreen } from './microservice/microserviceViewScreen';
 import { LayoutWithSidebar, getMenuWithApplication } from '../components/layout/layoutWithSidebar';
 import { RouteNotFound } from '../components/notfound';
-import { TopNavBar } from '../components/layout/topNavBar';
+//import { TopNavBar } from '../components/layout/topNavBar';
 
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
@@ -28,7 +28,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
     const { hasOneCustomer } = useGlobalContext();
     const navigate = useNavigate();
 
-    const [applications, setApplications] = useState({} as ShortInfo[]);
+    //const [applications, setApplications] = useState({} as ShortInfo[]);
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -43,7 +43,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
             getApplication(currentApplicationId),
             getMicroservices(currentApplicationId),
         ]).then(values => {
-            const applicationsData = values[0] as HttpResponseApplications;
+            //const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
 
             if (!applicationData?.id) {
@@ -51,7 +51,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
                 return;
             }
 
-            setApplications(applicationsData.applications);
+            //setApplications(applicationsData.applications);
             setApplication(applicationData);
 
             mergeMicroservicesFromGit(applicationData.microservices);
@@ -67,56 +67,53 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
 
     if (!isLoaded) return null;
 
-    // TODO DEV: Remove
+    // TODO DEV: Remove?
     if (application.id === '') {
         navigate(href);
         return null;
     }
 
-    // TODO DEV: Remove
-    const tempEnv = 'Dev';
-
-    // TODO DEV: Remove
-    const nav = getMenuWithApplication(navigate, application, tempEnv, hasOneCustomer);
+    // TODO DEV
+    const nav = getMenuWithApplication(navigate, application, 'Dev', hasOneCustomer);
 
     // TODO DEV: This is used by breadcrumbs?
-    const routes = [
-        {
-            path: '/microservices/application/:applicationId/',
-            to: generatePath('/microservices/application/:applicationId/overview', {
-                applicationId: application.id,
-            }),
-            name: 'Microservices',
-        },
-        {
-            path: '/microservices/application/:applicationId/overview',
-            to: generatePath('/microservices/application/:applicationId/overview', {
-                applicationId: application.id,
-            }),
-            name: 'Overview',
-        },
-        {
-            path: '/microservices/application/:applicationId/create',
-            to: generatePath('/microservices/application/:applicationId/create', {
-                applicationId: application.id,
-            }),
-            name: 'Create',
-        },
-        {
-            path: '/microservices/application/:applicationId/edit',
-            to: generatePath('/microservices/application/:applicationId/edit', {
-                applicationId: application.id,
-            }),
-            name: 'Edit',
-        },
-        {
-            path: '/microservices/application/:applicationId/view',
-            to: generatePath('/microservices/application/:applicationId/view', {
-                applicationId: application.id,
-            }),
-            name: 'View',
-        },
-    ];
+    // const routes = [
+    //     {
+    //         path: '/microservices/application/:applicationId/',
+    //         to: generatePath('/microservices/application/:applicationId/overview', {
+    //             applicationId: application.id,
+    //         }),
+    //         name: 'Microservices',
+    //     },
+    //     {
+    //         path: '/microservices/application/:applicationId/overview',
+    //         to: generatePath('/microservices/application/:applicationId/overview', {
+    //             applicationId: application.id,
+    //         }),
+    //         name: 'Overview',
+    //     },
+    //     {
+    //         path: '/microservices/application/:applicationId/create',
+    //         to: generatePath('/microservices/application/:applicationId/create', {
+    //             applicationId: application.id,
+    //         }),
+    //         name: 'Create',
+    //     },
+    //     {
+    //         path: '/microservices/application/:applicationId/edit',
+    //         to: generatePath('/microservices/application/:applicationId/edit', {
+    //             applicationId: application.id,
+    //         }),
+    //         name: 'Edit',
+    //     },
+    //     {
+    //         path: '/microservices/application/:applicationId/view',
+    //         to: generatePath('/microservices/application/:applicationId/view', {
+    //             applicationId: application.id,
+    //         }),
+    //         name: 'View',
+    //     },
+    // ];
 
     return (
         <LayoutWithSidebar navigation={nav}>

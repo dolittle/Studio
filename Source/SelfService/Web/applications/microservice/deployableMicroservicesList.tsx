@@ -1,7 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-// TODO validate the data
 import React, { useEffect, useState } from 'react';
 
 import { useNavigate, useLocation } from 'react-router';
@@ -22,6 +21,7 @@ export type DeployableMicroservicesListProps = {
     application: HttpResponseApplication;
 };
 
+// TODO validate the data?
 export const DeployableMicroservicesList = ({ application }: DeployableMicroservicesListProps) => {
     const navigate = useNavigate();
     const location = useLocation();

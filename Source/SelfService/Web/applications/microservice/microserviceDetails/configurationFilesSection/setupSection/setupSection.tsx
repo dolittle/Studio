@@ -26,6 +26,7 @@ export type SetupSectionProps = {
     application: HttpResponseApplication;
     applicationId: string;
     currentMicroservice: MicroserviceStore;
+    // TODO: Refactor? This is the same as currentMicroservice.id?
     microserviceId: string;
 };
 

@@ -14,6 +14,7 @@ import { EnvironmentVariablesSection } from './environmentSection/environmentVar
 export type ConfigurationFilesSectionProps = {
     application: HttpResponseApplication;
     applicationId: string;
+    // TODO: Refactor? This is the same as currentMicroservice.id?
     microserviceId: string;
     currentMicroservice: MicroserviceStore;
 };

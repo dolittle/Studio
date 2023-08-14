@@ -45,6 +45,7 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
         setIsLoading(true);
 
         const microserviceId = Guid.create().toString();
+        // Values from data grid table.
         const { microserviceName, developmentEnvironment, headArguments, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
         // Convert the head arguments to the format that the form expects.
         const headArgumentValues = headArguments.map(arg => arg.value);
@@ -98,9 +99,10 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
             <Form<MicroserviceFormParameters>
                 initialValues={{
                     microserviceName: '',
-                    developmentEnvironment: '',
+                    // TODO ENV: Get environments.
+                    developmentEnvironment: 'Dev',
                     runtimeVersion: latestRuntimeVersion,
-                    headImage: frag.get('head-image') || '', //nginxdemos/hello:latest
+                    headImage: frag.get('head-image') || '', // nginxdemos/hello:latest
                     headPort: 80,
                     entrypoint: '',
                     isPublic: false,

@@ -29,6 +29,7 @@ const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 type FilesSectionProps = {
     applicationId: string;
     currentMicroservice: MicroserviceStore;
+    // TODO: Refactor? This is the same as currentMicroservice.id?
     microserviceId: string;
 };
 
@@ -165,6 +166,7 @@ export const FilesSection = ({ applicationId, currentMicroservice, microserviceI
                 }}
             />
 
+            {/* TODO: Save expanded state? */}
             <Accordion id='configuration-files' title='Configuration Files' defaultExpanded>
                 <HeaderButtons
                     filePrompt={() => fileUploadRef.current?.showPrompt()}

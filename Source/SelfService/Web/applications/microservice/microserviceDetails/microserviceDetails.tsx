@@ -31,8 +31,9 @@ const initialPodsData = {
 
 export type MicroserviceDetailsProps = {
     application: HttpResponseApplication;
-    microserviceId: string;
     currentMicroservice: MicroserviceStore;
+    // TODO: Refactor? This is the same as currentMicroservice.id?
+    microserviceId: string;
 };
 
 export const MicroserviceDetails = ({ application, microserviceId, currentMicroservice }: MicroserviceDetailsProps) => {

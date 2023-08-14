@@ -48,9 +48,11 @@ export type EnvironmentVariableTableRow = InputEnvironmentVariable & {
 export type EnvironmentVariablesProps = {
     applicationId: string;
     currentMicroservice: MicroserviceStore;
+    // TODO: Refactor? This is the same as currentMicroservice.id?
     microserviceId: string;
 };
 
+// TODO: TYPO: Variables = Variable
 export const EnvironmentVariablesSection = ({ applicationId, currentMicroservice, microserviceId }: EnvironmentVariablesProps) => {
     const { enqueueSnackbar } = useSnackbar();
 

@@ -28,17 +28,18 @@ export const Microservice = ({ application }: MicroserviceProps) => {
     const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as MicroserviceObject[];
 
-    // TODO ENV: How to handle this?
-    // const canEdit = canEditMicroservices(application.environments, environment);
-    // const handleCreateMicroservice = () => {
-    //     // if (!canEdit) {
-    //     //     enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
-    //     //     return;
-    //     // }
+    // TODO: Refactor. Use createMicroserviceHref?
+    const handleCreateMicroservice = () => {
+        // TODO ENV: How to handle this?
+        //const canEdit = canEditMicroservices(application.environments, environment);
+        // if (!canEdit) {
+        //     enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
+        //     return;
+        // }
 
-    //     const href = `/microservices/application/${application.id}/create`;
-    //     navigate(href);
-    // };
+        const href = `/microservices/application/${application.id}/create`;
+        navigate(href);
+    };
 
     const createMicroserviceHref = useHref(`/microservices/application/${application.id}/create`);
 
