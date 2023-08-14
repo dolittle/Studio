@@ -1,45 +1,42 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+
+import { Typography } from '@mui/material';
+
 import { getPersonalisedInfo } from '../../apis/solutions/application';
 
 import { Doc as AccessContainerRegistry } from '../documentation/accessContainerRegistry';
 
-type Props = {
+export type ViewProps = {
     applicationId: string;
 };
 
-export const View: React.FunctionComponent<Props> = (props) => {
-    const applicationId = props!.applicationId;
-
+export const View = ({ applicationId }: ViewProps) => {
     const [info, setInfo] = useState({} as any);
-    const [loaded, setLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        Promise.all([
-            getPersonalisedInfo(applicationId)
-        ]).then(values => {
-            const data = values[0];
-            data.applicationId = applicationId;
-            setInfo(data);
-            setLoaded(true);
-        });
+        Promise.all([getPersonalisedInfo(applicationId)])
+            .then(values => {
+                const data = values[0];
+                data.applicationId = applicationId;
+                setInfo(data);
+                setIsLoaded(true);
+            });
     }, []);
 
-    if (!loaded) {
-        return null;
-    }
-
+    if (!isLoaded) return null;
 
     return (
         <>
-            <p>Your container registry is empty</p>
+            <Typography>Your container registry is empty</Typography>
             <br />
 
             <Typography variant='h1' my={2}>How to access and add an image to your container registry</Typography>
             <br />
+
             <AccessContainerRegistry info={info} />
         </>
     );
