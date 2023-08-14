@@ -26,7 +26,7 @@ import { HeaderButtons } from './headerButtons';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
-type FilesSectionProps = {
+export type FilesSectionProps = {
     applicationId: string;
     currentMicroservice: MicroserviceStore;
     // TODO: Refactor? This is the same as currentMicroservice.id?
@@ -44,12 +44,15 @@ export const FilesSection = ({ applicationId, currentMicroservice, microserviceI
     const [deleteConfigFileDialogIsOpen, setDeleteConfigFileDialogIsOpen] = useState(false);
     const [validateFileDialogIsOpen, setValidateFileDialogIsOpen] = useState({ isOpen: false, file: [] as File[] });
 
+    const microserviceEnvironment = currentMicroservice.environment;
+    const microserviceName = currentMicroservice.name;
+
     useEffect(() => {
         fetchAndUpdateConfigFileNamesList();
     }, []);
 
     const fetchAndUpdateConfigFileNamesList = async (): Promise<void> => {
-        const result = await getConfigFilesNamesList(applicationId, currentMicroservice.environment, microserviceId);
+        const result = await getConfigFilesNamesList(applicationId, microserviceEnvironment, microserviceId);
         createDataTableObj(result.data ?? []);
     };
 
@@ -85,7 +88,7 @@ export const FilesSection = ({ applicationId, currentMicroservice, microserviceI
         const formData = new FormData();
         formData.set('file', file);
 
-        const result = await updateConfigFile(applicationId, currentMicroservice.environment, microserviceId, formData);
+        const result = await updateConfigFile(applicationId, microserviceEnvironment, microserviceId, formData);
 
         if (result.success) {
             enqueueSnackbar(`'${file.name}' successfully added.`);
@@ -100,7 +103,7 @@ export const FilesSection = ({ applicationId, currentMicroservice, microserviceI
     const handleConfigFileDelete = async (): Promise<void> => {
         for (const filename of selectedRowIds) {
             const fileName = filename.toString();
-            const response = await deleteConfigFile(applicationId, currentMicroservice.environment, microserviceId, fileName);
+            const response = await deleteConfigFile(applicationId, microserviceEnvironment, microserviceId, fileName);
 
             if (response) {
                 enqueueSnackbar(`'${fileName}' deleted from configuration files.`);
@@ -117,7 +120,7 @@ export const FilesSection = ({ applicationId, currentMicroservice, microserviceI
     };
 
     // This is reused. consider moving
-    const configMapPrefix = `${currentMicroservice.environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
+    const configMapPrefix = `${microserviceEnvironment.toLowerCase()}-${microserviceName.toLowerCase()}`;
 
     // TODO: Should be able to download multiple selected files
     const handleConfigFileDownload = (): void => {
@@ -138,9 +141,9 @@ export const FilesSection = ({ applicationId, currentMicroservice, microserviceI
         <>
             <RestartMicroserviceDialog
                 applicationId={applicationId}
-                environment={currentMicroservice.environment}
+                environment={microserviceEnvironment}
                 microserviceId={microserviceId}
-                msName={currentMicroservice.name}
+                msName={microserviceName}
                 open={restartMicroserviceDialogIsOpen}
                 setOpen={() => setRestartMicroserviceDialogIsOpen(true)}
                 handleSuccess={() => {
@@ -178,7 +181,7 @@ export const FilesSection = ({ applicationId, currentMicroservice, microserviceI
 
                 <FileUploadForm ref={fileUploadRef} onSelected={handleFileSelect} allowMultipleFiles hideDropArea />
 
-                <RestartInfoBox microserviceName={currentMicroservice.name} isOpen={restartInfoBoxIsOpen} onDismissed={() => setRestartInfoBoxIsOpen(false)} />
+                <RestartInfoBox microserviceName={microserviceName} isOpen={restartInfoBoxIsOpen} onDismissed={() => setRestartInfoBoxIsOpen(false)} />
 
                 {configFileTableRows.length > 0 ?
                     <ConfigFilesTable rows={configFileTableRows} selectionModel={selectedRowIds} handleSelectionModelChange={setSelectedRowIds} /> :

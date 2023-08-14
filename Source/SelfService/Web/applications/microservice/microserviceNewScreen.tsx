@@ -7,7 +7,7 @@ import { DeployableMicroservicesList } from './deployableMicroservicesList';
 
 import { HttpResponseApplication } from '../../apis/solutions/application';
 
-type MicroserviceNewScreenProps = {
+export type MicroserviceNewScreenProps = {
     application: HttpResponseApplication;
 };
 

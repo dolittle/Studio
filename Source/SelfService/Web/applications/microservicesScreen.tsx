@@ -12,8 +12,8 @@ import '../spaces/applications/applicationScreen.scss';
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
 
-import { ShortInfo, getMicroservices } from '../apis/solutions/api';
-import { HttpResponseApplication, getApplicationsListing, getApplication, HttpResponseApplications } from '../apis/solutions/application';
+import { getMicroservices } from '../apis/solutions/api';
+import { getApplicationsListing, getApplication, HttpResponseApplication, HttpResponseApplications } from '../apis/solutions/application';
 
 import { Microservice } from './microservice/microservices/microservices';
 import { MicroserviceNewScreen } from './microservice/microserviceNewScreen';
@@ -25,8 +25,8 @@ import { RouteNotFound } from '../components/notfound';
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
 export const MicroservicesScreen = withRouteApplicationState(({ routeApplicationParams }) => {
-    const { hasOneCustomer } = useGlobalContext();
     const navigate = useNavigate();
+    const { hasOneCustomer } = useGlobalContext();
 
     //const [applications, setApplications] = useState({} as ShortInfo[]);
     const [application, setApplication] = useState({} as HttpResponseApplication);

@@ -9,8 +9,8 @@ import { StatusIndicator, Tabs } from '@dolittle/design-system';
 
 import { MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
 
-import { getPodStatus, HttpResponsePodStatus } from '../../../apis/solutions/api';
 import { MicroserviceSimple } from '../../../apis/solutions/index';
+import { getPodStatus, HttpResponsePodStatus } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
 import { ConfigurationFilesSection } from './configurationFilesSection/configurationFilesSection';
@@ -20,14 +20,14 @@ import { TerminalView } from './terminal/terminalView';
 
 import { getContainerStatus } from '../../../utils/helpers';
 
-const initialPodsData = {
+const initialPodsData: HttpResponsePodStatus = {
     namespace: '',
     microservice: {
         name: '',
         id: '',
     },
     pods: [],
-} as HttpResponsePodStatus;
+};
 
 export type MicroserviceDetailsProps = {
     application: HttpResponseApplication;
@@ -36,25 +36,24 @@ export type MicroserviceDetailsProps = {
     microserviceId: string;
 };
 
-export const MicroserviceDetails = ({ application, microserviceId, currentMicroservice }: MicroserviceDetailsProps) => {
+export const MicroserviceDetails = ({ application, currentMicroservice, microserviceId }: MicroserviceDetailsProps) => {
     const applicationId = application.id;
+    const microserviceEnvironment = currentMicroservice.environment;
+    const microserviceName = currentMicroservice.name;
 
     const [podsData, setPodsData] = useState(initialPodsData);
 
     useEffect(() => {
-        Promise.all([getPodStatus(application.id, currentMicroservice.environment, microserviceId)])
-            .then(values => {
-                setPodsData(values[0]);
-            });
+        Promise.all([getPodStatus(applicationId, microserviceEnvironment, microserviceId)])
+            .then(values => setPodsData(values[0]));
     }, []);
 
     const getLastOpenTab = parseInt(sessionStorage.getItem('microservice-details-tabs') || '0');
-
     const podsStatuses = () => podsData.pods.flatMap(pod => pod.containers.map(container => container.state));
     const microserviceHealthStatus = getContainerStatus(podsStatuses());
 
     // What is the purpose of this??
-    const canEdit = canEditMicroservice(application.environments, currentMicroservice.environment, currentMicroservice.id);
+    const canEdit = canEditMicroservice(application.environments, microserviceEnvironment, microserviceId); // currentMicroservice.id?
     let ms = {} as MicroserviceSimple;
     let hasEditData = false;
     if (canEdit) {
@@ -75,7 +74,7 @@ export const MicroserviceDetails = ({ application, microserviceId, currentMicros
             args: [],
         };
 
-        const environmentInfo = application.environments.find(_environment => _environment.name === currentMicroservice.environment)!;
+        const environmentInfo = application.environments.find(environment => environment.name === microserviceEnvironment)!;
 
         // TODO currently we don't use the ms.extra.ingress in the view
         // Look to "liveIngressView" for how we "set" the data to uniq paths
@@ -85,13 +84,13 @@ export const MicroserviceDetails = ({ application, microserviceId, currentMicros
                 customerId: application.customerId,
                 microserviceId,
             },
-            name: currentMicroservice.name,
+            name: microserviceName,
             kind: 'unknown',
-            environment: currentMicroservice.environment,
+            environment: microserviceEnvironment,
             extra: {
                 ingress: {
                     path: '',
-                    pathType: ''
+                    pathType: '',
                 },
                 headPort: 80,
                 isPublic: true,
@@ -119,7 +118,7 @@ export const MicroserviceDetails = ({ application, microserviceId, currentMicros
                 applicationId={applicationId}
                 environment={'Dev'}
                 microserviceId={microserviceId}
-                msName={currentMicroservice.name}
+                msName={microserviceName}
                 data={podsData}
             />
         },
@@ -142,7 +141,7 @@ export const MicroserviceDetails = ({ application, microserviceId, currentMicros
     return (
         <>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 3.25 }}>
-                <Typography variant='h1' sx={{ mr: 3 }}>{currentMicroservice.name}</Typography>
+                <Typography variant='h1' sx={{ mr: 3 }}>{microserviceName}</Typography>
                 <StatusIndicator variantFilled status={microserviceHealthStatus.status} label={microserviceHealthStatus.label} />
             </Box>
 

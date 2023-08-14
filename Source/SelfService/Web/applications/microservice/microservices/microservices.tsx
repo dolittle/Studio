@@ -53,7 +53,7 @@ export const Microservice = ({ application }: MicroserviceProps) => {
                     <Button label='Deploy New Microservice' variant='fullwidth' startWithIcon='RocketLaunch' href={createMicroserviceHref} sx={{ mt: 2.125 }} />
                 </>
             ) : (
-                <NoMicroservices onCreate={() => navigate(createMicroserviceHref)} />
+                <NoMicroservices onCreate={handleCreateMicroservice} />
             )}
         </>
     );

@@ -25,11 +25,6 @@ export const MicroservicesDataGrid = ({ application, microservices }: Microservi
     const [microserviceRows, setMicroserviceRows] = useState<(MicroserviceObject | undefined)[]>([]);
     const [isLoadingRows, setIsLoadingRows] = useState(true);
 
-    const getMicroserviceStatus = useCallback(async (microserviceId: string, environment: string) => {
-        const status = await getPodStatus(application.id, environment, microserviceId);
-        return status.pods;
-    }, [application.id]);
-
     useEffect(() => {
         setIsLoadingRows(true);
 
@@ -43,6 +38,11 @@ export const MicroservicesDataGrid = ({ application, microservices }: Microservi
         })).then(data => setMicroserviceRows(data))
             .finally(() => setIsLoadingRows(false));
     }, [microservices]);
+
+    const getMicroserviceStatus = useCallback(async (microserviceId: string, environment: string) => {
+        const status = await getPodStatus(application.id, environment, microserviceId);
+        return status.pods;
+    }, [application.id]);
 
     const handleTableRowClick = (microserviceId: string) => {
         const href = `/microservices/application/${application.id}/view/${microserviceId}`;

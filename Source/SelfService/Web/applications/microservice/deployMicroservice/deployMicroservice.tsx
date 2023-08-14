@@ -37,10 +37,9 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
     // TODO ENV: Show always as 'false' while deploying and display options later in configuration?
     //const environmentInfo = application.environments.find(env => env.name === 'Dev')!;
     const hasM3ConnectorOption = false; // environmentInfo?.connections?.m3Connector || false;
-
     const latestRuntimeVersion = getLatestRuntimeInfo().image;
-
     const frag = new URLSearchParams(location.hash.slice(1));
+
     const handleCreateMicroservice = async (values: MicroserviceFormParameters) => {
         setIsLoading(true);
 
@@ -80,7 +79,6 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
 
         try {
             await saveSimpleMicroservice(newMicroservice);
-
             enqueueSnackbar(`Microservice '${microserviceName}' has been deployed.`);
             const href = `/microservices/application/${application.id}/view/${newMicroservice.dolittle.microserviceId}`;
             navigate(href);
@@ -108,15 +106,13 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
                     isPublic: false,
                     headArguments: [],
                     ingressPath: '',
-                    hasM3Connector: false
+                    hasM3Connector: false,
                 }}
                 sx={{ 'mt': 4.5, 'ml': 3, '& .MuiFormControl-root': { my: 1 } }}
                 onSubmit={handleCreateMicroservice}
             >
                 <SetupFields />
-
                 <ContainerImageFields />
-
                 <PublicUrlFields />
 
                 {hasM3ConnectorOption && <HasM3ConnectorField />}

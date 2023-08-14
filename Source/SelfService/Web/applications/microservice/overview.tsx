@@ -23,7 +23,7 @@ export const Overview = ({ application, microserviceId }: OverviewProps) => {
     const navigate = useNavigate();
     const $microservices = useReadable(microservices) as any;
 
-    const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = $microservices.find((microservice: MicroserviceStore) => microservice.id === microserviceId);
 
     if (!currentMicroservice) {
         const href = `/microservices/application/${application.id}/overview`;
