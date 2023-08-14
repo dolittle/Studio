@@ -2,19 +2,23 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import { useReadable } from 'use-svelte-store';
+
+import { microservices, MicroserviceStore } from '../../stores/microservice';
 
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Pivot, PivotItem } from '@fluentui/react';
 
-import { HealthStatus } from '../microserviceDetails/healthStatus/healthStatus';
+import { Typography } from '@mui/material';
+
 import { HttpResponsePodStatus } from '../../../apis/solutions/api';
 
-import { microservices, MicroserviceStore } from '../../stores/microservice';
 import { Webhooks } from './webhooks';
 import { ConfigView } from './config/configView';
-import { Typography } from '@mui/material';
+
+import { HealthStatus } from '../microserviceDetails/healthStatus/healthStatus';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -26,8 +30,9 @@ type Props = {
 };
 
 export const View: React.FunctionComponent<Props> = (props) => {
-    const $microservices = useReadable(microservices) as any;
     const navigate = useNavigate();
+    const $microservices = useReadable(microservices) as any;
+
     const _props = props!;
     const applicationId = _props.applicationId;
     const microserviceId = _props.microserviceId;
@@ -36,8 +41,9 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const [selectedKey, setSelectedKey] = useState('healthStatus');
 
     const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId && ms.environment === environment);
+
     if (!currentMicroservice) {
-        const href = `/microservices/application/${applicationId}/${environment}/overview`;
+        const href = `/microservices/application/${applicationId}/overview`;
         navigate(href);
         return null;
     }
@@ -46,6 +52,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
         <>
             <Stack tokens={stackTokens}>
                 <Typography variant='h1' my={2}>{currentMicroservice.name}</Typography>
+
                 <Pivot selectedKey={selectedKey}
                     onLinkClick={(item?: PivotItem, ev?: React.MouseEvent<HTMLElement>) => {
                         const key = item?.props.itemKey as string;
@@ -63,6 +70,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     >
                         <ConfigView microservice={currentMicroservice.edit} />
                     </PivotItem>
+
                     <PivotItem
                         itemKey="webhooks"
                         headerText="Webhooks"
