@@ -25,8 +25,8 @@ import { BackupsScreen } from './applications/backupsScreen';
 import { DocumentationScreen } from './applications/documentationScreen';
 import { MicroservicesScreen } from './applications/microservicesScreen';
 import { ContainerRegistryScreen } from './applications/containerRegistryScreen';
-import { LogsScreen } from './applications/logsScreen';
 import { M3ConnectorScreen } from './applications/m3connectorScreen';
+import { LogsScreen } from './applications/logsScreen';
 
 import { ApplicationsScreen } from './spaces/applications/applicationsScreen';
 import { ApplicationScreen } from './spaces/applications/applicationScreen';
@@ -70,7 +70,7 @@ export const App = () => {
 
                             <Route path='/m3connector/application/:applicationId/*' element={<M3ConnectorScreen />} />
 
-                            <Route path='/logs/application/:applicationId/:environment' element={<LogsScreen />} />
+                            <Route path='/logs/application/:applicationId' element={<LogsScreen />} />
 
                             <Route path='/admin/*' element={<AdminScreen />} />
 

@@ -14,7 +14,7 @@ export type LogContextDialogState = {
     show: boolean;
     application: string;
     applicationId: string;
-    environment: string;
+    //environment: string;
     microservice: string;
     microserviceId: string;
     from: bigint;
@@ -36,7 +36,7 @@ export const LogContextDialog = (
         <DialogTitle>Detailed view</DialogTitle>
         <LogsInRange
             applicationId={state.applicationId}
-            environment={state.environment}
+            //environment={state.environment}
             filters={{
                 dateRange: { start: state.from, stop: state.to },
                 searchTerms: [],

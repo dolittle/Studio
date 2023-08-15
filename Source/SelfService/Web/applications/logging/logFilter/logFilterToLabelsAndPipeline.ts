@@ -7,15 +7,14 @@ import { LogFilterObject } from './logFilterPanel';
 /**
  * Constructs query labels and filtering pipeline to fetch logs for an application, environment and provided filters.
  * @param applicationId The application ID to get logs for.
- * @param environment The environment to get logs for.
  * @param filters The filters to apply.
  * @returns The query labels and filter pipeline to use in Loki requests.
  */
-export const logFilterToLabelsAndPipeline = (applicationId: string, environment: string, filters: LogFilterObject): [QueryLabels, string[]] => {
+export const logFilterToLabelsAndPipeline = (applicationId: string, filters: LogFilterObject): [QueryLabels, string[]] => {
     const labels = {
         job: 'microservice',
         application_id: applicationId,
-        environment,
+        //environment,
         microservice_id:
             filters.microservice !== undefined && filters.microservice.length > 0
                 ? filters.microservice.map((_) => _.id)
