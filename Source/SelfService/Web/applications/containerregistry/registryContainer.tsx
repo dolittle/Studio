@@ -15,11 +15,10 @@ import { RegistryWelcome } from './registryWelcome';
 import { RegistryTags } from './registryTags';
 
 export type RegistryContainerProps = {
-    environment: string;
     application: HttpResponseApplication;
 };
 
-export const RegistryContainer = ({ environment, application }: RegistryContainerProps) => {
+export const RegistryContainer = ({ application }: RegistryContainerProps) => {
     const navigate = useNavigate();
 
     const applicationId = application.id;
@@ -58,9 +57,9 @@ export const RegistryContainer = ({ environment, application }: RegistryContaine
 
             <div>
                 <Routes>
-                    <Route path='/' element={<RegistryImages applicationId={applicationId} environment={environment} data={containerRegistryImages} />} />
+                    <Route path='/' element={<RegistryImages applicationId={applicationId} data={containerRegistryImages} />} />
                     <Route path='/welcome' element={<RegistryWelcome applicationId={applicationId} />} />
-                    <Route path='/tags/:image' element={<RegistryTags url={containerRegistryImages.url} applicationId={applicationId} environment={environment} />} />
+                    <Route path='/tags/:image' element={<RegistryTags url={containerRegistryImages.url} applicationId={applicationId} />} />
                 </Routes>
             </div>
         </>

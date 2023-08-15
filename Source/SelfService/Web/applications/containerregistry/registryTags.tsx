@@ -14,12 +14,11 @@ type ViewParams = {
 };
 
 export type RegistryTagsProps = {
-    url: string;
-    environment: string;
     applicationId: string;
+    url: string;
 };
 
-export const RegistryTags = ({ url, environment, applicationId }: RegistryTagsProps) => {
+export const RegistryTags = ({ applicationId, url }: RegistryTagsProps) => {
     const { image } = useParams<ViewParams>();
     if (!image) return null;
 
@@ -39,7 +38,8 @@ export const RegistryTags = ({ url, environment, applicationId }: RegistryTagsPr
             });
     }, []);
 
-    const msCreatePath = `/microservices/application/${applicationId}/${environment}/create?kind=dolittle-microservice`;
+    // TODO ENV: Removed environment from path. Dunno what that changes.
+    const msCreatePath = `/microservices/application/${applicationId}/create?kind=dolittle-microservice`;
 
     if (!isLoaded) return null;
 

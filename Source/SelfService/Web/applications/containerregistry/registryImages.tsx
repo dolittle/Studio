@@ -11,11 +11,10 @@ import { ContainerRegistryImages } from '../../apis/solutions/containerregistry'
 
 export type RegistryImagesProps = {
     applicationId: string;
-    environment: string;
     data: ContainerRegistryImages;
 };
 
-export const RegistryImages = ({ applicationId, environment, data }: RegistryImagesProps) => {
+export const RegistryImages = ({ applicationId, data }: RegistryImagesProps) => {
     const navigate = useNavigate();
 
     return (
@@ -39,8 +38,9 @@ export const RegistryImages = ({ applicationId, environment, data }: RegistryIma
                                     onClick={(event) => {
                                         event.preventDefault();
                                         const href = generatePath(
-                                            '/containerregistry/application/:applicationId/:environment/overview/tags/:image',
-                                            { applicationId, environment, image: encodeURIComponent(row.name) }
+                                            // TODO ENV: Removed 'environment' from path. Dunno what that changes.
+                                            '/containerregistry/application/:applicationId/overview/tags/:image',
+                                            { applicationId, image: encodeURIComponent(row.name) }
                                         );
                                         navigate(href);
                                     }}

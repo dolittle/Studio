@@ -8,13 +8,11 @@ import { useGlobalContext } from '../context/globalContext';
 
 import { Typography } from '@mui/material';
 
-import { ShortInfoWithEnvironment } from '../apis/solutions/api';
-import { getApplication, getApplications, HttpResponseApplication, HttpResponseApplications } from '../apis/solutions/application';
+import { ShortInfo } from '../apis/solutions/api';
+import { getApplication, getApplicationsListing, HttpResponseApplication, HttpResponseApplications } from '../apis/solutions/application';
 
 import { RouteNotFound } from '../components/notfound';
 import { TopNavBar } from '../components/layout/topNavBar';
-import { ContainerRegistryContainer } from './containerregistry/container';
-import { PickEnvironment, isEnvironmentValidFromUrl } from '../components/pickEnvironment';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 import { RegistryContainer } from './containerregistry/registryContainer';
 
@@ -24,24 +22,22 @@ export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplica
     const navigate = useNavigate();
     const { hasOneCustomer } = useGlobalContext();
 
+    //const [applications, setApplications] = useState([] as ShortInfo[]);
     const [application, setApplication] = useState({} as HttpResponseApplication);
-    const [applications, setApplications] = useState([] as ShortInfoWithEnvironment[]);
-    const [loaded, setLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
-    const currentEnvironment = routeApplicationParams.environment;
     const currentApplicationId = routeApplicationParams.applicationId;
 
     useEffect(() => {
-        if (!currentEnvironment || !currentApplicationId) {
-            return;
-        }
+        if (!currentApplicationId) return;
 
         Promise.all([
-            getApplications(),
+            getApplicationsListing(),
             getApplication(currentApplicationId),
         ]).then(values => {
-            const applicationsData = values[0] as HttpResponseApplications;
+            //const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
+
             if (!applicationData?.id) {
                 const href = `/problem`;
                 navigate(href);
@@ -49,38 +45,25 @@ export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplica
             }
 
             // TODO this should be unique
-            // TODO also when we have more than one application and more than one environment we should default to something.
-            setApplications(applicationsData.applications);
+            //setApplications(applicationsData.applications);
             setApplication(applicationData);
-            setLoaded(true);
-        }).catch(error => {
-            console.log(error);
-        });
-    }, [currentApplicationId, currentEnvironment]);
+            setIsLoaded(true);
+        }).catch(error => console.log(error));
+    }, [currentApplicationId]);
 
-    if (!loaded) return null;
+    if (!isLoaded) return null;
 
     if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application with this environment not found</Typography>;
-    }
-
-    if (!isEnvironmentValidFromUrl(applications, currentApplicationId, currentEnvironment)) {
-        return (
-            <PickEnvironment
-                applications={applications}
-                application={application}
-                redirectTo={'/documentation/application/:applicationId/:environment/overview'}
-                openModal={true} />
-        );
+        return <Typography variant='h1' my={2}>Application not found</Typography>;
     }
 
     const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
 
-    const routes = [];
+    //const routes = [];
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
+            {/* <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} /> */}
 
             <Routes>
                 <Route path='/overview/*' element={<RegistryContainer application={application} />} />

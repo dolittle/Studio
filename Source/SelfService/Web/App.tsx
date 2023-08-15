@@ -66,7 +66,7 @@ export const App = () => {
 
                             <Route path='/documentation/application/:applicationId/*' element={<DocumentationScreen />} />
 
-                            <Route path='/containerregistry/application/:applicationId/:environment/*' element={<ContainerRegistryScreen />} />
+                            <Route path='/containerregistry/application/:applicationId/*' element={<ContainerRegistryScreen />} />
 
                             <Route path='/m3connector/application/:applicationId/*' element={<M3ConnectorScreen />} />
 
