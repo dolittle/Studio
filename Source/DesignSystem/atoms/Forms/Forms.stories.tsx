@@ -49,8 +49,8 @@ const { metadata, createStory } = componentStories(Form<FormData>, {
     decorator: (Story) => (
         <Form<FormData>
             initialValues={{
-                textValue: 'default',
-                selectOption: undefined,
+                textValue: '',
+                selectOption: 'cat',
                 checkedValue: false,
                 switchedValue: false,
             }}>
