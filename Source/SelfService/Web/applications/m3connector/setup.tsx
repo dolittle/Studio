@@ -9,12 +9,12 @@ import { Button } from '@dolittle/design-system';
 
 import { HttpResponseApplication } from '../../apis/solutions/application';
 
-export type M3ConnectorSetupProps = {
-    application: HttpResponseApplication;
-};
-
 type ViewParams = {
     environment: string;
+};
+
+export type M3ConnectorSetupProps = {
+    application: HttpResponseApplication;
 };
 
 export const View = ({ application }: M3ConnectorSetupProps) => {
@@ -32,6 +32,7 @@ export const View = ({ application }: M3ConnectorSetupProps) => {
         return (
             <>
                 <p>Already setup</p>
+
                 <Button
                     label='View Details'
                     onClick={async () => {

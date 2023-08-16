@@ -11,19 +11,20 @@ import { Button } from '@dolittle/design-system';
 
 import { HttpResponseApplication } from '../../apis/solutions/application';
 
-export type M3ConnectorOverviewProps = {
-    application: HttpResponseApplication;
-};
-
 type EnvironmentInfo = {
     name: string;
     connected: boolean;
+};
+
+export type M3ConnectorOverviewProps = {
+    application: HttpResponseApplication;
 };
 
 export const View = ({ application }: M3ConnectorOverviewProps) => {
     const navigate = useNavigate();
 
     const applicationId = application.id;
+
     const environments = application.environments.map(_environment => ({
         name: _environment.name,
         connected: _environment.connections.m3Connector,
@@ -36,6 +37,7 @@ export const View = ({ application }: M3ConnectorOverviewProps) => {
             {environments.map(row => (
                 <>
                     <Typography variant='h2' my={2}>{row.name}</Typography>
+
                     <Button
                         label={row.connected ? 'View Details' : 'Setup'}
                         onClick={async () => {
