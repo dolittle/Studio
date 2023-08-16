@@ -39,6 +39,7 @@ export const ActionToolbar = ({ connectionId, connectorName, onEditAction, onDel
             <Button
                 label='Delete Connection'
                 startWithIcon='DeleteRounded'
+                color='error'
                 onClick={
                     () => dispatch({
                         type: 'open',
