@@ -15,10 +15,5 @@ export type ApplicationsListProps = {
 
 export const ApplicationsList = ({ data }: ApplicationsListProps) =>
     <List>
-        {data.map(application =>
-            <ApplicationsListItem
-                key={`${application.id}`}
-                application={application}
-            />
-        )}
+        {data.map(application => <ApplicationsListItem key={`${application.id}`} application={application} />)}
     </List>;
