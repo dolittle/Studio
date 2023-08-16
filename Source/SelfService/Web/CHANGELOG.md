@@ -1,3 +1,14 @@
+# [3.7.6] - 2023-8-16 [PR: #442](https://github.com/dolittle/Studio/pull/442)
+### Summary
+- Fix: Save button did not enable after selecting the deployment type and name. The issue was with the Select component not firing the validation rules.
+
+### Design System
+- Form: Create a Form.story for easier testing and future documentation of Forms
+- Select: Fix bug where validation rules were not fired for Select changes.
+- Select: Improve validation evaluation for Select to happen onChange, even when form is onTouched
+- Sleect: Add validation error messages to the Select component
+
+
 # [3.7.4] - 2023-8-11 [PR: #440](https://github.com/dolittle/Studio/pull/440)
 ## Summary
 
