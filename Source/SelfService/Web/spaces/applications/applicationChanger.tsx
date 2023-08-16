@@ -3,17 +3,17 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useGlobalContext } from '../../../context/globalContext';
+import { useGlobalContext } from '../../context/globalContext';
 import { useSnackbar } from 'notistack';
 
-import { ShortInfo } from '../../../apis/solutions/api';
-import { getApplication, getApplicationsListing, HttpResponseApplication, HttpResponseApplications } from '../../../apis/solutions/application';
+import { ShortInfo } from '../../apis/solutions/api';
+import { getApplication, getApplicationsListing, HttpResponseApplication, HttpResponseApplications } from '../../apis/solutions/application';
 
 import { getSelectionMenuItems, DropdownMenuProps, MenuItemProps } from '@dolittle/design-system';
 
-import { SpaceCreateDialog } from '../../spaceCreateDialog';
+import { ApplicationCreateDialog } from './applicationCreateDialog';
 
-export const SpaceSelectMenu = () => {
+export const ApplicationChanger = () => {
     const { enqueueSnackbar } = useSnackbar();
     const { currentApplicationId, setCurrentApplicationId } = useGlobalContext();
 
@@ -77,7 +77,7 @@ export const SpaceSelectMenu = () => {
 
     return (
         <>
-            <SpaceCreateDialog isOpen={createSpaceDialogOpen} onClose={() => setCreateSpaceDialogOpen(false)} />
+            <ApplicationCreateDialog isOpen={createSpaceDialogOpen} onClose={() => setCreateSpaceDialogOpen(false)} />
             {getSelectionMenuItems(applicationMenuItems(), application.name)}
         </>
     );

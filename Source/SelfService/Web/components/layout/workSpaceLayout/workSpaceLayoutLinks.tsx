@@ -9,7 +9,7 @@ import { useGlobalContext } from '../../../context/globalContext';
 
 import { getPrimaryNavigationItems, getSecondaryNavigationItems, getSidePanelItems, LayoutProps, MenuListProps, MenuItemProps } from '@dolittle/design-system';
 
-import { SpaceSelectMenu } from './spaceSelectMenu';
+import { ApplicationChanger } from '../../../spaces/applications/applicationChanger';
 
 const PrimaryNavigation = () => {
     const location = useLocation();
@@ -150,7 +150,7 @@ const SidePanelIntegrationItems = () => {
 export const mainNavigationItems: LayoutProps['navigationBar'] = {
     logo: 'AigonixLightCube',
     primaryNavigationItems: <PrimaryNavigation />,
-    selectionMenuItems: <SpaceSelectMenu />,
+    selectionMenuItems: <ApplicationChanger />,
     secondaryNavigationItems: <SecondaryNavigation />,
 };
 

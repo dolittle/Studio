@@ -15,7 +15,7 @@ import { getApplicationsListing } from '../../apis/solutions/application';
 
 import { ApplicationsList } from './applicationsList';
 import { LoginWrapper } from '../../components/layout/loginWrapper';
-import { SpaceCreateDialog } from '../../components/spaceCreateDialog';
+import { ApplicationCreateDialog } from './applicationCreateDialog';
 
 export const ApplicationsScreen = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -26,7 +26,6 @@ export const ApplicationsScreen = () => {
     const [canCreateApplication, setCanCreateApplication] = useState(false);
     const [createSpaceDialogOpen, setCreateSpaceDialogOpen] = useState(false);
 
-    // TODO handle when not 200!
     useEffect(() => {
         Promise.all([getApplicationsListing()])
             .then(values => {
@@ -51,7 +50,7 @@ export const ApplicationsScreen = () => {
 
     return (
         <LoginWrapper>
-            <SpaceCreateDialog isOpen={createSpaceDialogOpen} onClose={() => setCreateSpaceDialogOpen(false)} />
+            <ApplicationCreateDialog isOpen={createSpaceDialogOpen} onClose={() => setCreateSpaceDialogOpen(false)} />
 
             <Typography variant='h2' sx={{ mb: 4 }}>
                 {applicationInfos.length > 0 ? 'Select Your Application' : 'There are no Applications'}
