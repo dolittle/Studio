@@ -40,6 +40,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
     const podsData = _props.podsData;
     const [selectedKey, setSelectedKey] = useState('healthStatus');
 
+    // TODO ENV
     const currentMicroservice: MicroserviceStore = $microservices.find(ms => ms.id === microserviceId && ms.environment === environment);
 
     if (!currentMicroservice) {
