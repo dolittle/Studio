@@ -7,7 +7,7 @@ import { useGlobalContext } from '../../../context/globalContext';
 import { useSnackbar } from 'notistack';
 
 import { ShortInfo } from '../../../apis/solutions/api';
-import { getApplicationsListing, HttpResponseApplications } from '../../../apis/solutions/application';
+import { getApplication, getApplicationsListing, HttpResponseApplication, HttpResponseApplications } from '../../../apis/solutions/application';
 
 import { getSelectionMenuItems, DropdownMenuProps, MenuItemProps } from '@dolittle/design-system';
 
@@ -18,25 +18,29 @@ export const SpaceSelectMenu = () => {
     const { currentApplicationId, setCurrentApplicationId } = useGlobalContext();
 
     const [applications, setApplications] = useState([] as ShortInfo[]);
+    const [application, setApplication] = useState({} as HttpResponseApplication);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
     const [createSpaceDialogOpen, setCreateSpaceDialogOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        Promise.all([getApplicationsListing()])
-            .then(values => {
-                const response = values[0] as HttpResponseApplications;
+        if (!currentApplicationId) return;
 
-                setApplications(response.applications);
-                setCanCreateApplication(response.canCreateApplication);
-                setIsLoading(false);
-            })
-            .catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }));
+        Promise.all([
+            getApplicationsListing(),
+            getApplication(currentApplicationId),
+        ]).then(values => {
+            const response = values[0] as HttpResponseApplications;
+            const applicationData = values[1];
+
+            setApplications(response.applications);
+            setApplication(applicationData);
+            setCanCreateApplication(response.canCreateApplication);
+            setIsLoading(false);
+        }).catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }));
     }, [currentApplicationId]);
 
     if (isLoading) return null;
-
-    const currentApplication = applications.find(application => application.id === currentApplicationId) || applications[0];
 
     const applicationMenuItems = () => {
         const menuItems: DropdownMenuProps['menuItems'] = applications.map(application => {
@@ -74,7 +78,7 @@ export const SpaceSelectMenu = () => {
     return (
         <>
             <SpaceCreateDialog isOpen={createSpaceDialogOpen} onClose={() => setCreateSpaceDialogOpen(false)} />
-            {getSelectionMenuItems(applicationMenuItems(), currentApplication.name)}
+            {getSelectionMenuItems(applicationMenuItems(), application.name)}
         </>
     );
 };
