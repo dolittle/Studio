@@ -50,8 +50,8 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
             </InputLabel>
 
             <MuiSelect
+                {...selectProps}
                 {...field}
-                {...selectProps as MuiSelectProps}
                 required={isRequired(selectProps.required)}
                 ref={ref}
                 labelId={`${selectProps.id}-select`}
