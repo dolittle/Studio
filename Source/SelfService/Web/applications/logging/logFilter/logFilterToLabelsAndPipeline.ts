@@ -17,13 +17,13 @@ export const logFilterToLabelsAndPipeline = (applicationId: string, filters: Log
         //environment,
         microservice_id:
             filters.microservice !== undefined && filters.microservice.length > 0
-                ? filters.microservice.map((_) => _.id)
+                ? filters.microservice.map(ms => ms.id)
                 : undefined,
     };
 
     const pipeline = filters.searchTerms
-        .map((term) => term.replace(/[.*+?^${}()|[\]\\"]/g, '\\\\$&'))
-        .map((term) => `|~"(?i)${term}"`);
+        .map(term => term.replace(/[.*+?^${}()|[\]\\"]/g, '\\\\$&'))
+        .map(term => `|~"(?i)${term}"`);
 
     return [labels, pipeline];
 };
