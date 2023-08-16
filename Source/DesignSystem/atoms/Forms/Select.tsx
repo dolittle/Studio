@@ -37,6 +37,18 @@ export type SelectProps<T = string> = {
 export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onOpen, sx, ...selectProps }, ref) => {
     const { field } = useController(selectProps);
 
+    /**
+     * Override the default validation mode of the field.
+     * Select should validate on every 'onChange'. Rest of form defaults to 'onTouched'. Set in {@link Form}.
+     * 'onTouched' behaviour is onBlur for first validation, then onChange for subsequent validations.
+     * Great for input fields, less great for selects
+     * More Info: https://www.react-hook-form.com/api/useform/#mode
+     * @param e the event triggered
+     */
+    const overrideDefaultValidationMode = (e) => {
+        field.onChange(e);
+        field.onBlur();
+    };
     return (
         <FormControl size='small' sx={{ width: 220, ...sx }}>
             <InputLabel
@@ -52,6 +64,7 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
             <MuiSelect
                 {...selectProps}
                 {...field}
+                onChange={overrideDefaultValidationMode}
                 required={isRequired(selectProps.required)}
                 ref={ref}
                 labelId={`${selectProps.id}-select`}
