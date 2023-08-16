@@ -3,7 +3,7 @@
 
 import React, { useMemo } from 'react';
 
-import { Stack } from '@mui/material';
+import { Typography, Stack } from '@mui/material';
 
 import { Input, MaxWidthTextBlock, Select, SelectPropsOptions, Tooltip } from '@dolittle/design-system';
 
@@ -19,6 +19,7 @@ const ConnectorNameTooltipText = () =>
     </>;
 
 const hostingTooltipText = `Select between hosting the connector bundle on premise or allowing a platform-managed solution in the cloud. The cloud setup takes care of hosting, establishing backups and making sure the connector is running.`;
+const hostingSelectedTooltipText = `Once selected, the hosting type cannot be changed. Create a new connector to change the hosting type.`;
 
 export type MainM3ConnectionInfoProps = {
     hasSelectedDeploymentType: boolean;
@@ -64,7 +65,12 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentT
                 />
             </Tooltip>
 
-            <Tooltip tooltipTitle='Hosting' tooltipText={hostingTooltipText} displayOnHover={hasSelectedDeploymentType} sx={{ top: 38 }}>
+            <Tooltip
+                tooltipTitle='Hosting'
+                tooltipText={hasSelectedDeploymentType ? hostingSelectedTooltipText : hostingTooltipText}
+                displayOnHover={hasSelectedDeploymentType}
+                sx={{ top: 38 }}
+            >
                 <Select
                     id='selectHosting'
                     label='Hosting'
