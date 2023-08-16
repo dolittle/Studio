@@ -69,29 +69,29 @@ export const SetupContainerScreen = ({ application }: SetupContainerScreenProps)
 
                 <Route path='/container-registry-info' element={
                     <>
-                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} sx={{ mb: 2 }} />
-                        <Typography variant='h1' sx={{ mb: 4 }}>Container Registry Info</Typography>
+                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} />
+                        <Typography variant='h1'>Container Registry Info</Typography>
                         <AccessContainerRegistry info={$info} />
                     </>
                 } />
 
                 <Route path='/verify-kubernetes-access' element={
                     <>
-                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} sx={{ mb: 2 }} />
-                        <Typography variant='h1' sx={{ mb: 4 }}>Verify access to kubernetes</Typography>
+                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} />
+                        <Typography variant='h1'>Verify access to kubernetes</Typography>
                         <VerifyKubernetesAccess info={$info} />
                     </>
                 } />
 
                 <Route path='/ci-cd/azure-pipelines' element={
                     <>
-                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} sx={{ mb: 4 }} />
-                        <Typography variant='h1' sx={{ mb: 4 }}>Setup Azure Pipelines</Typography>
+                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} />
+                        <Typography variant='h1'>Setup Azure Pipelines</Typography>
                         <SetupAzurePipelines info={$info} />
                     </>
                 } />
 
-                <Route element={<Typography variant='h1' sx={{ my: 2 }}>Something has gone wrong: documentation</Typography>} />
+                <Route element={<Typography variant='h1'>Something has gone wrong: documentation</Typography>} />
                 <Route path='*' element={<RouteNotFound redirectUrl='overview' auto={true} />} />
             </Routes>
         </Box>
