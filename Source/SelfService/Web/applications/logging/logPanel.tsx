@@ -27,11 +27,6 @@ export type LogPanelProps = {
     application: string;
 
     /**
-     * The Environment to the logs are for.
-     */
-    environment?: string;
-
-    /**
      * The filters to apply to the logs query.
      */
     filters: LogFilterObject;
@@ -162,6 +157,7 @@ export const LogPanel = (props: LogPanelProps) => {
 
                                 <NewSwitch
                                     label='Microservice'
+                                    checked={showMicroservice}
                                     onChange={event => setShowMicroservice(event.target.checked)}
                                 />
                             </Grid>

@@ -14,33 +14,24 @@ export type LogContextDialogState = {
     show: boolean;
     application: string;
     applicationId: string;
-    //environment: string;
     microservice: string;
     microserviceId: string;
     from: bigint;
     to: bigint;
 };
 
-export const LogContextDialog = (
-    state: LogContextDialogState,
-    setState: React.Dispatch<React.SetStateAction<LogContextDialogState>>,
-    showTimestamp: boolean,
-) => (
-    <Dialog
-        open={state.show}
-        maxWidth='xl'
-        fullWidth
-        scroll='paper'
-        onClose={() => setState({ ...state, show: false })}
-    >
+export const LogContextDialog = (state: LogContextDialogState, setState: React.Dispatch<React.SetStateAction<LogContextDialogState>>, showTimestamp: boolean) =>
+    <Dialog open={state.show} maxWidth='xl' fullWidth scroll='paper' onClose={() => setState({ ...state, show: false })}>
         <DialogTitle>Detailed view</DialogTitle>
+
         <LogsInRange
             applicationId={state.applicationId}
-            //environment={state.environment}
             filters={{
                 dateRange: { start: state.from, stop: state.to },
                 searchTerms: [],
                 microservice: [{ id: state.microserviceId, name: state.microservice }],
+                // TODO ENV
+                //environment: [],
             }}
             from={state.from}
             to={state.to}
@@ -49,16 +40,9 @@ export const LogContextDialog = (
             render={(logs, loadMoreLogs) => (
                 <>
                     <DialogContent>
-                        <LogLines
-                            logs={logs}
-                            showTimestamp={showTimestamp}
-                            sx={{
-                                '& > div:first-of-type': {
-                                    color: 'success.main',
-                                },
-                            }}
-                        />
+                        <LogLines logs={logs} showTimestamp={showTimestamp} sx={{ '& > div:first-of-type': { color: 'success.main' } }} />
                     </DialogContent>
+
                     <DialogActions>
                         <Button label='Close' color='subtle' onClick={() => setState({ ...state, show: false })} />
                         <Button label='Show more' onClick={() => loadMoreLogs()} />
@@ -66,5 +50,4 @@ export const LogContextDialog = (
                 </>
             )}
         />
-    </Dialog>
-);
+    </Dialog>;

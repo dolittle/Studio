@@ -19,11 +19,6 @@ export type LogsInRangeProps = {
     applicationId: string;
 
     /**
-     * The Environment to get logs for.
-     */
-    environment?: string;
-
-    /**
      * The filters to apply to the logs query.
      */
     filters: LogFilterObject;
