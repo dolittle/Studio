@@ -14,17 +14,18 @@ import { useRouteApplicationParams } from '../utils/route';
 import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
 import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../apis/solutions/backups';
 
-//import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
+import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 import { BackupsList } from './backup/backupsList';
 import { BackupsListView } from './backup/backupsListView';
 
 export const BackupsScreen = () => {
     const navigate = useNavigate();
-    const { currentEnvironment, hasOneCustomer } = useGlobalContext();
+    const { hasOneCustomer } = useGlobalContext();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [backupLinksForEnvironment, setBackupLinksForEnvironment] = useState<BackupLinkWithName[]>([]);
+    const [currentEnvironment, setCurrentEnvironment] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
     const routeApplicationProps = useRouteApplicationParams();
@@ -92,8 +93,8 @@ export const BackupsScreen = () => {
         <LayoutWithSidebar navigation={nav}>
             <BreadCrumbContainer routes={routes} />
             <Routes>
-                <Route path="/overview" element={<BackupsList data={backupLinksForEnvironment} application={application} />} />
-                <Route path="/:environment/list" element={<BackupsListView application={application} environment={currentEnvironment} />} />
+                <Route path='overview' element={<BackupsList data={backupLinksForEnvironment} application={application} setCurrentEnvironment={setCurrentEnvironment} />} />
+                <Route path='list' element={<BackupsListView application={application} environment={currentEnvironment} />} />
                 <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups.</Typography>} />
             </Routes>
         </LayoutWithSidebar>
