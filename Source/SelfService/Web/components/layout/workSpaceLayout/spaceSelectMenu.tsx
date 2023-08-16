@@ -1,13 +1,13 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useGlobalContext } from '../../../context/globalContext';
 import { useSnackbar } from 'notistack';
 
-import { ShortInfoWithEnvironment } from '../../../apis/solutions/api';
-import { getApplications, HttpResponseApplications } from '../../../apis/solutions/application';
+import { ShortInfo } from '../../../apis/solutions/api';
+import { getApplicationsListing, HttpResponseApplications } from '../../../apis/solutions/application';
 
 import { getSelectionMenuItems, DropdownMenuProps, MenuItemProps } from '@dolittle/design-system';
 
@@ -15,24 +15,20 @@ import { SpaceCreateDialog } from '../../spaceCreateDialog';
 
 export const SpaceSelectMenu = () => {
     const { enqueueSnackbar } = useSnackbar();
-    const { currentEnvironment, currentApplicationId, setCurrentApplicationId } = useGlobalContext();
+    const { currentApplicationId, setCurrentApplicationId } = useGlobalContext();
 
-    const [applicationInfos, setApplicationInfos] = useState([] as ShortInfoWithEnvironment[]);
+    const [applications, setApplications] = useState([] as ShortInfo[]);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
     const [createSpaceDialogOpen, setCreateSpaceDialogOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        Promise.all([getApplications()])
+        Promise.all([getApplicationsListing()])
             .then(values => {
                 const response = values[0] as HttpResponseApplications;
 
-                if (!currentApplicationId) {
-                    setCurrentApplicationId(response.applications[0].id);
-                }
-
+                setApplications(response.applications);
                 setCanCreateApplication(response.canCreateApplication);
-                setApplicationInfos(response.applications);
                 setIsLoading(false);
             })
             .catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }));
@@ -40,17 +36,16 @@ export const SpaceSelectMenu = () => {
 
     if (isLoading) return null;
 
-    const currentApplication = applicationInfos.find(application => application.id === currentApplicationId) || applicationInfos[0];
+    const currentApplication = applications.find(application => application.id === currentApplicationId) || applications[0];
 
     const applicationMenuItems = () => {
-        const menuItems: DropdownMenuProps['menuItems'] = applicationInfos.filter(application => application.environment === currentEnvironment)
-            .map(application => {
-                return {
-                    id: application.id,
-                    label: application.name,
-                    onSelect: (menuItem: MenuItemProps) => handleApplicationChange(menuItem),
-                };
-            });
+        const menuItems: DropdownMenuProps['menuItems'] = applications.map(application => {
+            return {
+                id: application.id,
+                label: application.name,
+                onSelect: (menuItem: MenuItemProps) => handleApplicationChange(menuItem),
+            };
+        });
 
         menuItems.push({
             id: 'create-new-application',
@@ -64,7 +59,6 @@ export const SpaceSelectMenu = () => {
 
     const handleApplicationChange = (menuItem: MenuItemProps) => {
         if (menuItem.id === currentApplicationId) return;
-
         setCurrentApplicationId(menuItem.id);
     };
 
@@ -80,7 +74,7 @@ export const SpaceSelectMenu = () => {
     return (
         <>
             <SpaceCreateDialog isOpen={createSpaceDialogOpen} onClose={() => setCreateSpaceDialogOpen(false)} />
-            {getSelectionMenuItems(applicationMenuItems(), currentApplication?.name)}
+            {getSelectionMenuItems(applicationMenuItems(), currentApplication.name)}
         </>
     );
 };
