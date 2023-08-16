@@ -3,7 +3,7 @@
 
 import React, { forwardRef } from 'react';
 
-import { FormControl, InputLabel, MenuItem, Select as MuiSelect, SelectProps as MuiSelectProps, SxProps } from '@mui/material';
+import { FormControl, FormHelperText, InputLabel, MenuItem, Select as MuiSelect, SelectProps as MuiSelectProps, SxProps, Typography } from '@mui/material';
 
 import { useController, isRequired, FieldProps } from './helpers';
 
@@ -35,7 +35,7 @@ export type SelectProps<T = string> = {
  * @returns A {@link Select} component.
  */
 export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onOpen, sx, ...selectProps }, ref) => {
-    const { field } = useController(selectProps);
+    const { field, hasError, errorMessage } = useController(selectProps);
 
     /**
      * Override the default validation mode of the field.
@@ -56,6 +56,7 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
                 disabled={selectProps.disabled}
                 required={isRequired(selectProps.required)}
                 size='small'
+                error={hasError}
                 sx={{ typography: 'body2' }}
             >
                 {selectProps.label}
@@ -85,6 +86,9 @@ export const Select = forwardRef<HTMLOptionElement, SelectProps>(({ options, onO
                     </MenuItem>
                 ))}
             </MuiSelect>
+            <FormHelperText error={hasError} id={`${selectProps.id}-helper-text`}>
+                <Typography variant='caption' sx={{ color: 'error.light' }}>{errorMessage}</Typography>
+            </FormHelperText>
         </FormControl>
     );
 });
