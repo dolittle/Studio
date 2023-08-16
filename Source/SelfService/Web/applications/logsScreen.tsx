@@ -33,9 +33,10 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
     const { hasOneCustomer } = useGlobalContext();
 
     //const [applications, setApplications] = useState({} as ShortInfo[]);
-    const currentApplicationId = routeApplicationParams.applicationId;
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [isLoaded, setIsLoaded] = useState(false);
+
+    const currentApplicationId = routeApplicationParams.applicationId;
     const href = `/problem`;
 
     const availableMicroservices: LogFilterMicroservice[] = application?.microservices !== undefined ? application.microservices.map(microservice => ({
@@ -43,15 +44,15 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
         name: microservice.name,
     })) : [];
 
-    // const uniqueMicroservices = new Map<string, LogFilterMicroservice>();
-    // availableMicroservices.forEach(microservice => uniqueMicroservices.set(microservice.name, microservice));
-    // const uniqueMicroservicesList = Array.from(uniqueMicroservices.values());
+    const uniqueMicroservices = new Map<string, LogFilterMicroservice>();
+    availableMicroservices.forEach(microservice => uniqueMicroservices.set(microservice.name, microservice));
+    const uniqueMicroservicesList = Array.from(uniqueMicroservices.values());
 
     const availableEnvironments = application?.environments !== undefined ? application.environments.map(env => env.name) : [];
 
     const [filters, setFilters] = useLogFilters(
         { dateRange: 'live', searchTerms: [] },
-        availableMicroservices,
+        uniqueMicroservicesList,
         availableEnvironments,
     );
 
@@ -103,7 +104,7 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
             <Box sx={{ minWidth: 640, mt: 3 }}>
                 <LogFilterPanel
                     environments={availableEnvironments}
-                    microservices={availableMicroservices}
+                    microservices={uniqueMicroservicesList}
                     filters={filters}
                     setSearchFilters={setFilters}
                 />
