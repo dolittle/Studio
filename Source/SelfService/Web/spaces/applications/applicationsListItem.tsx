@@ -14,7 +14,6 @@ const styles = {
     mb: 2,
     minWidth: 155,
     minHeight: 36,
-    display: 'block',
 };
 
 export type ApplicationsListItemProps = {
@@ -23,13 +22,10 @@ export type ApplicationsListItemProps = {
 
 export const ApplicationsListItem = ({ application }: ApplicationsListItemProps) => {
     const microservicesHref = useHref(`/microservices/application/${application.id}/overview`);
-    return <ListItem sx={{ p: 0 }}>
-        {/* TODO ENV: Fix Styling of this button is broken for the applications page because of using href */}
-        <Button
-            variant='filled'
-            label={`${application.name}`}
-            isFullWidth
-            sx={styles}
-            href={microservicesHref} />
-    </ListItem>;
+
+    return (
+        <ListItem sx={{ p: 0 }}>
+            <Button variant='filled' label={`${application.name}`} isFullWidth href={microservicesHref} sx={styles} />
+        </ListItem>
+    );
 };

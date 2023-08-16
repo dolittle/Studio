@@ -64,7 +64,7 @@ export const ApplicationsScreen = () => {
                     variant='outlined'
                     isFullWidth
                     onClick={handleApplicationCreate}
-                    sx={{ minWidth: 155, display: 'block' }}
+                    sx={{ minWidth: 155 }}
                 />
             </Box>
 
