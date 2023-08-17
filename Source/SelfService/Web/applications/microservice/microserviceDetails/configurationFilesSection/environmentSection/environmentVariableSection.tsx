@@ -249,7 +249,6 @@ export const EnvironmentVariablesSection = ({ applicationId, currentMicroservice
                         description={`To add your first environment variable, select 'add variable'. Provide a name, value and set its secrecy.`}
                         label='Add Variable'
                         handleOnClick={handleEnvVariableAdd} // TODO: Sometimes throws error when clicked
-                        sx={{ mb: 8 }}
                     /> :
                     <Paper sx={{ width: 1 }}>
                         <DataGridPro

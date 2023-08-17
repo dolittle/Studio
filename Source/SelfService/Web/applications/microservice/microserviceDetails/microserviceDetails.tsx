@@ -129,7 +129,7 @@ export const MicroserviceDetails = ({ application, currentMicroservice, microser
     }
 
     return (
-        <Box>
+        <Box sx={{ my: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 3.25 }}>
                 <Typography variant='h1' sx={{ mr: 3 }}>{microserviceName}</Typography>
                 <StatusIndicator variantFilled status={microserviceHealthStatus.status} label={microserviceHealthStatus.label} />
