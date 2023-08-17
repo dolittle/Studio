@@ -4,18 +4,15 @@
 import React, { useEffect, useState } from 'react';
 
 import { generatePath, Route, useNavigate, Routes } from 'react-router-dom';
-import { useGlobalContext } from '../context/globalContext';
 
 import { HttpResponseApplication, getApplicationsListing, getApplication } from '../apis/solutions/application';
 
-import { TopNavBar } from '../components/layout/topNavBar';
-import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
+import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { SetupContainerScreen } from './setup/setupContainerScreen';
 
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
 export const DocumentationScreen = withRouteApplicationState(({ routeApplicationParams }) => {
-    const { hasOneCustomer } = useGlobalContext();
     const navigate = useNavigate();
 
     const currentApplicationId = routeApplicationParams.applicationId;
@@ -54,8 +51,6 @@ export const DocumentationScreen = withRouteApplicationState(({ routeApplication
         return null;
     }
 
-    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
-
     // const routes = [
     //     {
     //         path: '/documentation/application/:applicationId/',
@@ -88,12 +83,10 @@ export const DocumentationScreen = withRouteApplicationState(({ routeApplication
     // ];
 
     return (
-        <LayoutWithSidebar navigation={nav}>
-            {/* <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} /> */}
-
+        <WorkSpaceLayoutWithSidePanel pageTitle='Setup' sidePanelMode='applications'>
             <Routes>
                 <Route path='/*' element={<SetupContainerScreen application={application} />} />
             </Routes>
-        </LayoutWithSidebar>
+        </WorkSpaceLayoutWithSidePanel>
     );
 });
