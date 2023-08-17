@@ -51,37 +51,6 @@ export const DocumentationScreen = withRouteApplicationState(({ routeApplication
         return <Typography variant='h1' my={2}>Application not found.</Typography>;
     }
 
-    // const routes = [
-    //     {
-    //         path: '/documentation/application/:applicationId/',
-    //         to: generatePath('/documentation/application/:applicationId/overview', {
-    //             applicationId: application.id,
-    //         }),
-    //         name: 'Documentation',
-    //     },
-    //     {
-    //         path: '/documentation/application/:applicationId/overview',
-    //         to: generatePath('/documentation/application/:applicationId/overview', {
-    //             applicationId: application.id,
-    //         }),
-    //         name: 'Overview',
-    //     },
-    //     {
-    //         path: '/documentation/application/:applicationId/container-registry-info',
-    //         to: generatePath('/documentation/application/:applicationId/container-registry-info', {
-    //             applicationId: application.id,
-    //         }),
-    //         name: 'Container Registry Info',
-    //     },
-    //     {
-    //         path: '/documentation/application/:applicationId/verify-kubernetes-access',
-    //         to: generatePath('/documentation/application/:applicationId/verify-kubernetes-access', {
-    //             applicationId: application.id,
-    //         }),
-    //         name: 'Verify access to kubernetes',
-    //     },
-    // ];
-
     return (
         <WorkSpaceLayoutWithSidePanel pageTitle='Setup' sidePanelMode='applications'>
             <Routes>
