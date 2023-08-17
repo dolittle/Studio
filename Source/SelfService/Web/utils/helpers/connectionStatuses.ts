@@ -24,7 +24,7 @@ export const getConnectionStatus = (status: string): StatusIndicatorStatus => {
         };
     }
 
-    return { status: 'unknown' };
+    return { status: 'unknown', label: 'unknown' };
 };
 
 export const getConnectionsStatus = (status?: string): StatusIndicatorStatus => {
@@ -47,7 +47,7 @@ export const getConnectionsStatus = (status?: string): StatusIndicatorStatus => 
             };
         }
     }
-    return { status: 'unknown' };
+    return { status: 'unknown', label: 'unknown' };
 };
 
 export const getPodHealthStatus = (status?: string): StatusIndicatorStatus => {
@@ -71,7 +71,7 @@ export const getPodHealthStatus = (status?: string): StatusIndicatorStatus => {
         }
     }
 
-    return { status: 'unknown' };
+    return { status: 'unknown', label: 'unknown' };
 };
 
 export const getContainerStatus = (status: string[]): StatusIndicatorStatus => {
@@ -94,5 +94,5 @@ export const getContainerStatus = (status: string[]): StatusIndicatorStatus => {
         };
     }
 
-    return { status: 'unknown' };
+    return { status: 'unknown', label: 'unknown' };
 };
