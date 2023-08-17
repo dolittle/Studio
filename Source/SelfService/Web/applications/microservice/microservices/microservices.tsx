@@ -45,7 +45,7 @@ export const Microservice = ({ application }: MicroserviceProps) => {
 
     return (
         <>
-            <Typography variant='h1' sx={{ my: 2 }}>Microservices</Typography>
+            <Typography variant='h1' sx={{ my: 3 }}>Microservices</Typography>
 
             {$microservices.length > 0 ? (
                 <>
