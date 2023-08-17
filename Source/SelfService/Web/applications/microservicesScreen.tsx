@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Route, useNavigate, Routes, generatePath } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useGlobalContext } from '../context/globalContext';
 
@@ -12,7 +12,7 @@ import { Typography } from '@mui/material';
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
 
 import { getMicroservices } from '../apis/solutions/api';
-import { getApplicationsListing, getApplication, HttpResponseApplication, HttpResponseApplications } from '../apis/solutions/application';
+import { getApplicationsListing, getApplication, HttpResponseApplication } from '../apis/solutions/application';
 
 import { Microservice } from './microservice/microservices/microservices';
 import { MicroserviceNewScreen } from './microservice/microserviceNewScreen';
@@ -27,7 +27,6 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
     const { enqueueSnackbar } = useSnackbar();
     const { hasOneCustomer } = useGlobalContext();
 
-    //const [applications, setApplications] = useState({} as ShortInfo[]);
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -41,7 +40,6 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
             getApplication(currentApplicationId),
             getMicroservices(currentApplicationId),
         ]).then(values => {
-            //const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
 
             if (!applicationData.id) {
@@ -49,7 +47,6 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
                 return;
             }
 
-            //setApplications(applicationsData.applications);
             setApplication(applicationData);
 
             mergeMicroservicesFromGit(applicationData.microservices);
@@ -68,46 +65,6 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
     }
 
     const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
-
-    // TODO DEV: This is used by breadcrumbs?
-    // const routes = [
-    //     {
-    //         path: '/microservices/application/:applicationId/',
-    //         to: generatePath('/microservices/application/:applicationId/overview', {
-    //             applicationId: application.id,
-    //         }),
-    //         name: 'Microservices',
-    //     },
-    //     {
-    //         path: '/microservices/application/:applicationId/overview',
-    //         to: generatePath('/microservices/application/:applicationId/overview', {
-    //             applicationId: application.id,
-    //         }),
-    //         name: 'Overview',
-    //     },
-    //     {
-    //         path: '/microservices/application/:applicationId/create',
-    //         to: generatePath('/microservices/application/:applicationId/create', {
-    //             applicationId: application.id,
-    //         }),
-    //         name: 'Create',
-    //     },
-    //     {
-    //         path: '/microservices/application/:applicationId/edit',
-    //         to: generatePath('/microservices/application/:applicationId/edit', {
-    //             applicationId: application.id,
-    //         }),
-    //         name: 'Edit',
-    //     },
-    //     {
-    //         path: '/microservices/application/:applicationId/view',
-    //         to: generatePath('/microservices/application/:applicationId/view', {
-    //             applicationId: application.id,
-    //         }),
-    //         name: 'View',
-    //     },
-    // ];
-    {/* <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} /> */ }
 
     return (
         <LayoutWithSidebar navigation={nav}>
