@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Layout, LayoutProps } from '@dolittle/design-system';
+import { Layout } from '@dolittle/design-system';
 
 import { usePageTitle } from '../../utils/usePageTitle';
 
@@ -12,7 +12,6 @@ import { applicationsSidePanel, integrationsSidePanel, mainNavigationItems } fro
 export type WorkSpaceLayoutProps = {
     pageTitle: string;
     sidePanelMode?: 'applications' | 'integrations';
-    breadcrumbs?: LayoutProps['breadcrumbs'];
     children: React.ReactNode;
 };
 
@@ -26,13 +25,13 @@ export const WorkSpaceLayout = ({ pageTitle, children }: WorkSpaceLayoutProps) =
     );
 };
 
-export const WorkSpaceLayoutWithSidePanel = ({ pageTitle, sidePanelMode, breadcrumbs, children }: WorkSpaceLayoutProps) => {
+export const WorkSpaceLayoutWithSidePanel = ({ pageTitle, sidePanelMode, children }: WorkSpaceLayoutProps) => {
     usePageTitle(pageTitle);
 
     const sidePanelLinks = sidePanelMode === 'applications' ? applicationsSidePanel : integrationsSidePanel;
 
     return (
-        <Layout navigationBar={mainNavigationItems} sidePanel={sidePanelLinks} breadcrumbs={breadcrumbs}>
+        <Layout navigationBar={mainNavigationItems} sidePanel={sidePanelLinks}>
             {children}
         </Layout>
     );

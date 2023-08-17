@@ -32,11 +32,6 @@ export type LayoutProps = {
     sidePanel?: SidePanelProps;
 
     /**
-     * The breadcrumbs items that will be displayed at the top of the layout.
-     */
-    breadcrumbs?: BreadcrumbsProps;
-
-    /**
      * The main content of the layout.
      */
     children: React.ReactNode;
@@ -52,18 +47,13 @@ export type LayoutProps = {
  * @param {LayoutProps} props - The {@link LayoutProps}.
  * @returns A {@link Layout} component.
  */
-export const Layout = ({ navigationBar, sidePanel, breadcrumbs, children, sx }: LayoutProps) =>
+export const Layout = ({ navigationBar, sidePanel, children, sx }: LayoutProps) =>
     <Grid container sx={{ flexFlow: 'nowrap' }}>
         <NavigationBar {...navigationBar} />
 
         {sidePanel && <SidePanel {...sidePanel} />}
 
         <Box component='main' sx={{ ...styles, ...sx }}>
-            {sidePanel &&
-                <Toolbar>
-                    {breadcrumbs && <Breadcrumbs {...breadcrumbs} />}
-                </Toolbar>
-            }
             {children}
         </Box>
     </Grid>;
