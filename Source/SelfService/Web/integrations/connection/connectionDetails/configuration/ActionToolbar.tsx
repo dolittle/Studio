@@ -13,6 +13,7 @@ import { DeleteConnectorDialog, DeleteConnectorDialogState, deleteConnectorDialo
 
 export type ActionToolbarProps = {
     canEdit: boolean;
+    alwaysEdit?: boolean;
     onEditAction?: () => void;
     onDeleteAction?: () => void;
     onCancelAction?: () => void;
@@ -20,7 +21,7 @@ export type ActionToolbarProps = {
     connectorName: string;
 };
 
-export const ActionToolbar = ({ connectionId, connectorName, onEditAction, onDeleteAction, onCancelAction, canEdit = false }: ActionToolbarProps) => {
+export const ActionToolbar = ({ connectionId, connectorName, onEditAction, onDeleteAction, onCancelAction, canEdit = false, alwaysEdit = false }: ActionToolbarProps) => {
     const { isValid, isDirty } = useFormState();
     const initialDialogState: DeleteConnectorDialogState = { open: false, connectionId, connectorName, isLoading: false };
     const [dialogState, dispatch] = useReducer(deleteConnectorDialogReducer, initialDialogState);
@@ -28,8 +29,8 @@ export const ActionToolbar = ({ connectionId, connectorName, onEditAction, onDel
     return (
         <Box sx={{ display: 'flex', mt: 4, gap: 2 }}>
             {canEdit
-                ? <Button label={'Cancel'} startWithIcon='CancelRounded' onClick={onCancelAction} type='reset' />
-                : <Button label='Edit' startWithIcon='EditRounded' onClick={onEditAction} />}
+                ? <Button label={'Cancel'} startWithIcon='CancelRounded' onClick={onCancelAction} type='reset' disabled={alwaysEdit}/>
+                : <Button label='Edit' startWithIcon='EditRounded' onClick={onEditAction} disabled={alwaysEdit}/>}
             <Button
                 label='Save'
                 startWithIcon='SaveRounded'

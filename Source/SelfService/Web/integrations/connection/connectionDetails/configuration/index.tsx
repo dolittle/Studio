@@ -22,6 +22,7 @@ import { ActionToolbar } from './ActionToolbar';
 
 export const ConfigurationView = () => {
     const [canEdit, setEditMode] = useState(false);
+    const [alwaysEdit, setAlwaysEdit] = useState(false);
     const connectionId = useConnectionIdFromRoute();
     const query = useConnectionsIdGet(
         { id: connectionId },
@@ -42,6 +43,14 @@ export const ConfigurationView = () => {
             return;
         }
 
+        const connectionStatus = connection.status.name.toLowerCase();
+
+        if (connectionStatus === 'registered') {
+            setAlwaysEdit(true);
+        }
+        if (connectionStatus === 'pending') {
+            setAlwaysEdit(false);
+        }
         if (getConnectionIndicatorStatus(connection.status.name).label === 'pending') {
             setEditMode(true);
         };
@@ -97,6 +106,7 @@ export const ConfigurationView = () => {
                         formRef.current?.reset(true);
                         setEditMode(false);
                     }}
+                    alwaysEdit={alwaysEdit}
                 />
 
                 <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} canEdit={canEdit} />
