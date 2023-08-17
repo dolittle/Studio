@@ -5,9 +5,9 @@ import React from 'react';
 
 import { Layout, LayoutProps } from '@dolittle/design-system';
 
-import { usePageTitle } from '../../../utils/usePageTitle';
+import { usePageTitle } from '../../utils/usePageTitle';
 
-import { mainNavigationItems, applicationsSidePanel, integrationsSidePanel } from './workSpaceLayoutLinks';
+import { applicationsSidePanel, integrationsSidePanel, mainNavigationItems } from './workSpaceLayoutLinks';
 
 export type WorkSpaceLayoutProps = {
     pageTitle: string;
@@ -29,12 +29,10 @@ export const WorkSpaceLayout = ({ pageTitle, children }: WorkSpaceLayoutProps) =
 export const WorkSpaceLayoutWithSidePanel = ({ pageTitle, sidePanelMode, breadcrumbs, children }: WorkSpaceLayoutProps) => {
     usePageTitle(pageTitle);
 
+    const sidePanelLinks = sidePanelMode === 'applications' ? applicationsSidePanel : integrationsSidePanel;
+
     return (
-        <Layout
-            navigationBar={mainNavigationItems}
-            sidePanel={sidePanelMode === 'applications' ? applicationsSidePanel : integrationsSidePanel}
-            breadcrumbs={breadcrumbs}
-        >
+        <Layout navigationBar={mainNavigationItems} sidePanel={sidePanelLinks} breadcrumbs={breadcrumbs}>
             {children}
         </Layout>
     );
