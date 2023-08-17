@@ -8,12 +8,11 @@ import { useGlobalContext } from '../context/globalContext';
 
 import { Box, Typography } from '@mui/material';
 
-import { ShortInfoWithEnvironment, HttpResponseMicroservices, getMicroservices } from '../apis/solutions/api';
-import { HttpResponseApplication, getApplications, getApplication, HttpResponseApplications } from '../apis/solutions/application';
+import { ShortInfo, HttpResponseMicroservices, getMicroservices } from '../apis/solutions/api';
+import { HttpResponseApplication, getApplicationsListing, getApplication, HttpResponseApplications } from '../apis/solutions/application';
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
 import { LayoutWithSidebar, getMenuWithApplication } from '../components/layout/layoutWithSidebar';
-import { isEnvironmentValidFromUrl, PickEnvironment } from '../components/pickEnvironment';
 import { TopNavBar } from '../components/layout/topNavBar';
 
 import { LogFilterMicroservice, LogFilterPanel } from './logging/logFilter/logFilterPanel';
@@ -33,43 +32,39 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
     const navigate = useNavigate();
     const { hasOneCustomer } = useGlobalContext();
 
-    const currentEnvironment = routeApplicationParams.environment;
-    const currentApplicationId = routeApplicationParams.applicationId;
-
+    //const [applications, setApplications] = useState({} as ShortInfo[]);
     const [application, setApplication] = useState({} as HttpResponseApplication);
-    const [applications, setApplications] = useState({} as ShortInfoWithEnvironment[]);
     const [isLoaded, setIsLoaded] = useState(false);
 
+    const currentApplicationId = routeApplicationParams.applicationId;
     const href = `/problem`;
 
-    const availableMicroservices: LogFilterMicroservice[] = application?.microservices !== undefined
-        ? application.microservices
-            .filter(_ => _.environment === currentEnvironment)
-            .map(microservice => ({
-                id: microservice.dolittle.microserviceId,
-                name: microservice.name,
-            }))
-        : [];
+    const availableMicroservices: LogFilterMicroservice[] = application?.microservices !== undefined ? application.microservices.map(microservice => ({
+        id: microservice.dolittle.microserviceId,
+        name: microservice.name,
+    })) : [];
+
+    const uniqueMicroservices = new Map<string, LogFilterMicroservice>();
+    availableMicroservices.forEach(microservice => uniqueMicroservices.set(microservice.name, microservice));
+    const uniqueMicroservicesList = Array.from(uniqueMicroservices.values());
 
     const availableEnvironments = application?.environments !== undefined ? application.environments.map(env => env.name) : [];
 
     const [filters, setFilters] = useLogFilters(
         { dateRange: 'live', searchTerms: [] },
-        availableMicroservices,
+        uniqueMicroservicesList,
         availableEnvironments,
     );
 
     useEffect(() => {
-        if (!currentEnvironment || !currentApplicationId) {
-            return;
-        }
+        if (!currentApplicationId) return;
 
         Promise.all([
-            getApplications(),
+            getApplicationsListing(),
             getApplication(currentApplicationId),
             getMicroservices(currentApplicationId),
         ]).then(values => {
-            const applicationsData = values[0] as HttpResponseApplications;
+            //const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
 
             if (!applicationData?.id) {
@@ -77,19 +72,20 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
                 return;
             }
 
-            setApplications(applicationsData.applications);
+            //setApplications(applicationsData.applications);
             setApplication(applicationData);
             mergeMicroservicesFromGit(applicationData.microservices);
 
             const microservicesData = values[2] as HttpResponseMicroservices;
-            const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
-            mergeMicroservicesFromK8s(microservices);
+            //const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
+
+            mergeMicroservicesFromK8s(microservicesData.microservices);
             setIsLoaded(true);
         }).catch(() => {
             navigate(href);
             return;
         });
-    }, [currentEnvironment, currentApplicationId]);
+    }, [currentApplicationId]);
 
     if (!isLoaded) return null;
 
@@ -98,57 +94,38 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
         return null;
     }
 
-    if (!isEnvironmentValidFromUrl(applications, currentApplicationId, currentEnvironment)) {
-        return (
-            <PickEnvironment
-                applications={applications}
-                application={application}
-                redirectTo={'/microservices/application/:applicationId/:environment/overview'}
-                openModal={true} />
-        );
-    }
-
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
+    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} environment={currentEnvironment} />
+            {/* <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} /> */}
             <Typography variant='h1'>Logs</Typography>
 
             <Box sx={{ minWidth: 640, mt: 3 }}>
-                <LogFilterPanel environments={availableEnvironments} microservices={availableMicroservices} filters={filters} setSearchFilters={setFilters} />
+                <LogFilterPanel
+                    environments={availableEnvironments}
+                    microservices={uniqueMicroservicesList}
+                    filters={filters}
+                    setSearchFilters={setFilters}
+                />
 
                 {filters.dateRange === 'live' ?
                     <LogsFromLast
                         applicationId={currentApplicationId}
-                        environment={currentEnvironment}
                         filters={filters}
                         last={DAY}
-                        render={logs => (
-                            <LogPanel
-                                application={application.name}
-                                environment={currentEnvironment}
-                                filters={filters}
-                                logs={logs}
-                            />
-                        )}
+                        render={logs =>
+                            <LogPanel application={application.name} filters={filters} logs={logs} />
+                        }
                     /> :
                     <LogsInRange
                         applicationId={currentApplicationId}
-                        environment={currentEnvironment}
                         filters={filters}
                         from={filters.dateRange.start}
                         to={filters.dateRange.stop}
-                        render={(logs, loadMoreLogs) => (
-                            <LogPanel
-                                application={application.name}
-                                environment={currentEnvironment}
-                                filters={filters}
-                                logs={logs}
-                                autoLoadMoreLogs
-                                loadMoreLogs={loadMoreLogs}
-                            />
-                        )}
+                        render={(logs, loadMoreLogs) =>
+                            <LogPanel application={application.name} filters={filters} logs={logs} autoLoadMoreLogs loadMoreLogs={loadMoreLogs} />
+                        }
                     />
                 }
             </Box>

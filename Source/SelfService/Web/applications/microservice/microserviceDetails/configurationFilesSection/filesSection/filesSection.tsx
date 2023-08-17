@@ -9,6 +9,8 @@ import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { Accordion, FileUploadForm, FileUploadFormRef } from '@dolittle/design-system';
 
+import { MicroserviceStore } from '../../../../stores/microservice';
+
 import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../../apis/solutions/api';
 
 import { isAlphaNumeric } from '../../../../../utils/helpers';
@@ -24,14 +26,14 @@ import { HeaderButtons } from './headerButtons';
 
 const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
-type FilesSectionProps = {
+export type FilesSectionProps = {
     applicationId: string;
-    environment: string;
-    microserviceName: string;
+    currentMicroservice: MicroserviceStore;
+    // TODO: Refactor? This is the same as currentMicroservice.id?
     microserviceId: string;
 };
 
-export const FilesSection = ({ applicationId, environment, microserviceName, microserviceId }: FilesSectionProps) => {
+export const FilesSection = ({ applicationId, currentMicroservice, microserviceId }: FilesSectionProps) => {
     const fileUploadRef = useRef<FileUploadFormRef>(null);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -42,12 +44,15 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     const [deleteConfigFileDialogIsOpen, setDeleteConfigFileDialogIsOpen] = useState(false);
     const [validateFileDialogIsOpen, setValidateFileDialogIsOpen] = useState({ isOpen: false, file: [] as File[] });
 
+    const microserviceEnvironment = currentMicroservice.environment;
+    const microserviceName = currentMicroservice.name;
+
     useEffect(() => {
         fetchAndUpdateConfigFileNamesList();
     }, []);
 
     const fetchAndUpdateConfigFileNamesList = async (): Promise<void> => {
-        const result = await getConfigFilesNamesList(applicationId, environment, microserviceId);
+        const result = await getConfigFilesNamesList(applicationId, microserviceEnvironment, microserviceId);
         createDataTableObj(result.data ?? []);
     };
 
@@ -83,7 +88,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         const formData = new FormData();
         formData.set('file', file);
 
-        const result = await updateConfigFile(applicationId, environment, microserviceId, formData);
+        const result = await updateConfigFile(applicationId, microserviceEnvironment, microserviceId, formData);
 
         if (result.success) {
             enqueueSnackbar(`'${file.name}' successfully added.`);
@@ -98,7 +103,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     const handleConfigFileDelete = async (): Promise<void> => {
         for (const filename of selectedRowIds) {
             const fileName = filename.toString();
-            const response = await deleteConfigFile(applicationId, environment, microserviceId, fileName);
+            const response = await deleteConfigFile(applicationId, microserviceEnvironment, microserviceId, fileName);
 
             if (response) {
                 enqueueSnackbar(`'${fileName}' deleted from configuration files.`);
@@ -115,7 +120,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
     };
 
     // This is reused. consider moving
-    const configMapPrefix = `${environment.toLowerCase()}-${microserviceName.toLowerCase()}`;
+    const configMapPrefix = `${microserviceEnvironment.toLowerCase()}-${microserviceName.toLowerCase()}`;
 
     // TODO: Should be able to download multiple selected files
     const handleConfigFileDownload = (): void => {
@@ -136,7 +141,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
         <>
             <RestartMicroserviceDialog
                 applicationId={applicationId}
-                environment={environment}
+                environment={microserviceEnvironment}
                 microserviceId={microserviceId}
                 msName={microserviceName}
                 open={restartMicroserviceDialogIsOpen}
@@ -164,6 +169,7 @@ export const FilesSection = ({ applicationId, environment, microserviceName, mic
                 }}
             />
 
+            {/* TODO: Save expanded state? */}
             <Accordion id='configuration-files' title='Configuration Files' defaultExpanded>
                 <HeaderButtons
                     filePrompt={() => fileUploadRef.current?.showPrompt()}

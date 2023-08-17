@@ -2,62 +2,51 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
+
 import { useParams, Link as RouterLink } from 'react-router-dom';
-import {
-    Table, TableContainer, TableHead,
-    TableRow, TableCell, TableBody
-} from '@mui/material';
 
-import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
+import { Link, Paper, Table, TableContainer, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+
 import { ContainerRegistryTags, getTagsInContainerRegistry } from '../../apis/solutions/containerregistry';
-
-type Props = {
-    url: string
-    environment: string
-    applicationId: string
-};
 
 type ViewParams = {
     image: string;
 };
 
-export const View: React.FunctionComponent<Props> = (props) => {
-    const _props = props!;
+export type RegistryTagsProps = {
+    applicationId: string;
+    url: string;
+};
+
+export const RegistryTags = ({ applicationId, url }: RegistryTagsProps) => {
     const { image } = useParams<ViewParams>();
+    if (!image) return null;
 
-    if (!image) {
-        return null;
-    }
+    const imagePath = `${url}/${image}`;
 
-    const applicationId = _props.applicationId;
-    const environment = _props.environment;
-    const imagePath = `${_props.url}/${image}`;
-
-    const [loaded, setLoaded] = useState(false);
     const [containerRegistryTags, setContainerRegistryTags] = useState({
         name: '',
         tags: [],
     } as ContainerRegistryTags);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        Promise.all([
-            getTagsInContainerRegistry(applicationId, image)
-        ]).then(values => {
-            setContainerRegistryTags(values[0]);
-            setLoaded(true);
-        });
+        Promise.all([getTagsInContainerRegistry(applicationId, image)])
+            .then(values => {
+                setContainerRegistryTags(values[0]);
+                setIsLoaded(true);
+            });
     }, []);
 
-    const msCreatePath = `/microservices/application/${applicationId}/${environment}/create?kind=dolittle-microservice`;
+    // TODO ENV: Removed environment from path. Dunno what that changes.
+    const msCreatePath = `/microservices/application/${applicationId}/create?kind=dolittle-microservice`;
 
-    if (!loaded) {
-        return null;
-    }
+    if (!isLoaded) return null;
 
     return (
         <>
             <p>{imagePath}</p>
+
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 480 }} aria-label="Docker images" size="small">
                     <TableHead>
@@ -69,6 +58,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                             <TableCell><b>Signed</b></TableCell>
                         </TableRow>
                     </TableHead>
+
                     <TableBody>
                         {containerRegistryTags.tags.map(tag => (
                             <TableRow key={tag.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>

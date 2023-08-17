@@ -76,10 +76,10 @@ export const LogFilterPanel = ({ environments, microservices, filters, setSearch
             </Grid>
 
             <Grid item xs={12} lg={8} sx={{ '& > *': { py: 0.5 } }}>
-                {/* <EnvironmentFilter
+                <EnvironmentFilter
                     availableEnvironments={environments}
                     selectedEnvironments={filters.environment}
-                    onSelectEnvironments={onSelectEnvironments} /> */}
+                    onSelectEnvironments={onSelectEnvironments} />
 
                 <MicroserviceFilter
                     availableMicroservices={microservices}

@@ -25,26 +25,30 @@ import { SetupFields } from '../components/form/setupFields';
 
 export type DeployMicroserviceProps = {
     application: HttpResponseApplication;
-    environment: string;
 };
 
-export const DeployMicroservice = ({ application, environment }: DeployMicroserviceProps) => {
+export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => {
     const navigate = useNavigate();
-    const { enqueueSnackbar } = useSnackbar();
     const location = useLocation();
+    const { enqueueSnackbar } = useSnackbar();
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const environmentInfo = application.environments.find(env => env.name === environment)!;
-    const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
+    // TODO ENV: Show always as 'false' while deploying and display option later in configuration?
+    //const environmentInfo = application.environments.find(env => env.name === 'Dev')!;
+    const hasM3ConnectorOption = false; // environmentInfo?.connections?.m3Connector || false;
+
+    const availableEnvironments = application.environments.map(env => env.name);
     const latestRuntimeVersion = getLatestRuntimeInfo().image;
 
     const frag = new URLSearchParams(location.hash.slice(1));
+
     const handleCreateMicroservice = async (values: MicroserviceFormParameters) => {
         setIsLoading(true);
 
-        const microserviceId = Guid.create().toString();
+        // Values from data grid table.
         const { microserviceName, developmentEnvironment, headArguments, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
+        const microserviceId = Guid.create().toString();
         // Convert the head arguments to the format that the form expects.
         const headArgumentValues = headArguments.map(arg => arg.value);
 
@@ -78,9 +82,8 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
 
         try {
             await saveSimpleMicroservice(newMicroservice);
-
             enqueueSnackbar(`Microservice '${microserviceName}' has been deployed.`);
-            const href = `/microservices/application/${application.id}/${environment}/view/${newMicroservice.dolittle.microserviceId}`;
+            const href = `/microservices/application/${application.id}/view/${newMicroservice.dolittle.microserviceId}`;
             navigate(href);
         } catch (error: unknown) {
             const message = (error instanceof Error) ? error.message : 'Something went wrong when saving microservice.';
@@ -97,23 +100,21 @@ export const DeployMicroservice = ({ application, environment }: DeployMicroserv
             <Form<MicroserviceFormParameters>
                 initialValues={{
                     microserviceName: '',
-                    developmentEnvironment: environment,
+                    developmentEnvironment: availableEnvironments[0] || '',
                     runtimeVersion: latestRuntimeVersion,
-                    headImage: frag.get('head-image') || '', //nginxdemos/hello:latest
+                    headImage: frag.get('head-image') || '', // nginxdemos/hello:latest
                     headPort: 80,
                     entrypoint: '',
                     isPublic: false,
                     headArguments: [],
                     ingressPath: '',
-                    hasM3Connector: false
+                    hasM3Connector: false,
                 }}
                 sx={{ 'mt': 4.5, 'ml': 3, '& .MuiFormControl-root': { my: 1 } }}
                 onSubmit={handleCreateMicroservice}
             >
-                <SetupFields />
-
+                <SetupFields environments={availableEnvironments} />
                 <ContainerImageFields />
-
                 <PublicUrlFields />
 
                 {hasM3ConnectorOption && <HasM3ConnectorField />}

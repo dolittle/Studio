@@ -5,7 +5,7 @@ import React from 'react';
 
 import { NoEntityView } from '../../../components/noEntityView/noEntityView';
 
-type NoMicroservicesProps = {
+export type NoMicroservicesProps = {
     onCreate: () => void;
 };
 

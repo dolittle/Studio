@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box, Typography } from '@mui/material';
 
@@ -9,8 +9,8 @@ import { StatusIndicator, Tabs } from '@dolittle/design-system';
 
 import { MicroserviceStore, canEditMicroservice } from '../../stores/microservice';
 
-import { HttpResponsePodStatus } from '../../../apis/solutions/api';
 import { MicroserviceSimple } from '../../../apis/solutions/index';
+import { getPodStatus, HttpResponsePodStatus } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
 import { ConfigurationFilesSection } from './configurationFilesSection/configurationFilesSection';
@@ -20,23 +20,40 @@ import { TerminalView } from './terminal/terminalView';
 
 import { getContainerStatus } from '../../../utils/helpers';
 
-export type MicroserviceViewProps = {
-    application: HttpResponseApplication;
-    environment: string;
-    microserviceId: string;
-    podsData: HttpResponsePodStatus;
-    currentMicroservice: MicroserviceStore;
+const initialPodsData: HttpResponsePodStatus = {
+    namespace: '',
+    microservice: {
+        name: '',
+        id: '',
+    },
+    pods: [],
 };
 
-export const MicroserviceView = ({ application, microserviceId, environment, podsData, currentMicroservice }: MicroserviceViewProps) => {
-    const podsStatuses = () => podsData.pods.flatMap(pod => pod.containers.map(container => container.state));
+export type MicroserviceDetailsProps = {
+    application: HttpResponseApplication;
+    currentMicroservice: MicroserviceStore;
+    // TODO: Refactor? This is the same as currentMicroservice.id?
+    microserviceId: string;
+};
 
-    const microserviceHealthStatus = getContainerStatus(podsStatuses());
+export const MicroserviceDetails = ({ application, currentMicroservice, microserviceId }: MicroserviceDetailsProps) => {
     const applicationId = application.id;
-    const canEdit = canEditMicroservice(application.environments, environment, currentMicroservice.id);
+    const microserviceEnvironment = currentMicroservice.environment;
+    const microserviceName = currentMicroservice.name;
+
+    const [podsData, setPodsData] = useState(initialPodsData);
+
+    useEffect(() => {
+        Promise.all([getPodStatus(applicationId, microserviceEnvironment, microserviceId)])
+            .then(values => setPodsData(values[0]));
+    }, []);
+
     const getLastOpenTab = parseInt(sessionStorage.getItem('microservice-details-tabs') || '0');
+    const podsStatuses = () => podsData.pods.flatMap(pod => pod.containers.map(container => container.state));
+    const microserviceHealthStatus = getContainerStatus(podsStatuses());
 
     // What is the purpose of this??
+    const canEdit = canEditMicroservice(application.environments, microserviceEnvironment, microserviceId); // currentMicroservice.id?
     let ms = {} as MicroserviceSimple;
     let hasEditData = false;
     if (canEdit) {
@@ -57,7 +74,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
             args: [],
         };
 
-        const environmentInfo = application.environments.find(_environment => _environment.name === environment)!;
+        const environmentInfo = application.environments.find(environment => environment.name === microserviceEnvironment)!;
 
         // TODO currently we don't use the ms.extra.ingress in the view
         // Look to "liveIngressView" for how we "set" the data to uniq paths
@@ -67,13 +84,13 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
                 customerId: application.customerId,
                 microserviceId,
             },
-            name: currentMicroservice.name,
+            name: microserviceName,
             kind: 'unknown',
-            environment,
+            environment: microserviceEnvironment,
             extra: {
                 ingress: {
                     path: '',
-                    pathType: ''
+                    pathType: '',
                 },
                 headPort: 80,
                 isPublic: true,
@@ -91,33 +108,22 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
             render: () => <ConfigurationFilesSection
                 application={application}
                 applicationId={applicationId}
-                environment={environment}
                 microserviceId={microserviceId}
                 currentMicroservice={currentMicroservice}
             />
         },
         {
             label: 'Health Status',
-            render: () => <HealthStatus
-                applicationId={applicationId}
-                environment={environment}
-                microserviceId={microserviceId}
-                msName={currentMicroservice.name}
-                data={podsData}
-            />
+            render: () => <HealthStatus applicationId={applicationId} currentMicroservice={currentMicroservice} data={podsData} />
         },
     ];
 
-    const terminalAvailable = useTerminalAvailable(applicationId, environment, microserviceId);
+    const terminalAvailable = useTerminalAvailable(applicationId, microserviceEnvironment, microserviceId);
     if (terminalAvailable) {
         tabs.push(
             {
                 label: 'Terminal',
-                render: () => <TerminalView
-                    applicationId={applicationId}
-                    environment={environment}
-                    microserviceId={microserviceId}
-                />
+                render: () => <TerminalView applicationId={applicationId} environment={microserviceEnvironment} microserviceId={microserviceId} />
             },
         );
     }
@@ -125,7 +131,7 @@ export const MicroserviceView = ({ application, microserviceId, environment, pod
     return (
         <>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 3.25 }}>
-                <Typography variant='h1' sx={{ mr: 3 }}>{currentMicroservice.name}</Typography>
+                <Typography variant='h1' sx={{ mr: 3 }}>{microserviceName}</Typography>
                 <StatusIndicator variantFilled status={microserviceHealthStatus.status} label={microserviceHealthStatus.label} />
             </Box>
 

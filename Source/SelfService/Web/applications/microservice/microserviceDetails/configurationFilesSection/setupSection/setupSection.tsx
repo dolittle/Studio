@@ -26,33 +26,36 @@ export type SetupSectionProps = {
     application: HttpResponseApplication;
     applicationId: string;
     currentMicroservice: MicroserviceStore;
-    environment: string;
+    // TODO: Refactor? This is the same as currentMicroservice.id?
     microserviceId: string;
 };
 
-export const SetupSection = ({ application, applicationId, currentMicroservice, environment, microserviceId }: SetupSectionProps) => {
+export const SetupSection = ({ application, applicationId, currentMicroservice, microserviceId }: SetupSectionProps) => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
+    const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
+    const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
+    const [formIsNotEditable, setFormIsNotEditable] = useState(true);
+
+    // TODO ENV: Not sure that I can use currentMicroservice.environment here?
+    const microserviceEnvironment = currentMicroservice.environment;
+    const microserviceName = currentMicroservice.name;
     const microserviceInfo = currentMicroservice.edit?.extra;
-    const environmentInfo = application.environments.find(env => env.name === environment)!;
-    const canDelete = canDeleteMicroservice(application.environments, environment, microserviceId);
+    const canDelete = canDeleteMicroservice(application.environments, microserviceEnvironment, microserviceId);
 
     const currentRuntimeImageNumber = {
         value: microserviceInfo?.runtimeImage,
         displayValue: getRuntimeNumberFromString(microserviceInfo?.runtimeImage)
     };
 
+    const availableEnvironments = application.environments.map(env => env.name);
     const hasPublicUrl = microserviceInfo?.isPublic || false;
-    const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector || false;
+    const hasM3ConnectorOption = application.environments.find(env => env.name === microserviceEnvironment)?.connections?.m3Connector || false;
     // Remove extra slash from ingress path as it is there already with startAdornment.
     const cleanedIngressPath = microserviceInfo?.ingress?.path?.replace(/\//, '') || '';
     // Convert the head arguments to the format that the form expects.
     const headArgumentValues = microserviceInfo?.headCommand?.args?.map((arg: string) => ({ value: arg })) || [];
-
-    const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
-    const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
-    const [formIsNotEditable, setFormIsNotEditable] = useState(true);
 
     const handleMicroserviceDelete = async () => {
         if (!canDelete) {
@@ -60,15 +63,15 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
             return;
         }
 
-        const success = await deleteMicroservice(applicationId, environment, microserviceId);
+        const success = await deleteMicroservice(applicationId, microserviceEnvironment, microserviceId);
 
         if (!success) {
-            enqueueSnackbar(`Failed to delete microservice '${currentMicroservice.name}'.`, { variant: 'error' });
+            enqueueSnackbar(`Failed to delete microservice '${microserviceName}'.`, { variant: 'error' });
             return;
         }
 
-        enqueueSnackbar(`Microservice '${currentMicroservice.name}' has been deleted.`);
-        const href = `/microservices/application/${applicationId}/${environment}/overview`;
+        enqueueSnackbar(`Microservice '${microserviceName}' has been deleted.`);
+        const href = `/microservices/application/${applicationId}/overview`;
         navigate(href);
     };
 
@@ -87,9 +90,9 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
 
             <RestartMicroserviceDialog
                 applicationId={applicationId}
-                environment={environment}
+                environment={microserviceEnvironment}
                 microserviceId={microserviceId}
-                msName={currentMicroservice.name}
+                msName={microserviceName}
                 open={restartDialogIsOpen}
                 setOpen={setRestartDialogIsOpen}
                 handleSuccess={() => window.location.reload()}
@@ -104,8 +107,8 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
 
                 <Form<MicroserviceFormParameters>
                     initialValues={{
-                        microserviceName: currentMicroservice.name,
-                        developmentEnvironment: environment,
+                        microserviceName,
+                        developmentEnvironment: microserviceEnvironment,
                         runtimeVersion: currentRuntimeImageNumber.value,
                         headImage: microserviceInfo?.headImage,
                         headPort: microserviceInfo?.headPort,
@@ -117,10 +120,8 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
                     }}
                     sx={{ '& .MuiFormControl-root': { my: 1 } }}
                 >
-                    <SetupFields hasDashedBorder isDisabled={formIsNotEditable} />
-
+                    <SetupFields environments={availableEnvironments} hasDashedBorder isDisabled={formIsNotEditable} />
                     <ContainerImageFields hasDashedBorder isDisabled={formIsNotEditable} />
-
                     <PublicUrlFields hasDashedBorder hasPublicUrl={hasPublicUrl} isDisabled={formIsNotEditable} />
 
                     {hasM3ConnectorOption && <HasM3ConnectorField isDisabled={formIsNotEditable} />}

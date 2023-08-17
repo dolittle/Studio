@@ -5,9 +5,8 @@ import React from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
-
 import { Paper } from '@mui/material';
+import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 
 import { IconButton } from '@dolittle/design-system';
 

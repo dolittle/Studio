@@ -4,31 +4,28 @@
 import React from 'react';
 
 import { ListItem } from '@mui/material';
-
+import { useHref } from 'react-router-dom';
 import { Button } from '@dolittle/design-system';
 
-import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
+import { ShortInfo } from '../../apis/solutions/api';
 
 // Makes ListItem buttons as wide as the longest one.
 const styles = {
     mb: 2,
     minWidth: 155,
     minHeight: 36,
-    display: 'block',
 };
 
 export type ApplicationsListItemProps = {
-    application: ShortInfoWithEnvironment;
-    onClick: () => void;
+    application: ShortInfo;
 };
 
-export const ApplicationsListItem = ({ application, onClick }: ApplicationsListItemProps) =>
-    <ListItem sx={{ p: 0 }}>
-        <Button
-            variant='filled'
-            label={`${application.name}-${application.environment}`}
-            isFullWidth
-            onClick={onClick}
-            sx={styles}
-        />
-    </ListItem>;
+export const ApplicationsListItem = ({ application }: ApplicationsListItemProps) => {
+    const microservicesHref = useHref(`/microservices/application/${application.id}/overview`);
+
+    return (
+        <ListItem sx={{ p: 0 }}>
+            <Button variant='filled' label={`${application.name}`} isFullWidth href={microservicesHref} sx={styles} />
+        </ListItem>
+    );
+};

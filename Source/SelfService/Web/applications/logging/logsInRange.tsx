@@ -19,11 +19,6 @@ export type LogsInRangeProps = {
     applicationId: string;
 
     /**
-     * The Environment to get logs for.
-     */
-    environment: string;
-
-    /**
      * The filters to apply to the logs query.
      */
     filters: LogFilterObject;
@@ -57,7 +52,7 @@ export type LogsInRangeProps = {
 };
 
 export const LogsInRange = (props: LogsInRangeProps) => {
-    const [labels, pipeline] = logFilterToLabelsAndPipeline(props.applicationId, props.environment, props.filters);
+    const [labels, pipeline] = logFilterToLabelsAndPipeline(props.applicationId, props.filters);
 
     const newestFirst = true; // TODO: What is required to support ordering the other way? Might impact the hooks and the LogPanel.
 

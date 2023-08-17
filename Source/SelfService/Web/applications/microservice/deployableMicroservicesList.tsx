@@ -1,7 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-// TODO validate the data
 import React, { useEffect, useState } from 'react';
 
 import { useNavigate, useLocation } from 'react-router';
@@ -19,11 +18,11 @@ type DeployableMicroservices = SimpleCardProps & {
 };
 
 export type DeployableMicroservicesListProps = {
-    environment: string;
     application: HttpResponseApplication;
 };
 
-export const DeployableMicroservicesList = ({ environment, application }: DeployableMicroservicesListProps) => {
+// TODO validate the data?
+export const DeployableMicroservicesList = ({ application }: DeployableMicroservicesListProps) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -78,7 +77,7 @@ export const DeployableMicroservicesList = ({ environment, application }: Deploy
 
     return (
         <>
-            {microserviceTypeState === 'dolittle-microservice' && <DeployMicroservice application={application} environment={environment} />}
+            {microserviceTypeState === 'dolittle-microservice' && <DeployMicroservice application={application} />}
         </>
     );
 };

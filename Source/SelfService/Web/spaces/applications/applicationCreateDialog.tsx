@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 
 import { useSnackbar } from 'notistack';
-import { useGlobalContext } from '../context/globalContext';
+import { useGlobalContext } from '../../context/globalContext';
 
 import { Guid } from '@dolittle/rudiments';
 
@@ -12,11 +12,11 @@ import { Stack, Typography } from '@mui/material';
 
 import { DialogForm, Checkbox, Input } from '@dolittle/design-system';
 
-import { createApplication, HttpApplicationRequest } from '../apis/solutions/application';
+import { createApplication, HttpApplicationRequest } from '../../apis/solutions/application';
 
-import { alphaNumericLowerCasedCharsRegex } from '../utils/helpers/regex';
+import { alphaNumericLowerCasedCharsRegex } from '../../utils/helpers/regex';
 
-type SpaceCreateParameters = {
+type ApplicationCreateParameters = {
     name: string;
     environments: {
         Dev: boolean;
@@ -25,7 +25,7 @@ type SpaceCreateParameters = {
     };
 };
 
-export type SpaceCreateDialogProps = {
+export type ApplicationCreateDialogProps = {
     /**
      * Whether or not the dialog is open.
      */
@@ -37,13 +37,13 @@ export type SpaceCreateDialogProps = {
     onClose: () => void;
 };
 
-export const SpaceCreateDialog = ({ isOpen, onClose }: SpaceCreateDialogProps) => {
+export const ApplicationCreateDialog = ({ isOpen, onClose }: ApplicationCreateDialogProps) => {
     const { enqueueSnackbar } = useSnackbar();
     const { setCurrentApplicationId } = useGlobalContext();
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleSpaceCreate = async (form: SpaceCreateParameters) => {
+    const handleSpaceCreate = async (form: ApplicationCreateParameters) => {
         setIsLoading(true);
 
         const request: HttpApplicationRequest = {
@@ -78,7 +78,7 @@ export const SpaceCreateDialog = ({ isOpen, onClose }: SpaceCreateDialogProps) =
 
     return (
         <DialogForm
-            id='create-space'
+            id='create-application'
             isOpen={isOpen}
             isLoading={isLoading}
             title='Create new Application'
@@ -89,7 +89,7 @@ export const SpaceCreateDialog = ({ isOpen, onClose }: SpaceCreateDialogProps) =
                     Test: false,
                     Prod: true,
                 }
-            } as SpaceCreateParameters}
+            } as ApplicationCreateParameters}
             confirmBtnText='Create'
             onCancel={onClose}
             onConfirm={handleSpaceCreate}

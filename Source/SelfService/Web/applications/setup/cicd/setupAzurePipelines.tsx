@@ -12,11 +12,11 @@ import { Button } from '@dolittle/design-system';
 import { getAzureDevopsKubernetesServiceAccount, getContainerRegistry } from '../../../apis/solutions/cicd';
 import { Info } from '../../stores/documentationInfo';
 
-export type DocProps = {
+export type SetupAzurePipelinesProps = {
     info: Info;
 };
 
-export const Doc = ({ info }: DocProps) => {
+export const SetupAzurePipelines = ({ info }: SetupAzurePipelinesProps) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const applicationID = info.applicationId;
@@ -46,8 +46,8 @@ export const Doc = ({ info }: DocProps) => {
 
     return (
         <>
-            <Typography variant='h2' my={2}>Endpoints</Typography>
-            <Typography variant='h3' my={2}>Cluster</Typography>
+            <Typography variant='h2' sx={{ mb: 4 }}>Endpoints</Typography>
+            <Typography variant='h3' sx={{ mb: 2 }}>Cluster</Typography>
 
             <Input
                 fullWidth={true}
@@ -56,7 +56,7 @@ export const Doc = ({ info }: DocProps) => {
                 inputProps={{ 'aria-label': 'cluster endpoint' }}
             />
 
-            <Typography variant='h3' my={2}>Container Registry</Typography>
+            <Typography variant='h3' sx={{ mt: 4, mb: 2 }}>Container Registry</Typography>
             <Input
                 fullWidth={true}
                 defaultValue={containerRegistry}
@@ -64,11 +64,11 @@ export const Doc = ({ info }: DocProps) => {
                 inputProps={{ 'aria-label': 'container registry endpoint' }}
             />
 
-            <Typography variant='h2' my={2}>Credentials</Typography>
-            <Typography variant='h3' my={2}>Get credentials to deploy to the platform from the pipeline</Typography>
+            <Typography variant='h2' sx={{ my: 4 }}>Credentials</Typography>
+            <Typography variant='h3' sx={{ mb: 2 }}>Get credentials to deploy to the platform from the pipeline</Typography>
             <Button label='Copy Credentials to clipboard' endWithIcon='CopyAllRounded' onClick={handleKubernetesAccountCopy} />
 
-            <Typography variant='h3' my={2}>Get credentials to push to container registry</Typography>
+            <Typography variant='h3' sx={{ mt: 4, mb: 2 }}>Get credentials to push to container registry</Typography>
             <Button label='Copy Credentials to clipboard' endWithIcon='CopyAllRounded' onClick={handleContainerRegistryCopy} />
         </>
     );

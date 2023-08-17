@@ -50,13 +50,12 @@ export const BackupsListView = ({ application, environment }: BackupsListViewPro
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        Promise.all([
-            getBackupsByApplication(application.id, environment)
-        ]).then(values => {
-            const _data = values[0];
-            setData(_data);
-            setIsLoading(false);
-        });
+        Promise.all([getBackupsByApplication(application.id, environment)])
+            .then(values => {
+                const _data = values[0];
+                setData(_data);
+                setIsLoading(false);
+            });
     }, []);
 
     if (isLoading) return <LoadingSpinner />;

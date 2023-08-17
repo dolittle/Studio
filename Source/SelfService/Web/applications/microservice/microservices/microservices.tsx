@@ -3,8 +3,8 @@
 
 import React from 'react';
 
+import { useHref, useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { useNavigate } from 'react-router-dom';
 
 import { MicroserviceObject } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
@@ -21,52 +21,40 @@ import { MicroservicesDataGrid } from './microservicesDataGrid';
 
 export type MicroserviceProps = {
     application: HttpResponseApplication;
-    environment: string;
 };
 
-export const Microservice = ({ application, environment }: MicroserviceProps) => {
+export const Microservice = ({ application }: MicroserviceProps) => {
     const navigate = useNavigate();
-    const $microservices = useReadable(microservices) as MicroserviceObject[];
     const { enqueueSnackbar } = useSnackbar();
+    const $microservices = useReadable(microservices) as MicroserviceObject[];
 
-    let tempEnvironments = application.environments.map(e => e.name);
-    tempEnvironments = [...tempEnvironments, ...$microservices.map(item => item.environment)];
-
-    const canEdit = canEditMicroservices(application.environments, environment);
-
-    const newEnvironments = [...new Set(tempEnvironments)];
-    const hasEnvironments = newEnvironments.length > 0;
-
-    const filteredMicroservices = $microservices.filter(microservice => microservice.environment === environment);
-
+    // TODO: Refactor. Use createMicroserviceHref?
     const handleCreateMicroservice = () => {
-        if (!canEdit) {
-            enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
-            return;
-        }
+        // TODO ENV: How to handle this?
+        //const canEdit = canEditMicroservices(application.environments, environment);
+        // if (!canEdit) {
+        //     enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
+        //     return;
+        // }
 
-        const href = `/microservices/application/${application.id}/${environment}/create`;
+        const href = `/microservices/application/${application.id}/create`;
         navigate(href);
     };
+
+    const createMicroserviceHref = useHref(`/microservices/application/${application.id}/create`);
 
     return (
         <>
             <Typography variant='h1' sx={{ my: 2 }}>Microservices</Typography>
 
-            {filteredMicroservices.length > 0 ?
-                <MicroservicesDataGrid application={application} environment={environment} microservices={filteredMicroservices} /> :
+            {$microservices.length > 0 ? (
+                <>
+                    <MicroservicesDataGrid application={application} microservices={$microservices} />
+                    <Button label='Deploy New Microservice' variant='fullwidth' startWithIcon='RocketLaunch' href={createMicroserviceHref} sx={{ mt: 2.125 }} />
+                </>
+            ) : (
                 <NoMicroservices onCreate={handleCreateMicroservice} />
-            }
-
-            {hasEnvironments && filteredMicroservices.length > 0 &&
-                <Button
-                    label='Deploy New Microservice'
-                    variant='fullwidth'
-                    startWithIcon='RocketLaunch'
-                    onClick={() => handleCreateMicroservice()}
-                    sx={{ mt: 2.125 }}
-                />
-            }
+            )}
         </>
     );
 };

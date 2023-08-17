@@ -2,55 +2,49 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
+
 import { useNavigate, Routes, Route } from 'react-router-dom';
-import { HttpResponseApplication } from '../../apis/solutions/application';
 
-import { View as Tags } from './tags';
-import { View as Images } from './images';
-import { View as Welcome } from './welcome';
-
-import { getReposInContainerRegistry, ContainerRegistryImages } from '../../apis/solutions/containerregistry';
 import { Typography } from '@mui/material';
 
-type Props = {
-    environment: string
-    application: HttpResponseApplication
+import { HttpResponseApplication } from '../../apis/solutions/application';
+import { getReposInContainerRegistry, ContainerRegistryImages } from '../../apis/solutions/containerregistry';
+
+import { RegistryImages } from './registryImages';
+import { RegistryWelcome } from './registryWelcome';
+import { RegistryTags } from './registryTags';
+
+export type RegistryContainerProps = {
+    application: HttpResponseApplication;
 };
 
-export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props) => {
+export const RegistryContainer = ({ application }: RegistryContainerProps) => {
     const navigate = useNavigate();
-    const _props = props!;
-    const application = _props.application;
-    const applicationId = application.id;
-    const environment = _props.environment;
 
-    const [loaded, setLoaded] = useState(false);
+    const applicationId = application.id;
+
     const [containerRegistryImages, setContainerRegistryImages] = useState({
         url: '',
         images: [],
     } as ContainerRegistryImages);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
         Promise.all([
             getReposInContainerRegistry(applicationId)
         ]).then(values => {
             setContainerRegistryImages(values[0]);
-            setLoaded(true);
+            setIsLoaded(true);
         });
     }, []);
 
-
-    if (!loaded) {
-        return null;
-    }
-
+    if (!isLoaded) return null;
 
     const hasImages = containerRegistryImages.images.length > 0;
 
-
     // Force redirect if no images to the welcome screen
     if (!hasImages && !window.location.pathname.endsWith('/overview/welcome')) {
-        const href = `/containerregistry/application/${applicationId}/${environment}/overview/welcome`;
+        const href = `/containerregistry/application/${applicationId}/overview/welcome`;
         navigate(href);
         return null;
     }
@@ -63,11 +57,9 @@ export const ContainerRegistryContainer: React.FunctionComponent<Props> = (props
 
             <div>
                 <Routes>
-                    <Route path="/" element={<Images applicationId={applicationId} environment={environment} data={containerRegistryImages} />} />
-
-                    <Route path="/welcome" element={<Welcome applicationId={applicationId} />} />
-
-                    <Route path="/tags/:image" element={<Tags url={containerRegistryImages.url} applicationId={applicationId} environment={environment} />} />
+                    <Route path='/' element={<RegistryImages applicationId={applicationId} data={containerRegistryImages} />} />
+                    <Route path='/welcome' element={<RegistryWelcome applicationId={applicationId} />} />
+                    <Route path='/tags/:image' element={<RegistryTags url={containerRegistryImages.url} applicationId={applicationId} />} />
                 </Routes>
             </div>
         </>

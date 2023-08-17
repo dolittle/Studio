@@ -3,6 +3,8 @@
 
 import React, { useMemo, useState } from 'react';
 
+import { MicroserviceStore } from '../../../stores/microservice';
+
 import { AlertBox, AlertBoxErrorMessage, Button, Graph } from '@dolittle/design-system';
 
 import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../../apis/solutions/api';
@@ -23,18 +25,19 @@ const computeStats = (metric: Metric | undefined, scale: number): HealthStatusTa
 
 export type HealthStatusProps = {
     applicationId: string;
-    environment: string;
-    microserviceId: string;
-    msName: string;
+    currentMicroservice: MicroserviceStore;
     data: HttpResponsePodStatus;
 };
 
-export const HealthStatus = ({ applicationId, environment, microserviceId, msName, data }: HealthStatusProps) => {
+export const HealthStatus = ({ applicationId, currentMicroservice, data }: HealthStatusProps) => {
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
 
+    const microserviceId = currentMicroservice.id;
+    const microserviceEnvironment = currentMicroservice.environment;
+
     const timeRange = useMemo<[number, number]>(() => [Date.now() - 86_400_000, Date.now()], [Date.now() / 60_000]);
-    const cpu = useMetricsFromLast(`microservice:container_cpu_usage_seconds:rate_max{application_id="${applicationId}", environment="${environment}", microservice_id="${microserviceId}"}`, 86_400, 60);
-    const memory = useMetricsFromLast(`microservice:container_memory_working_set_bytes:max{application_id="${applicationId}", environment="${environment}", microservice_id="${microserviceId}"}`, 86_400, 60);
+    const cpu = useMetricsFromLast(`microservice:container_cpu_usage_seconds:rate_max{application_id="${applicationId}", environment="${microserviceEnvironment}", microservice_id="${microserviceId}"}`, 86_400, 60);
+    const memory = useMetricsFromLast(`microservice:container_memory_working_set_bytes:max{application_id="${applicationId}", environment="${microserviceEnvironment}", microservice_id="${microserviceId}"}`, 86_400, 60);
 
     const containerTables = data.pods?.map(pod => {
         const rows = pod.containers.map((container: ContainerStatusInfo) => {
@@ -79,9 +82,9 @@ export const HealthStatus = ({ applicationId, environment, microserviceId, msNam
         <>
             <RestartMicroserviceDialog
                 applicationId={applicationId}
-                environment={environment}
+                environment={microserviceEnvironment}
                 microserviceId={microserviceId}
-                msName={msName}
+                msName={currentMicroservice.name}
                 open={restartDialogIsOpen}
                 setOpen={setRestartDialogIsOpen}
                 handleSuccess={() => window.location.reload()}

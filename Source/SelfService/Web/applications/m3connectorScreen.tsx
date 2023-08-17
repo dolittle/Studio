@@ -13,51 +13,52 @@ import { useRouteApplicationParams } from '../utils/route';
 import { Container } from './m3connector/container';
 
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
-import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
+//import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 
 export const M3ConnectorScreen = () => {
     const navigate = useNavigate();
     const routeApplicationProps = useRouteApplicationParams();
-    const { currentEnvironment, hasOneCustomer } = useGlobalContext();
+    const { hasOneCustomer } = useGlobalContext();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
-    const [loaded, setLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const applicationId = routeApplicationProps.applicationId;
 
     useEffect(() => {
-        Promise.all([
-            getApplication(applicationId),
-        ]).then(values => {
-            const applicationData = values[0];
-            if (!applicationData?.id) {
-                const href = `/problem`;
-                navigate(href);
-                return;
-            }
+        Promise.all([getApplication(applicationId)])
+            .then(values => {
+                const applicationData = values[0];
 
-            setApplication(applicationData);
-            setLoaded(true);
-        });
+                if (!applicationData?.id) {
+                    const href = `/problem`;
+                    navigate(href);
+                    return;
+                }
+
+                setApplication(applicationData);
+                setIsLoaded(true);
+            });
     }, []);
 
-    if (!loaded) return null;
+    if (!isLoaded) return null;
 
     if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application  not found</Typography>;
+        return <Typography variant='h1' my={2}>Application  not found.</Typography>;
     }
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
+    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
 
-    const routes = [];
+    //const routes = [];
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            <div id="topNavBar" className="nav flex-container">
+            {/* <div id="topNavBar" className="nav flex-container">
                 <div className="left flex-start">
                     <BreadCrumbContainer routes={routes} />
                 </div>
-            </div>
+            </div> */}
+
             <Routes>
                 <Route path='/*' element={<Container application={application} />} />
             </Routes>

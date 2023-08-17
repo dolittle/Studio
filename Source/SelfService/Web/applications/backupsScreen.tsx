@@ -14,18 +14,18 @@ import { useRouteApplicationParams } from '../utils/route';
 import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
 import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../apis/solutions/backups';
 
-import { BackupsListView } from './backup/backupsListView';
-
 import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
 import { BackupsList } from './backup/backupsList';
+import { BackupsListView } from './backup/backupsListView';
 
 export const BackupsScreen = () => {
     const navigate = useNavigate();
-    const { currentEnvironment, hasOneCustomer } = useGlobalContext();
+    const { hasOneCustomer } = useGlobalContext();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [backupLinksForEnvironment, setBackupLinksForEnvironment] = useState<BackupLinkWithName[]>([]);
+    const [currentEnvironment, setCurrentEnvironment] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
     const routeApplicationProps = useRouteApplicationParams();
@@ -33,24 +33,24 @@ export const BackupsScreen = () => {
     const environments = application.environments;
 
     useEffect(() => {
-        Promise.all([
-            getApplication(applicationId)
-        ]).then(values => {
-            const applicationData = values[0];
+        Promise.all([getApplication(applicationId)])
+            .then(values => {
+                const applicationData = values[0];
 
-            if (!applicationData?.id) {
-                const href = `/problem`;
-                navigate(href);
-                return;
-            }
+                if (!applicationData?.id) {
+                    const href = `/problem`;
+                    navigate(href);
+                    return;
+                }
 
-            setApplication(applicationData);
-            setIsLoading(false);
-        });
+                setApplication(applicationData);
+                setIsLoading(false);
+            });
     }, []);
 
     useEffect(() => {
         if (!environments) return;
+
         Promise.all(environments.map(environment =>
             getLatestBackupLinkByApplication(application.id, environment.name)))
             .then(values => setBackupLinksForEnvironment(values));
@@ -58,12 +58,11 @@ export const BackupsScreen = () => {
 
     if (isLoading) return <LoadingSpinner />;
 
-    // TODO: Add sad_aigon_svg and back button if application is not found.
     if (application.id === '') {
         return <Typography variant='h1' my={2}>Application with this environment not found.</Typography>;
     }
 
-    const nav = getMenuWithApplication(navigate, application, currentEnvironment, hasOneCustomer);
+    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
 
     const routes = [
         {
@@ -94,8 +93,8 @@ export const BackupsScreen = () => {
         <LayoutWithSidebar navigation={nav}>
             <BreadCrumbContainer routes={routes} />
             <Routes>
-                <Route path="/overview" element={<BackupsList data={backupLinksForEnvironment} application={application} />} />
-                <Route path="/:environment/list" element={<BackupsListView application={application} environment={currentEnvironment} />} />
+                <Route path='overview' element={<BackupsList data={backupLinksForEnvironment} application={application} setCurrentEnvironment={setCurrentEnvironment} />} />
+                <Route path='list' element={<BackupsListView application={application} environment={currentEnvironment} />} />
                 <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups.</Typography>} />
             </Routes>
         </LayoutWithSidebar>

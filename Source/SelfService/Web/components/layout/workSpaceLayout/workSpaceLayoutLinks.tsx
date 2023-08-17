@@ -9,7 +9,7 @@ import { useGlobalContext } from '../../../context/globalContext';
 
 import { getPrimaryNavigationItems, getSecondaryNavigationItems, getSidePanelItems, LayoutProps, MenuListProps, MenuItemProps } from '@dolittle/design-system';
 
-import { SpaceSelectMenu } from './spaceSelectMenu';
+import { ApplicationChanger } from '../../../spaces/applications/applicationChanger';
 
 const PrimaryNavigation = () => {
     const location = useLocation();
@@ -29,7 +29,7 @@ const PrimaryNavigation = () => {
             selected: location.pathname.includes('/microservices'),
             overrides: {
                 component: Link,
-                to: `/microservices/application/${currentApplicationId}/Dev/overview`,
+                to: `/microservices/application/${currentApplicationId}/overview`,
             },
         },
         {
@@ -87,7 +87,7 @@ const SecondaryNavigation = () => {
 };
 
 const SidePanelApplicationItems = () => {
-    const { currentApplicationId, currentEnvironment } = useGlobalContext();
+    const { currentApplicationId } = useGlobalContext();
 
     const sidePanelItems: MenuListProps['listItems'] = [
         {
@@ -96,7 +96,7 @@ const SidePanelApplicationItems = () => {
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: `/microservices/application/${currentApplicationId}/${currentEnvironment}/overview`,
+                to: `/microservices/application/${currentApplicationId}/overview`,
             },
         },
         {
@@ -114,7 +114,7 @@ const SidePanelApplicationItems = () => {
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: `/containerregistry/application/${currentApplicationId}/${currentEnvironment}/overview`,
+                to: `/containerregistry/application/${currentApplicationId}/overview`,
             },
         },
         {
@@ -123,7 +123,7 @@ const SidePanelApplicationItems = () => {
             sx: { my: 1 },
             overrides: {
                 component: Link,
-                to: `/logs/application/${currentApplicationId}/${currentEnvironment}`,
+                to: `/logs/application/${currentApplicationId}`,
             },
         },
     ];
@@ -132,8 +132,6 @@ const SidePanelApplicationItems = () => {
 };
 
 const SidePanelIntegrationItems = () => {
-    const { currentApplicationId, currentEnvironment } = useGlobalContext();
-
     const sidePanelItems: MenuListProps['listItems'] = [
         {
             label: 'ERP Connections',
@@ -152,7 +150,7 @@ const SidePanelIntegrationItems = () => {
 export const mainNavigationItems: LayoutProps['navigationBar'] = {
     logo: 'AigonixLightCube',
     primaryNavigationItems: <PrimaryNavigation />,
-    selectionMenuItems: <SpaceSelectMenu />,
+    selectionMenuItems: <ApplicationChanger />,
     secondaryNavigationItems: <SecondaryNavigation />,
 };
 

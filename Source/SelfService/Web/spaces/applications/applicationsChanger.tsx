@@ -41,7 +41,7 @@ const styles = {
 export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { setCurrentApplicationId, setCurrentEnvironment } =
+    const { setCurrentApplicationId } =
         useGlobalContext();
     const applications = props!.applications;
     const currentApplicationEnvironment = `${props!.applicationId}/${props!.environment}`;
@@ -81,11 +81,9 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
 
         // Little ugly, it would be nicer to add data to the drop down, or look it up
         const newApplicationId = newApplication.split('/')[0];
-        const newEnvironment = newApplication.split('/')[1];
 
         //setCurrentApplicationAndEnvironment(newApplicationId, newEnvironment);
         setCurrentApplicationId(newApplicationId);
-        setCurrentEnvironment(newEnvironment);
 
         const parts = window.location.pathname.split(`/${currentApplicationEnvironment}`);
         // TODO: We just slap on any search querystring here, so it will be reused after the environment switch. We might want to do this more properly later?
@@ -109,7 +107,6 @@ export const ApplicationsChanger: React.FunctionComponent<Props> = (props) => {
                     onChange={onChange}
                     variant='standard'
                 >
-
                     {items}
                 </Select>
             </FormControl>

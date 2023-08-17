@@ -27,11 +27,6 @@ export type LogPanelProps = {
     application: string;
 
     /**
-     * The Environment to the logs are for.
-     */
-    environment: string;
-
-    /**
      * The filters to apply to the logs query.
      */
     filters: LogFilterObject;
@@ -63,7 +58,7 @@ export const LogPanel = (props: LogPanelProps) => {
         show: false,
         application: '',
         applicationId: '',
-        environment: '',
+        //environment: '',
         microservice: '',
         microserviceId: '',
         from: 0n,
@@ -76,7 +71,7 @@ export const LogPanel = (props: LogPanelProps) => {
                 show: true,
                 application: labels.application,
                 applicationId: labels.application_id,
-                environment: labels.environment,
+                //environment: labels.environment,
                 microservice: labels.microservice,
                 microserviceId: labels.microservice_id,
                 from: timestamp - 86_400_000_000_000n,
@@ -134,7 +129,7 @@ export const LogPanel = (props: LogPanelProps) => {
             Displaying{' '}
             <b>{props.filters.dateRange === 'live' ? 'live logs' : 'date range logs'}</b>{' '}
             for {props.application} Application,{' '}
-            {/* {environments}, and{' '} */}
+            {environments}, and{' '}
             {microservices}
         </Typography>
     );
@@ -162,6 +157,7 @@ export const LogPanel = (props: LogPanelProps) => {
 
                                 <NewSwitch
                                     label='Microservice'
+                                    checked={showMicroservice}
                                     onChange={event => setShowMicroservice(event.target.checked)}
                                 />
                             </Grid>

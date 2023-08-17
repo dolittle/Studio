@@ -5,34 +5,31 @@ import React, { useState, useEffect } from 'react';
 
 import { useGlobalContext } from '../../context/globalContext';
 import { useSnackbar } from 'notistack';
-import { useNavigate } from 'react-router-dom';
 
 import { Box, Stack, Typography } from '@mui/material';
 
 import { Button, Link } from '@dolittle/design-system';
 
-import { ShortInfoWithEnvironment } from '../../apis/solutions/api';
-import { HttpResponseApplications, getApplications } from '../../apis/solutions/application';
+import { ShortInfo } from '../../apis/solutions/api';
+import { getApplicationsListing } from '../../apis/solutions/application';
 
 import { ApplicationsList } from './applicationsList';
 import { LoginWrapper } from '../../components/layout/loginWrapper';
-import { SpaceCreateDialog } from '../../components/spaceCreateDialog';
+import { ApplicationCreateDialog } from './applicationCreateDialog';
 
 export const ApplicationsScreen = () => {
-    const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
-    const { currentApplicationId, hasOneCustomer, setCurrentEnvironment } = useGlobalContext();
+    const { currentApplicationId, hasOneCustomer } = useGlobalContext();
 
-    const [applicationInfos, setApplicationInfos] = useState([] as ShortInfoWithEnvironment[]);
+    const [applicationInfos, setApplicationInfos] = useState([] as ShortInfo[]);
     const [isLoaded, setIsLoaded] = useState(false);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
     const [createSpaceDialogOpen, setCreateSpaceDialogOpen] = useState(false);
 
-    // TODO handle when not 200!
     useEffect(() => {
-        Promise.all([getApplications()])
+        Promise.all([getApplicationsListing()])
             .then(values => {
-                const response = values[0] as HttpResponseApplications;
+                const response = values[0];
                 setCanCreateApplication(response.canCreateApplication);
                 setApplicationInfos(response.applications);
                 setIsLoaded(true);
@@ -41,13 +38,6 @@ export const ApplicationsScreen = () => {
     }, [currentApplicationId]);
 
     if (!isLoaded) return null;
-
-    const onApplicationSelect = (application: ShortInfoWithEnvironment) => {
-        const { environment, id } = application;
-        setCurrentEnvironment(environment);
-        const href = `/microservices/application/${id}/${environment}/overview`;
-        navigate(href);
-    };
 
     const handleApplicationCreate = () => {
         if (!canCreateApplication) {
@@ -60,21 +50,21 @@ export const ApplicationsScreen = () => {
 
     return (
         <LoginWrapper>
-            <SpaceCreateDialog isOpen={createSpaceDialogOpen} onClose={() => setCreateSpaceDialogOpen(false)} />
+            <ApplicationCreateDialog isOpen={createSpaceDialogOpen} onClose={() => setCreateSpaceDialogOpen(false)} />
 
             <Typography variant='h2' sx={{ mb: 4 }}>
-                {applicationInfos.length > 0 ? 'Select Your Application & Environment' : 'There are no Applications'}
+                {applicationInfos.length > 0 ? 'Select Your Application' : 'There are no Applications'}
             </Typography>
 
             <Box sx={{ display: 'inline-block' }}>
-                <ApplicationsList data={applicationInfos} onSelect={onApplicationSelect} />
+                <ApplicationsList data={applicationInfos} />
 
                 <Button
                     label='Create new Application'
                     variant='outlined'
                     isFullWidth
                     onClick={handleApplicationCreate}
-                    sx={{ minWidth: 155, display: 'block' }}
+                    sx={{ minWidth: 155 }}
                 />
             </Box>
 

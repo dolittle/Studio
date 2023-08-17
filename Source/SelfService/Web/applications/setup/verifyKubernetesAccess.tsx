@@ -2,19 +2,20 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import ReactMarkdown from 'react-markdown';
+
 import gfm from 'remark-gfm';
+
 import { Info, SubjectRulesReviewStatus } from '../stores/documentationInfo';
 
-type Vars = {
-    clusterName: string
-    resourceGroup: string
-    subscriptionId: string
-    applicationId: string
-    subjectRulesReviewStatus: SubjectRulesReviewStatus
-    environment: string
+export type Vars = {
+    clusterName: string;
+    resourceGroup: string;
+    subscriptionId: string;
+    applicationId: string;
+    subjectRulesReviewStatus: SubjectRulesReviewStatus;
 };
-
 
 function templateResource(namespace: string, resource: string, name: string): string {
     const markdown = `
@@ -23,7 +24,7 @@ kubectl -n ${namespace} get ${resource} ${name}
 ~~~
 `;
     return markdown.trim();
-}
+};
 
 function template(vars: Vars): string {
     const namespace = `application-${vars.applicationId}`;
@@ -35,10 +36,8 @@ function template(vars: Vars): string {
                 namespace,
                 resource: 'secrets',
                 resourceName,
-                environment: vars.environment,
             };
         }))
-        .filter(o => o.resourceName.includes(o.environment.toLowerCase()))
         .map(o => templateResource(o.namespace, o.resource, o.resourceName));
 
     const configMaps = vars.subjectRulesReviewStatus.resourceRules
@@ -48,10 +47,8 @@ function template(vars: Vars): string {
                 namespace,
                 resource: 'configmaps',
                 resourceName,
-                environment: vars.environment,
             };
         }))
-        .filter(o => o.resourceName.includes(o.environment.toLowerCase()))
         .map(o => templateResource(o.namespace, o.resource, o.resourceName));
 
     const markdown = `
@@ -124,7 +121,7 @@ command again.
 kubectl -n ${namespace} get pods
 ~~~
 
-# Resources you have access too
+# Resources you have access to
 ${configMaps.join('\n')}
 ${secrets.join('\n')}
 
@@ -132,31 +129,24 @@ ${secrets.join('\n')}
     return markdown.trim();
 };
 
-type Props = {
-    info: Info
-    environment: string
+export type VerifyKubernetesAccessProps = {
+    info: Info;
 };
 
-export const Doc: React.FunctionComponent<Props> = (props) => {
-    const _props = props!;
-    const info = _props.info;
-
+export const VerifyKubernetesAccess = ({ info }: VerifyKubernetesAccessProps) => {
     const vars = {
         clusterName: info.clusterName,
         resourceGroup: info.resourceGroup,
         subscriptionId: info.subscriptionId,
         applicationId: info.applicationId,
         subjectRulesReviewStatus: info.subjectRulesReviewStatus,
-        environment: _props.environment,
     } as Vars;
-
 
     const data = template(vars);
 
     return (
-        <ReactMarkdown remarkPlugins={[gfm]} >
+        <ReactMarkdown remarkPlugins={[gfm]}>
             {data}
         </ReactMarkdown>
     );
 };
-

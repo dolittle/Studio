@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import { useQueryParams, ArrayParam, StringParam, withDefault } from 'use-query-params';
 
 import { LogFilterDateRange, LogFilterMicroservice, LogFilterObject } from './logFilterPanel';
@@ -18,7 +19,7 @@ export const useLogFilters = (
         to: withDefault(StringParam, initialFilters.dateRange === 'live' ? undefined : initialFilters.dateRange.stop.toString()),
         search: withDefault(ArrayParam, initialFilters.searchTerms),
         environment: withDefault(ArrayParam, initialFilters.environment?.map(env => env)),
-        microservice: withDefault(ArrayParam, initialFilters.microservice?.map(_ => _.id)),
+        microservice: withDefault(ArrayParam, initialFilters.microservice?.map(ms => ms.id)),
     });
 
     let dateRange: LogFilterDateRange = 'live';
@@ -62,7 +63,7 @@ export const useLogFilters = (
             to: dateRange === 'live' ? undefined : dateRange.stop.toString(),
             search: searchTerms.length > 0 ? searchTerms : undefined,
             environment: environment !== undefined && environment.length > 0 ? environment.map(env => env) : undefined,
-            microservice: microservice !== undefined && microservice.length > 0 ? microservice.map(_ => _.id) : undefined,
+            microservice: microservice !== undefined && microservice.length > 0 ? microservice.map(ms => ms.id) : undefined,
         }, 'replace');
     };
 

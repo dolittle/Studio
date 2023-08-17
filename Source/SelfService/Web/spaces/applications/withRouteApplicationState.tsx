@@ -14,15 +14,11 @@ export type WithRouteApplicationProps = {
 export function withRouteApplicationState<ComponentProps>(wrapped: ComponentType<ComponentProps & WithRouteApplicationProps>) {
     return React.memo(function RouteApplicationState(props: ComponentProps) {
         const routeApplicationParams = useRouteApplicationParams();
-        const { currentApplicationId, currentEnvironment, setCurrentApplicationId, setCurrentEnvironment } = useGlobalContext();
+        const { currentApplicationId, setCurrentApplicationId } = useGlobalContext();
 
         useEffect(() => {
             if (routeApplicationParams.applicationId && currentApplicationId !== routeApplicationParams.applicationId) {
                 setCurrentApplicationId(routeApplicationParams.applicationId);
-            }
-
-            if (routeApplicationParams.environment && currentEnvironment !== routeApplicationParams.environment) {
-                setCurrentEnvironment(routeApplicationParams.environment);
             }
         }, []);
 

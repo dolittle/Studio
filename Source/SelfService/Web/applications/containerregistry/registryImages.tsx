@@ -2,32 +2,25 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import { useNavigate, generatePath } from 'react-router-dom';
 
-import {
-    Table, TableContainer, TableHead,
-    TableRow, TableCell, TableBody
-} from '@mui/material';
+import { Paper, Table, TableContainer, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 
-import Paper from '@mui/material/Paper';
 import { ContainerRegistryImages } from '../../apis/solutions/containerregistry';
 
-type Props = {
-    applicationId: string
-    environment: string
-    data: ContainerRegistryImages
+export type RegistryImagesProps = {
+    applicationId: string;
+    data: ContainerRegistryImages;
 };
 
-export const View: React.FunctionComponent<Props> = (props) => {
+export const RegistryImages = ({ applicationId, data }: RegistryImagesProps) => {
     const navigate = useNavigate();
-    const _props = props!;
-    const containerRegistryImages = _props.data;
-    const applicationId = _props.applicationId;
-    const environment = _props.environment;
 
     return (
         <>
-            <p>{containerRegistryImages.url}</p>
+            <p>{data.url}</p>
+
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 480 }} aria-label="Docker images" size="small">
                     <TableHead>
@@ -35,8 +28,9 @@ export const View: React.FunctionComponent<Props> = (props) => {
                             <TableCell><b>Name</b></TableCell>
                         </TableRow>
                     </TableHead>
+
                     <TableBody>
-                        {containerRegistryImages.images.map(row => (
+                        {data.images.map(row => (
                             <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell
                                     component="th"
@@ -44,8 +38,9 @@ export const View: React.FunctionComponent<Props> = (props) => {
                                     onClick={(event) => {
                                         event.preventDefault();
                                         const href = generatePath(
-                                            '/containerregistry/application/:applicationId/:environment/overview/tags/:image',
-                                            { applicationId, environment, image: encodeURIComponent(row.name) }
+                                            // TODO ENV: Removed 'environment' from path. Dunno what that changes.
+                                            '/containerregistry/application/:applicationId/overview/tags/:image',
+                                            { applicationId, image: encodeURIComponent(row.name) }
                                         );
                                         navigate(href);
                                     }}
