@@ -7,6 +7,7 @@ import { Stack } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 
 import { Input, PasswordInput, MaxWidthTextBlock } from '@dolittle/design-system';
+import { isValidUrl } from '../../../utils/validation/isValidUrl';
 
 export type MetadataPublisherCredentialsProps = {
     canEdit: boolean;
@@ -33,6 +34,7 @@ export const MetadataPublisherCredentials = ({ canEdit }: MetadataPublisherCrede
                     sx={{ width: 1, maxWidth: 500 }}
                     required={{ value: required, message: 'Please enter your metadata publisher URL.' }}
                     disabled={!canEdit}
+                    validate={(value) => isValidUrl(value) || 'Please enter a valid URL.' }
                 />
                 <PasswordInput
                     id='metadataPublisherPassword'
