@@ -4,7 +4,10 @@
 import React, { useEffect, useState } from 'react';
 
 import { Route, useNavigate, Routes, generatePath } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import { useGlobalContext } from '../context/globalContext';
+
+import { Typography } from '@mui/material';
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
 
@@ -21,6 +24,7 @@ import { withRouteApplicationState } from '../spaces/applications/withRouteAppli
 
 export const MicroservicesScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
     const { hasOneCustomer } = useGlobalContext();
 
     //const [applications, setApplications] = useState({} as ShortInfo[]);
@@ -28,7 +32,6 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
     const [isLoaded, setIsLoaded] = useState(false);
 
     const currentApplicationId = routeApplicationParams.applicationId;
-    const href = `/problem`;
 
     useEffect(() => {
         if (!currentApplicationId) return;
@@ -42,7 +45,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
             const applicationData = values[1];
 
             if (!applicationData.id) {
-                navigate(href);
+                navigate('/problem');
                 return;
             }
 
@@ -54,18 +57,14 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
 
             setIsLoaded(true);
         }).catch(() => {
-            // TODO DEV: Remove
-            navigate(href);
-            return;
+            enqueueSnackbar('Failed getting data from the server', { variant: 'error' });
         });
     }, [currentApplicationId]);
 
     if (!isLoaded) return null;
 
-    // TODO DEV: Remove?
     if (application.id === '') {
-        navigate(href);
-        return null;
+        return <Typography variant='h1' my={2}>Application not found</Typography>;
     }
 
     const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
