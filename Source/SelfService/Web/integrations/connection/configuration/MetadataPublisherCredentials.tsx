@@ -34,7 +34,7 @@ export const MetadataPublisherCredentials = ({ canEdit }: MetadataPublisherCrede
                     sx={{ width: 1, maxWidth: 500 }}
                     required={{ value: required, message: 'Please enter your metadata publisher URL.' }}
                     disabled={!canEdit}
-                    validate={(value) => isValidUrl(value) || 'Please enter a valid URL.' }
+                    validate={(value) => required ? isValidUrl(value) || 'Please enter a valid URL.' : true}
                 />
                 <PasswordInput
                     id='metadataPublisherPassword'
