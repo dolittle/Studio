@@ -8,12 +8,11 @@ import { useGlobalContext } from '../context/globalContext';
 
 import { Box, Typography } from '@mui/material';
 
-import { ShortInfo, HttpResponseMicroservices, getMicroservices } from '../apis/solutions/api';
-import { HttpResponseApplication, getApplicationsListing, getApplication, HttpResponseApplications } from '../apis/solutions/application';
+import { HttpResponseMicroservices, getMicroservices } from '../apis/solutions/api';
+import { HttpResponseApplication, getApplicationsListing, getApplication } from '../apis/solutions/application';
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
 import { LayoutWithSidebar, getMenuWithApplication } from '../components/layout/layoutWithSidebar';
-import { TopNavBar } from '../components/layout/topNavBar';
 
 import { LogFilterMicroservice, LogFilterPanel } from './logging/logFilter/logFilterPanel';
 import { useLogFilters } from './logging/logFilter/useLogFilters';
@@ -32,7 +31,6 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
     const navigate = useNavigate();
     const { hasOneCustomer } = useGlobalContext();
 
-    //const [applications, setApplications] = useState({} as ShortInfo[]);
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -64,7 +62,6 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
             getApplication(currentApplicationId),
             getMicroservices(currentApplicationId),
         ]).then(values => {
-            //const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
 
             if (!applicationData?.id) {
@@ -72,12 +69,10 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
                 return;
             }
 
-            //setApplications(applicationsData.applications);
             setApplication(applicationData);
             mergeMicroservicesFromGit(applicationData.microservices);
 
             const microservicesData = values[2] as HttpResponseMicroservices;
-            //const microservices = microservicesData.microservices.filter(microservice => microservice.environment === currentEnvironment);
 
             mergeMicroservicesFromK8s(microservicesData.microservices);
             setIsLoaded(true);
@@ -98,7 +93,6 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
 
     return (
         <LayoutWithSidebar navigation={nav}>
-            {/* <TopNavBar routes={[]} applications={applications} applicationId={currentApplicationId} /> */}
             <Typography variant='h1'>Logs</Typography>
 
             <Box sx={{ minWidth: 640, mt: 3 }}>
