@@ -69,7 +69,7 @@ export const ConfigurationView = () => {
             {
                 onSuccess() {
                     queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connections_GET] });
-                    enqueueSnackbar(`Deleted connection: ${connectionId}`, { variant: 'success' });
+                    enqueueSnackbar(`Deleted connection: ${connectionId}`);
                     navigate('/integrations/connections');
                 },
                 onError() {

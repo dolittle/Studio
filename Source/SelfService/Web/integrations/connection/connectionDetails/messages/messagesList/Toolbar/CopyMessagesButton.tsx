@@ -23,7 +23,7 @@ export const CopyMessagesButton = (props: CopyMessagesProps) => {
         // eslint-disable-next-line no-restricted-globals
         setTimeout(() => {
             setIsLoading(false);
-            enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully copied`, { variant: 'success' });
+            enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully copied`);
             props.onActionCompleted();
         }, 2000);
     };
