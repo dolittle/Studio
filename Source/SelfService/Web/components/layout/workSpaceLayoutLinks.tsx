@@ -87,6 +87,7 @@ const SecondaryNavigation = () => {
 };
 
 const SidePanelApplicationItems = () => {
+    const location = useLocation();
     const { currentApplicationId } = useGlobalContext();
 
     const sidePanelItems: MenuListProps['listItems'] = [
@@ -97,6 +98,7 @@ const SidePanelApplicationItems = () => {
             overrides: {
                 component: Link,
                 to: `/microservices/application/${currentApplicationId}/overview`,
+                selected: location.pathname.includes('/microservices'),
             },
         },
         {
@@ -106,6 +108,7 @@ const SidePanelApplicationItems = () => {
             overrides: {
                 component: Link,
                 to: `/backups/application/${currentApplicationId}/overview`,
+                selected: location.pathname.includes('/backups'),
             },
         },
         {
@@ -115,6 +118,7 @@ const SidePanelApplicationItems = () => {
             overrides: {
                 component: Link,
                 to: `/containerregistry/application/${currentApplicationId}/overview`,
+                selected: location.pathname.includes('/containerregistry'),
             },
         },
         {
@@ -124,6 +128,7 @@ const SidePanelApplicationItems = () => {
             overrides: {
                 component: Link,
                 to: `/logs/application/${currentApplicationId}`,
+                selected: location.pathname.includes('/logs'),
             },
         },
         {
@@ -133,6 +138,7 @@ const SidePanelApplicationItems = () => {
             overrides: {
                 component: Link,
                 to: `/documentation/application/${currentApplicationId}/overview`,
+                selected: location.pathname.includes('/documentation'),
             },
         },
     ];
@@ -149,6 +155,7 @@ const SidePanelIntegrationItems = () => {
             overrides: {
                 component: Link,
                 to: '/integrations/connections',
+                selected: location.pathname.includes('/integrations'),
             },
         },
     ];

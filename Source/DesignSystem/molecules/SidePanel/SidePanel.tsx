@@ -10,7 +10,7 @@ import { MenuList, MenuListProps } from '@dolittle/design-system';
 import { Drawer } from './StyledCompenents';
 
 export const getSidePanelItems = (sidePanelItems: MenuListProps['listItems']) =>
-    <MenuList listItems={sidePanelItems} withSelectedItem dense withIcons />;
+    <MenuList listItems={sidePanelItems} dense withIcons />;
 
 /**
  * The props for a {@link SidePanel} component.
