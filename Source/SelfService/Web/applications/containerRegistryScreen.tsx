@@ -4,13 +4,12 @@
 import React, { useEffect, useState } from 'react';
 
 import { Route, useNavigate, Routes } from 'react-router-dom';
-import { useGlobalContext } from '../context/globalContext';
 
 import { Typography } from '@mui/material';
 
 import { getApplication, getApplicationsListing, HttpResponseApplication } from '../apis/solutions/application';
 
-import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
+import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { RegistryContainer } from './containerregistry/registryContainer';
 import { RouteNotFound } from '../components/notfound';
 
@@ -18,7 +17,6 @@ import { withRouteApplicationState } from '../spaces/applications/withRouteAppli
 
 export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
-    const { hasOneCustomer } = useGlobalContext();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -51,16 +49,14 @@ export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplica
         return <Typography variant='h1' my={2}>Application not found</Typography>;
     }
 
-    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
-
     //const routes = [];
 
     return (
-        <LayoutWithSidebar navigation={nav}>
+        <WorkSpaceLayoutWithSidePanel pageTitle='Backups' sidePanelMode='applications'>
             <Routes>
                 <Route path='/overview/*' element={<RegistryContainer application={application} />} />
                 <Route path='*' element={<RouteNotFound redirectUrl={'overview'} auto={true} />} />
             </Routes>
-        </LayoutWithSidebar>
+        </WorkSpaceLayoutWithSidePanel>
     );
 });
