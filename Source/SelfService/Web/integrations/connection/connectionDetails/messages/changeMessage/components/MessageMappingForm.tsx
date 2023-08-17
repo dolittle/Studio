@@ -71,7 +71,7 @@ export const MessageMappingForm = ({
         }, {
             onSuccess(data, variables, context) {
                 navigate(`..`);
-                enqueueSnackbar('Message successfully created', { variant: 'success' });
+                enqueueSnackbar('Message successfully created');
             },
             onError(error, variables, context) {
                 console.log('error', error);

@@ -37,7 +37,7 @@ export const DeleteMessagesButton = ({
                 //TODO: Handle error return object to mark which message types failed to delete
             },
             onSuccess(data, variables, context) {
-                enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully deleted`, { variant: 'success' });
+                enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully deleted`);
             },
             onSettled() {
                 onActionCompleted();
