@@ -4,7 +4,6 @@
 import React, { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { useGlobalContext } from '../context/globalContext';
 
 import { Box, Typography } from '@mui/material';
 
@@ -12,8 +11,8 @@ import { HttpResponseMicroservices, getMicroservices } from '../apis/solutions/a
 import { HttpResponseApplication, getApplicationsListing, getApplication } from '../apis/solutions/application';
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
-import { LayoutWithSidebar, getMenuWithApplication } from '../components/layout/layoutWithSidebar';
 
+import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { LogFilterMicroservice, LogFilterPanel } from './logging/logFilter/logFilterPanel';
 import { useLogFilters } from './logging/logFilter/useLogFilters';
 import { LogsInRange } from './logging/logsInRange';
@@ -29,7 +28,6 @@ const DAY = 86_400_000_000_000n;
 
 export const LogsScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
-    const { hasOneCustomer } = useGlobalContext();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -89,11 +87,9 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
         return null;
     }
 
-    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
-
     return (
-        <LayoutWithSidebar navigation={nav}>
-            <Typography variant='h1'>Logs</Typography>
+        <WorkSpaceLayoutWithSidePanel pageTitle='Logs' sidePanelMode='applications'>
+            <Typography variant='h1' sx={{ my: 3 }}>Logs</Typography>
 
             <Box sx={{ minWidth: 640, mt: 3 }}>
                 <LogFilterPanel
@@ -123,6 +119,6 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
                     />
                 }
             </Box>
-        </LayoutWithSidebar>
+        </WorkSpaceLayoutWithSidePanel>
     );
 });
