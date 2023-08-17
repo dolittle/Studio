@@ -10,7 +10,7 @@ import { SubmitHandler } from 'react-hook-form';
 import { Form, FormRef } from '@dolittle/design-system';
 
 import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
-import { ConnectionModel, IonConfigRequest } from '../../../apis/integrations/generated';
+import { ConnectionModel, ConnectionModelResult, IonConfigRequest, IonConfigurationResult, MdpConfigurationResult, StringResult } from '../../../apis/integrations/generated';
 import { useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
 import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
@@ -43,6 +43,14 @@ export type M3ConfigurationFormProps = {
     children?: React.ReactNode;
 };
 
+export type SaveActionName = | 'name' | 'hostingType' | 'mdp' | 'ion';
+export type SaveActionState =
+    | { status: 'success' }
+    | { status: 'error', errorMessage?: string };
+export type FormSaveAction = { type: SaveActionName, saveState: SaveActionState };
+
+export type M3ConfigurationFormSaveState = FormSaveAction[];
+
 export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3ConfigurationFormProps>((
     {
         connectionId,
@@ -54,6 +62,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
     ref: React.Ref<M3ConfigurationFormRef>
 ) => {
     const [currentForm, setCurrentForm] = useState<FormRef<M3ConnectionParameters>>();
+    const [lastSaveState, setLastSaveState] = useState<M3ConfigurationFormSaveState>();
     const formRef = useCallback((ref) => {
         if (ref) {
             setCurrentForm(ref);
@@ -71,11 +80,12 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
     useForceSubscribeToIonConfigurationStateChanges(currentForm);
 
     useEffect(() => {
-        if (currentForm?.formState.isSubmitSuccessful) {
+        if (currentForm?.formState.isSubmitSuccessful && lastSaveState?.length) {
             currentForm.reset(currentForm.getValues());
+            console.log('saved', lastSaveState);
             onSaved?.();
         }
-    }, [currentForm?.reset, currentForm?.formState.isSubmitSuccessful, currentForm?.formState.defaultValues, onSaved]);
+    }, [currentForm?.reset, currentForm?.formState.isSubmitSuccessful, currentForm?.formState.defaultValues, onSaved, lastSaveState]);
 
 
     const { enqueueSnackbar } = useSnackbar();
@@ -97,54 +107,64 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         if (!connectionId || !currentForm) {
             return;
         }
-
+        setLastSaveState([]);
+        const saveActions: { name: SaveActionName, action: Promise<StringResult | ConnectionModelResult | IonConfigurationResult | MdpConfigurationResult> }[] = [];
         const getFieldState = (field) => currentForm.getFieldState(field, currentForm.formState);
 
         const connectorNameFieldState = getFieldState('connectorName');
         if (connectorNameFieldState.isDirty) {
-            nameMutation.mutate(
-                {
-                    id: connectionId,
-                    body: data.connectorName,
-                },
-                {
-                    onSuccess: () => {
-                        handleSuccessfulSave('Saved Name');
+            saveActions.push({
+                name: 'name',
+                action: nameMutation.mutateAsync(
+                    {
+                        id: connectionId,
+                        body: data.connectorName,
                     },
-                    onError: (error) => handleErrorWhenSaving('Error saving Name', error),
-                },
-            );
+                    {
+                        onSuccess: () => {
+                            handleSuccessfulSave('Saved Name');
+                        },
+                        onError: (error) => handleErrorWhenSaving('Error saving Name', error),
+                    },
+                )
+            });
         }
 
         const selectHostingFieldState = getFieldState('selectHosting');
         if (!hasSelectedDeploymentType && selectHostingFieldState.isDirty) {
             if (data.selectHosting === 'On premises') {
-                onPremisesConfigurationMutation.mutate(
-                    {
-                        id: connectionId,
-                    },
-                    {
-                        onSuccess: () => {
-                            handleSuccessfulSave('Saved Hosting Type');
+                saveActions.push({
+                    name: 'hostingType',
+                    action: onPremisesConfigurationMutation.mutateAsync(
+                        {
+                            id: connectionId,
                         },
-                        onError: (error) => handleErrorWhenSaving('Error saving Hosting Type', error),
-                    },
-                );
+                        {
+                            onSuccess: () => {
+                                handleSuccessfulSave('Saved Hosting Type');
+                            },
+                            onError: (error) => handleErrorWhenSaving('Error saving Hosting Type', error),
+                        },
+                    )
+                });
             }
 
             if (data.selectHosting === 'Cloud') {
 
-                onCloudConfigurationMutation.mutate(
-                    {
-                        id: connectionId,
-                    },
-                    {
-                        onSuccess: () => {
-                            handleSuccessfulSave('Saved Hosting Type');
+                saveActions.push({
+                    name: 'hostingType',
+                    action: onCloudConfigurationMutation.mutateAsync(
+                        {
+                            id: connectionId,
                         },
-                        onError: (error) => handleErrorWhenSaving('Error saving Hosting Type', error),
-                    },
-                );
+                        {
+                            onSuccess: () => {
+                                handleSuccessfulSave('Saved Hosting Type');
+                            },
+                            onError: (error) => handleErrorWhenSaving('Error saving Hosting Type', error),
+                        },
+                    )
+                });
             }
         }
 
@@ -152,38 +172,60 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         const metadataPublisherPasswordFieldState = getFieldState('metadataPublisherPassword');
         if ((metadataPublisherUrlFieldState.isDirty || metadataPublisherPasswordFieldState.isDirty) &&
             (data.metadataPublisherUrl && data.metadataPublisherPassword)) {
-            mdpConfigurationMutation.mutate(
-                {
-                    id: connectionId,
-                    metadataPublisherConfigRequest: {
-                        url: data.metadataPublisherUrl,
-                        password: data.metadataPublisherPassword,
+            saveActions.push({
+                name: 'mdp',
+                action: mdpConfigurationMutation.mutateAsync(
+                    {
+                        id: connectionId,
+                        metadataPublisherConfigRequest: {
+                            url: data.metadataPublisherUrl,
+                            password: data.metadataPublisherPassword,
+                        },
                     },
-                },
-                {
-                    onSuccess: () => {
-                        handleSuccessfulSave('Saved MDP Configuration');
+                    {
+                        onSuccess: () => {
+                            handleSuccessfulSave('Saved MDP Configuration');
+                        },
+                        onError: (error) => handleErrorWhenSaving('Error saving MDP Configuration', error),
                     },
-                    onError: (error) => handleErrorWhenSaving('Error saving MDP Configuration', error),
-                },
-            );
+                )
+            });
         }
 
         const ionConfigurationFieldState = getFieldState('ionConfiguration');
         if (ionConfigurationFieldState.isDirty) {
-            ionConfigurationMutation.mutate(
-                {
-                    id: connectionId,
-                    ionConfigRequest: data.ionConfiguration,
-                },
-                {
-                    onSuccess: () => {
-                        handleSuccessfulSave('Saved ION Configuration');
+            saveActions.push({
+                name: 'ion',
+                action: ionConfigurationMutation.mutateAsync(
+                    {
+                        id: connectionId,
+                        ionConfigRequest: data.ionConfiguration,
                     },
-                    onError: (error) => handleErrorWhenSaving('Error saving ION Configuration', error),
-                },
-            );
+                    {
+                        onSuccess: () => {
+                            handleSuccessfulSave('Saved ION Configuration');
+                        },
+                        onError: (error) => handleErrorWhenSaving('Error saving ION Configuration', error),
+                    },
+                )
+            });
         }
+
+        Promise.allSettled(saveActions.map((action) => action.action))
+            .then((results) => {
+                // use the index of the result to get the corresponding save action name and map this to a success or error state.
+                const saveState = results.map((result, index) => {
+                    const saveAction = saveActions[index];
+                    if (result.status === 'fulfilled') {
+                        const successSate: FormSaveAction = { type: saveAction.name, saveState: { status: 'success'} };
+                        return successSate;
+                    }
+                    const errorState: FormSaveAction = { type: saveAction.name, saveState: { status: 'error', errorMessage: result.reason } };
+                    return errorState;
+                });
+                console.log('saveState from promises', saveState);
+                setLastSaveState(saveState);
+            });
     }, [
         currentForm,
         connectionId,
