@@ -126,6 +126,15 @@ const SidePanelApplicationItems = () => {
                 to: `/logs/application/${currentApplicationId}`,
             },
         },
+        {
+            label: 'Setup',
+            icon: 'FindInPageRounded',
+            sx: { my: 1 },
+            overrides: {
+                component: Link,
+                to: `/documentation/application/${currentApplicationId}/overview`,
+            },
+        },
     ];
 
     return getSidePanelItems(sidePanelItems);
