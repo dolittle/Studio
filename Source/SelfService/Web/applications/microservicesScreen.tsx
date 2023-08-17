@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { generatePath, Route, Routes, useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import { Typography } from '@mui/material';
@@ -13,10 +13,11 @@ import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/m
 import { getMicroservices } from '../apis/solutions/api';
 import { getApplicationsListing, getApplication, HttpResponseApplication } from '../apis/solutions/application';
 
+import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
+import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { Microservice } from './microservice/microservices/microservices';
 import { MicroserviceNewScreen } from './microservice/microserviceNewScreen';
 import { MicroserviceViewScreen } from './microservice/microserviceViewScreen';
-import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { RouteNotFound } from '../components/notfound';
 
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
@@ -62,8 +63,53 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
         return <Typography variant='h1' my={2}>Application not found.</Typography>;
     }
 
+    const routes = [
+        {
+            path: '/microservices/application/:applicationId',
+            to: generatePath(
+                '/microservices/application/:applicationId/overview', {
+                applicationId: application.id,
+            }),
+            name: 'Microservices',
+        },
+        {
+            path: '/microservices/application/:applicationId/overview',
+            to: generatePath(
+                '/microservices/application/:applicationId/overview', {
+                applicationId: application.id,
+            }),
+            name: 'Overview',
+        },
+        {
+            path: '/microservices/application/:applicationId/create',
+            to: generatePath(
+                '/microservices/application/:applicationId/create', {
+                applicationId: application.id,
+            }),
+            name: 'Create',
+        },
+        {
+            path: '/microservices/application/:applicationId/edit',
+            to: generatePath(
+                '/microservices/application/:applicationId/edit', {
+                applicationId: application.id,
+            }),
+            name: 'Edit',
+        },
+        {
+            path: '/microservices/application/:applicationId/view/:microserviceId',
+            to: generatePath(
+                // TODO: Needs :microserviceId
+                '/microservices/application/:applicationId/view', {
+                applicationId: application.id,
+            }),
+            name: 'View',
+        },
+    ];
+
     return (
         <WorkSpaceLayoutWithSidePanel pageTitle='Microservices' sidePanelMode='applications'>
+            <BreadCrumbContainer routes={routes} />
             <Routes>
                 <Route path='/overview' element={<Microservice application={application} />} />
                 <Route path='/create' element={<MicroserviceNewScreen application={application} />} />
