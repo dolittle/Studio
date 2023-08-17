@@ -10,7 +10,6 @@ import { Typography } from '@mui/material';
 import { getApplication, getApplicationsListing, HttpResponseApplication } from '../apis/solutions/application';
 
 import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
-import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { RegistryContainer } from './containerregistry/registryContainer';
 import { RouteNotFound } from '../components/notfound';
 
@@ -50,11 +49,8 @@ export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplica
         return <Typography variant='h1' my={2}>Application not found</Typography>;
     }
 
-    const routes = [];
-
     return (
         <WorkSpaceLayoutWithSidePanel pageTitle='Container Registry' sidePanelMode='applications'>
-            <BreadCrumbContainer routes={routes} />
             <Routes>
                 <Route path='/overview/*' element={<RegistryContainer application={application} />} />
                 <Route path='*' element={<RouteNotFound redirectUrl={'overview'} auto={true} />} />

@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { generatePath, Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../context/globalContext';
 
 import { Typography } from '@mui/material';
@@ -14,7 +14,6 @@ import { useRouteApplicationParams } from '../utils/route';
 import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
 import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../apis/solutions/backups';
 
-import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
 import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { BackupsList } from './backup/backupsList';
 import { BackupsListView } from './backup/backupsListView';
@@ -61,33 +60,8 @@ export const BackupsScreen = () => {
         return <Typography variant='h1' my={2}>Application not found.</Typography>;
     }
 
-    const routes = [
-        {
-            path: '/backups/application/:applicationId',
-            to: generatePath('/backups/application/:applicationId/overview', {
-                applicationId: application.id,
-            }),
-            name: 'Backups',
-        },
-        {
-            path: '/backups/application/:applicationId/overview',
-            to: generatePath('/backups/application/:applicationId/overview', {
-                applicationId: application.id,
-            }),
-            name: 'Overview',
-        },
-        {
-            path: '/backups/application/:applicationId/list',
-            to: generatePath('/backups/application/:applicationId/list', {
-                applicationId: application.id,
-            }),
-            name: application.name,
-        },
-    ];
-
     return (
         <WorkSpaceLayoutWithSidePanel pageTitle='Backups' sidePanelMode='applications'>
-            <BreadCrumbContainer routes={routes} />
             <Routes>
                 <Route path='overview' element={<BackupsList data={backupLinksForEnvironment} application={application} />} />
                 <Route path='list' element={<BackupsListView application={application} environment={currentEnvironment} />} />
