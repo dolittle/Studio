@@ -52,5 +52,5 @@ export function useBuildConfigurationAccordionList(connection: ConnectionModel |
             singleExpandMode: true,
             items
         };
-    }, [connection?.status, connection?.ionStatus, connection?.mdpStatus, canEdit]);
+    }, [connection?.chosenEnvironment.value, connection?.status, connection?.ionStatus, connection?.mdpStatus, canEdit]);
 };
