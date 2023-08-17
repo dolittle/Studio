@@ -15,13 +15,13 @@ import { getApplication, HttpResponseApplication } from '../apis/solutions/appli
 import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../apis/solutions/backups';
 
 import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
-import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
+import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { BackupsList } from './backup/backupsList';
 import { BackupsListView } from './backup/backupsListView';
 
 export const BackupsScreen = () => {
     const navigate = useNavigate();
-    const { currentEnvironment, hasOneCustomer } = useGlobalContext();
+    const { currentEnvironment } = useGlobalContext();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [backupLinksForEnvironment, setBackupLinksForEnvironment] = useState<BackupLinkWithName[]>([]);
@@ -58,10 +58,8 @@ export const BackupsScreen = () => {
     if (isLoading) return <LoadingSpinner />;
 
     if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application with this environment not found.</Typography>;
+        return <Typography variant='h1' my={2}>Application not found.</Typography>;
     }
-
-    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
 
     const routes = [
         {
@@ -88,13 +86,13 @@ export const BackupsScreen = () => {
     ];
 
     return (
-        <LayoutWithSidebar navigation={nav}>
+        <WorkSpaceLayoutWithSidePanel pageTitle='Backups' sidePanelMode='applications'>
             <BreadCrumbContainer routes={routes} />
             <Routes>
                 <Route path='overview' element={<BackupsList data={backupLinksForEnvironment} application={application} />} />
                 <Route path='list' element={<BackupsListView application={application} environment={currentEnvironment} />} />
                 <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups.</Typography>} />
             </Routes>
-        </LayoutWithSidebar>
+        </WorkSpaceLayoutWithSidePanel>
     );
 };
