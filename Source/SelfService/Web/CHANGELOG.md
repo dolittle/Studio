@@ -1,3 +1,13 @@
+# [3.8.0] - 2023-8-17 [PR: #443](https://github.com/dolittle/Studio/pull/443)
+## Summary
+
+Removed the need for 'environment' in all URLs so users can see and be able to interact with all the apps and environments they have access to when logged into studio.
+
+### Added
+
+- API call that gets applications by name and ID
+
+
 # [3.7.6] - 2023-8-16 [PR: #442](https://github.com/dolittle/Studio/pull/442)
 ### Summary
 - Fix: Save button did not enable after selecting the deployment type and name. The issue was with the Select component not firing the validation rules.
