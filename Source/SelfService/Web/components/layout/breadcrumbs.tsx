@@ -2,9 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useNavigate, useMatch, Link as RouterLink } from 'react-router-dom';
 
-import { Link, Breadcrumbs, Stack } from '@mui/material';
+import { useMatch, Link as RouterLink } from 'react-router-dom';
+
+import { Link, Breadcrumbs, Toolbar } from '@mui/material';
 import { ChevronRight } from '@mui/icons-material';
 
 const styles = {
@@ -12,7 +13,11 @@ const styles = {
     fontSize: 16,
     lineHeight: '1.25rem',
     color: 'text.primary',
-    textDecoration: 'none'
+    textDecoration: 'none',
+};
+
+type Props = {
+    routes: BreadcrumbsRoute[];
 };
 
 export type BreadcrumbsRoute = {
@@ -21,13 +26,8 @@ export type BreadcrumbsRoute = {
     name: string;
 };
 
-type Props = {
-    routes: BreadcrumbsRoute[]
-};
-
 export const BreadCrumbContainer = (props: Props) => {
-
-    const crumbs = props!.routes.filter((route) => useMatch({path: route.path, end: false}) ? route : false);
+    const crumbs = props!.routes.filter((route) => useMatch({ path: route.path, end: false }) ? route : false);
 
     const breadcrumbs = crumbs.map((item, index) => {
         const links = [
@@ -38,20 +38,20 @@ export const BreadCrumbContainer = (props: Props) => {
                 sx={styles}
             >
                 {item.name}
-            </Link >
+            </Link>
         ];
 
         return links;
     });
 
     return (
-        <Stack spacing={2}>
+        <Toolbar>
             <Breadcrumbs
                 separator={<ChevronRight fontSize="small" sx={{ color: 'rgba(255, 255, 255, 0.38);', }} />}
                 aria-label="breadcrumb"
             >
                 {breadcrumbs}
             </Breadcrumbs>
-        </Stack>
+        </Toolbar>
     );
 };
