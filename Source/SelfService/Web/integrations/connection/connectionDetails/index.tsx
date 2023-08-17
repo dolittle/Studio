@@ -9,7 +9,7 @@ import { Tabs } from '@dolittle/design-system';
 
 import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionIdFromRoute } from '../../routes.hooks';
-import { getConnectionStatus } from '../../../utils/helpers/connectionStatuses';
+import { getConnectionIndicatorStatus } from '../../../utils/helpers/connectionStatuses';
 
 import { Page } from '../../../components/layout/page';
 import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
@@ -77,8 +77,8 @@ export const ConnectionDetails = () => {
                 ? <Navigate to={redirectPath} replace={true} />
                 : <Page
                     title={pageTitle}
-                    healthStatus={getConnectionStatus(status).status}
-                    healthStatusLabel={getConnectionStatus(status).label}
+                    healthStatus={getConnectionIndicatorStatus(status).status}
+                    healthStatusLabel={getConnectionIndicatorStatus(status).label}
                     sx={{ mb: 4 }}
                 >
                     <Tabs selectedTab={getSelectedTab(location)} tabs={tabs} />

@@ -5,7 +5,7 @@ import { StatusIndicatorProps } from '@dolittle/design-system';
 
 export type StatusIndicatorStatus = Pick<StatusIndicatorProps, 'status' | 'label'>;
 
-export const getConnectionStatus = (status: string): StatusIndicatorStatus => {
+export const getConnectionIndicatorStatus = (status: string): StatusIndicatorStatus => {
     const compareStatus = status.toLowerCase();
     if (compareStatus === 'connected') {
         return {
