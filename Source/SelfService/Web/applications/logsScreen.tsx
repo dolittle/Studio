@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 import { Box, Typography } from '@mui/material';
 
@@ -28,12 +29,12 @@ const DAY = 86_400_000_000_000n;
 
 export const LogsScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [isLoaded, setIsLoaded] = useState(false);
 
     const currentApplicationId = routeApplicationParams.applicationId;
-    const href = `/problem`;
 
     const availableMicroservices: LogFilterMicroservice[] = application?.microservices !== undefined ? application.microservices.map(microservice => ({
         id: microservice.dolittle.microserviceId,
@@ -76,8 +77,7 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
             mergeMicroservicesFromK8s(microservicesData.microservices);
             setIsLoaded(true);
         }).catch(() => {
-            navigate(href);
-            return;
+            enqueueSnackbar('Failed getting data from the server.', { variant: 'error' });
         });
     }, [currentApplicationId]);
 
