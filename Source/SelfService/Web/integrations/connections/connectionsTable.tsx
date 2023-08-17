@@ -12,7 +12,7 @@ import { StatusIndicator } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../apis/integrations/generated';
 
-import { getConnectionStatus } from '../../utils/helpers/connectionStatuses';
+import { getConnectionIndicatorStatus } from '../../utils/helpers/connectionStatuses';
 
 type ConnectionsTableRowProps = {
     row: ConnectionModel;
@@ -22,7 +22,7 @@ const StatusCell = ({ row }: ConnectionsTableRowProps) => {
     const status = row.status?.name;
 
     return (
-        <StatusIndicator status={getConnectionStatus(status).status} label={getConnectionStatus(status).label} />
+        <StatusIndicator status={getConnectionIndicatorStatus(status).status} label={getConnectionIndicatorStatus(status).label} />
     );
 };
 

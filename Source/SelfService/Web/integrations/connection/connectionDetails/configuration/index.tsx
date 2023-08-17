@@ -13,7 +13,7 @@ import { AccordionList, AccordionListProps, FileUploadFormRef } from '@dolittle/
 
 import { useConnectionsIdGet, useConnectionsIdDelete } from '../../../../apis/integrations/connectionsApi.hooks';
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
-import { getConnectionStatus } from '../../../../utils/helpers';
+import { getConnectionIndicatorStatus } from '../../../../utils/helpers';
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
 import { M3ConfigurationForm, M3ConfigurationFormRef } from '../../configuration/M3ConfigurationForm';
 import { MainM3ConnectionInfo } from '../../configuration/MainM3ConnectionInfo';
@@ -42,7 +42,7 @@ export const ConfigurationView = () => {
             return;
         }
 
-        if(getConnectionStatus(connection.status.name).label === 'pending') {
+        if (getConnectionIndicatorStatus(connection.status.name).label === 'pending') {
             setEditMode(true);
         };
 
