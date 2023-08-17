@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Route, Routes, useNavigate, generatePath } from 'react-router-dom';
+import { generatePath, Route, Routes, useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../context/globalContext';
 
 import { Typography } from '@mui/material';
@@ -21,11 +21,10 @@ import { BackupsListView } from './backup/backupsListView';
 
 export const BackupsScreen = () => {
     const navigate = useNavigate();
-    const { hasOneCustomer } = useGlobalContext();
+    const { currentEnvironment, hasOneCustomer } = useGlobalContext();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [backupLinksForEnvironment, setBackupLinksForEnvironment] = useState<BackupLinkWithName[]>([]);
-    const [currentEnvironment, setCurrentEnvironment] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
     const routeApplicationProps = useRouteApplicationParams();
@@ -80,12 +79,11 @@ export const BackupsScreen = () => {
             name: 'Overview',
         },
         {
-            path: '/backups/application/:applicationId/:environment/list',
-            to: generatePath('/backups/application/:applicationId/:environment/list', {
+            path: '/backups/application/:applicationId/list',
+            to: generatePath('/backups/application/:applicationId/list', {
                 applicationId: application.id,
-                environment: currentEnvironment,
             }),
-            name: currentEnvironment,
+            name: application.name,
         },
     ];
 
@@ -93,7 +91,7 @@ export const BackupsScreen = () => {
         <LayoutWithSidebar navigation={nav}>
             <BreadCrumbContainer routes={routes} />
             <Routes>
-                <Route path='overview' element={<BackupsList data={backupLinksForEnvironment} application={application} setCurrentEnvironment={setCurrentEnvironment} />} />
+                <Route path='overview' element={<BackupsList data={backupLinksForEnvironment} application={application} />} />
                 <Route path='list' element={<BackupsListView application={application} environment={currentEnvironment} />} />
                 <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups.</Typography>} />
             </Routes>
