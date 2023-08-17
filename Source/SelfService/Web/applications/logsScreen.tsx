@@ -62,7 +62,8 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
         ]).then(values => {
             const applicationData = values[1];
 
-            if (!applicationData?.id) {
+            if (!applicationData.id) {
+                const href = `/problem`;
                 navigate(href);
                 return;
             }
@@ -83,8 +84,7 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
     if (!isLoaded) return null;
 
     if (application.id === '') {
-        navigate(href);
-        return null;
+        return <Typography variant='h1' my={2}>Application  not found.</Typography>;
     }
 
     return (
