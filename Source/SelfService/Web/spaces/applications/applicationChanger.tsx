@@ -37,8 +37,11 @@ export const ApplicationChanger = () => {
             setApplication(applicationData);
             setCanCreateApplication(response.canCreateApplication);
             setIsLoading(false);
-        }).catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }));
-    }, [currentApplicationId]);
+        }).catch(() => {
+            enqueueSnackbar('Failed getting data from the server.', { variant: 'error' });
+
+        });
+    }, []);
 
     if (isLoading) return null;
 
@@ -64,6 +67,8 @@ export const ApplicationChanger = () => {
     const handleApplicationChange = (menuItem: MenuItemProps) => {
         if (menuItem.id === currentApplicationId) return;
         setCurrentApplicationId(menuItem.id);
+        window.location.reload();
+        return false;
     };
 
     const handleApplicationCreate = () => {
