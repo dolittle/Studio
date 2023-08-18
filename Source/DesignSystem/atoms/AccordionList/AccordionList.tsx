@@ -48,7 +48,7 @@ export const AccordionList = ({ singleExpandMode, items, initialId = '' }: Accor
             {items.map(item =>
                 <Accordion
                     key={item.id}
-                    expanded={singleExpandMode ? expanded === item.id : undefined}
+                    expanded={singleExpandMode ? expanded === item.id : item.expanded}
                     onExpanded={(event, isExpanded) => handleExpanded(item.id, isExpanded)}
                     {...item}
                 >

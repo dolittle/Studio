@@ -15,7 +15,7 @@ import { useConnectionsIdGet, useConnectionsIdDelete } from '../../../../apis/in
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
 import { getConnectionIndicatorStatus } from '../../../../utils/helpers';
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
-import { M3ConfigurationForm, M3ConfigurationFormRef } from '../../configuration/M3ConfigurationForm';
+import { M3ConfigurationForm, M3ConfigurationFormRef, M3ConfigurationFormSaveState } from '../../configuration/M3ConfigurationForm';
 import { MainM3ConnectionInfo } from '../../configuration/MainM3ConnectionInfo';
 import { useBuildConfigurationAccordionList } from '../../configuration/useBuildConfigurationAccordionList';
 import { ActionToolbar } from './ActionToolbar';
@@ -23,10 +23,14 @@ import { ActionToolbar } from './ActionToolbar';
 export const ConfigurationView = () => {
     const [canEdit, setEditMode] = useState(false);
     const [alwaysEdit, setAlwaysEdit] = useState(false);
+    const [lastSaveState, setLastSaveState] = useState<M3ConfigurationFormSaveState>();
     const connectionId = useConnectionIdFromRoute();
     const query = useConnectionsIdGet(
         { id: connectionId },
-        { refetchInterval: (data) => data?.value?.status.name !== 'Connected' ? 5000 : false }
+        {
+            refetchInterval: (data) => data?.value?.status.name !== 'Connected' ? 5000 : false,
+            refetchOnWindowFocus: false,
+        }
     );
 
     const formRef = useRef<M3ConfigurationFormRef>(null);
@@ -60,8 +64,12 @@ export const ConfigurationView = () => {
     const deploymentType = connection?.chosenEnvironment?.value;
     const hasSelectedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
 
-    const accordionListProps: AccordionListProps = useBuildConfigurationAccordionList(connection, fileUploadRef, canEdit);
+    const accordionListProps: AccordionListProps = useBuildConfigurationAccordionList(connection, fileUploadRef, canEdit, lastSaveState);
     const canConfigureConnection = connection?.status?.name !== 'Registered';
+
+
+    if (query.isLoading) return <>Loading</>;
+    if (!connection) return null;
 
     const handleDelete = () => {
         deleteMutation.mutate(
@@ -79,8 +87,17 @@ export const ConfigurationView = () => {
         );
     };
 
-    if (query.isLoading) return <>Loading</>;
-    if (!connection) return null;
+    const handleSaveState = (saveState: M3ConfigurationFormSaveState) => {
+        setLastSaveState(saveState);
+        saveState.forEach((state) => {
+            if (state.status === 'success') {
+                enqueueSnackbar(`Saved ${state.name}`);
+            }
+            if (state.status === 'error') {
+                enqueueSnackbar(`Error saving ${state.name}. Error: ${state.errorMessage}`, { variant: 'error' });
+            }
+        });
+    };
 
     return (
         <Box sx={{ mt: 6, ml: 2 }}>
@@ -90,9 +107,10 @@ export const ConfigurationView = () => {
                 connectionId={connectionId}
                 connection={connection}
                 hasSelectedDeploymentType={hasSelectedDeploymentType}
-                onSaved={() => {
+                onSaved={(saveState) => {
                     fileUploadRef.current?.clearSelected();
                     setEditMode(false);
+                    handleSaveState(saveState);
                 }}
                 ref={formRef}
             >

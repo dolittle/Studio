@@ -39,15 +39,15 @@ export type M3ConfigurationFormProps = {
     connectionId: string;
     connection: ConnectionModel
     hasSelectedDeploymentType: boolean;
-    onSaved?: () => void;
+    onSaved?: (saveState: M3ConfigurationFormSaveState) => void;
     children?: React.ReactNode;
 };
 
-export type SaveActionName = | 'name' | 'hostingType' | 'mdp' | 'ion';
+export type SaveActionName = | 'Name' | 'Hosting Type' | 'MDP configuration' | 'ION Configuration';
 export type SaveActionState =
     | { status: 'success' }
     | { status: 'error', errorMessage?: string };
-export type FormSaveAction = { type: SaveActionName, saveState: SaveActionState };
+export type FormSaveAction = { name: SaveActionName } & SaveActionState;
 
 export type M3ConfigurationFormSaveState = FormSaveAction[];
 
@@ -82,8 +82,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
     useEffect(() => {
         if (currentForm?.formState.isSubmitSuccessful && lastSaveState?.length) {
             currentForm.reset(currentForm.getValues());
-            console.log('saved', lastSaveState);
-            onSaved?.();
+            onSaved?.(lastSaveState);
         }
     }, [currentForm?.reset, currentForm?.formState.isSubmitSuccessful, currentForm?.formState.defaultValues, onSaved, lastSaveState]);
 
@@ -114,7 +113,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         const connectorNameFieldState = getFieldState('connectorName');
         if (connectorNameFieldState.isDirty) {
             saveActions.push({
-                name: 'name',
+                name: 'Name',
                 action: nameMutation.mutateAsync(
                     {
                         id: connectionId,
@@ -134,7 +133,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         if (!hasSelectedDeploymentType && selectHostingFieldState.isDirty) {
             if (data.selectHosting === 'On premises') {
                 saveActions.push({
-                    name: 'hostingType',
+                    name: 'Hosting Type',
                     action: onPremisesConfigurationMutation.mutateAsync(
                         {
                             id: connectionId,
@@ -152,7 +151,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
             if (data.selectHosting === 'Cloud') {
 
                 saveActions.push({
-                    name: 'hostingType',
+                    name: 'Hosting Type',
                     action: onCloudConfigurationMutation.mutateAsync(
                         {
                             id: connectionId,
@@ -173,7 +172,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         if ((metadataPublisherUrlFieldState.isDirty || metadataPublisherPasswordFieldState.isDirty) &&
             (data.metadataPublisherUrl && data.metadataPublisherPassword)) {
             saveActions.push({
-                name: 'mdp',
+                name: 'MDP configuration',
                 action: mdpConfigurationMutation.mutateAsync(
                     {
                         id: connectionId,
@@ -195,7 +194,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         const ionConfigurationFieldState = getFieldState('ionConfiguration');
         if (ionConfigurationFieldState.isDirty) {
             saveActions.push({
-                name: 'ion',
+                name: 'ION Configuration',
                 action: ionConfigurationMutation.mutateAsync(
                     {
                         id: connectionId,
@@ -217,10 +216,10 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
                 const saveState = results.map((result, index) => {
                     const saveAction = saveActions[index];
                     if (result.status === 'fulfilled') {
-                        const successSate: FormSaveAction = { type: saveAction.name, saveState: { status: 'success'} };
+                        const successSate: FormSaveAction = { name: saveAction.name, status: 'success' };
                         return successSate;
                     }
-                    const errorState: FormSaveAction = { type: saveAction.name, saveState: { status: 'error', errorMessage: result.reason } };
+                    const errorState: FormSaveAction = { name: saveAction.name, status: 'error', errorMessage: result.reason };
                     return errorState;
                 });
                 console.log('saveState from promises', saveState);
@@ -232,7 +231,8 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         nameMutation,
         onPremisesConfigurationMutation,
         onCloudConfigurationMutation,
-        mdpConfigurationMutation, ionConfigurationMutation,
+        mdpConfigurationMutation,
+        ionConfigurationMutation,
     ]);
 
     const handleSuccessfulSave = (message: string) => {
