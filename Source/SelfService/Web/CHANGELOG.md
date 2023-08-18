@@ -1,3 +1,32 @@
+# [3.9.0] - 2023-8-18 [PR: #445](https://github.com/dolittle/Studio/pull/445)
+## Summary
+
+Replaced Layout with new WorkSpaceLayout.
+
+<img width="1387" alt="Screenshot 2023-08-17 at 19 40 34" src="https://github.com/dolittle/Studio/assets/19160439/062f0776-4835-4f41-868e-3c7b05655e28">
+
+### Added
+
+- Current environment to GlobalContext to be used at the moment in Backups page.
+- 'Div' around MicroserviceDetails so content is not in Flex Container.
+- 'selected' prop to SidePanel navigation that shows active panel.
+- A temporary spacing on the Integrations page that takes 'breadcrumbs' place.
+
+### Changed
+
+- Error handling in pages, when data is not found. Removed navigation to a 'problem' page.
+- Link to Setup page in new layout.
+- Style improvements for new layout.
+
+### Fixed
+
+- Link to Backups list view.
+
+### Removed
+
+- Breadcrumbs as they were not consistant and useful.
+
+
 # [3.8.1] - 2023-8-18 [PR: #444](https://github.com/dolittle/Studio/pull/444)
 ## Summary
 
