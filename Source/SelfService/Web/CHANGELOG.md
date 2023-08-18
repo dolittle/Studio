@@ -1,3 +1,11 @@
+# [3.8.1] - 2023-8-18 [PR: #444](https://github.com/dolittle/Studio/pull/444)
+## Summary
+
+- Add URL input validation for the MDP URL field
+- Disabled edit/cancel button until the name/deployment type has been saved
+- Remove Snackbars with variant: success - it's better to lean on the default grey, which is more consistently used.
+
+
 # [3.8.0] - 2023-8-17 [PR: #443](https://github.com/dolittle/Studio/pull/443)
 ## Summary
 
