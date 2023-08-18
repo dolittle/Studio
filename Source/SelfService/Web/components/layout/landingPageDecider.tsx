@@ -26,9 +26,10 @@ export const LandingPageDecider = () => {
                     setCurrentApplicationId(response.applications[0].id);
                     setHasOneApplication(true);
                 }
+
+                setIsLoaded(true);
             })
-            .catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }))
-            .finally(() => setIsLoaded(true));
+            .catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }));
     }, []);
 
     if (!isLoaded) return null;
