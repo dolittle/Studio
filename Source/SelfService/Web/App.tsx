@@ -29,7 +29,6 @@ import { M3ConnectorScreen } from './applications/m3connectorScreen';
 import { LogsScreen } from './applications/logsScreen';
 
 import { ApplicationsScreen } from './spaces/applications/applicationsScreen';
-import { ApplicationScreen } from './spaces/applications/applicationScreen';
 
 import { Screen as AdminScreen } from './admin/adminScreen';
 import { HomeScreen } from './home/homeScreen';
@@ -57,8 +56,6 @@ export const App = () => {
                             <Route path='/' element={<LandingPageDecider />} />
 
                             <Route path='/applications' element={<ApplicationsScreen />} />
-
-                            <Route path='/application/*' element={<ApplicationScreen />} />
 
                             <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
 
