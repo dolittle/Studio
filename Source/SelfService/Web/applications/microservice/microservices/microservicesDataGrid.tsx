@@ -57,6 +57,7 @@ export const MicroservicesDataGrid = ({ application, microservices }: Microservi
                 columns={microservicesDataGridColumns}
                 loading={isLoadingRows}
                 onRowClick={({ row }) => handleTableRowClick(row.id)}
+                getRowId={(row) => `${row.id}-${row.environment}`}
             />
         </DataGridWrapper>
     );
