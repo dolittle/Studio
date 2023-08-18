@@ -7,24 +7,27 @@ import { useGlobalContext } from '../../context/globalContext';
 import { useSnackbar } from 'notistack';
 import { Navigate } from 'react-router-dom';
 
-import { getApplicationsListing, HttpResponseApplications } from '../../apis/solutions/application';
+import { getApplicationsListing } from '../../apis/solutions/application';
 
 export const LandingPageDecider = () => {
-    const { setCurrentApplicationId } = useGlobalContext();
+    const { currentApplicationId, setCurrentApplicationId } = useGlobalContext();
     const { enqueueSnackbar } = useSnackbar();
 
-    const [hasOneApplication, setHasOneApplication] = useState(false);
+    const [hasApplicationId, setHasApplicationId] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    // TODO handle when not 200!
     useEffect(() => {
-        Promise.all([getApplicationsListing()])
-            .then(values => {
-                const response = values[0] as HttpResponseApplications;
+        if (currentApplicationId) {
+            setHasApplicationId(true);
+            setIsLoaded(true);
+            return;
+        }
 
-                if (response.applications.length === 1) {
-                    setCurrentApplicationId(response.applications[0].id);
-                    setHasOneApplication(true);
+        Promise.all([getApplicationsListing()])
+            .then(response => {
+                if (response[0].applications.length === 1) {
+                    setCurrentApplicationId(response[0].applications[0].id);
+                    setHasApplicationId(true);
                 }
 
                 setIsLoaded(true);
@@ -35,10 +38,6 @@ export const LandingPageDecider = () => {
     if (!isLoaded) return null;
 
     return (
-        hasOneApplication ? (
-            <Navigate to='/home' />
-        ) : (
-            <Navigate to='/applications' />
-        )
+        hasApplicationId ? <Navigate to='/home' /> : <Navigate to='/applications' />
     );
 };
