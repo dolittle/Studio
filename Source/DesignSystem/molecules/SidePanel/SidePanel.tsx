@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Divider, Toolbar } from '@mui/material';
 
@@ -28,13 +28,8 @@ export type SidePanelProps = {
  * @returns A {@link SidePanel} component.
  */
 export const SidePanel = ({ sidePanelNavigationItems }: SidePanelProps) => {
-    const [isSidePanelExpanded, setIsSidePanelExpanded] = useState(false);
-
-    useEffect(() => {
-        if (sessionStorage.getItem('isSidePanelExpanded') === 'true') {
-            setIsSidePanelExpanded(true);
-        }
-    }, []);
+    const sidePanelMode = sessionStorage.getItem('isSidePanelExpanded') === 'true';
+    const [isSidePanelExpanded, setIsSidePanelExpanded] = useState(sidePanelMode);
 
     const handleSidePanelToggle = () => {
         setIsSidePanelExpanded(!isSidePanelExpanded);
