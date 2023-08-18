@@ -10,7 +10,7 @@ import { Navigate } from 'react-router-dom';
 import { getApplicationsListing, HttpResponseApplications } from '../../apis/solutions/application';
 
 export const LandingPageDecider = () => {
-    const { currentApplicationId, setCurrentApplicationId } = useGlobalContext();
+    const { setCurrentApplicationId } = useGlobalContext();
     const { enqueueSnackbar } = useSnackbar();
 
     const [hasOneApplication, setHasOneApplication] = useState(false);
@@ -33,10 +33,9 @@ export const LandingPageDecider = () => {
 
     if (!isLoaded) return null;
 
-    // TODO ENV: Navigate to '/home'.
     return (
         hasOneApplication ? (
-            <Navigate to={`/microservices/application/${currentApplicationId}/overview`} />
+            <Navigate to='/home' />
         ) : (
             <Navigate to='/applications' />
         )
