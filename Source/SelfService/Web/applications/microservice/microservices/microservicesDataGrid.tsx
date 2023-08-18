@@ -44,8 +44,8 @@ export const MicroservicesDataGrid = ({ application, microservices }: Microservi
         return status.pods;
     }, [application.id]);
 
-    const handleTableRowClick = (microserviceId: string) => {
-        const href = `/microservices/application/${application.id}/view/${microserviceId}`;
+    const handleTableRowClick = (microserviceId: string, environment: string) => {
+        const href = `/microservices/application/${application.id}/view/${microserviceId}/${environment}`;
         navigate(href);
     };
 
@@ -56,7 +56,7 @@ export const MicroservicesDataGrid = ({ application, microservices }: Microservi
                 rows={microserviceRows}
                 columns={microservicesDataGridColumns}
                 loading={isLoadingRows}
-                onRowClick={({ row }) => handleTableRowClick(row.id)}
+                onRowClick={({ row }) => handleTableRowClick(row.id, row.environment)}
                 getRowId={(row) => `${row.id}-${row.environment}`}
             />
         </DataGridWrapper>

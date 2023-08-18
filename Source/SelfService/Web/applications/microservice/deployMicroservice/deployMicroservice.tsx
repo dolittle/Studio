@@ -83,7 +83,7 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
         try {
             await saveSimpleMicroservice(newMicroservice);
             enqueueSnackbar(`Microservice '${microserviceName}' has been deployed.`);
-            const href = `/microservices/application/${application.id}/view/${newMicroservice.dolittle.microserviceId}`;
+            const href = `/microservices/application/${application.id}/view/${newMicroservice.dolittle.microserviceId}/${newMicroservice.environment}}`;
             navigate(href);
         } catch (error: unknown) {
             const message = (error instanceof Error) ? error.message : 'Something went wrong when saving microservice.';
