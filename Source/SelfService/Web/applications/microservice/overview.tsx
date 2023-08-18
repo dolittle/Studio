@@ -17,13 +17,16 @@ import { MicroserviceDetails } from './microserviceDetails/microserviceDetails';
 export type OverviewProps = {
     application: HttpResponseApplication;
     microserviceId: string;
+    environment: string;
 };
 
-export const Overview = ({ application, microserviceId }: OverviewProps) => {
+export const Overview = ({ application, microserviceId, environment }: OverviewProps) => {
     const navigate = useNavigate();
     const $microservices = useReadable(microservices) as any;
 
-    const currentMicroservice: MicroserviceStore = $microservices.find((microservice: MicroserviceStore) => microservice.id === microserviceId);
+    const currentMicroservice: MicroserviceStore = $microservices.find((microservice: MicroserviceStore) =>
+        microservice.id === microserviceId && microservice.environment === environment
+    );
 
     if (!currentMicroservice) {
         const href = `/microservices/application/${application.id}/overview`;

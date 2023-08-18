@@ -14,7 +14,7 @@ export type Props = {
 };
 
 export const MicroserviceViewScreen = ({ application }: Props) => {
-    const { microserviceId } = useParams() as any;
+    const { microserviceId, environment } = useParams() as any;
 
-    return <Overview application={application} microserviceId={microserviceId} />;
+    return <Overview application={application} microserviceId={microserviceId} environment={environment} />;
 };
