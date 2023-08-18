@@ -4,25 +4,20 @@
 import React, { useEffect, useState } from 'react';
 
 import { Route, useNavigate, Routes } from 'react-router-dom';
-import { useGlobalContext } from '../context/globalContext';
 
 import { Typography } from '@mui/material';
 
-import { ShortInfo } from '../apis/solutions/api';
-import { getApplication, getApplicationsListing, HttpResponseApplication, HttpResponseApplications } from '../apis/solutions/application';
+import { getApplication, getApplicationsListing, HttpResponseApplication } from '../apis/solutions/application';
 
-import { RouteNotFound } from '../components/notfound';
-import { TopNavBar } from '../components/layout/topNavBar';
-import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
+import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { RegistryContainer } from './containerregistry/registryContainer';
+import { RouteNotFound } from '../components/notfound';
 
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
 export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
-    const { hasOneCustomer } = useGlobalContext();
 
-    //const [applications, setApplications] = useState([] as ShortInfo[]);
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -35,7 +30,6 @@ export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplica
             getApplicationsListing(),
             getApplication(currentApplicationId),
         ]).then(values => {
-            //const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
 
             if (!applicationData?.id) {
@@ -44,8 +38,6 @@ export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplica
                 return;
             }
 
-            // TODO this should be unique
-            //setApplications(applicationsData.applications);
             setApplication(applicationData);
             setIsLoaded(true);
         }).catch(error => console.log(error));
@@ -57,18 +49,12 @@ export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplica
         return <Typography variant='h1' my={2}>Application not found</Typography>;
     }
 
-    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
-
-    //const routes = [];
-
     return (
-        <LayoutWithSidebar navigation={nav}>
-            {/* <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} /> */}
-
+        <WorkSpaceLayoutWithSidePanel pageTitle='Container Registry' sidePanelMode='applications'>
             <Routes>
                 <Route path='/overview/*' element={<RegistryContainer application={application} />} />
                 <Route path='*' element={<RouteNotFound redirectUrl={'overview'} auto={true} />} />
             </Routes>
-        </LayoutWithSidebar>
+        </WorkSpaceLayoutWithSidePanel>
     );
 });

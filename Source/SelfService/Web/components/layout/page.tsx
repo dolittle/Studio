@@ -7,8 +7,6 @@ import { Box, SxProps, Typography } from '@mui/material';
 
 import { StatusIndicator, StatusIndicatorProps } from '@dolittle/design-system';
 
-import { usePageTitle } from '../../utils/usePageTitle';
-
 const styles = {
     display: 'flex',
     alignItems: 'center',
@@ -24,16 +22,11 @@ export type PageProps = {
     sx?: SxProps;
 };
 
-export const Page = ({ title, healthStatus, healthStatusLabel, children, sx }: PageProps) => {
-    usePageTitle(title);
-
-    return (
-        <>
-            <Box sx={{ ...styles, ...sx }}>
-                <Typography variant='h1' sx={{ mr: healthStatus ? 3 : 0 }}>{title}</Typography>
-                {healthStatus && <StatusIndicator status={healthStatus} label={healthStatusLabel} variantFilled />}
-            </Box>
-            {children}
-        </>
-    );
-};
+export const Page = ({ title, healthStatus, healthStatusLabel, children, sx }: PageProps) =>
+    <>
+        <Box sx={{ ...styles, ...sx }}>
+            <Typography variant='h1' sx={{ mr: healthStatus ? 3 : 0 }}>{title}</Typography>
+            {healthStatus && <StatusIndicator status={healthStatus} label={healthStatusLabel} variantFilled />}
+        </Box>
+        {children}
+    </>;

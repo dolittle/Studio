@@ -5,11 +5,11 @@ import React from 'react';
 
 import { Link, useLocation } from 'react-router-dom';
 
-import { useGlobalContext } from '../../../context/globalContext';
+import { useGlobalContext } from '../../context/globalContext';
 
 import { getPrimaryNavigationItems, getSecondaryNavigationItems, getSidePanelItems, LayoutProps, MenuListProps, MenuItemProps } from '@dolittle/design-system';
 
-import { ApplicationChanger } from '../../../spaces/applications/applicationChanger';
+import { ApplicationChanger } from '../../spaces/applications/applicationChanger';
 
 const PrimaryNavigation = () => {
     const location = useLocation();
@@ -87,6 +87,7 @@ const SecondaryNavigation = () => {
 };
 
 const SidePanelApplicationItems = () => {
+    const location = useLocation();
     const { currentApplicationId } = useGlobalContext();
 
     const sidePanelItems: MenuListProps['listItems'] = [
@@ -97,6 +98,7 @@ const SidePanelApplicationItems = () => {
             overrides: {
                 component: Link,
                 to: `/microservices/application/${currentApplicationId}/overview`,
+                selected: location.pathname.includes('/microservices'),
             },
         },
         {
@@ -106,6 +108,7 @@ const SidePanelApplicationItems = () => {
             overrides: {
                 component: Link,
                 to: `/backups/application/${currentApplicationId}/overview`,
+                selected: location.pathname.includes('/backups'),
             },
         },
         {
@@ -115,6 +118,7 @@ const SidePanelApplicationItems = () => {
             overrides: {
                 component: Link,
                 to: `/containerregistry/application/${currentApplicationId}/overview`,
+                selected: location.pathname.includes('/containerregistry'),
             },
         },
         {
@@ -124,6 +128,17 @@ const SidePanelApplicationItems = () => {
             overrides: {
                 component: Link,
                 to: `/logs/application/${currentApplicationId}`,
+                selected: location.pathname.includes('/logs'),
+            },
+        },
+        {
+            label: 'Setup',
+            icon: 'FindInPageRounded',
+            sx: { my: 1 },
+            overrides: {
+                component: Link,
+                to: `/documentation/application/${currentApplicationId}/overview`,
+                selected: location.pathname.includes('/documentation'),
             },
         },
     ];
@@ -140,6 +155,7 @@ const SidePanelIntegrationItems = () => {
             overrides: {
                 component: Link,
                 to: '/integrations/connections',
+                selected: location.pathname.includes('/integrations'),
             },
         },
     ];

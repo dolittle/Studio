@@ -4,7 +4,6 @@
 import React, { useEffect, useState } from 'react';
 
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { useGlobalContext } from '../context/globalContext';
 
 import { Typography } from '@mui/material';
 
@@ -12,13 +11,11 @@ import { getApplication, HttpResponseApplication } from '../apis/solutions/appli
 import { useRouteApplicationParams } from '../utils/route';
 import { Container } from './m3connector/container';
 
-import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
-//import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
+import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 
 export const M3ConnectorScreen = () => {
     const navigate = useNavigate();
     const routeApplicationProps = useRouteApplicationParams();
-    const { hasOneCustomer } = useGlobalContext();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -26,6 +23,7 @@ export const M3ConnectorScreen = () => {
     const applicationId = routeApplicationProps.applicationId;
 
     useEffect(() => {
+        // TODO ENV: getApplication should be getApplicationsListing?
         Promise.all([getApplication(applicationId)])
             .then(values => {
                 const applicationData = values[0];
@@ -47,21 +45,11 @@ export const M3ConnectorScreen = () => {
         return <Typography variant='h1' my={2}>Application  not found.</Typography>;
     }
 
-    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
-
-    //const routes = [];
-
     return (
-        <LayoutWithSidebar navigation={nav}>
-            {/* <div id="topNavBar" className="nav flex-container">
-                <div className="left flex-start">
-                    <BreadCrumbContainer routes={routes} />
-                </div>
-            </div> */}
-
+        <WorkSpaceLayoutWithSidePanel pageTitle='M3 connector' sidePanelMode='applications'>
             <Routes>
                 <Route path='/*' element={<Container application={application} />} />
             </Routes>
-        </LayoutWithSidebar>
+        </WorkSpaceLayoutWithSidePanel>
     );
 };

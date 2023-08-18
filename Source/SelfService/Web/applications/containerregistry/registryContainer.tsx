@@ -52,7 +52,7 @@ export const RegistryContainer = ({ application }: RegistryContainerProps) => {
     return (
         <>
             <div>
-                <Typography variant='h1' my={2}>Container Registry</Typography>
+                <Typography variant='h1' sx={{ my: 3 }}>Container Registry</Typography>
             </div>
 
             <div>

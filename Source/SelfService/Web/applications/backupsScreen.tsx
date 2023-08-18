@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Route, Routes, useNavigate, generatePath } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../context/globalContext';
 
 import { Typography } from '@mui/material';
@@ -14,18 +14,16 @@ import { useRouteApplicationParams } from '../utils/route';
 import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
 import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../apis/solutions/backups';
 
-import { BreadCrumbContainer } from '../components/layout/breadcrumbs';
-import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
+import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { BackupsList } from './backup/backupsList';
 import { BackupsListView } from './backup/backupsListView';
 
 export const BackupsScreen = () => {
     const navigate = useNavigate();
-    const { hasOneCustomer } = useGlobalContext();
+    const { currentEnvironment } = useGlobalContext();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [backupLinksForEnvironment, setBackupLinksForEnvironment] = useState<BackupLinkWithName[]>([]);
-    const [currentEnvironment, setCurrentEnvironment] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
     const routeApplicationProps = useRouteApplicationParams();
@@ -59,44 +57,16 @@ export const BackupsScreen = () => {
     if (isLoading) return <LoadingSpinner />;
 
     if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application with this environment not found.</Typography>;
+        return <Typography variant='h1' my={2}>Application not found.</Typography>;
     }
 
-    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
-
-    const routes = [
-        {
-            path: '/backups/application/:applicationId',
-            to: generatePath('/backups/application/:applicationId/overview', {
-                applicationId: application.id,
-            }),
-            name: 'Backups',
-        },
-        {
-            path: '/backups/application/:applicationId/overview',
-            to: generatePath('/backups/application/:applicationId/overview', {
-                applicationId: application.id,
-            }),
-            name: 'Overview',
-        },
-        {
-            path: '/backups/application/:applicationId/:environment/list',
-            to: generatePath('/backups/application/:applicationId/:environment/list', {
-                applicationId: application.id,
-                environment: currentEnvironment,
-            }),
-            name: currentEnvironment,
-        },
-    ];
-
     return (
-        <LayoutWithSidebar navigation={nav}>
-            <BreadCrumbContainer routes={routes} />
+        <WorkSpaceLayoutWithSidePanel pageTitle='Backups' sidePanelMode='applications'>
             <Routes>
-                <Route path='overview' element={<BackupsList data={backupLinksForEnvironment} application={application} setCurrentEnvironment={setCurrentEnvironment} />} />
+                <Route path='overview' element={<BackupsList data={backupLinksForEnvironment} application={application} />} />
                 <Route path='list' element={<BackupsListView application={application} environment={currentEnvironment} />} />
                 <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups.</Typography>} />
             </Routes>
-        </LayoutWithSidebar>
+        </WorkSpaceLayoutWithSidePanel>
     );
 };

@@ -3,112 +3,59 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Route, useNavigate, Routes, generatePath } from 'react-router-dom';
-import { useGlobalContext } from '../context/globalContext';
+import { generatePath, Route, useNavigate, Routes } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
-// I wonder if scss is scoped like svelte. I hope so!
-// Not scoped like svelte
-import '../spaces/applications/applicationScreen.scss';
+import { Typography } from '@mui/material';
 
-import { ShortInfo } from '../apis/solutions/api';
 import { HttpResponseApplication, getApplicationsListing, getApplication } from '../apis/solutions/application';
 
-import { TopNavBar } from '../components/layout/topNavBar';
-import { getMenuWithApplication, LayoutWithSidebar } from '../components/layout/layoutWithSidebar';
+import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { SetupContainerScreen } from './setup/setupContainerScreen';
 
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
 export const DocumentationScreen = withRouteApplicationState(({ routeApplicationParams }) => {
-    const { hasOneCustomer } = useGlobalContext();
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
 
     const currentApplicationId = routeApplicationParams.applicationId;
 
-    //const [applications, setApplications] = useState([] as ShortInfo[]);
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    const href = `/problem`;
-
     useEffect(() => {
-        if (!currentApplicationId) {
-            return;
-        }
+        if (!currentApplicationId) return;
 
         Promise.all([
             getApplicationsListing(),
             getApplication(currentApplicationId),
         ]).then(values => {
-            //const applicationsData = values[0] as HttpResponseApplications;
             const applicationData = values[1];
 
-            if (!applicationData?.id) {
-                navigate(href);
+            if (!applicationData.id) {
+                navigate('/problem');
                 return;
             }
 
-            // TODO this should be unique
-            //setApplications(applicationsData.applications);
             setApplication(applicationData);
             setIsLoaded(true);
         }).catch(() => {
-            navigate(href);
-            return;
+            enqueueSnackbar('Failed getting data from the server.', { variant: 'error' });
         });
     }, [currentApplicationId]);
 
     if (!isLoaded) return null;
 
     if (application.id === '') {
-        navigate(href);
-        return null;
+        return <Typography variant='h1' my={2}>Application not found.</Typography>;
     }
 
-    const nav = getMenuWithApplication(navigate, application, hasOneCustomer);
-
-    // const routes = [
-    //     {
-    //         path: '/documentation/application/:applicationId/',
-    //         to: generatePath('/documentation/application/:applicationId/overview', {
-    //             applicationId: application.id,
-    //         }),
-    //         name: 'Documentation',
-    //     },
-    //     {
-    //         path: '/documentation/application/:applicationId/overview',
-    //         to: generatePath('/documentation/application/:applicationId/overview', {
-    //             applicationId: application.id,
-    //         }),
-    //         name: 'Overview',
-    //     },
-    //     {
-    //         path: '/documentation/application/:applicationId/container-registry-info',
-    //         to: generatePath('/documentation/application/:applicationId/container-registry-info', {
-    //             applicationId: application.id,
-    //         }),
-    //         name: 'Container Registry Info',
-    //     },
-    //     {
-    //         path: '/documentation/application/:applicationId/verify-kubernetes-access',
-    //         to: generatePath('/documentation/application/:applicationId/verify-kubernetes-access', {
-    //             applicationId: application.id,
-    //         }),
-    //         name: 'Verify access to kubernetes',
-    //     },
-    // ];
-
-    // const redirectUrl = generatePath('/documentation/application/:applicationId/overview', {
-    //     applicationId: currentApplicationId,
-    // });
-
     return (
-        <LayoutWithSidebar navigation={nav}>
-            {/* <TopNavBar routes={routes} applications={applications} applicationId={currentApplicationId} /> */}
-
+        <WorkSpaceLayoutWithSidePanel pageTitle='Setup' sidePanelMode='applications'>
             <Routes>
                 <Route path='/*' element={<SetupContainerScreen application={application} />} />
             </Routes>
-        </LayoutWithSidebar>
+        </WorkSpaceLayoutWithSidePanel>
     );
 });

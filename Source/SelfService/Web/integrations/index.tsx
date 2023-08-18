@@ -3,30 +3,27 @@
 
 import React from 'react';
 
-import { useLocation, useRoutes } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import { Box } from '@mui/material';
+
 import { buildQueryClient } from '../apis/integrations/queryClient';
 
-import { integrationsBreadcrumbsNameMap, routes } from './routes';
+import { routes } from './routes';
 
-import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { DebugRouter } from '../components/debugRouter';
 
 export const IntegrationsIndex = () => {
-    const location = useLocation();
     const queryClient = buildQueryClient();
     const routesElement = useRoutes(routes);
 
     return (
-        <WorkSpaceLayoutWithSidePanel
-            pageTitle='Integrations'
-        // breadcrumbs={{
-        //     currentPath: location.pathname,
-        //     breadcrumbsNameMap: integrationsBreadcrumbsNameMap,
-        // }}
-        >
+        <WorkSpaceLayoutWithSidePanel pageTitle='Integrations'>
+            {/* Temporary replacement for breadcrumbs */}
+            <Box sx={{ minHeight: 16 }} />
             <QueryClientProvider client={queryClient}>
                 <DebugRouter>
                     {routesElement}

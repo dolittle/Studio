@@ -60,7 +60,7 @@ export const SetupContainerScreen = ({ application }: SetupContainerScreenProps)
         <Box sx={{ '& a': { color: 'text.primary' }, '& h1': { mt: 4, mb: 2 } }}>
             <Routes>
                 <Route path='/overview' element={
-                    <List sx={{ '& li': { mb: 2 } }}>
+                    <List sx={{ '& li': { my: 2 } }}>
                         <li><Link href={containerRegistryHref} message='Container Registry Info' /></li>
                         <li><Link href={kubernetesAccessHref} message='Verify access to kubernetes' /></li>
                         <li><Link href={azurePipelineHref} message='Setup Azure Pipelines' /></li>
@@ -69,7 +69,7 @@ export const SetupContainerScreen = ({ application }: SetupContainerScreenProps)
 
                 <Route path='/container-registry-info' element={
                     <>
-                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} />
+                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} sx={{ mt: 2 }} />
                         <Typography variant='h1'>Container Registry Info</Typography>
                         <AccessContainerRegistry info={$info} />
                     </>
@@ -77,7 +77,7 @@ export const SetupContainerScreen = ({ application }: SetupContainerScreenProps)
 
                 <Route path='/verify-kubernetes-access' element={
                     <>
-                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} />
+                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} sx={{ mt: 2 }} />
                         <Typography variant='h1'>Verify access to kubernetes</Typography>
                         <VerifyKubernetesAccess info={$info} />
                     </>
@@ -85,7 +85,7 @@ export const SetupContainerScreen = ({ application }: SetupContainerScreenProps)
 
                 <Route path='/ci-cd/azure-pipelines' element={
                     <>
-                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} />
+                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} sx={{ mt: 2 }} />
                         <Typography variant='h1'>Setup Azure Pipelines</Typography>
                         <SetupAzurePipelines info={$info} />
                     </>

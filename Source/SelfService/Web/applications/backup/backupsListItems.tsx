@@ -15,19 +15,18 @@ export type BackupsListItemsProps = {
     application: HttpResponseApplication;
     environment: string;
     name: string;
-    setCurrentEnvironment: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const BackupsListItems = ({ application, environment, name, setCurrentEnvironment }: BackupsListItemsProps) => {
+export const BackupsListItems = ({ application, environment, name }: BackupsListItemsProps) => {
     const navigate = useNavigate();
-    const { setCurrentApplicationId } = useGlobalContext();
+    const { setCurrentApplicationId, setCurrentEnvironment } = useGlobalContext();
 
     const handleBackupsView = async () => {
         // Do we need to set the current application id here?
         setCurrentApplicationId(application.id);
         setCurrentEnvironment(environment);
 
-        const href = `/backups/application/${application.id}/${environment}/list`;
+        const href = `/backups/application/${application.id}/list`;
         navigate(href);
     };
 

@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Typography } from '@mui/material';
 
-import { WorkSpaceLayout } from '../components/layout/workSpaceLayout/workSpaceLayout';
+import { WorkSpaceLayout } from '../components/layout/workSpaceLayout';
 import { HomeScreenCardGridItems } from './homeScreenCardGridItems';
 
 export const HomeScreen = () =>
