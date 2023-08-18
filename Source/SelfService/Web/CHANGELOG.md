@@ -1,3 +1,8 @@
+# [3.9.1] - 2023-8-18 [PR: #446](https://github.com/dolittle/Studio/pull/446)
+- Use unique id in data grid which leans on microservice id AND environemnt
+- Reintroduce enviroment to the url for viewing a microservice
+
+
 # [3.9.0] - 2023-8-18 [PR: #445](https://github.com/dolittle/Studio/pull/445)
 ## Summary
 
