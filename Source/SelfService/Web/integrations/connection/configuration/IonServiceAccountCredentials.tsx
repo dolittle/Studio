@@ -76,7 +76,7 @@ export const IonServiceAccountCredentials = React.forwardRef<FileUploadFormRef, 
 
         {props.canEdit && (
             <MaxWidthBlock>
-                <FileUploadForm onSelected={handleFileUploaded} validFileExtensions={['json']} ref={ref} />
+                <FileUploadForm onSelected={handleFileUploaded} validFileExtensions={['ionapi']} ref={ref} />
             </MaxWidthBlock>
         )}
     </>;
