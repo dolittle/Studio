@@ -168,7 +168,6 @@ export const MessageMappingTable = ({
                 processRowUpdate={processRowUpdate}
                 onProcessRowUpdateError={error => console.log(error)}
                 experimentalFeatures={{ newEditingApi: true }}
-                disableColumnMenu
                 disableColumnReorder
                 disableColumnResize
                 disableColumnSelector
