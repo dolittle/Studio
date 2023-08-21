@@ -1,3 +1,9 @@
+# [3.9.2] - 2023-8-21 [PR: #447](https://github.com/dolittle/Studio/pull/447)
+## Summary
+Correctly add mapping for required fields automatically
+Show tooltip on hover indicating why Required fields cannot be deselected
+
+
 # [3.9.1] - 2023-8-18 [PR: #446](https://github.com/dolittle/Studio/pull/446)
 - Use unique id in data grid which leans on microservice id AND environemnt
 - Reintroduce enviroment to the url for viewing a microservice
