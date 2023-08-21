@@ -15,5 +15,8 @@ export const CreateMessagesButton = ({ onClick }: CreateConnectionButtonProps) =
         variant='fullwidth'
         startWithIcon='MessageRounded'
         onClick={onClick}
-        sx={{ mt: 2.125 }}
+        sx={{
+            mt: 2.125,
+            maxWidth: '1200px'
+        }}
     />;

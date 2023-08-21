@@ -6,6 +6,7 @@ import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
+import { Box } from '@mui/material';
 import { AlertBox, ContentContainer, LoadingSpinner } from '@dolittle/design-system';
 
 import { useConnectionsIdMessageMappingsGet } from '../../../../../apis/integrations/messageMappingApi.hooks';
@@ -81,7 +82,7 @@ export const MessagesListView = () => {
                         onSelectedIdsChanged={setSelectedMessageTypeIds}
                     />
                 </ContentContainer>
-                <CreateMessagesButton onClick={() => { handleCreateNewMessage(); }} />
+                <Box sx={{ maxWidth: '1200px' }}><CreateMessagesButton onClick={() => { handleCreateNewMessage(); }} /></Box>
             </> :
             <NoMessages onCreateNew={() => { handleCreateNewMessage(); }} />
     );
