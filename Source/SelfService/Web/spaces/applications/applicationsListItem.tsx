@@ -25,7 +25,13 @@ export const ApplicationsListItem = ({ application }: ApplicationsListItemProps)
 
     return (
         <ListItem sx={{ p: 0 }}>
-            <Button variant='filled' label={`${application.name}`} isFullWidth href={microservicesHref} sx={styles} />
+            <Button
+                variant='filled'
+                label={`${application.name}`}
+                isFullWidth
+                href={microservicesHref}
+                sx={styles}
+            />
         </ListItem>
     );
 };
