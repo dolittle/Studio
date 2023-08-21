@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 
 import { Grid, LinearProgress, Box } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
@@ -15,6 +15,7 @@ import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
 import { ViewModeProps } from '../ViewMode';
 import { DataGridTableListingEntry, MessageMappingTable } from './MessageMappingTable';
 import { useUpdateMappedFieldsInForm } from './useUpdateMappedFieldsInForm';
+import { generateMappedFieldNameFrom } from './generateMappedFieldNameFrom';
 
 export type TableSectionProps = ViewModeProps & {
     selectedTableName: string;
@@ -89,6 +90,16 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
             return newMappedFields;
         });
     };
+
+    useEffect(() => {
+        gridMappableTableColumns.forEach(column => {
+            const isRequiredAndUnmapped = requiredTableColumnIds.includes(column.m3ColumnName) && !mappedFields.has(column.m3ColumnName);
+            if (isRequiredAndUnmapped) {
+                const generatedName = generateMappedFieldNameFrom(column.m3Description, column.m3ColumnName, Array.from(mappedFields.keys()));
+                updateMappedFieldsAndUpdateFormValue(column.m3ColumnName, generatedName);
+            }
+        });
+    }, [gridMappableTableColumns, requiredTableColumnIds, mappedFields, generateMappedFieldNameFrom]);
 
     return (
         <>
