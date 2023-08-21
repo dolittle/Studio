@@ -1,3 +1,9 @@
+# [3.9.3] - 2023-8-21 [PR: #448](https://github.com/dolittle/Studio/pull/448)
+### Summary
+Allow native column filtering for Message mapping table
+![Uploading image.png…]()
+
+
 # [3.9.2] - 2023-8-21 [PR: #447](https://github.com/dolittle/Studio/pull/447)
 ## Summary
 Correctly add mapping for required fields automatically
