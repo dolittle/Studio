@@ -1,3 +1,26 @@
+# [3.9.5] - 2023-8-21 [PR: #450](https://github.com/dolittle/Studio/pull/450)
+## Summary
+
+Fix for new layout application change and navigations.
+
+<img width="920" alt="Screenshot 2023-08-21 at 21 56 30" src="https://github.com/dolittle/Studio/assets/19160439/f2cd00f1-a3cf-4802-99af-b8d0b472d54b">
+
+### Added
+
+- Navigate directly to 'Home' page when application ID is stored in localStorage - no need to select application on login.
+
+### Fixed
+
+- Side panel 'expanded' animation when changing active panel.
+- After changing the application, go to the 'Home' page to display the correct application.
+- Error displaying when application is not found. Navigate to 'Applications' page in that case.
+
+### Removed
+
+- Old unused components.
+- Reference to 'environment' from RouteApplicationParams.
+
+
 # [3.9.4] - 2023-8-21 [PR: #449](https://github.com/dolittle/Studio/pull/449)
 - Change the accepted file extension to ".ionapi"
 - Set maxwidth for create message type button
