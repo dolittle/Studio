@@ -1,3 +1,8 @@
+# [3.9.4] - 2023-8-21 [PR: #449](https://github.com/dolittle/Studio/pull/449)
+- Change the accepted file extension to ".ionapi"
+- Set maxwidth for create message type button
+
+
 # [3.9.3] - 2023-8-21 [PR: #448](https://github.com/dolittle/Studio/pull/448)
 ### Summary
 Allow native column filtering for Message mapping table
