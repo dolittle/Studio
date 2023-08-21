@@ -7,38 +7,37 @@ import { useGlobalContext } from '../../context/globalContext';
 import { useSnackbar } from 'notistack';
 import { Navigate } from 'react-router-dom';
 
-import { getApplicationsListing, HttpResponseApplications } from '../../apis/solutions/application';
+import { getApplicationsListing } from '../../apis/solutions/application';
 
 export const LandingPageDecider = () => {
     const { currentApplicationId, setCurrentApplicationId } = useGlobalContext();
     const { enqueueSnackbar } = useSnackbar();
 
-    const [hasOneApplication, setHasOneApplication] = useState(false);
+    const [hasApplicationId, setHasApplicationId] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    // TODO handle when not 200!
     useEffect(() => {
-        Promise.all([getApplicationsListing()])
-            .then(values => {
-                const response = values[0] as HttpResponseApplications;
+        if (currentApplicationId) {
+            setHasApplicationId(true);
+            setIsLoaded(true);
+            return;
+        }
 
-                if (response.applications.length === 1) {
-                    setCurrentApplicationId(response.applications[0].id);
-                    setHasOneApplication(true);
+        Promise.all([getApplicationsListing()])
+            .then(response => {
+                if (response[0].applications.length === 1) {
+                    setCurrentApplicationId(response[0].applications[0].id);
+                    setHasApplicationId(true);
                 }
+
+                setIsLoaded(true);
             })
-            .catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }))
-            .finally(() => setIsLoaded(true));
+            .catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }));
     }, []);
 
     if (!isLoaded) return null;
 
-    // TODO ENV: Navigate to '/home'.
     return (
-        hasOneApplication ? (
-            <Navigate to={`/microservices/application/${currentApplicationId}/overview`} />
-        ) : (
-            <Navigate to='/applications' />
-        )
+        hasApplicationId ? <Navigate to='/home' /> : <Navigate to='/applications' />
     );
 };
