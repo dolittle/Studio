@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import { Paper } from '@mui/material';
-import { DataGridPro, GridColDef, GridSelectionModel, GridRowId, useGridApiRef } from '@mui/x-data-grid-pro';
+import { Box, Paper, Tooltip } from '@mui/material';
+import { DataGridPro, GridColDef, GridSelectionModel, GridRowId, useGridApiRef, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid-pro';
 
 import { EditCell, EditTextFieldCell } from '@dolittle/design-system';
 
@@ -28,27 +28,6 @@ export type MessageMappingTableProps = {
     onFieldMapped: (m3Field: string, mappedFieldName) => void;
 };
 
-const columns: GridColDef<DataGridTableListingEntry>[] = [
-    {
-        field: 'm3ColumnName',
-        headerName: 'M3 Field Name',
-        minWidth: 270,
-    },
-    {
-        field: 'm3Description',
-        headerName: 'M3 Description',
-        minWidth: 270,
-    },
-    {
-        field: 'fieldName',
-        headerName: 'Remapped Name',
-        editable: true,
-        minWidth: 270,
-        renderCell: EditCell,
-        renderEditCell: EditTextFieldCell,
-    },
-];
-
 export const MessageMappingTable = ({
     dataGridListing,
     selectedIds,
@@ -57,6 +36,41 @@ export const MessageMappingTable = ({
     isLoading,
     onFieldMapped,
 }: MessageMappingTableProps) => {
+    const columns: GridColDef<DataGridTableListingEntry>[] = useMemo(() => [
+        {
+            ...GRID_CHECKBOX_SELECTION_COL_DEF,
+            renderCell: (params) => {
+                return <>
+                    {disabledRows?.includes(params.row.id)
+                        ? <Tooltip
+                            title='This is a primary key for this table and is required as part of the message type.'
+                            placement='right'
+                        >
+                            <Box>{GRID_CHECKBOX_SELECTION_COL_DEF.renderCell?.(params)}</Box>
+                        </Tooltip>
+                        : GRID_CHECKBOX_SELECTION_COL_DEF.renderCell?.(params)}
+                </>;
+            }
+        },
+        {
+            field: 'm3ColumnName',
+            headerName: 'M3 Field Name',
+            minWidth: 270,
+        },
+        {
+            field: 'm3Description',
+            headerName: 'M3 Description',
+            minWidth: 270,
+        },
+        {
+            field: 'fieldName',
+            headerName: 'Remapped Name',
+            editable: true,
+            minWidth: 270,
+            renderCell: EditCell,
+            renderEditCell: EditTextFieldCell,
+        },
+    ], [disabledRows]);
 
     const gridApiRef = useGridApiRef();
 
