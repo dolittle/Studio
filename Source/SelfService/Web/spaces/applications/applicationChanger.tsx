@@ -3,8 +3,9 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useGlobalContext } from '../../context/globalContext';
+import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import { useGlobalContext } from '../../context/globalContext';
 
 import { ShortInfo } from '../../apis/solutions/api';
 import { getApplication, getApplicationsListing, HttpResponseApplication, HttpResponseApplications } from '../../apis/solutions/application';
@@ -14,6 +15,7 @@ import { getSelectionMenuItems, DropdownMenuProps, MenuItemProps } from '@dolitt
 import { ApplicationCreateDialog } from './applicationCreateDialog';
 
 export const ApplicationChanger = () => {
+    const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const { currentApplicationId, setCurrentApplicationId } = useGlobalContext();
 
@@ -24,7 +26,11 @@ export const ApplicationChanger = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if (!currentApplicationId) return;
+        if (!currentApplicationId) {
+            enqueueSnackbar('No application found with this ID.', { variant: 'error' });
+            navigate('/applications');
+            return;
+        };
 
         Promise.all([
             getApplicationsListing(),
@@ -39,7 +45,8 @@ export const ApplicationChanger = () => {
             setIsLoading(false);
         }).catch(() => {
             enqueueSnackbar('Failed getting data from the server.', { variant: 'error' });
-
+            navigate('/applications');
+            return;
         });
     }, []);
 
@@ -66,8 +73,9 @@ export const ApplicationChanger = () => {
 
     const handleApplicationChange = (menuItem: MenuItemProps) => {
         if (menuItem.id === currentApplicationId) return;
+
         setCurrentApplicationId(menuItem.id);
-        window.location.reload();
+        window.location.href = 'selfservice/home';
         return false;
     };
 

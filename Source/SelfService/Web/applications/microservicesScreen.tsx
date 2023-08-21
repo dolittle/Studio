@@ -11,7 +11,7 @@ import { Typography } from '@mui/material';
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
 
 import { getMicroservices } from '../apis/solutions/api';
-import { getApplicationsListing, getApplication, HttpResponseApplication } from '../apis/solutions/application';
+import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
 
 import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { Microservice } from './microservice/microservices/microservices';
@@ -31,14 +31,17 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
     const currentApplicationId = routeApplicationParams.applicationId;
 
     useEffect(() => {
-        if (!currentApplicationId) return;
+        if (!currentApplicationId) {
+            enqueueSnackbar('No application found with this ID.', { variant: 'error' });
+            navigate('/applications');
+            return;
+        };
 
         Promise.all([
-            getApplicationsListing(),
             getApplication(currentApplicationId),
             getMicroservices(currentApplicationId),
         ]).then(values => {
-            const applicationData = values[1];
+            const applicationData = values[0];
 
             if (!applicationData.id) {
                 navigate('/problem');
@@ -48,13 +51,15 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
             setApplication(applicationData);
 
             mergeMicroservicesFromGit(applicationData.microservices);
-            mergeMicroservicesFromK8s(values[2].microservices);
+            mergeMicroservicesFromK8s(values[1].microservices);
 
             setIsLoaded(true);
         }).catch(() => {
             enqueueSnackbar('Failed getting data from the server.', { variant: 'error' });
+            navigate('/applications');
+            return;
         });
-    }, [currentApplicationId]);
+    }, []);
 
     if (!isLoaded) return null;
 
