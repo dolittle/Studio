@@ -1,3 +1,11 @@
+# [3.9.7] - 2023-8-22 [PR: #452](https://github.com/dolittle/Studio/pull/452)
+## Summary
+
+Fixed log line text that overflowed if long text has no spaces.
+
+<img width="1471" alt="Screenshot 2023-08-22 at 18 27 17" src="https://github.com/dolittle/Studio/assets/19160439/5faea2c1-d450-4628-9428-4d0e46e5b7e1">
+
+
 # [3.9.5] - 2023-8-21 [PR: #450](https://github.com/dolittle/Studio/pull/450)
 ## Summary
 
