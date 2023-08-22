@@ -119,12 +119,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
                         id: connectionId,
                         body: data.connectorName,
                     },
-                    {
-                        onSuccess: () => {
-                            handleSuccessfulSave('Saved Name');
-                        },
-                        onError: (error) => handleErrorWhenSaving('Error saving Name', error),
-                    },
                 )
             });
         }
@@ -138,12 +132,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
                         {
                             id: connectionId,
                         },
-                        {
-                            onSuccess: () => {
-                                handleSuccessfulSave('Saved Hosting Type');
-                            },
-                            onError: (error) => handleErrorWhenSaving('Error saving Hosting Type', error),
-                        },
                     )
                 });
             }
@@ -155,12 +143,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
                     action: onCloudConfigurationMutation.mutateAsync(
                         {
                             id: connectionId,
-                        },
-                        {
-                            onSuccess: () => {
-                                handleSuccessfulSave('Saved Hosting Type');
-                            },
-                            onError: (error) => handleErrorWhenSaving('Error saving Hosting Type', error),
                         },
                     )
                 });
@@ -181,12 +163,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
                             password: data.metadataPublisherPassword,
                         },
                     },
-                    {
-                        onSuccess: () => {
-                            handleSuccessfulSave('Saved MDP Configuration');
-                        },
-                        onError: (error) => handleErrorWhenSaving('Error saving MDP Configuration', error),
-                    },
                 )
             });
         }
@@ -199,12 +175,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
                     {
                         id: connectionId,
                         ionConfigRequest: data.ionConfiguration,
-                    },
-                    {
-                        onSuccess: () => {
-                            handleSuccessfulSave('Saved ION Configuration');
-                        },
-                        onError: (error) => handleErrorWhenSaving('Error saving ION Configuration', error),
                     },
                 )
             });
@@ -222,7 +192,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
                     const errorState: FormSaveAction = { name: saveAction.name, status: 'error', errorMessage: result.reason };
                     return errorState;
                 });
-                console.log('saveState from promises', saveState);
                 setLastSaveState(saveState);
             });
     }, [
