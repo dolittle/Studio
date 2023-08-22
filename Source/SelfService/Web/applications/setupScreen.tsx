@@ -14,7 +14,7 @@ import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayo
 import { SetupContainerScreen } from './setup/setupContainerScreen';
 import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
 
-export const DocumentationScreen = withRouteApplicationState(({ routeApplicationParams }) => {
+export const SetupScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 

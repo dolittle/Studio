@@ -22,7 +22,7 @@ import { Problem } from './components/problem';
 import { LandingPageDecider } from './components/layout/landingPageDecider';
 
 import { BackupsScreen } from './applications/backupsScreen';
-import { DocumentationScreen } from './applications/documentationScreen';
+import { SetupScreen } from './applications/setupScreen';
 import { MicroservicesScreen } from './applications/microservicesScreen';
 import { ContainerRegistryScreen } from './applications/containerRegistryScreen';
 import { M3ConnectorScreen } from './applications/m3connectorScreen';
@@ -61,13 +61,13 @@ export const App = () => {
 
                             <Route path='/microservices/application/:applicationId/*' element={<MicroservicesScreen />} />
 
-                            <Route path='/setup/application/:applicationId/*' element={<DocumentationScreen />} />
-
                             <Route path='/containerregistry/application/:applicationId/*' element={<ContainerRegistryScreen />} />
 
                             <Route path='/m3connector/application/:applicationId/*' element={<M3ConnectorScreen />} />
 
                             <Route path='/logs/application/:applicationId' element={<LogsScreen />} />
+
+                            <Route path='/setup/application/:applicationId/*' element={<SetupScreen />} />
 
                             <Route path='/admin/*' element={<AdminScreen />} />
 
