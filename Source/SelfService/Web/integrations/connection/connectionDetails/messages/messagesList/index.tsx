@@ -82,7 +82,7 @@ export const MessagesListView = () => {
                         onSelectedIdsChanged={setSelectedMessageTypeIds}
                     />
                 </ContentContainer>
-                <Box sx={{ maxWidth: '1200px' }}><CreateMessagesButton onClick={() => { handleCreateNewMessage(); }} /></Box>
+                <CreateMessagesButton onClick={() => { handleCreateNewMessage(); }} />
             </> :
             <NoMessages onCreateNew={() => { handleCreateNewMessage(); }} />
     );
