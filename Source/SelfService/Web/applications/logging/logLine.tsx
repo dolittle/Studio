@@ -2,13 +2,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
+
 import { Box, Skeleton } from '@mui/material';
+
+import { Button } from '@dolittle/design-system';
+
 import { format } from 'date-fns';
 
 import { ColoredLine, ColoredLineSection, TerminalColor } from './lineParsing';
 import { DataLabels } from './loki/types';
-
-import { Button } from '@dolittle/design-system';
 
 const styles = {
     showCell: {
@@ -33,6 +35,14 @@ const styles = {
         flexShrink: 0,
         textOverflow: 'ellipsis',
         overflow: 'hidden',
+    },
+    textCell: {
+        display: 'flex',
+        alignItems: 'center',
+        flexGrow: 1,
+        wordWrap: 'break-word',
+        whiteSpace: 'pre-wrap',
+        wordBreak: 'break-word',
     },
 };
 
@@ -157,7 +167,7 @@ export const LogLine = ({ line, showContextButton, loading, onClickShowLineConte
                 </SkeletonWhenLoading>
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}
+            <Box sx={styles.textCell}
                 style={
                     leadingWhitespace > 0 ? {
                         paddingLeft: leadingEmSpace,
