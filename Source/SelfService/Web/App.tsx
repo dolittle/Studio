@@ -61,7 +61,7 @@ export const App = () => {
 
                             <Route path='/microservices/application/:applicationId/*' element={<MicroservicesScreen />} />
 
-                            <Route path='/documentation/application/:applicationId/*' element={<DocumentationScreen />} />
+                            <Route path='/setup/application/:applicationId/*' element={<DocumentationScreen />} />
 
                             <Route path='/containerregistry/application/:applicationId/*' element={<ContainerRegistryScreen />} />
 

@@ -34,9 +34,9 @@ export const SetupContainerScreen = ({ application }: SetupContainerScreenProps)
 
     const applicationId = application.id;
 
-    const containerRegistryHref = useHref(`/documentation/application/${applicationId}/container-registry-info`);
-    const kubernetesAccessHref = useHref(`/documentation/application/${applicationId}/verify-kubernetes-access`);
-    const azurePipelineHref = useHref(`/documentation/application/${applicationId}/ci-cd/azure-pipelines`);
+    const containerRegistryHref = useHref(`/setup/application/${applicationId}/container-registry-info`);
+    const kubernetesAccessHref = useHref(`/setup/application/${applicationId}/verify-kubernetes-access`);
+    const azurePipelineHref = useHref(`/setup/application/${applicationId}/ci-cd/azure-pipelines`);
 
     useEffect(() => {
         if (!$isLoaded) {
@@ -52,7 +52,7 @@ export const SetupContainerScreen = ({ application }: SetupContainerScreenProps)
     if ($info.applicationId === '') return null;
 
     const handleBackClick = () => {
-        const href = `/documentation/application/${applicationId}/overview`;
+        const href = `/setup/application/${applicationId}/overview`;
         navigate(href);
     };
 
