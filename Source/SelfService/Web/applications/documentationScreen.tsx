@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 
 import { Typography } from '@mui/material';
 
-import { HttpResponseApplication, getApplication } from '../apis/solutions/application';
+import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
 
 import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { SetupContainerScreen } from './setup/setupContainerScreen';
@@ -18,13 +18,17 @@ export const DocumentationScreen = withRouteApplicationState(({ routeApplication
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
-    const currentApplicationId = routeApplicationParams.applicationId;
-
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [isLoaded, setIsLoaded] = useState(false);
 
+    const currentApplicationId = routeApplicationParams.applicationId;
+
     useEffect(() => {
-        if (!currentApplicationId) return;
+        if (!currentApplicationId) {
+            enqueueSnackbar('No application found with this ID.', { variant: 'error' });
+            navigate('/applications');
+            return;
+        };
 
         Promise.all([getApplication(currentApplicationId)])
             .then(values => {
@@ -37,6 +41,8 @@ export const DocumentationScreen = withRouteApplicationState(({ routeApplication
                 setIsLoaded(true);
             }).catch(() => {
                 enqueueSnackbar('Failed getting data from the server.', { variant: 'error' });
+                navigate('/applications');
+                return;
             });
     }, [currentApplicationId]);
 
