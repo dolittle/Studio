@@ -1,6 +1,7 @@
 .openapi-generator-ignore
 apis/AsyncApiApi.ts
 apis/BaseMetadataApi.ts
+apis/CommandApi.ts
 apis/ConnectionConfigurationApi.ts
 apis/ConnectionRestApiApi.ts
 apis/ConnectionsApi.ts
