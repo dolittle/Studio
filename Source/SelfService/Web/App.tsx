@@ -55,11 +55,13 @@ export const App = () => {
                         <Routes>
                             <Route path='/' element={<LandingPageDecider />} />
 
+                            <Route path='/home' element={<HomeScreen />} />
+
                             <Route path='/applications' element={<ApplicationsScreen />} />
 
-                            <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
-
                             <Route path='/microservices/application/:applicationId/*' element={<MicroservicesScreen />} />
+
+                            <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
 
                             <Route path='/containerregistry/application/:applicationId/*' element={<ContainerRegistryScreen />} />
 
@@ -69,13 +71,11 @@ export const App = () => {
 
                             <Route path='/setup/application/:applicationId/*' element={<SetupScreen />} />
 
+                            <Route path='/integrations/*' element={<IntegrationsIndex />} />
+
                             <Route path='/admin/*' element={<AdminScreen />} />
 
                             <Route path='/problem' element={<Problem />} />
-
-                            <Route path='/home' element={<HomeScreen />} />
-
-                            <Route path='/integrations/*' element={<IntegrationsIndex />} />
 
                             <Route path='*' element={<RouteNotFound redirectUrl='/' auto={true} />} />
                         </Routes>
