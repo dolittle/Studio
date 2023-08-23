@@ -43,6 +43,24 @@ export type InputProps = {
     type?: string;
 
     /**
+     * If true, the `Input` element will take up the full width of its container.
+     * @default false
+     */
+        isFullWidth?: boolean;
+
+    /**
+     * Whether the input should be multiline.
+     * @default 'undefined'
+     */
+    multiline?: boolean;
+
+    /**
+     * The number of rows to limit the multiline input. Required {@link multiline} to be set .
+     * @default 'undefined'
+     */
+    rows?: number;
+
+    /**
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
@@ -53,7 +71,7 @@ export type InputProps = {
  * @param props - The {@link InputProps} for the input.
  * @returns A {@link Input} component.
  */
-export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, startAdornment, placeholder, dashedBorder, type, sx, ...fieldProps }, ref) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, startAdornment, placeholder, dashedBorder, type, isFullWidth, multiline, rows, sx, ...fieldProps }, ref) => {
     const { field, hasError, errorMessage } = useController(fieldProps);
 
     return (
@@ -61,11 +79,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, star
             variant='outlined'
             size='small'
             sx={{
-                'width': 220,
+                'width': isFullWidth ? undefined :  220,
                 'mb': { sm: 0, xs: 2.5 },
                 '& fieldset': { borderStyle: dashedBorder ? 'dashed' : 'solid' },
                 ...sx,
-            }}>
+            }}
+            fullWidth={isFullWidth}
+            >
             <InputLabel
                 htmlFor={fieldProps.id}
                 required={isRequired(fieldProps.required)}
@@ -90,6 +110,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, star
                 aria-describedby={`${fieldProps.id}-helper-text`}
                 type={type ?? 'text'}
                 size='small'
+                multiline={multiline}
+                rows={rows}
                 sx={{ typography: 'body2' }}
                 startAdornment={startAdornment ?
                     <InputAdornment position='start'>

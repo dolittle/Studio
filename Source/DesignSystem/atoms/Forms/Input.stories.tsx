@@ -52,7 +52,7 @@ to understand the requested information and to address any errors.
 
 **Layout:** Input fields should expand with fluid layouts but never fill an entire width of a large screen. Take care to keep alignment on text fields where it makes sense and shorten fields where appropriate. For example, an input field for abbreviated state names such as AL, AK, AZ, AR, etc.. can be shortened. However, an input field for first and last name will be longer and should maintain the same width as each other.` },
     },
-    controls: { include: ['id', 'label', 'autoFocus', 'startAdornment', 'placeholder', 'disabled', 'required', 'pattern'] },
+    controls: { include: ['id', 'label', 'autoFocus', 'startAdornment', 'placeholder', 'disabled', 'required', 'pattern', 'isFullWidth'] },
 };
 
 metadata.argTypes = {
@@ -82,6 +82,11 @@ metadata.argTypes = {
             Password: passwordRegex,
         },
     },
+    isFullWidth: {
+        description: 'If true, the `Input` element will take up the full width of its container.',
+        control: { type: 'boolean' },
+        table: { defaultValue: { summary: 'false' } },
+    },
 };
 
 metadata.args = {
@@ -93,6 +98,7 @@ metadata.args = {
     disabled: false,
     required: false,
     pattern: undefined,
+    isFullWidth: false
 };
 
 export default metadata;
@@ -107,9 +113,9 @@ export const Required = createStory({
 Required.parameters = {
     docs: {
         description: {
-            story: `Always include an asterisk (*) on the label when input is required from the user. 
-            Alternatively, you can leave out the asterisk IF all fields are required and only a few are optional. 
-            In this case, include the type (optional) in the label. This is only recommended in familiar tasks where users expect certain information to be required, 
+            story: `Always include an asterisk (*) on the label when input is required from the user.
+            Alternatively, you can leave out the asterisk IF all fields are required and only a few are optional.
+            In this case, include the type (optional) in the label. This is only recommended in familiar tasks where users expect certain information to be required,
             such as a signup or checkout process.`
         },
     },
@@ -152,3 +158,16 @@ WithSideTooltip.decorators = [
         </Tooltip>
     ),
 ];
+
+export const WithMultiline = createStory({
+    id: 'withMultiline',
+    label: 'With multiline',
+    multiline: true,
+    rows: 5,
+});
+
+export const WithFullWidth = createStory({
+    id: 'withFullWidth',
+    label: 'With full width',
+    isFullWidth: true,
+});
