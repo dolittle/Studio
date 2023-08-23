@@ -12,6 +12,7 @@ export { AlertDialog, AlertDialogProps, DialogForm } from './atoms/AlertDialog';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
 export { Breadcrumbs, BreadcrumbsProps } from './atoms/Breadcrumbs';
 export { Button, ButtonProps } from './atoms/Button';
+export { Chip, ChipProps } from './atoms/Chip';
 export * from './atoms/Forms';
 export { Icon, IconProps } from './atoms/Icon';
 export { IconButton, IconButtonProps } from './atoms/IconButton';
