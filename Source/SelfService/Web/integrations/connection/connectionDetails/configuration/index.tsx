@@ -19,6 +19,7 @@ import { M3ConfigurationForm, M3ConfigurationFormRef, M3ConfigurationFormSaveSta
 import { MainM3ConnectionInfo } from '../../configuration/MainM3ConnectionInfo';
 import { useBuildConfigurationAccordionList } from '../../configuration/useBuildConfigurationAccordionList';
 import { ActionToolbar } from './ActionToolbar';
+import { ConfigurationFormContent } from '../../configuration/ConfigurationFormContent';
 
 export const ConfigurationView = () => {
     const [canEdit, setEditMode] = useState(false);
@@ -89,6 +90,7 @@ export const ConfigurationView = () => {
 
     const handleSaveState = (saveState: M3ConfigurationFormSaveState) => {
         setLastSaveState(saveState);
+        console.log('handleSaveState', saveState);
         saveState.forEach((state) => {
             if (state.status === 'success') {
                 enqueueSnackbar(`Saved ${state.name}`);
@@ -130,7 +132,7 @@ export const ConfigurationView = () => {
                 <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} canEdit={canEdit} />
 
                 <Collapse in={canConfigureConnection}>
-                    <AccordionList  {...accordionListProps} />
+                    <ConfigurationFormContent connection={connection} canEdit={canEdit} formSaveState={lastSaveState} fileUploadRef={fileUploadRef}/>
                 </Collapse>
             </M3ConfigurationForm>
         </Box>
