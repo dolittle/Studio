@@ -117,24 +117,26 @@ export type AccordionProps = {
  * @param {AccordionProps} props - The {@link AccordionProps}.
  * @returns A {@link Accordion} component.
  */
-export const Accordion = ({ id, title, progressStatus, progressLabel, defaultExpanded, expanded, onExpanded, disabled, children, sx }: AccordionProps) =>
-    <MuiAccordion
-        defaultExpanded={defaultExpanded}
-        expanded={expanded}
-        onChange={onExpanded}
-        disabled={disabled}
-        sx={{ ...styles.accordion, ...sx }}
-    >
-        <AccordionSummary
-            expandIcon={<ExpandCircleDownRounded sx={styles.expandIcon} />}
-            aria-controls={`${id}-content`}
-            id={`${id}-header`}
+export const Accordion = ({ id, title, progressStatus, progressLabel, defaultExpanded, expanded, onExpanded, disabled, children, sx }: AccordionProps) => {
+        console.log('expanded', expanded);
+        return <MuiAccordion
+            defaultExpanded={defaultExpanded}
+            expanded={expanded}
+            onChange={onExpanded}
             disabled={disabled}
-            sx={styles.accordionSummary}
+            sx={{ ...styles.accordion, ...sx }}
         >
-            <Typography variant='subtitle1' sx={{ ml: 1.25, mr: 3 }}>{title}</Typography>
-            {progressStatus && <StatusIndicator status={progressStatus} label={progressLabel} />}
-        </AccordionSummary>
+            <AccordionSummary
+                expandIcon={<ExpandCircleDownRounded sx={styles.expandIcon} />}
+                aria-controls={`${id}-content`}
+                id={`${id}-header`}
+                disabled={disabled}
+                sx={styles.accordionSummary}
+            >
+                <Typography variant='subtitle1' sx={{ ml: 1.25, mr: 3 }}>{title}</Typography>
+                {progressStatus && <StatusIndicator status={progressStatus} label={progressLabel} />}
+            </AccordionSummary>
 
-        <AccordionDetails>{children}</AccordionDetails>
-    </MuiAccordion>;
+            <AccordionDetails>{children}</AccordionDetails>
+        </MuiAccordion>;
+    };
