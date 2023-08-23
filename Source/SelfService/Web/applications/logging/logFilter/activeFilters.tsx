@@ -3,11 +3,11 @@
 
 import React from 'react';
 
-import { Chip, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+
+import { Button, Chip } from '@dolittle/design-system';
 
 import { LogFilterMicroservice, LogFilterObject } from './logFilterPanel';
-
-import { Button } from '@dolittle/design-system';
 
 export type ActiveFiltersProps = {
     filters: LogFilterObject;
@@ -54,13 +54,11 @@ export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) =>
         <>
             <Button label='Clear Filters' disabled={filters.searchTerms.length === 0} color='subtle' onClick={clearFilters} />
 
-            {filters.searchTerms.map((s, index) =>
+            {filters.searchTerms.map((term, index) =>
                 <Chip
                     key={index}
-                    label={`"${s}"`}
-                    onDelete={() => removeTerm(s, index)}
-                    color='primary'
-                    size='small'
+                    label={`"${term}"`}
+                    onDelete={() => removeTerm(term, index)}
                     sx={{ ml: 1 }}
                 />
             )}
@@ -74,8 +72,6 @@ export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) =>
                     key={index}
                     label={environment}
                     onDelete={() => removeEnvironment(environment, index)}
-                    color='primary'
-                    size='small'
                     sx={{ mr: 1 }}
                 />
             )}
@@ -89,19 +85,13 @@ export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) =>
                     key={index}
                     label={microservice.name}
                     onDelete={() => removeMicroservice(microservice, index)}
-                    color='primary'
-                    size='small'
                     sx={{ mr: 1 }}
                 />
             )}
 
             <Typography component='span' sx={{ mx: 2 }}>|</Typography>
 
-            <Chip
-                label={filters.dateRange === 'live' ? 'Live logs' : 'Date range'}
-                color='primary'
-                size='small'
-            />
+            <Chip label={filters.dateRange === 'live' ? 'Live logs' : 'Date range'} />
         </>
     );
 };
