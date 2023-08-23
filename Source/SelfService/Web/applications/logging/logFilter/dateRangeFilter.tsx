@@ -3,14 +3,13 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Box, TextField } from '@mui/material';
+import { Box, MenuItem, SelectChangeEvent, TextField } from '@mui/material';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
-import { DropdownMenu } from '@dolittle/design-system';
-
 import { nb } from 'date-fns/locale';
 
+import { FilterSelect } from './filterSelect';
 import { LogFilterDateRange } from './logFilterPanel';
 
 const beginningOfToday = () => {
@@ -34,6 +33,8 @@ export const DateRangeFilter = ({ range, onSetDateRange }: DateRangeFilterProps)
     const [startDate, setStartDate] = useState<Date | null>(beginningOfToday);
     const [stopDate, setStopDate] = useState<Date | null>(endOfToday);
 
+    const selectValue = range === 'live' ? 'live' : 'daterange';
+
     const isValidDate = (date: Date | null): boolean => date?.toString().toLowerCase() !== 'invalid date';
 
     useEffect(() => {
@@ -51,8 +52,8 @@ export const DateRangeFilter = ({ range, onSetDateRange }: DateRangeFilterProps)
 
     }, [range]);
 
-    const handleOnChange = (value: string) => {
-        if (value === 'date-range') {
+    const handleOnChange = (event: SelectChangeEvent<string>) => {
+        if (event.target.value === 'daterange') {
             let start = startDate, stop = stopDate;
 
             if (start === null) {
@@ -100,22 +101,13 @@ export const DateRangeFilter = ({ range, onSetDateRange }: DateRangeFilterProps)
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={nb}>
-            <DropdownMenu
-                id='logs-filter-panel'
-                selected={range === 'live' ? 'Live logs' : 'Date range...'}
-                menuItems={[
-                    {
-                        id: 'live-logs',
-                        label: 'Live logs',
-                        onSelect: () => handleOnChange('live'),
-                    },
-                    {
-                        id: 'date-range',
-                        label: 'Date range...',
-                        onSelect: () => handleOnChange('date-range'),
-                    },
-                ]}
-            />
+            <FilterSelect
+                value={selectValue}
+                onChange={handleOnChange}
+            >
+                <MenuItem value='live'>Live logs</MenuItem>
+                <MenuItem value='daterange'>Date range...</MenuItem>
+            </FilterSelect>
 
             {range !== 'live' &&
                 <Box sx={{ mt: 1 }}>
