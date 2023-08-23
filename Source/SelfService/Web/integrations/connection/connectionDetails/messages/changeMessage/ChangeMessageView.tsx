@@ -15,6 +15,7 @@ import { MessageDetailsSection } from './components/MessageDetailsSection';
 import { TableSection } from './components/TableSection';
 import { SubmitButtonSection } from './components/SubmitButtonSection';
 import { CancelOrDiscardButton } from './components/CancelOrDiscardButton';
+import { MessageFilterSection } from './components/MessageFilterSection';
 
 export type ChangeMessageViewProps = {
     mode: ViewMode;
@@ -102,6 +103,7 @@ export const ChangeMessageView = ({
                                             initialSelectedFields={messageType?.fieldMappings ?? []}
                                             onBackToSearchResultsClicked={() => removeSelectedTable()}
                                         />
+                                        <MessageFilterSection mode={mode} />
                                         <SubmitButtonSection
                                             mode={mode}
                                             isSubmitting={isSubmitting}

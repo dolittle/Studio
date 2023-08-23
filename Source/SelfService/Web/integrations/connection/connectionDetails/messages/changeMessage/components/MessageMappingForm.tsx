@@ -49,6 +49,7 @@ export const MessageMappingForm = ({
                 fieldName: field.mappedName,
                 fieldDescription: field.mappedDescription,
             })) || [],
+            jqFilter: messageType?.jqPredicate ?? '',
         });
         setHasBeenReset(true);
     }, [messageType, formRef.current?.reset]);
@@ -67,6 +68,7 @@ export const MessageMappingForm = ({
             setMessageMappingRequestArguments: {
                 description: values.description,
                 fields: values.fields,
+                jqFilter: values.jqFilter,
             },
         }, {
             onSuccess(data, variables, context) {
@@ -90,6 +92,7 @@ export const MessageMappingForm = ({
                     fieldName: field.mappedName,
                     fieldDescription: field.mappedDescription,
                 })) || [],
+                jqFilter: messageType?.jqPredicate ?? '',
             }}
             onSubmit={handleNewMessageSave}
             fRef={formRef}
