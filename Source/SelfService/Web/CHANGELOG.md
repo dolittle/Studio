@@ -1,3 +1,10 @@
+# [3.9.8] - 2023-8-23 [PR: #453](https://github.com/dolittle/Studio/pull/453)
+- Generate the latest integrations API
+- Add support for multiline and fullwidth Input field
+- Add support for jqFilter field when mapping message type
+- Add some meaningful content to the Filters section
+
+
 # [3.9.7] - 2023-8-22 [PR: #452](https://github.com/dolittle/Studio/pull/452)
 ## Summary
 
