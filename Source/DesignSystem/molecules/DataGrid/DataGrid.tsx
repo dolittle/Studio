@@ -7,7 +7,11 @@ import { DataGridPro, DataGridProProps } from '@mui/x-data-grid-pro';
 
 import { DataGridWrapper } from './DataGridWrapper';
 
-// Use these props on every DataGrid in the application.
+/**
+ * Default props for the DataGrid component.
+ *
+ * Use these props on every DataGrid in the application.
+ */
 export const dataGridDefaultProps: DataGridProProps = {
     columns: [],
     rows: [],
@@ -23,6 +27,11 @@ export const dataGridDefaultProps: DataGridProProps = {
     disableColumnSelector: true,
 };
 
+/**
+ * Show DataGrid component in Storybook.
+ *
+ * Not intended to be used outside of Storybook.
+ */
 export const DataGrid = (args: DataGridProProps) =>
     <DataGridWrapper sx={{ minHeight: 250 }}>
         <DataGridPro {...dataGridDefaultProps} {...args} />
