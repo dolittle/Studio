@@ -9,6 +9,8 @@ import { Button, Chip } from '@dolittle/design-system';
 
 import { LogFilterMicroservice, LogFilterObject } from './logFilterPanel';
 
+const Separator = () => <Typography component='span' sx={{ mx: 1 }}>|</Typography>;
+
 export type ActiveFiltersProps = {
     filters: LogFilterObject;
     updateFilters: (filters: LogFilterObject) => void;
@@ -59,39 +61,38 @@ export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) =>
                     key={index}
                     label={`"${term}"`}
                     onDelete={() => removeTerm(term, index)}
-                    sx={{ ml: 1 }}
+                    sx={{ mx: 1 }}
                 />
             )}
 
-            {filters.environment?.length &&
-                <Typography component='span' sx={{ mx: 2 }}>|</Typography>
-            }
+            {filters.environment?.length && <Separator />}
 
             {filters.environment?.map((environment, index) =>
                 <Chip
                     key={index}
                     label={environment}
                     onDelete={() => removeEnvironment(environment, index)}
-                    sx={{ mr: 1 }}
+                    sx={{ mx: 1 }}
                 />
             )}
 
-            {filters.microservice?.length &&
-                <Typography component='span' sx={{ mx: 2 }}>|</Typography>
-            }
+            {filters.microservice?.length && <Separator />}
 
             {filters.microservice?.map((microservice, index) =>
                 <Chip
                     key={index}
                     label={microservice.name}
                     onDelete={() => removeMicroservice(microservice, index)}
-                    sx={{ mr: 1 }}
+                    sx={{ mx: 1 }}
                 />
             )}
 
-            <Typography component='span' sx={{ mx: 2 }}>|</Typography>
+            <Separator />
 
-            <Chip label={filters.dateRange === 'live' ? 'Live logs' : 'Date range'} />
+            <Chip
+                label={filters.dateRange === 'live' ? 'Live logs' : 'Date range'}
+                sx={{ mx: 1 }}
+            />
         </>
     );
 };
