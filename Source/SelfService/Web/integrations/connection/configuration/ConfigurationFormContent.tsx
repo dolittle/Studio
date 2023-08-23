@@ -3,7 +3,7 @@
 
 import React, { useMemo } from 'react';
 
-import { AccordionListProps, AccordionProps, FileUploadFormRef } from '@dolittle/design-system';
+import { AccordionList, AccordionListProps, AccordionProps, FileUploadFormRef } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../../apis/integrations/generated';
 
@@ -13,16 +13,23 @@ import { IonServiceAccountCredentials } from './IonServiceAccountCredentials';
 import { configurationStatusFromServiceCredentialsStatus, hostBundleStatusFromServicesStatus } from './statusResolvers';
 import { M3ConfigurationFormSaveState, SaveActionName } from './M3ConfigurationForm';
 
-export function useBuildConfigurationAccordionList(
-    connection: ConnectionModel | undefined,
-    fileUploadRef: React.RefObject<FileUploadFormRef>,
-    canEdit: boolean = true,
-    formSaveState?: M3ConfigurationFormSaveState
-): AccordionListProps {
+export type ConfigurationFormContentProps = {
+    connection: ConnectionModel | undefined;
+    fileUploadRef: React.RefObject<FileUploadFormRef>;
+    canEdit: boolean;
+    formSaveState?: M3ConfigurationFormSaveState;
+};
+
+export const ConfigurationFormContent = ({
+    connection,
+    fileUploadRef,
+    canEdit = true,
+    formSaveState
+}: ConfigurationFormContentProps) => {
 
     const getSaveStateFor = (name: SaveActionName) => formSaveState?.find(state => state.name === name);
 
-    return useMemo(() => {
+    const accordionListProps = useMemo(() => {
         const connectorBundleStatus = hostBundleStatusFromServicesStatus(connection?.mdpStatus, connection?.ionStatus);
         const metadataPublisherCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.mdpStatus);
         const iONServiceAccountCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.ionStatus);
@@ -42,8 +49,8 @@ export function useBuildConfigurationAccordionList(
                 }
             );
         }
-        const expandMdp = mdpSaveState ? mdpSaveState.status === 'error' : undefined;
-        const expandIon = ionSaveState ? ionSaveState.status === 'error' : undefined;
+        const expandMdp = mdpSaveState ? mdpSaveState.status === 'error' : false;
+        const expandIon = ionSaveState ? ionSaveState.status === 'error' : false;
         console.log('expandMdp', expandMdp);
         console.log('expandIon', expandIon);
         items.push(...[
@@ -54,7 +61,7 @@ export function useBuildConfigurationAccordionList(
                 progressStatus: metadataPublisherCredentialsStatus && metadataPublisherCredentialsStatus[0],
                 progressLabel: metadataPublisherCredentialsStatus && metadataPublisherCredentialsStatus[1],
                 sx: { mt: 8 },
-                expanded: expandMdp
+                defaultExpanded: expandMdp
             },
             {
                 id: 'ionCredentials',
@@ -63,10 +70,10 @@ export function useBuildConfigurationAccordionList(
                 progressStatus: iONServiceAccountCredentialsStatus && iONServiceAccountCredentialsStatus[0],
                 progressLabel: iONServiceAccountCredentialsStatus && iONServiceAccountCredentialsStatus[1],
                 sx: { mt: 8 },
-                expanded: expandIon,
+                defaultExpanded: expandIon,
             },]);
         return {
-            singleExpandMode: true,
+            singleExpandMode: false,
             items
         };
     }, [
@@ -77,4 +84,6 @@ export function useBuildConfigurationAccordionList(
         canEdit,
         formSaveState
     ]);
+
+    return <AccordionList  {...accordionListProps} />;
 };
