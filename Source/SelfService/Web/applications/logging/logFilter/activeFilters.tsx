@@ -18,7 +18,7 @@ export type ActiveFiltersProps = {
 
 export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) => {
     const clearFilters = () => {
-        updateFilters({ ...filters, searchTerms: [] });
+        updateFilters({ ...filters, searchTerms: [], environment: [], microservice: [] });
     };
 
     const removeTerm = (term: string, index: number) => {
@@ -52,9 +52,14 @@ export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) =>
         });
     };
 
+    const hasSearchTerms = filters.searchTerms.length > 0 ? true : false;
+    const hasEnvironmentFilter = filters.environment?.length && filters.environment.length > 0 ? true : false;
+    const hasMicroserviceFilter = filters.microservice?.length && filters.microservice.length > 0 ? true : false;
+    const hasFilters = hasSearchTerms || hasEnvironmentFilter || hasMicroserviceFilter;
+
     return (
         <>
-            <Button label='Clear Filters' disabled={filters.searchTerms.length === 0} color='subtle' onClick={clearFilters} />
+            <Button label='Clear Filters' disabled={!hasFilters} color='subtle' onClick={clearFilters} />
 
             {filters.searchTerms.map((term, index) =>
                 <Chip
@@ -65,7 +70,7 @@ export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) =>
                 />
             )}
 
-            {filters.environment?.length && <Separator />}
+            {hasEnvironmentFilter && <Separator />}
 
             {filters.environment?.map((environment, index) =>
                 <Chip
@@ -76,7 +81,7 @@ export const ActiveFilters = ({ updateFilters, filters }: ActiveFiltersProps) =>
                 />
             )}
 
-            {filters.microservice?.length && <Separator />}
+            {hasMicroserviceFilter && <Separator />}
 
             {filters.microservice?.map((microservice, index) =>
                 <Chip
