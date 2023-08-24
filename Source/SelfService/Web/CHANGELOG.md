@@ -1,3 +1,26 @@
+# [3.9.10] - 2023-8-24 [PR: #455](https://github.com/dolittle/Studio/pull/455)
+## Summary
+
+Minor improvements since the release of the new layout.
+
+### Added
+
+- 'defaultStyles' to DataGridWrapper that every DataGrid should use
+- Chip component to Design System
+
+### Changed
+
+- Finished DocumentationScreen renaming to 'SetupScreen'
+- DocumentationScreen error handling. Navigate to 'applications' when application or application ID is not found
+- EnvironmentVariables DataGrid header text alignment to start
+- Commented out GlobalContext unused code for now
+
+### Fixed
+
+- Chips spacing in LogsFilter. Added even margin
+- LogsFilter 'Clear filters' button to not be disabled when filters are active and remove all filters when clicked
+
+
 # [3.9.9] - 2023-8-24 [PR: #454](https://github.com/dolittle/Studio/pull/454)
 - Support passing text variant to the TextCopyBox
 - Improve wording of the message type filters text
