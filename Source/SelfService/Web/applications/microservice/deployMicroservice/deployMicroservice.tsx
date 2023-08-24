@@ -32,13 +32,13 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
     const location = useLocation();
     const { enqueueSnackbar } = useSnackbar();
 
-    const [isLoading, setIsLoading] = useState(false);
-
-    // TODO ENV: Show always as 'false' while deploying and display option later in configuration?
-    //const environmentInfo = application.environments.find(env => env.name === 'Dev')!;
-    const hasM3ConnectorOption = false; // environmentInfo?.connections?.m3Connector || false;
-
     const availableEnvironments = application.environments.map(env => env.name);
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [selectedEnvironment, setSelectedEnvironment] = useState(availableEnvironments[0]);
+
+    const environmentInfo = application.environments.find(env => env.name === selectedEnvironment);
+    const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector;
     const latestRuntimeVersion = getLatestRuntimeInfo().image;
 
     const frag = new URLSearchParams(location.hash.slice(1));
@@ -98,7 +98,7 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
             <Form<MicroserviceFormParameters>
                 initialValues={{
                     microserviceName: '',
-                    developmentEnvironment: availableEnvironments[0],
+                    developmentEnvironment: selectedEnvironment,
                     runtimeVersion: latestRuntimeVersion,
                     headImage: frag.get('head-image') || '', // nginxdemos/hello:latest
                     headPort: 80,
@@ -111,7 +111,7 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
                 sx={{ 'ml': 3, '& .MuiFormControl-root': { my: 1 } }}
                 onSubmit={handleCreateMicroservice}
             >
-                <SetupFields environments={availableEnvironments} />
+                <SetupFields environments={availableEnvironments} onEnvironmentSelect={setSelectedEnvironment} />
                 <ContainerImageFields />
                 <PublicUrlFields />
 
