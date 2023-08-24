@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 
 import { Accordion, AccordionProps } from '@dolittle/design-system';
 
+export type AccordionListItem = Omit<AccordionProps, 'defaultExpanded' | 'expanded' | 'onExpanded'>;
+
 /**
  * The props for a {@link AccordionList} component.
  */
@@ -12,14 +14,7 @@ export type AccordionListProps = {
     /**
      * List of accordion items to display.
      */
-    items: Omit<AccordionProps, 'onExpanded'>[];
-
-    /**
-     * Id of the initial accordion item to be expanded. Optional.
-     *
-     * If left empty, all accordion items start collapsed.
-     */
-    initialId?: string;
+    items: AccordionListItem[];
 
     /**
      * Flag indicating if only one accordion item should be expanded at at time.
@@ -28,6 +23,16 @@ export type AccordionListProps = {
      * @default false
      */
     singleExpandMode?: boolean;
+
+    /**
+     * List of accordion items to expand.
+     */
+    expandedModel?: AccordionListItem['id'][];
+
+    /**
+     * Callback triggered when expanded model changes.
+     */
+    onExpandedModelChange?: (expandedModel: AccordionListItem['id'][]) => void;
 };
 
 /**
@@ -36,12 +41,16 @@ export type AccordionListProps = {
  * @param {AccordionListProps} props - The {@link AccordionListProps}.
  * @returns A {@link AccordionList} component.
  */
-export const AccordionList = ({ singleExpandMode, items, initialId }: AccordionListProps) => {
-    const [expanded, setExpanded] = useState<Set<string>>(new Set(initialId ? [initialId] : []));
-    const [_items, _setItems] = useState<AccordionProps[]>(items);
+export const AccordionList = ({ singleExpandMode, items, expandedModel, onExpandedModelChange }: AccordionListProps) => {
+    const hasMultipleExpanded = expandedModel && expandedModel.length > 1;
+    if (singleExpandMode && hasMultipleExpanded) {
+        console.warn('AccordionList: singleExpandMode is enabled, but more than one accordion item is expanded. Selecting first item.');
+        expandedModel = [expandedModel![0]];
+    }
+
+    const [expanded, setExpanded] = useState<Set<string>>(new Set(expandedModel || []));
 
     const handleExpanded = (accordionId: string, isExpanded: boolean) => {
-        console.log('handleExpanded', accordionId, isExpanded);
         setExpanded(current => {
             const expandedList = singleExpandMode ? new Set<string>() : new Set<string>(current);
             if (isExpanded) {
@@ -49,35 +58,26 @@ export const AccordionList = ({ singleExpandMode, items, initialId }: AccordionL
             } else {
                 expandedList.delete(accordionId);
             }
-            console.log('expandedList', expandedList);
+            onExpandedModelChange?.([...expandedList]);
             return expandedList;
         });
     };
 
     const isExpandedControlledState = (panel: string) => expanded.has(panel);
-    const isExpandedStateOverridden = (item: AccordionProps) => item.expanded !== undefined;
 
     useEffect(() => {
-        // const shouldBeExpanded = singleExpandMode ? expanded === item.id : item.expanded;
-        // if (shouldBeExpanded) {
-        //     setExpanded(item.id);
-        // }
-        if (items === _items) {
-            return;
+        if (expandedModel &&
+            (expandedModel.length !== [...expanded].length|| !expandedModel.every(model => expanded.has(model)))
+        ) {
+            setExpanded(new Set(expandedModel));
         }
-        _setItems(items);
 
-        const itemsToChangeExpandState = items.filter(item => item.expanded !== undefined);
-        itemsToChangeExpandState
-            .forEach(item => item.expanded !== isExpandedControlledState(item.id) && handleExpanded(item.id, item.expanded!));
-    }, [items]);
+    }, [expandedModel]);
 
     return (
         <>
             {items.map(item => <Accordion
                 key={item.id}
-                // id={item.id}
-                // title={item.title}
                 {...item}
                 expanded={isExpandedControlledState(item.id)}
                 onExpanded={(event, isExpanded) => handleExpanded(item.id, isExpanded)}
