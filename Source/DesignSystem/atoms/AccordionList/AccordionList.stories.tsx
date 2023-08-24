@@ -22,7 +22,6 @@ The AccordionList component uses the Accordion component internally. It does so 
 };
 
 metadata.argTypes = {
-    initialId: { control: false },
 };
 
 metadata.args = {
@@ -37,7 +36,7 @@ export const Default = createStory();
 export const InitialExpanded = createStory({
     items: dummyAccordionList,
     singleExpandMode: true,
-    initialId: '2',
+    expandedModel: ['2'],
 });
 InitialExpanded.parameters = {
     docs: {
@@ -58,29 +57,39 @@ export const WithStatusMessage = createStory({
 export const WithProgrammaticallyChangingExpandedState = () => {
     const [items, setItems] = useState(dummyAccordionList);
 
-    const toggleAccordionState = (index: number) => () => {
-        setItems(current => {
-            const newItems = [...current];
-            newItems[index].expanded = !newItems[index].expanded;
-            return newItems;
+    const [expandedModel, setExpandedModel] = useState<string[]>(['1', '3']);
+
+    const toggleAccordionState = (id: string) => {
+        setExpandedModel((current) => {
+            const newExpandedModel = [...current];
+            if (current.includes(id)) {
+                newExpandedModel.splice(newExpandedModel.indexOf(id), 1);
+            } else {
+                newExpandedModel.push(id);
+            }
+            return newExpandedModel;
         });
+    };
+
+    const getButtonLabel = (id: string) => {
+        return `${expandedModel.includes(id) ? 'Collapse' : 'Expand'} Accordion ${id}`;
     };
 
     return <>
         <Box gap={1} display='flex' flexDirection='column' justifyItems='start'>
             <Box gap={1} display='flex' alignItems='center'>
-                <Typography component='span'>Accordion 1 forced state: {items[0].expanded}</Typography>
-                <Button onClick={toggleAccordionState(0)} label={`Force ${!items[0].expanded}`} />
+                <Typography component='span'>Accordion 1 forced state: {expandedModel.includes('1').toString()}</Typography>
+                <Button onClick={() => toggleAccordionState('1')} label={getButtonLabel('1')} />
             </Box>
             <Box gap={1} display='flex' alignItems='center'>
-                <Typography component='span'>Accordion 2 forced state: {items[1].expanded}</Typography>
-                <Button onClick={toggleAccordionState(1)} label={`Force ${!items[1].expanded}`} />
+                <Typography component='span'>Accordion 2 forced state: {expandedModel.includes('2').toString()}</Typography>
+                <Button onClick={() => toggleAccordionState('2')} label={getButtonLabel('2')} />
             </Box>
             <Box gap={1} display='flex' alignItems='center'>
-                <Typography component='span'>Accordion 3 forced state: {items[2].expanded}</Typography>
-                <Button onClick={toggleAccordionState(2)} label={`Force ${!items[2].expanded}`} />
+                <Typography component='span'>Accordion 3 forced state: {expandedModel.includes('3').toString()}</Typography>
+                <Button onClick={() => toggleAccordionState('3')} label={getButtonLabel('3')} />
             </Box>
         </Box >
-        <AccordionList items={items} />
+        <AccordionList items={items} expandedModel={expandedModel} onExpandedModelChange={setExpandedModel} />
     </>;
 };

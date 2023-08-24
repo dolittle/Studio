@@ -3,11 +3,11 @@
 
 import React from 'react';
 
-import { AccordionProps } from '@dolittle/design-system';
+import { AccordionListItem } from '@dolittle/design-system';
 
 import { DummyChildrenContent } from './DummyText';
 
-export const dummyAccordionList: AccordionProps[] = [
+export const dummyAccordionList: AccordionListItem[] = [
     {
         id: '1',
         title: 'Accordion 1',
@@ -25,7 +25,7 @@ export const dummyAccordionList: AccordionProps[] = [
     },
 ];
 
-export const dummyAccordionListWithStatus: AccordionProps[] = [
+export const dummyAccordionListWithStatus: AccordionListItem[] = [
     {
         id: '1',
         title: 'Accordion 1',
