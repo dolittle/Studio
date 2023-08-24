@@ -46,19 +46,19 @@ export const microservicesDataGridColumns: GridColDef[] = [
     {
         field: 'name',
         headerName: 'Name',
-        minWidth: 200,
+        minWidth: 150,
         flex: 1,
     },
     {
         field: 'environment',
         headerName: 'Environment',
-        minWidth: 170,
+        minWidth: 150,
         flex: 1,
     },
     {
         field: 'image',
         headerName: 'Container Image',
-        minWidth: 270,
+        minWidth: 250,
         flex: 1,
         valueGetter: ({ row }: HealthStatusTableRowProps) =>
             `${row.edit?.extra?.headImage || 'N/A'}`,
