@@ -118,7 +118,6 @@ export type AccordionProps = {
  * @returns A {@link Accordion} component.
  */
 export const Accordion = ({ id, title, progressStatus, progressLabel, defaultExpanded, expanded, onExpanded, disabled, children, sx }: AccordionProps) => {
-        console.log('expanded', expanded);
         return <MuiAccordion
             defaultExpanded={defaultExpanded}
             expanded={expanded}
