@@ -17,6 +17,7 @@ export type MessageFilterSectionProps = ViewModeProps & {
 
 export const MessageFilterSection = (props: MessageFilterSectionProps) => {
 
+    const facilityFilteringExample = '(.Facility | tonumber == 220)';
     return (
         <ContentSection title='Filters'>
             <ContentParagraph>
@@ -38,6 +39,7 @@ export const MessageFilterSection = (props: MessageFilterSectionProps) => {
                     <br />
                     <br />
                 </TextCopyBox>
+                <TextCopyBox instructions={facilityFilteringExample} variant='monospace' />
             </ContentParagraph>
             <Input sx={{ mt: 2 }} id='jqFilter' label='jq predicate' multiline rows={3} isFullWidth />
         </ContentSection>
