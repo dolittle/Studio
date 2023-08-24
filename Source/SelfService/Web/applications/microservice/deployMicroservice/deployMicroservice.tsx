@@ -46,11 +46,9 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
     const handleCreateMicroservice = async (values: MicroserviceFormParameters) => {
         setIsLoading(true);
 
-        // Values from data grid table.
-        const { microserviceName, developmentEnvironment, headArguments, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
         const microserviceId = Guid.create().toString();
         // Convert the head arguments to the format that the form expects.
-        const headArgumentValues = headArguments.map(arg => arg.value);
+        const headArgumentValues = values.headArguments.map(arg => arg.value);
 
         const newMicroservice: MicroserviceSimple = {
             dolittle: {
@@ -58,31 +56,31 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
                 customerId: application.customerId,
                 microserviceId,
             },
-            name: microserviceName,
+            name: values.microserviceName,
             kind: 'simple',
-            environment: developmentEnvironment,
+            environment: values.developmentEnvironment,
             extra: {
-                headImage,
-                headPort: parseInt(headPort.toString(), 10),
-                runtimeImage: runtimeVersion,
-                isPublic,
+                headImage: values.headImage,
+                headPort: parseInt(values.headPort.toString(), 10),
+                runtimeImage: values.runtimeVersion,
+                isPublic: values.isPublic,
                 ingress: {
-                    path: '/' + ingressPath,
+                    path: '/' + values.ingressPath,
                     pathType: 'Prefix',
                 },
                 headCommand: {
-                    command: entrypoint.length ? [entrypoint] : [],
+                    command: values.entrypoint.length ? [values.entrypoint] : [],
                     args: headArgumentValues,
                 },
                 connections: {
-                    m3Connector: hasM3Connector,
+                    m3Connector: values.hasM3Connector,
                 },
             },
         };
 
         try {
             await saveSimpleMicroservice(newMicroservice);
-            enqueueSnackbar(`Microservice '${microserviceName}' has been deployed.`);
+            enqueueSnackbar(`Microservice '${values.microserviceName}' has been deployed.`);
             const href = `/microservices/application/${application.id}/view/${newMicroservice.dolittle.microserviceId}/${newMicroservice.environment}}`;
             navigate(href);
         } catch (error: unknown) {
@@ -100,7 +98,7 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
             <Form<MicroserviceFormParameters>
                 initialValues={{
                     microserviceName: '',
-                    developmentEnvironment: availableEnvironments[0] || '',
+                    developmentEnvironment: availableEnvironments[0],
                     runtimeVersion: latestRuntimeVersion,
                     headImage: frag.get('head-image') || '', // nginxdemos/hello:latest
                     headPort: 80,
