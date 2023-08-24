@@ -28,7 +28,7 @@ export const ConfigurationFormContent = ({
 }: ConfigurationFormContentProps) => {
 
     const [expanded, setExpanded] = useState<string[]>([]);
-
+    const hasFormErrors = formSaveState?.some(s => s.status === 'error');
 
     const connectorBundleAccordionId = 'hostConnectorBundle';
     const mdpCredentialsAccordionId = 'metadataPublisherCredentials';
@@ -107,5 +107,5 @@ export const ConfigurationFormContent = ({
         setExpanded([...new Set([...newExpanded])]);
     }, [formSaveState]);
 
-    return <AccordionList items={accordionListItems} expandedModel={expanded} onExpandedModelChange={setExpanded} />;
+    return <AccordionList items={accordionListItems} singleExpandMode={!hasFormErrors} expandedModel={expanded} onExpandedModelChange={setExpanded} />;
 };
