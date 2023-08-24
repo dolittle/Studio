@@ -21,11 +21,10 @@ export const MessageFilterSection = (props: MessageFilterSectionProps) => {
     return (
         <ContentSection title='Filters'>
             <ContentParagraph>
-                The filtering mechanism helps you focus on the data you are interested in instead of having to deal with all the data and filtering when you are processing it.
+                The filtering mechanism allows you to focus only on the relevant data to your application. It is applied per message type, allowing you to tailor different message types with other filters from the same table.
             </ContentParagraph>
             <ContentParagraph>
-                To filter the data to your needs, you can use a jq predicate. The jq predicate is a JSON query language that allows you to filter the data based on the JSON structure.
-                You can learn more about jq here <Link
+                Filters are defined using a jq predicate expression. The jq predicate is an expression based on the jq query language, which allows for filtering the data based on the JSON structure of the message type. You can learn more about jq here  <Link
                     target
                     ariaLabel='jq user manual'
                     href={'https://stedolan.github.io/jq/manual/'}
@@ -33,12 +32,7 @@ export const MessageFilterSection = (props: MessageFilterSectionProps) => {
                 />
             </ContentParagraph>
             <ContentParagraph>
-                Here is an example of a jq filter that matches all messages that have a Facility property with a value of 220. This way you can filter out all messages that are not relevant to you:
-                <TextCopyBox instructions={'(.Facility | tonumber == 220)'}>
-                    <Typography component={'span'} variant='monospace'>(.Facility | tonumber == 220)</Typography>
-                    <br />
-                    <br />
-                </TextCopyBox>
+                Example of a jq predicate expression matching all messages with a Facility property with a value of 220:
                 <TextCopyBox instructions={facilityFilteringExample} variant='monospace' />
             </ContentParagraph>
             <Input sx={{ mt: 2 }} id='jqFilter' label='jq predicate' multiline rows={3} isFullWidth />
