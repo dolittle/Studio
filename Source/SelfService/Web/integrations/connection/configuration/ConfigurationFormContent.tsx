@@ -1,9 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
-import { AccordionList, AccordionListProps, AccordionProps, FileUploadFormRef } from '@dolittle/design-system';
+import { AccordionList, AccordionListItem, AccordionListProps, AccordionProps, FileUploadFormRef } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../../apis/integrations/generated';
 
@@ -27,20 +27,23 @@ export const ConfigurationFormContent = ({
     formSaveState
 }: ConfigurationFormContentProps) => {
 
-    const getSaveStateFor = (name: SaveActionName) => formSaveState?.find(state => state.name === name);
+    const [expanded, setExpanded] = useState<string[]>([]);
 
-    const accordionListProps = useMemo(() => {
+
+    const connectorBundleAccordionId = 'hostConnectorBundle';
+    const mdpCredentialsAccordionId = 'metadataPublisherCredentials';
+    const ionServiceAccountAccordionId = 'ION Service Account Credentials';
+
+    const accordionListItems = useMemo(() => {
         const connectorBundleStatus = hostBundleStatusFromServicesStatus(connection?.mdpStatus, connection?.ionStatus);
         const metadataPublisherCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.mdpStatus);
         const iONServiceAccountCredentialsStatus = configurationStatusFromServiceCredentialsStatus(connection?.ionStatus);
 
-        const mdpSaveState = getSaveStateFor('MDP configuration');
-        const ionSaveState = getSaveStateFor('ION Configuration');
-        const items: AccordionProps[] = [];
+        const items: AccordionListItem[] = [];
         if (connection?.chosenEnvironment.value?.toLocaleLowerCase() === 'on premises') {
             items.push(
                 {
-                    id: 'hostConnectorBundle',
+                    id: connectorBundleAccordionId,
                     title: 'Host Your Connector Bundle',
                     children: <ConnectorBundleConfiguration connectionId={connection?.connectionId || ''} />,
                     progressStatus: connectorBundleStatus[0],
@@ -49,33 +52,24 @@ export const ConfigurationFormContent = ({
                 }
             );
         }
-        const expandMdp = mdpSaveState ? mdpSaveState.status === 'error' : false;
-        const expandIon = ionSaveState ? ionSaveState.status === 'error' : false;
-        console.log('expandMdp', expandMdp);
-        console.log('expandIon', expandIon);
         items.push(...[
             {
-                id: 'metadataPublisherCredentials',
+                id: mdpCredentialsAccordionId,
                 title: 'Metadata Publisher Credentials',
                 children: <MetadataPublisherCredentials canEdit={canEdit} />,
                 progressStatus: metadataPublisherCredentialsStatus && metadataPublisherCredentialsStatus[0],
                 progressLabel: metadataPublisherCredentialsStatus && metadataPublisherCredentialsStatus[1],
                 sx: { mt: 8 },
-                defaultExpanded: expandMdp
             },
             {
                 id: 'ionCredentials',
-                title: 'ION Service Account Credentials',
+                title: ionServiceAccountAccordionId,
                 children: <IonServiceAccountCredentials ref={fileUploadRef} canEdit={canEdit} />,
                 progressStatus: iONServiceAccountCredentialsStatus && iONServiceAccountCredentialsStatus[0],
                 progressLabel: iONServiceAccountCredentialsStatus && iONServiceAccountCredentialsStatus[1],
                 sx: { mt: 8 },
-                defaultExpanded: expandIon,
             },]);
-        return {
-            singleExpandMode: false,
-            items
-        };
+        return items;
     }, [
         connection?.chosenEnvironment.value,
         connection?.status,
@@ -85,5 +79,33 @@ export const ConfigurationFormContent = ({
         formSaveState
     ]);
 
-    return <AccordionList  {...accordionListProps} />;
+    const getSaveStateFor = (name: SaveActionName) => formSaveState?.find(state => state.name === name);
+
+    useEffect(() => {
+        const mdpSaveState = getSaveStateFor('MDP configuration');
+        const ionSaveState = getSaveStateFor('ION Configuration');
+
+        const newExpanded = [...expanded];
+        if (mdpSaveState?.status === 'error') {
+            newExpanded.push(mdpCredentialsAccordionId);
+        } else if (mdpSaveState?.status === 'success') {
+            const index = newExpanded.indexOf(mdpCredentialsAccordionId);
+            if (index > -1) {
+                newExpanded.splice(index, 1);
+            }
+        }
+
+        if (ionSaveState?.status === 'error') {
+            newExpanded.push(ionServiceAccountAccordionId);
+        } else if (ionSaveState?.status === 'success') {
+            const index = newExpanded.indexOf(ionServiceAccountAccordionId);
+            if (index > -1) {
+                newExpanded.splice(index, 1);
+            }
+        }
+
+        setExpanded([...new Set([...newExpanded])]);
+    }, [formSaveState]);
+
+    return <AccordionList items={accordionListItems} expandedModel={expanded} onExpandedModelChange={setExpanded} />;
 };
