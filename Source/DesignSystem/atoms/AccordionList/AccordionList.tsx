@@ -12,7 +12,7 @@ export type AccordionListProps = {
     /**
      * List of accordion items to display.
      */
-    items: Omit<AccordionProps, 'expanded' | 'onExpanded'>[];
+    items: Omit<AccordionProps, 'onExpanded'>[];
 
     /**
      * Id of the initial accordion item to be expanded. Optional.
@@ -38,6 +38,7 @@ export type AccordionListProps = {
  */
 export const AccordionList = ({ singleExpandMode, items, initialId }: AccordionListProps) => {
     const [expanded, setExpanded] = useState<Set<string>>(new Set(initialId ? [initialId] : []));
+    const [_items, _setItems] = useState<AccordionProps[]>(items);
 
     const handleExpanded = (accordionId: string, isExpanded: boolean) => {
         console.log('handleExpanded', accordionId, isExpanded);
@@ -56,15 +57,20 @@ export const AccordionList = ({ singleExpandMode, items, initialId }: AccordionL
     const isExpandedControlledState = (panel: string) => expanded.has(panel);
     const isExpandedStateOverridden = (item: AccordionProps) => item.expanded !== undefined;
 
-    // useEffect(() => {
-    //     // const shouldBeExpanded = singleExpandMode ? expanded === item.id : item.expanded;
-    //     // if (shouldBeExpanded) {
-    //     //     setExpanded(item.id);
-    //     // }
+    useEffect(() => {
+        // const shouldBeExpanded = singleExpandMode ? expanded === item.id : item.expanded;
+        // if (shouldBeExpanded) {
+        //     setExpanded(item.id);
+        // }
+        if (items === _items) {
+            return;
+        }
+        _setItems(items);
 
-    //     const itemsToChangeExpandState = items.filter(item => item.defaultExpanded !== undefined);
-    //     itemsToChangeExpandState.forEach(item => handleExpanded(item.id, item.defaultExpanded!));
-    // }, [expanded, setExpanded, items]);
+        const itemsToChangeExpandState = items.filter(item => item.expanded !== undefined);
+        itemsToChangeExpandState
+            .forEach(item => item.expanded !== isExpandedControlledState(item.id) && handleExpanded(item.id, item.expanded!));
+    }, [items]);
 
     return (
         <>
@@ -72,9 +78,9 @@ export const AccordionList = ({ singleExpandMode, items, initialId }: AccordionL
                 key={item.id}
                 // id={item.id}
                 // title={item.title}
+                {...item}
                 expanded={isExpandedControlledState(item.id)}
                 onExpanded={(event, isExpanded) => handleExpanded(item.id, isExpanded)}
-                {...item}
             >
                 {item.children}
             </Accordion>
