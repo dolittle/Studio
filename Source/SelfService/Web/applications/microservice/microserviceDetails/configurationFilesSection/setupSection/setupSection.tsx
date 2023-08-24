@@ -24,13 +24,10 @@ import { getRuntimeNumberFromString } from '../../../../../utils/helpers';
 
 export type SetupSectionProps = {
     application: HttpResponseApplication;
-    applicationId: string;
     currentMicroservice: MicroserviceStore;
-    // TODO: Refactor? This is the same as currentMicroservice.id?
-    microserviceId: string;
 };
 
-export const SetupSection = ({ application, applicationId, currentMicroservice, microserviceId }: SetupSectionProps) => {
+export const SetupSection = ({ application, currentMicroservice }: SetupSectionProps) => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -38,7 +35,8 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
 
-    // TODO ENV: Not sure that I can use currentMicroservice.environment here?
+    const applicationId = application.id;
+    const microserviceId = currentMicroservice.id;
     const microserviceEnvironment = currentMicroservice.environment;
     const microserviceName = currentMicroservice.name;
     const microserviceInfo = currentMicroservice.edit?.extra;

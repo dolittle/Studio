@@ -29,11 +29,9 @@ const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 export type FilesSectionProps = {
     applicationId: string;
     currentMicroservice: MicroserviceStore;
-    // TODO: Refactor? This is the same as currentMicroservice.id?
-    microserviceId: string;
 };
 
-export const FilesSection = ({ applicationId, currentMicroservice, microserviceId }: FilesSectionProps) => {
+export const FilesSection = ({ applicationId, currentMicroservice }: FilesSectionProps) => {
     const fileUploadRef = useRef<FileUploadFormRef>(null);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -44,6 +42,7 @@ export const FilesSection = ({ applicationId, currentMicroservice, microserviceI
     const [deleteConfigFileDialogIsOpen, setDeleteConfigFileDialogIsOpen] = useState(false);
     const [validateFileDialogIsOpen, setValidateFileDialogIsOpen] = useState({ isOpen: false, file: [] as File[] });
 
+    const microserviceId = currentMicroservice.id;
     const microserviceEnvironment = currentMicroservice.environment;
     const microserviceName = currentMicroservice.name;
 

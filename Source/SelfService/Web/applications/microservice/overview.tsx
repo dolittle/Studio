@@ -39,7 +39,7 @@ export const Overview = ({ application, microserviceId, environment }: OverviewP
     switch (subView) {
         case 'simple':
             return (
-                <MicroserviceDetails application={application} microserviceId={microserviceId} currentMicroservice={currentMicroservice} />
+                <MicroserviceDetails application={application} currentMicroservice={currentMicroservice} />
             );
         default:
             return (

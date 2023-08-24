@@ -14,30 +14,13 @@ import { EnvironmentVariablesSection } from './environmentSection/environmentVar
 export type ConfigurationFilesSectionProps = {
     application: HttpResponseApplication;
     applicationId: string;
-    // TODO: Refactor? This is the same as currentMicroservice.id?
-    microserviceId: string;
     currentMicroservice: MicroserviceStore;
 };
 
-export const ConfigurationFilesSection = ({ application, applicationId, microserviceId, currentMicroservice }: ConfigurationFilesSectionProps) => (
+export const ConfigurationFilesSection = ({ application, applicationId, currentMicroservice }: ConfigurationFilesSectionProps) => (
     <>
-        <SetupSection
-            application={application}
-            applicationId={applicationId}
-            currentMicroservice={currentMicroservice}
-            microserviceId={microserviceId}
-        />
-
-        <FilesSection
-            applicationId={applicationId}
-            currentMicroservice={currentMicroservice}
-            microserviceId={microserviceId}
-        />
-
-        <EnvironmentVariablesSection
-            applicationId={applicationId}
-            currentMicroservice={currentMicroservice}
-            microserviceId={microserviceId}
-        />
+        <SetupSection application={application} currentMicroservice={currentMicroservice} />
+        <FilesSection applicationId={applicationId} currentMicroservice={currentMicroservice} />
+        <EnvironmentVariablesSection applicationId={applicationId} currentMicroservice={currentMicroservice} />
     </>
 );

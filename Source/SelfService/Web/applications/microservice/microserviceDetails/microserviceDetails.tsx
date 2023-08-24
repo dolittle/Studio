@@ -32,16 +32,15 @@ const initialPodsData: HttpResponsePodStatus = {
 export type MicroserviceDetailsProps = {
     application: HttpResponseApplication;
     currentMicroservice: MicroserviceStore;
-    // TODO: Refactor? This is the same as currentMicroservice.id?
-    microserviceId: string;
 };
 
-export const MicroserviceDetails = ({ application, currentMicroservice, microserviceId }: MicroserviceDetailsProps) => {
+export const MicroserviceDetails = ({ application, currentMicroservice }: MicroserviceDetailsProps) => {
+    const [podsData, setPodsData] = useState(initialPodsData);
+
     const applicationId = application.id;
+    const microserviceId = currentMicroservice.id;
     const microserviceEnvironment = currentMicroservice.environment;
     const microserviceName = currentMicroservice.name;
-
-    const [podsData, setPodsData] = useState(initialPodsData);
 
     useEffect(() => {
         Promise.all([getPodStatus(applicationId, microserviceEnvironment, microserviceId)])
@@ -53,7 +52,7 @@ export const MicroserviceDetails = ({ application, currentMicroservice, microser
     const microserviceHealthStatus = getContainerStatus(podsStatuses());
 
     // What is the purpose of this??
-    const canEdit = canEditMicroservice(application.environments, microserviceEnvironment, microserviceId); // currentMicroservice.id?
+    const canEdit = canEditMicroservice(application.environments, microserviceEnvironment, microserviceId);
     let ms = {} as MicroserviceSimple;
     let hasEditData = false;
     if (canEdit) {
@@ -105,12 +104,7 @@ export const MicroserviceDetails = ({ application, currentMicroservice, microser
     const tabs = [
         {
             label: 'Configuration',
-            render: () => <ConfigurationFilesSection
-                application={application}
-                applicationId={applicationId}
-                microserviceId={microserviceId}
-                currentMicroservice={currentMicroservice}
-            />
+            render: () => <ConfigurationFilesSection application={application} applicationId={applicationId} currentMicroservice={currentMicroservice} />
         },
         {
             label: 'Health Status',
