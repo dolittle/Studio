@@ -98,6 +98,19 @@ export const ConfigurationView = () => {
         });
     };
 
+    const handleOnSaved = (saveState: M3ConfigurationFormSaveState): void => {
+        if(saveState.every((state) => state.status === 'success')) {
+            fileUploadRef.current?.clearSelected();
+            setEditMode(false);
+        }
+        handleSaveState(saveState);
+    };
+
+    const handleOnCancelAction = () => {
+        formRef.current?.reset(true);
+        setEditMode(false);
+    };
+
     return (
         <Box sx={{ mt: 6, ml: 2 }}>
             <Typography variant='subtitle1'>Configuration Setup</Typography>
@@ -106,11 +119,7 @@ export const ConfigurationView = () => {
                 connectionId={connectionId}
                 connection={connection}
                 hasSelectedDeploymentType={hasSelectedDeploymentType}
-                onSaved={(saveState) => {
-                    fileUploadRef.current?.clearSelected();
-                    setEditMode(false);
-                    handleSaveState(saveState);
-                }}
+                onSaved={handleOnSaved}
                 ref={formRef}
             >
                 <ActionToolbar
@@ -119,10 +128,7 @@ export const ConfigurationView = () => {
                     canEdit={canEdit}
                     onEditAction={() => setEditMode(true)}
                     onDeleteAction={handleDelete}
-                    onCancelAction={() => {
-                        formRef.current?.reset(true);
-                        setEditMode(false);
-                    }}
+                    onCancelAction={handleOnCancelAction}
                     alwaysEdit={alwaysEdit}
                 />
 
