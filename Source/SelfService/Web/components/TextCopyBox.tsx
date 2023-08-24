@@ -71,7 +71,7 @@ export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMa
 
     return (
         <>{withMaxWidth
-            ? <MaxWidthTextBlock>
+            ? <MaxWidthBlock>
                 <TextCopyContent
                     instructions={instructions}
                     sx={sx}
@@ -82,7 +82,7 @@ export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMa
                 >
                     {children}
                 </TextCopyContent>
-            </MaxWidthTextBlock>
+            </MaxWidthBlock>
             : <TextCopyContent
                 instructions={instructions}
                 sx={sx}
