@@ -1,3 +1,8 @@
+# [3.9.9] - 2023-8-24 [PR: #454](https://github.com/dolittle/Studio/pull/454)
+- Support passing text variant to the TextCopyBox
+- Improve wording of the message type filters text
+
+
 # [3.9.8] - 2023-8-23 [PR: #453](https://github.com/dolittle/Studio/pull/453)
 - Generate the latest integrations API
 - Add support for multiline and fullwidth Input field
