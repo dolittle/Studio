@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Box, Collapse, Typography } from '@mui/material';
 
-import { AccordionList, AccordionListProps, FileUploadFormRef } from '@dolittle/design-system';
+import { AccordionListProps, FileUploadFormRef } from '@dolittle/design-system';
 
 import { useConnectionsIdGet, useConnectionsIdDelete } from '../../../../apis/integrations/connectionsApi.hooks';
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
@@ -17,7 +17,6 @@ import { getConnectionIndicatorStatus } from '../../../../utils/helpers';
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
 import { M3ConfigurationForm, M3ConfigurationFormRef, M3ConfigurationFormSaveState } from '../../configuration/M3ConfigurationForm';
 import { MainM3ConnectionInfo } from '../../configuration/MainM3ConnectionInfo';
-import { useBuildConfigurationAccordionList } from '../../configuration/useBuildConfigurationAccordionList';
 import { ActionToolbar } from './ActionToolbar';
 import { ConfigurationFormContent } from '../../configuration/ConfigurationFormContent';
 
@@ -65,7 +64,6 @@ export const ConfigurationView = () => {
     const deploymentType = connection?.chosenEnvironment?.value;
     const hasSelectedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
 
-    const accordionListProps: AccordionListProps = useBuildConfigurationAccordionList(connection, fileUploadRef, canEdit, lastSaveState);
     const canConfigureConnection = connection?.status?.name !== 'Registered';
 
 
@@ -90,7 +88,6 @@ export const ConfigurationView = () => {
 
     const handleSaveState = (saveState: M3ConfigurationFormSaveState) => {
         setLastSaveState(saveState);
-        console.log('handleSaveState', saveState);
         saveState.forEach((state) => {
             if (state.status === 'success') {
                 enqueueSnackbar(`Saved ${state.name}`);

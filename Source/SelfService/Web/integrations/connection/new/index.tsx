@@ -13,8 +13,8 @@ import { useConnectionIdFromRoute } from '../../routes.hooks';
 import { Page } from '../../../components/layout/page';
 import { MainM3ConnectionInfo } from '../configuration/MainM3ConnectionInfo';
 import { ActionButtons } from './ActionButtons';
-import { useBuildConfigurationAccordionList } from '../configuration/useBuildConfigurationAccordionList';
 import { M3ConfigurationForm } from '../configuration/M3ConfigurationForm';
+import { ConfigurationFormContent } from '../configuration/ConfigurationFormContent';
 
 export const NewConnectionView = () => {
     const connectionId = useConnectionIdFromRoute();
@@ -30,7 +30,6 @@ export const NewConnectionView = () => {
     const deploymentType = connection?.chosenEnvironment?.value;
     const hasSelectedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
 
-    const accordionListProps: AccordionListProps = useBuildConfigurationAccordionList(connection, fileUploadRef);
     const canConfigureConnection = connection?.status?.name !== 'Registered';
 
 
@@ -50,7 +49,7 @@ export const NewConnectionView = () => {
                     <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} canEdit />
 
                     <Collapse in={canConfigureConnection}>
-                        <AccordionList  {...accordionListProps} />
+                        {/* <ConfigurationFormContent connection={connection} canEdit={canEdit} formSaveState={lastSaveState} fileUploadRef={fileUploadRef}/> */}
                     </Collapse>
 
                     <ActionButtons connection={connection} />
