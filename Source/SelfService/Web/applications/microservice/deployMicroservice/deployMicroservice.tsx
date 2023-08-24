@@ -10,7 +10,7 @@ import { Guid } from '@dolittle/rudiments';
 
 import { Typography } from '@mui/material';
 
-import { Button, Form, LoadingSpinner } from '@dolittle/design-system';
+import { Button, Form, FullPageLoadingSpinner } from '@dolittle/design-system';
 
 import { saveSimpleMicroservice } from '../../stores/microservice';
 
@@ -91,6 +91,7 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
 
     return (
         <>
+            {isLoading && <FullPageLoadingSpinner />}
             <Typography variant='h1' sx={{ mt: 3, mb: 4 }}>Deploy Base Microservice</Typography>
 
             <Form<MicroserviceFormParameters>
@@ -117,10 +118,7 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
 
                 {hasM3ConnectorOption && <HasM3ConnectorField />}
 
-                {isLoading ?
-                    <LoadingSpinner /> :
-                    <Button variant='filled' label='Deploy microservice' type='submit' startWithIcon='RocketLaunch' sx={{ mt: 1 }} />
-                }
+                <Button variant='filled' label='Deploy microservice' type='submit' startWithIcon='RocketLaunch' sx={{ mt: 1 }} />
             </Form>
         </>
     );
