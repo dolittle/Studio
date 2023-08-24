@@ -5,7 +5,7 @@ import React, { useCallback } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { Paper, Typography, SxProps } from '@mui/material';
+import { Paper, Typography, SxProps, type TypographyProps } from '@mui/material';
 
 import { Button, MaxWidthBlock, MaxWidthTextBlock } from '@dolittle/design-system';
 
@@ -39,12 +39,18 @@ export type TextCopyBoxProps = {
     downloadableFileName?: string;
 
     /**
+     * The text variant to use for the instructions.
+     * @default 'body1'
+     */
+    variant?: TypographyProps['variant'];
+
+    /**
      * Style overrides applied to the root Paper component
      */
     sx?: SxProps;
 };
 
-export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMaxWidth, downloadableFileName, sx }: TextCopyBoxProps) => {
+export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMaxWidth, downloadableFileName, variant, sx }: TextCopyBoxProps) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const handleTextCopy = useCallback(() => {
@@ -72,6 +78,7 @@ export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMa
                     handleTextCopy={handleTextCopy}
                     handleTextDownload={handleTextDownload}
                     downloadableFileName={downloadableFileName}
+                    variant={variant}
                 >
                     {children}
                 </TextCopyContent>
@@ -82,6 +89,7 @@ export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMa
                 handleTextCopy={handleTextCopy}
                 handleTextDownload={handleTextDownload}
                 downloadableFileName={downloadableFileName}
+                variant={variant}
             >
                 {children}
             </TextCopyContent>
@@ -115,13 +123,13 @@ const TextCopyContent = ({ instructions, children, sx, downloadableFileName, han
 
 </>;
 
-type RenderContentsProps = Pick<TextCopyBoxProps, 'instructions' | 'children'>;
+type RenderContentsProps = Pick<TextCopyBoxProps, 'instructions' | 'children' | 'variant'>;
 
-const InstructionContent = ({ instructions, children }: RenderContentsProps) => <>
+const InstructionContent = ({ instructions, children, variant }: RenderContentsProps) => <>
     {children
         ? <>{children}</>
         : <>{Array.isArray(instructions)
-            ? instructions.map((instruction, index) => <Typography key={index}>{instruction}</Typography>)
+            ? instructions.map((instruction, index) => <Typography key={index} variant={variant}>{instruction}</Typography>)
             : <Typography>{instructions}</Typography>
         }</>
     }</>;
