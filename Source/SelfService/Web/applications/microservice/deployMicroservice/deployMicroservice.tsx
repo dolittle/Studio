@@ -39,7 +39,6 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
 
     const environmentInfo = application.environments.find(env => env.name === selectedEnvironment);
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector;
-    const latestRuntimeVersion = getLatestRuntimeInfo().image;
 
     const frag = new URLSearchParams(location.hash.slice(1));
 
@@ -99,7 +98,7 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
                 initialValues={{
                     microserviceName: '',
                     developmentEnvironment: selectedEnvironment,
-                    runtimeVersion: latestRuntimeVersion,
+                    runtimeVersion: getLatestRuntimeInfo().image,
                     headImage: frag.get('head-image') || '', // nginxdemos/hello:latest
                     headPort: 80,
                     entrypoint: '',
@@ -112,7 +111,9 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
                 onSubmit={handleCreateMicroservice}
             >
                 <SetupFields environments={availableEnvironments} onEnvironmentSelect={setSelectedEnvironment} />
+
                 <ContainerImageFields />
+
                 <PublicUrlFields />
 
                 {hasM3ConnectorOption && <HasM3ConnectorField />}
