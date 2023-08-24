@@ -72,7 +72,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
     useImperativeHandle(ref, () => ({
         reset(keepDefault: boolean) {
             if (currentForm) {
-                currentForm.reset(keepDefault ? currentForm.formState.defaultValues : undefined);
+                currentForm.reset(keepDefault ? defaultValues : undefined);
             }
         }
     }), [currentForm]);
@@ -101,6 +101,22 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
     const metadataPublisherUrl = connection._configuration?.mdp?.url;
     const metadataPublisherPassword = connection._configuration?.mdp?.password;
     const ionConfiguration = connection._configuration?.ion;
+
+    const defaultValues = {
+        connectorName: connection.name || '',
+        selectHosting: hasSelectedDeploymentType ? deploymentType || '' : '',
+        metadataPublisherUrl: metadataPublisherUrl || '',
+        metadataPublisherPassword: metadataPublisherPassword || '',
+        ionConfiguration: {
+            iu: ionConfiguration?.gatewayUrl || '',
+            pu: ionConfiguration?.oauthTokenUrl || '',
+            ot: ionConfiguration?.byUser || '',
+            saak: ionConfiguration?.username || '',
+            sask: ionConfiguration?.password || '',
+            ci: ionConfiguration?.clientId || '',
+            cs: ionConfiguration?.clientSecret || '',
+        },
+    };
 
     const handleM3ConnectionSave: SubmitHandler<M3ConnectionParameters> = useCallback((data) => {
         if (!connectionId || !currentForm) {
@@ -216,21 +232,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
 
     return (
         <Form<M3ConnectionParameters>
-            initialValues={{
-                connectorName: connection.name || '',
-                selectHosting: hasSelectedDeploymentType ? deploymentType || '' : '',
-                metadataPublisherUrl: metadataPublisherUrl || '',
-                metadataPublisherPassword: metadataPublisherPassword || '',
-                ionConfiguration: {
-                    iu: ionConfiguration?.gatewayUrl || '',
-                    pu: ionConfiguration?.oauthTokenUrl || '',
-                    ot: ionConfiguration?.byUser || '',
-                    saak: ionConfiguration?.username || '',
-                    sask: ionConfiguration?.password || '',
-                    ci: ionConfiguration?.clientId || '',
-                    cs: ionConfiguration?.clientSecret || '',
-                },
-            }}
+            initialValues={defaultValues}
             onSubmit={(data, event) => handleM3ConnectionSave(data, event)}
             sx={{ ml: 3 }}
             fRef={formRef}
