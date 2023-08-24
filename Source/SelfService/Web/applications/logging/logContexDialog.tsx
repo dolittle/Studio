@@ -30,8 +30,7 @@ export const LogContextDialog = (state: LogContextDialogState, setState: React.D
                 dateRange: { start: state.from, stop: state.to },
                 searchTerms: [],
                 microservice: [{ id: state.microserviceId, name: state.microservice }],
-                // TODO ENV
-                //environment: [],
+                environment: [],
             }}
             from={state.from}
             to={state.to}

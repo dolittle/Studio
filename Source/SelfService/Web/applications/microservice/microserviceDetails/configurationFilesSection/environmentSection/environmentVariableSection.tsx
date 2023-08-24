@@ -8,9 +8,9 @@ import { useSnackbar } from 'notistack';
 import { MicroserviceStore } from '../../../../stores/microservice';
 
 import { DataGridPro, GridRowId, GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
-import { Box, Paper } from '@mui/material';
+import { Box } from '@mui/material';
 
-import { Accordion, Button } from '@dolittle/design-system';
+import { Accordion, Button, dataGridDefaultProps, DataGridWrapper } from '@dolittle/design-system';
 
 import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../../apis/solutions/api';
 
@@ -31,7 +31,6 @@ const styles = {
         },
     },
     dataTable: {
-        'mb': 8,
         '& .MuiOutlinedInput-root': {
             // Hack for secret cell active state. Otherwise size is going to be different.
             '& .MuiSelect-select': { p: '10px 15px' },
@@ -250,28 +249,24 @@ export const EnvironmentVariablesSection = ({ applicationId, currentMicroservice
                         label='Add Variable'
                         handleOnClick={handleEnvVariableAdd} // TODO: Sometimes throws error when clicked
                     /> :
-                    <Paper sx={{ width: 1 }}>
+                    <DataGridWrapper>
                         <DataGridPro
+                            {...dataGridDefaultProps}
                             rows={envVariableTableRows}
                             columns={envVariableColumns}
-                            editMode='row'
-                            getRowHeight={() => 'auto'}
-                            autoHeight
-                            headerHeight={46}
-                            disableColumnMenu
-                            hideFooter
-                            disableSelectionOnClick
                             checkboxSelection
                             selectionModel={selectedRowIds}
                             onSelectionModelChange={setSelectedRowIds}
+                            editMode='row'
                             rowModesModel={rowMode}
                             onRowModesModelChange={setRowMode}
                             processRowUpdate={processRowUpdate}
                             onProcessRowUpdateError={error => console.log(error)}
+                            disableSelectionOnClick
                             experimentalFeatures={{ newEditingApi: true }}
                             sx={styles.dataTable}
                         />
-                    </Paper>
+                    </DataGridWrapper>
                 }
             </Accordion>
         </>

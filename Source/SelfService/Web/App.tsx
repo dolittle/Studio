@@ -22,7 +22,7 @@ import { Problem } from './components/problem';
 import { LandingPageDecider } from './components/layout/landingPageDecider';
 
 import { BackupsScreen } from './applications/backupsScreen';
-import { DocumentationScreen } from './applications/documentationScreen';
+import { SetupScreen } from './applications/setupScreen';
 import { MicroservicesScreen } from './applications/microservicesScreen';
 import { ContainerRegistryScreen } from './applications/containerRegistryScreen';
 import { M3ConnectorScreen } from './applications/m3connectorScreen';
@@ -55,13 +55,13 @@ export const App = () => {
                         <Routes>
                             <Route path='/' element={<LandingPageDecider />} />
 
-                            <Route path='/applications' element={<ApplicationsScreen />} />
+                            <Route path='/home' element={<HomeScreen />} />
 
-                            <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
+                            <Route path='/applications' element={<ApplicationsScreen />} />
 
                             <Route path='/microservices/application/:applicationId/*' element={<MicroservicesScreen />} />
 
-                            <Route path='/documentation/application/:applicationId/*' element={<DocumentationScreen />} />
+                            <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
 
                             <Route path='/containerregistry/application/:applicationId/*' element={<ContainerRegistryScreen />} />
 
@@ -69,13 +69,13 @@ export const App = () => {
 
                             <Route path='/logs/application/:applicationId' element={<LogsScreen />} />
 
+                            <Route path='/setup/application/:applicationId/*' element={<SetupScreen />} />
+
+                            <Route path='/integrations/*' element={<IntegrationsIndex />} />
+
                             <Route path='/admin/*' element={<AdminScreen />} />
 
                             <Route path='/problem' element={<Problem />} />
-
-                            <Route path='/home' element={<HomeScreen />} />
-
-                            <Route path='/integrations/*' element={<IntegrationsIndex />} />
 
                             <Route path='*' element={<RouteNotFound redirectUrl='/' auto={true} />} />
                         </Routes>
