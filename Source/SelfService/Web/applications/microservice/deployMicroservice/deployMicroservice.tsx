@@ -95,7 +95,7 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
 
     return (
         <>
-            <Typography variant='h1'>Deploy Base Microservice</Typography>
+            <Typography variant='h1' sx={{ mt: 3, mb: 4 }}>Deploy Base Microservice</Typography>
 
             <Form<MicroserviceFormParameters>
                 initialValues={{
@@ -110,7 +110,7 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
                     ingressPath: '',
                     hasM3Connector: false,
                 }}
-                sx={{ 'mt': 4.5, 'ml': 3, '& .MuiFormControl-root': { my: 1 } }}
+                sx={{ 'ml': 3, '& .MuiFormControl-root': { my: 1 } }}
                 onSubmit={handleCreateMicroservice}
             >
                 <SetupFields environments={availableEnvironments} />
