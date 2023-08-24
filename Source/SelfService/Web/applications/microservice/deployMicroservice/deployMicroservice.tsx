@@ -82,9 +82,8 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
             enqueueSnackbar(`Microservice '${values.microserviceName}' has been deployed.`);
             const href = `/microservices/application/${application.id}/view/${newMicroservice.dolittle.microserviceId}/${newMicroservice.environment}}`;
             navigate(href);
-        } catch (error: unknown) {
-            const message = (error instanceof Error) ? error.message : 'Something went wrong when saving microservice.';
-            enqueueSnackbar(message, { variant: 'error' });
+        } catch (error) {
+            enqueueSnackbar('Something went wrong when saving microservice.', { variant: 'error' });
         } finally {
             setIsLoading(false);
         }
