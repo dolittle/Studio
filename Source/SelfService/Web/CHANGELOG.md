@@ -1,3 +1,18 @@
+# [3.9.14] - 2023-8-25 [PR: #459](https://github.com/dolittle/Studio/pull/459)
+## Summary
+
+Improved Microservices page appearance.
+
+### Added
+
+- FullPageLoadingSpinner to the Design System for waiting to the action complete
+
+### Fixed
+
+- M3Connector option display when deploying the new Microservice
+- Layout horizontal scroll
+
+
 # [3.9.13] - 2023-8-25 [PR: #458](https://github.com/dolittle/Studio/pull/458)
 ## Summary
 Update link to changelog for 9.0.1
