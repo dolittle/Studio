@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 
-import { Accordion, AlertDialog, Form } from '@dolittle/design-system';
+import { Accordion, AlertDialog, Form, FullPageLoadingSpinner } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
 
@@ -24,21 +24,20 @@ import { getRuntimeNumberFromString } from '../../../../../utils/helpers';
 
 export type SetupSectionProps = {
     application: HttpResponseApplication;
-    applicationId: string;
     currentMicroservice: MicroserviceStore;
-    // TODO: Refactor? This is the same as currentMicroservice.id?
-    microserviceId: string;
 };
 
-export const SetupSection = ({ application, applicationId, currentMicroservice, microserviceId }: SetupSectionProps) => {
+export const SetupSection = ({ application, currentMicroservice }: SetupSectionProps) => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
     const [formIsNotEditable, setFormIsNotEditable] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
-    // TODO ENV: Not sure that I can use currentMicroservice.environment here?
+    const applicationId = application.id;
+    const microserviceId = currentMicroservice.id;
     const microserviceEnvironment = currentMicroservice.environment;
     const microserviceName = currentMicroservice.name;
     const microserviceInfo = currentMicroservice.edit?.extra;
@@ -50,6 +49,7 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
     };
 
     const availableEnvironments = application.environments.map(env => env.name);
+
     const hasPublicUrl = microserviceInfo?.isPublic || false;
     const hasM3ConnectorOption = application.environments.find(env => env.name === microserviceEnvironment)?.connections?.m3Connector || false;
     // Remove extra slash from ingress path as it is there already with startAdornment.
@@ -58,6 +58,9 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
     const headArgumentValues = microserviceInfo?.headCommand?.args?.map((arg: string) => ({ value: arg })) || [];
 
     const handleMicroserviceDelete = async () => {
+        setIsLoading(true);
+        setDeleteDialogIsOpen(false);
+
         if (!canDelete) {
             enqueueSnackbar('Deleting microservice is disabled.', { variant: 'error' });
             return;
@@ -67,16 +70,20 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
 
         if (!success) {
             enqueueSnackbar(`Failed to delete microservice '${microserviceName}'.`, { variant: 'error' });
+            setIsLoading(false);
             return;
         }
 
         enqueueSnackbar(`Microservice '${microserviceName}' has been deleted.`);
         const href = `/microservices/application/${applicationId}/overview`;
         navigate(href);
+        setIsLoading(false);
     };
 
     return (
         <>
+            {isLoading && <FullPageLoadingSpinner />}
+
             <AlertDialog
                 id='delete-microservice'
                 title='Delete microservice?'
@@ -113,7 +120,7 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
                         headImage: microserviceInfo?.headImage,
                         headPort: microserviceInfo?.headPort,
                         entrypoint: '',
-                        isPublic: microserviceInfo?.isPublic,
+                        isPublic: hasPublicUrl,
                         headArguments: headArgumentValues,
                         ingressPath: cleanedIngressPath,
                         hasM3Connector: hasM3ConnectorOption,
@@ -121,7 +128,9 @@ export const SetupSection = ({ application, applicationId, currentMicroservice, 
                     sx={{ '& .MuiFormControl-root': { my: 1 } }}
                 >
                     <SetupFields environments={availableEnvironments} hasDashedBorder isDisabled={formIsNotEditable} />
+
                     <ContainerImageFields hasDashedBorder isDisabled={formIsNotEditable} />
+
                     <PublicUrlFields hasDashedBorder hasPublicUrl={hasPublicUrl} isDisabled={formIsNotEditable} />
 
                     {hasM3ConnectorOption && <HasM3ConnectorField isDisabled={formIsNotEditable} />}

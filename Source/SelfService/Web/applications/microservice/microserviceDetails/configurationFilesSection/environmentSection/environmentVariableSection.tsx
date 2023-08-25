@@ -47,12 +47,10 @@ export type EnvironmentVariableTableRow = InputEnvironmentVariable & {
 export type EnvironmentVariablesProps = {
     applicationId: string;
     currentMicroservice: MicroserviceStore;
-    // TODO: Refactor? This is the same as currentMicroservice.id?
-    microserviceId: string;
 };
 
 // TODO: TYPO: Variables = Variable
-export const EnvironmentVariablesSection = ({ applicationId, currentMicroservice, microserviceId }: EnvironmentVariablesProps) => {
+export const EnvironmentVariablesSection = ({ applicationId, currentMicroservice }: EnvironmentVariablesProps) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const [envVariableTableRows, setEnvVariableTableRows] = useState<EnvironmentVariableTableRow[]>([]);
@@ -61,6 +59,7 @@ export const EnvironmentVariablesSection = ({ applicationId, currentMicroservice
     const [disableAddButton, setDisableAddButton] = useState(false);
     const [restartInfoBoxIsOpen, setRestartInfoBoxIsOpen] = useState(false);
 
+    const microserviceId = currentMicroservice.id;
     const microserviceEnvironment = currentMicroservice.environment;
     const microserviceName = currentMicroservice.name;
 
@@ -247,7 +246,7 @@ export const EnvironmentVariablesSection = ({ applicationId, currentMicroservice
                         title='No environment variables yet...'
                         description={`To add your first environment variable, select 'add variable'. Provide a name, value and set its secrecy.`}
                         label='Add Variable'
-                        handleOnClick={handleEnvVariableAdd} // TODO: Sometimes throws error when clicked
+                        handleOnClick={handleEnvVariableAdd}
                     /> :
                     <DataGridWrapper>
                         <DataGridPro

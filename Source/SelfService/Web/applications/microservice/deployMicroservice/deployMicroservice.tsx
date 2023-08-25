@@ -10,7 +10,7 @@ import { Guid } from '@dolittle/rudiments';
 
 import { Typography } from '@mui/material';
 
-import { Button, Form, LoadingSpinner } from '@dolittle/design-system';
+import { Button, Form, FullPageLoadingSpinner } from '@dolittle/design-system';
 
 import { saveSimpleMicroservice } from '../../stores/microservice';
 
@@ -32,25 +32,22 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
     const location = useLocation();
     const { enqueueSnackbar } = useSnackbar();
 
-    const [isLoading, setIsLoading] = useState(false);
-
-    // TODO ENV: Show always as 'false' while deploying and display option later in configuration?
-    //const environmentInfo = application.environments.find(env => env.name === 'Dev')!;
-    const hasM3ConnectorOption = false; // environmentInfo?.connections?.m3Connector || false;
-
     const availableEnvironments = application.environments.map(env => env.name);
-    const latestRuntimeVersion = getLatestRuntimeInfo().image;
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [selectedEnvironment, setSelectedEnvironment] = useState(availableEnvironments[0]);
+
+    const environmentInfo = application.environments.find(env => env.name === selectedEnvironment);
+    const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector;
 
     const frag = new URLSearchParams(location.hash.slice(1));
 
     const handleCreateMicroservice = async (values: MicroserviceFormParameters) => {
         setIsLoading(true);
 
-        // Values from data grid table.
-        const { microserviceName, developmentEnvironment, headArguments, headImage, headPort, runtimeVersion, isPublic, ingressPath, entrypoint, hasM3Connector } = values;
         const microserviceId = Guid.create().toString();
         // Convert the head arguments to the format that the form expects.
-        const headArgumentValues = headArguments.map(arg => arg.value);
+        const headArgumentValues = values.headArguments.map(arg => arg.value);
 
         const newMicroservice: MicroserviceSimple = {
             dolittle: {
@@ -58,36 +55,35 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
                 customerId: application.customerId,
                 microserviceId,
             },
-            name: microserviceName,
+            name: values.microserviceName,
             kind: 'simple',
-            environment: developmentEnvironment,
+            environment: values.developmentEnvironment,
             extra: {
-                headImage,
-                headPort: parseInt(headPort.toString(), 10),
-                runtimeImage: runtimeVersion,
-                isPublic,
+                headImage: values.headImage,
+                headPort: parseInt(values.headPort.toString(), 10),
+                runtimeImage: values.runtimeVersion,
+                isPublic: values.isPublic,
                 ingress: {
-                    path: '/' + ingressPath,
+                    path: '/' + values.ingressPath,
                     pathType: 'Prefix',
                 },
                 headCommand: {
-                    command: entrypoint.length ? [entrypoint] : [],
+                    command: values.entrypoint.length ? [values.entrypoint] : [],
                     args: headArgumentValues,
                 },
                 connections: {
-                    m3Connector: hasM3Connector,
+                    m3Connector: values.hasM3Connector,
                 },
             },
         };
 
         try {
             await saveSimpleMicroservice(newMicroservice);
-            enqueueSnackbar(`Microservice '${microserviceName}' has been deployed.`);
+            enqueueSnackbar(`Microservice '${values.microserviceName}' has been deployed.`);
             const href = `/microservices/application/${application.id}/view/${newMicroservice.dolittle.microserviceId}/${newMicroservice.environment}}`;
             navigate(href);
-        } catch (error: unknown) {
-            const message = (error instanceof Error) ? error.message : 'Something went wrong when saving microservice.';
-            enqueueSnackbar(message, { variant: 'error' });
+        } catch (error) {
+            enqueueSnackbar('Something went wrong when saving microservice.', { variant: 'error' });
         } finally {
             setIsLoading(false);
         }
@@ -95,13 +91,14 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
 
     return (
         <>
-            <Typography variant='h1'>Deploy Base Microservice</Typography>
+            {isLoading && <FullPageLoadingSpinner />}
+            <Typography variant='h1' sx={{ mt: 3, mb: 4 }}>Deploy Base Microservice</Typography>
 
             <Form<MicroserviceFormParameters>
                 initialValues={{
                     microserviceName: '',
-                    developmentEnvironment: availableEnvironments[0] || '',
-                    runtimeVersion: latestRuntimeVersion,
+                    developmentEnvironment: selectedEnvironment,
+                    runtimeVersion: getLatestRuntimeInfo().image,
                     headImage: frag.get('head-image') || '', // nginxdemos/hello:latest
                     headPort: 80,
                     entrypoint: '',
@@ -110,19 +107,18 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
                     ingressPath: '',
                     hasM3Connector: false,
                 }}
-                sx={{ 'mt': 4.5, 'ml': 3, '& .MuiFormControl-root': { my: 1 } }}
+                sx={{ 'ml': 3, '& .MuiFormControl-root': { my: 1 } }}
                 onSubmit={handleCreateMicroservice}
             >
-                <SetupFields environments={availableEnvironments} />
+                <SetupFields environments={availableEnvironments} onEnvironmentSelect={setSelectedEnvironment} />
+
                 <ContainerImageFields />
+
                 <PublicUrlFields />
 
                 {hasM3ConnectorOption && <HasM3ConnectorField />}
 
-                {isLoading ?
-                    <LoadingSpinner /> :
-                    <Button variant='filled' label='Deploy microservice' type='submit' startWithIcon='RocketLaunch' sx={{ mt: 1 }} />
-                }
+                <Button variant='filled' label='Deploy microservice' type='submit' startWithIcon='RocketLaunch' sx={{ mt: 1 }} />
             </Form>
         </>
     );

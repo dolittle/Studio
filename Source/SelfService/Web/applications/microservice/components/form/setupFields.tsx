@@ -29,9 +29,10 @@ export type SetupFieldsProps = {
     environments: string[];
     hasDashedBorder?: boolean;
     isDisabled?: boolean;
+    onEnvironmentSelect?: (environment: string) => void;
 };
 
-export const SetupFields = ({ environments, hasDashedBorder, isDisabled }: SetupFieldsProps) => {
+export const SetupFields = ({ environments, hasDashedBorder, isDisabled, onEnvironmentSelect }: SetupFieldsProps) => {
     const [showEnvironmentInfo, setShowEnvironmentInfo] = useState(false);
     const [showEntrypointInfo, setShowEntrypointInfo] = useState(false);
 
@@ -59,6 +60,7 @@ export const SetupFields = ({ environments, hasDashedBorder, isDisabled }: Setup
                     label='Development Environment'
                     options={environments?.map(env => ({ value: env, displayValue: env })) || []}
                     onOpen={() => setShowEnvironmentInfo(true)}
+                    onChange={event => onEnvironmentSelect ? onEnvironmentSelect(event.target.value) : null}
                     disabled={isDisabled}
                     required
                     sx={hasDashedBorder ? { '& fieldset': { borderStyle: 'dashed' } } : {}}

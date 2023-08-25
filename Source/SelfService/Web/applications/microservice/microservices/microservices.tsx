@@ -28,20 +28,16 @@ export const Microservice = ({ application }: MicroserviceProps) => {
     const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as MicroserviceObject[];
 
-    // TODO: Refactor. Use createMicroserviceHref?
-    const handleCreateMicroservice = () => {
-        // TODO ENV: How to handle this?
-        //const canEdit = canEditMicroservices(application.environments, environment);
-        // if (!canEdit) {
-        //     enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
-        //     return;
-        // }
+    // TODO ENV: How to handle this?
+    //const canEdit = canEditMicroservices(application.environments, environment);
+    // if (!canEdit) {
+    //     enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
+    //     return;
+    // }
 
-        const href = `/microservices/application/${application.id}/create`;
-        navigate(href);
-    };
-
-    const createMicroserviceHref = useHref(`/microservices/application/${application.id}/create`);
+    // TODO: Make this a button with 'href'.
+    const href = `/microservices/application/${application.id}/create`;
+    const createMicroserviceHref = useHref(href);
 
     return (
         <>
@@ -53,7 +49,7 @@ export const Microservice = ({ application }: MicroserviceProps) => {
                     <Button label='Deploy New Microservice' variant='fullwidth' startWithIcon='RocketLaunch' href={createMicroserviceHref} sx={{ mt: 2.125 }} />
                 </>
             ) : (
-                <NoMicroservices onCreate={handleCreateMicroservice} />
+                <NoMicroservices onCreate={() => navigate(href)} />
             )}
         </>
     );
