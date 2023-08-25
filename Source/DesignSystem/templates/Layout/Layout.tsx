@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import { Box, Grid, SxProps, Toolbar } from '@mui/material';
+import { Box, Grid, SxProps } from '@mui/material';
 
-import { NavigationBar, NavigationBarProps, SidePanel, SidePanelProps, Breadcrumbs, BreadcrumbsProps } from '@dolittle/design-system';
+import { NavigationBar, NavigationBarProps, SidePanel, SidePanelProps } from '@dolittle/design-system';
 
 const styles: SxProps = {
     'minHeight': 'calc(100vh - 96px)',
