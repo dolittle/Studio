@@ -1,3 +1,20 @@
+# [3.9.11] - 2023-8-25 [PR: #456](https://github.com/dolittle/Studio/pull/456)
+## Summary
+### M3 Connector Configuration Page
+- Introduces `M3ConfigurationFormSaveState`, which is a submit result object that contains if a form submit was valid from the server side. It's always valid from react-hook-form's perspective if the form itself is valid, which is not helpful. It functions as a way to aggregate up all the different requests and give that back to the parent component when form submitting is successful
+- Expand M3 Configuration form sections when there are errors submitting. Allow expanding multiple sections when there are errors
+- Collapse M3 Configuration form sections when section successfully saved
+- Better logic when saving fails
+  - Do not exit edit mode
+  - Revert back to original values from data, not the form (since the form is successful if it has submitted, regardless of what the server says) 
+
+### Design System / AccordionList
+- [AccordionList]: Changes to AccordionList to make it easier to programmatically change
+  - [AccordionList]: Using children Accordion's as controlled components
+  - [AccordionList]: Reworked AccordionListItems to be a separate type 
+  - [AccordionList]: Added explicit API for expandedModel and onExpandedModelChange - inspired by the MUI data grid selection mechanism
+
+
 # [3.9.10] - 2023-8-24 [PR: #455](https://github.com/dolittle/Studio/pull/455)
 ## Summary
 
