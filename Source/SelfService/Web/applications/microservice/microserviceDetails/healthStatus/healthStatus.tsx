@@ -5,7 +5,7 @@ import React, { useMemo, useState } from 'react';
 
 import { MicroserviceStore } from '../../../stores/microservice';
 
-import { AlertBox, AlertBoxErrorMessage, Button, Graph } from '@dolittle/design-system';
+import { AlertBox, AlertBoxErrorMessage, Button, FullPageLoadingSpinner, Graph } from '@dolittle/design-system';
 
 import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../../apis/solutions/api';
 
@@ -97,12 +97,10 @@ export const HealthStatus = ({ applicationId, currentMicroservice, data }: Healt
                 sx={{ mb: 2.5 }}
             />
 
+            {/* TODO: Displays AlertBox on first render. */}
             {containerTables.length > 0
                 ? containerTables
-                : <AlertBox
-                    title='Cannot display microservice containers'
-                    message={<AlertBoxErrorMessage />}
-                />
+                : <AlertBox title='Cannot display microservice containers' message={<AlertBoxErrorMessage />} />
             }
 
             {cpu.loading
