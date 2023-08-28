@@ -1,9 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { Typography, Stack } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
 
 import { Input, MaxWidthTextBlock, Select, SelectPropsOptions, Tooltip } from '@dolittle/design-system';
 
@@ -21,14 +22,30 @@ const ConnectorNameTooltipText = () =>
 const hostingTooltipText = `Select between hosting the connector bundle on premise or allowing a platform-managed solution in the cloud. The cloud setup takes care of hosting, establishing backups and making sure the connector is running.`;
 const hostingSelectedTooltipText = `Once selected, the hosting type cannot be changed. Create a new connector to change the hosting type.`;
 
+const authenticationTypeTooltipText = `Depending on the version of M3 you are using, you can select between basic M3 authentication or ION API authentication. Typically cloud hosted M3 systems use ION API authentication, but some on premise versions of M3 might also support this.`;
+
 export type MainM3ConnectionInfoProps = {
-    hasSelectedDeploymentType: boolean;
+    hasSavedDeploymentType: boolean;
     connectionIdLinks?: Link[] | null;
     canEdit: boolean;
+    onAuthenticationTypeChange: (authenticationType: string) => void;
 };
 
-export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentType, canEdit }: MainM3ConnectionInfoProps) => {
-    const selectValues = useMemo(() => {
+export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSavedDeploymentType, canEdit, onAuthenticationTypeChange }: MainM3ConnectionInfoProps) => {
+    const { watch, setValue } = useFormContext();
+
+    const selectDropdownHostingValue: string = watch('selectHosting');
+    const selectAuthenticationValue: string = watch('selectAuthenticationType');
+    const hasSelectedCloudDeployment = useMemo(() => selectDropdownHostingValue.toLowerCase() === 'cloud',
+        [selectDropdownHostingValue]
+    );
+
+    const authenticationTypeSelectValues: SelectPropsOptions = [
+        { value: 'ion', displayValue: 'ION' },
+        { value: 'basic', displayValue: 'Basic' },
+    ];
+
+    const deploymentTypeSelectValues = useMemo(() => {
         const shouldUseOnPrem = connectionIdLinks?.some(link => link.rel === 'deploy-on-premises') || false;
         const shouldUseCloud = connectionIdLinks?.some(link => link.rel === 'deploy-to-cloud') || false;
 
@@ -37,7 +54,7 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentT
             { value: 'Cloud', displayValue: 'In the Dolittle Cloud' },
         ];
 
-        if (hasSelectedDeploymentType) {
+        if (hasSavedDeploymentType) {
             return selectValues;
         }
 
@@ -49,7 +66,20 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentT
         }
 
         return selectValues;
-    }, [connectionIdLinks, hasSelectedDeploymentType]);
+    }, [connectionIdLinks, hasSavedDeploymentType]);
+
+
+    useEffect(() => {
+        onAuthenticationTypeChange(selectAuthenticationValue);
+    }, [selectAuthenticationValue, onAuthenticationTypeChange]);
+
+    const isCloudDeploymentValueSelected = selectDropdownHostingValue.toLowerCase() === 'cloud';
+
+    useEffect(() => {
+        if (isCloudDeploymentValueSelected) {
+            setValue('selectAuthenticationType', 'ion');
+        }
+    }, [isCloudDeploymentValueSelected]);
 
     return (
         <Stack spacing={3.5} sx={{ mt: 3, ml: 3 }}>
@@ -67,16 +97,31 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSelectedDeploymentT
 
             <Tooltip
                 tooltipTitle='Hosting'
-                tooltipText={hasSelectedDeploymentType ? hostingSelectedTooltipText : hostingTooltipText}
-                displayOnHover={hasSelectedDeploymentType}
+                tooltipText={hasSavedDeploymentType ? hostingSelectedTooltipText : hostingTooltipText}
+                displayOnHover={hasSavedDeploymentType}
                 sx={{ top: 38 }}
             >
                 <Select
                     id='selectHosting'
                     label='Hosting'
-                    options={selectValues}
-                    disabled={!canEdit || hasSelectedDeploymentType}
+                    options={deploymentTypeSelectValues}
+                    disabled={!canEdit || hasSavedDeploymentType}
                     required='Please select the hosting type.'
+                />
+            </Tooltip>
+
+            <Tooltip
+                tooltipTitle='M3 Authentication Type'
+                tooltipText={authenticationTypeTooltipText}
+                displayOnHover={true}
+                sx={{ top: 38 }}
+            >
+                <Select
+                    id='selectAuthenticationType'
+                    label='M3 Authentication Type'
+                    options={authenticationTypeSelectValues}
+                    disabled={!canEdit || hasSelectedCloudDeployment}
+                    required='Please select the authentication type.'
                 />
             </Tooltip>
         </Stack>

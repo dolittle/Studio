@@ -26,6 +26,7 @@ const useForceSubscribeToIonConfigurationStateChanges = (currentForm: FormRef<M3
 export type M3ConnectionParameters = {
     connectorName: string;
     selectHosting: string;
+    selectAuthenticationType: string;
     metadataPublisherUrl: string;
     metadataPublisherPassword: string;
     ionConfiguration: IonConfigRequest;
@@ -39,6 +40,7 @@ export type M3ConfigurationFormProps = {
     connectionId: string;
     connection: ConnectionModel
     hasSelectedDeploymentType: boolean;
+    authenticationType?: string;
     onSaved?: (saveState: M3ConfigurationFormSaveState) => void;
     children?: React.ReactNode;
 };
@@ -56,6 +58,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         connectionId,
         connection,
         hasSelectedDeploymentType,
+        authenticationType,
         onSaved,
         children
     }: M3ConfigurationFormProps,
@@ -105,6 +108,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
     const defaultValues = {
         connectorName: connection.name || '',
         selectHosting: hasSelectedDeploymentType ? deploymentType || '' : '',
+        selectAuthenticationType: authenticationType || '',
         metadataPublisherUrl: metadataPublisherUrl || '',
         metadataPublisherPassword: metadataPublisherPassword || '',
         ionConfiguration: {
