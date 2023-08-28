@@ -24,6 +24,7 @@ export const ConfigurationView = () => {
     const [canEdit, setEditMode] = useState(false);
     const [alwaysEdit, setAlwaysEdit] = useState(false);
     const [lastSaveState, setLastSaveState] = useState<M3ConfigurationFormSaveState>();
+    const [authenticationType, setAuthenticationType] = useState<string>('');
     const connectionId = useConnectionIdFromRoute();
     const query = useConnectionsIdGet(
         { id: connectionId },
@@ -62,8 +63,9 @@ export const ConfigurationView = () => {
     }, [connection?.status.name]);
 
     const deploymentType = connection?.chosenEnvironment?.value;
-    const hasSelectedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
+    const hasSavedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
 
+    //TODO PAV: Should also check local state for auth type value
     const canConfigureConnection = connection?.status?.name !== 'Registered';
 
 
@@ -99,7 +101,7 @@ export const ConfigurationView = () => {
     };
 
     const handleOnSaved = (saveState: M3ConfigurationFormSaveState): void => {
-        if(saveState.every((state) => state.status === 'success')) {
+        if (saveState.every((state) => state.status === 'success')) {
             fileUploadRef.current?.clearSelected();
             setEditMode(false);
         }
@@ -118,7 +120,8 @@ export const ConfigurationView = () => {
             <M3ConfigurationForm
                 connectionId={connectionId}
                 connection={connection}
-                hasSelectedDeploymentType={hasSelectedDeploymentType}
+                hasSelectedDeploymentType={hasSavedDeploymentType}
+                authenticationType={authenticationType}
                 onSaved={handleOnSaved}
                 ref={formRef}
             >
@@ -132,10 +135,15 @@ export const ConfigurationView = () => {
                     alwaysEdit={alwaysEdit}
                 />
 
-                <MainM3ConnectionInfo hasSelectedDeploymentType={hasSelectedDeploymentType} connectionIdLinks={links} canEdit={canEdit} />
+                <MainM3ConnectionInfo
+                    hasSavedDeploymentType={hasSavedDeploymentType}
+                    connectionIdLinks={links}
+                    canEdit={canEdit}
+                    onAuthenticationTypeChange={setAuthenticationType}
+                />
 
                 <Collapse in={canConfigureConnection}>
-                    <ConfigurationFormContent connection={connection} canEdit={canEdit} formSaveState={lastSaveState} fileUploadRef={fileUploadRef}/>
+                    <ConfigurationFormContent connection={connection} canEdit={canEdit} formSaveState={lastSaveState} fileUploadRef={fileUploadRef} />
                 </Collapse>
             </M3ConfigurationForm>
         </Box>
