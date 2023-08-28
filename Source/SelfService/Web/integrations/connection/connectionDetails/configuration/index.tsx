@@ -144,7 +144,13 @@ export const ConfigurationView = () => {
                 />
 
                 <Collapse in={canConfigureConnection}>
-                    <ConfigurationFormContent connection={connection} canEdit={canEdit} formSaveState={lastSaveState} fileUploadRef={fileUploadRef} />
+                    <ConfigurationFormContent
+                        connection={connection}
+                        authenticationType={authenticationType}
+                        canEdit={canEdit}
+                        formSaveState={lastSaveState}
+                        fileUploadRef={fileUploadRef}
+                    />
                 </Collapse>
             </M3ConfigurationForm>
         </Box>
