@@ -66,6 +66,7 @@ const SecondaryNavigation = () => {
             overrides: {
                 component: 'a',
                 href: '/.auth/cookies/logout',
+                onClick: () => localStorage.clear(),
             },
         },
     ];
@@ -79,6 +80,7 @@ const SecondaryNavigation = () => {
             overrides: {
                 component: 'a',
                 href: '/.auth/cookies/initiate',
+                onClick: () => localStorage.clear(),
             },
         });
     }
