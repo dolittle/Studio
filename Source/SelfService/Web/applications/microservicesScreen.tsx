@@ -68,7 +68,7 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
     }
 
     return (
-        <WorkSpaceLayoutWithSidePanel pageTitle='Microservices' sidePanelMode='applications'>
+        <WorkSpaceLayoutWithSidePanel pageTitle='Microservices | Applications' sidePanelMode='applications'>
             <Routes>
                 <Route path='/overview' element={<Microservice application={application} />} />
                 <Route path='/create' element={<MicroserviceNewScreen application={application} />} />

@@ -53,7 +53,7 @@ export const SetupScreen = withRouteApplicationState(({ routeApplicationParams }
     }
 
     return (
-        <WorkSpaceLayoutWithSidePanel pageTitle='Setup' sidePanelMode='applications'>
+        <WorkSpaceLayoutWithSidePanel pageTitle='Setup | Applications' sidePanelMode='applications'>
             <Routes>
                 <Route path='/*' element={<SetupContainerScreen application={application} />} />
             </Routes>
