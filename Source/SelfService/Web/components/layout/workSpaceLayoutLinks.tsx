@@ -75,7 +75,7 @@ const SecondaryNavigation = () => {
         // Put before log out link if there is more than one customer.
         secondaryNavigationItems.splice(secondaryNavigationItems.length - 1, 0, {
             id: 'change-organization',
-            label: 'Change Organization',
+            label: 'Change Customer',
             icon: 'SupervisedUserCircleRounded',
             overrides: {
                 component: 'a',
