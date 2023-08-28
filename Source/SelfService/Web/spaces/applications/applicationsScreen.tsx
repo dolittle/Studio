@@ -16,8 +16,10 @@ import { getApplicationsListing } from '../../apis/solutions/application';
 import { ApplicationsList } from './applicationsList';
 import { LoginWrapper } from '../../components/layout/loginWrapper';
 import { ApplicationCreateDialog } from './applicationCreateDialog';
+import { usePageTitle } from '../../utils/usePageTitle';
 
 export const ApplicationsScreen = () => {
+    usePageTitle('Applications');
     const { enqueueSnackbar } = useSnackbar();
     const { currentApplicationId, hasOneCustomer } = useGlobalContext();
 
