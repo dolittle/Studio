@@ -9,6 +9,7 @@ import { useFormContext } from 'react-hook-form';
 import { Input, MaxWidthTextBlock, Select, SelectPropsOptions, Tooltip } from '@dolittle/design-system';
 
 import { Link } from '../../../apis/integrations/generated';
+import { M3AuthenticationType } from './M3AuthenticationType';
 
 const newConnectionDescription = `This process might take some time depending on access rights and working knowledge of
                     your organization's firewall and M3 system. You can always save and create the connection setup details then come back at a later time to finish.`;
@@ -28,14 +29,14 @@ export type MainM3ConnectionInfoProps = {
     hasSavedDeploymentType: boolean;
     connectionIdLinks?: Link[] | null;
     canEdit: boolean;
-    onAuthenticationTypeChange: (authenticationType: string) => void;
+    onAuthenticationTypeChange: (authenticationType: M3AuthenticationType) => void;
 };
 
 export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSavedDeploymentType, canEdit, onAuthenticationTypeChange }: MainM3ConnectionInfoProps) => {
     const { watch, setValue } = useFormContext();
 
     const selectDropdownHostingValue: string = watch('selectHosting');
-    const selectAuthenticationValue: string = watch('selectAuthenticationType');
+    const selectAuthenticationValue: M3AuthenticationType | undefined = watch('selectAuthenticationType');
     const hasSelectedCloudDeployment = useMemo(() => selectDropdownHostingValue.toLowerCase() === 'cloud',
         [selectDropdownHostingValue]
     );
@@ -70,7 +71,9 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSavedDeploymentType
 
 
     useEffect(() => {
-        onAuthenticationTypeChange(selectAuthenticationValue);
+        if (selectAuthenticationValue) {
+            onAuthenticationTypeChange(selectAuthenticationValue);
+        }
     }, [selectAuthenticationValue, onAuthenticationTypeChange]);
 
     const isCloudDeploymentValueSelected = selectDropdownHostingValue.toLowerCase() === 'cloud';

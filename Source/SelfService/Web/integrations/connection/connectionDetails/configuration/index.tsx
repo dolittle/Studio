@@ -19,12 +19,13 @@ import { M3ConfigurationForm, M3ConfigurationFormRef, M3ConfigurationFormSaveSta
 import { MainM3ConnectionInfo } from '../../configuration/MainM3ConnectionInfo';
 import { ActionToolbar } from './ActionToolbar';
 import { ConfigurationFormContent } from '../../configuration/ConfigurationFormContent';
+import { M3AuthenticationType } from '../../configuration/M3AuthenticationType';
 
 export const ConfigurationView = () => {
     const [canEdit, setEditMode] = useState(false);
     const [alwaysEdit, setAlwaysEdit] = useState(false);
     const [lastSaveState, setLastSaveState] = useState<M3ConfigurationFormSaveState>();
-    const [authenticationType, setAuthenticationType] = useState<string>('');
+    const [authenticationType, setAuthenticationType] = useState<M3AuthenticationType>();
     const connectionId = useConnectionIdFromRoute();
     const query = useConnectionsIdGet(
         { id: connectionId },
