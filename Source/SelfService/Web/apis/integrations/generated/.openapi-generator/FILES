@@ -4,6 +4,7 @@ apis/BaseMetadataApi.ts
 apis/CommandApi.ts
 apis/ConnectionConfigurationApi.ts
 apis/ConnectionRestApiApi.ts
+apis/ConnectionWebhookApi.ts
 apis/ConnectionsApi.ts
 apis/DeploymentApi.ts
 apis/EnvironmentApi.ts
@@ -47,6 +48,9 @@ models/KafkaServiceAccountCredentialsDto.ts
 models/KafkaServiceAccountListDto.ts
 models/Link.ts
 models/ListTable.ts
+models/M3BasicAuthConfigRequest.ts
+models/M3BasicAuthConfiguration.ts
+models/M3BasicAuthConfigurationResult.ts
 models/M3EnvironmentListDto.ts
 models/MappableTable.ts
 models/MappableTableColumn.ts
@@ -83,5 +87,8 @@ models/TableListingEntryIEnumerableResult.ts
 models/TableSummaryDto.ts
 models/TopicAccess.ts
 models/TopicAccessDto.ts
+models/WebhookServiceStatus.ts
+models/WebhookStatusDto.ts
+models/WebhookTargetStatus.ts
 models/index.ts
 runtime.ts

@@ -15,36 +15,36 @@
 
 import * as runtime from '../runtime';
 import type {
-  RestApiStatusDto,
+  WebhookStatusDto,
 } from '../models/index';
 import {
-    RestApiStatusDtoFromJSON,
-    RestApiStatusDtoToJSON,
+    WebhookStatusDtoFromJSON,
+    WebhookStatusDtoToJSON,
 } from '../models/index';
 
-export interface ConnectionsIdRestApiDisablePostRequest {
+export interface ConnectionsIdWebhooksDisablePostRequest {
     id: string;
 }
 
-export interface ConnectionsIdRestApiEnablePostRequest {
+export interface ConnectionsIdWebhooksEnablePostRequest {
     id: string;
 }
 
-export interface ConnectionsIdRestApiStatusGetRequest {
+export interface ConnectionsIdWebhooksStatusGetRequest {
     id: string;
 }
 
 /**
  * 
  */
-export class ConnectionRestApiApi extends runtime.BaseAPI {
+export class ConnectionWebhookApi extends runtime.BaseAPI {
 
     /**
-     * POST to this resource to disable the REST API for the connection
+     * POST to this resource to disable the Webhook API for the connection
      */
-    async connectionsIdRestApiDisablePostRaw(requestParameters: ConnectionsIdRestApiDisablePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async connectionsIdWebhooksDisablePostRaw(requestParameters: ConnectionsIdWebhooksDisablePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdRestApiDisablePost.');
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdWebhooksDisablePost.');
         }
 
         const queryParameters: any = {};
@@ -64,7 +64,7 @@ export class ConnectionRestApiApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/connections/{id}/rest-api/disable`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/connections/{id}/webhooks/disable`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -74,18 +74,18 @@ export class ConnectionRestApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * POST to this resource to disable the REST API for the connection
+     * POST to this resource to disable the Webhook API for the connection
      */
-    async connectionsIdRestApiDisablePost(requestParameters: ConnectionsIdRestApiDisablePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.connectionsIdRestApiDisablePostRaw(requestParameters, initOverrides);
+    async connectionsIdWebhooksDisablePost(requestParameters: ConnectionsIdWebhooksDisablePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.connectionsIdWebhooksDisablePostRaw(requestParameters, initOverrides);
     }
 
     /**
-     * POST to this resource to deploy the REST API for the connection
+     * POST to this resource to deploy the webhook API for the connection
      */
-    async connectionsIdRestApiEnablePostRaw(requestParameters: ConnectionsIdRestApiEnablePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async connectionsIdWebhooksEnablePostRaw(requestParameters: ConnectionsIdWebhooksEnablePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdRestApiEnablePost.');
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdWebhooksEnablePost.');
         }
 
         const queryParameters: any = {};
@@ -105,7 +105,7 @@ export class ConnectionRestApiApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/connections/{id}/rest-api/enable`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/connections/{id}/webhooks/enable`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -115,18 +115,18 @@ export class ConnectionRestApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * POST to this resource to deploy the REST API for the connection
+     * POST to this resource to deploy the webhook API for the connection
      */
-    async connectionsIdRestApiEnablePost(requestParameters: ConnectionsIdRestApiEnablePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.connectionsIdRestApiEnablePostRaw(requestParameters, initOverrides);
+    async connectionsIdWebhooksEnablePost(requestParameters: ConnectionsIdWebhooksEnablePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.connectionsIdWebhooksEnablePostRaw(requestParameters, initOverrides);
     }
 
     /**
-     * Get the status of the REST API for this connection
+     * GET this resource to get the status of the webhook API for the connection
      */
-    async connectionsIdRestApiStatusGetRaw(requestParameters: ConnectionsIdRestApiStatusGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestApiStatusDto>> {
+    async connectionsIdWebhooksStatusGetRaw(requestParameters: ConnectionsIdWebhooksStatusGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebhookStatusDto>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdRestApiStatusGet.');
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdWebhooksStatusGet.');
         }
 
         const queryParameters: any = {};
@@ -146,20 +146,20 @@ export class ConnectionRestApiApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/connections/{id}/rest-api/status`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/connections/{id}/webhooks/status`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => RestApiStatusDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => WebhookStatusDtoFromJSON(jsonValue));
     }
 
     /**
-     * Get the status of the REST API for this connection
+     * GET this resource to get the status of the webhook API for the connection
      */
-    async connectionsIdRestApiStatusGet(requestParameters: ConnectionsIdRestApiStatusGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RestApiStatusDto> {
-        const response = await this.connectionsIdRestApiStatusGetRaw(requestParameters, initOverrides);
+    async connectionsIdWebhooksStatusGet(requestParameters: ConnectionsIdWebhooksStatusGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WebhookStatusDto> {
+        const response = await this.connectionsIdWebhooksStatusGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

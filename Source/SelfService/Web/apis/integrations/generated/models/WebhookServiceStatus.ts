@@ -17,25 +17,25 @@
  * 
  * @export
  */
-export const RestApiServiceStatus = {
+export const WebhookServiceStatus = {
     Off: 'Off',
     Deploying: 'Deploying',
     Active: 'Active',
     Unhealthy: 'Unhealthy',
     Terminating: 'Terminating'
 } as const;
-export type RestApiServiceStatus = typeof RestApiServiceStatus[keyof typeof RestApiServiceStatus];
+export type WebhookServiceStatus = typeof WebhookServiceStatus[keyof typeof WebhookServiceStatus];
 
 
-export function RestApiServiceStatusFromJSON(json: any): RestApiServiceStatus {
-    return RestApiServiceStatusFromJSONTyped(json, false);
+export function WebhookServiceStatusFromJSON(json: any): WebhookServiceStatus {
+    return WebhookServiceStatusFromJSONTyped(json, false);
 }
 
-export function RestApiServiceStatusFromJSONTyped(json: any, ignoreDiscriminator: boolean): RestApiServiceStatus {
-    return json as RestApiServiceStatus;
+export function WebhookServiceStatusFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookServiceStatus {
+    return json as WebhookServiceStatus;
 }
 
-export function RestApiServiceStatusToJSON(value?: RestApiServiceStatus | null): any {
+export function WebhookServiceStatusToJSON(value?: WebhookServiceStatus | null): any {
     return value as any;
 }
 
