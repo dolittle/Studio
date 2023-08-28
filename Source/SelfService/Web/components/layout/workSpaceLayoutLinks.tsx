@@ -26,7 +26,7 @@ const PrimaryNavigation = () => {
         },
         {
             label: 'applications',
-            selected: location.pathname.includes('/microservices'),
+            selected: location.pathname.includes('/application/'),
             overrides: {
                 component: Link,
                 to: `/microservices/application/${currentApplicationId}/overview`,
