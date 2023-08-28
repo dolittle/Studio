@@ -1,3 +1,26 @@
+# [3.9.15] - 2023-8-28 [PR: #460](https://github.com/dolittle/Studio/pull/460)
+## Summary
+
+Improved overall navigation.
+
+### Added
+
+- Navigate to 'Landing page' when NavBar logo is clicked
+
+### Changed
+
+- Clean 'localStorage' after logging out or changing customer
+- 'Orgainzation' link label to 'Customer' as it is on Authentication pages
+
+### Fixed
+
+- Favicon display. Changed index.ejs file for that
+
+### Removed
+
+- Microservices EnvironmentVariables button styles for smaller screens so they dont stack on top of each other
+
+
 # [3.9.14] - 2023-8-25 [PR: #459](https://github.com/dolittle/Studio/pull/459)
 ## Summary
 
