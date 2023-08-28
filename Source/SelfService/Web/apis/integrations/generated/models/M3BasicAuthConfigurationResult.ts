@@ -19,60 +19,60 @@ import {
     LinkFromJSONTyped,
     LinkToJSON,
 } from './Link';
-import type { MappableTable } from './MappableTable';
+import type { M3BasicAuthConfiguration } from './M3BasicAuthConfiguration';
 import {
-    MappableTableFromJSON,
-    MappableTableFromJSONTyped,
-    MappableTableToJSON,
-} from './MappableTable';
+    M3BasicAuthConfigurationFromJSON,
+    M3BasicAuthConfigurationFromJSONTyped,
+    M3BasicAuthConfigurationToJSON,
+} from './M3BasicAuthConfiguration';
 
 /**
  * A result with the value (if any) and links to other resources (if any)
  * @export
- * @interface MappableTableResult
+ * @interface M3BasicAuthConfigurationResult
  */
-export interface MappableTableResult {
+export interface M3BasicAuthConfigurationResult {
     /**
      * 
-     * @type {MappableTable}
-     * @memberof MappableTableResult
+     * @type {M3BasicAuthConfiguration}
+     * @memberof M3BasicAuthConfigurationResult
      */
-    value?: MappableTable;
+    value?: M3BasicAuthConfiguration;
     /**
      * Links to other resources. There will usually be a self link, but there
      * may be other links as well with relations that indicate what the link is.
      * @type {Array<Link>}
-     * @memberof MappableTableResult
+     * @memberof M3BasicAuthConfigurationResult
      */
     links: Array<Link>;
 }
 
 /**
- * Check if a given object implements the MappableTableResult interface.
+ * Check if a given object implements the M3BasicAuthConfigurationResult interface.
  */
-export function instanceOfMappableTableResult(value: object): boolean {
+export function instanceOfM3BasicAuthConfigurationResult(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "links" in value;
 
     return isInstance;
 }
 
-export function MappableTableResultFromJSON(json: any): MappableTableResult {
-    return MappableTableResultFromJSONTyped(json, false);
+export function M3BasicAuthConfigurationResultFromJSON(json: any): M3BasicAuthConfigurationResult {
+    return M3BasicAuthConfigurationResultFromJSONTyped(json, false);
 }
 
-export function MappableTableResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): MappableTableResult {
+export function M3BasicAuthConfigurationResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): M3BasicAuthConfigurationResult {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'value': !exists(json, 'value') ? undefined : MappableTableFromJSON(json['value']),
+        'value': !exists(json, 'value') ? undefined : M3BasicAuthConfigurationFromJSON(json['value']),
         'links': ((json['links'] as Array<any>).map(LinkFromJSON)),
     };
 }
 
-export function MappableTableResultToJSON(value?: MappableTableResult | null): any {
+export function M3BasicAuthConfigurationResultToJSON(value?: M3BasicAuthConfigurationResult | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -81,7 +81,7 @@ export function MappableTableResultToJSON(value?: MappableTableResult | null): a
     }
     return {
         
-        'value': MappableTableToJSON(value.value),
+        'value': M3BasicAuthConfigurationToJSON(value.value),
         'links': ((value.links as Array<any>).map(LinkToJSON)),
     };
 }

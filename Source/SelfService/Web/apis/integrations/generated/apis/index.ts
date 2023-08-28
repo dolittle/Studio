@@ -5,6 +5,7 @@ export * from './BaseMetadataApi';
 export * from './CommandApi';
 export * from './ConnectionConfigurationApi';
 export * from './ConnectionRestApiApi';
+export * from './ConnectionWebhookApi';
 export * from './ConnectionsApi';
 export * from './DeploymentApi';
 export * from './EnvironmentApi';
