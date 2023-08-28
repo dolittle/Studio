@@ -40,7 +40,7 @@ export const IntegrationsIndex = () => {
     if (isLoading) return null;
 
     return (
-        <WorkSpaceLayoutWithSidePanel pageTitle='Integrations'>
+        <WorkSpaceLayoutWithSidePanel pageTitle='Connections | Integrations'>
             {/* Temporary replacement for breadcrumbs */}
             <Box sx={{ minHeight: 16 }} />
             <QueryClientProvider client={queryClient}>

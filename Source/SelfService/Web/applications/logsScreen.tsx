@@ -88,7 +88,7 @@ export const LogsScreen = withRouteApplicationState(({ routeApplicationParams })
     }
 
     return (
-        <WorkSpaceLayoutWithSidePanel pageTitle='Logs' sidePanelMode='applications'>
+        <WorkSpaceLayoutWithSidePanel pageTitle='Logs | Applications' sidePanelMode='applications'>
             <Typography variant='h1' sx={{ my: 3 }}>Logs</Typography>
 
             <Box sx={{ minWidth: 640, mt: 3 }}>

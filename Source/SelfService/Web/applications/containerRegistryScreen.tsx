@@ -50,7 +50,7 @@ export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplica
     }
 
     return (
-        <WorkSpaceLayoutWithSidePanel pageTitle='Container Registry' sidePanelMode='applications'>
+        <WorkSpaceLayoutWithSidePanel pageTitle='Container Registry | Applications' sidePanelMode='applications'>
             <Routes>
                 <Route path='/overview/*' element={<RegistryContainer application={application} />} />
                 <Route path='*' element={<RouteNotFound redirectUrl={'overview'} auto={true} />} />

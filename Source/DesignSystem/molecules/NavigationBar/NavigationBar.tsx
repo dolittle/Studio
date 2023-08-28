@@ -89,7 +89,7 @@ export const NavigationBar = ({ logo, primaryNavigationItems, secondaryNavigatio
                 </Box>
 
                 <Box sx={{ ...styles.hideOnMobile, flexGrow: 1, alignItems: 'center', gap: 3 }}>
-                    {logo && <Icon icon={logo} sx={{ mr: 2 }} />}
+                    {logo && <IconButton tooltipText='Home' icon={logo} href='/' sx={{ mr: 2 }} />}
                     {primaryNavigationItems}
                 </Box>
 

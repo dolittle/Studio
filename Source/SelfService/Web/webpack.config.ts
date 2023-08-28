@@ -140,16 +140,10 @@ function webpack(env: Args, argv: Args) {
             new CopyPlugin({
                 patterns: [
                     {
-                        from: './assets/favicons/apple-touch-icon.png',
-                        to: './assets/favicons/',
-                    },
-                    {
-                        from: './assets/favicons/favicon-32x32.png',
-                        to: './assets/favicons/',
+                        from: 'favicon.png',
                     },
                     {
                         from: 'favicon.ico',
-                        to: './',
                     },
                 ],
             }),

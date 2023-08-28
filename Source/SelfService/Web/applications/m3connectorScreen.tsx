@@ -46,7 +46,7 @@ export const M3ConnectorScreen = () => {
     }
 
     return (
-        <WorkSpaceLayoutWithSidePanel pageTitle='M3 connector' sidePanelMode='applications'>
+        <WorkSpaceLayoutWithSidePanel pageTitle='M3 Connector | Applications' sidePanelMode='applications'>
             <Routes>
                 <Route path='/*' element={<Container application={application} />} />
             </Routes>

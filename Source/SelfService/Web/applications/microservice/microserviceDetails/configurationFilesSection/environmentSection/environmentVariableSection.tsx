@@ -20,9 +20,6 @@ import { envVariableColumns } from './tableColumns';
 
 const styles = {
     buttonWrapper: {
-        display: 'flex',
-        flexDirection: { xs: 'column', xl: 'row' },
-        alignItems: 'start',
         mb: 1.5,
         button: {
             'mr': 2.5,

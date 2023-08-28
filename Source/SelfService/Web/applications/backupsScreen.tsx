@@ -61,7 +61,7 @@ export const BackupsScreen = () => {
     }
 
     return (
-        <WorkSpaceLayoutWithSidePanel pageTitle='Backups' sidePanelMode='applications'>
+        <WorkSpaceLayoutWithSidePanel pageTitle='Backups | Applications' sidePanelMode='applications'>
             <Routes>
                 <Route path='overview' element={<BackupsList data={backupLinksForEnvironment} application={application} />} />
                 <Route path='list' element={<BackupsListView application={application} environment={currentEnvironment} />} />

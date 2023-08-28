@@ -26,7 +26,7 @@ const PrimaryNavigation = () => {
         },
         {
             label: 'applications',
-            selected: location.pathname.includes('/microservices'),
+            selected: location.pathname.includes('/application/'),
             overrides: {
                 component: Link,
                 to: `/microservices/application/${currentApplicationId}/overview`,
@@ -66,6 +66,7 @@ const SecondaryNavigation = () => {
             overrides: {
                 component: 'a',
                 href: '/.auth/cookies/logout',
+                onClick: () => localStorage.clear(),
             },
         },
     ];
@@ -74,11 +75,12 @@ const SecondaryNavigation = () => {
         // Put before log out link if there is more than one customer.
         secondaryNavigationItems.splice(secondaryNavigationItems.length - 1, 0, {
             id: 'change-organization',
-            label: 'Change Organization',
+            label: 'Change Customer',
             icon: 'SupervisedUserCircleRounded',
             overrides: {
                 component: 'a',
                 href: '/.auth/cookies/initiate',
+                onClick: () => localStorage.clear(),
             },
         });
     }
