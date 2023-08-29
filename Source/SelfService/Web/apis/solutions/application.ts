@@ -123,6 +123,7 @@ export async function getLiveApplications(): Promise<HttpResponseApplications> {
         });
 
     const jsonResult: HttpResponseApplications = await result.json();
+    jsonResult.applications = jsonResult.applications || [];
     return jsonResult;
 };
 
