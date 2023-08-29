@@ -10,11 +10,12 @@ import { SubmitHandler } from 'react-hook-form';
 import { Form, FormRef } from '@dolittle/design-system';
 
 import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
-import { ConnectionModel, ConnectionModelResult, IonConfigRequest, IonConfigurationResult, MdpConfigurationResult, StringResult } from '../../../apis/integrations/generated';
+import { ConnectionModel, ConnectionModelResult, IonConfigRequest, IonConfigurationResult, M3BasicAuthConfigRequest, MdpConfigurationResult, StringResult } from '../../../apis/integrations/generated';
 import { useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
-import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
+import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost, useConnectionsIdConfigurationBasicPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
 
+//TODO: Can this be replaced with using `watch` from react-hook-form?
 const useForceSubscribeToIonConfigurationStateChanges = (currentForm: FormRef<M3ConnectionParameters> | undefined) => {
     useEffect(() => {
         if (currentForm) {
@@ -30,6 +31,7 @@ export type M3ConnectionParameters = {
     metadataPublisherUrl: string;
     metadataPublisherPassword: string;
     ionConfiguration: IonConfigRequest;
+    basicConfiguration: M3BasicAuthConfigRequest
 };
 
 export type M3ConfigurationFormRef = {
@@ -104,8 +106,9 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
     const metadataPublisherUrl = connection._configuration?.mdp?.url;
     const metadataPublisherPassword = connection._configuration?.mdp?.password;
     const ionConfiguration = connection._configuration?.ion;
+    const basicConfiguration = connection._configuration?.m3BasicAuth;
 
-    const defaultValues = {
+    const defaultValues: M3ConnectionParameters = {
         connectorName: connection.name || '',
         selectHosting: hasSelectedDeploymentType ? deploymentType || '' : '',
         selectAuthenticationType: authenticationType || '',
@@ -120,6 +123,12 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
             ci: ionConfiguration?.clientId || '',
             cs: ionConfiguration?.clientSecret || '',
         },
+        basicConfiguration: {
+            username: basicConfiguration?.username || '',
+            password: basicConfiguration?.password || '',
+            host: basicConfiguration?.host || '',
+            allowInsecureSsl: basicConfiguration?.allowInsecureSsl || undefined,
+        }
     };
 
     const handleM3ConnectionSave: SubmitHandler<M3ConnectionParameters> = useCallback((data) => {

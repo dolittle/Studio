@@ -17,7 +17,6 @@ export const MetadataPublisherCredentials = ({ canEdit }: MetadataPublisherCrede
     const { watch } = useFormContext();
     const [metadataPublisherUrl, metadataPublisherPassword] = watch(['metadataPublisherUrl', 'metadataPublisherPassword']);
 
-    // TODO: Run again when input loses focus.
     const required = !!metadataPublisherUrl || !!metadataPublisherPassword;
 
     return (
