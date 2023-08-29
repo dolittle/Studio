@@ -44,6 +44,11 @@ export const ConfigurationView = () => {
     const connection = query.data?.value;
     const links = query.data?.links || [];
 
+    const deploymentType = connection?.chosenEnvironment?.value;
+    const hasSavedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
+
+    const canConfigureConnection = authenticationType && connection?.status?.name !== 'Registered';
+
     useEffect(() => {
         if (!connection) {
             return;
@@ -63,12 +68,29 @@ export const ConfigurationView = () => {
 
     }, [connection?.status.name]);
 
-    const deploymentType = connection?.chosenEnvironment?.value;
-    const hasSavedDeploymentType = deploymentType?.toLowerCase() !== 'unknown';
-
-    //TODO PAV: Should also check local state for auth type value
-    const canConfigureConnection = connection?.status?.name !== 'Registered';
-
+    useEffect(() => {
+        if (!connection || !connection.chosenEnvironment.value) {
+            return;
+        }
+        let authenticationType: M3AuthenticationType | undefined;
+        if (connection.chosenEnvironment.value.toLowerCase() === 'cloud') {
+            authenticationType = 'ion';
+        }
+        if (connection.chosenEnvironment.value.toLowerCase() === 'on premises') {
+            if(connection._configuration.m3BasicAuth?.host) {
+                authenticationType = 'basic';
+            }
+            if(connection._configuration.ion?.gatewayUrl) {
+                authenticationType = 'ion';
+            }
+        }
+        setAuthenticationType(authenticationType);
+    }, [
+        connection?._configuration.ion,
+        connection?._configuration.mdp,
+        connection?._configuration.m3BasicAuth,
+        connection?.chosenEnvironment.value
+    ]);
 
     if (query.isLoading) return <>Loading</>;
     if (!connection) return null;

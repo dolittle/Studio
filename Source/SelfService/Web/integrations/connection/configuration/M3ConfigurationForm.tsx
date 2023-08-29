@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useImperativeHandle, useState, useCallback, useEffect } from 'react';
+import React, { useImperativeHandle, useState, useCallback, useEffect, useMemo } from 'react';
 
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
@@ -103,34 +103,43 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
     const mdpConfigurationMutation = useConnectionsIdConfigurationMdpPost();
     const basicConfigurationMutation = useConnectionsIdConfigurationBasicPost();
 
-    const deploymentType = connection.chosenEnvironment?.value;
-    const metadataPublisherUrl = connection._configuration?.mdp?.url;
-    const metadataPublisherPassword = connection._configuration?.mdp?.password;
-    const ionConfiguration = connection._configuration?.ion;
-    const basicConfiguration = connection._configuration?.m3BasicAuth;
+    const defaultValues: M3ConnectionParameters = useMemo(() => {
+        const deploymentType = connection.chosenEnvironment?.value;
+        const metadataPublisherUrl = connection._configuration?.mdp?.url;
+        const metadataPublisherPassword = connection._configuration?.mdp?.password;
+        const ionConfiguration = connection._configuration?.ion;
+        const basicConfiguration = connection._configuration?.m3BasicAuth;
 
-    const defaultValues: M3ConnectionParameters = {
-        connectorName: connection.name || '',
-        selectHosting: hasSelectedDeploymentType ? deploymentType || '' : '',
-        selectAuthenticationType: authenticationType || '',
-        metadataPublisherUrl: metadataPublisherUrl || '',
-        metadataPublisherPassword: metadataPublisherPassword || '',
-        ionConfiguration: {
-            iu: ionConfiguration?.gatewayUrl || '',
-            pu: ionConfiguration?.oauthTokenUrl || '',
-            ot: ionConfiguration?.byUser || '',
-            saak: ionConfiguration?.username || '',
-            sask: ionConfiguration?.password || '',
-            ci: ionConfiguration?.clientId || '',
-            cs: ionConfiguration?.clientSecret || '',
-        },
-        basicConfiguration: {
-            username: basicConfiguration?.username || '',
-            password: basicConfiguration?.password || '',
-            host: basicConfiguration?.host || '',
-            allowInsecureSsl: basicConfiguration?.allowInsecureSsl || undefined,
+        return {
+            connectorName: connection.name || '',
+            selectHosting: hasSelectedDeploymentType ? deploymentType || '' : '',
+            selectAuthenticationType: authenticationType || '',
+            metadataPublisherUrl: metadataPublisherUrl || '',
+            metadataPublisherPassword: metadataPublisherPassword || '',
+            ionConfiguration: {
+                iu: ionConfiguration?.gatewayUrl || '',
+                pu: ionConfiguration?.oauthTokenUrl || '',
+                ot: ionConfiguration?.byUser || '',
+                saak: ionConfiguration?.username || '',
+                sask: ionConfiguration?.password || '',
+                ci: ionConfiguration?.clientId || '',
+                cs: ionConfiguration?.clientSecret || '',
+            },
+            basicConfiguration: {
+                username: basicConfiguration?.username || '',
+                password: basicConfiguration?.password || '',
+                host: basicConfiguration?.host || '',
+                allowInsecureSsl: basicConfiguration?.allowInsecureSsl || undefined,
+            }
+        };
+    }, [connection, hasSelectedDeploymentType, authenticationType]);
+
+    useEffect(() => {
+        if (currentForm) {
+            currentForm.reset(defaultValues);
         }
-    };
+
+    }, [defaultValues, currentForm]);
 
     const handleM3ConnectionSave: SubmitHandler<M3ConnectionParameters> = useCallback((data) => {
         if (!connectionId || !currentForm) {
@@ -259,16 +268,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         mdpConfigurationMutation,
         ionConfigurationMutation,
     ]);
-
-    const handleSuccessfulSave = (message: string) => {
-        enqueueSnackbar(message);
-        queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connection_GET, connectionId] });
-    };
-
-    const handleErrorWhenSaving = (message: string, error: unknown) => {
-        console.log(message, error);
-        enqueueSnackbar(message, { variant: 'error' });
-    };
 
     return (
         <Form<M3ConnectionParameters>
