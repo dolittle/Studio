@@ -109,7 +109,9 @@ export async function isApplicationOnline(applicationID: string): Promise<Applic
             mode: 'cors',
         });
 
-    return response;
+    const data = await parseJSONResponse(response);
+
+    return data;
 };
 
 export async function getLiveApplications(): Promise<any> {
