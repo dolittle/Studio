@@ -91,11 +91,6 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         }
     }, [currentForm?.reset, currentForm?.formState.isSubmitSuccessful, currentForm?.formState.defaultValues, onSaved, lastSaveState]);
 
-
-    const { enqueueSnackbar } = useSnackbar();
-
-    const queryClient = useQueryClient();
-
     const nameMutation = useConnectionsIdNamePost();
     const onPremisesConfigurationMutation = useConnectionsIdDeployOnPremisesPost();
     const onCloudConfigurationMutation = useConnectionsIdDeployCloudPost();
@@ -134,9 +129,13 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         };
     }, [connection, hasSelectedDeploymentType, authenticationType]);
 
+    /**
+     * Reset the form defaults when the default values change, and keep any dirty values
+     * The idea here is to set the *Initial* state. If the form needs to be reset, then use the reset function available on the imperativeRef from parent component.
+     */
     useEffect(() => {
         if (currentForm) {
-            currentForm.reset(defaultValues);
+            currentForm.reset(defaultValues, { keepDirtyValues: true });
         }
 
     }, [defaultValues, currentForm]);
