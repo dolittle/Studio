@@ -18,7 +18,6 @@ export { Icon, IconProps } from './atoms/Icon';
 export { IconButton, IconButtonProps } from './atoms/IconButton';
 export { Link, LinkProps } from './atoms/Link';
 export { FullPageLoadingSpinner, LoadingSpinner } from './atoms/LoadingSpinner';
-export { MaintenanceMessageBuilding } from './atoms/MaintenanceMessage';
 export { StatusIndicator, StatusIndicatorProps } from './atoms/StatusIndicator';
 export { Summary } from './atoms/Metrics';
 export { Tabs } from './atoms/Tabs';
