@@ -11,7 +11,6 @@ import { ConsumeDataRestAPIView } from './connectionDetails/consumeDataRestAPI';
 import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { MessagesViewRoot } from './connectionDetails/messages';
 import { Index as ChangeMessageView } from './connectionDetails/messages/changeMessage';
-import { NewConnectionView } from './new';
 import { ConsumeDataEventStreamsView } from './connectionDetails/consumeDataEventStreams';
 
 
@@ -51,10 +50,5 @@ export const routes: RouteObject[] = [
                 element: <ConsumeDataEventStreamsView />,
             },
         ],
-    },
-    {
-        path: 'new/',
-        element: <NewConnectionView />,
-        children: [],
-    },
+    }
 ];
