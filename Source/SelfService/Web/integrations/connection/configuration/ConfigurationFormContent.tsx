@@ -106,8 +106,9 @@ export const ConfigurationFormContent = ({
     const getSaveStateFor = (name: SaveActionName) => formSaveState?.find(state => state.name === name);
 
     useEffect(() => {
-        const mdpSaveState = getSaveStateFor('MDP configuration');
+        const mdpSaveState = getSaveStateFor('MDP Configuration');
         const ionSaveState = getSaveStateFor('ION Configuration');
+        const basicSaveState = getSaveStateFor('Basic Configuration');
 
         const newExpanded = [...expanded];
         if (mdpSaveState?.status === 'error') {
@@ -123,6 +124,15 @@ export const ConfigurationFormContent = ({
             newExpanded.push(ionServiceAccountAccordionId);
         } else if (ionSaveState?.status === 'success') {
             const index = newExpanded.indexOf(ionServiceAccountAccordionId);
+            if (index > -1) {
+                newExpanded.splice(index, 1);
+            }
+        }
+
+        if (basicSaveState?.status === 'error') {
+            newExpanded.push(basicCredentialsAccordionId);
+        } else if (basicSaveState?.status === 'success') {
+            const index = newExpanded.indexOf(basicCredentialsAccordionId);
             if (index > -1) {
                 newExpanded.splice(index, 1);
             }
