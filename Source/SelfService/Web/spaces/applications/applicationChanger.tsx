@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useGlobalContext } from '../../context/globalContext';
 
-import { ShortInfo } from '../../apis/solutions/api';
-import { getApplication, getApplicationsListing, HttpResponseApplication, HttpResponseApplications } from '../../apis/solutions/application';
-
 import { getSelectionMenuItems, DropdownMenuProps, MenuItemProps } from '@dolittle/design-system';
+
+import { ShortInfo } from '../../apis/solutions/api';
+import { getApplication, getApplicationsListing, getLiveApplications, HttpResponseApplication } from '../../apis/solutions/application';
 
 import { ApplicationCreateDialog } from './applicationCreateDialog';
 
@@ -20,6 +20,7 @@ export const ApplicationChanger = () => {
     const { currentApplicationId, setCurrentApplicationId } = useGlobalContext();
 
     const [applications, setApplications] = useState([] as ShortInfo[]);
+    const [liveApplications, setLiveApplications] = useState([] as ShortInfo[]);
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
     const [createSpaceDialogOpen, setCreateSpaceDialogOpen] = useState(false);
@@ -34,14 +35,13 @@ export const ApplicationChanger = () => {
 
         Promise.all([
             getApplicationsListing(),
+            getLiveApplications(),
             getApplication(currentApplicationId),
         ]).then(values => {
-            const response = values[0] as HttpResponseApplications;
-            const applicationData = values[1];
-
-            setApplications(response.applications);
-            setApplication(applicationData);
-            setCanCreateApplication(response.canCreateApplication);
+            setApplications(values[0].applications);
+            setLiveApplications(values[1].applications);
+            setApplication(values[2]);
+            setCanCreateApplication(values[0].canCreateApplication);
             setIsLoading(false);
         }).catch(() => {
             enqueueSnackbar('Failed getting data from the server.', { variant: 'error' });
@@ -74,9 +74,14 @@ export const ApplicationChanger = () => {
     const handleApplicationChange = (menuItem: MenuItemProps) => {
         if (menuItem.id === currentApplicationId) return;
 
-        setCurrentApplicationId(menuItem.id);
-        window.location.href = 'selfservice/home';
-        return false;
+        if (liveApplications.some(application => application.id === menuItem.id)) {
+            setCurrentApplicationId(menuItem.id);
+            window.location.href = 'selfservice/home'; // TODO: stay on the same page?
+            return false;
+        } else {
+            navigate(`/building`);
+            return;
+        }
     };
 
     const handleApplicationCreate = () => {
