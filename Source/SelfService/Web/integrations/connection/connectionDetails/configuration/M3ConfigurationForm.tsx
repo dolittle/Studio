@@ -9,11 +9,11 @@ import { SubmitHandler } from 'react-hook-form';
 
 import { Form, FormRef } from '@dolittle/design-system';
 
-import { CACHE_KEYS } from '../../../apis/integrations/CacheKeys';
-import { ConnectionModel, ConnectionModelResult, IonConfigRequest, IonConfigurationResult, M3BasicAuthConfigRequest, M3BasicAuthConfigurationResult, MdpConfigurationResult, StringResult } from '../../../apis/integrations/generated';
-import { useConnectionsIdNamePost } from '../../../apis/integrations/connectionsApi.hooks';
-import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../apis/integrations/deploymentApi.hooks';
-import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost, useConnectionsIdConfigurationBasicPost } from '../../../apis/integrations/connectionConfigurationApi.hooks';
+import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
+import { ConnectionModel, ConnectionModelResult, IonConfigRequest, IonConfigurationResult, M3BasicAuthConfigRequest, M3BasicAuthConfigurationResult, MdpConfigurationResult, StringResult } from '../../../../apis/integrations/generated';
+import { useConnectionsIdNamePost } from '../../../../apis/integrations/connectionsApi.hooks';
+import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../../apis/integrations/deploymentApi.hooks';
+import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost, useConnectionsIdConfigurationBasicPost } from '../../../../apis/integrations/connectionConfigurationApi.hooks';
 
 //TODO: Can this be replaced with using `watch` from react-hook-form?
 const useForceSubscribeToIonConfigurationStateChanges = (currentForm: FormRef<M3ConnectionParameters> | undefined) => {

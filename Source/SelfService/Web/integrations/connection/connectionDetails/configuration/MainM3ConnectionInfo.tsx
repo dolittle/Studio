@@ -8,7 +8,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { Input, MaxWidthTextBlock, Select, SelectPropsOptions, Tooltip } from '@dolittle/design-system';
 
-import { Link } from '../../../apis/integrations/generated';
+import { Link } from '../../../../apis/integrations/generated';
 import { M3AuthenticationType } from './M3AuthenticationType';
 
 const newConnectionDescription = `This process might take some time depending on access rights and working knowledge of

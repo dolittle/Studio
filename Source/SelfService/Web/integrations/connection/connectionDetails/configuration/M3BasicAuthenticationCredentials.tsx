@@ -7,7 +7,7 @@ import { Stack } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 
 import { Input, PasswordInput, MaxWidthTextBlock } from '@dolittle/design-system';
-import { isValidUrl } from '../../../utils/validation/isValidUrl';
+import { isValidUrl } from '../../../../utils/validation/isValidUrl';
 
 export type M3BasicAuthenticationCredentialsProps = {
     canEdit: boolean;
