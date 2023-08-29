@@ -1,3 +1,10 @@
+# [3.10.0] - 2023-8-29 [PR: #461](https://github.com/dolittle/Studio/pull/461)
+## Summary
+- Support for selecting authentication type when setting up the M3 connector
+- Cloud connector supports only ION
+- On premises connector supports MDP/ION and MDP/M3 basic authentication
+
+
 # [3.9.15] - 2023-8-28 [PR: #460](https://github.com/dolittle/Studio/pull/460)
 ## Summary
 
