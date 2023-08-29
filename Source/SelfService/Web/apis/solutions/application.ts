@@ -19,8 +19,6 @@ export type HttpApplicationEnvironment = {
 export type HttpApplicationRequest = {
     id: string;
     name: string;
-    //contactName: string;
-    //contactEmail: string;
     environments: HttpApplicationEnvironment[];
 };
 
@@ -109,12 +107,12 @@ export async function isApplicationOnline(applicationID: string): Promise<Applic
             mode: 'cors',
         });
 
-    const data = await parseJSONResponse(response);
+    const data: ApplicationBuildState = await parseJSONResponse(response);
 
     return data;
 };
 
-export async function getLiveApplications(): Promise<any> {
+export async function getLiveApplications(): Promise<HttpResponseApplications> {
     const url = `${getServerUrlPrefix()}/live/applications`;
 
     const result = await fetch(
@@ -124,7 +122,7 @@ export async function getLiveApplications(): Promise<any> {
             mode: 'cors',
         });
 
-    const jsonResult = await result.json();
+    const jsonResult: HttpResponseApplications = await result.json();
     return jsonResult;
 };
 
