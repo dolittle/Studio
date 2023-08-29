@@ -34,6 +34,7 @@ export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecu
 export { Graph } from './molecules/Metrics/Graph';
 export { DropdownMenu, DropdownMenuProps, MenuItemProps } from './molecules/DropdownMenu';
 export { MenuList, MenuListProps } from './molecules/MenuList';
+export { ProblemPage } from './molecules/ProblemPage';
 export { NavigationBar, NavigationBarProps, getPrimaryNavigationItems, getSecondaryNavigationItems, getSelectionMenuItems } from './molecules/NavigationBar';
 export { SelectCard, SimpleCard, SimpleCardProps, SimpleCardGrid, SimpleCardGridProps } from './molecules/Card';
 export { SidePanel, SidePanelProps, getSidePanelItems } from './molecules/SidePanel';
