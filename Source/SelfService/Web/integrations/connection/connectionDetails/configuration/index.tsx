@@ -72,19 +72,22 @@ export const ConfigurationView = () => {
         if (!connection || !connection.chosenEnvironment.value) {
             return;
         }
-        let authenticationType: M3AuthenticationType | undefined;
+        let authenticationFromServer: M3AuthenticationType | undefined;
         if (connection.chosenEnvironment.value.toLowerCase() === 'cloud') {
-            authenticationType = 'ion';
+            authenticationFromServer = 'ion';
         }
         if (connection.chosenEnvironment.value.toLowerCase() === 'on premises') {
-            if(connection._configuration.m3BasicAuth?.host) {
-                authenticationType = 'basic';
+            if (connection._configuration.m3BasicAuth?.host) {
+                authenticationFromServer = 'basic';
             }
-            if(connection._configuration.ion?.gatewayUrl) {
-                authenticationType = 'ion';
+            if (connection._configuration.ion?.gatewayUrl) {
+                authenticationFromServer = 'ion';
             }
         }
-        setAuthenticationType(authenticationType);
+        const shouldOverrideAuthenticationFromServer = authenticationFromServer && !authenticationType;
+        if (shouldOverrideAuthenticationFromServer) {
+            setAuthenticationType(authenticationFromServer);
+        }
     }, [
         connection?._configuration.ion,
         connection?._configuration.mdp,
