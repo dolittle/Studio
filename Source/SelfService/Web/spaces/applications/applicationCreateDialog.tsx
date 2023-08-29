@@ -4,7 +4,6 @@
 import React, { useState } from 'react';
 
 import { useSnackbar } from 'notistack';
-import { useGlobalContext } from '../../context/globalContext';
 
 import { Guid } from '@dolittle/rudiments';
 
@@ -12,7 +11,7 @@ import { Stack, Typography } from '@mui/material';
 
 import { Checkbox, DialogForm, FullPageLoadingSpinner, Input } from '@dolittle/design-system';
 
-import { createApplication, HttpApplicationRequest, isApplicationOnline } from '../../apis/solutions/application';
+import { createApplication, HttpApplicationRequest } from '../../apis/solutions/application';
 
 import { alphaNumericLowerCasedCharsRegex } from '../../utils/helpers/regex';
 
@@ -39,7 +38,6 @@ export type ApplicationCreateDialogProps = {
 
 export const ApplicationCreateDialog = ({ isOpen, onClose }: ApplicationCreateDialogProps) => {
     const { enqueueSnackbar } = useSnackbar();
-    const { setCurrentApplicationId } = useGlobalContext();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -66,8 +64,7 @@ export const ApplicationCreateDialog = ({ isOpen, onClose }: ApplicationCreateDi
 
         try {
             await createApplication(request);
-            setCurrentApplicationId(request.id);
-            enqueueSnackbar(`'${form.name}' successfully created.`);
+            enqueueSnackbar(`'${form.name}' successfully created. Setting up your application may take few minutes.`);
         } catch (error) {
             enqueueSnackbar('Failed to create new application. Please try again.', { variant: 'error' });
         } finally {
