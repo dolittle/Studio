@@ -15,11 +15,11 @@ import { useConnectionsIdGet, useConnectionsIdDelete } from '../../../../apis/in
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
 import { getConnectionIndicatorStatus } from '../../../../utils/helpers';
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
-import { M3ConfigurationForm, M3ConfigurationFormRef, M3ConfigurationFormSaveState } from './M3ConfigurationForm';
-import { MainM3ConnectionInfo } from './MainM3ConnectionInfo';
-import { ActionToolbar } from './ActionToolbar';
-import { ConfigurationFormContent } from './ConfigurationFormContent';
-import { M3AuthenticationType } from './M3AuthenticationType';
+import { M3ConfigurationForm, M3ConfigurationFormRef, M3ConfigurationFormSaveState } from './setup/M3ConfigurationForm';
+import { MainM3ConnectionInfo } from './setup/MainM3ConnectionInfo';
+import { ActionToolbar } from './setup/ActionToolbar';
+import { ConfigurationFormContent } from './setup/ConfigurationFormContent';
+import { M3AuthenticationType } from './setup/M3AuthenticationType';
 
 export const ConfigurationView = () => {
     const [canEdit, setEditMode] = useState(false);
