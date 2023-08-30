@@ -29,8 +29,8 @@ import { M3ConnectorScreen } from './applications/m3connectorScreen';
 import { LogsScreen } from './applications/logsScreen';
 
 import { ApplicationsScreen } from './spaces/applications/applicationsScreen';
-
 import { Screen as AdminScreen } from './admin/adminScreen';
+import { ApplicationBuilding } from './spaces/applications/applicationBuilding';
 import { HomeScreen } from './home/homeScreen';
 import { IntegrationsIndex } from './integrations';
 
@@ -74,6 +74,8 @@ export const App = () => {
                             <Route path='/integrations/*' element={<IntegrationsIndex />} />
 
                             <Route path='/admin/*' element={<AdminScreen />} />
+
+                            <Route path='/building' element={<ApplicationBuilding />} />
 
                             <Route path='/problem' element={<Problem />} />
 

@@ -5,4 +5,4 @@ import React from 'react';
 
 import { ProblemPage } from '@dolittle/design-system';
 
-export const Problem = () => <ProblemPage variant='problem' />;
+export const ApplicationBuilding = () => <ProblemPage variant='building' />;
