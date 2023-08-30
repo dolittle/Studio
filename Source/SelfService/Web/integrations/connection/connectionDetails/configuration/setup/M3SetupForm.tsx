@@ -3,17 +3,13 @@
 
 import React, { useImperativeHandle, useState, useCallback, useEffect, useMemo } from 'react';
 
-import { useSnackbar } from 'notistack';
-import { useQueryClient } from '@tanstack/react-query';
 import { SubmitHandler } from 'react-hook-form';
-
 import { Form, FormRef } from '@dolittle/design-system';
 
-import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
-import { ConnectionModel, ConnectionModelResult, IonConfigRequest, IonConfigurationResult, M3BasicAuthConfigRequest, M3BasicAuthConfigurationResult, MdpConfigurationResult, StringResult } from '../../../../apis/integrations/generated';
-import { useConnectionsIdNamePost } from '../../../../apis/integrations/connectionsApi.hooks';
-import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../../apis/integrations/deploymentApi.hooks';
-import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost, useConnectionsIdConfigurationBasicPost } from '../../../../apis/integrations/connectionConfigurationApi.hooks';
+import { ConnectionModel, ConnectionModelResult, IonConfigRequest, IonConfigurationResult, M3BasicAuthConfigRequest, M3BasicAuthConfigurationResult, MdpConfigurationResult, StringResult } from '../../../../../apis/integrations/generated';
+import { useConnectionsIdNamePost } from '../../../../../apis/integrations/connectionsApi.hooks';
+import { useConnectionsIdDeployCloudPost, useConnectionsIdDeployOnPremisesPost } from '../../../../../apis/integrations/deploymentApi.hooks';
+import { useConnectionsIdConfigurationMdpPost, useConnectionsIdConfigurationIonPost, useConnectionsIdConfigurationBasicPost } from '../../../../../apis/integrations/connectionConfigurationApi.hooks';
 
 //TODO: Can this be replaced with using `watch` from react-hook-form?
 const useForceSubscribeToIonConfigurationStateChanges = (currentForm: FormRef<M3ConnectionParameters> | undefined) => {
@@ -34,16 +30,16 @@ export type M3ConnectionParameters = {
     basicConfiguration: M3BasicAuthConfigRequest
 };
 
-export type M3ConfigurationFormRef = {
+export type M3SetupFormRef = {
     reset: (keepDefault: boolean) => void;
 };
 
-export type M3ConfigurationFormProps = {
+export type M3SetupFormProps = {
     connectionId: string;
     connection: ConnectionModel
     hasSelectedDeploymentType: boolean;
     authenticationType?: string;
-    onSaved?: (saveState: M3ConfigurationFormSaveState) => void;
+    onSaved?: (saveState: M3SetupFormSaveState) => void;
     children?: React.ReactNode;
 };
 
@@ -53,9 +49,9 @@ export type SaveActionState =
     | { status: 'error', errorMessage?: string };
 export type FormSaveAction = { name: SaveActionName } & SaveActionState;
 
-export type M3ConfigurationFormSaveState = FormSaveAction[];
+export type M3SetupFormSaveState = FormSaveAction[];
 
-export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3ConfigurationFormProps>((
+export const M3SetupForm = React.forwardRef<M3SetupFormRef, M3SetupFormProps>((
     {
         connectionId,
         connection,
@@ -63,11 +59,11 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         authenticationType,
         onSaved,
         children
-    }: M3ConfigurationFormProps,
-    ref: React.Ref<M3ConfigurationFormRef>
+    }: M3SetupFormProps,
+    ref: React.Ref<M3SetupFormRef>
 ) => {
     const [currentForm, setCurrentForm] = useState<FormRef<M3ConnectionParameters>>();
-    const [lastSaveState, setLastSaveState] = useState<M3ConfigurationFormSaveState>();
+    const [lastSaveState, setLastSaveState] = useState<M3SetupFormSaveState>();
     const formRef = useCallback((ref) => {
         if (ref) {
             setCurrentForm(ref);
@@ -266,6 +262,7 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         onCloudConfigurationMutation,
         mdpConfigurationMutation,
         ionConfigurationMutation,
+        basicConfigurationMutation
     ]);
 
     return (
@@ -280,4 +277,4 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
     );
 });
 
-M3ConfigurationForm.displayName = 'M3ConfigurationForm';
+M3SetupForm.displayName = 'M3ConfigurationForm';

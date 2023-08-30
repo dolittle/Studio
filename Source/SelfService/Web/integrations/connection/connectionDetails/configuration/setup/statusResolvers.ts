@@ -3,7 +3,7 @@
 
 import { StatusIndicatorProps } from '@dolittle/design-system';
 
-import { ConnectionStatus, RemoteServiceStatus } from '../../../../apis/integrations/generated';
+import { ConnectionStatus, RemoteServiceStatus } from '../../../../../apis/integrations/generated';
 
 export type StatusMessage = [StatusIndicatorProps['status'], StatusIndicatorProps['label']];
 

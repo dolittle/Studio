@@ -7,9 +7,9 @@ import { useFormContext } from 'react-hook-form';
 import { enqueueSnackbar } from 'notistack';
 
 import { FileUploadForm, FileUploadFormRef, MaxWidthTextBlock, MaxWidthBlock } from '@dolittle/design-system';
-import { IonConfigRequest } from '../../../../apis/integrations/generated';
+import { IonConfigRequest } from '../../../../../apis/integrations/generated';
 
-import { TextCopyBox } from '../../../../components/TextCopyBox';
+import { TextCopyBox } from '../../../../../components/TextCopyBox';
 
 /**
  * Simple type guard to check if the object is of type IonConfigRequest.

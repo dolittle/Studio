@@ -3,7 +3,7 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { API_CONFIGURATION } from './api';
 import { CACHE_KEYS } from './CacheKeys';
-import { ConnectionConfigurationApi, ConnectionsIdConfigurationBasicPostRequest, ConnectionsIdConfigurationIonPostRequest, ConnectionsIdConfigurationMdpPostRequest } from './generated';
+import { ConnectionConfigurationApi, ConnectionsIdConfigurationBasicPostRequest, ConnectionsIdConfigurationExporterCronPostRequest, ConnectionsIdConfigurationIonPostRequest, ConnectionsIdConfigurationMdpPostRequest } from './generated';
 
 let apiInstance: ConnectionConfigurationApi | undefined;
 
@@ -32,5 +32,12 @@ export const useConnectionsIdConfigurationBasicPost = () => {
     const api = getOrCreateApi();
     return useMutation({
         mutationFn: (params: ConnectionsIdConfigurationBasicPostRequest) => api.connectionsIdConfigurationBasicPost(params),
+    });
+};
+
+export const useConnectionsIdConfigurationExporterCronPost = () => {
+    const api = getOrCreateApi();
+    return useMutation({
+        mutationFn: (params: ConnectionsIdConfigurationExporterCronPostRequest) => api.connectionsIdConfigurationExporterCronPost(params),
     });
 };

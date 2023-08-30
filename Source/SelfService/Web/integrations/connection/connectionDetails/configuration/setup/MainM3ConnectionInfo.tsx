@@ -8,7 +8,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { Input, MaxWidthTextBlock, Select, SelectPropsOptions, Tooltip } from '@dolittle/design-system';
 
-import { Link } from '../../../../apis/integrations/generated';
+import { Link } from '../../../../../apis/integrations/generated';
 import { M3AuthenticationType } from './M3AuthenticationType';
 
 const newConnectionDescription = `This process might take some time depending on access rights and working knowledge of
@@ -49,7 +49,7 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSavedDeploymentType
 
         const selectValues: SelectPropsOptions = [
             { value: 'On premises', displayValue: 'On Premises' },
-            { value: 'Cloud', displayValue: 'In the Dolittle Cloud' },
+            { value: 'Cloud', displayValue: 'In the Aigonix Cloud' },
         ];
 
         if (hasSavedDeploymentType) {
@@ -74,12 +74,6 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSavedDeploymentType
     }, [selectAuthenticationValue, onAuthenticationTypeChange]);
 
     const isCloudDeploymentValueSelected = selectDropdownHostingValue.toLowerCase() === 'cloud';
-
-    useEffect(() => {
-        if (isCloudDeploymentValueSelected) {
-            setValue('selectAuthenticationType', 'ion');
-        }
-    }, [isCloudDeploymentValueSelected]);
 
     return (
         <Stack spacing={3.5} sx={{ mt: 3, ml: 3 }}>
