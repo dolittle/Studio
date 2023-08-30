@@ -73,17 +73,13 @@ export const SetupContainer = () => {
             return;
         }
         let authenticationFromServer: M3AuthenticationType | undefined;
-        if (connection.chosenEnvironment.value.toLowerCase() === 'cloud') {
+        if (connection._configuration.m3BasicAuth?.host) {
+            authenticationFromServer = 'basic';
+        }
+        if (connection._configuration.ion?.gatewayUrl) {
             authenticationFromServer = 'ion';
         }
-        if (connection.chosenEnvironment.value.toLowerCase() === 'on premises') {
-            if (connection._configuration.m3BasicAuth?.host) {
-                authenticationFromServer = 'basic';
-            }
-            if (connection._configuration.ion?.gatewayUrl) {
-                authenticationFromServer = 'ion';
-            }
-        }
+
         const shouldOverrideAuthenticationFromServer = authenticationFromServer && !authenticationType;
         if (shouldOverrideAuthenticationFromServer) {
             setAuthenticationType(authenticationFromServer);
