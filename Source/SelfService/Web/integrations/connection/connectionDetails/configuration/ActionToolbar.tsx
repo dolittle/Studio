@@ -27,7 +27,7 @@ export const ActionToolbar = ({ connectionId, connectorName, onEditAction, onDel
     const [dialogState, dispatch] = useReducer(deleteConnectorDialogReducer, initialDialogState);
 
     return (
-        <Box sx={{ display: 'flex', mt: 4, gap: 2 }}>
+        <Box sx={{ display: 'flex', gap: 2 }}>
             {canEdit
                 ? <Button label={'Cancel'} startWithIcon='CancelRounded' onClick={onCancelAction} type='reset' disabled={alwaysEdit}/>
                 : <Button label='Edit' startWithIcon='EditRounded' onClick={onEditAction} disabled={alwaysEdit}/>}

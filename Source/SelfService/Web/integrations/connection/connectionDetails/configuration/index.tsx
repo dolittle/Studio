@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Box, Collapse, Typography } from '@mui/material';
 
-import { AccordionListProps, FileUploadFormRef } from '@dolittle/design-system';
+import { AccordionListProps, ContentContainer, ContentHeader, ContentParagraph, ContentSection, FileUploadFormRef } from '@dolittle/design-system';
 
 import { useConnectionsIdGet, useConnectionsIdDelete } from '../../../../apis/integrations/connectionsApi.hooks';
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
@@ -140,44 +140,61 @@ export const ConfigurationView = () => {
     };
 
     return (
-        <Box sx={{ mt: 6, ml: 2 }}>
-            <Typography variant='subtitle1'>Configuration Setup</Typography>
-
-            <M3ConfigurationForm
-                connectionId={connectionId}
-                connection={connection}
-                hasSelectedDeploymentType={hasSavedDeploymentType}
-                authenticationType={authenticationType}
-                onSaved={handleOnSaved}
-                ref={formRef}
-            >
-                <ActionToolbar
+        <>
+            <ContentContainer>
+                <M3ConfigurationForm
                     connectionId={connectionId}
-                    connectorName={connection.name}
-                    canEdit={canEdit}
-                    onEditAction={() => setEditMode(true)}
-                    onDeleteAction={handleDelete}
-                    onCancelAction={handleOnCancelAction}
-                    alwaysEdit={alwaysEdit}
-                />
+                    connection={connection}
+                    hasSelectedDeploymentType={hasSavedDeploymentType}
+                    authenticationType={authenticationType}
+                    onSaved={handleOnSaved}
+                    ref={formRef}
+                >
+                    <ContentHeader
+                        title='Connector Setup'
+                        buttonsSlot={
+                            <ActionToolbar
+                                connectionId={connectionId}
+                                connectorName={connection.name}
+                                canEdit={canEdit}
+                                onEditAction={() => setEditMode(true)}
+                                onDeleteAction={handleDelete}
+                                onCancelAction={handleOnCancelAction}
+                                alwaysEdit={alwaysEdit}
+                            />
+                        }
+                    ></ContentHeader>
+                    <ContentSection hideHeader>
 
-                <MainM3ConnectionInfo
-                    hasSavedDeploymentType={hasSavedDeploymentType}
-                    connectionIdLinks={links}
-                    canEdit={canEdit}
-                    onAuthenticationTypeChange={setAuthenticationType}
-                />
+                        <MainM3ConnectionInfo
+                            hasSavedDeploymentType={hasSavedDeploymentType}
+                            connectionIdLinks={links}
+                            canEdit={canEdit}
+                            onAuthenticationTypeChange={setAuthenticationType} />
 
-                <Collapse in={canConfigureConnection}>
-                    <ConfigurationFormContent
-                        connection={connection}
-                        authenticationType={authenticationType}
-                        canEdit={canEdit}
-                        formSaveState={lastSaveState}
-                        fileUploadRef={fileUploadRef}
-                    />
-                </Collapse>
-            </M3ConfigurationForm>
-        </Box>
+                        <Collapse in={canConfigureConnection}>
+                            <ConfigurationFormContent
+                                connection={connection}
+                                authenticationType={authenticationType}
+                                canEdit={canEdit}
+                                formSaveState={lastSaveState}
+                                fileUploadRef={fileUploadRef} />
+                        </Collapse>
+
+                    </ContentSection>
+                </M3ConfigurationForm>
+            </ContentContainer>
+            {/* TODO: Only show configuration section after the deployment type is set ? */}
+            <ContentContainer>
+                <ContentHeader
+                    title='Connector Configuration'
+                ></ContentHeader>
+                <ContentSection hideHeader>
+                    <ContentParagraph>
+                        You can make changes to the connector and how it functions in this section.
+                    </ContentParagraph>
+                </ContentSection>
+            </ContentContainer>
+        </>
     );
 };
