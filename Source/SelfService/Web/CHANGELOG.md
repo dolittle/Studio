@@ -1,3 +1,13 @@
+# [3.11.1] - 2023-8-30 [PR: #463](https://github.com/dolittle/Studio/pull/463)
+## Summary
+
+Improve creating new application with better navigation and application building page.
+
+### Added
+
+- ProblemPage to Design System
+
+
 # [3.11.0] - 2023-8-30 [PR: #462](https://github.com/dolittle/Studio/pull/462)
 - do not disable authentication type based on connector deployment type
 - Simplify selection of configuration sections. MDP will now always be visible until we have an M3 hosting type added
