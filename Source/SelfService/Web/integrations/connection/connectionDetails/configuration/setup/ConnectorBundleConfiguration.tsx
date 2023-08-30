@@ -7,9 +7,9 @@ import { Typography } from '@mui/material';
 
 import { Button, MaxWidthTextBlock } from '@dolittle/design-system';
 
-import { getBridgeServerUrlPrefix } from '../../../../apis/integrations/api';
+import { getBridgeServerUrlPrefix } from '../../../../../apis/integrations/api';
 
-import { TextCopyBox } from '../../../../components/TextCopyBox';
+import { TextCopyBox } from '../../../../../components/TextCopyBox';
 
 const copyInstructions = [
     `Please make sure your organization's firewall rules allow the M3 connector to connect to Kafka in order to communicate with our API. The Kafka cluster is reachable as:`,

@@ -5,7 +5,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 
 import { AccordionList, AccordionListItem, FileUploadFormRef } from '@dolittle/design-system';
 
-import { ConnectionModel } from '../../../../apis/integrations/generated';
+import { ConnectionModel } from '../../../../../apis/integrations/generated';
 
 import { ConnectorBundleConfiguration } from './ConnectorBundleConfiguration';
 import { MetadataPublisherCredentials } from './MetadataPublisherCredentials';
