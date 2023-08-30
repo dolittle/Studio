@@ -1,3 +1,11 @@
+# [3.12.0] - 2023-8-30 [PR: #464](https://github.com/dolittle/Studio/pull/464)
+## Summary
+
+- Restructure the Configuration tab with Content* components to match the other tabs
+- Add Connector configuration section with exporter settings to change the cronExpression
+- Fix bug where the selected authentication type was not respected when cloud and authtype basic was selected
+
+
 # [3.11.1] - 2023-8-30 [PR: #463](https://github.com/dolittle/Studio/pull/463)
 ## Summary
 
