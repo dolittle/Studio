@@ -85,7 +85,7 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
 
     const defaultValues: ConnectorConfigurationFormParameters = useMemo(() => (
         {
-            cronExpression: 'johnny',
+            cronExpression: connection.cronExportTrigger || '',
         }
     ), [connection]);
 

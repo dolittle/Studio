@@ -10,15 +10,10 @@ export type CronFormParameters = {
 };
 
 export type ExporterConfigurationSectionProps = {
-    connectionModel?: ConnectionModel
     canEdit: boolean;
 };
 
-export const ExporterConfigurationSection = ({ connectionModel, canEdit }: ExporterConfigurationSectionProps) => {
-
-    const handlCronFormSubmit = (data: CronFormParameters) => {
-        throw new Error('Function not implemented.');
-    };
+export const ExporterConfigurationSection = ({ canEdit }: ExporterConfigurationSectionProps) => {
 
     return (
         <ContentSection title='Exporter Settings'>
@@ -27,7 +22,11 @@ export const ExporterConfigurationSection = ({ connectionModel, canEdit }: Expor
                 tooltipText={<>The Exporter is usually configured to force update all data every ... as a way to ensure the system is in sync. You can override this setting by supplying your own <Link message='cron expression' href='https://crontab.cronhub.io/' target /></>}
                 sx={{ top: 16 }}
             >
-                <Input id='cronExpression' label='Cron Expression' disabled={!canEdit} />
+                <Input
+                    id='cronExpression'
+                    label='Cron Expression'
+                    disabled={!canEdit}
+                />
             </Tooltip>
         </ContentSection>
     );
