@@ -37,9 +37,6 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSavedDeploymentType
 
     const selectDropdownHostingValue: string = watch('selectHosting');
     const selectAuthenticationValue: M3AuthenticationType | undefined = watch('selectAuthenticationType');
-    const hasSelectedCloudDeployment = useMemo(() => selectDropdownHostingValue.toLowerCase() === 'cloud',
-        [selectDropdownHostingValue]
-    );
 
     const authenticationTypeSelectValues: SelectPropsOptions = [
         { value: 'ion', displayValue: 'ION' },
@@ -123,7 +120,7 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSavedDeploymentType
                     id='selectAuthenticationType'
                     label='M3 Authentication Type'
                     options={authenticationTypeSelectValues}
-                    disabled={!canEdit || hasSelectedCloudDeployment}
+                    disabled={!canEdit}
                     required='Please select the authentication type.'
                 />
             </Tooltip>

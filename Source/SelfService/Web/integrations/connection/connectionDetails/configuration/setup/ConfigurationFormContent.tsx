@@ -82,16 +82,15 @@ export const ConfigurationFormContent = ({
 
         if (connection?.chosenEnvironment.value?.toLocaleLowerCase() === 'on premises') {
             items.push(connectorBundleAccordion);
-            items.push(mdpCredentialsAccordion);
-            if (authenticationType === 'ion') {
-                items.push(ionCredentialsAccordion);
-            }
-            if (authenticationType === 'basic') {
-                items.push(basicAuthenticationAccordion);
-            }
-        } else if (connection?.chosenEnvironment.value?.toLocaleLowerCase() === 'cloud') {
+        }
+        items.push(mdpCredentialsAccordion); // Always show MDP credentials for now, even though it's not required for M3 cloudsuite instances.
+        if (authenticationType === 'ion') {
             items.push(ionCredentialsAccordion);
         }
+        if (authenticationType === 'basic') {
+            items.push(basicAuthenticationAccordion);
+        }
+
         return items;
     }, [
         connection?.chosenEnvironment.value,

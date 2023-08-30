@@ -4,13 +4,12 @@
 import React, { useState } from 'react';
 
 import { useSnackbar } from 'notistack';
-import { useGlobalContext } from '../../context/globalContext';
 
 import { Guid } from '@dolittle/rudiments';
 
 import { Stack, Typography } from '@mui/material';
 
-import { DialogForm, Checkbox, Input } from '@dolittle/design-system';
+import { Checkbox, DialogForm, FullPageLoadingSpinner, Input } from '@dolittle/design-system';
 
 import { createApplication, HttpApplicationRequest } from '../../apis/solutions/application';
 
@@ -39,7 +38,6 @@ export type ApplicationCreateDialogProps = {
 
 export const ApplicationCreateDialog = ({ isOpen, onClose }: ApplicationCreateDialogProps) => {
     const { enqueueSnackbar } = useSnackbar();
-    const { setCurrentApplicationId } = useGlobalContext();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -66,13 +64,12 @@ export const ApplicationCreateDialog = ({ isOpen, onClose }: ApplicationCreateDi
 
         try {
             await createApplication(request);
-            setCurrentApplicationId(request.id);
-            enqueueSnackbar(`'${form.name}' successfully created.`);
+            enqueueSnackbar(`'${form.name}' successfully created. Setting up your application may take few minutes.`);
         } catch (error) {
             enqueueSnackbar('Failed to create new application. Please try again.', { variant: 'error' });
         } finally {
-            onClose();
             setIsLoading(false);
+            onClose();
         }
     };
 
@@ -80,7 +77,6 @@ export const ApplicationCreateDialog = ({ isOpen, onClose }: ApplicationCreateDi
         <DialogForm
             id='create-application'
             isOpen={isOpen}
-            isLoading={isLoading}
             title='Create new Application'
             formInitialValues={{
                 name: '',
@@ -94,6 +90,8 @@ export const ApplicationCreateDialog = ({ isOpen, onClose }: ApplicationCreateDi
             onCancel={onClose}
             onConfirm={handleSpaceCreate}
         >
+            {isLoading && <FullPageLoadingSpinner />}
+
             <Typography variant='body1' sx={{ my: 2 }}>Provide a name for your new application.</Typography>
             <Input
                 id='name'
