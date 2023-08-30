@@ -77,10 +77,12 @@ export const ConfigurationView = () => {
             authenticationFromServer = 'ion';
         }
         if (connection.chosenEnvironment.value.toLowerCase() === 'on premises') {
-            if (connection._configuration.m3BasicAuth?.host) {
+            const m3BasicAuthHasAnyValuesSet = connection._configuration.m3BasicAuth?.host || connection._configuration.m3BasicAuth?.username || connection._configuration.m3BasicAuth?.password;
+            const ionAuthHasAnyValuesSet = connection._configuration.ion?.gatewayUrl;
+            if (m3BasicAuthHasAnyValuesSet) {
                 authenticationFromServer = 'basic';
             }
-            if (connection._configuration.ion?.gatewayUrl) {
+            if (ionAuthHasAnyValuesSet) {
                 authenticationFromServer = 'ion';
             }
         }
