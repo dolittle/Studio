@@ -49,7 +49,7 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSavedDeploymentType
 
         const selectValues: SelectPropsOptions = [
             { value: 'On premises', displayValue: 'On Premises' },
-            { value: 'Cloud', displayValue: 'In the Dolittle Cloud' },
+            { value: 'Cloud', displayValue: 'In the Aigonix Cloud' },
         ];
 
         if (hasSavedDeploymentType) {
