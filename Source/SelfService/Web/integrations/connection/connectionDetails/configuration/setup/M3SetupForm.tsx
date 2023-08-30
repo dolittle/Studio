@@ -4,7 +4,6 @@
 import React, { useImperativeHandle, useState, useCallback, useEffect, useMemo } from 'react';
 
 import { SubmitHandler } from 'react-hook-form';
-
 import { Form, FormRef } from '@dolittle/design-system';
 
 import { ConnectionModel, ConnectionModelResult, IonConfigRequest, IonConfigurationResult, M3BasicAuthConfigRequest, M3BasicAuthConfigurationResult, MdpConfigurationResult, StringResult } from '../../../../../apis/integrations/generated';
@@ -263,6 +262,7 @@ export const M3SetupForm = React.forwardRef<M3SetupFormRef, M3SetupFormProps>((
         onCloudConfigurationMutation,
         mdpConfigurationMutation,
         ionConfigurationMutation,
+        basicConfigurationMutation
     ]);
 
     return (
