@@ -75,12 +75,6 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSavedDeploymentType
 
     const isCloudDeploymentValueSelected = selectDropdownHostingValue.toLowerCase() === 'cloud';
 
-    useEffect(() => {
-        if (isCloudDeploymentValueSelected) {
-            setValue('selectAuthenticationType', 'ion');
-        }
-    }, [isCloudDeploymentValueSelected]);
-
     return (
         <Stack spacing={3.5} sx={{ mt: 3, ml: 3 }}>
             <MaxWidthTextBlock>{newConnectionDescription}</MaxWidthTextBlock>
