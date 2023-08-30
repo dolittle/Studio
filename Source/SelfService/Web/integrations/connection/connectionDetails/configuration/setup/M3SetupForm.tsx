@@ -31,16 +31,16 @@ export type M3ConnectionParameters = {
     basicConfiguration: M3BasicAuthConfigRequest
 };
 
-export type M3ConfigurationFormRef = {
+export type M3SetupFormRef = {
     reset: (keepDefault: boolean) => void;
 };
 
-export type M3ConfigurationFormProps = {
+export type M3SetupFormProps = {
     connectionId: string;
     connection: ConnectionModel
     hasSelectedDeploymentType: boolean;
     authenticationType?: string;
-    onSaved?: (saveState: M3ConfigurationFormSaveState) => void;
+    onSaved?: (saveState: M3SetupFormSaveState) => void;
     children?: React.ReactNode;
 };
 
@@ -50,9 +50,9 @@ export type SaveActionState =
     | { status: 'error', errorMessage?: string };
 export type FormSaveAction = { name: SaveActionName } & SaveActionState;
 
-export type M3ConfigurationFormSaveState = FormSaveAction[];
+export type M3SetupFormSaveState = FormSaveAction[];
 
-export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3ConfigurationFormProps>((
+export const M3SetupForm = React.forwardRef<M3SetupFormRef, M3SetupFormProps>((
     {
         connectionId,
         connection,
@@ -60,11 +60,11 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
         authenticationType,
         onSaved,
         children
-    }: M3ConfigurationFormProps,
-    ref: React.Ref<M3ConfigurationFormRef>
+    }: M3SetupFormProps,
+    ref: React.Ref<M3SetupFormRef>
 ) => {
     const [currentForm, setCurrentForm] = useState<FormRef<M3ConnectionParameters>>();
-    const [lastSaveState, setLastSaveState] = useState<M3ConfigurationFormSaveState>();
+    const [lastSaveState, setLastSaveState] = useState<M3SetupFormSaveState>();
     const formRef = useCallback((ref) => {
         if (ref) {
             setCurrentForm(ref);
@@ -277,4 +277,4 @@ export const M3ConfigurationForm = React.forwardRef<M3ConfigurationFormRef, M3Co
     );
 });
 
-M3ConfigurationForm.displayName = 'M3ConfigurationForm';
+M3SetupForm.displayName = 'M3ConfigurationForm';

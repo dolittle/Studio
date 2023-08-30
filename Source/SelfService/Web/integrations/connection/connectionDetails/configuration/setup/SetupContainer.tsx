@@ -15,7 +15,7 @@ import { useConnectionsIdGet, useConnectionsIdDelete } from '../../../../../apis
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 import { getConnectionIndicatorStatus } from '../../../../../utils/helpers';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
-import { M3ConfigurationForm, M3ConfigurationFormRef, M3ConfigurationFormSaveState } from './M3ConfigurationForm';
+import { M3SetupForm, M3SetupFormRef, M3SetupFormSaveState } from './M3SetupForm';
 import { MainM3ConnectionInfo } from './MainM3ConnectionInfo';
 import { ActionToolbar } from './ActionToolbar';
 import { ConfigurationFormContent } from './ConfigurationFormContent';
@@ -24,7 +24,7 @@ import { M3AuthenticationType } from './M3AuthenticationType';
 export const SetupContainer = () => {
     const [canEdit, setEditMode] = useState(false);
     const [alwaysEdit, setAlwaysEdit] = useState(false);
-    const [lastSaveState, setLastSaveState] = useState<M3ConfigurationFormSaveState>();
+    const [lastSaveState, setLastSaveState] = useState<M3SetupFormSaveState>();
     const [authenticationType, setAuthenticationType] = useState<M3AuthenticationType>();
     const connectionId = useConnectionIdFromRoute();
     const query = useConnectionsIdGet(
@@ -35,7 +35,7 @@ export const SetupContainer = () => {
         }
     );
 
-    const formRef = useRef<M3ConfigurationFormRef>(null);
+    const formRef = useRef<M3SetupFormRef>(null);
     const fileUploadRef = useRef<FileUploadFormRef>(null);
     const deleteMutation = useConnectionsIdDelete();
     const queryClient = useQueryClient();
@@ -114,7 +114,7 @@ export const SetupContainer = () => {
         );
     };
 
-    const handleSaveState = (saveState: M3ConfigurationFormSaveState) => {
+    const handleSaveState = (saveState: M3SetupFormSaveState) => {
         setLastSaveState(saveState);
         saveState.forEach((state) => {
             if (state.status === 'success') {
@@ -126,7 +126,7 @@ export const SetupContainer = () => {
         });
     };
 
-    const handleOnSaved = (saveState: M3ConfigurationFormSaveState): void => {
+    const handleOnSaved = (saveState: M3SetupFormSaveState): void => {
         if (saveState.every((state) => state.status === 'success')) {
             fileUploadRef.current?.clearSelected();
             setEditMode(false);
@@ -141,7 +141,7 @@ export const SetupContainer = () => {
 
     return (
         <ContentContainer>
-            <M3ConfigurationForm
+            <M3SetupForm
                 connectionId={connectionId}
                 connection={connection}
                 hasSelectedDeploymentType={hasSavedDeploymentType}
@@ -181,7 +181,7 @@ export const SetupContainer = () => {
                     </Collapse>
 
                 </ContentSection>
-            </M3ConfigurationForm>
+            </M3SetupForm>
         </ContentContainer>
     );
 };

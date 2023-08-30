@@ -11,7 +11,7 @@ import { ConnectorBundleConfiguration } from './ConnectorBundleConfiguration';
 import { MetadataPublisherCredentials } from './MetadataPublisherCredentials';
 import { IonServiceAccountCredentials } from './IonServiceAccountCredentials';
 import { configurationStatusFromServiceCredentialsStatus, hostBundleStatusFromServicesStatus } from './statusResolvers';
-import { M3ConfigurationFormSaveState, SaveActionName } from './M3ConfigurationForm';
+import { M3SetupFormSaveState, SaveActionName } from './M3SetupForm';
 import { M3AuthenticationType } from './M3AuthenticationType';
 import { M3BasicAuthenticationCredentials } from './M3BasicAuthenticationCredentials';
 
@@ -20,7 +20,7 @@ export type ConfigurationFormContentProps = {
     fileUploadRef: React.RefObject<FileUploadFormRef>;
     canEdit: boolean;
     authenticationType?: M3AuthenticationType;
-    formSaveState?: M3ConfigurationFormSaveState;
+    formSaveState?: M3SetupFormSaveState;
 };
 
 export const ConfigurationFormContent = ({
