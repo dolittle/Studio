@@ -1,3 +1,11 @@
+# [3.12.1] - 2023-8-31 [PR: #465](https://github.com/dolittle/Studio/pull/465)
+## Summary
+
+Improve Layout spacing in MicroserviceDetails and ContainerRegsistry page.
+Improve NoMicroservises footer text.
+Navigate from ApplicationsList to 'building' page when application is not live. (Still needs improvement).
+
+
 # [3.12.0] - 2023-8-30 [PR: #464](https://github.com/dolittle/Studio/pull/464)
 ## Summary
 
