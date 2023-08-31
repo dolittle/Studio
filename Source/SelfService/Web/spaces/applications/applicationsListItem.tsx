@@ -3,8 +3,10 @@
 
 import React from 'react';
 
+import { useHref, useNavigate } from 'react-router-dom';
+
 import { ListItem } from '@mui/material';
-import { useHref } from 'react-router-dom';
+
 import { Button } from '@dolittle/design-system';
 
 import { ShortInfo } from '../../apis/solutions/api';
@@ -18,10 +20,21 @@ const styles = {
 
 export type ApplicationsListItemProps = {
     application: ShortInfo;
+    liveApplicationsList: ShortInfo[];
 };
 
-export const ApplicationsListItem = ({ application }: ApplicationsListItemProps) => {
-    const microservicesHref = useHref(`/microservices/application/${application.id}/overview`);
+export const ApplicationsListItem = ({ application, liveApplicationsList }: ApplicationsListItemProps) => {
+    const navigate = useNavigate();
+    //const microservicesHref = useHref(`/microservices/application/${application.id}/overview`);
+
+    // TODO ENV: We should also check if application even works.
+    const handleApplicationChange = () => {
+        if (liveApplicationsList.some(app => app.id === application.id)) {
+            navigate(`/microservices/application/${application.id}/overview`);
+        } else {
+            navigate(`/building`);
+        }
+    };
 
     return (
         <ListItem sx={{ p: 0 }}>
@@ -29,7 +42,8 @@ export const ApplicationsListItem = ({ application }: ApplicationsListItemProps)
                 variant='filled'
                 label={`${application.name}`}
                 isFullWidth
-                href={microservicesHref}
+                onClick={handleApplicationChange}
+                //href={microservicesHref}
                 sx={styles}
             />
         </ListItem>
