@@ -3,12 +3,11 @@
 
 import React from 'react';
 
-import { Box, Grid, SxProps } from '@mui/material';
+import { Grid, SxProps } from '@mui/material';
 
 import { NavigationBar, NavigationBarProps, SidePanel, SidePanelProps } from '@dolittle/design-system';
 
 const styles: SxProps = {
-    'width': '100vw',
     'minHeight': 'calc(100vh - 96px)',
     'display': 'flex',
     'flexDirection': 'column',
@@ -49,7 +48,7 @@ export type LayoutProps = {
  * @returns A {@link Layout} component.
  */
 export const Layout = ({ navigationBar, sidePanel, children, sx }: LayoutProps) =>
-    <Grid container sx={{ width: 'unset', display: 'inline-flex', flexFlow: 'nowrap' }}>
+    <Grid container sx={{ display: 'inline-flex', flexFlow: 'nowrap' }}>
         <NavigationBar {...navigationBar} />
 
         {sidePanel && <SidePanel {...sidePanel} />}
