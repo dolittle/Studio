@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useNavigate, Routes, Route } from 'react-router-dom';
 
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { HttpResponseApplication } from '../../apis/solutions/application';
 import { getReposInContainerRegistry, ContainerRegistryImages } from '../../apis/solutions/containerregistry';
@@ -30,12 +30,11 @@ export const RegistryContainer = ({ application }: RegistryContainerProps) => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        Promise.all([
-            getReposInContainerRegistry(applicationId)
-        ]).then(values => {
-            setContainerRegistryImages(values[0]);
-            setIsLoaded(true);
-        });
+        Promise.all([getReposInContainerRegistry(applicationId)])
+            .then(values => {
+                setContainerRegistryImages(values[0]);
+                setIsLoaded(true);
+            });
     }, []);
 
     if (!isLoaded) return null;
@@ -50,18 +49,14 @@ export const RegistryContainer = ({ application }: RegistryContainerProps) => {
     }
 
     return (
-        <>
-            <div>
-                <Typography variant='h1' sx={{ my: 3 }}>Container Registry</Typography>
-            </div>
+        <Box sx={{ mr: 3 }}>
+            <Typography variant='h1' sx={{ my: 3 }}>Container Registry</Typography>
 
-            <div>
-                <Routes>
-                    <Route path='/' element={<RegistryImages applicationId={applicationId} data={containerRegistryImages} />} />
-                    <Route path='/welcome' element={<RegistryWelcome applicationId={applicationId} />} />
-                    <Route path='/tags/:image' element={<RegistryTags url={containerRegistryImages.url} applicationId={applicationId} />} />
-                </Routes>
-            </div>
-        </>
+            <Routes>
+                <Route path='/' element={<RegistryImages applicationId={applicationId} data={containerRegistryImages} />} />
+                <Route path='/welcome' element={<RegistryWelcome applicationId={applicationId} />} />
+                <Route path='/tags/:image' element={<RegistryTags url={containerRegistryImages.url} applicationId={applicationId} />} />
+            </Routes>
+        </Box>
     );
 };

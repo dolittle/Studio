@@ -11,7 +11,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import { Button, Link } from '@dolittle/design-system';
 
 import { ShortInfo } from '../../apis/solutions/api';
-import { getApplicationsListing } from '../../apis/solutions/application';
+import { getApplicationsListing, getLiveApplications } from '../../apis/solutions/application';
 
 import { ApplicationsList } from './applicationsList';
 import { LoginWrapper } from '../../components/layout/loginWrapper';
@@ -24,19 +24,21 @@ export const ApplicationsScreen = () => {
     const { currentApplicationId, hasOneCustomer } = useGlobalContext();
 
     const [applicationInfos, setApplicationInfos] = useState([] as ShortInfo[]);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [liveApplications, setLiveApplications] = useState([] as ShortInfo[]);
     const [canCreateApplication, setCanCreateApplication] = useState(false);
     const [createSpaceDialogOpen, setCreateSpaceDialogOpen] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        Promise.all([getApplicationsListing()])
-            .then(values => {
-                const response = values[0];
-                setCanCreateApplication(response.canCreateApplication);
-                setApplicationInfos(response.applications);
-                setIsLoaded(true);
-            })
-            .catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }));
+        Promise.all([
+            getApplicationsListing(),
+            getLiveApplications(),
+        ]).then(values => {
+            setApplicationInfos(values[0].applications);
+            setLiveApplications(values[1].applications);
+            setCanCreateApplication(values[0].canCreateApplication);
+            setIsLoaded(true);
+        }).catch(() => enqueueSnackbar('Failed getting data from the server.', { variant: 'error' }));
     }, [currentApplicationId]);
 
     if (!isLoaded) return null;
@@ -59,7 +61,7 @@ export const ApplicationsScreen = () => {
             </Typography>
 
             <Box sx={{ display: 'inline-block' }}>
-                <ApplicationsList data={applicationInfos} />
+                <ApplicationsList data={applicationInfos} liveApplicationsList={liveApplications} />
 
                 <Button
                     label='Create new Application'

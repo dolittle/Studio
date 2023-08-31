@@ -11,11 +11,12 @@ import { ApplicationsListItem } from './applicationsListItem';
 
 export type ApplicationsListProps = {
     data: ShortInfo[];
+    liveApplicationsList: ShortInfo[];
 };
 
-export const ApplicationsList = ({ data }: ApplicationsListProps) =>
+export const ApplicationsList = ({ data, liveApplicationsList }: ApplicationsListProps) =>
     <List>
         {data.map(application =>
-            <ApplicationsListItem key={`${application.id}`} application={application} />
+            <ApplicationsListItem key={`${application.id}`} application={application} liveApplicationsList={liveApplicationsList} />
         )}
     </List>;
