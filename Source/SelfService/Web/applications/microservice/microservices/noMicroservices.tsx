@@ -18,5 +18,4 @@ export const NoMicroservices = ({ onCreate }: NoMicroservicesProps) =>
             onCreateEntity: onCreate,
         }}
         description='After you deploy your first microservice it will appear here.'
-        subDescription={`To deploy a new microservice click on the 'deploy a microservice' button or 'deploy new' tab at the top.`}
     />;
