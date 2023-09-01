@@ -31,7 +31,7 @@ const styles = {
         alignItems: 'center',
         whiteSpace: 'nowrap',
         pr: 2,
-        width: '7em',
+        minWidth: 96,
         flexShrink: 0,
         textOverflow: 'ellipsis',
         overflow: 'hidden',

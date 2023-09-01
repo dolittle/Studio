@@ -16,6 +16,7 @@ export type LogContextDialogState = {
     applicationId: string;
     microservice: string;
     microserviceId: string;
+    environment: string;
     from: bigint;
     to: bigint;
 };
@@ -30,7 +31,7 @@ export const LogContextDialog = (state: LogContextDialogState, setState: React.D
                 dateRange: { start: state.from, stop: state.to },
                 searchTerms: [],
                 microservice: [{ id: state.microserviceId, name: state.microservice }],
-                environment: [],
+                environment: [state.environment],
             }}
             from={state.from}
             to={state.to}
