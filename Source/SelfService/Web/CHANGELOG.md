@@ -1,3 +1,9 @@
+# [3.13.1] - 2023-9-1 [PR: #467](https://github.com/dolittle/Studio/pull/467)
+## Summary
+
+Fix for displaying logs in 'show more' dialog.
+
+
 # [3.13.0] - 2023-9-1 [PR: #466](https://github.com/dolittle/Studio/pull/466)
 ## Summary 
 - Add "Strict certificate validation" to connector configuration
