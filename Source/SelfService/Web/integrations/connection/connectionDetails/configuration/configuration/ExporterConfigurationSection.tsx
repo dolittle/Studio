@@ -25,7 +25,7 @@ export const ExporterConfigurationSection = ({ canEdit }: ExporterConfigurationS
                     label='Cron Expression'
                     disabled={!canEdit} />
             </ContentSection>
-            <ContentSection title='Require strict certificate validation'>
+            <ContentSection title='Use strict certificate validation'>
                 <ContentParagraph>
                     If enabled, the Exporter will only accept connections to servers with valid certificates. For some on premise solutions it may be required to disable this setting.
                 </ContentParagraph>
