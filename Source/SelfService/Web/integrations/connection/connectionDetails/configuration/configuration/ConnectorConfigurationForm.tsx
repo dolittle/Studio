@@ -8,7 +8,7 @@ import { SubmitHandler } from 'react-hook-form';
 import { Form, FormRef } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../../../../apis/integrations/generated';
-import { useConnectionsIdConfigurationExporterCronPost } from '../../../../../apis/integrations/connectionConfigurationApi.hooks';
+import { useConnectionsIdConfigurationExporterCronPost, useConnectionsIdConfigurationExporterStrictCertificateValidationPost } from '../../../../../apis/integrations/connectionConfigurationApi.hooks';
 
 
 //TODO: Can this be replaced with using `watch` from react-hook-form?
@@ -21,7 +21,8 @@ const useForceSubscribeToCronExpressionStateChanges = (currentForm: FormRef<Conn
 };
 
 export type ConfigurationSaveActionName =
-    | 'Cron';
+    | 'Cron'
+    | 'Strict Certificate Validation';
 
 export type ConfigurationSaveActionState =
     | { status: 'success' }
@@ -83,6 +84,7 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
     }, [currentForm?.reset, currentForm?.formState.isSubmitSuccessful, currentForm?.formState.defaultValues, onSaved, lastSaveState]);
 
     const cronMutation = useConnectionsIdConfigurationExporterCronPost();
+    const strictCertificateValidationMutation = useConnectionsIdConfigurationExporterStrictCertificateValidationPost();
 
     const defaultValues: ConnectorConfigurationFormParameters = useMemo(() => (
         {
@@ -111,7 +113,7 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
         }
         setLastSaveState([]);
         const saveActions: (
-            | { name: Extract<ConfigurationSaveActionName, 'Cron'>, action: Promise<void> }
+            | { name: Extract<ConfigurationSaveActionName, 'Cron'| 'Strict Certificate Validation'>, action: Promise<void> }
         )[] = [];
         const getFieldState = (field) => currentForm.getFieldState(field, currentForm.formState);
 
@@ -123,6 +125,19 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
                     {
                         id: connectionId,
                         cronExpression: data.cronExpression,
+                    },
+                )
+            });
+        }
+
+        const strictCertificateValidationExpressionFieldState = getFieldState('strictCertificateValidation');
+        if (strictCertificateValidationExpressionFieldState.isDirty) {
+            saveActions.push({
+                name: 'Strict Certificate Validation',
+                action: strictCertificateValidationMutation.mutateAsync(
+                    {
+                        id: connectionId,
+                        enable: data.strictCertificateValidation,
                     },
                 )
             });
