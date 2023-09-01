@@ -3,7 +3,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
-import { ContentContainer, ContentHeader, ContentSection, ContentParagraph } from '@dolittle/design-system/';
+import { ContentContainer, ContentHeader, ContentSection, ContentParagraph, ContentDivider } from '@dolittle/design-system/';
 import { useConnectionsIdGet } from '../../../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { ExporterConfigurationSection } from './ExporterConfigurationSection';
@@ -69,10 +69,7 @@ export const ConfigurationContainer = () => {
                             onEditAction={() => setEditMode(true)}
                         />
                     }
-                ></ContentHeader>
-                <ContentParagraph>
-                    You can make changes to the connector and how it functions in this section.
-                </ContentParagraph>
+                />
                 <ExporterConfigurationSection canEdit={canEdit} />
             </ConnectorConfigurationForm>
         </ContentContainer>
