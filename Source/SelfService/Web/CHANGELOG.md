@@ -1,3 +1,8 @@
+# [3.13.0] - 2023-9-1 [PR: #466](https://github.com/dolittle/Studio/pull/466)
+## Summary 
+- Add "Strict certificate validation" to connector configuration
+
+
 # [3.12.1] - 2023-8-31 [PR: #465](https://github.com/dolittle/Studio/pull/465)
 ## Summary
 
