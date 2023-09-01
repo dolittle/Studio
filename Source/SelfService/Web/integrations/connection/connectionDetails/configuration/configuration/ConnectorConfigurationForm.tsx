@@ -37,6 +37,7 @@ export type ConnectorConfigurationFormRef = {
 
 export type ConnectorConfigurationFormParameters = {
     cronExpression: string;
+    strictCertificateValidation: boolean;
 };
 
 export type ConnectorConfigurationFormProps = {
@@ -86,6 +87,8 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
     const defaultValues: ConnectorConfigurationFormParameters = useMemo(() => (
         {
             cronExpression: connection.cronExportTrigger || '',
+            // strictCertificateValidation: connection.strictCertificateValidation || false, //TODO: Implement
+            strictCertificateValidation: true,
         }
     ), [connection]);
 
