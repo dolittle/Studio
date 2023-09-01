@@ -15,7 +15,7 @@ import { M3SetupFormSaveState, SaveActionName } from './M3SetupForm';
 import { M3AuthenticationType } from './M3AuthenticationType';
 import { M3BasicAuthenticationCredentials } from './M3BasicAuthenticationCredentials';
 
-export type ConfigurationFormContentProps = {
+export type SetupFormContentProps = {
     connection: ConnectionModel | undefined;
     fileUploadRef: React.RefObject<FileUploadFormRef>;
     canEdit: boolean;
@@ -23,13 +23,13 @@ export type ConfigurationFormContentProps = {
     formSaveState?: M3SetupFormSaveState;
 };
 
-export const ConfigurationFormContent = ({
+export const SetupFormContent = ({
     connection,
     fileUploadRef,
     canEdit = true,
     formSaveState,
     authenticationType
-}: ConfigurationFormContentProps) => {
+}: SetupFormContentProps) => {
 
     const [expanded, setExpanded] = useState<string[]>([]);
     const hasFormErrors = formSaveState?.some(s => s.status === 'error');

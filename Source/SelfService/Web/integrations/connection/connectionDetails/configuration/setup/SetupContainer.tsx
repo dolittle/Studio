@@ -18,7 +18,7 @@ import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { M3SetupForm, M3SetupFormRef, M3SetupFormSaveState } from './M3SetupForm';
 import { MainM3ConnectionInfo } from './MainM3ConnectionInfo';
 import { ActionToolbar } from './ActionToolbar';
-import { ConfigurationFormContent } from './ConfigurationFormContent';
+import { SetupFormContent } from './SetupFormContent';
 import { M3AuthenticationType } from './M3AuthenticationType';
 
 export const SetupContainer = () => {
@@ -168,7 +168,7 @@ export const SetupContainer = () => {
                         onAuthenticationTypeChange={setAuthenticationType} />
 
                     <Collapse in={canConfigureConnection}>
-                        <ConfigurationFormContent
+                        <SetupFormContent
                             connection={connection}
                             authenticationType={authenticationType}
                             canEdit={canEdit}
