@@ -1,4 +1,4 @@
-# 4. implement testing
+# 4. implement automated testing
 
 Date: 2023-09-04
 
