@@ -1,3 +1,10 @@
+# [3.14.0] - 2023-9-6 [PR: #468](https://github.com/dolittle/Studio/pull/468)
+## Summary
+
+- Introduce Data Sync Settings section with ability to enable / disable realtime updates
+- Rename the Configuration Section to General Settings to play well with the Data Sync settings section
+
+
 # [3.13.1] - 2023-9-1 [PR: #467](https://github.com/dolittle/Studio/pull/467)
 ## Summary
 
