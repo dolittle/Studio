@@ -29,7 +29,7 @@ export const RealtimeSyncSection = () => {
     const [disableRealtimeDialogState, disableRealtimeDialogDispatch] = useReducer(disableWebhooksDialogReducer, { isOpen: false });
 
     const serviceStatus = webhookStatus?.service || 'Off';
-    const isEnabling = !((webhookStatus?.target === 'Disabled') || serviceStatus === 'Deploying');
+    const isEnabling = (webhookStatus?.target === 'Disabled') || serviceStatus === 'Deploying';
     const shouldDisableDisableButton = serviceStatus === 'Off' || serviceStatus === 'Deploying' || serviceStatus === 'Terminating';
 
     const webhookUrl = webhookStatus?.basePath + '/{TABLE_NAME}' || '';
