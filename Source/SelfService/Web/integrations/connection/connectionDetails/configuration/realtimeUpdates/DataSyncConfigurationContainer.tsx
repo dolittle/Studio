@@ -11,7 +11,7 @@ import { ActionToolbar } from './ActionToolbar';
 
 
 
-export const RealtimeUpdatesConfigurationContainer = () => {
+export const DataSyncConfigurationContainer = () => {
     const { enqueueSnackbar } = useSnackbar();
     const [canEdit, setEditMode] = useState(false);
     const connectionId = useConnectionIdFromRoute();
@@ -46,11 +46,11 @@ export const RealtimeUpdatesConfigurationContainer = () => {
                     />
                 }
             />
-            <ContentSection title='Scheduled Updates'>
+            {/* <ContentSection title='Scheduled Updates'>
                 <ContentParagraph>
                     Insert text here!
                 </ContentParagraph>
-            </ContentSection>
+            </ContentSection> */}
             <ContentSection title='Realtime Updates'>
                 <ContentParagraph>
                     Realtime updates is a feature that allows you to receive updates from M3 in real time. It requires you to manually configure webhooks for the tables you would like to receive updates from.
