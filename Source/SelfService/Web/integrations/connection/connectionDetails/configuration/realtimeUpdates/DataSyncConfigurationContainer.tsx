@@ -31,13 +31,13 @@ export const DataSyncConfigurationContainer = () => {
         <ContentContainer>
             <ContentHeader
                 title='Data Sync Settings'
-                buttonsSlot={
-                    <ActionToolbar
-                        canEdit={canEdit}
-                        onCancelAction={handleOnCancelAction}
-                        onEditAction={() => setEditMode(true)}
-                    />
-                }
+                // buttonsSlot={
+                //     <ActionToolbar
+                //         canEdit={canEdit}
+                //         onCancelAction={handleOnCancelAction}
+                //         onEditAction={() => setEditMode(true)}
+                //     />
+                // }
             />
             {/* <ContentSection title='Scheduled Updates'>
                 <ContentParagraph>
