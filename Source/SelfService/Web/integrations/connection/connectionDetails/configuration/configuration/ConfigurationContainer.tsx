@@ -61,7 +61,7 @@ export const ConfigurationContainer = () => {
                 ref={formRef}
             >
                 <ContentHeader
-                    title='Connector Configuration'
+                    title='General Settings'
                     buttonsSlot={
                         <ActionToolbar
                             canEdit={canEdit}
