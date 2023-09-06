@@ -144,7 +144,7 @@ export const RealtimeSyncSection = () => {
                     hideDivider
                 >
                     <AlertBox
-                        severity='warning'
+                        severity='info'
                         isOpen
                         title='Note'
                         message='Replace {TABLE_NAME} in the webhook URL with the name of the table you are setting up the webhook for' />
