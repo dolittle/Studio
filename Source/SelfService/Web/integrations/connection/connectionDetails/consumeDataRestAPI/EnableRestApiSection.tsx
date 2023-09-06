@@ -14,7 +14,7 @@ export const EnableRestApiSection = ({ status, onEnableRestApi, isEnabling }: En
     return (
         <ContentSection title='Enable Rest API'>
             <ContentParagraph>
-                To enable the Rest API service, press the Deploy service button. The first time you enable the Rest API may take a few minutes to set up and deploy your dedicated service.
+                To enable the Rest API service, press the &quot;Enable REST API&quot; button. The first time you enable the Rest API may take a few minutes to set up and deploy your dedicated service.
             </ContentParagraph>
             <Button label='Enable Rest Api' variant='fullwidth' startWithIcon='RocketLaunch' onClick={() => onEnableRestApi?.()} disabled={status !== 'Off' || isEnabling} />
         </ContentSection>
