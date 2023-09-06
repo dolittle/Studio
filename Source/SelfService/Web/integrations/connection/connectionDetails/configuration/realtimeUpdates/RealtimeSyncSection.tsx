@@ -1,6 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import React from 'react';
+import React, { useReducer } from 'react';
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
 import { Box, Stack, Typography } from '@mui/material';
@@ -9,9 +9,9 @@ import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 import { useConnectionsIdWebhookStatusGet, useConnectionsIdWebhooksDisablePost, useConnectionsIdWebhooksEnablePost } from '../../../../../apis/integrations/connectionWebhookApi.hooks';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { AlertBox, Button, ContentParagraph, ContentSection, IconButton, Link, StatusIndicatorProps } from '@dolittle/design-system';
+import { DisableWebhooksDialog, disableWebhooksDialogReducer } from './DisableRealtimeSyncDialog';
 
 export const RealtimeSyncSection = () => {
-    const webhookUrl = 'https://bridge-services-dev.dolittle.cloud/1c7a24ffb4/dishonest-hang';
     const { enqueueSnackbar } = useSnackbar();
 
     const connectionId = useConnectionIdFromRoute();
@@ -26,10 +26,16 @@ export const RealtimeSyncSection = () => {
     const enableMutation = useConnectionsIdWebhooksEnablePost();
     const disableMutation = useConnectionsIdWebhooksDisablePost();
     const queryClient = useQueryClient();
+    const [disableRealtimeDialogState, disableRealtimeDialogDispatch] = useReducer(disableWebhooksDialogReducer, { isOpen: false });
 
     const serviceStatus = webhookStatus?.service || 'Off';
-    const isEnabling = (webhookStatus?.target === 'Disabled') || serviceStatus === 'Deploying';
+    const isEnabling = !((webhookStatus?.target === 'Disabled') || serviceStatus === 'Deploying');
     const shouldDisableDisableButton = serviceStatus === 'Off' || serviceStatus === 'Deploying' || serviceStatus === 'Terminating';
+
+    const webhookUrl = webhookStatus?.basePath + '/{TABLE_NAME}' || '';
+    const webhookUsername = webhookStatus?.username || '';
+    const webhookPassword = webhookStatus?.password || '';
+
 
 
     const handleWebhookLinkCopy = () => {
@@ -37,27 +43,36 @@ export const RealtimeSyncSection = () => {
         enqueueSnackbar('Webhook url copied to clipboard.');
     };
 
+    const handleWebhookUsernameCopy = () => {
+        navigator.clipboard.writeText(webhookUsername);
+        enqueueSnackbar('Webhook username copied to clipboard.');
+    };
+    const handleWebhookPasswordCopy = () => {
+        navigator.clipboard.writeText(webhookPassword);
+        enqueueSnackbar('Webhook password copied to clipboard.');
+    };
+
     const handleEnableRealtimeSync = () => {
         enableMutation.mutate({ id: connectionId }, {
             onSuccess: () => {
                 queryClient.invalidateQueries([CACHE_KEYS.ConnectionWebhookStatus_GET, connectionId]);
-                enqueueSnackbar('Realtime sync service is being deployed. It will be available in a few minutes.');
+                enqueueSnackbar('Realtime sync service is being enabled. It will be available in a few minutes.');
             },
             onError: (error) => {
-                enqueueSnackbar('Something went wrong deploying the Rest API service. Error: ' + error, { variant: 'error' });
+                enqueueSnackbar('Something went wrong deploying the Realtime sync service. Error: ' + error, { variant: 'error' });
             }
         });
     };
 
     const handleDisableRealtimeSync = () => {
-        // disableServiceDialogDispatch({ type: 'close' });
+        disableRealtimeDialogDispatch({ type: 'close' });
         disableMutation.mutate({ id: connectionId }, {
             onSuccess: () => {
                 queryClient.invalidateQueries([CACHE_KEYS.ConnectionRestApiStatus_GET, connectionId]);
-                enqueueSnackbar('Rest API service has been disabled.');
+                enqueueSnackbar('Realtime sync service has been disabled.');
             },
             onError: (error) => {
-                enqueueSnackbar('Something went wrong while disabling the Rest API service. Error: ' + error, { variant: 'error' });
+                enqueueSnackbar('Something went wrong while disabling the Realtime sync service. Error: ' + error, { variant: 'error' });
             }
         });
     };
@@ -81,6 +96,11 @@ export const RealtimeSyncSection = () => {
 
     return (
         <>
+            <DisableWebhooksDialog
+                dispatch={disableRealtimeDialogDispatch}
+                state={disableRealtimeDialogState}
+                onConfirm={handleDisableRealtimeSync}
+            />
             <ContentSection
                 title='Realtime Data Sync'
                 headerProps={{
@@ -95,8 +115,7 @@ export const RealtimeSyncSection = () => {
                         variant='outlined'
                         color='error'
                         disabled={shouldDisableDisableButton}
-                        onClick={() => handleDisableRealtimeSync()}
-                        // onClick={() => disableServiceDialogDispatch({ type: 'open' })}
+                        onClick={() => disableRealtimeDialogDispatch({ type: 'open' })}
                     />
                     }</>
 
@@ -136,29 +155,29 @@ export const RealtimeSyncSection = () => {
                         <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
                             <Link
                                 target
-                                ariaLabel='OpenAPI documentation'
-                                message={webhookUrl + '/{TABLE_NAME}'} />
+                                ariaLabel='Webhook base path'
+                                message={webhookStatus?.basePath + '/{TABLE_NAME}'} />
                             <IconButton
-                                tooltipText='Copy OpenAPI documentation link to clipboard'
+                                tooltipText='Copy webhook base path to clipboard'
                                 icon='CopyAllRounded'
                                 color='primary'
                                 onClick={handleWebhookLinkCopy} />
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
-                            <Typography>Username: abcd</Typography>
+                            <Typography>Username: {webhookUsername}</Typography>
                             <IconButton
-                                tooltipText='Copy OpenAPI documentation link to clipboard'
+                                tooltipText='Copy webhook username to clipboard'
                                 icon='CopyAllRounded'
                                 color='primary'
-                                onClick={handleWebhookLinkCopy} />
+                                onClick={handleWebhookUsernameCopy} />
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
-                            <Typography>Password: abcd</Typography>
+                            <Typography>Password: {webhookPassword}</Typography>
                             <IconButton
-                                tooltipText='Copy OpenAPI documentation link to clipboard'
+                                tooltipText='Copy webhook password to clipboard'
                                 icon='CopyAllRounded'
                                 color='primary'
-                                onClick={handleWebhookLinkCopy} />
+                                onClick={handleWebhookPasswordCopy} />
                         </Box>
                     </Stack>
                 </ContentSection>
