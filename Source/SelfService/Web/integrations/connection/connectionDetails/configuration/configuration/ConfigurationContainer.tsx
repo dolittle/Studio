@@ -1,9 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
-import { ContentContainer, ContentHeader, ContentSection, ContentParagraph, ContentDivider } from '@dolittle/design-system/';
+import { ContentContainer, ContentHeader } from '@dolittle/design-system/';
 import { useConnectionsIdGet } from '../../../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { ExporterConfigurationSection } from './ExporterConfigurationSection';

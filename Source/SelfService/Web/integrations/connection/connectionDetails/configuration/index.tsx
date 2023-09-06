@@ -4,6 +4,7 @@
 import React, { } from 'react';
 import { SetupContainer } from './setup/SetupContainer';
 import { ConfigurationContainer } from './configuration/ConfigurationContainer';
+import { RealtimeUpdatesConfigurationContainer } from './realtimeUpdates/RealtimeUpdatesConfigurationContainer';
 
 export const ConfigurationView = () => {
 
@@ -12,6 +13,7 @@ export const ConfigurationView = () => {
             <SetupContainer />
             {/* TODO: Only show configuration section after the deployment type is set ? */}
             <ConfigurationContainer />
+            <RealtimeUpdatesConfigurationContainer />
         </>
     );
 };
