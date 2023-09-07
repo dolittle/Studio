@@ -36,8 +36,6 @@ export const ConfigurationContainer = () => {
     };
 
     const handleOnSaved = (saveState: ConnectorConfigurationFormSaveState): void => {
-        console.log('saved');
-
         if (saveState.every((state) => state.status === 'success')) {
             setEditMode(false);
         }

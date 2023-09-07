@@ -8,20 +8,19 @@ import { SubmitHandler } from 'react-hook-form';
 import { Form, FormRef } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../../../../apis/integrations/generated';
-import { useConnectionsIdConfigurationExporterCronPost, useConnectionsIdConfigurationExporterStrictCertificateValidationPost } from '../../../../../apis/integrations/connectionConfigurationApi.hooks';
+import { useConnectionsIdConfigurationExporterStrictCertificateValidationPost } from '../../../../../apis/integrations/connectionConfigurationApi.hooks';
 
 
 //TODO: Can this be replaced with using `watch` from react-hook-form?
-const useForceSubscribeToCronExpressionStateChanges = (currentForm: FormRef<ConnectorConfigurationFormParameters> | undefined) => {
+const useForceSubscribeToIsDirtyStateChanges = (currentForm: FormRef<ConnectorConfigurationFormParameters> | undefined) => {
     useEffect(() => {
         if (currentForm) {
-            const { isDirty } = currentForm.getFieldState('cronExpression', currentForm.formState);
+            const { isDirty } = currentForm.getFieldState('strictCertificateValidation', currentForm.formState);
         }
     }, [currentForm]);
 };
 
 export type ConfigurationSaveActionName =
-    | 'Cron'
     | 'Strict Certificate Validation';
 
 export type ConfigurationSaveActionState =
@@ -37,7 +36,6 @@ export type ConnectorConfigurationFormRef = {
 };
 
 export type ConnectorConfigurationFormParameters = {
-    cronExpression: string;
     strictCertificateValidation: boolean;
 };
 
@@ -63,9 +61,6 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
             setCurrentForm(ref);
         }
     }, []);
-    if (currentForm) {
-        const cronExpressionWatch = currentForm.watch('cronExpression');
-    }
 
     useImperativeHandle(ref, () => ({
         reset(keepDefault: boolean) {
@@ -83,17 +78,15 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
         }
     }, [currentForm?.reset, currentForm?.formState.isSubmitSuccessful, currentForm?.formState.defaultValues, onSaved, lastSaveState]);
 
-    const cronMutation = useConnectionsIdConfigurationExporterCronPost();
     const strictCertificateValidationMutation = useConnectionsIdConfigurationExporterStrictCertificateValidationPost();
 
     const defaultValues: ConnectorConfigurationFormParameters = useMemo(() => (
         {
-            cronExpression: connection.cronExportTrigger || '',
             strictCertificateValidation: connection.strictCertificateValidation || false,
         }
     ), [connection]);
 
-    useForceSubscribeToCronExpressionStateChanges(currentForm);
+    useForceSubscribeToIsDirtyStateChanges(currentForm);
 
     /**
      * Reset the form defaults when the default values change, and keep any dirty values
@@ -112,22 +105,9 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
         }
         setLastSaveState([]);
         const saveActions: (
-            | { name: Extract<ConfigurationSaveActionName, 'Cron'| 'Strict Certificate Validation'>, action: Promise<void> }
+            | { name: Extract<ConfigurationSaveActionName, 'Cron' | 'Strict Certificate Validation'>, action: Promise<void> }
         )[] = [];
         const getFieldState = (field) => currentForm.getFieldState(field, currentForm.formState);
-
-        const cronExpressionFieldState = getFieldState('cronExpression');
-        if (cronExpressionFieldState.isDirty) {
-            saveActions.push({
-                name: 'Cron',
-                action: cronMutation.mutateAsync(
-                    {
-                        id: connectionId,
-                        cronExpression: data.cronExpression,
-                    },
-                )
-            });
-        }
 
         const strictCertificateValidationExpressionFieldState = getFieldState('strictCertificateValidation');
         if (strictCertificateValidationExpressionFieldState.isDirty) {
@@ -159,7 +139,7 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
     }, [
         currentForm?.getFieldState,
         connectionId,
-        cronMutation,
+        strictCertificateValidationMutation,
     ]);
 
     return (
@@ -173,4 +153,4 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
     );
 });
 
-ConnectorConfigurationForm.displayName = 'M3ConfigurationForm';
+ConnectorConfigurationForm.displayName = 'ConnectorConfigurationForm';
