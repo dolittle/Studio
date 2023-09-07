@@ -3,13 +3,14 @@
 
 import React from 'react';
 
-import { Paper } from '@mui/material';
+import { Paper, SxProps } from '@mui/material';
 
 export type ContentContainerProps = {
     children?: React.ReactNode;
+    sx?: SxProps;
 };
 
-export const ContentContainer = ({ children }: ContentContainerProps) =>
-    <Paper sx={{ width: 1, my: 2, px: 2, maxWidth: '1200px' }}>
+export const ContentContainer = ({ sx, children }: ContentContainerProps) =>
+    <Paper sx={{ width: 1, my: 2, px: 3, maxWidth: '1200px', ...sx }}>
         {children}
     </Paper>;
