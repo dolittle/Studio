@@ -6,7 +6,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Grid, LinearProgress, Box } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
-import { AlertBox, Button, ContentSection, Switch } from '@dolittle/design-system/';
+import { AlertBox, Button, ContentSection, NewSwitch, Switch, TextField } from '@dolittle/design-system/';
 
 import { FieldMapping, MappedField } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
@@ -125,7 +125,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                                 You can remap the M3 Description by adding a remapped name that makes sense for your organization’s business logic. `}
                             </Box>
                             <Grid container gap={2} sx={{ py: 3, justifyContent: 'flex-end', alignContent: 'flex-end' }}>
-                                <Switch.UI
+                                <NewSwitch
                                     id='hideUnselectedRows'
                                     label='Hide Unselected Rows'
                                     checked={hideUnselectedRows}
