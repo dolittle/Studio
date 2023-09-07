@@ -16,7 +16,7 @@ export type ActionToolbarProps = {
 };
 
 export const ActionToolbar = ({ onEditAction, onCancelAction, canEdit = false,  }: ActionToolbarProps) => {
-    // const { isValid, isDirty } = useFormState();
+    const { isValid, isDirty } = useFormState();
 
     return (
         <Box sx={{ display: 'flex', gap: 2 }}>
@@ -26,7 +26,7 @@ export const ActionToolbar = ({ onEditAction, onCancelAction, canEdit = false,  
             <Button
                 label='Save'
                 startWithIcon='SaveRounded'
-                // disabled={!canEdit || !isDirty || !isValid}
+                disabled={!canEdit || !isDirty || !isValid}
                 type='submit'
             />
         </Box>
