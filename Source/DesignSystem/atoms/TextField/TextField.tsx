@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { InputAdornment, SxProps, TextField as MuiTextField } from '@mui/material';
+import { InputAdornment, SxProps, TextField as MuiTextField, TextFieldProps as MuiTextFieldProps } from '@mui/material';
 
 import { Icon, IconProps, SvgIconsDefinition } from '@dolittle/design-system';
 
@@ -84,12 +84,18 @@ export type TextFieldProps = {
     onValueChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 
     /**
+     * The variant of the `TextField`.
+     * @default 'outlined
+     */
+    variant?: MuiTextFieldProps['variant'];
+
+    /**
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
 };
 
-export const TextField = ({ label, value, size = 'small', placeholder, helperText, isDisabled, isFullWidth, startIcon, endIcon, iconColor, onValueChange, sx }: TextFieldProps) =>
+export const TextField = ({ label, value, size = 'small', placeholder, helperText, isDisabled, isFullWidth, startIcon, endIcon, iconColor, onValueChange, variant = 'outlined', sx }: TextFieldProps) =>
     <MuiTextField
         label={label}
         value={value}
@@ -105,7 +111,7 @@ export const TextField = ({ label, value, size = 'small', placeholder, helperTex
                 <TextFieldAdornment position='end' icon={endIcon} color={iconColor ?? 'inherit'} size={size} />
         }}
         onChange={onValueChange}
-        variant='outlined'
+        variant={variant}
         type='text'
         autoComplete='off'
         sx={{ '.MuiOutlinedInput-root': { fontSize: 'inherit' }, ...sx }}
