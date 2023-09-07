@@ -1,3 +1,9 @@
+# [3.16.0] - 2023-9-7 [PR: #470](https://github.com/dolittle/Studio/pull/470)
+## Summary
+- Add support for quick filtering of the table fields
+- Move responsibility of filtering selected to the grid itself to trigger item count correctly
+
+
 # [3.15.0] - 2023-9-7 [PR: #469](https://github.com/dolittle/Studio/pull/469)
 ## Summary
 - Add Scheduled data sync section and form to save cron expression
