@@ -6,24 +6,24 @@ import { useSnackbar } from 'notistack';
 import { ContentContainer, ContentHeader } from '@dolittle/design-system/';
 import { useConnectionsIdGet } from '../../../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
-import { ExporterConfigurationSection } from './ExporterConfigurationSection';
-import { ConnectorConfigurationForm, ConnectorConfigurationFormRef, ConnectorConfigurationFormSaveState } from './ConnectorConfigurationForm';
+import { SettingsFormContent } from './SettingsFormContent';
+import { SettingsForm, SettingsFormRef, SettingsFormSaveState } from './SettingsForm';
 import { ActionToolbar } from './ActionToolbar';
 
-export const ConfigurationContainer = () => {
+export const SettingsContainer = () => {
     const [canEdit, setEditMode] = useState(false);
-    const [lastSaveState, setLastSaveState] = useState<ConnectorConfigurationFormSaveState>();
+    const [lastSaveState, setLastSaveState] = useState<SettingsFormSaveState>();
 
     const { enqueueSnackbar } = useSnackbar();
     const connectionId = useConnectionIdFromRoute();
     const query = useConnectionsIdGet({ id: connectionId });
 
-    const formRef = useRef<ConnectorConfigurationFormRef>(null);
+    const formRef = useRef<SettingsFormRef>(null);
 
     const connection = query.data?.value;
     const links = query.data?.links || [];
 
-    const handleSaveState = (saveState: ConnectorConfigurationFormSaveState) => {
+    const handleSaveState = (saveState: SettingsFormSaveState) => {
         setLastSaveState(saveState);
         saveState.forEach((state) => {
             if (state.status === 'success') {
@@ -35,7 +35,7 @@ export const ConfigurationContainer = () => {
         });
     };
 
-    const handleOnSaved = (saveState: ConnectorConfigurationFormSaveState): void => {
+    const handleOnSaved = (saveState: SettingsFormSaveState): void => {
         if (saveState.every((state) => state.status === 'success')) {
             setEditMode(false);
         }
@@ -52,7 +52,7 @@ export const ConfigurationContainer = () => {
 
     return (
         <ContentContainer>
-            <ConnectorConfigurationForm
+            <SettingsForm
                 connectionId={connectionId}
                 connection={connection}
                 onSaved={handleOnSaved}
@@ -68,8 +68,8 @@ export const ConfigurationContainer = () => {
                         />
                     }
                 />
-                <ExporterConfigurationSection canEdit={canEdit} />
-            </ConnectorConfigurationForm>
+                <SettingsFormContent canEdit={canEdit} />
+            </SettingsForm>
         </ContentContainer>
     );
 };
