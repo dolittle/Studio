@@ -166,7 +166,6 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
         <Form<ConnectorConfigurationFormParameters>
             initialValues={defaultValues}
             onSubmit={(data, event) => handleSave(data, event)}
-            sx={{ ml: 3 }}
             fRef={formRef}
         >
             {children}

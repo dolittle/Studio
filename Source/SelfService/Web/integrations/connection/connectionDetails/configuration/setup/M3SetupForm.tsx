@@ -269,7 +269,6 @@ export const M3SetupForm = React.forwardRef<M3SetupFormRef, M3SetupFormProps>((
         <Form<M3ConnectionParameters>
             initialValues={defaultValues}
             onSubmit={(data, event) => handleM3ConnectionSave(data, event)}
-            sx={{ ml: 3 }}
             fRef={formRef}
         >
             {children}
