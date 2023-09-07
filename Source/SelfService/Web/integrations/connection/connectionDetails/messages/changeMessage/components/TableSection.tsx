@@ -26,6 +26,7 @@ export type TableSectionProps = ViewModeProps & {
 export const TableSection = ({ selectedTableName, initialSelectedFields, onBackToSearchResultsClicked, mode }: TableSectionProps) => {
     const connectionId = useConnectionIdFromRoute();
     const setMappedFieldsInForm = useUpdateMappedFieldsInForm();
+    const [fieldSearchTerm, setFieldSearchTerm] = useState('');
 
     if (!selectedTableName) return <AlertBox />;
 
@@ -124,7 +125,13 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                                 {`This displays all the M3 fields available for this table. Primary fields are necessary for the message type and have already been selected.
                                 You can remap the M3 Description by adding a remapped name that makes sense for your organization’s business logic. `}
                             </Box>
-                            <Grid container gap={2} sx={{ py: 3, justifyContent: 'flex-end', alignContent: 'flex-end' }}>
+                            <Grid container gap={4} sx={{ py: 3, justifyContent: 'flex-end', justifyItems: 'center', }}>
+                                <TextField
+                                    startIcon='Search'
+                                    variant='standard'
+                                    placeholder='Search fields'
+                                    onValueChange={(event) => setFieldSearchTerm(event.target.value)}
+                                />
                                 <NewSwitch
                                     id='hideUnselectedRows'
                                     label='Hide Unselected Rows'
@@ -139,6 +146,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                                 disabledRows={requiredTableColumnIds}
                                 onSelectedIdsChanged={setSelectedRowIds}
                                 onFieldMapped={updateMappedFieldsAndUpdateFormValue}
+                                quickFilterValue={fieldSearchTerm}
                             />
                         </>
                     )}
