@@ -26,6 +26,7 @@ export type MessageMappingTableProps = {
     isLoading: boolean;
     hideUnselectedRows?: boolean;
     onFieldMapped: (m3Field: string, mappedFieldName) => void;
+    quickFilterValue?: string;
 };
 
 export const MessageMappingTable = ({
@@ -35,6 +36,7 @@ export const MessageMappingTable = ({
     disabledRows,
     isLoading,
     onFieldMapped,
+    quickFilterValue
 }: MessageMappingTableProps) => {
     const columns: GridColDef<DataGridTableListingEntry>[] = useMemo(() => [
         {
@@ -168,10 +170,12 @@ export const MessageMappingTable = ({
                 processRowUpdate={processRowUpdate}
                 onProcessRowUpdateError={error => console.log(error)}
                 experimentalFeatures={{ newEditingApi: true }}
+                filterModel={{ items: [], quickFilterValues: [quickFilterValue] }}
                 disableColumnReorder
                 disableColumnResize
                 disableColumnSelector
                 disableSelectionOnClick
+                keepNonExistentRowsSelected
             />
         </Paper>
     );
