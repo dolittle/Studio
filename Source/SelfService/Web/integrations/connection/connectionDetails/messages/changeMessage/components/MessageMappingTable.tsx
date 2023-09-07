@@ -4,7 +4,7 @@
 import React, { useMemo } from 'react';
 
 import { Box, Paper, Tooltip } from '@mui/material';
-import { DataGridPro, GridColDef, GridSelectionModel, GridRowId, useGridApiRef, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridSelectionModel, GridRowId, useGridApiRef, GRID_CHECKBOX_SELECTION_FIELD, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid-pro';
 
 import { EditCell, EditTextFieldCell } from '@dolittle/design-system';
 
@@ -24,7 +24,7 @@ export type MessageMappingTableProps = {
     onSelectedIdsChanged: (newSelectedIds: GridSelectionModel) => void;
     disabledRows?: GridRowId[];
     isLoading: boolean;
-    hideUnselectedRows?: boolean;
+    showOnlySelected?: boolean;
     onFieldMapped: (m3Field: string, mappedFieldName) => void;
     quickFilterValue?: string;
 };
@@ -36,6 +36,7 @@ export const MessageMappingTable = ({
     disabledRows,
     isLoading,
     onFieldMapped,
+    showOnlySelected,
     quickFilterValue
 }: MessageMappingTableProps) => {
     const columns: GridColDef<DataGridTableListingEntry>[] = useMemo(() => [
@@ -73,6 +74,19 @@ export const MessageMappingTable = ({
             renderEditCell: EditTextFieldCell,
         },
     ], [disabledRows]);
+
+    const gridFilters = useMemo(() => {
+        return {
+            items: showOnlySelected ? [
+                {
+                    columnField: GRID_CHECKBOX_SELECTION_FIELD,
+                    operatorValue: 'is',
+                    value: 'true',
+                }
+            ] : [],
+            quickFilterValues: [quickFilterValue?.trim() || undefined]
+        };
+    }, [quickFilterValue, showOnlySelected]);
 
     const gridApiRef = useGridApiRef();
 
@@ -170,7 +184,7 @@ export const MessageMappingTable = ({
                 processRowUpdate={processRowUpdate}
                 onProcessRowUpdateError={error => console.log(error)}
                 experimentalFeatures={{ newEditingApi: true }}
-                filterModel={{ items: [], quickFilterValues: [quickFilterValue] }}
+                filterModel={gridFilters}
                 disableColumnReorder
                 disableColumnResize
                 disableColumnSelector

@@ -6,7 +6,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Grid, LinearProgress, Box } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
-import { AlertBox, Button, ContentSection, NewSwitch, Switch, TextField } from '@dolittle/design-system/';
+import { AlertBox, Button, ContentSection, NewSwitch, TextField } from '@dolittle/design-system/';
 
 import { FieldMapping, MappedField } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
@@ -75,11 +75,6 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
         [allMappableTableColumns, mappedFields]
     );
 
-    const selectedTableColumns = useMemo(
-        () => gridMappableTableColumns.filter(column => selectedIds.includes(column.m3ColumnName)),
-        [gridMappableTableColumns, selectedIds]
-    );
-
     const updateMappedFieldsAndUpdateFormValue = (m3Field: string, mappedFieldName: any) => {
         setMappedFields(prevMappedFields => {
             const newMappedFields = new Map(prevMappedFields);
@@ -140,13 +135,14 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                                 />
                             </Grid>
                             <MessageMappingTable
-                                dataGridListing={hideUnselectedRows ? selectedTableColumns : gridMappableTableColumns}
+                                dataGridListing={gridMappableTableColumns}
                                 isLoading={isLoading}
                                 selectedIds={selectedIds}
                                 disabledRows={requiredTableColumnIds}
                                 onSelectedIdsChanged={setSelectedRowIds}
                                 onFieldMapped={updateMappedFieldsAndUpdateFormValue}
                                 quickFilterValue={fieldSearchTerm}
+                                showOnlySelected={!hideUnselectedRows}
                             />
                         </>
                     )}
