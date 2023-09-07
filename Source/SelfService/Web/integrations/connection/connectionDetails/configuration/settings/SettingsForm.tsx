@@ -12,7 +12,7 @@ import { useConnectionsIdConfigurationExporterStrictCertificateValidationPost } 
 
 
 //TODO: Can this be replaced with using `watch` from react-hook-form?
-const useForceSubscribeToIsDirtyStateChanges = (currentForm: FormRef<ConnectorConfigurationFormParameters> | undefined) => {
+const useForceSubscribeToIsDirtyStateChanges = (currentForm: FormRef<SettingsFormParameters> | undefined) => {
     useEffect(() => {
         if (currentForm) {
             const { isDirty } = currentForm.getFieldState('strictCertificateValidation', currentForm.formState);
@@ -29,33 +29,33 @@ export type ConfigurationSaveActionState =
 
 export type ConfigurationFormSaveAction = { name: ConfigurationSaveActionName } & ConfigurationSaveActionState;
 
-export type ConnectorConfigurationFormSaveState = ConfigurationFormSaveAction[];
+export type SettingsFormSaveState = ConfigurationFormSaveAction[];
 
-export type ConnectorConfigurationFormRef = {
+export type SettingsFormRef = {
     reset: (keepDefault: boolean) => void;
 };
 
-export type ConnectorConfigurationFormParameters = {
+export type SettingsFormParameters = {
     strictCertificateValidation: boolean;
 };
 
-export type ConnectorConfigurationFormProps = {
+export type SettingsFormProps = {
     connectionId: string;
     connection: ConnectionModel
-    onSaved?: (saveState: ConnectorConfigurationFormSaveState) => void;
+    onSaved?: (saveState: SettingsFormSaveState) => void;
     children?: React.ReactNode;
 };
 
-export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfigurationFormRef, ConnectorConfigurationFormProps>(({
+export const SettingsForm = React.forwardRef<SettingsFormRef, SettingsFormProps>(({
     connectionId,
     connection,
     onSaved,
     children
-}: ConnectorConfigurationFormProps,
-    ref: React.Ref<ConnectorConfigurationFormRef>
+}: SettingsFormProps,
+    ref: React.Ref<SettingsFormRef>
 ) => {
-    const [currentForm, setCurrentForm] = useState<FormRef<ConnectorConfigurationFormParameters>>();
-    const [lastSaveState, setLastSaveState] = useState<ConnectorConfigurationFormSaveState>();
+    const [currentForm, setCurrentForm] = useState<FormRef<SettingsFormParameters>>();
+    const [lastSaveState, setLastSaveState] = useState<SettingsFormSaveState>();
     const formRef = useCallback((ref) => {
         if (ref) {
             setCurrentForm(ref);
@@ -80,7 +80,7 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
 
     const strictCertificateValidationMutation = useConnectionsIdConfigurationExporterStrictCertificateValidationPost();
 
-    const defaultValues: ConnectorConfigurationFormParameters = useMemo(() => (
+    const defaultValues: SettingsFormParameters = useMemo(() => (
         {
             strictCertificateValidation: connection.strictCertificateValidation || false,
         }
@@ -99,7 +99,7 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
 
     }, [defaultValues, currentForm]);
 
-    const handleSave: SubmitHandler<ConnectorConfigurationFormParameters> = useCallback((data) => {
+    const handleSave: SubmitHandler<SettingsFormParameters> = useCallback((data) => {
         if (!connectionId || !currentForm) {
             return;
         }
@@ -143,7 +143,7 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
     ]);
 
     return (
-        <Form<ConnectorConfigurationFormParameters>
+        <Form<SettingsFormParameters>
             initialValues={defaultValues}
             onSubmit={(data, event) => handleSave(data, event)}
             fRef={formRef}
@@ -153,4 +153,4 @@ export const ConnectorConfigurationForm = React.forwardRef<ConnectorConfiguratio
     );
 });
 
-ConnectorConfigurationForm.displayName = 'ConnectorConfigurationForm';
+SettingsForm.displayName = 'SettingsForm';

@@ -2,13 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { ContentParagraph, ContentSection, Input, Link, Switch } from '@dolittle/design-system';
+import { ContentParagraph, ContentSection, Switch } from '@dolittle/design-system';
 
-export type ExporterConfigurationSectionProps = {
+export type SettingsFormContentProps = {
     canEdit: boolean;
 };
 
-export const ExporterConfigurationSection = ({ canEdit }: ExporterConfigurationSectionProps) => {
+export const SettingsFormContent = ({ canEdit }: SettingsFormContentProps) => {
 
     return (
         <>
