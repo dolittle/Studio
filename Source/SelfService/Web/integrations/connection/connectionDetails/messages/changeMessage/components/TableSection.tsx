@@ -126,6 +126,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                                     variant='outlined'
                                     placeholder='Search fields'
                                     onValueChange={(event) => setFieldSearchTerm(event.target.value)}
+                                    sx={{ flexGrow: 1 }}
                                 />
                                 <NewSwitch
                                     id='hideUnselectedRows'
