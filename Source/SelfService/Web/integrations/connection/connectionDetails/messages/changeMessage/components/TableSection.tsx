@@ -143,7 +143,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                                 onSelectedIdsChanged={setSelectedRowIds}
                                 onFieldMapped={updateMappedFieldsAndUpdateFormValue}
                                 quickFilterValue={fieldSearchTerm}
-                                showOnlySelected={!hideUnselectedRows}
+                                showOnlySelected={hideUnselectedRows}
                             />
                         </>
                     )}
