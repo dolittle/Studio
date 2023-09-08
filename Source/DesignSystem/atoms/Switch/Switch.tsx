@@ -37,5 +37,5 @@ export type SwitchProps = {
  * @param {SwitchProps} props - The {@link SwitchProps}.
  * @returns A {@link NewSwitch} component.
  */
-export const NewSwitch = ({ label, size, isDisabled, onChange }: SwitchProps) =>
-    <FormControlLabel label={label} control={<MuiSwitch size={size ? size : 'small'} disabled={isDisabled} onChange={onChange} />} />;
+export const NewSwitch = ({ label, size, isDisabled, onChange, ...switchProps }: SwitchProps) =>
+    <FormControlLabel label={label} control={<MuiSwitch size={size ? size : 'small'} disabled={isDisabled} onChange={onChange} {...switchProps} />} />;
