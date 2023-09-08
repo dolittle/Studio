@@ -9,9 +9,9 @@ import { Form, Switch } from './';
 const { metadata, createStory } = componentStories(Switch, {
     actions: { onChange: 'Changed' },
     decorator: (Story) => (
-        <Form<{ default: string }>
+        <Form<{ default: boolean }>
             initialValues={{
-                default: '',
+                default: false,
             }}
         >
             {Story()}
@@ -43,3 +43,14 @@ metadata.args = {
 export default metadata;
 
 export const Default = createStory();
+
+export const DefaultOn = createStory();
+DefaultOn.decorators = [(Story) => (
+    <Form<{ default: boolean }>
+        initialValues={{
+            default: true,
+        }}
+    >
+        {Story()}
+    </Form>
+)];
