@@ -1,3 +1,9 @@
+# [3.17.0] - 2023-9-8 [PR: #471](https://github.com/dolittle/Studio/pull/471)
+## Summary
+- Fix wrongly inverted boolean being passed into the switch to hide unselected rows in the message mapping table
+- [DesignSystem]/NewSwitch] - Fix 'NewSwitch" and pass the props to the component - alternatively, we should pass in only 'checked.'
+
+
 # [3.16.0] - 2023-9-7 [PR: #470](https://github.com/dolittle/Studio/pull/470)
 ## Summary
 - Add support for quick filtering of the table fields
