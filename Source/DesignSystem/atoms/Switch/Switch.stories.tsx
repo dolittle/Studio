@@ -29,3 +29,8 @@ metadata.args = {
 export default metadata;
 
 export const Default = createStory();
+
+export const DefaultOn = createStory({
+    label: 'Default on switch',
+    checked: true,
+});
