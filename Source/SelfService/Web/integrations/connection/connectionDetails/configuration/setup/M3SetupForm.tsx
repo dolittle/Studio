@@ -119,8 +119,7 @@ export const M3SetupForm = React.forwardRef<M3SetupFormRef, M3SetupFormProps>((
             basicConfiguration: {
                 username: basicConfiguration?.username || '',
                 password: basicConfiguration?.password || '',
-                host: basicConfiguration?.host || '',
-                allowInsecureSsl: basicConfiguration?.allowInsecureSsl || undefined,
+                host: basicConfiguration?.host || ''
             }
         };
     }, [connection, hasSelectedDeploymentType, authenticationType]);
