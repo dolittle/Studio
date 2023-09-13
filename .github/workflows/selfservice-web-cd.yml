@@ -1,0 +1,141 @@
+name: SelfService - Web - Continuous Delivery
+
+on:
+  push:
+    branches:
+      - "main"
+
+env:
+  SOURCE_PATH: "Source/SelfService/Web"
+  DOCKER_FILE: "Source/SelfService/Web/Dockerfile"
+  DOCKER_IMAGE_TAG: "dolittle/self-service-web"
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request }} != true
+    outputs:
+      has-changes: ${{ steps.filter.outputs.src }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            src:
+              - '${{ env.SOURCE_PATH }}/**'
+              - 'Source/Shared/**'
+
+  ci:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.has-changes == 'true'
+    outputs:
+      src: ${{ steps.filter.outputs.src }}
+      next-version: ${{ steps.increment-version.outputs.next-version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        working-directory: ${{ env.SOURCE_PATH}}
+        run: yarn
+
+      - name: CI
+        working-directory: ${{ env.SOURCE_PATH}}
+        run: yarn ci
+
+      - name: Read version from file
+        id: version-info
+        uses: dolittle/read-version-from-file-action@v2
+        with:
+          path: ${{ env.SOURCE_PATH }}/version.json
+
+      - name: Increment version
+        id: increment-version
+        uses: dolittle/increment-version-action@v2
+        with:
+          version: ${{ steps.version-info.outputs.current-version }}
+          release-type: patch
+
+      - name: Write version info
+        uses: dolittle/write-version-to-file-action@v2
+        with:
+          path: ${{ env.SOURCE_PATH }}/version.json
+          version: ${{ steps.increment-version.outputs.next-version }}
+          merge-strategy: rebase
+
+  release:
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Get git branch name
+        run: echo "::set-output name=branch::$(echo ${GITHUB_REF##*/})"
+        id: get_branch
+
+      - name: Push Semantic Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: .
+          file: ./${{ env.DOCKER_FILE }}
+          tags: ${{ env.DOCKER_IMAGE_TAG }}:${{ needs.ci.outputs.next-version }}
+          build-args: |
+            MUI_LICENSE_KEY_ARG=${{ secrets.MUI_LICENSE_KEY_STUDIO }}
+
+      - name: Push Latest Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: .
+          file: ./${{ env.DOCKER_FILE }}
+          tags: ${{ env.DOCKER_IMAGE_TAG }}:latest
+          build-args: |
+            MUI_LICENSE_KEY_ARG=${{ secrets.MUI_LICENSE_KEY_STUDIO }}
+
+  deploy-dev:
+    needs:
+      - ci
+      - release
+    name: Deploy SelfService Web to development
+    uses: ./.github/workflows/update-container-image.yml
+    secrets: inherit
+    with:
+      namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+      deployment: dev-selfserviceweb
+      image: dolittle/self-service-web:${{ needs.ci.outputs.next-version }}
+      environment: dev
+      environment-url: https://dev.dolittle.studio/
+
+  deploy-prod:
+    needs:
+      - ci
+      - release
+    name: Deploy SelfService Web to production
+    uses: ./.github/workflows/update-container-image.yml
+    secrets: inherit
+    with:
+      namespace: application-fe7736bb-57fc-4166-bb91-6954f4dd4eb7
+      deployment: prod-selfserviceweb
+      image: dolittle/self-service-web:${{ needs.ci.outputs.next-version }}
+      environment: prod
+      environment-url: https://dolittle.studio/
