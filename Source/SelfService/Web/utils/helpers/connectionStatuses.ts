@@ -2,29 +2,39 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { StatusIndicatorProps } from '@dolittle/design-system';
+import { StatusMessage } from '../../apis/integrations/generated';
 
-export type StatusIndicatorStatus = Pick<StatusIndicatorProps, 'status' | 'label'>;
+export type StatusIndicatorStatus = Pick<StatusIndicatorProps, 'status' | 'label' | 'message'>;
 
-export const getConnectionIndicatorStatus = (status: string): StatusIndicatorStatus => {
-    const compareStatus = status.toLowerCase();
-    if (compareStatus === 'connected') {
-        return {
-            status: 'success',
-            label: 'connected',
-        };
-    } else if (compareStatus === 'registered' || compareStatus === 'pending') {
-        return {
-            status: 'warning',
-            label: 'pending',
-        };
-    } else if (compareStatus === 'failing') {
-        return {
-            status: 'error',
-            label: 'failing',
-        };
+export const getConnectionIndicatorStatusFromStatusMessage = (status?: StatusMessage): StatusIndicatorStatus => {
+    const indicator: StatusIndicatorStatus = {
+        status: 'unknown',
+        label: status?.title,
+        message: status?.message || undefined,
+    };
+
+    switch (status?.severity) {
+        case 'Success':
+            indicator.status = 'success';
+            break;
+        case 'Error':
+            indicator.status = 'error';
+            break;
+        case 'Waiting':
+            indicator.status = 'waiting';
+            break;
+        case 'Warning':
+            indicator.status = 'warning';
+            break;
+        case 'Information': //TODO: Introduce Information status
+        case 'Unknown':
+        case 'None':
+        default:
+            indicator.status = 'unknown';
+            break;
+
     }
-
-    return { status: 'unknown', label: 'unknown' };
+    return indicator;
 };
 
 export const getConnectionsStatus = (status?: string): StatusIndicatorStatus => {
