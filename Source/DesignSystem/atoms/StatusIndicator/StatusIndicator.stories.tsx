@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Stack } from '@mui/material';
 
-import { componentStories, StatusIndicator } from '@dolittle/design-system';
+import { componentStories, StatusIndicator, StatusIndicatorProps } from '@dolittle/design-system';
 
 const { metadata, createStory } = componentStories(StatusIndicator);
 
@@ -69,3 +69,17 @@ FilledVariants.decorators = [
 export const WithCustomLabel = createStory({
     label: 'Add your label here',
 });
+export const WithCustomMessage = () => {
+    const props: StatusIndicatorProps = {
+        status: 'warning',
+        label: 'Hover on me for a tooltip',
+        message: 'A long descriptive message that describes the current status',
+    };
+
+    return (
+        <Stack direction='row' gap={3}>
+            <StatusIndicator variantFilled {...props}/>
+            <StatusIndicator {...props}/>
+        </Stack>
+    );
+};
