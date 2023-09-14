@@ -25,7 +25,7 @@ jobs:
               - .github/workflows/designsystem*
 
       - name: Setup node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         if: steps.filter.outputs.src == 'true'
         with:
           node-version: 16.x
