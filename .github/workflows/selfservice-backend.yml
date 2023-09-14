@@ -2,6 +2,8 @@ name: SelfService - Backend
 
 on:
   push:
+    branches-ignore:
+      - 'main'
 
 env:
   SOURCE_PATH: "Source/SelfService/Backend"
@@ -41,7 +43,7 @@ jobs:
 
   docker:
     needs: ci
-    if: github.ref != 'refs/heads/main' && needs.ci.outputs.src == 'true'
+    if: needs.ci.outputs.src == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
