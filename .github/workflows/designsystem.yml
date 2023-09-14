@@ -13,7 +13,7 @@ jobs:
       src: ${{ steps.filter.outputs.src }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - uses: dorny/paths-filter@v2
         id: filter
@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-node@v1
         if: steps.filter.outputs.src == 'true'
         with:
-          node-version: 14.x
+          node-version: 16.x
           registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
