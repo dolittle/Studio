@@ -9,7 +9,7 @@ import { ConnectionStatus } from '../../../apis/integrations/generated';
 
 import { childRoutePaths } from '.';
 
-export const pendingStatuses = ['registered', 'pending', 'failing'];
+const attentionToConfigurationRequiredStatuses = ['registered', 'pending', 'failing'];
 
 /**
  * Hook that resolves the sub-tab to redirect to based on the status of the connection.
@@ -23,7 +23,7 @@ export function useRedirectToTabByStatus(status?: ConnectionStatus) {
         if (!status?.name || childRoutePaths.some((path) => location.pathname.includes(path))) {
             return null;
         } else {
-            return pendingStatuses.includes(status.name.toLowerCase())
+            return attentionToConfigurationRequiredStatuses.includes(status.name.toLowerCase())
                 ? 'configuration'
                 : 'messages';
         }
