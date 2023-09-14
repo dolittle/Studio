@@ -26,6 +26,8 @@ jobs:
             src:
               - '${{ env.SOURCE_PATH }}/**'
               - 'Source/Shared/**'
+              - .github/workflows/selfservice-web*
+              - .github/workflows/update*
 
       - name: Setup node
         uses: actions/setup-node@v1

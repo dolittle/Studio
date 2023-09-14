@@ -25,6 +25,8 @@ jobs:
           filters: |
             src:
               - '${{ env.SOURCE_PATH }}/**'
+              - .github/workflows/selfservice-backend*
+              - .github/workflows/update*
 
       - name: Setup Go
         uses: actions/setup-go@v2
