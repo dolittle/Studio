@@ -4,23 +4,9 @@
 import { StatusIndicatorProps } from '@dolittle/design-system';
 
 import { ConnectionStatus, RemoteServiceStatus } from '../../../../../apis/integrations/generated';
+import { StatusIndicatorMessage } from '../../../../../utils/helpers/connectionStatuses';
 
 export type StatusMessage = [StatusIndicatorProps['status'], StatusIndicatorProps['label']];
-
-export const configurationStatusFromConnectionStatus = (connectionStatus?: ConnectionStatus): StatusMessage => {
-    switch (connectionStatus?.name) {
-        case 'Connected':
-            return ['success', 'Connected'];
-        case 'Failing':
-            return ['error', 'Failing'];
-        case 'Deleted':
-            return ['unknown', 'Deleted'];
-        case 'Registered':
-        case 'Pending':
-        default:
-            return ['waiting', 'Waiting for access'];
-    }
-};
 
 export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStatus, ionStatus?: RemoteServiceStatus): StatusMessage => {
     const nonSuccessStatuses = ['DeploymentChosen', 'Undeployed'];
@@ -28,6 +14,37 @@ export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStat
         return ['waiting', 'Waiting for access'];
     }
     return ['success', 'Connected'];
+};
+
+
+export const getConnectionIndicatorStatusFromStatusMessage = (status?: ConnectionStatus): StatusIndicatorMessage => {
+    const indicator: StatusIndicatorMessage = {
+        status: 'unknown',
+        label: status?.statusMessage?.title,
+        message: status?.statusMessage?.message || undefined,
+    };
+
+    switch (status?.severity) {
+        case 'Success':
+            indicator.status = 'success';
+            break;
+        case 'Error':
+            indicator.status = 'error';
+            break;
+        case 'Waiting':
+            indicator.status = 'waiting';
+            break;
+        case 'Warning':
+            indicator.status = 'warning';
+            break;
+        case 'Information': //TODO: Introduce Information status
+        case 'Unknown':
+        case 'None':
+        default:
+            indicator.status = 'unknown';
+            break;
+    }
+    return indicator;
 };
 
 export const configurationStatusFromServiceCredentialsStatus = (serviceStatus?: RemoteServiceStatus): StatusMessage | undefined => {

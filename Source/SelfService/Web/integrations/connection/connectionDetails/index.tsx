@@ -9,10 +9,11 @@ import { Tabs } from '@dolittle/design-system';
 
 import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionIdFromRoute } from '../../routes.hooks';
-import { getConnectionIndicatorStatusFromStatusMessage } from '../../../utils/helpers/connectionStatuses';
+
 
 import { Page } from '../../../components/layout/page';
 import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
+import { getConnectionIndicatorStatusFromStatusMessage } from './configuration/setup/statusResolvers';
 
 export const childRoutePaths = ['/configuration', '/messages', '/consume-data-rest-api', '/consume-data-event-streams'];
 
@@ -69,7 +70,7 @@ export const ConnectionDetails = () => {
     if (!connection) return null;
 
     const pageTitle = connection.name || 'Connection Details';
-    const status = getConnectionIndicatorStatusFromStatusMessage(connection.status.statusMessage);
+    const status = getConnectionIndicatorStatusFromStatusMessage(connection.status);
 
     return (
         <>
