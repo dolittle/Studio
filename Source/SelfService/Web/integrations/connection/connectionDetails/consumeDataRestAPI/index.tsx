@@ -17,6 +17,7 @@ import { CredentialsSection } from './Credentials/CredentialsSection';
 import { EnableRestApiSection } from './EnableRestApiSection';
 import { DisableRestApiDialog, disableRestApiDialogReducer } from './DisableRestApiDialog';
 import { RestApiDescriptionSection } from './RestApiDescriptionSection';
+import { getIndicatorStatusFromStatusMessage } from '../../../statusHelpers';
 
 /* The ERP ReadModels -service must be specific to the connection, so we need
     to generate the URL dynamically. */
@@ -43,23 +44,7 @@ export const ConsumeDataRestAPIView = () => {
     const serviceStatus = apiStatus?.service || 'Off';
     const showEnableSection = (apiStatus?.target === 'Disabled') || serviceStatus === 'Deploying';
     const shouldDisableDisableButton = serviceStatus === 'Off' || serviceStatus === 'Deploying' || serviceStatus === 'Terminating';
-
-
-    const statusIndicatorFromServiceStatus = (status: RestApiServiceStatus | ''): StatusIndicatorProps['status'] => {
-        switch (status?.toLocaleLowerCase()) {
-            case 'off':
-                return 'error';
-            case 'deploying':
-                return 'waiting';
-            case 'active':
-                return 'success';
-            case 'unhealthy':
-                return 'warning';
-            case 'terminating':
-                return 'waiting';
-        }
-        return 'unknown';
-    };
+    const serviceStatusIndicator = getIndicatorStatusFromStatusMessage(apiStatus?.status);
 
     const handleEnableRestApi = () => {
         enableMutation.mutate({ id: connectionId }, {
@@ -93,10 +78,11 @@ export const ConsumeDataRestAPIView = () => {
                 <DisableRestApiDialog dispatch={disableServiceDialogDispatch} state={disableServiceDialogState} onConfirm={handleDisableRestApi} />
                 <ContentHeader
                     title='REST API'
-                    status={!isLoading
+                    status={!isLoading && serviceStatusIndicator
                         ? {
-                            status: statusIndicatorFromServiceStatus(serviceStatus || ''),
-                            label: serviceStatus
+                            status: serviceStatusIndicator.status,
+                            label: serviceStatusIndicator.label,
+                            message: serviceStatusIndicator.message,
                         }
                         : undefined
                     }
