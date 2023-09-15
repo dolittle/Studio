@@ -29,7 +29,7 @@ export type ContentHeaderProps = {
     /**
      *  Show a status indeicator as part of the {@link ContentHeader}
      */
-    status?: Pick<StatusIndicatorProps, 'status' | 'label'>;
+    status?: Pick<StatusIndicatorProps, 'status' | 'label' | 'message'>;
 
     /**
      * Render buttons as an array of {@link ButtonProps} as part of the {@link ContentHeader}

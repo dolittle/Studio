@@ -10,6 +10,7 @@ import { useConnectionsIdWebhookStatusGet, useConnectionsIdWebhooksDisablePost, 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { AlertBox, Button, ContentParagraph, ContentSection, IconButton, Link, StatusIndicatorProps } from '@dolittle/design-system';
 import { DisableWebhooksDialog, disableWebhooksDialogReducer } from './DisableRealtimeSyncDialog';
+import { getConnectionIndicatorStatusFromStatusMessage } from '../setup/statusResolvers';
 
 export const RealtimeSyncSection = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -31,6 +32,7 @@ export const RealtimeSyncSection = () => {
     const serviceStatus = webhookStatus?.service || 'Off';
     const isEnabling = (webhookStatus?.target === 'Disabled') || serviceStatus === 'Deploying';
     const shouldDisableDisableButton = serviceStatus === 'Off' || serviceStatus === 'Deploying' || serviceStatus === 'Terminating';
+    const serviceStatusIndicator = getConnectionIndicatorStatusFromStatusMessage(webhookStatus?.status);
 
     const webhookUrl = webhookStatus?.basePath + '/{TABLE_NAME}' || '';
     const webhookUsername = webhookStatus?.username || '';
@@ -77,23 +79,6 @@ export const RealtimeSyncSection = () => {
         });
     };
 
-    const statusIndicatorFromServiceStatus = (status: WebhookServiceStatus | ''): StatusIndicatorProps['status'] => {
-        switch (status?.toLocaleLowerCase()) {
-            case 'off':
-                return 'error';
-            case 'deploying':
-                return 'waiting';
-            case 'active':
-                return 'success';
-            case 'unhealthy':
-                return 'warning';
-            case 'terminating':
-                return 'waiting';
-        }
-        return 'unknown';
-    };
-
-
     return (
         <>
             <DisableWebhooksDialog
@@ -104,10 +89,11 @@ export const RealtimeSyncSection = () => {
             <ContentSection
                 title='Realtime Data Sync'
                 headerProps={{
-                    status: !isLoading
+                    status: !isLoading && serviceStatusIndicator
                         ? {
-                            status: statusIndicatorFromServiceStatus(serviceStatus || ''),
-                            label: serviceStatus
+                            status: serviceStatusIndicator.status,
+                            label: serviceStatusIndicator.label,
+                            message: serviceStatusIndicator.message,
                         }
                         : undefined,
                     buttonsSlot: <>{!isEnabling && <Button
