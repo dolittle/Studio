@@ -25,6 +25,12 @@ import {
     RestApiTargetStatusFromJSONTyped,
     RestApiTargetStatusToJSON,
 } from './RestApiTargetStatus';
+import type { StatusMessage } from './StatusMessage';
+import {
+    StatusMessageFromJSON,
+    StatusMessageFromJSONTyped,
+    StatusMessageToJSON,
+} from './StatusMessage';
 
 /**
  * 
@@ -44,6 +50,12 @@ export interface RestApiStatusDto {
      * @memberof RestApiStatusDto
      */
     service?: RestApiServiceStatus;
+    /**
+     * 
+     * @type {StatusMessage}
+     * @memberof RestApiStatusDto
+     */
+    status?: StatusMessage;
     /**
      * 
      * @type {string}
@@ -85,6 +97,7 @@ export function RestApiStatusDtoFromJSONTyped(json: any, ignoreDiscriminator: bo
         
         'target': !exists(json, 'target') ? undefined : RestApiTargetStatusFromJSON(json['target']),
         'service': !exists(json, 'service') ? undefined : RestApiServiceStatusFromJSON(json['service']),
+        'status': !exists(json, 'status') ? undefined : StatusMessageFromJSON(json['status']),
         'basePath': !exists(json, 'basePath') ? undefined : json['basePath'],
         'updatedAt': !exists(json, 'updatedAt') ? undefined : (json['updatedAt'] === null ? null : new Date(json['updatedAt'])),
         'updatedBy': !exists(json, 'updatedBy') ? undefined : json['updatedBy'],
@@ -102,6 +115,7 @@ export function RestApiStatusDtoToJSON(value?: RestApiStatusDto | null): any {
         
         'target': RestApiTargetStatusToJSON(value.target),
         'service': RestApiServiceStatusToJSON(value.service),
+        'status': StatusMessageToJSON(value.status),
         'basePath': value.basePath,
         'updatedAt': value.updatedAt === undefined ? undefined : (value.updatedAt === null ? null : value.updatedAt.toISOString()),
         'updatedBy': value.updatedBy,

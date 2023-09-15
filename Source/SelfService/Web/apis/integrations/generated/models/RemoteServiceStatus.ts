@@ -50,12 +50,6 @@ export interface RemoteServiceStatus {
      * @memberof RemoteServiceStatus
      */
     readonly name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RemoteServiceStatus
-     */
-    readonly description: string;
 }
 
 /**
@@ -64,7 +58,6 @@ export interface RemoteServiceStatus {
 export function instanceOfRemoteServiceStatus(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "description" in value;
 
     return isInstance;
 }
@@ -82,7 +75,6 @@ export function RemoteServiceStatusFromJSONTyped(json: any, ignoreDiscriminator:
         'severity': !exists(json, 'severity') ? undefined : StatusSeverityFromJSON(json['severity']),
         'statusMessage': !exists(json, 'statusMessage') ? undefined : StatusMessageFromJSON(json['statusMessage']),
         'name': json['name'],
-        'description': json['description'],
     };
 }
 

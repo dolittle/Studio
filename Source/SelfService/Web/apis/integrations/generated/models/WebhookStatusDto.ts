@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { StatusMessage } from './StatusMessage';
+import {
+    StatusMessageFromJSON,
+    StatusMessageFromJSONTyped,
+    StatusMessageToJSON,
+} from './StatusMessage';
 import type { WebhookServiceStatus } from './WebhookServiceStatus';
 import {
     WebhookServiceStatusFromJSON,
@@ -44,6 +50,12 @@ export interface WebhookStatusDto {
      * @memberof WebhookStatusDto
      */
     service?: WebhookServiceStatus;
+    /**
+     * 
+     * @type {StatusMessage}
+     * @memberof WebhookStatusDto
+     */
+    status?: StatusMessage;
     /**
      * 
      * @type {string}
@@ -97,6 +109,7 @@ export function WebhookStatusDtoFromJSONTyped(json: any, ignoreDiscriminator: bo
         
         'target': !exists(json, 'target') ? undefined : WebhookTargetStatusFromJSON(json['target']),
         'service': !exists(json, 'service') ? undefined : WebhookServiceStatusFromJSON(json['service']),
+        'status': !exists(json, 'status') ? undefined : StatusMessageFromJSON(json['status']),
         'basePath': !exists(json, 'basePath') ? undefined : json['basePath'],
         'username': !exists(json, 'username') ? undefined : json['username'],
         'password': !exists(json, 'password') ? undefined : json['password'],
@@ -116,6 +129,7 @@ export function WebhookStatusDtoToJSON(value?: WebhookStatusDto | null): any {
         
         'target': WebhookTargetStatusToJSON(value.target),
         'service': WebhookServiceStatusToJSON(value.service),
+        'status': StatusMessageToJSON(value.status),
         'basePath': value.basePath,
         'username': value.username,
         'password': value.password,

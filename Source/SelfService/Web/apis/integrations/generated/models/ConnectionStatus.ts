@@ -50,12 +50,6 @@ export interface ConnectionStatus {
      * @memberof ConnectionStatus
      */
     readonly name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ConnectionStatus
-     */
-    readonly description: string;
 }
 
 /**
@@ -64,7 +58,6 @@ export interface ConnectionStatus {
 export function instanceOfConnectionStatus(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "description" in value;
 
     return isInstance;
 }
@@ -82,7 +75,6 @@ export function ConnectionStatusFromJSONTyped(json: any, ignoreDiscriminator: bo
         'severity': !exists(json, 'severity') ? undefined : StatusSeverityFromJSON(json['severity']),
         'statusMessage': !exists(json, 'statusMessage') ? undefined : StatusMessageFromJSON(json['statusMessage']),
         'name': json['name'],
-        'description': json['description'],
     };
 }
 
