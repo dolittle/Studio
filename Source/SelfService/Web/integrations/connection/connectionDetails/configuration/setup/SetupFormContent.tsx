@@ -11,7 +11,6 @@ import { getIndicatorStatusFromStatusMessage } from '../../../../statusHelpers';
 import { ConnectorBundleConfiguration } from './ConnectorBundleConfiguration';
 import { MetadataPublisherCredentials } from './MetadataPublisherCredentials';
 import { IonServiceAccountCredentials } from './IonServiceAccountCredentials';
-import { hostBundleStatusFromServicesStatus } from './statusResolvers';
 import { M3SetupFormSaveState, SaveActionName } from './M3SetupForm';
 import { M3AuthenticationType } from './M3AuthenticationType';
 import { M3BasicAuthenticationCredentials } from './M3BasicAuthenticationCredentials';
@@ -41,7 +40,7 @@ export const SetupFormContent = ({
     const basicCredentialsAccordionId = 'basicCredentials';
 
     const accordionListItems = useMemo(() => {
-        const connectorBundleStatus = hostBundleStatusFromServicesStatus(connection?.mdpStatus, connection?.ionStatus);
+        const connectorBundleStatus = getIndicatorStatusFromStatusMessage(connection?.m3ConnectorStatus.statusMessage);
         const metadataPublisherCredentialsStatus = getIndicatorStatusFromStatusMessage(connection?.mdpCredentialStatus.statusMessage);
         const iONServiceAccountCredentialsStatus = getIndicatorStatusFromStatusMessage(connection?.m3CredentialStatus.statusMessage);
         const basicAuthenticationCredentialsStatus = getIndicatorStatusFromStatusMessage(connection?.m3CredentialStatus.statusMessage);
@@ -51,8 +50,9 @@ export const SetupFormContent = ({
             id: connectorBundleAccordionId,
             title: 'Host Your Connector Bundle',
             children: <ConnectorBundleConfiguration connectionId={connection?.connectionId || ''} />,
-            statusLevel: connectorBundleStatus[0],
-            statusLabel: connectorBundleStatus[1],
+            statusLevel: connectorBundleStatus?.status,
+            statusLabel: connectorBundleStatus?.label,
+            statusMessage: connectorBundleStatus?.message,
             sx: { mt: 8 },
         };
         const mdpCredentialsAccordion: AccordionListItem = {
@@ -98,6 +98,7 @@ export const SetupFormContent = ({
     }, [
         connection?.chosenEnvironment.value,
         connection?.status,
+        connection?.m3ConnectorStatus,
         connection?.m3CredentialStatus,
         connection?.mdpCredentialStatus,
         canEdit,
