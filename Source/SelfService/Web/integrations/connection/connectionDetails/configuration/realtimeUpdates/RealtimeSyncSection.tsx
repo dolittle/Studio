@@ -10,7 +10,8 @@ import { useConnectionsIdWebhookStatusGet, useConnectionsIdWebhooksDisablePost, 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { AlertBox, Button, ContentParagraph, ContentSection, IconButton, Link, StatusIndicatorProps } from '@dolittle/design-system';
 import { DisableWebhooksDialog, disableWebhooksDialogReducer } from './DisableRealtimeSyncDialog';
-import { getConnectionIndicatorStatusFromStatusMessage } from '../setup/statusResolvers';
+import { getIndicatorStatusFromStatusMessage } from '../../../../statusHelpers';
+
 
 export const RealtimeSyncSection = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -32,7 +33,7 @@ export const RealtimeSyncSection = () => {
     const serviceStatus = webhookStatus?.service || 'Off';
     const isEnabling = (webhookStatus?.target === 'Disabled') || serviceStatus === 'Deploying';
     const shouldDisableDisableButton = serviceStatus === 'Off' || serviceStatus === 'Deploying' || serviceStatus === 'Terminating';
-    const serviceStatusIndicator = getConnectionIndicatorStatusFromStatusMessage(webhookStatus?.status);
+    const serviceStatusIndicator = getIndicatorStatusFromStatusMessage(webhookStatus?.status);
 
     const webhookUrl = webhookStatus?.basePath + '/{TABLE_NAME}' || '';
     const webhookUsername = webhookStatus?.username || '';

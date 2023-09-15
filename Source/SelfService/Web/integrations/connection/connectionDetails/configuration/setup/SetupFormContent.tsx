@@ -6,11 +6,12 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { AccordionList, AccordionListItem, FileUploadFormRef } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../../../../apis/integrations/generated';
+import { getIndicatorStatusFromStatusMessage } from '../../../../statusHelpers';
 
 import { ConnectorBundleConfiguration } from './ConnectorBundleConfiguration';
 import { MetadataPublisherCredentials } from './MetadataPublisherCredentials';
 import { IonServiceAccountCredentials } from './IonServiceAccountCredentials';
-import { getConnectionIndicatorStatusFromStatusMessage, hostBundleStatusFromServicesStatus } from './statusResolvers';
+import { hostBundleStatusFromServicesStatus } from './statusResolvers';
 import { M3SetupFormSaveState, SaveActionName } from './M3SetupForm';
 import { M3AuthenticationType } from './M3AuthenticationType';
 import { M3BasicAuthenticationCredentials } from './M3BasicAuthenticationCredentials';
@@ -41,10 +42,10 @@ export const SetupFormContent = ({
 
     const accordionListItems = useMemo(() => {
         const connectorBundleStatus = hostBundleStatusFromServicesStatus(connection?.mdpStatus, connection?.ionStatus);
-        const metadataPublisherCredentialsStatus = getConnectionIndicatorStatusFromStatusMessage(connection?.mdpStatus.statusMessage);
-        const iONServiceAccountCredentialsStatus = getConnectionIndicatorStatusFromStatusMessage(connection?.ionStatus.statusMessage);
+        const metadataPublisherCredentialsStatus = getIndicatorStatusFromStatusMessage(connection?.mdpStatus.statusMessage);
+        const iONServiceAccountCredentialsStatus = getIndicatorStatusFromStatusMessage(connection?.ionStatus.statusMessage);
         //TODO: Update to use the proper status from API when available
-        const basicAuthenticationCredentialsStatus = getConnectionIndicatorStatusFromStatusMessage(connection?.ionStatus.statusMessage);
+        const basicAuthenticationCredentialsStatus = getIndicatorStatusFromStatusMessage(connection?.ionStatus.statusMessage);
 
         const items: AccordionListItem[] = [];
         const connectorBundleAccordion: AccordionListItem = {

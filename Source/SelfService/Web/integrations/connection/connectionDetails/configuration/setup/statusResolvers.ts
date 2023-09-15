@@ -15,36 +15,3 @@ export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStat
     }
     return ['success', 'Connected'];
 };
-
-
-export const getConnectionIndicatorStatusFromStatusMessage = (status?: StatusMessage): StatusIndicatorMessage | undefined => {
-    if (!status) return undefined;
-    const indicator: StatusIndicatorMessage = {
-        status: 'unknown',
-        label: status?.title,
-        message: status?.message || undefined,
-    };
-
-    switch (status?.severity) {
-        case 'Success':
-            indicator.status = 'success';
-            break;
-        case 'Error':
-            indicator.status = 'error';
-            break;
-        case 'Waiting':
-            indicator.status = 'waiting';
-            break;
-        case 'Warning':
-            indicator.status = 'warning';
-            break;
-        case 'Information': //TODO: Introduce Information status
-        case 'Unknown':
-            indicator.status = 'unknown';
-            break;
-        case 'None':
-        default:
-            return undefined;
-    }
-    return indicator;
-};
