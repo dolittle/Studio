@@ -127,24 +127,24 @@ export type AccordionProps = {
  * @returns A {@link Accordion} component.
  */
 export const Accordion = ({ id, title, statusLevel, statusLabel, statusMessage, defaultExpanded, expanded, onExpanded, disabled, children, sx }: AccordionProps) => {
-        return <MuiAccordion
-            defaultExpanded={defaultExpanded}
-            expanded={expanded}
-            onChange={onExpanded}
+    return <MuiAccordion
+        defaultExpanded={defaultExpanded}
+        expanded={expanded}
+        onChange={onExpanded}
+        disabled={disabled}
+        sx={{ ...styles.accordion, ...sx }}
+    >
+        <AccordionSummary
+            expandIcon={<ExpandCircleDownRounded sx={styles.expandIcon} />}
+            aria-controls={`${id}-content`}
+            id={`${id}-header`}
             disabled={disabled}
-            sx={{ ...styles.accordion, ...sx }}
+            sx={styles.accordionSummary}
         >
-            <AccordionSummary
-                expandIcon={<ExpandCircleDownRounded sx={styles.expandIcon} />}
-                aria-controls={`${id}-content`}
-                id={`${id}-header`}
-                disabled={disabled}
-                sx={styles.accordionSummary}
-            >
-                <Typography variant='subtitle1' sx={{ ml: 1.25, mr: 3 }}>{title}</Typography>
-                {statusLevel && <StatusIndicator status={statusLevel} label={statusLabel} message={statusMessage} sx={styles.statusIndicator} />}
-            </AccordionSummary>
+            <Typography variant='subtitle1' sx={{ ml: 1.25, mr: 3 }}>{title}</Typography>
+            {statusLevel && <StatusIndicator status={statusLevel} label={statusLabel} message={statusMessage} sx={styles.statusIndicator} />}
+        </AccordionSummary>
 
-            <AccordionDetails>{children}</AccordionDetails>
-        </MuiAccordion>;
-    };
+        <AccordionDetails>{children}</AccordionDetails>
+    </MuiAccordion>;
+};
