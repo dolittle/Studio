@@ -12,13 +12,15 @@ type ConnectionStatusCondition = {
     icon: SvgIconsDefinition | null;
 };
 
-const connectionStatusCondition = (status: string): ConnectionStatusCondition => {
+const connectionStatusCondition = (status: StatusIndicatorProps['status']): ConnectionStatusCondition => {
     if (status === 'success') {
         return { color: 'success.main', icon: 'CheckCircleRounded' };
     } else if (status === 'table-success') {
         return { color: 'text.primary', icon: 'CheckCircleRounded' };
     } else if (status === 'waiting') {
         return { color: 'text.secondary', icon: null };
+    } else if (status === 'information') {
+        return { color: 'info.main', icon: 'InfoRounded' };
     } else if (status === 'warning') {
         return { color: 'warning.main', icon: 'WarningRounded' };
     } else if (status === 'error') {
@@ -35,7 +37,7 @@ export type StatusIndicatorProps = {
     /**
      * The `status` to show.
      */
-    status: 'success' | 'table-success' | 'waiting' | 'warning' | 'error' | 'unknown';
+    status: 'success' | 'table-success' | 'information' | 'waiting' | 'warning' | 'error' | 'unknown';
 
     /**
      * The `label` to show.

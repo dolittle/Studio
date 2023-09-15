@@ -25,7 +25,9 @@ export const getIndicatorStatusFromStatusMessage = (status?: StatusMessage): Sta
         case 'Warning':
             indicator.status = 'warning';
             break;
-        case 'Information': //TODO: Introduce Information status
+        case 'Information':
+            indicator.status = 'information';
+            break;
         case 'Unknown':
             indicator.status = 'unknown';
             break;
