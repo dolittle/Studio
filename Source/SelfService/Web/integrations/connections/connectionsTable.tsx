@@ -18,7 +18,7 @@ type ConnectionsTableRowProps = {
 };
 
 const StatusCell = ({ row }: ConnectionsTableRowProps) => {
-    const status = getConnectionIndicatorStatusFromStatusMessage(row.status);
+    const status = getConnectionIndicatorStatusFromStatusMessage(row.status.statusMessage);
     return (
         <StatusIndicator status={status.status} label={status.label} message={status.message} />
     );

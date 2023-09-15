@@ -3,12 +3,12 @@
 
 import { StatusIndicatorProps } from '@dolittle/design-system';
 
-import { ConnectionStatus, RemoteServiceStatus } from '../../../../../apis/integrations/generated';
+import { RemoteServiceStatus, StatusMessage } from '../../../../../apis/integrations/generated';
 import { StatusIndicatorMessage } from '../../../../../utils/helpers/connectionStatuses';
 
-export type StatusMessage = [StatusIndicatorProps['status'], StatusIndicatorProps['label']];
+export type StatusMessageLocal = [StatusIndicatorProps['status'], StatusIndicatorProps['label']];
 
-export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStatus, ionStatus?: RemoteServiceStatus): StatusMessage => {
+export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStatus, ionStatus?: RemoteServiceStatus): StatusMessageLocal => {
     const nonSuccessStatuses = ['DeploymentChosen', 'Undeployed'];
     if ([ionStatus, mdpStatus].every(status => status && nonSuccessStatuses.includes(status.name))) {
         return ['waiting', 'Waiting for access'];
@@ -17,11 +17,11 @@ export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStat
 };
 
 
-export const getConnectionIndicatorStatusFromStatusMessage = (status?: ConnectionStatus): StatusIndicatorMessage => {
+export const getConnectionIndicatorStatusFromStatusMessage = (status?: StatusMessage): StatusIndicatorMessage => {
     const indicator: StatusIndicatorMessage = {
         status: 'unknown',
-        label: status?.statusMessage?.title,
-        message: status?.statusMessage?.message || undefined,
+        label: status?.title,
+        message: status?.message || undefined,
     };
 
     switch (status?.severity) {
@@ -45,23 +45,4 @@ export const getConnectionIndicatorStatusFromStatusMessage = (status?: Connectio
             break;
     }
     return indicator;
-};
-
-export const configurationStatusFromServiceCredentialsStatus = (serviceStatus?: RemoteServiceStatus): StatusMessage | undefined => {
-    switch (serviceStatus?.name) {
-        case 'Unresponsive':
-        case 'Inactive':
-        case 'Disconnected':
-        case 'ServiceFailing':
-            return ['error', 'Failed'];
-        case 'Active':
-            return ['success', 'Connected'];
-        case 'Configured':
-            return ['waiting', 'Waiting for credential verification'];
-        case 'Alive':
-        case 'Undeployed':
-        case 'DeploymentChosen':
-        default:
-            return undefined;
-    }
 };

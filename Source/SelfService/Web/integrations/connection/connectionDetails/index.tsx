@@ -70,7 +70,7 @@ export const ConnectionDetails = () => {
     if (!connection) return null;
 
     const pageTitle = connection.name || 'Connection Details';
-    const status = getConnectionIndicatorStatusFromStatusMessage(connection.status);
+    const status = getConnectionIndicatorStatusFromStatusMessage(connection.status.statusMessage);
 
     return (
         <>
