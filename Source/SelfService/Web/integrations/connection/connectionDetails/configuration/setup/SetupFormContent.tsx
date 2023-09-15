@@ -59,27 +59,27 @@ export const SetupFormContent = ({
             id: mdpCredentialsAccordionId,
             title: 'Metadata Publisher Credentials',
             children: <MetadataPublisherCredentials canEdit={canEdit} />,
-            statusLevel: metadataPublisherCredentialsStatus.status,
-            statusLabel: metadataPublisherCredentialsStatus.label,
-            statusMessage: metadataPublisherCredentialsStatus.message,
+            statusLevel: metadataPublisherCredentialsStatus?.status,
+            statusLabel: metadataPublisherCredentialsStatus?.label,
+            statusMessage: metadataPublisherCredentialsStatus?.message,
             sx: { mt: 8 },
         };
         const ionCredentialsAccordion: AccordionListItem = {
             id: ionServiceAccountAccordionId,
             title: 'ION Service Account Credentials',
             children: <IonServiceAccountCredentials ref={fileUploadRef} canEdit={canEdit} />,
-            statusLevel: iONServiceAccountCredentialsStatus.status,
-            statusLabel: iONServiceAccountCredentialsStatus.label,
-            statusMessage: iONServiceAccountCredentialsStatus.message,
+            statusLevel: iONServiceAccountCredentialsStatus?.status,
+            statusLabel: iONServiceAccountCredentialsStatus?.label,
+            statusMessage: iONServiceAccountCredentialsStatus?.message,
             sx: { mt: 8 },
         };
         const basicAuthenticationAccordion: AccordionListItem = {
             id: basicCredentialsAccordionId,
             title: 'M3 Basic Credentials',
             children: <M3BasicAuthenticationCredentials canEdit={canEdit} />,
-            statusLevel: basicAuthenticationCredentialsStatus.status,
-            statusLabel: basicAuthenticationCredentialsStatus.label,
-            statusMessage: basicAuthenticationCredentialsStatus.message ,
+            statusLevel: basicAuthenticationCredentialsStatus?.status,
+            statusLabel: basicAuthenticationCredentialsStatus?.label,
+            statusMessage: basicAuthenticationCredentialsStatus?.message ,
             sx: { mt: 8 },
         };
 

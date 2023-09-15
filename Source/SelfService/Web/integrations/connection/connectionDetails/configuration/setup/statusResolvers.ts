@@ -17,7 +17,8 @@ export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStat
 };
 
 
-export const getConnectionIndicatorStatusFromStatusMessage = (status?: StatusMessage): StatusIndicatorMessage => {
+export const getConnectionIndicatorStatusFromStatusMessage = (status?: StatusMessage): StatusIndicatorMessage | undefined => {
+    if (!status) return undefined;
     const indicator: StatusIndicatorMessage = {
         status: 'unknown',
         label: status?.title,

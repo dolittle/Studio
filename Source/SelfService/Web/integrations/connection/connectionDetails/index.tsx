@@ -78,9 +78,9 @@ export const ConnectionDetails = () => {
                 ? <Navigate to={redirectPath} replace={true} />
                 : <Page
                     title={pageTitle}
-                    healthStatus={status.status}
-                    healthStatusLabel={status.label}
-                    healthStatusMessage={status.message}
+                    healthStatus={status?.status}
+                    healthStatusLabel={status?.label}
+                    healthStatusMessage={status?.message}
                     sx={{ mb: 4 }}
                 >
                     <Tabs selectedTab={getSelectedTab(location)} tabs={tabs} />
