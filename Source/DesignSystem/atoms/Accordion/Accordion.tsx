@@ -76,6 +76,12 @@ export type AccordionProps = {
     progressLabel?: StatusIndicatorProps['label'];
 
     /**
+     * The status message of the accordion. Displayed as a tooltip over the status.
+     *
+     */
+    progressMessage?: StatusIndicatorProps['message'];
+
+    /**
      * Whether the accordion is expanded or not on initial render.
      * @default false
      */
@@ -117,7 +123,7 @@ export type AccordionProps = {
  * @param {AccordionProps} props - The {@link AccordionProps}.
  * @returns A {@link Accordion} component.
  */
-export const Accordion = ({ id, title, progressStatus, progressLabel, defaultExpanded, expanded, onExpanded, disabled, children, sx }: AccordionProps) => {
+export const Accordion = ({ id, title, progressStatus, progressLabel, progressMessage, defaultExpanded, expanded, onExpanded, disabled, children, sx }: AccordionProps) => {
         return <MuiAccordion
             defaultExpanded={defaultExpanded}
             expanded={expanded}
@@ -133,7 +139,7 @@ export const Accordion = ({ id, title, progressStatus, progressLabel, defaultExp
                 sx={styles.accordionSummary}
             >
                 <Typography variant='subtitle1' sx={{ ml: 1.25, mr: 3 }}>{title}</Typography>
-                {progressStatus && <StatusIndicator status={progressStatus} label={progressLabel} />}
+                {progressStatus && <StatusIndicator status={progressStatus} label={progressLabel} message={progressMessage} />}
             </AccordionSummary>
 
             <AccordionDetails>{children}</AccordionDetails>
