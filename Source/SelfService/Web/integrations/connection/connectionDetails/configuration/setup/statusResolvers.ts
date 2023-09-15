@@ -40,10 +40,11 @@ export const getConnectionIndicatorStatusFromStatusMessage = (status?: StatusMes
             break;
         case 'Information': //TODO: Introduce Information status
         case 'Unknown':
-        case 'None':
-        default:
             indicator.status = 'unknown';
             break;
+        case 'None':
+        default:
+            return undefined;
     }
     return indicator;
 };
