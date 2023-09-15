@@ -45,6 +45,9 @@ const styles = {
         color: 'text.secondary',
         // Enable 'expand' click on icon.
         pointerEvents: 'auto'
+    },
+    statusIndicator: {
+        pointerEvents: 'auto'
     }
 };
 
@@ -139,7 +142,7 @@ export const Accordion = ({ id, title, statusLevel, statusLabel, statusMessage, 
                 sx={styles.accordionSummary}
             >
                 <Typography variant='subtitle1' sx={{ ml: 1.25, mr: 3 }}>{title}</Typography>
-                {statusLevel && <StatusIndicator status={statusLevel} label={statusLabel} message={statusMessage} />}
+                {statusLevel && <StatusIndicator status={statusLevel} label={statusLabel} message={statusMessage} sx={styles.statusIndicator} />}
             </AccordionSummary>
 
             <AccordionDetails>{children}</AccordionDetails>
