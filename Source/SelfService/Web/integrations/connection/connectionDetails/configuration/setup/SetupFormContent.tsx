@@ -61,6 +61,7 @@ export const SetupFormContent = ({
             children: <MetadataPublisherCredentials canEdit={canEdit} />,
             statusLevel: metadataPublisherCredentialsStatus.status,
             statusLabel: metadataPublisherCredentialsStatus.label,
+            statusMessage: metadataPublisherCredentialsStatus.message,
             sx: { mt: 8 },
         };
         const ionCredentialsAccordion: AccordionListItem = {
@@ -69,6 +70,7 @@ export const SetupFormContent = ({
             children: <IonServiceAccountCredentials ref={fileUploadRef} canEdit={canEdit} />,
             statusLevel: iONServiceAccountCredentialsStatus.status,
             statusLabel: iONServiceAccountCredentialsStatus.label,
+            statusMessage: iONServiceAccountCredentialsStatus.message,
             sx: { mt: 8 },
         };
         const basicAuthenticationAccordion: AccordionListItem = {
@@ -77,6 +79,7 @@ export const SetupFormContent = ({
             children: <M3BasicAuthenticationCredentials canEdit={canEdit} />,
             statusLevel: basicAuthenticationCredentialsStatus.status,
             statusLabel: basicAuthenticationCredentialsStatus.label,
+            statusMessage: basicAuthenticationCredentialsStatus.message ,
             sx: { mt: 8 },
         };
 
