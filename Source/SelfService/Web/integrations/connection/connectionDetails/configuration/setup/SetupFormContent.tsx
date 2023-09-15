@@ -47,36 +47,36 @@ export const SetupFormContent = ({
         const basicAuthenticationCredentialsStatus = getConnectionIndicatorStatusFromStatusMessage(connection?.ionStatus.statusMessage);
 
         const items: AccordionListItem[] = [];
-        const connectorBundleAccordion = {
+        const connectorBundleAccordion: AccordionListItem = {
             id: connectorBundleAccordionId,
             title: 'Host Your Connector Bundle',
             children: <ConnectorBundleConfiguration connectionId={connection?.connectionId || ''} />,
-            progressStatus: connectorBundleStatus[0],
-            progressLabel: connectorBundleStatus[1],
+            statusLevel: connectorBundleStatus[0],
+            statusLabel: connectorBundleStatus[1],
             sx: { mt: 8 },
         };
-        const mdpCredentialsAccordion = {
+        const mdpCredentialsAccordion: AccordionListItem = {
             id: mdpCredentialsAccordionId,
             title: 'Metadata Publisher Credentials',
             children: <MetadataPublisherCredentials canEdit={canEdit} />,
-            progressStatus: metadataPublisherCredentialsStatus.status,
-            progressLabel: metadataPublisherCredentialsStatus.label,
+            statusLevel: metadataPublisherCredentialsStatus.status,
+            statusLabel: metadataPublisherCredentialsStatus.label,
             sx: { mt: 8 },
         };
-        const ionCredentialsAccordion = {
+        const ionCredentialsAccordion: AccordionListItem = {
             id: ionServiceAccountAccordionId,
             title: 'ION Service Account Credentials',
             children: <IonServiceAccountCredentials ref={fileUploadRef} canEdit={canEdit} />,
-            progressStatus: iONServiceAccountCredentialsStatus.status,
-            progressLabel: iONServiceAccountCredentialsStatus.label,
+            statusLevel: iONServiceAccountCredentialsStatus.status,
+            statusLabel: iONServiceAccountCredentialsStatus.label,
             sx: { mt: 8 },
         };
-        const basicAuthenticationAccordion = {
+        const basicAuthenticationAccordion: AccordionListItem = {
             id: basicCredentialsAccordionId,
             title: 'M3 Basic Credentials',
             children: <M3BasicAuthenticationCredentials canEdit={canEdit} />,
-            progressStatus: basicAuthenticationCredentialsStatus.status,
-            progressLabel: basicAuthenticationCredentialsStatus.label,
+            statusLevel: basicAuthenticationCredentialsStatus.status,
+            statusLabel: basicAuthenticationCredentialsStatus.label,
             sx: { mt: 8 },
         };
 

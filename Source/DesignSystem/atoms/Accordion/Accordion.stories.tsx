@@ -18,7 +18,7 @@ metadata.parameters = {
 };
 
 metadata.argTypes = {
-    progressStatus: {
+    statusLevel: {
         control: {
             type: 'select',
             options: ['success', 'waiting', 'warning', 'error', 'unknown'],
@@ -79,8 +79,8 @@ WithStatusMessage.decorators = [
             <Accordion
                 id='with-status-message'
                 title='With Status Message'
-                progressStatus={status}
-                progressLabel={status === 'waiting' ? 'Waiting for something to happen...' : status}
+                statusLevel={status}
+                statusLabel={status === 'waiting' ? 'Waiting for something to happen...' : status}
             >
                 <DummyChildrenContent />
             </Accordion>
