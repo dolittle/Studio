@@ -42,10 +42,9 @@ export const SetupFormContent = ({
 
     const accordionListItems = useMemo(() => {
         const connectorBundleStatus = hostBundleStatusFromServicesStatus(connection?.mdpStatus, connection?.ionStatus);
-        const metadataPublisherCredentialsStatus = getIndicatorStatusFromStatusMessage(connection?.mdpStatus.statusMessage);
-        const iONServiceAccountCredentialsStatus = getIndicatorStatusFromStatusMessage(connection?.ionStatus.statusMessage);
-        //TODO: Update to use the proper status from API when available
-        const basicAuthenticationCredentialsStatus = getIndicatorStatusFromStatusMessage(connection?.ionStatus.statusMessage);
+        const metadataPublisherCredentialsStatus = getIndicatorStatusFromStatusMessage(connection?.mdpCredentialStatus.statusMessage);
+        const iONServiceAccountCredentialsStatus = getIndicatorStatusFromStatusMessage(connection?.m3CredentialStatus.statusMessage);
+        const basicAuthenticationCredentialsStatus = getIndicatorStatusFromStatusMessage(connection?.m3CredentialStatus.statusMessage);
 
         const items: AccordionListItem[] = [];
         const connectorBundleAccordion: AccordionListItem = {
@@ -99,8 +98,8 @@ export const SetupFormContent = ({
     }, [
         connection?.chosenEnvironment.value,
         connection?.status,
-        connection?.ionStatus,
-        connection?.mdpStatus,
+        connection?.m3CredentialStatus,
+        connection?.mdpCredentialStatus,
         canEdit,
         formSaveState,
         authenticationType
