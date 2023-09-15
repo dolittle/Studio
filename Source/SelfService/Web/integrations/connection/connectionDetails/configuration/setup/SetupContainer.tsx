@@ -29,7 +29,7 @@ export const SetupContainer = () => {
     const query = useConnectionsIdGet(
         { id: connectionId },
         {
-            refetchInterval: (data) => data?.value?.status.name !== 'Connected' ? 5000 : false,
+            refetchInterval: (data) => data?.value?.status.name !== 'Connected' ? 5000 : 8000,
             refetchOnWindowFocus: false,
         }
     );
