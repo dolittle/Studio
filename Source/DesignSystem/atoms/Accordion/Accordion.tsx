@@ -45,6 +45,9 @@ const styles = {
         color: 'text.secondary',
         // Enable 'expand' click on icon.
         pointerEvents: 'auto'
+    },
+    statusIndicator: {
+        pointerEvents: 'auto'
     }
 };
 
@@ -66,14 +69,20 @@ export type AccordionProps = {
      * The status of the accordion. Displayed in the header.
      * @default undefined
      */
-    progressStatus?: StatusIndicatorProps['status'];
+    statusLevel?: StatusIndicatorProps['status'];
 
     /**
      * The status text of the accordion. Displayed in the header.
      *
      * If not provided, the `progressStatus` will be used as the label.
      */
-    progressLabel?: StatusIndicatorProps['label'];
+    statusLabel?: StatusIndicatorProps['label'];
+
+    /**
+     * The status message of the accordion. Displayed as a tooltip over the status.
+     *
+     */
+    statusMessage?: StatusIndicatorProps['message'];
 
     /**
      * Whether the accordion is expanded or not on initial render.
@@ -117,25 +126,25 @@ export type AccordionProps = {
  * @param {AccordionProps} props - The {@link AccordionProps}.
  * @returns A {@link Accordion} component.
  */
-export const Accordion = ({ id, title, progressStatus, progressLabel, defaultExpanded, expanded, onExpanded, disabled, children, sx }: AccordionProps) => {
-        return <MuiAccordion
-            defaultExpanded={defaultExpanded}
-            expanded={expanded}
-            onChange={onExpanded}
+export const Accordion = ({ id, title, statusLevel, statusLabel, statusMessage, defaultExpanded, expanded, onExpanded, disabled, children, sx }: AccordionProps) => {
+    return <MuiAccordion
+        defaultExpanded={defaultExpanded}
+        expanded={expanded}
+        onChange={onExpanded}
+        disabled={disabled}
+        sx={{ ...styles.accordion, ...sx }}
+    >
+        <AccordionSummary
+            expandIcon={<ExpandCircleDownRounded sx={styles.expandIcon} />}
+            aria-controls={`${id}-content`}
+            id={`${id}-header`}
             disabled={disabled}
-            sx={{ ...styles.accordion, ...sx }}
+            sx={styles.accordionSummary}
         >
-            <AccordionSummary
-                expandIcon={<ExpandCircleDownRounded sx={styles.expandIcon} />}
-                aria-controls={`${id}-content`}
-                id={`${id}-header`}
-                disabled={disabled}
-                sx={styles.accordionSummary}
-            >
-                <Typography variant='subtitle1' sx={{ ml: 1.25, mr: 3 }}>{title}</Typography>
-                {progressStatus && <StatusIndicator status={progressStatus} label={progressLabel} />}
-            </AccordionSummary>
+            <Typography variant='subtitle1' sx={{ ml: 1.25, mr: 3 }}>{title}</Typography>
+            {statusLevel && <StatusIndicator status={statusLevel} label={statusLabel} message={statusMessage} sx={styles.statusIndicator} />}
+        </AccordionSummary>
 
-            <AccordionDetails>{children}</AccordionDetails>
-        </MuiAccordion>;
-    };
+        <AccordionDetails>{children}</AccordionDetails>
+    </MuiAccordion>;
+};

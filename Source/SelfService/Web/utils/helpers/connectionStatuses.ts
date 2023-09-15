@@ -3,54 +3,9 @@
 
 import { StatusIndicatorProps } from '@dolittle/design-system';
 
-export type StatusIndicatorStatus = Pick<StatusIndicatorProps, 'status' | 'label'>;
+export type StatusIndicatorMessage = Pick<StatusIndicatorProps, 'status' | 'label' | 'message'>;
 
-export const getConnectionIndicatorStatus = (status: string): StatusIndicatorStatus => {
-    const compareStatus = status.toLowerCase();
-    if (compareStatus === 'connected') {
-        return {
-            status: 'success',
-            label: 'connected',
-        };
-    } else if (compareStatus === 'registered' || compareStatus === 'pending') {
-        return {
-            status: 'warning',
-            label: 'pending',
-        };
-    } else if (compareStatus === 'failing') {
-        return {
-            status: 'error',
-            label: 'failing',
-        };
-    }
-
-    return { status: 'unknown', label: 'unknown' };
-};
-
-export const getConnectionsStatus = (status?: string): StatusIndicatorStatus => {
-    if (status) {
-        const compareStatus = status.toLowerCase();
-        if (compareStatus === 'connected') {
-            return {
-                status: 'table-success',
-                label: 'connected',
-            };
-        } else if (compareStatus === 'registered' || compareStatus === 'pending') {
-            return {
-                status: 'warning',
-                label: 'pending',
-            };
-        } else if (compareStatus === 'failing') {
-            return {
-                status: 'error',
-                label: 'Not connected',
-            };
-        }
-    }
-    return { status: 'unknown', label: 'unknown' };
-};
-
-export const getPodHealthStatus = (status?: string): StatusIndicatorStatus => {
+export const getPodHealthStatus = (status?: string): StatusIndicatorMessage => {
     if (status) {
         const compareStatus = status.toLowerCase();
         if (compareStatus === 'running') {
@@ -74,7 +29,7 @@ export const getPodHealthStatus = (status?: string): StatusIndicatorStatus => {
     return { status: 'unknown', label: 'unknown' };
 };
 
-export const getContainerStatus = (status: string[]): StatusIndicatorStatus => {
+export const getContainerStatus = (status: string[]): StatusIndicatorMessage => {
     if (!status && typeof status !== 'string') {
         return { status: 'unknown' };
     } else if (status.includes('failed')) {

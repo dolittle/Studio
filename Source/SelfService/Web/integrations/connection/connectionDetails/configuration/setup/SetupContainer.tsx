@@ -7,13 +7,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 
-import { Box, Collapse, Typography } from '@mui/material';
+import { Collapse } from '@mui/material';
 
-import { AccordionListProps, ContentContainer, ContentHeader, ContentParagraph, ContentSection, FileUploadFormRef } from '@dolittle/design-system';
+import { ContentContainer, ContentHeader, ContentSection, FileUploadFormRef } from '@dolittle/design-system';
 
 import { useConnectionsIdGet, useConnectionsIdDelete } from '../../../../../apis/integrations/connectionsApi.hooks';
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
-import { getConnectionIndicatorStatus } from '../../../../../utils/helpers';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { M3SetupForm, M3SetupFormRef, M3SetupFormSaveState } from './M3SetupForm';
 import { MainM3ConnectionInfo } from './MainM3ConnectionInfo';
@@ -62,7 +61,7 @@ export const SetupContainer = () => {
         if (connectionStatus === 'pending') {
             setAlwaysEdit(false);
         }
-        if (getConnectionIndicatorStatus(connection.status.name).label === 'pending') {
+        if (connectionStatus === 'pending' || connectionStatus === 'registered') {
             setEditMode(true);
         };
 

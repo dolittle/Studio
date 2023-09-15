@@ -18,15 +18,16 @@ export type PageProps = {
     title: string;
     healthStatus?: StatusIndicatorProps['status'];
     healthStatusLabel?: StatusIndicatorProps['label'];
+    healthStatusMessage?: StatusIndicatorProps['message'];
     children?: React.ReactNode;
     sx?: SxProps;
 };
 
-export const Page = ({ title, healthStatus, healthStatusLabel, children, sx }: PageProps) =>
+export const Page = ({ title, healthStatus, healthStatusLabel, healthStatusMessage, children, sx }: PageProps) =>
     <>
         <Box sx={{ ...styles, ...sx }}>
             <Typography variant='h1' sx={{ mr: healthStatus ? 3 : 0 }}>{title}</Typography>
-            {healthStatus && <StatusIndicator status={healthStatus} label={healthStatusLabel} variantFilled />}
+            {healthStatus && <StatusIndicator status={healthStatus} label={healthStatusLabel} message={healthStatusMessage} variantFilled />}
         </Box>
         {children}
     </>;

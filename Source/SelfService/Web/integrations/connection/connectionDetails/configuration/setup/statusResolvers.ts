@@ -3,26 +3,12 @@
 
 import { StatusIndicatorProps } from '@dolittle/design-system';
 
-import { ConnectionStatus, RemoteServiceStatus } from '../../../../../apis/integrations/generated';
+import { RemoteServiceStatus, StatusMessage } from '../../../../../apis/integrations/generated';
+import { StatusIndicatorMessage } from '../../../../../utils/helpers/connectionStatuses';
 
-export type StatusMessage = [StatusIndicatorProps['status'], StatusIndicatorProps['label']];
+export type StatusMessageLocal = [StatusIndicatorProps['status'], StatusIndicatorProps['label']];
 
-export const configurationStatusFromConnectionStatus = (connectionStatus?: ConnectionStatus): StatusMessage => {
-    switch (connectionStatus?.name) {
-        case 'Connected':
-            return ['success', 'Connected'];
-        case 'Failing':
-            return ['error', 'Failing'];
-        case 'Deleted':
-            return ['unknown', 'Deleted'];
-        case 'Registered':
-        case 'Pending':
-        default:
-            return ['waiting', 'Waiting for access'];
-    }
-};
-
-export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStatus, ionStatus?: RemoteServiceStatus): StatusMessage => {
+export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStatus, ionStatus?: RemoteServiceStatus): StatusMessageLocal => {
     const nonSuccessStatuses = ['DeploymentChosen', 'Undeployed'];
     if ([ionStatus, mdpStatus].every(status => status && nonSuccessStatuses.includes(status.name))) {
         return ['waiting', 'Waiting for access'];
@@ -30,21 +16,34 @@ export const hostBundleStatusFromServicesStatus = (mdpStatus?: RemoteServiceStat
     return ['success', 'Connected'];
 };
 
-export const configurationStatusFromServiceCredentialsStatus = (serviceStatus?: RemoteServiceStatus): StatusMessage | undefined => {
-    switch (serviceStatus?.name) {
-        case 'Unresponsive':
-        case 'Inactive':
-        case 'Disconnected':
-        case 'ServiceFailing':
-            return ['error', 'Failed'];
-        case 'Active':
-            return ['success', 'Connected'];
-        case 'Configured':
-            return ['waiting', 'Waiting for credential verification'];
-        case 'Alive':
-        case 'Undeployed':
-        case 'DeploymentChosen':
+
+export const getConnectionIndicatorStatusFromStatusMessage = (status?: StatusMessage): StatusIndicatorMessage | undefined => {
+    if (!status) return undefined;
+    const indicator: StatusIndicatorMessage = {
+        status: 'unknown',
+        label: status?.title,
+        message: status?.message || undefined,
+    };
+
+    switch (status?.severity) {
+        case 'Success':
+            indicator.status = 'success';
+            break;
+        case 'Error':
+            indicator.status = 'error';
+            break;
+        case 'Waiting':
+            indicator.status = 'waiting';
+            break;
+        case 'Warning':
+            indicator.status = 'warning';
+            break;
+        case 'Information': //TODO: Introduce Information status
+        case 'Unknown':
+        case 'None':
         default:
-            return undefined;
+            indicator.status = 'unknown';
+            break;
     }
+    return indicator;
 };

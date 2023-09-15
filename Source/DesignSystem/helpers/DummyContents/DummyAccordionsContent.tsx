@@ -29,31 +29,31 @@ export const dummyAccordionListWithStatus: AccordionListItem[] = [
     {
         id: '1',
         title: 'Accordion 1',
-        progressStatus: 'success',
+        statusLevel: 'success',
         children: <DummyChildrenContent />,
     },
     {
         id: '2',
         title: 'Accordion 2',
-        progressStatus: 'waiting',
+        statusLevel: 'waiting',
         children: <DummyChildrenContent />,
     },
     {
         id: '3',
         title: 'Accordion 3',
-        progressStatus: 'warning',
+        statusLevel: 'warning',
         children: <DummyChildrenContent />,
     },
     {
         id: '4',
         title: 'Accordion 4',
-        progressStatus: 'error',
+        statusLevel: 'error',
         children: <DummyChildrenContent />,
     },
     {
         id: '5',
         title: 'Accordion 5',
-        progressStatus: 'unknown',
+        statusLevel: 'unknown',
         children: <DummyChildrenContent />,
     },
 ];

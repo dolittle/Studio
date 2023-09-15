@@ -55,6 +55,7 @@ export * from './ServiceAccountCreatedDto';
 export * from './ServiceAccountListDto';
 export * from './SetMessageMappingRequestArguments';
 export * from './SortDirection';
+export * from './StatusMessage';
 export * from './StatusSeverity';
 export * from './StringResult';
 export * from './Table';

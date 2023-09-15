@@ -11,18 +11,17 @@ import { Paper } from '@mui/material';
 import { StatusIndicator } from '@dolittle/design-system';
 
 import { ConnectionModel } from '../../apis/integrations/generated';
-
-import { getConnectionIndicatorStatus } from '../../utils/helpers/connectionStatuses';
+import { getConnectionIndicatorStatusFromStatusMessage } from '../connection/connectionDetails/configuration/setup/statusResolvers';
 
 type ConnectionsTableRowProps = {
     row: ConnectionModel;
 };
 
 const StatusCell = ({ row }: ConnectionsTableRowProps) => {
-    const status = row.status?.name;
+    const status = getConnectionIndicatorStatusFromStatusMessage(row.status.statusMessage);
 
     return (
-        <StatusIndicator status={getConnectionIndicatorStatus(status).status} label={getConnectionIndicatorStatus(status).label} />
+        <>{status && <StatusIndicator status={status.status} label={status.label} message={status.message} />}</>
     );
 };
 
